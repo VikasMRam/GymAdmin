@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { string, element } from 'prop-types';
 import styled from 'styled-components';
+import Measure from 'react-measure';
 
 import { Block } from 'sly/components/atoms';
 import { size, palette } from 'sly/components/themes';
@@ -42,13 +43,13 @@ const Title = styled(Block)`
   flex-grow: 1; 
 `;
 
-const Cloned = ({ element, ...props }) => React.cloneElement(element, props);
-
-const StyledFilterButton = styled(Cloned)``;
+const StyledFilterButton = styled.div``;
 
 const DoneButton = styled(ButtonLink)`
   padding: 0 ${size('spacing.large')};
 `;
+
+const Content = styled.div``;
 
 export default class PopoverPortal extends Component {
   static propTypes = {
@@ -63,13 +64,30 @@ export default class PopoverPortal extends Component {
     isOpen: !this.state.isOpen,
   });
 
+  onContentResize = (params) => {
+    console.log('content', params);
+  };
+
+  onButtonResize = (params) => {
+    console.log('button', params);
+  };
+
   render() {
     const { button, children, title } = this.props;
     const { isOpen } = this.state;
 
     return (
       <Wrapper>
-        <StyledFilterButton element={button} onClick={this.onClick} />
+        <Measure bounds onResize={this.onButtonResize}>
+          {({ measureRef }) => (
+            <StyledFilterButton
+              innerRef={measureRef}
+              onClick={this.onClick}
+            >
+              {button}
+            </StyledFilterButton>
+          )}
+        </Measure>
         <PopoverWrapper isOpen={isOpen}>
           <MobileHeader>
             <Title size="subtitle" weight="medium">{title}</Title>
@@ -81,7 +99,13 @@ export default class PopoverPortal extends Component {
               Done
             </DoneButton>
           </MobileHeader>
-          {children}
+          <Measure bounds onResize={this.onContentResize}>
+            {({ measureRef }) => (
+              <Content innerRef={measureRef}>
+                {children}
+              </Content>
+            )}
+          </Measure>
         </PopoverWrapper>
       </Wrapper>
     );

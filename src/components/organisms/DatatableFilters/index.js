@@ -28,11 +28,11 @@ export default class DatatableFilters extends Component {
   };
 
   render() {
-    const { datatable } = this.props;
+    const { datatable, ...props } = this.props;
     const { onFilterChange, onFilterRemove, onLogicalOperatorChange } = datatable;
     const { filters, logicalOperator } = datatable.filterState;
     return (
-      <Wrapper>
+      <Wrapper {...props}>
         {filters.map((filter, i) => (
           /* eslint-disable react/no-array-index-key */
           <DatatableFilterRow
