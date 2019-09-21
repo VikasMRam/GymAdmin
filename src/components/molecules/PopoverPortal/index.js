@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { string, element } from 'prop-types';
+import { string, element, object } from 'prop-types';
 import styled from 'styled-components';
 import Measure from 'react-measure';
 
 import { Block } from 'sly/components/atoms';
 import { size, palette } from 'sly/components/themes';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
+import withBreakpoint from 'sly/components/helpers/breakpoint';
 
 const Wrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -25,7 +26,10 @@ const PopoverWrapper = styled.div`
   
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     top: calc(100% + 5px);
+    left: ${p => p.left}px;
     margin-right: auto;
+    width: unset;
+    height: unset;
   }
 `;
 
@@ -51,30 +55,47 @@ const DoneButton = styled(ButtonLink)`
 
 const Content = styled.div``;
 
+@withBreakpoint
+
 export default class PopoverPortal extends Component {
   static propTypes = {
     title: string,
     button: element,
     children: element,
+    breakpoint: object,
   };
 
-  state = { isOpen: true };
+  state = {
+    isOpen: true,
+    buttonX: 0,
+    left: 0,
+  };
 
   onClick = () => this.setState({
     isOpen: !this.state.isOpen,
   });
 
-  onContentResize = (params) => {
-    console.log('content', params);
+  onButtonResize = ({ bounds }) => {
+    this.setState({
+      buttonX: bounds.left,
+    });
   };
 
-  onButtonResize = (params) => {
-    console.log('button', params);
+  onContentResize = (args) => {
+    const { breakpoint } = this.props;
+    const { buttonX } = this.state;
+    const { width } = args.bounds;
+    const total = buttonX + width;
+    const left = total > breakpoint.currentWidth
+      ? breakpoint.currentWidth - total
+      : 0;
+    console.log('set left', { left, currentWidth: breakpoint.currentWidth, buttonX, width, args });
+    this.setState({ left });
   };
 
   render() {
     const { button, children, title } = this.props;
-    const { isOpen } = this.state;
+    const { isOpen, left } = this.state;
 
     return (
       <Wrapper>
@@ -88,7 +109,7 @@ export default class PopoverPortal extends Component {
             </StyledFilterButton>
           )}
         </Measure>
-        <PopoverWrapper isOpen={isOpen}>
+        <PopoverWrapper left={left} isOpen={isOpen}>
           <MobileHeader>
             <Title size="subtitle" weight="medium">{title}</Title>
             <DoneButton
@@ -99,7 +120,7 @@ export default class PopoverPortal extends Component {
               Done
             </DoneButton>
           </MobileHeader>
-          <Measure bounds onResize={this.onContentResize}>
+          <Measure bounds client onResize={this.onContentResize}>
             {({ measureRef }) => (
               <Content innerRef={measureRef}>
                 {children}
