@@ -80,3 +80,11 @@ export const newProvider = {
     },
   },
 };
+
+export const newParentClient = {
+  data: {
+    id: null,
+    type: 'Client',
+    attributes: {},
+  },
+};
