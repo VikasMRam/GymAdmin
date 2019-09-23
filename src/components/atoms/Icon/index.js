@@ -27,6 +27,7 @@ const Wrapper = styled.span`
     width: ${fontSize};
     height: ${fontSize};
     font-size: ${fontSize};
+    width: ${fontSize};
     display: block;
     fill: currentColor;
     stroke: ${prop('stroke', 'none')};

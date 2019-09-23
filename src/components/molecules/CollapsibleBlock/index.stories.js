@@ -20,6 +20,11 @@ storiesOf('Molecules|CollapsibleBlock', module)
       { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
     </CollapsibleBlock>
   ))
+  .add('zero', () => (
+    <CollapsibleBlock expandTo="bottom" moreLabelOn="center" chevronOnLeft minHeight={0} notCollapsedLabel="Hide additional content" collapsedLabel="Show additional content">
+      { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
+    </CollapsibleBlock>
+  ))
   .add('splicit minHeight', () => (
     <CollapsibleBlock minHeight={200}>
       { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }

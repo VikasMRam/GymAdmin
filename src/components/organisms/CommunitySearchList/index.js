@@ -9,11 +9,9 @@ import { size, gridColumns, assetPath } from 'sly/components/themes';
 import { getPaginationData } from 'sly/services/helpers/pagination';
 import pad from 'sly/components/helpers/pad';
 import shadow from 'sly/components/helpers/shadow';
-import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
 import { Image, Centered, Link, Block } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
 import Heading from 'sly/components/atoms/Heading';
-import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import CommunityTile from 'sly/components/organisms/CommunityTile';
 
@@ -168,7 +166,6 @@ const CommunitySearchList = ({
           <MSCColumnWrapper>
             {usefulInformationTilesComponents}
           </MSCColumnWrapper>
-          <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
         </Fragment>
       }
       {/* TODO: shadow causing issues with pagination */}
@@ -177,7 +174,6 @@ const CommunitySearchList = ({
         <Fragment>
           {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
           <PaddedPagination basePath={basePath} pageParam="page-number" current={current} total={total} />
-          <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
         </Fragment>
       }
     </Fragment>

@@ -6,6 +6,7 @@ import { size, palette } from 'sly/components/themes';
 import { titleize } from 'sly/services/helpers/strings';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import { getHelmetForSearchPage } from 'sly/services/helpers/html_headers';
+import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
 import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
 import { Heading, Button, Hr } from 'sly/components/atoms';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
@@ -13,6 +14,7 @@ import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
+import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import pad from 'sly/components/helpers/pad';
 import CommunityFilterListContainer
   from 'sly/containers/CommunityFilterListContainer';
@@ -57,10 +59,6 @@ const LegacyContent = pad(styled.div`
     &:focus {
       outline: none;
     }
-  }
-  display: none;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: block;
   }
 `, 'large');
 
@@ -226,6 +224,7 @@ const CommunitySearchPage = ({
       <CommunitySearchPageTemplate
         column={columnContent}
       >
+        <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
         {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
         {!isMapView && !isFetchingResults && TopContent()}
         <TopWrapper>

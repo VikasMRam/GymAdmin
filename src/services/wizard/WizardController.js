@@ -119,8 +119,9 @@ class WizardController extends Component {
         throw new SubmissionError({ _error: e.message });
       });
     }
-    this.next();
 
+    // if onStepChange returns a promise then wait for it to resolve before
+    // moving to next step
     if (onStepChange) {
       const args = {
         currentStep,
@@ -130,8 +131,11 @@ class WizardController extends Component {
         goto,
         doSubmit,
       };
-      return onStepChange(args);
+      const returnVal = onStepChange(args);
+      return Promise.resolve(returnVal)
+        .then(this.next);
     }
+    this.next();
 
     return null;
   };

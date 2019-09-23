@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { arrayOf, func, oneOf, object } from 'prop-types';
-import build from 'redux-object';
 
 import { query } from 'sly/services/newApi';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import clientPropType from 'sly/propTypes/client';
 import { newProvider, newParentClient } from 'sly/constants/payloads/client';
+import { normJsonApi } from 'sly/services/helpers/jsonApi';
 import DashboardCommunityReferrals from 'sly/components/organisms/DashboardCommunityReferrals';
 import DashboardCommunityReferralSearch from 'sly/components/organisms/DashboardCommunityReferralSearch';
 import DashboardAgentReferrals from 'sly/components/organisms/DashboardAgentReferrals';
@@ -16,33 +16,6 @@ import DashboardAgentReferralSearch from 'sly/components/organisms/DashboardAgen
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import DashboardCommunityReferralContactDetailsContainer from 'sly/containers/DashboardCommunityReferralContactDetailsContainer';
 import DashboardAgentReferralContactDetailsContainer from 'sly/containers/DashboardAgentReferralContactDetailsContainer';
-
-const normJsonApi = (resp) => {
-  const { data, included } = resp.body;
-  let normalizedResult = [];
-  let result = data.reduce((acc, item) => {
-    if (!acc[item.type]) {
-      acc[item.type] = {};
-    }
-    acc[item.type][item.id] = item;
-    return acc;
-  }, {});
-  result = included.reduce((acc, item) => {
-    if (!acc[item.type]) {
-      acc[item.type] = {};
-    }
-    acc[item.type][item.id] = item;
-    return acc;
-  }, result);
-  const ids = normalizedResult.map(({ id }) => id);
-  normalizedResult = data.reduce((acc, elem) => {
-    if (!ids.includes(elem.id)) {
-      acc.push(build(result, elem.type, elem.id, { eager: true }));
-    }
-    return acc;
-  }, normalizedResult);
-  return normalizedResult;
-};
 
 @query('getCommunities', 'getCommunities')
 @query('getAgents', 'getAgents')
@@ -193,6 +166,7 @@ export default class ReferralSearchContainer extends Component {
     parent.set('id', parentRawClient.id);
     parent.set('type', 'Client');
     newBareClient.set('relationships.parent', { data: parent.value() });
+    newBareClient.set('relationships.admin', {});
     const newChildClient = newBareClient.value();
     return createClient(newChildClient).then(() => {
       notifyInfo('Sent referrral successfully');
