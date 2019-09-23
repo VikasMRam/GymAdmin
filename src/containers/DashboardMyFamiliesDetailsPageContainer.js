@@ -3,7 +3,7 @@ import { object, func, arrayOf } from 'prop-types';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
-import { generatePath } from 'react-router';
+import { Redirect, generatePath } from 'react-router';
 
 import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
@@ -69,18 +69,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     notes: arrayOf(notePropType),
     invalidateClients: func,
   };
-
-  componentDidMount() {
-    const { breakpoint, match, history, client } = this.props;
-    const currentTab = match.params.tab || SUMMARY;
-    if (isBrowser && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
-      const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, {
-        id: client.id,
-        tab: ACTIVITY,
-      });
-      history.push(activityPath);
-    }
-  }
 
   onRejectSuccess = (hide) => {
     const { history } = this.props;
@@ -243,7 +231,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   refetchConversations = () => {
     const { status } = this.props;
     status.conversations.refetch();
-  }
+  };
 
   render() {
     const {
@@ -251,8 +239,23 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     } = this;
 
     const {
-      client, match, status, notes, user, conversations,
+      client,
+      match,
+      status,
+      notes,
+      user,
+      conversations,
+      breakpoint,
     } = this.props;
+
+    const currentTab = match.params.tab || SUMMARY;
+    if (isBrowser && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
+      const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, {
+        id: client.id,
+        tab: ACTIVITY,
+      });
+      return <Redirect to={activityPath} />;
+    }
 
     const { result: rawClient, meta } = status.client;
     const { hasFinished: clientHasFinished } = status.client;

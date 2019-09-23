@@ -26,6 +26,7 @@ import clientPropType from 'sly/propTypes/client';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import { size, palette } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
+import { isBrowser } from 'sly/config';
 
 const Wrapper = mobileOnly(Tr, css`
   display: flex;
@@ -107,7 +108,7 @@ const onClientClick = (clientName, to) => {
 
 const genFamilyDetailsPath = (id, extraPathParams = {}) => generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, ...extraPathParams });
 const ClientRowCard = ({ client, breakpoint }) => {
-  const tab = breakpoint.atLeastLaptop()
+  const tab = isBrowser && breakpoint.atLeastLaptop()
     ? ACTIVITY
     : SUMMARY;
 

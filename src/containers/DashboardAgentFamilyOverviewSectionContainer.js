@@ -3,7 +3,6 @@ import { arrayOf, object } from 'prop-types';
 
 import { prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import withBreakpoint from 'sly/components/helpers/breakpoint';
 import DashboardAgentFamilyOverviewSection from 'sly/components/organisms/DashboardAgentFamilyOverviewSection';
 import { withRouter } from 'react-router';
 
@@ -38,8 +37,6 @@ const getPaginationData = ({ result, meta }) => {
 
 @withRouter
 
-@withBreakpoint
-
 @prefetch('clients', 'getClients', (req, { datatable }) => req(datatable.query))
 
 export default class DashboardAgentFamilyOverviewSectionContainer extends Component {
@@ -47,14 +44,13 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
     clients: arrayOf(clientPropType),
     status: object,
     history: object,
-    breakpoint: object,
     datatable: object,
     match: object,
   };
 
   render() {
     const {
-      clients, status, breakpoint, datatable, match,
+      clients, status, datatable, match,
     } = this.props;
 
     const { error, hasFinished } = status.clients;
@@ -69,7 +65,6 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
         clients={clients}
         pagination={getPaginationData(status.clients)}
         activeTab={match.params.clientType}
-        breakpoint={breakpoint}
         onSearchTextKeyUp={this.handleSearchTextKeyUp}
         datatable={datatable}
       />

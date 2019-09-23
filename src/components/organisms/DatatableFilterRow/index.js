@@ -3,6 +3,7 @@ import { func, number, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 
+import { Box } from 'sly/components/atoms';
 import filterPropType from 'sly/propTypes/datatableFilter';
 import datatableColumnsPropType from 'sly/propTypes/datatableColumns';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
@@ -31,9 +32,11 @@ const valueAndOptionsForSelect = (value, list) => {
   };
 };
 
-const Row = styled(mobileOnly('div', css` 
+const Row = styled(mobileOnly(Box, css` 
   display: flex;
   flex-wrap: wrap;
+  padding: ${size('spacing.regular')};
+  
   > * {
     margin: 0 ${size('spacing.regular')} ${size('spacing.regular')} 0; 
   }

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, shape, object, string, bool, func } from 'prop-types';
 import { generatePath } from 'react-router';
@@ -22,6 +22,7 @@ import {
 } from 'sly/constants/dashboardAppPaths';
 import Th from 'sly/components/molecules/Th';
 import ClientRowCard from 'sly/components/organisms/ClientRowCard';
+import withBreakpoint from 'sly/components/helpers/breakpoint';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
@@ -86,93 +87,96 @@ const onTabClick = (label) => {
 
 const getBasePath = clientType => generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType });
 
-const DashboardAgentFamilyOverviewSection = ({
-  clients,
-  pagination,
-  activeTab,
-  onSearchTextKeyUp,
-  isPageLoading,
-  basePath,
-  breakpoint,
-  datatable,
-}) => {
-  return (
-    <Fragment>
-      <Tabs activeTab={activeTab} tabsOnly>
-        {Object.entries(TabMap).map(([name, key]) => (
-          <Tab
-            id={key}
-            key={key}
-            to={getBasePath(key)}
-            onClick={() => onTabClick(name)}
-          >
-            {`${name} (${pagination[`${key}Count`] || '0'})`}
-          </Tab>
-        ))}
-      </Tabs>
+@withBreakpoint
 
-      <TableHeaderButtons
-        datatable={datatable}
-        onSearchTextKeyUp={onSearchTextKeyUp}
-        modelName="Client"
-      />
+export default class DashboardAgentFamilyOverviewSection extends Component {
+  static propTypes = {
+    datatable: object,
+    clients: arrayOf(clientPropType),
+    pagination: object,
+    breakpoint: object,
+    paginationString: string,
+    activeTab: string,
+    showPagination: bool,
+    searchTextValue: string,
+    onSearchTextKeyUp: func,
+    isPageLoading: bool,
+  };
 
-      <Section>
+  static defaultProps = {
+    mobileContents: [],
+  };
+
+  render() {
+    const {
+      clients,
+      pagination,
+      activeTab,
+      onSearchTextKeyUp,
+      isPageLoading,
+      breakpoint,
+      datatable,
+    } = this.props;
+
+    return (
+      <Fragment>
+        <Tabs activeTab={activeTab} tabsOnly>
+          {Object.entries(TabMap)
+            .map(([name, key]) => (
+              <Tab
+                id={key}
+                key={key}
+                to={getBasePath(key)}
+                onClick={() => onTabClick(name)}
+              >
+                {`${name} (${pagination[`${key}Count`] || '0'})`}
+              </Tab>
+            ))}
+        </Tabs>
+
+        <TableHeaderButtons
+          datatable={datatable}
+          onSearchTextKeyUp={onSearchTextKeyUp}
+          modelName="Client"
+        />
+
+        <Section>
+          {!isPageLoading && (
+            <Fragment>
+              <StyledTable>
+                <THead>
+                  <Tr>
+                    {AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS
+                      .map(({ text }) => <Th key={text}>{text}</Th>)
+                    }
+                  </Tr>
+                </THead>
+                <TBody>
+                  {clients.map(client => (
+                    <ClientRowCard key={client.id} client={client} breakpoint={breakpoint} />
+                  ))}
+                </TBody>
+              </StyledTable>
+              {pagination.show && (
+                <StyledPagination
+                  current={pagination.current}
+                  total={pagination.total}
+                  range={1}
+                  basePath={datatable.basePath}
+                  pageParam="page-number"
+                />
+              )}
+            </Fragment>
+          )}
+          {isPageLoading && 'Loading...'}
+        </Section>
+
         {!isPageLoading && (
-          <Fragment>
-            <StyledTable>
-              <THead>
-                <Tr>
-                  {AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS
-                    .map(({ text }) => <Th key={text}>{text}</Th>)
-                  }
-                </Tr>
-              </THead>
-              <TBody>
-                {clients.map(client => (
-                  <ClientRowCard key={client.id} client={client} breakpoint={breakpoint} />
-                ))}
-              </TBody>
-            </StyledTable>
-            {pagination.show && (
-              <StyledPagination
-                current={pagination.current}
-                total={pagination.total}
-                range={1}
-                basePath={datatable.basePath}
-                pageParam="page-number"
-              />
-            )}
-          </Fragment>
+          <FamiliesCountStatusBlock padding="regular" size="caption" snap="top">
+            {pagination.text}
+          </FamiliesCountStatusBlock>
         )}
-        {isPageLoading && 'Loading...'}
-      </Section>
-
-      {!isPageLoading && (
-        <FamiliesCountStatusBlock padding="regular" size="caption" snap="top">
-          {pagination.text}
-        </FamiliesCountStatusBlock>
-      )}
-    </Fragment>
-  );
-};
-
-DashboardAgentFamilyOverviewSection.propTypes = {
-  datatable: object,
-  clients: arrayOf(clientPropType),
-  pagination: object,
-  breakpoint: object,
-  paginationString: string,
-  activeTab: string,
-  showPagination: bool,
-  searchTextValue: string,
-  onSearchTextKeyUp: func,
-  isPageLoading: bool,
-  basePath: string,
-};
-
-DashboardAgentFamilyOverviewSection.defaultProps = {
-  mobileContents: [],
-};
-
-export default DashboardAgentFamilyOverviewSection;
+      </Fragment>
+    );
+  };
+}

@@ -10,7 +10,7 @@ import ButtonLink from 'sly/components/molecules/ButtonLink';
 
 const Wrapper = styled(mobileOnly(Box,
   css`
- 
+    border: none; 
   `,
   css`
     display: table;
