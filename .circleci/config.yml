@@ -198,7 +198,7 @@ jobs:
             - "d1:18:b5:41:1d:85:be:48:1b:20:21:9a:e6:3f:f7:03"
       - run:
           name: Clone SlyApi
-          command: git clone git@github.com:seniorly/SlyApi.git
+          command: git clone git@github.com:seniorly/SlyApi.git ~/SlyApi
       
       - checkout:
           path: ~/project
