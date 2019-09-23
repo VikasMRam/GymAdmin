@@ -202,7 +202,7 @@ jobs:
       
       - run:
           command: |
-            docker-compose up
+            docker-compose -f docker-compose-test.yml up
           working_directory: ~/SlyApi
           background: true
       
