@@ -129,7 +129,7 @@ const getBasePath = (tab, params) => {
 
 const DashboardAgentFamilyOverviewPage = ({
   clients, onClientClick, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params, breakpoint, showModal,
-  meta, hideModal,
+  meta, hideModal, notifyInfo,
 }) => {
   const prospectsLabel = tabIDLabelMap[tabIDs[0]];
   const connectedLabel = tabIDLabelMap[tabIDs[1]];
@@ -145,7 +145,7 @@ const DashboardAgentFamilyOverviewPage = ({
     closedTabLabel += ` (${closedCount})`;
     const { lookingFor, timeToMove } = meta;
     handleAddFamilyClick = () =>
-      showModal(<AddFamilyFormContainer lookingFor={lookingFor} timeToMove={timeToMove} onCancel={hideModal} />, null, 'noPadding', false);
+      showModal(<AddFamilyFormContainer notifyInfo={notifyInfo} lookingFor={lookingFor} timeToMove={timeToMove} onCancel={hideModal} />, null, 'noPadding', false);
   }
 
   const defaultTab = breakpoint.atLeastLaptop() ? ACTIVITY : SUMMARY;
@@ -229,6 +229,7 @@ DashboardAgentFamilyOverviewPage.propTypes = {
   params: object,
   showModal: func.isRequired,
   hideModal: func.isRequired,
+  notifyInfo: func.isRequired,
 };
 
 DashboardAgentFamilyOverviewPage.defaultProps = {
