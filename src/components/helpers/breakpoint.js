@@ -45,6 +45,8 @@ class Breakpoint {
     }
   }
 
+  width = () => this.currentWidth;
+
   isMobile = () => this.is(MOBILE);
   isTablet = () => this.is(TABLET);
   isLaptop = () => this.is(LAPTOP);

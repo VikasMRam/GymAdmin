@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { string, element, object } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 import Measure from 'react-measure';
 
 import { Block } from 'sly/components/atoms';
@@ -26,7 +27,9 @@ const PopoverWrapper = styled.div`
   
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     top: calc(100% + 5px);
-    left: ${p => p.left}px;
+    ${ifProp('left', css`
+      left: calc(${p => p.left}px - ${size('spacing.xLarge')});
+    `)}
     margin-right: auto;
     width: unset;
     height: unset;
@@ -76,26 +79,23 @@ export default class PopoverPortal extends Component {
   });
 
   onButtonResize = ({ bounds }) => {
-    this.setState({
-      buttonX: bounds.left,
-    });
+    const { left } = bounds;
+    this.setState({ buttonX: left });
   };
 
-  onContentResize = (args) => {
-    const { breakpoint } = this.props;
-    const { buttonX } = this.state;
-    const { width } = args.bounds;
-    const total = buttonX + width;
-    const left = total > breakpoint.currentWidth
-      ? breakpoint.currentWidth - total
-      : 0;
-    console.log('set left', { left, currentWidth: breakpoint.currentWidth, buttonX, width, args });
-    this.setState({ left });
+  onContentResize = ({ bounds }) => {
+    const { width } = bounds;
+    this.setState({ width });
   };
 
   render() {
-    const { button, children, title } = this.props;
-    const { isOpen, left } = this.state;
+    const { button, children, title, breakpoint } = this.props;
+    const { isOpen, width, buttonX } = this.state;
+
+    const total = buttonX + width;
+    const left = breakpoint && total > breakpoint.width()
+      ? breakpoint.width() - total
+      : 0;
 
     return (
       <Wrapper>
