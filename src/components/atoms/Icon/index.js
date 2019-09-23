@@ -62,6 +62,7 @@ Icon.defaultProps = {
   flip: false,
   rotate: 0,
   size: 'regular',
+  variation: 'base',
 };
 
 export default Icon;
