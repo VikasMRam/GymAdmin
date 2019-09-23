@@ -1,31 +1,27 @@
 import React from 'react';
-import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import DashboardAdminReferralAgentTile from 'sly/components/organisms/DashboardAdminReferralAgentTile';
-import agent from 'sly/../private/storybook/sample-data/agent-linda-iwamota';
-
-const Wrapper = styled.div`
-  width: 800px;
-  padding: 24px;
-`;
 
 const notifyError = action('notifyError');
 const notifyInfo = action('notifyInfo');
+const bottomActionOnClick = action('bottomActionOnClick');
 
-const wrap = (props = {}) => (
-  <Wrapper>
-    <DashboardAdminReferralAgentTile
-      agent={agent}
-      notifyInfo={notifyInfo}
-      notifyError={notifyError}
-      {...props}
-    />
-  </Wrapper>
-);
+const agent = {
+  name: 'Sarah Ordover',
+  slyScore: 95,
+  businessName: 'Assisted Living Locators Los Angeles, CA',
+  workPhone: '310-853-8282',
+  cellPhone: '323-513-2261',
+  leadCount: 4,
+};
+
+const wrap = (props = {}) => <DashboardAdminReferralAgentTile {...agent} notifyInfo={notifyInfo} notifyError={notifyError} {...props} />;
 
 storiesOf('Organisms|DashboardAdminReferralAgentTile', module)
   .add('default', () => wrap())
-  .add('recommended', () => wrap({ isRecommended: true }));
+  .add('recommended', () => wrap({ isRecommended: true }))
+  .add('with bottom action', () => wrap({ isRecommended: true, bottomActionText: 'Change Agent', bottomActionOnClick }))
+  .add('with stage', () => wrap({ isRecommended: true, stage: 'New' }));
 

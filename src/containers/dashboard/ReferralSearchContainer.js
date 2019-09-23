@@ -12,8 +12,10 @@ import { newProvider, newParentClient } from 'sly/constants/payloads/client';
 import DashboardCommunityReferrals from 'sly/components/organisms/DashboardCommunityReferrals';
 import DashboardCommunityReferralSearch from 'sly/components/organisms/DashboardCommunityReferralSearch';
 import DashboardAgentReferrals from 'sly/components/organisms/DashboardAgentReferrals';
+import DashboardAgentReferralSearch from 'sly/components/organisms/DashboardAgentReferralSearch';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import DashboardCommunityReferralContactDetailsContainer from 'sly/containers/DashboardCommunityReferralContactDetailsContainer';
+import DashboardAgentReferralContactDetailsContainer from 'sly/containers/DashboardAgentReferralContactDetailsContainer';
 
 const normJsonApi = (resp) => {
   const { data, included } = resp.body;
@@ -69,6 +71,7 @@ export default class ReferralSearchContainer extends Component {
     communities: [],
     agents: [],
     selectedCommunity: null,
+    selectedAgent: null,
   };
 
   onCommunitySendReferralComplete = (data, { reset }) => {
@@ -76,11 +79,24 @@ export default class ReferralSearchContainer extends Component {
     const { selectedCommunity } = this.state;
     const partner = {
       id: selectedCommunity.id,
-      type: 'Community',
+      type: 'Property',
     };
     return this.sendReferral(partner)
       .then(reset)
       .then(() => this.setSelectedCommunity(null))
+      .then(() => refetchClient());
+  };
+
+  onAgentSendReferralComplete = (data, { reset }) => {
+    const { refetchClient } = this.props;
+    const { selectedAgent } = this.state;
+    const partner = {
+      id: selectedAgent.id,
+      type: 'PartnerAgent',
+    };
+    return this.sendReferral(partner)
+      .then(reset)
+      .then(() => this.setSelectedAgent(null))
       .then(() => refetchClient());
   };
 
@@ -94,17 +110,53 @@ export default class ReferralSearchContainer extends Component {
     return selectedCommunity;
   }
 
-  zipRe = new RegExp(/^\d{5}(-\d{4})?$/);
-  doCommunitySearch = ({ nameOrZip }) => {
-    const { getCommunities } = this.props;
-    // Based on regex matching use name or zip
+  getSelectedAgent = () => {
+    const { selectedAgent } = this.state;
+    return selectedAgent;
+  }
+
+  setSelectedAgent = (selectedAgent) => {
+    this.setState({ selectedAgent });
+    return selectedAgent;
+  }
+
+  getSearchFilters = (nameOrZip) => {
+  // Based on regex matching use name or zip
     const filters = {};
     if (nameOrZip.match(this.zipRe)) {
       filters['filter[zip]'] = nameOrZip;
     } else {
       filters['filter[name]'] = nameOrZip;
     }
+  }
+  zipRe = new RegExp(/^\d{5}(-\d{4})?$/);
 
+  transformAgent = (agent) => {
+    let workPhone = null;
+    let cellPhone = null;
+    const { name: businessName, info, contacts } = agent;
+    const { slyScore, displayName: name, last5DayLeadCount: leadCount } = info;
+    if (contacts && contacts.length > 0) {
+      const [contact] = contacts;
+      // FIXME: Use destucturing
+      workPhone = contact.workPhone;
+      cellPhone = contact.mobilePhone;
+    }
+    const agentProps = {
+      key: name,
+      name,
+      slyScore,
+      businessName,
+      workPhone,
+      cellPhone,
+      leadCount,
+    };
+    return agentProps;
+  }
+
+  doCommunitySearch = ({ nameOrZip }) => {
+    const { getCommunities } = this.props;
+    const filters = this.getSearchFilters(nameOrZip);
     return getCommunities(filters).then((resp) => {
       const communities = normJsonApi(resp);
       return this.setState({
@@ -113,14 +165,15 @@ export default class ReferralSearchContainer extends Component {
     });
   };
 
-  doAgentSearch = (filters) => {
+  doAgentSearch = ({ nameOrZip }) => {
     const { getAgents } = this.props;
+    const filters = this.getSearchFilters(nameOrZip);
 
-    return getAgents(filters).then((r) => {
-      const { data } = r.body;
-      console.log('Seeing these agents ', data);
+    return getAgents(filters).then((resp) => {
+      const agents = normJsonApi(resp);
+      console.log('Seeing these agents ', agents);
       this.setState({
-        agents: data,
+        agents,
       });
     });
   };
@@ -134,9 +187,7 @@ export default class ReferralSearchContainer extends Component {
     const provider = immutable(pick, newProvider, ['id', 'type', 'attributes']);
     provider.set('id', partner.id);
     provider.set('type', 'Provider');
-    // FIXME: Set entityType from the partner object
-    // provider.set('attributes.entityType', partner.type);
-    provider.set('attributes.entityType', 'Property');
+    provider.set('attributes.entityType', partner.type);
     newBareClient.set('relationships.provider', { data: provider.value() });
     const parent = immutable(pick, newParentClient, ['id', 'type', 'attributes']);
     parent.set('id', parentRawClient.id);
@@ -224,6 +275,7 @@ export default class ReferralSearchContainer extends Component {
     return (
       <WizardController
         formName="SendAgentReferral"
+        onComplete={(data, { reset }) => this.onAgentSendReferralComplete(data, { reset })}
       >
         {({
           data, onSubmit, isFinalStep, submitEnabled, next, previous, goto, currentStep, ...props
@@ -232,9 +284,24 @@ export default class ReferralSearchContainer extends Component {
             <WizardSteps currentStep={currentStep} {...props}>
               <WizardStep
                 component={DashboardAgentReferrals}
-                onSubmit={onSubmit}
+                onSendNewReferralClick={onSubmit}
                 name="DashboardAgentReferrals"
+              />
+              <WizardStep
+                component={DashboardAgentReferralSearch}
+                onSubmit={onSubmit}
+                name="DashboardAgentReferralSearch"
+                handleAgentSearch={this.doAgentSearch}
                 agents={agents}
+                transformAgent={this.transformAgent}
+                setSelectedAgent={(a) => { this.setSelectedAgent(a); goto(3); }}
+              />
+              <WizardStep
+                component={DashboardAgentReferralContactDetailsContainer}
+                onSubmit={onSubmit}
+                onChangeAgent={previous}
+                name="DashboardAgentReferralContactDetailsContainer"
+                agent={this.getSelectedAgent() ? this.transformAgent(this.getSelectedAgent()) : null}
               />
             </WizardSteps>
           );

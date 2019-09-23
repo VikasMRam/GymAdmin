@@ -44,21 +44,21 @@ const SmallMobileSendNewReferralButton = styled(Button)`
   }
 `;
 
-const DashboardAgentReferrals = ({ onSubmit }) => (
+const DashboardAgentReferrals = ({ onSendNewReferralClick }) => (
   <Fragment>
     <TopWrapper>
       <Block size="subtitle">Agents</Block>
-      <SendNewReferralButton onClick={() => onSubmit()}>Send a new referral</SendNewReferralButton>
+      <SendNewReferralButton onClick={() => onSendNewReferralClick()}>Send a new referral</SendNewReferralButton>
     </TopWrapper>
     <EmptyResultWrapper>
       <EmptyResultTextBlock palette="grey" variation="dark">You haven’t sent any referrals to any agents yet. </EmptyResultTextBlock>
-      <SmallMobileSendNewReferralButton onClick={() => onSubmit()}>Send a new referral</SmallMobileSendNewReferralButton>
+      <SmallMobileSendNewReferralButton onClick={() => onSendNewReferralClick()}>Send a new referral</SmallMobileSendNewReferralButton>
     </EmptyResultWrapper>
   </Fragment>
 );
 
 DashboardAgentReferrals.propTypes = {
-  onSubmit: func,
+  onSendNewReferralClick: func,
 };
 
 export default DashboardAgentReferrals;

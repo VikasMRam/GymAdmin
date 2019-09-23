@@ -26,7 +26,7 @@ const DashboardCommunityReferralContactDetails = ({ community, handleSubmit, onC
     <Hr size="large" />
     <StyledDashboardAdminReferralCommunityTile community={community} actionText="Change Community" actionClick={() => onChangeCommunity()} />
     <Field name="name" label="Community contact name" type="text" placeholder="Enter Community contact name" component={ReduxField} />
-    <Field name="email" label="Community email" type="text" placeholder="Enter Communit email" component={ReduxField} />
+    <Field name="email" label="Community email" type="text" placeholder="Enter Community email" component={ReduxField} />
     <Field name="slyMessage" label="Message" type="textarea" placeholder="Enter Message" component={ReduxField} />
     <Button type="submit">Send Referral</Button>
   </Form>

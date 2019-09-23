@@ -604,6 +604,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   notifyError={notifyError}
                   notifyInfo={notifyInfo}
                   parentClient={client}
+                  parentRawClient={rawClient}
+                  refetchClient={refetchClient}
                   referralMode="Agent"
                 />
               </Role>
