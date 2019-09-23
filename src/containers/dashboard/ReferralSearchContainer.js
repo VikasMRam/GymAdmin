@@ -142,6 +142,7 @@ export default class ReferralSearchContainer extends Component {
     parent.set('id', parentRawClient.id);
     parent.set('type', 'Client');
     newBareClient.set('relationships.parent', { data: parent.value() });
+    newBareClient.set('relationships.admin', {});
     const newChildClient = newBareClient.value();
     return createClient(newChildClient).then(() => {
       notifyInfo('Sent referrral successfully');
