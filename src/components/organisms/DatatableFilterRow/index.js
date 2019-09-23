@@ -10,7 +10,8 @@ import ButtonLink from 'sly/components/molecules/ButtonLink';
 import Field from 'sly/components/molecules/Field';
 import { noValueOperators, listValueOperators, operatorNames } from 'sly/services/datatable/helpers';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
+import shadow from 'sly/components/helpers/shadow';
 
 const AUTOCOMPLETE = 'MultiSelectDynamicList';
 const SELECT = 'MultiSelectStaticList';
@@ -33,12 +34,20 @@ const valueAndOptionsForSelect = (value, list) => {
 };
 
 const Row = styled(mobileOnly(Box, css` 
+  box-shadow: 0 0 ${size('spacing.regular')} ${palette('slate', 'filler')}80;
   display: flex;
   flex-wrap: wrap;
   padding: ${size('spacing.regular')};
-  
-  > * {
-    margin: 0 ${size('spacing.regular')} ${size('spacing.regular')} 0; 
+  padding-bottom: 0;
+  margin-bottom: ${size('spacing.regular')};
+  > :first-child {
+    order: 1;
+  }
+  > :nth-child(n+2):nth-child(-n+3) {
+    order: 0;
+  }
+  > :nth-child(n+4) {
+    order: 2;
   }
 `, css`
   display: table-row; 
@@ -50,8 +59,11 @@ const Row = styled(mobileOnly(Box, css`
 `;
 
 const CloseButton = mobileOnly(ButtonLink, css`
+  margin: 0 ${size('spacing.regular')} ${size('spacing.regular')} 0; 
   flex-grow: 0;
   order: 1;
+  display: flex; 
+  align-items: center;
 `, css`
 
 `);
@@ -59,13 +71,17 @@ const CloseButton = mobileOnly(ButtonLink, css`
 const Where = mobileOnly('div', css`
   flex-grow: 0.5;
   padding: 0 ${size('spacing.large')};
+  margin: 0 ${size('spacing.regular')} ${size('spacing.regular')} 0; 
   height: ${size('element.small')};
   line-height: ${size('element.small')};
+  background: ${palette('grey.background')};
+  border-radius: ${size('spacing.small')};
 `, css`
   
 `);
 
 const SmallField = styled(Field)`
+  margin: 0 ${size('spacing.regular')} ${size('spacing.regular')} 0; 
 `;
 
 const WhereField = mobileOnly(SmallField, css`
@@ -80,27 +96,10 @@ const GrowField = mobileOnly(SmallField, css`
 
 `);
 
-const ConditionCell = mobileOnly('div', css`
-  display: flex;
-  flex-basis: 100%;
-  order: 2;
-  > * {
-    margin-right: ${size('spacing.regular')};
-    flex-grow: 1;
-  }
-`, css`
-
-`);
-
-const Condition = mobileOnly('div', css`
-  display: flex;
-  > * {
-    flex-grow: 1;
-  }
-`, css`
-  display: flex;
-`);
-
+const SplitFlex = styled.div`
+  width: 100%;
+  height: 0;
+`;
 export default class DatatableFilterRow extends Component {
   static propTypes = {
     index: number.isRequired,
@@ -192,7 +191,7 @@ export default class DatatableFilterRow extends Component {
 
     return (
       <Row>
-        <CloseButton onClick={() => onFilterRemove(filter)} icon="close" />
+        <CloseButton onClick={() => onFilterRemove(filter)} palette="slate" icon="close" />
 
         {index === 0 && (
           <Where>Where</Where>
@@ -223,6 +222,7 @@ export default class DatatableFilterRow extends Component {
           options={this.getColumns()}
         />
 
+        <SplitFlex />
         {/*<ConditionCell>*/}
           {filter.column && (
             <GrowField
