@@ -11,3 +11,5 @@ export const TASK_RESOURCE_TYPE = 'Task';
 export const USER_RESOURCE_TYPE = 'User';
 
 export const CLIENT_RESOURCE_TYPE = 'Client';
+
+export const UUIDAUX_RESOURCE_TYPE = 'UUIDAux';

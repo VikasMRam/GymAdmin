@@ -11,6 +11,7 @@ import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP } from 'sly/constants/famil
 import SlyEvent from 'sly/services/helpers/events';
 import withBreakpoint from 'sly/components/helpers/breakpoint';
 import ModalController from 'sly/controllers/ModalController';
+import NotificationController from 'sly/controllers/NotificationController';
 
 const onClientClick = (clientName, to) => {
   const event = {
@@ -154,22 +155,27 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     const { meta } = clientsStatus;
 
     return (
-      <ModalController>
-        {({ show, hide }) => (
-          <DashboardAgentFamilyOverviewPage
-            clients={clients}
-            onClientClick={onClientClick}
-            pagination={pagination}
-            activeTab={type}
-            breakpoint={breakpoint}
-            onSearchTextKeyUp={this.handleSearchTextKeyUp}
-            params={params}
-            showModal={show}
-            hideModal={hide}
-            meta={meta}
-          />
+      <NotificationController>
+        {({ notifyInfo }) => (
+          <ModalController>
+            {({ show, hide }) => (
+              <DashboardAgentFamilyOverviewPage
+                clients={clients}
+                onClientClick={onClientClick}
+                pagination={pagination}
+                activeTab={type}
+                breakpoint={breakpoint}
+                onSearchTextKeyUp={this.handleSearchTextKeyUp}
+                params={params}
+                showModal={show}
+                hideModal={hide}
+                meta={meta}
+                notifyInfo={notifyInfo}
+              />
+            )}
+          </ModalController>
         )}
-      </ModalController>
+      </NotificationController>
     );
   }
 }

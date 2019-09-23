@@ -130,7 +130,7 @@ export default class AddFamilyForm extends Component {
             type="select"
             component={ReduxField}
           >
-            <option value="" disabled>Select</option>
+            <option disabled>Select an option</option>
             {timeToMoveOptions}
           </Field>
           <Field
@@ -139,7 +139,7 @@ export default class AddFamilyForm extends Component {
             type="select"
             component={ReduxField}
           >
-            <option value="" disabled>Select an option</option>
+            <option disabled>Select an option</option>
             {lookingForOptions}
           </Field>
         </CollapsibleBlock>

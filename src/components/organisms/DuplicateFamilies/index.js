@@ -13,7 +13,7 @@ const ClientsWrapper = styled.div`
 `;
 
 const DuplicateFamilies = ({
-  onAddFamily, clients,
+  handleSubmit, clients,
 }) => (
   <ThreeSectionFormTemplate
     hasSubmit
@@ -22,7 +22,7 @@ const DuplicateFamilies = ({
     heading="Duplicate families detected"
     description="Looks like there are leads with matching phone numbers and/or emails. If you still want to proceed, click Add Family below."
     submitButtonText="Add family"
-    onSubmit={onAddFamily}
+    onSubmit={handleSubmit}
   >
     <ClientsWrapper>
       {clients.map(c => <FamilyEntry key={c.id} client={c} />)}
@@ -31,7 +31,7 @@ const DuplicateFamilies = ({
 );
 
 DuplicateFamilies.propTypes = {
-  onAddFamily: func,
+  handleSubmit: func,
   clients: arrayOf(clientPropType).isRequired,
 };
 
