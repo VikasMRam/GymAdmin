@@ -91,8 +91,16 @@ export default class Datatable extends Component {
   onFilterRemove = (filter) => {
     const { filters, logicalOperator } = this.state;
     const index = filters.indexOf(filter);
-    const next = [...filters.slice(0, index), ...filters.slice(index + 1)];
-    this.setFilters({ filters: next, logicalOperator, 'page-number': 0 });
+    const next = {
+      filters: [...filters.slice(0, index), ...filters.slice(index + 1)],
+      logicalOperator,
+      'page-number': 0,
+    };
+    if (filter.column) {
+      this.setFilters(next);
+    } else {
+      this.setState(next);
+    }
   };
 
   onLogicalOperatorChange = (logicalOperator) => {
