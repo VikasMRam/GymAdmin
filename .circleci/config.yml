@@ -193,6 +193,13 @@ jobs:
       CYPRESS_reporter: junit
 
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "d1:18:b5:41:1d:85:be:48:1b:20:21:9a:e6:3f:f7:03"
+      - run:
+          name: Clone SlyApi
+          command: git clone git@github.com:seniorly/SlyApi.git
+      
       - checkout:
           path: ~/project
       
