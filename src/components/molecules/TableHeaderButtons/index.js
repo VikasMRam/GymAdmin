@@ -12,7 +12,7 @@ const Wrappper = styled.div`
   padding: ${size('spacing.large')};
   border-bottom: ${border};
   background-color: ${palette('white.base')};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     border-top: none;
     border-bottom: none;
@@ -43,9 +43,6 @@ const RightSideButtons = styled.div`
   display: flex;
 `;
 
-const AddNewButton = styled(IconButton)`
-  margin-right: ${size('spacing.regular')};
-`;
 const SortButton = styled(IconButton)`
   margin-right: ${size('spacing.regular')};
 `;
@@ -65,11 +62,10 @@ const ColumnsButton = styled(IconButton)`
 `;
 
 const TableHeaderButtons = ({
-  onColumnButtonClick, onAddNewButtonClick, onSortButtonClick, onFilterButtonClick, onSearchTextKeyUp, className, modelName,
+  onColumnButtonClick, onSortButtonClick, onFilterButtonClick, onSearchTextKeyUp, className,
 }) => (
   <Wrappper className={className}>
     {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
-    <AddNewButton icon="search" onClick={onAddNewButtonClick}>Add {modelName}</AddNewButton>
     <SearchTextInput type="search" placeholder="Type to filter by name" onKeyUp={onSearchTextKeyUp} />
     <RightSideButtons>
       {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
@@ -84,8 +80,6 @@ const TableHeaderButtons = ({
 TableHeaderButtons.propTypes = {
   onColumnButtonClick: func,
   className: string,
-  modelName: string,
-  onAddNewButtonClick: func,
   onSortButtonClick: func,
   onFilterButtonClick: func,
   onSearchTextKeyUp: func,

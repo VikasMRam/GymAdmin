@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import qs from 'query-string';
 import { arrayOf, object } from 'prop-types';
+
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import { withUser, prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
@@ -9,7 +10,8 @@ import { delayedExecutor, getSearchParams } from 'sly/services/helpers/search';
 import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP } from 'sly/constants/familyDetails';
 import SlyEvent from 'sly/services/helpers/events';
 import withBreakpoint from 'sly/components/helpers/breakpoint';
-import { AGENT_DASHBOARD_FAMILIES_NEW_PATH } from 'sly/constants/dashboardAppPaths';
+import ModalController from 'sly/controllers/ModalController';
+import NotificationController from 'sly/controllers/NotificationController';
 
 const onClientClick = (clientName, to) => {
   const event = {
@@ -99,12 +101,6 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     breakpoint: object,
   };
 
-  addClient = () => {
-    const { history } = this.props;
-    const clientPath = AGENT_DASHBOARD_FAMILIES_NEW_PATH;
-    return history.push(clientPath);
-  };
-
   handleSearchTextKeyUp = (event) => {
     const { value } = event.target;
     const { match, location, history } = this.props;
@@ -154,18 +150,32 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
         />
       );
     }
+
     const pagination = getPaginationData(clientsStatus);
+    const { meta } = clientsStatus;
+
     return (
-      <DashboardAgentFamilyOverviewPage
-        clients={clients}
-        onClientClick={onClientClick}
-        pagination={pagination}
-        activeTab={type}
-        breakpoint={breakpoint}
-        onSearchTextKeyUp={this.handleSearchTextKeyUp}
-        onAddNewClient={this.addClient}
-        params={params}
-      />
+      <NotificationController>
+        {({ notifyInfo }) => (
+          <ModalController>
+            {({ show, hide }) => (
+              <DashboardAgentFamilyOverviewPage
+                clients={clients}
+                onClientClick={onClientClick}
+                pagination={pagination}
+                activeTab={type}
+                breakpoint={breakpoint}
+                onSearchTextKeyUp={this.handleSearchTextKeyUp}
+                params={params}
+                showModal={show}
+                hideModal={hide}
+                meta={meta}
+                notifyInfo={notifyInfo}
+              />
+            )}
+          </ModalController>
+        )}
+      </NotificationController>
     );
   }
 }

@@ -7,9 +7,9 @@ import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 
 import { query, getRelationship, invalidateRequests } from 'sly/services/newApi';
-import clientPropType  from 'sly/propTypes/client';
-import  userPropType   from 'sly/propTypes/user';
-import { FAMILY_STATUS_ACTIVE, FAMILY_STATUS_ON_HOLD, NOTE_COMMENTABLE_TYPE_CLIENT, FAMILY_STAGE_WON, FAMILY_STAGE_LOST } from 'sly/constants/familyDetails';
+import clientPropType from 'sly/propTypes/client';
+import userPropType from 'sly/propTypes/user';
+import { FAMILY_STATUS_ACTIVE, FAMILY_STATUS_ON_PAUSE, NOTE_COMMENTABLE_TYPE_CLIENT, FAMILY_STAGE_WON, FAMILY_STAGE_LOST } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { createValidator, required, float } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
@@ -219,7 +219,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const { handleUpdateStage } = this;
     const { client, formState, lossReasons, user } = this.props;
     const { clientInfo, stage, status } = client;
-    const isPaused = status === FAMILY_STATUS_ON_HOLD;
+    const isPaused = status === FAMILY_STATUS_ON_PAUSE;
     const { name } = clientInfo;
     let nextStageGroup;
     let levelGroup;

@@ -68,14 +68,12 @@ const CommunityDetails = ({
           }
         </StyledArticle>
       )}
-      { !contract && (
-        <StyledArticle>
-          <Paragraph>
-            Seniorly is not affiliated with the owner or operator(s) of {communityName}.
-            The information regarding {communityName} has not been verified or approved by the owner or operator.
-          </Paragraph>
-        </StyledArticle>
-      )}
+      <StyledArticle>
+        <Paragraph>
+          Seniorly is not affiliated with the owner or operator(s) of {communityName}.
+          The information above has not been verified or approved by the owner or operator.
+        </Paragraph>
+      </StyledArticle>
     </CollapsibleBlock>
   );
 };

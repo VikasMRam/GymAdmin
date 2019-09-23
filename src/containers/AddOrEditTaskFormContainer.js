@@ -13,7 +13,6 @@ import AddTaskForm from 'sly/components/organisms/AddTaskForm';
 const validate = createValidator({
   title: [required],
   dueDate: [required],
-  creator: [required],
   stage: [required],
   status: [required],
   priority: [required],
@@ -48,16 +47,17 @@ export default class AddOrEditTaskFormContainer extends Component {
     const {
       createTask, updateTask, notifyInfo, onSuccess, client, task,
     } = this.props;
+    const { owner, ...postData } = data;
     const payload = {
       type: TASK_RESOURCE_TYPE,
       attributes: {
-        ...data,
+        ...postData,
       },
       relationships: {
         owner: {
           data: {
             type: USER_RESOURCE_TYPE,
-            id: data.owner,
+            id: owner,
           },
         },
       },
@@ -111,7 +111,7 @@ export default class AddOrEditTaskFormContainer extends Component {
       if (task.title) {
         initialValues.title = task.title;
       }
-      if (task.relatedEntities) {
+      if (task.relatedEntities.length) {
         initialValues.relatedTo = task.relatedEntities[0].id;
       }
       if (task.dueDate) {

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
-import { func, arrayOf } from 'prop-types';
+import { func, arrayOf, object } from 'prop-types';
 import styled from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { Block, Hr } from 'sly/components/atoms';
@@ -16,16 +17,19 @@ const Wrapper = styled.div`
 
 const SendReferralTitleBlock = pad(Block);
 
-const StyledDashboardAdminReferralCommunityTile = cursor(styled(DashboardAdminReferralCommunityTile)`
+const StyledDashboardAdminReferralCommunityTile = styled(DashboardAdminReferralCommunityTile)`
   margin-top: ${size('spacing.large')};
 
   &:hover {
     box-shadow: 0 ${size('spacing.tiny')} ${size('spacing.small')} ${palette('grey', 'stroke')};
+    box-shadow: ${ifProp('disabled', 'none')};
   }
-`);
+`;
+
+const CursorStyledDashboardAdminReferralCommunityTile = cursor(StyledDashboardAdminReferralCommunityTile);
 
 const DashboardCommunityReferralSearch = ({
-  communities, handleCommunitySearch, setSelectedCommunity, onSubmit,
+  communities, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit,
 }) => (
   <Wrapper>
     <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
@@ -34,7 +38,17 @@ const DashboardCommunityReferralSearch = ({
       <Fragment>
         <Hr size="large" />
         <Block>Showing {communities.length} communities</Block>
-        {communities.map(e => <StyledDashboardAdminReferralCommunityTile key={e.name} community={e} onClick={() => { setSelectedCommunity(e); onSubmit(); }} />)}
+        {communities.map((community) => {
+          const props = {
+            key: community.name,
+            community,
+          };
+          const client = childrenClientCommunityIdsMap[community.id];
+          if (client) {
+          return <StyledDashboardAdminReferralCommunityTile {...props} disabled referralSentAt={client.createdAt} />;
+          }
+          return <CursorStyledDashboardAdminReferralCommunityTile {...props} onClick={() => { setSelectedCommunity(community); onSubmit(); }} />;
+        })}
       </Fragment>
     )}
   </Wrapper>
@@ -47,6 +61,7 @@ DashboardCommunityReferralSearch.propTypes = {
   handleSubmit: func,
   onSubmit: func,
   communities: arrayOf(adminCommunityPropType),
+  childrenClientCommunityIdsMap: object,
 };
 
 export default DashboardCommunityReferralSearch;
