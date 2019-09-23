@@ -322,13 +322,13 @@ workflows:
   build:
     jobs:
       # run build (unit tests, linting, quality checks etc etc) for PRs
-      - build
+      # - build
       - e2e:
           context: OPENVPN
-      - deploy:
-          requires:
-            - build
-            - e2e
+      # - deploy:
+      #     requires:
+      #       - build
+      #       - e2e
 
 
 #  build-staging:
