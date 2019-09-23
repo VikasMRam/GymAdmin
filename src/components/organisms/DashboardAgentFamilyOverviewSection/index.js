@@ -22,7 +22,6 @@ import {
 } from 'sly/constants/dashboardAppPaths';
 import Th from 'sly/components/molecules/Th';
 import ClientRowCard from 'sly/components/organisms/ClientRowCard';
-import withBreakpoint from 'sly/components/helpers/breakpoint';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
@@ -87,14 +86,11 @@ const onTabClick = (label) => {
 
 const getBasePath = clientType => generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType });
 
-@withBreakpoint
-
 export default class DashboardAgentFamilyOverviewSection extends Component {
   static propTypes = {
     datatable: object,
     clients: arrayOf(clientPropType),
     pagination: object,
-    breakpoint: object,
     paginationString: string,
     activeTab: string,
     showPagination: bool,
@@ -114,7 +110,6 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
       activeTab,
       onSearchTextKeyUp,
       isPageLoading,
-      breakpoint,
       datatable,
     } = this.props;
 
@@ -153,7 +148,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
                 </THead>
                 <TBody>
                   {clients.map(client => (
-                    <ClientRowCard key={client.id} client={client} breakpoint={breakpoint} />
+                    <ClientRowCard key={client.id} client={client} />
                   ))}
                 </TBody>
               </StyledTable>

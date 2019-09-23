@@ -26,7 +26,6 @@ import clientPropType from 'sly/propTypes/client';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import { size, palette } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
-import { isBrowser } from 'sly/config';
 
 const Wrapper = mobileOnly(Tr, css`
   display: flex;
@@ -107,11 +106,7 @@ const onClientClick = (clientName, to) => {
 };
 
 const genFamilyDetailsPath = (id, extraPathParams = {}) => generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, ...extraPathParams });
-const ClientRowCard = ({ client, breakpoint }) => {
-  const tab = isBrowser && breakpoint.atLeastLaptop()
-    ? ACTIVITY
-    : SUMMARY;
-
+const ClientRowCard = ({ client }) => {
   const {
     clientInfo, uuidAux, stage, status, createdAt, notes,
   } = client;
@@ -125,7 +120,7 @@ const ClientRowCard = ({ client, breakpoint }) => {
   const createdAtStr = dayjs(createdAt).format('MM/DD/YYYY');
   const disabled = status === FAMILY_STATUS_ON_HOLD;
   const lastNote = notes[0];
-  const to = genFamilyDetailsPath(client.id, { tab });
+  const to = genFamilyDetailsPath(client.id, { tab: SUMMARY });
 
   return (
     <Wrapper disabled={disabled}>

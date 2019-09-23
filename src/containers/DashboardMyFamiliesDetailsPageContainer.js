@@ -25,7 +25,6 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
 import SlyEvent from 'sly/services/helpers/events';
 import { CONVERSATION_PARTICIPANT_TYPE_CLIENT, CONVERSATION_PARTICIPANT_TYPE_USER } from 'sly/constants/conversations';
 import withBreakpoint from 'sly/components/helpers/breakpoint';
-import { isBrowser } from 'sly/config';
 
 @withUser
 
@@ -249,7 +248,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     } = this.props;
 
     const currentTab = match.params.tab || SUMMARY;
-    if (isBrowser && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
+    if (breakpoint && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
       const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, {
         id: client.id,
         tab: ACTIVITY,

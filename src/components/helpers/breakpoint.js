@@ -59,18 +59,14 @@ function getDisplayName(WrappedComponent) {
 }
 
 // WARNING: use with care, only in the browser.
-// e.g. ALWAYS put isBrowser before usage:
-// if(isBrowser && breakpoint.atLeastLaptop())... etc
+// e.g. ALWAYS check if breakpoint is not null before usage:
+// if(breakpoint && breakpoint.atLeastLaptop())... etc
 export default function withBreakpoint(ChildComponent) {
   class WithBreakpoint extends Component {
     static displayName = `withBreakpoint(${getDisplayName(ChildComponent)})`;
     static WrappedComponent = ChildComponent;
 
-    state = {
-      breakpoint: isBrowser
-        ? new Breakpoint()
-        : null,
-    };
+    state = { breakpoint: null };
 
     componentDidMount() {
       if (isBrowser) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { bool, string, oneOf } from 'prop-types';
+import { bool, string, oneOf, object } from 'prop-types';
 import { ifProp, switchProp } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
@@ -193,6 +193,7 @@ Button.propTypes = {
   type: string,
   to: string,
   href: string,
+  measureRef: object,
 };
 
 Button.defaultProps = {

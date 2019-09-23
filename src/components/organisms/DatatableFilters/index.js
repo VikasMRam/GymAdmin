@@ -7,6 +7,7 @@ import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import DatatableFilterRow from 'sly/components/organisms/DatatableFilterRow';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
+import IconButton from 'sly/components/molecules/IconButton';
 
 const Wrapper = styled(mobileOnly(Box,
   css`
@@ -20,6 +21,24 @@ const Wrapper = styled(mobileOnly(Box,
   `
 ))`
   background: ${palette('white.base')};
+`;
+
+const StyledButtonLink = mobileOnly(ButtonLink, css`display:none`);
+
+const PopoverFooter = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-top: ${size('border.regular')} solid ${palette('grey', 'filler')};
+  padding: ${size('spacing.regular')} ${size('spacing.large')};
+  > * {
+    width: 100%;
+  }
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: none;
+  }
 `;
 
 export default class DatatableFilters extends Component {
@@ -46,14 +65,18 @@ export default class DatatableFilters extends Component {
             columns={datatable.columns}
           />
         ))}
-        <ButtonLink
+        <StyledButtonLink
           icon="add"
-          palette="slate"
+          palette="primary"
           size="caption"
           onClick={datatable.addFilter}
         >
           Add filter
-        </ButtonLink>
+        </StyledButtonLink>
+
+        <PopoverFooter>
+          <IconButton icon="add" onClick={datatable.addFilter}>Add filter</IconButton>
+        </PopoverFooter>
       </Wrapper>
     );
   }
