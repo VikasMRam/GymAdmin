@@ -198,7 +198,13 @@ jobs:
 
       - run:
           name: Clone SlyApi
-          command: git clone git@github.com:seniorly/SlyApi.git ~/SlyApi
+          command: git clone --single-branch --branch feature/docker git@github.com:seniorly/SlyApi.git ~/SlyApi
+      
+      - run:
+          command: |
+            docker-compose up
+          working_directory: ~/SlyApi
+          background: true
       
       - node/install:
           node-version: 8.16.0
