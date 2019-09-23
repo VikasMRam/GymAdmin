@@ -32,7 +32,7 @@ const Html = ({
       </head>
       <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
-        {state.trim().length > 0 && <script dangerouslySetInnerHTML={{ __html: state }} />}
+        {state.trim().length > 0 && <script type="text/javascript" dangerouslySetInnerHTML={{ __html: state }} />}
         {helmet.script.toComponent()}
         {scriptElements}
         {/* eslint-disable */}
