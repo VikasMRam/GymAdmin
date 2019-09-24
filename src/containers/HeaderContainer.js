@@ -14,31 +14,31 @@ import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 import { withAuth } from 'sly/services/newApi';
 
 const defaultHeaderItems = [
-  { name: 'Call for help (855) 866-4515', href: 'tel:+18558664515', palette: 'primary' },
-  { name: 'Resources', href: '/resources' },
+  { name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary' },
+  { name: 'Resources', to: '/resources' },
   { name: 'How It Works' },
 ];
 
 const smallScreenMenuItems = [
-  { name: 'Home', href: '/' },
+  { name: 'Home', to: '/' },
 ];
 
 const defaultMenuItems = (user) => {
   const menuItems = [
     {
-      name: 'Call for help (855) 866-4515', href: 'tel:+18558664515', palette: 'primary', hideInBigScreen: true, section: 2,
+      name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', hideInBigScreen: true, section: 2,
     },
     {
-      name: 'Resources', href: '/resources', hideInBigScreen: true, section: 2,
+      name: 'Resources', to: '/resources', hideInBigScreen: true, section: 2,
     },
-    { name: 'Contact Us', href: '/contact', section: 2 },
-    { name: 'About Us', href: '/about', section: 2 },
+    { name: 'Contact Us', to: '/contact', section: 2 },
+    { name: 'About Us', to: '/about', section: 2 },
   ];
   if (user) {
     const { roleID } = user;
     /* eslint-disable-next-line no-bitwise */
     if (roleID & PROVIDER_OD_ROLE) {
-      menuItems.unshift({ name: 'Dashboard', href: '/mydashboard', section: 2 });
+      menuItems.unshift({ name: 'Dashboard', to: '/mydashboard', section: 2 });
     }
   }
   return menuItems;
@@ -46,16 +46,16 @@ const defaultMenuItems = (user) => {
 
 const customerMenuItems = [
   {
-    name: 'Favorites', href: FAMILY_DASHBOARD_FAVORITES_PATH, section: 1, icon: 'favourite-light',
+    name: 'Favorites', to: FAMILY_DASHBOARD_FAVORITES_PATH, section: 1, icon: 'favourite-light',
   },
   {
-    name: 'My Profile', href: FAMILY_DASHBOARD_PROFILE_PATH, section: 1, icon: 'user',
+    name: 'My Profile', to: FAMILY_DASHBOARD_PROFILE_PATH, section: 1, icon: 'user',
   },
 ];
 
 const agentMenuItems = [
   {
-    name: 'My Families', href: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), section: 1, icon: 'users',
+    name: 'My Families', to: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), section: 1, icon: 'users',
   },
 ];
 

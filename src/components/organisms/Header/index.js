@@ -168,7 +168,7 @@ const Header = ({
       {item.name}
     </Button>
   ) : (
-    <HeaderItem noHoverColorChange size="caption" onClick={item.onClick} href={item.href} to={item.to} palette={item.palette ? item.palette : 'slate'} key={item.name}>
+    <HeaderItem noHoverColorChange size="caption" onClick={item.onClick} to={item.to} palette={item.palette ? item.palette : 'slate'} key={item.name}>
       {item.name}
     </HeaderItem>
   ));
@@ -177,7 +177,7 @@ const Header = ({
   const headerMenuItemComponents = menuItems
     .map((item) => {
       const mi = (
-        <HeaderMenuItem noHoverColorChange size="caption" href={item.href} to={item.to} palette={item.palette ? item.palette : 'slate'} onClick={item.onClick}>
+        <HeaderMenuItem key={item.to} noHoverColorChange size="caption" to={item.to} palette={item.palette ? item.palette : 'slate'} onClick={item.onClick}>
           {item.name}
           {item.icon && <Icon size="caption" icon={item.icon} palette={item.palette ? item.palette : 'slate'} />}
         </HeaderMenuItem>
@@ -199,7 +199,7 @@ const Header = ({
     });
   const smallScreenMenuItemComponents = smallScreenMenuItems
     .map(item => (
-      <HeaderMenuItem noHoverColorChange size="caption" href={item.href} to={item.to} palette={item.palette ? item.palette : 'slate'} onClick={item.onClick}>
+      <HeaderMenuItem key={item.to} noHoverColorChange size="caption" to={item.to} palette={item.palette ? item.palette : 'slate'} onClick={item.onClick}>
         {item.name}
         {item.icon && <Icon size="caption" icon={item.icon} palette={item.palette ? item.palette : 'slate'} />}
       </HeaderMenuItem>
@@ -216,7 +216,7 @@ const Header = ({
     // tabIndex necessary for onBlur to work
     <HeaderWrapper tabIndex="-1" onBlur={handleHeaderMenuBlur} className={className}>
       <SeniorlyLogoWrapper>
-        <Link href="/">
+        <Link to="/">
           <Logo />
         </Link>
       </SeniorlyLogoWrapper>
@@ -263,7 +263,6 @@ Header.propTypes = {
   headerItems: arrayOf(shape({
     name: string.isRequired,
     to: string,
-    href: string,
     onClick: func,
     palette: palettePropType,
     isButton: bool,
@@ -271,7 +270,6 @@ Header.propTypes = {
   menuItems: arrayOf(shape({
     name: string.isRequired,
     to: string,
-    href: string,
     onClick: func,
     hideInBigScreen: bool,
     icon: string,
@@ -280,7 +278,6 @@ Header.propTypes = {
   smallScreenMenuItems: arrayOf(shape({
     name: string.isRequired,
     to: string,
-    href: string,
     onClick: func,
     icon: string,
   })),
