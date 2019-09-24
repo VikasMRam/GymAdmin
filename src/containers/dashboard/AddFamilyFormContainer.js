@@ -95,10 +95,12 @@ export default class AddFamilyFormContainer extends Component {
             id: null,
             type: UUIDAUX_RESOURCE_TYPE,
             attributes: {
-              residentInfo: {
-                fullName: residentName,
+              uuidInfo: {
+                residentInfo: {
+                  fullName: residentName,
+                },
+                housingInfo: {},
               },
-              housingInfo: {},
             },
           },
         },
@@ -106,16 +108,16 @@ export default class AddFamilyFormContainer extends Component {
     };
     if (preferredLocation) {
       const [city, state] = preferredLocation.split(',');
-      payload.relationships.uuidAux.data.attributes.locationInfo = {
+      payload.relationships.uuidAux.data.attributes.uuidInfo.locationInfo = {
         city,
         state,
       };
     }
     if (timeToMove) {
-      payload.relationships.uuidAux.data.attributes.housingInfo.moveTimeline = timeToMove;
+      payload.relationships.uuidAux.data.attributes.uuidInfo.housingInfo.moveTimeline = timeToMove;
     }
     if (lookingFor) {
-      payload.relationships.uuidAux.data.attributes.housingInfo.lookingFor = lookingFor;
+      payload.relationships.uuidAux.data.attributes.uuidInfo.housingInfo.lookingFor = lookingFor;
     }
 
     return createClient(payload)
