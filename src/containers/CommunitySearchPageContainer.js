@@ -125,9 +125,9 @@ export default class CommunitySearchPageContainer extends PureComponent {
 
     const isFetchingResults = status.communityList.isLoading || !status.communityList.hasStarted;
 
-    if (isFetchingResults) {
-      return null;
-    }
+    // if (isFetchingResults) {
+    //   return null;
+    // }
 
     const requestMeta = status.communityList.meta;
 
@@ -141,12 +141,12 @@ export default class CommunitySearchPageContainer extends PureComponent {
         }) => (
           <CommunitySearchPage
             isMapView={isMapView}
-            requestMeta={requestMeta}
+            requestMeta={requestMeta || {}}
             toggleMap={this.toggleMap}
             searchParams={searchParams}
             onParamsChange={this.changeSearchParams}
             onParamsRemove={this.removeSearchFilters}
-            communityList={communityList}
+            communityList={communityList || []}
             geoGuide={gg}
             location={location}
             onAdTileClick={this.handleOnAdTileClick}

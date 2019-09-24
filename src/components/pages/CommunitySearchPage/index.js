@@ -225,7 +225,6 @@ const CommunitySearchPage = ({
         column={columnContent}
       >
         <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
-        {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
         {!isMapView && !isFetchingResults && TopContent()}
         <TopWrapper>
           {isMapView && (
