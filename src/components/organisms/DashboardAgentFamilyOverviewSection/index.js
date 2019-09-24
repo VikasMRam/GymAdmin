@@ -90,6 +90,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
   static propTypes = {
     datatable: object,
     clients: arrayOf(clientPropType),
+    autocompleteFilters: object,
     pagination: object,
     paginationString: string,
     activeTab: string,
@@ -111,6 +112,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
       onSearchTextKeyUp,
       isPageLoading,
       datatable,
+      autocompleteFilters,
     } = this.props;
 
     return (
@@ -131,6 +133,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
 
         <TableHeaderButtons
           datatable={datatable}
+          autocompleteFilters={autocompleteFilters}
           onSearchTextKeyUp={onSearchTextKeyUp}
           modelName="Client"
         />
@@ -173,5 +176,5 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
         )}
       </Fragment>
     );
-  };
+  }
 }

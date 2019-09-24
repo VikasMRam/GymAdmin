@@ -213,6 +213,7 @@ Field.propTypes = {
     'textarea',
     'select',
     'choice', // react-select
+    'autocomplete',
     'communitychoice',
     'singlechoice',
     'multiplechoice',

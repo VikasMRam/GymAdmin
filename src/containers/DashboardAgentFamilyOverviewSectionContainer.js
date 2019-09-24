@@ -59,10 +59,13 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
       throw new Error(JSON.stringify(error));
     }
 
+    const { meta } = status.clients;
+
     return (
       <DashboardAgentFamilyOverviewSection
         isPageLoading={!hasFinished || !datatable.hasFinished}
         clients={clients}
+        autocompleteFilters={(meta && meta.autocomplete_filters) || {}}
         pagination={getPaginationData(status.clients)}
         activeTab={match.params.clientType}
         onSearchTextKeyUp={this.handleSearchTextKeyUp}

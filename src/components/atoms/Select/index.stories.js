@@ -32,6 +32,10 @@ const Wrapper = styled.div`
   padding: 10px;
 `;
 
+const SmallWrapper = styled(Wrapper)`
+  width: 100px;
+`;
+
 storiesOf('Atoms|Select', module)
   .add('default', () => (
     <Wrapper>
@@ -46,4 +50,13 @@ storiesOf('Atoms|Select', module)
         menuIsOpen={true}
       />
     </Wrapper>
+  ))
+  .add('small space', () => (
+    <SmallWrapper>
+      <Field type="choice" options={groupedOptions}
+         size="small"
+         isMulti={true}
+         menuIsOpen={true}
+      />
+    </SmallWrapper>
   ));

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { func, number, oneOf } from 'prop-types';
+import React, { Component, Fragment } from 'react';
+import { func, number, object, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 
@@ -8,10 +8,14 @@ import filterPropType from 'sly/propTypes/datatableFilter';
 import datatableColumnsPropType from 'sly/propTypes/datatableColumns';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
 import Field from 'sly/components/molecules/Field';
-import { noValueOperators, listValueOperators, operatorNames } from 'sly/services/datatable/helpers';
+import {
+  noValueOperators,
+  listValueOperators,
+  operatorNames,
+  getAutocompleteValues,
+} from 'sly/services/datatable/helpers';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import { size, palette } from 'sly/components/themes';
-import shadow from 'sly/components/helpers/shadow';
 
 const AUTOCOMPLETE = 'MultiSelectDynamicList';
 const SELECT = 'MultiSelectStaticList';
@@ -34,7 +38,7 @@ const valueAndOptionsForSelect = (value, list) => {
 };
 
 const Row = styled(mobileOnly(Box, css` 
-  box-shadow: 0 0 ${size('spacing.regular')} ${palette('slate', 'filler')}80;
+  box-shadow: 0 ${size('spacing.small')} ${size('spacing.small')} ${palette('slate', 'filler')}80;
   display: flex;
   flex-wrap: wrap;
   padding: ${size('spacing.regular')};
@@ -65,7 +69,7 @@ const CloseButton = mobileOnly(ButtonLink, css`
   display: flex; 
   align-items: center;
 `, css`
-
+  width: ${size('icon.regular')};
 `);
 
 const Where = mobileOnly('div', css`
@@ -77,7 +81,7 @@ const Where = mobileOnly('div', css`
   background: ${palette('grey.background')};
   border-radius: ${size('spacing.small')};
 `, css`
-  
+  width: 80px; 
 `);
 
 const SmallField = styled(Field)`
@@ -87,22 +91,27 @@ const SmallField = styled(Field)`
 const WhereField = mobileOnly(SmallField, css`
   flex-grow: 0.5; 
 `, css`
-
+   width: 80px;
 `);
 
 const GrowField = mobileOnly(SmallField, css`
   flex-grow: 1;
 `, css`
-
+  min-width: 140px;
 `);
 
 const SplitFlex = styled.div`
   width: 100%;
   height: 0;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: none;
+  }
 `;
+
 export default class DatatableFilterRow extends Component {
   static propTypes = {
     index: number.isRequired,
+    autocompleteFilters: object,
     onFilterChange: func.isRequired,
     onFilterRemove: func.isRequired,
     onLogicalOperatorChange: func,
@@ -150,8 +159,15 @@ export default class DatatableFilterRow extends Component {
       value: op,
     }));
 
+  getValueForAutocomplete = (value, column) => {
+    const { autocompleteFilters } = this.props;
+    const fromFilters = autocompleteFilters[column.paramKey] || [];
+    return getAutocompleteValues(column)(fromFilters.filter(({ id }) => value.includes(id)));
+  };
+
   getValuePropsFor = ({ column, value, operator }) => {
     const { type, typeInfo } = this.state.columns[column];
+
     switch (type.name) {
       case SELECT: return {
         type: 'choice',
@@ -161,7 +177,7 @@ export default class DatatableFilterRow extends Component {
       };
       case AUTOCOMPLETE: return {
         type: 'autocomplete',
-        value,
+        value: this.getValueForAutocomplete(value, this.state.columns[column]),
         isMulti: listValueOperators.includes(operator),
         onChange: option => this.onSelectChange(option, { name: 'value' }),
       };
@@ -222,9 +238,10 @@ export default class DatatableFilterRow extends Component {
           options={this.getColumns()}
         />
 
-        <SplitFlex />
-        {/*<ConditionCell>*/}
-          {filter.column && (
+
+        {filter.column && (
+          <Fragment>
+            <SplitFlex />
             <GrowField
               name="operator"
               value={filter.operator}
@@ -232,17 +249,17 @@ export default class DatatableFilterRow extends Component {
               onChange={this.onSelectChange}
               options={this.getOperatorsFor(filter.column)}
             />
-          )}
+          </Fragment>
+        )}
 
-          {filter.operator && !noValueOperators.includes(filter.operator) && (
-            <GrowField
-              name={`${filter.column}:${filter.operator}`}
-              size="small"
-              column={columns[filter.column]}
-              {...this.getValuePropsFor(filter)}
-            />
-          )}
-        {/*</ConditionCell>*/}
+        {filter.operator && !noValueOperators.includes(filter.operator) && (
+          <GrowField
+            name={`${filter.column}:${filter.operator}`}
+            size="small"
+            column={columns[filter.column]}
+            {...this.getValuePropsFor(filter)}
+          />
+        )}
       </Row>
     );
   }

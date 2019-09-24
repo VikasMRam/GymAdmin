@@ -50,6 +50,7 @@ const Wrapper = styled.div`
     border-top-right-radius: 0;
     top: 100%;
     margin-top: 0px;
+    min-width: max-content;
   } 
 `;
 

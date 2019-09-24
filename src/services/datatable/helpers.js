@@ -108,3 +108,12 @@ export const parseQuerystringFilters = (qsText) => {
 
   return filterState;
 };
+
+export const getAutocompleteValues = column => items => items.map((item) => {
+  const keyArray = column.value.split('.').slice(1);
+  const label = keyArray.reduce((assoc, key) => assoc[key], item);
+  return {
+    value: item.id,
+    label,
+  };
+});

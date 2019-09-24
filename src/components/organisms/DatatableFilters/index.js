@@ -14,13 +14,19 @@ const Wrapper = styled(mobileOnly(Box,
     border: none; 
   `,
   css`
+    box-shadow: 0 ${size('spacing.small')} ${size('spacing.small')} ${palette('slate', 'filler')}80;
+  `
+))`
+  background: ${palette('white.base')};
+`;
+
+const Table = styled.div`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: table;
     width: ${size('layout.col7')};
     border-collapse: separate;
     border-spacing: ${size('spacing.regular')};
-  `
-))`
-  background: ${palette('white.base')};
+  }
 `;
 
 const StyledButtonLink = mobileOnly(ButtonLink, css`display:none`);
@@ -43,28 +49,33 @@ const PopoverFooter = styled.div`
 
 export default class DatatableFilters extends Component {
   static propTypes = {
+    autocompleteFilters: object,
     datatable: object,
   };
 
   render() {
-    const { datatable, ...props } = this.props;
+    const { datatable, autocompleteFilters, ...props } = this.props;
     const { onFilterChange, onFilterRemove, onLogicalOperatorChange } = datatable;
     const { filters, logicalOperator } = datatable.filterState;
     return (
       <Wrapper {...props}>
-        {filters.map((filter, i) => (
-          /* eslint-disable react/no-array-index-key */
-          <DatatableFilterRow
-            key={`${filter.column || i}_${i}`}
-            index={i}
-            onFilterChange={onFilterChange}
-            onFilterRemove={onFilterRemove}
-            onLogicalOperatorChange={onLogicalOperatorChange}
-            logicalOperator={logicalOperator}
-            filter={filter}
-            columns={datatable.columns}
-          />
-        ))}
+        <Table>
+          {filters.map((filter, i) => (
+            /* eslint-disable react/no-array-index-key */
+            <DatatableFilterRow
+              key={`${filter.column || i}_${i}`}
+              index={i}
+              autocompleteFilters={autocompleteFilters}
+              onFilterChange={onFilterChange}
+              onFilterRemove={onFilterRemove}
+              onLogicalOperatorChange={onLogicalOperatorChange}
+              logicalOperator={logicalOperator}
+              filter={filter}
+              columns={datatable.columns}
+            />
+          ))}
+        </Table>
+
         <StyledButtonLink
           icon="add"
           palette="primary"

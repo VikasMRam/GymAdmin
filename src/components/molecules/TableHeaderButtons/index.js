@@ -66,7 +66,7 @@ const ColumnsButton = styled(IconButton)`
 const isFilterable = datatable => datatable && datatable.columns.some(column => column.isFilterable);
 
 const TableHeaderButtons = ({
-  onColumnButtonClick, onSortButtonClick, datatable, className, modelName,
+  onColumnButtonClick, onSortButtonClick, datatable, className, modelName, autocompleteFilters
 }) => {
   const filterButton = (
     <FilterButton
@@ -94,7 +94,7 @@ const TableHeaderButtons = ({
       {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
       {isFilterable(datatable) && (
         <PopoverPortal title="Filters" button={filterButton}>
-          <DatatableFilters datatable={datatable} />
+          <DatatableFilters datatable={datatable} autocompleteFilters={autocompleteFilters} />
         </PopoverPortal>
       )}
       {onColumnButtonClick && <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>}
@@ -103,6 +103,7 @@ const TableHeaderButtons = ({
 };
 
 TableHeaderButtons.propTypes = {
+  autocompleteFilters: object,
   datatable: object,
   onColumnButtonClick: func,
   className: string,
