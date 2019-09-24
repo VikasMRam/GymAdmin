@@ -6,7 +6,7 @@ const clientInfo = shape({
   name: string.isRequired,
   email: string.isRequired,
   referralSource: string.isRequired,
-  slyMessage: string.isRequired,
+  slyMessage: string,
 });
 
 export const meta = shape({
