@@ -701,7 +701,7 @@ export default class CommunityDetailPage extends Component {
                   </BottomSection>
                 </TopCollapsibleSection>
                 {sortedEstimatedPrice.length > 0 &&
-                  <TopCollapsibleSection title={`Compare to Other ${typeOfCare} Communities in the Area`}>
+                  <TopCollapsibleSection title={`Compare Costs to Nearby ${typeOfCare} Communities`}>
                     <MainSection>
                       <CommunityPricingComparison community={community} />
                     </MainSection>
