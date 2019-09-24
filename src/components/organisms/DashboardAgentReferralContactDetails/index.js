@@ -25,7 +25,7 @@ const DashboardAgentReferralContactDetails = ({
   <Form onSubmit={handleSubmit} name="DashboardAgentReferralContactDetailsForm">
     <SendReferralTitleBlock size="subtitle">Send referral to a agent</SendReferralTitleBlock>
     <Hr size="large" />
-    <StyledDashboardAdminReferralAgentTile {...agent} bottomActionText="Change Agent" bottomActionOnClick={() => onChangeAgent()} />
+    <StyledDashboardAdminReferralAgentTile agent={agent} bottomActionText="Change Agent" bottomActionOnClick={() => onChangeAgent()} />
     <Field name="name" label="Agent contact name" type="text" placeholder="Enter Agent contact name" component={ReduxField} />
     <Field name="email" label="Agent email" type="text" placeholder="Enter Agent email" component={ReduxField} />
     <Field name="slyMessage" label="Message" type="textarea" placeholder="Enter Message" component={ReduxField} />

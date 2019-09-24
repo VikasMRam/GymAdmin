@@ -1,14 +1,16 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { string, number, bool, func } from 'prop-types';
+import { string, bool, func } from 'prop-types';
+import dayjs from 'dayjs';
 
 import { size, palette } from 'sly/components/themes';
 import { Heading, Badge, Icon, Block, Span } from 'sly/components/atoms';
 import cursor from 'sly/components/helpers/cursor';
-import Stage from 'sly/components/molecules/Stage/index';
+import Stage from 'sly/components/molecules/Stage';
+import { adminAgentPropType } from 'sly/propTypes/agent';
 
 const Wrapper = styled.div`
-  border: ${size('border.regular')} solid ${palette('grey', 'filler')};
+  border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
   border-radius: ${size('border.xxLarge')};
 `;
 
@@ -22,7 +24,7 @@ const TopWrapper = styled.div`
 `;
 
 const BottomWrapper = styled.div`
-  border-top: ${size('border.regular')} solid ${palette('grey', 'filler')};
+  border-top: ${size('border.regular')} solid ${palette('grey', 'stroke')};
   padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')}) ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -95,9 +97,61 @@ const BottomActionBlock = cursor(styled(Block)`
   text-align: center;
 `);
 
+const ReferralSentAtWrapper = styled.div`
+  display: none;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: block;
+    margin-left: auto;
+  }
+`;
+
+function transformAgent(agent) {
+  let workPhone = null;
+  let cellPhone = null;
+  let slyScoreValue = null;
+  let name = null;
+  let leadCount = null;
+  const { name: businessName, info, contacts } = agent;
+  if (info) {
+    const { slyScore, displayName, last5DayLeadCount } = info;
+    if (slyScore) {
+      slyScoreValue = slyScore;
+    }
+    if (displayName) {
+      name = displayName;
+    }
+    if (last5DayLeadCount) {
+      leadCount = last5DayLeadCount;
+    }
+  }
+  if (contacts && contacts.length > 0) {
+    const [contact] = contacts;
+    ({ workPhone } = contact);
+    cellPhone = contact.mobilePhone;
+  }
+  const agentProps = {
+    name,
+    slyScore: slyScoreValue,
+    businessName,
+    workPhone,
+    cellPhone,
+    leadCount,
+  };
+  return agentProps;
+}
+
+const getReferralSentTimeText = (date) => {
+  date = dayjs(date).utc();
+  return date.format('M/D/YY, h:mmA');
+};
+
 const DashboardAdminReferralAgentTile = ({
-  className, onClick, name, slyScore, isRecommended, businessName, workPhone, cellPhone, leadCount, bottomActionText, bottomActionOnClick, stage,
+  className, onClick, agent, isRecommended, bottomActionText, bottomActionOnClick, stage, referralSentAt,
 }) => {
+  const {
+    name, slyScore, businessName, workPhone, cellPhone, leadCount,
+  } = transformAgent(agent);
   return (
     <Wrapper className={className} onClick={onClick}>
       <TopWrapper>
@@ -141,6 +195,7 @@ const DashboardAdminReferralAgentTile = ({
             </Fragment>
           )}
         </DetailsTable>
+        {referralSentAt && <ReferralSentAtWrapper><Span palette="grey" variation="dark" size="tiny">Sent on {getReferralSentTimeText(referralSentAt)}</Span></ReferralSentAtWrapper>}
       </TopWrapper>
       {bottomActionText && bottomActionOnClick && (
         <BottomWrapper>
@@ -159,16 +214,12 @@ const DashboardAdminReferralAgentTile = ({
 DashboardAdminReferralAgentTile.propTypes = {
   className: string,
   onClick: func,
-  name: string.isRequired,
-  slyScore: number.isRequired,
-  isRecommended: bool.isRequired,
-  businessName: string,
-  workPhone: string,
-  cellPhone: string,
-  leadCount: number,
+  agent: adminAgentPropType.isRequired,
+  isRecommended: bool,
   bottomActionText: string,
   bottomActionOnClick: func,
   stage: string,
+  referralSentAt: string,
 };
 
 DashboardAdminReferralAgentTile.defaultProps = {

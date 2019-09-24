@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { size, palette } from 'sly/components/themes';
 import { Block, Button } from 'sly/components/atoms';
 import pad from 'sly/components/helpers/pad';
+import clientPropType from 'sly/propTypes/client';
+import DashboardAdminReferralAgentTile from 'sly/components/organisms/DashboardAdminReferralAgentTile';
 
 const TopWrapper = styled.div`
   display: flex;
@@ -44,21 +46,46 @@ const SmallMobileSendNewReferralButton = styled(Button)`
   }
 `;
 
-const DashboardAgentReferrals = ({ onSendNewReferralClick }) => (
-  <Fragment>
-    <TopWrapper>
-      <Block size="subtitle">Agents</Block>
-      <SendNewReferralButton onClick={() => onSendNewReferralClick()}>Send a new referral</SendNewReferralButton>
-    </TopWrapper>
-    <EmptyResultWrapper>
-      <EmptyResultTextBlock palette="grey" variation="dark">You haven’t sent any referrals to any agents yet. </EmptyResultTextBlock>
-      <SmallMobileSendNewReferralButton onClick={() => onSendNewReferralClick()}>Send a new referral</SmallMobileSendNewReferralButton>
-    </EmptyResultWrapper>
-  </Fragment>
-);
+const ChildrenClientsWrapper = styled.div`
+  padding: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.xLarge')};
+  }
+`;
+
+const StyledDashboardAdminReferralAgentTile = pad(DashboardAdminReferralAgentTile);
+
+const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients }) => {
+  const childrenComponents = [];
+  if (childrenClients.length > 0) {
+    childrenClients.forEach((childrenClient) => {
+      const { stage, provider, createdAt } = childrenClient;
+      const component = <StyledDashboardAdminReferralAgentTile stage={stage} agent={provider} referralSentAt={createdAt} />;
+      childrenComponents.push(component);
+    });
+  }
+
+  return (
+    <Fragment>
+      <TopWrapper>
+        <Block size="subtitle">Agents</Block>
+        <SendNewReferralButton onClick={() => onSendNewReferralClick()}>Send a new referral</SendNewReferralButton>
+      </TopWrapper>
+      {childrenComponents.length === 0 && (
+        <EmptyResultWrapper>
+          <EmptyResultTextBlock palette="grey" variation="dark">You haven’t sent any referrals to any agents yet. </EmptyResultTextBlock>
+          <SmallMobileSendNewReferralButton onClick={() => onSendNewReferralClick()}>Send a new referral</SmallMobileSendNewReferralButton>
+        </EmptyResultWrapper>
+      )}
+      {childrenComponents.length > 0 && <ChildrenClientsWrapper>{childrenComponents}</ChildrenClientsWrapper>}
+    </Fragment>
+  );
+};
 
 DashboardAgentReferrals.propTypes = {
   onSendNewReferralClick: func,
+  childrenClients: clientPropType,
 };
 
 export default DashboardAgentReferrals;

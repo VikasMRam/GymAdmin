@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { func, arrayOf } from 'prop-types';
+import { func, arrayOf, object } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -29,7 +29,7 @@ const StyledDashboardAdminReferralAgentTile = styled(DashboardAdminReferralAgent
 const CursorStyledDashboardAdminReferralAgentTile = cursor(StyledDashboardAdminReferralAgentTile);
 
 const DashboardAgentReferralSearch = ({
-  agents, handleAgentSearch, setSelectedAgent, transformAgent, onSubmit,
+  agents, childrenClientAgentIdsMap, handleAgentSearch, setSelectedAgent, onSubmit,
 }) => (
   <Wrapper>
     <SendReferralTitleBlock size="subtitle">Send referral to agent</SendReferralTitleBlock>
@@ -39,8 +39,12 @@ const DashboardAgentReferralSearch = ({
         <Hr size="large" />
         <Block>Showing {agents.length} agents</Block>
         {agents.map((agent) => {
-          const props = transformAgent(agent);
-          return <CursorStyledDashboardAdminReferralAgentTile {...props} onClick={() => { setSelectedAgent(agent); onSubmit(); }} />;
+          const client = childrenClientAgentIdsMap[agent.id];
+          if (client) {
+            const { stage } = client;
+            return <StyledDashboardAdminReferralAgentTile agent={agent} stage={stage} disabled />;
+          }
+          return <CursorStyledDashboardAdminReferralAgentTile agent={agent} onClick={() => { setSelectedAgent(agent); onSubmit(); }} />;
         })}
       </Fragment>
     )}
@@ -51,9 +55,9 @@ DashboardAgentReferralSearch.propTypes = {
   handleAgentSearch: func.isRequired,
   setSelectedAgent: func,
   sendReferral: func,
-  transformAgent: func,
   onSubmit: func,
   agents: arrayOf(adminCommunityPropType),
+  childrenClientAgentIdsMap: object,
 };
 
 export default DashboardAgentReferralSearch;
