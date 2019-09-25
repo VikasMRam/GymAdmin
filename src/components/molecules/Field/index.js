@@ -64,6 +64,7 @@ const Wrapper = styled.div`
 
   ${ifProp('row', css`
     flex-direction: row;
+    align-items: center;
   `)};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -109,7 +110,7 @@ const InputBeforeLabelWrapper = styled.div`
 // donot use pad to add margin bottom on input as it well lead to
 // rerender on key stroke that will loose focus
 const StyledInputMessage = styled(InputMessage)`
-  margin-top: ${size('spacing.regular')};
+  margin-top: ${ifProp({ renderInputFirst: false }, size('spacing.regular'))};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-top: ${ifProp({ wideWidth: true }, 0)};
@@ -121,6 +122,13 @@ const CharCount = styled(textAlign(Block, 'right'))`
   margin-top: ${size('spacing.regular')};
 `;
 CharCount.displayName = 'CharCount';
+
+const StyledLabel = styled(Label)`
+  ${ifProp('renderInputFirst', css`
+    margin-bottom: 0;
+    margin-right: ${size('spacing.regular')};
+  `)};
+`;
 
 const Field = ({
   message,
@@ -166,9 +174,9 @@ const Field = ({
       {(label || labelRight) &&
         <LabelWrapper wideWidth={wideWidth}>
           {label &&
-            <Label htmlFor={inputProps.id}>
+            <StyledLabel htmlFor={inputProps.id} renderInputFirst={renderInputFirst}>
               {label}
-            </Label>
+            </StyledLabel>
           }
           {labelRight &&
             <span>{labelRight}</span>
@@ -177,10 +185,10 @@ const Field = ({
       }
       {renderInputFirst || (wideWidth ? <InputWrapper wideWidth={wideWidth}><InputComponent {...inputProps} /></InputWrapper> : <InputComponent {...inputProps} />)}
       {invalid && !hideErrors && message && (
-        <StyledInputMessage name={`${name}Error`} icon="close" palette="danger" message={message} wideWidth={wideWidth} />
+        <StyledInputMessage name={`${name}Error`} icon="close" palette="danger" message={message} wideWidth={wideWidth} renderInputFirst={renderInputFirst} />
       )}
       {warning && !hideErrors && message && (
-        <StyledInputMessage name={`${name}Warning`} icon="warning" palette="warning" message={message} wideWidth={wideWidth} />
+        <StyledInputMessage name={`${name}Warning`} icon="warning" palette="warning" message={message} wideWidth={wideWidth} renderInputFirst={renderInputFirst} />
       )}
       {success &&
         <CheckIcon icon="check" size="regular" palette="green" />

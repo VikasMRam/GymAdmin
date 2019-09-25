@@ -27,6 +27,13 @@ const lossReasons = [
   DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS[0],
   PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS[0],
 ];
+const roomTypes = [
+  'Shared Suite',
+  'Private Suite',
+  '1 Bedroom',
+  '2 Bedroom',
+  'Other',
+];
 
 const UpdateFamilyStageFormContainer = reduxForm({
   form: 'UpdateFamilyStageForm',
@@ -40,6 +47,7 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       onCancel={action('onCancel')}
       nextAllowedStages={optionValues}
       lossReasons={lossReasons}
+      roomTypes={roomTypes}
     />
   ))
   .add('with currentStage', () => (
@@ -54,6 +62,7 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       nextAllowedStages={optionValues}
       lossReasons={lossReasons}
       initialValues={{ stage: optionValues[4] }}
+      roomTypes={roomTypes}
     />
   ))
   .add('on lost stage', () => (
@@ -68,6 +77,7 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       nextAllowedStages={optionValues}
       lossReasons={lossReasons}
       initialValues={{ stage: FAMILY_STAGE_LOST }}
+      roomTypes={roomTypes}
     />
   ))
   .add('on lost stage and paused', () => (
@@ -83,6 +93,7 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       nextAllowedStages={optionValues}
       lossReasons={lossReasons}
       initialValues={{ stage: FAMILY_STAGE_LOST }}
+      roomTypes={roomTypes}
     />
   ))
   .add('on lost stage with normal reason', () => (
@@ -98,6 +109,7 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       lossReasons={lossReasons}
       currentLossReason={lossReasons[0]}
       initialValues={{ lossReason: lossReasons[0] }}
+      roomTypes={roomTypes}
     />
   ))
   .add('on lost stage and loss description field', () => (
@@ -113,6 +125,7 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       lossReasons={lossReasons}
       currentLossReason={DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS[0]}
       initialValues={{ lossReason: DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS[0] }}
+      roomTypes={roomTypes}
     />
   ))
   .add('on lost stage and preffered location field', () => (
@@ -128,5 +141,6 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       lossReasons={lossReasons}
       currentLossReason={PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS[0]}
       initialValues={{ lossReason: PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS[0] }}
+      roomTypes={roomTypes}
     />
   ));

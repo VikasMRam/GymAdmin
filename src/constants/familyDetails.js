@@ -63,3 +63,12 @@ STATUS_ICON_MAP[FAMILY_STATUS_ACTIVE] = 'active';
 STATUS_ICON_MAP[FAMILY_STATUS_ARCHIVED] = 'archived';
 STATUS_ICON_MAP[FAMILY_STATUS_LONG_TERM] = 'hourglass';
 STATUS_ICON_MAP[FAMILY_STATUS_ON_PAUSE] = 'pause';
+
+// todo temp till api meta is updated
+export const ROOM_TYPES = [
+  'Shared Suite',
+  'Private Suite',
+  '1 Bedroom',
+  '2 Bedroom',
+  'Other',
+];
