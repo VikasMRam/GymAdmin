@@ -86,12 +86,12 @@ const styles = css`
 const StyledTextarea = styled.textarea`
   ${styles};
 `;
-// TODO: Check how we can bring in a non standard 44px height
+
 const StyledSelect = styled.select`
   ${styles};
   background: ${palette('white', 'base')};
   color: ${palette('slate', 'base')};
-  height: ${size('element', 'regular')};
+  height: ${size('element', 'button')};
 `;
 const StyledInput = styled.input`
   ${styles};
@@ -100,7 +100,7 @@ const StyledInput = styled.input`
 export default class Input extends Component {
   static propTypes = {
     type: oneOf(['search', 'textarea', 'select', 'text', 'checkbox', 'radio', 'password', 'number', 'hidden', 'date']),
-    size: oneOf(['small', 'regular', 'large', 'xLarge']),
+    size: oneOf(['small', 'regular', 'button', 'large', 'xLarge']),
     onFocus: func,
     invalid: bool,
     readOnly: bool,

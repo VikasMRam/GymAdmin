@@ -24,10 +24,7 @@ const Wrappper = styled.div`
 `;
 
 const SearchTextInput = styled(Input)`
-
-  @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    margin-right: ${size('spacing.large')};
-  }
+  margin-right: ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('tabletLayout.col4')};
@@ -75,6 +72,7 @@ const TableHeaderButtons = ({
       {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
       <SearchTextInput
         type="search"
+        size="button"
         placeholder="Type to filter by name"
         value={(datatable.getFilter('name', 'cs') || {}).value || ''}
         onChange={({ target }) => datatable.doSearch('name', 'cs', target.value)}
