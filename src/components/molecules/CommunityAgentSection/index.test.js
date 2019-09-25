@@ -40,7 +40,7 @@ describe('CommunityAgentSection', () => {
     expect(wrapper.contains(agent.info.email)).toBe(true);
     expect(wrapper.find('Image').prop('src')).toEqual(agent.info.profileImageUrl);
     expect(wrapper.find('NumberFormat')).toHaveLength(1);
-    expect(wrapper.find('NumberFormat').dive().text()).toEqual('925-890-6575');
+    expect(wrapper.find('NumberFormat').dive().text()).toEqual('(925) 890-6575');
   });
 
   it('renders chosenReview', () => {
@@ -52,7 +52,7 @@ describe('CommunityAgentSection', () => {
     expect(wrapper.contains('abc')).toBe(true);
     expect(wrapper.find('Image').prop('src')).toEqual(agent.info.profileImageUrl);
     expect(wrapper.find('NumberFormat')).toHaveLength(1);
-    expect(wrapper.find('NumberFormat').dive().text()).toEqual('925-890-6575');
+    expect(wrapper.find('NumberFormat').dive().text()).toEqual('(925) 890-6575');
   });
 
   it('handles onPhoneClick', () => {
