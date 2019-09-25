@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import Measure from 'react-measure';
 import styled from 'styled-components';
 import { bool, number, string, oneOfType, oneOf, node } from 'prop-types';
+import { ifProp } from 'styled-tools';
 
+import pad from 'sly/components/helpers/pad';
+import SlyEvent from 'sly/services/helpers/events';
 import { size, key, getKey, remToPx } from 'sly/components/themes';
 import { Link, Icon, Block } from 'sly/components/atoms';
-import SlyEvent from 'sly/services/helpers/events';
 
 export const blockCapHeight = (props) => {
   if (!props.isRenderedHeightBigger) {
@@ -23,7 +25,17 @@ export const blockCapHeight = (props) => {
 export const ReadMore = styled(Link)`
   display: flex;
   align-items: center;
+  justify-content: ${ifProp({ moreLabelOn: 'center' }, 'center')};
+  flex-direction: ${ifProp('chevronOnLeft', 'row-reverse')};
+  padding-top: ${size('spacing.small')};
+  padding-bottom: ${size('spacing.small')};
+
+  > *:${ifProp('chevronOnLeft', 'last-child', 'first-child ')} {
+    margin-right: ${size('spacing.small')};
+  }
 `;
+
+const PaddedReadMore = pad(ReadMore, 'large');
 
 const BlockCap = styled.div`
   height: ${blockCapHeight};
@@ -39,21 +51,26 @@ const OnePix = styled.div`
   margin-top: -1px;
 `;
 
-const StyledBlock = styled(Block)`
-  margin-right: ${size('spacing.large')};
-`;
-
 export default class CollapsibleBlock extends Component {
   static propTypes = {
     blockClassName: string,
     collapsedDefault: bool,
     minHeight: oneOfType([number, oneOf(['tiny', 'small', 'regular', 'large'])]),
     children: node,
+    collapsedLabel: string.isRequired,
+    notCollapsedLabel: string.isRequired,
+    chevronOnLeft: bool,
+    expandTo: oneOf(['bottom', 'top']).isRequired,
+    moreLabelOn: oneOf(['left', 'center']).isRequired,
   };
 
   static defaultProps = {
     minHeight: 'small',
     collapsedDefault: true,
+    collapsedLabel: 'Show more',
+    notCollapsedLabel: 'Show less',
+    expandTo: 'top',
+    moreLabelOn: 'left',
   };
 
   state = {
@@ -77,35 +94,44 @@ export default class CollapsibleBlock extends Component {
 
   render() {
     const {
-      children, minHeight, collapsedDefault, blockClassName, ...props
+      children, minHeight, collapsedDefault, blockClassName, collapsedLabel, notCollapsedLabel,
+      chevronOnLeft, expandTo, moreLabelOn, ...props
     } = this.props;
     const { collapsed, maxHeight } = this.state;
-    const collapsibleMinHeight = remToPx(getKey(`sizes.collapsible.${minHeight}`));
+    const height = getKey(`sizes.collapsible.${minHeight}`);
+    const collapsibleMinHeight = height ? remToPx(height) : minHeight;
+
+    const getContent = measureRef => (
+      <BlockCap maxHeight={maxHeight} minHeight={minHeight} collapsed={collapsed} isRenderedHeightBigger={maxHeight > collapsibleMinHeight}>
+        <div ref={measureRef} {...props}>
+          { children }
+          <OnePix />
+        </div>
+      </BlockCap>
+    );
+    const ReadMoreComponent = expandTo === 'top' ? ReadMore : PaddedReadMore;
 
     return (
       <Measure onResize={this.onResize} margin>
         {({ measureRef }) => (
           <div className={blockClassName}>
-            <BlockCap maxHeight={maxHeight} minHeight={minHeight} collapsed={collapsed} isRenderedHeightBigger={maxHeight > collapsibleMinHeight}>
-              <div ref={measureRef} {...props}>
-                { children }
-                <OnePix />
-              </div>
-            </BlockCap>
+            {expandTo === 'top' && getContent(measureRef)}
             {maxHeight > collapsibleMinHeight &&
-              <ReadMore
+              <ReadMoreComponent
                 onClick={this.toggle}
+                chevronOnLeft={chevronOnLeft}
+                moreLabelOn={moreLabelOn}
                 transparent
               >
-                <StyledBlock weight="medium" palette="primary">
-                  {collapsed ? 'Show more' : 'Show less'}
-                </StyledBlock>
-                <Icon icon="chevron" palette="slate" size="small" flip={!collapsed} />
-              </ReadMore>
+                <Block size="caption" palette="primary">
+                  {collapsed ? collapsedLabel : notCollapsedLabel}
+                </Block>
+                <Icon icon="chevron" palette="primary" size="small" flip={!collapsed} />
+              </ReadMoreComponent>
             }
+            {expandTo === 'bottom' && getContent(measureRef)}
           </div>
-        )
-        }
+        )}
       </Measure>
     );
   }

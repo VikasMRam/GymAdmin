@@ -20,11 +20,11 @@ const StyledDashboardAdminReferralCommunityTile = styled(DashboardAdminReferralC
   margin-bottom: ${size('spacing.large')};
 `;
 
-const DashboardCommunityReferralContactDetails = ({ community, handleSubmit }) => (
+const DashboardCommunityReferralContactDetails = ({ community, handleSubmit, onChangeCommunity }) => (
   <Form onSubmit={handleSubmit} name="DashboardCommunityReferralContactDetailsForm">
     <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
     <Hr size="large" />
-    <StyledDashboardAdminReferralCommunityTile community={community} actionText="Change Community" actionClick={() => alert('actionClick')} />
+    <StyledDashboardAdminReferralCommunityTile community={community} actionText="Change Community" actionClick={() => onChangeCommunity()} />
     <Field name="name" label="Community contact name" type="text" placeholder="Enter Community contact name" component={ReduxField} />
     <Field name="email" label="Community email" type="text" placeholder="Enter Communit email" component={ReduxField} />
     <Field name="slyMessage" label="Message" type="textarea" placeholder="Enter Message" component={ReduxField} />
@@ -35,6 +35,7 @@ const DashboardCommunityReferralContactDetails = ({ community, handleSubmit }) =
 DashboardCommunityReferralContactDetails.propTypes = {
   community: adminCommunityPropType,
   handleSubmit: func,
+  onChangeCommunity: func,
 };
 
 export default DashboardCommunityReferralContactDetails;

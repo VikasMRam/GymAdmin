@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
-import { object, string, func, shape } from 'prop-types';
+import { object, string, func } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import Input from 'sly/components/atoms/Input';
 import IconButton from 'sly/components/molecules/IconButton';
-import filterStateProptype from 'sly/propTypes/filterState';
 import DatatableFilters from 'sly/components/organisms/DatatableFilters';
 import PopoverPortal from 'sly/components/molecules/PopoverPortal';
-import { AGENT_DASHBOARD_FAMILIES_NEW_PATH } from 'sly/constants/dashboardAppPaths';
 
 const border = css`${size('border.regular')} solid ${palette('slate.stroke')}`;
 const Wrappper = styled.div`
@@ -16,7 +14,7 @@ const Wrappper = styled.div`
   padding: ${size('spacing.large')};
   border-bottom: ${border};
   background-color: ${palette('white.base')};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     border-top: none;
     border-bottom: none;
@@ -24,12 +22,6 @@ const Wrappper = styled.div`
     border-right: ${border};
   }
 `;
-
-// const SearchButton = styled(IconButton)`
-//   @media screen and (min-width: ${size('breakpoint.mobile')}) {
-//     display: none;
-//   }
-// `;
 
 const SearchTextInput = styled(Input)`
 
@@ -42,9 +34,6 @@ const SearchTextInput = styled(Input)`
   }
 `;
 
-const AddNewButton = styled(IconButton)`
-  margin-right: ${size('spacing.regular')};
-`;
 const SortButton = styled(IconButton)`
   margin-right: ${size('spacing.regular')};
 `;
@@ -66,7 +55,7 @@ const ColumnsButton = styled(IconButton)`
 const isFilterable = datatable => datatable && datatable.columns.some(column => column.isFilterable);
 
 const TableHeaderButtons = ({
-  onColumnButtonClick, onSortButtonClick, datatable, className, modelName, autocompleteFilters
+  onColumnButtonClick, onSortButtonClick, datatable, className, autocompleteFilters,
 }) => {
   const filterButton = (
     <FilterButton
@@ -84,7 +73,6 @@ const TableHeaderButtons = ({
   return (
     <Wrappper className={className}>
       {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
-      <AddNewButton icon="search" to={AGENT_DASHBOARD_FAMILIES_NEW_PATH}>Add {modelName}</AddNewButton>
       <SearchTextInput
         type="search"
         placeholder="Type to filter by name"
@@ -107,9 +95,7 @@ TableHeaderButtons.propTypes = {
   datatable: object,
   onColumnButtonClick: func,
   className: string,
-  modelName: string,
   onSortButtonClick: func,
-  onSearchTextKeyUp: func,
 };
 
 export default TableHeaderButtons;

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
-import { arrayOf, func, oneOf } from 'prop-types';
+import { arrayOf, func, oneOf, object } from 'prop-types';
 
 import { normalizeResponse, query } from 'sly/services/newApi';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import clientPropType from 'sly/propTypes/client';
-import { newProvider } from 'sly/constants/payloads/client';
+import { newProvider, newParentClient } from 'sly/constants/payloads/client';
+import { normJsonApi } from 'sly/services/helpers/jsonApi';
 import DashboardCommunityReferrals from 'sly/components/organisms/DashboardCommunityReferrals';
 import DashboardCommunityReferralSearch from 'sly/components/organisms/DashboardCommunityReferralSearch';
 import DashboardAgentReferrals from 'sly/components/organisms/DashboardAgentReferrals';
@@ -27,9 +28,11 @@ export default class ReferralSearchContainer extends Component {
     agents: arrayOf(adminAgentPropType),
     referralMode: oneOf(['Agent', 'Community']),
     parentClient: clientPropType.isRequired,
+    parentRawClient: object,
     getAgents: func,
     getCommunities: func,
     createClient: func,
+    refetchClient: func,
   };
 
   static defaultProps = {
@@ -42,13 +45,17 @@ export default class ReferralSearchContainer extends Component {
     selectedCommunity: null,
   };
 
-  onCommunitySendReferralComplete = () => {
+  onCommunitySendReferralComplete = (data, { reset }) => {
+    const { refetchClient } = this.props;
     const { selectedCommunity } = this.state;
     const partner = {
       id: selectedCommunity.id,
       type: 'Community',
     };
-    return this.sendReferral(partner);
+    return this.sendReferral(partner)
+      .then(reset)
+      .then(() => this.setSelectedCommunity(null))
+      .then(() => refetchClient());
   };
 
   getSelectedCommunity = () => {
@@ -94,19 +101,24 @@ export default class ReferralSearchContainer extends Component {
 
   sendReferral = (partner) => {
     const {
-      createClient, parentClient, notifyInfo, notifyError,
+      createClient, parentRawClient, notifyInfo, notifyError,
     } = this.props;
-    console.log('Going to send referral for', parentClient.name);
-    const newBareClient = immutable(pick(parentClient, ['id', 'type', 'attributes.clientInfo', 'attributes.uuid', 'relationships']));
+    const newBareClient = immutable(pick(parentRawClient, ['id', 'type', 'attributes.clientInfo', 'attributes.uuid', 'relationships']));
     newBareClient.set('id', null);
-    newBareClient.set('type', 'Client');
-    newBareClient.set('attributes.parentID', parentClient.id);
     const provider = immutable(pick, newProvider, ['id', 'type', 'attributes']);
     provider.set('id', partner.id);
-    provider.set('attributes.entityType', partner.type);
-    newBareClient.set('relationships.provider', provider.value());
+    provider.set('type', 'Provider');
+    // FIXME: Set entityType from the partner object
+    // provider.set('attributes.entityType', partner.type);
+    provider.set('attributes.entityType', 'Property');
+    newBareClient.set('relationships.provider', { data: provider.value() });
+    const parent = immutable(pick, newParentClient, ['id', 'type', 'attributes']);
+    parent.set('id', parentRawClient.id);
+    parent.set('type', 'Client');
+    newBareClient.set('relationships.parent', { data: parent.value() });
+    newBareClient.set('relationships.admin', {});
     const newChildClient = newBareClient.value();
-    return createClient(newChildClient).then((r) => {
+    return createClient(newChildClient).then(() => {
       notifyInfo('Sent referrral successfully');
     }, (e) => {
       console.log('Saw error, e', e);
@@ -116,10 +128,18 @@ export default class ReferralSearchContainer extends Component {
 
   render() {
     const {
-      referralMode,
+      referralMode, parentClient,
     } = this.props;
+    const { communitiesInterested, children: childrenClients } = parentClient;
     const { communities, agents } = this.state;
-    console.log('This state is changing', communities);
+    const communitiesInterestedIdsMap = communitiesInterested.reduce((accumulator, community) => {
+      accumulator[community.id] = community;
+      return accumulator;
+    }, {});
+    const childrenClientCommunityIdsMap = childrenClients.reduce((accumulator, client) => {
+      accumulator[client.provider.id] = client;
+      return accumulator;
+    }, {});
     // FIXME: @fonz, how does dynamic component choosing look? How do we choose properties , can we do
     // const modeCompMap = { 'Community': DashboardCommunityReferrals, 'Agent': DashboardAgentReferrals };
     // const ModeComp = modeCompMap[referralMode];
@@ -131,12 +151,12 @@ export default class ReferralSearchContainer extends Component {
       return (
         <WizardController
           formName="SendCommunityReferral"
-          onComplete={data => this.onCommunitySendReferralComplete(data)}
+          onComplete={(data, { reset }) => this.onCommunitySendReferralComplete(data, { reset })}
           // todo: final step return to first step
           // onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
         >
           {({
-            data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
+            data, onSubmit, isFinalStep, submitEnabled, next, previous, goto, currentStep, ...props
           }) => {
             return (
               <WizardSteps currentStep={currentStep} {...props}>
@@ -144,21 +164,28 @@ export default class ReferralSearchContainer extends Component {
                   component={DashboardCommunityReferrals}
                   onSubmit={onSubmit}
                   name="DashboardCommunityReferrals"
-                  communities={communities}
+                  communitiesInterested={communitiesInterested}
+                  communitiesInterestedIdsMap={communitiesInterestedIdsMap}
+                  childrenClients={childrenClients}
+                  childrenClientCommunityIdsMap={childrenClientCommunityIdsMap}
                   handleCommunitySearch={this.doCommunitySearch}
                   sendNewReferral={this.sendReferral}
+                  setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto(3); }}
                 />
                 <WizardStep
                   component={DashboardCommunityReferralSearch}
                   onSubmit={onSubmit}
                   name="DashboardCommunityReferralSearch"
                   communities={communities}
+                  childrenClients={childrenClients}
+                  childrenClientCommunityIdsMap={childrenClientCommunityIdsMap}
                   handleCommunitySearch={this.doCommunitySearch}
-                  setSelectedCommunity={this.setSelectedCommunity}
+                  setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto(3); }}
                 />
                 <WizardStep
                   component={DashboardCommunityReferralContactDetailsContainer}
                   onSubmit={onSubmit}
+                  onChangeCommunity={previous}
                   name="DashboardCommunityReferralContactDetailsContainer"
                   community={this.getSelectedCommunity()}
                 />

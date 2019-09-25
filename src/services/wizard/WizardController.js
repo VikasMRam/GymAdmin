@@ -37,9 +37,7 @@ class WizardController extends Component {
   }
 
   componentWillUnmount() {
-    const { resetForm, resetController } = this.props;
-    resetForm();
-    resetController();
+    this.reset();
   }
 
   setStepsSize = (stepSize) => {
@@ -50,6 +48,12 @@ class WizardController extends Component {
     });
   }
 
+  reset = () => {
+    const { resetForm, resetController } = this.props;
+    resetForm();
+    resetController();
+  }
+
   isFinalStep = () => {
     const { currentStep, stepSize } = this.props;
     return currentStep === stepSize;
@@ -57,8 +61,8 @@ class WizardController extends Component {
 
   goto = (step) => {
     const { set, progressPath, currentStep } = this.props;
-    // first step will already be present
-    if (currentStep > 2) {
+    // Checking if we had already visited the step
+    if (progressPath.indexOf(currentStep) === -1) {
       progressPath.push(currentStep);
     }
     set({
@@ -91,7 +95,13 @@ class WizardController extends Component {
 
   doSubmit = (params = {}) => {
     const { onComplete, data } = this.props;
-
+    const { reset, next, previous } = this;
+    params = {
+      ...params,
+      reset,
+      next,
+      previous,
+    };
     return onComplete(data, params);
   };
 
@@ -111,8 +121,9 @@ class WizardController extends Component {
         throw new SubmissionError({ _error: e.message });
       });
     }
-    this.next();
 
+    // if onStepChange returns a promise then wait for it to resolve before
+    // moving to next step
     if (onStepChange) {
       const args = {
         currentStep,
@@ -122,8 +133,14 @@ class WizardController extends Component {
         goto,
         doSubmit,
       };
-      return onStepChange(args);
+      const returnVal = onStepChange(args);
+      return Promise.resolve(returnVal)
+        .then(this.next)
+        .catch((e) => {
+          throw new SubmissionError({ _error: e.message });
+        });
     }
+    this.next();
 
     return null;
   };
@@ -131,7 +148,7 @@ class WizardController extends Component {
   render() {
     const {
       formOptions, next, previous, goto, handleSubmit, setStepsSize,
-      isFinalStep,
+      isFinalStep, reset,
     } = this;
     const {
       children, currentStep, data, submitEnabled,
@@ -148,6 +165,7 @@ class WizardController extends Component {
       formOptions,
       data,
       submitEnabled,
+      reset,
     });
   }
 }

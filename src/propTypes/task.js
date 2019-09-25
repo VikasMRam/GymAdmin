@@ -16,6 +16,7 @@ import {
 export default shape({
   id: string,
   description: string,
+  dueDate: string,
   priority: oneOf([
     TASK_PRIORITY_LOW,
     TASK_PRIORITY_MED,

@@ -59,7 +59,7 @@ const CommunityPricingComparison = ({ community }) => {
       }
       {bottomSectionPrices.length > 0 &&
         <Fragment>
-          <StyledBlock size="body" weight="medium">Compare to other care options</StyledBlock>
+          <StyledBlock size="body" weight="medium">Compare cost to other care options</StyledBlock>
           {bottomSectionPrices.map((object, i) => (
             <StyledPriceBar
               width={findPercentage(object[1], maxPrice)}

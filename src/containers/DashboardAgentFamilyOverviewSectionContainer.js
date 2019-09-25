@@ -6,6 +6,9 @@ import clientPropType from 'sly/propTypes/client';
 import DashboardAgentFamilyOverviewSection from 'sly/components/organisms/DashboardAgentFamilyOverviewSection';
 import { withRouter } from 'react-router';
 
+import ModalController from 'sly/controllers/ModalController';
+import NotificationController from 'sly/controllers/NotificationController';
+
 const getPaginationData = ({ result, meta }) => {
   if (!result) return {};
 
@@ -62,15 +65,25 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
     const { meta } = status.clients;
 
     return (
-      <DashboardAgentFamilyOverviewSection
-        isPageLoading={!hasFinished || !datatable.hasFinished}
-        clients={clients}
-        autocompleteFilters={(meta && meta.autocomplete_filters) || {}}
-        pagination={getPaginationData(status.clients)}
-        activeTab={match.params.clientType}
-        onSearchTextKeyUp={this.handleSearchTextKeyUp}
-        datatable={datatable}
-      />
+      <NotificationController>
+        {({ notifyInfo }) => (
+          <ModalController>
+            {({ show, hide }) => (
+              <DashboardAgentFamilyOverviewSection
+                isPageLoading={!hasFinished || !datatable.hasFinished}
+                clients={clients}
+                meta={meta || {}}
+                pagination={getPaginationData(status.clients)}
+                activeTab={match.params.clientType}
+                datatable={datatable}
+                showModal={show}
+                hideModal={hide}
+                notifyInfo={notifyInfo}
+              />
+            )}
+          </ModalController>
+        )}
+      </NotificationController>
     );
   }
 }

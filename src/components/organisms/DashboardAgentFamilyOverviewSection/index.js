@@ -8,20 +8,16 @@ import mobileOnly from 'sly/components/helpers/mobileOnly';
 import pad from 'sly/components/helpers/pad';
 import SlyEvent from 'sly/services/helpers/events';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
-import { Box, Table, THead, TBody, Tr } from 'sly/components/atoms';
+import { Box, Table, THead, TBody, Tr, Heading } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import Tab from 'sly/components/molecules/Tab';
-import clientPropType from 'sly/propTypes/client';
-import {
-  ACTIVITY,
-  AGENT_DASHBOARD_FAMILIES_PATH,
-  AGENT_DASHBOARD_FAMILIES_NEW_PATH,
-  SUMMARY,
-  PROSPECTING, CONNECTED, CLOSED,
-} from 'sly/constants/dashboardAppPaths';
+import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
+import { AGENT_DASHBOARD_FAMILIES_PATH, PROSPECTING, CONNECTED, CLOSED } from 'sly/constants/dashboardAppPaths';
 import Th from 'sly/components/molecules/Th';
+import IconButton from 'sly/components/molecules/IconButton';
 import ClientRowCard from 'sly/components/organisms/ClientRowCard';
+import AddFamilyFormContainer from 'sly/containers/dashboard/AddFamilyFormContainer';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
@@ -69,6 +65,16 @@ const FamiliesCountStatusBlock = pad(styled(Box)`
   background-color: ${palette('white.base')};
 `, 'large');
 
+const TwoColumn = pad(styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: capitalize;
+  ${Heading} {
+    margin-bottom: 0;
+  }
+`);
+
 const TabMap = {
   Prospects: PROSPECTING,
   Connected: CONNECTED,
@@ -90,7 +96,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
   static propTypes = {
     datatable: object,
     clients: arrayOf(clientPropType),
-    autocompleteFilters: object,
+    meta: clientMetaPropType,
     pagination: object,
     paginationString: string,
     activeTab: string,
@@ -98,6 +104,9 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
     searchTextValue: string,
     onSearchTextKeyUp: func,
     isPageLoading: bool,
+    showModal: func.isRequired,
+    hideModal: func.isRequired,
+    notifyInfo: func.isRequired,
   };
 
   static defaultProps = {
@@ -109,15 +118,41 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
       clients,
       pagination,
       activeTab,
-      onSearchTextKeyUp,
       isPageLoading,
       datatable,
-      autocompleteFilters,
+      meta,
+      showModal,
+      hideModal,
+      notifyInfo,
     } = this.props;
+
+    const {
+      autocomplete_filters: autocompleteFilters = {},
+      lookingFor,
+      timeToMove,
+    } = meta;
+
+    const handleAddFamilyClick = () => showModal((
+      <AddFamilyFormContainer
+        notifyInfo={notifyInfo}
+        lookingFor={lookingFor}
+        timeToMove={timeToMove}
+        onCancel={hideModal}
+      />
+    ), null, 'noPadding', false);
+
+    const beforeTabHeader = (
+      <TwoColumn>
+        <Heading level="subtitle">My Families</Heading>
+        <IconButton icon="user-add" onClick={handleAddFamilyClick} hideTextInMobile>
+          Add family
+        </IconButton>
+      </TwoColumn>
+    );
 
     return (
       <Fragment>
-        <Tabs activeTab={activeTab} tabsOnly>
+        <Tabs activeTab={activeTab} beforeHeader={beforeTabHeader} tabsOnly>
           {Object.entries(TabMap)
             .map(([name, key]) => (
               <Tab
@@ -134,7 +169,6 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
         <TableHeaderButtons
           datatable={datatable}
           autocompleteFilters={autocompleteFilters}
-          onSearchTextKeyUp={onSearchTextKeyUp}
           modelName="Client"
         />
 

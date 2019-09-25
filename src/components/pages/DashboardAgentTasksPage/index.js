@@ -121,7 +121,7 @@ const getBasePath = (tab) => {
 };
 
 const DashboardAgentTasksPage = ({
-  tasks, onTaskClick, pagination, activeTab, onSearchTextKeyUp, isPageLoading,
+  tasks, pagination, activeTab, onSearchTextKeyUp, isPageLoading,
   showModal, hideModal, meta, notifyInfo, notifyError,
 }) => {
   const dueTodayLabel = tabIDLabelMap[tabIDs[0]];
@@ -135,6 +135,7 @@ const DashboardAgentTasksPage = ({
   let completedTabLabel = tabIDLabelMap[tabIDs[3]];
 
   let handleAddTaskClick;
+  let handleTaskClick;
   if (!isPageLoading) {
     const {
       dueTodayCount,
@@ -158,6 +159,20 @@ const DashboardAgentTasksPage = ({
             notifyInfo={notifyInfo}
             notifyError={notifyError}
             onSuccess={hideModal}
+          />
+        ), null, 'noPadding', false
+      );
+    handleTaskClick = task =>
+      showModal(
+        (
+          <AddOrEditTaskFormContainer
+            priorities={priorities}
+            statuses={statuses}
+            onCancel={hideModal}
+            notifyInfo={notifyInfo}
+            notifyError={notifyError}
+            onSuccess={hideModal}
+            task={task}
           />
         ), null, 'noPadding', false
       );
@@ -210,7 +225,7 @@ const DashboardAgentTasksPage = ({
               </THead>
               <TBody>
                 {tasks.map(task => (
-                  <TaskRowCard key={task.id} task={task} onTaskClick={onTaskClick} />
+                  <TaskRowCard key={task.id} task={task} onTaskClick={() => handleTaskClick(task)} />
                 ))}
                 {tasks.length === 0 &&
                   <Tr>
@@ -246,7 +261,6 @@ const DashboardAgentTasksPage = ({
 
 DashboardAgentTasksPage.propTypes = {
   tasks: arrayOf(taskPropType),
-  onTaskClick: func.isRequired,
   pagination: object,
   paginationString: string,
   activeTab: string,
