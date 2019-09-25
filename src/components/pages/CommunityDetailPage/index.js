@@ -411,6 +411,7 @@ export default class CommunityDetailPage extends Component {
       communityFaQs,
       mainImage,
       partnerAgents,
+      twilioNumber
     } = community;
 
     const {
@@ -642,7 +643,9 @@ export default class CommunityDetailPage extends Component {
                         staffDescription={staffDescription}
                         residentDescription={residentDescription}
                         ownerExperience={ownerExperience}
-                        contract={community.contacts && community.contacts.length > 0} // TODO: cheange to use contract info once api sends it
+                        city={address.city}
+                        state={address.state}
+                        phone={twilioNumber}
                       />
                     </MainSection>
                   </TopCollapsibleSection>
