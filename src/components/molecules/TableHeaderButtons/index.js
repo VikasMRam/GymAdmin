@@ -7,6 +7,7 @@ import Input from 'sly/components/atoms/Input';
 import IconButton from 'sly/components/molecules/IconButton';
 import DatatableFilters from 'sly/components/organisms/DatatableFilters';
 import PopoverPortal from 'sly/components/molecules/PopoverPortal';
+import { ifProp } from 'styled-tools';
 
 const border = css`${size('border.regular')} solid ${palette('slate.stroke')}`;
 const Wrappper = styled.div`
@@ -36,6 +37,10 @@ const SortButton = styled(IconButton)`
 `;
 
 const FilterButton = styled(IconButton)`
+  ${ifProp('filtered', css`
+    border-color: ${palette('primary.filler')};
+    background: ${palette('primary.background')};
+  `)}
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-right: ${size('spacing.regular')};
   }
@@ -54,6 +59,7 @@ const isFilterable = datatable => datatable && datatable.columns.some(column => 
 const TableHeaderButtons = ({
   onColumnButtonClick, onSortButtonClick, datatable, className, autocompleteFilters,
 }) => {
+  const nFilters = datatable.numberOfFilters;
   const filterButton = (
     <FilterButton
       icon="filter"
@@ -62,8 +68,9 @@ const TableHeaderButtons = ({
       palette="slate"
       iconPalette="slate"
       hideTextInMobile
+      filtered={nFilters > 0}
     >
-      Filter
+      Filters {nFilters && ` (${nFilters})`}
     </FilterButton>
   );
 

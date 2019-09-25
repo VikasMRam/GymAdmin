@@ -45,6 +45,7 @@ export const SeniorlyIconMenu = styled.div`
   display: flex;
   align-items: center;
   margin-right: ${size('spacing.large')};
+  color: ${palette('secondary.base')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
@@ -151,7 +152,6 @@ const OnlyInMobile = styled.div`
 `;
 
 const OnlyInTablet = styled.div`
-  color: ${palette('secondary.base')};
   display: none;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: block;
@@ -230,10 +230,10 @@ const Header = ({
           </Fragment>
         )}
         <OnlyInTablet>
-          <Icon icon="logo" size="xLarge" />
+          <Link palette="secondary" to="/"><Icon icon="logo" size="xLarge" /></Link>
         </OnlyInTablet>
         <OnlyInMobile>
-          <Icon icon="logo" size="large" />
+          <Link palette="secondary" to="/"><Icon icon="logo" size="large" /></Link>
         </OnlyInMobile>
       </SeniorlyIconMenu>
       <StyledSearchBoxContainer menuOpen={menuOpen} hasShadow layout="header" onLocationSearch={onLocationSearch} />

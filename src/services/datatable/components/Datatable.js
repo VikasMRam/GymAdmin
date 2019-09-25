@@ -151,6 +151,7 @@ export default class Datatable extends Component {
       columns,
       hasFinished: status.datatable.hasFinished,
       filterState: this.state,
+      numberOfFilters: this.state.filters.length,
       basePath,
       query,
     });
