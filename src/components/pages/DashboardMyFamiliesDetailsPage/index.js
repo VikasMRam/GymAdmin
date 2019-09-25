@@ -540,7 +540,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           </BigScreenSummarySection>
           <SmallScreenClientNameWrapper>
             <Link to={backLinkHref}>
-              <Icon icon="arrow-left" palette="slate" />
+              <Icon icon="arrow-left" palette="primary" />
             </Link>
             <SmallScreenClientButtonWrapper>
               <SmallScreenClientNameDiv>

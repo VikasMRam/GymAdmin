@@ -151,6 +151,7 @@ const OnlyInMobile = styled.div`
 `;
 
 const OnlyInTablet = styled.div`
+  color: ${palette('secondary.base')};
   display: none;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: block;
