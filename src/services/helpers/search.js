@@ -2,44 +2,6 @@ import { stringify } from 'query-string';
 
 import { urlize, objectToURLQueryParams, parseURLQueryParams } from './url';
 
-const fnExecutionTracker = {};
-
-/**
- * Decorator function that helps restrict number of function calls  to 1 within a specified timelimit.
- * It always executes the last function call
- * @param fnToEval - the actual function you want to be executed.
- * @param key
- * @param waitTimeInMillis
- * @returns {Function}
- */
-export const delayedExecutor = (fnToEval, key, waitTimeInMillis = 800) => {
-  // Add fnExecutionQ
-  fnExecutionTracker[key] = { lastExecutionTime: undefined, timer: undefined };
-
-  return function (...args) {
-    const timeNow = new Date();
-    if (
-      !fnExecutionTracker[key].lastExecutionTime ||
-      timeNow - fnExecutionTracker[key].lastExecutionTime > waitTimeInMillis
-    ) {
-      fnExecutionTracker[key].lastExecutionTime = new Date();
-      fnExecutionTracker[key].timer = undefined;
-      fnToEval(...args);
-    } else {
-      if (fnExecutionTracker[key].timer) {
-        clearTimeout(fnExecutionTracker[key].timer);
-      }
-      const timeout =
-        waitTimeInMillis -
-        (timeNow - fnExecutionTracker[key].lastExecutionTime);
-      const timer = setTimeout(() => {
-        fnToEval(...args);
-      }, timeout);
-      fnExecutionTracker[key].timer = timer;
-    }
-  };
-};
-
 export const getRadiusFromMapBounds = (bounds) => {
   const center = bounds.getCenter();
   const ne = bounds.getNorthEast();

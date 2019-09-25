@@ -3,7 +3,7 @@ import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { arrayOf, func, oneOf, object } from 'prop-types';
 
-import { query } from 'sly/services/newApi';
+import { normalizeResponse, query } from 'sly/services/newApi';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import clientPropType from 'sly/propTypes/client';
@@ -34,6 +34,7 @@ export default class ReferralSearchContainer extends Component {
     createClient: func,
     refetchClient: func,
   };
+
   static defaultProps = {
     referralMode: 'Community',
   };
@@ -60,12 +61,12 @@ export default class ReferralSearchContainer extends Component {
   getSelectedCommunity = () => {
     const { selectedCommunity } = this.state;
     return selectedCommunity;
-  }
+  };
 
   setSelectedCommunity = (selectedCommunity) => {
     this.setState({ selectedCommunity });
     return selectedCommunity;
-  }
+  };
 
   zipRe = new RegExp(/^\d{5}(-\d{4})?$/);
   doCommunitySearch = ({ nameOrZip }) => {
@@ -79,7 +80,7 @@ export default class ReferralSearchContainer extends Component {
     }
 
     return getCommunities(filters).then((resp) => {
-      const communities = normJsonApi(resp);
+      const communities = normalizeResponse(resp.body);
       return this.setState({
         communities,
       });

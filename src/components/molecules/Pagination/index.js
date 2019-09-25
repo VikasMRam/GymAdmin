@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 const marginLeftNext = css`
   margin-left: calc(${size('spacing.large')} - ${size('spacing.regular')});
 `;
-const StyledLink = styled(Link)`
+const StyledLink = styled(({ borderPalette, ghost, ...props }) => <Link {...props} />)`
   ${buttonStyles};
 `;
 const ChevronLink = styled(({ flip, ...props }) => (
@@ -39,8 +39,7 @@ const ChevronLink = styled(({ flip, ...props }) => (
   ${ifProp('flip', marginLeftNext, 0)};
 `;
 
-const PageLink = styled(Link)`
- ${buttonStyles};
+const PageLink = styled(StyledLink)`
   background-color: ${ifProp('selected', palette('background'))};
   margin-right: ${size('spacing.regular')};
   &:last-of-type {

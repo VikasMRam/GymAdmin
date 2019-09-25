@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { bool, string, oneOf } from 'prop-types';
+import { bool, string, oneOf, object } from 'prop-types';
 import { ifProp, switchProp } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
@@ -154,7 +154,7 @@ export const styles = css`
 `;
 
 const StyledLink = styled(({
-  disabled, transparent, palette, height, theme, ...props
+  disabled, transparent, foregroundPalette, palette, height, theme, ...props
 }) => (
   <Link {...props} />
 ))`
@@ -168,7 +168,7 @@ const StyledButton = styled.button`
   ${styles};
 `;
 
-const Button = ({ type, kind, ...props }) => {
+const Button = ({ type, kind, measureRef, ...props }) => {
   // rename type to kind to avoid collision with html button type
   if (props.to) {
     const { selectable, ...linkProps } = props;
@@ -176,7 +176,7 @@ const Button = ({ type, kind, ...props }) => {
   } else if (props.href) {
     return <Anchor kind={kind} {...props} />;
   }
-  return <StyledButton {...props} kind={kind} type={type} />;
+  return <StyledButton innerRef={measureRef} {...props} kind={kind} type={type} />;
 };
 
 Button.propTypes = {
@@ -193,6 +193,7 @@ Button.propTypes = {
   type: string,
   to: string,
   href: string,
+  measureRef: object,
 };
 
 Button.defaultProps = {

@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import qs from 'query-string';
 import { arrayOf, object } from 'prop-types';
 import dayjs from 'dayjs';
+import debounce from 'lodash/debounce';
 
 import taskPropType from 'sly/propTypes/task';
 import { withUser, prefetch } from 'sly/services/newApi';
-import { delayedExecutor, getSearchParams } from 'sly/services/helpers/search';
+import { getSearchParams } from 'sly/services/helpers/search';
 import { TASK_STATUS_NOT_STARTED_CODE, TASK_STATUS_IN_PROGRESS_CODE } from 'sly/constants/tasks';
 import DashboardAgentTasksPage from 'sly/components/pages/DashboardAgentTasksPage';
 import ModalController from 'sly/controllers/ModalController';
@@ -109,9 +110,9 @@ export default class DashboardAgentTasksPageContainer extends Component {
     this.sendQuery(history, qs.stringify(filters));
   };
 
-  sendQuery = delayedExecutor((history, filtersQs) => {
+  sendQuery = debounce((history, filtersQs) => {
     history.push({ search: `?${filtersQs}` });
-  }, 'agentTasksSearch', 500);
+  }, 200);
 
   render() {
     const {

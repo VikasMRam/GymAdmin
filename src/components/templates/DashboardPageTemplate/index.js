@@ -2,6 +2,7 @@ import React from 'react';
 import { node, string, bool } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
+import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
 import {
@@ -29,24 +30,12 @@ const onMenuItemClick = (menuItem) => {
 };
 
 const menuItems = [
-  {
-    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick,
-  },
-  {
-    label: 'My Profile', icon: 'settings', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_PROFILE_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick,
-  },
-  {
-    label: 'My Families', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_FAMILIES_PATH, role: AGENT_ND_ROLE, onClick: onMenuItemClick,
-  },
-  {
-    label: 'Messages_', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_MESSAGES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick,
-  },
-  {
-    label: 'Messages', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_MESSAGES_PATH, role: AGENT_ND_ROLE, onClick: onMenuItemClick,
-  },
-  {
-    label: 'Calls', icon: 'phone', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick,
-  },
+  { label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick },
+  { label: 'My Profile', icon: 'settings', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_PROFILE_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick },
+  { label: 'My Families', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), role: AGENT_ND_ROLE, onClick: onMenuItemClick },
+  { label: 'Messages_', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_MESSAGES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick },
+  { label: 'Messages', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_MESSAGES_PATH, role: AGENT_ND_ROLE, onClick: onMenuItemClick },
+  { label: 'Calls', icon: 'phone', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
 ];
 
 const Header = styled.div`
@@ -61,7 +50,7 @@ const Header = styled.div`
 const Column = styled.aside`
   background-color: ${palette('white.base')};
   display:none;
-
+  
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
     width: ${size('element.xxHuge')};
@@ -92,6 +81,17 @@ const DashboardPage = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  
+  > :first-child {
+    flex-grow: 0;
+  }
+  
+  > :nth-child(n+2) {
+    flex-grow: 1;
+  }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: grid;

@@ -1,4 +1,4 @@
-import { string, shape, bool, arrayOf } from 'prop-types';
+import { string, object, shape, bool, arrayOf } from 'prop-types';
 
 import { uuidAux } from './user';
 
@@ -19,4 +19,5 @@ export default shape({
   clientInfo,
   uuid: string,
   uuidAux,
+  autocomplete_filters: object,
 });

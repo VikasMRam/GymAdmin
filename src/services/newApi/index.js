@@ -31,3 +31,5 @@ export middleware from './middleware';
 export withApi from './withApi';
 export withUser from './withUser';
 export withAuth from './withAuth';
+
+export { normalizeResponse } from './helpers';

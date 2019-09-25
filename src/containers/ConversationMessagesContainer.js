@@ -173,6 +173,7 @@ export default class ConversationMessagesContainer extends Component {
     }
   }
 
+  // FIXME: query should not use redux
   onMessage = (message) => {
     const {
       conversation, status, getConversations, user,
@@ -197,6 +198,7 @@ export default class ConversationMessagesContainer extends Component {
     return true;
   };
 
+  // FIXME: query should normalize this
   onNewMessagesLoaded = (resp) => {
     const { pageNumber } = this.state;
     // TODO: utilize logic from helper.

@@ -2,14 +2,14 @@
 import React from 'react';
 import { string, number, bool, oneOf } from 'prop-types';
 import styled from 'styled-components';
-import { ifProp, prop } from 'styled-tools';
+import { prop } from 'styled-tools';
 
 import { variation as variationPropType } from 'sly/propTypes/variation';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size, palette, key } from 'sly/components/themes';
 
 const fontSize = props => size('icon', props.size);
-const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
+const getColor = ({ palette: paletteProp, variation }) => paletteProp && variation && palette(paletteProp, variation);
 const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)${flip ? ' scaleX(-1) scaleY(-1)' : ''}`;
 
 const Wrapper = styled.span`
@@ -20,7 +20,6 @@ const Wrapper = styled.span`
   // sizes relative to set font-size
   width: ${fontSize};
   height: ${fontSize};
-  ${ifProp('flip', 'transform: scaleY(-1)')};
   ${getTransform};
   transition: transform ${key('transitions.fast')};
   & > svg {
@@ -66,7 +65,6 @@ Icon.defaultProps = {
   flip: false,
   rotate: 0,
   size: 'regular',
-  palette: 'secondary',
   variation: 'base',
 };
 

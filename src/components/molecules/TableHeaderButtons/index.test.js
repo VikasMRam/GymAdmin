@@ -1,9 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { Datatable } from 'sly/services/datatable';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 
-const wrap = (props = {}) => shallow(<TableHeaderButtons {...props} />);
+const wrap = (props = {}) => shallow(
+  <Datatable>
+    {datatable => (
+      <TableHeaderButtons
+        datatable={datatable}
+        {...props}
+      />
+    )}
+  </Datatable>
+);
 
 describe('TableHeaderButtons', () => {
   it('does renders children when passed in', () => {

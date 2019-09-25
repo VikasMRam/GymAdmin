@@ -27,6 +27,7 @@ export default class ApiProvider extends Component {
       acc[name] = (...args) => makeApiCall(call, args);
       acc[name].actionName = call.actionName;
       acc[name].method = call.method;
+      acc[name].call = call;
       return acc;
     }, {});
 

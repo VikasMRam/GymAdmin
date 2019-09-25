@@ -238,7 +238,7 @@ const CommunitySearchPage = ({
             </IconButton>
           )}
           <IconButton
-            icon="filter"
+            icon="tweak"
             ghost
             transparent
             onClick={handleModalFilterClick}
