@@ -43,9 +43,10 @@ const StyledButton = styled(({ noPadding, padRight, ...props }) => <Button {...p
 
 const StyledIcon = styled(({ padRight, ...props }) => <Icon {...props} />)`
   margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
+  margin-top: -1px;
+  margin-bottom: -1px;
   ${ifProp('hideTextInMobile', css`
     margin-right: 0;
-
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
     }
