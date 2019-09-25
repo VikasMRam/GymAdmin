@@ -44,19 +44,23 @@ storiesOf('Atoms|Select', module)
   ))
   .add('with groups', () => (
     <Wrapper>
-      <Field type="choice" options={groupedOptions}
+      <Field
+        type="choice"
+        options={groupedOptions}
         size="small"
-        isMulti={true}
-        menuIsOpen={true}
+        isMulti
+        menuIsOpen
       />
     </Wrapper>
   ))
   .add('small space', () => (
     <SmallWrapper>
-      <Field type="choice" options={groupedOptions}
-         size="small"
-         isMulti={true}
-         menuIsOpen={true}
+      <Field
+        type="choice"
+        options={groupedOptions}
+        size="small"
+        isMulti
+        menuIsOpen
       />
     </SmallWrapper>
   ));

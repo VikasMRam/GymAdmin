@@ -7,6 +7,3 @@ export default shape({
   operator: string,
   value: oneOfType([singleValue, arrayOf(singleValue)]),
 });
-
-
-

@@ -16,7 +16,9 @@ export default class Autocomplete extends Component {
       .then(r => r.json())
       .then(normalizeResponse)
       .then(getAutocompleteValues(column))
-      .catch(e => console.log(e));
+      // FIXME: no error handling
+      // eslint-disable-next-line no-console
+      .catch(console.error);
   };
 
   render() {

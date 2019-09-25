@@ -1,13 +1,13 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { object, string, func } from 'prop-types';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import Input from 'sly/components/atoms/Input';
 import IconButton from 'sly/components/molecules/IconButton';
 import DatatableFilters from 'sly/components/organisms/DatatableFilters';
 import PopoverPortal from 'sly/components/molecules/PopoverPortal';
-import { ifProp } from 'styled-tools';
 
 const border = css`${size('border.regular')} solid ${palette('slate.stroke')}`;
 const Wrappper = styled.div`

@@ -73,7 +73,6 @@ export default class PopoverPortal extends Component {
   state = {
     isOpen: false,
     buttonX: 0,
-    left: 0,
   };
 
   onClick = () => this.setState({

@@ -1,7 +1,7 @@
 import React from 'react';
 import SyncSelect, { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
-import { string, arrayOf, object, bool, node, oneOfType } from 'prop-types';
+import { func, string, arrayOf, object, bool, node, oneOfType } from 'prop-types';
 import styled from 'styled-components';
 
 import { getKey, size, palette } from 'sly/components/themes';
@@ -109,7 +109,7 @@ const Select = ({
   options,
   async,
   loadOptions,
-  ...props,
+  ...props
 }) => {
   const SelectComponent = async
     ? AsyncSelect
@@ -143,6 +143,7 @@ Select.propTypes = {
   value: oneOfType([string, arrayOf(string)]),
   textSize: string,
   options: arrayOf(object).isRequired,
+  loadOptions: func,
 };
 
 Select.defaultProps = {
