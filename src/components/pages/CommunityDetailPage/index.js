@@ -645,7 +645,7 @@ export default class CommunityDetailPage extends Component {
                         ownerExperience={ownerExperience}
                         city={address.city}
                         state={address.state}
-                        phone={twilioNumber}
+                        twilioNumber={twilioNumber}
                       />
                     </MainSection>
                   </TopCollapsibleSection>

@@ -26,8 +26,9 @@ const CommunityDetails = ({
 }) => {
   let phone = '8558664515';
   if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
-    [phone] = twilioNumber.numbers[0];
+    [phone] = twilioNumber.numbers;
   }
+
   return (
     <CollapsibleBlock collapsedDefault={false}>
       {communityDescription && (
@@ -81,7 +82,7 @@ const CommunityDetails = ({
           <Link href={`tel:${phone}`}>
             <NumberFormat
               value={phone}
-              format="###-###-####"
+              format="(###) ###-####"
               displayType="text"
             />
           </Link>
@@ -116,6 +117,7 @@ CommunityDetails.propTypes = {
   contract: PropTypes.bool,
   city: PropTypes.string,
   state: PropTypes.string,
+  twilioNumber: PropTypes.object,
 
 };
 

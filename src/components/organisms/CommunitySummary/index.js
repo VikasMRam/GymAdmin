@@ -110,7 +110,7 @@ const CommunitySummary = ({
               <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
                 <NumberFormat
                   value={conciergeNumber}
-                  format="###-###-####"
+                  format="(###) ###-####"
                   displayType="text"
                 />
               </Link>
