@@ -63,7 +63,7 @@ describe('datatables helpers', () => {
     });
   });
 
-  it('should ignore empty filters', () => {
+  it('should not ignore empty filters', () => {
     const filterState = {
       filters: [{
       }, {
@@ -76,6 +76,6 @@ describe('datatables helpers', () => {
     };
 
     const qsObject = makeQuerystringFilters(filterState);
-    expect(qsObject).toEqual({ exp: 'or' });
+    expect(qsObject).toEqual({ 'filter[email]': '', 'filter[name]': 'cs', exp: 'or' });
   })
 });
