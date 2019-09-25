@@ -260,9 +260,13 @@ jobs:
             echo -e "$OPENVPN_TLS_AUTH" >> tls_auth.pem
 
       # PEMs should be escaped like explained here https://discuss.circleci.com/t/issues-storing-firebase-keys-as-environment-variable/6197/6
+      # - run:
+          # name: Creating OpenVPN Tunnel
+          # command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
+
       - run:
-          name: Creating OpenVPN Tunnel
-          command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
+          name: Waiting for Local React to be up and running
+          command: npx wait-on http://localhost:8080
 
       - run:
           name: Waiting for Local React to be up and running
