@@ -98,7 +98,7 @@ const CommunityAgentSection = ({
             <PhoneLink href={`tel:${slyPhone}`} onClick={onPhoneClick}>
               <NumberFormat
                 value={slyPhone}
-                format="###-###-####"
+                format="(###) ###-####"
                 displayType="text"
               />
             </PhoneLink>

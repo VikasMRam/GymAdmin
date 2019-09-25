@@ -26,7 +26,7 @@ const InteractiveDetail = ({
         <Link href={`tel:${detail.value}`}>
           <NumberFormat
             value={detail.value}
-            format="###-###-####"
+            format="(###) ###-####"
             displayType="text"
           />
         </Link>
