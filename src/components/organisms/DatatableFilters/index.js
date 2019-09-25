@@ -8,6 +8,7 @@ import mobileOnly from 'sly/components/helpers/mobileOnly';
 import DatatableFilterRow from 'sly/components/organisms/DatatableFilterRow';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
 import IconButton from 'sly/components/molecules/IconButton';
+import { ifProp } from 'styled-tools';
 
 const Wrapper = styled(mobileOnly(Box,
   css`
@@ -45,6 +46,12 @@ const PopoverFooter = mobileOnly('div', css`
   }
 `);
 
+const StyledIconButton = styled(IconButton)`
+  ${ifProp('filtered', css`margin-top: ${size('spacing.regular')}`)};
+  width: 100%;
+  border-color: ${palette('slate.stroke')};
+`;
+
 export default class DatatableFilters extends Component {
   static propTypes = {
     autocompleteFilters: object,
@@ -74,14 +81,17 @@ export default class DatatableFilters extends Component {
           ))}
         </Table>
 
-        <ButtonLink
+        <StyledIconButton
           icon="add"
+          iconPalette="primary"
           palette="primary"
           size="caption"
+          ghost
           onClick={datatable.addFilter}
+          filtered={filters.length > 0}
         >
           Add filter
-        </ButtonLink>
+        </StyledIconButton>
       </Wrapper>
     );
   }

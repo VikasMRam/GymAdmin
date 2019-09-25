@@ -40,6 +40,7 @@ const PopoverWrapper = styled.div`
 const MobileHeader = styled.div`
   display: flex;
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
+  border-bottom: 1px solid ${palette('slate.stroke')};
    
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: none;

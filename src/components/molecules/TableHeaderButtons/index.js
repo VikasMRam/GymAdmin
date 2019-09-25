@@ -60,7 +60,7 @@ const TableHeaderButtons = ({
   onColumnButtonClick, onSortButtonClick, datatable, className, autocompleteFilters,
 }) => {
   const filtered = datatable.numberOfFilters > 0;
-  const filterTitle = `Filters ${filtered && ` (${datatable.numberOfFilters})`}`;
+  const filterTitle = `Filters ${filtered ? ` (${datatable.numberOfFilters})` : ''}`;
   const filterButton = (
     <FilterButton
       icon="filter"
