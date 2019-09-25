@@ -29,9 +29,7 @@ const Table = styled.div`
   }
 `;
 
-const StyledButtonLink = mobileOnly(ButtonLink, css`display:none`);
-
-const PopoverFooter = styled.div`
+const PopoverFooter = mobileOnly('div', css`
   position: fixed;
   bottom: 0;
   left: 0;
@@ -45,7 +43,7 @@ const PopoverFooter = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: none;
   }
-`;
+`);
 
 export default class DatatableFilters extends Component {
   static propTypes = {
@@ -76,18 +74,14 @@ export default class DatatableFilters extends Component {
           ))}
         </Table>
 
-        <StyledButtonLink
+        <ButtonLink
           icon="add"
           palette="primary"
           size="caption"
           onClick={datatable.addFilter}
         >
           Add filter
-        </StyledButtonLink>
-
-        <PopoverFooter>
-          <IconButton icon="add" onClick={datatable.addFilter}>Add filter</IconButton>
-        </PopoverFooter>
+        </ButtonLink>
       </Wrapper>
     );
   }

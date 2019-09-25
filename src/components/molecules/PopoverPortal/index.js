@@ -8,6 +8,9 @@ import { Block } from 'sly/components/atoms';
 import { size, palette } from 'sly/components/themes';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
 import withBreakpoint from 'sly/components/helpers/breakpoint';
+import theme from 'sly/components/themes/default';
+
+const gutter = parseFloat(theme.sizes.layout.gutter) * 16;
 
 const Wrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -27,9 +30,7 @@ const PopoverWrapper = styled.div`
   
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     top: calc(100% + 5px);
-    ${ifProp('left', css`
-      left: calc(${p => p.left}px - ${size('spacing.xLarge')});
-    `)}
+    ${ifProp('left', css`left: ${p => p.left}px;`)}
     margin-right: auto;
     width: unset;
     height: unset;
@@ -69,7 +70,7 @@ export default class PopoverPortal extends Component {
   };
 
   state = {
-    isOpen: false,
+    isOpen: true,
     buttonX: 0,
     left: 0,
   };
@@ -92,7 +93,7 @@ export default class PopoverPortal extends Component {
     const { button, children, title, breakpoint } = this.props;
     const { isOpen, width, buttonX } = this.state;
 
-    const total = buttonX + width;
+    const total = buttonX + width + gutter;
     const left = breakpoint && total > breakpoint.width()
       ? breakpoint.width() - total
       : 0;

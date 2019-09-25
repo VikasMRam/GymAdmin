@@ -62,7 +62,7 @@ const Header = styled.div`
 const Column = styled.aside`
   background-color: ${palette('white.base')};
   display:none;
-
+  
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
     width: ${size('element.xxHuge')};
@@ -93,6 +93,17 @@ const DashboardPage = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  
+  > :first-child {
+    flex-grow: 0;
+  }
+  
+  > :nth-child(n+2) {
+    flex-grow: 1;
+  }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: grid;

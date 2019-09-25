@@ -59,7 +59,8 @@ const isFilterable = datatable => datatable && datatable.columns.some(column => 
 const TableHeaderButtons = ({
   onColumnButtonClick, onSortButtonClick, datatable, className, autocompleteFilters,
 }) => {
-  const nFilters = datatable.numberOfFilters;
+  const filtered = datatable.numberOfFilters > 0;
+  const filterTitle = `Filters ${filtered && ` (${datatable.numberOfFilters})`}`;
   const filterButton = (
     <FilterButton
       icon="filter"
@@ -68,9 +69,9 @@ const TableHeaderButtons = ({
       palette="slate"
       iconPalette="slate"
       hideTextInMobile
-      filtered={nFilters > 0}
+      filtered={filtered}
     >
-      Filters {nFilters && ` (${nFilters})`}
+      {filterTitle}
     </FilterButton>
   );
 
@@ -86,7 +87,7 @@ const TableHeaderButtons = ({
       />
       {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
       {isFilterable(datatable) && (
-        <PopoverPortal title="Filters" button={filterButton}>
+        <PopoverPortal title={filterTitle} button={filterButton}>
           <DatatableFilters datatable={datatable} autocompleteFilters={autocompleteFilters} />
         </PopoverPortal>
       )}
