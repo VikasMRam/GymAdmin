@@ -110,7 +110,7 @@ export default class Input extends Component {
   static defaultProps = {
     palette: 'stroke',
     type: 'text',
-    size: 'regular',
+    size: 'button',
   };
 
   ref = React.createRef();
