@@ -194,7 +194,7 @@ export default class ReferralSearchContainer extends Component {
       const { entityType } = provider;
       if (entityType === 'PartnerAgent') {
         agentReferralClients.push(childrenClient);
-      } if (entityType === 'Property') {
+      } else if (entityType === 'Property') {
         communityReferralClients.push(childrenClient);
       }
     });
