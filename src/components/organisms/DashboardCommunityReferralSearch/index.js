@@ -33,7 +33,7 @@ const DashboardCommunityReferralSearch = ({
 }) => (
   <Wrapper>
     <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
-    <DashboardCommunityAgentSearchBox handleSubmit={handleCommunitySearch} />
+    <DashboardCommunityAgentSearchBox label="Find a community" handleSubmit={handleCommunitySearch} />
     {communities && communities.length > 0 && (
       <Fragment>
         <Hr size="large" />
