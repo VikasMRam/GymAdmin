@@ -120,3 +120,5 @@ export const calculatePricing = (community, estimatedPrice) => {
   };
 };
 
+export const priceParser = str => str.replace(/[^\d]/g, '');
+export const priceFormatter = value => value ? value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') : value;
