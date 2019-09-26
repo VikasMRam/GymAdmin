@@ -85,7 +85,7 @@ const BigScreenSlyScorebadge = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: block;
     height: fit-content;
-    padding: 4px 12px;
+    padding: ${size('spacing.small')} calc(${size('spacing', 'regular')} + ${size('spacing', 'small')}) ;
     background-color: ${palette('grey', 'stroke')};
     border: ${size('border.regular')} solid ${palette('grey', 'filler')};
     border-radius: ${size('border.xxLarge')};
