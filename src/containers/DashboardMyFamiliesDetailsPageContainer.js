@@ -248,7 +248,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     } = this.props;
 
     const currentTab = match.params.tab || SUMMARY;
-    if (breakpoint && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
+    if (breakpoint && client && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
       const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, {
         id: client.id,
         tab: ACTIVITY,
