@@ -14,7 +14,7 @@ const fontSize = ({ size: sizeProp }) => size('text', sizeProp);
 const Box = styled.div`
   border: ${size('border.regular')} solid ${palette('stroke')};
   border-radius: ${ifProp('noBorderRadius', 0, size('spacing.small'))};
-  padding: ${padding};
+  padding: ${ifProp('noPadding', 0, padding)};
   font-size: ${fontSize};
 
   ${switchProp('snap', {
@@ -36,6 +36,7 @@ Box.propTypes = {
   padding: spacingPropType,
   snap: oneOf(['none', 'top', 'bottom']),
   noBorderRadius: bool,
+  noPadding: bool,
   size: textPropType,
 };
 

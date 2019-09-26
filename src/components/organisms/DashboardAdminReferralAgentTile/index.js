@@ -4,15 +4,12 @@ import { string, bool, func } from 'prop-types';
 import dayjs from 'dayjs';
 
 import { size, palette } from 'sly/components/themes';
-import { Heading, Badge, Icon, Block, Span } from 'sly/components/atoms';
+import { Heading, Badge, Block, Span, Box } from 'sly/components/atoms';
 import cursor from 'sly/components/helpers/cursor';
+import IconBadge from 'sly/components/molecules/IconBadge';
 import Stage from 'sly/components/molecules/Stage';
 import { adminAgentPropType } from 'sly/propTypes/agent';
-
-const Wrapper = styled.div`
-  border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
-  border-radius: ${size('border.xxLarge')};
-`;
+import pad from 'sly/components/helpers/pad';
 
 const TopWrapper = styled.div`
   padding: ${size('spacing.large')};
@@ -46,30 +43,12 @@ const BigScreenSection = styled.div`
   }
 `;
 
-const MobileAgentNameHeading = styled(Heading)`
+const MobileSlyscoreSection = pad(styled.div`
+  display: flex;
+`, 'regular');
 
-`;
-
-const MobileSlyscoreSection = styled.div`
-  margin-bottom: ${size('spacing.regular')};
-`;
-
-const StyledBadge = styled(Badge)`
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.small')};
-  padding-top: ${size('spacing.small')};
-  white-space: nowrap;
-`;
-
-const SlyScoreBadge = styled(StyledBadge)`
+const SlyScoreBadge = styled(Badge)`
   margin-right: ${size('spacing.regular')};
-`;
-const StyledIcon = styled(Icon)`
-  margin-right: ${size('spacing.small')};
-`;
-
-const IconBadgeSpan = styled(Span)`
-  white-space: nowrap;
 `;
 
 const DetailsTable = styled.div`
@@ -121,7 +100,7 @@ function transformAgent(agent) {
     if (displayName) {
       name = displayName;
     }
-    if (last5DayLeadCount) {
+    if (last5DayLeadCount !== undefined && last5DayLeadCount !== null) {
       leadCount = last5DayLeadCount;
     }
   }
@@ -152,23 +131,24 @@ const DashboardAdminReferralAgentTile = ({
   const {
     name, slyScore, businessName, workPhone, cellPhone, leadCount,
   } = transformAgent(agent);
+  const slyScoreText = `${slyScore} SLYSCORE`;
   return (
-    <Wrapper className={className} onClick={onClick}>
+    <Box className={className} onClick={onClick} noPadding>
       <TopWrapper>
         <BigScreenSlyScorebadge><Block weight="bold">{slyScore}</Block><Block weight="bold" palette="grey" size="tiny">SLY</Block></BigScreenSlyScorebadge>
         <SmallScreenSection>
-          <MobileAgentNameHeading size="body">{name}</MobileAgentNameHeading>
+          <Heading size="body">{name}</Heading>
           <MobileSlyscoreSection>
-            <SlyScoreBadge palette="grey" variation="stroke"><IconBadgeSpan size="tiny">{slyScore} SLYSCORE</IconBadgeSpan></SlyScoreBadge>
-            {isRecommended && <StyledBadge palette="green"><StyledIcon icon="checkmark-circle" palette="white" size="small" /><IconBadgeSpan palette="white" size="tiny">RECOMMENDED</IconBadgeSpan></StyledBadge>}
+            <SlyScoreBadge palette="grey" variation="stroke" borderRadius="small" >{slyScoreText}</SlyScoreBadge>
+            {isRecommended && <IconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="RECOMMENDED" />}
           </MobileSlyscoreSection>
         </SmallScreenSection>
         <DetailsTable>
           <BigScreenSection>
-            <MobileAgentNameHeading size="body">{name}</MobileAgentNameHeading>
+            <Heading size="body">{name}</Heading>
           </BigScreenSection>
           <BigScreenSection>
-            {isRecommended && <StyledBadge palette="green"><StyledIcon icon="checkmark-circle" palette="white" size="small" /><IconBadgeSpan palette="white" size="tiny">RECOMMENDED</IconBadgeSpan></StyledBadge>}
+            {isRecommended && <IconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="RECOMMENDED" />}
           </BigScreenSection>
           {businessName && (
             <Fragment>
@@ -207,7 +187,7 @@ const DashboardAdminReferralAgentTile = ({
           <Stage stage={stage} />
         </BottomWrapper>
       )}
-    </Wrapper>
+    </Box>
   );
 };
 
@@ -220,10 +200,6 @@ DashboardAdminReferralAgentTile.propTypes = {
   bottomActionOnClick: func,
   stage: string,
   referralSentAt: string,
-};
-
-DashboardAdminReferralAgentTile.defaultProps = {
-  isRecommended: false,
 };
 
 export default DashboardAdminReferralAgentTile;

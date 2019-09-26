@@ -70,12 +70,12 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients }) =>
     <Fragment>
       <TopWrapper>
         <Block size="subtitle">Agents</Block>
-        <SendNewReferralButton onClick={() => onSendNewReferralClick()}>Send a new referral</SendNewReferralButton>
+        <SendNewReferralButton onClick={onSendNewReferralClick}>Send a new referral</SendNewReferralButton>
       </TopWrapper>
       {childrenComponents.length === 0 && (
         <EmptyResultWrapper>
           <EmptyResultTextBlock palette="grey" variation="dark">You haven’t sent any referrals to any agents yet. </EmptyResultTextBlock>
-          <SmallMobileSendNewReferralButton onClick={() => onSendNewReferralClick()}>Send a new referral</SmallMobileSendNewReferralButton>
+          <SmallMobileSendNewReferralButton onClick={onSendNewReferralClick}>Send a new referral</SmallMobileSendNewReferralButton>
         </EmptyResultWrapper>
       )}
       {childrenComponents.length > 0 && <ChildrenClientsWrapper>{childrenComponents}</ChildrenClientsWrapper>}
