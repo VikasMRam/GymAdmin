@@ -131,7 +131,6 @@ export default class ReferralSearchContainer extends Component {
 
     return getAgents(filters).then((resp) => {
       const agents = normJsonApi(resp);
-      console.log('Seeing these agents ', agents);
       this.setState({
         agents,
       });
@@ -297,7 +296,7 @@ export default class ReferralSearchContainer extends Component {
                 onSubmit={onSubmit}
                 onChangeAgent={previous}
                 name="DashboardAgentReferralContactDetailsContainer"
-                agent={this.getSelectedAgent() ? this.getSelectedAgent() : null}
+                agent={this.getSelectedAgent()}
               />
             </WizardSteps>
           );
