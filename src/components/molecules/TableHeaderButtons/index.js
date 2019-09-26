@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import { object, string, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
@@ -56,9 +56,8 @@ const ColumnsButton = styled(IconButton)`
 
 const isFilterable = datatable => datatable && datatable.columns.some(column => column.isFilterable);
 
-const TableHeaderButtons = ({
-  onColumnButtonClick, onSortButtonClick, datatable, className, autocompleteFilters,
-}) => {
+// eslint-disable-next-line react/prop-types
+const Filters = ({ datatable, autocompleteFilters }) => {
   const filtered = datatable.numberOfFilters > 0;
   const filterTitle = `Filters ${filtered ? ` (${datatable.numberOfFilters})` : ''}`;
   const filterButton = (
@@ -76,21 +75,37 @@ const TableHeaderButtons = ({
   );
 
   return (
-    <Wrappper className={className}>
-      {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
-      <SearchTextInput
-        type="search"
-        size="button"
-        placeholder="Type to filter by name"
-        value={(datatable.getFilter('name', 'cs') || {}).value || ''}
-        onChange={({ target }) => datatable.doSearch('name', 'cs', target.value)}
-      />
-      {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
+    <Fragment>
       {isFilterable(datatable) && (
         <PopoverPortal title={filterTitle} button={filterButton}>
           <DatatableFilters datatable={datatable} autocompleteFilters={autocompleteFilters} />
         </PopoverPortal>
       )}
+    </Fragment>
+  );
+};
+
+const TableHeaderButtons = ({
+  onColumnButtonClick, onSearchTextKeyUp, onSortButtonClick, datatable, className, autocompleteFilters,
+}) => {
+
+  return (
+    <Wrappper className={className}>
+      {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
+      {datatable
+        ? (
+          <SearchTextInput
+            type="search"
+            size="button"
+            placeholder="Type to filter by name"
+            value={(datatable.getFilter('name', 'cs') || {}).value || ''}
+            onChange={({ target }) => datatable.doSearch('name', 'cs', target.value)}
+          />
+        )
+        : <SearchTextInput type="search" placeholder="Type to filter by name" onKeyUp={onSearchTextKeyUp} />
+      }
+      {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
+      {datatable && <Filters datatable={datatable} autocompleteFilters={autocompleteFilters} />}
       {onColumnButtonClick && <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>}
     </Wrappper>
   );
