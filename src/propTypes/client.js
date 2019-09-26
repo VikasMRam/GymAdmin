@@ -1,4 +1,4 @@
-import { string, shape, bool, arrayOf } from 'prop-types';
+import { string, object, shape, bool, arrayOf } from 'prop-types';
 
 import { uuidAux } from './user';
 
@@ -6,7 +6,7 @@ const clientInfo = shape({
   name: string.isRequired,
   email: string.isRequired,
   referralSource: string.isRequired,
-  slyMessage: string.isRequired,
+  slyMessage: string,
 });
 
 export const meta = shape({
@@ -19,4 +19,5 @@ export default shape({
   clientInfo,
   uuid: string,
   uuidAux,
+  autocomplete_filters: object,
 });

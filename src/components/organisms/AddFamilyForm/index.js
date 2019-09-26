@@ -118,7 +118,7 @@ export default class AddFamilyForm extends Component {
         <Field
           type="textarea"
           rows={3}
-          name="slyMessage"
+          name="notes"
           label="Notes"
           component={ReduxField}
         />
@@ -130,7 +130,7 @@ export default class AddFamilyForm extends Component {
             type="select"
             component={ReduxField}
           >
-            <option disabled>Select an option</option>
+            <option value="" disabled>Select an option</option>
             {timeToMoveOptions}
           </Field>
           <Field
@@ -139,7 +139,7 @@ export default class AddFamilyForm extends Component {
             type="select"
             component={ReduxField}
           >
-            <option disabled>Select an option</option>
+            <option value="" disabled>Select an option</option>
             {lookingForOptions}
           </Field>
         </CollapsibleBlock>

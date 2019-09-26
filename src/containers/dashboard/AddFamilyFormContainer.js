@@ -31,15 +31,12 @@ const DuplicateFamiliesReduxForm = reduxForm({
 
 @query('createClient', 'createClient')
 
-@query('createUuidAux', 'createUuidAux')
-
 @query('getClients', 'getClients')
 
 export default class AddFamilyFormContainer extends Component {
   static propTypes = {
     status: object,
     createClient: func,
-    createUuidAux: func,
     getClients: func,
     notifyInfo: func,
     onSuccess: func,
@@ -53,7 +50,7 @@ export default class AddFamilyFormContainer extends Component {
     duplicates: [],
   };
 
-  handleStepChange = ({ data, previous, doSubmit }) => {
+  handleStepChange = ({ data, doSubmit }) => {
     const { getClients } = this.props;
     const { email, phone } = data;
 
@@ -69,7 +66,6 @@ export default class AddFamilyFormContainer extends Component {
             duplicates: matchingClients,
           });
         } else {
-          previous();
           doSubmit();
         }
       });
@@ -77,40 +73,54 @@ export default class AddFamilyFormContainer extends Component {
 
   handleAddFamily = (data) => {
     const {
-      createClient, createUuidAux, onCancel, notifyInfo,
+      createClient, onCancel, notifyInfo,
     } = this.props;
-    console.log(data);
-    /* todo: uncomment after clarifying payload
-    const { residentName } = data;
-    const payload = {
-      type: UUIDAUX_RESOURCE_TYPE,
-      attributes: {
-        residentInfo: {
-          fullName: residentName,
-        },
-      },
-    };
-
+    const {
+      name, phone, email, source, notes, residentName, preferredLocation, timeToMove, lookingFor,
+    } = data;
     const payload = {
       type: CLIENT_RESOURCE_TYPE,
       attributes: {
-        ...postData,
+        clientInfo: {
+          name,
+          phone,
+          email,
+          referralSource: source,
+          slyMessage: notes,
+        },
       },
       relationships: {
         uuidAux: {
           data: {
+            id: null,
             type: UUIDAUX_RESOURCE_TYPE,
-            id: uuidAuxID,
+            attributes: {
+              uuidInfo: {
+                residentInfo: {
+                  fullName: residentName,
+                },
+                housingInfo: {},
+              },
+            },
           },
         },
       },
-    }; */
+    };
+    if (preferredLocation) {
+      const [city, state] = preferredLocation.split(',');
+      payload.relationships.uuidAux.data.attributes.uuidInfo.locationInfo = {
+        city,
+        state,
+      };
+    }
+    if (timeToMove) {
+      payload.relationships.uuidAux.data.attributes.uuidInfo.housingInfo.moveTimeline = timeToMove;
+    }
+    if (lookingFor) {
+      payload.relationships.uuidAux.data.attributes.uuidInfo.housingInfo.lookingFor = lookingFor;
+    }
 
-    const createUUidAuxPromise = () => Promise.resolve();
-    const createClientPromise = () => Promise.resolve();
-
-    return createUUidAuxPromise()
-      .then(createClientPromise)
+    return createClient(payload)
       .then(() => {
         onCancel();
         notifyInfo('Family added successfully');

@@ -95,10 +95,12 @@ class WizardController extends Component {
 
   doSubmit = (params = {}) => {
     const { onComplete, data } = this.props;
-    const { reset } = this;
+    const { reset, next, previous } = this;
     params = {
       ...params,
       reset,
+      next,
+      previous,
     };
     return onComplete(data, params);
   };
@@ -133,7 +135,10 @@ class WizardController extends Component {
       };
       const returnVal = onStepChange(args);
       return Promise.resolve(returnVal)
-        .then(this.next);
+        .then(this.next)
+        .catch((e) => {
+          throw new SubmissionError({ _error: e.message });
+        });
     }
     this.next();
 

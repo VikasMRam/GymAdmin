@@ -160,7 +160,7 @@ const AgentSummary = ({
                 <Span size="subtitle" weight="medium" palette="primary">
                   <NumberFormat
                     value={slyPhone}
-                    format="###-###-####"
+                    format="(###) ###-####"
                     displayType="text"
                   />
                 </Span>

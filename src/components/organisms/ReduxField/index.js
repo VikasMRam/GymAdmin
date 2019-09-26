@@ -17,11 +17,11 @@ const ReduxField = ({
     const oldBlur = fieldProps.onBlur;
     fieldProps.onBlur = () => oldBlur(null, true);
   }
-  // if (fieldProps.type === 'select') {
-  //   const oldChange = fieldProps.onChange;
-  //   fieldProps.onChange = (value, ...props) => oldChange(value.value, ...props);
-  //   fieldProps.onBlur = _ => _;
-  // }
+  if (fieldProps.type === 'choice') {
+    const oldChange = fieldProps.onChange;
+    fieldProps.onChange = (value, ...props) => oldChange(value.value, ...props);
+    fieldProps.onBlur = _ => _;
+  }
 
   return <Field {...fieldProps} />;
 };

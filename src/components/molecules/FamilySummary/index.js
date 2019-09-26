@@ -70,7 +70,7 @@ const FamilySummary = ({
           <StyledLink href={`tel:+1${client.clientInfo.phoneNumber}`} onClick={clickEventHandler('fdetails-summary', 'phone')} target="_blank">
             <NumberFormat
               value={client.clientInfo.phoneNumber}
-              format="###-###-####"
+              format="(###) ###-####"
               displayType="text"
             />
           </StyledLink>

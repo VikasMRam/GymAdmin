@@ -9,7 +9,7 @@ import {
   AGENT_DASHBOARD_MESSAGES_PATH,
   FAMILY_DASHBOARD_MESSAGES_PATH,
   DASHBOARD_PATH,
-  AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, ACTIVITY,
+  AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY,
 } from 'sly/constants/dashboardAppPaths';
 import { CUSTOMER_ROLE, AGENT_ND_ROLE } from 'sly/constants/roles';
 import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
@@ -40,7 +40,7 @@ const StyledConversationMessagesContainer = styled(ConversationMessagesContainer
 `;
 
 const DashboardMessageDetailsPage = ({
-  user, conversation, isLoading, refetchConversation, breakpoint,
+  user, conversation, isLoading, refetchConversation,
 }) => {
   let headingBoxSection = '';
   let conversationParticipants = [];
@@ -68,7 +68,6 @@ const DashboardMessageDetailsPage = ({
     const name = otherParticipant && otherParticipant.participantInfo ? otherParticipant.participantInfo.name : '';
     const otherParticipantIsClient = otherParticipant.participantType === CONVERSATION_PARTICIPANT_TYPE_CLIENT;
     sendMessageFormPlaceholder = otherParticipant && otherParticipant.participantInfo && `Message ${otherParticipant.participantInfo.name.split(' ').shift()}...`;
-    const tab = breakpoint.atLeastLaptop() ? ACTIVITY : undefined;
 
     const heading = (
       <HeaderWrapper>
@@ -80,7 +79,7 @@ const DashboardMessageDetailsPage = ({
         </Role>
         <FullWidthTextCenterBlock size="subtitle" palette={otherParticipantIsClient && 'primary'}>
           {otherParticipantIsClient
-            ? <Link size="subtitle" to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: otherParticipant.participantID, tab })}>{name}</Link>
+            ? <Link size="subtitle" to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: otherParticipant.participantID, tab: SUMMARY })}>{name}</Link>
             : name
           }
         </FullWidthTextCenterBlock>
@@ -118,7 +117,6 @@ const DashboardMessageDetailsPage = ({
 };
 
 DashboardMessageDetailsPage.propTypes = {
-  breakpoint: object,
   conversation: conversationPropType,
   user: userPropType,
   isLoading: bool,

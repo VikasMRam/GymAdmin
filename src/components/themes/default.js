@@ -1,5 +1,5 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { isDev } from 'sly/config';
+import { isDev, isBrowser } from 'sly/config';
 
 import { makeColor, makeColorTable } from './color';
 
@@ -27,7 +27,7 @@ theme.palette = {
   pink     : makeColor('#9A268E', ['dark', 'base', 'filler', 'stroke', 'background']),
 };
 
-// if (isDev) console.table(makeColorTable(theme.palette));
+if (isDev && isBrowser) console.table(makeColorTable(theme.palette));
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',
@@ -146,8 +146,9 @@ theme.sizes = {
   },
 
   element: {
-    small   : '2.000rem',   // 34px
+    small   : '2.250rem',   // 36px
     regular : '2.500rem',   // 40px
+    button  : '2.750rem',   // 44px
     large   : '3.000rem',   // 48px
     xLarge  : '3.250rem',   // 52px
     xxLarge : '4.500rem',   // 72px

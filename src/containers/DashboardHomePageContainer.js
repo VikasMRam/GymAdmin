@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { generatePath } from 'react-router';
 import { Redirect } from 'react-router-dom';
 
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
@@ -15,7 +16,7 @@ const DashboardHomePageContainer = () => (
       <RefreshRedirect to="/mydashboard" />
     </Role>
     <Role is={AGENT_ND_ROLE}>
-      <Redirect to={AGENT_DASHBOARD_FAMILIES_PATH} />
+      <Redirect to={generatePath(AGENT_DASHBOARD_FAMILIES_PATH)} />
     </Role>
   </Fragment>
 );

@@ -1,10 +1,13 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { string, func } from 'prop-types';
+import { object, string, func } from 'prop-types';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import Input from 'sly/components/atoms/Input';
 import IconButton from 'sly/components/molecules/IconButton';
+import DatatableFilters from 'sly/components/organisms/DatatableFilters';
+import PopoverPortal from 'sly/components/molecules/PopoverPortal';
 
 const border = css`${size('border.regular')} solid ${palette('slate.stroke')}`;
 const Wrappper = styled.div`
@@ -21,26 +24,12 @@ const Wrappper = styled.div`
   }
 `;
 
-// const SearchButton = styled(IconButton)`
-//   @media screen and (min-width: ${size('breakpoint.mobile')}) {
-//     display: none;
-//   }
-// `;
-
 const SearchTextInput = styled(Input)`
-
-  @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    margin-right: ${size('spacing.large')};
-  }
+  margin-right: ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('tabletLayout.col4')};
   }
-`;
-
-const RightSideButtons = styled.div`
-  margin-left: auto;
-  display: flex;
 `;
 
 const SortButton = styled(IconButton)`
@@ -48,6 +37,10 @@ const SortButton = styled(IconButton)`
 `;
 
 const FilterButton = styled(IconButton)`
+  ${ifProp('filtered', css`
+    border-color: ${palette('primary.filler')};
+    background: ${palette('primary.background')};
+  `)}
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-right: ${size('spacing.regular')};
   }
@@ -61,28 +54,54 @@ const ColumnsButton = styled(IconButton)`
   }
 `;
 
+const isFilterable = datatable => datatable && datatable.columns.some(column => column.isFilterable);
+
 const TableHeaderButtons = ({
-  onColumnButtonClick, onSortButtonClick, onFilterButtonClick, onSearchTextKeyUp, className,
-}) => (
-  <Wrappper className={className}>
-    {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
-    <SearchTextInput type="search" placeholder="Type to filter by name" onKeyUp={onSearchTextKeyUp} />
-    <RightSideButtons>
+  onColumnButtonClick, onSortButtonClick, datatable, className, autocompleteFilters,
+}) => {
+  const filtered = datatable.numberOfFilters > 0;
+  const filterTitle = `Filters ${filtered ? ` (${datatable.numberOfFilters})` : ''}`;
+  const filterButton = (
+    <FilterButton
+      icon="filter"
+      ghost
+      borderPalette="slate"
+      palette="slate"
+      iconPalette="slate"
+      hideTextInMobile
+      filtered={filtered}
+    >
+      {filterTitle}
+    </FilterButton>
+  );
+
+  return (
+    <Wrappper className={className}>
+      {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
+      <SearchTextInput
+        type="search"
+        size="button"
+        placeholder="Type to filter by name"
+        value={(datatable.getFilter('name', 'cs') || {}).value || ''}
+        onChange={({ target }) => datatable.doSearch('name', 'cs', target.value)}
+      />
       {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
-      {onFilterButtonClick && <FilterButton onClick={onFilterButtonClick} icon="filter" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Filter</FilterButton>}
-      {onColumnButtonClick &&
-        <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>
-      }
-    </RightSideButtons>
-  </Wrappper>
-);
+      {isFilterable(datatable) && (
+        <PopoverPortal title={filterTitle} button={filterButton}>
+          <DatatableFilters datatable={datatable} autocompleteFilters={autocompleteFilters} />
+        </PopoverPortal>
+      )}
+      {onColumnButtonClick && <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>}
+    </Wrappper>
+  );
+};
 
 TableHeaderButtons.propTypes = {
+  autocompleteFilters: object,
+  datatable: object,
   onColumnButtonClick: func,
   className: string,
   onSortButtonClick: func,
-  onFilterButtonClick: func,
-  onSearchTextKeyUp: func,
 };
 
 export default TableHeaderButtons;
