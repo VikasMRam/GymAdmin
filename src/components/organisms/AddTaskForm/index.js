@@ -17,7 +17,7 @@ const StyledTable = styled.table`
 `;
 
 const AddTaskForm = ({
-  handleSubmit, onCancel, assignedTos, statuses, priorities, heading, initialValues, ...props
+  handleSubmit, onCancel, assignedTos, statuses, priorities, heading, initialValues, deleteTask, completeTask, ...props
 }) => {
   /* const assignedTosOptions = assignedTos.map(at => ({ value: at.id, label: at.name }));
   const statusesOptions = statuses.map(s => ({ value: s, label: s }));
@@ -48,8 +48,11 @@ const AddTaskForm = ({
       submitButtonText={isEditMode ? 'Update' : 'Add Task'}
       cancelButtonText={isEditMode && 'Back'}
       extraActionButtonsAfterSubmit={isEditMode && [{
-        text: 'Complete',
+        text: 'Complete', onClick: completeTask,
       }]}
+      topRightIcon="trash"
+      topRightIconOnClick={deleteTask}
+      topRightIconPalette="danger"
     >
       <Field
         name="title"
@@ -138,6 +141,8 @@ AddTaskForm.propTypes = {
   assignedTos: arrayOf(userPropType).isRequired,
   heading: string.isRequired,
   initialValues: object,
+  deleteTask: func,
+  completeTask: func,
 };
 
 AddTaskForm.defaultProps = {

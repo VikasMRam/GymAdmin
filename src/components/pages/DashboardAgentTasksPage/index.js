@@ -121,8 +121,8 @@ const getBasePath = (tab) => {
 };
 
 const DashboardAgentTasksPage = ({
-  tasks, pagination, activeTab, onSearchTextKeyUp, isPageLoading,
-  showModal, hideModal, meta, notifyInfo, notifyError,
+  tasks, tasksRaw, pagination, activeTab, onSearchTextKeyUp, isPageLoading,
+  showModal, hideModal, meta, notifyInfo, notifyError, refetchTasks,
 }) => {
   const dueTodayLabel = tabIDLabelMap[tabIDs[0]];
   const overdueLabel = tabIDLabelMap[tabIDs[1]];
@@ -173,6 +173,8 @@ const DashboardAgentTasksPage = ({
             notifyError={notifyError}
             onSuccess={hideModal}
             task={task}
+            tasksRaw={tasksRaw}
+            refetchTasks={refetchTasks}
           />
         ), null, 'noPadding', false
       );
@@ -261,6 +263,7 @@ const DashboardAgentTasksPage = ({
 
 DashboardAgentTasksPage.propTypes = {
   tasks: arrayOf(taskPropType),
+  tasksRaw: arrayOf(object),
   pagination: object,
   paginationString: string,
   activeTab: string,
@@ -273,6 +276,7 @@ DashboardAgentTasksPage.propTypes = {
   meta: object,
   notifyInfo: func,
   notifyError: func,
+  refetchTasks: func,
 };
 
 export default DashboardAgentTasksPage;
