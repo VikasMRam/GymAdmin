@@ -21,6 +21,7 @@ const validate = createValidator({
   moveInDate: [required],
   communityName: [required],
   monthlyFees: [required, float],
+  referralAgreementType: [required],
   referralAgreement: [required],
   lossReason: [required],
   lostDescription: [required],
@@ -176,6 +177,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     if (roomType) {
       newClient.set('attributes.clientInfo.moveRoomType', roomType);
     }
+    newClient.set('attributes.clientInfo.referralAgreementType', referralAgreementType);
     if (referralAgreementType === 'percentage') {
       const moveInFee = referralAgreement * monthlyFees;
       newClient.set('attributes.clientInfo.moveInFee', parseFloat(moveInFee));
@@ -243,7 +245,19 @@ export default class UpdateFamilyStageFormContainer extends Component {
     } = this.props;
     const { clientInfo, stage, status } = client;
     const isPaused = status === FAMILY_STATUS_ON_PAUSE;
-    const { name } = clientInfo;
+    const {
+      name,
+      moveInDate: existingMoveInDate,
+      communityName: existingCommunityName,
+      moveRoomType: existingMoveRoomType,
+      referralAgreement: existingReferralAgreement,
+      referralAgreementType: existingReferralAgreementType,
+      monthlyFees: existingMonthlyFees,
+      invoiceAmount: existingInvoiceAmount,
+      invoiceNumber: existingInvoiceNumber,
+      invoicePaid: existingInvoicePaid,
+      lossReason: existingLossReason,
+    } = clientInfo;
     let nextStageGroup;
     let levelGroup;
     let showRejectOption;
@@ -263,6 +277,16 @@ export default class UpdateFamilyStageFormContainer extends Component {
     }
     const initialValues = {
       stage,
+      moveInDate: existingMoveInDate ? new Date(existingMoveInDate) : null,
+      communityName: existingCommunityName,
+      roomType: existingMoveRoomType,
+      referralAgreement: existingReferralAgreement ? existingReferralAgreement.toString() : null,
+      referralAgreementType: existingReferralAgreementType,
+      monthlyFees: existingMonthlyFees ? existingMonthlyFees.toString() : null,
+      invoiceAmount: existingInvoiceAmount ? existingInvoiceAmount.toString() : null,
+      invoiceNumber: existingInvoiceNumber,
+      invoicePaid: existingInvoicePaid,
+      lossReason: existingLossReason,
     };
 
     return (
