@@ -3,7 +3,13 @@ import { func, object, string } from 'prop-types';
 import { generatePath } from 'react-router';
 
 import { CUSTOMER_ROLE, PROVIDER_OD_ROLE, AGENT_ND_ROLE } from 'sly/constants/roles';
-import { AGENT_DASHBOARD_FAMILIES_PATH, FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH } from 'sly/constants/dashboardAppPaths';
+import {
+  AGENT_DASHBOARD_FAMILIES_PATH,
+  FAMILY_DASHBOARD_FAVORITES_PATH,
+  FAMILY_DASHBOARD_PROFILE_PATH,
+  AGENT_DASHBOARD_MESSAGES_PATH,
+  AGENT_DASHBOARD_TASKS_PATH,
+} from 'sly/constants/dashboardAppPaths';
 import SlyEvent from 'sly/services/helpers/events';
 import AuthContainer from 'sly/containers/AuthContainer';
 import NotificationController from 'sly/controllers/NotificationController';
@@ -56,6 +62,12 @@ const customerMenuItems = [
 const agentMenuItems = [
   {
     name: 'My Families', to: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), section: 1, icon: 'users',
+  },
+  {
+    name: 'Messages', to: generatePath(AGENT_DASHBOARD_MESSAGES_PATH), section: 1, icon: 'message',
+  },
+  {
+    name: 'Tasks', to: generatePath(AGENT_DASHBOARD_TASKS_PATH), section: 1, icon: 'checkbox-fill',
   },
 ];
 
