@@ -262,13 +262,15 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const hasConversationFinished = this.getHasConversationFinished();
     let conversation = null;
     if (hasConversationFinished && conversations) {
-      conversations.forEach((conv) => {
-        conv.conversationParticipants.forEach((participant) => {
-          if (participant.participantID === user.id && participant.participantType === CONVERSATION_PARTICIPANT_TYPE_USER) {
-            conversation = conv;
-          }
-        });
-      });
+      [conversation] = conversations;
+      // TODO: Alert when there are multiple conversation between user and entity.
+      // conversations.forEach((conv) => {
+      //   conv.conversationParticipants.forEach((participant) => {
+      //     if (participant.participantID === user.id && participant.participantType === CONVERSATION_PARTICIPANT_TYPE_USER) {
+      //       conversation = conv;
+      //     }
+      //   });
+      // });
     }
 
     return (
