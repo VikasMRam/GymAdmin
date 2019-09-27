@@ -23,8 +23,8 @@ const Wrapper = styled.span`
   ${getTransform};
   transition: transform ${key('transitions.fast')};
   & > svg {
-    width: ${fontSize};
-    height: ${fontSize};
+    width: inherit;
+    height: inherit;
     font-size: ${fontSize};
     min-width: ${fontSize};
     display: block;
