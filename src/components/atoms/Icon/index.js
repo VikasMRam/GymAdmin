@@ -8,25 +8,25 @@ import { variation as variationPropType } from 'sly/propTypes/variation';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size, palette, key } from 'sly/components/themes';
 
-const fontSize = props => size('icon', props.size);
+const iconSize = props => size('icon', props.size);
 const getColor = ({ palette: paletteProp, variation }) => paletteProp && variation && palette(paletteProp, variation);
 const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)${flip ? ' scaleX(-1) scaleY(-1)' : ''}`;
 
 const Wrapper = styled.span`
-  display: inline-block;
-  vertical-align: top;
-  font-size: ${fontSize};
+  display: inline-flex;
   ${ifProp('palette', css`color: ${getColor}`)};
   // sizes relative to set font-size
-  width: ${fontSize};
-  height: ${fontSize};
+  vertical-align: top;
+  
+  width: ${iconSize};
+  height: ${iconSize};
+  text-align: center;
   ${getTransform};
   transition: transform ${key('transitions.fast')};
   & > svg {
-    width: ${fontSize};
-    height: ${fontSize};
-    font-size: ${fontSize};
-    min-width: ${fontSize};
+    align-self: center;
+    height: ${iconSize};
+    min-width: ${iconSize};
     display: block;
     fill: currentColor;
     stroke: ${prop('stroke', 'none')};

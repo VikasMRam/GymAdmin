@@ -1,8 +1,9 @@
 import React from 'react';
 import SyncSelect, { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
-import { func, string, arrayOf, object, bool, node, oneOfType } from 'prop-types';
-import styled from 'styled-components';
+import { func, string, arrayOf, object, bool, node, oneOf, oneOfType } from 'prop-types';
+import styled, { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { getKey, size, palette } from 'sly/components/themes';
 import Icon from 'sly/components/atoms/Icon';
@@ -10,15 +11,35 @@ import Hr from 'sly/components/atoms/Hr';
 
 const { Option, Group } = components;
 
+const StyledOption = styled(Option)`
+`;
+
 const Wrapper = styled.div`
   .react-select-container {
-    ${({ textSize }) => `font-size: ${size('text', textSize)}`};
+    ${ifProp('textSize', ({ textSize, lineHeight }) => css`
+      font-size: ${size('text', textSize)};
+      ${ifProp('lineHeight', css`
+        line-height: ${size('lineHeight', lineHeight)};
+      `, css`
+        line-height: ${size('lineHeight', textSize)};
+      `)}
+    `)};
+  }
+  
+  hr {
+    padding: 0;
+    margin: 0;
   }
 
+  ${StyledOption} {
+    min-height: ${p => size('element', p.size)};
+  }
+  
   .react-select__control {
     padding: -2px;
     border-color: ${palette('slate.stroke')};
     box-shadow: none;
+    min-height: ${p => size('element', p.size)};
     &--menu-is-open {
       border-color: ${palette('primary.base')};
       border-bottom-left-radius: 0;
@@ -26,17 +47,24 @@ const Wrapper = styled.div`
     }
   }
   
+  .react-select__menu-list {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  
   .react-select__indicator-separator {
     display: none;
   }  
   
   .react-select__option {
-    padding-left: ${size('spacing.xxxLarge')}; 
+    display: flex;
+    align-items: center;
+    padding-left: ${size('icon.large')}; 
     background: transparent;
     &--is-selected {
       color: ${palette('primary.base')};
       font-weight: ${size('weight.medium')};
-      padding-left: calc(${size('spacing.large')} + ${size('spacing.small')});
+      padding-left: 0;
     }
   }
   
@@ -63,7 +91,9 @@ const theme = theme => ({
 });
 
 const StyledIcon = styled(Icon)`
-  margin-right: ${size('spacing.regular')};
+  justify-content: center;
+  width: ${size('icon.large')};
+  height: 1em;
 `;
 
 const StyledHr = styled(Hr)`
@@ -74,12 +104,25 @@ const StyledHr = styled(Hr)`
 SyncSelect.displayName = 'Select';
 AsyncSelect.displayName = 'AsyncSelect';
 
-const IconOption = props => (
-  <Option {...props}>
-    {props.isSelected && <StyledIcon icon="check" size="small" palette="primary" />}
-    {props.data.label}
-  </Option>
-);
+const getIconSize = (selectSize) => {
+  switch (selectSize) {
+    case 'small': return 'cmall';
+    case 'button': return 'caption';
+    default: return 'regular';
+  }
+};
+
+const IconOption = ({ selectProps, ...props }) => {
+  const iconSize = getIconSize(selectProps.size);
+  return (
+    <StyledOption {...props}>
+      <div>
+        {props.isSelected && <StyledIcon icon="check" size={iconSize} palette="primary" />}
+        {props.data.label}
+      </div>
+    </StyledOption>
+  );
+}
 
 IconOption.propTypes = {
   data: object,
@@ -104,6 +147,7 @@ GroupSection.propTypes = {
 };
 
 const Select = ({
+  size,
   textSize,
   value,
   options,
@@ -120,13 +164,14 @@ const Select = ({
   value = flattenedValues.find(v => v.value === value) || value;
 
   return (
-    <Wrapper textSize={textSize}>
+    <Wrapper textSize={textSize} size={size}>
       <SelectComponent
         className="react-select-container"
         classNamePrefix="react-select"
         options={options}
         loadOptions={loadOptions}
         defaultValue={value}
+        size={size}
         theme={theme}
         components={{ Option: IconOption, Group: GroupSection }}
         blurInputOnSelect
@@ -136,17 +181,18 @@ const Select = ({
   );
 };
 
-// v6hEox4BtF
-
 Select.propTypes = {
+  size: oneOf([ 'small', 'regular', 'button', 'large' ]),
+  textSize: string,
+  lineHeight: string,
   async: bool,
   value: oneOfType([string, arrayOf(string)]),
-  textSize: string,
   options: arrayOf(object).isRequired,
   loadOptions: func,
 };
 
 Select.defaultProps = {
+  size: 'regular',
   async: false,
   options: [],
 };
