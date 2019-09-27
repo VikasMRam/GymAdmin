@@ -122,9 +122,10 @@ const IconOption = ({ selectProps, ...props }) => {
       </div>
     </StyledOption>
   );
-}
+};
 
 IconOption.propTypes = {
+  selectProps: object,
   data: object,
   isSelected: bool,
 };
@@ -182,7 +183,7 @@ const Select = ({
 };
 
 Select.propTypes = {
-  size: oneOf([ 'small', 'regular', 'button', 'large' ]),
+  size: oneOf(['small', 'regular', 'button', 'large']),
   textSize: string,
   lineHeight: string,
   async: bool,
