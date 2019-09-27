@@ -209,7 +209,8 @@ export default class UpdateFamilyStageForm extends Component {
                   parse={priceParser}
                   format={priceFormatter}
                 />
-                {referralAgreementType === 'percentage' && referralAgreement.length > 0 && monthlyFees.length > 0 &&
+                {/* important to keep in mind that referralAgreement and monthlyFees will be available as string */}
+                {referralAgreementType === 'percentage' && referralAgreement && referralAgreement.length > 0 && monthlyFees && monthlyFees.length > 0 &&
                   <Block weight="medium" size="caption" palette="green">Your referral total is ${priceFormatter(referralAgreement * monthlyFees)}</Block>}
               </ReferralAgreementWrapper>
             }
