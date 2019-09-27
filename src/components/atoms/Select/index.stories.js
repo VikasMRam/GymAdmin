@@ -36,11 +36,26 @@ const SmallWrapper = styled(Wrapper)`
   width: 100px;
 `;
 
+const MultiWrapper = styled(Wrapper)`
+  display: flex;
+  > * {
+    width: 100px;
+    margin-right: 50px;
+  }
+`;
+
 storiesOf('Atoms|Select', module)
   .add('default', () => (
     <Wrapper>
       <Field type="choice" options={options} />
     </Wrapper>
+  ))
+  .add('sizes', () => (
+    <MultiWrapper>
+      <Field type="choice" textSize="tiny" options={options} value={options[1]} menuIsOpen />
+      <Field type="choice" textSize="caption" size="button" options={options} value={options[1]} menuIsOpen />
+      <Field type="choice" size="large" options={groupedOptions} value={groupedOptions[1].options[1]} menuIsOpen />
+    </MultiWrapper>
   ))
   .add('with groups', () => (
     <Wrapper>

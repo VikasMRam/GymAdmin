@@ -60,6 +60,7 @@ const Row = styled(mobileOnly(Box, css`
   }
 `))`
   font-size: ${size('text.caption')};
+  line-height: ${size('lineHeight.caption')};
 `;
 
 const CloseButton = mobileOnly(ButtonLink, css`
