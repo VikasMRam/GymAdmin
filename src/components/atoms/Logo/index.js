@@ -10,10 +10,14 @@ const LogoIcon = styled(Icon)`
   height: auto;
 `;
 
-const Logo = ({ variant }) => <LogoIcon icon={`seniorlyLogo${variant ? `-${variant}` : ''}`} size="xxLarge" />;
+const Logo = ({ palette }) => <LogoIcon icon="seniorlyLogo" palette={palette} size="xxLarge" />;
 
 Logo.propTypes = {
-  variant: string,
+  palette: string,
+};
+
+Logo.defaultProps = {
+  palette: 'secondary',
 };
 
 export default Logo;
