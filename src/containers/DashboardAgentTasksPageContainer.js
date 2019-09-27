@@ -91,6 +91,11 @@ export default class DashboardAgentTasksPageContainer extends Component {
     history: object,
   };
 
+  refetchTasks = () => {
+    const { status } = this.props;
+    status.tasks.refetch();
+  }
+
   handleSearchTextKeyUp = (event) => {
     const { value } = event.target;
     const { match, location, history } = this.props;
@@ -122,7 +127,7 @@ export default class DashboardAgentTasksPageContainer extends Component {
     const params = getPageParams({ match, location });
     const { type } = params;
     const { tasks: tasksStatus } = status;
-    const { hasFinished, error: tasksError, meta } = tasksStatus;
+    const { hasFinished, error: tasksError, meta, result: tasksRaw } = tasksStatus;
 
     if (tasksError) {
       return <RefreshRedirect to="/" />;
@@ -142,6 +147,7 @@ export default class DashboardAgentTasksPageContainer extends Component {
             {({ show, hide }) => (
               <DashboardAgentTasksPage
                 tasks={tasks}
+                tasksRaw={tasksRaw}
                 pagination={pagination}
                 activeTab={type}
                 onSearchTextKeyUp={this.handleSearchTextKeyUp}
@@ -150,6 +156,7 @@ export default class DashboardAgentTasksPageContainer extends Component {
                 meta={meta}
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
+                refetchTasks={this.refetchTasks}
               />
             )}
           </ModalController>

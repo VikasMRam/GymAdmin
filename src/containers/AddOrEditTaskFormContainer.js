@@ -41,6 +41,8 @@ export default class AddOrEditTaskFormContainer extends Component {
     onSuccess: func,
     updateTask: func,
     task: taskPropType,
+    tasksRaw: arrayOf(object),
+    refetchTasks: func,
   };
 
   handleSubmitTask = (data) => {
@@ -92,6 +94,16 @@ export default class AddOrEditTaskFormContainer extends Component {
         }
       });
   };
+
+  updateTaskStatus = (task, status) => {
+    const { updateTask, tasksRaw, refetchTasks, onSuccess, notifyInfo } = this.props;
+    const taskRaw = tasksRaw.find(taskRaw => taskRaw.id === task.id);
+    taskRaw.attributes.status = status;
+    return updateTask({ id: task.id }, taskRaw)
+      .then(refetchTasks)
+      .then(() => notifyInfo(`Task ${status} successfully`))
+      .then(() => { onSuccess ? onSuccess() : null; });
+  }
 
   render() {
     const {
@@ -146,6 +158,8 @@ export default class AddOrEditTaskFormContainer extends Component {
         onSubmit={this.handleSubmitTask}
         initialValues={initialValues}
         heading={task && task.title}
+        deleteTask={() => this.updateTaskStatus(task, 'Deleted')}
+        completeTask={() => this.updateTaskStatus(task, 'Completed')}
       />
     );
   }

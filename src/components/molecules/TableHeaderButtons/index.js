@@ -88,7 +88,6 @@ const Filters = ({ datatable, autocompleteFilters }) => {
 const TableHeaderButtons = ({
   onColumnButtonClick, onSearchTextKeyUp, onSortButtonClick, datatable, className, autocompleteFilters,
 }) => {
-
   return (
     <Wrappper className={className}>
       {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
@@ -117,6 +116,7 @@ TableHeaderButtons.propTypes = {
   onColumnButtonClick: func,
   className: string,
   onSortButtonClick: func,
+  onSearchTextKeyUp: func,
 };
 
 export default TableHeaderButtons;
