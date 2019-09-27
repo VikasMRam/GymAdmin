@@ -96,10 +96,13 @@ export default class AddOrEditTaskFormContainer extends Component {
   };
 
   updateTaskStatus = (task, status) => {
-    const { updateTask, tasksRaw, refetchTasks, onSuccess } = this.props;
+    const { updateTask, tasksRaw, refetchTasks, onSuccess, notifyInfo } = this.props;
     const taskRaw = tasksRaw.find(taskRaw => taskRaw.id === task.id);
     taskRaw.attributes.status = status;
-    return updateTask({ id: task.id }, taskRaw).then(refetchTasks).then(() => { onSuccess ? onSuccess() : null; });
+    return updateTask({ id: task.id }, taskRaw)
+      .then(refetchTasks)
+      .then(() => notifyInfo(`Task ${status} successfully`))
+      .then(() => { onSuccess ? onSuccess() : null; });
   }
 
   render() {
