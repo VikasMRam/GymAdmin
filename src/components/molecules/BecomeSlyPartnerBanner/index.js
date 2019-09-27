@@ -36,7 +36,7 @@ const StyledBlock = styled(Block)`
 const BecomeSlyPartnerBanner = ({ palette }) => (
   <Wrapper type={palette} palette="white">
     <TopWrapper>
-      <Logo variant="white" />
+      <Logo palette="white" />
       <Line />
       <div>PARTNERS</div>
     </TopWrapper>

@@ -60,7 +60,7 @@ export const consumerCards = [
     a way to provide some relief from managing every expenditure.`,
   },
   {
-    icon: 'card',
+    icon: 'card-dark',
     heading: 'Use Credit/Debit Card',
     content: `You can now pay for your senior care services by credit or debit card directly
     through Seniorly using our secure payment platform at no additional charge.`,

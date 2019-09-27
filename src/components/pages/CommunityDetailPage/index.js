@@ -415,7 +415,7 @@ export default class CommunityDetailPage extends Component {
     } = community;
 
     const {
-      careServices, websiteUrl, promoDescription, promoTitle, communitySize,
+      careServices, websiteUrl, promoDescription, promoTitle, communitySize, communityInsights,
     } = propInfo;
 
     // TODO: move this to common helper, used in multiple places
@@ -534,7 +534,20 @@ export default class CommunityDetailPage extends Component {
                     />
                   )
                 }
-                {autoHighlights &&
+                {communityInsights && communityInsights.length > 0 &&
+                  <TopCollapsibleSection
+                    title={`Community Insights at ${name}`}
+                  >
+                    <MainSection>
+                      {communityInsights.map(item => (
+                        <IconItemWrapper key={item}>
+                          <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
+                        </IconItemWrapper>))
+                      }
+                    </MainSection>
+                  </TopCollapsibleSection>
+                }
+                {!communityInsights && autoHighlights &&
                   <TopCollapsibleSection
                     title={`Community Highlights at ${name}`}
                   >

@@ -86,7 +86,7 @@ const CommunityDetails = ({
               displayType="text"
             />
           </Link>
-          . There is no cost for their service. We are compensated by the community you select.
+          . There is no cost for this service. We are compensated by the community you select.
         </Paragraph>
       </StyledArticle>
       <StyledArticle>

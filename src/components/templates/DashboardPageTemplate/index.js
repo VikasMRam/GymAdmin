@@ -12,8 +12,9 @@ import {
   FAMILY_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_MESSAGES_PATH,
   ADMIN_DASHBOARD_CALLS_PATH,
+  AGENT_DASHBOARD_TASKS_PATH,
 } from 'sly/constants/dashboardAppPaths';
-import { CUSTOMER_ROLE, AGENT_ND_ROLE,PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { CUSTOMER_ROLE, AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import ModalContainer from 'sly/containers/ModalContainer';
 import DashboardMenu from 'sly/components/molecules/DashboardMenu';
@@ -35,6 +36,7 @@ const menuItems = [
   { label: 'My Families', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), role: AGENT_ND_ROLE, onClick: onMenuItemClick },
   { label: 'Messages_', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_MESSAGES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick },
   { label: 'Messages', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_MESSAGES_PATH, role: AGENT_ND_ROLE, onClick: onMenuItemClick },
+  { label: 'Tasks', icon: 'checkbox-fill', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_TASKS_PATH, role: AGENT_ND_ROLE, onClick: onMenuItemClick },
   { label: 'Calls', icon: 'phone', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
 ];
 
@@ -50,7 +52,7 @@ const Header = styled.div`
 const Column = styled.aside`
   background-color: ${palette('white.base')};
   display:none;
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
     width: ${size('element.xxHuge')};
@@ -68,7 +70,7 @@ const Body = styled.main`
     background-color: ${palette('grey.background')};
     padding: ${size('spacing.xLarge')};
   }
-    
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     grid-column: 2 / 2;
     grid-row: 2 / 2;
@@ -84,11 +86,11 @@ const DashboardPage = styled.div`
 
   display: flex;
   flex-direction: column;
-  
+
   > :first-child {
     flex-grow: 0;
   }
-  
+
   > :nth-child(n+2) {
     flex-grow: 1;
   }

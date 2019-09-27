@@ -4,4 +4,5 @@ import { storiesOf } from '@storybook/react';
 import IconBadge from 'sly/components/molecules/IconBadge';
 
 storiesOf('Molecules|IconBadge', module)
-  .add('default', () => <IconBadge icon="hourglass" text="LONG-TERM" />);
+  .add('default', () => <IconBadge icon="hourglass" text="LONG-TERM" />)
+  .add('RECOMMENDED', () => <IconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="RECOMMENDED" />);
