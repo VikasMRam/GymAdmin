@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
-  <defs>
-    <path id="active-a" d="M12,4 C7.584,4 4,7.584 4,12 C4,16.416 7.584,20 12,20 C16.416,20 20,16.416 20,12 C20,7.584 16.416,4 12,4 Z"/>
-  </defs>
-  <g fill="none" fill-rule="evenodd">
-    <mask id="active-b" fill="#fff">
-      <use xlink:href="#active-a"/>
-    </mask>
-    <use fill="#000" fill-rule="nonzero" xlink:href="#active-a"/>
-    <g fill="currentColor" fill-rule="nonzero" mask="url(#active-b)">
-      <rect width="24" height="24"/>
-    </g>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24"><defs><path id="active-regular-a" d="M12 4c-4.416 0-8 3.584-8 8s3.584 8 8 8 8-3.584 8-8-3.584-8-8-8z"/></defs><g fill="none" fill-rule="evenodd"><mask id="active-regular-b" fill="#fff"><use xlink:href="#active-regular-a"/></mask><use fill="#000" fill-rule="nonzero" xlink:href="#active-regular-a"/><g fill="currentColor" fill-rule="nonzero" mask="url(#active-regular-b)"><path d="M0 0h24v24H0z"/></g></g></svg>
