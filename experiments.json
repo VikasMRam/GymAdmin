@@ -1,3 +1,4 @@
 {
-  "InplaceWizard_Step1": ["Step1A","Step1B"]
+  "InplaceWizard_Step1": ["Step1A","Step1B"],
+  "PricingCTA_Language": ["Detailed", "Personalized"]
 }
