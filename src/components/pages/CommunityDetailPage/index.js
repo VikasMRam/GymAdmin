@@ -579,11 +579,11 @@ export default class CommunityDetailPage extends Component {
                   {!hasCCRC && (pricesList.length > 0 || estimatedPriceList.length > 0 || floorPlans.length < 0) &&
                     <CommunityPricingTable name={name}
                                            pricesList={pricesList}
-                                           estimatedPricingList={estimatedPriceList}
+                                           estimatedPriceList={estimatedPriceList}
                                            price={estimatedPriceBase}
                                            getPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
                                            size={communitySize}
-                                           showTootTip={address.state === 'TN'}
+                                           showToolTip={address.state === 'TN'}
                     />
                   }
                   {!hasCCRC && pricesList.length === 0 && estimatedPriceList.length === 0 && floorPlans.length > 0 &&
