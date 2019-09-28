@@ -7,7 +7,7 @@ import pad from 'sly/components/helpers/pad';
 import cursor from 'sly/components/helpers/cursor';
 import { size } from 'sly/components/themes';
 import clientPropType from 'sly/propTypes/client';
-import { Box, Heading, Label, Block, Link } from 'sly/components/atoms';
+import { Box, Heading, Label, Block, Link, Hr } from 'sly/components/atoms';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
 
@@ -112,6 +112,21 @@ const FamilySummary = ({
         <Label palette="grey">Seniorly introduction</Label>
         <Block size="caption">{client.clientInfo.slyMessage}</Block>
       </SlyIntro>
+    }
+    {(client.admin || client.organization) &&
+      <Hr />
+    }
+    {client.admin &&
+    <ColumWrapper>
+      <Label palette="grey">Assigned to</Label>
+      <Block size="caption">{client.admin.name}</Block>
+    </ColumWrapper>
+    }
+    {client.organization && client.organization[0] &&
+    <ColumWrapper>
+      <Label palette="grey">Business name</Label>
+      <Block size="caption">{client.organization[0].name}</Block>
+    </ColumWrapper>
     }
     <StyledLink to={to} onClick={clickEventHandler('fdetails-summary', 'seeMoreFamilyDetails')} >See more family details</StyledLink>
   </Box>
