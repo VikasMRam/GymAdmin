@@ -7,7 +7,7 @@ import pad from 'sly/components/helpers/pad';
 import cursor from 'sly/components/helpers/cursor';
 import { size } from 'sly/components/themes';
 import clientPropType from 'sly/propTypes/client';
-import { Box, Heading, Label, Block, Link,Hr } from 'sly/components/atoms';
+import { Box, Heading, Label, Block, Link, Hr } from 'sly/components/atoms';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
 
