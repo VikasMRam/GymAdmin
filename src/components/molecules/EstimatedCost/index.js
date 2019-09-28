@@ -41,7 +41,7 @@ const EstimatedCost = ({
           </Block>
           <Button ghost onClick={getPricing}>Get Detailed Pricing</Button>
           <Block size="caption" palette="grey">
-            *Seniorly’s estimated monthly cost is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.  If you manage the community and would like to update your pricing, please email us at communities@seniorly.com.
+            *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.
           </Block>
         </EstimatedCostWrapper>
       }
