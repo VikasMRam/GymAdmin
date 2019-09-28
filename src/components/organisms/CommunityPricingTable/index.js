@@ -94,8 +94,8 @@ const toolTipCode = (size) => {
       {!isServer && size === 'up to 20 Beds' &&
       <TooltipContent id="pricing" place="top" effect="solid" multiline>
         Pricing in assisted living communities can be difficult to estimate.<br />
-        In addition to the cost of "room and board," many communities also charge separately for care.<br />
-        Small communities like this typically have "all-inclusive" pricing that gives the resident one monthly
+        In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
+        Small communities like this typically have &quot;all-inclusive&quot; pricing that gives the resident one monthly
         price.<br />
         Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
         service.<br />
@@ -104,8 +104,8 @@ const toolTipCode = (size) => {
       {!isServer && size === '20 - 51 Beds' &&
       <TooltipContent id="pricing" place="top" effect="solid" multiline>
         Pricing in assisted living communities can be difficult to estimate.<br />
-        In addition to the cost of "room and board," many communities also charge separately for care.<br />
-        Many medium sized communities like this have "all-inclusive" pricing that gives the resident one monthly
+        In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
+        Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
         price.<br />
         Some communities will use a Points or Level of Care system to determine the care related fees.<br />
         Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
@@ -115,7 +115,7 @@ const toolTipCode = (size) => {
       {!isServer && size === '51 +' &&
       <TooltipContent id="pricing" place="top" effect="solid" multiline>
         Pricing in assisted living communities can be difficult to estimate.<br />
-        In addition to the cost of "room and board," many communities also charge separately for care.<br />
+        In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
         Most large sized communities like this typically charge additional care fees.<br />
         Communities will use a Points or a Level of Care system to determine the care related fees.<br />
         Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
@@ -138,7 +138,7 @@ const CommunityPricingTable = ({
       { estimated &&
         <StyledBlockNp size="title">
           <StyledBlockSp size="body" palette="slate">The estimated monthly pricing for {name} ranges from</StyledBlockSp>
-          <StyledNumberFormat weight="weight.medium" color="secondary" value={from} displayType="text" thousandSeparator prefix="$" /> to <StyledNumberFormat weight="weight.medium" color="secondary" value={to} displayType="text" thousandSeparator prefix="$" /><Span size="caption"> per month*</Span>
+          <StyledNumberFormat weight="weight.medium" color="secondary" value={from} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary" value={to} displayType="text" thousandSeparator prefix="$" /><Span weight="medium" size="title" palette="secondary"> per month*</Span>
         </StyledBlockNp>
       }
       { !estimated &&
@@ -204,7 +204,7 @@ const CommunityPricingTable = ({
           </Variant>
         </Experiment>
         <Block>
-          { (pricesList.length === 0 || !showToolTip) && size === 'up to 20 Beds' &&
+          { (pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === 'up to 20 Beds' &&
             <Paragraph>
               Pricing in assisted living communities can be difficult to estimate.<br />
               In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
@@ -214,7 +214,7 @@ const CommunityPricingTable = ({
               service.
             </Paragraph>
           }
-          { (pricesList.length === 0 || !showToolTip) && size === '20 - 51 Beds' &&
+          { (pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '20 - 51 Beds' &&
           <Paragraph>
             Pricing in assisted living communities can be difficult to estimate.<br />
             In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
@@ -225,7 +225,7 @@ const CommunityPricingTable = ({
             service.<br />
           </Paragraph>
           }
-          {(pricesList.length === 0 || !showToolTip) && size === '51 +' &&
+          {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '51 +' &&
           <Paragraph>
             Pricing in assisted living communities can be difficult to estimate.<br />
             In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />

@@ -83,20 +83,20 @@ export const buildEstimatedPriceList = (community) => {
     twoBedroomApartmentRate,
   } = estimatedPrice;
   try {
-    if (sharedSuiteRate && !sharedSuiteRate.match(/[A-Za-z]+/)) {
-      priceList.push({ label: 'Shared Suite', value: getAveragePriceString(sharedSuiteRate) });
+    if (sharedSuiteRate !== 0) {
+      priceList.push({ label: 'Shared Suite', value: sharedSuiteRate });
     }
-    if (privateSuiteRate && !privateSuiteRate.match(/[A-Za-z]+/)) {
-      priceList.push({ label: 'Private Suite', value: getAveragePriceString(privateSuiteRate) });
+    if (privateSuiteRate !== 0) {
+      priceList.push({ label: 'Private Suite', value: privateSuiteRate });
     }
-    if (studioApartmentRate && !studioApartmentRate.match(/[A-Za-z]+/)) {
-      priceList.push({ label: 'Studio Apartment', value: getAveragePriceString(studioApartmentRate) });
+    if (studioApartmentRate !== 0) {
+      priceList.push({ label: 'Studio Apartment', value: studioApartmentRate });
     }
-    if (oneBedroomApartmentRate && !oneBedroomApartmentRate.match(/[A-Za-z]+/)) {
-      priceList.push({ label: 'One Bedroom Apartment', value: getAveragePriceString(oneBedroomApartmentRate) });
+    if (oneBedroomApartmentRate !== 0) {
+      priceList.push({ label: 'One Bedroom Apartment', value: oneBedroomApartmentRate });
     }
-    if (twoBedroomApartmentRate && !twoBedroomApartmentRate.match(/[A-Za-z]+/)) {
-      priceList.push({ label: 'Two Bedroom Apartment', value: getAveragePriceString(twoBedroomApartmentRate) });
+    if (twoBedroomApartmentRate !== 0) {
+      priceList.push({ label: 'Two Bedroom Apartment', value: twoBedroomApartmentRate });
     }
   } catch (e) {
     console.log('Non numeric prices');
