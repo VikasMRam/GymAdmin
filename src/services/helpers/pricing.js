@@ -34,7 +34,7 @@ const getAveragePriceString = (priceStringOrNumber) => {
 
 export const buildPriceList = (community) => {
   const priceList = [];
-  const { propInfo, startingRate } = community;
+  const { propInfo, rgsAux } = community;
   const {
     sharedSuiteRate,
     privateSuiteRate,
@@ -58,8 +58,45 @@ export const buildPriceList = (community) => {
     if (twoBedroomApartmentRate && !twoBedroomApartmentRate.match(/[A-Za-z]+/)) {
       priceList.push({ label: 'Two Bedroom Apartment', value: getAveragePriceString(twoBedroomApartmentRate) });
     }
-    if (startingRate && priceList.length > 0) {
-      priceList.push({ label: 'Inquire for room type', value: startingRate });
+  } catch (e) {
+    console.log('Non numeric prices');
+  }
+
+  return priceList;
+};
+
+export const buildEstimatedPriceList = (community) => {
+  const priceList = [];
+  const { rgsAux } = community;
+  if (!rgsAux) {
+    return priceList;
+  }
+  const { estimatedPrice } = rgsAux;
+  if (!estimatedPrice) {
+    return priceList;
+  }
+  const {
+    sharedSuiteRate,
+    privateSuiteRate,
+    studioApartmentRate,
+    oneBedroomApartmentRate,
+    twoBedroomApartmentRate,
+  } = estimatedPrice;
+  try {
+    if (sharedSuiteRate && !sharedSuiteRate.match(/[A-Za-z]+/)) {
+      priceList.push({ label: 'Shared Suite', value: getAveragePriceString(sharedSuiteRate) });
+    }
+    if (privateSuiteRate && !privateSuiteRate.match(/[A-Za-z]+/)) {
+      priceList.push({ label: 'Private Suite', value: getAveragePriceString(privateSuiteRate) });
+    }
+    if (studioApartmentRate && !studioApartmentRate.match(/[A-Za-z]+/)) {
+      priceList.push({ label: 'Studio Apartment', value: getAveragePriceString(studioApartmentRate) });
+    }
+    if (oneBedroomApartmentRate && !oneBedroomApartmentRate.match(/[A-Za-z]+/)) {
+      priceList.push({ label: 'One Bedroom Apartment', value: getAveragePriceString(oneBedroomApartmentRate) });
+    }
+    if (twoBedroomApartmentRate && !twoBedroomApartmentRate.match(/[A-Za-z]+/)) {
+      priceList.push({ label: 'Two Bedroom Apartment', value: getAveragePriceString(twoBedroomApartmentRate) });
     }
   } catch (e) {
     console.log('Non numeric prices');
@@ -113,7 +150,7 @@ export const calculatePricing = (community, estimatedPrice) => {
   }
   const pricesList = buildPriceList(community);
   if (pricesList.length > 0) {
-    [estimatedPriceBase] = pricesList;
+    estimatedPriceBase = pricesList[0].value;
   }
   return {
     estimatedPriceLabelMap, maxPrice, estimatedPriceBase, sortedEstimatedPrice,

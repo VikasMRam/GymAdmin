@@ -169,7 +169,6 @@ const CommunitySearchList = ({
         </Fragment>
       }
       {/* TODO: shadow causing issues with pagination */}
-      <div></div>
       {communityList.length > 0 &&
         <Fragment>
           {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
