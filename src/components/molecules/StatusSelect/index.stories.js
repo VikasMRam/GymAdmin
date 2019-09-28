@@ -13,13 +13,10 @@ storiesOf('Molecules|StatusSelect', module)
   .add('default', () => (
     <Fragment>
       <Wrapper>
-        <StatusSelect size="regular" />
+        <StatusSelect size="tiny" />
       </Wrapper>
       <Wrapper>
-        <StatusSelect size="button" />
-      </Wrapper>
-      <Wrapper>
-        <StatusSelect size="large" menuIsOpen />
+        <StatusSelect size="tiny" menuIsOpen />
       </Wrapper>
     </Fragment>
   ));

@@ -52,9 +52,11 @@ storiesOf('Atoms|Select', module)
   ))
   .add('sizes', () => (
     <MultiWrapper>
-      <Field type="choice" textSize="tiny" options={options} value={options[1]} menuIsOpen />
-      <Field type="choice" textSize="caption" size="button" options={options} value={options[1]} menuIsOpen />
-      <Field type="choice" size="large" options={groupedOptions} value={groupedOptions[1].options[1]} menuIsOpen />
+      <Field type="choice" size="tiny" options={options} value={options[1].value} menuIsOpen />
+      <Field type="choice" size="small" options={options} value={options[1].value} menuIsOpen />
+      <Field type="choice" options={options} value={options[1].value} menuIsOpen />
+      <Field type="choice" size="button" options={options} value={options[1].value} menuIsOpen />
+      <Field type="choice" size="large" options={groupedOptions} value={groupedOptions[1].options[1].value} menuIsOpen />
     </MultiWrapper>
   ))
   .add('with groups', () => (

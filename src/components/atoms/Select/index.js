@@ -5,13 +5,16 @@ import { func, string, arrayOf, object, bool, node, oneOf, oneOfType } from 'pro
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { getKey, size, palette } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import Icon from 'sly/components/atoms/Icon';
 import Hr from 'sly/components/atoms/Hr';
 
 const { Option, Group } = components;
 
 const StyledOption = styled(Option)`
+  .react-select__menu-list &.react-select__option {
+    //color: ${palette('base')};
+  }
 `;
 
 const Wrapper = styled.div`
@@ -36,7 +39,6 @@ const Wrapper = styled.div`
   }
   
   .react-select__control {
-    padding: -2px;
     border-color: ${palette('slate.stroke')};
     box-shadow: none;
     min-height: ${p => size('element', p.size)};
@@ -52,6 +54,11 @@ const Wrapper = styled.div`
     padding-bottom: 0px;
   }
   
+  .react-select__indicator {
+    padding-top: 0;
+    padding-bottom: 0;
+  }  
+  
   .react-select__indicator-separator {
     display: none;
   }  
@@ -61,9 +68,11 @@ const Wrapper = styled.div`
     align-items: center;
     padding-left: ${size('icon.large')}; 
     background: transparent;
-    &--is-selected {
+    &--is-selected  {
       color: ${palette('primary.base')};
       font-weight: ${size('weight.medium')};
+    }
+    &${ifProp('alwaysShowIcon', '', '--is-selected')}  {
       padding-left: 0;
     }
   }
@@ -82,14 +91,6 @@ const Wrapper = styled.div`
   } 
 `;
 
-const theme = theme => ({
-  ...theme,
-  colors: {
-    ...theme.colors,
-    primary: getKey('palette.primary.base'),
-  },
-});
-
 const StyledIcon = styled(Icon)`
   justify-content: center;
   width: ${size('icon.large')};
@@ -104,22 +105,23 @@ const StyledHr = styled(Hr)`
 SyncSelect.displayName = 'Select';
 AsyncSelect.displayName = 'AsyncSelect';
 
-const getIconSize = (selectSize) => {
-  switch (selectSize) {
-    case 'small': return 'cmall';
-    case 'button': return 'caption';
+const getIconSize = (textSize) => {
+  switch (textSize) {
+    case 'micro': return 'tiny';
+    case 'tiny': return 'small';
+    case 'caption': return 'caption';
     default: return 'regular';
   }
 };
 
-const IconOption = ({ selectProps, ...props }) => {
-  const iconSize = getIconSize(selectProps.size);
+const IconOption = ({ selectProps,  ...props }) => {
+  const iconSize = getIconSize(selectProps.textSize);
+  const { palette = 'primary', icon = 'check' } = props.data;
+  const showIcon = props.isSelected || selectProps.alwaysShowIcon;
   return (
-    <StyledOption {...props}>
-      <div>
-        {props.isSelected && <StyledIcon icon="check" size={iconSize} palette="primary" />}
-        {props.data.label}
-      </div>
+    <StyledOption palette={palette} {...props}>
+      {showIcon && <StyledIcon icon={icon} size={iconSize} palette={palette} />}
+      {props.data.label}
     </StyledOption>
   );
 };
@@ -132,7 +134,6 @@ IconOption.propTypes = {
 
 const GroupSection = (props) => {
   const lastGroupLabel = props.selectProps.options.map(v => v.label).pop();
-
   return (
     <Group {...props}>
       {props.children}
@@ -147,10 +148,20 @@ GroupSection.propTypes = {
   label: string,
 };
 
+const getTextSize = (size) => {
+  switch (size) {
+    case 'tiny': return 'micro';
+    case 'small':
+    case 'regular': return 'tiny';
+    case 'large': return 'body';
+    default: return 'caption';
+  }
+};
+
 const Select = ({
   size,
-  textSize,
   value,
+  alwaysShowIcon,
   options,
   async,
   loadOptions,
@@ -164,16 +175,18 @@ const Select = ({
   const flattenedValues = values.reduce((a, b) => a.concat(b), []);
   value = flattenedValues.find(v => v.value === value) || value;
 
+  const textSize = getTextSize(size);
+
   return (
-    <Wrapper textSize={textSize} size={size}>
+    <Wrapper textSize={textSize} size={size} alwaysShowIcon={alwaysShowIcon}>
       <SelectComponent
         className="react-select-container"
         classNamePrefix="react-select"
         options={options}
         loadOptions={loadOptions}
         defaultValue={value}
-        size={size}
-        theme={theme}
+        textSize={textSize}
+        alwaysShowIcon={alwaysShowIcon}
         components={{ Option: IconOption, Group: GroupSection }}
         blurInputOnSelect
         {...props}
@@ -183,8 +196,8 @@ const Select = ({
 };
 
 Select.propTypes = {
-  size: oneOf(['small', 'regular', 'button', 'large']),
-  textSize: string,
+  alwaysShowIcon: bool,
+  size: oneOf(['tiny', 'small', 'regular', 'button', 'large']),
   lineHeight: string,
   async: bool,
   value: oneOfType([string, arrayOf(string)]),

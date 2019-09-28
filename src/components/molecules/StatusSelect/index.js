@@ -4,18 +4,19 @@ import Field from 'sly/components/molecules/Field';
 
 
 const options = [
-  { label: 'Active',    color: 'green',  value: 'Active' },
-  { label: 'On Pause',  color: 'red',    value: 'On Pause' },
-  { label: 'Long Term', color: 'purple', value: 'Long Term' },
-  { label: 'Archived',  color: 'grey',   value: 'Archived' },
-  { label: 'Deleted',   color: '',       value: 'Deleted' },
+  { label: 'Active',    palette: 'green',  value: 'Active' },
+  // { label: 'Hot',       palette: 'yellow',  value: 'Active' },
+  { label: 'Long Term', palette: 'purple', value: 'Long Term' },
+  { label: 'On Pause',  palette: 'red',    value: 'On Pause' },
+  { label: 'Archived',  palette: 'slate',   value: 'Archived' },
+  { label: 'Deleted',   palette: 'grey',       value: 'Deleted' },
 ];
 
 export default class StatusSelect extends Component {
   render() {
     const { ...props } = this.props;
     return (
-      <Field type="choice" options={options} {...props} />
+      <Field value="On Pause" type="choice" options={options} {...props} />
     );
   }
 }
