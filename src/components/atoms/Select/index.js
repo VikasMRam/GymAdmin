@@ -5,17 +5,11 @@ import { func, string, arrayOf, object, bool, node, oneOf, oneOfType } from 'pro
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
+import { size, palette, getKey } from 'sly/components/themes';
 import Icon from 'sly/components/atoms/Icon';
 import Hr from 'sly/components/atoms/Hr';
 
-const { Option, Group } = components;
-
-const StyledOption = styled(Option)`
-  .react-select__menu-list &.react-select__option {
-    //color: ${palette('base')};
-  }
-`;
+const { Option, Group, SingleValue } = components;
 
 const Wrapper = styled.div`
   .react-select-container {
@@ -114,13 +108,21 @@ const getIconSize = (textSize) => {
   }
 };
 
+const StyledOption = styled(Option)`
+  .react-select__menu-list &.react-select__option {
+    color: ${palette('base')};
+  }
+`;
+
 const IconOption = ({ selectProps,  ...props }) => {
   const iconSize = getIconSize(selectProps.textSize);
-  const { palette = 'primary', icon = 'check' } = props.data;
+  console.log('iconSize', iconSize)
+  const {  icon = 'check' } = props.data;
+  const pp = props.data.palette || 'primary';
   const showIcon = props.isSelected || selectProps.alwaysShowIcon;
   return (
-    <StyledOption palette={palette} {...props}>
-      {showIcon && <StyledIcon icon={icon} size={iconSize} palette={palette} />}
+    <StyledOption palette={pp} {...props}>
+      {showIcon && <StyledIcon icon={icon} size={iconSize} palette={pp} />}
       {props.data.label}
     </StyledOption>
   );
@@ -132,6 +134,32 @@ IconOption.propTypes = {
   isSelected: bool,
 };
 
+const StyledSingleValue = styled(SingleValue)`
+  &.react-select__single-value {
+    color: ${(p) => {
+      return palette(p.palette, 'base');
+    }};
+  }
+`;
+
+const IconSingleValue = ({ selectProps, ...props }) => {
+  const iconSize = getIconSize(selectProps.textSize);
+  const { palette: pp = 'primary', icon = 'check' } = props.data;
+  const showIcon = props.data.icon || selectProps.alwaysShowIcon;
+  console.log(pp)
+  return (
+    <StyledSingleValue palette={pp} {...props}>
+      {showIcon && <StyledIcon icon={icon} size={iconSize} palette={pp} />}
+      {props.data.label}
+    </StyledSingleValue>
+  );
+};
+
+IconSingleValue.propTypes = {
+  selectProps: object,
+  data: object,
+  isSelected: bool,
+};
 const GroupSection = (props) => {
   const lastGroupLabel = props.selectProps.options.map(v => v.label).pop();
   return (
@@ -158,9 +186,16 @@ const getTextSize = (size) => {
   }
 };
 
+// hack to mix emotion and styled-components themes
+const theme = theme => ({
+  ...theme,
+  palette: getKey('palette'),
+});
+
 const Select = ({
   size,
   value,
+  components,
   alwaysShowIcon,
   options,
   async,
@@ -182,12 +217,13 @@ const Select = ({
       <SelectComponent
         className="react-select-container"
         classNamePrefix="react-select"
+        theme={theme}
         options={options}
         loadOptions={loadOptions}
         defaultValue={value}
         textSize={textSize}
         alwaysShowIcon={alwaysShowIcon}
-        components={{ Option: IconOption, Group: GroupSection }}
+        components={{ Option: IconOption, Group: GroupSection, SingleValue: IconSingleValue, ...components }}
         blurInputOnSelect
         {...props}
       />
@@ -202,6 +238,7 @@ Select.propTypes = {
   async: bool,
   value: oneOfType([string, arrayOf(string)]),
   options: arrayOf(object).isRequired,
+  components: object,
   loadOptions: func,
 };
 
@@ -209,6 +246,7 @@ Select.defaultProps = {
   size: 'regular',
   async: false,
   options: [],
+  components: {},
 };
 
 export default Select;

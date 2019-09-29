@@ -17,14 +17,14 @@ const theme = {};
 // DO NOT MODIFY the following without asking Jared
 theme.palette = {
   slate    : makeColor('#2a333f', ['dark', 'base', 'filler', 'stroke']),
-  grey     : makeColor('#70767E', ['dark', 'base', 'filler', 'stroke', 'background']),
   primary  : makeColor('#186dc5', ['dark', 'base', 'filler', 'stroke', 'background']),
   secondary: makeColor('#56c4c2', ['dark', 'base', 'filler', 'stroke', 'background']),
-  yellow   : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke', 'background']),
   white    : makeColor('#ffffff', ['base']),
   danger   : makeColor('#dc3133', ['dark', 'base', 'filler', 'stroke']),
   warning  : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke']),
   green    : makeColor('#4fb75f', ['dark', 'base', 'filler', 'stroke']),
+  grey     : makeColor('#70767E', ['dark', 'base', 'filler', 'stroke', 'background']),
+  yellow   : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke', 'background']),
   pink     : makeColor('#9a268e', ['dark', 'base', 'filler', 'stroke', 'background']),
   purple   : makeColor('#6d27ca', ['dark', 'base', 'filler', 'stroke', 'background']),
 };
