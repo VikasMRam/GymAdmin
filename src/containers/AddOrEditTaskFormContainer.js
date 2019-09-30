@@ -7,6 +7,7 @@ import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
 import taskPropType from 'sly/propTypes/task';
 import { createValidator, required } from 'sly/services/validation';
+import { TASK_RELATED_ENTITY_TYPE } from 'sly/constants/tasks';
 import { TASK_RESOURCE_TYPE, USER_RESOURCE_TYPE, CLIENT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import AddTaskForm from 'sly/components/organisms/AddTaskForm';
 
@@ -65,11 +66,15 @@ export default class AddOrEditTaskFormContainer extends Component {
       },
     };
     if (!task && data.relatedTo) {
+      // todo: revisit if more type of related entities can be possbile
       payload.relationships.relatedEntities = {
         data: [
           {
-            type: client ? CLIENT_RESOURCE_TYPE : USER_RESOURCE_TYPE,
-            id: data.relatedTo,
+            type: TASK_RELATED_ENTITY_TYPE,
+            id: client.id,
+            attributes: {
+              entityType: CLIENT_RESOURCE_TYPE,
+            },
           },
         ],
       };
@@ -117,8 +122,9 @@ export default class AddOrEditTaskFormContainer extends Component {
       return null;
     }
     const initialValues = {};
+    // todo: revisit if more type of related entities can be possbile
     if (client) {
-      initialValues.relatedTo = client.name;
+      initialValues.relatedTo = client.clientInfo.name;
     }
     if (task) {
       if (task.title) {

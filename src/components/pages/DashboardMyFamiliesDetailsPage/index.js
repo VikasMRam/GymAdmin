@@ -627,7 +627,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
             {currentTab === TASKS && (
               <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
-                <DashboardAgentTasksSectionContainer basePath={tasksPath} noBorder />
+                <DashboardAgentTasksSectionContainer
+                  basePath={tasksPath}
+                  client={client}
+                  noBorder
+                />
               </Role>
             )}
 

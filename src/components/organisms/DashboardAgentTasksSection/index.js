@@ -8,6 +8,7 @@ import mobileOnly from 'sly/components/helpers/mobileOnly';
 import pad from 'sly/components/helpers/pad';
 import SlyEvent from 'sly/services/helpers/events';
 import taskPropType from 'sly/propTypes/task';
+import clientPropType from 'sly/propTypes/client';
 import textAlign from 'sly/components/helpers/textAlign';
 import { AGENT_DASHBOARD_TASKS_PATH } from 'sly/constants/dashboardAppPaths';
 import { Box, Table, THead, TBody, Tr, Td, Heading, Block } from 'sly/components/atoms';
@@ -129,6 +130,7 @@ const getBasePath = (tab, basePath = AGENT_DASHBOARD_TASKS_PATH) => {
 
 export default class DashboardAgentTasksSection extends Component {
   static propTypes = {
+    client: clientPropType,
     tasks: arrayOf(taskPropType),
     tasksRaw: arrayOf(object),
     pagination: object,
@@ -149,7 +151,7 @@ export default class DashboardAgentTasksSection extends Component {
   };
 
   handleAddTaskClick = () => {
-    const { showModal, hideModal, notifyInfo, notifyError, meta } = this.props;
+    const { showModal, hideModal, notifyInfo, notifyError, meta, client } = this.props;
     const { priorities, statuses } = meta;
 
     showModal(
@@ -161,13 +163,14 @@ export default class DashboardAgentTasksSection extends Component {
           notifyInfo={notifyInfo}
           notifyError={notifyError}
           onSuccess={hideModal}
+          client={client}
         />
       ), null, 'noPadding', false
     );
   };
 
   handleTaskClick = (task) => {
-    const { showModal, hideModal, notifyInfo, notifyError, meta, tasksRaw, refetchTasks } = this.props;
+    const { showModal, hideModal, notifyInfo, notifyError, meta, tasksRaw, refetchTasks, client } = this.props;
     const { priorities, statuses } = meta;
 
     showModal(
@@ -182,6 +185,7 @@ export default class DashboardAgentTasksSection extends Component {
           task={task}
           tasksRaw={tasksRaw}
           refetchTasks={refetchTasks}
+          client={client}
         />
       ), null, 'noPadding', false
     );

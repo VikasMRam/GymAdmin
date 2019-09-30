@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { arrayOf, object, bool, string } from 'prop-types';
+import { arrayOf, object } from 'prop-types';
 import dayjs from 'dayjs';
 import qs from 'query-string';
 import debounce from 'lodash/debounce';
@@ -92,8 +92,6 @@ export default class DashboardAgentTasksSectionContainer extends Component {
     history: object,
     match: object,
     location: object,
-    noBorder: bool,
-    basePath: string,
   };
 
   refetchTasks = () => {
@@ -125,7 +123,7 @@ export default class DashboardAgentTasksSectionContainer extends Component {
   }, 200);
 
   render() {
-    const { tasks, status, match, location, noBorder, basePath } = this.props;
+    const { tasks, status, match, location, ...props } = this.props;
 
     const params = getPageParams({ match, location });
     const { type } = params;
@@ -150,6 +148,7 @@ export default class DashboardAgentTasksSectionContainer extends Component {
           <ModalController>
             {({ show, hide }) => (
               <DashboardAgentTasksSection
+                {...props}
                 isPageLoading={!hasFinished}
                 tasks={tasks}
                 tasksRaw={tasksRaw}
@@ -162,8 +161,6 @@ export default class DashboardAgentTasksSectionContainer extends Component {
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
                 refetchTasks={this.refetchTasks}
-                noBorder={noBorder}
-                basePath={basePath}
               />
             )}
           </ModalController>
