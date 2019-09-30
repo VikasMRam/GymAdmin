@@ -101,8 +101,8 @@ export default class AddOrEditTaskFormContainer extends Component {
       });
   };
 
-  updateTaskStatus = (task, status) => {
-    const { updateTask, tasksRaw, refetchTasks, onSuccess, notifyInfo } = this.props;
+  updateTaskStatus = (status) => {
+    const { updateTask, tasksRaw, refetchTasks, onSuccess, notifyInfo, task } = this.props;
     const taskRaw = tasksRaw.find(taskRaw => taskRaw.id === task.id);
     taskRaw.attributes.status = status;
     return updateTask({ id: task.id }, taskRaw)
@@ -126,6 +126,8 @@ export default class AddOrEditTaskFormContainer extends Component {
     if (client) {
       initialValues.relatedTo = client.clientInfo.name;
     }
+    let deleteTask;
+    let completeTask;
     if (task) {
       if (task.title) {
         initialValues.title = task.title;
@@ -154,6 +156,8 @@ export default class AddOrEditTaskFormContainer extends Component {
       if (task.creator) {
         initialValues.creator = task.creator;
       }
+      deleteTask = () => this.updateTaskStatus('Deleted');
+      completeTask = () => this.updateTaskStatus('Completed');
     }
 
     return (
@@ -165,8 +169,8 @@ export default class AddOrEditTaskFormContainer extends Component {
         onSubmit={this.handleSubmitTask}
         initialValues={initialValues}
         heading={task && task.title}
-        deleteTask={() => this.updateTaskStatus(task, 'Deleted')}
-        completeTask={() => this.updateTaskStatus(task, 'Completed')}
+        deleteTask={deleteTask}
+        completeTask={completeTask}
       />
     );
   }
