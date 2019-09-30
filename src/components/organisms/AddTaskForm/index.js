@@ -50,9 +50,9 @@ const AddTaskForm = ({
       extraActionButtonsAfterSubmit={isEditMode && [{
         text: 'Complete', onClick: completeTask,
       }]}
-      topRightIcon="trash"
-      topRightIconOnClick={deleteTask}
-      topRightIconPalette="danger"
+      topRightIcon={isEditMode && 'trash'}
+      topRightIconOnClick={isEditMode && deleteTask}
+      topRightIconPalette={isEditMode && 'danger'}
     >
       <Field
         name="title"

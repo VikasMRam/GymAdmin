@@ -87,28 +87,26 @@ const Filters = ({ datatable, autocompleteFilters }) => {
 
 const TableHeaderButtons = ({
   onColumnButtonClick, onSearchTextKeyUp, onSortButtonClick, datatable, className, autocompleteFilters,
-}) => {
-  return (
-    <Wrappper className={className}>
-      {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
-      {datatable
-        ? (
-          <SearchTextInput
-            type="search"
-            size="button"
-            placeholder="Type to filter by name"
-            value={(datatable.getFilter('name', 'cs') || {}).value || ''}
-            onChange={({ target }) => datatable.doSearch('name', 'cs', target.value)}
-          />
-        )
-        : <SearchTextInput type="search" placeholder="Type to filter by name" onKeyUp={onSearchTextKeyUp} />
-      }
-      {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
-      {datatable && <Filters datatable={datatable} autocompleteFilters={autocompleteFilters} />}
-      {onColumnButtonClick && <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>}
-    </Wrappper>
-  );
-};
+}) => (
+  <Wrappper className={className}>
+    {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
+    {datatable
+      ? (
+        <SearchTextInput
+          type="search"
+          size="button"
+          placeholder="Type to filter by name"
+          value={(datatable.getFilter('name', 'cs') || {}).value || ''}
+          onChange={({ target }) => datatable.doSearch('name', 'cs', target.value)}
+        />
+      )
+      : <SearchTextInput type="search" placeholder="Type to filter by name" onKeyUp={onSearchTextKeyUp} />
+    }
+    {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
+    {datatable && <Filters datatable={datatable} autocompleteFilters={autocompleteFilters} />}
+    {onColumnButtonClick && <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>}
+  </Wrappper>
+);
 
 TableHeaderButtons.propTypes = {
   autocompleteFilters: object,
