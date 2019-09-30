@@ -17,13 +17,13 @@ import {
   SUMMARY,
   MESSAGES, ACTIVITY,
 } from 'sly/constants/dashboardAppPaths';
-import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
+import { NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
 import SlyEvent from 'sly/services/helpers/events';
-import { CONVERSATION_PARTICIPANT_TYPE_CLIENT, CONVERSATION_PARTICIPANT_TYPE_USER } from 'sly/constants/conversations';
+import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
 import withBreakpoint from 'sly/components/helpers/breakpoint';
 
 @withUser
@@ -73,36 +73,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { history } = this.props;
     hide();
     history.push(generatePath(AGENT_DASHBOARD_FAMILIES_PATH));
-  };
-
-  onUnPause = (notifyInfo, notifyError) => {
-    const { setStatusToActive } = this;
-    const { invalidateClients } = this.props;
-
-    return setStatusToActive()
-      .then(invalidateClients)
-      .then(() => {
-        SlyEvent.getInstance().sendEvent({
-          category: 'fdetails',
-          action: 'unpause-family',
-          label: 'submit',
-          value: '',
-        });
-        notifyInfo('Family successfully unpaused');
-      })
-      .catch((r) => {
-        // TODO: Need to set a proper way to handle server side errors
-        const { body } = r;
-        const errorMessage = body.errors.map(e => e.title).join('. ');
-        console.error(errorMessage);
-        notifyError('Failed to unpause. Please try again.');
-        SlyEvent.getInstance().sendEvent({
-          category: 'fdetails',
-          action: 'unpause-family',
-          label: 'error',
-          value: '',
-        });
-      });
   };
 
   onAddNote = (data, notifyError, notifyInfo, hideModal) => {
@@ -194,17 +164,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       });
   };
 
-  setStatusToActive = () => {
-    const { updateClient, client, status } = this.props;
-    const { id } = client;
-    const { result: rawClient } = status.client;
-    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status']))
-      .set('attributes.status', FAMILY_STATUS_ACTIVE)
-      .value();
-
-    return updateClient({ id }, newClient);
-  };
-
   getHasConversationFinished = () => {
     const { status } = this.props;
     const { hasFinished: userHasFinished } = status.user;
@@ -234,7 +193,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   render() {
     const {
-      onRejectSuccess, onUnPause, onAddNote, onEditNote,
+      onRejectSuccess, onAddNote, onEditNote,
     } = this;
 
     const {
@@ -290,7 +249,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 onRejectSuccess={() => onRejectSuccess(hide)}
                 refetchClient={status.client.refetch}
                 refetchNotes={status.notes.refetch}
-                onUnPause={() => onUnPause(notifyInfo, notifyError)}
                 onAddNote={onAddNote}
                 onEditNote={onEditNote}
                 notes={notes}

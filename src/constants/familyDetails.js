@@ -19,6 +19,7 @@ export const FAMILY_STAGE_ORDERED = {
 export const TOTAL_STAGES_COUNT = 5;
 
 export const FAMILY_STATUS_ACTIVE = 'Active';
+export const FAMILY_STATUS_HOT = 'HOT';
 export const FAMILY_STATUS_ON_PAUSE = 'On Pause';
 export const FAMILY_STATUS_ARCHIVED = 'Archived';
 export const FAMILY_STATUS_LONG_TERM = 'Long Term';
