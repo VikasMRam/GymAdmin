@@ -136,7 +136,7 @@ const CommunitySearchList = ({
   // components.splice(adIndex, 0, <AdTileWrapper key="ad" ><AdTile {...searchAdProps} onClick={() => onAdTileClick()} /></AdTileWrapper>);
   const { current, total } = getPaginationData(requestMeta);
   const count = requestMeta['filtered-count'];
-  const present = (requestMeta['page-number'] * requestMeta['page-size'];
+  const present = (requestMeta['page-number'] * requestMeta['page-size']);
   const start = present + 1;
   const end = (present + requestMeta['page-size']  > count ? count : present);
 
