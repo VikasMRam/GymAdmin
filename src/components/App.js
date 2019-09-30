@@ -19,7 +19,6 @@ import { assetPath } from 'sly/components/themes';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Router from 'sly/components/molecules/Router';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
-
 import {
   DASHBOARD_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
@@ -34,7 +33,6 @@ import {
   ADMIN_DASHBOARD_CALLS_PATH,
   ADMIN_DASHBOARD_CALL_DETAILS_PATH,
 } from 'sly/constants/dashboardAppPaths';
-
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/components/pages/Error'));
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage'));
@@ -66,7 +64,7 @@ const DashboardMessagesContainer = loadable(() => import(/* webpackChunkName: "c
 const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/containers/DashboardMessageDetailsPageContainer'));
 const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallsOverview" */ 'sly/containers/DashboardCallsIndexPageContainer'));
 const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
-const DashboardAgentTasksPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/containers/DashboardAgentTasksPageContainer'));
+const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/components/pages/DashboardAgentTasksPage'));
 
 setGlobalStyles();
 setDatepickerStyles();
@@ -134,7 +132,7 @@ const routes = [
   },
   {
     path: AGENT_DASHBOARD_TASKS_PATH,
-    component: DashboardAgentTasksPageContainer,
+    component: DashboardAgentTasksPage,
     exact: true,
   },
   {

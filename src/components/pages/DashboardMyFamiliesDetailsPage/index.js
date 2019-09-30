@@ -2,6 +2,8 @@ import React, { Fragment, Component } from 'react';
 import styled, { css } from 'styled-components';
 import { string, func, object, arrayOf, bool } from 'prop-types';
 import { generatePath } from 'react-router';
+import { ifProp } from 'styled-tools';
+
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
@@ -49,9 +51,9 @@ import userPropType from 'sly/propTypes/user';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import Role from 'sly/components/common/Role';
 import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
-import { AGENT_ND_ROLE,PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
-import EntityTasksContainer from 'sly/containers/dashboard/EntityTasksContainer';
+import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
@@ -71,23 +73,6 @@ const SmallScreenBorder = css`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     border: 0;
-  }
-`;
-
-const CommunitiesTab = styled.div`
-  ${SmallScreenBorder};
-  padding: ${size('spacing.xxxLarge')} 0;
-
-  > * {
-    width: ${size('layout.col4')};
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col4')};
-    margin-left: auto;
-    margin-right: auto;
   }
 `;
 
@@ -232,11 +217,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     user: userPropType.isRequired,
   };
 
-  getTabsForUser = () => {
-    const {
-      client, user,
-    } = this.props;
-    const { roleID } = user;
+  getTabPathsForUser = () => {
+    const { client } = this.props;
     const { id } = client;
     const summaryPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: SUMMARY });
     const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: ACTIVITY });
@@ -245,15 +227,40 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const agentsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: PARTNER_AGENTS }); // Only for Admin
     const tasksPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: TASKS }); // Only for Admin
     const messagesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: MESSAGES });
+
+    return {
+      summaryPath,
+      activityPath,
+      familyDetailsPath,
+      communitiesPath,
+      agentsPath,
+      tasksPath,
+      messagesPath,
+    };
+  };
+
+  getTabsForUser = () => {
+    const { user } = this.props;
+    const { roleID } = user;
+    const {
+      summaryPath,
+      activityPath,
+      familyDetailsPath,
+      communitiesPath,
+      agentsPath,
+      tasksPath,
+      messagesPath,
+    } = this.getTabPathsForUser();
+
     const summaryTab = (
-      <MobileTab id={SUMMARY} to={summaryPath} onClick={clickEventHandler('fdetails-tab', 'Summary')}>
+      <MobileTab id={SUMMARY} key={SUMMARY} to={summaryPath} onClick={clickEventHandler('fdetails-tab', 'Summary')}>
         Summary
       </MobileTab>
     );
 
     const genTab = ({ id, to, label }) => {
       return (
-        <Tab id={id} to={to} onClick={clickEventHandler('fdetails-tab', label)}>
+        <Tab id={id} key={id} to={to} onClick={clickEventHandler('fdetails-tab', label)}>
           {label}
         </Tab>
       );
@@ -446,7 +453,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }
 
     if (!client) {
-
       const prospectingUrl = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: PROSPECTING });
       const backlink = <BackLink linkText="Back to Prospects" to={prospectingUrl} onClick={clickEventHandler('fdetails', 'Back to Prospects')} />;
       return (
@@ -514,6 +520,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     const backLinkHref = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: TabMap[levelGroup] });
     const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
+    const { tasksPath } = this.getTabPathsForUser();
 
     return (
       <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
@@ -620,14 +627,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
             {currentTab === TASKS && (
               <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
-                <CommunitiesTab>
-                  <EntityTasksContainer
-                    entityId={client.id}
-                    entityType="Client"
-                  />
-                </CommunitiesTab>
+                <DashboardAgentTasksSectionContainer basePath={tasksPath} noBorder />
               </Role>
-
             )}
 
             {currentTab === MESSAGES && (

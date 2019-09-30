@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import qs from 'query-string';
-import { arrayOf, object } from 'prop-types';
+import { arrayOf, object, bool, string } from 'prop-types';
 import dayjs from 'dayjs';
+import qs from 'query-string';
 import debounce from 'lodash/debounce';
+import { withRouter } from 'react-router';
 
+import { prefetch, withUser } from 'sly/services/newApi';
 import taskPropType from 'sly/propTypes/task';
-import { withUser, prefetch } from 'sly/services/newApi';
-import { getSearchParams } from 'sly/services/helpers/search';
 import { TASK_STATUS_NOT_STARTED_CODE, TASK_STATUS_IN_PROGRESS_CODE } from 'sly/constants/tasks';
-import DashboardAgentTasksPage from 'sly/components/pages/DashboardAgentTasksPage';
+import { getSearchParams } from 'sly/services/helpers/search';
+import RefreshRedirect from 'sly/components/common/RefreshRedirect';
+import DashboardAgentTasksSection from 'sly/components/organisms/DashboardAgentTasksSection';
 import ModalController from 'sly/controllers/ModalController';
 import NotificationController from 'sly/controllers/NotificationController';
-import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 
 const getPaginationData = ({ result, meta }) => {
   const count = result.length;
@@ -67,6 +68,8 @@ const getPageParams = ({ match, location }) => {
   };
 };
 
+@withRouter
+
 @prefetch('tasks', 'getTasks', (getClients, { match, location }) => {
   const { pageNumber, date, status } = getPageParams({ match, location });
   const filters = {
@@ -82,19 +85,21 @@ const getPageParams = ({ match, location }) => {
 
 @withUser
 
-export default class DashboardAgentTasksPageContainer extends Component {
+export default class DashboardAgentTasksSectionContainer extends Component {
   static propTypes = {
     tasks: arrayOf(taskPropType),
     status: object,
+    history: object,
     match: object,
     location: object,
-    history: object,
+    noBorder: bool,
+    basePath: string,
   };
 
   refetchTasks = () => {
     const { status } = this.props;
     status.tasks.refetch();
-  }
+  };
 
   handleSearchTextKeyUp = (event) => {
     const { value } = event.target;
@@ -120,9 +125,7 @@ export default class DashboardAgentTasksPageContainer extends Component {
   }, 200);
 
   render() {
-    const {
-      tasks, status, match, location,
-    } = this.props;
+    const { tasks, status, match, location, noBorder, basePath } = this.props;
 
     const params = getPageParams({ match, location });
     const { type } = params;
@@ -134,18 +137,20 @@ export default class DashboardAgentTasksPageContainer extends Component {
     }
     if (!hasFinished) {
       return (
-        <DashboardAgentTasksPage
+        <DashboardAgentTasksSection
           isPageLoading={!hasFinished}
         />
       );
     }
     const pagination = getPaginationData(tasksStatus);
+
     return (
       <NotificationController>
-        {({ notifyError, notifyInfo }) => (
+        {({ notifyInfo, notifyError }) => (
           <ModalController>
             {({ show, hide }) => (
-              <DashboardAgentTasksPage
+              <DashboardAgentTasksSection
+                isPageLoading={!hasFinished}
                 tasks={tasks}
                 tasksRaw={tasksRaw}
                 pagination={pagination}
@@ -157,6 +162,8 @@ export default class DashboardAgentTasksPageContainer extends Component {
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
                 refetchTasks={this.refetchTasks}
+                noBorder={noBorder}
+                basePath={basePath}
               />
             )}
           </ModalController>
