@@ -151,7 +151,7 @@ export default class DashboardAgentTasksSection extends Component {
   };
 
   handleAddTaskClick = () => {
-    const { showModal, hideModal, notifyInfo, notifyError, meta, client } = this.props;
+    const { showModal, hideModal, notifyInfo, notifyError, meta, client, refetchTasks } = this.props;
     const { priorities, statuses } = meta;
 
     showModal(
@@ -164,6 +164,7 @@ export default class DashboardAgentTasksSection extends Component {
           notifyError={notifyError}
           onSuccess={hideModal}
           client={client}
+          refetchTasks={refetchTasks}
         />
       ), null, 'noPadding', false
     );
