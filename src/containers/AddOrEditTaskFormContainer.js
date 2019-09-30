@@ -47,7 +47,7 @@ export default class AddOrEditTaskFormContainer extends Component {
 
   handleSubmitTask = (data) => {
     const {
-      createTask, updateTask, notifyInfo, onSuccess, client, task,
+      createTask, updateTask, notifyInfo, onSuccess, client, task, refetchTasks,
     } = this.props;
     const { owner, ...postData } = data;
     const payload = {
@@ -83,6 +83,7 @@ export default class AddOrEditTaskFormContainer extends Component {
     }
 
     taskApiCall
+      .then(refetchTasks)
       .then(() => {
         if (task) {
           notifyInfo('Task successfully updated');
