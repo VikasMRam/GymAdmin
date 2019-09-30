@@ -582,12 +582,12 @@ export default class CommunityDetailPage extends Component {
                   id="pricing-and-floor-plans"
                 >
                   {hasCCRC &&
-                    <div>
+                    <MainSection>
                       <Paragraph>
                         Pricing for {name} may include both a one time buy-in fee and a monthly component. Connect directly with {name} to find out your pricing.
                       </Paragraph>
                       <Button ghost onClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}>Get Detailed Pricing</Button>
-                    </div>
+                    </MainSection>
                   }
                   {!hasCCRC && (pricesList.length > 0 || estimatedPriceList.length > 0 || floorPlans.length === 0) &&
                     <CommunityPricingTable name={name}
