@@ -206,7 +206,7 @@ const CommunityPricingTable = ({
         <Block>
           { (pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === 'up to 20 Beds' &&
             <Paragraph>
-              Pricing in assisted living communities can be difficult to estimate.<br />
+              Pricing in assisted living communities can be difficult to estimate.
               In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
               Small communities like this typically have &quot;all-inclusive&quot; pricing that gives the resident one monthly
               price.
@@ -216,23 +216,23 @@ const CommunityPricingTable = ({
           }
           { (pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '20 - 51 Beds' &&
           <Paragraph>
-            Pricing in assisted living communities can be difficult to estimate.<br />
-            In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
+            Pricing in assisted living communities can be difficult to estimate.
+            In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
             Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
-            price.<br />
-            Some communities will use a Points or Level of Care system to determine the care related fees.<br />
+            price.
+            Some communities will use a Points or Level of Care system to determine the care related fees.
             Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
-            service.<br />
+            service.
           </Paragraph>
           }
           {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '51 +' &&
           <Paragraph>
-            Pricing in assisted living communities can be difficult to estimate.<br />
-            In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
-            Most large sized communities like this typically charge additional care fees.<br />
-            Communities will use a Points or a Level of Care system to determine the care related fees.<br />
+            Pricing in assisted living communities can be difficult to estimate.
+            In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
+            Most large sized communities like this typically charge additional care fees.
+            Communities will use a Points or a Level of Care system to determine the care related fees.
             Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
-            service.<br />
+            service.
           </Paragraph>
           }
         </Block>
