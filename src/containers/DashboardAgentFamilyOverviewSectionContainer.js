@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
+import { withRouter, generatePath } from 'react-router';
 
 import { prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
 import DashboardAgentFamilyOverviewSection from 'sly/components/organisms/DashboardAgentFamilyOverviewSection';
-import { withRouter } from 'react-router';
-
 import ModalController from 'sly/controllers/ModalController';
 import NotificationController from 'sly/controllers/NotificationController';
 
@@ -51,6 +51,14 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
     match: object,
   };
 
+  onAddFamilySuccess = (client) => {
+    const { history, status } = this.props;
+    const { id } = client;
+
+    status.clients.refetch();
+    history.push(generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id }));
+  };
+
   render() {
     const {
       clients, status, datatable, match,
@@ -79,6 +87,7 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
                 showModal={show}
                 hideModal={hide}
                 notifyInfo={notifyInfo}
+                onAddFamilySuccess={this.onAddFamilySuccess}
               />
             )}
           </ModalController>
