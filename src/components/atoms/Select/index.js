@@ -57,17 +57,15 @@ const Wrapper = styled.div`
     display: none;
   }  
   
-  .react-select__option {
+  .react-select__option, .react-select__single-value {
     display: flex;
     align-items: center;
     padding-left: ${size('icon.large')}; 
     background: transparent;
+    
     &--is-selected  {
       color: ${palette('primary.base')};
       font-weight: ${size('weight.medium')};
-    }
-    &${ifProp('alwaysShowIcon', '', '--is-selected')}  {
-      padding-left: 0;
     }
   }
   
@@ -87,8 +85,8 @@ const Wrapper = styled.div`
 
 const StyledIcon = styled(Icon)`
   justify-content: center;
+  align-self: baseline;
   width: ${size('icon.large')};
-  height: 1em;
 `;
 
 const StyledHr = styled(Hr)`
@@ -110,20 +108,20 @@ const getIconSize = (textSize) => {
 
 const StyledOption = styled(Option)`
   .react-select__menu-list &.react-select__option {
+    ${ifProp('showIcon', css`padding-left: 0;`)};
     color: ${palette('base')};
   }
 `;
 
 const IconOption = ({ selectProps,  ...props }) => {
   const iconSize = getIconSize(selectProps.textSize);
-  console.log('iconSize', iconSize)
   const {  icon = 'check' } = props.data;
   const pp = props.data.palette || 'primary';
-  const showIcon = props.isSelected || selectProps.alwaysShowIcon;
+  const showIcon = props.data.icon || props.isSelected;
   return (
-    <StyledOption palette={pp} {...props}>
+    <StyledOption showIcon={showIcon} palette={pp} {...props}>
       {showIcon && <StyledIcon icon={icon} size={iconSize} palette={pp} />}
-      {props.data.label}
+      <span>{props.data.label}</span>
     </StyledOption>
   );
 };
@@ -136,19 +134,22 @@ IconOption.propTypes = {
 
 const StyledSingleValue = styled(SingleValue)`
   &.react-select__single-value {
-    color: ${(p) => {
-      return palette(p.palette, 'base');
-    }};
+    ${ifProp('showIcon', css` padding-left: 0;`)};
+    ${StyledIcon} {
+      width: ${size('icon.regular')};
+      justify-content: flex-start;
+      margin-left: ${size('spacing.tiny')};
+    }
+    color: ${palette('base')};
   }
 `;
 
 const IconSingleValue = ({ selectProps, ...props }) => {
   const iconSize = getIconSize(selectProps.textSize);
   const { palette: pp = 'primary', icon = 'check' } = props.data;
-  const showIcon = props.data.icon || selectProps.alwaysShowIcon;
-  console.log(pp)
+  const showIcon = !!props.data.icon;
   return (
-    <StyledSingleValue palette={pp} {...props}>
+    <StyledSingleValue showIcon={showIcon} palette={pp} {...props}>
       {showIcon && <StyledIcon icon={icon} size={iconSize} palette={pp} />}
       {props.data.label}
     </StyledSingleValue>
@@ -190,13 +191,13 @@ const getTextSize = (size) => {
 const theme = theme => ({
   ...theme,
   palette: getKey('palette'),
+  sizes: getKey('sizes'),
 });
 
 const Select = ({
   size,
   value,
   components,
-  alwaysShowIcon,
   options,
   async,
   loadOptions,
@@ -213,7 +214,7 @@ const Select = ({
   const textSize = getTextSize(size);
 
   return (
-    <Wrapper textSize={textSize} size={size} alwaysShowIcon={alwaysShowIcon}>
+    <Wrapper textSize={textSize} size={size} >
       <SelectComponent
         className="react-select-container"
         classNamePrefix="react-select"
@@ -222,7 +223,6 @@ const Select = ({
         loadOptions={loadOptions}
         defaultValue={value}
         textSize={textSize}
-        alwaysShowIcon={alwaysShowIcon}
         components={{ Option: IconOption, Group: GroupSection, SingleValue: IconSingleValue, ...components }}
         blurInputOnSelect
         {...props}
@@ -232,7 +232,6 @@ const Select = ({
 };
 
 Select.propTypes = {
-  alwaysShowIcon: bool,
   size: oneOf(['tiny', 'small', 'regular', 'button', 'large']),
   lineHeight: string,
   async: bool,

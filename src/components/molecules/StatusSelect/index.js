@@ -15,7 +15,9 @@ const options = [
 
 const StyledField = styled(Field)`
   text-transform: uppercase;
-  font-weight: ${size('weight.bold')};
+  & .react-select__single-value, & .react-select__option {
+    font-weight: ${size('weight.bold')};
+  }
 `;
 
 export default class StatusSelect extends Component {
