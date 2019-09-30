@@ -83,19 +83,19 @@ export const buildEstimatedPriceList = (community) => {
     twoBedroomApartmentRate,
   } = estimatedPrice;
   try {
-    if (sharedSuiteRate !== 0) {
+    if (sharedSuiteRate && sharedSuiteRate !== 0) {
       priceList.push({ label: 'Shared Suite', value: sharedSuiteRate });
     }
-    if (privateSuiteRate !== 0) {
+    if (privateSuiteRate && privateSuiteRate !== 0) {
       priceList.push({ label: 'Private Suite', value: privateSuiteRate });
     }
-    if (studioApartmentRate !== 0) {
+    if (studioApartmentRate && studioApartmentRate !== 0) {
       priceList.push({ label: 'Studio Apartment', value: studioApartmentRate });
     }
-    if (oneBedroomApartmentRate !== 0) {
+    if (oneBedroomApartmentRate && oneBedroomApartmentRate !== 0) {
       priceList.push({ label: 'One Bedroom Apartment', value: oneBedroomApartmentRate });
     }
-    if (twoBedroomApartmentRate !== 0) {
+    if (twoBedroomApartmentRate && twoBedroomApartmentRate !== 0) {
       priceList.push({ label: 'Two Bedroom Apartment', value: twoBedroomApartmentRate });
     }
   } catch (e) {
