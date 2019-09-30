@@ -589,7 +589,7 @@ export default class CommunityDetailPage extends Component {
                       <Button ghost onClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}>Get Detailed Pricing</Button>
                     </div>
                   }
-                  {!hasCCRC && (pricesList.length > 0 || estimatedPriceList.length > 0 || floorPlans.length < 0) &&
+                  {!hasCCRC && (pricesList.length > 0 || estimatedPriceList.length > 0 || floorPlans.length === 0) &&
                     <CommunityPricingTable name={name}
                                            pricesList={pricesList}
                                            estimatedPriceList={estimatedPriceList}
