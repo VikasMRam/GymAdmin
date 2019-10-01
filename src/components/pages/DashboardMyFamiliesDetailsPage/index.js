@@ -166,7 +166,20 @@ const SmallScreenClientNameWrapper = styled.div`
   }
 `;
 
+const StyledStatusSelect = styled(StatusSelect)`
+  margin-bottom: 0;
+`;
+
 const StyledClientNameBlock = styled(Block)`
+  display: flex;
+  
+  > :nth-child(1) {
+    flex-grow: 1;
+  }
+  
+  > :nth-child(2) {
+    flex-grow: 0;
+  }
 `;
 
 const ClientName = ({ client, ...props }) => {
@@ -177,8 +190,8 @@ const ClientName = ({ client, ...props }) => {
       weight="medium"
       size="subtitle"
     >
-      {name}
-      <StatusSelect clientId={client.id} {...props} />
+      <span>{name}</span>
+      <StyledStatusSelect clientId={client.id} {...props} />
     </StyledClientNameBlock>
   );
 };
