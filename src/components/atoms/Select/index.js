@@ -221,7 +221,7 @@ const Select = ({
         theme={theme}
         options={options}
         loadOptions={loadOptions}
-        defaultValue={value}
+        value={value}
         textSize={textSize}
         components={{ Option: IconOption, Group: GroupSection, SingleValue: IconSingleValue, ...components }}
         blurInputOnSelect

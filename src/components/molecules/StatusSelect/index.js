@@ -53,10 +53,14 @@ export default class StatusSelect extends Component {
     notifyInfo: func,
   };
 
+  state = {
+    status: this.props.client.status,
+  };
+
   onChange = ({ value }) => {
     const { notifyInfo, hideModal } = this.props;
 
-    this.confirm(value)
+    this.setState({ status: value }, () => this.confirm(value)
       .then(reason => this.submitUserStatus(value, reason))
       .then(() => {
         SlyEvent.getInstance().sendEvent({
@@ -67,18 +71,20 @@ export default class StatusSelect extends Component {
         });
         notifyInfo(`Family successfully set to "${value}"`);
       })
-      .then(hideModal);
+      .then(hideModal));
   };
 
   confirm = (toStatus) => {
     const { showModal, hideModal, client } = this.props;
+
+    const onCancel = () => this.setState({ status: client.status }, hideModal);
 
     return new Promise((resolve) => {
       switch (toStatus) {
         case FAMILY_STATUS_ON_PAUSE: return showModal((
           <ConfirmReasonFormContainer
             onAgree={({ reason }) => resolve(reason)}
-            onCancel={hideModal}
+            onCancel={onCancel}
             title={`Place ${client.name} on Pause`}
             message="Please write a reason why you are putting this family on Pause..."
           />
@@ -88,7 +94,7 @@ export default class StatusSelect extends Component {
             heading={`${client.name} to "${toStatus}"?`}
             description={`Are you sure that you want to set ${client.name} to "${toStatus}"?`}
             onConfirmClick={() => resolve()}
-            onCancelClick={hideModal}
+            onCancelClick={onCancel}
           />
         ));
       }
@@ -106,11 +112,11 @@ export default class StatusSelect extends Component {
   };
 
   render() {
-    const { client, ...props } = this.props;
+    const { ...props } = this.props;
     return (
       <StyledField
         type="choice"
-        value={client.status}
+        value={this.state.status}
         size="tiny"
         options={options}
         onChange={this.onChange}
