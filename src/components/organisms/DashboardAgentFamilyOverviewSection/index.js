@@ -107,10 +107,35 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
     showModal: func.isRequired,
     hideModal: func.isRequired,
     notifyInfo: func.isRequired,
+    onAddFamilySuccess: func,
   };
 
   static defaultProps = {
     mobileContents: [],
+  };
+
+  handleAddFamilyClick = () => {
+    const {
+      showModal,
+      hideModal,
+      notifyInfo,
+      meta,
+      onAddFamilySuccess,
+    } = this.props;
+    const {
+      lookingFor,
+      timeToMove,
+    } = meta;
+
+    showModal((
+      <AddFamilyFormContainer
+        notifyInfo={notifyInfo}
+        lookingFor={lookingFor}
+        timeToMove={timeToMove}
+        onCancel={hideModal}
+        onSuccess={onAddFamilySuccess}
+      />
+    ), null, 'noPadding', false);
   };
 
   render() {
@@ -121,30 +146,16 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
       isPageLoading,
       datatable,
       meta,
-      showModal,
-      hideModal,
-      notifyInfo,
     } = this.props;
 
     const {
       autocomplete_filters: autocompleteFilters = {},
-      lookingFor,
-      timeToMove,
     } = meta;
-
-    const handleAddFamilyClick = () => showModal((
-      <AddFamilyFormContainer
-        notifyInfo={notifyInfo}
-        lookingFor={lookingFor}
-        timeToMove={timeToMove}
-        onCancel={hideModal}
-      />
-    ), null, 'noPadding', false);
 
     const beforeTabHeader = (
       <TwoColumn>
         <Heading level="subtitle">My Families</Heading>
-        <IconButton icon="user-add" onClick={handleAddFamilyClick} hideTextInMobile>
+        <IconButton icon="user-add" onClick={this.handleAddFamilyClick} hideTextInMobile>
           Add family
         </IconButton>
       </TwoColumn>

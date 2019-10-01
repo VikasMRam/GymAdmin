@@ -73,7 +73,7 @@ export default class AddFamilyFormContainer extends Component {
 
   handleAddFamily = (data) => {
     const {
-      createClient, onCancel, notifyInfo,
+      createClient, onCancel, notifyInfo, onSuccess,
     } = this.props;
     const {
       name, phone, email, source, notes, residentName, preferredLocation, timeToMove, lookingFor,
@@ -121,9 +121,12 @@ export default class AddFamilyFormContainer extends Component {
     }
 
     return createClient(payload)
-      .then(() => {
+      .then((resp) => {
         onCancel();
         notifyInfo('Family added successfully');
+        if (onSuccess) {
+          onSuccess(normJsonApi(resp));
+        }
       });
   };
 

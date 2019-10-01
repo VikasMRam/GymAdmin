@@ -68,6 +68,13 @@ const FamiliesCountStatusBlock = pad(styled(Box)`
   background-color: ${palette('white.base')};
 `, 'large');
 
+const StyledFamiliesCountStatusBlock = styled(FamiliesCountStatusBlock)`
+  margin-bottom: 0;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+`;
+
 const TwoColumn = pad(styled.div`
   display: flex;
   justify-content: space-between;
@@ -238,6 +245,7 @@ export default class DashboardAgentTasksSection extends Component {
 
     const TableHeaderButtonComponent = noBorder ? StyledTableHeaderButtons : TableHeaderButtons;
     const SectionComponent = noBorder ? StyledSection : Section;
+    const StatusBlock = noBorder ? StyledFamiliesCountStatusBlock : FamiliesCountStatusBlock;
 
     return (
       <Fragment>
@@ -295,9 +303,9 @@ export default class DashboardAgentTasksSection extends Component {
         </SectionComponent>
 
         {!isPageLoading && tasks.length > 0 &&
-          <FamiliesCountStatusBlock padding="regular" size="caption" snap="top">
+          <StatusBlock padding="regular" size="caption" snap="top">
             {pagination.text}
-          </FamiliesCountStatusBlock>
+          </StatusBlock>
         }
       </Fragment>
     );
