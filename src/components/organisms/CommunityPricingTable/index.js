@@ -129,8 +129,8 @@ const toolTipCode = (size) => {
 const CommunityPricingTable = ({
   pricesList, estimatedPriceList, price, getPricing, name, size, showToolTip,
 }) => {
-  const basePer = percentageOf(price, 10);
-  const from = Math.round(price - basePer);
+  const basePer = percentageOf(price, 20);
+  const from = Math.round(price);
   const to = Math.round(price + basePer);
   const estimated = pricesList.length === 0;
   return (
@@ -206,7 +206,7 @@ const CommunityPricingTable = ({
         <Block>
           { (pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === 'up to 20 Beds' &&
             <Paragraph>
-              Pricing in assisted living communities can be difficult to estimate.
+              **Pricing in assisted living communities can be difficult to estimate.
               In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
               Small communities like this typically have &quot;all-inclusive&quot; pricing that gives the resident one monthly
               price.
@@ -216,7 +216,7 @@ const CommunityPricingTable = ({
           }
           { (pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '20 - 51 Beds' &&
           <Paragraph>
-            Pricing in assisted living communities can be difficult to estimate.
+            **Pricing in assisted living communities can be difficult to estimate.
             In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
             Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
             price.
@@ -227,7 +227,7 @@ const CommunityPricingTable = ({
           }
           {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '51 +' &&
           <Paragraph>
-            Pricing in assisted living communities can be difficult to estimate.
+            **Pricing in assisted living communities can be difficult to estimate.
             In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
             Most large sized communities like this typically charge additional care fees.
             Communities will use a Points or a Level of Care system to determine the care related fees.
