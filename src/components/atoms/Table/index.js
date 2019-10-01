@@ -136,7 +136,7 @@ export const TextTd = ({
 );
 
 TextTd.propTypes = {
-  children: string.isRequired,
+  children: string,
   disabled: bool,
   borderless: bool,
 };
