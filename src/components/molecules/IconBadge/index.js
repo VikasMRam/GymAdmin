@@ -14,7 +14,7 @@ const StyledBadge = styled(Badge)`
   border: ${size('border.regular')} solid ${palette('slate.stroke')};
   display: inline-flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   padding: ${size('spacing.small')} ${size('spacing.regular')};
 `;
 
@@ -27,7 +27,7 @@ const IconBadge = ({
 }) => (
   <StyledBadge className={className} palette={badgePalette} variation={badgeVariation} textPalette={palette} borderRadius={borderRadius}>
     <StyledIcon icon={icon} palette={palette} size="small" />
-    <Block weight="bold" palette={palette} size="tiny">
+    <Block weight="bold" palette={palette} size="nano">
       {text}
     </Block>
   </StyledBadge>

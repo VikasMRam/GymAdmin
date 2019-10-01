@@ -18,17 +18,17 @@ export const StyledIcon = styled(Icon)`
   }
 `;
 
-const Checkbox = props => <StyledIcon icon="radio" {...props} />;
+const Radio = props => <StyledIcon icon="radio" {...props} />;
 
-Checkbox.propTypes = {
+Radio.propTypes = {
   checked: bool.isRequired,
   palette: string,
 };
 
-Checkbox.defaultProps = {
+Radio.defaultProps = {
   checked: false,
   palette: 'primary',
 };
 
-export default Checkbox;
+export default Radio;
 

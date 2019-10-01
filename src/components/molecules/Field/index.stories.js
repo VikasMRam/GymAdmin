@@ -10,6 +10,8 @@ const labelRight = (
   </Block>
 );
 
+const optionsList = [{ value: 'sms', label: 'SMS' }, { value: 'email', label: 'Email' }, { value: 'phone', label: 'Phone' }];
+
 storiesOf('Molecules|Field', module)
   .add('default', () => <Field name="field" placeholder="Input some text" />)
   .add('with label', () => (
@@ -78,6 +80,9 @@ storiesOf('Molecules|Field', module)
     </Field>))
   .add('type checkbox', () => (
     <Field name="field" label="Label" type="checkbox" />
+  ))
+  .add('type checkbox with options', () => (
+    <Field name="field" label="Contact preference" type="checkbox" options={optionsList} />
   ))
   .add('type radio', () => <Field name="field" label="Label" type="radio" />)
   .add('type radio invalid with error message', () => (

@@ -153,6 +153,8 @@ export default class FamilyDetailsFormContainer extends Component {
       budget: maxMonthlyBudget,
       timeToMove: moveTimeline,
       preferredLocation,
+      slyMessage,
+      contactPreferences: ['sms', 'email'],
     };
     ({ preferredLocation } = formData);
 
@@ -160,7 +162,6 @@ export default class FamilyDetailsFormContainer extends Component {
       <ReduxForm
         onSubmit={this.handleSubmit}
         initialValues={initialValues}
-        intro={slyMessage}
         preferredLocation={preferredLocation}
         {...props}
       />

@@ -17,6 +17,7 @@ import BoxChoice from 'sly/components/molecules/BoxChoice';
 import IconInput from 'sly/components/molecules/IconInput';
 import InputMessage from 'sly/components/molecules/InputMessage';
 import Autocomplete from 'sly/components/molecules/Autocomplete';
+import CheckboxInput from 'sly/components/molecules/CheckboxInput';
 
 const textTypeInputs = ['email', 'iconInput'];
 const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
@@ -46,6 +47,8 @@ const getInputComponent = (type) => {
       return Select;
     case 'autocomplete':
       return Autocomplete;
+    case 'checkbox':
+      return CheckboxInput;
     default:
       return Input;
   }
@@ -64,7 +67,7 @@ const Wrapper = styled.div`
 
   ${ifProp('row', css`
     flex-direction: row;
-    align-items: center;
+    align-items: baseline;
   `)};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -160,7 +163,7 @@ const Field = ({
     ...props,
   };
   const InputComponent = getInputComponent(type);
-  const renderInputFirst = type === 'checkbox' || type === 'radio';
+  const renderInputFirst = (type === 'checkbox' && !props.options) || type === 'radio';
   const valueLength = inputProps.value ? inputProps.value.length : 0;
   if (type === 'date') {
     inputProps.selected = inputProps.value;

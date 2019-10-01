@@ -98,7 +98,6 @@ const StyledFamilyActivityItem = styled(FamilyActivityItem)`
 
 const FamilyDetailsTab = styled.div`
   ${SmallScreenBorder};
-  padding: ${size('spacing.xLarge')};
 `;
 
 const TabWrapper = styled(Box)`
