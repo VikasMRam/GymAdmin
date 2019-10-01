@@ -157,7 +157,6 @@ const BigScreenSummarySection = styled.section`
 `;
 
 const SmallScreenClientNameWrapper = styled.div`
-  display: flex;
   padding: ${size('spacing.large')};
   background-color: ${palette('white', 'base')};
 
@@ -172,17 +171,26 @@ const StyledStatusSelect = styled(StatusSelect)`
 
 const StyledClientNameBlock = styled(Block)`
   display: flex;
-  
-  > :nth-child(1) {
-    flex-grow: 1;
-  }
+  align-items: center;
   
   > :nth-child(2) {
-    flex-grow: 0;
+    flex-grow: 1;
+    text-align: center;
   }
+  
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    > :nth-child(2) {
+      text-align: left;
+    }
+  
+    > :nth-child(1) {
+      display: none;
+    }
+  }
+  
 `;
 
-const ClientName = ({ client, ...props }) => {
+const ClientName = ({ client, backLinkHref, ...props }) => {
   const { clientInfo } = client;
   const { name } = clientInfo;
   return (
@@ -190,6 +198,9 @@ const ClientName = ({ client, ...props }) => {
       weight="medium"
       size="subtitle"
     >
+      <Link to={backLinkHref}>
+        <Icon icon="arrow-left" palette="primary" />
+      </Link>
       <span>{name}</span>
       <StyledStatusSelect clientId={client.id} {...props} />
     </StyledClientNameBlock>
@@ -507,7 +518,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const backLinkHref = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: TabMap[levelGroup] });
     const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
 
-    const clientName = <ClientName client={client} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} />;
+    const clientName = <ClientName client={client} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} />;
 
     return (
       <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
@@ -532,9 +543,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
           </BigScreenSummarySection>
           <SmallScreenClientNameWrapper>
-            <Link to={backLinkHref}>
-              <Icon icon="arrow-left" palette="primary" />
-            </Link>
             {clientName}
           </SmallScreenClientNameWrapper>
         </div>
