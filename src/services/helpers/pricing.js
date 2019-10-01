@@ -34,7 +34,7 @@ const getAveragePriceString = (priceStringOrNumber) => {
 
 export const buildPriceList = (community) => {
   const priceList = [];
-  const { propInfo, rgsAux } = community;
+  const { propInfo } = community;
   const {
     sharedSuiteRate,
     privateSuiteRate,
@@ -147,10 +147,6 @@ export const calculatePricing = (community, estimatedPrice) => {
       }
     }
     estimatedPriceBase = startingRate || mEstimatedPrice.providedAverage || mEstimatedPrice.estimatedAverage;
-  }
-  const pricesList = buildPriceList(community);
-  if (pricesList.length > 0) {
-    estimatedPriceBase = pricesList[0].value;
   }
   return {
     estimatedPriceLabelMap, maxPrice, estimatedPriceBase, sortedEstimatedPrice,
