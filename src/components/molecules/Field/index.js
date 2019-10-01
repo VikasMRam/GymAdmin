@@ -1,6 +1,6 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
-import { string, bool, oneOf, number, oneOfType, node, array, object } from 'prop-types';
+import { string, bool, oneOf, number, oneOfType, node, array, object, arrayOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -247,6 +247,7 @@ Field.propTypes = {
   labelRight: node,
   wideWidth: bool,
   hideValue: bool,
+  options: arrayOf(object),
 };
 
 Field.defaultProps = {
