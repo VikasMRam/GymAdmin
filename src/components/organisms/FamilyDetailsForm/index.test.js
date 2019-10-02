@@ -38,6 +38,21 @@ const monthlyBudget = [
   '$5K+',
 ];
 
+const roomTypes = [
+  '1 Bedroom',
+  'Suite',
+];
+
+const careLevels = [
+  'Ambulatory',
+  'Non Ambulatory',
+];
+
+const communityTypes = [
+  'Assisted Living',
+  'Memory Care',
+];
+
 const intro = 'Rhoda Goldman Plaza';
 const handleSubmit = jest.fn();
 const defaultProps = {
@@ -47,6 +62,9 @@ const defaultProps = {
   gender,
   lookingFor,
   monthlyBudget,
+  roomTypes,
+  careLevels,
+  communityTypes,
 };
 
 const wrap = (props = {}) => shallow(<FamilyDetailsForm {...defaultProps} {...props} />);
