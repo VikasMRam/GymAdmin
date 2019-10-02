@@ -267,12 +267,12 @@ export default class UpdateFamilyStageFormContainer extends Component {
     let referralAgreement;
     let monthlyFees;
     if (formState) {
-      this.currentStage = getStageDetails(stage, user);
+      this.currentStage = getStageDetails(stage);
       ({ levelGroup, showRejectOption } = this.currentStage);
       ({
         stage: nextStage, lossReason: currentLossReason, referralAgreementType, referralAgreement, monthlyFees,
       } = formState);
-      this.nextStage = getStageDetails(nextStage, user);
+      this.nextStage = getStageDetails(nextStage);
       ({ levelGroup: nextStageGroup } = this.nextStage);
     }
     const initialValues = {
