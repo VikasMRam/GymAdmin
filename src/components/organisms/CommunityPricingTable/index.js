@@ -37,10 +37,16 @@ const StyledTd = styled.td`
   padding: ${size('spacing.regular')} ${size('spacing.xLarge')}; 
 `;
 
-const Wrapper = styled.table`
+const StyledTableBlock = styled(Block)`
+  padding: 0 ${size('spacing.xLarge')};
+`;
+
+const StyledTable = styled.table`
   border-collapse: collapse;
   width: 100%;
   position: relative;
+  border-radius: ${size('spacing.small')};
+  border: ${size('border.regular')} solid ${palette('grey', 'filler')};
 `;
 
 const StyledBlock = styled(Block)`
@@ -148,59 +154,63 @@ const CommunityPricingTable = ({
         </StyledBlockNp>
       }
       { pricesList.length > 0 &&
-        <Wrapper>
-          <thead>
-            <tr>
-              <StyledTh colSpan={2} color="slate" bgcolor="grey">
-                Costs By Room Type**
-              </StyledTh>
-            </tr>
-          </thead>
-          <tbody>
-            <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Average Monthly Cost</StyledTd> </Tr>
-            {pricesList.map((price) => {
-            const { label, value } = price;
-            return (
-              <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
-            );
-          })}
-          </tbody>
-        </Wrapper>
+        <StyledTableBlock>
+          <StyledTable>
+            <thead>
+              <tr>
+                <StyledTh colSpan={2} color="slate" bgcolor="grey">
+                  Costs By Room Type**
+                </StyledTh>
+              </tr>
+            </thead>
+            <tbody>
+              <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Average Monthly Cost</StyledTd> </Tr>
+              {pricesList.map((price) => {
+              const { label, value } = price;
+              return (
+                <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
+              );
+            })}
+            </tbody>
+          </StyledTable>
+        </StyledTableBlock>
       }
       { pricesList.length === 0 && estimatedPriceList.length > 0 &&
-        <Wrapper>
-          <thead>
-            <tr>
-              {showToolTip &&
-              <StyledTh colSpan={2} color="slate" bgcolor="grey">
-                {toolTipCode(size)}
-              </StyledTh>
-              }
-              {!showToolTip &&
-              <StyledTh colSpan={2} color="slate" bgcolor="grey">
-                Costs By Room Type**
-              </StyledTh>
-              }
-            </tr>
-          </thead>
-          <tbody>
-            <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Estimated Monthly Cost</StyledTd> </Tr>
-            {estimatedPriceList.map((price) => {
-            const { label, value } = price;
-            return (
-              <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
-            );
-          })}
-          </tbody>
-        </Wrapper>
+        <StyledTableBlock>
+          <StyledTable>
+            <thead>
+              <tr>
+                {showToolTip &&
+                <StyledTh colSpan={2} color="slate" bgcolor="grey">
+                  {toolTipCode(size)}
+                </StyledTh>
+                }
+                {!showToolTip &&
+                <StyledTh colSpan={2} color="slate" bgcolor="grey">
+                  Costs By Room Type**
+                </StyledTh>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Estimated Monthly Cost</StyledTd> </Tr>
+              {estimatedPriceList.map((price) => {
+              const { label, value } = price;
+              return (
+                <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
+              );
+            })}
+            </tbody>
+          </StyledTable>
+        </StyledTableBlock>
       }
       <StyledBlock>
         <Experiment name="PricingCTA_Language" defaultVariant="Detailed">
           <Variant name="Detailed">
-            <StyledButton ghost onClick={getPricing}>Get Detailed Pricing</StyledButton>
+            <StyledButton onClick={getPricing}>Get Detailed Pricing</StyledButton>
           </Variant>
           <Variant name="Personalized">
-            <StyledButton ghost onClick={getPricing}>Get Personalized Pricing</StyledButton>
+            <StyledButton onClick={getPricing}>Get Personalized Pricing</StyledButton>
           </Variant>
         </Experiment>
         <Block>
