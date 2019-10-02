@@ -463,7 +463,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }
 
     const {
-      gender, lookingFor, monthlyBudget, timeToMove,
+      gender, lookingFor, monthlyBudget, timeToMove, roomTypes, careLevels, communityTypes,
     } = meta;
     const {
       id, clientInfo, stage, status,
@@ -473,8 +473,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails,
     } = getStageDetails(stage);
     // Override based on role
+    let isAdmin = false;
     if (userHasAdminRole(user)) {
       [showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails] = [false, true, true, true];
+      isAdmin = true;
     }
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) => {
@@ -596,6 +598,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   lookingFor={lookingFor}
                   monthlyBudget={monthlyBudget}
                   timeToMove={timeToMove}
+                  careLevels={careLevels}
+                  roomTypes={roomTypes}
+                  communityTypes={communityTypes}
+                  isAdmin={isAdmin}
                 />
               </FamilyDetailsTab>
             )}
