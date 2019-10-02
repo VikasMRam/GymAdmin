@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { func, arrayOf, object } from 'prop-types';
 import styled from 'styled-components';
 import { generatePath } from 'react-router';
-
 import { size, palette } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import DashboardAdminReferralCommunityTile from 'sly/components/organisms/DashboardAdminReferralCommunityTile';
@@ -44,17 +43,31 @@ const DashboardCommunityReferrals = ({
       <CommunitiesWrapper>
         {communitiesInterested.map((community) => {
             const client = childrenClientCommunityIdsMap[community.id];
-            const { id, stage, createdAt } = client;
             const props = {
               key: community.name,
               community,
               title,
             };
             if (client) {
-              const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS });
-              return <Link to={familyDetailsPath}><StyledDashboardAdminReferralCommunityTile {...props} stage={stage} referralSentAt={createdAt} /></Link>;
+              const { id, stage, createdAt } = client;
+              const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, {
+                id,
+                tab: FAMILY_DETAILS,
+              });
+              return (<Link to={familyDetailsPath}>
+                <StyledDashboardAdminReferralCommunityTile
+                  {...props}
+                  stage={stage}
+                  referralSentAt={createdAt}
+                />
+                      </Link>);
             }
-            return <StyledDashboardAdminReferralCommunityTile {...props} actionText="Send Referral" actionClick={() => setSelectedCommunity(community)} />;
+            return (<StyledDashboardAdminReferralCommunityTile
+              {...props}
+              actionText="Send Referral"
+              actionClick={() => setSelectedCommunity(community)}
+            />);
+
           })
         }
         {childrenClients.map((client) => {

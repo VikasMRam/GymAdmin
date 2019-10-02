@@ -47,9 +47,6 @@ const AddTaskForm = ({
       heading={heading}
       submitButtonText={isEditMode ? 'Update' : 'Add Task'}
       cancelButtonText={isEditMode && 'Back'}
-      extraActionButtonsAfterSubmit={isEditMode && [{
-        text: 'Complete', onClick: completeTask,
-      }]}
       topRightIcon={isEditMode && 'trash'}
       topRightIconOnClick={isEditMode && deleteTask}
       topRightIconPalette={isEditMode && 'danger'}
@@ -118,7 +115,7 @@ const AddTaskForm = ({
           {isEditMode &&
             <tr>
               <td><Label>Creator</Label></td>
-              <td><Label>{initialValues.creator.name}</Label></td>
+              {initialValues.creator && <td><Label>{initialValues.creator.name}</Label></td>}
             </tr>
           }
           {dateString &&
