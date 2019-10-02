@@ -602,14 +602,16 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             )}
 
             {currentTab === COMMUNITIES && (
-              <ReferralSearchContainer
-                notifyError={notifyError}
-                notifyInfo={notifyInfo}
-                parentClient={client}
-                parentRawClient={rawClient}
-                refetchClient={refetchClient}
-                referralMode="Community"
-              />
+              <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
+                <ReferralSearchContainer
+                  notifyError={notifyError}
+                  notifyInfo={notifyInfo}
+                  parentClient={client}
+                  parentRawClient={rawClient}
+                  refetchClient={refetchClient}
+                  referralMode="Community"
+                />
+              </Role>
             )}
 
             {currentTab === PARTNER_AGENTS && (
