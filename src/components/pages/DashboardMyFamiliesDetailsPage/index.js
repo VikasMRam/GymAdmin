@@ -95,7 +95,6 @@ const StyledFamilyActivityItem = styled(FamilyActivityItem)`
 
 const FamilyDetailsTab = styled.div`
   ${SmallScreenBorder};
-  padding: ${size('spacing.xLarge')};
 `;
 
 const TabWrapper = styled(Box)`
@@ -474,7 +473,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }
 
     const {
-      gender, lookingFor, monthlyBudget, timeToMove,
+      gender, lookingFor, monthlyBudget, timeToMove, roomTypes, careLevels, communityTypes,
     } = meta;
     const {
       id, clientInfo, stage,
@@ -483,8 +482,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails,
     } = getStageDetails(stage);
     // Override based on role
+    let isAdmin = false;
     if (userHasAdminRole(user)) {
       [showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails] = [false, true, true, true];
+      isAdmin = true;
     }
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) => {
@@ -598,6 +599,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   lookingFor={lookingFor}
                   monthlyBudget={monthlyBudget}
                   timeToMove={timeToMove}
+                  careLevels={careLevels}
+                  roomTypes={roomTypes}
+                  communityTypes={communityTypes}
+                  isAdmin={isAdmin}
                 />
               </FamilyDetailsTab>
             )}

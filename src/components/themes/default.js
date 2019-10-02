@@ -144,6 +144,7 @@ theme.sizes = {
     tiny    : '0.125rem',   //  2px
     small   : '0.250rem',   //  4px
     regular : '0.500rem',   //  8px
+    medium  : '0.750rem',   // 12px
     large   : '1.000rem',   // 16px
     xLarge  : '1.500rem',   // 24px
     xxLarge : '2.000rem',   // 32px
@@ -173,6 +174,7 @@ theme.sizes = {
   },
 
   lineHeight: {
+    nano    : '1.2',    // 12px/10px
     tiny    : '1.167',
     caption : '1.429',
     body    : '1.5',
