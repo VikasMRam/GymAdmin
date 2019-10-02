@@ -9,12 +9,11 @@ import Field from 'sly/components/molecules/Field';
 import {
   FAMILY_STATUS_ACTIVE,
   FAMILY_STATUS_ARCHIVED,
-  FAMILY_STATUS_HOT,
+  //  FAMILY_STATUS_HOT,
   FAMILY_STATUS_DELETED,
   FAMILY_STATUS_LONG_TERM,
   FAMILY_STATUS_ON_PAUSE,
 } from 'sly/constants/familyDetails';
-
 import SlyEvent from 'sly/services/helpers/events';
 import { prefetch, query } from 'sly/services/newApi';
 import ConfirmReasonFormContainer from 'sly/containers/ConfirmReasonFormContainer';

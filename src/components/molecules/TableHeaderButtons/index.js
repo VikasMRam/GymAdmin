@@ -123,7 +123,7 @@ const TableHeaderButtons = ({
 );
 
 TableHeaderButtons.propTypes = {
-  autocompleteFilters: object,
+  meta: object,
   datatable: object,
   onColumnButtonClick: func,
   className: string,

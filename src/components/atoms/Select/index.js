@@ -11,6 +11,13 @@ import Hr from 'sly/components/atoms/Hr';
 
 const { Option, Group, SingleValue } = components;
 
+const StyledOption = styled(Option)`
+  .react-select__menu-list &.react-select__option {
+    ${ifProp('showIcon', css`padding-left: 0;`)};
+    color: ${palette('base')};
+  }
+`;
+
 const Wrapper = styled.div`
   .react-select-container {
     ${ifProp('textSize', ({ textSize, lineHeight }) => css`
@@ -110,13 +117,6 @@ const getIconSize = (textSize) => {
     default: return 'regular';
   }
 };
-
-const StyledOption = styled(Option)`
-  .react-select__menu-list &.react-select__option {
-    ${ifProp('showIcon', css`padding-left: 0;`)};
-    color: ${palette('base')};
-  }
-`;
 
 const IconOption = ({ selectProps,  ...props }) => {
   const iconSize = getIconSize(selectProps.textSize);
