@@ -4,15 +4,15 @@ import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
 import { withPreventDefault } from 'sly/services/helpers/forms';
-import PlaceFamilyOnPauseForm from 'sly/components/organisms/PlaceFamilyOnPauseForm';
+import ConfirmReasonForm from '.';
 
-const PlaceFamilyOnPauseFormContainer = reduxForm({
+const ConfirmReasonFormContainer = reduxForm({
   form: 'PlaceFamilyOnPauseForm',
-})(PlaceFamilyOnPauseForm);
+})(ConfirmReasonForm);
 
 storiesOf('Organisms|PlaceFamilyOnPauseForm', module)
   .add('default', () => (
-    <PlaceFamilyOnPauseFormContainer
+    <ConfirmReasonFormContainer
       name="test"
       handleSubmit={withPreventDefault(action('onSubmit'))}
       onCancel={action('onCancel')}

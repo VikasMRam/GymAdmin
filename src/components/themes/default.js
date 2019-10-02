@@ -17,13 +17,14 @@ const theme = {};
 // DO NOT MODIFY the following without asking Jared
 theme.palette = {
   slate    : makeColor('#2a333f', ['dark', 'base', 'filler', 'stroke']),
-  grey     : makeColor('#70767E', ['dark', 'base', 'filler', 'stroke', 'background']),
   primary  : makeColor('#186dc5', ['dark', 'base', 'filler', 'stroke', 'background']),
   secondary: makeColor('#56c4c2', ['dark', 'base', 'filler', 'stroke', 'background']),
   white    : makeColor('#ffffff', ['base']),
   danger   : makeColor('#dc3133', ['dark', 'base', 'filler', 'stroke']),
   warning  : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke']),
   green    : makeColor('#4fb75f', ['dark', 'base', 'filler', 'stroke']),
+  grey     : makeColor('#70767E', ['dark', 'base', 'filler', 'stroke', 'background']),
+  yellow   : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke', 'background']),
   pink     : makeColor('#9a268e', ['dark', 'base', 'filler', 'stroke', 'background']),
   purple   : makeColor('#6d27ca', ['dark', 'base', 'filler', 'stroke', 'background']),
 };
@@ -103,6 +104,7 @@ theme.sizes = {
   },
 
   element: {
+    tiny    : '1.750rem',   // 28px
     small   : '2.250rem',   // 36px
     regular : '2.500rem',   // 40px
     button  : '2.750rem',   // 44px
@@ -161,6 +163,7 @@ theme.sizes = {
   },
 
   text: {
+    micro   : '0.625rem',   // 10px
     tiny    : '0.750rem',   // 12px
     caption : '0.875rem',   // 14px
     body    : '1.000rem',   // 16px
