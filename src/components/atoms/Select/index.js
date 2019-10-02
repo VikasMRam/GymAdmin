@@ -23,6 +23,10 @@ const Wrapper = styled.div`
     `)};
   }
   
+  .react-select__value-container {
+    overflow: visible;
+  }
+  
   hr {
     padding: 0;
     margin: 0;
@@ -49,8 +53,7 @@ const Wrapper = styled.div`
   }
   
   .react-select__indicator {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0 ${size('spacing.small')};
   }  
   
   .react-select__indicator-separator {
@@ -58,6 +61,7 @@ const Wrapper = styled.div`
   }  
   
   .react-select__option, .react-select__single-value {
+    margin-left: 0;
     display: flex;
     align-items: center;
     padding-left: ${size('icon.large')}; 
@@ -85,6 +89,7 @@ const Wrapper = styled.div`
 
 const StyledIcon = styled(Icon)`
   justify-content: center;
+  margin-right: ${size('spacing.small')};
   align-self: baseline;
   width: ${size('icon.large')};
 `;
@@ -99,7 +104,7 @@ AsyncSelect.displayName = 'AsyncSelect';
 
 const getIconSize = (textSize) => {
   switch (textSize) {
-    case 'micro': return 'tiny';
+    case 'micro':
     case 'tiny': return 'small';
     case 'caption': return 'caption';
     default: return 'regular';
@@ -151,7 +156,7 @@ const IconSingleValue = ({ selectProps, ...props }) => {
   return (
     <StyledSingleValue showIcon={showIcon} palette={pp} {...props}>
       {showIcon && <StyledIcon icon={icon} size={iconSize} palette={pp} />}
-      {props.data.label}
+      <span>{props.data.label}</span>
     </StyledSingleValue>
   );
 };

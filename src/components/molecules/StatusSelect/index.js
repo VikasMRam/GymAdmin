@@ -34,6 +34,10 @@ const StyledField = styled(Field)`
   & .react-select__single-value, & .react-select__option {
     font-weight: ${size('weight.bold')};
   }
+  
+  & .react-select__single-value > :nth-child(2) {
+    display: none; 
+  }
 `;
 
 @prefetch('client', 'getClient', (req, { clientId }) => req({

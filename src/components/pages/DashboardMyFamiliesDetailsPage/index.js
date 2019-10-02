@@ -152,6 +152,11 @@ const SmallScreenClientNameWrapper = styled.div`
 
 const StyledStatusSelect = styled(StatusSelect)`
   margin-bottom: 0;
+  min-width: 56px;
+  
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    min-width: ${size('element.huge')};
+  }
 `;
 
 const StyledClientNameBlock = styled(Block)`
