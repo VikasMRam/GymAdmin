@@ -94,7 +94,7 @@ const CommunityDetails = ({
           What is a local senior living expert in {city}, {state}?
         </StyledHeading>
         <Paragraph>
-          Similar to real estate agents, a senior living expert is a professional who knows
+          A senior living expert is a professional who knows
           the {city}, {state} communities and specializes in helping you find the right fit for your
           unique budget, location, care, social and other needs. This is a free service. To learn more,&nbsp;
           <Link href={`https://www.seniorly.com/agents?utm_content=${communityName}&utm_medium=link&utm_source=summary&utm_campaign=cta`}>

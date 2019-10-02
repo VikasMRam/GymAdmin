@@ -7,6 +7,7 @@ import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
 import taskPropType from 'sly/propTypes/task';
 import { createValidator, required } from 'sly/services/validation';
+import { TASK_RELATED_ENTITY_TYPE } from 'sly/constants/tasks';
 import { TASK_RESOURCE_TYPE, USER_RESOURCE_TYPE, CLIENT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import AddTaskForm from 'sly/components/organisms/AddTaskForm';
 
@@ -47,7 +48,7 @@ export default class AddOrEditTaskFormContainer extends Component {
 
   handleSubmitTask = (data) => {
     const {
-      createTask, updateTask, notifyInfo, onSuccess, client, task,
+      createTask, updateTask, notifyInfo, onSuccess, client, task, refetchTasks,
     } = this.props;
     const { owner, ...postData } = data;
     const payload = {
@@ -65,11 +66,15 @@ export default class AddOrEditTaskFormContainer extends Component {
       },
     };
     if (!task && data.relatedTo) {
+      // todo: revisit if more type of related entities can be possbile
       payload.relationships.relatedEntities = {
         data: [
           {
-            type: client ? CLIENT_RESOURCE_TYPE : USER_RESOURCE_TYPE,
-            id: data.relatedTo,
+            type: TASK_RELATED_ENTITY_TYPE,
+            id: client.id,
+            attributes: {
+              entityType: CLIENT_RESOURCE_TYPE,
+            },
           },
         ],
       };
@@ -83,6 +88,7 @@ export default class AddOrEditTaskFormContainer extends Component {
     }
 
     taskApiCall
+      .then(refetchTasks)
       .then(() => {
         if (task) {
           notifyInfo('Task successfully updated');
@@ -95,8 +101,8 @@ export default class AddOrEditTaskFormContainer extends Component {
       });
   };
 
-  updateTaskStatus = (task, status) => {
-    const { updateTask, tasksRaw, refetchTasks, onSuccess, notifyInfo } = this.props;
+  updateTaskStatus = (status) => {
+    const { updateTask, tasksRaw, refetchTasks, onSuccess, notifyInfo, task } = this.props;
     const taskRaw = tasksRaw.find(taskRaw => taskRaw.id === task.id);
     taskRaw.attributes.status = status;
     return updateTask({ id: task.id }, taskRaw)
@@ -116,9 +122,12 @@ export default class AddOrEditTaskFormContainer extends Component {
       return null;
     }
     const initialValues = {};
+    // todo: revisit if more type of related entities can be possbile
     if (client) {
-      initialValues.relatedTo = client.name;
+      initialValues.relatedTo = client.clientInfo.name;
     }
+    let deleteTask;
+    let completeTask;
     if (task) {
       if (task.title) {
         initialValues.title = task.title;
@@ -147,6 +156,8 @@ export default class AddOrEditTaskFormContainer extends Component {
       if (task.creator) {
         initialValues.creator = task.creator;
       }
+      deleteTask = () => this.updateTaskStatus('Deleted');
+      completeTask = () => this.updateTaskStatus('Completed');
     }
 
     return (
@@ -158,8 +169,8 @@ export default class AddOrEditTaskFormContainer extends Component {
         onSubmit={this.handleSubmitTask}
         initialValues={initialValues}
         heading={task && task.title}
-        deleteTask={() => this.updateTaskStatus(task, 'Deleted')}
-        completeTask={() => this.updateTaskStatus(task, 'Completed')}
+        deleteTask={deleteTask}
+        completeTask={completeTask}
       />
     );
   }

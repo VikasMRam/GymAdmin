@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { instanceOf, string, bool, node } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 
@@ -18,6 +19,11 @@ const Wrapper = styled.div`
     border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
     border-top-left-radius: ${size('border.xxLarge')};
     border-top-right-radius: ${size('border.xxLarge')};
+    ${ifProp({ noBorder: true }, css`
+      border-left: none;
+      border-right: none;
+      border-top: none;
+    `)};
   }
 `;
 
@@ -37,6 +43,7 @@ export default class Tabs extends Component {
     className: string,
     tabsOnly: bool.isRequired,
     beforeHeader: node,
+    noBorder: bool,
   };
 
   static defaultProps = {

@@ -18,23 +18,23 @@ const TableWrapper = styled.div`
 
 const StyledTable = styled.table`
   display: block;
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: table;
-    
+
     border: none;
-    
+
     font-size: ${size('text.caption')};
-    
+
     border-collapse: collapse;
     width: 100%;
     position: relative;
-    
+
     td, th {
       white-space: nowrap;
       border-right: none;
     }
-    th:first-child, td:first-child { 
+    th:first-child, td:first-child {
       left: 0;
       position: sticky;
       top: auto;
@@ -62,7 +62,7 @@ Table.propTypes = {
 
 export const THead = styled.thead`
   display: none;
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: table-header-group;
   }
@@ -70,33 +70,33 @@ export const THead = styled.thead`
 
 export const TBody = styled.tbody`
   display: block;
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: table-row-group; 
+    display: table-row-group;
   }
 `;
 
 export const Tr = styled.tr`
   display: block;
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: table-row; 
+    display: table-row;
   }
 `;
 
 export const Td = styled.td`
   display: block;
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: table-cell;
     max-width: ${size('layout.col3')};
     line-height: ${size('lineHeight.caption')};
-    
+
     padding: ${size('spacing.regular')} ${size('spacing.large')};
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 
     background-color: ${palette('white', 'base')};
-    
+
     ${ifProp('disabled', css`
       background-color: ${palette('grey', 'background')};
       color: ${palette('slate', 'filler')};
@@ -136,7 +136,7 @@ export const TextTd = ({
 );
 
 TextTd.propTypes = {
-  children: string.isRequired,
+  children: string,
   disabled: bool,
   borderless: bool,
 };

@@ -9,10 +9,10 @@ import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import SlyEvent from 'sly/services/helpers/events';
-import { calculatePricing, buildPriceList } from 'sly/services/helpers/pricing';
+import { calculatePricing, buildPriceList, buildEstimatedPriceList } from 'sly/services/helpers/pricing';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import pad from 'sly/components/helpers/pad';
-import { Button } from 'sly/components/atoms';
+import { Button, Paragraph } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import {
   CommunityDetailPageTemplate,
@@ -45,7 +45,6 @@ import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
 import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList';
 import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
-import EstimatedCost from 'sly/components/molecules/EstimatedCost';
 import TextBottomSection from 'sly/components/molecules/TextBottomSection';
 import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
@@ -461,6 +460,7 @@ export default class CommunityDetailPage extends Component {
 
     const typeOfCare = typeCares[0];
     const { modal, currentStep } = searchParams;
+    const hasCCRC = typeCares.includes('Continuing Care Retirement Community(CCRC)');
 
     // TODO: move this to a container for EntityReviews handling posts
     const onLeaveReview = () => {};
@@ -485,6 +485,7 @@ export default class CommunityDetailPage extends Component {
 
 
     const pricesList = buildPriceList(community);
+    const estimatedPriceList = buildEstimatedPriceList(community);
     const pricingTitle = (pricesList.length === 0 && floorPlans.length > 0) ? 'Pricing and Floor Plans' : 'Pricing';
 
     const showSimilarEarlier = pricesList.length === 0 && floorPlans.length > 0 && address.city === 'Sacramento' && address.state === 'CA' &&
@@ -580,29 +581,34 @@ export default class CommunityDetailPage extends Component {
                   title={`${pricingTitle} at ${name}`}
                   id="pricing-and-floor-plans"
                 >
-                  {pricesList.length > 0 &&
-                  <CommunityPricingTable name={name} pricesList={pricesList} price={estimatedPriceBase} />
-                  }
-                  {pricesList.length === 0 && floorPlans.length > 0 &&
-                  <MainSection>
-                    <CommunityFloorPlansList
-                      floorPlans={floorPlans}
-                      onItemClick={openFloorPlanModal}
-                    />
-                  </MainSection>
-                  }
-                  {floorPlans.length === 0 && pricesList.length === 0 &&
+                  {hasCCRC &&
                     <MainSection>
-                      <EstimatedCost
-                        name={name}
-                        getPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
-                        typeCares={typeCares}
-                        price={estimatedPriceBase}
+                      <Paragraph>
+                        Pricing for {name} may include both a one time buy-in fee and a monthly component. Connect directly with {name} to find out your pricing.
+                      </Paragraph>
+                      <Button ghost onClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}>Get Detailed Pricing</Button>
+                    </MainSection>
+                  }
+                  {!hasCCRC && (pricesList.length > 0 || estimatedPriceList.length > 0 || floorPlans.length === 0) &&
+                    <CommunityPricingTable name={name}
+                                           pricesList={pricesList}
+                                           estimatedPriceList={estimatedPriceList}
+                                           price={estimatedPriceBase}
+                                           getPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
+                                           size={communitySize}
+                                           showToolTip={address.state === 'TN'}
+                    />
+                  }
+                  {!hasCCRC && pricesList.length === 0 && estimatedPriceList.length === 0 && floorPlans.length > 0 &&
+                    <MainSection>
+                      <CommunityFloorPlansList
+                        floorPlans={floorPlans}
+                        onItemClick={openFloorPlanModal}
                       />
                     </MainSection>
                   }
 
-                  { (floorPlans.length > 0 || pricesList.length > 0) &&
+                  { !hasCCRC && pricesList.length === 0 && estimatedPriceList.length === 0 && floorPlans.length > 0 &&
                     <BottomSection>
                       <GetCurrentAvailabilityContainer
                         community={community}
@@ -621,7 +627,7 @@ export default class CommunityDetailPage extends Component {
                     </BottomSection>
                   }
                 </TopCollapsibleSection>
-                {floorPlans.length === 0 && pricesList.length === 0 &&
+                {floorPlans.length === 0 && pricesList.length === 0 && estimatedPriceList.length === 0 &&
                   <TopCollapsibleSection
                     title={`Get Availability at ${name}`}
                   >
