@@ -21,24 +21,20 @@ import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client
 import notePropType from 'sly/propTypes/note';
 import { size, palette } from 'sly/components/themes';
 import { getStageDetails } from 'sly/services/helpers/stage';
-import { FAMILY_STATUS_ON_PAUSE, NOTE_CTYPE_NOTE } from 'sly/constants/familyDetails';
+import { NOTE_CTYPE_NOTE } from 'sly/constants/familyDetails';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
 import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFamilyContainer';
 import RejectFamilyContainer from 'sly/containers/RejectFamilyContainer';
 import UpdateFamilyStageFormContainer from 'sly/containers/UpdateFamilyStageFormContainer';
-import PlaceFamilyOnPauseFormContainer from 'sly/containers/PlaceFamilyOnPauseFormContainer';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import { Box, Block, Icon, Link, Hr } from 'sly/components/atoms';
 import Tabs from 'sly/components/molecules/Tabs';
-// import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 import FamilyStage from 'sly/components/molecules/FamilyStage';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
-import PutFamilyOnPause from 'sly/components/molecules/PutFamilyOnPause';
 import BackLink from 'sly/components/molecules/BackLink';
-import IconButton from 'sly/components/molecules/IconButton';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
@@ -53,6 +49,7 @@ import Role from 'sly/components/common/Role';
 import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
+import StatusSelect from 'sly/components/molecules/StatusSelect';
 import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
@@ -144,7 +141,6 @@ const BigScreenSummarySection = styled.section`
 `;
 
 const SmallScreenClientNameWrapper = styled.div`
-  display: flex;
   padding: ${size('spacing.large')};
   background-color: ${palette('white', 'base')};
 
@@ -153,14 +149,56 @@ const SmallScreenClientNameWrapper = styled.div`
   }
 `;
 
-const SmallScreenClientButtonWrapper = styled.div`
-  margin: 0 auto;
+const StyledStatusSelect = styled(StatusSelect)`
+  margin-bottom: 0;
+  min-width: 56px;
+  
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    min-width: ${size('element.huge')};
+  }
 `;
 
-const SmallScreenClientNameDiv = styled.div`
+const StyledClientNameBlock = styled(Block)`
   display: flex;
-  align-items: end;
+  align-items: center;
+  
+  > :nth-child(2) {
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    > :nth-child(2) {
+      text-align: left;
+    }
+  
+    > :nth-child(1) {
+      display: none;
+    }
+  }
+  
 `;
+
+const ClientName = ({ client, backLinkHref, ...props }) => {
+  const { clientInfo } = client;
+  const { name } = clientInfo;
+  return (
+    <StyledClientNameBlock
+      weight="medium"
+      size="subtitle"
+    >
+      <Link to={backLinkHref}>
+        <Icon icon="arrow-left" palette="primary" />
+      </Link>
+      <span>{name}</span>
+      <StyledStatusSelect clientId={client.id} {...props} />
+    </StyledClientNameBlock>
+  );
+};
+
+ClientName.propTypes = {
+  client: clientPropType,
+};
 
 const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   margin-bottom: ${size('element.xxxLarge')};
@@ -200,7 +238,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     notifyInfo: func,
     meta: clientMetaPropType,
     onRejectSuccess: func,
-    onUnPause: func.isRequired,
     onAddNote: func,
     onEditNote: func,
     notes: arrayOf(notePropType),
@@ -314,7 +351,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       meta, showModal, hideModal, notifyError, notifyInfo, client, rawClient, onRejectSuccess,
     } = this.props;
     SlyEvent.getInstance().sendEvent({
-      category: 'fdetails',
+      category: 'details',
       action: 'launch',
       label: 'reject-lead',
       value: '',
@@ -396,41 +433,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     />, null, 'noPadding', false);
   };
 
-  handlePauseClick = () => {
-    const {
-      showModal, hideModal, notifyError, client, rawClient, notifyInfo, onUnPause,
-    } = this.props;
-    const { status } = client;
-    const isPaused = status === FAMILY_STATUS_ON_PAUSE;
-
-    if (isPaused) {
-      onUnPause();
-    } else {
-      showModal(<PlaceFamilyOnPauseFormContainer
-        onSuccess={hideModal}
-        onCancel={hideModal}
-        notifyError={notifyError}
-        notifyInfo={notifyInfo}
-        client={client}
-        rawClient={rawClient}
-      />, null, 'noPadding', false);
-    }
-    SlyEvent.getInstance().sendEvent({
-      category: 'fdetails',
-      action: 'launch',
-      label: (isPaused ? 'true' : 'false'),
-      value: '',
-    });
-  };
-
   render() {
     const {
-      handleAcceptClick, handleRejectClick, handleUpdateClick, handleAddNoteClick, handlePauseClick,
+      handleAcceptClick, handleRejectClick, handleUpdateClick, handleAddNoteClick,
       handleEditNoteClick,
     } = this;
 
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, onUnPause, refetchConversations, refetchClient,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
     } = this.props;
     const { admin } = user;
 
@@ -466,16 +476,15 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       gender, lookingFor, monthlyBudget, timeToMove, roomTypes, careLevels, communityTypes,
     } = meta;
     const {
-      id, clientInfo, stage, status,
+      id, clientInfo, stage,
     } = client;
-    const isPaused = status === FAMILY_STATUS_ON_PAUSE;
     let {
-      levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails,
+      levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails,
     } = getStageDetails(stage);
     // Override based on role
     let isAdmin = false;
     if (userHasAdminRole(user)) {
-      [showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails] = [false, true, true, true];
+      [showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails] = [false, true, true, true];
       isAdmin = true;
     }
     const { name } = clientInfo;
@@ -523,13 +532,15 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
     const { tasksPath } = this.getTabPathsForUser();
 
+    const clientName = <ClientName client={client} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} />;
+
     return (
       <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
         <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
           <BigScreenSummarySection>
             <Box snap="bottom">
               {backlink}
-              <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
+              {clientName}
             </Box>
             <Hr noMargin />
             <FamilyStage
@@ -544,18 +555,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             />
             {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
             {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
-            {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
           </BigScreenSummarySection>
           <SmallScreenClientNameWrapper>
-            <Link to={backLinkHref}>
-              <Icon icon="arrow-left" palette="primary" />
-            </Link>
-            <SmallScreenClientButtonWrapper>
-              <SmallScreenClientNameDiv>
-                <Block weight="medium" size="subtitle">{name}</Block>
-                {isPaused && <IconButton transparent icon="pause" size="caption" palette="danger" onClick={onUnPause} />}
-              </SmallScreenClientNameDiv>
-            </SmallScreenClientButtonWrapper>
+            {clientName}
           </SmallScreenClientNameWrapper>
         </div>
         <div>
@@ -566,7 +568,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             {currentTab === SUMMARY && (
               <Fragment>
                 <SmallScreenBorderPaddedFamilySummary client={client} to={familyDetailsPath} noHeading />
-                {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
               </Fragment>
             )}
 
@@ -607,14 +608,16 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             )}
 
             {currentTab === COMMUNITIES && (
-              <ReferralSearchContainer
-                notifyError={notifyError}
-                notifyInfo={notifyInfo}
-                parentClient={client}
-                parentRawClient={rawClient}
-                refetchClient={refetchClient}
-                referralMode="Community"
-              />
+              <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
+                <ReferralSearchContainer
+                  notifyError={notifyError}
+                  notifyInfo={notifyInfo}
+                  parentClient={client}
+                  parentRawClient={rawClient}
+                  refetchClient={refetchClient}
+                  referralMode="Community"
+                />
+              </Role>
             )}
 
             {currentTab === PARTNER_AGENTS && (

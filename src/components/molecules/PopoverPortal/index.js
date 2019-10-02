@@ -41,6 +41,7 @@ const MobileHeader = styled.div`
   display: flex;
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
   border-bottom: 1px solid ${palette('slate.stroke')};
+  align-items: center;
    
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: none;
@@ -48,7 +49,7 @@ const MobileHeader = styled.div`
 `;
 
 const Title = styled(Block)`
-  
+  ${ifProp('hasHeaderButton', css`text-align: center;`)};  
   flex-grow: 1; 
 `;
 
@@ -65,13 +66,15 @@ const Content = styled.div``;
 export default class PopoverPortal extends Component {
   static propTypes = {
     title: string,
+    subtitle: string,
     button: element,
+    headerButton: element,
     children: element,
     breakpoint: object,
   };
 
   state = {
-    isOpen: false,
+    isOpen: true,
     buttonX: 0,
   };
 
@@ -90,7 +93,7 @@ export default class PopoverPortal extends Component {
   };
 
   render() {
-    const { button, children, title, breakpoint } = this.props;
+    const { button, children, title, subtitle, headerButton, breakpoint } = this.props;
     const { isOpen, width, buttonX } = this.state;
 
     const total = buttonX + width + gutter;
@@ -112,10 +115,15 @@ export default class PopoverPortal extends Component {
         </Measure>
         <PopoverWrapper left={left} isOpen={isOpen}>
           <MobileHeader>
-            <Title size="subtitle" weight="medium">{title}</Title>
+            {headerButton}
+            <Title hasHeaderButton={!!headerButton} size="regular" weight="medium">
+              {title}
+              {subtitle && <Block size="caption" weight="regular" palette="grey">{subtitle}</Block>}
+            </Title>
             <DoneButton
               palette="primary"
               weight="medium"
+              size="caption"
               onClick={this.onClick}
             >
               Done

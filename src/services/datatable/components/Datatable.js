@@ -108,6 +108,10 @@ export default class Datatable extends Component {
     this.setFilters({ filters, logicalOperator, 'page-number': 0 });
   };
 
+  clearFilters = () => {
+    this.setState({ filters: [], logicalOperator: 'and', 'page-number': 0 });
+  };
+
   setFilters = (state) => {
     const { location, history } = this.props;
     const qs = state.filters.length
@@ -131,6 +135,7 @@ export default class Datatable extends Component {
       onFilterRemove,
       onLogicalOperatorChange,
       getFilter,
+      clearFilters,
     } = this;
 
     const columns = datatable
@@ -147,6 +152,7 @@ export default class Datatable extends Component {
       onFilterRemove,
       onLogicalOperatorChange,
       getFilter,
+      clearFilters,
 
       columns,
       hasFinished: status.datatable.hasFinished,
