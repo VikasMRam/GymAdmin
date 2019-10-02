@@ -208,7 +208,7 @@ export default class DatatableFilterRow extends Component {
 
     return (
       <Row>
-        <CloseButton onClick={() => onFilterRemove(filter)} palette="slate" icon="close" />
+        <CloseButton onClick={() => onFilterRemove(filter)} palette="slate" icon="close" size="caption" />
 
         {index === 0 && (
           <Where>Where</Where>
@@ -216,6 +216,7 @@ export default class DatatableFilterRow extends Component {
 
         {index === 1 && (
           <WhereField
+            size="small"
             name="logicalOperator"
             type="choice"
             value={logicalOperator}
@@ -232,6 +233,7 @@ export default class DatatableFilterRow extends Component {
         )}
 
         <GrowField
+          size="small"
           name="column"
           value={filter.column}
           type="choice"
@@ -244,6 +246,7 @@ export default class DatatableFilterRow extends Component {
           <Fragment>
             <SplitFlex />
             <GrowField
+              size="small"
               name="operator"
               value={filter.operator}
               type="choice"

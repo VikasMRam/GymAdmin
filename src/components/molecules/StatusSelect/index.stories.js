@@ -9,17 +9,18 @@ const Wrapper = styled.div`
   width: 300px;
 `;
 
+const client = {
+  status: 'On Pause',
+};
+
 storiesOf('Molecules|StatusSelect', module)
   .add('default', () => (
     <Fragment>
       <Wrapper>
-        <StatusSelect size="regular" />
+        <StatusSelect client={client} />
       </Wrapper>
       <Wrapper>
-        <StatusSelect size="button" />
-      </Wrapper>
-      <Wrapper>
-        <StatusSelect size="large" menuIsOpen />
+        <StatusSelect client={client} menuIsOpen />
       </Wrapper>
     </Fragment>
   ));
