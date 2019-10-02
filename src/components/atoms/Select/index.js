@@ -139,7 +139,7 @@ IconOption.propTypes = {
 
 const StyledSingleValue = styled(SingleValue)`
   &.react-select__single-value {
-    ${ifProp('showIcon', css` padding-left: 0;`)};
+    padding-left: 0;
     ${StyledIcon} {
       width: ${size('icon.regular')};
       justify-content: flex-start;

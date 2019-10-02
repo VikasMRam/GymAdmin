@@ -148,10 +148,6 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
       meta,
     } = this.props;
 
-    const {
-      autocomplete_filters: autocompleteFilters = {},
-    } = meta;
-
     const beforeTabHeader = (
       <TwoColumn>
         <Heading level="subtitle">My Families</Heading>
@@ -179,7 +175,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
 
         <TableHeaderButtons
           datatable={datatable}
-          autocompleteFilters={autocompleteFilters}
+          meta={meta}
           modelName="Client"
         />
 

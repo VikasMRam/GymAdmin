@@ -13,6 +13,7 @@ import { ifProp } from 'styled-tools';
 const Wrapper = styled(mobileOnly(Box,
   css`
     border: none; 
+    padding: ${size('spacing.large')};
   `,
   css`
     box-shadow: 0 ${size('spacing.small')} ${size('spacing.small')} ${palette('slate', 'filler')}80;
@@ -30,26 +31,40 @@ const Table = styled.div`
   }
 `;
 
-const PopoverFooter = mobileOnly('div', css`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  border-top: ${size('border.regular')} solid ${palette('grey', 'filler')};
-  padding: ${size('spacing.regular')} ${size('spacing.large')};
-  > * {
-    width: 100%;
-  }
-  
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+const Bottom = styled.div`
+  ${ifProp('filtered', css`padding-top: ${size('spacing.regular')}`)};
+
+  & > :nth-child(2) {
     display: none;
   }
-`);
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: flex;
+    align-items: center;
+
+    & > :nth-child(1) {
+      align-self: start;
+    }
+
+    & > :nth-child(2) {
+      padding-top: 1px;
+      display: block;
+      align-self: center;
+      min-width: max-content;
+      padding-right: ${size('spacing.regular')};
+    }
+  }
+`;
 
 const StyledIconButton = styled(IconButton)`
-  ${ifProp('filtered', css`margin-top: ${size('spacing.regular')}`)};
   width: 100%;
   border-color: ${palette('slate.stroke')};
+  justify-content: flex-start;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    border: 0;
+    padding-left: ${size('spacing.regular')};
+  }
 `;
 
 export default class DatatableFilters extends Component {
@@ -62,6 +77,7 @@ export default class DatatableFilters extends Component {
     const { datatable, autocompleteFilters, ...props } = this.props;
     const { onFilterChange, onFilterRemove, onLogicalOperatorChange } = datatable;
     const { filters, logicalOperator } = datatable.filterState;
+    const filtered = filters.length > 0;
     return (
       <Wrapper {...props}>
         <Table>
@@ -81,17 +97,28 @@ export default class DatatableFilters extends Component {
           ))}
         </Table>
 
-        <StyledIconButton
-          icon="add"
-          iconPalette="primary"
-          palette="primary"
-          size="caption"
-          ghost
-          onClick={datatable.addFilter}
-          filtered={filters.length > 0}
-        >
-          Add filter
-        </StyledIconButton>
+        <Bottom filtered={filtered}>
+          <StyledIconButton
+            icon="add"
+            iconPalette="primary"
+            palette="primary"
+            size="caption"
+            ghost
+            onClick={datatable.addFilter}
+          >
+            Add filter
+          </StyledIconButton>
+          {filtered && (
+            <ButtonLink
+              size="caption"
+              palette="primary"
+              weight="medium"
+              onClick={datatable.clearFilters}
+            >
+              Clear filters
+            </ButtonLink>
+          )}
+        </Bottom>
       </Wrapper>
     );
   }

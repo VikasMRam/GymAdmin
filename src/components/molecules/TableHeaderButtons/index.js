@@ -8,6 +8,7 @@ import Input from 'sly/components/atoms/Input';
 import IconButton from 'sly/components/molecules/IconButton';
 import DatatableFilters from 'sly/components/organisms/DatatableFilters';
 import PopoverPortal from 'sly/components/molecules/PopoverPortal';
+import ButtonLink from 'sly/components/molecules/ButtonLink';
 
 const border = css`${size('border.regular')} solid ${palette('slate.stroke')}`;
 const Wrappper = styled.div`
@@ -57,9 +58,22 @@ const ColumnsButton = styled(IconButton)`
 const isFilterable = datatable => datatable && datatable.columns.some(column => column.isFilterable);
 
 // eslint-disable-next-line react/prop-types
-const Filters = ({ datatable, autocompleteFilters }) => {
+const Filters = ({ datatable, meta = {} }) => {
+  const autocompleteFilters = meta.autocomplete_filters || {};
+  const filteredCount = meta.filtered_count || 0;
   const filtered = datatable.numberOfFilters > 0;
   const filterTitle = `Filters ${filtered ? ` (${datatable.numberOfFilters})` : ''}`;
+  const filterSubtitle = `${filteredCount} Results`;
+  const clearButton = (
+    <ButtonLink
+      palette="primary"
+      weight="medium"
+      size="caption"
+      onClick={datatable.clearFilters}
+    >
+      Clear filters
+    </ButtonLink>
+  );
   const filterButton = (
     <FilterButton
       icon="filter"
@@ -77,7 +91,7 @@ const Filters = ({ datatable, autocompleteFilters }) => {
   return (
     <Fragment>
       {isFilterable(datatable) && (
-        <PopoverPortal title={filterTitle} button={filterButton}>
+        <PopoverPortal headerButton={clearButton} title={filterTitle} subtitle={filterSubtitle} button={filterButton}>
           <DatatableFilters datatable={datatable} autocompleteFilters={autocompleteFilters} />
         </PopoverPortal>
       )}
@@ -86,7 +100,7 @@ const Filters = ({ datatable, autocompleteFilters }) => {
 };
 
 const TableHeaderButtons = ({
-  onColumnButtonClick, onSearchTextKeyUp, onSortButtonClick, datatable, className, autocompleteFilters,
+  onColumnButtonClick, onSearchTextKeyUp, onSortButtonClick, datatable, className, meta,
 }) => (
   <Wrappper className={className}>
     {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
@@ -103,7 +117,7 @@ const TableHeaderButtons = ({
       : <SearchTextInput type="search" placeholder="Type to filter by name" onKeyUp={onSearchTextKeyUp} />
     }
     {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
-    {datatable && <Filters datatable={datatable} autocompleteFilters={autocompleteFilters} />}
+    {datatable && <Filters datatable={datatable} meta={meta} />}
     {onColumnButtonClick && <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>}
   </Wrappper>
 );
