@@ -88,3 +88,26 @@ export const newParentClient = {
     attributes: {},
   },
 };
+
+export const newContact = {
+  data: {
+    id: null,
+    type: 'Contact',
+    attributes: {},
+    relationships: {
+      entities: {
+        data: [],
+      },
+    },
+  },
+};
+
+export const newSlyEntity = {
+  data: {
+    type: 'SlyEntity',
+    id: '',
+    attributes: {
+      entityType: 'Property',
+    },
+  },
+};

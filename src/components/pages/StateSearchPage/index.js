@@ -184,7 +184,7 @@ const StateSearchPage = ({
           )}
           {seoLinks.length > 0 && (
             <IconButton
-              icon="filter"
+              icon="tweak"
               ghost
               transparent
               onClick={handleModalFilterClick}

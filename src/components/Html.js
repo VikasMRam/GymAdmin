@@ -23,16 +23,16 @@ const Html = ({
           Google Platform Library
         */}
         <meta name="google-signin-client_id" content={googleAppId} />
-        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2`} as="font" />
-        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-regular-webfont.woff2`} as="font" />
-        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-light-webfont.woff2`} as="font" />
+        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2`} as="font" crossOrigin="anonymous" />
+        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-regular-webfont.woff2`} as="font" crossOrigin="anonymous" />
+        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-light-webfont.woff2`} as="font" crossOrigin="anonymous" />
         {styleElements}
         {linkElements}
         {helmet.link.toComponent()}
       </head>
       <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
-        {state.trim().length > 0 && <script dangerouslySetInnerHTML={{ __html: state }} />}
+        {state.trim().length > 0 && <script type="text/javascript" dangerouslySetInnerHTML={{ __html: state }} />}
         {helmet.script.toComponent()}
         {scriptElements}
         {/* eslint-disable */}

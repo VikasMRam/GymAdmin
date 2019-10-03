@@ -1,7 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import styled from 'styled-components';
 
-import Select from 'sly/components/atoms/Select';
+import Field from 'sly/components/molecules/Field';
 
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -27,6 +28,56 @@ const groupedOptions = [
   },
 ];
 
+const Wrapper = styled.div`
+  padding: 10px;
+`;
+
+const SmallWrapper = styled(Wrapper)`
+  width: 100px;
+`;
+
+const MultiWrapper = styled(Wrapper)`
+  display: flex;
+  > * {
+    width: 100px;
+    margin-right: 50px;
+  }
+`;
+
 storiesOf('Atoms|Select', module)
-  .add('default', () => <Select options={options} />)
-  .add('with groups', () => <Select options={groupedOptions} />);
+  .add('default', () => (
+    <Wrapper>
+      <Field type="choice" options={options} />
+    </Wrapper>
+  ))
+  .add('sizes', () => (
+    <MultiWrapper>
+      <Field type="choice" size="tiny" options={options} value={options[1].value} menuIsOpen />
+      <Field type="choice" size="small" options={options} value={options[1].value} menuIsOpen />
+      <Field type="choice" options={options} value={options[1].value} menuIsOpen />
+      <Field type="choice" size="button" options={options} value={options[1].value} menuIsOpen />
+      <Field type="choice" size="large" options={groupedOptions} value={groupedOptions[1].options[1].value} menuIsOpen />
+    </MultiWrapper>
+  ))
+  .add('with groups', () => (
+    <Wrapper>
+      <Field
+        type="choice"
+        options={groupedOptions}
+        size="small"
+        isMulti
+        menuIsOpen
+      />
+    </Wrapper>
+  ))
+  .add('small space', () => (
+    <SmallWrapper>
+      <Field
+        type="choice"
+        options={groupedOptions}
+        size="small"
+        isMulti
+        menuIsOpen
+      />
+    </SmallWrapper>
+  ));

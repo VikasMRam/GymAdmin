@@ -86,7 +86,7 @@ FamilyActivityItem.propTypes = {
 };
 
 FamilyActivityItem.defaultProps = {
-  icon: 'seniorly',
+  icon: 'logo',
 };
 
 export default FamilyActivityItem;

@@ -1,7 +1,12 @@
 import build from 'redux-object';
 
 export const normJsonApi = (resp) => {
-  const { data, included } = resp.body;
+  const { included } = resp.body;
+  let { data } = resp.body;
+  const hasMultipleItems = Array.isArray(data);
+  if (!hasMultipleItems) {
+    data = [data];
+  }
   let normalizedResult = [];
   let result = data.reduce((acc, item) => {
     if (!acc[item.type]) {
@@ -27,5 +32,6 @@ export const normJsonApi = (resp) => {
     }
     return acc;
   }, normalizedResult);
-  return normalizedResult;
+
+  return hasMultipleItems ? normalizedResult : normalizedResult.pop();
 };

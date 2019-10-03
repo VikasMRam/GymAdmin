@@ -45,7 +45,9 @@ const MSCColumnWrapper = styled.div`
 
 const PaddedPagination = pad(Pagination, 'small');
 
-const ShadowCommunityTile = shadow(CommunityTile);
+const ShadowCommunityTile = shadow(styled(CommunityTile)`
+  position: relative;
+`);
 
 const mostSearchedCities = [
   {
@@ -133,6 +135,10 @@ const CommunitySearchList = ({
   });
   // components.splice(adIndex, 0, <AdTileWrapper key="ad" ><AdTile {...searchAdProps} onClick={() => onAdTileClick()} /></AdTileWrapper>);
   const { current, total } = getPaginationData(requestMeta);
+  const count = requestMeta['filtered-count'];
+  const present = (requestMeta['page-number'] * requestMeta['page-size']);
+  const start = present + 1;
+  const end = (present + requestMeta['page-size']  > count ? count : present);
 
   // pagination pathname
   let params = {};
@@ -168,11 +174,11 @@ const CommunitySearchList = ({
           </MSCColumnWrapper>
         </Fragment>
       }
-      {/* TODO: shadow causing issues with pagination */}
-      <div></div>
+      <Fragment>
+        {`Showing ${start} to ${end} of ${count}`}
+      </Fragment>
       {communityList.length > 0 &&
         <Fragment>
-          {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
           <PaddedPagination basePath={basePath} pageParam="page-number" current={current} total={total} />
         </Fragment>
       }

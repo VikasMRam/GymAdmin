@@ -16,6 +16,7 @@ const Wrapper = styled.div`
 
     > *:nth-child(2) {
       flex-grow: 1;
+      overflow: auto;
     }
   }
 `;

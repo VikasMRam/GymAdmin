@@ -56,12 +56,18 @@ export default class FamilyDetailsFormContainer extends Component {
       name,
       email,
       phone,
+      tags,
+      slyMessage,
       residentName,
       lookingFor,
       gender,
+      age,
       budget,
       timeToMove,
       preferredLocation,
+      roomPreference,
+      mobilityLevel,
+      communityCareType,
     } = data;
     let locationInfo = {};
     if (preferredLocation) {
@@ -82,12 +88,24 @@ export default class FamilyDetailsFormContainer extends Component {
       newClient.set('attributes.clientInfo.phoneNumber', phone);
     }
 
+    if (slyMessage) {
+      newClient.set('attributes.clientInfo.slyMessage', slyMessage);
+    }
+
     let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
     if (residentName) {
       newUuidAux.set('attributes.uuidInfo.residentInfo.fullName', residentName);
     }
     if (gender) {
       newUuidAux.set('attributes.uuidInfo.residentInfo.gender', gender);
+    }
+    if (age) {
+      // This is an int on server side
+      newUuidAux.set('attributes.uuidInfo.residentInfo.age', parseInt(age));
+    }
+    if (mobilityLevel) {
+      // FIXME: Mobility on backend is an array
+      newUuidAux.set('attributes.uuidInfo.careInfo.mobility', [mobilityLevel]);
     }
     if (budget) {
       newUuidAux.set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', budget);
@@ -97,6 +115,12 @@ export default class FamilyDetailsFormContainer extends Component {
     }
     if (timeToMove) {
       newUuidAux.set('attributes.uuidInfo.housingInfo.moveTimeline', timeToMove);
+    }
+    if (communityCareType) {
+      newUuidAux.set('attributes.uuidInfo.housingInfo.typeCare', [communityCareType]);
+    }
+    if (roomPreference) {
+      newUuidAux.set('attributes.uuidInfo.housingInfo.roomPreference', [roomPreference]);
     }
     if (locationInfo) {
       newUuidAux.set('attributes.uuidInfo.locationInfo', locationInfo);
@@ -127,16 +151,28 @@ export default class FamilyDetailsFormContainer extends Component {
 
   render() {
     const { client, formData, ...props } = this.props;
-    const { clientInfo, uuidAux } = client;
+    const { clientInfo, uuidAux, tags } = client;
     const {
       name, email, slyMessage, phoneNumber = '',
     } = clientInfo;
     const { uuidInfo } = uuidAux;
     const {
-      residentInfo, housingInfo, financialInfo, locationInfo,
+      residentInfo, housingInfo, financialInfo, locationInfo, careInfo,
     } = uuidInfo;
-    const { fullName, gender } = residentInfo;
+    // FIXME: Frontend and backend differ in []string and stringfor certain fields
+    let { mobility } = careInfo;
+    if (mobility) {
+      [mobility] = mobility;
+    }
+    const { fullName, gender, age } = residentInfo;
     const { lookingFor, moveTimeline } = housingInfo;
+    let { typeCare, roomPreference } = housingInfo;
+    if (typeCare) {
+      [typeCare] = typeCare;
+    }
+    if (roomPreference) {
+      [roomPreference] = roomPreference;
+    }
     const { maxMonthlyBudget } = financialInfo;
     let preferredLocation = '';
     if (locationInfo) {
@@ -150,9 +186,15 @@ export default class FamilyDetailsFormContainer extends Component {
       residentName: fullName,
       lookingFor,
       gender,
+      age,
+      roomPreference,
+      mobilityLevel: mobility,
+      communityCareType: typeCare,
       budget: maxMonthlyBudget,
       timeToMove: moveTimeline,
       preferredLocation,
+      slyMessage,
+      contactPreferences: ['sms', 'email'],
     };
     ({ preferredLocation } = formData);
 
@@ -160,7 +202,6 @@ export default class FamilyDetailsFormContainer extends Component {
       <ReduxForm
         onSubmit={this.handleSubmit}
         initialValues={initialValues}
-        intro={slyMessage}
         preferredLocation={preferredLocation}
         {...props}
       />

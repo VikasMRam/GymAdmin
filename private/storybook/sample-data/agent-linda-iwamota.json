@@ -30,7 +30,7 @@
     "displayName": "eskaton village grass valley",
     "profileImageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/c199f63a3fc23f72bdd63578c0d8ab0a/EskatonVillageGrassValley_sd.jpg",
     "recentFamiliesHelped": 5,
-    "lastFiveDayLeadCount": 5,
+    "last5DayLeadCount": 5,
     "slyScore":87,
     "slyPhone":"+13122182900",
     "adminNote":"This is a long admin note",
@@ -50,5 +50,22 @@
     "state": "CA",
     "zip": "95945",
     "id": "d763212ea1b506675121b531f0c1c374"
-  }
+  },
+  "contacts": [
+    {
+      "createdAt": "2018-07-26T17:17:39Z",
+      "email": "maureen@seniorcareauthority.com",
+      "entities": [],
+      "firstName": "Maureen",
+      "id": "1e8d45007bb0d0a43396b0ede3f29fb0",
+      "lastName": "Simmons",
+      "mobilePhone": "9163376527",
+      "name": "Maureen Simmons",
+      "organization": null,
+      "updatedAt": "2018-07-31T22:14:26Z",
+      "validEmail": true,
+      "validSMS": false,
+      "workPhone": "9162265255"
+    }
+  ]
 }

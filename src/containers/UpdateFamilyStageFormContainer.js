@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 import { query, getRelationship, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
-import { FAMILY_STATUS_ACTIVE, FAMILY_STATUS_ON_PAUSE, NOTE_COMMENTABLE_TYPE_CLIENT, FAMILY_STAGE_WON, FAMILY_STAGE_LOST } from 'sly/constants/familyDetails';
+import { FAMILY_STATUS_ACTIVE, FAMILY_STATUS_ON_PAUSE, NOTE_COMMENTABLE_TYPE_CLIENT, FAMILY_STAGE_WON, FAMILY_STAGE_LOST, ROOM_TYPES } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { createValidator, required, float } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
@@ -21,7 +21,8 @@ const validate = createValidator({
   moveInDate: [required],
   communityName: [required],
   monthlyFees: [required, float],
-  referralAgreement: [required, float],
+  referralAgreementType: [required],
+  referralAgreement: [required],
   lossReason: [required],
   lostDescription: [required],
   preferredLocation: [required],
@@ -79,12 +80,12 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const { currentStage, nextStage } = this;
     const {
       updateClient, client, rawClient, notifyError, notifyInfo, onSuccess, createNote,
-      updateUuidAux, uuidAux, refetchClient, refetchNotes, invalidateClients, user,
+      updateUuidAux, uuidAux, refetchClient, refetchNotes, invalidateClients,
     } = this.props;
     const { id, clientInfo, stage: previousStage } = client;
     const {
       stage, note, moveInDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription,
-      preferredLocation,
+      preferredLocation, referralAgreementType, invoiceAmount, invoiceNumber, invoicePaid, roomType,
     } = data;
     let notePromise = () => Promise.resolve();
     let uuidAuxPromise = () => Promise.resolve();
@@ -164,14 +165,36 @@ export default class UpdateFamilyStageFormContainer extends Component {
     if (lostDescription) {
       newClient.set('attributes.clientInfo.otherText', lostDescription);
     }
+    if (invoiceAmount) {
+      newClient.set('attributes.clientInfo.invoiceAmount', parseFloat(invoiceAmount));
+    }
+    if (invoiceNumber) {
+      newClient.set('attributes.clientInfo.invoiceNumber', invoiceNumber);
+    }
+    if (invoicePaid) {
+      newClient.set('attributes.clientInfo.invoicePaid', invoicePaid === 'yes');
+    }
+    if (roomType) {
+      newClient.set('attributes.clientInfo.moveRoomType', roomType);
+    }
+    newClient.set('attributes.clientInfo.referralAgreementType', referralAgreementType);
+    if (referralAgreementType === 'percentage') {
+      const moveInFee = referralAgreement * monthlyFees;
+      newClient.set('attributes.clientInfo.moveInFee', parseFloat(moveInFee));
+    } else if (referralAgreementType === 'flat-fee') {
+      newClient.set('attributes.clientInfo.moveInFee', parseFloat(referralAgreement));
+    }
+    const shouldUpdateUuidAux = preferredLocation;
     if (preferredLocation) {
       const [city, state] = preferredLocation.split(',');
       const locationInfo = {
         city,
         state,
       };
-      const { id: uuidID } = uuidAux;
       newUuidAux.set('attributes.uuidInfo.locationInfo', locationInfo);
+    }
+    if (shouldUpdateUuidAux) {
+      const { id: uuidID } = uuidAux;
       newUuidAux = newUuidAux.value();
       uuidAuxPromise = () => updateUuidAux({ id: uuidID }, newUuidAux);
     }
@@ -217,24 +240,53 @@ export default class UpdateFamilyStageFormContainer extends Component {
 
   render() {
     const { handleUpdateStage } = this;
-    const { client, formState, lossReasons, user } = this.props;
+    const {
+      client, formState, lossReasons, user,
+    } = this.props;
     const { clientInfo, stage, status } = client;
     const isPaused = status === FAMILY_STATUS_ON_PAUSE;
-    const { name } = clientInfo;
+    const {
+      name,
+      moveInDate: existingMoveInDate,
+      communityName: existingCommunityName,
+      moveRoomType: existingMoveRoomType,
+      referralAgreement: existingReferralAgreement,
+      referralAgreementType: existingReferralAgreementType,
+      monthlyFees: existingMonthlyFees,
+      invoiceAmount: existingInvoiceAmount,
+      invoiceNumber: existingInvoiceNumber,
+      invoicePaid: existingInvoicePaid,
+      lossReason: existingLossReason,
+    } = clientInfo;
     let nextStageGroup;
     let levelGroup;
     let showRejectOption;
     let nextStage;
     let currentLossReason;
+    let referralAgreementType;
+    let referralAgreement;
+    let monthlyFees;
     if (formState) {
-      this.currentStage = getStageDetails(stage, user);
+      this.currentStage = getStageDetails(stage);
       ({ levelGroup, showRejectOption } = this.currentStage);
-      ({ stage: nextStage, lossReason: currentLossReason } = formState);
-      this.nextStage = getStageDetails(nextStage, user);
+      ({
+        stage: nextStage, lossReason: currentLossReason, referralAgreementType, referralAgreement, monthlyFees,
+      } = formState);
+      this.nextStage = getStageDetails(nextStage);
       ({ levelGroup: nextStageGroup } = this.nextStage);
     }
     const initialValues = {
       stage,
+      moveInDate: existingMoveInDate ? new Date(existingMoveInDate) : null,
+      communityName: existingCommunityName,
+      roomType: existingMoveRoomType,
+      referralAgreement: existingReferralAgreement ? existingReferralAgreement.toString() : null,
+      referralAgreementType: existingReferralAgreementType,
+      monthlyFees: existingMonthlyFees ? existingMonthlyFees.toString() : null,
+      invoiceAmount: existingInvoiceAmount ? existingInvoiceAmount.toString() : null,
+      invoiceNumber: existingInvoiceNumber,
+      invoicePaid: existingInvoicePaid,
+      lossReason: existingLossReason,
     };
 
     return (
@@ -251,6 +303,10 @@ export default class UpdateFamilyStageFormContainer extends Component {
         currentLossReason={currentLossReason}
         isPaused={isPaused}
         initialValues={initialValues}
+        referralAgreementType={referralAgreementType}
+        referralAgreement={referralAgreement}
+        monthlyFees={monthlyFees}
+        roomTypes={ROOM_TYPES}
       />
     );
   }

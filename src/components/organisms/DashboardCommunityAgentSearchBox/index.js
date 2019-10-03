@@ -1,5 +1,5 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
 import styled from 'styled-components';
 import { reduxForm, Field } from 'redux-form';
 
@@ -17,16 +17,17 @@ const CommunityTextBox = styled(Field)`
   flex-grow: 2;
 `;
 
-const CommunityAgentSearchForm = ({ handleSubmit }) => {
+const CommunityAgentSearchForm = ({ label, handleSubmit }) => {
   return (
     <Form onSubmit={handleSubmit} name="CommunitySearchForm" >
-      <CommunityTextBox name="nameOrZip" label="Find a community" type="text" placeholder="Search by zip code or community name" component={ReduxField} />
+      <CommunityTextBox name="nameOrZip" label={label} type="text" placeholder="Search by zip code or community name" component={ReduxField} />
       <IconButton type="submit" icon="search" />
     </Form>
   );
 };
 
 CommunityAgentSearchForm.propTypes = {
+  label: string,
   handleSubmit: func.isRequired,
 };
 
@@ -38,9 +39,10 @@ const ReduxForm = reduxForm({
   keepDirtyOnReinitialize: true,
 })(CommunityAgentSearchForm);
 
-const DashboardCommunityAgentSearchBox = ({ handleSubmit }) => <ReduxForm onSubmit={handleSubmit} />;
+const DashboardCommunityAgentSearchBox = ({ label, handleSubmit }) => <ReduxForm label={label} onSubmit={handleSubmit} />;
 
 DashboardCommunityAgentSearchBox.propTypes = {
+  label: string,
   handleSubmit: func.isRequired,
 };
 

@@ -38,6 +38,21 @@ const monthlyBudget = [
   '$5K+',
 ];
 
+const roomTypes = [
+  '1 Bedroom',
+  'Suite',
+];
+
+const careLevels = [
+  'Ambulatory',
+  'Non Ambulatory',
+];
+
+const communityTypes = [
+  'Assisted Living',
+  'Memory Care',
+];
+
 const intro = 'Rhoda Goldman Plaza';
 const handleSubmit = jest.fn();
 const defaultProps = {
@@ -47,6 +62,9 @@ const defaultProps = {
   gender,
   lookingFor,
   monthlyBudget,
+  roomTypes,
+  careLevels,
+  communityTypes,
 };
 
 const wrap = (props = {}) => shallow(<FamilyDetailsForm {...defaultProps} {...props} />);
@@ -54,7 +72,6 @@ const wrap = (props = {}) => shallow(<FamilyDetailsForm {...defaultProps} {...pr
 describe('FamilyDetailsForm', () => {
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('TwoColumnWrapper').find('IntroInfo').contains(intro)).toBeTruthy();
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' }).prop('disabled')).toBeTruthy();
@@ -71,7 +88,6 @@ describe('FamilyDetailsForm', () => {
 
   it('renders with accepted', () => {
     const wrapper = wrap({ accepted: true });
-    expect(wrapper.find('TwoColumnWrapper').find('IntroInfo').contains(intro)).toBeTruthy();
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' }).prop('disabled')).toBeFalsy();

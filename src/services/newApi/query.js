@@ -17,21 +17,21 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
   return (InnerComponent) => {
     const makeApiCall = call => (...args) => {
       if (['get', 'destroy'].includes(call.method)) {
-        return call(...args);
+        return call.call(...args);
       }
 
       const placeholders = args.length >= 2 ? args[0] : {};
       const data = args.length >= 2 ? args[1] : args[0];
       const options = args.length === 3 ? args[2] : {};
 
-      return call(placeholders, { data }, options);
+      return call.call(placeholders, { data }, options);
     };
 
     const mapDispatchToActions = (dispatch, { api }) => {
       const call = makeApiCall(api[apiCall]);
 
       return {
-        fetch: (props, ...args) => dispatch(dispatcher(call, props, ...args)),
+        fetch: (props, ...args) => dispatcher(call, props, ...args),
       };
     };
 

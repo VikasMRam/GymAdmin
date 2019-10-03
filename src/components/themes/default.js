@@ -1,5 +1,5 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { isDev } from 'sly/config';
+import { isDev, isBrowser } from 'sly/config';
 
 import { makeColor, makeColorTable } from './color';
 
@@ -17,17 +17,19 @@ const theme = {};
 // DO NOT MODIFY the following without asking Jared
 theme.palette = {
   slate    : makeColor('#2a333f', ['dark', 'base', 'filler', 'stroke']),
-  grey     : makeColor('#70767E', ['dark', 'base', 'filler', 'stroke', 'background']),
   primary  : makeColor('#186dc5', ['dark', 'base', 'filler', 'stroke', 'background']),
   secondary: makeColor('#56c4c2', ['dark', 'base', 'filler', 'stroke', 'background']),
   white    : makeColor('#ffffff', ['base']),
   danger   : makeColor('#dc3133', ['dark', 'base', 'filler', 'stroke']),
   warning  : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke']),
-  green    : makeColor('#4FB75F', ['dark', 'base', 'filler', 'stroke']),
-  pink     : makeColor('#9A268E', ['dark', 'base', 'filler', 'stroke', 'background']),
+  green    : makeColor('#4fb75f', ['dark', 'base', 'filler', 'stroke']),
+  grey     : makeColor('#70767E', ['dark', 'base', 'filler', 'stroke', 'background']),
+  yellow   : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke', 'background']),
+  pink     : makeColor('#9a268e', ['dark', 'base', 'filler', 'stroke', 'background']),
+  purple   : makeColor('#6d27ca', ['dark', 'base', 'filler', 'stroke', 'background']),
 };
 
-// if (isDev) console.table(makeColorTable(theme.palette));
+if (isDev && isBrowser) console.table(makeColorTable(theme.palette));
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',
@@ -94,6 +96,106 @@ theme.sizes = {
     // mobile breakpoint has to fit 16 margin + col4 + 16 margin = 416px, 26rem
   },
 
+  collapsible: {
+    tiny   : '5.000rem',   //  80px
+    small  : '10.00rem',   // 160px
+    regular: '20.00rem',   // 320px
+    large  : '30.00rem',   // 480px
+  },
+
+  element: {
+    tiny    : '1.750rem',   // 28px
+    small   : '2.250rem',   // 36px
+    regular : '2.500rem',   // 40px
+    button  : '2.750rem',   // 44px
+    large   : '3.000rem',   // 48px
+    xLarge  : '3.250rem',   // 52px
+    xxLarge : '4.500rem',   // 72px
+    xxxLarge: '5.000rem',   // 80px
+    huge    : '6.000rem',   // 96px
+    xHuge   : '7.500rem',   // 120px
+    xxHuge  : '9.000rem',   // 144px
+  },
+
+  slider: {
+    knobWidth    : '1.125rem',    // 18px
+    knobHeight   : '2.250rem',    // 36px
+    knobMarginTop: '-1.125rem',   // -18px
+    valueWidth   : {
+      small  : '3.000rem',   // 48px
+      regular: '6.000rem',   // 96px
+      large  : '9.000rem',   // 144px
+    },
+  },
+
+  padding: {
+    regular: '0.5rem 1rem',
+  },
+
+  border: {
+    regular: '1px',   // 1px
+    large  : '2px',   // 2px
+    xLarge : '3px',   // 3px
+    xxLarge: '4px',   // 4px
+  },
+
+  spacing: {
+    nano    : '0.062rem',   //  1px
+    tiny    : '0.125rem',   //  2px
+    small   : '0.250rem',   //  4px
+    regular : '0.500rem',   //  8px
+    medium  : '0.750rem',   // 12px
+    large   : '1.000rem',   // 16px
+    xLarge  : '1.500rem',   // 24px
+    xxLarge : '2.000rem',   // 32px
+    xxxLarge: '3.000rem',   // 48px
+    huge    : '4.000rem',   // 64px
+    massive : '4.500rem',   // 72px
+  },
+
+  icon: {
+    tiny   : '0.750rem',   // 12px
+    small  : '1.000rem',   // 16px
+    caption: '1.250rem',   // 20px for use with caption text
+    regular: '1.500rem',   // 24px
+    large  : '2.250rem',   // 36px
+    xLarge : '3.000rem',   // 48px
+    xxLarge: '4.500rem',   // 72px
+  },
+
+  text: {
+    micro   : '0.625rem',   // 10px
+    tiny    : '0.750rem',   // 12px
+    caption : '0.875rem',   // 14px
+    body    : '1.000rem',   // 16px
+    subtitle: '1.250rem',   // 20px
+    title   : '1.750rem',   // 28px
+    hero    : '2.250rem',   // 36px
+  },
+
+  lineHeight: {
+    nano    : '1.2',    // 12px/10px
+    tiny    : '1.167',
+    caption : '1.429',
+    body    : '1.5',
+    subtitle: '1.3',
+    title   : '1.28',
+    hero    : '1.33',
+    minimal : '1.125',
+  },
+
+  weight: {
+    light:    '300',
+    regular:  '400',
+    medium:   '500',
+    bold:     '700',
+  },
+
+  /** *******************************************
+   * FIXME: all things below should be calculated
+   * from available space
+   ******************************************** */
+
   header: {
     SearchBox: {
       width: '22.5rem',   // 360x
@@ -135,36 +237,6 @@ theme.sizes = {
     width: {
       mobile: '23.4375rem',   // 375px
       laptop: '15.375rem',    // 246px
-    },
-  },
-
-  collapsible: {
-    tiny   : '5.000rem',   //  80px
-    small  : '10.00rem',   // 160px
-    regular: '20.00rem',   // 320px
-    large  : '30.00rem',   // 480px
-  },
-
-  element: {
-    small   : '2.000rem',   // 34px
-    regular : '2.500rem',   // 40px
-    large   : '3.000rem',   // 48px
-    xLarge  : '3.250rem',   // 52px
-    xxLarge : '4.500rem',   // 72px
-    xxxLarge: '5.000rem',   // 80px
-    huge    : '6.000rem',   // 96px
-    xHuge   : '7.500rem',   // 120px
-    xxHuge  : '9.000rem',   // 144px
-  },
-
-  slider: {
-    knobWidth    : '1.125rem',    // 18px
-    knobHeight   : '2.250rem',    // 36px
-    knobMarginTop: '-1.125rem',   // -18px
-    valueWidth   : {
-      small  : '3.000rem',   // 48px
-      regular: '6.000rem',   // 96px
-      large  : '9.000rem',   // 144px
     },
   },
 
@@ -258,66 +330,6 @@ theme.sizes = {
         height: '1056px',   // 1056px
       },
     },
-  },
-
-  padding: {
-    regular: '0.5rem 1rem',
-  },
-
-  border: {
-    regular: '1px',   // 1px
-    large  : '2px',   // 2px
-    xLarge : '3px',   // 3px
-    xxLarge: '4px',   // 4px
-  },
-
-  spacing: {
-    nano    : '0.062rem',   //  1px
-    tiny    : '0.125rem',   //  2px
-    small   : '0.250rem',   //  4px
-    regular : '0.500rem',   //  8px
-    large   : '1.000rem',   // 16px
-    xLarge  : '1.500rem',   // 24px
-    xxLarge : '2.000rem',   // 32px
-    xxxLarge: '3.000rem',   // 48px
-    huge    : '4.000rem',   // 64px
-    massive : '4.500rem',   // 72px
-  },
-
-  icon: {
-    tiny   : '0.750rem',   // 12px
-    small  : '1.000rem',   // 16px
-    caption: '1.250rem',   // 20px for use with caption text
-    regular: '1.500rem',   // 24px
-    large  : '2.250rem',   // 36px
-    xLarge : '3.000rem',   // 48px
-    xxLarge: '4.500rem',   // 72px
-  },
-
-  text: {
-    tiny    : '0.750rem',   // 12px
-    caption : '0.875rem',   // 14px
-    body    : '1.000rem',   // 16px
-    subtitle: '1.250rem',   // 20px
-    title   : '1.750rem',   // 28px
-    hero    : '2.250rem',   // 36px
-  },
-
-  weight: {
-    light:    '300',
-    regular:  '400',
-    medium:   '500',
-    bold:     '700',
-  },
-
-  lineHeight: {
-    tiny    : '1.167',
-    caption : '1.429',
-    body    : '1.5',
-    subtitle: '1.3',
-    title   : '1.28',
-    hero    : '1.33',
-    minimal : '1.125',
   },
 
   carousel: {

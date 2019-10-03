@@ -3,7 +3,7 @@ import { object, func, arrayOf } from 'prop-types';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
-import { generatePath } from 'react-router';
+import { Redirect, generatePath } from 'react-router';
 
 import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
@@ -17,15 +17,14 @@ import {
   SUMMARY,
   MESSAGES, ACTIVITY,
 } from 'sly/constants/dashboardAppPaths';
-import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
+import { NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
 import SlyEvent from 'sly/services/helpers/events';
-import { CONVERSATION_PARTICIPANT_TYPE_CLIENT, CONVERSATION_PARTICIPANT_TYPE_USER } from 'sly/constants/conversations';
+import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
 import withBreakpoint from 'sly/components/helpers/breakpoint';
-import { isBrowser } from 'sly/config';
 
 @withUser
 
@@ -70,54 +69,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     invalidateClients: func,
   };
 
-  componentDidMount() {
-    const {
-      breakpoint, match, history, client,
-    } = this.props;
-    const currentTab = match.params.tab || SUMMARY;
-    if (isBrowser && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
-      const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, {
-        id: client.id,
-        tab: ACTIVITY,
-      });
-      history.push(activityPath);
-    }
-  }
-
   onRejectSuccess = (hide) => {
     const { history } = this.props;
     hide();
-    history.push(AGENT_DASHBOARD_FAMILIES_PATH);
-  };
-
-  onUnPause = (notifyInfo, notifyError) => {
-    const { setStatusToActive } = this;
-    const { invalidateClients } = this.props;
-
-    return setStatusToActive()
-      .then(invalidateClients)
-      .then(() => {
-        SlyEvent.getInstance().sendEvent({
-          category: 'fdetails',
-          action: 'unpause-family',
-          label: 'submit',
-          value: '',
-        });
-        notifyInfo('Family successfully unpaused');
-      })
-      .catch((r) => {
-        // TODO: Need to set a proper way to handle server side errors
-        const { body } = r;
-        const errorMessage = body.errors.map(e => e.title).join('. ');
-        console.error(errorMessage);
-        notifyError('Failed to unpause. Please try again.');
-        SlyEvent.getInstance().sendEvent({
-          category: 'fdetails',
-          action: 'unpause-family',
-          label: 'error',
-          value: '',
-        });
-      });
+    history.push(generatePath(AGENT_DASHBOARD_FAMILIES_PATH));
   };
 
   onAddNote = (data, notifyError, notifyInfo, hideModal) => {
@@ -209,17 +164,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       });
   };
 
-  setStatusToActive = () => {
-    const { updateClient, client, status } = this.props;
-    const { id } = client;
-    const { result: rawClient } = status.client;
-    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status']))
-      .set('attributes.status', FAMILY_STATUS_ACTIVE)
-      .value();
-
-    return updateClient({ id }, newClient);
-  };
-
   getHasConversationFinished = () => {
     const { status } = this.props;
     const { hasFinished: userHasFinished } = status.user;
@@ -245,16 +189,31 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   refetchConversations = () => {
     const { status } = this.props;
     status.conversations.refetch();
-  }
+  };
 
   render() {
     const {
-      onRejectSuccess, onUnPause, onAddNote, onEditNote,
+      onRejectSuccess, onAddNote, onEditNote,
     } = this;
 
     const {
-      client, match, status, notes, user, conversations,
+      client,
+      match,
+      status,
+      notes,
+      user,
+      conversations,
+      breakpoint,
     } = this.props;
+
+    const currentTab = match.params.tab || SUMMARY;
+    if (breakpoint && client && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
+      const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, {
+        id: client.id,
+        tab: ACTIVITY,
+      });
+      return <Redirect to={activityPath} />;
+    }
 
     const { result: rawClient, meta } = status.client;
     const { hasFinished: clientHasFinished } = status.client;
@@ -262,13 +221,15 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const hasConversationFinished = this.getHasConversationFinished();
     let conversation = null;
     if (hasConversationFinished && conversations) {
-      conversations.forEach((conv) => {
-        conv.conversationParticipants.forEach((participant) => {
-          if (participant.participantID === user.id && participant.participantType === CONVERSATION_PARTICIPANT_TYPE_USER) {
-            conversation = conv;
-          }
-        });
-      });
+      [conversation] = conversations;
+      // TODO: Alert when there are multiple conversation between user and entity.
+      // conversations.forEach((conv) => {
+      //   conv.conversationParticipants.forEach((participant) => {
+      //     if (participant.participantID === user.id && participant.participantType === CONVERSATION_PARTICIPANT_TYPE_USER) {
+      //       conversation = conv;
+      //     }
+      //   });
+      // });
     }
 
     return (
@@ -288,7 +249,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 onRejectSuccess={() => onRejectSuccess(hide)}
                 refetchClient={status.client.refetch}
                 refetchNotes={status.notes.refetch}
-                onUnPause={() => onUnPause(notifyInfo, notifyError)}
                 onAddNote={onAddNote}
                 onEditNote={onEditNote}
                 notes={notes}

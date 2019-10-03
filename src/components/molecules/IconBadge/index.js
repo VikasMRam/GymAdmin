@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
 import { palette as palettePropType } from 'sly/propTypes/palette';
+import { variation as variationPropType } from 'sly/propTypes/variation';
 import { Badge, Icon, Block } from 'sly/components/atoms';
 
 const borderRadius = ({ borderRadius }) => size('spacing', borderRadius);
@@ -22,26 +23,30 @@ const StyledIcon = styled(Icon)`
 `;
 
 const IconBadge = ({
-  palette, text, icon, borderRadius,
+  className, palette, badgePalette, badgeVariation, text, icon, borderRadius,
 }) => (
-  <StyledBadge palette="white" textPalette={palette} borderRadius={borderRadius}>
+  <StyledBadge className={className} palette={badgePalette} variation={badgeVariation} textPalette={palette} borderRadius={borderRadius}>
     <StyledIcon icon={icon} palette={palette} size="small" />
-    <Block weight="bold" palette={palette} size="tiny">
+    <Block weight="bold" palette={palette} size="micro">
       {text}
     </Block>
   </StyledBadge>
 );
 
 IconBadge.propTypes = {
+  className: string,
   borderRadius: string.isRequired,
-  icon: string.isRequired,
+  icon: string,
   text: string,
   palette: palettePropType.isRequired,
+  badgePalette: palettePropType.isRequired,
+  badgeVariation: variationPropType,
 };
 
 IconBadge.defaultProps = {
   palette: 'green',
   borderRadius: 'small',
+  badgePalette: 'white',
 };
 
 export default IconBadge;

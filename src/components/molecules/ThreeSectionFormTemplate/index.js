@@ -6,9 +6,11 @@ import { ifNotProp, prop } from 'styled-tools';
 import { size, palette } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import fullWidth from 'sly/components/helpers/fullWidth';
-import { Heading, Hr, Button, Block } from 'sly/components/atoms';
+import { Heading, Hr, Button, Block, Icon } from 'sly/components/atoms';
+import cursor from 'sly/components/helpers/cursor';
 
 const Head = styled.div`
+  display: flex;
   padding: 0 ${size('spacing.xLarge')};
   padding-top: ${size('spacing.xLarge')};
 `;
@@ -36,18 +38,26 @@ const FullWidthActionButtonsWrapper = fullWidth(ActionButtonsWrapper);
 
 const PaddedHeading = pad(Heading, 'large');
 
+const TopRightIconButton = cursor(styled(Icon)`
+  margin-left: auto;
+`);
+
 const ThreeSectionFormTemplate = ({
   onCancelClick, submitButtonText, cancelButtonText, children, heading, description, hasCancel, hasSubmit,
   onSubmit, pristine, submitting, invalid, extraActionButtonsAfterSubmit, noFooter, buttonsFullWidth,
+  topRightIcon, topRightIconOnClick, topRightIconPalette,
 }) => {
   const ACWrapperComponent = buttonsFullWidth ? FullWidthActionButtonsWrapper : ActionButtonsWrapper;
 
   return (
     <form onSubmit={onSubmit}>
       <Head>
-        {!description && <Heading size="subtitle">{heading}</Heading>}
-        {description && <PaddedHeading size="subtitle">{heading}</PaddedHeading>}
-        {description && <Block size="caption">{description}</Block>}
+        <div>
+          {!description && <Heading size="subtitle">{heading}</Heading>}
+          {description && <PaddedHeading size="subtitle">{heading}</PaddedHeading>}
+          {description && <Block size="caption">{description}</Block>}
+        </div>
+        {topRightIcon && topRightIconOnClick && <TopRightIconButton onClick={topRightIconOnClick} icon={topRightIcon} palette={topRightIconPalette} />}
       </Head>
       <Hr />
       <Wrapper>
@@ -84,6 +94,9 @@ ThreeSectionFormTemplate.propTypes = {
     onClick: func,
     text: string.isRequired,
   })),
+  topRightIcon: string,
+  topRightIconOnClick: func,
+  topRightIconPalette: string,
 };
 
 ThreeSectionFormTemplate.defaultProps = {

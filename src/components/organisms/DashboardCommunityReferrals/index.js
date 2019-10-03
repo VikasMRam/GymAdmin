@@ -1,17 +1,23 @@
 import React, { Fragment } from 'react';
 import { func, arrayOf, object } from 'prop-types';
 import styled from 'styled-components';
-
+import { generatePath } from 'react-router';
 import { size, palette } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import DashboardAdminReferralCommunityTile from 'sly/components/organisms/DashboardAdminReferralCommunityTile';
-import { Block, Button } from 'sly/components/atoms';
+import { Block, Button, Link } from 'sly/components/atoms';
 import pad from 'sly/components/helpers/pad';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
 
 const TopWrapper = styled.div`
   display: flex;
+  align-items: center;
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
   border-bottom: ${size('border.regular')} solid ${palette('grey', 'stroke')};
+
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    padding: ${size('spacing.xLarge')};
+  }
 `;
 
 const CommunitiesWrapper = styled.div`
@@ -43,9 +49,25 @@ const DashboardCommunityReferrals = ({
               title,
             };
             if (client) {
-              return <StyledDashboardAdminReferralCommunityTile {...props} stage={client.stage} referralSentAt={client.createdAt} />;
+              const { id, stage, createdAt } = client;
+              const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, {
+                id,
+                tab: FAMILY_DETAILS,
+              });
+              return (<Link to={familyDetailsPath}>
+                <StyledDashboardAdminReferralCommunityTile
+                  {...props}
+                  stage={stage}
+                  referralSentAt={createdAt}
+                />
+                      </Link>);
             }
-            return <StyledDashboardAdminReferralCommunityTile {...props} actionText="Send Referral" actionClick={() => setSelectedCommunity(community)} />;
+            return (<StyledDashboardAdminReferralCommunityTile
+              {...props}
+              actionText="Send Referral"
+              actionClick={() => setSelectedCommunity(community)}
+            />);
+
           })
         }
         {childrenClients.map((client) => {

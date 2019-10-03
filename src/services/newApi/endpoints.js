@@ -72,4 +72,8 @@ export default {
   getTasks: { method: get, path: '/platform/tasks' },
   createTask: { method: post, path: '/platform/tasks' },
   updateTask: { method: patch, path: '/platform/tasks/:id' },
+
+  createContact: { method: post, path: '/platform/contacts' },
+
+  getDatatable: { method: get, path: '/meta-data/datatables/:id' },
 };

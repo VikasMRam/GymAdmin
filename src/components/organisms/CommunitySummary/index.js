@@ -110,11 +110,11 @@ const CommunitySummary = ({
               <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
                 <NumberFormat
                   value={conciergeNumber}
-                  format="###-###-####"
+                  format="(###) ###-####"
                   displayType="text"
                 />
               </Link>
-              <StyledIcon palette="slate" variation="filler" icon="help" size="small" data-tip data-for="phone" />
+              <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
               {!isServer &&
                 <TooltipContent id="phone" place="top" effect="solid" multiline>
                   This phone number will connect you to the concierge team at Seniorly.

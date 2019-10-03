@@ -42,7 +42,7 @@ describe('AddFamilyForm', () => {
     expect(wrapper.find(Field).filter({ name: 'lookingFor' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'timeToMove' })).toHaveLength(1);
     expect(wrapper.find('StyledSearchBoxContainer')).toHaveLength(1);
-    expect(wrapper.find(Field).filter({ name: 'slyMessage' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'source' })).toHaveLength(1);
   });
 

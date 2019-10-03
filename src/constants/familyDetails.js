@@ -19,6 +19,7 @@ export const FAMILY_STAGE_ORDERED = {
 export const TOTAL_STAGES_COUNT = 5;
 
 export const FAMILY_STATUS_ACTIVE = 'Active';
+export const FAMILY_STATUS_HOT = 'HOT';
 export const FAMILY_STATUS_ON_PAUSE = 'On Pause';
 export const FAMILY_STATUS_ARCHIVED = 'Archived';
 export const FAMILY_STATUS_LONG_TERM = 'Long Term';
@@ -63,3 +64,12 @@ STATUS_ICON_MAP[FAMILY_STATUS_ACTIVE] = 'active';
 STATUS_ICON_MAP[FAMILY_STATUS_ARCHIVED] = 'archived';
 STATUS_ICON_MAP[FAMILY_STATUS_LONG_TERM] = 'hourglass';
 STATUS_ICON_MAP[FAMILY_STATUS_ON_PAUSE] = 'pause';
+
+// todo temp till api meta is updated
+export const ROOM_TYPES = [
+  'Shared Suite',
+  'Private Suite',
+  '1 Bedroom',
+  '2 Bedroom',
+  'Other',
+];

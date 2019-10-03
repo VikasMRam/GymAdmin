@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
-import { Paragraph, Heading } from 'sly/components/atoms';
+import { Link, Paragraph, Heading } from 'sly/components/atoms';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
@@ -21,8 +22,13 @@ const StyledArticle = styled.article`
 `;
 
 const CommunityDetails = ({
-  communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription, ownerExperience, contract,
+  communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription, ownerExperience, city, state, twilioNumber,
 }) => {
+  let phone = '8558664515';
+  if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
+    [phone] = twilioNumber.numbers;
+  }
+
   return (
     <CollapsibleBlock collapsedDefault={false}>
       {communityDescription && (
@@ -72,7 +78,30 @@ const CommunityDetails = ({
         <Paragraph>
           Seniorly is not affiliated with the owner or operator(s) of {communityName}.
           The information above has not been verified or approved by the owner or operator.
+          For exact details, connect to a local senior living expert in {city} by calling&nbsp;
+          <Link href={`tel:${phone}`}>
+            <NumberFormat
+              value={phone}
+              format="(###) ###-####"
+              displayType="text"
+            />
+          </Link>
+          . There is no cost for this service. We are compensated by the community you select.
         </Paragraph>
+      </StyledArticle>
+      <StyledArticle>
+        <StyledHeading level="subtitle" size="subtitle">
+          What is a local senior living expert in {city}, {state}?
+        </StyledHeading>
+        <Paragraph>
+          A senior living expert is a professional who knows
+          the {city}, {state} communities and specializes in helping you find the right fit for your
+          unique budget, location, care, social and other needs. This is a free service. To learn more,&nbsp;
+          <Link href={`https://www.seniorly.com/agents?utm_content=${communityName}&utm_medium=link&utm_source=summary&utm_campaign=cta`}>
+            click here to visit our Seniorly Partner Agent page.
+          </Link>
+        </Paragraph>
+        <Paragraph>&nbsp;</Paragraph>
       </StyledArticle>
     </CollapsibleBlock>
   );
@@ -86,6 +115,10 @@ CommunityDetails.propTypes = {
   residentDescription: PropTypes.string,
   ownerExperience: PropTypes.string,
   contract: PropTypes.bool,
+  city: PropTypes.string,
+  state: PropTypes.string,
+  twilioNumber: PropTypes.object,
+
 };
 
 export default CommunityDetails;

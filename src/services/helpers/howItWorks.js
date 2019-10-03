@@ -1,6 +1,6 @@
 export const secondContents = [
   {
-    icon: 'search-dark',
+    icon: 'search',
     heading: 'Open Local Search Platform',
     content: `We provide the most comprehensive, unbiased information on
       senior housing and care without requiring personal data to access. Our
@@ -8,21 +8,21 @@ export const secondContents = [
       available communities regardless if we have a commercial relationship with them.`,
   },
   {
-    icon: 'move-dark',
+    icon: 'move',
     heading: 'Moving Resources',
     content: `Our platform and customer service team offers helpful resources to plan and
     manage the transition into a new home. In addition, we publish weekly useful news and
     tips for both families and professionals.`,
   },
   {
-    icon: 'case-dark',
+    icon: 'case',
     heading: 'Billing Portal',
     content: `Our secure billing portal offers a safe, efficient way to pay for assisted
     living services online. We created this to help families better manage all of the expenses
     associated with a loved one living in a new home.`,
   },
   {
-    icon: 'mobile-dark',
+    icon: 'mobile',
     heading: 'On-Going Support',
     content: `We are committed to maintaining a relationship with every aging citizen we help,
     every community we feature, and every agent we partner with. Our benefits begin with the
@@ -32,7 +32,7 @@ export const secondContents = [
 
 export const consumerCards = [
   {
-    icon: 'search-dark',
+    icon: 'search',
     heading: 'Unparalleled Search Experience',
     content: `Our powerful search platform makes it easy for you to discover the communities
     that fit your needs. We have created an online experience that allows you to filter by
@@ -40,14 +40,14 @@ export const consumerCards = [
     of all the free information and resources throughout our website.`,
   },
   {
-    icon: 'logo-dark',
+    icon: 'logo',
     heading: 'Personalized Support',
     content: `We provide you with all of the information you are seeking and we never require
     you to give any personal details to access it.  When you create a profile, you’ll benefit
     from our ability to save your searches and preferences for future visits.`,
   },
   {
-    icon: 'verified-dark',
+    icon: 'verified',
     heading: 'Secure Billing on Your Terms',
     content: `We’ve developed a secure, safe credit or debit card payment solution for housing
     fees and other products and services you select.  There is no additional charge to use this

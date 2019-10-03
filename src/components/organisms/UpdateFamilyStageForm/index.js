@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { func, string, arrayOf, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
@@ -11,7 +11,10 @@ import {
   DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS,
   PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
 } from 'sly/constants/familyDetails';
+import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import Role from 'sly/components/common/Role';
 import pad from 'sly/components/helpers/pad';
+import { priceFormatter, priceParser } from 'sly/services/helpers/pricing';
 import { Block, Span, Label } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
@@ -27,6 +30,13 @@ Warning.displayName = 'Warning';
 const PaddedField = pad(Field, 'xLarge');
 PaddedField.displayName = 'PaddedField';
 
+const ReferralAgreementWrapper = styled.div`
+  display: grid;
+  grid-template-columns: max-content max-content;
+  grid-gap: ${size('spacing.large')};
+  align-items: baseline;
+`;
+
 export default class UpdateFamilyStageForm extends Component {
   static propTypes = {
     handleSubmit: func,
@@ -38,10 +48,19 @@ export default class UpdateFamilyStageForm extends Component {
     nextStage: string,
     nextAllowedStages: arrayOf(string).isRequired,
     lossReasons: arrayOf(string).isRequired,
+    roomTypes: arrayOf(string).isRequired,
     currentLossReason: string,
     change: func.isRequired,
     onLocationChange: func,
     isPaused: bool,
+    monthlyFees: string,
+    referralAgreement: string,
+    referralAgreementType: string,
+  };
+
+  static defaultProps = {
+    referralAgreement: '',
+    monthlyFees: '',
   };
 
   handleChange = () => {
@@ -61,7 +80,7 @@ export default class UpdateFamilyStageForm extends Component {
     const { handleChange, handleLocationChange } = this;
     const {
       handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, nextAllowedStages, lossReasons,
-      currentLossReason, isPaused, ...props
+      currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, roomTypes, ...props
     } = this.props;
 
     const NEW_FAMILY_STAGE_ORDERED = { ...FAMILY_STAGE_ORDERED };
@@ -79,6 +98,7 @@ export default class UpdateFamilyStageForm extends Component {
       }
       return null;
     });
+    const roomTypeOptions = roomTypes.map(t => <option key={t} value={t}>{t}</option>);
     const lossReasonOptions = lossReasons.map(reason => <option key={reason} value={reason}>{reason}</option>);
     const stageGroupChanged = nextStageGroup && currentStageGroup !== nextStageGroup;
     const stageChanged = currentStage !== nextStage;
@@ -143,20 +163,87 @@ export default class UpdateFamilyStageForm extends Component {
         }
         {nextStage === FAMILY_STAGE_WON &&
           <Field
+            name="roomType"
+            label="Room type"
+            type="select"
+            component={ReduxField}
+          >
+            <option value="" disabled>Select an option</option>
+            {roomTypeOptions}
+          </Field>
+        }
+        {nextStage === FAMILY_STAGE_WON &&
+          <Field
             name="monthlyFees"
             label={<span>Resident&apos;s monthly fees (rent + care)<Span palette="danger">*</Span></span>}
             type="iconInput"
             component={ReduxField}
+            parse={priceParser}
+            format={priceFormatter}
           />
         }
         {nextStage === FAMILY_STAGE_WON &&
-          <Field
-            name="referralAgreement"
-            label={<span>Your community referral agreement %<Span palette="danger">*</Span></span>}
-            type="iconInput"
-            icon="percentage"
-            component={ReduxField}
-          />
+          <Fragment>
+            <Label>Your community referral agreement %<Span palette="danger">*</Span></Label>
+            <Field
+              name="referralAgreementType"
+              label="Percentage"
+              type="radio"
+              value="percentage"
+              component={ReduxField}
+            />
+            <Field
+              name="referralAgreementType"
+              label="Flat-fee"
+              type="radio"
+              value="flat-fee"
+              component={ReduxField}
+            />
+            {referralAgreementType &&
+              <ReferralAgreementWrapper>
+                <Field
+                  name="referralAgreement"
+                  type="iconInput"
+                  icon={referralAgreementType === 'percentage' ? 'percentage' : 'dollar'}
+                  component={ReduxField}
+                  parse={priceParser}
+                  format={priceFormatter}
+                />
+                {/* important to keep in mind that referralAgreement and monthlyFees will be available as string */}
+                {referralAgreementType === 'percentage' && referralAgreement && referralAgreement.length > 0 && monthlyFees && monthlyFees.length > 0 &&
+                  <Block weight="medium" size="caption" palette="green">Your referral total is ${priceFormatter(referralAgreement * monthlyFees)}</Block>}
+              </ReferralAgreementWrapper>
+            }
+            <Role is={PLATFORM_ADMIN_ROLE}>
+              <Field
+                name="invoiceNumber"
+                label="Invoice Number"
+                type="text"
+                placeholder="0000000"
+                component={ReduxField}
+              />
+              <Field
+                name="invoiceAmount"
+                type="iconInput"
+                icon="dollar"
+                label="Invoice Amount"
+                placeholder="0.00"
+                component={ReduxField}
+                parse={priceParser}
+                format={priceFormatter}
+              />
+              <Field
+                name="invoicePaid"
+                label="Invoice Paid?"
+                type="select"
+                component={ReduxField}
+              >
+                <option value="" disabled>Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </Field>
+            </Role>
+          </Fragment>
         }
         {nextStage === FAMILY_STAGE_LOST &&
           <Field
