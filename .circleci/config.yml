@@ -266,11 +266,11 @@ jobs:
 
       - run:
           name: Waiting for Local React to be up and running
-          command: npx wait-on http://localhost:8080
+          command: npx wait-on http://localhost:8000
 
       - run:
-          name: Waiting for Local React to be up and running
-          command: npx wait-on http://localhost:8000
+          name: Waiting for Local Go to be up and running
+          command: npx wait-on http://localhost:8080
 
       - run:
           name: Curl whether API is accessible
