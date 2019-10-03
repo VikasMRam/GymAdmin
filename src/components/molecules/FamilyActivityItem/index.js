@@ -46,8 +46,15 @@ const Date = styled(Block)`
 const CursorSpan = cursor(Span);
 CursorSpan.displayName = 'CursorSpan';
 
+const getIconFromCType = (cType) => {
+  switch (cType) {
+    case 'activity': return 'logo';
+    default: return cType;
+  }
+};
+
 const FamilyActivityItem = ({
-  title, description, icon, date, snap, noBorderRadius, className, onEditClick,
+  title, description, cType, date, snap, noBorderRadius, className, onEditClick,
 }) => {
   let dateString = '';
   const parsedDate = dayjs(date);
@@ -56,6 +63,8 @@ const FamilyActivityItem = ({
   } else {
     dateString = parsedDate.format('MM/DD/YYYY hh:mm A');
   }
+
+  const icon = getIconFromCType(cType);
 
   return (
     <StyledBox className={className} padding="large" snap={snap} noBorderRadius={noBorderRadius}>
@@ -77,7 +86,7 @@ const FamilyActivityItem = ({
 FamilyActivityItem.propTypes = {
   title: string.isRequired,
   description: string,
-  icon: string,
+  cType: string,
   date: string.isRequired,
   snap: string,
   noBorderRadius: bool,
@@ -86,7 +95,7 @@ FamilyActivityItem.propTypes = {
 };
 
 FamilyActivityItem.defaultProps = {
-  icon: 'logo',
+  cType: 'note',
 };
 
 export default FamilyActivityItem;

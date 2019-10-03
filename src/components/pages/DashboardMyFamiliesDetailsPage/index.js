@@ -496,6 +496,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         title: a.title,
         description: a.body,
         date: a.createdAt,
+        cType: a.cType,
       };
       if (a.cType === NOTE_CTYPE_NOTE) {
         props.onEditClick = () => handleEditNoteClick(a);
