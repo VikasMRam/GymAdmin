@@ -20,7 +20,8 @@ import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client
 import notePropType from 'sly/propTypes/note';
 import { size, palette } from 'sly/components/themes';
 import { getStageDetails } from 'sly/services/helpers/stage';
-import { NOTE_CTYPE_NOTE } from 'sly/constants/familyDetails';
+import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
+import { ACTIVITY_ICON_MAP } from 'sly/constants/familyDetails';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
@@ -151,7 +152,7 @@ const SmallScreenClientNameWrapper = styled.div`
 const StyledStatusSelect = styled(StatusSelect)`
   margin-bottom: 0;
   min-width: 56px;
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     min-width: ${size('element.huge')};
   }
@@ -160,22 +161,22 @@ const StyledStatusSelect = styled(StatusSelect)`
 const StyledClientNameBlock = styled(Block)`
   display: flex;
   align-items: center;
-  
+
   > :nth-child(2) {
     flex-grow: 1;
     text-align: center;
   }
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     > :nth-child(2) {
       text-align: left;
     }
-  
+
     > :nth-child(1) {
       display: none;
     }
   }
-  
+
 `;
 
 const ClientName = ({ client, backLinkHref, ...props }) => {
@@ -495,6 +496,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         title: a.title,
         description: a.body,
         date: a.createdAt,
+        icon: ACTIVITY_ICON_MAP[a.cType],
       };
       if (a.cType === NOTE_CTYPE_NOTE) {
         props.onEditClick = () => handleEditNoteClick(a);
