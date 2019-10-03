@@ -77,7 +77,7 @@ const FormBottomSection = styled.div`
 
 const FormSectionHeading = pad(Block, 'large');
 
-const contactPreferenceOptionsList = [{ value: 'sms', label: 'SMS' }, { value: 'email', label: 'Email' }, { value: 'phone', label: 'Phone' }];
+// const contactPreferenceOptionsList = [{ value: 'sms', label: 'SMS' }, { value: 'email', label: 'Email' }, { value: 'phone', label: 'Phone' }];
 
 // const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
 //   { value: 'EmailOnly', label: 'EmailOnly' },
@@ -209,7 +209,7 @@ class FamilyDetailsForm extends Component {
                 component={ReduxField}
                 wideWidth
               />
-              <Field
+              {/* <Field
                 name="contactPreferences"
                 type="checkbox"
                 label="Contact Preference"
@@ -224,7 +224,7 @@ class FamilyDetailsForm extends Component {
                 readOnly={!canEditFamilyDetails}
                 component={ReduxField}
                 wideWidth
-              />
+              /> */}
             </FormSection>
             <FormSection>
               <FormSectionHeading weight="medium">Resident Info</FormSectionHeading>
