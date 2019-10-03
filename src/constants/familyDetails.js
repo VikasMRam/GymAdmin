@@ -1,3 +1,5 @@
+import { NOTE_CTYPE_ACTIVITY_TASK_COMPLETED } from 'sly/constants/notes';
+
 export const FAMILY_STAGE_NEW = 'New';
 export const FAMILY_STAGE_CONTACT1 = '1st Contact Attempt';
 export const FAMILY_STAGE_CONTACT2 = '2nd Contact Attempt';
@@ -30,10 +32,6 @@ export const STAGE_CLIENT_TYPE_MAP = {
   Connected: 'connected',
   Closed: 'closed',
 };
-
-export const NOTE_COMMENTABLE_TYPE_CLIENT = 'Client';
-
-export const NOTE_CTYPE_NOTE = 'note';
 
 export const DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS = [
   'Other',
@@ -73,3 +71,6 @@ export const ROOM_TYPES = [
   '2 Bedroom',
   'Other',
 ];
+
+export const ACTIVITY_ICON_MAP = {};
+ACTIVITY_ICON_MAP[NOTE_CTYPE_ACTIVITY_TASK_COMPLETED] = 'checkbox-fill';
