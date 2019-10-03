@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import { func, string, object } from 'prop-types';
 import produce from 'immer';
 
+import { Span } from 'sly/components/atoms';
 import clientPropType from 'sly/propTypes/client';
 import { size } from 'sly/components/themes';
 import Field from 'sly/components/molecules/Field';
@@ -33,6 +34,9 @@ const StyledField = styled(Field)`
   & .react-select__single-value, & .react-select__option {
     font-weight: ${size('weight.bold')};
   }
+  & .react-select__menu {
+    right: 0;
+  }
 `;
 
 @prefetch('client', 'getClient', (req, { clientId }) => req({
@@ -60,7 +64,7 @@ export default class StatusSelect extends Component {
     const { notifyInfo, hideModal } = this.props;
 
     this.setState({ status: value }, () => this.confirm(value)
-      .then(reason => this.submitUserStatus(value, reason))
+      .then(data => this.submitUserStatus(value, data || {}))
       .then(() => {
         SlyEvent.getInstance().sendEvent({
           category: 'fdetails',
@@ -73,6 +77,14 @@ export default class StatusSelect extends Component {
       .then(hideModal));
   };
 
+  getDateProps = () => ({
+    name: 'date',
+    type: 'date',
+    size: 'small',
+    required: true,
+    label: <Fragment>Expected resume date<Span palette="danger">*</Span></Fragment>,
+  });
+
   confirm = (toStatus) => {
     const { showModal, hideModal, client } = this.props;
 
@@ -80,18 +92,27 @@ export default class StatusSelect extends Component {
 
     return new Promise((resolve) => {
       switch (toStatus) {
+        case FAMILY_STATUS_LONG_TERM: return showModal((
+          <ConfirmReasonFormContainer
+            onAgree={resolve}
+            onCancel={onCancel}
+            title={`Place ${client.clientInfo.name} on ${toStatus}`}
+            label="Long-term reason"
+          />
+        ));
         case FAMILY_STATUS_ON_PAUSE: return showModal((
           <ConfirmReasonFormContainer
-            onAgree={({ reason }) => resolve(reason)}
+            onAgree={resolve}
             onCancel={onCancel}
-            title={`Place ${client.name} on Pause`}
-            message="Please write a reason why you are putting this family on Pause..."
+            title={`Place ${client.clientInfo.name} on ${toStatus}`}
+            label="Pause reason"
+            extraFieldProps={this.getDateProps()}
           />
         ));
         default: return showModal((
           <ConfirmationDialog
-            heading={`${client.name} to "${toStatus}"?`}
-            description={`Are you sure that you want to set ${client.name} to "${toStatus}"?`}
+            heading={`Set ${client.clientInfo.name} to "${toStatus}"`}
+            description={`Are you sure that you want to set ${client.clientInfo.name} to "${toStatus}"?`}
             onConfirmClick={() => resolve()}
             onCancelClick={onCancel}
           />
@@ -100,12 +121,13 @@ export default class StatusSelect extends Component {
     });
   };
 
-  submitUserStatus = (clientStatus, onHoldReason) => {
+  submitUserStatus = (clientStatus, { reason, date }) => {
     const { updateClient, status: prefetchStatus, clientId } = this.props;
     return updateClient({ id: clientId }, produce(prefetchStatus.client.result, (draft) => {
       draft.attributes.status = clientStatus;
-      if (onHoldReason) {
-        draft.attributes.clientInfo.onHoldReason = onHoldReason;
+      if (reason) {
+        draft.attributes.clientInfo.onHoldReason = reason;
+        draft.attributes.clientInfo.resumeDate = date;
       }
     }));
   };
@@ -115,6 +137,7 @@ export default class StatusSelect extends Component {
     return (
       <StyledField
         type="choice"
+        name="status"
         value={this.state.status}
         size="tiny"
         options={options}
