@@ -54,33 +54,60 @@ export default class ReferralSearchContainer extends Component {
     const { refetchClient } = this.props;
     const { selectedCommunity } = this.state;
     const { email, name, slyMessage } = data;
-    const partner = {
-      id: selectedCommunity.id,
-      type: 'Property',
-      slyMessage,
-    };
-    return this.createContactForProvider({ email, name }, partner)
-      .then(() => this.sendReferral(partner))
+    const { id } = selectedCommunity;
+    const canCreateContact = this.getCanCreateContact(selectedCommunity, data);
+    const chain = partner => this.sendReferral(partner)
       .then(reset)
       .then(() => this.setSelectedCommunity(null))
       .then(() => refetchClient());
+    const partner = {
+      id,
+      type: 'Property',
+      slyMessage,
+    };
+    if (canCreateContact) {
+      return this.createContactForProvider({ email, name }, partner).then(() => chain(partner));
+    }
+    return chain(partner);
   };
 
   onAgentSendReferralComplete = (data, { reset }) => {
     const { refetchClient } = this.props;
     const { selectedAgent } = this.state;
     const { email, name, slyMessage } = data;
-    const partner = {
-      id: selectedAgent.id,
-      type: 'PartnerAgent',
-      slyMessage,
-    };
-    return this.createContactForProvider({ email, name }, partner)
-      .then(() => this.sendReferral(partner))
+    const { id } = selectedAgent;
+    const canCreateContact = this.getCanCreateContact(selectedAgent, data);
+    const chain = partner => this.sendReferral(partner)
       .then(reset)
       .then(() => this.setSelectedAgent(null))
       .then(() => refetchClient());
+    const partner = {
+      id,
+      type: 'PartnerAgent',
+      slyMessage,
+    };
+    if (canCreateContact) {
+      return this.createContactForProvider({ email, name }, partner)
+        .then(() => chain(partner));
+    }
+    return chain(partner);
   };
+
+  getCanCreateContact = (selectedPartner, data) => {
+    const { contacts } = selectedPartner;
+    let canCreateContact = false;
+    if (contacts.length === 0) {
+      canCreateContact = true;
+    } else if (contacts.length > 0) {
+      // Make sure to use the correct contacts object as the one used in render method
+      const contact = contacts[0];
+      const { email, name } = contact;
+      if (email !== data.email || name !== data.name) {
+        canCreateContact = true;
+      }
+    }
+    return canCreateContact;
+  }
 
   getSelectedCommunity = () => {
     const { selectedCommunity } = this.state;
@@ -218,6 +245,13 @@ export default class ReferralSearchContainer extends Component {
     //          handleCommunitySearch={this.doCommunitySearch}
     //          sendReferral={this.sendReferral} /> ;
     if (referralMode === 'Community') {
+      const selectedCommunity = this.getSelectedCommunity();
+      const contact = (selectedCommunity && selectedCommunity.contacts.length > 0) ? selectedCommunity.contacts[0] : null;
+      let contactFormInitialValues = {};
+      if (contact) {
+        const { email, name } = contact;
+        contactFormInitialValues = { email, name };
+      }
       return (
         <WizardController
           formName="SendCommunityReferral"
@@ -257,7 +291,8 @@ export default class ReferralSearchContainer extends Component {
                   onSubmit={onSubmit}
                   onChangeCommunity={previous}
                   name="DashboardCommunityReferralContactDetailsContainer"
-                  community={this.getSelectedCommunity()}
+                  community={selectedCommunity}
+                  initialValues={contactFormInitialValues}
                 />
               </WizardSteps>
             );
@@ -265,7 +300,14 @@ export default class ReferralSearchContainer extends Component {
         </WizardController>
       );
     }
-
+    // Agent Referral Flow
+    const selectedAgent = this.getSelectedAgent();
+    const contact = (selectedAgent && selectedAgent.contacts.length > 0) ? selectedAgent.contacts[0] : null;
+    let contactFormInitialValues = {};
+    if (contact) {
+      const { email, name } = contact;
+      contactFormInitialValues = { email, name };
+    }
     return (
       <WizardController
         formName="SendAgentReferral"
@@ -296,7 +338,8 @@ export default class ReferralSearchContainer extends Component {
                 onSubmit={onSubmit}
                 onChangeAgent={previous}
                 name="DashboardAgentReferralContactDetailsContainer"
-                agent={this.getSelectedAgent()}
+                agent={selectedAgent}
+                initialValues={contactFormInitialValues}
               />
             </WizardSteps>
           );
