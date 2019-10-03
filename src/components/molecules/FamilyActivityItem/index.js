@@ -7,6 +7,7 @@ import pad from 'sly/components/helpers/pad';
 import { size } from 'sly/components/themes';
 import cursor from 'sly/components/helpers/cursor';
 import { Box, Block, Icon, Span } from 'sly/components/atoms';
+import { NOTE_CTYPE_NOTE, NOTE_CTYPE_ACTIVITY, NOTE_CTYPE_ACTIVITY_TASK_COMPLETED } from 'sly/constants/notes';
 
 const StyledBox = styled(Box)`
   display: flex;
@@ -46,8 +47,17 @@ const Date = styled(Block)`
 const CursorSpan = cursor(Span);
 CursorSpan.displayName = 'CursorSpan';
 
+const getIconFromCType = (cType) => {
+  switch (cType) {
+    case NOTE_CTYPE_NOTE: return 'note';
+    case NOTE_CTYPE_ACTIVITY: return 'logo';
+    case NOTE_CTYPE_ACTIVITY_TASK_COMPLETED: return 'checkbox-fill';
+    default: return 'logo';
+  }
+};
+
 const FamilyActivityItem = ({
-  title, description, icon, date, snap, noBorderRadius, className, onEditClick,
+  title, description, cType, date, snap, noBorderRadius, className, onEditClick,
 }) => {
   let dateString = '';
   const parsedDate = dayjs(date);
@@ -56,6 +66,8 @@ const FamilyActivityItem = ({
   } else {
     dateString = parsedDate.format('MM/DD/YYYY hh:mm A');
   }
+
+  const icon = getIconFromCType(cType);
 
   return (
     <StyledBox className={className} padding="large" snap={snap} noBorderRadius={noBorderRadius}>
@@ -77,16 +89,12 @@ const FamilyActivityItem = ({
 FamilyActivityItem.propTypes = {
   title: string.isRequired,
   description: string,
-  icon: string,
+  cType: string,
   date: string.isRequired,
   snap: string,
   noBorderRadius: bool,
   className: string,
   onEditClick: func,
-};
-
-FamilyActivityItem.defaultProps = {
-  icon: 'logo',
 };
 
 export default FamilyActivityItem;

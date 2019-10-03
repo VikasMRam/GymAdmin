@@ -21,7 +21,6 @@ import notePropType from 'sly/propTypes/note';
 import { size, palette } from 'sly/components/themes';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
-import { ACTIVITY_ICON_MAP } from 'sly/constants/familyDetails';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
@@ -154,7 +153,7 @@ const StyledStatusSelect = styled(StatusSelect)`
   min-width: 56px;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    min-width: ${size('element.huge')};
+    min-width: 125px;
   }
 `;
 
@@ -496,7 +495,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         title: a.title,
         description: a.body,
         date: a.createdAt,
-        icon: ACTIVITY_ICON_MAP[a.cType],
+        cType: a.cType,
       };
       if (a.cType === NOTE_CTYPE_NOTE) {
         props.onEditClick = () => handleEditNoteClick(a);

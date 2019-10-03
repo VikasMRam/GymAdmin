@@ -1,5 +1,3 @@
-import { NOTE_CTYPE_ACTIVITY_TASK_COMPLETED } from 'sly/constants/notes';
-
 export const FAMILY_STAGE_NEW = 'New';
 export const FAMILY_STAGE_CONTACT1 = '1st Contact Attempt';
 export const FAMILY_STAGE_CONTACT2 = '2nd Contact Attempt';
@@ -72,5 +70,3 @@ export const ROOM_TYPES = [
   'Other',
 ];
 
-export const ACTIVITY_ICON_MAP = {};
-ACTIVITY_ICON_MAP[NOTE_CTYPE_ACTIVITY_TASK_COMPLETED] = 'checkbox-fill';

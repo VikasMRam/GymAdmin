@@ -21,6 +21,7 @@ import CheckboxInput from 'sly/components/molecules/CheckboxInput';
 
 const textTypeInputs = ['email', 'iconInput'];
 const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
+
 const getInputComponent = (type) => {
   switch (type) {
     case 'rating':
@@ -69,6 +70,10 @@ const Wrapper = styled.div`
     flex-direction: row;
     align-items: baseline;
   `)};
+  
+  .react-datepicker__input-container {
+    display: block;
+  }
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex-direction: ${ifProp({ wideWidth: true }, 'row')};
@@ -168,7 +173,7 @@ const Field = ({
   if (type === 'date') {
     inputProps.selected = inputProps.value;
     inputProps.placeholderText = inputProps.placeholder;
-    inputProps.customInput = <Input />;
+    inputProps.customInput = <Input size={props.size} />;
   }
 
   return (
@@ -212,6 +217,7 @@ Field.propTypes = {
     bool,
     object,
   ]),
+  size: string,
   className: string,
   invalid: bool,
   warning: bool,
