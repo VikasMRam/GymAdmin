@@ -154,7 +154,7 @@ const StyledStatusSelect = styled(StatusSelect)`
   min-width: 56px;
   
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    min-width: ${size('element.huge')};
+    min-width: 125px;
   }
 `;
 
