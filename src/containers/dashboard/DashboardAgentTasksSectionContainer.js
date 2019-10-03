@@ -6,6 +6,7 @@ import debounce from 'lodash/debounce';
 import { withRouter } from 'react-router';
 
 import { prefetch, withUser } from 'sly/services/newApi';
+import clientPropType from 'sly/propTypes/client';
 import taskPropType from 'sly/propTypes/task';
 import { TASK_STATUS_NOT_STARTED_CODE, TASK_STATUS_IN_PROGRESS_CODE } from 'sly/constants/tasks';
 import { getSearchParams } from 'sly/services/helpers/search';
@@ -47,7 +48,7 @@ const getPaginationData = ({ result, meta }) => {
 const getPageParams = ({ match, location }) => {
   const searchParams = getSearchParams(match, location);
   const type = searchParams.type || 'DueToday';
-  const taskName = searchParams.name;
+  const taskName = searchParams.title;
   let date;
   let status = `in:${TASK_STATUS_NOT_STARTED_CODE},${TASK_STATUS_IN_PROGRESS_CODE}`;
   if (type === 'DueToday') {
@@ -95,6 +96,7 @@ const getPageParams = ({ match, location }) => {
 export default class DashboardAgentTasksSectionContainer extends Component {
   static propTypes = {
     tasks: arrayOf(taskPropType),
+    client: clientPropType,
     status: object,
     history: object,
     match: object,
@@ -106,14 +108,15 @@ export default class DashboardAgentTasksSectionContainer extends Component {
     status.tasks.refetch();
   };
 
+  // todo: temp implementation till datatables for tasks is ready
   handleSearchTextKeyUp = (event) => {
     const { value } = event.target;
-    const { match, location, history } = this.props;
+    const { match, location, history, client } = this.props;
     const {
       pageNumber, date, status, type,
     } = getPageParams({ match, location });
     const filters = {
-      name: value,
+      title: value,
       'filter[status]': status,
       pageNumber,
       type,
@@ -121,19 +124,23 @@ export default class DashboardAgentTasksSectionContainer extends Component {
     if (date) {
       filters['filter[dueDate]'] = date;
     }
+    if (client) {
+      const { id } = client;
+      filters['filter[client]'] = id;
+    }
 
     this.sendQuery(history, qs.stringify(filters));
   };
 
   sendQuery = debounce((history, filtersQs) => {
     history.push({ search: `?${filtersQs}` });
-  }, 200);
+  }, 500);
 
   render() {
     const { tasks, status, match, location, ...props } = this.props;
 
     const params = getPageParams({ match, location });
-    const { type } = params;
+    const { type, taskName } = params;
     const { tasks: tasksStatus } = status;
     const { hasFinished, error: tasksError, meta, result: tasksRaw } = tasksStatus;
 
@@ -168,6 +175,7 @@ export default class DashboardAgentTasksSectionContainer extends Component {
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
                 refetchTasks={this.refetchTasks}
+                searchTextBoxValue={taskName}
               />
             )}
           </ModalController>

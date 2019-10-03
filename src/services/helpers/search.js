@@ -47,6 +47,7 @@ const searchParamsWhitelist = [
   'region',
   'type',
   'name',
+  'title',
   'organization',
   'provider',
   'providerType',
