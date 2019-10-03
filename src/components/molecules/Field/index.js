@@ -72,6 +72,9 @@ const Wrapper = styled.div`
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex-direction: ${ifProp({ wideWidth: true }, 'row')};
+    ${({ type, options }) => (type === 'checkbox' && !!options === true) && css`
+      align-items: flex-start;
+    `};
   }
 `;
 
@@ -86,16 +89,54 @@ const LabelWrapper = styled.div`
   vertical-align: middle;
   justify-content: space-between;
   align-items: center;
+  ${({ type, options }) => (type === 'checkbox' && !!options === true) && css`
+    margin-bottom: ${size('spacing.regular')};
+  `};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${({ wideWidth }) => wideWidth && css`
       margin-right: ${size('tabletLayout.gutter')};
       flex: 0 0 ${size('tabletLayout.col2')};
+      ${({ type, options }) => (type === 'checkbox' && !!options === true) && css`
+        margin-bottom: 0;
+      `};
     `}
   }
 `;
 
+/* Input checkbox 2 columns
+  display: grid;
+  grid-gap: ${size('spacing.large')};
+  grid-template-columns: auto auto;
+*/
+
+/* Input checkbox 3 rows auto flow columns
+  display: grid;
+  grid-gap: ${size('spacing.large')};
+  grid-template-rows: auto auto auto;
+  grid-auto-flow: column;
+*/
+
 const InputWrapper = styled.div`
+  ${({ type, options }) => (type === 'checkbox' && !!options === true) && css`
+    > * {
+      margin-bottom: ${size('spacing.large')};
+      :last-child {
+        margin-bottom: 0;
+      }
+    }
+  `};
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    ${({ type, options }) => (type === 'checkbox' && !!options === true) && css`
+      > * {
+        margin-bottom: 0;
+      }
+      display: grid;
+      grid-gap: ${size('spacing.large')};
+      grid-template-rows: auto auto auto;
+      grid-auto-flow: column;
+    `};
+  }
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${({ wideWidth }) => wideWidth && css`
       margin-right: ${size('spacing.large')};
@@ -149,6 +190,7 @@ const Field = ({
   wideWidth,
   hideValue,
   showCharacterCount,
+  options,
   ...props
 }) => {
   const inputProps = {
@@ -160,10 +202,11 @@ const Field = ({
     warning,
     placeholder,
     'aria-describedby': `${name}Error`,
+    options,
     ...props,
   };
   const InputComponent = getInputComponent(type);
-  const renderInputFirst = (type === 'checkbox' && !props.options) || type === 'radio';
+  const renderInputFirst = (type === 'checkbox' && !options) || type === 'radio';
   const valueLength = inputProps.value ? inputProps.value.length : 0;
   if (type === 'date') {
     inputProps.selected = inputProps.value;
@@ -172,10 +215,10 @@ const Field = ({
   }
 
   return (
-    <Wrapper className={className} wideWidth={wideWidth} row={renderInputFirst}>
+    <Wrapper className={className} wideWidth={wideWidth} type={type} options={options} row={renderInputFirst}>
       {renderInputFirst && (wideWidth ? <InputBeforeLabelWrapper wideWidth={wideWidth}><InputComponent {...inputProps} /></InputBeforeLabelWrapper> : <InputComponent {...inputProps} />)}
       {(label || labelRight) &&
-        <LabelWrapper wideWidth={wideWidth}>
+        <LabelWrapper wideWidth={wideWidth} type={type} options={options}>
           {label &&
             <StyledLabel htmlFor={inputProps.id} renderInputFirst={renderInputFirst}>
               {label}
@@ -186,7 +229,7 @@ const Field = ({
           }
         </LabelWrapper>
       }
-      {renderInputFirst || (wideWidth ? <InputWrapper wideWidth={wideWidth}><InputComponent {...inputProps} /></InputWrapper> : <InputComponent {...inputProps} />)}
+      {renderInputFirst || (wideWidth ? <InputWrapper wideWidth={wideWidth} type={type} options={options}><InputComponent {...inputProps} /></InputWrapper> : <InputComponent {...inputProps} />)}
       {invalid && !hideErrors && message && (
         <StyledInputMessage name={`${name}Error`} icon="close" palette="danger" message={message} wideWidth={wideWidth} renderInputFirst={renderInputFirst} />
       )}

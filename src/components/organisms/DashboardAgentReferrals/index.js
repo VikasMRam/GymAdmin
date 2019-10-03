@@ -1,12 +1,14 @@
 import React, { Fragment } from 'react';
 import { func } from 'prop-types';
 import styled from 'styled-components';
+import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
-import { Block, Button } from 'sly/components/atoms';
+import { Block, Button, Link } from 'sly/components/atoms';
 import pad from 'sly/components/helpers/pad';
 import clientPropType from 'sly/propTypes/client';
 import DashboardAdminReferralAgentTile from 'sly/components/organisms/DashboardAdminReferralAgentTile';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
 
 const TopWrapper = styled.div`
   display: flex;
@@ -60,8 +62,12 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients }) =>
   const childrenComponents = [];
   if (childrenClients.length > 0) {
     childrenClients.forEach((childrenClient) => {
-      const { stage, provider, createdAt } = childrenClient;
-      const component = <StyledDashboardAdminReferralAgentTile stage={stage} agent={provider} referralSentAt={createdAt} />;
+      const { id, stage, provider, createdAt } = childrenClient;
+      const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, {
+        id,
+        tab: FAMILY_DETAILS,
+      });
+      const component = <Link to={familyDetailsPath}><StyledDashboardAdminReferralAgentTile stage={stage} agent={provider} referralSentAt={createdAt} /></Link>;
       childrenComponents.push(component);
     });
   }

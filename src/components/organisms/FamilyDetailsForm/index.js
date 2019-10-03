@@ -3,6 +3,7 @@ import { func, bool, string, object, arrayOf } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
+
 import { size, palette, columnWidth } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -66,17 +67,17 @@ const PaddedTwoColumnWrapper = pad(TwoColumnWrapper, 'large');
 const FormSection = styled.div`
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
   padding-bottom: 0;
-  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
+  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 `;
 const FormBottomSection = styled.div`
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
-  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
+  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')} ${palette('grey', 'filler')};
 `;
 
 const FormSectionHeading = pad(Block, 'large');
 
-// const contactPreferenceOptionsList = [{ value: 'sms', label: 'SMS' }, { value: 'email', label: 'Email' }, { value: 'phone', label: 'Phone' }];
+const contactPreferenceOptionsList = [{ value: 'sms', label: 'SMS' }, { value: 'email', label: 'Email' }, { value: 'phone', label: 'Phone' }];
 
 // const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
 //   { value: 'EmailOnly', label: 'EmailOnly' },
@@ -84,6 +85,12 @@ const FormSectionHeading = pad(Block, 'large');
 //   { value: 'WarmTransferVM', label: 'WarmTransferVM' },
 //   { value: 'NoAgent', label: 'NoAgent' },
 //   { value: 'EmailToAgent', label: 'EmailToAgent' },
+// ];
+
+// const tagsOptions = [
+//   { value: 'chocolate', label: 'Chocolate' },
+//   { value: 'strawberry', label: 'Strawberry' },
+//   { value: 'vanilla', label: 'Vanilla' },
 // ];
 class FamilyDetailsForm extends Component {
   static propTypes = {
@@ -148,6 +155,27 @@ class FamilyDetailsForm extends Component {
         }
         <Form onSubmit={handleSubmit}>
           <FormScrollSection>
+            {/* <FormSection>
+              <FormSectionHeading weight="medium">Metadata</FormSectionHeading>
+              <Field
+                name="tags"
+                label="Tags"
+                type="choice"
+                readOnly={!canEditFamilyDetails}
+                component={ReduxField}
+                wideWidth
+                options={tagsOptions}
+                isMulti
+              />
+              <Field
+                name="additionalAttributes"
+                type="checkbox"
+                label="Additional Attributes"
+                component={ReduxField}
+                options={additionalMDOptions}
+                wideWidth
+              />
+            </FormSection> */}
             <FormSection>
               <FormSectionHeading weight="medium">Contact Info</FormSectionHeading>
               <Field
@@ -181,21 +209,22 @@ class FamilyDetailsForm extends Component {
                 component={ReduxField}
                 wideWidth
               />
-              {/* <Field */}
-              {/* name="contactPreferences" */}
-              {/* type="checkbox" */}
-              {/* label="Contact preference" */}
-              {/* component={ReduxField} */}
-              {/* options={contactPreferenceOptionsList} */}
-              {/* /> */}
-              {/* <Field */}
-              {/* name="timePreference" */}
-              {/* label="Contact time preference" */}
-              {/* type="text" */}
-              {/* readOnly={!canEditFamilyDetails} */}
-              {/* component={ReduxField} */}
-              {/* wideWidth */}
-              {/* /> */}
+              <Field
+                name="contactPreferences"
+                type="checkbox"
+                label="Contact Preference"
+                component={ReduxField}
+                options={contactPreferenceOptionsList}
+                wideWidth
+              />
+              <Field
+                name="timePreference"
+                label="Contact Time Preference"
+                type="text"
+                readOnly={!canEditFamilyDetails}
+                component={ReduxField}
+                wideWidth
+              />
             </FormSection>
             <FormSection>
               <FormSectionHeading weight="medium">Resident Info</FormSectionHeading>
