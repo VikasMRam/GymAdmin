@@ -8,6 +8,8 @@ import { size } from 'sly/components/themes';
 import cursor from 'sly/components/helpers/cursor';
 import { Box, Block, Icon, Span } from 'sly/components/atoms';
 
+import { NOTE_CTYPE_NOTE, NOTE_CTYPE_ACTIVITY, NOTE_CTYPE_ACTIVITY_TASK_COMPLETED } from 'sly/constants/notes';
+
 const StyledBox = styled(Box)`
   display: flex;
 `;
@@ -48,7 +50,9 @@ CursorSpan.displayName = 'CursorSpan';
 
 const getIconFromCType = (cType) => {
   switch (cType) {
-    case 'activity': return 'logo';
+    case NOTE_CTYPE_NOTE: return 'note';
+    case NOTE_CTYPE_ACTIVITY: return 'logo';
+    case NOTE_CTYPE_ACTIVITY_TASK_COMPLETED: return 'checkbox-fill';
     default: return cType;
   }
 };
@@ -86,7 +90,7 @@ const FamilyActivityItem = ({
 FamilyActivityItem.propTypes = {
   title: string.isRequired,
   description: string,
-  cType: string,
+  icon: string,
   date: string.isRequired,
   snap: string,
   noBorderRadius: bool,
@@ -95,7 +99,7 @@ FamilyActivityItem.propTypes = {
 };
 
 FamilyActivityItem.defaultProps = {
-  cType: 'note',
+  icon: 'logo',
 };
 
 export default FamilyActivityItem;

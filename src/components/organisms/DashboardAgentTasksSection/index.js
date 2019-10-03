@@ -155,6 +155,7 @@ export default class DashboardAgentTasksSection extends Component {
     refetchTasks: func,
     noBorder: bool,
     basePath: string,
+    searchTextBoxValue: string,
   };
 
   handleAddTaskClick = () => {
@@ -202,6 +203,7 @@ export default class DashboardAgentTasksSection extends Component {
   render() {
     const {
       tasks, pagination, activeTab, onSearchTextKeyUp, isPageLoading, noBorder, basePath,
+      searchTextBoxValue,
     } = this.props;
     const dueTodayLabel = tabIDLabelMap[tabIDs[0]];
     const overdueLabel = tabIDLabelMap[tabIDs[1]];
@@ -264,7 +266,7 @@ export default class DashboardAgentTasksSection extends Component {
           </Tab>
         </Tabs>
 
-        <TableHeaderButtonComponent onSearchTextKeyUp={onSearchTextKeyUp} />
+        <TableHeaderButtonComponent onSearchTextKeyUp={onSearchTextKeyUp} value={searchTextBoxValue} />
 
         <SectionComponent>
           {!isPageLoading && (

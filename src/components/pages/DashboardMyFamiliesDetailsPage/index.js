@@ -2,7 +2,6 @@ import React, { Fragment, Component } from 'react';
 import styled, { css } from 'styled-components';
 import { string, func, object, arrayOf, bool } from 'prop-types';
 import { generatePath } from 'react-router';
-import { ifProp } from 'styled-tools';
 
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
@@ -21,7 +20,7 @@ import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client
 import notePropType from 'sly/propTypes/note';
 import { size, palette } from 'sly/components/themes';
 import { getStageDetails } from 'sly/services/helpers/stage';
-import { NOTE_CTYPE_NOTE } from 'sly/constants/familyDetails';
+import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
@@ -152,7 +151,7 @@ const SmallScreenClientNameWrapper = styled.div`
 const StyledStatusSelect = styled(StatusSelect)`
   margin-bottom: 0;
   min-width: 56px;
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     min-width: 125px;
   }
@@ -161,22 +160,22 @@ const StyledStatusSelect = styled(StatusSelect)`
 const StyledClientNameBlock = styled(Block)`
   display: flex;
   align-items: center;
-  
+
   > :nth-child(2) {
     flex-grow: 1;
     text-align: center;
   }
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     > :nth-child(2) {
       text-align: left;
     }
-  
+
     > :nth-child(1) {
       display: none;
     }
   }
-  
+
 `;
 
 const ClientName = ({ client, backLinkHref, ...props }) => {
