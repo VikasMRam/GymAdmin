@@ -7,7 +7,6 @@ import pad from 'sly/components/helpers/pad';
 import { size } from 'sly/components/themes';
 import cursor from 'sly/components/helpers/cursor';
 import { Box, Block, Icon, Span } from 'sly/components/atoms';
-
 import { NOTE_CTYPE_NOTE, NOTE_CTYPE_ACTIVITY, NOTE_CTYPE_ACTIVITY_TASK_COMPLETED } from 'sly/constants/notes';
 
 const StyledBox = styled(Box)`
@@ -90,16 +89,12 @@ const FamilyActivityItem = ({
 FamilyActivityItem.propTypes = {
   title: string.isRequired,
   description: string,
-  icon: string,
+  cType: string,
   date: string.isRequired,
   snap: string,
   noBorderRadius: bool,
   className: string,
   onEditClick: func,
-};
-
-FamilyActivityItem.defaultProps = {
-  icon: 'logo',
 };
 
 export default FamilyActivityItem;
