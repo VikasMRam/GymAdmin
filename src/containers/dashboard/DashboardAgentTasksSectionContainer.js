@@ -47,6 +47,7 @@ const getPaginationData = ({ result, meta }) => {
 const getPageParams = ({ match, location }) => {
   const searchParams = getSearchParams(match, location);
   const type = searchParams.type || 'DueToday';
+  const taskName = searchParams.name;
   let date;
   let status = `in:${TASK_STATUS_NOT_STARTED_CODE},${TASK_STATUS_IN_PROGRESS_CODE}`;
   if (type === 'DueToday') {
@@ -64,20 +65,26 @@ const getPageParams = ({ match, location }) => {
     status,
     date,
     type,
+    taskName,
     pageNumber: searchParams['page-number'],
   };
 };
 
 @withRouter
 
-@prefetch('tasks', 'getTasks', (getClients, { match, location }) => {
-  const { pageNumber, date, status } = getPageParams({ match, location });
+@prefetch('tasks', 'getTasks', (getClients, { match, location, client }) => {
+  const { pageNumber, date, status, taskName } = getPageParams({ match, location });
   const filters = {
     'filter[status]': status,
     'page-number': pageNumber,
+    'filter[title]': taskName,
   };
   if (date) {
     filters['filter[dueDate]'] = date;
+  }
+  if (client) {
+    const { id } = client;
+    filters['filter[client]'] = id;
   }
 
   return getClients(filters);

@@ -2,7 +2,6 @@ import React, { Fragment, Component } from 'react';
 import styled, { css } from 'styled-components';
 import { string, func, object, arrayOf, bool } from 'prop-types';
 import { generatePath } from 'react-router';
-import { ifProp } from 'styled-tools';
 
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
