@@ -19,18 +19,17 @@ describe('FamilyActivityItem', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.dive().find('StyledIcon').prop('icon')).toBe(FamilyActivityItem.defaultProps.icon);
     expect(wrapper.dive().find('StyledColumn').find('StyledBlock').contains(title)).toBeTruthy();
     expect(wrapper.dive().find('StyledColumn').find('Block').contains(description)).toBeTruthy();
     expect(wrapper.dive().find('Date').contains(dateString)).toBeTruthy();
   });
 
   it('renders when icon provided', () => {
-    const icon = 'sdfsdfsd';
+    const cType = 'sdfsdfsd';
     const wrapper = wrap({
-      icon,
+      cType,
     });
 
-    expect(wrapper.dive().find('StyledIcon').prop('icon')).toBe(icon);
+    expect(wrapper.dive().find('StyledIcon').prop('icon')).toBe('logo');
   });
 });

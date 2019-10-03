@@ -52,7 +52,7 @@ const getIconFromCType = (cType) => {
     case NOTE_CTYPE_NOTE: return 'note';
     case NOTE_CTYPE_ACTIVITY: return 'logo';
     case NOTE_CTYPE_ACTIVITY_TASK_COMPLETED: return 'checkbox-fill';
-    default: return cType;
+    default: return 'logo';
   }
 };
 
