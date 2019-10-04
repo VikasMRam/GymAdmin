@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
 import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
+import AmalFrancis from 'sly/../private/storybook/sample-data/user-amal-francis.json';
+import SushanthRamakrishna from 'sly/../private/storybook/sample-data/user-sushanth-ramakrishna.json';
 
 const timeToMove = [
   'Immediately',
@@ -53,6 +55,11 @@ const communityTypes = [
   'Memory Care',
 ];
 
+const assignedTos = [
+  AmalFrancis,
+  SushanthRamakrishna,
+];
+
 const intro = 'Rhoda Goldman Plaza';
 const handleSubmit = jest.fn();
 const defaultProps = {
@@ -65,6 +72,7 @@ const defaultProps = {
   roomTypes,
   careLevels,
   communityTypes,
+  assignedTos,
 };
 
 const wrap = (props = {}) => shallow(<FamilyDetailsForm {...defaultProps} {...props} />);
@@ -72,6 +80,8 @@ const wrap = (props = {}) => shallow(<FamilyDetailsForm {...defaultProps} {...pr
 describe('FamilyDetailsForm', () => {
   it('renders', () => {
     const wrapper = wrap();
+
+    expect(wrapper.find(Field).filter({ name: 'assignedTo' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' }).prop('disabled')).toBeTruthy();
@@ -88,6 +98,8 @@ describe('FamilyDetailsForm', () => {
 
   it('renders with accepted', () => {
     const wrapper = wrap({ accepted: true });
+
+    expect(wrapper.find(Field).filter({ name: 'assignedTo' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' }).prop('disabled')).toBeFalsy();
