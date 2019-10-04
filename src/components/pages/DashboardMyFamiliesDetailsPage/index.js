@@ -303,11 +303,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const agentTabList = [
       { id: ACTIVITY, to: activityPath, label: 'Activity' },
       { id: FAMILY_DETAILS, to: familyDetailsPath, label: 'Family Details' },
-      { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
       { id: MESSAGES, to: messagesPath, label: 'Messages' },
     ];
     const adminTabList = [
       ...agentTabList,
+      { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
       { id: PARTNER_AGENTS, to: agentsPath, label: 'Agents' },
       { id: TASKS, to: tasksPath, label: 'Tasks' },
     ];
