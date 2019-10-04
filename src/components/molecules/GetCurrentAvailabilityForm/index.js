@@ -35,7 +35,7 @@ const GetCurrentAvailabilityForm = ({ handleSubmit, submitting }) => (
         placeholder="Your email address"
         component={StyledReduxField}
       />
-      <Button type="submit" ghost disabled={submitting}>Get Availability</Button>
+      <Button type="submit" disabled={submitting}>Get Availability</Button>
     </TwoColumnWrapper>
     <TosAndPrivacy />
   </form>
