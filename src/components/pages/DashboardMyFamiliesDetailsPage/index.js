@@ -306,20 +306,21 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       { id: MESSAGES, to: messagesPath, label: 'Messages' },
     ];
     const adminTabList = [
-      ...agentTabList,
       { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
       { id: PARTNER_AGENTS, to: agentsPath, label: 'Agents' },
       { id: TASKS, to: tasksPath, label: 'Tasks' },
     ];
     // TODO: CHANGE TO HAS ROLE INSTEAD OF IS ROLE...
-    switch (roleID) {
-      case AGENT_ND_ROLE:
-        return [summaryTab].concat(agentTabList.map(e => genTab(e)));
-      case PLATFORM_ADMIN_ROLE:
-        return [summaryTab].concat(adminTabList.map(e => genTab(e)));
-      default:
-        return [];
+    let tabs = [summaryTab];
+    /* eslint-disable no-bitwise */
+    if (roleID & AGENT_ND_ROLE) {
+      tabs = tabs.concat(agentTabList.map(e => genTab(e)));
     }
+    /* eslint-disable no-bitwise */
+    if (roleID & PLATFORM_ADMIN_ROLE) {
+      tabs = tabs.concat(adminTabList.map(e => genTab(e)));
+    }
+    return tabs;
   };
 
   handleAcceptClick = () => {
@@ -481,10 +482,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails,
     } = getStageDetails(stage);
     // Override based on role
-    let isAdmin = false;
-    if (userHasAdminRole(user)) {
-      [showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails] = [false, true, true, true];
-      isAdmin = true;
+    if (admin) {
+      [showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails] = [false, true, true];
     }
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) => {
