@@ -3,6 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 
 import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
+import AmalFrancis from 'sly/../private/storybook/sample-data/user-amal-francis.json';
+import SushanthRamakrishna from 'sly/../private/storybook/sample-data/user-sushanth-ramakrishna.json';
 
 const timeToMove = [
   'Immediately',
@@ -38,10 +40,15 @@ const monthlyBudget = [
   '$5K+',
 ];
 
+const assignedTos = [
+  AmalFrancis,
+  SushanthRamakrishna,
+];
+
 const FamilyDetailsFormContainer = reduxForm({
   form: 'FamilyDetailsForm',
 })(FamilyDetailsForm);
 
 storiesOf('Organisms|FamilyDetailsForm', module)
-  .add('default', () => <FamilyDetailsFormContainer monthlyBudget={monthlyBudget} lookingFor={lookingFor} gender={gender} timeToMove={timeToMove} />)
-  .add('accepted', () => <FamilyDetailsFormContainer accepted monthlyBudget={monthlyBudget} lookingFor={lookingFor} gender={gender} timeToMove={timeToMove} />);
+  .add('default', () => <FamilyDetailsFormContainer monthlyBudget={monthlyBudget} lookingFor={lookingFor} gender={gender} timeToMove={timeToMove} assignedTos={assignedTos} />)
+  .add('accepted', () => <FamilyDetailsFormContainer accepted monthlyBudget={monthlyBudget} lookingFor={lookingFor} gender={gender} timeToMove={timeToMove} assignedTos={assignedTos} />);

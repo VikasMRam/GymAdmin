@@ -602,7 +602,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   careLevels={careLevels}
                   roomTypes={roomTypes}
                   communityTypes={communityTypes}
-                  isAdmin={isAdmin}
                 />
               </FamilyDetailsTab>
             )}

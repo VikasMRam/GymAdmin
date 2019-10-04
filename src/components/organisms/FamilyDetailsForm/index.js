@@ -5,9 +5,12 @@ import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette, columnWidth } from 'sly/components/themes';
+import userPropType from 'sly/propTypes/user';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
+import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import Role from 'sly/components/common/Role';
 import { Block, Button, Label } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
@@ -111,7 +114,7 @@ class FamilyDetailsForm extends Component {
     careLevels: arrayOf(string).isRequired,
     communityTypes: arrayOf(string).isRequired,
     preferredLocation: string,
-    isAdmin: bool,
+    assignedTos: arrayOf(userPropType).isRequired,
   };
 
   handleLocationChange = (value) => {
@@ -126,7 +129,7 @@ class FamilyDetailsForm extends Component {
     const { handleLocationChange } = this;
     const {
       handleSubmit, submitting, invalid, accepted, initialValues, lookingFor,
-      gender, timeToMove, monthlyBudget, roomTypes, communityTypes, careLevels, canEditFamilyDetails, isAdmin,
+      gender, timeToMove, monthlyBudget, roomTypes, communityTypes, careLevels, canEditFamilyDetails, assignedTos,
     } = this.props;
     let { preferredLocation } = this.props;
     if (initialValues && !preferredLocation) {
@@ -145,6 +148,7 @@ class FamilyDetailsForm extends Component {
     const roomPreferenceOptions = roomTypes.map(i => <option key={i} value={i}>{i}</option>);
     const mobilityLevelOptions = careLevels.map(i => <option key={i} value={i}>{i}</option>);
     const communityCareTypeOptions = communityTypes.map(i => <option key={i} value={i}>{i}</option>);
+    const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
     // const tagColumn = { typeInfo: { api: '/platform/tags?name=' } };
     return (
       <div>
@@ -155,27 +159,40 @@ class FamilyDetailsForm extends Component {
         }
         <Form onSubmit={handleSubmit}>
           <FormScrollSection>
-            {/* <FormSection>
-              <FormSectionHeading weight="medium">Metadata</FormSectionHeading>
-              <Field
-                name="tags"
-                label="Tags"
-                type="choice"
-                readOnly={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-                options={tagsOptions}
-                isMulti
-              />
-              <Field
-                name="additionalAttributes"
-                type="checkbox"
-                label="Additional Attributes"
-                component={ReduxField}
-                options={additionalMDOptions}
-                wideWidth
-              />
-            </FormSection> */}
+            <Role is={PLATFORM_ADMIN_ROLE}>
+              <FormSection>
+                <FormSectionHeading weight="medium">Metadata</FormSectionHeading>
+                <Field
+                  name="assignedTo"
+                  label="Assigned to"
+                  type="select"
+                  placeholder="Select an option"
+                  component={ReduxField}
+                  wideWidth
+                >
+                  <option value="" disabled>Select</option>
+                  {assignedToOptions}
+                </Field>
+                {/* <Field
+                    name="tags"
+                    label="Tags"
+                    type="choice"
+                    readOnly={!canEditFamilyDetails}
+                    component={ReduxField}
+                    wideWidth
+                    options={tagsOptions}
+                    isMulti
+                  />
+                  <Field
+                    name="additionalAttributes"
+                    type="checkbox"
+                    label="Additional Attributes"
+                    component={ReduxField}
+                    options={additionalMDOptions}
+                    wideWidth
+                  /> */}
+              </FormSection>
+            </Role>
             <FormSection>
               <FormSectionHeading weight="medium">Contact Info</FormSectionHeading>
               <Field
