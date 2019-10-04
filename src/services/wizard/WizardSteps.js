@@ -10,9 +10,8 @@ export default class WizardSteps extends Component {
     setStepsSize: func,
   };
 
-  constructor(props) {
-    super(props);
-
+  componentDidMount() {
+    // NOTE: React caches the class objects, so utilizing same components can clash
     const { children, setStepsSize } = this.props;
     setStepsSize(Array.isArray(children) ? children.length : 1);
   }
