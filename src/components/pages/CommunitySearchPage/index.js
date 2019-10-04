@@ -169,7 +169,7 @@ const CommunitySearchPage = ({
      hospitals, <p>6</p>
      reviews, <p>7</p>
      */
-    if (geoGuide && geoGuide.guideContent) {
+    if (geoGuide && geoGuide.guideContent && !(geoGuide.guideContent.ownGuidePage && geoGuide.guideContent.ownGuidePage === 'true')) {
       const additionalDivs = [];
       const gg = geoGuide.guideContent;
       ['description', 'guide', 'articles', 'resources',

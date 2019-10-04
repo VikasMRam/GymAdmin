@@ -48,6 +48,33 @@ const tocPaths = (toc) => {
   }
 };
 
+const tocGuidePaths = (toc) => {
+  if (toc && toc.length > 0) {
+    switch (toc[0]) {
+      case 'Assisted Living':
+        return {
+          path: '/assisted-living-guides',
+          label: 'Assisted Living Guides',
+        };
+      case 'Memory Care':
+        return {
+          path: '/memory-care-guides',
+          label: 'Memory Care Guides',
+        };
+      default:
+        return {
+          path: '/retirement-community-guides',
+          label: 'Retirement Community Guides',
+        };
+    }
+  } else {
+    return {
+      path: '/retirement-community-guides',
+      label: 'Retirement Community Guides',
+    };
+  }
+};
+
 export const stateNames = {
   AL: 'Alabama',
   AK: 'Alaska',
@@ -290,6 +317,33 @@ export const getBreadCrumbsForAgent = ({ name, state, city, id }) => {
   } else {
     return baseBcs;
   }
+  return baseBcs;
+};
+
+export const getBreadCrumbsForGuides = ({ toc, region, regionName}) => {
+  const tocBc = tocGuidePaths([titleize(toc)]);
+  // TODO: use react router generated paths once router wiring is complete
+  const baseBcs = [{
+    path: '/',
+    label: 'Home',
+  }];
+  // TODO A better job
+  if (tocBc) {
+    baseBcs.push(tocBc);
+  } else {
+    // Safety
+    return baseBcs;
+  }
+
+  if (region) {
+    baseBcs.push({
+      path: `${tocBc.path}/${region}`,
+      label: regionName,
+    });
+  } else {
+    return baseBcs;
+  }
+
   return baseBcs;
 };
 

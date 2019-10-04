@@ -204,6 +204,13 @@ export const getSearchParams = ({ params }, location) => {
   });
 };
 
+export const getGuideParams = ({ params }) => {
+  const { tocg } = params;
+  params.toc = tocg.substring(0, tocg.indexOf('-guide'));
+  params['own-guide'] = true;
+  return params;
+};
+
 export const getSearchParamFromPlacesResponse = ({ address_components, geometry }) => {
   const cityFull = address_components.filter(e => e.types.indexOf('locality') > -1 || e.types.indexOf('sublocality') > -1 || e.types.indexOf('administrative_area_level_3') > -1 || e.types.indexOf('neighborhood') > -1);
   const stateFull = address_components.filter(e => e.types.indexOf('administrative_area_level_1') > -1);
