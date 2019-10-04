@@ -9,6 +9,7 @@ coverage
 webpack/webpack-assets.json
 junit.xml
 e2e/node_modules
+package-lock.json
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
