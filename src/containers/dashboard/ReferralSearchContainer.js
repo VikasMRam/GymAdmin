@@ -59,7 +59,7 @@ export default class ReferralSearchContainer extends Component {
     const chain = partner => this.sendReferral(partner)
       .then(reset)
       .then(() => this.setSelectedCommunity(null))
-      .then(() => refetchClient());
+      .then(refetchClient);
     const partner = {
       id,
       type: 'Property',
@@ -80,7 +80,7 @@ export default class ReferralSearchContainer extends Component {
     const chain = partner => this.sendReferral(partner)
       .then(reset)
       .then(() => this.setSelectedAgent(null))
-      .then(() => refetchClient());
+      .then(refetchClient);
     const partner = {
       id,
       type: 'PartnerAgent',
