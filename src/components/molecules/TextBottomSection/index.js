@@ -40,7 +40,7 @@ const TextBottomSection = ({
       <HeadingBlock weight="medium" hasSubHeading={!!subHeading}>{heading}</HeadingBlock>
       {subHeading && <SubheadingBlock size="caption">{subHeading}</SubheadingBlock>}
     </TextWrapper>
-    <Button ghost onClick={onButtonClick}>{buttonText}</Button>
+    <Button onClick={onButtonClick}>{buttonText}</Button>
   </Wrapper>
 );
 

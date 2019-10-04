@@ -1,4 +1,5 @@
 {
   "InplaceWizard_Step1": ["Step1A","Step1B"],
-  "PricingCTA_Language": ["Detailed", "Personalized"]
+  "PricingCTA_Language": ["Detailed", "Personalized"],
+  "ProfileCTA_ButtonStyle": ["FullWidth", "FooterSmall"]
 }
