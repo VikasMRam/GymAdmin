@@ -83,7 +83,7 @@ export default class AddFamilyFormContainer extends Component {
       attributes: {
         clientInfo: {
           name,
-          phone,
+          phoneNumber: phone,
           email,
           referralSource: source,
           slyMessage: notes,

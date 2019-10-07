@@ -54,28 +54,33 @@ const DashboardCommunityReferrals = ({
                 id,
                 tab: FAMILY_DETAILS,
               });
-              return (<Link to={familyDetailsPath}>
-                <StyledDashboardAdminReferralCommunityTile
-                  {...props}
-                  stage={stage}
-                  referralSentAt={createdAt}
-                />
-                      </Link>);
+              return (
+                <Link to={familyDetailsPath}>
+                  <StyledDashboardAdminReferralCommunityTile
+                    {...props}
+                    stage={stage}
+                    referralSentAt={createdAt}
+                  />
+                </Link>);
             }
             return (<StyledDashboardAdminReferralCommunityTile
               {...props}
               actionText="Send Referral"
               actionClick={() => setSelectedCommunity(community)}
             />);
-
           })
         }
         {childrenClients.map((client) => {
+          const { id } = client;
           const community = communitiesInterestedIdsMap[client.provider.id];
           if (community) {
             return null;
           }
-          return <StyledDashboardAdminReferralCommunityTile key={client.name} community={client.provider} stage={client.stage} referralSentAt={client.createdAt} />;
+          const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, {
+            id,
+            tab: FAMILY_DETAILS,
+          });
+          return <Link to={familyDetailsPath}><StyledDashboardAdminReferralCommunityTile key={client.name} community={client.provider} stage={client.stage} referralSentAt={client.createdAt} /></Link>;
           })
         }
       </CommunitiesWrapper>

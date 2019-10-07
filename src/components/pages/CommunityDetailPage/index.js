@@ -12,7 +12,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import { calculatePricing, buildPriceList, buildEstimatedPriceList } from 'sly/services/helpers/pricing';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import pad from 'sly/components/helpers/pad';
-import { Button, Paragraph } from 'sly/components/atoms';
+import { Button, Paragraph, Block } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import {
   CommunityDetailPageTemplate,
@@ -58,8 +58,8 @@ import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContai
 import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
-import CommunityInpageWizardContainer from 'sly/containers/CommunityInpageWizardContainer';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
+import { Experiment, Variant } from 'sly/services/experiments';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -105,6 +105,15 @@ const StyledCommunityExtraInfoSection = styled(CommunityExtraInfoSection)`
 `;
 
 const StyledBannerNotification = pad(BannerNotification, 'large');
+
+const ButtonBlock = styled(Block)`
+  padding: ${size('spacing.xLarge')};
+  padding-top:0;
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
+`;
 
 const Header = makeHeader();
 const TwoColumn = makeTwoColumn('div');
@@ -389,9 +398,6 @@ export default class CommunityDetailPage extends Component {
       toggleHowSlyWorksVideoPlaying,
       isHowSlyWorksVideoPlaying,
       history,
-      showModal,
-      hideModal,
-      userAction,
     } = this.props;
 
     const {
@@ -410,7 +416,7 @@ export default class CommunityDetailPage extends Component {
       communityFaQs,
       mainImage,
       partnerAgents,
-      twilioNumber
+      twilioNumber,
     } = community;
 
     const {
@@ -489,7 +495,7 @@ export default class CommunityDetailPage extends Component {
     const pricingTitle = (pricesList.length === 0 && floorPlans.length > 0) ? 'Pricing and Floor Plans' : 'Pricing';
 
     const showSimilarEarlier = pricesList.length === 0 && floorPlans.length > 0 && address.city === 'Sacramento' && address.state === 'CA' &&
-      (!communityDescription || communityDescription === '') ;
+      (!communityDescription || communityDescription === '');
 
     return (
       <Fragment>
@@ -586,45 +592,46 @@ export default class CommunityDetailPage extends Component {
                       <Paragraph>
                         Pricing for {name} may include both a one time buy-in fee and a monthly component. Connect directly with {name} to find out your pricing.
                       </Paragraph>
-                      <Button ghost onClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}>Get Detailed Pricing</Button>
+                      <Button  onClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}>Get Detailed Pricing</Button>
                     </MainSection>
                   }
                   {!hasCCRC && (pricesList.length > 0 || estimatedPriceList.length > 0 || floorPlans.length === 0) &&
-                    <CommunityPricingTable name={name}
-                                           pricesList={pricesList}
-                                           estimatedPriceList={estimatedPriceList}
-                                           price={estimatedPriceBase}
-                                           getPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
-                                           size={communitySize}
-                                           showToolTip={address.state === 'TN'}
+                    <CommunityPricingTable
+                      name={name}
+                      pricesList={pricesList}
+                      estimatedPriceList={estimatedPriceList}
+                      price={estimatedPriceBase}
+                      getPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
+                      size={communitySize}
+                      showToolTip={address.state === 'TN'}
                     />
                   }
-                  {!hasCCRC && pricesList.length === 0 && estimatedPriceList.length === 0 && floorPlans.length > 0 &&
-                    <MainSection>
-                      <CommunityFloorPlansList
-                        floorPlans={floorPlans}
-                        onItemClick={openFloorPlanModal}
-                      />
-                    </MainSection>
-                  }
 
-                  { !hasCCRC && pricesList.length === 0 && estimatedPriceList.length === 0 && floorPlans.length > 0 &&
-                    <BottomSection>
-                      <GetCurrentAvailabilityContainer
-                        community={community}
-                        queryParams={{ modal, currentStep }}
-                        setQueryParams={setQueryParams}
-                        onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
-                        onSubmitExpressConversion={(e, submitExpressConversion) => {
-                          if (isAlreadyPricingRequested) {
-                            openAskAgentQuestionModal('pricing');
-                          } else {
-                            submitExpressConversion(e);
-                            onGCPClick();
-                          }
-                        }}
-                      />
-                    </BottomSection>
+                  {!hasCCRC && pricesList.length === 0 && estimatedPriceList.length === 0 && floorPlans.length > 0 &&
+                    <div>
+                      <MainSection>
+                        <CommunityFloorPlansList
+                          floorPlans={floorPlans}
+                          onItemClick={openFloorPlanModal}
+                        />
+                      </MainSection>
+                      <BottomSection>
+                        <GetCurrentAvailabilityContainer
+                          community={community}
+                          queryParams={{ modal, currentStep }}
+                          setQueryParams={setQueryParams}
+                          onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
+                          onSubmitExpressConversion={(e, submitExpressConversion) => {
+                            if (isAlreadyPricingRequested) {
+                              openAskAgentQuestionModal('pricing');
+                            } else {
+                              submitExpressConversion(e);
+                              onGCPClick();
+                            }
+                          }}
+                        />
+                      </BottomSection>
+                    </div>
                   }
                 </TopCollapsibleSection>
                 {floorPlans.length === 0 && pricesList.length === 0 && estimatedPriceList.length === 0 &&
@@ -684,14 +691,22 @@ export default class CommunityDetailPage extends Component {
                     <MainSection>
                       <CommunityAgentSection agent={partnerAgent} onAdvisorHelpClick={openAdvisorHelpModal} />
                     </MainSection>
-                    <BottomSection>
-                      <TextBottomSection
-                        heading="Ask about pricing, floor plans, availability, anything."
-                        subHeading=" Using a Seniorly Partner Agent is a free service for you."
-                        buttonText="Ask a question"
-                        onButtonClick={() => openAskAgentQuestionModal('services')}
-                      />
-                    </BottomSection>
+                    <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
+                      <Variant name="FullWidth">
+                        <ButtonBlock>
+                          <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask a question</StyledButton>
+                        </ButtonBlock>
+                      </Variant>
+                      <Variant name="FooterSmall">
+                        <BottomSection>
+                          <TextBottomSection
+                            heading="Ask about pricing, floor plans, availability, anything."
+                            buttonText="Ask a question"
+                            onButtonClick={() => openAskAgentQuestionModal('services')}
+                          />
+                        </BottomSection>
+                      </Variant>
+                    </Experiment>
                   </TopCollapsibleSection>
                 }
                 {careServices && careServices.length > 0 &&
@@ -699,28 +714,44 @@ export default class CommunityDetailPage extends Component {
                     <MainSection>
                       <CommunityCareService careServices={careServices} />
                     </MainSection>
-                    <BottomSection>
-                      <TextBottomSection
-                        heading="Need more detailed information on care services?"
-                        subHeading="Your Seniorly Partner Agent can consult with you on your individual care needs."
-                        buttonText="Ask about care services"
-                        onButtonClick={() => openAskAgentQuestionModal('services')}
-                      />
-                    </BottomSection>
+                    <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
+                      <Variant name="FullWidth">
+                        <ButtonBlock>
+                          <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask About Care Services</StyledButton>
+                        </ButtonBlock>
+                      </Variant>
+                      <Variant name="FooterSmall">
+                        <BottomSection>
+                          <TextBottomSection
+                            heading="Need more detailed information on care services?"
+                            buttonText="Ask About Care Services"
+                            onButtonClick={() => openAskAgentQuestionModal('services')}
+                          />
+                        </BottomSection>
+                      </Variant>
+                    </Experiment>
                   </TopCollapsibleSection>
                 }
                 <TopCollapsibleSection title={`Amenities at ${name}`}>
                   <MainSection>
                     <CommunityAmenities community={community} />
                   </MainSection>
-                  <BottomSection>
-                    <TextBottomSection
-                      heading="Need more detailed information on amenities?"
-                      subHeading=" Using a Seniorly Partner Agent is a free service for you."
-                      buttonText="Ask about amenities"
-                      onButtonClick={() => openAskAgentQuestionModal('services')}
-                    />
-                  </BottomSection>
+                  <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
+                    <Variant name="FullWidth">
+                      <ButtonBlock>
+                        <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask About Amenities</StyledButton>
+                      </ButtonBlock>
+                    </Variant>
+                    <Variant name="FooterSmall">
+                      <BottomSection>
+                        <TextBottomSection
+                          heading="Need more detailed information on amenities?"
+                          buttonText="Ask About Amenities"
+                          onButtonClick={() => openAskAgentQuestionModal('services')}
+                        />
+                      </BottomSection>
+                    </Variant>
+                  </Experiment>
                 </TopCollapsibleSection>
                 {sortedEstimatedPrice.length > 0 &&
                   <TopCollapsibleSection title={`Compare Costs to Nearby ${typeOfCare} Communities`}>
@@ -742,23 +773,24 @@ export default class CommunityDetailPage extends Component {
                       onReviewLinkClicked={onReviewLinkClicked}
                     />
                   </MainSection>
-                  <BottomSection>
-                    <TextBottomSection
-                      heading={`Have experience with ${name}?`}
-                      subHeading="Your review can help other families with their senior living search."
-                      buttonText="Write a review"
-                      onButtonClick={handleAddReviewButtonClick}
-                    />
-                  </BottomSection>
+                  <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
+                    <Variant name="FullWidth">
+                      <ButtonBlock>
+                        <StyledButton onClick={handleAddReviewButtonClick}>Write a Review</StyledButton>
+                      </ButtonBlock>
+                    </Variant>
+                    <Variant name="FooterSmall">
+                      <BottomSection>
+                        <TextBottomSection
+                          heading={`Have experience with ${name}?`}
+                          subHeading="Your review can help other families with their senior living search."
+                          buttonText="Write a Review"
+                          onButtonClick={handleAddReviewButtonClick}
+                        />
+                      </BottomSection>
+                    </Variant>
+                  </Experiment>
                 </TopCollapsibleSection>
-
-                <CommunityInpageWizardContainer
-                  community={community}
-                  showModal={showModal}
-                  hideModal={hideModal}
-                  user={user}
-                  userAction={userAction}
-                />
 
                 <TopCollapsibleSection title={`Questions About ${name}`}>
                   <MainSection>
@@ -772,13 +804,22 @@ export default class CommunityDetailPage extends Component {
                       user={user}
                     />
                   </MainSection>
-                  <BottomSection>
-                    <TextBottomSection
-                      heading="Don't see your question? Be the first to ask this community!"
-                      buttonText="Ask a Question"
-                      onButtonClick={openAskQuestionModal}
-                    />
-                  </BottomSection>
+                  <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
+                    <Variant name="FullWidth">
+                      <ButtonBlock>
+                        <StyledButton onClick={openAskQuestionModal}>Ask a Question</StyledButton>
+                      </ButtonBlock>
+                    </Variant>
+                    <Variant name="FooterSmall">
+                      <BottomSection>
+                        <TextBottomSection
+                          heading="Don't see your question? Be the first to ask this community!"
+                          buttonText="Ask a Question"
+                          onButtonClick={openAskQuestionModal}
+                        />
+                      </BottomSection>
+                    </Variant>
+                  </Experiment>
                 </TopCollapsibleSection>
                 {rgsAux.stateLicensingWebsite &&
                   <StyledCommunityExtraInfoSection

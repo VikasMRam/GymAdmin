@@ -2,7 +2,6 @@ import React, { Fragment, Component } from 'react';
 import styled, { css } from 'styled-components';
 import { string, func, object, arrayOf, bool } from 'prop-types';
 import { generatePath } from 'react-router';
-import { ifProp } from 'styled-tools';
 
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
@@ -21,7 +20,7 @@ import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client
 import notePropType from 'sly/propTypes/note';
 import { size, palette } from 'sly/components/themes';
 import { getStageDetails } from 'sly/services/helpers/stage';
-import { NOTE_CTYPE_NOTE } from 'sly/constants/familyDetails';
+import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
@@ -152,31 +151,31 @@ const SmallScreenClientNameWrapper = styled.div`
 const StyledStatusSelect = styled(StatusSelect)`
   margin-bottom: 0;
   min-width: 56px;
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    min-width: ${size('element.huge')};
+    min-width: 125px;
   }
 `;
 
 const StyledClientNameBlock = styled(Block)`
   display: flex;
   align-items: center;
-  
+
   > :nth-child(2) {
     flex-grow: 1;
     text-align: center;
   }
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     > :nth-child(2) {
       text-align: left;
     }
-  
+
     > :nth-child(1) {
       display: none;
     }
   }
-  
+
 `;
 
 const ClientName = ({ client, backLinkHref, ...props }) => {
@@ -304,23 +303,24 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const agentTabList = [
       { id: ACTIVITY, to: activityPath, label: 'Activity' },
       { id: FAMILY_DETAILS, to: familyDetailsPath, label: 'Family Details' },
-      { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
       { id: MESSAGES, to: messagesPath, label: 'Messages' },
     ];
     const adminTabList = [
-      ...agentTabList,
+      { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
       { id: PARTNER_AGENTS, to: agentsPath, label: 'Agents' },
       { id: TASKS, to: tasksPath, label: 'Tasks' },
     ];
     // TODO: CHANGE TO HAS ROLE INSTEAD OF IS ROLE...
-    switch (roleID) {
-      case AGENT_ND_ROLE:
-        return [summaryTab].concat(agentTabList.map(e => genTab(e)));
-      case PLATFORM_ADMIN_ROLE:
-        return [summaryTab].concat(adminTabList.map(e => genTab(e)));
-      default:
-        return [];
+    let tabs = [summaryTab];
+    /* eslint-disable no-bitwise */
+    if (roleID & AGENT_ND_ROLE) {
+      tabs = tabs.concat(agentTabList.map(e => genTab(e)));
     }
+    /* eslint-disable no-bitwise */
+    if (roleID & PLATFORM_ADMIN_ROLE) {
+      tabs = tabs.concat(adminTabList.map(e => genTab(e)));
+    }
+    return tabs;
   };
 
   handleAcceptClick = () => {
@@ -482,10 +482,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails,
     } = getStageDetails(stage);
     // Override based on role
-    let isAdmin = false;
-    if (userHasAdminRole(user)) {
-      [showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails] = [false, true, true, true];
-      isAdmin = true;
+    if (admin) {
+      [showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails] = [false, true, true];
     }
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) => {
@@ -496,6 +494,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         title: a.title,
         description: a.body,
         date: a.createdAt,
+        cType: a.cType,
       };
       if (a.cType === NOTE_CTYPE_NOTE) {
         props.onEditClick = () => handleEditNoteClick(a);
@@ -602,7 +601,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   careLevels={careLevels}
                   roomTypes={roomTypes}
                   communityTypes={communityTypes}
-                  isAdmin={isAdmin}
                 />
               </FamilyDetailsTab>
             )}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, bool, func } from 'prop-types';
+import { string, object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 
 import {
@@ -9,25 +9,31 @@ import {
 
 import ConfirmReasonForm from 'sly/components/organisms/ConfirmReasonForm';
 
-const validate = createValidator({
-  reason: [required],
-});
-
 const ReduxForm = reduxForm({
   form: 'ConfirmReasonForm',
-  validate,
 })(ConfirmReasonForm);
 
 export default class ConfirmReasonFormContainer extends Component {
   static propTypes = {
     title: string.isRequired,
     message: string.isRequired,
+    extraFieldProps: object,
     onCancel: func,
     onAgree: func,
+    validate: func,
   };
 
   render() {
-    const { onCancel, onAgree, title, message } = this.props;
+    const { onCancel, onAgree, title, message, extraFieldProps, ...props } = this.props;
+
+    const extraFieldValidator = extraFieldProps && extraFieldProps.required
+      ? { [extraFieldProps.name]: [required] }
+      : {};
+
+    const validate = createValidator({
+      reason: [required],
+      ...extraFieldValidator,
+    });
 
     return (
       <ReduxForm
@@ -35,6 +41,9 @@ export default class ConfirmReasonFormContainer extends Component {
         message={message}
         onSubmit={onAgree}
         onCancel={onCancel}
+        validate={validate}
+        extraFieldProps={extraFieldProps}
+        {...props}
       />
     );
   }

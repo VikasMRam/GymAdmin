@@ -5,18 +5,18 @@ import { string, func, arrayOf, object } from 'prop-types';
 import { size } from 'sly/components/themes';
 import Checkbox from 'sly/components/molecules/Checkbox';
 import { Span } from 'sly/components/atoms';
-import pad from 'sly/components/helpers/pad';
 import cursor from 'sly/components/helpers/cursor';
 
-const StyledCheckbox = styled(Checkbox)`
-  margin-right: ${size('spacing', 'regular')};
+const CheckboxItem = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
-const CheckboxItem = cursor(pad(styled.div`
-  :last-child {
-    margin-bottom: 0;
-  }
-`, 'large'));
+const StyledCheckbox = cursor(styled(Checkbox)`
+  margin-right: ${size('spacing', 'regular')};
+`);
+
+const CheckboxLabel = cursor(Span);
 
 class CheckboxInput extends Component {
   propTypes={
@@ -61,7 +61,7 @@ class CheckboxInput extends Component {
             uncheckedPalette="grey"
             checked={value.indexOf(option.value) !== -1}
           />
-          <Span size="caption">{option.label}</Span>
+          <CheckboxLabel size="caption">{option.label}</CheckboxLabel>
         </CheckboxItem>
       );
     });

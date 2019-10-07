@@ -100,7 +100,7 @@ const Filters = ({ datatable, meta = {} }) => {
 };
 
 const TableHeaderButtons = ({
-  onColumnButtonClick, onSearchTextKeyUp, onSortButtonClick, datatable, className, meta,
+  onColumnButtonClick, onSearchTextKeyUp, onSortButtonClick, datatable, className, meta, value,
 }) => (
   <Wrappper className={className}>
     {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
@@ -114,7 +114,7 @@ const TableHeaderButtons = ({
           onChange={({ target }) => datatable.doSearch('name', 'cs', target.value)}
         />
       )
-      : <SearchTextInput type="search" placeholder="Type to filter by name" onKeyUp={onSearchTextKeyUp} />
+      : <SearchTextInput type="search" placeholder="Type to filter by name" value={value} onChange={onSearchTextKeyUp} />
     }
     {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
     {datatable && <Filters datatable={datatable} meta={meta} />}
@@ -129,6 +129,7 @@ TableHeaderButtons.propTypes = {
   className: string,
   onSortButtonClick: func,
   onSearchTextKeyUp: func,
+  value: string,
 };
 
 export default TableHeaderButtons;

@@ -6,6 +6,8 @@ import ReactTooltip from 'react-tooltip';
 
 import { palette, size } from 'sly/components/themes';
 import { Button, Block, Span, Icon, Paragraph } from 'sly/components/atoms';
+import { MainSection, BottomSection } from 'sly/components/molecules/CollapsibleSection';
+import TextBottomSection from 'sly/components/molecules/TextBottomSection';
 import { isServer } from 'sly/config';
 import { Experiment, Variant } from 'sly/services/experiments';
 
@@ -37,14 +39,12 @@ const StyledTd = styled.td`
   padding: ${size('spacing.regular')} ${size('spacing.xLarge')}; 
 `;
 
-const Wrapper = styled.table`
+const StyledTable = styled.table`
   border-collapse: collapse;
   width: 100%;
   position: relative;
-`;
-
-const StyledBlock = styled(Block)`
-   padding: ${size('spacing.xLarge')};
+  border-radius: ${size('spacing.small')};
+  border: ${size('border.regular')} solid ${palette('grey', 'filler')};
 `;
 
 const StyledBlockSp = styled(Block)`
@@ -54,8 +54,6 @@ const StyledBlockSp = styled(Block)`
 const StyledBlockNp = styled(Block)`
    padding-top: 0px;
    padding-bottom: ${size('spacing.xLarge')};
-   padding-left: ${size('spacing.xLarge')};
-   padding-right: ${size('spacing.xLarge')};
   
 `;
 const StyledIcon = styled(Icon)`
@@ -64,6 +62,7 @@ const StyledIcon = styled(Icon)`
 `;
 
 const StyledButton = styled(Button)`
+  width: 100%;
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
@@ -135,112 +134,151 @@ const CommunityPricingTable = ({
   const estimated = pricesList.length === 0;
   return (
     <Fragment>
-      { estimated &&
-        <StyledBlockNp size="title">
-          <StyledBlockSp size="body" palette="slate">The estimated monthly pricing for {name} ranges from</StyledBlockSp>
-          <StyledNumberFormat weight="weight.medium" color="secondary" value={from} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary" value={to} displayType="text" thousandSeparator prefix="$" /><Span weight="medium" size="title" palette="secondary"> per month*</Span>
-        </StyledBlockNp>
-      }
-      { !estimated &&
-        <StyledBlockNp size="title">
-          <StyledBlockSp size="body" palette="slate">The estimated pricing for {name} starts around</StyledBlockSp>
-          <StyledNumberFormat weight="weight.medium" color="secondary" value={price} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> per month*</Span>
-        </StyledBlockNp>
-      }
-      { pricesList.length > 0 &&
-        <Wrapper>
-          <thead>
-            <tr>
-              <StyledTh colSpan={2} color="slate" bgcolor="grey">
-                Costs By Room Type**
-              </StyledTh>
-            </tr>
-          </thead>
-          <tbody>
-            <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Average Monthly Cost</StyledTd> </Tr>
-            {pricesList.map((price) => {
-            const { label, value } = price;
-            return (
-              <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
-            );
-          })}
-          </tbody>
-        </Wrapper>
-      }
-      { pricesList.length === 0 && estimatedPriceList.length > 0 &&
-        <Wrapper>
-          <thead>
-            <tr>
-              {showToolTip &&
-              <StyledTh colSpan={2} color="slate" bgcolor="grey">
-                {toolTipCode(size)}
-              </StyledTh>
-              }
-              {!showToolTip &&
-              <StyledTh colSpan={2} color="slate" bgcolor="grey">
-                Costs By Room Type**
-              </StyledTh>
-              }
-            </tr>
-          </thead>
-          <tbody>
-            <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Estimated Monthly Cost</StyledTd> </Tr>
-            {estimatedPriceList.map((price) => {
-            const { label, value } = price;
-            return (
-              <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
-            );
-          })}
-          </tbody>
-        </Wrapper>
-      }
-      <StyledBlock>
-        <Experiment name="PricingCTA_Language" defaultVariant="Detailed">
-          <Variant name="Detailed">
-            <StyledButton ghost onClick={getPricing}>Get Detailed Pricing</StyledButton>
-          </Variant>
-          <Variant name="Personalized">
-            <StyledButton ghost onClick={getPricing}>Get Personalized Pricing</StyledButton>
-          </Variant>
-        </Experiment>
+      <MainSection>
+        { estimated &&
+          <StyledBlockNp size="title">
+            <StyledBlockSp size="body" palette="slate">The estimated monthly pricing for {name} ranges from</StyledBlockSp>
+            <StyledNumberFormat weight="weight.medium" color="secondary" value={from} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary" value={to} displayType="text" thousandSeparator prefix="$" /><Span weight="medium" size="title" palette="secondary"> per month*</Span>
+          </StyledBlockNp>
+        }
+        { !estimated &&
+          <StyledBlockNp size="title">
+            <StyledBlockSp size="body" palette="slate">The estimated pricing for {name} starts around</StyledBlockSp>
+            <StyledNumberFormat weight="weight.medium" color="secondary" value={price} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> per month*</Span>
+          </StyledBlockNp>
+        }
+        { pricesList.length > 0 &&
+          <StyledBlockNp>
+            <StyledTable>
+              <thead>
+                <tr>
+                  <StyledTh colSpan={2} color="slate" bgcolor="grey">
+                    Costs By Room Type**
+                  </StyledTh>
+                </tr>
+              </thead>
+              <tbody>
+                <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Average Monthly Cost</StyledTd> </Tr>
+                {pricesList.map((price) => {
+                const { label, value } = price;
+                return (
+                  <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
+                );
+              })}
+              </tbody>
+            </StyledTable>
+          </StyledBlockNp>
+        }
+        { pricesList.length === 0 && estimatedPriceList.length > 0 &&
+          <StyledBlockNp>
+            <StyledTable>
+              <thead>
+                <tr>
+                  {showToolTip &&
+                  <StyledTh colSpan={2} color="slate" bgcolor="grey">
+                    {toolTipCode(size)}
+                  </StyledTh>
+                  }
+                  {!showToolTip &&
+                  <StyledTh colSpan={2} color="slate" bgcolor="grey">
+                    Costs By Room Type**
+                  </StyledTh>
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Estimated Monthly Cost</StyledTd> </Tr>
+                {estimatedPriceList.map((price) => {
+                const { label, value } = price;
+                return (
+                  <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
+                );
+              })}
+              </tbody>
+            </StyledTable>
+          </StyledBlockNp>
+        }
         <Block>
-          { (pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === 'up to 20 Beds' &&
+          <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
+            <Variant name="FooterSmall">
+              <div />
+            </Variant>
+            <Variant name="FullWidth">
+              <Experiment name="PricingCTA_Language" defaultVariant="Detailed">
+                <Variant name="Detailed">
+                  <StyledButton onClick={getPricing}>Get Detailed Pricing</StyledButton>
+                </Variant>
+                <Variant name="Personalized">
+                  <StyledButton onClick={getPricing}>Get Personalized Pricing</StyledButton>
+                </Variant>
+              </Experiment>
+            </Variant>
+          </Experiment>
+          <Block>
+            { (pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === 'up to 20 Beds' &&
+              <Paragraph>
+                **Pricing in assisted living communities can be difficult to estimate.
+                In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
+                Small communities like this typically have &quot;all-inclusive&quot; pricing that gives the resident one monthly
+                price.
+                Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+                service.
+              </Paragraph>
+            }
+            { (pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '20 - 51 Beds' &&
             <Paragraph>
               **Pricing in assisted living communities can be difficult to estimate.
               In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
-              Small communities like this typically have &quot;all-inclusive&quot; pricing that gives the resident one monthly
+              Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
               price.
+              Some communities will use a Points or Level of Care system to determine the care related fees.
               Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
               service.
             </Paragraph>
-          }
-          { (pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '20 - 51 Beds' &&
-          <Paragraph>
-            **Pricing in assisted living communities can be difficult to estimate.
-            In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
-            Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
-            price.
-            Some communities will use a Points or Level of Care system to determine the care related fees.
-            Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
-            service.
-          </Paragraph>
-          }
-          {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '51 +' &&
-          <Paragraph>
-            **Pricing in assisted living communities can be difficult to estimate.
-            In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
-            Most large sized communities like this typically charge additional care fees.
-            Communities will use a Points or a Level of Care system to determine the care related fees.
-            Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
-            service.
-          </Paragraph>
-          }
+            }
+            {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '51 +' &&
+            <Paragraph>
+              **Pricing in assisted living communities can be difficult to estimate.
+              In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
+              Most large sized communities like this typically charge additional care fees.
+              Communities will use a Points or a Level of Care system to determine the care related fees.
+              Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+              service.
+            </Paragraph>
+            }
+          </Block>
+          <Block size="caption" palette="grey">
+            *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.  If you manage the community and would like to update your pricing, please email us at communities@seniorly.com.
+          </Block>
         </Block>
-        <Block size="caption" palette="grey">
-          *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.  If you manage the community and would like to update your pricing, please email us at communities@seniorly.com.
-        </Block>
-      </StyledBlock>
+      </MainSection>
+      <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
+        <Variant name="FooterSmall">
+          <BottomSection>
+            <Experiment name="PricingCTA_Language" defaultVariant="Detailed">
+              <Variant name="Detailed">
+                <TextBottomSection
+                  heading="To get detailed pricing, complete this short form. "
+                  buttonText="Get Detailed Pricing"
+                  onButtonClick={getPricing}
+                />
+              </Variant>
+              <Variant name="Personalized">
+                <TextBottomSection
+                  heading="To get personalized pricing, complete this short form. "
+                  buttonText="Get Personalized Pricing"
+                  onButtonClick={getPricing}
+                />
+              </Variant>
+            </Experiment>
+          </BottomSection>
+        </Variant>
+        <Variant name="FullWidth">
+          <div />
+        </Variant>
+      </Experiment>
     </Fragment>
+
   );
 };
 
