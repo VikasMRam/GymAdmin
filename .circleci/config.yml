@@ -219,6 +219,12 @@ jobs:
       #       docker-compose -f docker-compose-test.yml up
       #     working_directory: ~/SlyApi
       #     background: true
+
+      - run:
+          name: Installing CUrl and HAproxy
+          command: |
+            sudo apt-get update
+            sudo apt-get install curl haproxy
       
       - node/install:
           node-version: 8.16.0
@@ -247,12 +253,6 @@ jobs:
 
       - run:
           command: npx cypress verify
-
-      - run:
-          name: Installing HAproxy
-          command: |
-            sudo apt-get update
-            sudo apt-get install haproxy
 
       # # The PEMs and credentials are set in OPENVPN context and are echoed into files
       # - run:
