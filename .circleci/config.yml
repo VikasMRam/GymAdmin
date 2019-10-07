@@ -255,8 +255,8 @@ jobs:
                 command: npx cypress verify
 
             - run:
-              name: Waiting for Local Go to be up and running
-              command: npx wait-on -t http://localhost:8080
+                name: Waiting for Local Go to be up and running
+                command: npx wait-on -t http://localhost:8080
 
       # - restore_cache:
       #     keys:
