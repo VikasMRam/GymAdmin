@@ -274,6 +274,7 @@ jobs:
                 command: |
                   npm run dev
                 working_directory: ~/project
+                background: true
 
             - run:
                 command: npx cypress verify
