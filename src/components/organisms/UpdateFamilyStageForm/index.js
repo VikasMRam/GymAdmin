@@ -211,7 +211,7 @@ export default class UpdateFamilyStageForm extends Component {
                 />
                 {/* important to keep in mind that referralAgreement and monthlyFees will be available as string */}
                 {referralAgreementType === 'percentage' && referralAgreement && referralAgreement.length > 0 && monthlyFees && monthlyFees.length > 0 &&
-                  <Block weight="medium" size="caption" palette="green">Your referral total is ${priceFormatter(referralAgreement * monthlyFees)}</Block>}
+                  <Block weight="medium" size="caption" palette="green">Your referral total is ${priceFormatter(referralAgreement * 0.01* monthlyFees)}</Block>}
               </ReferralAgreementWrapper>
             }
             <Role is={PLATFORM_ADMIN_ROLE}>
