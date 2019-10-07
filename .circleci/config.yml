@@ -276,8 +276,8 @@ jobs:
                 working_directory: ~/project
                 background: true
 
-            - run:
-                command: npx cypress verify
+            # - run:
+            #     command: npx cypress verify
 
             - run:
                 name: Waiting for Local Go to be up and running
