@@ -7,7 +7,6 @@ import userPropType from 'sly/propTypes/user';
 import { Span } from 'sly/components/atoms';
 import clientPropType from 'sly/propTypes/client';
 import { size } from 'sly/components/themes';
-
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import Field from 'sly/components/molecules/Field';
 import {
