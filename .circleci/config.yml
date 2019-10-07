@@ -185,6 +185,7 @@ jobs:
 
   e2e:
     docker:
+      - image: circleci/node:8.12 # though we use 8.9 only 8.12 has npm that supports npm ci
       # CircleCI PostgreSQL images available at: https://hub.docker.com/r/circleci/postgres/
       - image: circleci/postgres:9.6-alpine-postgis-ram
         environment:
@@ -226,33 +227,51 @@ jobs:
             sudo apt-get update
             sudo apt-get install curl haproxy
       
-      - node/install:
-          node-version: 8.16.0
-          install-yarn: false
+      - node/with-cache:
+          cache-key: package-lock.json
+          cache-version: v3
+          use-strict-cache: true
+          include-branch-in-cache-key: false
+          steps:
+            - run:
+                name: Install deps
+                command: |
+                  if [ ! -d node_modules ]; then
+                    npm ci
+                  else
+                    echo "node_modules from cache exist. So skipping install."
+                  fi
 
-      - restore_cache:
-          keys:
-            - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+            - run:
+                name: npm run dev
+                command: |
+                  npm run dev
 
-      - run:
-          name: NPM Install and Run Local SlyReact in Background
-          command: |
-            npm install
-            npm run dev
-          working_directory: ~/project
-          background: true
+            - run:
+                command: npx cypress verify
 
-      - run:
-          name: Install deps
-          command: |
-            if [ ! -d node_modules ]; then
-              npm ci
-            else
-              echo "node_modules from cache exist. So skipping install."
-            fi
+      # - restore_cache:
+      #     keys:
+      #       - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
 
-      - run:
-          command: npx cypress verify
+      # - run:
+      #     name: NPM Install and Run Local SlyReact in Background
+      #     command: |
+      #       npm install
+      #       npm run dev
+      #     working_directory: ~/project
+      #     background: true
+
+      # - run:
+      #     name: Install deps
+      #     command: |
+      #       if [ ! -d node_modules ]; then
+      #         npm ci
+      #       else
+      #         echo "node_modules from cache exist. So skipping install."
+      #       fi
+
+      
 
       # # The PEMs and credentials are set in OPENVPN context and are echoed into files
       # - run:
