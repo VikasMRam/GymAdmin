@@ -39,18 +39,13 @@ const StyledField = styled(Field)`
   }
 `;
 
-@prefetch('client', 'getClient', (req, { clientId }) => req({
-  id: clientId,
-}))
-
 @query('updateClient', 'updateClient')
 
 export default class StatusSelect extends Component {
   static propTypes = {
     updateClient: func.isRequired,
-    clientId: string.isRequired,
     client: clientPropType,
-    status: object,
+    rawClient: object,
     showModal: func,
     hideModal: func,
     notifyInfo: func,
@@ -122,8 +117,8 @@ export default class StatusSelect extends Component {
   };
 
   submitUserStatus = (clientStatus, { reason, date }) => {
-    const { updateClient, status: prefetchStatus, clientId } = this.props;
-    return updateClient({ id: clientId }, produce(prefetchStatus.client.result, (draft) => {
+    const { updateClient, rawClient } = this.props;
+    return updateClient({ id: rawClient.id }, produce(rawClient, (draft) => {
       draft.attributes.status = clientStatus;
       if (reason) {
         draft.attributes.clientInfo.onHoldReason = reason;
