@@ -186,11 +186,11 @@ jobs:
   e2e:
     docker:
       - image: circleci/node:8.12 # though we use 8.9 only 8.12 has npm that supports npm ci
-      # CircleCI PostgreSQL images available at: https://hub.docker.com/r/circleci/postgres/
-      - image: circleci/postgres:9.6-alpine-postgis-ram
+      - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-db:latest
         environment:
-          POSTGRES_USER: slydev
           POSTGRES_DB: slydev
+          POSTGRES_USER: slydev
+          POSTGRES_PASSWORD: slydev
       - image: redis:4
       - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-slyapi:latest
         aws_auth:
