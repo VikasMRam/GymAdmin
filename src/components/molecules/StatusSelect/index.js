@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { func, string, object } from 'prop-types';
+import { func, object } from 'prop-types';
 import produce from 'immer';
 
 import { Span } from 'sly/components/atoms';
@@ -16,7 +16,7 @@ import {
   FAMILY_STATUS_ON_PAUSE,
 } from 'sly/constants/familyDetails';
 import SlyEvent from 'sly/services/helpers/events';
-import { prefetch, query } from 'sly/services/newApi';
+import { query } from 'sly/services/newApi';
 import ConfirmReasonFormContainer from 'sly/containers/ConfirmReasonFormContainer';
 import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
 
@@ -39,18 +39,13 @@ const StyledField = styled(Field)`
   }
 `;
 
-@prefetch('client', 'getClient', (req, { clientId }) => req({
-  id: clientId,
-}))
-
 @query('updateClient', 'updateClient')
 
 export default class StatusSelect extends Component {
   static propTypes = {
     updateClient: func.isRequired,
-    clientId: string.isRequired,
     client: clientPropType,
-    status: object,
+    rawClient: object,
     showModal: func,
     hideModal: func,
     notifyInfo: func,
@@ -122,8 +117,8 @@ export default class StatusSelect extends Component {
   };
 
   submitUserStatus = (clientStatus, { reason, date }) => {
-    const { updateClient, status: prefetchStatus, clientId } = this.props;
-    return updateClient({ id: clientId }, produce(prefetchStatus.client.result, (draft) => {
+    const { updateClient, rawClient } = this.props;
+    return updateClient({ id: rawClient.id }, produce(rawClient, (draft) => {
       draft.attributes.status = clientStatus;
       if (reason) {
         draft.attributes.clientInfo.onHoldReason = reason;

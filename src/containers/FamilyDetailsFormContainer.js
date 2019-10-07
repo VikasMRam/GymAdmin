@@ -41,6 +41,7 @@ const ReduxForm = reduxForm({
 export default class FamilyDetailsFormContainer extends Component {
   static propTypes = {
     updateClient: func.isRequired,
+    refetchClient: func.isRequired,
     updateUuidAux: func.isRequired,
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
@@ -54,7 +55,7 @@ export default class FamilyDetailsFormContainer extends Component {
 
   handleSubmit = (data) => {
     const {
-      client, updateClient, rawClient, notifyInfo, notifyError, uuidAux, updateUuidAux,
+      client, updateClient, refetchClient, rawClient, notifyInfo, notifyError, uuidAux, updateUuidAux,
     } = this.props;
     const { id } = client;
     const { id: uuidID } = uuidAux;
@@ -154,6 +155,7 @@ export default class FamilyDetailsFormContainer extends Component {
           value: '',
         });
       })
+      .then(refetchClient)
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
         const { body } = r;

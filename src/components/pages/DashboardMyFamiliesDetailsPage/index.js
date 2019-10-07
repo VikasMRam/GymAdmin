@@ -178,7 +178,7 @@ const StyledClientNameBlock = styled(Block)`
 
 `;
 
-const ClientName = ({ client, backLinkHref, ...props }) => {
+const ClientName = ({ client, rawClient, backLinkHref, ...props }) => {
   const { clientInfo } = client;
   const { name } = clientInfo;
   return (
@@ -190,13 +190,15 @@ const ClientName = ({ client, backLinkHref, ...props }) => {
         <Icon icon="arrow-left" palette="primary" />
       </Link>
       <span>{name}</span>
-      <StyledStatusSelect clientId={client.id} {...props} />
+      <StyledStatusSelect client={client} rawClient={rawClient} {...props} />
     </StyledClientNameBlock>
   );
 };
 
 ClientName.propTypes = {
   client: clientPropType,
+  rawClient: object,
+  backLinkHref: string,
 };
 
 const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
@@ -440,7 +442,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
+      client, clientResult, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
     } = this.props;
     const { admin } = user;
 
@@ -531,7 +533,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
     const { tasksPath } = this.getTabPathsForUser();
 
-    const clientName = <ClientName client={client} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} />;
+    const clientName = <ClientName client={client} rawClient={rawClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} />;
 
     return (
       <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
@@ -590,6 +592,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                 <FamilyDetailsFormContainer
                   client={client}
                   rawClient={rawClient}
+                  refetchClient={refetchClient}
                   notifyInfo={notifyInfo}
                   notifyError={notifyError}
                   accepted={!showAcceptRejectButtons || admin}
