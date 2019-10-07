@@ -241,11 +241,13 @@ jobs:
                   else
                     echo "node_modules from cache exist. So skipping install."
                   fi
+                working_directory: ~/project
 
             - run:
                 name: npm run dev
                 command: |
                   npm run dev
+                working_directory: ~/project
 
             - run:
                 command: npx cypress verify
