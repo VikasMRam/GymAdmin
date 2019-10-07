@@ -10,7 +10,7 @@ function inputValuesAndAssert(cy) {
   const typeOfCare = 'Medication Management';
   const medicaid = 'Yes';
 
-  cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
+  cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`, { failOnStatusCode: false });
 
   cy.get('#pricing-and-floor-plans input[name="email"]').type(email);
 
