@@ -592,6 +592,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                 <FamilyDetailsFormContainer
                   client={client}
                   rawClient={rawClient}
+                  refetchClient={refetchClient}
                   notifyInfo={notifyInfo}
                   notifyError={notifyError}
                   accepted={!showAcceptRejectButtons || admin}

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { func, string, object } from 'prop-types';
+import { func, object } from 'prop-types';
 import produce from 'immer';
 
 import { Span } from 'sly/components/atoms';
@@ -16,7 +16,7 @@ import {
   FAMILY_STATUS_ON_PAUSE,
 } from 'sly/constants/familyDetails';
 import SlyEvent from 'sly/services/helpers/events';
-import { prefetch, query } from 'sly/services/newApi';
+import { query } from 'sly/services/newApi';
 import ConfirmReasonFormContainer from 'sly/containers/ConfirmReasonFormContainer';
 import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
 
