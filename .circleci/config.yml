@@ -265,12 +265,12 @@ jobs:
           # command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
 
       - run:
-          name: Waiting for Local React to be up and running
-          command: npx wait-on http://localhost:8000
+          name: Waiting for Local Go to be up and running
+          command: npx wait-on -t 900000 http://localhost:8080
 
       - run:
-          name: Waiting for Local Go to be up and running
-          command: npx wait-on http://localhost:8080
+          name: Waiting for Local React to be up and running
+          command: npx wait-on http://localhost:8000
 
       - run:
           name: Curl whether API is accessible
