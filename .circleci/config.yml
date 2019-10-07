@@ -184,8 +184,18 @@ jobs:
             - new_env_vars
 
   e2e:
-    machine: true
-
+    docker:
+      # CircleCI PostgreSQL images available at: https://hub.docker.com/r/circleci/postgres/
+      - image: circleci/postgres:9.6-alpine-postgis-ram
+        environment:
+          POSTGRES_USER: slydev
+          POSTGRES_DB: slydev
+      - image: redis:4
+      - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-slyapi:latest
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+  
     working_directory: ~/project/e2e
 
     environment:
@@ -196,19 +206,19 @@ jobs:
       - checkout:
           path: ~/project
 
-      - run:
-          name: Clone SlyApi
-          command: git clone --single-branch --branch feature/docker git@github.com:seniorly/SlyApi.git ~/SlyApi
+      # - run:
+      #     name: Clone SlyApi
+      #     command: git clone --single-branch --branch feature/docker git@github.com:seniorly/SlyApi.git ~/SlyApi
       
-      - run:
-          command: |
-            cat docker-compose-test.yml
-            sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-            sudo chmod +x /usr/local/bin/docker-compose
-            docker-compose --version
-            docker-compose -f docker-compose-test.yml up
-          working_directory: ~/SlyApi
-          background: true
+      # - run:
+      #     command: |
+      #       cat docker-compose-test.yml
+      #       sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      #       sudo chmod +x /usr/local/bin/docker-compose
+      #       docker-compose --version
+      #       docker-compose -f docker-compose-test.yml up
+      #     working_directory: ~/SlyApi
+      #     background: true
       
       - node/install:
           node-version: 8.16.0
@@ -239,30 +249,25 @@ jobs:
           command: npx cypress verify
 
       - run:
-          name: Installing OpenVPN Client and HAproxy
+          name: Installing HAproxy
           command: |
             sudo apt-get update
-            sudo apt-get install openvpn haproxy
+            sudo apt-get install haproxy
 
-      - run:
-          name: Running HAProxy
-          command: sudo haproxy -f haproxy.conf
-          background: true
-
-      # The PEMs and credentials are set in OPENVPN context and are echoed into files
-      - run:
-          name: Creating OpenVPN Client Credential file
-          command: |
-            echo -e "$OPENVPN_USERNAME\n$OPENVPN_PASSWORD" >> openVPN_cred.txt
-            echo -e "$OPENVPN_CA" >> ca.pem
-            echo -e "$OPENVPN_CERT" >> cert.pem
-            echo -e "$OPENVPN_KEY" >> key.pem
-            echo -e "$OPENVPN_TLS_AUTH" >> tls_auth.pem
-
-      # PEMs should be escaped like explained here https://discuss.circleci.com/t/issues-storing-firebase-keys-as-environment-variable/6197/6
+      # # The PEMs and credentials are set in OPENVPN context and are echoed into files
       # - run:
-          # name: Creating OpenVPN Tunnel
-          # command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
+      #     name: Creating OpenVPN Client Credential file
+      #     command: |
+      #       echo -e "$OPENVPN_USERNAME\n$OPENVPN_PASSWORD" >> openVPN_cred.txt
+      #       echo -e "$OPENVPN_CA" >> ca.pem
+      #       echo -e "$OPENVPN_CERT" >> cert.pem
+      #       echo -e "$OPENVPN_KEY" >> key.pem
+      #       echo -e "$OPENVPN_TLS_AUTH" >> tls_auth.pem
+
+      # # PEMs should be escaped like explained here https://discuss.circleci.com/t/issues-storing-firebase-keys-as-environment-variable/6197/6
+      # - run:
+      #     name: Creating OpenVPN Tunnel
+      #     command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
 
       - run:
           name: Waiting for Local Go to be up and running
