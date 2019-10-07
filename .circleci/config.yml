@@ -253,6 +253,11 @@ jobs:
             sudo apt-get update
             sudo apt-get install curl haproxy
       
+      - run:
+          name: Running HAProxy
+          command: sudo haproxy -f haproxy.conf
+          background: true
+      
       - node/with-cache:
           cache-key: package-lock.json
           cache-version: v3
