@@ -9,7 +9,9 @@ function inputValuesAndAssert(cy) {
   const typeOfCare = 'Medication Management';
   const medicaid = 'Yes';
 
-  cy.visit(`/custom-pricing/${communitySlug}`, { failOnStatusCode: false });
+  cy.visit('/');
+
+  cy.visit(`/custom-pricing/${communitySlug}`);
 
   const data = {
     communitySlug, name, phoneNumber, typeOfRoom, typeOfCare, medicaid,
