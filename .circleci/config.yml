@@ -196,6 +196,8 @@ jobs:
         aws_auth:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+        environment:
+          SLY_DBHOST: localhost
   
     working_directory: ~/project/e2e
 
@@ -252,6 +254,10 @@ jobs:
             - run:
                 command: npx cypress verify
 
+            - run:
+              name: Waiting for Local Go to be up and running
+              command: npx wait-on -t http://localhost:8080
+
       # - restore_cache:
       #     keys:
       #       - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
@@ -290,68 +296,68 @@ jobs:
       #     name: Creating OpenVPN Tunnel
       #     command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
 
-      - run:
-          name: Waiting for Local Go to be up and running
-          command: npx wait-on -t 900000 http://localhost:8080
+      # - run:
+      #     name: Waiting for Local Go to be up and running
+      #     command: npx wait-on -t 900000 http://localhost:8080
 
-      - run:
-          name: Waiting for Local React to be up and running
-          command: npx wait-on http://localhost:8000
+      # - run:
+      #     name: Waiting for Local React to be up and running
+      #     command: npx wait-on http://localhost:8000
 
-      - run:
-          name: Curl whether API is accessible
-          command: curl http://www.lvh.me/v0/ping
+      # - run:
+      #     name: Curl whether API is accessible
+      #     command: curl http://www.lvh.me/v0/ping
 
-      - save_cache:
-          key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - ~/.npm
-            - ~/.cache
-            - ~/project/node_modules
-            - ~/project/e2e/node_modules
+      # - save_cache:
+      #     key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+      #     paths:
+      #       - ~/.npm
+      #       - ~/.cache
+      #       - ~/project/node_modules
+      #       - ~/project/e2e/node_modules
 
-      - run:
-          name: Run Cypress tests
-          command: |
-            echo "Running cypress"
-            npx cypress run --reporter junit --reporter-options "mochaFile=$TEST_RESULTS/cypress-test-output.xml,toConsole=true" --spec "cypress/integration/**/*"
+      # - run:
+      #     name: Run Cypress tests
+      #     command: |
+      #       echo "Running cypress"
+      #       npx cypress run --reporter junit --reporter-options "mochaFile=$TEST_RESULTS/cypress-test-output.xml,toConsole=true" --spec "cypress/integration/**/*"
 
-      - run:
-          name: Closing OpenVPN Tunnel
-          command: sudo killall openvpn
+      # - run:
+      #     name: Closing OpenVPN Tunnel
+      #     command: sudo killall openvpn
 
-      # TODO: remove once circle ci starts supporting customizable notifications in workflows
-      - run:
-          name: Send tests success notification
-          command: |
-            if [ -z "$CIRCLE_PULL_REQUEST" ] && [ "$CIRCLE_BRANCH" == "master" ]; then
-              export TEST_OUTPUT=$(cat test_output)
-              SLACK_NOTIFICATION_API_KEY=$SLACK_TEST_NOTIFICATION_API_KEY ../.circleci/push-slack-notification.sh -t "smoke tests success" \
-                -tl "$CIRCLE_BUILD_URL" -m "$TEST_OUTPUT" -c "#42c88a"
-            fi
+      # # TODO: remove once circle ci starts supporting customizable notifications in workflows
+      # - run:
+      #     name: Send tests success notification
+      #     command: |
+      #       if [ -z "$CIRCLE_PULL_REQUEST" ] && [ "$CIRCLE_BRANCH" == "master" ]; then
+      #         export TEST_OUTPUT=$(cat test_output)
+      #         SLACK_NOTIFICATION_API_KEY=$SLACK_TEST_NOTIFICATION_API_KEY ../.circleci/push-slack-notification.sh -t "smoke tests success" \
+      #           -tl "$CIRCLE_BUILD_URL" -m "$TEST_OUTPUT" -c "#42c88a"
+      #       fi
 
-      - run:
-          name: Send tests failed notification
-          when: on_fail
-          command: |
-            if [ -z "$CIRCLE_PULL_REQUEST" ] && [ "$CIRCLE_BRANCH" == "master" ]; then
-              export DESC_MSG=$(cat test_output)
-              if [ -z "$DESC_MSG" ]; then
-                DESC_MSG="failed before running tests"
-              fi
-              SLACK_NOTIFICATION_API_KEY=$SLACK_TEST_NOTIFICATION_API_KEY ../.circleci/push-slack-notification.sh -t "smoke tests failed" \
-                -tl "$CIRCLE_BUILD_URL" -m "<!channel> $DESC_MSG" -c "#ed5c5c"
-            fi
+      # - run:
+      #     name: Send tests failed notification
+      #     when: on_fail
+      #     command: |
+      #       if [ -z "$CIRCLE_PULL_REQUEST" ] && [ "$CIRCLE_BRANCH" == "master" ]; then
+      #         export DESC_MSG=$(cat test_output)
+      #         if [ -z "$DESC_MSG" ]; then
+      #           DESC_MSG="failed before running tests"
+      #         fi
+      #         SLACK_NOTIFICATION_API_KEY=$SLACK_TEST_NOTIFICATION_API_KEY ../.circleci/push-slack-notification.sh -t "smoke tests failed" \
+      #           -tl "$CIRCLE_BUILD_URL" -m "<!channel> $DESC_MSG" -c "#ed5c5c"
+      #       fi
 
-      - store_test_results:
-          path: /tmp/test-results
+      # - store_test_results:
+      #     path: /tmp/test-results
 
-      - store_artifacts:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: cypress/videos
-      - store_artifacts:
-          path: cypress/screenshots
+      # - store_artifacts:
+      #     path: /tmp/test-results
+      # - store_artifacts:
+      #     path: cypress/videos
+      # - store_artifacts:
+      #     path: cypress/screenshots
 
 workflows:
   version: 2
