@@ -222,6 +222,10 @@ jobs:
           POSTGRES_PASSWORD: slydev
           POSTGRES_USER: slydev
           POSTGRES_DB: slydev
+      - image: cypress/base:8
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
   
     working_directory: ~/project/e2e
 
@@ -309,7 +313,7 @@ jobs:
                 name: Run Cypress tests
                 command: |
                   echo "Running cypress"
-                  npx cypress run --reporter junit --reporter-options "mochaFile=$TEST_RESULTS/cypress-test-output.xml,toConsole=true" --spec "cypress/integration/**/*"
+                  $(npm bin)/cypress run --reporter junit --reporter-options "mochaFile=$TEST_RESULTS/cypress-test-output.xml,toConsole=true" --spec "cypress/integration/**/*"
 
 
       # - restore_cache:
