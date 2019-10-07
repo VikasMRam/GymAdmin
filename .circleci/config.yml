@@ -252,7 +252,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install curl haproxy
-      
+
       - run:
           name: Running HAProxy
           command: sudo haproxy -f haproxy.conf
@@ -291,6 +291,26 @@ jobs:
             - run:
                 name: Curl whether API is accessible
                 command: curl http://www.lvh.me/v0/ping
+
+            - run:
+                name: Waiting for Local React to be up and running
+                command: npx wait-on http://localhost:8000
+
+            - run:
+                name: Install deps
+                command: |
+                  if [ ! -d node_modules ]; then
+                    npm ci
+                  else
+                    echo "node_modules from cache exist. So skipping install."
+                  fi
+
+            - run:
+                name: Run Cypress tests
+                command: |
+                  echo "Running cypress"
+                  npx cypress run --reporter junit --reporter-options "mochaFile=$TEST_RESULTS/cypress-test-output.xml,toConsole=true" --spec "cypress/integration/**/*"
+
 
       # - restore_cache:
       #     keys:
