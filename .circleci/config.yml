@@ -198,6 +198,12 @@ jobs:
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
         environment:
           SLY_DBHOST: localhost
+          SLY_DBNAME: slydev
+          SLY_DBUSER: slydev
+          SLY_DBPASSWORD: slydev
+          POSTGRES_PASSWORD: slydev
+          POSTGRES_USER: slydev
+          POSTGRES_DB: slydev
   
     working_directory: ~/project/e2e
 
