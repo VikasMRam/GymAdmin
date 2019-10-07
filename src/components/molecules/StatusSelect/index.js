@@ -3,9 +3,12 @@ import styled from 'styled-components';
 import { func, object } from 'prop-types';
 import produce from 'immer';
 
+import userPropType from 'sly/propTypes/user';
 import { Span } from 'sly/components/atoms';
 import clientPropType from 'sly/propTypes/client';
 import { size } from 'sly/components/themes';
+
+import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import Field from 'sly/components/molecules/Field';
 import {
   FAMILY_STATUS_ACTIVE,
@@ -21,12 +24,13 @@ import ConfirmReasonFormContainer from 'sly/containers/ConfirmReasonFormContaine
 import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
 
 const options = [
-  { label: 'Active',    icon: 'active',     palette: 'green',  value: FAMILY_STATUS_ACTIVE },
+
+  { label: 'Active',    icon: 'active',     palette: 'green',  value: FAMILY_STATUS_ACTIVE, role: AGENT_ND_ROLE  },
   // { label: 'Hot',       icon: 'hot',        palette: 'yellow', value: FAMILY_STATUS_HOT },
-  { label: 'Long Term', icon: 'hourglass',  palette: 'purple', value: FAMILY_STATUS_LONG_TERM },
-  { label: 'On Pause',  icon: 'pause',      palette: 'danger', value: FAMILY_STATUS_ON_PAUSE },
-  { label: 'Archived',  icon: 'archived',   palette: 'slate',  value: FAMILY_STATUS_ARCHIVED },
-  { label: 'Deleted',   icon: 'trash-fill', palette: 'grey',   value: FAMILY_STATUS_DELETED },
+  { label: 'Long Term', icon: 'hourglass',  palette: 'purple', value: FAMILY_STATUS_LONG_TERM, role: PLATFORM_ADMIN_ROLE },
+  { label: 'On Pause',  icon: 'pause',      palette: 'danger', value: FAMILY_STATUS_ON_PAUSE, role: AGENT_ND_ROLE },
+  { label: 'Archived',  icon: 'archived',   palette: 'slate',  value: FAMILY_STATUS_ARCHIVED, role: PLATFORM_ADMIN_ROLE  },
+  { label: 'Deleted',   icon: 'trash-fill', palette: 'grey',   value: FAMILY_STATUS_DELETED, role: PLATFORM_ADMIN_ROLE },
 ];
 
 const StyledField = styled(Field)`
@@ -49,6 +53,7 @@ export default class StatusSelect extends Component {
     showModal: func,
     hideModal: func,
     notifyInfo: func,
+    user: userPropType,
   };
 
   state = {
@@ -79,6 +84,14 @@ export default class StatusSelect extends Component {
     required: true,
     label: <Fragment>Expected resume date<Span palette="danger">*</Span></Fragment>,
   });
+
+  // FIXME: Because I am an idiot and am not clever in the slightest
+  optionsForUser = () => {
+    const { user } = this.props;
+    const { roleID } = user;
+    /* eslint-disable-next-line no-bitwise */
+    return options.filter(o => o.role & roleID);
+  };
 
   confirm = (toStatus) => {
     const { showModal, hideModal, client } = this.props;
@@ -135,7 +148,7 @@ export default class StatusSelect extends Component {
         name="status"
         value={this.state.status}
         size="tiny"
-        options={options}
+        options={this.optionsForUser()}
         onChange={this.onChange}
         {...props}
       />

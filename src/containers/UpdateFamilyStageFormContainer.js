@@ -180,7 +180,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     }
     newClient.set('attributes.clientInfo.referralAgreementType', referralAgreementType);
     if (referralAgreementType === 'percentage') {
-      const moveInFee = referralAgreement * monthlyFees;
+      const moveInFee = referralAgreement * monthlyFees * 0.01;
       newClient.set('attributes.clientInfo.moveInFee', parseFloat(moveInFee));
     } else if (referralAgreementType === 'flat-fee') {
       newClient.set('attributes.clientInfo.moveInFee', parseFloat(referralAgreement));

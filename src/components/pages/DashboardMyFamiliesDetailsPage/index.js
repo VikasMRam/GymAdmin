@@ -533,7 +533,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
     const { tasksPath } = this.getTabPathsForUser();
 
-    const clientName = <ClientName client={client} rawClient={rawClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} />;
+    const clientName = <ClientName client={client} rawClient={rawClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} user={user} />;
 
     return (
       <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
