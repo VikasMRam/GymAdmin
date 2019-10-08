@@ -43,7 +43,6 @@ import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetail
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
-import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList';
 import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
 import TextBottomSection from 'sly/components/molecules/TextBottomSection';
 import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
@@ -375,7 +374,7 @@ export default class CommunityDetailPage extends Component {
 
   render() {
     const {
-      handleShareClick, openAskAgentQuestionModal, openAskQuestionModal, openFloorPlanModal,
+      handleShareClick, openAskAgentQuestionModal, openAskQuestionModal,
       openAdvisorHelpModal, openAnswerQuestionModal, handleFavouriteClick, handleAddReviewButtonClick,
     } = this;
     const {
