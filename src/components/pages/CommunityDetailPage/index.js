@@ -333,11 +333,7 @@ export default class CommunityDetailPage extends Component {
     const { showModal, hideModal } = this.props;
     showModal(<AdvisorHelpPopup onButtonClick={hideModal} />);
   };
-
-  openExitIntentModal = () => {
-
-  };
-
+  
   openAnswerQuestionModal = (type, questionId) => {
     const { showModal, hideModal, community } = this.props;
     const { id, questions, communityFaQs } = community;
