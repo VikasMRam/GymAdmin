@@ -62,7 +62,7 @@ export const makeQuerystringFilters = (filterState, sectionFilters = {}, strict 
     qsObject[key] = value;
   });
 
-  if (filters.length > 1 && filterState.logicalOperator) {
+  if (filters.length >= 1 && filterState.logicalOperator) {
     qsObject.exp = filterState.logicalOperator;
   }
   return qsObject;
@@ -105,6 +105,10 @@ export const parseQuerystringFilters = (qsText) => {
       filterState.logicalOperator = queryValue;
     }
   });
+
+  if (filterState.filters.length === 1 && filterState.logicalOperator === 'or') {
+    filterState.filters.push({});
+  }
 
   return filterState;
 };
