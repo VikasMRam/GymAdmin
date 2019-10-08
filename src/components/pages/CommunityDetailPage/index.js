@@ -608,7 +608,7 @@ export default class CommunityDetailPage extends Component {
                   }
 
                   {!hasCCRC && pricesList.length === 0 && estimatedPriceList.length === 0 && floorPlans.length > 0 &&
-                    <div>
+                    <Fragment>
                       <MainSection>
                         <CommunityFloorPlansList
                           floorPlans={floorPlans}
@@ -631,7 +631,7 @@ export default class CommunityDetailPage extends Component {
                           }}
                         />
                       </BottomSection>
-                    </div>
+                    </Fragment>
                   }
                 </TopCollapsibleSection>
                 {floorPlans.length === 0 && pricesList.length === 0 && estimatedPriceList.length === 0 &&

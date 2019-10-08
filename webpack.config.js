@@ -47,6 +47,8 @@ const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY || 'AIzaSyALxJg-oMW7
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com';
 const MUTE_REDUX_LOGGER = process.env.MUTE_REDUX_LOGGER || false;
 const HIDE_CHATBOX = process.env.HIDE_CHATBOX || false;
+const ENABLE_EXPERIMENT_DEBUGGER = process.env.ENABLE_EXPERIMENT_DEBUGGER || false;
+const DISABLE_EXPERIMENTS = process.env.DISABLE_EXPERIMENTS || false;
 
 const isDev = NODE_ENV === 'development';
 const isStaging = SLY_ENV === 'staging';
@@ -79,6 +81,8 @@ console.info('Using config', JSON.stringify({
   GOOGLE_CLIENT_ID,
   MUTE_REDUX_LOGGER,
   HIDE_CHATBOX,
+  ENABLE_EXPERIMENT_DEBUGGER,
+  DISABLE_EXPERIMENTS,
 }, null, 2));
 
 const sourcePath = path.join(process.cwd(), SOURCE);
@@ -146,7 +150,9 @@ const base = group([
     'process.env.FB_CLIENT_ID': FB_CLIENT_ID,
     'process.env.GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID,
     'process.env.MUTE_REDUX_LOGGER': MUTE_REDUX_LOGGER,
-    'process.env.HIDE_CHATBOX': HIDE_CHATBOX || false,
+    'process.env.HIDE_CHATBOX': HIDE_CHATBOX,
+    'process.env.DISABLE_EXPERIMENTS': DISABLE_EXPERIMENTS,
+    'process.env.ENABLE_EXPERIMENT_DEBUGGER': ENABLE_EXPERIMENT_DEBUGGER,
   }),
 
   devServer({
