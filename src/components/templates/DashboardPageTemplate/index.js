@@ -65,9 +65,9 @@ const Column = styled.aside`
 const Body = styled.main`
   overflow: ${ifProp('bodyHasOverflow', 'auto', 'initial')};
   height: 100%;
+  background-color: ${palette('grey.background')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    background-color: ${palette('grey.background')};
     padding: ${size('spacing.xLarge')};
   }
 
