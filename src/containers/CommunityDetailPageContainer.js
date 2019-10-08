@@ -414,18 +414,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       });
   };
 
-  handleToggleAskQuestionModal = (isAskQuestionModalVisible) => {
-    const { community } = this.props;
-    const { id } = community;
-    const action = isAskQuestionModalVisible ? 'close-modal' : 'open-modal';
-    const category = 'AskQuestion';
-    const event = {
-      action, category, label: id,
-    };
-
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
   render() {
     const {
       status,

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { object, func, number, bool } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
+import cookie from 'react-cookie';
 
 import { size, palette, assetPath } from 'sly/components/themes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
@@ -60,6 +61,8 @@ import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFo
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 import { Experiment, Variant } from 'sly/services/experiments';
+import CommunityExitIntentContainer from 'sly/containers/CommunityExitIntentContainer';
+import CommunityInpageWizardContainer from 'sly/containers/CommunityInpageWizardContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -187,6 +190,43 @@ export default class CommunityDetailPage extends Component {
     onUnsaveCommunity: func,
     history: object,
   };
+  /* Exit Intent Work: https://github.com/mrlagmer/exitintent/blob/master/src/App.js */
+  constructor(props) {
+    super(props);
+    this.addExitIntent = this.addExitIntent.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('mouseout', this.addExitIntent);
+  }
+
+  addExitIntent(e) {
+    // Get the current viewport width.
+    const vpWidth = Math.max(
+      document.documentElement.clientWidth,
+      window.innerWidth || 0
+    );
+
+    // If the current mouse X position is within 50px of the right edge
+    // of the viewport, return.
+    if (e.clientX >= vpWidth - 50) return;
+
+    // If the current mouse Y position is not within 50px of the top
+    // edge of the viewport, return.
+    if (e.clientY >= 50) return;
+
+    // Reliable, works on mouse exiting window and
+    // user switching active program
+    const from = e.relatedTarget || e.toElement;
+    if (!from) {
+      const { showModal, hideModal } = this.props;
+      const s  = cookie.load('exitModalShowns');
+      if (s !== 'exitShown') {
+        cookie.save('exitModalShown', 'exitShown', { path: '/' });
+        showModal(<CommunityExitIntentContainer onButtonClick={hideModal} />);
+      }
+    }
+  }
 
   handleMorePicturesClick = (image) => {
     const {
@@ -294,6 +334,10 @@ export default class CommunityDetailPage extends Component {
     showModal(<AdvisorHelpPopup onButtonClick={hideModal} />);
   };
 
+  openExitIntentModal = () => {
+
+  };
+
   openAnswerQuestionModal = (type, questionId) => {
     const { showModal, hideModal, community } = this.props;
     const { id, questions, communityFaQs } = community;
@@ -368,6 +412,12 @@ export default class CommunityDetailPage extends Component {
   };
 
   handleAddReviewButtonClick = () => {
+    const { showModal } = this.props;
+
+    showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
+  };
+
+  showExitModal = () => {
     const { showModal } = this.props;
 
     showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
