@@ -606,37 +606,11 @@ export default class CommunityDetailPage extends Component {
                       showToolTip={address.state === 'TN'}
                     />
                   }
-
-                  {!hasCCRC && pricesList.length === 0 && estimatedPriceList.length === 0 && floorPlans.length > 0 &&
-                    <Fragment>
-                      <MainSection>
-                        <CommunityFloorPlansList
-                          floorPlans={floorPlans}
-                          onItemClick={openFloorPlanModal}
-                        />
-                      </MainSection>
-                      <BottomSection>
-                        <GetCurrentAvailabilityContainer
-                          community={community}
-                          queryParams={{ modal, currentStep }}
-                          setQueryParams={setQueryParams}
-                          onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
-                          onSubmitExpressConversion={(e, submitExpressConversion) => {
-                            if (isAlreadyPricingRequested) {
-                              openAskAgentQuestionModal('pricing');
-                            } else {
-                              submitExpressConversion(e);
-                              onGCPClick();
-                            }
-                          }}
-                        />
-                      </BottomSection>
-                    </Fragment>
-                  }
                 </TopCollapsibleSection>
                 {floorPlans.length === 0 && pricesList.length === 0 && estimatedPriceList.length === 0 &&
                   <TopCollapsibleSection
                     title={`Get Availability at ${name}`}
+                    id="availability"
                   >
                     <MainSection>
                       <GetCurrentAvailabilityContainer

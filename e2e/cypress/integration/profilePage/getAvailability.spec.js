@@ -2,7 +2,7 @@ import { doCustomPricingFlow } from './../../helpers/customPricing';
 import { assertUserActionsForGetAvailability } from './../../helpers/userActions';
 
 function inputValuesAndAssert(cy) {
-  const communitySlug = 'buena-vista-manor-house';
+  const communitySlug = 'araville-residential-care-home-temp';
   const name = 'Pranesh Kumar';
   const phoneNumber = '9999999999';
   const email = 'pranesh@seniorly.com';
@@ -12,7 +12,7 @@ function inputValuesAndAssert(cy) {
 
   cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
 
-  cy.get('#pricing-and-floor-plans input[name="email"]').type(email);
+  cy.get('#availability input[name="email"]').type(email);
 
   cy.get('button').contains('Get Availability').click();
 
