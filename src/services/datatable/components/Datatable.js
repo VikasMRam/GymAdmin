@@ -6,8 +6,6 @@ import { prefetch } from 'sly/services/newApi';
 import datatableColumnsProptype from 'sly/propTypes/datatableColumns';
 import { makeQuerystringFilters, parseQuerystringFilters, simpleQStringify } from 'sly/services/datatable/helpers';
 
-global.qs = require('query-string');
-
 @prefetch('datatable', 'getDatatable', (req, { id }) => req({ id }))
 
 @withRouter
