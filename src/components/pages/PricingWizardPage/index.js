@@ -22,6 +22,7 @@ import {
   WHAT_TO_NEXT_OPTIONS,
   EXPLORE_AFFORDABLE_PRICING_OPTIONS,
 } from 'sly/constants/pricingForm';
+import { hasCCRC } from 'sly/services/helpers/community';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
@@ -31,7 +32,7 @@ import CommunityPricingWizardWhatToDoNextFormContainer from 'sly/containers/Comm
 import CommunityPricingWizardExploreAffordableOptionsFormContainer
   from 'sly/containers/CommunityPricingWizardExploreAffordableOptionsFormContainer';
 import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
-import { hasCCRC } from 'sly/services/helpers/community';
+import CommunityPricingWizardLanding from 'sly/components/organisms/CommunityPricingWizardLanding';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -71,7 +72,7 @@ const contactFormHeadingMap = {
   'apply-financing': { heading: 'We Are Here to Help You', subheading: 'We have helped thousands of families to learn about and choose a community they love. This is a free service. ' },
 };
 
-const stepsWithoutControls = [3, 4];
+const stepsWithoutControls = [1, 4, 5];
 
 class PricingWizardPage extends Component {
   static propTypes = {
@@ -132,26 +133,26 @@ class PricingWizardPage extends Component {
 
     sendEvent('step-completed', id, currentStep);
     userActionSubmit(data);
-    if (currentStep === 3) {
+    if (currentStep === 4) {
       if (interest === 'talk-advisor') {
         doSubmit(openConfirmationModal);
       } else if (interest !== 'explore-affordable-options') {
+        goto(5);
+      }
+    }
+    if (currentStep === 2 && userHas(['name', 'phoneNumber'])) {
+      if (hasCCRC(community)) {
+        goto(2);
+        doSubmit(openConfirmationModal);
+      } else {
         goto(4);
       }
     }
-    if (currentStep === 1 && userHas(['name', 'phoneNumber'])) {
-      if (hasCCRC(community)) {
-        goto(1);
-        doSubmit(openConfirmationModal);
-      } else {
-        goto(3);
-      }
-    }
-    if (currentStep === 2) {
+    if (currentStep === 3) {
       // Track goal events
       sendEvent('pricing-contact-submitted', id, currentStep);
       if (hasCCRC(community)) {
-        goto(2);
+        goto(3);
         doSubmit(openConfirmationModal);
       }
     }
@@ -252,6 +253,12 @@ class PricingWizardPage extends Component {
               <Fragment>
                 <Body>
                   <WizardSteps currentStep={currentStep} {...props}>
+                    <WizardStep
+                      component={CommunityPricingWizardLanding}
+                      name="Landing"
+                      user={user}
+                      onBeginClick={next}
+                    />
                     <WizardStep
                       component={CommunityPWEstimatedPricingFormContainer}
                       name="EstimatedPricing"
