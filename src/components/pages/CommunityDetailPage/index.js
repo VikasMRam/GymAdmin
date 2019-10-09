@@ -243,7 +243,6 @@ export default class CommunityDetailPage extends Component {
           communitySlug={id}
           onButtonClick={hideModal}
           type="exitForm"
-          modalOnClose={this.onExitFormClose}
         />, this.onExitFormClose);
       }
     }
