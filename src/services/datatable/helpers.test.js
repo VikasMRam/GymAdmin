@@ -49,7 +49,7 @@ describe('datatables helpers', () => {
       }, {
         column: 'name',
         operator: 'cs',
-        value: 'test',
+        value: 'test@thing.com',
       }],
       logicalOperator: 'or',
     };
@@ -65,7 +65,7 @@ describe('datatables helpers', () => {
     },
     {
       name: 'filter[name]',
-      value: 'cs:test',
+      value: 'cs:test@thing.com',
     },
     {
       name: 'exp',
