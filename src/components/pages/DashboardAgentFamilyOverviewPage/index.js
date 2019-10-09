@@ -24,8 +24,12 @@ const DashboardAgentFamilyOverviewPage = ({ match, location }) => {
     );
   }
 
-  const { ['page-number']: pageNumber, ...filters } = parse(location.search);
-  const sectionFilters = { 'filter[client_type]': match.params.clientType, 'page-number': pageNumber };
+  const { 'page-number': pageNumber, ...filters } = parse(location.search);
+
+  const sectionFilters = {
+    client_type: match.params.clientType,
+    'page-number': pageNumber,
+  };
 
   return (
     <DashboardPageTemplate activeMenuItem="My Families">
