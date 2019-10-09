@@ -20,11 +20,20 @@ const StyledHeading = styled(Heading)`
 `;
 
 const CommunityAskQuestionForm = ({
-  handleSubmit, submitting, communityName, user, error,
+  handleSubmit, submitting, communityName, user, error, type,
 }) => {
+  let title = <StyledHeading level="subtitle" size="subtitle">Ask our experts about {communityName}</StyledHeading>;
+
+  if (type === 'exitForm') {
+    title = (<>
+      <StyledHeading level="title" size="subtitle">Didn't find what you were looking for?</StyledHeading>
+      <StyledHeading level="subtitle" size="caption">Tell us what you need and we will get back to you</StyledHeading>
+    </>);
+  }
+
   return (
     <form onSubmit={handleSubmit}>
-      <StyledHeading level="subtitle" size="subtitle">Ask our experts about {communityName}</StyledHeading>
+      {title}
       {!user && <Field
         name="name"
         label=""
@@ -63,6 +72,7 @@ CommunityAskQuestionForm.propTypes = {
   submitting: bool,
   user: object,
   error: string,
+  type: string,
 };
 
 export default CommunityAskQuestionForm;
