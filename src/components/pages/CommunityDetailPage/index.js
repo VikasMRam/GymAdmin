@@ -43,7 +43,6 @@ import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetail
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
-import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList';
 import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
 import TextBottomSection from 'sly/components/molecules/TextBottomSection';
 import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
@@ -375,7 +374,7 @@ export default class CommunityDetailPage extends Component {
 
   render() {
     const {
-      handleShareClick, openAskAgentQuestionModal, openAskQuestionModal, openFloorPlanModal,
+      handleShareClick, openAskAgentQuestionModal, openAskQuestionModal,
       openAdvisorHelpModal, openAnswerQuestionModal, handleFavouriteClick, handleAddReviewButtonClick,
     } = this;
     const {
@@ -606,37 +605,11 @@ export default class CommunityDetailPage extends Component {
                       showToolTip={address.state === 'TN'}
                     />
                   }
-
-                  {!hasCCRC && pricesList.length === 0 && estimatedPriceList.length === 0 && floorPlans.length > 0 &&
-                    <div>
-                      <MainSection>
-                        <CommunityFloorPlansList
-                          floorPlans={floorPlans}
-                          onItemClick={openFloorPlanModal}
-                        />
-                      </MainSection>
-                      <BottomSection>
-                        <GetCurrentAvailabilityContainer
-                          community={community}
-                          queryParams={{ modal, currentStep }}
-                          setQueryParams={setQueryParams}
-                          onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
-                          onSubmitExpressConversion={(e, submitExpressConversion) => {
-                            if (isAlreadyPricingRequested) {
-                              openAskAgentQuestionModal('pricing');
-                            } else {
-                              submitExpressConversion(e);
-                              onGCPClick();
-                            }
-                          }}
-                        />
-                      </BottomSection>
-                    </div>
-                  }
                 </TopCollapsibleSection>
                 {floorPlans.length === 0 && pricesList.length === 0 && estimatedPriceList.length === 0 &&
                   <TopCollapsibleSection
                     title={`Get Availability at ${name}`}
+                    id="availability"
                   >
                     <MainSection>
                       <GetCurrentAvailabilityContainer
