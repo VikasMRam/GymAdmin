@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { object, func, number, bool } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
-import cookie from 'react-cookie';
 
 import { size, palette, assetPath } from 'sly/components/themes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
@@ -61,8 +60,6 @@ import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFo
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 import { Experiment, Variant } from 'sly/services/experiments';
-import CommunityExitIntentContainer from 'sly/containers/CommunityExitIntentContainer';
-import CommunityInpageWizardContainer from 'sly/containers/CommunityInpageWizardContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -191,16 +188,22 @@ export default class CommunityDetailPage extends Component {
     history: object,
   };
   /* Exit Intent Work: https://github.com/mrlagmer/exitintent/blob/master/src/App.js */
-  constructor(props) {
-    super(props);
-    this.addExitIntent = this.addExitIntent.bind(this);
-  }
 
   componentDidMount() {
     document.addEventListener('mouseout', this.addExitIntent);
   }
 
-  addExitIntent(e) {
+  onExitFormClose = () => {
+    const {
+      community: {
+        id,
+      },
+    } = this.props;
+
+    sendEvent('exitModalTypeA', 'close-modal', id);
+  }
+
+  addExitIntent = (e) => {
     // Get the current viewport width.
     const vpWidth = Math.max(
       document.documentElement.clientWidth,
@@ -218,12 +221,29 @@ export default class CommunityDetailPage extends Component {
     // Reliable, works on mouse exiting window and
     // user switching active program
     const from = e.relatedTarget || e.toElement;
+
     if (!from) {
       const { showModal, hideModal } = this.props;
-      const s  = cookie.load('exitModalShowns');
+      const s = localStorage.getItem('exitModalShown');
+
       if (s !== 'exitShown') {
-        cookie.save('exitModalShown', 'exitShown', { path: '/' });
-        showModal(<CommunityExitIntentContainer onButtonClick={hideModal} />);
+        const {
+          community: {
+            id, name,
+          },
+        } = this.props;
+
+        localStorage.setItem('exitModalShown', 'exitShown');
+        // Track profiles on popup launch
+        sendEvent('exitModalTypeA', 'launch-modal', id);
+
+        showModal(<CommunityAskQuestionFormContainer
+          showModal={showModal}
+          communityName={name}
+          communitySlug={id}
+          onButtonClick={hideModal}
+          type="exitForm"
+        />, this.onExitFormClose);
       }
     }
   }
@@ -333,7 +353,7 @@ export default class CommunityDetailPage extends Component {
     const { showModal, hideModal } = this.props;
     showModal(<AdvisorHelpPopup onButtonClick={hideModal} />);
   };
-  
+
   openAnswerQuestionModal = (type, questionId) => {
     const { showModal, hideModal, community } = this.props;
     const { id, questions, communityFaQs } = community;
@@ -515,7 +535,7 @@ export default class CommunityDetailPage extends Component {
     const hasCCRC = typeCares.includes('Continuing Care Retirement Community(CCRC)');
 
     // TODO: move this to a container for EntityReviews handling posts
-    const onLeaveReview = () => {};
+    const onLeaveReview = () => { };
     // TODO: move this to a container PricingAndAvailability for handling bookings
     const { reviewsValue } = propRatings;
     const ratingsArray = propRatings.ratingsArray || [];
@@ -638,7 +658,7 @@ export default class CommunityDetailPage extends Component {
                       <Paragraph>
                         Pricing for {name} may include both a one time buy-in fee and a monthly component. Connect directly with {name} to find out your pricing.
                       </Paragraph>
-                      <Button  onClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}>Get Detailed Pricing</Button>
+                      <Button onClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}>Get Detailed Pricing</Button>
                     </MainSection>
                   }
                   {!hasCCRC && (pricesList.length > 0 || estimatedPriceList.length > 0 || floorPlans.length === 0) &&
