@@ -53,24 +53,24 @@ const tocGuidePaths = (toc) => {
     switch (toc[0]) {
       case 'Assisted Living':
         return {
-          path: '/assisted-living-guides',
-          label: 'Assisted Living Guides',
+          path: '/assisted-living-guide',
+          label: 'Assisted Living Guide',
         };
       case 'Memory Care':
         return {
-          path: '/memory-care-guides',
-          label: 'Memory Care Guides',
+          path: '/memory-care-guide',
+          label: 'Memory Care Guide',
         };
       default:
         return {
-          path: '/retirement-community-guides',
-          label: 'Retirement Community Guides',
+          path: '/retirement-community-guide',
+          label: 'Retirement Community Guide',
         };
     }
   } else {
     return {
-      path: '/retirement-community-guides',
-      label: 'Retirement Community Guides',
+      path: '/retirement-community-guide',
+      label: 'Retirement Community Guide',
     };
   }
 };

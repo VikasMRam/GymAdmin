@@ -112,7 +112,7 @@ const CareTypeRegionGuidePage = ({
 
   const HelmetContent = () => {
     const { title } = geoGuide;
-    const description = `Learn everything about ${geoGuide.city},${geoGuide.state} ${geoGuide.care_type} facilities. Understand cost, compare retirement living communities and options, and find ${geoGuide.city} resources for senior residents.`;
+    const description = `Learn everything about ${geoGuide.city},${geoGuide.state} ${geoGuide.caretype} facilities. Understand cost, compare retirement living communities and options, and find ${geoGuide.city} resources for senior residents.`;
 
     return (
       <Helmet>
