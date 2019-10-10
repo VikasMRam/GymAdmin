@@ -4,7 +4,7 @@ import { array, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import { Heading, Button, Block, Hr } from 'sly/components/atoms';
-import SimilarCommunitiesNearby from 'sly/components/organisms/SimilarCommunitiesNearby';
+import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 
 const StyledDoneButton = styled(Button)`
   flex: 1;
@@ -51,7 +51,7 @@ const CommunitySaved = ({ similarCommunities, onDoneButtonClicked }) => (
     </ButtonsWrapper>
     <StyledHr />
     <StyledHeading size="subtitle">Similar communities nearby</StyledHeading>
-    <SimilarCommunitiesNearby similarCommunities={similarCommunities} />
+    <SimilarCommunities communities={similarCommunities} showDescription={false} />
   </Fragment>
 );
 

@@ -31,7 +31,7 @@ import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPW
 import CommunityPricingWizardWhatToDoNextFormContainer from 'sly/containers/CommunityPricingWizardWhatToDoNextFormContainer';
 import CommunityPricingWizardExploreAffordableOptionsFormContainer
   from 'sly/containers/CommunityPricingWizardExploreAffordableOptionsFormContainer';
-import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
+import CommunityWizardAcknowledgement from 'sly/components/organisms/CommunityWizardAcknowledgement';
 import CommunityPricingWizardLanding from 'sly/components/organisms/CommunityPricingWizardLanding';
 
 const Header = makeHeader(HeaderContainer);
@@ -200,13 +200,13 @@ class PricingWizardPage extends Component {
     const subheading = 'We received your request and your Seniorly Partner Agent will work with you to get your exact pricing and availability.';
     const props = {
       similarCommunities: similarProperties,
-      similarCommunititesHref: getCitySearchUrl({ propInfo, address }),
+      buttonTo: getCitySearchUrl({ propInfo, address }),
       onTileClick: hideModal,
       heading,
       subheading,
     };
 
-    showModal(<CommunityBookATourConfirmationPopup {...props} />);
+    showModal(<CommunityWizardAcknowledgement {...props} />);
   };
 
   render() {

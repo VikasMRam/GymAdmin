@@ -21,7 +21,7 @@ import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
-import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
+import CommunityWizardAcknowledgement from 'sly/components/organisms/CommunityWizardAcknowledgement';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -73,13 +73,13 @@ const BookATourPage = ({
     const subheading = 'Your Seniorly Partner Agent will check if this community is available at this time. They will get back to you shortly by phone or email.';
     const props = {
       similarCommunities: similarProperties,
-      similarCommunititesHref: getCitySearchUrl({propInfo, address}),
+      buttonTo: getCitySearchUrl({ propInfo, address }),
       onTileClick: hideModal,
       heading,
       subheading,
     };
 
-    showModal(<CommunityBookATourConfirmationPopup {...props} />);
+    showModal(<CommunityWizardAcknowledgement {...props} />);
   };
   const handleStepChange = ({ currentStep, doSubmit, previous }) => {
     sendEvent('step-completed', id, currentStep);
