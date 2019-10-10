@@ -122,10 +122,10 @@ const FamilySummary = ({
       <Block size="caption">{client.admin.name}</Block>
     </ColumWrapper>
     }
-    {client.organization && client.organization[0] &&
+    {client.organization &&
     <ColumWrapper>
       <Label palette="grey">Business name</Label>
-      <Block size="caption">{client.organization[0].name}</Block>
+      <Block size="caption">{client.organization.name}</Block>
     </ColumWrapper>
     }
     <StyledLink to={to} onClick={clickEventHandler('fdetails-summary', 'seeMoreFamilyDetails')} >See more family details</StyledLink>
