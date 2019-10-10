@@ -13,6 +13,7 @@ import CommunityChoice from 'sly/components/molecules/CommunityChoice';
 import RatingInput from 'sly/components/molecules/RatingInput';
 import Slider from 'sly/components/molecules/Slider';
 import DateChoice from 'sly/components/molecules/DateChoice';
+import DateRange from 'sly/components/molecules/DateRange';
 import BoxChoice from 'sly/components/molecules/BoxChoice';
 import IconInput from 'sly/components/molecules/IconInput';
 import InputMessage from 'sly/components/molecules/InputMessage';
@@ -40,6 +41,8 @@ const getInputComponent = (type) => {
       return DateChoice;
     case 'iconInput':
       return IconInput;
+    case 'daterange':
+      return DateRange;
     case 'date':
       return DatePicker;
     case 'select':
