@@ -8,6 +8,7 @@ import { Heading, Block, Button } from 'sly/components/atoms';
 import IconItem from 'sly/components/molecules/IconItem';
 
 const PaddedHeading = pad(Heading, 'large');
+PaddedHeading.displayName = 'PaddedHeading';
 
 const PaddedBlock = pad(Block);
 

@@ -14,7 +14,7 @@ describe('CommunityTile', () => {
   it('renders', () => {
     const wrapper = wrap();
     expect(wrapper.find('StyledMediaGallery')).toHaveLength(1);
-    expect(wrapper.find('StyledCommunityInfo')).toHaveLength(1);
+    expect(wrapper.find('CommunityInfo')).toHaveLength(1);
     expect(wrapper.find('FullWidthButton')).toHaveLength(0);
     expect(wrapper.find('Span')).toHaveLength(0);
     expect(wrapper.find('CursorSpan')).toHaveLength(0);
@@ -53,6 +53,8 @@ describe('CommunityTile', () => {
       },
     ];
     const wrapper = wrap({ actionButtons });
+
+    expect(wrapper.find('PaddedCommunityInfo')).toHaveLength(1);
     actionButtons.forEach((actionButton, i) => {
       expect(wrapper.find('FullWidthButton').at(i).dive().dive()
         .dive()
