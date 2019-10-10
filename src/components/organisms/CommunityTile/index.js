@@ -31,6 +31,7 @@ const CursorSpan = cursor(Span);
 CursorSpan.displayName = 'CursorSpan';
 
 const PaddedCommunityInfo = pad(CommunityInfo);
+PaddedCommunityInfo.displayName = 'PaddedCommunityInfo';
 
 const AddNote = styled(CursorSpan)`
   display: block;
