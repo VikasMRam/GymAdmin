@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { array, func, object } from 'prop-types';
 
 import { size, assetPath, palette } from 'sly/components/themes';
+import pad from 'sly/components/helpers/pad';
 import { getBreadCrumbsForGuides } from 'sly/services/helpers/url';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
@@ -13,7 +14,6 @@ import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import { getTocSeoLabel } from 'sly/services/helpers/search';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -54,6 +54,16 @@ const Wrapper = styled.div`
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
 `;
+
+const StyledLink = pad(styled(Link)`
+  display: flex;
+  color: ${palette('slate', 'base')};
+
+  span {
+    margin-right: ${size('spacing.small')};
+  }
+`, 'regular');
+
 const StyledLabel = styled(Label)`
   text-align: center;
   font-size: ${size('text.subtitle')};
@@ -111,16 +121,16 @@ const CareTypeGuidePage = ({
         {guideList &&
           <Wrapper>
             <Paragraph>
-              This page includes all the assisted living city guides available. Each city guide provides comprehensive details on assisted living in that city. From understanding cost, comparing with other care types, to details specific to seniors living in the city, these guides are your go-to resource for learning everything about assisted living.
+              This page includes all the assisted living city guides currently available. Each city guide provides comprehensive details on assisted living in that city. From understanding cost, comparing with other care types, to details specific to senior residents living in the city, these retirement living guides are your go-to resource for learning everything about assisted living in the United States.
             </Paragraph>
             <StyledHeading level="title" size="title">
               List of Guides
             </StyledHeading>
             <Paragraph>
               {guideList.map(gg => (
-                <Link href={gg.url}>
+                <StyledLink href={gg.url}>
                   {gg.title}
-                </Link>
+                </StyledLink>
               ))}
             </Paragraph>
           </Wrapper>
