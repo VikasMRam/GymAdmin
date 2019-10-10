@@ -46,16 +46,13 @@ describe('CommunityAskQuestionForm', () => {
   });
 
   it('should rednder title and subtitle for exit form', () => {
-    const title = "Didn't find what you were looking for?";
-    const subtitle = 'Tell us what you need and we will get back to you';
+    const title = 'Wait! Get support from a local senior living expert. This is a free service';
     const wrapper = wrap({ type: 'exitForm' });
     const headingElem = wrapper.find('StyledHeading');
 
-    expect(headingElem).toHaveLength(2);
+    expect(headingElem).toHaveLength(1);
     expect(headingElem.at(0).dive().dive().dive()
       .text()).toContain(title);
-    expect(headingElem.at(1).dive().dive().dive()
-      .text()).toContain(subtitle);
 
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
