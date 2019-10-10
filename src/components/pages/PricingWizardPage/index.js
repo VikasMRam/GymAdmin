@@ -114,6 +114,13 @@ class PricingWizardPage extends Component {
     sendEvent('careType-changed', id, newCareTypes.toString());
   };
 
+  handleBudgetChange = (e, budget) => {
+    const { community } = this.props;
+    const { id } = community;
+    this.budget = budget;
+    sendEvent('budget-selected', id, budget.toString());
+  }
+
   // This function is called after the step is changed,
   // goto() is a hack to make the page stay in current step
   handleStepChange = ({
@@ -203,7 +210,7 @@ class PricingWizardPage extends Component {
 
   render() {
     const {
-      handleRoomTypeChange, handleCareTypeChange, handleStepChange, openAdvisorHelp, openConfirmationModal,
+      handleRoomTypeChange, handleCareTypeChange, handleBudgetChange, handleStepChange, openAdvisorHelp, openConfirmationModal,
     } = this;
 
     const {
@@ -276,7 +283,7 @@ class PricingWizardPage extends Component {
                       component={CommunityPricingWizardExploreAffordableOptionsFormContainer}
                       name="ExploreAffordableOptions"
                       listOptions={EXPLORE_AFFORDABLE_PRICING_OPTIONS}
-                      onBudgetChange={(e, budget) => sendEvent('budget-selected', id, budget)}
+                      onBudgetChange={handleBudgetChange}
                       onSubmit={onSubmit}
                     />
                   </WizardSteps>

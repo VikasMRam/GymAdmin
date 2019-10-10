@@ -164,6 +164,9 @@ export default class PricingWizardPageContainer extends Component {
         if (data.medicaidCoverage) {
           financialInfo.medicare = medicareToBool(data.medicaidCoverage);
         }
+        if (data.budget) {
+          financialInfo.maxMonthlyBudget = data.budget;
+        }
         draft.attributes.uuidInfo.financialInfo = financialInfo;
       })),
       createAction({

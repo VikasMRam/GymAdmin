@@ -475,7 +475,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }
 
     const {
-      gender, lookingFor, monthlyBudget, timeToMove, roomTypes, careLevels, communityTypes,
+      gender, lookingFor, monthlyBudget, timeToMove, roomTypes, careLevels, communityTypes, assignedTos,
     } = meta;
     const {
       id, clientInfo, stage,
@@ -604,6 +604,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   careLevels={careLevels}
                   roomTypes={roomTypes}
                   communityTypes={communityTypes}
+                  assignedTos={assignedTos}
                 />
               </FamilyDetailsTab>
             )}
