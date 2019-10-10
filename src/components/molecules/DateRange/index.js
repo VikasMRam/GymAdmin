@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
-import { func, string } from 'prop-types';
+import { func, string, array } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import { Input } from 'sly/components/atoms';
@@ -24,6 +24,7 @@ export default class DateRange extends Component {
   static propTypes = {
     onChange: func.isRequired,
     size: string.isRequired,
+    value: array,
   };
 
   state = {
