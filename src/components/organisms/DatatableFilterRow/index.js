@@ -37,6 +37,13 @@ const valueAndOptionsForSelect = (value, list) => {
   };
 };
 
+const ifAry = func => value => Array.isArray(value)
+  ? value.map(func)
+  : func(value);
+
+const parseDateValue = ifAry(value => value && dayjs(value, 'YYYY-MM-DD').toDate());
+const stringifyDateValue = ifAry(value => dayjs(value).format('YYYY-MM-DD'));
+
 const Row = styled(mobileOnly(Box, css` 
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.small')} ${palette('slate', 'filler')}80;
   display: flex;
@@ -183,9 +190,9 @@ export default class DatatableFilterRow extends Component {
         onChange: option => this.onSelectChange(option, { name: 'value' }),
       };
       case DATE_TIME: return {
-        type: 'date',
-        value: value && dayjs(value, 'YYYY-MM-DD').toDate(),
-        onChange: value => this.onValueChange('value', dayjs(value).format('YYYY-MM-DD')),
+        type: operator === 'bet' ? 'daterange' : 'date',
+        value: parseDateValue(value),
+        onChange: value => this.onValueChange('value', stringifyDateValue(value)),
       };
       default: return {
         type: 'text',
