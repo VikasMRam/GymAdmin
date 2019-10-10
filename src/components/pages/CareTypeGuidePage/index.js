@@ -111,7 +111,7 @@ const CareTypeGuidePage = ({
         {guideList &&
           <Wrapper>
             <Paragraph>
-              This page includes all the assisted living city guides available as of [insert date]. Each city guide provides comprehensive details on assisted living in that city.  From understanding cost, comparing with other care types, to details specific to seniors living in the city, these guides are your go-to resource for learning everything about assisted living.
+              This page includes all the assisted living city guides available. Each city guide provides comprehensive details on assisted living in that city. From understanding cost, comparing with other care types, to details specific to seniors living in the city, these guides are your go-to resource for learning everything about assisted living.
             </Paragraph>
             <StyledHeading level="title" size="title">
               List of Guides
