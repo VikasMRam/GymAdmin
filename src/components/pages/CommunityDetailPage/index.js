@@ -576,7 +576,11 @@ export default class CommunityDetailPage extends Component {
                 {showSimilarEarlier &&
                   <TopCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                     <MainSection>
+<<<<<<< HEAD
                       <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
+=======
+                      <SimilarCommunities communities={similarProperties} onCommunityClick={onSimilarCommunitiesClick} />
+>>>>>>> change pricing and book a tour wizard confirmation screen
                       <BackToSearch>
                         <Button
                           ghost
@@ -818,7 +822,11 @@ export default class CommunityDetailPage extends Component {
                 {!showSimilarEarlier &&
                   <BottomCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                     <MainSection>
+<<<<<<< HEAD
                       <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
+=======
+                      <SimilarCommunities communities={similarProperties} onCommunityClick={onSimilarCommunitiesClick} />
+>>>>>>> change pricing and book a tour wizard confirmation screen
                       <BackToSearch>
                         <Button
                           ghost
