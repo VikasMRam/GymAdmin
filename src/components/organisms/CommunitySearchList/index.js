@@ -138,7 +138,7 @@ const CommunitySearchList = ({
   const count = requestMeta['filtered-count'];
   const present = (requestMeta['page-number'] * requestMeta['page-size']);
   const start = present + 1;
-  const end = (present + requestMeta['page-size']  > count ? count : present);
+  const end = (present + requestMeta['page-size']  > count ? count : present + requestMeta['page-size'] );
 
   // pagination pathname
   let params = {};
