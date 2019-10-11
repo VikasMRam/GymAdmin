@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { arrayOf, func, bool, string } from 'prop-types';
+import { arrayOf, func, object } from 'prop-types';
 
 import pad from 'sly/components/helpers/pad';
 import { community as communityPropType } from 'sly/propTypes/community';
@@ -11,28 +11,23 @@ const PaddedLink = pad(styled(Link)`
   display: block;
 `, 'xLarge');
 
-const SimilarCommunities = ({ communities, onCommunityClick, showDescription, imageSize, layout }) => (
-  <div>
-    {communities.map((community, index) => (
-      <PaddedLink key={community.id} to={community.url} onClick={() => onCommunityClick && onCommunityClick(index, community.id)}>
-        <CommunityTile community={community} layout={layout} imageSize={imageSize} noGallery showDescription={showDescription} showSeeMoreButtonOnHover />
-      </PaddedLink>
-    ))}
-  </div>
-);
+const SimilarCommunities = ({ communities, onCommunityClick, communityStyle }) => {
+  const { layout = 'column', imageSize = 'regular', showDescription = false } = communityStyle;
+  return (
+    <div>
+      {communities.map((community, index) => (
+        <PaddedLink key={community.id} to={community.url} onClick={() => onCommunityClick && onCommunityClick(index, community.id)}>
+          <CommunityTile community={community} layout={layout} imageSize={imageSize} noGallery showDescription={showDescription} showSeeMoreButtonOnHover />
+        </PaddedLink>
+      ))}
+    </div>
+  );
+};
 
 SimilarCommunities.propTypes = {
   communities: arrayOf(communityPropType).isRequired,
   onCommunityClick: func,
-  showDescription: bool,
-  imageSize: string,
-  layout: string,
-};
-
-SimilarCommunities.defaultProps = {
-  showDescription: true,
-  imageSize: 'regular',
-  layout: 'column',
+  communityStyle: object,
 };
 
 export default SimilarCommunities;

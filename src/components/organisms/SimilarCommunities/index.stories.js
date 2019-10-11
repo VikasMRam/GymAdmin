@@ -8,5 +8,5 @@ const { similarProperties } = RhodaGoldmanPlaza;
 
 storiesOf('Organisms|SimilarCommunities', module)
   .add('default', () => <SimilarCommunities communities={similarProperties} />)
-  .add('with imageSize', () => <SimilarCommunities communities={similarProperties} imageSize="little" />);
+  .add('with imageSize', () => <SimilarCommunities communities={similarProperties} communityStyle={{ imageSize: 'little' }} />);
 
