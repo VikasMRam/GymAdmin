@@ -9,9 +9,6 @@ function inputValuesAndAssert(cy, screen) {
   const typeOfCare = 'Medication Management';
   const medicaid = 'Yes';
 
-  // FIXME: Visiting / inorder to avoid GET user-actions 400 error
-  cy.visit('/');
-
   if (screen === 'mobile' || screen === 'tablet') {
     cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
     cy.get('button').contains('Get Pricing').click();

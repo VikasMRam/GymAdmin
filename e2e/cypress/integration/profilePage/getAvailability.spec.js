@@ -10,9 +10,6 @@ function inputValuesAndAssert(cy) {
   const typeOfCare = 'Medication Management';
   const medicaid = 'Yes';
 
-  // FIXME: Visiting / inorder to avoid GET user-actions 400 error
-  // cy.visit('/');
-
   cy.visit(`/assisted-living/california/san-francisco/${communitySlug}?experimentEvaluations=ProfileCTA_ButtonStyle:FullWidth,PricingCTA_Language:Detailed`);
 
   cy.get('button').contains('Get Detailed Pricing').click();
