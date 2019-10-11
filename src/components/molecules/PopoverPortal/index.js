@@ -78,7 +78,35 @@ export default class PopoverPortal extends Component {
     buttonX: 0,
   };
 
-  onClick = () => this.setState({
+  ref = React.createRef();
+
+  componentDidMount = () => {
+    document.addEventListener('click', this.onDocumentClick);
+    document.addEventListener('keyup', this.onKeyUp);
+  };
+
+  componentWillUnmount = () => {
+    document.removeEventListener('click', this.onDocumentClick);
+    document.removeEventListener('keyup', this.onKeyUp);
+  };
+
+  onDocumentClick = (event) => {
+    const { isOpen } = this.state;
+    // check if the element is not being already removed from the dom,
+    // which means that it is probably the element that received the click
+    if (isOpen && document.contains(event.target) && !this.ref.current.contains(event.target)) {
+      this.toggle();
+    }
+  };
+
+  onKeyUp = (event) => {
+    const { isOpen } = this.state;
+    if (isOpen && event.code === 'Escape') {
+      this.toggle();
+    }
+  };
+
+  toggle = () => this.setState({
     isOpen: !this.state.isOpen,
   });
 
@@ -102,12 +130,12 @@ export default class PopoverPortal extends Component {
       : 0;
 
     return (
-      <Wrapper>
+      <Wrapper innerRef={this.ref}>
         <Measure bounds onResize={this.onButtonResize}>
           {({ measureRef }) => (
             <StyledFilterButton
               innerRef={measureRef}
-              onClick={this.onClick}
+              onClick={this.toggle}
             >
               {button}
             </StyledFilterButton>
@@ -124,7 +152,7 @@ export default class PopoverPortal extends Component {
               palette="primary"
               weight="medium"
               size="caption"
-              onClick={this.onClick}
+              onClick={this.toggle}
             >
               Done
             </DoneButton>

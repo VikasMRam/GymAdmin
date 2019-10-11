@@ -52,6 +52,8 @@ const BookATourPageContainer = loadable(() => import(/* webpackChunkName: "chunk
 const PricingWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkPricingWizard" */ 'sly/containers/PricingWizardPageContainer'));
 const AgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentProfile" */ 'sly/containers/AgentProfilePageContainer'));
 const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentRegion" */ 'sly/containers/AgentRegionPageContainer'));
+const CareTypeGuideContainer = loadable(() => import(/* webpackChunkName: "chunkCTGuide" */ 'sly/containers/CareTypeGuideContainer'));
+const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: "chunkRegionGuide" */ 'sly/containers/CareTypeRegionGuideContainer'));
 
 // Dashboard
 const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/containers/DashboardHomePageContainer'));
@@ -80,6 +82,8 @@ const careTypes = [
   'memory-care',
   'continuing-care-retirement-community',
 ].join('|');
+
+const careTypeGuides = ['assisted-living-guide', 'memory-care-guide'].join('|');
 
 const howItWorksTypes = [
   'consumers',
@@ -177,6 +181,16 @@ const routes = [
   {
     path: `/:toc(${careTypes})/:state`,
     component: StateSearchPageContainer,
+  },
+  {
+    path: `/:tocg(${careTypeGuides})`,
+    component: CareTypeGuideContainer,
+    exact: true,
+  },
+  {
+    path: `/:tocg(${careTypeGuides})/:region`,
+    component: CareTypeRegionGuideContainer,
+    exact: true,
   },
   {
     path: '/agents',

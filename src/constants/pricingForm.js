@@ -57,12 +57,12 @@ export const WHAT_TO_NEXT_OPTIONS = [
 
 export const EXPLORE_AFFORDABLE_PRICING_OPTIONS = [
   {
-    value: 'less-than-$2000',
+    value: '<$2K',
     label: 'Less than $2000',
     // href: 'https://www.seniorly.com/resources/articles/low-income-assisted-living',
     // target: '_blank',
     type: 'submit',
   },
-  { value: '$2000-$3000', label: '$2000 - $3000', type: 'submit' },
-  { value: '$3000-$4000', label: '$3000 - $4000', type: 'submit' },
+  { value: '$2K-$3K', label: '$2000 - $3000', type: 'submit' },
+  { value: '$3K-$4K', label: '$3000 - $4000', type: 'submit' },
 ];
