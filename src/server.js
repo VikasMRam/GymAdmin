@@ -136,7 +136,7 @@ app.use((req, res, next) => {
 
 // headers
 app.use((req, res, next) => {
-  const cookies = [req.headers.cookie];
+  const cookies = req.headers.cookie ? [req.headers.cookie] : [];
   const setCookie = createSetCookie(res, cookies);
   req.clientConfig.cookies = cookies;
 
