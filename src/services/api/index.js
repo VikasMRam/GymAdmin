@@ -97,6 +97,9 @@ api.create = (settings = {}) => ({
     const doRequest = () => api
       .request(endpoint, merge({}, this.settings, settings))
       .catch((error) => {
+        if (error.response.status === 400) {
+          console.log('400 happened with this settings', this.settings);
+        }
         if (!firstError && error.response && [401, 403].includes(error.response.status)) {
           firstError = error;
           return this.requestAuthToken()
