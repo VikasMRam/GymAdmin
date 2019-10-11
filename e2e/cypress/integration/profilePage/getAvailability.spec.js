@@ -1,5 +1,5 @@
-import { doCustomPricingFlow } from './../../helpers/customPricing';
-import { assertUserActionsForGetAvailability } from './../../helpers/userActions';
+import { doCustomPricingFlow } from '../../helpers/customPricing';
+import { assertUserActionsForGetAvailability } from '../../helpers/userActions';
 
 function inputValuesAndAssert(cy) {
   const communitySlug = 'araville-residential-care-home-temp';
@@ -22,10 +22,9 @@ function inputValuesAndAssert(cy) {
 
   doCustomPricingFlow(cy, data);
 
-  cy
-    .request({
-      url: '/v0/platform/user-actions',
-    })
+  cy.request({
+    url: '/v0/platform/user-actions',
+  })
     .then((response) => {
       cy.log('response', response);
       assertUserActionsForGetAvailability(response, data);

@@ -1,0 +1,2607 @@
+{
+  "data": {
+    "type": "Community",
+    "id": "almavia-of-san-francisco",
+    "attributes": {
+      "createdAt": "2015-02-19T20:42:57Z",
+      "floorPlanString": "Suite, Studio, One Bedroom",
+      "lastViewedAt": "2019-10-10T13:25:41Z",
+      "mainImage": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4261_sm_sd.jpg",
+      "name": "AlmaVia of San Francisco",
+      "propInfo": {
+        "roomImage": [
+          {
+            "name": "AV-4280_sm.jpg",
+            "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4280_sm_hd.jpg",
+            "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4280_sm_sd.jpg"
+          }
+        ],
+        "ownerImage": [
+          {
+            "name": "AVSF-2984_sm.jpg",
+            "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AVSF-2984_sm_hd.jpg",
+            "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AVSF-2984_sm_sd.jpg"
+          }
+        ],
+        "ratesText": "$5295",
+        "licenseNumber": "385600270",
+        "ownerName": "Elder Care Alliance",
+        "ownerExprience": "As at all our communities, our services are grounded in our belief in nurturing the body, mind and spirit of our residents through a holistic approach to wellness.",
+        "personalSpace": [
+          "2-Bedroom Apartments",
+          "1-Bedroom Apartments",
+          "Private Suites",
+          "Kitchenettes",
+          "Private Bathrooms",
+          "Air-conditioning",
+          "Telephone",
+          "Internet",
+          "Cable",
+          "Wifi"
+        ],
+        "personalSpaceOther": "Daily Mass offered.  ",
+        "profileServices": null,
+        "typeCare": [
+          "Assisted Living",
+          "Memory Care",
+          "Respite Care"
+        ],
+        "careServices": [
+          "Activities of Daily Living Assistance",
+          "Meal Preparation and Service",
+          "Coordination with Health Care Providers",
+          "Medication Management",
+          "Transportation to Doctors Appointments",
+          "Transportation Arrangement",
+          "24-Hour Call System",
+          "24-Hour Supervision",
+          "Mental Wellness Program",
+          "Physical Therapy",
+          "Respite Program",
+          "Diabetes Diet",
+          "Diabetes Care",
+          "Parkinsons Care",
+          "Special Dietary Restrictions",
+          "Mild Cognitive Impairment",
+          "Hospice Waiver",
+          "Dementia Waiver"
+        ],
+        "careServicesOther": "Memory Care neighborhood grounded in the \"I'm Still Here\" Philosophy, which focuses on what a person can do and learn vs. what he/she may have lost.",
+        "nonCareServices": [
+          "Move-In Coordination",
+          "Housekeeping & Linen Services",
+          "Scheduled Transportation (non-medical related)",
+          "Fitness Programs",
+          "Continuing Learning Programs",
+          "Resident-Run Activities",
+          "Community-Sponsored Activities",
+          "Family Education and Support Services",
+          "Planned Day Trips"
+        ],
+        "nonCareServicesOther": "Movie nights every evening,\r\nArts & Crafts,\r\nHappy hour  Fridays\r\nDaytrips,\r\nAdventures into SF\r\nExercise programs",
+        "staffDescription": "Fully licensed staff are on-site 24 hours per day.  Employee engagement ratings consistently exceed company Gold Standards and continue to improve every year. We pride ourselves in providing excellent care and service and know happy staff translates to very satisfied residents.",
+        "communityDescription": "Situated adjacent to St. Thomas More Church, this proximity to the church and school allows for intergenerational activities that enrich the lives of both residents and students. With a focus on best-in-class quality care, as well as lifestyle amenities, including restaurant-style dining, a robust library, an accessible computer lab and a lively gathering room bustling with activities, AlmaVia of San Francisco focuses on the holistic wellness of its residents.",
+        "residentLanguages": [
+          "English"
+        ],
+        "communityVideo": [
+          {
+            "name": "AlmaViaSF",
+            "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0d15a974-34bf-41f2-b941-fdd962d984c2/AlmaVia%2520SF%2520w%2520logo%25201_C.mp4",
+            "webm": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0d15a974-34bf-41f2-b941-fdd962d984c2/AlmaVia%2520SF%2520w%2520logo%25201_C.webm"
+          }
+        ],
+        "parentCompany": "Elder Care Alliance",
+        "websiteUrl": "www.almavia.org",
+        "capacity": "135",
+        "minAge": "60",
+        "secured": "Yes",
+        "communitySize": "51 +",
+        "communityFee": "5750",
+        "sharedSuiteRate": "",
+        "privateSuiteRate": "5595",
+        "studioApartmentRate": "5295",
+        "oneBedroomApartmentRate": "6475",
+        "twoBedroomApartmentRate": "7895",
+        "serviceHighlights": [
+          "Alzheimer’s / Dementia support",
+          "Happy and social hours",
+          "Community operated transportation"
+        ],
+        "communityHighlights": [
+          "Outdoor space",
+          "Library / Media / Activities room",
+          "Wellness center"
+        ],
+        "amenitiesHighlights": [
+          "Outdoor space",
+          "Library / Media / Activities room",
+          "Wellness center"
+        ],
+        "careHighlights": [
+          "Alzheimer’s / Dementia support"
+        ],
+        "programHighlights": [
+          "Happy and social hours"
+        ],
+        "nonCareHighlights": [
+          "Community operated transportation"
+        ],
+        "admin": [
+          "Visited By Seniorly"
+        ],
+        "adminNotes": "S sjskkksdaada nnnmasdksadksadk sadsadsadoaosasdkasdkasd \n\na\nsdasdasd;ads;adsldsa",
+        "respiteAllowed": {
+          "checked": true,
+          "minlength": 14,
+          "label": "Respite Care"
+        },
+        "caringUrl": "https://www.caring.com/local/assisted-living-facilities-in-san-francisco-california/alma-via-of-san-francisco",
+        "senioradvisorsUrl": "https://www.senioradvisor.com/local/almavia-of-san-francisco-san-francisco-ca",
+        "scriptDate": "0001-01-01T00:00:00Z"
+      },
+      "propRatings": {
+        "hasWebReviews": true,
+        "hasSlyReviews": true,
+        "ratingsArray": [
+          {
+            "name": "SeniorAdvisor.com",
+            "numReviews": 13,
+            "reviewsUrl": "https://www.senioradvisor.com/local/almavia-of-san-francisco-san-francisco-ca",
+            "avgRating": 4.15
+          },
+          {
+            "name": "Caring.com",
+            "numReviews": 8,
+            "reviewsUrl": "https://www.caring.com/local/assisted-living-facilities-in-san-francisco-california/alma-via-of-san-francisco",
+            "avgRating": 4.13
+          },
+          {
+            "name": "Facebook",
+            "numReviews": 16,
+            "reviewsUrl": "https://www.facebook.com/almaviasanfrancisco/",
+            "avgRating": 4.7
+          },
+          {
+            "name": "Yelp",
+            "numReviews": 4,
+            "reviewsUrl": "https://www.yelp.com/biz/almavia-of-san-francisco-san-francisco-2?adjust_creative=VsZZD5w6K3ruuvIjDlToBw&utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=VsZZD5w6K3ruuvIjDlToBw",
+            "avgRating": 3.5
+          },
+          {
+            "name": "Yelp",
+            "numReviews": 4,
+            "reviewsUrl": "https://www.yelp.com/biz/almavia-of-san-francisco-san-francisco-2?adjust_creative=VsZZD5w6K3ruuvIjDlToBw&utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=VsZZD5w6K3ruuvIjDlToBw",
+            "avgRating": 3.5
+          },
+          {
+            "name": "Yelp",
+            "numReviews": 4,
+            "reviewsUrl": "https://www.yelp.com/biz/almavia-of-san-francisco-san-francisco-2?adjust_creative=VsZZD5w6K3ruuvIjDlToBw&utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=VsZZD5w6K3ruuvIjDlToBw",
+            "avgRating": 3.5
+          },
+          {
+            "name": "Seniorly",
+            "numReviews": 1,
+            "reviewsUrl": "#",
+            "avgRating": 5
+          }
+        ],
+        "reviewsValue": 4.184,
+        "numReviews": 50
+      },
+      "rates": "5295",
+      "slyScore": 101.3924050632911,
+      "startingRate": 5295,
+      "status": 2,
+      "updatedAt": "2018-06-05T18:22:56Z",
+      "url": "/assisted-living/california/san-francisco/almavia-of-san-francisco"
+    },
+    "relationships": {
+      "address": {
+        "data": {
+          "type": "Address",
+          "id": "1a68758983ce9fafb83dc676c87f4641"
+        }
+      },
+      "agents": {
+        "data": []
+      },
+      "contacts": {
+        "data": [
+          {
+            "type": "Contact",
+            "id": "4ba48ad07d3e9d0f7c9006854e376a31"
+          },
+          {
+            "type": "Contact",
+            "id": "8251f3135907eac78501011738028cc5"
+          },
+          {
+            "type": "Contact",
+            "id": "4ba48ad07d3e9d0f7c9006854e376a31"
+          },
+          {
+            "type": "Contact",
+            "id": "8251f3135907eac78501011738028cc5"
+          },
+          {
+            "type": "Contact",
+            "id": "4ba48ad07d3e9d0f7c9006854e376a31"
+          },
+          {
+            "type": "Contact",
+            "id": "8251f3135907eac78501011738028cc5"
+          }
+        ]
+      },
+      "floorPlans": {
+        "data": []
+      },
+      "gallery": {
+        "data": {
+          "type": "Gallery",
+          "id": "55957fbece597a72726b6a8de913d2f4"
+        }
+      },
+      "organization": {
+        "data": {
+          "type": "Organization",
+          "id": "b2dfa4b145580a6fc65e3093b0db413d"
+        }
+      },
+      "partnerAgents": {
+        "data": []
+      },
+      "questions": {
+        "data": []
+      },
+      "reviews": {
+        "data": []
+      },
+      "rgsAux": {
+        "data": {
+          "type": "RgsAux",
+          "id": "5f2be727f85959aaf4e7cffd1c395368"
+        }
+      },
+      "similarProperties": {
+        "data": [
+          {
+            "type": "SearchResource",
+            "id": "amore-retirement-living"
+          },
+          {
+            "type": "SearchResource",
+            "id": "pacifica-senior-living-mission-villa"
+          },
+          {
+            "type": "SearchResource",
+            "id": "peninsula-reflections-205-collins-avenue-colma"
+          },
+          {
+            "type": "SearchResource",
+            "id": "vintage-golden-gate"
+          }
+        ]
+      },
+      "twilioNumber": {
+        "data": {
+          "type": "TwilioNumber",
+          "id": "ac2fb468dd76b8e1bb1f4d8eaaa4e958"
+        }
+      },
+      "user": {
+        "data": {
+          "type": "User",
+          "id": "500f25d10c95687976c9f4d557be04ad"
+        }
+      },
+      "videoGallery": {
+        "data": {
+          "type": "VideoGallery",
+          "id": "10e2c47908b57a927b877a64bd941ca1"
+        }
+      }
+    }
+  },
+  "included": [
+    {
+      "type": "TwilioNumber",
+      "id": "ac2fb468dd76b8e1bb1f4d8eaaa4e958",
+      "attributes": {
+        "application": "",
+        "areaCode": 415,
+        "cityID": 2597,
+        "createdAt": "2017-03-15T18:39:24Z",
+        "numbers": [
+          4152639703
+        ],
+        "updatedAt": "2017-03-15T18:39:24Z"
+      }
+    },
+    {
+      "type": "Address",
+      "id": "1a68758983ce9fafb83dc676c87f4641",
+      "attributes": {
+        "city": "San Francisco",
+        "county": "Alameda",
+        "latitude": 37.7121543,
+        "line1": "1 Thomas More Way",
+        "line2": "",
+        "longitude": -122.472111,
+        "state": "CA",
+        "zip": "94501"
+      }
+    },
+    {
+      "type": "Image",
+      "id": "dccf392e367e16a813224d944f397b94",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4278_sm_hd.jpg",
+        "name": "AV-4278_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4278_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4278_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4278_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4278_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "d9c0643780607ad2d5a3df19e082a786",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4213_sm_hd.jpg",
+        "name": "AV-4213_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4213_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4213_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4213_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4213_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "fc4ec0e43b3b8b535a48b28453f4aacd",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-15_hd.jpg",
+        "name": "Peninsula_Reflections_sm-15.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-15.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-15_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-15_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-15.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "ff30b486e42edad53262533a4bfd86b7",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-18_hd.jpg",
+        "name": "Peninsula_Reflections_sm-18.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-18.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-18_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-18_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-18.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "491f7576fd6c6a83b89623af12e0e8a2",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-21_hd.jpg",
+        "name": "Mission_Villa_logo-21.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-21.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-21_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-21_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-21.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Gallery",
+      "id": "3c8b8e0874889e9b9a79c2a23cc6789a",
+      "attributes": {
+        "createdAt": "2015-02-12T22:08:14Z",
+        "updatedAt": "2018-06-05T18:17:38Z"
+      },
+      "relationships": {
+        "images": {
+          "data": []
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "7bc0ee92fea5f5fd0f922a36372c31d0",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4277_sm_hd.jpg",
+        "name": "AV-4277_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4277_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4277_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4277_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4277_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "d024bb8cfc02efaa5cf41e2f1bcc1ae8",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4290_sm_hd.jpg",
+        "name": "AV-4290_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4290_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4290_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4290_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4290_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "496261537247574b71a24a1906a5c416",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-16_hd.jpg",
+        "name": "Mission_Villa_logo-16.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-16.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-16_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-16_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-16.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "b0eebe00820ca227e0d6a6e87dfd481b",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-24_hd.jpg",
+        "name": "Peninsula_Reflections_sm-24.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-24.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-24_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-24_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-24.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "40eed16652bd2d13e92da1fd1b29a31b",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-8_hd.jpg",
+        "name": "Mission_villa_07_10_logo-8.jpg",
+        "path": "cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-8.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-8_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-8_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-8.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "37cd5c213f19a1b7e604c7d530687c3a",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-19_hd.jpg",
+        "name": "Peninsula_Reflections_sm-19.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-19.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-19_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-19_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-19.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "382c292a22ed760e36257ffec09e08e5",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4238_sm_hd.jpg",
+        "name": "AV-4238_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4238_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4238_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4238_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4238_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "ca73a4d54c9275718ba934c3f57fdf99",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f2ca565765848060c4930377eb0879c8/AV-4199_sm_hd.jpg",
+        "name": "AV-4199_sm.jpg",
+        "path": "f2ca565765848060c4930377eb0879c8/AV-4199_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f2ca565765848060c4930377eb0879c8/AV-4199_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f2ca565765848060c4930377eb0879c8/AV-4199_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f2ca565765848060c4930377eb0879c8/AV-4199_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "9ae9f51913916319e9077f63fe8ce86a",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4261_sm_hd.jpg",
+        "name": "AV-4261_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4261_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4261_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4261_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4261_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "2e3ab07e28370a91c44d1ef251a586af",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4203_sm_hd.jpg",
+        "name": "AV-4203_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4203_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4203_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4203_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4203_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "bd43c7d2ee64f569c3847655238fb7b7",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-5_hd.jpg",
+        "name": "Peninsula_Reflections_sm-5.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-5.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-5_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-5_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-5.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "52c75856e74441f194c21252017c3e42",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4287_sm_hd.jpg",
+        "name": "AV-4287_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4287_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4287_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4287_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4287_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "f3cfbb0429dfb188770fd7f55e03a00f",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4236_sm_hd.jpg",
+        "name": "AV-4236_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4236_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4236_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4236_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4236_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Contact",
+      "id": "8251f3135907eac78501011738028cc5",
+      "attributes": {
+        "createdAt": "2017-05-12T18:46:56Z",
+        "email": "sushanth.r+1207@gmail.com",
+        "firstName": "Sush",
+        "lastName": "Care",
+        "mobilePhone": "(929) 292-9292",
+        "name": "Sush Care",
+        "updatedAt": "2017-05-12T18:46:56Z",
+        "validEmail": false,
+        "validSMS": false,
+        "workPhone": "(929) 292-9292"
+      },
+      "relationships": {
+        "entities": {
+          "data": []
+        },
+        "organization": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "e674e8961f157117ffc7d8e021981678",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-23_hd.jpg",
+        "name": "Mission_Villa_logo-23.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-23.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-23_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-23_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-23.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "6e5efc0ef57d6ae54d18a447d8ce9979",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4233_sm_hd.jpg",
+        "name": "AV-4233_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4233_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4233_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4233_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4233_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "84ad41bc4b3926bc0b439188cdb397f1",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4263_sm_hd.jpg",
+        "name": "AV-4263_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4263_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4263_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4263_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4263_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "cfeed38afc6d357afe232208941fa2b6",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-7_hd.jpg",
+        "name": "Peninsula_Reflections_sm-7.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-7.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-7_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-7_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-7.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "WebViewInfo",
+      "id": "amore-retirement-living",
+      "attributes": {
+        "ctaText": "Get Pricing.",
+        "firstLineValue": "Assisted Living, Memory Care",
+        "secondLineValue": "Suite, Studio, One Bedroom"
+      }
+    },
+    {
+      "type": "User",
+      "id": "500f25d10c95687976c9f4d557be04ad",
+      "attributes": {
+        "createdAt": "2016-12-07T21:15:47Z",
+        "email": "sushanth.r+1207@gmail.com",
+        "hasPasswordSet": true,
+        "name": "Sush Care 2",
+        "phoneNumber": "(929) 292-9292",
+        "roleID": 2,
+        "updatedAt": "2016-12-07T21:15:50Z",
+        "uuid": "31db5360-81e8-4018-8b19-afa795cd7a10"
+      },
+      "relationships": {
+        "organization": {
+          "data": {
+            "type": "Organization",
+            "id": "b2dfa4b145580a6fc65e3093b0db413d"
+          }
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "5ff12bc35f56ad76b73d5726f673ba9d",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4255_sm_hd.jpg",
+        "name": "AV-4255_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4255_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4255_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4255_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4255_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "94c373ee6836060dfa9f9b6a2b4e53a8",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4230_sm_hd.jpg",
+        "name": "AV-4230_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4230_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4230_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4230_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4230_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Contact",
+      "id": "4ba48ad07d3e9d0f7c9006854e376a31",
+      "attributes": {
+        "createdAt": "2017-09-28T05:24:02Z",
+        "email": "sushanthr+almavia@gmail.com",
+        "firstName": "Sush",
+        "lastName": "Ram",
+        "mobilePhone": "",
+        "name": "Sush Ram",
+        "updatedAt": "2017-09-28T05:24:02Z",
+        "validEmail": false,
+        "validSMS": false,
+        "workPhone": ""
+      },
+      "relationships": {
+        "entities": {
+          "data": []
+        },
+        "organization": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "WebViewInfo",
+      "id": "vintage-golden-gate",
+      "attributes": {
+        "ctaText": "Get Pricing.",
+        "firstLineValue": "Assisted Living, Independent Living, Memory Care",
+        "secondLineValue": "Suite, Studio, One Bedroom"
+      }
+    },
+    {
+      "type": "SearchResource",
+      "id": "amore-retirement-living",
+      "attributes": {
+        "addressString": "130 Vale Street, Daly City, CA",
+        "communitySize": "51 +",
+        "description": "",
+        "estimated": false,
+        "floorPlanString": "Suite, Studio, One Bedroom",
+        "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cfc2699c6ee771d1b716ad397543c10e/Amore-5595_FRONT_WebsiteHeader_sd.jpg",
+        "latitude": 37.691849,
+        "longitude": -122.468453,
+        "mainService": "Assisted Living",
+        "name": "Amore Retirement Living",
+        "numReviews": 1,
+        "resourceType": "Community",
+        "reviewsValue": 5,
+        "startingRate": 2850,
+        "typeCare": [
+          "Assisted Living",
+          "Memory Care"
+        ],
+        "url": "/assisted-living/california/daly-city/amore-retirement-living"
+      },
+      "relationships": {
+        "gallery": {
+          "data": {
+            "type": "Gallery",
+            "id": "dd604f07516a3546dcfa63e67c9971ca"
+          }
+        },
+        "webViewInfo": {
+          "data": {
+            "type": "WebViewInfo",
+            "id": "amore-retirement-living"
+          }
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "9608ac039007c9daa948269103e94abd",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-6_hd.jpg",
+        "name": "Mission_villa_07_10_logo-6.jpg",
+        "path": "cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-6.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-6_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-6_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-6.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "be1f7aa65a148a0f169af7d234457597",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-13_hd.jpg",
+        "name": "Peninsula_Reflections_sm-13.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-13.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-13_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-13_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-13.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "bc8a3f2c08f4e2010392403b40946e0d",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-27_hd.jpg",
+        "name": "Peninsula_Reflections_sm-27.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-27.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-27_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-27_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-27.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "d9e877d811741be15124661a2f7e3ba4",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-20_hd.jpg",
+        "name": "Peninsula_Reflections_sm-20.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-20.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-20_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-20_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-20.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "0fb29a7f97109a20b58ede1884336e30",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-2_hd.jpg",
+        "name": "Mission_villa_07_10_logo-2.jpg",
+        "path": "cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-2.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-2_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-2_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-2.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "1dfad0830b629a5a289c477604f0282c",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-2_hd.jpg",
+        "name": "Peninsula_Reflections_sm-2.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-2.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-2_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-2_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-2.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Gallery",
+      "id": "3b1cb1ed22966ded3aff99488279d19d",
+      "attributes": {
+        "createdAt": "2015-03-06T19:37:23Z",
+        "updatedAt": "2018-06-05T18:17:38Z"
+      },
+      "relationships": {
+        "images": {
+          "data": [
+            {
+              "type": "Image",
+              "id": "ab6f2ba976f06c7c3393dfff38dc1d17"
+            },
+            {
+              "type": "Image",
+              "id": "1dfad0830b629a5a289c477604f0282c"
+            },
+            {
+              "type": "Image",
+              "id": "3c6fd794cda8675ca9017b0064a37f06"
+            },
+            {
+              "type": "Image",
+              "id": "37cd5c213f19a1b7e604c7d530687c3a"
+            },
+            {
+              "type": "Image",
+              "id": "e16e6e91080de5da2abe0a891e425b9b"
+            },
+            {
+              "type": "Image",
+              "id": "bc8a3f2c08f4e2010392403b40946e0d"
+            },
+            {
+              "type": "Image",
+              "id": "1e7eaff383b5b0b3c42d0e970a92f6b9"
+            },
+            {
+              "type": "Image",
+              "id": "87372298f9385ae43cf789bc712b7b9d"
+            },
+            {
+              "type": "Image",
+              "id": "be1f7aa65a148a0f169af7d234457597"
+            },
+            {
+              "type": "Image",
+              "id": "fc4ec0e43b3b8b535a48b28453f4aacd"
+            },
+            {
+              "type": "Image",
+              "id": "6c20ae708f6d7871971b4664cddfbc2f"
+            },
+            {
+              "type": "Image",
+              "id": "6cd75b3ffcef3c54de5c832d42eb0f3a"
+            },
+            {
+              "type": "Image",
+              "id": "ff30b486e42edad53262533a4bfd86b7"
+            },
+            {
+              "type": "Image",
+              "id": "f254c0d7f875482c661b57b043475660"
+            },
+            {
+              "type": "Image",
+              "id": "45a9e0b2f4776631602da94b5a321b00"
+            },
+            {
+              "type": "Image",
+              "id": "d9e877d811741be15124661a2f7e3ba4"
+            },
+            {
+              "type": "Image",
+              "id": "a3764ceebcc09d264f159c2c929dee61"
+            },
+            {
+              "type": "Image",
+              "id": "bd43c7d2ee64f569c3847655238fb7b7"
+            },
+            {
+              "type": "Image",
+              "id": "d366713c61f02119d77593cfe48a56fc"
+            },
+            {
+              "type": "Image",
+              "id": "b0eebe00820ca227e0d6a6e87dfd481b"
+            },
+            {
+              "type": "Image",
+              "id": "9738e3fb3bf320f1058ab0687a9ef351"
+            },
+            {
+              "type": "Image",
+              "id": "9237d48f029a695f5cd9dcb23adccd60"
+            },
+            {
+              "type": "Image",
+              "id": "2ad4be3ca39310d47bf4b9eb1b3936c4"
+            },
+            {
+              "type": "Image",
+              "id": "cfeed38afc6d357afe232208941fa2b6"
+            },
+            {
+              "type": "Image",
+              "id": "aea4091fe4ee156996e5189673c19018"
+            },
+            {
+              "type": "Image",
+              "id": "9a6394bdeb9978d598efc3e2bb834308"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "eb43c1d25472bae1dd7d36b8ef33cb0a",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-5_hd.jpg",
+        "name": "Mission_villa_07_10_logo-5.jpg",
+        "path": "cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-5.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-5_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-5_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-5.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "68120d86fdfc66193640bf45c7b61cb2",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f2ca565765848060c4930377eb0879c8/AV-4252_sm_hd.jpg",
+        "name": "AV-4252_sm.jpg",
+        "path": "f2ca565765848060c4930377eb0879c8/AV-4252_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f2ca565765848060c4930377eb0879c8/AV-4252_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f2ca565765848060c4930377eb0879c8/AV-4252_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f2ca565765848060c4930377eb0879c8/AV-4252_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "05bb659c6e9dc1f08bdf92da99da5759",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AVSF-2984_sm_hd.jpg",
+        "name": "AVSF-2984_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AVSF-2984_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AVSF-2984_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AVSF-2984_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AVSF-2984_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "a3c3b1f4389b04ef292b7206214e77cd",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-18_hd.jpg",
+        "name": "Mission_Villa_logo-18.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-18.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-18_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-18_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-18.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "d366713c61f02119d77593cfe48a56fc",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-17_hd.jpg",
+        "name": "Peninsula_Reflections_sm-17.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-17.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-17_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-17_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-17.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Gallery",
+      "id": "dd604f07516a3546dcfa63e67c9971ca",
+      "attributes": {
+        "createdAt": "2015-03-31T16:22:42Z",
+        "updatedAt": "2018-06-05T18:17:38Z"
+      },
+      "relationships": {
+        "images": {
+          "data": [
+            {
+              "type": "Image",
+              "id": "0e36b907801464deedfd9c686a8bced1"
+            },
+            {
+              "type": "Image",
+              "id": "c42c668a52814e5ec941feda98ab30fe"
+            },
+            {
+              "type": "Image",
+              "id": "38bd8cc0566d916571d608cba61e07d4"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "09f20032a2bcd72e4aff1af66478f086",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-3_hd.jpg",
+        "name": "Mission_villa_07_10_logo-3.jpg",
+        "path": "cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-3.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-3_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-3_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-3.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "3ccab710f945cdc45456f3a624b4d1b8",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1a7d2e55d47595f680ed032d5f7e73fd/Mission_Villa_header-1_hd.jpg",
+        "name": "Mission_Villa_header-1.jpg",
+        "path": "1a7d2e55d47595f680ed032d5f7e73fd/Mission_Villa_header-1.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1a7d2e55d47595f680ed032d5f7e73fd/Mission_Villa_header-1_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1a7d2e55d47595f680ed032d5f7e73fd/Mission_Villa_header-1_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1a7d2e55d47595f680ed032d5f7e73fd/Mission_Villa_header-1.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "9a6394bdeb9978d598efc3e2bb834308",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-10_hd.jpg",
+        "name": "Peninsula_Reflections_sm-10.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-10.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-10_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-10_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-10.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "RgsAux",
+      "id": "5f2be727f85959aaf4e7cffd1c395368",
+      "attributes": {
+        "amenityScore": "",
+        "autoHighlights": null,
+        "communityDescription": "<p>Alma Via Of San Francisco is an assisted living community located in San Francisco, CA. This is a large sized assisted living community with 135 units. Communities this size typically offer 1-bedroom apartments, multiple levels of care, restaurant style dining, and a robust resident enrichment program. The listed community cost is $6,995 per month which is around 18% over the average of $5,950 in San Francisco. The community is managed by Elder Care Alliance. The community has an average star rating of 4.18 from 50 reviews.  One reviewer says: \"I visited Alma Via yesterday for a meeting and the facility was amazing.  The grounds were beautiful, the buildings very communal, the staff kind and...\"</p>",
+        "estimatedPrice": {
+          "providedAverage": 0,
+          "estimatedAverage": 0,
+          "cityAverage": 0,
+          "stateAverage": 0,
+          "nationalAverage": 0,
+          "homeCareMAverage": 0,
+          "homeCareHAverage": 0,
+          "adultDayAverage": 0,
+          "sharedSuiteRate": 0,
+          "privateSuiteRate": 0,
+          "studioApartmentRate": 0,
+          "oneBedroomApartmentRate": 0,
+          "twoBedroomApartmentRate": 0
+        },
+        "localDetails": "<strong>Health:</strong> There are around 20 hospitals, like Division of Microsurgery: California Pacific Medical Center: Davies Campus, within 6 miles of the community. <br><strong>Entertainment:</strong> You can find Izakaya Sozai and 20 other restaurants close to this facility. You can find Multimedia Entertainment and 16 other movie theaters close to this facility. You can find Golden Gate Park and 15 other parks close to the community. <br><strong>Services:</strong> You can find Walgreens and 20 other convenience stores close to this facility. There are around 20 transit stations, like Daly City BART Station, within 9 miles of AlmaVia of San Francisco. <br><strong>Shopping:</strong> There are around 20 department stores, like Nordstrom Rack Colma, within 8 miles of the community. You can find Fairmont Shopping Center and 20 other shopping malls close to the community. <br><strong>Places Of Worship:</strong> Almavia of san francisco has many churches nearby, for example: Cornerstone Church is one of 20 close by. Almavia of san francisco has many mosques nearby, for example: Daly City Musalla is one of 3 close by. Almavia of san francisco has many synagogues nearby, for example: Magain David Sephardim Congregation is one of 19 close by. <br>",
+        "manualHighlights": null,
+        "nearbyCities": null,
+        "rgsInfo": {
+          "localDetails": "<strong>Health:</strong> There are around 20 hospitals, like Division of Microsurgery: California Pacific Medical Center: Davies Campus, within 6 miles of the community. <br><strong>Entertainment:</strong> You can find Izakaya Sozai and 20 other restaurants close to this facility. You can find Multimedia Entertainment and 16 other movie theaters close to this facility. You can find Golden Gate Park and 15 other parks close to the community. <br><strong>Services:</strong> You can find Walgreens and 20 other convenience stores close to this facility. There are around 20 transit stations, like Daly City BART Station, within 9 miles of AlmaVia of San Francisco. <br><strong>Shopping:</strong> There are around 20 department stores, like Nordstrom Rack Colma, within 8 miles of the community. You can find Fairmont Shopping Center and 20 other shopping malls close to the community. <br><strong>Places Of Worship:</strong> Almavia of san francisco has many churches nearby, for example: Cornerstone Church is one of 20 close by. Almavia of san francisco has many mosques nearby, for example: Daly City Musalla is one of 3 close by. Almavia of san francisco has many synagogues nearby, for example: Magain David Sephardim Congregation is one of 19 close by. <br>",
+          "amenityScore": 0,
+          "seoCityLinks": "",
+          "personalSpaceScore": 0,
+          "prop_description": "<p>Alma Via Of San Francisco is an assisted living community located in San Francisco, CA. This is a large sized assisted living community with 135 units. Communities this size typically offer 1-bedroom apartments, multiple levels of care, restaurant style dining, and a robust resident enrichment program. The listed community cost is $6,995 per month which is around 18% over the average of $5,950 in San Francisco. The community is managed by Elder Care Alliance. The community has an average star rating of 4.18 from 50 reviews.  One reviewer says: \"I visited Alma Via yesterday for a meeting and the facility was amazing.  The grounds were beautiful, the buildings very communal, the staff kind and...\"</p>",
+          "contract_info": {
+            "hasContract": false,
+            "url": ""
+          }
+        },
+        "stateLicensingWebsite": "https://secure.dss.ca.gov/ccld/TransparencyAPI/api/FacilitySearch?facType=740&facility=&Street=&city=&zip=&county=Alameda&facnum="
+      }
+    },
+    {
+      "type": "Image",
+      "id": "5e2d98025b85cc788bd1f8fd22757e79",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-5_hd.jpg",
+        "name": "Mission_Villa_logo-5.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-5.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-5_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-5_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-5.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "SearchResource",
+      "id": "peninsula-reflections-205-collins-avenue-colma",
+      "attributes": {
+        "addressString": "205 Collins Avenue, Colma, CA",
+        "communitySize": "51 +",
+        "description": "Our community, a Spanish-Mission style setting, is situated in the township of Colma.  Our lobby areas and\r\ndining- and living-roo...",
+        "estimated": false,
+        "floorPlanString": "Suite, Studio, One Bedroom",
+        "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-15_sd.jpg",
+        "latitude": 37.6746709,
+        "longitude": -122.4573416,
+        "mainService": "Assisted Living",
+        "name": "Peninsula Reflections",
+        "numReviews": 2,
+        "resourceType": "Community",
+        "reviewsValue": 5,
+        "startingRate": 6000,
+        "typeCare": [
+          "Assisted Living",
+          "Memory Care"
+        ],
+        "url": "/assisted-living/california/colma/peninsula-reflections-205-collins-avenue-colma"
+      },
+      "relationships": {
+        "gallery": {
+          "data": {
+            "type": "Gallery",
+            "id": "3b1cb1ed22966ded3aff99488279d19d"
+          }
+        },
+        "webViewInfo": {
+          "data": {
+            "type": "WebViewInfo",
+            "id": "peninsula-reflections-205-collins-avenue-colma"
+          }
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "6c20ae708f6d7871971b4664cddfbc2f",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-23_hd.jpg",
+        "name": "Peninsula_Reflections_sm-23.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-23.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-23_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-23_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-23.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "f254c0d7f875482c661b57b043475660",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-21_hd.jpg",
+        "name": "Peninsula_Reflections_sm-21.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-21.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-21_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-21_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-21.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "38bd8cc0566d916571d608cba61e07d4",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cfc2699c6ee771d1b716ad397543c10e/Amore-5595_FRONT_WebsiteHeader_hd.jpg",
+        "name": "Amore-5595_FRONT_WebsiteHeader.jpg",
+        "path": "cfc2699c6ee771d1b716ad397543c10e/Amore-5595_FRONT_WebsiteHeader.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cfc2699c6ee771d1b716ad397543c10e/Amore-5595_FRONT_WebsiteHeader_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cfc2699c6ee771d1b716ad397543c10e/Amore-5595_FRONT_WebsiteHeader_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cfc2699c6ee771d1b716ad397543c10e/Amore-5595_FRONT_WebsiteHeader.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "24d8b8f50863e6134ac46294475cf1a9",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-24_hd.jpg",
+        "name": "Mission_Villa_logo-24.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-24.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-24_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-24_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-24.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "c42c668a52814e5ec941feda98ab30fe",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cfc2699c6ee771d1b716ad397543c10e/Amore-5595_sm_hd.jpg",
+        "name": "Amore-5595_sm.jpg",
+        "path": "cfc2699c6ee771d1b716ad397543c10e/Amore-5595_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cfc2699c6ee771d1b716ad397543c10e/Amore-5595_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cfc2699c6ee771d1b716ad397543c10e/Amore-5595_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cfc2699c6ee771d1b716ad397543c10e/Amore-5595_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "c09cd737573b94080cbfb50387e1ebe1",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-15_hd.jpg",
+        "name": "Mission_Villa_logo-15.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-15.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-15_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-15_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-15.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "7a43381008a8d1e0aa713695f0856ae4",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-27_hd.jpg",
+        "name": "Mission_Villa_logo-27.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-27.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-27_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-27_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-27.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "4b9663e003e79c25cbcdf24950431d60",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-19_hd.jpg",
+        "name": "Mission_Villa_logo-19.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-19.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-19_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-19_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-19.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "6efefe3a11858c37d6fc60892a225a4c",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4275_sm_hd.jpg",
+        "name": "AV-4275_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4275_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4275_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4275_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4275_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "87372298f9385ae43cf789bc712b7b9d",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-14_hd.jpg",
+        "name": "Peninsula_Reflections_sm-14.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-14.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-14_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-14_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-14.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "4f47fdf0b27c801c793d21dfdabf8b93",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-28_hd.jpg",
+        "name": "Mission_Villa_logo-28.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-28.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-28_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-28_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-28.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "dc197d29a7235f7308f0f05a923d3a3f",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4291_sm_hd.jpg",
+        "name": "AV-4291_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4291_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4291_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4291_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4291_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "af6aeaad0285ec85e28d5da601a957df",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-20_hd.jpg",
+        "name": "Mission_Villa_logo-20.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-20.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-20_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-20_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-20.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "9647e50d913acbbe8d3d247435188ca3",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4280_sm_hd.jpg",
+        "name": "AV-4280_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4280_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4280_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4280_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4280_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "60d2597cc8351f60b10ad092956eb4bc",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/d6ba781df0f83dabb8a2bfdffbb2e5f2/ElderCareAlliance_hd.png",
+        "name": "ElderCareAlliance.png",
+        "path": "d6ba781df0f83dabb8a2bfdffbb2e5f2/ElderCareAlliance.png",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/d6ba781df0f83dabb8a2bfdffbb2e5f2/ElderCareAlliance_sd.png",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/d6ba781df0f83dabb8a2bfdffbb2e5f2/ElderCareAlliance_thumb.png",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/d6ba781df0f83dabb8a2bfdffbb2e5f2/ElderCareAlliance.png"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Gallery",
+      "id": "55957fbece597a72726b6a8de913d2f4",
+      "attributes": {
+        "createdAt": "2015-02-19T20:42:57Z",
+        "updatedAt": "2018-06-05T18:17:38Z"
+      },
+      "relationships": {
+        "images": {
+          "data": [
+            {
+              "type": "Image",
+              "id": "5f1be80be8bc0027766bf0f67855caa5"
+            },
+            {
+              "type": "Image",
+              "id": "5ff12bc35f56ad76b73d5726f673ba9d"
+            },
+            {
+              "type": "Image",
+              "id": "68120d86fdfc66193640bf45c7b61cb2"
+            },
+            {
+              "type": "Image",
+              "id": "94c373ee6836060dfa9f9b6a2b4e53a8"
+            },
+            {
+              "type": "Image",
+              "id": "382c292a22ed760e36257ffec09e08e5"
+            },
+            {
+              "type": "Image",
+              "id": "dccf392e367e16a813224d944f397b94"
+            },
+            {
+              "type": "Image",
+              "id": "05bb659c6e9dc1f08bdf92da99da5759"
+            },
+            {
+              "type": "Image",
+              "id": "52c75856e74441f194c21252017c3e42"
+            },
+            {
+              "type": "Image",
+              "id": "ca73a4d54c9275718ba934c3f57fdf99"
+            },
+            {
+              "type": "Image",
+              "id": "f778e263e64f0a8ce525c2ffc727fe96"
+            },
+            {
+              "type": "Image",
+              "id": "dc197d29a7235f7308f0f05a923d3a3f"
+            },
+            {
+              "type": "Image",
+              "id": "f3cfbb0429dfb188770fd7f55e03a00f"
+            },
+            {
+              "type": "Image",
+              "id": "9ae9f51913916319e9077f63fe8ce86a"
+            },
+            {
+              "type": "Image",
+              "id": "d9c0643780607ad2d5a3df19e082a786"
+            },
+            {
+              "type": "Image",
+              "id": "6e5efc0ef57d6ae54d18a447d8ce9979"
+            },
+            {
+              "type": "Image",
+              "id": "84ad41bc4b3926bc0b439188cdb397f1"
+            },
+            {
+              "type": "Image",
+              "id": "6efefe3a11858c37d6fc60892a225a4c"
+            },
+            {
+              "type": "Image",
+              "id": "7bc0ee92fea5f5fd0f922a36372c31d0"
+            },
+            {
+              "type": "Image",
+              "id": "d024bb8cfc02efaa5cf41e2f1bcc1ae8"
+            },
+            {
+              "type": "Image",
+              "id": "dc229b8ffaf1a99b93fb0c9cae77d098"
+            },
+            {
+              "type": "Image",
+              "id": "20104cc31639466fd629f338f062845d"
+            },
+            {
+              "type": "Image",
+              "id": "9647e50d913acbbe8d3d247435188ca3"
+            },
+            {
+              "type": "Image",
+              "id": "32979aafb2492344e79c7b58a466a69a"
+            },
+            {
+              "type": "Image",
+              "id": "2e3ab07e28370a91c44d1ef251a586af"
+            },
+            {
+              "type": "Image",
+              "id": "60d2597cc8351f60b10ad092956eb4bc"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Video",
+      "id": "6a16391f0622025b125b7cc8ed0f466f",
+      "attributes": {
+        "name": "AlmaViaSF",
+        "path": "0d15a974-34bf-41f2-b941-fdd962d984c2/AlmaVia%20SF%20w%20logo%201_C.mp4",
+        "processed": 2,
+        "thumbUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4220_sm_sd.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0d15a974-34bf-41f2-b941-fdd962d984c2/AlmaVia%20SF%20w%20logo%201_C.mp4",
+        "webmUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0d15a974-34bf-41f2-b941-fdd962d984c2/AlmaVia%20SF%20w%20logo%201_C.webm"
+      }
+    },
+    {
+      "type": "Image",
+      "id": "15243b2c78d42b2a407d55642a35fe56",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-10_hd.jpg",
+        "name": "Mission_Villa_logo-10.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-10.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-10_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-10_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-10.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "f778e263e64f0a8ce525c2ffc727fe96",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4221_sm_hd.jpg",
+        "name": "AV-4221_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4221_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4221_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4221_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4221_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "ea51d673068dacd636ec387db5e52fd2",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-17_hd.jpg",
+        "name": "Mission_Villa_logo-17.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-17.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-17_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-17_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-17.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "25a13bcce0ad766b98b870c8e9e1a722",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-26_hd.jpg",
+        "name": "Mission_Villa_logo-26.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-26.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-26_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-26_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-26.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "f9555b467580161e0dee8d3500a2fef5",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-12_hd.jpg",
+        "name": "Mission_Villa_logo-12.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-12.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-12_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-12_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-12.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "aea4091fe4ee156996e5189673c19018",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-8_hd.jpg",
+        "name": "Peninsula_Reflections_sm-8.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-8.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-8_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-8_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-8.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "SearchResource",
+      "id": "vintage-golden-gate",
+      "attributes": {
+        "addressString": "1601 19th Avenue, San Francisco, CA",
+        "communitySize": "51 +",
+        "description": "",
+        "estimated": false,
+        "floorPlanString": "Suite, Studio, One Bedroom",
+        "imageUrl": "https://maps.googleapis.com/maps/api/streetview?size=200x160&location=1601 19th Avenue,San Francisco,CA&fov=90&pitch=-10&key=AIzaSyBbN8J_ogumAythgDCzwXzbuIn6qP-w0fM",
+        "latitude": 37.757266,
+        "longitude": -122.4772202,
+        "mainService": "Assisted Living",
+        "name": "Vintage Golden Gate",
+        "numReviews": 21,
+        "resourceType": "Community",
+        "reviewsValue": 4.2380953,
+        "startingRate": 7091,
+        "typeCare": [
+          "Assisted Living",
+          "Independent Living",
+          "Memory Care"
+        ],
+        "url": "/assisted-living/california/san-francisco/vintage-golden-gate"
+      },
+      "relationships": {
+        "gallery": {
+          "data": {
+            "type": "Gallery",
+            "id": "3c8b8e0874889e9b9a79c2a23cc6789a"
+          }
+        },
+        "webViewInfo": {
+          "data": {
+            "type": "WebViewInfo",
+            "id": "vintage-golden-gate"
+          }
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "aaa13df24ecabb0c610a6a05de011b8a",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-2_hd.jpg",
+        "name": "Mission_Villa_logo-2.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-2.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-2_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-2_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-2.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "dac327234c992e9277cac61df12e5351",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-22_hd.jpg",
+        "name": "Mission_Villa_logo-22.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-22.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-22_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-22_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-22.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "64fe6ed61f8b389de957603a7f50c1c3",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-25_hd.jpg",
+        "name": "Mission_Villa_logo-25.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-25.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-25_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-25_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-25.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "20104cc31639466fd629f338f062845d",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f0a734415ec84f0f2172abecb2eff42e/AV-4200_sm_hd.jpg",
+        "name": "AV-4200_sm.jpg",
+        "path": "f0a734415ec84f0f2172abecb2eff42e/AV-4200_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f0a734415ec84f0f2172abecb2eff42e/AV-4200_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f0a734415ec84f0f2172abecb2eff42e/AV-4200_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f0a734415ec84f0f2172abecb2eff42e/AV-4200_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "VideoGallery",
+      "id": "10e2c47908b57a927b877a64bd941ca1",
+      "attributes": {
+        "createdAt": "2015-02-19T20:42:57Z",
+        "updatedAt": "2018-06-05T18:17:38Z"
+      },
+      "relationships": {
+        "videos": {
+          "data": [
+            {
+              "type": "Video",
+              "id": "6a16391f0622025b125b7cc8ed0f466f"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "0e36b907801464deedfd9c686a8bced1",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cfc2699c6ee771d1b716ad397543c10e/Amore-5595_FRONT_Website_ALT_hd.jpg",
+        "name": "Amore-5595_FRONT_Website_ALT.jpg",
+        "path": "cfc2699c6ee771d1b716ad397543c10e/Amore-5595_FRONT_Website_ALT.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cfc2699c6ee771d1b716ad397543c10e/Amore-5595_FRONT_Website_ALT_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cfc2699c6ee771d1b716ad397543c10e/Amore-5595_FRONT_Website_ALT_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cfc2699c6ee771d1b716ad397543c10e/Amore-5595_FRONT_Website_ALT.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "6d627274f1f5c271b973d29915e07ac1",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-1_hd.jpg",
+        "name": "Mission_Villa_logo-1.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-1.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-1_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-1_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-1.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "92bfd2a9137e9be64a8ce5d632816a71",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-7_hd.jpg",
+        "name": "Mission_villa_07_10_logo-7.jpg",
+        "path": "cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-7.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-7_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-7_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-7.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "1e7eaff383b5b0b3c42d0e970a92f6b9",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-11_hd.jpg",
+        "name": "Peninsula_Reflections_sm-11.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-11.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-11_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-11_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-11.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "45a9e0b2f4776631602da94b5a321b00",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-4_hd.jpg",
+        "name": "Peninsula_Reflections_sm-4.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-4.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-4_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-4_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-4.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "a3764ceebcc09d264f159c2c929dee61",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-12_hd.jpg",
+        "name": "Peninsula_Reflections_sm-12.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-12.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-12_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-12_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-12.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "WebViewInfo",
+      "id": "pacifica-senior-living-mission-villa",
+      "attributes": {
+        "ctaText": "Get Pricing.",
+        "firstLineValue": "Assisted Living, Memory Care, Respite Care",
+        "secondLineValue": "Suite, Studio, One Bedroom"
+      }
+    },
+    {
+      "type": "Image",
+      "id": "c05668bc1345fa1a38b9a095dad6bac5",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-1_hd.jpg",
+        "name": "Mission_villa_07_10_logo-1.jpg",
+        "path": "cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-1.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-1_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-1_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-1.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "ab6f2ba976f06c7c3393dfff38dc1d17",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-16_hd.jpg",
+        "name": "Peninsula_Reflections_sm-16.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-16.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-16_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-16_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-16.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "9237d48f029a695f5cd9dcb23adccd60",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-6_hd.jpg",
+        "name": "Peninsula_Reflections_sm-6.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-6.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-6_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-6_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-6.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "180b860b409c426fcd20405c81d6592d",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-11_hd.jpg",
+        "name": "Mission_Villa_logo-11.jpg",
+        "path": "6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-11.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-11_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-11_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-11.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "WebViewInfo",
+      "id": "peninsula-reflections-205-collins-avenue-colma",
+      "attributes": {
+        "ctaText": "Get Pricing.",
+        "firstLineValue": "Assisted Living, Memory Care",
+        "secondLineValue": "Suite, Studio, One Bedroom"
+      }
+    },
+    {
+      "type": "Image",
+      "id": "dc229b8ffaf1a99b93fb0c9cae77d098",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f2ca565765848060c4930377eb0879c8/FRONT_WebsiteHeader_hd.jpg",
+        "name": "FRONT_WebsiteHeader.jpg",
+        "path": "f2ca565765848060c4930377eb0879c8/FRONT_WebsiteHeader.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f2ca565765848060c4930377eb0879c8/FRONT_WebsiteHeader_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f2ca565765848060c4930377eb0879c8/FRONT_WebsiteHeader_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f2ca565765848060c4930377eb0879c8/FRONT_WebsiteHeader.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "32979aafb2492344e79c7b58a466a69a",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AVSF-2944_sm_hd.jpg",
+        "name": "AVSF-2944_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AVSF-2944_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AVSF-2944_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AVSF-2944_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AVSF-2944_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "3c6fd794cda8675ca9017b0064a37f06",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-22_hd.jpg",
+        "name": "Peninsula_Reflections_sm-22.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-22.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-22_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-22_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-22.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "e16e6e91080de5da2abe0a891e425b9b",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-25_hd.jpg",
+        "name": "Peninsula_Reflections_sm-25.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-25.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-25_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-25_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-25.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "6cd75b3ffcef3c54de5c832d42eb0f3a",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-26_hd.jpg",
+        "name": "Peninsula_Reflections_sm-26.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-26.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-26_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-26_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-26.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Organization",
+      "id": "b2dfa4b145580a6fc65e3093b0db413d",
+      "attributes": {
+        "name": "Sush Care 2"
+      }
+    },
+    {
+      "type": "Image",
+      "id": "5f1be80be8bc0027766bf0f67855caa5",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4220_sm_hd.jpg",
+        "name": "AV-4220_sm.jpg",
+        "path": "0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4220_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4220_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4220_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4220_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "9738e3fb3bf320f1058ab0687a9ef351",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-9_hd.jpg",
+        "name": "Peninsula_Reflections_sm-9.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-9.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-9_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-9_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-9.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "SearchResource",
+      "id": "pacifica-senior-living-mission-villa",
+      "attributes": {
+        "addressString": "995 E Market St, Daly City, CA",
+        "communitySize": "51 +",
+        "description": "Ideally located in the San Francisco Bay Area, Pacifica Senior Living Mission Villa offers a full complement of senior assisted li...",
+        "estimated": false,
+        "floorPlanString": "Suite, Studio, One Bedroom",
+        "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/6a7c45374a73891ccf9ad75a14d5faa3/Mission_Villa_logo-22_sd.jpg",
+        "latitude": 37.6927726,
+        "longitude": -122.4559817,
+        "mainService": "Assisted Living",
+        "name": "Mission Villa",
+        "numReviews": 18,
+        "resourceType": "Community",
+        "reviewsValue": 4.111111,
+        "startingRate": 4500,
+        "typeCare": [
+          "Assisted Living",
+          "Memory Care",
+          "Respite Care"
+        ],
+        "url": "/assisted-living/california/daly-city/pacifica-senior-living-mission-villa"
+      },
+      "relationships": {
+        "gallery": {
+          "data": {
+            "type": "Gallery",
+            "id": "7d644b8518ba84a9b3c2c2128371afbd"
+          }
+        },
+        "webViewInfo": {
+          "data": {
+            "type": "WebViewInfo",
+            "id": "pacifica-senior-living-mission-villa"
+          }
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "491bd9520937620da35daa7e4e4baa90",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/83080026d3337c666cc71dead8bc9c4c/Mission_Villa_logo-9_hd.jpg",
+        "name": "Mission_Villa_logo-9.jpg",
+        "path": "83080026d3337c666cc71dead8bc9c4c/Mission_Villa_logo-9.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/83080026d3337c666cc71dead8bc9c4c/Mission_Villa_logo-9_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/83080026d3337c666cc71dead8bc9c4c/Mission_Villa_logo-9_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/83080026d3337c666cc71dead8bc9c4c/Mission_Villa_logo-9.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Gallery",
+      "id": "7d644b8518ba84a9b3c2c2128371afbd",
+      "attributes": {
+        "createdAt": "2015-04-23T21:26:16Z",
+        "updatedAt": "2018-06-05T18:17:38Z"
+      },
+      "relationships": {
+        "images": {
+          "data": [
+            {
+              "type": "Image",
+              "id": "3ccab710f945cdc45456f3a624b4d1b8"
+            },
+            {
+              "type": "Image",
+              "id": "6d627274f1f5c271b973d29915e07ac1"
+            },
+            {
+              "type": "Image",
+              "id": "5e2d98025b85cc788bd1f8fd22757e79"
+            },
+            {
+              "type": "Image",
+              "id": "15243b2c78d42b2a407d55642a35fe56"
+            },
+            {
+              "type": "Image",
+              "id": "a3c3b1f4389b04ef292b7206214e77cd"
+            },
+            {
+              "type": "Image",
+              "id": "24d8b8f50863e6134ac46294475cf1a9"
+            },
+            {
+              "type": "Image",
+              "id": "ea51d673068dacd636ec387db5e52fd2"
+            },
+            {
+              "type": "Image",
+              "id": "4b9663e003e79c25cbcdf24950431d60"
+            },
+            {
+              "type": "Image",
+              "id": "491bd9520937620da35daa7e4e4baa90"
+            },
+            {
+              "type": "Image",
+              "id": "180b860b409c426fcd20405c81d6592d"
+            },
+            {
+              "type": "Image",
+              "id": "c09cd737573b94080cbfb50387e1ebe1"
+            },
+            {
+              "type": "Image",
+              "id": "af6aeaad0285ec85e28d5da601a957df"
+            },
+            {
+              "type": "Image",
+              "id": "491f7576fd6c6a83b89623af12e0e8a2"
+            },
+            {
+              "type": "Image",
+              "id": "496261537247574b71a24a1906a5c416"
+            },
+            {
+              "type": "Image",
+              "id": "4f47fdf0b27c801c793d21dfdabf8b93"
+            },
+            {
+              "type": "Image",
+              "id": "f9555b467580161e0dee8d3500a2fef5"
+            },
+            {
+              "type": "Image",
+              "id": "aaa13df24ecabb0c610a6a05de011b8a"
+            },
+            {
+              "type": "Image",
+              "id": "dac327234c992e9277cac61df12e5351"
+            },
+            {
+              "type": "Image",
+              "id": "64fe6ed61f8b389de957603a7f50c1c3"
+            },
+            {
+              "type": "Image",
+              "id": "e674e8961f157117ffc7d8e021981678"
+            },
+            {
+              "type": "Image",
+              "id": "25a13bcce0ad766b98b870c8e9e1a722"
+            },
+            {
+              "type": "Image",
+              "id": "7a43381008a8d1e0aa713695f0856ae4"
+            },
+            {
+              "type": "Image",
+              "id": "0fb29a7f97109a20b58ede1884336e30"
+            },
+            {
+              "type": "Image",
+              "id": "9608ac039007c9daa948269103e94abd"
+            },
+            {
+              "type": "Image",
+              "id": "c05668bc1345fa1a38b9a095dad6bac5"
+            },
+            {
+              "type": "Image",
+              "id": "92bfd2a9137e9be64a8ce5d632816a71"
+            },
+            {
+              "type": "Image",
+              "id": "eb43c1d25472bae1dd7d36b8ef33cb0a"
+            },
+            {
+              "type": "Image",
+              "id": "09f20032a2bcd72e4aff1af66478f086"
+            },
+            {
+              "type": "Image",
+              "id": "40eed16652bd2d13e92da1fd1b29a31b"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "2ad4be3ca39310d47bf4b9eb1b3936c4",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-3_hd.jpg",
+        "name": "Peninsula_Reflections_sm-3.jpg",
+        "path": "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-3.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-3_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-3_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-3.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    }
+  ],
+  "meta": {
+    "copyright": "Copyright 2018 Seniorly Inc.",
+    "description": "AlmaVia of San Francisco offering Assisted Living is located at 1 Thomas More Way, San Francisco, CA. Compare to nearby communities offering Assisted Living",
+    "linked-data": {
+      "@context": "http://schema.org",
+      "@type": "LodgingBusiness",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "US",
+        "addressLocality": "San Francisco",
+        "addressRegion": "CA",
+        "streetAddress": "1 Thomas More Way"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingCount": "50",
+        "ratingValue": "4.18"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "37.71215",
+        "longitude": "-122.47211"
+      },
+      "name": "AlmaVia of San Francisco",
+      "priceRange": "From $5295 / month",
+      "url": "/assisted-living/california/san-francisco/almavia-of-san-francisco"
+    },
+    "og:image": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4261_sm_sd.jpg",
+    "og:video": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0d15a974-34bf-41f2-b941-fdd962d984c2/AlmaVia%20SF%20w%20logo%201_C.mp4",
+    "page_type": "Community_Full",
+    "title": "AlmaVia of San Francisco - Pricing & Photos San Francisco, CA",
+    "twitter:image:src": "https://d1qiigpe5txw4q.cloudfront.net/uploads/0e5f2cae2dbee1e6b9ce3bfdd9a6ea9d/AV-4261_sm_sd.jpg",
+    "version": "v0"
+  }
+}

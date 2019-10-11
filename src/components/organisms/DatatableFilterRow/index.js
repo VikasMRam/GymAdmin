@@ -160,7 +160,7 @@ export default class DatatableFilterRow extends Component {
       value: op,
     }));
 
-  getValueForAutocomplete = (value, column) => {
+  getValueForAutocomplete = (value = [], column) => {
     const { autocompleteFilters } = this.props;
     const fromFilters = autocompleteFilters[column.paramKey] || [];
     return getAutocompleteValues(column)(fromFilters.filter(({ id }) => value.includes(id)));

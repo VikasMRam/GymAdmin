@@ -1,7 +1,3 @@
-import dayjs from 'dayjs';
-
-export const noValueOperators = ['em', 'nem'];
-
 export const operatorNames = {
   eq: 'equal',
   ne: 'not equal',
@@ -29,6 +25,8 @@ export const listValueOperators = [
   'bet',
 ];
 
+export const noValueOperators = ['em', 'nem'];
+
 const getValue = (singleValue) => {
   if (singleValue instanceof Date) {
     return singleValue.toISOString();
@@ -44,28 +42,44 @@ const makeFilterValue = (value) => {
   return getValue(value);
 };
 
-export const simpleQStringify = (object) => {
-  return `?${Object.entries(object).map(([key, value]) => `${key}=${value}`).join('&')}`;
+export const simpleQStringify = (qsAry) => {
+  return `?${qsAry.map(({ name, value }) => `${name}=${value}`).join('&')}`;
+};
+
+// bullshit for how query-string formats querystrings
+export const simpleQSObjectify = (qsAry) => {
+  return qsAry.reduce((memo, { name, value }) => {
+    if (memo[name] && Array.isArray(memo[name])) {
+      memo[name].push(value);
+    } else if (memo[name]) {
+      memo[name] = [memo[name], value];
+    } else {
+      memo[name] = value;
+    }
+
+    return memo;
+  }, {});
 };
 
 export const makeQuerystringFilters = (filterState, sectionFilters = {}, strict = false) => {
-  const filters = filterState.filters.filter(filter => filter.column
-        && (!strict || (strict && filter.operator))
-        && (!strict || ((strict && filter.value) || (strict && noValueOperators.includes(filter.operator)))));
+  const filters = filterState.filters.filter(filter => (
+           (!strict || (strict && filter.operator))
+        && (!strict || ((strict && filter.value) || (strict && noValueOperators.includes(filter.operator))))
+  ));
 
-  const qsObject = { ...sectionFilters };
+  const qsAry = Object.entries(sectionFilters).map(([name, value]) => ({ name, value }));
 
   filters.forEach((filter) => {
-    const key = `filter[${filter.column}]`;
+    const name = `filter[${filter.column || ''}]`;
     const filterValue = makeFilterValue(filter.value);
     const value = `${filter.operator || ''}${filterValue ? `:${filterValue}` : ''}`;
-    qsObject[key] = value;
+    qsAry.push({ name, value });
   });
 
-  if (filters.length >= 1 && filterState.logicalOperator) {
-    qsObject.exp = filterState.logicalOperator;
+  if (filters.length > 1 && filterState.logicalOperator) {
+    qsAry.push({ name: 'exp', value: filterState.logicalOperator });
   }
-  return qsObject;
+  return qsAry;
 };
 
 export const simpleQSParse = (qs) => {
@@ -105,10 +119,6 @@ export const parseQuerystringFilters = (qsText) => {
       filterState.logicalOperator = queryValue;
     }
   });
-
-  if (filterState.filters.length === 1 && filterState.logicalOperator === 'or') {
-    filterState.filters.push({});
-  }
 
   return filterState;
 };

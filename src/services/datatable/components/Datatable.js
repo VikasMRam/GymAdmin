@@ -4,7 +4,12 @@ import { withRouter } from 'react-router';
 
 import { prefetch } from 'sly/services/newApi';
 import datatableColumnsProptype from 'sly/propTypes/datatableColumns';
-import { makeQuerystringFilters, parseQuerystringFilters, simpleQStringify } from 'sly/services/datatable/helpers';
+import {
+  makeQuerystringFilters,
+  parseQuerystringFilters,
+  simpleQSObjectify,
+  simpleQStringify,
+} from 'sly/services/datatable/helpers';
 
 @prefetch('datatable', 'getDatatable', (req, { id }) => req({ id }))
 
@@ -62,11 +67,7 @@ export default class Datatable extends Component {
   addFilter = (newFilter = {}) => {
     const { filters, logicalOperator } = this.state;
     const state = { filters: [...filters, newFilter], logicalOperator };
-    if (newFilter.value) {
-      this.setFilters(state);
-    } else {
-      this.setState(state);
-    }
+    this.setFilters(state);
   };
 
   onFilterChange = (filter, newFilter) => {
@@ -94,11 +95,7 @@ export default class Datatable extends Component {
       logicalOperator,
       'page-number': 0,
     };
-    if (filter.column) {
-      this.setFilters(next);
-    } else {
-      this.setState(next);
-    }
+    this.setFilters(next);
   };
 
   onLogicalOperatorChange = (logicalOperator) => {
@@ -107,7 +104,7 @@ export default class Datatable extends Component {
   };
 
   clearFilters = () => {
-    this.setState({ filters: [], logicalOperator: 'and', 'page-number': 0 });
+    this.setFilters({ filters: [], logicalOperator: 'and', 'page-number': 0 });
   };
 
   setFilters = (state) => {
@@ -140,7 +137,7 @@ export default class Datatable extends Component {
       ? datatable.columns
       : [];
 
-    const query = makeQuerystringFilters(this.state, sectionFilters, true);
+    const query = simpleQSObjectify(makeQuerystringFilters(this.state, sectionFilters, true));
     const basePath = `${location.pathname}${simpleQStringify(makeQuerystringFilters(this.state))}`;
 
     return this.props.children({
