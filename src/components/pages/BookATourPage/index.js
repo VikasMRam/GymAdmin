@@ -18,10 +18,10 @@ import {
 } from 'sly/components/templates/FullScreenWizard';
 import SlyEvent from 'sly/services/helpers/events';
 import HeaderContainer from 'sly/containers/HeaderContainer';
+import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWizardAcknowledgementContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
-import CommunityWizardAcknowledgement from 'sly/components/organisms/CommunityWizardAcknowledgement';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -77,9 +77,10 @@ const BookATourPage = ({
       onTileClick: hideModal,
       heading,
       subheading,
+      type: 'bat',
     };
 
-    showModal(<CommunityWizardAcknowledgement {...props} />);
+    showModal(<CommunityWizardAcknowledgementContainer {...props} />);
   };
   const handleStepChange = ({ currentStep, doSubmit, previous }) => {
     sendEvent('step-completed', id, currentStep);

@@ -29,9 +29,9 @@ import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
 import CommunityPricingWizardWhatToDoNextFormContainer from 'sly/containers/CommunityPricingWizardWhatToDoNextFormContainer';
+import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWizardAcknowledgementContainer';
 import CommunityPricingWizardExploreAffordableOptionsFormContainer
   from 'sly/containers/CommunityPricingWizardExploreAffordableOptionsFormContainer';
-import CommunityWizardAcknowledgement from 'sly/components/organisms/CommunityWizardAcknowledgement';
 import CommunityPricingWizardLanding from 'sly/components/organisms/CommunityPricingWizardLanding';
 
 const Header = makeHeader(HeaderContainer);
@@ -204,9 +204,10 @@ class PricingWizardPage extends Component {
       onTileClick: hideModal,
       heading,
       subheading,
+      type: 'pricingWizard',
     };
 
-    showModal(<CommunityWizardAcknowledgement {...props} />);
+    showModal(<CommunityWizardAcknowledgementContainer {...props} />);
   };
 
   render() {
@@ -235,7 +236,7 @@ class PricingWizardPage extends Component {
         </Column>
         <WizardController
           formName="PricingWizardForm"
-          onComplete={data => onComplete(data, openConfirmationModal)}
+          onComplete={data => onComplete(data).then(openConfirmationModal)}
           onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
         >
           {({
