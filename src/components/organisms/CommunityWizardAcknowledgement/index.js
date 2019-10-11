@@ -40,7 +40,8 @@ const IconsWrapper = pad(mobileOnly(styled.div`
   display: grid;
   grid-gap: ${size('spacing.regular')};
 `, null, css`
-  grid-template-columns: 1fr 1fr 1fr;
+  // todo uncomment this after modal size clarification
+  // grid-template-columns: 1fr 1fr 1fr;
   grid-gap: ${size('spacing.large')};
   margin-bottom: ${size('spacing.xxLarge')};
 `));
@@ -77,7 +78,7 @@ const CommunityWizardAcknowledgement = ({
     <PaddedHowSlyWorksVideo isPlaying={isVideoPlaying} onPause={onVideoPause} onPlay={onVideoPlay} onThumbnailClick={onVideoThumbnailClick} />
     <PaddedHr />
     <StyledHeading>You might like these communities.</StyledHeading>
-    <SimilarCommunities imageSize="little" layout="row" communities={similarCommunities} onCommunityClick={onTileClick} showDescription={false} />
+    <SimilarCommunities communityStyle={{ imageSize: 'little', layout: 'row', showDescription: false }} communities={similarCommunities} onCommunityClick={onTileClick} />
   </TopWrapper>
 );
 

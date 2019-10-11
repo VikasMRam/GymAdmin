@@ -51,7 +51,7 @@ const CommunitySaved = ({ similarCommunities, onDoneButtonClicked }) => (
     </ButtonsWrapper>
     <StyledHr />
     <StyledHeading size="subtitle">Similar communities nearby</StyledHeading>
-    <SimilarCommunities communities={similarCommunities} showDescription={false} />
+    <SimilarCommunities communities={similarCommunities} similarCommunityStyle={{ showDescription: false }} />
   </Fragment>
 );
 
