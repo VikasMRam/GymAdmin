@@ -1,7 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import CommunityWizardAcknowledgement from 'sly/components/organisms/CommunityWizardAcknowledgement';
+import Modal from 'sly/components/molecules/Modal';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const { similarProperties } = RhodaGoldmanPlaza;
@@ -15,4 +17,13 @@ const defaultProps = {
 };
 
 storiesOf('Organisms|CommunityWizardAcknowledgement', module)
-  .add('default', () => <CommunityWizardAcknowledgement {...defaultProps} />);
+  .add('default', () => <CommunityWizardAcknowledgement {...defaultProps} />)
+  .add('within modal', () => (
+    <Modal
+      onClose={action('closed')}
+      isOpen
+      closeable
+    >
+      <CommunityWizardAcknowledgement {...defaultProps} />
+    </Modal>
+  ));
