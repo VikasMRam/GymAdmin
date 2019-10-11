@@ -36,9 +36,9 @@ const assertProfilesContacted = (response, data, contactType) => {
 };
 
 export const assertUserActionsForGetAvailability = (response, data) => {
-  assertProfilesContacted(response, data, 'LEAD/REQUEST_AVAILABILITY');
+  assertProfilesContacted(response, data, 'LEAD/CUSTOM_PRICING');
   assertUserDetails(response, data);
-  assertUserDetailsEmail(response, data);
+  // assertUserDetailsEmail(response, data);
 };
 
 export const assertUserActionsForCustomPricing = (response, data) => {
