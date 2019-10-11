@@ -41,6 +41,10 @@ export const buildPriceList = (community) => {
     studioApartmentRate,
     oneBedroomApartmentRate,
     twoBedroomApartmentRate,
+    alSharedRate,
+    alPrivateRate,
+    mcSharedRate,
+    mcPrivateRate,
   } = propInfo;
   try {
     if (sharedSuiteRate && !sharedSuiteRate.match(/[A-Za-z]+/)) {
@@ -57,6 +61,18 @@ export const buildPriceList = (community) => {
     }
     if (twoBedroomApartmentRate && !twoBedroomApartmentRate.match(/[A-Za-z]+/)) {
       priceList.push({ label: 'Two Bedroom Apartment', value: getAveragePriceString(twoBedroomApartmentRate) });
+    }
+    if (alSharedRate && !alSharedRate.match(/[A-Za-z]+/)) {
+      priceList.push({ label: 'Assisted Living Shared', value: getAveragePriceString(alSharedRate) });
+    }
+    if (alPrivateRate && !alPrivateRate.match(/[A-Za-z]+/)) {
+      priceList.push({ label: 'Assisted Living Private', value: getAveragePriceString(alPrivateRate) });
+    }
+    if (mcSharedRate && !mcSharedRate.match(/[A-Za-z]+/)) {
+      priceList.push({ label: 'Memory Care Shared', value: getAveragePriceString(mcSharedRate) });
+    }
+    if (mcPrivateRate && !mcPrivateRate.match(/[A-Za-z]+/)) {
+      priceList.push({ label: 'Memory Care Private', value: getAveragePriceString(mcPrivateRate) });
     }
   } catch (e) {
     console.log('Non numeric prices');
