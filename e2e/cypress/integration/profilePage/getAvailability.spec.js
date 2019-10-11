@@ -10,7 +10,7 @@ function inputValuesAndAssert(cy) {
   const typeOfCare = 'Medication Management';
   const medicaid = 'Yes';
 
-  cy.visit(`/assisted-living/california/san-francisco/${communitySlug}?experimentEvaluations=ProfileCTA_ButtonStyle:FullWidth,PricingCTA_Language:Detailed`);
+  cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
 
   cy.get('button').contains('Get Detailed Pricing').click();
 

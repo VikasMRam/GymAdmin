@@ -195,7 +195,7 @@ jobs:
     steps:
       - checkout:
           path: ~/project
-      
+
       - node/install:
           node-version: 8.16.0
           install-yarn: false
@@ -208,7 +208,7 @@ jobs:
           name: NPM Install and Run Local SlyReact in Background
           command: |
             npm install
-            npm run staging
+            DISABLE_EXPERIMENTS=true npm run staging
           working_directory: ~/project
           background: true
 
