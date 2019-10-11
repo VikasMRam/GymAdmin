@@ -8,3 +8,11 @@ export default function buildEntity(response) {
   }
   return build(normalized, response.data.type.toLowerCase(), response.data.id, { eager: true });
 }
+
+if (!module.parent) {
+  // main so we are trying to build an entity from a response json
+  const responseText = require('fs').readFileSync(process.argv[2], 'utf8');
+  const response = JSON.parse(responseText);
+  const entities = buildEntity(response);
+  console.log(JSON.stringify(entities, null, 2));
+}
