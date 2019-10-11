@@ -89,11 +89,10 @@ class AcceptAndContactFamilyContainer extends Component {
     const { clientInfo } = client;
     const { phoneNumber } = clientInfo;
     const { contactType } = this.state;
-    
-    const { id: userId } = user; 
+    const { id: userId } = user;
     const userParticipant = conversation.conversationParticipants.find(participant => participant.participantID === userId);
     const { participantID } = userParticipant;
-    const email = "messaging+"+participantID+"@conversation."+domain;
+    const email = `messaging+${participantID}@conversation.${domain}`;
     const detail = {
       type: contactType,
       value: contactType === 'phone' ? phoneNumber : email,
