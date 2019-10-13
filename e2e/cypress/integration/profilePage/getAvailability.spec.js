@@ -12,9 +12,7 @@ function inputValuesAndAssert(cy) {
 
   cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
 
-  cy.get('#pricing-and-floor-plans input[name="email"]').type(email);
-
-  cy.get('button').contains('Get Availability').click();
+  cy.get('button').contains('Get Detailed Pricing').click();
 
   const data = {
     communitySlug, name, phoneNumber, typeOfRoom, typeOfCare, medicaid, email,

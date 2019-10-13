@@ -71,11 +71,20 @@ const FormSection = styled.div`
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
   padding-bottom: 0;
   border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.xLarge')};
+    padding-bottom: 0;
+  }
 `;
 const FormBottomSection = styled.div`
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
   border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')} ${palette('grey', 'filler')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.xLarge')};
+  }
 `;
 
 const FormSectionHeading = pad(Block, 'large');

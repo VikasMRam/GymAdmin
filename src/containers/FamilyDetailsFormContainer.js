@@ -27,8 +27,6 @@ const ReduxForm = reduxForm({
   validate,
 })(FamilyDetailsForm);
 
-@prefetch('users', 'getUsers')
-
 @query('updateClient', 'updateClient')
 
 @query('updateUuidAux', 'updateUuidAux')
@@ -55,7 +53,7 @@ export default class FamilyDetailsFormContainer extends Component {
 
   handleSubmit = (data) => {
     const {
-      client, updateClient, refetchClient, rawClient, notifyInfo, notifyError, uuidAux, updateUuidAux,
+      client, updateClient, refetchClient, rawClient, notifyInfo, notifyError, uuidAux,
     } = this.props;
     const { id } = client;
     const { id: uuidID } = uuidAux;
@@ -166,12 +164,8 @@ export default class FamilyDetailsFormContainer extends Component {
   };
 
   render() {
-    const { client, formData, users, status, ...props } = this.props;
-    const { users: usersStatus } = status;
-    const { hasFinished: usersHasFinished } = usersStatus;
-    if (!usersHasFinished) {
-      return null;
-    }
+    const { client, formData, ...props } = this.props;
+
 
     const { clientInfo, uuidAux, tags } = client;
     const {
@@ -230,7 +224,6 @@ export default class FamilyDetailsFormContainer extends Component {
         onSubmit={this.handleSubmit}
         initialValues={initialValues}
         preferredLocation={preferredLocation}
-        assignedTos={users}
         {...props}
       />
     );

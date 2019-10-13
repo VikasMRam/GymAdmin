@@ -49,18 +49,28 @@ describe('datatables helpers', () => {
       }, {
         column: 'name',
         operator: 'cs',
-        value: 'test',
+        value: 'test@thing.com',
       }],
       logicalOperator: 'or',
     };
 
     const qsObject = makeQuerystringFilters(filterState);
-    expect(qsObject).toEqual({
-      'filter[admin]': 'eq:true',
-      'filter[email]': 'nem',
-      'filter[name]': 'cs:test',
-      exp: 'or',
-    });
+    expect(qsObject).toEqual([{
+      name: 'filter[admin]',
+      value: 'eq:true',
+    },
+    {
+      name: 'filter[email]',
+      value: 'nem',
+    },
+    {
+      name: 'filter[name]',
+      value: 'cs:test@thing.com',
+    },
+    {
+      name: 'exp',
+      value: 'or',
+    }]);
   });
 
   it('should not ignore empty filters', () => {
@@ -76,6 +86,21 @@ describe('datatables helpers', () => {
     };
 
     const qsObject = makeQuerystringFilters(filterState);
-    expect(qsObject).toEqual({ 'filter[email]': '', 'filter[name]': 'cs', exp: 'or' });
-  })
+    expect(qsObject).toEqual([{
+      name: 'filter[]',
+      value: '',
+    },
+    {
+      name: 'filter[email]',
+      value: '',
+    },
+    {
+      name: 'filter[name]',
+      value: 'cs',
+    },
+    {
+      name: 'exp',
+      value: 'or',
+    }]);
+  });
 });

@@ -23,7 +23,7 @@ import { renderStylesToString } from 'emotion-server';
 
 import { cleanError, logWarn } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';
-import { port, host, publicPath, isDev, domain } from 'sly/config';
+import { port, host, publicPath, isDev, domain, disableExperiments } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import apiService from 'sly/services/api';
@@ -136,7 +136,7 @@ app.use((req, res, next) => {
 
 // headers
 app.use((req, res, next) => {
-  const cookies = [req.headers.cookie];
+  const cookies = req.headers.cookie ? [req.headers.cookie] : [];
   const setCookie = createSetCookie(res, cookies);
   req.clientConfig.cookies = cookies;
 
@@ -199,16 +199,19 @@ app.use(async (req, res, next) => {
 
   const hmac = crypto.createHmac('sha256', slyUUID);
   const slyUUIDHash = hmac.digest('hex');
-  const experimentNames = Object.keys(experiments);
-  const userExperiments = experimentNames
+  const userExperiments = Object.keys(experiments)
     .reduce((cumul, key, i) => {
-      const channel = i % 8;
-      const part = slyUUIDHash.substr(channel * 4, 4);
-      const segment = Math.floor((parseInt(part, 16) / 65536) / (1 / experiments[key].length));
+      let segment;
+      if (disableExperiments) {
+        segment = 0;
+      } else {
+        const channel = i % 8;
+        const part = slyUUIDHash.substr(channel * 4, 4);
+        segment = Math.floor((parseInt(part, 16) / 65536) / (1 / experiments[key].length));
+      }
       const variant = experiments[key][segment];
-      const modifiedCumul = { ...cumul };
-      modifiedCumul[key] = variant;
-      return modifiedCumul;
+      cumul[key] = variant;
+      return cumul;
     }, {});
 
   const api = apiService.create();

@@ -121,6 +121,9 @@ const CommunitySearchPage = ({
     showModal(modalContent, null, 'sidebar');
   };
 
+  const geoGuideList = (geoGuide && geoGuide.cityTOCGuides);
+
+
   const columnContent = (
     <CommunityFilterList
       latitude={latitude}
@@ -131,6 +134,7 @@ const CommunitySearchPage = ({
       isMapView={isMapView}
       toggleFilter={handleModalFilterClick}
       onParamsRemove={onParamsRemove}
+      geoGuideList={geoGuideList}
     />
   );
   const TopContent = () => {
@@ -142,7 +146,7 @@ const CommunitySearchPage = ({
             <StyledHeading level="hero" size="title">
               {listSize} {tocLabel} near {city}
             </StyledHeading>
-            { gg.manualDescription && <LegacyContent dangerouslySetInnerHTML={{ __html: gg.manualDescription}} />}
+            { gg.manualDescription && <LegacyContent dangerouslySetInnerHTML={{ __html: gg.manualDescription }} />}
             {!gg.manualDescription && <LegacyContent dangerouslySetInnerHTML={{ __html: gg.autoDescription }} />}
           </Fragment>
         );
@@ -169,7 +173,7 @@ const CommunitySearchPage = ({
      hospitals, <p>6</p>
      reviews, <p>7</p>
      */
-    if (geoGuide && geoGuide.guideContent) {
+    if (geoGuide && geoGuide.guideContent && !(geoGuide.guideContent.ownGuidePage && geoGuide.guideContent.ownGuidePage === 'true')) {
       const additionalDivs = [];
       const gg = geoGuide.guideContent;
       ['description', 'guide', 'articles', 'resources',

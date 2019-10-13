@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import { Link, Paragraph, Heading } from 'sly/components/atoms';
 
@@ -20,6 +20,29 @@ const StyledArticle = styled.article`
     }
   }
 `;
+
+const LegacyContent = styled.div`
+  a {
+    text-decoration: none;
+    color: ${palette('base')};
+
+    &:hover {
+      color: ${palette('filler')};
+      cursor: pointer;
+    }
+
+    &:active {
+      color: ${palette('base')};
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+`;
+LegacyContent.defaultProps = {
+  palette: 'primary',
+};
 
 const CommunityDetails = ({
   communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription, ownerExperience, city, state, twilioNumber,
@@ -40,7 +63,7 @@ const CommunityDetails = ({
       )}
       {(!communityDescription && rgsAuxDescription &&
         <StyledArticle>
-          <div dangerouslySetInnerHTML={{ __html: rgsAuxDescription }} />
+          <LegacyContent dangerouslySetInnerHTML={{ __html: rgsAuxDescription }} />
         </StyledArticle>
       )}
       {(!communityDescription && !rgsAuxDescription && 'No details are available')}
