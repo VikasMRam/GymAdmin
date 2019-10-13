@@ -432,7 +432,7 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       },
       onSimilarCommunitiesClick,
     } = this.props;
-
+    const communityStyle = { layout: 'row', imageSize: 'small', showDescription: false};
     // Track profiles on popup launch
     const modalContent = (<Experiment name="User_Bounce_Popup" defaultVariant="QuestionModal">
       <Variant name="QuestionModal">
@@ -451,7 +451,9 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
 
         <SimilarCommunities
           similarProperties={similarProperties}
-          onSimilarCommunityClick={onSimilarCommunitiesClick} />
+          onSimilarCommunityClick={onSimilarCommunitiesClick}
+          communityStyle={communityStyle}
+        />
 
       </Variant>
     </Experiment>);
