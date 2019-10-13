@@ -74,7 +74,7 @@ export const put = function patch(...args) {
   };
 };
 
-put.name = 'put';
+put.method = 'put';
 
 // placeholders
 // placeholders, options

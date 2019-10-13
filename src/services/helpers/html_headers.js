@@ -174,7 +174,7 @@ export const getHelmetForSearchPage = ({
       <link rel="canonical" href={canonicalUrl} />
 
       {
-        ((url.search && url.search.length > 0) || communityList.length <= 2) && <meta name="robots" content="noindex" />
+        url.search && url.search.length > 0 && <meta name="robots" content="noindex" />
       }
 
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>

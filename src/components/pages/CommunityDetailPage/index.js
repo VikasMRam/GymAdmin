@@ -12,7 +12,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import { calculatePricing, buildPriceList, buildEstimatedPriceList } from 'sly/services/helpers/pricing';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import pad from 'sly/components/helpers/pad';
-import { Button, Paragraph, Block } from 'sly/components/atoms';
+import { Heading, Button, Paragraph, Block } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import {
   CommunityDetailPageTemplate,
@@ -59,6 +59,7 @@ import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFo
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 import { Experiment, Variant } from 'sly/services/experiments';
+import exitIntent from 'sly/containers/ExitIntentContainer'
 
 const BackToSearch = styled.div`
   text-align: center
@@ -149,6 +150,7 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
   value,
 });
 
+@exitIntent
 export default class CommunityDetailPage extends Component {
   static propTypes = {
     user: object,
@@ -186,7 +188,6 @@ export default class CommunityDetailPage extends Component {
     onUnsaveCommunity: func,
     history: object,
   };
-
   handleMorePicturesClick = (image) => {
     const {
       community, onMediaGallerySlideChange, onMediaGalleryToggleFullscreen,
@@ -372,6 +373,12 @@ export default class CommunityDetailPage extends Component {
     showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
   };
 
+  showExitModal = () => {
+    const { showModal } = this.props;
+
+    showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
+  };
+
   render() {
     const {
       handleShareClick, openAskAgentQuestionModal, openAskQuestionModal,
@@ -468,7 +475,7 @@ export default class CommunityDetailPage extends Component {
     const hasCCRC = typeCares.includes('Continuing Care Retirement Community(CCRC)');
 
     // TODO: move this to a container for EntityReviews handling posts
-    const onLeaveReview = () => {};
+    const onLeaveReview = () => { };
     // TODO: move this to a container PricingAndAvailability for handling bookings
     const { reviewsValue } = propRatings;
     const ratingsArray = propRatings.ratingsArray || [];
@@ -495,7 +502,7 @@ export default class CommunityDetailPage extends Component {
 
     const showSimilarEarlier = pricesList.length === 0 && floorPlans.length > 0 && address.city === 'Sacramento' && address.state === 'CA' &&
       (!communityDescription || communityDescription === '');
-
+    const similarCommunityStyle = { layout: 'column', imageSize: 'regular', showDescription: true };
     return (
       <Fragment>
         {getHelmetForCommunityPage(community, location)}
@@ -569,7 +576,7 @@ export default class CommunityDetailPage extends Component {
                 {showSimilarEarlier &&
                   <TopCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                     <MainSection>
-                      <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} />
+                      <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
                       <BackToSearch>
                         <Button
                           ghost
@@ -591,7 +598,7 @@ export default class CommunityDetailPage extends Component {
                       <Paragraph>
                         Pricing for {name} may include both a one time buy-in fee and a monthly component. Connect directly with {name} to find out your pricing.
                       </Paragraph>
-                      <Button  onClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}>Get Detailed Pricing</Button>
+                      <Button onClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}>Get Detailed Pricing</Button>
                     </MainSection>
                   }
                   {!hasCCRC && (pricesList.length > 0 || estimatedPriceList.length > 0 || floorPlans.length === 0) &&
@@ -811,7 +818,7 @@ export default class CommunityDetailPage extends Component {
                 {!showSimilarEarlier &&
                   <BottomCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                     <MainSection>
-                      <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} />
+                      <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
                       <BackToSearch>
                         <Button
                           ghost

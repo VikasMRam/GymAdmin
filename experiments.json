@@ -1,5 +1,6 @@
 {
   "InplaceWizard_Step1": ["Step1A","Step1B"],
   "PricingCTA_Language": ["Detailed", "Personalized"],
-  "ProfileCTA_ButtonStyle": ["FullWidth", "FooterSmall"]
+  "ProfileCTA_ButtonStyle": ["FullWidth", "FooterSmall"],
+  "User_Bounce_Popup": ["QuestionModal", "SimilarCommunities"]
 }
