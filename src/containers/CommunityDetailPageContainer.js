@@ -34,6 +34,12 @@ import {
   PROFILE_VIEWED,
   TOUR_BOOKED,
 } from 'sly/services/newApi/constants';
+import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
+import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
+import { Experiment, Variant } from 'sly/services/experiments';
+import styled from 'styled-components';
+import { Heading } from 'sly/components/atoms';
+import { size } from 'sly/components/themes';
 
 const ignoreSearchParams = [
   'modal',
@@ -43,6 +49,11 @@ const ignoreSearchParams = [
   'token',
   'modal',
 ];
+
+
+const StyledHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.xLarge')};
+`;
 
 const createHasProfileAction = uuidActions => (type, actionInfo) => {
   if (!uuidActions) return false;
@@ -414,6 +425,40 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       });
   };
 
+  getExitintent = (showModal, hideModal) => {
+    const {
+      community: {
+        id, name, similarProperties,
+      },
+      onSimilarCommunitiesClick,
+    } = this.props;
+
+    // Track profiles on popup launch
+    const modalContent = (<Experiment name="User_Bounce_Popup" defaultVariant="QuestionModal">
+      <Variant name="QuestionModal">
+        <CommunityAskQuestionFormContainer
+          showModal={showModal}
+          communityName={name}
+          communitySlug={id}
+          onButtonClick={hideModal}
+          type="exitForm"
+        />
+      </Variant>
+      <Variant name="SimilarCommunities">
+        <StyledHeading>
+          We found some Assisted Living communities you might like
+        </StyledHeading>
+
+        <SimilarCommunities
+          similarProperties={similarProperties}
+          onSimilarCommunityClick={onSimilarCommunitiesClick} />
+
+      </Variant>
+    </Experiment>);
+
+    return modalContent;
+  }
+
   render() {
     const {
       status,
@@ -518,6 +563,7 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
                 hideModal={hide}
                 onUnsaveCommunity={this.handleUnsaveCommunity}
                 history={history}
+                exitIntentContent={this.getExitintent(show, hide)}
               />
             )}
           </ModalController>

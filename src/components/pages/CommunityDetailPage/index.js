@@ -12,7 +12,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import { calculatePricing, buildPriceList, buildEstimatedPriceList } from 'sly/services/helpers/pricing';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import pad from 'sly/components/helpers/pad';
-import { Button, Paragraph, Block } from 'sly/components/atoms';
+import { Heading, Button, Paragraph, Block } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import {
   CommunityDetailPageTemplate,
@@ -60,6 +60,7 @@ import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFo
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 import { Experiment, Variant } from 'sly/services/experiments';
+import exitIntent from 'sly/containers/ExitIntentContainer'
 
 const BackToSearch = styled.div`
   text-align: center
@@ -150,6 +151,7 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
   value,
 });
 
+@exitIntent
 export default class CommunityDetailPage extends Component {
   static propTypes = {
     user: object,
@@ -187,67 +189,6 @@ export default class CommunityDetailPage extends Component {
     onUnsaveCommunity: func,
     history: object,
   };
-  /* Exit Intent Work: https://github.com/mrlagmer/exitintent/blob/master/src/App.js */
-
-  componentDidMount() {
-    document.addEventListener('mouseout', this.addExitIntent);
-  }
-
-  onExitFormClose = () => {
-    const {
-      community: {
-        id,
-      },
-    } = this.props;
-
-    sendEvent('exitModalTypeA', 'close-modal', id);
-  }
-
-  addExitIntent = (e) => {
-    // Get the current viewport width.
-    const vpWidth = Math.max(
-      document.documentElement.clientWidth,
-      window.innerWidth || 0
-    );
-
-    // If the current mouse X position is within 50px of the right edge
-    // of the viewport, return.
-    if (e.clientX >= vpWidth - 50) return;
-
-    // If the current mouse Y position is not within 50px of the top
-    // edge of the viewport, return.
-    if (e.clientY >= 50) return;
-
-    // Reliable, works on mouse exiting window and
-    // user switching active program
-    const from = e.relatedTarget || e.toElement;
-
-    if (!from) {
-      const { showModal, hideModal } = this.props;
-      const s = localStorage.getItem('exitModalShown');
-
-      if (s !== 'exitShown') {
-        const {
-          community: {
-            id, name,
-          },
-        } = this.props;
-
-        localStorage.setItem('exitModalShown', 'exitShown');
-        // Track profiles on popup launch
-        sendEvent('exitModalTypeA', 'launch-modal', id);
-
-        showModal(<CommunityAskQuestionFormContainer
-          showModal={showModal}
-          communityName={name}
-          communitySlug={id}
-          onButtonClick={hideModal}
-          type="exitForm"
-        />, this.onExitFormClose);
-      }
-    }
-  }
-
   handleMorePicturesClick = (image) => {
     const {
       community, onMediaGallerySlideChange, onMediaGalleryToggleFullscreen,
