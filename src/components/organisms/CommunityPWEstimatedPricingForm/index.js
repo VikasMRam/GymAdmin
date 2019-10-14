@@ -21,9 +21,12 @@ const StyledBlock = styled(Block)`
 const StyledField = styled(Field)`
   display: grid;
   grid-gap: ${size('spacing.large')};
-  grid-template-columns: repeat(auto-fit, ${size('mobileLayout.col2')});
   margin-right: -${size('spacing.regular')};
   margin-bottom: ${size('spacing.xLarge')};
+
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    grid-template-columns: repeat(auto-fit, ${size('mobileLayout.col2')});
+  }
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     grid-template-columns: repeat(auto-fit, calc(${size('layout.col1')} + (${size('layout.gutter')}) * 2));
@@ -36,8 +39,10 @@ const StyledField = styled(Field)`
 `;
 
 const CareTypesField = StyledField.extend`
-  grid-template-columns: repeat(auto-fit, ${size('mobileLayout.col2')});
-
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    grid-template-columns: repeat(auto-fit, ${size('mobileLayout.col2')});
+  }
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     grid-template-columns: repeat(auto-fit, ${size('layout.col3')});
   }
