@@ -14,10 +14,11 @@ const PaddedLink = pad(styled(Link)`
 
 const ShadowCommunityTile = borderRadius(border(CommunityTile, 'regular', 'grey', 'stroke'));
 
-const SimilarCommunity = ({ similarProperties, onSimilarCommunityClick }) => {
+const SimilarCommunity = ({ similarProperties, onSimilarCommunityClick, communityStyle }) => {
+  const { layout = 'column', imageSize = 'regular', showDescription = false } = communityStyle;
   const components = similarProperties.map((similarProperty, index) => (
     <PaddedLink key={similarProperty.id} to={similarProperty.url} onClick={() => onSimilarCommunityClick(index, similarProperty.id)}>
-      <ShadowCommunityTile community={similarProperty} layout="column" imageSize="regular" noGallery showDescription showSeeMoreButtonOnHover />
+      <ShadowCommunityTile community={similarProperty} layout={layout} imageSize={imageSize} showDescription={showDescription} noGallery showSeeMoreButtonOnHover />
     </PaddedLink>
   ));
   return <div>{components}</div>;
@@ -26,6 +27,7 @@ const SimilarCommunity = ({ similarProperties, onSimilarCommunityClick }) => {
 SimilarCommunity.propTypes = {
   similarProperties: arrayOf(object).isRequired,
   onSimilarCommunityClick: func.isRequired,
+  communityStyle: object,
 };
 
 export default SimilarCommunity;
