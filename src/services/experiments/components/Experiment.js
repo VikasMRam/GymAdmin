@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 
-import { enableExperimentsDebugger, isTest } from 'sly/config';
+import { enableExperimentsDebugger, isProd } from 'sly/config';
 import SlyEvent from 'sly/services/helpers/events';
 import { size } from 'sly/components/themes';
 import { getExperiment } from 'sly/store/selectors';
@@ -38,7 +38,7 @@ export class Experiment extends Component {
   componentWillMount() {
     // read query string: ?experimentEvaluations=Organisms_Concierge_Calendly:original_flow,Organisms_Footer_Calendly:original_flow
     this.experimentsOverrides = {};
-    if (isTest) {
+    if (!isProd) {
       const { location } = this.props;
       if (location) {
         const { search } = location;

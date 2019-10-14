@@ -93,7 +93,7 @@ export default function buildApi(endpoints, config = {}) {
     };
 
     acc[key].actionName = key;
-    acc[key].method = normalizeArguments.name;
+    acc[key].method = normalizeArguments.method;
 
     return acc;
   }, {});

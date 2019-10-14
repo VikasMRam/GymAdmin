@@ -46,6 +46,7 @@ export default class CommunityAskQuestionFormContainer extends Component {
     parentSlug: string,
     showModal: func,
     createAction: func,
+    type: string,
   };
 
   handleOnSubmit = (values) => {
@@ -107,4 +108,3 @@ export default class CommunityAskQuestionFormContainer extends Component {
     );
   }
 }
-

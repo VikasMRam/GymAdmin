@@ -131,15 +131,15 @@ export default class ReferralSearchContainer extends Component {
 
   getSearchFilters = (nameOrZip) => {
   // Based on regex matching use name or zip
+    const zipRe = new RegExp(/^\d{5}(-\d{4})?$/);
     const filters = {};
-    if (nameOrZip.match(this.zipRe)) {
+    if (nameOrZip.match(zipRe)) {
       filters['filter[zip]'] = nameOrZip;
     } else {
       filters['filter[name]'] = nameOrZip;
     }
     return filters;
   }
-  zipRe = new RegExp(/^\d{5}(-\d{4})?$/);
 
   doCommunitySearch = ({ nameOrZip }) => {
     const { getCommunities } = this.props;
