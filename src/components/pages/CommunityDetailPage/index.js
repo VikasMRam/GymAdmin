@@ -59,7 +59,7 @@ import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFo
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 import { Experiment, Variant } from 'sly/services/experiments';
-import exitIntent from 'sly/containers/ExitIntentContainer'
+import exitIntent from 'sly/containers/ExitIntentContainer';
 
 const BackToSearch = styled.div`
   text-align: center

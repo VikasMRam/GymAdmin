@@ -5,12 +5,13 @@ import { func, bool } from 'prop-types';
 import { size, palette, key } from 'sly/components/themes';
 import CommunityActions from 'sly/components/molecules/CommunityActions';
 
-const FullWrapper = styled.div`
+const Wrapper = styled.div`
   position: fixed;
+  display: flex;
   left: 0;
   bottom: 0;
+  right: 0;
   background-color: ${palette('white', 'base')};
-  width: 100%;
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   z-index: ${key('zIndexes.stickySections')};
   padding: ${size('spacing.large')};
@@ -23,14 +24,14 @@ const FullWrapper = styled.div`
 `;
 
 const CommunityStickyFooter = ({
-  onBookATourClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
+  onGCPClick, isAlreadyPricingRequested,
 }) => (
-  <FullWrapper>
+  <Wrapper>
     <CommunityActions
       onGCPClick={onGCPClick}
       isAlreadyPricingRequested={isAlreadyPricingRequested}
     />
-  </FullWrapper>
+  </Wrapper>
 );
 
 CommunityStickyFooter.propTypes = {

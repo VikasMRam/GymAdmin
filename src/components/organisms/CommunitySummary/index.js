@@ -10,7 +10,7 @@ import { Link, Box, Heading, Hr, Icon } from 'sly/components/atoms';
 import IconButton from 'sly/components/molecules/IconButton';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
-import { isServer } from 'sly/config';
+import { isBrowser } from 'sly/config';
 
 const Address = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
@@ -107,7 +107,7 @@ const CommunitySummary = ({
           {conciergeNumber &&
             <Fragment>
               For pricing and availability, call&nbsp;
-              <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
+              <Link data-cy="concierge-number" href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
                 <NumberFormat
                   value={conciergeNumber}
                   format="(###) ###-####"
@@ -115,7 +115,7 @@ const CommunitySummary = ({
                 />
               </Link>
               <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
-              {!isServer &&
+              {isBrowser &&
                 <TooltipContent id="phone" place="top" effect="solid" multiline>
                   This phone number will connect you to the concierge team at Seniorly.
                 </TooltipContent>

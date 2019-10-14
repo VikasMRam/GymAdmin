@@ -16,6 +16,7 @@ const videoMimeTypes = {
 
 const CarouselWrapper = styled.div`
   position: relative;
+  width: 100%;
   background: ${ifProp('transparent', 'transparent', palette('grey', 'base'))};
   text-align: center;
 
@@ -44,9 +45,9 @@ const StyledVideo = styled.video`
 const StyledIcon = styled(Icon)`
   position: absolute;
   z-index: 1;
-  margin: auto;
-  top: 0;
+  top: 50%;
   bottom: 0;
+  margin-top: calc(-${size('icon.xLarge')} / 2);
 
   :hover {
     cursor: pointer;

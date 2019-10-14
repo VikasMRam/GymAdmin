@@ -14,7 +14,8 @@
     "__COVERAGE__": true,
     "__BASENAME__": true,
     "cy": true,
-    "Cypress": true
+    "Cypress": true,
+    "context": true
   },
   "settings": {
     "import/resolver": {
@@ -25,7 +26,6 @@
   },
   "rules": {
     "comma-dangle": [2, "always-multiline"],
-    "object-curly-newline": 0,
     "max-len": 0,
     "no-shadow": 0,
     "no-plusplus": 0,
