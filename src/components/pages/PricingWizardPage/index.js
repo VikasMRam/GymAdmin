@@ -72,7 +72,7 @@ const contactFormHeadingMap = {
   'apply-financing': { heading: 'We Are Here to Help You', subheading: 'We have helped thousands of families to learn about and choose a community they love. This is a free service. ' },
 };
 
-const stepsWithoutControls = [1, 4, 5];
+const stepsWithoutControls = ['Landing', 'WhatToDoNext', 'ExploreAffordableOptions'];
 
 class PricingWizardPage extends Component {
   static propTypes = {
@@ -133,26 +133,26 @@ class PricingWizardPage extends Component {
 
     sendEvent('step-completed', id, currentStep);
     userActionSubmit(data);
-    if (currentStep === 4) {
+    if (currentStep === 'WhatToDoNext') {
       if (interest === 'talk-advisor') {
         doSubmit(openConfirmationModal);
       } else if (interest !== 'explore-affordable-options') {
-        goto(5);
+        goto('ExploreAffordableOptions');
       }
     }
-    if (currentStep === 2 && userHas(['name', 'phoneNumber'])) {
+    if (currentStep === 'EstimatedPricing' && userHas(['name', 'phoneNumber'])) {
       if (hasCCRC(community)) {
-        goto(2);
+        goto('EstimatedPricing');
         doSubmit(openConfirmationModal);
       } else {
-        goto(4);
+        goto('WhatToDoNext');
       }
     }
-    if (currentStep === 3) {
+    if (currentStep === 'Contact') {
       // Track goal events
       sendEvent('pricing-contact-submitted', id, currentStep);
       if (hasCCRC(community)) {
-        goto(3);
+        goto('Contact');
         doSubmit(openConfirmationModal);
       }
     }
@@ -253,7 +253,7 @@ class PricingWizardPage extends Component {
             return (
               <Fragment>
                 <Body>
-                  <WizardSteps currentStep={currentStep} {...props}>
+                  <WizardSteps {...props}>
                     <WizardStep
                       component={CommunityPricingWizardLanding}
                       name="Landing"
@@ -296,16 +296,16 @@ class PricingWizardPage extends Component {
                     />
                   </WizardSteps>
                 </Body>
-                <Controls>
-                  {!stepsWithoutControls.includes(currentStep) &&
+                {currentStep && !stepsWithoutControls.includes(currentStep) &&
+                  <Controls>
                     <PricingFormFooter
                       price={estimatedPrice}
                       onProgressClick={onSubmit}
                       isFinalStep={userHas(['phoneNumber', 'name']) || isFinalStep}
                       isButtonDisabled={!submitEnabled}
                     />
-                  }
-                </Controls>
+                  </Controls>
+                }
               </Fragment>
               );
             }}
