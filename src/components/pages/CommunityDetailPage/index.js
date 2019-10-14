@@ -44,7 +44,6 @@ import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQ
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
 import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
-import TextBottomSection from 'sly/components/molecules/TextBottomSection';
 import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
@@ -58,8 +57,7 @@ import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
-import { Experiment, Variant } from 'sly/services/experiments';
-import exitIntent from 'sly/containers/ExitIntentContainer'
+import exitIntent from 'sly/containers/ExitIntentContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -671,22 +669,9 @@ export default class CommunityDetailPage extends Component {
                     <MainSection>
                       <CommunityAgentSection agent={partnerAgent} onAdvisorHelpClick={openAdvisorHelpModal} />
                     </MainSection>
-                    <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
-                      <Variant name="FullWidth">
-                        <ButtonBlock>
-                          <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask a question</StyledButton>
-                        </ButtonBlock>
-                      </Variant>
-                      <Variant name="FooterSmall">
-                        <BottomSection>
-                          <TextBottomSection
-                            heading="Ask about pricing, floor plans, availability, anything."
-                            buttonText="Ask a question"
-                            onButtonClick={() => openAskAgentQuestionModal('services')}
-                          />
-                        </BottomSection>
-                      </Variant>
-                    </Experiment>
+                    <ButtonBlock>
+                      <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask a question</StyledButton>
+                    </ButtonBlock>
                   </TopCollapsibleSection>
                 }
                 {careServices && careServices.length > 0 &&
@@ -694,44 +679,18 @@ export default class CommunityDetailPage extends Component {
                     <MainSection>
                       <CommunityCareService careServices={careServices} />
                     </MainSection>
-                    <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
-                      <Variant name="FullWidth">
-                        <ButtonBlock>
-                          <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask About Care Services</StyledButton>
-                        </ButtonBlock>
-                      </Variant>
-                      <Variant name="FooterSmall">
-                        <BottomSection>
-                          <TextBottomSection
-                            heading="Need more detailed information on care services?"
-                            buttonText="Ask About Care Services"
-                            onButtonClick={() => openAskAgentQuestionModal('services')}
-                          />
-                        </BottomSection>
-                      </Variant>
-                    </Experiment>
+                    <ButtonBlock>
+                      <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask About Care Services</StyledButton>
+                    </ButtonBlock>
                   </TopCollapsibleSection>
                 }
                 <TopCollapsibleSection title={`Amenities at ${name}`}>
                   <MainSection>
                     <CommunityAmenities community={community} />
                   </MainSection>
-                  <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
-                    <Variant name="FullWidth">
-                      <ButtonBlock>
-                        <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask About Amenities</StyledButton>
-                      </ButtonBlock>
-                    </Variant>
-                    <Variant name="FooterSmall">
-                      <BottomSection>
-                        <TextBottomSection
-                          heading="Need more detailed information on amenities?"
-                          buttonText="Ask About Amenities"
-                          onButtonClick={() => openAskAgentQuestionModal('services')}
-                        />
-                      </BottomSection>
-                    </Variant>
-                  </Experiment>
+                  <ButtonBlock>
+                    <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask About Amenities</StyledButton>
+                  </ButtonBlock>
                 </TopCollapsibleSection>
                 {sortedEstimatedPrice.length > 0 &&
                   <TopCollapsibleSection title={`Compare Costs to Nearby ${typeOfCare} Communities`}>
@@ -753,23 +712,9 @@ export default class CommunityDetailPage extends Component {
                       onReviewLinkClicked={onReviewLinkClicked}
                     />
                   </MainSection>
-                  <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
-                    <Variant name="FullWidth">
-                      <ButtonBlock>
-                        <StyledButton onClick={handleAddReviewButtonClick}>Write a Review</StyledButton>
-                      </ButtonBlock>
-                    </Variant>
-                    <Variant name="FooterSmall">
-                      <BottomSection>
-                        <TextBottomSection
-                          heading={`Have experience with ${name}?`}
-                          subHeading="Your review can help other families with their senior living search."
-                          buttonText="Write a Review"
-                          onButtonClick={handleAddReviewButtonClick}
-                        />
-                      </BottomSection>
-                    </Variant>
-                  </Experiment>
+                  <ButtonBlock>
+                    <StyledButton onClick={handleAddReviewButtonClick}>Write a Review</StyledButton>
+                  </ButtonBlock>
                 </TopCollapsibleSection>
 
                 <TopCollapsibleSection title={`Questions About ${name}`}>
@@ -784,22 +729,9 @@ export default class CommunityDetailPage extends Component {
                       user={user}
                     />
                   </MainSection>
-                  <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
-                    <Variant name="FullWidth">
-                      <ButtonBlock>
-                        <StyledButton onClick={openAskQuestionModal}>Ask a Question</StyledButton>
-                      </ButtonBlock>
-                    </Variant>
-                    <Variant name="FooterSmall">
-                      <BottomSection>
-                        <TextBottomSection
-                          heading="Don't see your question? Be the first to ask this community!"
-                          buttonText="Ask a Question"
-                          onButtonClick={openAskQuestionModal}
-                        />
-                      </BottomSection>
-                    </Variant>
-                  </Experiment>
+                  <ButtonBlock>
+                    <StyledButton onClick={openAskQuestionModal}>Ask a Question</StyledButton>
+                  </ButtonBlock>
                 </TopCollapsibleSection>
                 {rgsAux.stateLicensingWebsite &&
                   <StyledCommunityExtraInfoSection

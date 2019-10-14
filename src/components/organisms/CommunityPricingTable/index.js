@@ -6,10 +6,8 @@ import ReactTooltip from 'react-tooltip';
 
 import { palette, size } from 'sly/components/themes';
 import { Button, Block, Span, Icon, Paragraph } from 'sly/components/atoms';
-import { MainSection, BottomSection } from 'sly/components/molecules/CollapsibleSection';
-import TextBottomSection from 'sly/components/molecules/TextBottomSection';
+import { MainSection } from 'sly/components/molecules/CollapsibleSection';
 import { isServer } from 'sly/config';
-import { Experiment, Variant } from 'sly/services/experiments';
 
 const StyledNumberFormat = styled(NumberFormat)`
   font-weight: ${p => size(p.weight)};
@@ -199,21 +197,7 @@ const CommunityPricingTable = ({
           </StyledBlockNp>
         }
         <Block>
-          <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
-            <Variant name="FooterSmall">
-              <div />
-            </Variant>
-            <Variant name="FullWidth">
-              <Experiment name="PricingCTA_Language" defaultVariant="Detailed">
-                <Variant name="Detailed">
-                  <StyledButton onClick={getPricing}>Get Detailed Pricing</StyledButton>
-                </Variant>
-                <Variant name="Personalized">
-                  <StyledButton onClick={getPricing}>Get Personalized Pricing</StyledButton>
-                </Variant>
-              </Experiment>
-            </Variant>
-          </Experiment>
+          <StyledButton onClick={getPricing}>Get Detailed Pricing</StyledButton>
           <Block>
             { (pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === 'up to 20 Beds' &&
               <Paragraph>
@@ -252,31 +236,6 @@ const CommunityPricingTable = ({
           </Block>
         </Block>
       </MainSection>
-      <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
-        <Variant name="FooterSmall">
-          <BottomSection>
-            <Experiment name="PricingCTA_Language" defaultVariant="Detailed">
-              <Variant name="Detailed">
-                <TextBottomSection
-                  heading="To get detailed pricing, complete this short form. "
-                  buttonText="Get Detailed Pricing"
-                  onButtonClick={getPricing}
-                />
-              </Variant>
-              <Variant name="Personalized">
-                <TextBottomSection
-                  heading="To get personalized pricing, complete this short form. "
-                  buttonText="Get Personalized Pricing"
-                  onButtonClick={getPricing}
-                />
-              </Variant>
-            </Experiment>
-          </BottomSection>
-        </Variant>
-        <Variant name="FullWidth">
-          <div />
-        </Variant>
-      </Experiment>
     </Fragment>
 
   );
