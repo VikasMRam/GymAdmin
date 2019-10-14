@@ -82,13 +82,12 @@ const BookATourPage = ({
 
     showModal(<CommunityWizardAcknowledgementContainer {...props} />);
   };
-  const handleStepChange = ({ currentStep, doSubmit, previous }) => {
+  const handleStepChange = ({ currentStep, doSubmit }) => {
     sendEvent('step-completed', id, currentStep);
     if (userDetails && userDetails.phone && userDetails.fullName) {
-      // hack to show first step while api calls are happening
-      previous();
-      doSubmit();
+      return doSubmit();
     }
+    return null;
   };
 
   return (
