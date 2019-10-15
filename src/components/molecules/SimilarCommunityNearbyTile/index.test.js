@@ -12,7 +12,7 @@ const similarCommunity = {
   numReviews: 7,
   reviewsValue: 4.428571,
   startingRate: 5800,
-  address: {city:'San Francisco', state:'CA'}
+  address: 'San Francisco, CA',
 };
 
 const wrap = (props = {}) =>

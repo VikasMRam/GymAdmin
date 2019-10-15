@@ -41,7 +41,7 @@ const StyledIcon = styled(Icon)`
 
 const AdressBlock = styled(Block)`
   margin-bottom: ${size('spacing.small')};
-`
+`;
 
 const renderEstimatedRate = startingRate => startingRate ? (
   <RateBlock size="caption">
