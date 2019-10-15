@@ -654,7 +654,7 @@ export default class CommunityDetailPage extends Component {
                     </MainSection>
                   </TopCollapsibleSection>
                 }
-                <TopCollapsibleSection title="How Seniorly Works">
+                <TopCollapsibleSection title={`How Seniorly Works in ${address.city}, ${address.state}`}>
                   <MainSection noPadding>
                     <HowSlyWorksVideo
                       isPlaying={isHowSlyWorksVideoPlaying}
