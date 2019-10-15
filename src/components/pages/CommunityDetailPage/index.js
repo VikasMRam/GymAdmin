@@ -601,7 +601,7 @@ export default class CommunityDetailPage extends Component {
                       <Button onClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}>Get Detailed Pricing</Button>
                     </MainSection>
                   }
-                  {!hasCCRC && (pricesList.length > 0 || estimatedPriceList.length > 0 || floorPlans.length === 0) &&
+                  {!hasCCRC  &&
                     <CommunityPricingTable
                       name={name}
                       pricesList={pricesList}
@@ -613,29 +613,29 @@ export default class CommunityDetailPage extends Component {
                     />
                   }
                 </TopCollapsibleSection>
-                {floorPlans.length === 0 && pricesList.length === 0 && estimatedPriceList.length === 0 &&
-                  <TopCollapsibleSection
-                    title={`Get Availability at ${name}`}
-                    id="availability"
-                  >
-                    <MainSection>
-                      <GetCurrentAvailabilityContainer
-                        community={community}
-                        queryParams={{ modal, currentStep }}
-                        setQueryParams={setQueryParams}
-                        onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
-                        onSubmitExpressConversion={(e, submitExpressConversion) => {
-                          if (isAlreadyPricingRequested) {
-                            openAskAgentQuestionModal('pricing');
-                          } else {
-                            submitExpressConversion(e);
-                            onGCPClick();
-                          }
-                        }}
-                      />
-                    </MainSection>
-                  </TopCollapsibleSection>
-                }
+
+                <TopCollapsibleSection
+                  title={`Get Availability at ${name}`}
+                  id="availability"
+                >
+                  <MainSection>
+                    <GetCurrentAvailabilityContainer
+                      community={community}
+                      queryParams={{ modal, currentStep }}
+                      setQueryParams={setQueryParams}
+                      onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
+                      onSubmitExpressConversion={(e, submitExpressConversion) => {
+                        if (isAlreadyPricingRequested) {
+                          openAskAgentQuestionModal('pricing');
+                        } else {
+                          submitExpressConversion(e);
+                          onGCPClick();
+                        }
+                      }}
+                    />
+                  </MainSection>
+                </TopCollapsibleSection>
+
                 {(communityDescription || rgsAux.communityDescription) &&
                   <TopCollapsibleSection
                     title={`Details on ${name}`}
