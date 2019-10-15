@@ -6,7 +6,6 @@ import Helmet from 'react-helmet';
 import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
-import { getCitySearchUrl } from 'sly/services/helpers/url';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import SlyEvent from 'sly/services/helpers/events';
 import {
@@ -23,6 +22,7 @@ import {
   EXPLORE_AFFORDABLE_PRICING_OPTIONS,
 } from 'sly/constants/pricingForm';
 import { hasCCRC } from 'sly/services/helpers/community';
+import { DASHBOARD_PATH } from 'sly/constants/dashboardAppPaths';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
@@ -195,12 +195,12 @@ class PricingWizardPage extends Component {
     const {
       showModal, hideModal, community,
     } = this.props;
-    const { similarProperties, propInfo, address } = community;
+    const { similarProperties } = community;
     const heading = 'Thank you! Our team will be calling you from (855) 855-2629.';
     const subheading = 'We received your request and your Seniorly Partner Agent will work with you to get your exact pricing and availability.';
     const props = {
       similarCommunities: similarProperties,
-      buttonTo: getCitySearchUrl({ propInfo, address }),
+      buttonTo: DASHBOARD_PATH,
       onTileClick: hideModal,
       heading,
       subheading,

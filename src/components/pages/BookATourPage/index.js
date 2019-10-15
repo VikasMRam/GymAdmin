@@ -6,7 +6,6 @@ import Helmet from 'react-helmet';
 import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
 import CommunityBookATourDateFormContainer from 'sly/containers/CommunityBookATourDateFormContainer';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { getCitySearchUrl } from 'sly/services/helpers/url';
 import { size } from 'sly/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import {
@@ -17,6 +16,7 @@ import {
   makeHeader,
 } from 'sly/components/templates/FullScreenWizard';
 import SlyEvent from 'sly/services/helpers/events';
+import { DASHBOARD_PATH } from 'sly/constants/dashboardAppPaths';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWizardAcknowledgementContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
@@ -58,7 +58,7 @@ const BookATourPage = ({
   community, user, userDetails, onComplete, showModal, hideModal,
 }) => {
   const {
-    id, mainImage, similarProperties, propInfo, address,
+    id, mainImage, similarProperties,
   } = community;
   let formHeading = 'How can we contact you about this community tour?';
   if (user) {
@@ -73,7 +73,7 @@ const BookATourPage = ({
     const subheading = 'Your Seniorly Partner Agent will check if this community is available at this time. They will get back to you shortly by phone or email.';
     const props = {
       similarCommunities: similarProperties,
-      buttonTo: getCitySearchUrl({ propInfo, address }),
+      buttonTo: DASHBOARD_PATH,
       onTileClick: hideModal,
       heading,
       subheading,
