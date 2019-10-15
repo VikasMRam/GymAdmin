@@ -108,7 +108,7 @@ const AgentSummary = ({
 }) => {
   const { info, aggregateRating } = agent;
   const {
-    profileImageUrl, displayName, recentFamiliesHelped, citiesServed, slyPhone, parentCompany,
+    profileImageUrl, displayName, recentFamiliesHelped, citiesServed, slyPhone, parentCompany, imageCaption
   } = info;
   let ratingsSection = null;
   if (aggregateRating && aggregateRating.ratingValue > 0) {
@@ -125,6 +125,9 @@ const AgentSummary = ({
     <Wrapper>
       <AgentImageWrapper>
         <Image src={profileImageUrl} aspectRatio="1:1" />
+        <Block size="caption">
+          {imageCaption}
+        </Block>
       </AgentImageWrapper>
       <TextSection>
         <AgentSlySection>

@@ -12,6 +12,7 @@ const similarCommunity = {
   numReviews: 7,
   reviewsValue: 4.428571,
   startingRate: 5800,
+  address: {city:'San Francisco', state:'CA'}
 };
 
 const wrap = (props = {}) =>
@@ -26,6 +27,7 @@ describe('SimilarCommunityNearbyTile', () => {
       startingRate: similarCommunity.startingRate,
       reviewsValue: similarCommunity.reviewsValue,
       numReviews: similarCommunity.numReviews,
+      address: similarCommunity.address,
     });
     expect(wrapper.find('ImageWrapper')).toHaveLength(1);
     expect(wrapper.find('Name')).toHaveLength(1);
@@ -41,6 +43,7 @@ describe('SimilarCommunityNearbyTile', () => {
       estimatedRate: similarCommunity.estimated,
       startingRate: similarCommunity.startingRate,
       reviewsValue: similarCommunity.reviewsValue,
+      address: similarCommunity.address,
       numReviews: 0,
     });
     expect(wrapper.contains('4.4')).toBeFalsy;
@@ -54,6 +57,7 @@ describe('SimilarCommunityNearbyTile', () => {
       startingRate: 0,
       reviewsValue: similarCommunity.reviewsValue,
       numReviews: similarCommunity.numReviews,
+      address: similarCommunity.address,
     });
     expect(wrapper.find('ImageWrapper')).toHaveLength(1);
     expect(wrapper.find('Name')).toHaveLength(1);
@@ -70,6 +74,7 @@ describe('SimilarCommunityNearbyTile', () => {
       startingRate: similarCommunity.startingRate,
       reviewsValue: similarCommunity.reviewsValue,
       numReviews: similarCommunity.numReviews,
+      address: similarCommunity.address,
     });
     expect(wrapper.find('ImageWrapper')).toHaveLength(1);
     expect(wrapper.find('Name')).toHaveLength(1);
@@ -86,6 +91,7 @@ describe('SimilarCommunityNearbyTile', () => {
       startingRate: 0,
       reviewsValue: similarCommunity.reviewsValue,
       numReviews: similarCommunity.numReviews,
+      address: similarCommunity.address,
     });
     expect(wrapper.find('ImageWrapper')).toHaveLength(1);
     expect(wrapper.find('Name')).toHaveLength(1);

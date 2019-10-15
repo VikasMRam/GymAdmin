@@ -39,6 +39,10 @@ const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.regular')};
 `;
 
+const AdressBlock = styled(Block)`
+  margin-bottom: ${size('spacing.small')};
+`
+
 const renderEstimatedRate = startingRate => startingRate ? (
   <RateBlock size="caption">
     Estimated <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" /> per month
@@ -55,15 +59,18 @@ const renderRate = (estimated, startingRate) =>
   estimated ? renderEstimatedRate(startingRate) : renderProviderRate(startingRate);
 
 const SimilarCommunityNearbyTile = ({
-  image, name, typeOfCare, estimatedRate, startingRate, reviewsValue,
+  image, name, typeOfCare, address, estimatedRate, startingRate, reviewsValue,
 }) => (
   <div>
     <ImageWrapper src={image} aspectRatio="3:2" lazy={false} />
     <TypeOfCare size="tiny" palette="primary" weight="bold">{typeOfCare}</TypeOfCare>
     <Name size="body" weight="medium">{name}</Name>
+    <AdressBlock size="caption">
+      {address}
+    </AdressBlock>
     <PriceAndRatingWrapper>
       {renderRate(estimatedRate, startingRate)}
-      {reviewsValue !== 0 &&
+      {reviewsValue === 0 &&
       <Block size="caption">
         <StyledIcon icon="star" palette="primary" size="small" />
         {formatRating(reviewsValue)}
@@ -77,6 +84,7 @@ SimilarCommunityNearbyTile.propTypes = {
   image: string.isRequired,
   name: string.isRequired,
   typeOfCare: string,
+  address: string.isRequired,
   estimatedRate: number.isRequired,
   startingRate: number.isRequired,
   reviewsValue: number,
