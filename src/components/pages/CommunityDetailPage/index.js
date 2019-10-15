@@ -421,6 +421,7 @@ export default class CommunityDetailPage extends Component {
       mainImage,
       partnerAgents,
       twilioNumber,
+      guideUrl,
     } = community;
 
     const {
@@ -650,6 +651,7 @@ export default class CommunityDetailPage extends Component {
                         city={address.city}
                         state={address.state}
                         twilioNumber={twilioNumber}
+                        guideUrl={guideUrl}
                       />
                     </MainSection>
                   </TopCollapsibleSection>
