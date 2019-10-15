@@ -155,7 +155,7 @@ const DashboardFavoritesPage = ({
     };
 
     return (
-      <StyledLink to={community.url}>
+      <StyledLink to={community.url} key={community.id}>
         <StyledCommunityTile
           addNote
           canFavourite

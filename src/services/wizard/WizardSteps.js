@@ -13,26 +13,31 @@ export default class WizardSteps extends Component {
   componentDidMount() {
     // NOTE: React caches the class objects, so utilizing same components can clash
     const { children, init } = this.props;
-    const stepNames = children.map(c => c.props.name);
+    // filter to remove children that are falsy values and not react elements
+    // children that in conditions which evaluate to fasly values
+    const stepNames = children.filter(c => c).map(c => c.props.name);
 
     init(stepNames);
   }
 
   render() {
-    const { children } = this.props;
     const {
-      currentStepIndex, onSubmit, formOptions,
+      currentStepIndex, onSubmit, formOptions, children,
     } = this.props;
-    let newChild = children[0];
+    // remove children that are falsy values and not react elements
+    // children that in conditions which evaluate to fasly values
+    const filteredChildren = children.filter(c => c);
+    let newChild = filteredChildren[0];
     const { form } = formOptions;
 
-    const currentStepComponent = children.find((child, i) => i === currentStepIndex);
+    const currentStepComponent = filteredChildren.find((child, i) => i === currentStepIndex);
     if (currentStepComponent) {
+      const props = {
+        onSubmit: currentStepComponent.props.onSubmit || onSubmit,
+        form: currentStepComponent.props.form || form,
+      };
       newChild =
-        React.cloneElement(currentStepComponent, {
-          onSubmit: currentStepComponent.props.onSubmit || onSubmit,
-          form: currentStepComponent.props.form || form,
-        });
+        React.cloneElement(currentStepComponent, props);
     }
 
     return <Fragment>{newChild}</Fragment>;
