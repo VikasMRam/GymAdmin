@@ -100,7 +100,7 @@ class AgentProfilePage extends Component {
     const { ratingValue } = aggregateRating;
     const { displayName, bio } = info;
     const firstName = displayName.split(' ')[0];
-    const { state, city } = address;
+    const { state, city } = address || { state:'CA', city:'New York'};
     return (
       <Fragment>
         {getHelmetForAgentProfilePage({ agent, location })}

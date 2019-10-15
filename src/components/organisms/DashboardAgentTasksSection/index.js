@@ -20,6 +20,7 @@ import Th from 'sly/components/molecules/Th';
 import IconButton from 'sly/components/molecules/IconButton';
 import TaskRowCard from 'sly/components/organisms/TaskRowCard';
 import AddOrEditTaskFormContainer from 'sly/containers/AddOrEditTaskFormContainer';
+import { prefetch } from 'sly/services/newApi';
 
 const TABLE_HEADINGS = [
   { text: 'Task' },
@@ -108,35 +109,9 @@ const tabIDLabelMap = {
 
 const tabIDs = Object.keys(tabIDLabelMap);
 
-const onTabClick = (label) => {
-  const event = {
-    category: 'DashboardAgentTasksTab',
-    action: 'click',
-    label,
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
-const getBasePath = (tab, basePath = AGENT_DASHBOARD_TASKS_PATH) => {
-  const filters = {
-    type: tabIDs[0],
-  };
-
-  if (tab === tabIDs[1]) {
-    filters.type = 'Overdue';
-  } else if (tab === tabIDs[2]) {
-    filters.type = 'Upcoming';
-  } else if (tab === tabIDs[3]) {
-    filters.type = 'Completed';
-  }
-
-  const filterQs = qs.stringify(filters);
-
-  return filterQs !== '' ? `${basePath}?${filterQs}` : basePath;
-};
-
 export default class DashboardAgentTasksSection extends Component {
   static propTypes = {
+    datatable: object,
     client: clientPropType,
     tasks: arrayOf(taskPropType),
     tasksRaw: arrayOf(object),
@@ -202,31 +177,9 @@ export default class DashboardAgentTasksSection extends Component {
 
   render() {
     const {
-      tasks, pagination, activeTab, onSearchTextKeyUp, isPageLoading, noBorder, basePath,
-      searchTextBoxValue,
+      tasks, pagination, activeTab, isPageLoading, noBorder, meta,
+      datatable,
     } = this.props;
-    const dueTodayLabel = tabIDLabelMap[tabIDs[0]];
-    const overdueLabel = tabIDLabelMap[tabIDs[1]];
-    const upcomingLabel = tabIDLabelMap[tabIDs[2]];
-    const completedLabel = tabIDLabelMap[tabIDs[3]];
-
-    let dueTodayTabLabel = tabIDLabelMap[tabIDs[0]];
-    let overdueTabLabel = tabIDLabelMap[tabIDs[1]];
-    let upcomingTabLabel = tabIDLabelMap[tabIDs[2]];
-    let completedTabLabel = tabIDLabelMap[tabIDs[3]];
-
-    if (!isPageLoading) {
-      const {
-        dueTodayCount,
-        overdueCount,
-        upcomingCount,
-        completedCount,
-      } = pagination;
-      dueTodayTabLabel += ` (${dueTodayCount})`;
-      overdueTabLabel += ` (${overdueCount})`;
-      upcomingTabLabel += ` (${upcomingCount})`;
-      completedTabLabel += ` (${completedCount})`;
-    }
 
     const beforeTabHeader = (
       <TwoColumn>
@@ -248,25 +201,17 @@ export default class DashboardAgentTasksSection extends Component {
     const TableHeaderButtonComponent = noBorder ? StyledTableHeaderButtons : TableHeaderButtons;
     const SectionComponent = noBorder ? StyledSection : Section;
     const StatusBlock = noBorder ? StyledFamiliesCountStatusBlock : FamiliesCountStatusBlock;
+    const modelConfig = { name: 'Task', defaultSearchField: 'title' };
 
     return (
       <Fragment>
-        <Tabs activeTab={activeTab} tabsOnly noBorder={noBorder} beforeHeader={beforeTabHeader}>
-          <Tab id={tabIDs[0]} to={getBasePath(tabIDs[0], basePath)} onClick={() => onTabClick(dueTodayLabel)}>
-            {dueTodayTabLabel}
-          </Tab>
-          <Tab id={tabIDs[1]} to={getBasePath(tabIDs[1], basePath)} onClick={() => onTabClick(overdueLabel)}>
-            {overdueTabLabel}
-          </Tab>
-          <Tab id={tabIDs[2]} to={getBasePath(tabIDs[2], basePath)} onClick={() => onTabClick(upcomingLabel)}>
-            {upcomingTabLabel}
-          </Tab>
-          <Tab id={tabIDs[3]} to={getBasePath(tabIDs[3], basePath)} onClick={() => onTabClick(completedLabel)}>
-            {completedTabLabel}
-          </Tab>
-        </Tabs>
+        {beforeTabHeader}
+        <TableHeaderButtonComponent
+          datatable={datatable}
+          modelConfig={modelConfig}
+          meta={meta}
+        />
 
-        <TableHeaderButtonComponent onSearchTextKeyUp={onSearchTextKeyUp} value={searchTextBoxValue} />
 
         <SectionComponent>
           {!isPageLoading && (
@@ -295,7 +240,7 @@ export default class DashboardAgentTasksSection extends Component {
                   current={pagination.current}
                   total={pagination.total}
                   range={1}
-                  basePath={getBasePath(activeTab, basePath)}
+                  basePath={datatable.basePath}
                   pageParam="page-number"
                 />
               )}

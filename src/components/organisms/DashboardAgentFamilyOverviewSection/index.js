@@ -147,7 +147,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
       datatable,
       meta,
     } = this.props;
-
+    const modelConfig = { name: 'Client', defaultSearchField: 'name' };
     const beforeTabHeader = (
       <TwoColumn>
         <Heading level="subtitle">My Families</Heading>
@@ -176,7 +176,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
         <TableHeaderButtons
           datatable={datatable}
           meta={meta}
-          modelName="Client"
+          modelConfig={modelConfig}
         />
 
         <Section>
