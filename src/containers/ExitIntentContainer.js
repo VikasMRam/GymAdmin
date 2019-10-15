@@ -12,21 +12,39 @@ function getBodyScrollTop() {
   return el.scrollTop;
 }
 
+const ExitIntentStore = {
+  key: "isExitModalShown",
+  value: "exitShown"
+}
+
 const ExitIntentContainer = InnerComponent => {
   class Wrapper extends React.Component {
     static displayName = `exitIntent(${getDisplayName(InnerComponent)})`;
     static WrappedComponent = InnerComponent;
+    scrollInterval = null;
 
     componentDidMount() {
-      const isMobile = window.innerWidth < 768;
-
-      if (isMobile) {
+      if (this.isMobile()) {
         this.addMobileIntent();
+        this.handlePopStateEvent();
       } else {
         document.addEventListener('mouseout', this.addDesktopIntent);
       }
+    }
 
-      this.handlePopStateEvent('exitModalShown');
+    componentWillUnmount() {
+      if (this.isMobile()) {
+        window.removeEventListener('popstate', this.setPopstateEvent);
+        if (this.interval) {
+          clearInterval(this.interval);
+        }
+      } else {
+        document.removeEventListener('mouseout', this.addDesktopIntent);
+      }
+    }
+
+    isMobile = () => {
+      return window.innerWidth < 768;
     }
 
     /* Exit Intent Work: https://github.com/mrlagmer/exitintent/blob/master/src/App.js */
@@ -50,62 +68,48 @@ const ExitIntentContainer = InnerComponent => {
       const from = e.relatedTarget || e.toElement;
 
       if (!from) {
-        const s = localStorage.getItem('exitModalShown');
-
-        if (s !== 'exitShown') {
-          localStorage.setItem('exitModalShown', 'exitShown');
-          this.showIntent();
-        }
+        this.showIntent();
       }
     }
 
     addMobileIntent = () => {
       const { showIntent } = this;
-      var percentUp = 0.2;
-      var scrollInterval = 100;
+      const percentUp = 0.2;
+      const scrollInterval = 100;
+      const pageHeight = document.documentElement.offsetHeight;
 
-      var scrollStart = getBodyScrollTop();
-      var pageHeight = document.documentElement.offsetHeight;
-
-      var interval = null;
-      var complete = false;
+      let scrollStart = getBodyScrollTop();
+      let interval = null;
 
       if (pageHeight > 0) {
         // Only check the scroll position every few seconds, to avoid bogging the UI
         interval = setInterval(function () {
-          var scrollAmount = scrollStart - getBodyScrollTop();
+          let scrollAmount = scrollStart - getBodyScrollTop();
           if (scrollAmount < 0) {
             scrollAmount = 0;
             scrollStart = getBodyScrollTop();
           }
 
-          var upScrollPercent =
+          const upScrollPercent =
             parseFloat(scrollAmount) / parseFloat(pageHeight);
+
           if (upScrollPercent > parseFloat(percentUp) / 100) {
             clearInterval(interval);
             interval = null;
-
-            if (!complete) {
-              showIntent();
-              complete = true;
-            }
+            showIntent();
           }
         }, scrollInterval);
       }
+      this.interval = interval;
     }
 
     handlePopStateEvent = () => {
-      const { showIntent } = this;
+      const { setPopstateEvent } = this;
 
       if (window.matchMedia("(max-width: 2048px)").matches) {
         // Wait before setting event listener for browsers that trigger popstate at page load
         setTimeout(function () {
-          window.addEventListener("popstate", function (event) {
-            console.log(' event.state.intent', event.state.intent)
-            if (event.state && event.state.intent === "exit-intent") {
-              showIntent();
-            }
-          });
+          window.addEventListener("popstate", setPopstateEvent);
         }, 100);
 
         // Do not rewrite state in case of refresh
@@ -119,8 +123,24 @@ const ExitIntentContainer = InnerComponent => {
       }
     }
 
+    setPopstateEvent = (event) => {
+      const { showIntent } = this;
+
+      if (event.state && event.state.intent === "exit-intent") {
+        showIntent();
+      }
+    }
+
     showIntent = () => {
+      let isExitIntentShown = localStorage.getItem(ExitIntentStore.key) === ExitIntentStore.value;
+
+      if (isExitIntentShown) {
+        return;
+      }
+
       const { showModal, exitIntentContent } = this.props
+
+      localStorage.setItem(ExitIntentStore.key, ExitIntentStore.value);
       showModal(exitIntentContent);
     }
 
