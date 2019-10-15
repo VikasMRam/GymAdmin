@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
+import { node, func } from 'prop-types';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -8,17 +9,22 @@ function getDisplayName(WrappedComponent) {
 }
 
 function getBodyScrollTop() {
-  var el = document.scrollingElement || document.documentElement;
+  const el = document.scrollingElement || document.documentElement;
   return el.scrollTop;
 }
 
 const ExitIntentStore = {
-  key: "isExitModalShown",
-  value: "exitShown"
-}
+  key: 'isExitModalShown',
+  value: 'exitShown',
+};
 
-const ExitIntentContainer = InnerComponent => {
-  class Wrapper extends React.Component {
+const ExitIntentContainer = (InnerComponent) => {
+  class Wrapper extends Component {
+    static propTypes = {
+      exitIntentContent: node.isRequired,
+      showModal: func.isRequired,
+    };
+
     static displayName = `exitIntent(${getDisplayName(InnerComponent)})`;
     static WrappedComponent = InnerComponent;
     scrollInterval = null;
@@ -43,9 +49,7 @@ const ExitIntentContainer = InnerComponent => {
       }
     }
 
-    isMobile = () => {
-      return window.innerWidth < 768;
-    }
+    isMobile = () => window.innerWidth < 768;
 
     /* Exit Intent Work: https://github.com/mrlagmer/exitintent/blob/master/src/App.js */
     addDesktopIntent = (e) => {
@@ -83,7 +87,7 @@ const ExitIntentContainer = InnerComponent => {
 
       if (pageHeight > 0) {
         // Only check the scroll position every few seconds, to avoid bogging the UI
-        interval = setInterval(function () {
+        interval = setInterval(() => {
           let scrollAmount = scrollStart - getBodyScrollTop();
           if (scrollAmount < 0) {
             scrollAmount = 0;
@@ -106,19 +110,19 @@ const ExitIntentContainer = InnerComponent => {
     handlePopStateEvent = () => {
       const { setPopstateEvent } = this;
 
-      if (window.matchMedia("(max-width: 2048px)").matches) {
+      if (window.matchMedia('(max-width: 2048px)').matches) {
         // Wait before setting event listener for browsers that trigger popstate at page load
-        setTimeout(function () {
-          window.addEventListener("popstate", setPopstateEvent);
+        setTimeout(() => {
+          window.addEventListener('popstate', setPopstateEvent);
         }, 100);
 
         // Do not rewrite state in case of refresh
         if (
           !window.history.state ||
-          window.history.state.intent !== "normal-intent"
+          window.history.state.intent !== 'normal-intent'
         ) {
-          window.history.replaceState({ intent: "exit-intent" }, "");
-          window.history.pushState({ intent: "normal-intent" }, "");
+          window.history.replaceState({ intent: 'exit-intent' }, '');
+          window.history.pushState({ intent: 'normal-intent' }, '');
         }
       }
     }
@@ -126,19 +130,19 @@ const ExitIntentContainer = InnerComponent => {
     setPopstateEvent = (event) => {
       const { showIntent } = this;
 
-      if (event.state && event.state.intent === "exit-intent") {
+      if (event.state && event.state.intent === 'exit-intent') {
         showIntent();
       }
     }
 
     showIntent = () => {
-      let isExitIntentShown = localStorage.getItem(ExitIntentStore.key) === ExitIntentStore.value;
+      const isExitIntentShown = localStorage.getItem(ExitIntentStore.key) === ExitIntentStore.value;
 
       if (isExitIntentShown) {
         return;
       }
 
-      const { showModal, exitIntentContent } = this.props
+      const { showModal, exitIntentContent } = this.props;
 
       localStorage.setItem(ExitIntentStore.key, ExitIntentStore.value);
       showModal(exitIntentContent);
@@ -152,6 +156,6 @@ const ExitIntentContainer = InnerComponent => {
   hoistNonReactStatic(Wrapper, InnerComponent);
 
   return Wrapper;
-}
+};
 
 export default ExitIntentContainer;
