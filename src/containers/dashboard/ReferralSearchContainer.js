@@ -246,7 +246,7 @@ export default class ReferralSearchContainer extends Component {
     //          sendReferral={this.sendReferral} /> ;
     if (referralMode === 'Community') {
       const selectedCommunity = this.getSelectedCommunity();
-      const contact = (selectedCommunity && selectedCommunity.contacts.length > 0) ? selectedCommunity.contacts[0] : null;
+      const contact = (selectedCommunity && selectedCommunity.contacts && selectedCommunity.contacts.length > 0) ? selectedCommunity.contacts[0] : null;
       let contactFormInitialValues = {};
       if (contact) {
         const { email, name } = contact;
@@ -302,7 +302,7 @@ export default class ReferralSearchContainer extends Component {
     }
     // Agent Referral Flow
     const selectedAgent = this.getSelectedAgent();
-    const contact = (selectedAgent && selectedAgent.contacts.length > 0) ? selectedAgent.contacts[0] : null;
+    const contact = (selectedAgent && selectedAgent.contacts &&  selectedAgent.contacts.length > 0) ? selectedAgent.contacts[0] : null;
     let contactFormInitialValues = {};
     if (contact) {
       const { email, name } = contact;
