@@ -501,6 +501,7 @@ export default class CommunityDetailPage extends Component {
     const showSimilarEarlier = pricesList.length === 0 && floorPlans.length > 0 && address.city === 'Sacramento' && address.state === 'CA' &&
       (!communityDescription || communityDescription === '');
     const similarCommunityStyle = { layout: 'column', imageSize: 'regular', showDescription: true };
+
     return (
       <Fragment>
         {getHelmetForCommunityPage(community, location)}
@@ -574,7 +575,7 @@ export default class CommunityDetailPage extends Component {
                 {showSimilarEarlier &&
                   <TopCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                     <MainSection>
-                      <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
+                      <SimilarCommunities communities={similarProperties} onCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
                       <BackToSearch>
                         <Button
                           ghost
@@ -750,7 +751,7 @@ export default class CommunityDetailPage extends Component {
                 {!showSimilarEarlier &&
                   <BottomCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                     <MainSection>
-                      <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
+                      <SimilarCommunities communities={similarProperties} onCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
                       <BackToSearch>
                         <Button
                           ghost

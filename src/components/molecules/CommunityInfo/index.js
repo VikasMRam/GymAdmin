@@ -121,7 +121,7 @@ export default class CommunityInfo extends Component {
     } = this.props;
     const {
       webViewInfo, floorPlanString, propInfo, propRatings,
-      address, addressString,
+      address, addressString, mainService,
     } = community;
     let { description } = community;
     let { numReviews, typeCare = [] } = community;
@@ -142,6 +142,9 @@ export default class CommunityInfo extends Component {
       } = webViewInfo);
       const { firstLineValue } = webViewInfo;
       livingTypes = firstLineValue.split(',');
+    }
+    if (mainService) {
+      livingTypes = mainService.split(',');
     }
     if (propRatings) {
       ({ reviewsValue } = propRatings);
