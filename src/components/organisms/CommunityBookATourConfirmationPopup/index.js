@@ -61,6 +61,7 @@ const CommunityBookATourConfirmationPopup = ({
           startingRate={community.startingRate}
           reviewsValue={community.reviewsValue}
           numReviews={community.numReviews}
+          address={community.addressString}
         />
       </StyledLink>
     </SimilarCommunityTileWrapper>

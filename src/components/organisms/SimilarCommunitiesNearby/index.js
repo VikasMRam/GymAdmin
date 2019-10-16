@@ -28,6 +28,7 @@ const SimilarCommunitiesNearby = ({ similarCommunities, communitiesPerRow }) => 
         startingRate={similarCommunity.startingRate}
         reviewsValue={similarCommunity.reviewsValue}
         numReviews={similarCommunity.numReviews}
+        address={similarCommunity.addressString}
       />
     </Link>
   ));

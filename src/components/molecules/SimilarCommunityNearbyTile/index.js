@@ -70,7 +70,7 @@ const SimilarCommunityNearbyTile = ({
     </AdressBlock>
     <PriceAndRatingWrapper>
       {renderRate(estimatedRate, startingRate)}
-      {reviewsValue === 0 &&
+      {reviewsValue !== 0 &&
       <Block size="caption">
         <StyledIcon icon="star" palette="primary" size="small" />
         {formatRating(reviewsValue)}
