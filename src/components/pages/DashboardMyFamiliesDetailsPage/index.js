@@ -554,6 +554,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               onRejectClick={handleRejectClick}
               onUpdateClick={handleUpdateClick}
               onAddNoteClick={handleAddNoteClick}
+              client={client}
               user={user}
             />
             {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
