@@ -20,6 +20,7 @@ const defaultProps = {
     startingRate: 100,
     reviewsValue: 4.235,
     numReviews: 2,
+    addressString: 'San Francisco, CA',
   }],
   appointmentText,
   similarCommunititesHref,
