@@ -1,8 +1,9 @@
+/* eslint-disable react/no-danger */
 import React, { Component } from 'react';
 import { injectGlobal } from 'styled-components';
 import { bool } from 'prop-types';
 
-import { isBrowser, olarkSiteId, rokoApiKey} from 'sly/config';
+import { /* isBrowser, olarkSiteId, */ rokoApiKey } from 'sly/config';
 import { getKey } from 'sly/components/themes';
 
 injectGlobal`
@@ -67,31 +68,27 @@ export default class ChatBox extends Component {
   }
 
   render() {
-    if (isBrowser) {
-      // setTimeout(() => {
-      //   loadOlark();
-      //   window.olark.identify(olarkSiteId);
-      // }, 30000);
-    }
+    /* if (isBrowser) {
+      setTimeout(() => {
+        loadOlark();
+        window.olark.identify(olarkSiteId);
+      }, 30000);
+    } */
 
     return (
-      <>
-        {/* Begin Instabot Code */}
-        <script
-          defer
-          type="text/javascript"
-          dangerouslySetInnerHTML={{ __html: `
-            setTimeout(function(){
-              (function(s,d,r) {
-                var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
-                j.text="apiKey: '${rokoApiKey}'";j.async=true;j.src=r;
-                f.parentNode.insertBefore(j,f);
-              })('script', document, '//widget.instabot.io/jsapi/rokoInstabot.js');
-            }, 30000);
-          ` }}
-        />
-        {/* End Instabot Code */}
-      </>
+      <script
+        defer
+        type="text/javascript"
+        dangerouslySetInnerHTML={{ __html: `
+          setTimeout(function(){
+            (function(s,d,r) {
+              var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
+              j.text="apiKey: '${rokoApiKey}'";j.async=true;j.src=r;
+              f.parentNode.insertBefore(j,f);
+            })('script', document, '//widget.instabot.io/jsapi/rokoInstabot.js');
+          }, 30000);
+        ` }}
+      />
     );
   }
 }
