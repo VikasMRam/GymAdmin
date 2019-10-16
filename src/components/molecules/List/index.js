@@ -1,5 +1,4 @@
-/* eslint-disable react/no-array-index-key */
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
@@ -30,14 +29,14 @@ const StyledHeading = styled(Heading)`
 const List = ({
   columns, heading, items,
 }) => (
-  <Fragment>
+  <>
     {heading &&
       <StyledHeading level="subtitle" size="subtitle">{heading}</StyledHeading>
     }
     <ListWrapper columns={columns}>
       {items.map(item => <ListItem key={item}>{item}</ListItem>)}
     </ListWrapper>
-  </Fragment>
+  </>
 );
 
 List.propTypes = {

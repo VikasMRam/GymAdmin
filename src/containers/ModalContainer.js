@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ const ModalContainer = ({ location, match }) => (
     {({
       isModalOpen, isModalCloseable, modalContent, modalOnClose, modalType, hide, show,
     }) => (
-      <Fragment>
+      <>
         <FilthyRedirect isModalOpen={isModalOpen} showModal={show} location={location} match={match} />
         <Modal
           closeable={isModalCloseable}
@@ -26,7 +26,7 @@ const ModalContainer = ({ location, match }) => (
         >
           {modalContent}
         </Modal>
-      </Fragment>
+      </>
     )}
   </ModalController>
 );

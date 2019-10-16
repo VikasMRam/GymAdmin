@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, func, object } from 'prop-types';
@@ -86,8 +86,7 @@ const CareTypeGuidePage = ({
   searchParams,
 }) => {
   const HeaderContent = (
-    <Fragment>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+    <>
       <HeaderContainer />
       <HeroWrapper>
         <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
@@ -101,16 +100,14 @@ const CareTypeGuidePage = ({
           <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>
       </HeroWrapper>
-    </Fragment>
+    </>
   );
-
 
   const title = ' Assisted Living City Guides ';
   const description = ' Learn everything about assisted living facilities in the United States. Understand cost, compare retirement living communities and options, and find city specific resources for senior residents.';
 
-
   return (
-    <Fragment>
+    <>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
         <Helmet>
@@ -139,7 +136,7 @@ const CareTypeGuidePage = ({
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>
       </TemplateContent>
       <Footer />
-    </Fragment>
+    </>
 
   );
 };

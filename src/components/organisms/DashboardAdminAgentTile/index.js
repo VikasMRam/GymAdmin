@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { bool, func } from 'prop-types';
 import { prop } from 'styled-tools';
 
 import { size, palette, columnWidth } from 'sly/components/themes';
 import { adminAgentPropType } from 'sly/propTypes/agent';
-import { Heading, Badge, Button, Box, Block, Icon } from 'sly/components/atoms';
+import { Heading, Badge, Button, Block, Icon } from 'sly/components/atoms';
 
 const Header = styled.div`
   display: flex;
@@ -90,7 +90,7 @@ export default class DashboardAdminAgentTile extends Component {
     const { agent, isRecommended } = this.props;
     const infoRowsNumber = Math.ceil(Object.keys(agentPropsMap).length / 2);
     return (
-      <Fragment>
+      <>
         <Header>
           <SlyScore>{agent.info.slyScore}</SlyScore>
           <Heading level="subtitle"> { agent.name } </Heading>
@@ -111,7 +111,7 @@ export default class DashboardAdminAgentTile extends Component {
           <Block size="caption">{agent.info.adminNotes}</Block>
         </IconItem>
         <Button onClick={this.copyToClipboard}>WT: {agent.info.slyPhone}</Button>
-      </Fragment>
+      </>
     );
   }
 }

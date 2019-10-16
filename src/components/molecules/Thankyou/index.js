@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { func, string } from 'prop-types';
 import styled from 'styled-components';
 
@@ -40,14 +40,14 @@ const Thankyou = ({
     const { address, propInfo } = community;
     const { city } = address;
     backToSearch = (
-      <Fragment>
+      <>
         <StyledBlock>
           While you wait, compare your selection with other communities nearby
         </StyledBlock>
         <BackToSearch>
           <Button ghost href={getCitySearchUrl({ propInfo, address })}>Communities In {city}</Button>
         </BackToSearch>
-      </Fragment>
+      </>
     );
   }
 

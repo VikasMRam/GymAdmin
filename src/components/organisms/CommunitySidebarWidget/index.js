@@ -1,10 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { number, func, bool } from 'prop-types';
+import { func, bool } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import { Box, Hr } from 'sly/components/atoms';
 import { community as communityPropType } from 'sly/propTypes/community';
+import pad from 'sly/components/helpers/pad';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
 import CommunityActions from 'sly/components/molecules/CommunityActions';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
@@ -18,12 +19,10 @@ const Wrapper = styled(Box)`
   padding: ${size('spacing.xLarge')};
 `;
 
-const CommunityPricingAndRatingWrapper = styled.div`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
+const CommunityPricingAndRatingWrapper = pad(styled.div``);
 
 const CommunitySidebarWidget = ({
-  community, onBookATourClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
+  community, onGCPClick, isAlreadyPricingRequested,
   onLearnMoreClick,
 }) => {
   const { startingRate, propRatings, propInfo } = community;
@@ -31,15 +30,15 @@ const CommunitySidebarWidget = ({
   const { promoDescription, promoTitle } = propInfo;
 
   return (
-    <Fragment>
+    <>
       <Wrapper>
         {(startingRate > 0 || startingRate > 0) &&
-          <Fragment>
+          <>
             <CommunityPricingAndRatingWrapper>
               <CommunityPricingAndRating price={startingRate} rating={reviewsValue} />
             </CommunityPricingAndRatingWrapper>
             <Hr />
-          </Fragment>
+          </>
         }
         <CommunityActions
           isAlreadyPricingRequested={isAlreadyPricingRequested}
@@ -56,16 +55,13 @@ const CommunitySidebarWidget = ({
             hasLearnMore
           />
         )}
-    </Fragment>
+    </>
   );
 };
 
 CommunitySidebarWidget.propTypes = {
   community: communityPropType,
-  onBookATourClick: func,
   onGCPClick: func,
-  onAQClick: func,
-  isAlreadyTourScheduled: bool,
   isAlreadyPricingRequested: bool,
   onLearnMoreClick: func,
 };

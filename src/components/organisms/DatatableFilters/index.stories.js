@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
@@ -28,7 +28,7 @@ class Container extends Component {
         // {},
       ],
       logicalOperator: 'and',
-    }
+    },
   };
 
   onChange = (filterState) => {
@@ -46,7 +46,7 @@ class Container extends Component {
 
   render() {
     return (
-      <Fragment>
+      <>
         <StyledInput
           onChange={this.onInputChange}
           value={makeQuerystringFilters(this.state.filterState)}
@@ -56,7 +56,7 @@ class Container extends Component {
           onChange={this.onChange}
           filterState={this.state.filterState}
         />
-      </Fragment>
+      </>
     );
   }
 }

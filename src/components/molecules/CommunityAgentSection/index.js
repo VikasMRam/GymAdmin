@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 import NumberFormat from 'react-number-format';
@@ -70,12 +70,12 @@ const CommunityAgentSection = ({
   const reviewedBy = 'Resident\'s family member';
   const { id, address } = agent;
   let agentImageComponent = (
-    <Fragment>
+    <>
       <AgentImageWrapper>
         <Image src={profileImageUrl} aspectRatio="1:1" />
       </AgentImageWrapper>
       <AgentName weight="medium" palette="slate">{displayName}</AgentName>
-    </Fragment>
+    </>
   );
   if (id && address) {
     agentImageComponent = (
@@ -85,7 +85,7 @@ const CommunityAgentSection = ({
     );
   }
   return (
-    <Fragment>
+    <>
       <SubHeadingSection onClick={onAdvisorHelpClick}>
         <AdvisorHelpBlock size="caption" weight="medium" palette="primary">What can my Seniorly Partner Agent help me with?</AdvisorHelpBlock>
         <Icon icon="help" palette="primary" />
@@ -115,7 +115,7 @@ const CommunityAgentSection = ({
           </ReviewSection>
         </AgentReviewSection>
       }
-    </Fragment>
+    </>
   );
 };
 

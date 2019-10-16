@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { string, func, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 
@@ -7,9 +7,9 @@ import ReduxField from 'sly/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
 
 const getLabel = label => (
-  <Fragment>
+  <>
     {label || 'Reason'} <Span palette="danger">*</Span>
-  </Fragment>
+  </>
 );
 
 const ConfirmReasonForm = ({

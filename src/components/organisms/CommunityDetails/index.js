@@ -45,7 +45,7 @@ LegacyContent.defaultProps = {
 };
 
 const CommunityDetails = ({
-  communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription, ownerExperience, city, state, twilioNumber,
+  communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription, ownerExperience, city, state, twilioNumber, guideUrl,
 }) => {
   let phone = '8558664515';
   if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
@@ -97,6 +97,16 @@ const CommunityDetails = ({
           }
         </StyledArticle>
       )}
+      {guideUrl &&
+        <StyledArticle>
+          <Paragraph>
+            {communityName} is located in {city}, {state}. To learn even more about senior living there, click on this link for the&nbsp;
+            <Link href={`${guideUrl}`} >
+              {city}, {state} assisted living guide.
+            </Link>
+          </Paragraph>
+        </StyledArticle>
+      }
       <StyledArticle>
         <Paragraph>
           Seniorly is not affiliated with the owner or operator(s) of {communityName}.

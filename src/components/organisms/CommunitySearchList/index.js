@@ -1,5 +1,4 @@
-/* eslint-disable react/self-closing-comp */
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { object, arrayOf, func } from 'prop-types';
 import queryString from 'query-string';
@@ -155,15 +154,13 @@ const CommunitySearchList = ({
   }
 
   return (
-    <Fragment>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+    <>
       <CommunityFilterBarWrapper>
         <CommunityFilterBar searchParams={searchParams} {...props} />
       </CommunityFilterBarWrapper>
       {components}
       {communityList.length < 1 &&
-        <Fragment>
-          {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+        <>
           <StyledHeading size="subtitle">Explore homes in popular cities</StyledHeading>
           <MSCColumnWrapper>
             {mostSearchedCitiesComponents}
@@ -172,17 +169,13 @@ const CommunitySearchList = ({
           <MSCColumnWrapper>
             {usefulInformationTilesComponents}
           </MSCColumnWrapper>
-        </Fragment>
+        </>
       }
-      <Fragment>
-        {`Showing ${start} to ${end} of ${count}`}
-      </Fragment>
+      {`Showing ${start} to ${end} of ${count}`}
       {communityList.length > 0 &&
-        <Fragment>
-          <PaddedPagination basePath={basePath} pageParam="page-number" current={current} total={total} />
-        </Fragment>
+        <PaddedPagination basePath={basePath} pageParam="page-number" current={current} total={total} />
       }
-    </Fragment>
+    </>
   );
 };
 
