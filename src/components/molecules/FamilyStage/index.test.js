@@ -13,6 +13,7 @@ const endStage = fitem[fitem.length - 1];
 const interStage = FAMILY_STAGE_ORDERED[stageGroups[1]][1];
 
 TestUser.roleID = 2; // Modify roleID for this test
+TestUser.organization = { id: 'yyyyyyy' };
 const defaultProps = {
   stageText: newStage,
   user: TestUser,
