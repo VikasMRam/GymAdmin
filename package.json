@@ -28,7 +28,7 @@
     "test": "npm run env:test -- jest",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
-    "lint": "eslint src/external src/controllers src/components/common src/components/helpers src/components/atoms src/components/molecules src/constants src/propTypes private webpack.config.js e2e",
+    "lint": "eslint src/*.js src/external src/controllers src/components/common src/components/helpers src/components/atoms src/components/molecules src/constants src/propTypes private webpack.config.js e2e",
     "format": "prettier-eslint --write",
     "format-all": "npm run format -- \"src/**/*.js\"",
     "storybook": "start-storybook -s ./public -p 9001 -c private/storybook"
