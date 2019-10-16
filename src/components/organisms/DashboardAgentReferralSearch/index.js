@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { func, arrayOf, object } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
@@ -35,7 +35,7 @@ const DashboardAgentReferralSearch = ({
     <SendReferralTitleBlock size="subtitle">Send referral to agent</SendReferralTitleBlock>
     <DashboardCommunityAgentSearchBox label="Find an agent" handleSubmit={handleAgentSearch} />
     {agents && agents.length > 0 && (
-      <Fragment>
+      <>
         <Hr size="large" />
         <Block>Showing {agents.length} agents</Block>
         {agents.map((agent) => {
@@ -46,7 +46,7 @@ const DashboardAgentReferralSearch = ({
           }
           return <CursorStyledDashboardAdminReferralAgentTile agent={agent} onClick={() => { setSelectedAgent(agent); onSubmit(); }} />;
         })}
-      </Fragment>
+      </>
     )}
   </Wrapper>
 );

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { func, shape, string, number, object, bool } from 'prop-types';
 import NumberFormat from 'react-number-format';
@@ -52,15 +52,15 @@ const CommunityFloorPlanPopupForm = ({
         <HeadingBlock size="subtitle" weight="medium">Inquire about {typeOfCare} - {roomType}</HeadingBlock>
         <DetailsTable>
           {priceToShow > 0 &&
-          <Fragment>
+          <>
             <Block size="caption">Pricing starts at</Block>
             <Block size="caption"><NumberFormat value={priceToShow} displayType="text" thousandSeparator prefix="$" /></Block>
-          </Fragment>}
+          </>}
           {!!shareType &&
-          <Fragment>
+          <>
             <Block size="caption">Room type</Block>
             <Block size="caption">{shareType}</Block>
-          </Fragment>}
+          </>}
         </DetailsTable>
         <Hr />
         {/* FIXME: Copied from CommunityBookATourContactForm. Make it reusable component */}

@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
-import { func, object } from 'prop-types';
+import { object } from 'prop-types';
 import { ifProp, ifNotProp } from 'styled-tools';
 import { generatePath } from 'react-router';
 
@@ -9,19 +9,16 @@ import {
   Block,
   Link,
   Icon,
-  Hr,
 } from 'sly/components/atoms';
-
 import {
   DoubleLineTd,
   Td,
   TextTd,
   Tr,
 } from 'sly/components/atoms/Table';
-
 import Stage from 'sly/components/molecules/Stage';
 import { FAMILY_STATUS_ON_PAUSE } from 'sly/constants/familyDetails';
-import { ACTIVITY, AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
 import clientPropType from 'sly/propTypes/client';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import { size, palette } from 'sly/components/themes';
@@ -76,14 +73,14 @@ const StageCell = mobileOnly(Td, css`
 `);
 
 const NoteCell = mobileOnly(({ disabled, note, ...props }) => (
-  <Fragment>
+  <>
     {note && (
       <DoubleLineTd firstLine={note.body} secondLine={dayjs(note.createdAt).format('MM/DD/YYYY')} disabled={disabled} {...props} />
     )}
     {!note && (
       <TextTd disabled={disabled} {...props} />
     )}
-  </Fragment>
+  </>
 ), css`
   ${ifNotProp('note', css`display: none;`)}
 

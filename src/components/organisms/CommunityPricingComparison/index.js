@@ -1,10 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import { calculatePricing, findPercentage } from 'sly/services/helpers/pricing';
+import pad from 'sly/components/helpers/pad';
 import { Block } from 'sly/components/atoms';
 import PriceBar from 'sly/components/molecules/PriceBar';
 
@@ -12,9 +13,7 @@ const StyledPriceBar = styled(PriceBar)`
   margin-bottom: ${ifProp('last', size('spacing.large'), size('spacing.regular'))};
 `;
 
-const StyledBlock = styled(Block)`
-  margin-bottom: ${size('spacing.regular')};
-`;
+const PaddedBlock = pad(Block, 'regular');
 
 const CommunityPricingComparison = ({ community }) => {
   const { rgsAux, name } = community;
@@ -42,7 +41,7 @@ const CommunityPricingComparison = ({ community }) => {
     <article>
       {!topSectionPrices.length && !bottomSectionPrices.length && <div>No pricing info available.</div> }
       {topSectionPrices.length > 0 &&
-        <Fragment>
+        <>
           {topSectionPrices.map((object, i) => (
             <StyledPriceBar
               width={findPercentage(object[1], maxPrice)}
@@ -55,11 +54,11 @@ const CommunityPricingComparison = ({ community }) => {
               {estimatedPriceLabelMap[object[0]]}
             </StyledPriceBar>
           ))}
-        </Fragment>
+        </>
       }
       {bottomSectionPrices.length > 0 &&
-        <Fragment>
-          <StyledBlock size="body" weight="medium">Compare cost to other care options</StyledBlock>
+        <>
+          <PaddedBlock size="body" weight="medium">Compare cost to other care options</PaddedBlock>
           {bottomSectionPrices.map((object, i) => (
             <StyledPriceBar
               width={findPercentage(object[1], maxPrice)}
@@ -72,7 +71,7 @@ const CommunityPricingComparison = ({ community }) => {
             </StyledPriceBar>
           ))}
           {hasAdultDayAverage && <Block size="tiny" palette="grey">1 The estimate above is based on data provided by Genworth&apos;s Cost of Care estimate. Home care assumes 44 hours per week, and Adult Day assumes 5 days per week.</Block>}
-        </Fragment>
+        </>
       }
     </article>
   );

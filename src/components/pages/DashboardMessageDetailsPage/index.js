@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { bool, number, func, object } from 'prop-types';
+import React from 'react';
+import { bool, number, func } from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { generatePath } from 'react-router';
 import styled from 'styled-components';
@@ -36,7 +36,7 @@ const HeaderWrapper = styled.div`
 
 const StyledConversationMessagesContainer = styled(ConversationMessagesContainer)`
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('border.xLarge')};  
+  border-radius: ${size('border.xLarge')};
 `;
 
 const DashboardMessageDetailsPage = ({
@@ -51,14 +51,14 @@ const DashboardMessageDetailsPage = ({
   if (!isLoading) {
     if (!conversation) {
       return (
-        <Fragment>
+        <>
           <Role is={CUSTOMER_ROLE}>
             <Redirect to={FAMILY_DASHBOARD_MESSAGES_PATH} />;
           </Role>
-          <Role is={AGENT_ROLE}>
+          <Role is={AGENT_ND_ROLE}>
             <Redirect to={AGENT_DASHBOARD_MESSAGES_PATH} />;
           </Role>
-        </Fragment>
+        </>
       );
     }
     ({ conversationParticipants } = conversation);
@@ -95,13 +95,13 @@ const DashboardMessageDetailsPage = ({
     <DashboardPageTemplate activeMenuItem="Messages" bodyHasOverflow>
       {!isLoading && !conversation && <Redirect to={DASHBOARD_PATH} />}
       {isLoading &&
-        <Fragment>
+        <>
           <br />
           <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
-        </Fragment>
+        </>
       }
       {!isLoading &&
-        <Fragment>
+        <>
           <StyledConversationMessagesContainer
             conversation={conversation}
             viewingAsParticipant={viewingAsParticipant}
@@ -110,7 +110,7 @@ const DashboardMessageDetailsPage = ({
             sendMessageFormPlaceholder={sendMessageFormPlaceholder}
             refetchConversation={refetchConversation}
           />
-        </Fragment>
+        </>
       }
     </DashboardPageTemplate>
   );

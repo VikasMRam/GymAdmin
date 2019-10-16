@@ -1,11 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { string, func, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled, { css } from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
 import { Heading, Block, Button } from 'sly/components/atoms';
-
 
 const HeadingSection = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
@@ -15,7 +14,6 @@ const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
   display: flex;
 `;
-
 
 const StyledButton = styled(Button)`
    display: grid;

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { array, bool, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
@@ -86,7 +86,6 @@ const StateSearchFilterList = ({
   const WrapperElement = (isModalView) ? StyledWrapper : StyledBox;
   return (
     <WrapperElement>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       {!isModalView &&
         <ImageButtonWrapper isMapView={isMapView}>
           {isMapView && toggleMap &&
@@ -95,23 +94,22 @@ const StateSearchFilterList = ({
           </IconButton>
           }
           {!isMapView &&
-          <Fragment>
-            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+          <>
             <StyledImage src={assetPath('images/map-placeholder.png')} />
             <IconButton icon="map" iconSize="regular" onClick={toggleMap} palette="primary" ghost>
               View Map
             </IconButton>
-          </Fragment>
+          </>
           }
         </ImageButtonWrapper>
       }
       {seoLinks.length > 0 && (
-        <Fragment>
+        <>
           {!isModalView && <StyledHr />}
           <CollapsibleSection size="small" title="Cities" borderless>
             {tocFields}
           </CollapsibleSection>
-        </Fragment>
+        </>
       )}
     </WrapperElement>
   );

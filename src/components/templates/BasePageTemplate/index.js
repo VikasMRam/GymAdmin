@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React  from 'react';
 import styled from 'styled-components';
-import { bool, node } from 'prop-types';
+import { node } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import ModalContainer from 'sly/containers/ModalContainer';
@@ -19,11 +19,12 @@ const Main = styled.main`
 `;
 
 export const TemplateContent = ({ children }) => (
-  <Fragment>
+  <>
     <Main>{children}</Main>
     <ModalContainer />
-  </Fragment>
+  </>
 );
+
 TemplateContent.propTypes = {
   children: node,
 };

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
 import { generatePath } from 'react-router';
 
@@ -188,7 +188,7 @@ export default class HeaderContainer extends Component {
                 howItWorksItem.onClick = () => show(modalBody, null, 'fullScreen');
               }
               return (
-                <Fragment>
+                <>
                   <Header
                     menuOpen={isDropdownOpen}
                     onMenuIconClick={toggleDropdown}
@@ -201,7 +201,7 @@ export default class HeaderContainer extends Component {
                   />
                   <AuthContainer notifyInfo={notifyInfo} showModal={show} hideModal={hide} />
                   <Notifications messages={messages} dismiss={dismiss} />
-                </Fragment>
+                </>
               );
             }}
           </NotificationController>

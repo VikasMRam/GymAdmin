@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { number, node, func, arrayOf, object } from 'prop-types';
 
 export default class WizardSteps extends Component {
@@ -40,6 +40,6 @@ export default class WizardSteps extends Component {
         React.cloneElement(currentStepComponent, props);
     }
 
-    return <Fragment>{newChild}</Fragment>;
+    return <>{newChild}</>;
   }
 }

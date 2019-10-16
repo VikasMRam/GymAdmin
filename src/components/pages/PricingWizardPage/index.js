@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { object, func, bool } from 'prop-types';
 import Helmet from 'react-helmet';
@@ -251,7 +251,7 @@ class PricingWizardPage extends Component {
             }
 
             return (
-              <Fragment>
+              <>
                 <Body>
                   <WizardSteps {...props}>
                     <WizardStep
@@ -306,7 +306,7 @@ class PricingWizardPage extends Component {
                     />
                   </Controls>
                 }
-              </Fragment>
+              </>
               );
             }}
         </WizardController>

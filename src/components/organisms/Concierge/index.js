@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { object, func } from 'prop-types';
 
 import { isBrowser } from 'sly/config';
@@ -53,7 +53,7 @@ const Concierge = ({
 
   const StepComponent = steps[currentStep];
   const modal = (
-    <Fragment>
+    <>
       {appElement && StepComponent && modalIsOpen && (
         <Modal
           appElement={appElement}
@@ -72,7 +72,7 @@ const Concierge = ({
           />
         </Modal>
       )}
-    </Fragment>
+    </>
   );
   let result = modal;
   if (community) {
@@ -82,7 +82,7 @@ const Concierge = ({
           show,
           hide,
         }) => (
-          <Fragment >
+          <>
             <ConversionFormContainer
               submitRegularConversion={submitRegularConversion}
               submitExpressConversion={submitExpressConversion}
@@ -94,7 +94,7 @@ const Concierge = ({
               hideModal={hide}
             />
             {modal}
-          </Fragment>
+          </>
         )}
       </ModalController>
     );

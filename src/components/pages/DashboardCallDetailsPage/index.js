@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { object, string, shape, func } from 'prop-types';
 import voiceCallPropType from 'sly/propTypes/calls';
@@ -83,7 +83,7 @@ export default class DashboardCallDetailsPage extends Component {
     const activityPath = generatePath(ADMIN_DASHBOARD_CALL_DETAILS_PATH, { id, tab: ACTIVITY });
     const initialFormData = { name: voiceCall.toNumber, phoneNumber: voiceCall.fromNumber, referralSource: 'Direct Call' };
     return (
-      <Fragment>
+      <>
         <DashboardTwoColumnTemplate>
           <Box><DashboardAdminFamilyDetailsFormContainer notifyInfo={notifyInfo} notifyError={notifyError} postCreateClient={postCreateClient} initialFormData={initialFormData} {...meta} /></Box>
           <div>
@@ -108,7 +108,7 @@ export default class DashboardCallDetailsPage extends Component {
           </div>
 
         </DashboardTwoColumnTemplate>
-      </Fragment>
+      </>
     );
   }
 }

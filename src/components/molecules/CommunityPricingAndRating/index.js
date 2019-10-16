@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { number, string } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
@@ -38,7 +38,7 @@ const StyledBlock = styled(Block)`
 const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
   const ratingFixed = formatRating(rating);
   return (
-    <Fragment>
+    <>
       <Wrapper>
         {price > 0 &&
           <StyledCommunityPricingWrapper>
@@ -65,7 +65,7 @@ const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
           * Your pricing will vary depending on your specific room and care service needs.
         </StyledBlock>
       }
-    </Fragment>
+    </>
   );
 };
 

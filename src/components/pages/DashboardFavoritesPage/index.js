@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { arrayOf, object, func, bool } from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -183,7 +183,7 @@ const DashboardFavoritesPage = ({
           </Masonry>
         }
         {!communityTiles.length &&
-          <Fragment>
+          <>
             <Wrapper>
               <PaddedHeading size="subtitle" weight="regular">You haven’t saved any communities yet.</PaddedHeading>
               <PaddedParagraph size="caption">Add communities to your saved list to organize and compare which options are the best fit for you.</PaddedParagraph>
@@ -201,7 +201,7 @@ const DashboardFavoritesPage = ({
                 onPlay={e => sendEvent('howSlyWorksVideo', 'play', 'dashboard-family-favorites', e.target.currentTime)}
               />
             </Wrapper>
-          </Fragment>
+          </>
         }
       </FormSection>
     </DashboardPageTemplate>

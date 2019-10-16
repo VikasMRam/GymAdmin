@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
@@ -85,8 +85,7 @@ const CareTypeRegionGuidePage = ({
   searchParams,
 }) => {
   const HeaderContent = (
-    <Fragment>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+    <>
       <HeaderContainer />
       <HeroWrapper>
         <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
@@ -100,7 +99,7 @@ const CareTypeRegionGuidePage = ({
           <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>
       </HeroWrapper>
-    </Fragment>
+    </>
   );
 
   const BreadCrumbContent = () => {
@@ -148,16 +147,16 @@ const CareTypeRegionGuidePage = ({
       }
 
       return (
-        <Fragment>
+        <>
           {additionalDivs}
-        </Fragment>
+        </>
       );
     }
     return (<div />);
   };
 
   return (
-    <Fragment>
+    <>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
         {geoGuide && geoGuide.guideContent && BreadCrumbContent()}
@@ -165,7 +164,7 @@ const CareTypeRegionGuidePage = ({
         {geoGuide && geoGuide.guideContent && ListContent()}
       </TemplateContent>
       <Footer />
-    </Fragment>
+    </>
 
   );
 };

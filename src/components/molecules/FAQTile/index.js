@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
 
@@ -13,10 +13,10 @@ const Answer = styled.div`
 `;
 
 const FAQTile = ({ question, answer }) => (
-  <Fragment>
+  <>
     <Question>{question}</Question>
     <Answer>{answer}</Answer>
-  </Fragment>
+  </>
 );
 
 FAQTile.propTypes = {

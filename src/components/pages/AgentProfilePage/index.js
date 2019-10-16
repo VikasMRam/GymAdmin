@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import { shape, object } from 'prop-types';
 import styled from 'styled-components';
 
@@ -51,22 +51,6 @@ const AskQuestionToAgentWrapper = styled.div`
   }
 `;
 
-const AgentCommunitiesWrapper = styled.div`
-  width: 100%;
-  justify-content: center;
-  display: grid;
-  grid-gap: ${size('spacing.large')};
-  grid-template-columns: ${size('layout.col4')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    grid-template-columns: ${size('layout.col4')} ${size('layout.col4')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-template-columns: ${size('layout.col4')} ${size('layout.col4')} ${size('layout.col4')};
-  }
-`;
-
 class AgentProfilePage extends Component {
   static propTypes = {
     agent: shape({
@@ -98,7 +82,7 @@ class AgentProfilePage extends Component {
     const firstName = displayName.split(' ')[0];
     const { state, city } = address;
     return (
-      <Fragment>
+      <>
         {getHelmetForAgentProfilePage({ agent, location })}
 
         <TemplateHeader>
@@ -122,12 +106,12 @@ class AgentProfilePage extends Component {
           <StyledHr fullWidth />
 
           {communities &&
-            <Fragment>
+            <>
               <Section title={`Communities near ${firstName}`}>
                 <SimilarCommunities communities={communities} />
               </Section>
               <StyledHr fullWidth />
-            </Fragment>
+            </>
           }
 
           {reviews && reviews.length > 0 &&
@@ -140,12 +124,12 @@ class AgentProfilePage extends Component {
           }
 
           {bio &&
-            <Fragment>
+            <>
               <StyledSection title={`About ${firstName}`}>
                 {bio}
               </StyledSection>
               <StyledHr fullWidth />
-            </Fragment>
+            </>
           }
 
           <StyledSection>
@@ -169,7 +153,7 @@ class AgentProfilePage extends Component {
           </StyledSection>
         </TemplateContent>
         <Footer />
-      </Fragment>
+      </>
     );
   }
 }

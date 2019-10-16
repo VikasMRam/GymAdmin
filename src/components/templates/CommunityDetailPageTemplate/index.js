@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { string } from 'prop-types';
 import styled from 'styled-components';
 import classes from 'classnames';
@@ -186,13 +186,13 @@ export const makeBody = (Component) => {
 export const makeFooter = () => {
   function Footer({ className, ...props }) {
     return (
-      <Fragment>
+      <>
         <FooterOrganism
           className={classes('overlayFooter', className)}
           {...props}
         />
         <ModalContainer />
-      </Fragment>
+      </>
     );
   }
   Footer.propTypes = {

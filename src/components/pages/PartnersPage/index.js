@@ -1,6 +1,5 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Helmet from 'react-helmet';
 
 import { size, assetPath } from 'sly/components/themes';
 import { getHelmetForPartnersPage } from 'sly/services/helpers/html_headers';
@@ -80,17 +79,16 @@ const MSPAColumnWrapper = styled(ColumnWrapper)`
 
 const PartnersPage = () => {
   const headerContent = (
-    <Fragment>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+    <>
       <HeaderContainer />
       <HeroWrapper>
         <HeroTextWrapper><PartnerWithSly /></HeroTextWrapper>
       </HeroWrapper>
-    </Fragment>
+    </>
   );
 
   return (
-    <Fragment>
+    <>
       {getHelmetForPartnersPage()}
       <TemplateHeader>{headerContent}</TemplateHeader>
       <TemplateContent>
@@ -131,7 +129,7 @@ const PartnersPage = () => {
         </TemplateContent>
       </StyledSection>
       <Footer />
-    </Fragment>
+    </>
   );
 };
 
