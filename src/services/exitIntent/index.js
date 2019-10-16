@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import { node, func } from 'prop-types';
 
+import { host, domain } from 'sly/config';
+
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
     || WrappedComponent.name
     || 'Component';
-}
-
-function getBodyScrollTop() {
-  const el = document.scrollingElement || document.documentElement;
-  return el.scrollTop;
 }
 
 const ExitIntentStore = {
@@ -18,7 +15,7 @@ const ExitIntentStore = {
   value: 'exitShown',
 };
 
-const ExitIntentContainer = (InnerComponent) => {
+const ExitIntent = (InnerComponent) => {
   class Wrapper extends Component {
     static propTypes = {
       exitIntentContent: node.isRequired,
@@ -30,17 +27,23 @@ const ExitIntentContainer = (InnerComponent) => {
     scrollInterval = null;
 
     componentDidMount() {
-      if (this.isMobile()) {
-        this.addMobileIntent();
-        this.handlePopStateEvent();
-      } else {
-        document.addEventListener('mouseout', this.addDesktopIntent);
+      console.log('\n\nReferrer', host, domain, document.referrer);
+      console.log('window.history.state', window.history.state);
+      // @todo change the test condition
+      if (document.referrer.indexOf(host) === 0) {
+        this.addPopstateListener();
       }
+      // if (this.isMobile()) {
+      //   this.addMobileIntent();
+      //   this.handlePopStateEvent();
+      // } else {
+      //   document.addEventListener('mouseout', this.addDesktopIntent);
+      // }
     }
 
     componentWillUnmount() {
       if (this.isMobile()) {
-        window.removeEventListener('popstate', this.setPopstateEvent);
+        window.removeEventListener('popstate', this.onPopstate);
         if (this.interval) {
           clearInterval(this.interval);
         }
@@ -76,58 +79,24 @@ const ExitIntentContainer = (InnerComponent) => {
       }
     }
 
-    addMobileIntent = () => {
-      const { showIntent } = this;
-      const percentUp = 0.2;
-      const scrollInterval = 100;
-      const pageHeight = document.documentElement.offsetHeight;
-
-      let scrollStart = getBodyScrollTop();
-      let interval = null;
-
-      if (pageHeight > 0) {
-        // Only check the scroll position every few seconds, to avoid bogging the UI
-        interval = setInterval(() => {
-          let scrollAmount = scrollStart - getBodyScrollTop();
-          if (scrollAmount < 0) {
-            scrollAmount = 0;
-            scrollStart = getBodyScrollTop();
-          }
-
-          const upScrollPercent =
-            parseFloat(scrollAmount) / parseFloat(pageHeight);
-
-          if (upScrollPercent > parseFloat(percentUp) / 100) {
-            clearInterval(interval);
-            interval = null;
-            showIntent();
-          }
-        }, scrollInterval);
+    addPopstateListener = () => {
+      window.addEventListener('popstate', this.onPopstate);
+      // Do not rewrite state in case of refresh
+      if (
+        !window.history.state ||
+        window.history.state.intent !== 'normal-intent'
+      ) {
+        window.history.replaceState({ intent: 'exit-intent' }, '');
+        window.history.pushState({ intent: 'normal-intent' }, '');
+      } else {
+        console.log('not installing..');
       }
-      this.interval = interval;
-    }
+      // }
+    };
 
-    handlePopStateEvent = () => {
-      const { setPopstateEvent } = this;
+    onPopstate = (event) => {
+      console.log('\n\n inside popstate listener');
 
-      if (window.matchMedia('(max-width: 2048px)').matches) {
-        // Wait before setting event listener for browsers that trigger popstate at page load
-        setTimeout(() => {
-          window.addEventListener('popstate', setPopstateEvent);
-        }, 100);
-
-        // Do not rewrite state in case of refresh
-        if (
-          !window.history.state ||
-          window.history.state.intent !== 'normal-intent'
-        ) {
-          window.history.replaceState({ intent: 'exit-intent' }, '');
-          window.history.pushState({ intent: 'normal-intent' }, '');
-        }
-      }
-    }
-
-    setPopstateEvent = (event) => {
       const { showIntent } = this;
 
       if (event.state && event.state.intent === 'exit-intent') {
@@ -158,4 +127,4 @@ const ExitIntentContainer = (InnerComponent) => {
   return Wrapper;
 };
 
-export default ExitIntentContainer;
+export default ExitIntent;

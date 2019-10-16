@@ -12,7 +12,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import { calculatePricing, buildPriceList, buildEstimatedPriceList } from 'sly/services/helpers/pricing';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import pad from 'sly/components/helpers/pad';
-import { Heading, Button, Paragraph, Block } from 'sly/components/atoms';
+import { Button, Paragraph, Block } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import {
   CommunityDetailPageTemplate,
@@ -59,7 +59,7 @@ import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFo
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 import { Experiment, Variant } from 'sly/services/experiments';
-import exitIntent from 'sly/containers/ExitIntentContainer'
+import exitIntent from 'sly/services/exitIntent';
 
 const BackToSearch = styled.div`
   text-align: center
