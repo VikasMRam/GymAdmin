@@ -14,13 +14,13 @@ const PaddedLink = pad(styled(Link)`
 const SimilarCommunities = ({ communities, onCommunityClick, communityStyle }) => {
   const { layout = 'column', imageSize = 'regular', showDescription = false } = communityStyle;
   return (
-    <div>
+    <>
       {communities.map((community, index) => (
         <PaddedLink key={community.id} to={community.url} onClick={() => onCommunityClick && onCommunityClick(index, community.id)}>
           <CommunityTile community={community} layout={layout} imageSize={imageSize} noGallery showDescription={showDescription} showSeeMoreButtonOnHover />
         </PaddedLink>
       ))}
-    </div>
+    </>
   );
 };
 
