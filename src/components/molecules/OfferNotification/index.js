@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { bool, string, func } from 'prop-types';
 
@@ -46,14 +46,14 @@ const OfferNotification = ({
     <div>
       <TopWrapper>
         {title && <Span weight="medium" size="body">{title}</Span>}
-        {title && description && <Fragment>&nbsp;-&nbsp;</Fragment>}
+        {title && description && <>&nbsp;-&nbsp;</>}
         {description && <Span>{description}</Span>}
       </TopWrapper>
       {hasLearnMore &&
-        <Fragment>
+        <>
           <BigScreenLearnMore onClick={onLearnMoreClick}>Click here to learn more.</BigScreenLearnMore>
           <SmallScreenLearnMore onClick={onLearnMoreClick}>Learn more.</SmallScreenLearnMore>
-        </Fragment>}
+        </>}
     </div>
   </Wrapper>
 );

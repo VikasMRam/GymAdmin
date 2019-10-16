@@ -31,7 +31,7 @@ const InteractiveDetail = ({
           />
         </Link>
       }
-      {detail.type === 'email' && <Link href={`mailto:${detail.value}`}>{detail.value}</Link>}
+      {detail.type === 'email' && <Link href={`mailto:${detail.value}`}>Click here to send Email</Link>}
     </Value>
   </div>
 );

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { func, object } from 'prop-types';
 import produce from 'immer';
@@ -23,7 +23,6 @@ import ConfirmReasonFormContainer from 'sly/containers/ConfirmReasonFormContaine
 import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
 
 const options = [
-
   { label: 'Active',    icon: 'active',     palette: 'green',  value: FAMILY_STATUS_ACTIVE, role: AGENT_ND_ROLE  },
   // { label: 'Hot',       icon: 'hot',        palette: 'yellow', value: FAMILY_STATUS_HOT },
   { label: 'Long Term', icon: 'hourglass',  palette: 'purple', value: FAMILY_STATUS_LONG_TERM, role: PLATFORM_ADMIN_ROLE },
@@ -81,7 +80,7 @@ export default class StatusSelect extends Component {
     type: 'date',
     size: 'small',
     required: true,
-    label: <Fragment>Expected resume date<Span palette="danger">*</Span></Fragment>,
+    label: <>Expected resume date<Span palette="danger">*</Span></>,
   });
 
   // FIXME: Because I am an idiot and am not clever in the slightest

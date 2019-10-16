@@ -22,26 +22,35 @@ const TooltipContent = styled(ReactTooltip)`
   }
 `;
 
-// TODO: add support for changing icon colour using prop
-const HelpBubble = ({ children, className }) => {
-  const id = uniqueId('tooltipHelpBubble_');
-
-  return (
-    <div className={className}>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <Icon palette="slate" variation="filler" icon="help" size="small" data-tip data-for={id} />
-      {!isServer &&
+const HelpBubble = ({ children, className, icon, iconPalette, iconVariation, iconSize }) => {
+  if (!isServer) {
+    const id = uniqueId('tooltipHelpBubble_');
+    return (
+      <div className={className}>
+        <Icon palette={iconPalette} variation={iconVariation} icon={icon} size={iconSize} data-tip data-for={id} />
         <TooltipContent id={id} place="top" effect="solid" multiline>
           {children}
         </TooltipContent>
-      }
-    </div>
-  );
+      </div>
+    );
+  }
+  return <Icon className={className} palette={iconPalette} variation={iconVariation} icon={icon} size={iconSize} />;
 };
 
 HelpBubble.propTypes = {
   children: node,
   className: string,
+  icon: string,
+  iconPalette: string,
+  iconVariation: string,
+  iconSize: string,
+};
+
+HelpBubble.defaultProps = {
+  icon: 'help',
+  iconPalette: 'slate',
+  iconVariation: 'filler',
+  iconSize: 'small',
 };
 
 export default HelpBubble;

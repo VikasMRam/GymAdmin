@@ -1,5 +1,5 @@
-import React, { Fragment, Component } from 'react';
-import { shape, object, func } from 'prop-types';
+import React, { Component } from 'react';
+import { shape, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -9,10 +9,10 @@ import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePa
 import Footer from 'sly/components/organisms/Footer';
 import AgentSummary from 'sly/components/molecules/AgentSummary';
 import Section from 'sly/components/molecules/Section';
-import { Link, Hr } from 'sly/components/atoms';
+import { Hr } from 'sly/components/atoms';
 import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
 import EntityReviews from 'sly/components/organisms/EntityReviews';
-import SimilarCommunityNearbyTile from 'sly/components/molecules/SimilarCommunityNearbyTile';
+import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import { getBreadCrumbsForAgent } from 'sly/services/helpers/url';
 import BannerNotificationController from 'sly/controllers/BannerNotificationController';
@@ -51,26 +51,6 @@ const AskQuestionToAgentWrapper = styled.div`
   }
 `;
 
-const AgentCommunityLink = styled(Link)`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
-
-const AgentCommunitiesWrapper = styled.div`
-  width: 100%;
-  justify-content: center;
-  display: grid;
-  grid-gap: ${size('spacing.large')};
-  grid-template-columns: ${size('layout.col4')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    grid-template-columns: ${size('layout.col4')} ${size('layout.col4')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-template-columns: ${size('layout.col4')} ${size('layout.col4')} ${size('layout.col4')};
-  }
-`;
-
 class AgentProfilePage extends Component {
   static propTypes = {
     agent: shape({
@@ -102,7 +82,7 @@ class AgentProfilePage extends Component {
     const firstName = displayName.split(' ')[0];
     const { state, city } = address;
     return (
-      <Fragment>
+      <>
         {getHelmetForAgentProfilePage({ agent, location })}
 
         <TemplateHeader>
@@ -126,32 +106,12 @@ class AgentProfilePage extends Component {
           <StyledHr fullWidth />
 
           {communities &&
-            <Fragment>
+            <>
               <Section title={`Communities near ${firstName}`}>
-                <AgentCommunitiesWrapper>
-                  {communities.map((community) => {
-                    const { mainService } = community;
-                    return (
-                      <AgentCommunityLink
-                        key={community.slug}
-                        to={community.url}
-                      >
-                        <SimilarCommunityNearbyTile
-                          image={community.imageUrl}
-                          typeOfCare={mainService}
-                          name={community.name}
-                          estimatedRate={community.estimated || 0}
-                          startingRate={community.startingRate}
-                          reviewsValue={community.reviewsValue}
-                          numReviews={community.numReviews}
-                        />
-                      </AgentCommunityLink>
-                    );
-                  })}
-                </AgentCommunitiesWrapper>
+                <SimilarCommunities communities={communities} />
               </Section>
               <StyledHr fullWidth />
-            </Fragment>
+            </>
           }
 
           {reviews && reviews.length > 0 &&
@@ -164,12 +124,12 @@ class AgentProfilePage extends Component {
           }
 
           {bio &&
-            <Fragment>
+            <>
               <StyledSection title={`About ${firstName}`}>
                 {bio}
               </StyledSection>
               <StyledHr fullWidth />
-            </Fragment>
+            </>
           }
 
           <StyledSection>
@@ -193,7 +153,7 @@ class AgentProfilePage extends Component {
           </StyledSection>
         </TemplateContent>
         <Footer />
-      </Fragment>
+      </>
     );
   }
 }

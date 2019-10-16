@@ -1,8 +1,7 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import { string, object } from 'prop-types';
 import { prefetch, query } from 'sly/services/newApi';
 import AgentSummary from 'sly/components/molecules/AgentSummary';
-
 
 @prefetch('communities', 'getCommunities', (getCommunities, { callNumber }) => {
   const filters = {

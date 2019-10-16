@@ -1,20 +1,36 @@
 import { Component } from 'react';
-import { arrayOf, any, func, number, object, bool, string } from 'prop-types';
+import { arrayOf, any, func, object, bool, string, number } from 'prop-types';
 import { isValid, isSubmitting, reset, SubmissionError } from 'redux-form';
 
 import { connectController } from 'sly/controllers';
 import { selectFormData } from 'sly/services/helpers/forms';
 
-class WizardController extends Component {
+const mapStateToProps = (state, { controller, ...ownProps }) => {
+  isValid(ownProps.formName)(state);
+  return {
+    steps: controller.steps || [],
+    progressPath: controller.progressPath || [0],
+    currentStepIndex: controller.currentStepIndex || 0,
+    data: selectFormData(state, ownProps.formName, {}),
+    submitEnabled: isValid(ownProps.formName)(state) && !isSubmitting(ownProps.formName)(state),
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  resetForm: () => dispatch(reset(ownProps.formName)),
+});
+
+@connectController(mapStateToProps, mapDispatchToProps)
+
+export default class WizardController extends Component {
   static propTypes = {
     progressPath: arrayOf(number).isRequired,
     children: any,
-    set: func,
+    set: func.isRequired,
     resetController: func,
-    currentStep: number,
-    stepSize: number,
+    currentStepIndex: number.isRequired,
+    steps: arrayOf(string).isRequired,
     onComplete: func,
-    onSubmit: func,
     data: object,
     submitEnabled: bool,
     resetForm: func,
@@ -40,55 +56,55 @@ class WizardController extends Component {
     this.reset();
   }
 
-  setStepsSize = (stepSize) => {
+  init = (steps) => {
     const { set } = this.props;
 
     set({
-      stepSize,
+      steps,
     });
-  }
+  };
 
   reset = () => {
     const { resetForm, resetController } = this.props;
     resetForm();
     resetController();
-  }
+  };
 
   isFinalStep = () => {
-    const { currentStep, stepSize } = this.props;
-    return currentStep === stepSize;
-  }
+    const { currentStepIndex, steps } = this.props;
+    return currentStepIndex === steps.length - 1;
+  };
 
-  goto = (step) => {
-    const { set, progressPath, currentStep } = this.props;
+  goto = (nextStep) => {
+    const { set, steps, progressPath } = this.props;
+    const nextStepIndex = steps.indexOf(nextStep);
     // Checking if we had already visited the step
-    if (progressPath.indexOf(currentStep) === -1) {
-      progressPath.push(currentStep);
+    if (!progressPath.includes(nextStepIndex)) {
+      progressPath.push(nextStepIndex);
     }
+
     set({
-      currentStep: step,
+      currentStepIndex: nextStepIndex,
       progressPath,
     });
-  }
+  };
 
   next = () => {
-    const { goto } = this;
-    const { currentStep } = this.props;
-    const nextStep = currentStep + 1;
+    const { currentStepIndex, steps } = this.props;
+    const nextStep = steps[currentStepIndex + 1];
 
-    goto(nextStep);
-  }
+    this.goto(nextStep);
+  };
 
   previous = () => {
-    const { currentStep, set, progressPath } = this.props;
-    let prevStep = 1;
-
-    if (currentStep > 1) {
-      prevStep = progressPath.pop();
+    const { set, progressPath, currentStepIndex } = this.props;
+    let prevStepIndex = 0;
+    if (currentStepIndex > 1) {
+      prevStepIndex = progressPath.pop();
     }
 
     set({
-      currentStep: prevStep,
+      currentStepIndex: prevStepIndex,
       progressPath,
     });
   };
@@ -102,6 +118,7 @@ class WizardController extends Component {
       next,
       previous,
     };
+
     return onComplete(data, params);
   };
 
@@ -110,16 +127,12 @@ class WizardController extends Component {
       next, previous, goto, doSubmit, isFinalStep,
     } = this;
     const {
-      onSubmit, onStepChange, data, currentStep,
+      onStepChange, data, currentStepIndex, steps,
     } = this.props;
+    const currentStep = steps[currentStepIndex];
 
     if (isFinalStep()) {
       return doSubmit();
-    }
-    if (onSubmit) {
-      return onSubmit(data).catch((e) => {
-        throw new SubmissionError({ _error: e.message });
-      });
     }
 
     // if onStepChange returns a promise then wait for it to resolve before
@@ -147,18 +160,20 @@ class WizardController extends Component {
 
   render() {
     const {
-      formOptions, next, previous, goto, handleSubmit, setStepsSize,
+      formOptions, next, previous, goto, handleSubmit, init,
       isFinalStep, reset,
     } = this;
     const {
-      children, currentStep, data, submitEnabled,
+      children, currentStepIndex, data, submitEnabled, steps,
     } = this.props;
+    const currentStep = steps[currentStepIndex];
 
     return children({
       onSubmit: handleSubmit,
       isFinalStep: isFinalStep(),
-      setStepsSize,
+      init,
       currentStep,
+      currentStepIndex,
       next,
       previous,
       goto,
@@ -169,20 +184,3 @@ class WizardController extends Component {
     });
   }
 }
-
-const mapStateToProps = (state, { controller, ...ownProps }) => {
-  isValid(ownProps.formName)(state);
-  return {
-    progressPath: controller.progressPath || [1],
-    currentStep: controller.currentStep || ownProps.currentStep || 1,
-    stepSize: controller.stepSize || 0,
-    data: selectFormData(state, ownProps.formName, {}),
-    submitEnabled: isValid(ownProps.formName)(state) && !isSubmitting(ownProps.formName)(state),
-  };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  resetForm: () => dispatch(reset(ownProps.formName)),
-});
-
-export default connectController(mapStateToProps, mapDispatchToProps)(WizardController);

@@ -1,28 +1,27 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { number, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { size, palette } from 'sly/components/themes';
+import pad from 'sly/components/helpers/pad';
+import textAlign from 'sly/components/helpers/textAlign';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Heading from 'sly/components/atoms/Heading';
 import Link from 'sly/components/atoms/Link';
 import Footer from 'sly/components/organisms/Footer';
 
-const Wrapper = styled.div`
+const Wrapper = textAlign(styled.div`
   position: relative;
   background-color: ${palette('white', 'base')};
   margin: calc(${size('breakpoint.tablet')}/4) auto;
   content-align: center;
-  text-align: center;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width:${size('breakpoint.tablet')};
   }
-`;
-const IWrapper = styled(Heading)`
-  margin-bottom: ${size('spacing.xxLarge')};
+`);
 
-`;
+const IWrapper = pad(Heading, 'xxLarge');
 
 const getTextError = (errorCode) => {
   // Change to map and add more codeS!
@@ -62,7 +61,7 @@ export default class ErrorPage extends Component {
   render() {
     const { errorCode } = this.props;
     return (
-      <Fragment>
+      <>
         <TemplateHeader><HeaderContainer /></TemplateHeader>
         <TemplateContent>
           <Wrapper>
@@ -75,7 +74,7 @@ export default class ErrorPage extends Component {
           </Wrapper>
         </TemplateContent>
         <Footer />
-      </Fragment>
+      </>
     );
   }
 }

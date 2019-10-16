@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { string, func, object, arrayOf, bool } from 'prop-types';
 import { generatePath } from 'react-router';
@@ -37,7 +37,6 @@ import BackLink from 'sly/components/molecules/BackLink';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
-import { userHasAdminRole } from 'sly/services/helpers/role';
 import Tab from 'sly/components/molecules/Tab';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import fullHeight from 'sly/components/helpers/fullHeight';
@@ -327,7 +326,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
   handleAcceptClick = () => {
     const {
-      showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails, goToMessagesTab, refetchConversations, refetchClient,
+      showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails, goToMessagesTab, refetchConversations, refetchClient, conversation, user,
     } = this.props;
     SlyEvent.getInstance().sendEvent({
       category: 'fdetails',
@@ -345,6 +344,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         goToMessagesTab={goToMessagesTab}
         refetchConversations={refetchConversations}
         refetchClient={refetchClient}
+        conversation={conversation}
+        user={user}
       />), null, 'noPadding', false);
   };
 
@@ -442,7 +443,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, clientResult, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
     } = this.props;
     const { admin } = user;
 
@@ -567,9 +568,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           </Tabs>
           <TabWrapper snap="top">
             {currentTab === SUMMARY && (
-              <Fragment>
+              <>
                 <SmallScreenBorderPaddedFamilySummary client={client} to={familyDetailsPath} noHeading />
-              </Fragment>
+              </>
             )}
 
             {currentTab === ACTIVITY && (
@@ -579,10 +580,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                 <TextAlignCenterBlock>There are no activities.</TextAlignCenterBlock>
                 }
                 {!noteIsLoading && activityCards.length > 0 &&
-                <Fragment>
+                <>
                   {/* <TableHeaderButtons hasColumnsButton={false} /> */}
                   {activityCards}
-                </Fragment>
+                </>
                 }
               </SmallScreenBorderDiv>
             )}
@@ -648,10 +649,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             {currentTab === MESSAGES && (
               <SmallScreenBorderDiv>
                 {!hasConversationFinished &&
-                  <Fragment>
+                  <>
                     <br />
                     <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
-                  </Fragment>
+                  </>
                 }
                 {hasConversationFinished &&
                   <ConversationMessagesContainer

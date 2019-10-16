@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { size, assetPath, palette } from 'sly/components/themes';
@@ -90,9 +90,9 @@ const OverlappingSectionsTemplate = ({
   intro,
   description,
   children,
-  footer
+  footer,
 }) => (
-  <Fragment>
+  <>
     <TemplateHeader>
       <HeaderContainer />
       <HeroWrapper>
@@ -122,7 +122,7 @@ const OverlappingSectionsTemplate = ({
       {children}
     </TemplateContent>
     {footer}
-  </Fragment>
+  </>
 );
 
 export default OverlappingSectionsTemplate;

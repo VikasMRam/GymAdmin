@@ -114,8 +114,7 @@ const Tab = styled(Link)`
 `;
 
 const Header = ({ heroImageUrl, heading, subheading }) => (
-  <Fragment>
-    {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+  <>
     <HeaderContainer />
     <HeroWrapper>
       <HeroBackgroundImage src={assetPath(heroImageUrl)} alt="A Home To Love" />
@@ -133,7 +132,7 @@ const Header = ({ heroImageUrl, heading, subheading }) => (
         {children}
       </TabsWrapper> */}
     </HeroWrapper>
-  </Fragment>
+  </>
 );
 
 Header.propTypes = {
@@ -227,7 +226,7 @@ const HowItWorksDetailPage = ({
     </Header>
   );
   return (
-    <Fragment>
+    <>
       <TemplateHeader>{header}</TemplateHeader>
       <TemplateContent>
         <ForFamiliesComponents contents={contents} />
@@ -245,7 +244,7 @@ const HowItWorksDetailPage = ({
         </CardsSection>
       </TemplateContent>
       <Bottom />
-    </Fragment>
+    </>
   );
 };
 

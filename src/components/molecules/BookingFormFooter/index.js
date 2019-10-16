@@ -93,8 +93,9 @@ const BookingFormFooter = ({
           </div>
         </div>
       </PreferenceWrapper>
-      {isFinalStep && <StyledButton kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>Send Tour Request</StyledButton>}
-      {!isFinalStep && <StyledButton kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>Continue</StyledButton>}
+      <StyledButton kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>
+        {isFinalStep ? 'Send Tour Request' : 'Continue'}
+      </StyledButton>
     </Wrapper>
   );
 };

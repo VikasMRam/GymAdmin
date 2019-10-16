@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { func, number, string, arrayOf } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
@@ -32,7 +32,7 @@ const EstimatedCost = ({
   const hasCCRC = typeCares.includes('Continuing Care Retirement Community(CCRC)');
 
   return (
-    <Fragment>
+    <>
       {!hasCCRC && (from > 0 || to > 0) &&
         <EstimatedCostWrapper>
           <StyledBlock size="caption" palette="grey">Estimated Pricing*</StyledBlock>
@@ -53,7 +53,7 @@ const EstimatedCost = ({
           <Button ghost onClick={getPricing}>Get Detailed Pricing</Button>
         </div>
       }
-    </Fragment>
+    </>
   );
 };
 

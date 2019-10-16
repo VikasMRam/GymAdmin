@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { generatePath } from 'react-router';
 import { Redirect } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ import { FAMILY_DASHBOARD_FAVORITES_PATH, AGENT_DASHBOARD_FAMILIES_PATH } from '
 import Role from 'sly/components/common/Role';
 
 const DashboardHomePageContainer = () => (
-  <Fragment>
+  <>
     <Role is={CUSTOMER_ROLE}>
       <Redirect to={FAMILY_DASHBOARD_FAVORITES_PATH} />
     </Role>
@@ -18,7 +18,7 @@ const DashboardHomePageContainer = () => (
     <Role is={AGENT_ND_ROLE}>
       <Redirect to={generatePath(AGENT_DASHBOARD_FAMILIES_PATH)} />
     </Role>
-  </Fragment>
+  </>
 );
 
 export default DashboardHomePageContainer;

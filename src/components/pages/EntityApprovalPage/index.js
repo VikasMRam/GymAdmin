@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { string } from 'prop-types';
 
 import HeaderContainer from 'sly/containers/HeaderContainer';
@@ -7,14 +7,14 @@ import Footer from 'sly/components/organisms/Footer';
 import { Heading, Block } from 'sly/components/atoms';
 
 const EntityApprovalPage = ({ heading, message }) => (
-  <Fragment>
+  <>
     <TemplateHeader><HeaderContainer /></TemplateHeader>
     <TemplateContent>
       <Heading>{heading}</Heading>
       <Block>{message}</Block>
     </TemplateContent>
     <Footer />
-  </Fragment>
+  </>
 );
 
 EntityApprovalPage.propTypes = {

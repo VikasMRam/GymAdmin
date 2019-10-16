@@ -223,11 +223,10 @@ const Header = ({
       </SeniorlyLogoWrapper>
       <SeniorlyIconMenu>
         {headerMenuItemComponents.length > 0 && (
-          <Fragment>
-            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+          <>
             {!menuOpen && <MenuIcon onClick={onMenuIconClick} icon="menu" palette="secondary" />}
             {menuOpen && <MenuIcon onClick={onMenuIconClick} icon="close" palette="secondary" />}
-          </Fragment>
+          </>
         )}
         <OnlyInTablet>
           <Link palette="secondary" to="/"><Icon icon="logo" size="xLarge" /></Link>

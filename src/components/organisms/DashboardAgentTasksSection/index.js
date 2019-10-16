@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
 import qs from 'query-string';
@@ -250,7 +250,7 @@ export default class DashboardAgentTasksSection extends Component {
     const StatusBlock = noBorder ? StyledFamiliesCountStatusBlock : FamiliesCountStatusBlock;
 
     return (
-      <Fragment>
+      <>
         <Tabs activeTab={activeTab} tabsOnly noBorder={noBorder} beforeHeader={beforeTabHeader}>
           <Tab id={tabIDs[0]} to={getBasePath(tabIDs[0], basePath)} onClick={() => onTabClick(dueTodayLabel)}>
             {dueTodayTabLabel}
@@ -270,7 +270,7 @@ export default class DashboardAgentTasksSection extends Component {
 
         <SectionComponent>
           {!isPageLoading && (
-            <Fragment>
+            <>
               <StyledTable>
                 <THead>
                   <Tr>
@@ -299,7 +299,7 @@ export default class DashboardAgentTasksSection extends Component {
                   pageParam="page-number"
                 />
               )}
-            </Fragment>
+            </>
           )}
           {isPageLoading && 'Loading...'}
         </SectionComponent>
@@ -309,7 +309,7 @@ export default class DashboardAgentTasksSection extends Component {
             {pagination.text}
           </StatusBlock>
         }
-      </Fragment>
+      </>
     );
   }
 }

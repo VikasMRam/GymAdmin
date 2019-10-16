@@ -3,8 +3,11 @@ import { object, func } from 'prop-types';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
+import { domain } from 'sly/config';
 import { query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
+import conversationPropType from 'sly/propTypes/conversation/conversation';
+import userPropType from 'sly/propTypes/user';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { withPreventDefault } from 'sly/services/helpers/forms';
 import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
@@ -24,11 +27,13 @@ class AcceptAndContactFamilyContainer extends Component {
     goToFamilyDetails: func,
     goToMessagesTab: func,
     refetchConversations: func,
+    conversation: conversationPropType,
+    user: userPropType,
   };
 
   state = { contactType: null };
 
-  handleUpdateStage = (contactType) => {
+  handleUpdateStage = () => {
     const {
       updateClient, client, rawClient, refetchClient,
     } = this.props;
@@ -40,11 +45,6 @@ class AcceptAndContactFamilyContainer extends Component {
 
     return updateClient({ id }, newClient)
       .then(() => refetchClient())
-      .then(() => {
-        this.setState({
-          contactType,
-        });
-      })
       .catch((r) => {
         this.handleError(r, 'Failed to update stage. Please try again.');
       });
@@ -66,8 +66,13 @@ class AcceptAndContactFamilyContainer extends Component {
   }
 
   handleCallOrEmailClick = (contactType, next) => {
-    this.handleUpdateStage(contactType)
-      .then(() => next());
+    return this.handleUpdateStage(contactType)
+      .then(() => {
+        this.setState({
+          contactType,
+        });
+      })
+      .then(next);
   }
 
   handleMessageClick = (contactType) => {
@@ -79,15 +84,30 @@ class AcceptAndContactFamilyContainer extends Component {
   }
 
   render() {
-    const { handleCallOrEmailClick, handleMessageClick, handleAcceptFamilySubmit } = this;
-    const { onCancel, client } = this.props;
+    const { onCancel, client, conversation, user } = this.props;
     const { clientInfo } = client;
-    const { email, phoneNumber } = clientInfo;
+    const { phoneNumber } = clientInfo;
+    let { email } = clientInfo;
     const { contactType } = this.state;
+    const { id: userId } = user;
+    if (conversation) {
+      const userParticipant = conversation.conversationParticipants.find(participant => participant.participantID === userId);
+      const { participantID } = userParticipant;
+      email = `messaging+${participantID}@conversation.${domain}`;
+    }
     const detail = {
       type: contactType,
       value: contactType === 'phone' ? phoneNumber : email,
     };
+    if (phoneNumber) {
+      return (
+        <AcceptFamilyContactDetails
+          handleSubmit={() => this.handleCallOrEmailClick('phone')}
+          label="Phone number"
+          detail={{ type: 'phone', value: phoneNumber }}
+        />
+      );
+    }
 
     return (
       <WizardController>
@@ -96,17 +116,16 @@ class AcceptAndContactFamilyContainer extends Component {
         }) => (
           <WizardSteps {...props}>
             <WizardStep
-              component={AcceptAndContactFamilyForm}
               name="Contact"
+              component={AcceptAndContactFamilyForm}
               onCancelClick={onCancel}
-              onCallClick={phoneNumber ? () => handleCallOrEmailClick('phone', next) : null}
-              onEmailClick={email ? () => handleCallOrEmailClick('email', next) : null}
-              onMessageClick={() => handleMessageClick(null)}
+              onEmailClick={() => this.handleCallOrEmailClick('email', next)}
+              onMessageClick={this.handleMessageClick}
             />
             <WizardStep
-              component={AcceptFamilyContactDetails}
               name="Details"
-              handleSubmit={handleAcceptFamilySubmit}
+              component={AcceptFamilyContactDetails}
+              handleSubmit={this.handleAcceptFamilySubmit}
               label={contactType === 'phone' ? 'Phone number' : 'Email'}
               detail={detail}
             />
