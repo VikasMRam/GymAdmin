@@ -1,4 +1,0 @@
-describe('exit intent', () => {
-  it('', () => {
-  });
-});

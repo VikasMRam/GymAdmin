@@ -59,7 +59,7 @@ import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFo
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 import { Experiment, Variant } from 'sly/services/experiments';
-import exitIntent from 'sly/services/exitIntent';
+import withExitIntent from 'sly/services/exitIntent/withExitIntent';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -150,7 +150,8 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
   value,
 });
 
-@exitIntent
+@withExitIntent
+
 export default class CommunityDetailPage extends Component {
   static propTypes = {
     user: object,
