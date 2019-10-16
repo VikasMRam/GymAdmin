@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { arrayOf, shape, string, bool } from 'prop-types';
+import { arrayOf, func, bool } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import { Heading, Box } from 'sly/components/atoms';
-import LatestMessage from 'sly/components/molecules/LatestMessage';
-import messagePropType from 'sly/propTypes/conversation/conversationMessage';
+import conversationPropType from 'sly/propTypes/conversation/conversation';
+import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
 
 const Wrapper = styled.div`
   padding: ${size('spacing', 'xLarge')};
@@ -40,30 +40,24 @@ const EmptyMessagesWrapper = styled.div`
   text-align: center;
 `;
 
-const DashboardMessagesPage = ({ messages, isLoading }) => {
-  let messagesComponent = <EmptyMessagesWrapper>No messages</EmptyMessagesWrapper>;
+const DashboardMessagesPage = ({ isLoading, conversations, onConversationClick, refetchConversations }) => {
+  let messagesComponent = null;
+  let hasMessages = false;
   if (isLoading) {
     messagesComponent = <EmptyMessagesWrapper>Loading...</EmptyMessagesWrapper>;
+  } else if (conversations.length === 0) {
+    messagesComponent = <EmptyMessagesWrapper>No messages</EmptyMessagesWrapper>;
+  } else {
+    hasMessages = true;
+    messagesComponent = <DashboardMessagesContainer conversations={conversations} onConversationClick={onConversationClick} refetchConversations={refetchConversations} />;
   }
-  if (messages.length > 0) {
-    messagesComponent = messages.map(message => (
-      <LatestMessage
-        key={message.message.id}
-        name={message.name}
-        message={message.message}
-        hasUnread={message.hasUnread}
-        to={message.to}
-      />
-    ));
-  }
-
   return (
     <DashboardPageTemplate activeMenuItem="Messages">
       <Wrapper>
         <HeadingWrapper>
           <Heading size="subtitle">Messages</Heading>
         </HeadingWrapper>
-        <MessagesWrapper snap="top" hasMessages={messages.length > 0}>
+        <MessagesWrapper snap="top" hasMessages={hasMessages}>
           {messagesComponent}
         </MessagesWrapper>
       </Wrapper>
@@ -72,12 +66,15 @@ const DashboardMessagesPage = ({ messages, isLoading }) => {
 };
 
 DashboardMessagesPage.propTypes = {
-  messages: arrayOf(shape({
-    message: messagePropType.isRequired,
-    name: string.isRequired,
-    hasUnread: bool,
-  })),
+  // messages: arrayOf(shape({
+  //   message: messagePropType.isRequired,
+  //   name: string.isRequired,
+  //   hasUnread: bool,
+  // })),
   isLoading: bool,
+  conversations: arrayOf(conversationPropType),
+  onConversationClick: func,
+  refetchConversations: func,
 };
 
 export default DashboardMessagesPage;

@@ -23,7 +23,7 @@ import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
 import SlyEvent from 'sly/services/helpers/events';
-import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
+import { CONVERSATION_PARTICIPANT_TYPE_CLIENT, CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION } from 'sly/constants/conversations';
 import withBreakpoint from 'sly/components/helpers/breakpoint';
 
 @withUser
@@ -51,6 +51,11 @@ import withBreakpoint from 'sly/components/helpers/breakpoint';
   'filter[participant_type]': CONVERSATION_PARTICIPANT_TYPE_CLIENT,
 }))
 
+@prefetch('orgConversations', 'getConversations', (req, { user }) => req({
+  'filter[participant_id]': user && user.organization.id,
+  'filter[participant_type]': CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION,
+}))
+
 @withBreakpoint
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
@@ -58,6 +63,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     user: userPropType.isRequired,
     client: clientPropType,
     conversations: arrayOf(conversationPropType),
+    orgConversations: arrayOf(conversationPropType),
     match: object,
     status: object,
     history: object,
@@ -68,6 +74,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     notes: arrayOf(notePropType),
     invalidateClients: func,
   };
+
+  state = {
+    selectedConversation: null,
+  }
 
   onRejectSuccess = (hide) => {
     const { history } = this.props;
@@ -168,8 +178,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { status } = this.props;
     const { hasFinished: userHasFinished } = status.user;
     const { hasFinished: conversationsHasFinished } = status.conversations;
+    const { hasFinished: orgConversationsHasFinished } = status.orgConversations;
 
-    return userHasFinished && conversationsHasFinished;
+    return userHasFinished && conversationsHasFinished && orgConversationsHasFinished;
   };
 
   goToFamilyDetails = () => {
@@ -191,6 +202,24 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     status.conversations.refetch();
   };
 
+  onMessagesTabConversationClick = (conversation) => {
+    this.setState({ selectedConversation: conversation });
+  }
+
+  refetchMessagesTabConversations = () => {
+    const { status } = this.props;
+    status.orgConversations.refetch();
+  }
+
+  componentDidMount = () => {
+    const hasConversationFinished = this.getHasConversationFinished();
+    const { conversations, orgConversations } = this.props;
+    if (hasConversationFinished && orgConversations.length === 0) {
+      const [conversation] = conversations;
+      this.setState({ selectedConversation: conversation });
+    }
+  }
+
   render() {
     const {
       onRejectSuccess, onAddNote, onEditNote,
@@ -203,8 +232,11 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       notes,
       user,
       conversations,
+      orgConversations,
       breakpoint,
     } = this.props;
+
+    const { selectedConversation } = this.state;
 
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && client && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
@@ -219,9 +251,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { hasFinished: clientHasFinished } = status.client;
     const { hasFinished: noteHasFinished } = status.notes;
     const hasConversationFinished = this.getHasConversationFinished();
-    let conversation = null;
     if (hasConversationFinished && conversations) {
-      [conversation] = conversations;
+      console.log('conversations', conversations);
+      console.log('orgConversations', orgConversations);
       // TODO: Alert when there are multiple conversation between user and entity.
       // conversations.forEach((conv) => {
       //   conv.conversationParticipants.forEach((participant) => {
@@ -258,7 +290,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 goToMessagesTab={this.goToMessagesTab}
                 refetchConversations={this.refetchConversations}
                 user={user}
-                conversation={conversation}
+                conversation={selectedConversation}
+                conversations={orgConversations}
+                onMessagesTabConversationClick={this.onMessagesTabConversationClick}
+                refetchMessagesTabConversations={this.refetchMessagesTabConversations}
                 hasConversationFinished={hasConversationFinished}
               />
             )}

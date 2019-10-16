@@ -1,28 +1,24 @@
 import React, { Component } from 'react';
-import { arrayOf, object, func } from 'prop-types';
-import { generatePath } from 'react-router';
+import { arrayOf, object, func, bool } from 'prop-types';
 
-import { withUser, prefetch, query } from 'sly/services/newApi';
+import { withUser, query } from 'sly/services/newApi';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
-import DashboardMessagesPage from 'sly/components/pages/DashboardMessagesPage';
-import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import userPropType from 'sly/propTypes/user';
 import withWS from 'sly/services/ws/withWS';
-import { AGENT_DASHBOARD_MESSAGE_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
 import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
+import LatestMessage from 'sly/components/molecules/LatestMessage';
 
 @withUser
 @withWS
-@prefetch('conversations', 'getConversations', (req, { user }) => req({
-  'filter[participant_id]': user && user.id,
-  'filter[participant_type]': 'User',
-}))
 @query('getConversationMessages', 'getConversationMessages')
 
 export default class DashboardMessagesContainer extends Component {
   static propTypes = {
+    isLoading: bool,
     conversations: arrayOf(conversationPropType),
-    status: object,
+    onConversationClick: func,
+    refetchConversations: func,
+
     getConversationMessages: func,
     ws: object,
     user: userPropType,
@@ -39,9 +35,9 @@ export default class DashboardMessagesContainer extends Component {
   }
 
   onMessage = (message) => {
-    const { getConversationMessages, status } = this.props;
+    const { getConversationMessages, refetchConversations } = this.props;
     if (message.payload.conversationId) {
-      status.conversations.refetch();
+      refetchConversations();
       getConversationMessages({ 'filter[conversationID]': message.payload.conversationId, sort: '-created_at' });
       // prevent more handlers to be called
       return false;
@@ -50,41 +46,40 @@ export default class DashboardMessagesContainer extends Component {
   };
 
   render() {
-    const { conversations, status, user } = this.props;
+    const { conversations, user, onConversationClick } = this.props;
     const { id: userId } = user;
     let messages = [];
-    const { conversations: conversationsStatus } = status;
-    const {
-      hasFinished, error: conversationsError,
-    } = conversationsStatus;
-    if (conversationsError) {
-      return <RefreshRedirect to="/" />;
-    }
-    if (hasFinished) {
-      messages = conversations
-        .filter(conversation => !!conversation.latestMessage)
-        .map((conversation) => {
-          const { conversationParticipants, latestMessage } = conversation;
-          const { conversationParticipantID } = latestMessage;
-          const userParticipant = conversationParticipants.find(conversationParticipant => conversationParticipant.participantID === userId);
-          const conversationParticipant = conversationParticipants.find(conversationParticipant => conversationParticipant.id === conversationParticipantID);
-          const { participantInfo } = conversationParticipant;
-          const { name } = participantInfo;
-          let hasUnread = false;
-          if (userParticipant == null) {
-            hasUnread = true;
-          } else {
-            hasUnread = userParticipant.stats ? userParticipant.stats.unreadMessageCount > 0 : false;
-          }
-          const to = generatePath(AGENT_DASHBOARD_MESSAGE_DETAILS_PATH, { id: conversation.id });
-          return {
-            name,
-            message: latestMessage,
-            hasUnread,
-            to,
-          };
-        });
-    }
-    return <DashboardMessagesPage messages={messages} isLoading={!hasFinished} />;
+    messages = conversations
+      .filter(conversation => !!conversation.latestMessage)
+      .map((conversation) => {
+        const { conversationParticipants, latestMessage } = conversation;
+        const { conversationParticipantID } = latestMessage;
+        const userParticipant = conversationParticipants.find(conversationParticipant => conversationParticipant.participantID === userId);
+        const conversationParticipant = conversationParticipants.find(conversationParticipant => conversationParticipant.id === conversationParticipantID);
+        const { participantInfo } = conversationParticipant;
+        const { name } = participantInfo;
+        let hasUnread = false;
+        if (userParticipant == null) {
+          hasUnread = true;
+        } else {
+          hasUnread = userParticipant.stats ? userParticipant.stats.unreadMessageCount > 0 : false;
+        }
+        return {
+          name,
+          message: latestMessage,
+          hasUnread,
+          conversation,
+        };
+      });
+
+    return messages.map(message => (
+      <LatestMessage
+        key={message.message.id}
+        name={message.name}
+        message={message.message}
+        hasUnread={message.hasUnread}
+        onClick={() => onConversationClick(message.conversation)}
+      />
+    ));
   }
 }

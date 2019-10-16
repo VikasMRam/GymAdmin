@@ -37,7 +37,6 @@ import BackLink from 'sly/components/molecules/BackLink';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
-import { userHasAdminRole } from 'sly/services/helpers/role';
 import Tab from 'sly/components/molecules/Tab';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import fullHeight from 'sly/components/helpers/fullHeight';
@@ -50,6 +49,7 @@ import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
 import StatusSelect from 'sly/components/molecules/StatusSelect';
 import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
+import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
@@ -178,6 +178,14 @@ const StyledClientNameBlock = styled(Block)`
 
 `;
 
+const DashboardMessagesContainerWrapper = styled.div`
+  padding: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding: ${size('spacing.xLarge')};
+  }
+`;
+
 const ClientName = ({ client, rawClient, backLinkHref, ...props }) => {
   const { clientInfo } = client;
   const { name } = clientInfo;
@@ -251,6 +259,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     refetchConversations: func,
     hasConversationFinished: bool,
     conversation: conversationPropType,
+    conversations: arrayOf(conversationPropType),
+    onMessagesTabConversationClick: func,
+    refetchMessagesTabConversations: func,
     user: userPropType.isRequired,
   };
 
@@ -311,6 +322,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
       { id: PARTNER_AGENTS, to: agentsPath, label: 'Agents' },
       { id: TASKS, to: tasksPath, label: 'Tasks' },
+      { id: MESSAGES, to: messagesPath, label: 'Messages' },
     ];
     // TODO: CHANGE TO HAS ROLE INSTEAD OF IS ROLE...
     let tabs = [summaryTab];
@@ -444,7 +456,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, clientResult, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, conversations, onMessagesTabConversationClick, refetchMessagesTabConversations, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
     } = this.props;
     const { admin } = user;
 
@@ -482,9 +494,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       id, clientInfo, stage,
     } = client;
-    let {
-      levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails,
-    } = getStageDetails(stage);
+    const stageDetails = getStageDetails(stage);
+    let { showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails } = stageDetails;
+    const { levelGroup } = stageDetails;
     // Override based on role
     if (admin) {
       [showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails] = [false, true, true];
@@ -655,7 +667,16 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                     <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
                   </Fragment>
                 }
-                {hasConversationFinished &&
+                {hasConversationFinished && !conversation && conversations.length > 0 &&
+                  <DashboardMessagesContainerWrapper>
+                    <DashboardMessagesContainer
+                      conversations={conversations}
+                      onConversationClick={onMessagesTabConversationClick}
+                      refetchConversations={refetchMessagesTabConversations}
+                    />
+                  </DashboardMessagesContainerWrapper>
+                }
+                {hasConversationFinished && conversation &&
                   <ConversationMessagesContainer
                     conversation={conversation}
                     viewingAsParticipant={viewingAsParticipant}
