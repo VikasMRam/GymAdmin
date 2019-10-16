@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
 import Helmet from 'react-helmet';
@@ -107,7 +107,7 @@ const BookATourPage = ({
         {({
           data, onSubmit, isFinalStep, submitEnabled, ...props
         }) => (
-          <Fragment>
+          <>
             <Body>
               <WizardSteps {...props}>
                 <WizardStep
@@ -138,7 +138,7 @@ const BookATourPage = ({
                 isButtonDisabled={!submitEnabled}
               />
             </Controls>
-          </Fragment>
+          </>
         )}
       </WizardController>
     </FullScreenWizard>

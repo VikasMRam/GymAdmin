@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
-import { arrayOf, shape, object, string, bool, func } from 'prop-types';
+import { arrayOf, object, string, bool, func } from 'prop-types';
 import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
@@ -158,7 +158,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
     );
 
     return (
-      <Fragment>
+      <>
         <Tabs activeTab={activeTab} beforeHeader={beforeTabHeader} tabsOnly>
           {Object.entries(TabMap)
             .map(([name, key]) => (
@@ -181,7 +181,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
 
         <Section>
           {!isPageLoading && (
-            <Fragment>
+            <>
               <StyledTable>
                 <THead>
                   <Tr>
@@ -205,7 +205,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
                   pageParam="page-number"
                 />
               )}
-            </Fragment>
+            </>
           )}
           {isPageLoading && 'Loading...'}
         </Section>
@@ -215,7 +215,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
             {pagination.text}
           </FamiliesCountStatusBlock>
         )}
-      </Fragment>
+      </>
     );
   }
 }

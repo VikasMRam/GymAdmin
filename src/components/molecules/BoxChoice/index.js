@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { arrayOf, oneOfType, string, func, bool, shape, number } from 'prop-types';
 
 import { BoxChoiceTile } from 'sly/components/atoms';
@@ -47,7 +47,7 @@ export default class BoxChoice extends Component {
     } = this.props;
 
     return (
-      <Fragment>
+      <>
         {options.map(option => (
           <BoxChoiceTile
             key={option.value}
@@ -56,7 +56,7 @@ export default class BoxChoice extends Component {
             label={option.label}
           />
         ))}
-      </Fragment>
+      </>
     );
   }
 }

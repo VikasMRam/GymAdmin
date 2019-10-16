@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { array, func } from 'prop-types';
 
@@ -35,7 +35,7 @@ const StyledHr = styled(Hr)`
 StyledHr.displayName = 'StyledHr';
 
 const CommunitySaved = ({ similarCommunities, onDoneButtonClicked }) => (
-  <Fragment>
+  <section>
     <StyledHeading size="subtitle">Community Saved!</StyledHeading>
     <StyledBlock>You can view your saved communities from the nav bar</StyledBlock>
     <ButtonsWrapper>
@@ -52,7 +52,7 @@ const CommunitySaved = ({ similarCommunities, onDoneButtonClicked }) => (
     <StyledHr />
     <StyledHeading size="subtitle">Similar communities nearby</StyledHeading>
     <SimilarCommunities communities={similarCommunities} communityStyle={{ layout: 'row', showDescription: false }} />
-  </Fragment>
+  </section>
 );
 
 CommunitySaved.propTypes = {

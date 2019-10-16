@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { bool, string, arrayOf, shape, object } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
@@ -68,24 +68,21 @@ export default class CommunityStickyHeader extends Component {
     const { items, visible } = this.props;
 
     return (
-      <Fragment>
-        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-        <StyledNav visible={visible}>
-          <ol>
-            {
-              items.map((item, key) => {
-                const { label } = item;
+      <StyledNav visible={visible}>
+        <ol>
+          {
+            items.map((item, key) => {
+              const { label } = item;
 
-                return (
-                  <li key={key}>
-                    <Link onClick={e => this.handleClick(e, key)}>{label}</Link>
-                  </li>
-                );
-              })
-            }
-          </ol>
-        </StyledNav>
-      </Fragment>
+              return (
+                <li key={key}>
+                  <Link onClick={e => this.handleClick(e, key)}>{label}</Link>
+                </li>
+              );
+            })
+          }
+        </ol>
+      </StyledNav>
     );
   }
 }

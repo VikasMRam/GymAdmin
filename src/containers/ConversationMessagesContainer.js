@@ -1,4 +1,4 @@
-import React, { Component, Fragment, createRef } from 'react';
+import React, { Component, createRef } from 'react';
 import { arrayOf, object, func, string, node } from 'prop-types';
 import dayjs from 'dayjs';
 import build from 'redux-object';
@@ -346,10 +346,10 @@ export default class ConversationMessagesContainer extends Component {
 
     if (!this.getHasFinished() && !this.alreadyLoaded) {
       return (
-        <Fragment>
+        <>
           <br />
           <FullHeightTextCenterBlock size="caption">Loading...</FullHeightTextCenterBlock>
-        </Fragment>
+        </>
       );
     }
 
@@ -363,13 +363,13 @@ export default class ConversationMessagesContainer extends Component {
         {headingBoxSection}
         <MessagesWrapper innerRef={this.messagesRef}>
           {!messages.length && (
-            <Fragment>
+            <>
               <br />
               <FullHeightTextCenterBlock size="caption">No messages</FullHeightTextCenterBlock>
-            </Fragment>
+            </>
           )}
           {messages && messages.length > 0 && (
-            <Fragment>
+            <>
               {viewingAsParticipantUnreadMessageCount > 0 &&
                 <Wrapper >
                   <BannerNotification hasBorderRadius palette="warning" padding="small" onCloseClick={this.handleMarkAsRead}>
@@ -390,11 +390,11 @@ export default class ConversationMessagesContainer extends Component {
                 </Wrapper>
               }
               {loadingMore &&
-                <Fragment>
+                <>
                   <br />
                   <TextCenterBlock size="caption">Loading more messages...</TextCenterBlock>
                   <br />
-                </Fragment>
+                </>
               }
               <ConversationMessages
                 viewingAsParticipant={viewingAsParticipant}
@@ -402,7 +402,7 @@ export default class ConversationMessagesContainer extends Component {
                 participants={participants}
                 newMessageRef={this.newMessageRef}
               />
-            </Fragment>
+            </>
           )}
         </MessagesWrapper>
         <StyledSendMessageFormContainer

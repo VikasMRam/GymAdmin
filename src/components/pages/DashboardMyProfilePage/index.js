@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
 
@@ -24,14 +24,14 @@ const DashboardMyProfilePage = ({ user, warningMessage }) => {
     <DashboardPageTemplate activeMenuItem="My Profile">
       <BannerNotificationController>
         {({ messages, notifySuccess }) => (
-          <Fragment>
+          <>
             {messages.map(message => <PaddedBannerNotification key={message.id}>{message.content}</PaddedBannerNotification>)}
             {warningMessage && <PaddedBannerNotification palette="warning">{warningMessage}</PaddedBannerNotification>}
             <ProfileUserDetailsFormWrapper>
               <DashboardProfileUserDetailsFormContainer notifySuccess={notifySuccess} />
             </ProfileUserDetailsFormWrapper>
             {hasPasswordSet ? <DashboardChangePasswordFormContainer notifySuccess={notifySuccess} /> : <DashboardAddPasswordFormContainer notifySuccess={notifySuccess} />}
-          </Fragment>
+          </>
         )}
       </BannerNotificationController>
     </DashboardPageTemplate>

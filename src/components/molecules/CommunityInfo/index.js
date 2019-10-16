@@ -171,9 +171,8 @@ export default class CommunityInfo extends Component {
         <IconTextWrapper>
           <StyledIcon icon="bed" palette={inverted ? 'white' : 'grey'} size="small" />
           <Info title={roomTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
-            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {roomTypes.map((roomType, i) =>
-              <Fragment key={roomType}>{!!i && <Fragment>, </Fragment>}{roomType}</Fragment>)}
+              <Fragment key={roomType}>{!!i && <>, </>}{roomType}</Fragment>)}
           </Info>
         </IconTextWrapper>
       );
@@ -183,9 +182,8 @@ export default class CommunityInfo extends Component {
         <IconTextWrapper>
           <StyledIcon icon="hospital" palette={inverted ? 'white' : 'grey'} size="small" />
           <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
-            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {livingTypes.map((livingType, i) =>
-              <Fragment key={livingType}>{!!i && <Fragment>{i === livingTypes.length - 1 ? ' & ' : ', '}</Fragment>}{livingType}</Fragment>)}
+              <Fragment key={livingType}>{!!i && <>{i === livingTypes.length - 1 ? ' & ' : ', '}</>}{livingType}</Fragment>)}
           </Info>
         </IconTextWrapper>
       );

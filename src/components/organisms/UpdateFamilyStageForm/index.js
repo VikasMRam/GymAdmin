@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { func, string, arrayOf, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
@@ -183,7 +183,7 @@ export default class UpdateFamilyStageForm extends Component {
           />
         }
         {nextStage === FAMILY_STAGE_WON &&
-          <Fragment>
+          <>
             <Label>Your community referral agreement %<Span palette="danger">*</Span></Label>
             <Field
               name="referralAgreementType"
@@ -243,7 +243,7 @@ export default class UpdateFamilyStageForm extends Component {
                 <option value="no">No</option>
               </Field>
             </Role>
-          </Fragment>
+          </>
         }
         {nextStage === FAMILY_STAGE_LOST &&
           <Field

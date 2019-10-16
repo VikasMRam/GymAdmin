@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { bool, number, func, object } from 'prop-types';
+import React from 'react';
+import { bool, number, func } from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { generatePath } from 'react-router';
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ import {
   DASHBOARD_PATH,
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY,
 } from 'sly/constants/dashboardAppPaths';
-import { CUSTOMER_ROLE, AGENT_ND_ROLE } from 'sly/constants/roles';
+import { CUSTOMER_ROLE, AGENT_ROLE, AGENT_ND_ROLE } from 'sly/constants/roles';
 import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import userPropType from 'sly/propTypes/user';
@@ -51,14 +51,14 @@ const DashboardMessageDetailsPage = ({
   if (!isLoading) {
     if (!conversation) {
       return (
-        <Fragment>
+        <>
           <Role is={CUSTOMER_ROLE}>
             <Redirect to={FAMILY_DASHBOARD_MESSAGES_PATH} />;
           </Role>
           <Role is={AGENT_ROLE}>
             <Redirect to={AGENT_DASHBOARD_MESSAGES_PATH} />;
           </Role>
-        </Fragment>
+        </>
       );
     }
     ({ conversationParticipants } = conversation);
@@ -95,13 +95,13 @@ const DashboardMessageDetailsPage = ({
     <DashboardPageTemplate activeMenuItem="Messages" bodyHasOverflow>
       {!isLoading && !conversation && <Redirect to={DASHBOARD_PATH} />}
       {isLoading &&
-        <Fragment>
+        <>
           <br />
           <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
-        </Fragment>
+        </>
       }
       {!isLoading &&
-        <Fragment>
+        <>
           <StyledConversationMessagesContainer
             conversation={conversation}
             viewingAsParticipant={viewingAsParticipant}
@@ -110,7 +110,7 @@ const DashboardMessageDetailsPage = ({
             sendMessageFormPlaceholder={sendMessageFormPlaceholder}
             refetchConversation={refetchConversation}
           />
-        </Fragment>
+        </>
       }
     </DashboardPageTemplate>
   );

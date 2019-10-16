@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { string, bool, func } from 'prop-types';
 import dayjs from 'dayjs';
@@ -151,28 +151,28 @@ const DashboardAdminReferralAgentTile = ({
             {isRecommended && <IconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="RECOMMENDED" />}
           </BigScreenSection>
           {businessName && (
-            <Fragment>
+            <>
               <Span size="caption" palette="grey" variation="dark" >Business name</Span>
               <Span size="caption">{businessName}</Span>
-            </Fragment>
+            </>
           )}
           {workPhone && (
-            <Fragment>
+            <>
               <Span size="caption" palette="grey" variation="dark">Work phone</Span>
               <Span size="caption">{workPhone}</Span>
-            </Fragment>
+            </>
           )}
           {cellPhone && (
-            <Fragment>
+            <>
               <Span size="caption" palette="grey" variation="dark">Cell phone</Span>
               <Span size="caption">{cellPhone}</Span>
-            </Fragment>
+            </>
           )}
           {(leadCount !== undefined && leadCount !== null) && (
-            <Fragment>
+            <>
               <Span size="caption" palette="grey" variation="dark">Lead count</Span>
               <Span size="caption">{leadCount}</Span>
-            </Fragment>
+            </>
           )}
         </DetailsTable>
         {referralSentAt && <ReferralSentAtWrapper><Span palette="grey" variation="dark" size="tiny">Sent on {getReferralSentTimeText(referralSentAt)}</Span></ReferralSentAtWrapper>}

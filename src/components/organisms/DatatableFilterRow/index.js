@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { func, number, object, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
@@ -141,7 +141,7 @@ export default class DatatableFilterRow extends Component {
     if (Array.isArray(option)) {
       value = option.map(({ value }) => value);
     } else if (option && typeof option === 'object') {
-      value = option.value;
+      ({ value } = option);
     }
     this.onValueChange(name, value);
   };
@@ -250,7 +250,7 @@ export default class DatatableFilterRow extends Component {
 
 
         {filter.column && (
-          <Fragment>
+          <>
             <SplitFlex />
             <GrowField
               size="small"
@@ -260,7 +260,7 @@ export default class DatatableFilterRow extends Component {
               onChange={this.onSelectChange}
               options={this.getOperatorsFor(filter.column)}
             />
-          </Fragment>
+          </>
         )}
 
         {filter.operator && !noValueOperators.includes(filter.operator) && (
@@ -275,5 +275,3 @@ export default class DatatableFilterRow extends Component {
     );
   }
 }
-
-

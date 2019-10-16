@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { injectGlobal } from 'styled-components';
 import { bool } from 'prop-types';
 
@@ -75,19 +75,23 @@ export default class ChatBox extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         {/* Begin Instabot Code */}
-        <script type="text/javascript" defer dangerouslySetInnerHTML={{ __html: `
-          setTimeout(function(){
-            (function(s,d,r) {
-              var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
-              j.text="apiKey: '${rokoApiKey}'";j.async=true;j.src=r;
-              f.parentNode.insertBefore(j,f);
-            })('script', document, '//widget.instabot.io/jsapi/rokoInstabot.js');
-          }, 30000);
-        `}}></script>
+        <script
+          defer
+          type="text/javascript"
+          dangerouslySetInnerHTML={{ __html: `
+            setTimeout(function(){
+              (function(s,d,r) {
+                var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
+                j.text="apiKey: '${rokoApiKey}'";j.async=true;j.src=r;
+                f.parentNode.insertBefore(j,f);
+              })('script', document, '//widget.instabot.io/jsapi/rokoInstabot.js');
+            }, 30000);
+          ` }}
+        />
         {/* End Instabot Code */}
-      </Fragment>
+      </>
     );
   }
 }

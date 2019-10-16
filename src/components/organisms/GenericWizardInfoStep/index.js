@@ -1,11 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { string, func, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled, { css } from 'styled-components';
 
 import { size, palette, assetPath } from 'sly/components/themes/index';
 import { Heading, Block, Button, Image } from 'sly/components/atoms/index';
-
 
 const ImageSection = styled(Block)`
   font-size: ${size('text.title')};

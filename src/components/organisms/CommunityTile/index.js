@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, bool, string, func, number, shape, oneOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
@@ -159,7 +159,7 @@ const CommunityTile = ({
         />
       }
       {noGallery &&
-        <Fragment>
+        <>
           <ImageWrapper>
             <StyledImage
               layout={layout}
@@ -171,7 +171,7 @@ const CommunityTile = ({
           <TopRightWrapper>
             {topRightSection()}
           </TopRightWrapper>
-        </Fragment>
+        </>
       }
       <Details layout={layout} padding="regular" hasImages={hasImages}>
         <CommunityInfoComponent
