@@ -15,7 +15,8 @@
     "__BASENAME__": true,
     "cy": true,
     "Cypress": true,
-    "context": true
+    "context": true,
+    "assert": true,
   },
   "settings": {
     "import/resolver": {
