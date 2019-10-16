@@ -105,6 +105,7 @@ class AgentProfilePage extends Component {
     const { displayName, bio, cv } = info;
     const firstName = displayName.split(' ')[0];
     const { state, city } = address;
+    const similarCommunityStyle = { layout: 'column', imageSize: 'regular', showDescription: false };
     return (
       <>
         {getHelmetForAgentProfilePage({ agent, location })}
@@ -135,7 +136,7 @@ class AgentProfilePage extends Component {
           {communities &&
             <>
               <Section title={`Assisted Living Communities in ${city}, ${state}`}>
-                <SimilarCommunities communities={communities} />
+                <SimilarCommunities communities={communities} communityStyle={similarCommunityStyle} />
               </Section>
               <StyledHr fullWidth />
             </>
