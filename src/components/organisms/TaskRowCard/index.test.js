@@ -19,7 +19,7 @@ describe('TaskRowCard', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('NameCell')).toHaveLength(1);
-    expect(wrapper.find('RelatedToCell').contains(task.relatedEntities[0].id)).toBeTruthy();
+    expect(wrapper.find('RelatedToCell').contains(task.relatedEntities[0].label)).toBeTruthy();
     expect(wrapper.find('DueDateCell').contains(dueDateStr)).toBeTruthy();
     expect(wrapper.find('PriorityCell').contains(task.priority)).toBeTruthy();
     expect(wrapper.find('AssignedToCell').contains(task.owner.name)).toBeTruthy();

@@ -212,7 +212,7 @@ export default class ReferralSearchContainer extends Component {
     const {
       referralMode, parentClient,
     } = this.props;
-    const { communitiesInterested, children: childrenClients } = parentClient;
+    const { communitiesInterested, children: childrenClients, recommendedAgents } = parentClient;
     const { communities, agents } = this.state;
     const communityReferralClients = [];
     const agentReferralClients = [];
@@ -233,6 +233,10 @@ export default class ReferralSearchContainer extends Component {
       accumulator[client.provider.id] = client;
       return accumulator;
     }, {});
+    const recommendedAgentsIdsMap = recommendedAgents.reduce((accumulator, community) => {
+      accumulator[community.id] = community;
+      return accumulator;
+    }, {});
     const childrenClientAgentIdsMap = agentReferralClients.reduce((accumulator, client) => {
       accumulator[client.provider.id] = client;
       return accumulator;
@@ -246,7 +250,7 @@ export default class ReferralSearchContainer extends Component {
     //          sendReferral={this.sendReferral} /> ;
     if (referralMode === 'Community') {
       const selectedCommunity = this.getSelectedCommunity();
-      const contact = (selectedCommunity && selectedCommunity.contacts.length > 0) ? selectedCommunity.contacts[0] : null;
+      const contact = (selectedCommunity && selectedCommunity.contacts && selectedCommunity.contacts.length > 0) ? selectedCommunity.contacts[0] : null;
       let contactFormInitialValues = {};
       if (contact) {
         const { email, name } = contact;
@@ -302,7 +306,7 @@ export default class ReferralSearchContainer extends Component {
     }
     // Agent Referral Flow
     const selectedAgent = this.getSelectedAgent();
-    const contact = (selectedAgent && selectedAgent.contacts.length > 0) ? selectedAgent.contacts[0] : null;
+    const contact = (selectedAgent && selectedAgent.contacts &&  selectedAgent.contacts.length > 0) ? selectedAgent.contacts[0] : null;
     let contactFormInitialValues = {};
     if (contact) {
       const { email, name } = contact;
@@ -320,9 +324,12 @@ export default class ReferralSearchContainer extends Component {
             <WizardSteps currentStep={currentStep} {...props}>
               <WizardStep
                 component={DashboardAgentReferrals}
+                recommendedAgents={recommendedAgents}
+                recommendedAgentsIdsMap={recommendedAgentsIdsMap}
                 onSendNewReferralClick={onSubmit}
                 name="DashboardAgentReferrals"
                 childrenClients={agentReferralClients}
+                setSelectedAgent={(a) => { this.setSelectedAgent(a); goto(3); }}
               />
               <WizardStep
                 component={DashboardAgentReferralSearch}

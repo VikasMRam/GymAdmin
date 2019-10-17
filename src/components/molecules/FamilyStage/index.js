@@ -10,7 +10,8 @@ import { TOTAL_STAGES_COUNT } from 'sly/constants/familyDetails';
 import { Box, Heading, Button } from 'sly/components/atoms';
 import Stage from 'sly/components/molecules/Stage';
 import userPropType from 'sly/propTypes/user';
-import { userHasAdminRole } from 'sly/services/helpers/role';
+import clientPropType from 'sly/propTypes/client';
+import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 
 const ColumWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
@@ -34,7 +35,7 @@ const MarginBottomFullWidthButton = pad(FullWidthButton, 'regular');
 MarginBottomFullWidthButton.displayName = 'MarginBottomFullWidthButton';
 
 const FamilyStage = ({
-  stageText, onAcceptClick, onRejectClick, snap, noBorderRadius, onAddNoteClick, onUpdateClick, user,
+  stageText, onAcceptClick, onRejectClick, snap, noBorderRadius, onAddNoteClick, onUpdateClick, client, user,
 }) => {
   const stageDetails = getStageDetails(stageText);
 
@@ -45,8 +46,12 @@ const FamilyStage = ({
   const {
     levelGroup, palette,
   } = stageDetails;
-
-  if (userHasAdminRole(user)) {
+  const { provider } = client;
+  const { entityType, id: proOrg } = provider;
+  const { roleID, organization } = user;
+  const { id: userOrg } = organization;
+  /* eslint-disable-next-line no-bitwise */
+  if ((PLATFORM_ADMIN_ROLE & roleID) || (entityType === 'Organization' && userOrg === proOrg)) {
     [showAcceptRejectButtons, showUpdateAddNoteButtons, disableAddNoteButton, disableUpdateButton] = [false, true, false, false];
   }
   let text = 'Unknown';
@@ -74,6 +79,7 @@ FamilyStage.propTypes = {
   onAddNoteClick: func,
   snap: string,
   noBorderRadius: bool,
+  client: clientPropType,
   user: userPropType,
 };
 
