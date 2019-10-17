@@ -13,6 +13,7 @@ function getDisplayName(WrappedComponent) {
 const MODAL_SHOWN = 'modal-shown';
 const EXIT_INTENT = 'exit-intent';
 const STAY_INTENT = 'stay-intent';
+const FOCUS_THRESHOLD_TIME = 10;
 
 const withExitIntent = (InnerComponent) => {
   class Wrapper extends Component {
@@ -25,24 +26,37 @@ const withExitIntent = (InnerComponent) => {
     static WrappedComponent = InnerComponent;
 
     componentDidMount() {
-      this.addPopstateListener();
+      const ifvisible = require('ifvisible.js');
+      let focusOutTime;
 
-      //  this.addMobileIntent();
-      //  this.handlePopStateEvent();
-      //  document.addEventListener('mouseout', this.addDesktopIntent);
+      ifvisible.on('blur', () => {
+        focusOutTime = new Date();
+      });
+
+      ifvisible.on('focus', () => {
+        const currentTime = new Date();
+        const inactiveTime = Math.abs((currentTime.getTime() - focusOutTime.getTime()) / 1000);
+
+        if (inactiveTime >= FOCUS_THRESHOLD_TIME) {
+          this.showIntent();
+        }
+      });
+
+      this.ifvisible = ifvisible;
+      this.addPopstateListener();
+      // document.addEventListener('mouseout', this.onMouseout);
     }
 
     componentWillUnmount() {
-      window.removeEventListener('popstate', this.onPopstate);
-      // document.removeEventListener('mouseout', this.addDesktopIntent);
+      this.removeEventListeners();
     }
 
     /* Exit Intent Work: https://github.com/mrlagmer/exitintent/blob/master/src/App.js */
-    addDesktopIntent = (e) => {
+    onMouseout = (e) => {
       // Get the current viewport width.
       const vpWidth = Math.max(
         document.documentElement.clientWidth,
-        window.innerWidth || 0
+        window.innerWidth || 0,
       );
 
       // If the current mouse X position is within 50px of the right edge
@@ -91,7 +105,17 @@ const withExitIntent = (InnerComponent) => {
 
       localStorage.setItem(MODAL_SHOWN, MODAL_SHOWN);
       showModal(exitIntentContent);
+      this.removeEventListeners();
     };
+
+    removeEventListeners = () => {
+      window.removeEventListener('popstate', this.onPopstate);
+      // document.removeEventListener('mouseout', this.onMouseout);
+      if (this.ifvisible) {
+        this.ifvisible.off('blur');
+        this.ifvisible.off('focus');
+      }
+    }
 
     render() {
       return <InnerComponent {...this.props} />;
