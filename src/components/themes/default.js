@@ -1,5 +1,5 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { isDev, isBrowser } from 'sly/config';
+import { isDev, isBrowser, isTest } from 'sly/config';
 
 import { makeColor, makeColorTable } from './color';
 
@@ -29,7 +29,7 @@ theme.palette = {
   purple   : makeColor('#6d27ca', ['dark', 'base', 'filler', 'stroke', 'background']),
 };
 
-if (isDev && isBrowser) console.table(makeColorTable(theme.palette));
+// if (isDev && isBrowser && !isTest) console.table(makeColorTable(theme.palette));
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',
