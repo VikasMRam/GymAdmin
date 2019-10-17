@@ -212,7 +212,7 @@ export default class ReferralSearchContainer extends Component {
     const {
       referralMode, parentClient,
     } = this.props;
-    const { communitiesInterested, children: childrenClients } = parentClient;
+    const { communitiesInterested, children: childrenClients, recommendedAgents } = parentClient;
     const { communities, agents } = this.state;
     const communityReferralClients = [];
     const agentReferralClients = [];
@@ -231,6 +231,10 @@ export default class ReferralSearchContainer extends Component {
     }, {});
     const childrenClientCommunityIdsMap = communityReferralClients.reduce((accumulator, client) => {
       accumulator[client.provider.id] = client;
+      return accumulator;
+    }, {});
+    const recommendedAgentsIdsMap = recommendedAgents.reduce((accumulator, community) => {
+      accumulator[community.id] = community;
       return accumulator;
     }, {});
     const childrenClientAgentIdsMap = agentReferralClients.reduce((accumulator, client) => {
@@ -320,9 +324,12 @@ export default class ReferralSearchContainer extends Component {
             <WizardSteps currentStep={currentStep} {...props}>
               <WizardStep
                 component={DashboardAgentReferrals}
+                recommendedAgents={recommendedAgents}
+                recommendedAgentsIdsMap={recommendedAgentsIdsMap}
                 onSendNewReferralClick={onSubmit}
                 name="DashboardAgentReferrals"
                 childrenClients={agentReferralClients}
+                setSelectedAgent={(a) => { this.setSelectedAgent(a); goto(3); }}
               />
               <WizardStep
                 component={DashboardAgentReferralSearch}

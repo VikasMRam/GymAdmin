@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { func } from 'prop-types';
+import { func, arrayOf, object } from 'prop-types';
 import styled from 'styled-components';
 import { generatePath } from 'react-router';
 
@@ -58,8 +58,9 @@ const ChildrenClientsWrapper = styled.div`
 
 const StyledDashboardAdminReferralAgentTile = pad(DashboardAdminReferralAgentTile);
 
-const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients }) => {
+const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients, recommendedAgents, recommendedAgentsIdsMap, setSelectedAgent }) => {
   const childrenComponents = [];
+
   if (childrenClients.length > 0) {
     childrenClients.forEach((childrenClient) => {
       const { id, stage, provider, createdAt } = childrenClient;
@@ -71,7 +72,7 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients }) =>
       childrenComponents.push(component);
     });
   }
-
+  const title = 'Agent Recommended by Seniorly';
   return (
     <Fragment>
       <TopWrapper>
@@ -84,14 +85,37 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients }) =>
           <SmallMobileSendNewReferralButton onClick={onSendNewReferralClick}>Send a new referral</SmallMobileSendNewReferralButton>
         </EmptyResultWrapper>
       )}
+      {recommendedAgents.map((agent) => {
+        const client = recommendedAgentsIdsMap[agent.id];
+        if (client) {
+          return <div />; // WTF
+        }
+        const props = {
+          key: agent.name,
+          agent,
+          title,
+        };
+        if (client) {
+          // Skip
+        }
+        return (<StyledDashboardAdminReferralAgentTile
+          {...props}
+          actionText="Send Referral"
+          actionClick={() => setSelectedAgent(agent)}
+        />);
+      })
+      }
       {childrenComponents.length > 0 && <ChildrenClientsWrapper>{childrenComponents}</ChildrenClientsWrapper>}
     </Fragment>
   );
 };
 
 DashboardAgentReferrals.propTypes = {
+  setSelectedAgent: func,
   onSendNewReferralClick: func,
   childrenClients: clientPropType,
+  recommendedAgents: arrayOf(object),
+  recommendedAgentsIdsMap: object,
 };
 
 export default DashboardAgentReferrals;

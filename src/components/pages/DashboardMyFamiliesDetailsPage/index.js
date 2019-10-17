@@ -636,7 +636,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
             {currentTab === PARTNER_AGENTS && (
               <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
-                <ReferralSearchContainer
+                  <ReferralSearchContainer
                   notifyError={notifyError}
                   notifyInfo={notifyInfo}
                   parentClient={client}
