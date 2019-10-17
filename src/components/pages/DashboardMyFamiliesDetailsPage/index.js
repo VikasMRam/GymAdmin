@@ -98,7 +98,7 @@ const FamilyDetailsTab = styled.div`
 `;
 
 const FamilyTasksTab = styled.div`
-  padding:${size('spacing', 'xLarge')}; 
+  padding:${size('spacing', 'xLarge')};
 `;
 
 const TabWrapper = styled(Box)`
@@ -635,7 +635,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
             {currentTab === PARTNER_AGENTS && (
               <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
-                  <ReferralSearchContainer
+                <ReferralSearchContainer
                   notifyError={notifyError}
                   notifyInfo={notifyInfo}
                   parentClient={client}
