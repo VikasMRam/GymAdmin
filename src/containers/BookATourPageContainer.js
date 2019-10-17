@@ -155,6 +155,5 @@ export default class BookATourPageContainer extends Component {
         )}
       </ModalController>
     );
-  };
+  }
 }
-

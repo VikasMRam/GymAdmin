@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { any } from 'prop-types';
 import styled from 'styled-components';
 
@@ -36,7 +36,7 @@ const CommunitySearchPageTemplate = ({
   children,
   column,
 }) => (
-  <Fragment>
+  <>
     <TemplateHeader><HeaderContainer /></TemplateHeader>
     <TemplateContent>
       <TwoColumnWrapper>
@@ -45,7 +45,7 @@ const CommunitySearchPageTemplate = ({
       </TwoColumnWrapper>
     </TemplateContent>
     <Footer />
-  </Fragment>
+  </>
 );
 
 CommunitySearchPageTemplate.propTypes = {

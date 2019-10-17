@@ -27,7 +27,6 @@ const HelpBubble = ({ children, className, icon, iconPalette, iconVariation, ico
     const id = uniqueId('tooltipHelpBubble_');
     return (
       <div className={className}>
-        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <Icon palette={iconPalette} variation={iconVariation} icon={icon} size={iconSize} data-tip data-for={id} />
         <TooltipContent id={id} place="top" effect="solid" multiline>
           {children}

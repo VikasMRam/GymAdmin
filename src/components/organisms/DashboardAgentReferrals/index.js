@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { func, arrayOf, object } from 'prop-types';
 import styled from 'styled-components';
 import { generatePath } from 'react-router';
@@ -95,7 +95,7 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients, reco
     ));
   });
   return (
-    <Fragment>
+    <>
       <TopWrapper>
         <Block size="subtitle">Agents</Block>
         <SendNewReferralButton onClick={onSendNewReferralClick}>Send a new referral</SendNewReferralButton>
@@ -108,7 +108,7 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients, reco
       )}
       {childrenComponents.length > 0 && <ChildrenClientsWrapper>{childrenComponents}</ChildrenClientsWrapper>}
       {recommendedAgentComponents.length > 1 && <ChildrenClientsWrapper>{recommendedAgentComponents}</ChildrenClientsWrapper>}
-    </Fragment>
+    </>
   );
 };
 

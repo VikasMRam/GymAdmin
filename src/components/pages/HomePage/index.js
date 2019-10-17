@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
@@ -331,8 +331,7 @@ const HomePage = ({
   toggleHowSlyWorksVideoPlaying, history,
 }) => {
   const HeaderContent = (
-    <Fragment>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+    <>
       <HeaderContainer />
       <HeroWrapper>
         <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
@@ -351,18 +350,21 @@ const HomePage = ({
           </ImageCreditLabel>
         </ImageCreditDiv>
       </HeroWrapper>
-    </Fragment>
+    </>
   );
 
   const onButtonClick = (discoverHome) => {
     const modalContent = (
-      <Fragment>
+      <>
         <Heading size="subtitle">Please enter a location:</Heading>
-        <SearchBoxContainer layout="homeHero" onLocationSearch={e => {
-          hideModal();
-          onLocationSearch(e, true);
-        }} />
-      </Fragment>
+        <SearchBoxContainer
+          layout="homeHero"
+          onLocationSearch={(e) => {
+            hideModal();
+            onLocationSearch(e, true);
+          }}
+        />
+      </>
     );
     const onClose = () => {
       setActiveDiscoverHome();
@@ -421,7 +423,7 @@ const HomePage = ({
   const canonicalUrl = `${host}`;
 
   return (
-    <Fragment>
+    <>
       <Helmet>
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
@@ -497,7 +499,7 @@ const HomePage = ({
         <SeoLinks title="Assisted living by State" links={ALSeoStates} />
       </TemplateContent>
       <Footer />
-    </Fragment>
+    </>
   );
 };
 

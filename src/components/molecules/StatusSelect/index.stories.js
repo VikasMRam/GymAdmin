@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 
@@ -15,12 +15,12 @@ const client = {
 
 storiesOf('Molecules|StatusSelect', module)
   .add('default', () => (
-    <Fragment>
+    <>
       <Wrapper>
         <StatusSelect client={client} />
       </Wrapper>
       <Wrapper>
         <StatusSelect client={client} menuIsOpen />
       </Wrapper>
-    </Fragment>
+    </>
   ));

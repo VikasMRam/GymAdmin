@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
 import Helmet from 'react-helmet';
@@ -6,7 +6,6 @@ import Helmet from 'react-helmet';
 import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
 import CommunityBookATourDateFormContainer from 'sly/containers/CommunityBookATourDateFormContainer';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { getCitySearchUrl } from 'sly/services/helpers/url';
 import { size } from 'sly/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import {
@@ -17,11 +16,12 @@ import {
   makeHeader,
 } from 'sly/components/templates/FullScreenWizard';
 import SlyEvent from 'sly/services/helpers/events';
+import { DASHBOARD_PATH } from 'sly/constants/dashboardAppPaths';
 import HeaderContainer from 'sly/containers/HeaderContainer';
+import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWizardAcknowledgementContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
-import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -58,7 +58,7 @@ const BookATourPage = ({
   community, user, userDetails, onComplete, showModal, hideModal,
 }) => {
   const {
-    id, mainImage, similarProperties, propInfo, address,
+    id, mainImage, similarProperties,
   } = community;
   let formHeading = 'How can we contact you about this community tour?';
   if (user) {
@@ -73,21 +73,21 @@ const BookATourPage = ({
     const subheading = 'Your Seniorly Partner Agent will check if this community is available at this time. They will get back to you shortly by phone or email.';
     const props = {
       similarCommunities: similarProperties,
-      similarCommunititesHref: getCitySearchUrl({propInfo, address}),
+      buttonTo: DASHBOARD_PATH,
       onTileClick: hideModal,
       heading,
       subheading,
+      type: 'bat',
     };
 
-    showModal(<CommunityBookATourConfirmationPopup {...props} />);
+    showModal(<CommunityWizardAcknowledgementContainer {...props} />);
   };
-  const handleStepChange = ({ currentStep, doSubmit, previous }) => {
+  const handleStepChange = ({ currentStep, doSubmit }) => {
     sendEvent('step-completed', id, currentStep);
     if (userDetails && userDetails.phone && userDetails.fullName) {
-      // hack to show first step while api calls are happening
-      previous();
-      doSubmit();
+      return doSubmit();
     }
+    return null;
   };
 
   return (
@@ -107,7 +107,7 @@ const BookATourPage = ({
         {({
           data, onSubmit, isFinalStep, submitEnabled, ...props
         }) => (
-          <Fragment>
+          <>
             <Body>
               <WizardSteps {...props}>
                 <WizardStep
@@ -138,7 +138,7 @@ const BookATourPage = ({
                 isButtonDisabled={!submitEnabled}
               />
             </Controls>
-          </Fragment>
+          </>
         )}
       </WizardController>
     </FullScreenWizard>

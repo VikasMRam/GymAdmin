@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
 import qs from 'query-string';
@@ -10,17 +10,15 @@ import SlyEvent from 'sly/services/helpers/events';
 import taskPropType from 'sly/propTypes/task';
 import clientPropType from 'sly/propTypes/client';
 import textAlign from 'sly/components/helpers/textAlign';
-import { AGENT_DASHBOARD_TASKS_PATH } from 'sly/constants/dashboardAppPaths';
 import { Box, Table, THead, TBody, Tr, Td, Heading, Block } from 'sly/components/atoms';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 import Pagination from 'sly/components/molecules/Pagination';
-import Tabs from 'sly/components/molecules/Tabs';
-import Tab from 'sly/components/molecules/Tab';
+
 import Th from 'sly/components/molecules/Th';
 import IconButton from 'sly/components/molecules/IconButton';
 import TaskRowCard from 'sly/components/organisms/TaskRowCard';
 import AddOrEditTaskFormContainer from 'sly/containers/AddOrEditTaskFormContainer';
-import { prefetch } from 'sly/services/newApi';
+
 
 const TABLE_HEADINGS = [
   { text: 'Task' },
@@ -136,7 +134,12 @@ export default class DashboardAgentTasksSection extends Component {
   handleAddTaskClick = () => {
     const { showModal, hideModal, notifyInfo, notifyError, meta, client, refetchTasks } = this.props;
     const { priorities, statuses } = meta;
-
+    const event = {
+      category: 'AgentDashboardTasks',
+      action: 'click',
+      label: 'addTask',
+    };
+    SlyEvent.getInstance().sendEvent(event);
     showModal(
       (
         <AddOrEditTaskFormContainer
@@ -156,7 +159,12 @@ export default class DashboardAgentTasksSection extends Component {
   handleTaskClick = (task) => {
     const { showModal, hideModal, notifyInfo, notifyError, meta, tasksRaw, refetchTasks, client } = this.props;
     const { priorities, statuses } = meta;
-
+    const event = {
+      category: 'AgentDashboardTasks',
+      action: 'click',
+      label: 'viewTask',
+    };
+    SlyEvent.getInstance().sendEvent(event);
     showModal(
       (
         <AddOrEditTaskFormContainer
@@ -204,7 +212,7 @@ export default class DashboardAgentTasksSection extends Component {
     const modelConfig = { name: 'Task', defaultSearchField: 'title' };
 
     return (
-      <Fragment>
+      <>
         {beforeTabHeader}
         <TableHeaderButtonComponent
           datatable={datatable}
@@ -215,7 +223,7 @@ export default class DashboardAgentTasksSection extends Component {
 
         <SectionComponent>
           {!isPageLoading && (
-            <Fragment>
+            <>
               <StyledTable>
                 <THead>
                   <Tr>
@@ -244,7 +252,7 @@ export default class DashboardAgentTasksSection extends Component {
                   pageParam="page-number"
                 />
               )}
-            </Fragment>
+            </>
           )}
           {isPageLoading && 'Loading...'}
         </SectionComponent>
@@ -254,7 +262,7 @@ export default class DashboardAgentTasksSection extends Component {
             {pagination.text}
           </StatusBlock>
         }
-      </Fragment>
+      </>
     );
   }
 }

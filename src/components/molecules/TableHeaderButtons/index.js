@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { object, string, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
@@ -58,7 +58,7 @@ const ColumnsButton = styled(IconButton)`
 const isFilterable = datatable => datatable && datatable.columns.some(column => column.isFilterable);
 
 // eslint-disable-next-line react/prop-types
-const Filters = ({ datatable, meta = {} }) => {
+const Filters = ({ datatable, meta = {} }) => { /* eslint-disable react/prop-types */
   const autocompleteFilters = meta.autocomplete_filters || {};
   const filteredCount = meta.filtered_count || 0;
   const filtered = datatable.numberOfFilters > 0;
@@ -89,13 +89,13 @@ const Filters = ({ datatable, meta = {} }) => {
   );
 
   return (
-    <Fragment>
+    <>
       {isFilterable(datatable) && (
         <PopoverPortal headerButton={clearButton} title={filterTitle} subtitle={filterSubtitle} button={filterButton}>
           <DatatableFilters datatable={datatable} autocompleteFilters={autocompleteFilters} />
         </PopoverPortal>
       )}
-    </Fragment>
+    </>
   );
 };
 

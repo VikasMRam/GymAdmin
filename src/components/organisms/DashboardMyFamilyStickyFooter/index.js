@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, bool, string, func, object } from 'prop-types';
 import { ifNotProp } from 'styled-tools';
@@ -63,13 +63,13 @@ const DashboardMyFamilyStickyFooter = ({
   <StickyFooter>
     <FooterWrapper showAcceptRejectButtons={showAcceptRejectButtons}>
       {!showAcceptRejectButtons &&
-        <Fragment>
+        <>
           <Stage stage={stage} stageLabel={stageLabel} />
           <OptionsButton onClick={onOptionsClick} >...</OptionsButton>
           <RightSideButtons>
             {[...options].reverse().map(option => <Button key={option.text} onClick={option.onClick} ghost={option.ghost}>{option.text}</Button>)}
           </RightSideButtons>
-        </Fragment>
+        </>
       }
       {showAcceptRejectButtons &&
         <AcceptRejectButtonsWrapper>

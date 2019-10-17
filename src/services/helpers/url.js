@@ -303,7 +303,7 @@ export const getBreadCrumbsForAgent = ({ name, state, city, id }) => {
     if (city) {
       baseBcs.push({
         path: `${agentsPath}/${urlize(region)}/${urlize(city)}`,
-        label: city,
+        label: `${city}, ${state}`,
       });
       if (name) {
         baseBcs.push({

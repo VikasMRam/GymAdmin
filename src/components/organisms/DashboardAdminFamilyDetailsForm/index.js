@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { func, bool, string, object, arrayOf } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
+
 import { size, columnWidth } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -97,7 +98,6 @@ class DashboardAdminFamilyDetailsForm extends Component {
 
     return (
       <div>
-
         <Form onSubmit={handleSubmit}>
           <TwoColumnWrapper>
             <div>
@@ -185,7 +185,6 @@ class DashboardAdminFamilyDetailsForm extends Component {
               component={ReduxField}
             />
           </TwoColumnWrapper>
-
         </Form>
       </div>
     );

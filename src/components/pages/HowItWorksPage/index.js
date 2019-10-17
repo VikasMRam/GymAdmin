@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
 
@@ -172,7 +172,7 @@ const CityTileWrapper = styled(Link)`
 
 const HowItWorksPage = () => {
   const intro = (
-    <Fragment>
+    <>
       <Helmet>
         <title>Search Senior Living Communities Near You</title>
         <meta name="description" content="With Seniorly you can find pricing, availability, amenities and more for over 30,000 senior living communities nationwide. Connect with your local senior living expert who can personalize your senior care search." />
@@ -185,13 +185,13 @@ const HowItWorksPage = () => {
       <IntroLogo>
         <Icon icon="logo" size="xxLarge" />
       </IntroLogo>
-    </Fragment>
+    </>
   );
 
   const discoverTiles = Object.entries(howItWorksContents)
-    .map(([data], index) => (
+    .map(([data]) => (
       <DiscoverTile
-        key={index}
+        key={data.url}
         content={data}
         to={data.url}
       />
@@ -220,7 +220,7 @@ const HowItWorksPage = () => {
       ));
 
     return (
-      <Fragment>
+      <>
         <BottomContent>
           <CenterBottom>
             <BottomContentHeading>Ready to find a new home?</BottomContentHeading>
@@ -230,7 +230,7 @@ const HowItWorksPage = () => {
           </CenterBottom>
         </BottomContent>
         <Footer />
-      </Fragment>
+      </>
     );
   };
 

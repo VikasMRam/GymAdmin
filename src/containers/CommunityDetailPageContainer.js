@@ -450,7 +450,7 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
         </StyledHeading>
 
         <SimilarCommunities
-          similarProperties={similarProperties}
+          communities={similarProperties}
           onSimilarCommunityClick={onSimilarCommunitiesClick}
           communityStyle={communityStyle}
         />

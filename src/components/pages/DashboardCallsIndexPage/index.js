@@ -1,33 +1,28 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { object } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
+import pad from 'sly/components/helpers/pad';
 import { Table } from 'sly/components/atoms';
-
+import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 
 const TableSectionWrapper = styled.div`
   overflow: auto;
 `;
 
-const TableWrapper = styled.div`
-  margin-bottom: ${size('spacing.large')};
-`;
+const TableWrapper = pad(styled.div, 'large');
 
-const DashboardCallsIndexPage = ({ tableContents }) => {
-  return (
-    <DashboardPageTemplate activeMenuItem="My Families">
-      <Fragment>
-        <TableSectionWrapper>
-          <TableWrapper>
-            <Table {...tableContents} />
-          </TableWrapper>
-        </TableSectionWrapper>
-      </Fragment>
-    </DashboardPageTemplate>
-  );
-};
+const DashboardCallsIndexPage = ({ tableContents }) => (
+  <DashboardPageTemplate activeMenuItem="My Families">
+    <>
+      <TableSectionWrapper>
+        <TableWrapper>
+          <Table {...tableContents} />
+        </TableWrapper>
+      </TableSectionWrapper>
+    </>
+  </DashboardPageTemplate>
+);
 
 DashboardCallsIndexPage.propTypes = {
   tableContents: object,

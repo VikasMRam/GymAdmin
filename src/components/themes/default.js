@@ -246,8 +246,8 @@ theme.sizes = {
       height: '5.25rem',     // 84px
     },
     little: {
-      width:  '10.9375rem',  // 175px
-      height: '7.375rem',    // 118px
+      width:  '12rem',       // 192px
+      height: '8rem',        // 128px
     },
     small: {
       width : '13.500rem',   // 216px

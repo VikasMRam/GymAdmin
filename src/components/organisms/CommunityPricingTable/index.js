@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, object, func, string, number, bool } from 'prop-types';
 import NumberFormat from 'react-number-format';
@@ -6,10 +6,8 @@ import ReactTooltip from 'react-tooltip';
 
 import { palette, size } from 'sly/components/themes';
 import { Button, Block, Span, Icon, Paragraph } from 'sly/components/atoms';
-import { MainSection, BottomSection } from 'sly/components/molecules/CollapsibleSection';
-import TextBottomSection from 'sly/components/molecules/TextBottomSection';
+import { MainSection } from 'sly/components/molecules/CollapsibleSection';
 import { isServer } from 'sly/config';
-import { Experiment, Variant } from 'sly/services/experiments';
 
 const StyledNumberFormat = styled(NumberFormat)`
   font-weight: ${p => size(p.weight)};
@@ -36,7 +34,7 @@ const Tr = styled.tr`
 
 const StyledTd = styled.td`
   border: none;
-  padding: ${size('spacing.regular')} ${size('spacing.xLarge')}; 
+  padding: ${size('spacing.regular')} ${size('spacing.xLarge')};
 `;
 
 const StyledTable = styled.table`
@@ -54,7 +52,7 @@ const StyledBlockSp = styled(Block)`
 const StyledBlockNp = styled(Block)`
    padding-top: 0px;
    padding-bottom: ${size('spacing.xLarge')};
-  
+
 `;
 const StyledIcon = styled(Icon)`
   margin-left: ${size('spacing.small')};
@@ -80,50 +78,45 @@ const TooltipContent = styled(ReactTooltip)`
   }
 `;
 
-const percentageOf = (num, percentage) => {
-  return (percentage / 100) * num;
-};
+const percentageOf = (num, percentage) => (percentage / 100) * num;
 
-
-const toolTipCode = (size) => {
-  return (
-    <Fragment>
-      Costs By Room Type&nbsp;
-      <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="pricing" />
-      {!isServer && size === 'up to 20 Beds' &&
-      <TooltipContent id="pricing" place="top" effect="solid" multiline>
-        Pricing in assisted living communities can be difficult to estimate.<br />
-        In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
-        Small communities like this typically have &quot;all-inclusive&quot; pricing that gives the resident one monthly
-        price.<br />
-        Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
-        service.<br />
-      </TooltipContent>
-      }
-      {!isServer && size === '20 - 51 Beds' &&
-      <TooltipContent id="pricing" place="top" effect="solid" multiline>
-        Pricing in assisted living communities can be difficult to estimate.<br />
-        In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
-        Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
-        price.<br />
-        Some communities will use a Points or Level of Care system to determine the care related fees.<br />
-        Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
-        service.<br />
-      </TooltipContent>
-      }
-      {!isServer && size === '51 +' &&
-      <TooltipContent id="pricing" place="top" effect="solid" multiline>
-        Pricing in assisted living communities can be difficult to estimate.<br />
-        In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
-        Most large sized communities like this typically charge additional care fees.<br />
-        Communities will use a Points or a Level of Care system to determine the care related fees.<br />
-        Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
-        service.<br />
-      </TooltipContent>
-      }
-    </Fragment>
-  );
-};
+const toolTipCode = size => (
+  <>
+    Costs By Room Type&nbsp;
+    <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="pricing" />
+    {!isServer && size === 'up to 20 Beds' &&
+    <TooltipContent id="pricing" place="top" effect="solid" multiline>
+      Pricing in assisted living communities can be difficult to estimate.<br />
+      In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
+      Small communities like this typically have &quot;all-inclusive&quot; pricing that gives the resident one monthly
+      price.<br />
+      Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+      service.<br />
+    </TooltipContent>
+    }
+    {!isServer && size === '20 - 51 Beds' &&
+    <TooltipContent id="pricing" place="top" effect="solid" multiline>
+      Pricing in assisted living communities can be difficult to estimate.<br />
+      In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
+      Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
+      price.<br />
+      Some communities will use a Points or Level of Care system to determine the care related fees.<br />
+      Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+      service.<br />
+    </TooltipContent>
+    }
+    {!isServer && size === '51 +' &&
+    <TooltipContent id="pricing" place="top" effect="solid" multiline>
+      Pricing in assisted living communities can be difficult to estimate.<br />
+      In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
+      Most large sized communities like this typically charge additional care fees.<br />
+      Communities will use a Points or a Level of Care system to determine the care related fees.<br />
+      Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+      service.<br />
+    </TooltipContent>
+    }
+  </>
+);
 
 const CommunityPricingTable = ({
   pricesList, estimatedPriceList, price, getPricing, name, size, showToolTip,
@@ -132,22 +125,23 @@ const CommunityPricingTable = ({
   const from = Math.round(price);
   const to = Math.round(price + basePer);
   const estimated = pricesList.length === 0;
+
   return (
-    <Fragment>
+    <>
       <MainSection>
-        { estimated &&
+        {estimated &&
           <StyledBlockNp size="title">
             <StyledBlockSp size="body" palette="slate">The estimated monthly pricing for {name} ranges from</StyledBlockSp>
             <StyledNumberFormat weight="weight.medium" color="secondary" value={from} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary" value={to} displayType="text" thousandSeparator prefix="$" /><Span weight="medium" size="title" palette="secondary"> per month*</Span>
           </StyledBlockNp>
         }
-        { !estimated &&
+        {!estimated &&
           <StyledBlockNp size="title">
             <StyledBlockSp size="body" palette="slate">The estimated pricing for {name} starts around</StyledBlockSp>
             <StyledNumberFormat weight="weight.medium" color="secondary" value={price} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> per month*</Span>
           </StyledBlockNp>
         }
-        { pricesList.length > 0 &&
+        {pricesList.length > 0 &&
           <StyledBlockNp>
             <StyledTable>
               <thead>
@@ -169,7 +163,7 @@ const CommunityPricingTable = ({
             </StyledTable>
           </StyledBlockNp>
         }
-        { pricesList.length === 0 && estimatedPriceList.length > 0 &&
+        {pricesList.length === 0 && estimatedPriceList.length > 0 &&
           <StyledBlockNp>
             <StyledTable>
               <thead>
@@ -199,23 +193,9 @@ const CommunityPricingTable = ({
           </StyledBlockNp>
         }
         <Block>
-          <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
-            <Variant name="FooterSmall">
-              <div />
-            </Variant>
-            <Variant name="FullWidth">
-              <Experiment name="PricingCTA_Language" defaultVariant="Detailed">
-                <Variant name="Detailed">
-                  <StyledButton onClick={getPricing}>Get Detailed Pricing</StyledButton>
-                </Variant>
-                <Variant name="Personalized">
-                  <StyledButton onClick={getPricing}>Get Personalized Pricing</StyledButton>
-                </Variant>
-              </Experiment>
-            </Variant>
-          </Experiment>
+          <StyledButton onClick={getPricing}>Get Detailed Pricing</StyledButton>
           <Block>
-            { (pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === 'up to 20 Beds' &&
+            {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === 'up to 20 Beds' &&
               <Paragraph>
                 **Pricing in assisted living communities can be difficult to estimate.
                 In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
@@ -225,60 +205,34 @@ const CommunityPricingTable = ({
                 service.
               </Paragraph>
             }
-            { (pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '20 - 51 Beds' &&
-            <Paragraph>
-              **Pricing in assisted living communities can be difficult to estimate.
-              In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
-              Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
-              price.
-              Some communities will use a Points or Level of Care system to determine the care related fees.
-              Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
-              service.
-            </Paragraph>
+            {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '20 - 51 Beds' &&
+              <Paragraph>
+                **Pricing in assisted living communities can be difficult to estimate.
+                In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
+                Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
+                price.
+                Some communities will use a Points or Level of Care system to determine the care related fees.
+                Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+                service.
+              </Paragraph>
             }
             {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '51 +' &&
-            <Paragraph>
-              **Pricing in assisted living communities can be difficult to estimate.
-              In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
-              Most large sized communities like this typically charge additional care fees.
-              Communities will use a Points or a Level of Care system to determine the care related fees.
-              Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
-              service.
-            </Paragraph>
+              <Paragraph>
+                **Pricing in assisted living communities can be difficult to estimate.
+                In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
+                Most large sized communities like this typically charge additional care fees.
+                Communities will use a Points or a Level of Care system to determine the care related fees.
+                Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+                service.
+              </Paragraph>
             }
           </Block>
           <Block size="caption" palette="grey">
-            *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.  If you manage the community and would like to update your pricing, please email us at communities@seniorly.com.
+            *Seniorly&apos;s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.  If you manage the community and would like to update your pricing, please email us at communities@seniorly.com.
           </Block>
         </Block>
       </MainSection>
-      <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
-        <Variant name="FooterSmall">
-          <BottomSection>
-            <Experiment name="PricingCTA_Language" defaultVariant="Detailed">
-              <Variant name="Detailed">
-                <TextBottomSection
-                  heading="To get detailed pricing, complete this short form. "
-                  buttonText="Get Detailed Pricing"
-                  onButtonClick={getPricing}
-                />
-              </Variant>
-              <Variant name="Personalized">
-                <TextBottomSection
-                  heading="To get personalized pricing, complete this short form. "
-                  buttonText="Get Personalized Pricing"
-                  onButtonClick={getPricing}
-                />
-              </Variant>
-            </Experiment>
-          </BottomSection>
-        </Variant>
-        <Variant name="FullWidth">
-          <div />
-        </Variant>
-      </Experiment>
-    </Fragment>
-
+    </>
   );
 };
 

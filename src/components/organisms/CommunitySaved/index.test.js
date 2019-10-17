@@ -3,8 +3,6 @@ import { shallow } from 'enzyme';
 
 import CommunitySaved from 'sly/components/organisms/CommunitySaved';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-import SimilarCommunitiesNearby from 'sly/components/organisms/SimilarCommunitiesNearby';
-
 
 const { similarProperties } = RhodaGoldmanPlaza;
 
@@ -19,7 +17,7 @@ describe('CommunitySaved', () => {
     expect(wrapper.find('StyledBlock')).toHaveLength(1);
     expect(wrapper.find('ButtonsWrapper')).toHaveLength(1);
     expect(wrapper.find('StyledHr')).toHaveLength(1);
-    expect(wrapper.find(SimilarCommunitiesNearby)).toHaveLength(1);
+    expect(wrapper.find('SimilarCommunities')).toHaveLength(1);
   });
 
   it('calls callback on done button click', () => {

@@ -1,9 +1,9 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
-import { key } from 'sly/components/themes';
 
+import { key } from 'sly/components/themes';
 import { Heading } from 'sly/components/atoms';
 import theme from 'sly/components/themes/default';
 
@@ -72,10 +72,10 @@ storiesOf('Theme', module)
       <Heading level="title">New Palete</Heading>
       {Object.entries(theme.palette)
         .map(([key, colors]) => (
-          <Fragment>
+          <>
             <Heading level="subtitle">{key}</Heading>
             <Colors colors={pickColors(colors)} />
-          </Fragment>
+          </>
         ))
       }
       <div>
@@ -88,10 +88,10 @@ storiesOf('Theme', module)
       <Heading level="title">Old Palete</Heading>
       {Object.entries(oldPalette)
         .map(([key, colors]) => (
-          <Fragment>
+          <>
             <Heading level="subtitle">{key}</Heading>
-            <Colors colors={colors.reduce((c,v,i) =>(c[i]=v,c), {})} />
-          </Fragment>
+            <Colors colors={colors.reduce((c, v, i) => (c[i] = v, c), {})} />
+          </>
         ))
       }
     </Wrapper>
