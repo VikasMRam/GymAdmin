@@ -3,7 +3,17 @@ import { string, func, bool, node } from 'prop-types';
 
 import { connectController } from 'sly/controllers';
 
-class ModalController extends Component {
+const mapStateToProps = (state, { controller = {} }) => ({
+  isModalOpen: controller.isModalOpen,
+  modalType: controller.modalType,
+  isModalCloseable: controller.isModalCloseable,
+  modalContent: controller.modalContent,
+  modalOnClose: controller.modalOnClose,
+});
+
+@connectController(mapStateToProps)
+
+export default class ModalController extends Component {
   static propTypes = {
     modalType: string,
     set: func,
@@ -48,13 +58,3 @@ class ModalController extends Component {
     });
   }
 }
-
-const mapStateToProps = (state, { controller = {} }) => ({
-  isModalOpen: controller.isModalOpen,
-  modalType: controller.modalType,
-  isModalCloseable: controller.isModalCloseable,
-  modalContent: controller.modalContent,
-  modalOnClose: controller.modalOnClose,
-});
-
-export default connectController(mapStateToProps)(ModalController);

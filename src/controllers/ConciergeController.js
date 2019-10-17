@@ -7,7 +7,6 @@ import { resourceCreateRequest } from 'sly/store/resource/actions';
 import { getDetail } from 'sly/store/selectors';
 import { connectController } from 'sly/controllers';
 import SlyEvent from 'sly/services/helpers/events';
-
 import {
   ASSESSMENT,
   REQUEST_CALLBACK,
@@ -15,24 +14,19 @@ import {
   REQUEST_PRICING,
   REQUEST_AVAILABILITY,
 } from 'sly/services/api/actions';
-
 import {
   AVAILABILITY_REQUEST,
   CONSULTATION_REQUESTED, PRICING_REQUEST,
   PROFILE_CONTACTED,
 } from 'sly/services/newApi/constants';
-
 import { prefetch, query, withAuth } from 'sly/services/newApi';
-
 import {
   createBooleanValidator,
   required,
   email,
   usPhone,
 } from 'sly/services/validation';
-
 import userPropType from 'sly/propTypes/user';
-
 import { CONCIERGE } from 'sly/constants/modalType';
 
 export const CONVERSION_FORM = 'conversionForm';
@@ -74,7 +68,8 @@ const getLegacyActionType = (action) => {
   } else if (action === PRICING_REQUEST) {
     return REQUEST_PRICING;
   }
-}
+  return null;
+};
 
 const mapStateToProps = (state, props) => {
   const { communitySlug, queryParams, history } = props;
@@ -203,14 +198,13 @@ export default class ConciergeController extends Component {
         label: communitySlug || pathName,
       });
       return this.doSubmitConversion(data, CONSULTATION_REQUESTED, true);
-    } else {
-      SlyEvent.getInstance().sendEvent({
-        action: 'contactCommunity',
-        category: 'requestAvailability',
-        label: communitySlug || pathName,
-      });
-      return this.doSubmitConversion(data, PROFILE_CONTACTED, true);
     }
+    SlyEvent.getInstance().sendEvent({
+      action: 'contactCommunity',
+      category: 'requestAvailability',
+      label: communitySlug || pathName,
+    });
+    return this.doSubmitConversion(data, PROFILE_CONTACTED, true);
   };
 
   submitRegularConversion = (data) => {
@@ -445,4 +439,3 @@ export default class ConciergeController extends Component {
     });
   }
 }
-
