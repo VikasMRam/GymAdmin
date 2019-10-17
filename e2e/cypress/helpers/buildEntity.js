@@ -1,12 +1,14 @@
 const normalize = require('json-api-normalizer').default;
 const build = require('redux-object').default;
 
+const toLowerFirst = word => `${word.charAt(0).toLowerCase()}${word.slice(1)}`;
+
 function buildEntity(response) {
   const normalized = normalize(response);
   if (Array.isArray(response.data)) {
-    return response.data.map(({ type, id }) => build(normalized, type.toLowerCase(), id, { eager: true }));
+    return response.data.map(({ type, id }) => build(normalized, toLowerFirst(type), id, { eager: true }));
   }
-  return build(normalized, response.data.type.toLowerCase(), response.data.id, { eager: true });
+  return build(normalized, toLowerFirst(response.data.type), response.data.id, { eager: true });
 }
 
 exports.default = buildEntity;

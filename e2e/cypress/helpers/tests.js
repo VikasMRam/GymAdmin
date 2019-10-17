@@ -22,12 +22,29 @@ export const responsive = (tests) =>  {
   });
 };
 
-export const select = (...args) => cy.get(args.map((x) => {
-  if (x[0] === '.') {
-    return `[class*="${x.slice(1)}"]`;
-  } else if (x[0] === '#') {
-    return `[data-cy*="${x.slice(1)}"]`;
-  }
-  return x;
-}).join(' '));
+/**
+ * Transforms selectors to make them more compatible with our e2e tests
+ * ; classes are converted from '.something' to '[class*="something"]
+ * to make easier to target styled-components and ids are converted
+ * from '#something' to '[data-cy*="something"]'
+ *
+ * @param args A list of selectors to match
+ * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const select = (...args) => cy.get(args.map((arg) => {
+  const regexes = {
+    class: /\.[^\s.#\[,]+/g,
+    'data-cy': /\#[^\s.#\[,]+/g,
+  };
+  Object.entries(regexes).forEach(([attr, regex]) => {
+    let match;
+    while(match = regex.exec(arg)) {
+      const { 0: matched, index } = match;
+      const replaced = `[${attr}*="${matched.slice(1)}"]`;
+      arg = `${arg.substr(0, index)}${replaced}${arg.substr(index + matched.length)}`;
+      regex.lastIndex = index + replaced.length;
+    }
+  });
+  return arg;
+}).join(', '));
 
