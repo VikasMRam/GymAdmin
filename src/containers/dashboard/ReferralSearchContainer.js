@@ -278,7 +278,7 @@ export default class ReferralSearchContainer extends Component {
                   childrenClientCommunityIdsMap={childrenClientCommunityIdsMap}
                   handleCommunitySearch={this.doCommunitySearch}
                   sendNewReferral={this.sendReferral}
-                  setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto(3); }}
+                  setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto('DashboardCommunityReferralContactDetailsContainer'); }}
                 />
                 <WizardStep
                   component={DashboardCommunityReferralSearch}
@@ -288,7 +288,7 @@ export default class ReferralSearchContainer extends Component {
                   childrenClients={communityReferralClients}
                   childrenClientCommunityIdsMap={childrenClientCommunityIdsMap}
                   handleCommunitySearch={this.doCommunitySearch}
-                  setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto(3); }}
+                  setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto('DashboardCommunityReferralContactDetailsContainer'); }}
                 />
                 <WizardStep
                   component={DashboardCommunityReferralContactDetailsContainer}
@@ -329,7 +329,7 @@ export default class ReferralSearchContainer extends Component {
                 onSendNewReferralClick={onSubmit}
                 name="DashboardAgentReferrals"
                 childrenClients={agentReferralClients}
-                setSelectedAgent={(a) => { this.setSelectedAgent(a); goto(3); }}
+                setSelectedAgent={(a) => { this.setSelectedAgent(a); goto('DashboardAgentReferralContactDetailsContainer'); }}
               />
               <WizardStep
                 component={DashboardAgentReferralSearch}
@@ -338,7 +338,7 @@ export default class ReferralSearchContainer extends Component {
                 handleAgentSearch={this.doAgentSearch}
                 agents={agents}
                 childrenClientAgentIdsMap={childrenClientAgentIdsMap}
-                setSelectedAgent={(a) => { this.setSelectedAgent(a); goto(3); }}
+                setSelectedAgent={(a) => { this.setSelectedAgent(a); goto('DashboardAgentReferralContactDetailsContainer'); }}
               />
               <WizardStep
                 component={DashboardAgentReferralContactDetailsContainer}
