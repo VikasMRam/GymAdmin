@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, arrayOf, func, object } from 'prop-types';
+import { string, arrayOf, object } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
 import { resourceListReadRequest } from 'sly/store/resource/actions';
@@ -10,13 +10,13 @@ import { titleize } from 'sly/services/helpers/strings';
 import { getAgentUrl } from 'sly/services/helpers/url';
 import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/agents';
-import { getSearchParams } from 'sly/services/helpers/search';
+import { getAgentParams } from 'sly/services/helpers/search';
 import { connectController } from 'sly/controllers';
 
 const mapStateToProps = (state, { match, location }) => {
   const { params } = match;
   const { region, city } = params;
-  const searchParams = getSearchParams(match, location);
+  const searchParams = getAgentParams(match, location);
   return {
     regionSlug: region,
     citySlug: city,
@@ -25,7 +25,7 @@ const mapStateToProps = (state, { match, location }) => {
 };
 
 const mapPropsToActions = ({ match, location }) => {
-  const searchParams = getSearchParams(match, location);
+  const searchParams = getAgentParams(match, location);
   return {
     agent: resourceListReadRequest('agent', searchParams),
   };
@@ -43,6 +43,8 @@ export default class AgentRegionPageContainer extends Component {
     history: object,
   };
 
+
+
   handleLocationSearch = (result) => {
     const { history } = this.props;
     const event = {
@@ -57,7 +59,7 @@ export default class AgentRegionPageContainer extends Component {
 
   render() {
     const {
-      agentsList, regionSlug, citySlug, history
+      agentsList, regionSlug, citySlug, history,
     } = this.props;
 
     const { location } = history;
@@ -73,6 +75,12 @@ export default class AgentRegionPageContainer extends Component {
     let locationName = null;
     if (citySlug) {
       locationName = titleize(citySlug);
+      const cityParts = citySlug.split('-');
+      if (cityParts.length > 1) {
+        const state = cityParts.pop();
+        const city = cityParts.join('-');
+        locationName = `${titleize(city)} ${state.toUpperCase()}`;
+      }
     } else {
       locationName = titleize(regionSlug);
     }
