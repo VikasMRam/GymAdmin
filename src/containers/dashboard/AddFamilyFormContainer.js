@@ -62,12 +62,11 @@ export default class AddFamilyFormContainer extends Component {
       .then((data) => {
         const matchingClients = normJsonApi(data);
         if (matchingClients.length) {
-          this.setState({
+          return this.setState({
             duplicates: matchingClients,
           });
-        } else {
-          doSubmit();
         }
+        return doSubmit();
       });
   };
 

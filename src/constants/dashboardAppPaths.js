@@ -7,7 +7,6 @@ export const PROSPECTING = 'prospecting';
 export const CONNECTED = 'connected';
 export const CLOSED = 'closed';
 
-
 export const FAMILY_DASHBOARD_FAVORITES_PATH = `${FAMILY_DASHBOARD_PATH}/favorites`;
 export const FAMILY_DASHBOARD_PROFILE_PATH = `${FAMILY_DASHBOARD_PATH}/my-profile`;
 export const AGENT_DASHBOARD_FAMILIES_PATH = `${AGENT_DASHBOARD_PATH}/my-families`;
