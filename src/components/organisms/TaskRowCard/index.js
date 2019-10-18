@@ -8,10 +8,10 @@ import taskPropType from 'sly/propTypes/task';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import pad from 'sly/components/helpers/pad';
 import borderRadius from 'sly/components/helpers/borderRadius';
-import { Link } from 'sly/components/atoms';
+import { Link, ClampedText } from 'sly/components/atoms';
 import { Td, Tr } from 'sly/components/atoms/Table';
 import Stage from 'sly/components/molecules/Stage';
-import { getAppPathForEntity } from 'sly/services/helpers/appPaths'
+import { getAppPathForEntity } from 'sly/services/helpers/appPaths';
 
 const Wrapper = mobileOnly(borderRadius(pad(Tr, 'large'), 'small'), css`
   display: flex;
@@ -25,9 +25,11 @@ const StyledNameCell = ({
   disabled, task, to, ...props
 }) => (
   <Td disabled={disabled} {...props}>
-    <Link to={to} {...props}>
-      {task.title}
-    </Link>
+    <ClampedText size={size('weight.medium')}>
+      <Link to={to} {...props}>
+        {task.title}
+      </Link>
+    </ClampedText>
   </Td>
 );
 
@@ -38,7 +40,6 @@ StyledNameCell.propTypes = {
 };
 
 const NameCell = mobileOnly(pad(StyledNameCell, 'regular'), css`
-  font-weight: ${size('weight.medium')};
   order: 1;
 `);
 NameCell.displayName = 'NameCell';
