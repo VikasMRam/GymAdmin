@@ -11,7 +11,7 @@ import borderRadius from 'sly/components/helpers/borderRadius';
 import { Link } from 'sly/components/atoms';
 import { Td, Tr } from 'sly/components/atoms/Table';
 import Stage from 'sly/components/molecules/Stage';
-import { getAppPathForEntity } from 'sly/services/helpers/appPaths'
+import { getAppPathForEntity } from 'sly/services/helpers/appPaths';
 
 const Wrapper = mobileOnly(borderRadius(pad(Tr, 'large'), 'small'), css`
   display: flex;
@@ -94,7 +94,7 @@ const TaskRowCard = ({ task, onTaskClick }) => {
   const {
     dueDate, status, owner, relatedEntities, priority,
   } = task;
-  const dueDateStr = dayjs(dueDate).format('MM/DD/YYYY, hh:mmA');
+  const dueDateStr = dayjs(dueDate).format('MM/DD/YYYY');
   return (
     <Wrapper>
       <NameCell task={task} onClick={() => onTaskClick(task)} />
