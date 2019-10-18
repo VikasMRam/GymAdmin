@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { func, string, arrayOf, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
@@ -77,7 +77,6 @@ export default class UpdateFamilyStageForm extends Component {
   };
 
   render() {
-    const { handleChange, handleLocationChange } = this;
     const {
       handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, nextAllowedStages, lossReasons,
       currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, roomTypes, ...props
@@ -85,8 +84,8 @@ export default class UpdateFamilyStageForm extends Component {
 
     const NEW_FAMILY_STAGE_ORDERED = { ...FAMILY_STAGE_ORDERED };
 
-    const options = Object.keys(NEW_FAMILY_STAGE_ORDERED).map((sg, ig) => {
-      let stages = NEW_FAMILY_STAGE_ORDERED[sg].map((s, i) => nextAllowedStages.indexOf(s) !== -1 && <option disabled={ig === 0 && i === 0} key={s} value={s}>{s}</option>);
+    const options = Object.keys(NEW_FAMILY_STAGE_ORDERED).map((sg) => {
+      let stages = NEW_FAMILY_STAGE_ORDERED[sg].map(s => nextAllowedStages.indexOf(s) !== -1 && <option key={s} value={s}>{s}</option>);
       stages = stages.filter(s => s);
 
       if (stages.length) {
@@ -183,7 +182,7 @@ export default class UpdateFamilyStageForm extends Component {
           />
         }
         {nextStage === FAMILY_STAGE_WON &&
-          <Fragment>
+          <>
             <Label>Your community referral agreement %<Span palette="danger">*</Span></Label>
             <Field
               name="referralAgreementType"
@@ -211,7 +210,7 @@ export default class UpdateFamilyStageForm extends Component {
                 />
                 {/* important to keep in mind that referralAgreement and monthlyFees will be available as string */}
                 {referralAgreementType === 'percentage' && referralAgreement && referralAgreement.length > 0 && monthlyFees && monthlyFees.length > 0 &&
-                  <Block weight="medium" size="caption" palette="green">Your referral total is ${priceFormatter(referralAgreement * 0.01* monthlyFees)}</Block>}
+                  <Block weight="medium" size="caption" palette="green">Your referral total is ${priceFormatter(referralAgreement * 0.01 * monthlyFees)}</Block>}
               </ReferralAgreementWrapper>
             }
             <Role is={PLATFORM_ADMIN_ROLE}>
@@ -243,7 +242,7 @@ export default class UpdateFamilyStageForm extends Component {
                 <option value="no">No</option>
               </Field>
             </Role>
-          </Fragment>
+          </>
         }
         {nextStage === FAMILY_STAGE_LOST &&
           <Field
@@ -275,8 +274,8 @@ export default class UpdateFamilyStageForm extends Component {
             />
             <Label><span>Preferred location<Span palette="danger">*</Span></span></Label>
             <SearchBoxContainer
-              onLocationSearch={handleLocationChange}
-              onTextChange={handleChange}
+              onLocationSearch={this.handleLocationChange}
+              onTextChange={this.handleChange}
             />
           </div>
         }

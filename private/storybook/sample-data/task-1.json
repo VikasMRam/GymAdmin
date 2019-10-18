@@ -34,7 +34,8 @@
   "relatedEntities": [
     {
       "type": "SlyEntity",
-      "id": "rhoda-goldman-plaza"
+      "id": "rhoda-goldman-plaza",
+      "label":"Rhoda Goldman"
     }
   ]
 }

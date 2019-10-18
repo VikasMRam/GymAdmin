@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
@@ -26,7 +26,7 @@ const BigScreen = displayOnlyIn(styled(Block)`
 `, ['tablet', 'laptop']);
 
 const children = (
-  <Fragment>
+  <>
     <SmallScreen weight="medium" size="caption">
       <div>
         <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent />
@@ -40,7 +40,7 @@ const children = (
         <span>Mark as read</span>
       </div>
     </BigScreen>
-  </Fragment>
+  </>
 );
 
 storiesOf('Molecules|BannerNotification', module)

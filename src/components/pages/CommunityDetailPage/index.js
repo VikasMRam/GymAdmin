@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { object, func, number, bool } from 'prop-types';
 import Sticky from 'react-stickynode';
@@ -12,7 +12,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import { calculatePricing, buildPriceList, buildEstimatedPriceList } from 'sly/services/helpers/pricing';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import pad from 'sly/components/helpers/pad';
-import { Heading, Button, Paragraph, Block } from 'sly/components/atoms';
+import { Button, Paragraph, Block } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import {
   CommunityDetailPageTemplate,
@@ -26,7 +26,7 @@ import {
 } from 'sly/components/templates/CommunityDetailPageTemplate';
 import SaveCommunityContainer from 'sly/containers/SaveCommunityContainer';
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
-import CollapsibleSection, { MainSection, BottomSection } from 'sly/components/molecules/CollapsibleSection';
+import CollapsibleSection, { MainSection } from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
 import EntityReviews from 'sly/components/organisms/EntityReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
@@ -421,6 +421,7 @@ export default class CommunityDetailPage extends Component {
       mainImage,
       partnerAgents,
       twilioNumber,
+      guideUrl,
     } = community;
 
     const {
@@ -501,8 +502,9 @@ export default class CommunityDetailPage extends Component {
     const showSimilarEarlier = pricesList.length === 0 && floorPlans.length > 0 && address.city === 'Sacramento' && address.state === 'CA' &&
       (!communityDescription || communityDescription === '');
     const similarCommunityStyle = { layout: 'column', imageSize: 'regular', showDescription: true };
+
     return (
-      <Fragment>
+      <>
         {getHelmetForCommunityPage(community, location)}
         <Header noBottomMargin={!!bannerNotification} />
         {bannerNotification && <StyledBannerNotification>{bannerNotification}</StyledBannerNotification>}
@@ -574,7 +576,7 @@ export default class CommunityDetailPage extends Component {
                 {showSimilarEarlier &&
                   <TopCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                     <MainSection>
-                      <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
+                      <SimilarCommunities communities={similarProperties} onCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
                       <BackToSearch>
                         <Button
                           ghost
@@ -650,6 +652,7 @@ export default class CommunityDetailPage extends Component {
                         city={address.city}
                         state={address.state}
                         twilioNumber={twilioNumber}
+                        guideUrl={guideUrl}
                       />
                     </MainSection>
                   </TopCollapsibleSection>
@@ -750,7 +753,7 @@ export default class CommunityDetailPage extends Component {
                 {!showSimilarEarlier &&
                   <BottomCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                     <MainSection>
-                      <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
+                      <SimilarCommunities communities={similarProperties} onCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
                       <BackToSearch>
                         <Button
                           ghost
@@ -813,7 +816,7 @@ export default class CommunityDetailPage extends Component {
           }
         </CommunityDetailPageTemplate>
         <Footer />
-      </Fragment>
+      </>
     );
   }
 }

@@ -1,6 +1,6 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import { func, object, string } from 'prop-types';
+import { func, object } from 'prop-types';
 
 import { size, assetPath } from 'sly/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
@@ -89,8 +89,7 @@ class AgentsPage extends Component {
       location,
     } = this.props;
     const headerContent = (
-      <Fragment>
-        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+      <>
         <HeaderContainer />
         <HeroWrapper innerRef={this.heroRef}>
           <HeroBackgroundImage src={assetPath('images/agents/agent-hero.png')} alt="A Home To Love" />
@@ -98,10 +97,10 @@ class AgentsPage extends Component {
             <FindLocalAgent onLocationSearch={onLocationSearch} />
           </HeroTextWrapper>
         </HeroWrapper>
-      </Fragment>
+      </>
     );
     return (
-      <Fragment>
+      <>
         {getHelmetForAgentsPage({ location })}
         <TemplateHeader>{headerContent}</TemplateHeader>
         <TemplateContent>
@@ -137,7 +136,7 @@ class AgentsPage extends Component {
           </StyledSection>
         </TemplateContent>
         <Footer />
-      </Fragment>
+      </>
     );
   }
 }

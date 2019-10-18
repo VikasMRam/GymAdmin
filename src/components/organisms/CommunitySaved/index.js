@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { array, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import { Heading, Button, Block, Hr } from 'sly/components/atoms';
-import SimilarCommunitiesNearby from 'sly/components/organisms/SimilarCommunitiesNearby';
+import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 
 const StyledDoneButton = styled(Button)`
   flex: 1;
@@ -35,7 +35,7 @@ const StyledHr = styled(Hr)`
 StyledHr.displayName = 'StyledHr';
 
 const CommunitySaved = ({ similarCommunities, onDoneButtonClicked }) => (
-  <Fragment>
+  <section>
     <StyledHeading size="subtitle">Community Saved!</StyledHeading>
     <StyledBlock>You can view your saved communities from the nav bar</StyledBlock>
     <ButtonsWrapper>
@@ -51,8 +51,8 @@ const CommunitySaved = ({ similarCommunities, onDoneButtonClicked }) => (
     </ButtonsWrapper>
     <StyledHr />
     <StyledHeading size="subtitle">Similar communities nearby</StyledHeading>
-    <SimilarCommunitiesNearby similarCommunities={similarCommunities} />
-  </Fragment>
+    <SimilarCommunities communities={similarCommunities} communityStyle={{ layout: 'row', showDescription: false }} />
+  </section>
 );
 
 CommunitySaved.propTypes = {

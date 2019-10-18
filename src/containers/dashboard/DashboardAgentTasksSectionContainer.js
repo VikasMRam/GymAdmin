@@ -73,25 +73,26 @@ const getPageParams = ({ match, location }) => {
 
 @withRouter
 
-@prefetch('tasks', 'getTasks', (getClients, { match, location, client }) => {
-  const { pageNumber, date, status, taskName } = getPageParams({ match, location });
-  const filters = {
-    'filter[status]': status,
-    'page-number': pageNumber,
-    'filter[title]': taskName,
-  };
-  if (date) {
-    filters['filter[dueDate]'] = date;
-  }
+@withUser
+
+@prefetch('tasks', 'getTasks', (req, { datatable, client }) => {
+  // const { pageNumber, date, status, taskName } = getPageParams({ match, location });
+  // const filters = {
+  //   'filter[status]': status,
+  //   'page-number': pageNumber,
+  //   'filter[title]': taskName,
+  // };
+  // if (date) {
+  //   filters['filter[dueDate]'] = date;
+  // }
+  const filters  = {};
   if (client) {
     const { id } = client;
     filters['filter[client]'] = id;
+    return req(filters);
   }
-
-  return getClients(filters);
+  return req(datatable.query);
 })
-
-@withUser
 
 export default class DashboardAgentTasksSectionContainer extends Component {
   static propTypes = {

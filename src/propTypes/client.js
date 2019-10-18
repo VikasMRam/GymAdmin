@@ -4,7 +4,8 @@ import { uuidAux } from './user';
 
 const clientInfo = shape({
   name: string.isRequired,
-  email: string.isRequired,
+  email: string,
+  phoneNumber: string,
   referralSource: string.isRequired,
   slyMessage: string,
 });

@@ -1,14 +1,15 @@
-import React, { Fragment } from 'react';
-import { func } from 'prop-types';
+import React from 'react';
+import { func, arrayOf, object } from 'prop-types';
 import styled from 'styled-components';
 import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
-import { Block, Button, Link } from 'sly/components/atoms';
+import { Heading, Block, Button, Link } from 'sly/components/atoms';
 import pad from 'sly/components/helpers/pad';
 import clientPropType from 'sly/propTypes/client';
 import DashboardAdminReferralAgentTile from 'sly/components/organisms/DashboardAdminReferralAgentTile';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
+import cursor from 'sly/components/helpers/cursor';
 
 const TopWrapper = styled.div`
   display: flex;
@@ -57,9 +58,11 @@ const ChildrenClientsWrapper = styled.div`
 `;
 
 const StyledDashboardAdminReferralAgentTile = pad(DashboardAdminReferralAgentTile);
+const CursorStyledDashboardAdminReferralAgentTile = cursor(StyledDashboardAdminReferralAgentTile);
 
-const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients }) => {
+const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients, recommendedAgents, recommendedAgentsIdsMap, setSelectedAgent }) => {
   const childrenComponents = [];
+
   if (childrenClients.length > 0) {
     childrenClients.forEach((childrenClient) => {
       const { id, stage, provider, createdAt } = childrenClient;
@@ -71,9 +74,28 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients }) =>
       childrenComponents.push(component);
     });
   }
-
+  const title = 'Agent Recommended by Seniorly';
+  const recommendedAgentComponents = [];
+  recommendedAgentComponents.push(<Heading level="subtitle">Recommended Agents:</Heading>);
+  recommendedAgents.forEach((agent) => {
+    // const client = recommendedAgentsIdsMap[agent.id];
+    const props = {
+      key: agent.name,
+      agent,
+      title,
+    };
+    recommendedAgentComponents.push((
+      <CursorStyledDashboardAdminReferralAgentTile
+        {...props}
+        agent={agent}
+        onClick={() => {
+          setSelectedAgent(agent);
+        }}
+      />
+    ));
+  });
   return (
-    <Fragment>
+    <>
       <TopWrapper>
         <Block size="subtitle">Agents</Block>
         <SendNewReferralButton onClick={onSendNewReferralClick}>Send a new referral</SendNewReferralButton>
@@ -85,13 +107,17 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients }) =>
         </EmptyResultWrapper>
       )}
       {childrenComponents.length > 0 && <ChildrenClientsWrapper>{childrenComponents}</ChildrenClientsWrapper>}
-    </Fragment>
+      {recommendedAgentComponents.length > 1 && <ChildrenClientsWrapper>{recommendedAgentComponents}</ChildrenClientsWrapper>}
+    </>
   );
 };
 
 DashboardAgentReferrals.propTypes = {
+  setSelectedAgent: func,
   onSendNewReferralClick: func,
-  childrenClients: clientPropType,
+  childrenClients: arrayOf(clientPropType),
+  recommendedAgents: arrayOf(object),
+  recommendedAgentsIdsMap: object,
 };
 
 export default DashboardAgentReferrals;

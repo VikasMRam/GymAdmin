@@ -23,6 +23,7 @@ const dig = (wrapper, name) => {
     }
     return wrapper;
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(`Component with name: ${name} not found in this list`, tries);
     throw e;
   }
@@ -152,7 +153,6 @@ describe('ConciergeController', () => {
   describe('Container', () => {
     const wrap = (communitySlug, store) => dig(shallow(
       <ConciergeController
-        children={spy}
         communitySlug={communitySlug}
         store={store}
         api={api}
@@ -161,8 +161,9 @@ describe('ConciergeController', () => {
         queryParams={{}}
         setQueryParams={setQueryParams}
         history={history}
-      />
-    , { context: { router } }), 'ConciergeController').dive();
+      >
+        {spy}
+      </ConciergeController>, { context: { router } }), 'ConciergeController').dive();
 
     it('should pass default values', () => {
       const store = initStore({ bees, resource, entities, authenticated });
@@ -277,7 +278,6 @@ describe('ConciergeController', () => {
         <ConciergeController.WrappedComponent
           {...props}
           set={set}
-          children={spy}
           api={api}
           queryParams={{}}
           match={match}
@@ -291,7 +291,9 @@ describe('ConciergeController', () => {
           updateUuidAux={updateUuidAux}
           history={history}
           status={status}
-        />
+        >
+          {spy}
+        </ConciergeController.WrappedComponent>
       ));
 
       const instance = component.instance();

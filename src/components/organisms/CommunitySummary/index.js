@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { object, bool, func, string } from 'prop-types';
 import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
@@ -105,7 +105,7 @@ const CommunitySummary = ({
       <Wrapper>
         <div>
           {conciergeNumber &&
-            <Fragment>
+            <>
               For pricing and availability, call&nbsp;
               <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
                 <NumberFormat
@@ -120,7 +120,7 @@ const CommunitySummary = ({
                   This phone number will connect you to the concierge team at Seniorly.
                 </TooltipContent>
               }
-            </Fragment>
+            </>
           }
         </div>
         <div>

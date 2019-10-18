@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { string, func, object, arrayOf, bool } from 'prop-types';
 import { generatePath } from 'react-router';
@@ -50,6 +50,7 @@ import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchCont
 import StatusSelect from 'sly/components/molecules/StatusSelect';
 import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
 import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
+import { Datatable } from 'sly/services/datatable';
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
@@ -94,6 +95,10 @@ const StyledFamilyActivityItem = styled(FamilyActivityItem)`
 
 const FamilyDetailsTab = styled.div`
   ${SmallScreenBorder};
+`;
+
+const FamilyTasksTab = styled.div`
+  padding:${size('spacing', 'xLarge')};
 `;
 
 const TabWrapper = styled(Box)`
@@ -545,7 +550,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     const backLinkHref = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: TabMap[levelGroup] });
     const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
-    const { tasksPath } = this.getTabPathsForUser();
+
+    const taskFilters = {
+      'filter[client]': client.id,
+    };
 
     const clientName = <ClientName client={client} rawClient={rawClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} user={user} />;
 
@@ -566,6 +574,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               onRejectClick={handleRejectClick}
               onUpdateClick={handleUpdateClick}
               onAddNoteClick={handleAddNoteClick}
+              client={client}
               user={user}
             />
             {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
@@ -581,9 +590,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           </Tabs>
           <TabWrapper snap="top">
             {currentTab === SUMMARY && (
-              <Fragment>
+              <>
                 <SmallScreenBorderPaddedFamilySummary client={client} to={familyDetailsPath} noHeading />
-              </Fragment>
+              </>
             )}
 
             {currentTab === ACTIVITY && (
@@ -593,10 +602,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                 <TextAlignCenterBlock>There are no activities.</TextAlignCenterBlock>
                 }
                 {!noteIsLoading && activityCards.length > 0 &&
-                <Fragment>
+                <>
                   {/* <TableHeaderButtons hasColumnsButton={false} /> */}
                   {activityCards}
-                </Fragment>
+                </>
                 }
               </SmallScreenBorderDiv>
             )}
@@ -651,21 +660,27 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
             {currentTab === TASKS && (
               <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
-                <DashboardAgentTasksSectionContainer
-                  basePath={tasksPath}
-                  client={client}
-                  noBorder
-                />
+                <FamilyTasksTab>
+                  <Datatable
+                    id="tasks"
+                    filters={taskFilters}
+                  >
+                    {datatable => (
+                      <DashboardAgentTasksSectionContainer datatable={datatable} client={client} />
+                    )}
+                  </Datatable>
+                </FamilyTasksTab>
               </Role>
             )}
+
 
             {currentTab === MESSAGES && (
               <SmallScreenBorderDiv>
                 {!hasConversationFinished &&
-                  <Fragment>
+                  <>
                     <br />
                     <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
-                  </Fragment>
+                  </>
                 }
                 {hasConversationFinished && !conversation && conversations.length > 0 &&
                   <DashboardMessagesContainerWrapper>

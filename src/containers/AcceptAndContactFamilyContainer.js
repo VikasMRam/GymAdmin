@@ -33,7 +33,7 @@ class AcceptAndContactFamilyContainer extends Component {
 
   state = { contactType: null };
 
-  handleUpdateStage = (contactType) => {
+  handleUpdateStage = () => {
     const {
       updateClient, client, rawClient, refetchClient,
     } = this.props;
@@ -45,11 +45,6 @@ class AcceptAndContactFamilyContainer extends Component {
 
     return updateClient({ id }, newClient)
       .then(() => refetchClient())
-      .then(() => {
-        this.setState({
-          contactType,
-        });
-      })
       .catch((r) => {
         this.handleError(r, 'Failed to update stage. Please try again.');
       });
@@ -71,8 +66,13 @@ class AcceptAndContactFamilyContainer extends Component {
   }
 
   handleCallOrEmailClick = (contactType, next) => {
-    this.handleUpdateStage(contactType)
-      .then(() => next());
+    return this.handleUpdateStage(contactType)
+      .then(() => {
+        this.setState({
+          contactType,
+        });
+      })
+      .then(next);
   }
 
   handleMessageClick = (contactType) => {
@@ -84,7 +84,6 @@ class AcceptAndContactFamilyContainer extends Component {
   }
 
   render() {
-    const { handleCallOrEmailClick, handleMessageClick, handleAcceptFamilySubmit } = this;
     const { onCancel, client, conversation, user } = this.props;
     const { clientInfo } = client;
     const { phoneNumber } = clientInfo;
@@ -100,45 +99,38 @@ class AcceptAndContactFamilyContainer extends Component {
       type: contactType,
       value: contactType === 'phone' ? phoneNumber : email,
     };
+    if (phoneNumber) {
+      return (
+        <AcceptFamilyContactDetails
+          handleSubmit={() => this.handleCallOrEmailClick('phone')}
+          label="Phone number"
+          detail={{ type: 'phone', value: phoneNumber }}
+        />
+      );
+    }
 
     return (
       <WizardController>
         {({
           data, next, previous, ...props
-        }) => {
-          const wizardStepComponents = [];
-          if (phoneNumber) {
-            wizardStepComponents.push(
-              <WizardStep
-                component={AcceptFamilyContactDetails}
-                name="Details"
-                handleSubmit={() => handleCallOrEmailClick('phone', next)}
-                label="Phone number"
-                detail={{ type: 'phone', value: phoneNumber }}
-              />
-            );
-          } else {
-            wizardStepComponents.push(
-              <WizardStep
-                component={AcceptAndContactFamilyForm}
-                name="Contact"
-                onCancelClick={onCancel}
-                onEmailClick={email ? () => handleCallOrEmailClick('email', next) : null}
-                onMessageClick={() => handleMessageClick(null)}
-              />
-            );
-            wizardStepComponents.push(
-              <WizardStep
-                component={AcceptFamilyContactDetails}
-                name="Details"
-                handleSubmit={handleAcceptFamilySubmit}
-                label={contactType === 'phone' ? 'Phone number' : 'Email'}
-                detail={detail}
-              />
-            );
-          }
-          return <WizardSteps {...props}>{wizardStepComponents}</WizardSteps>;
-        }}
+        }) => (
+          <WizardSteps {...props}>
+            <WizardStep
+              name="Contact"
+              component={AcceptAndContactFamilyForm}
+              onCancelClick={onCancel}
+              onEmailClick={() => this.handleCallOrEmailClick('email', next)}
+              onMessageClick={this.handleMessageClick}
+            />
+            <WizardStep
+              name="Details"
+              component={AcceptFamilyContactDetails}
+              handleSubmit={this.handleAcceptFamilySubmit}
+              label={contactType === 'phone' ? 'Phone number' : 'Email'}
+              detail={detail}
+            />
+          </WizardSteps>
+        )}
       </WizardController>
     );
   }

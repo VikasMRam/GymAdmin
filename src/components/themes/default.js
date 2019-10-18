@@ -1,5 +1,5 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { isDev, isBrowser } from 'sly/config';
+import { isDev, isBrowser, isTest } from 'sly/config';
 
 import { makeColor, makeColorTable } from './color';
 
@@ -29,7 +29,7 @@ theme.palette = {
   purple   : makeColor('#6d27ca', ['dark', 'base', 'filler', 'stroke', 'background']),
 };
 
-if (isDev && isBrowser) console.table(makeColorTable(theme.palette));
+// if (isDev && isBrowser && !isTest) console.table(makeColorTable(theme.palette));
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',
@@ -246,8 +246,8 @@ theme.sizes = {
       height: '5.25rem',     // 84px
     },
     little: {
-      width:  '10.9375rem',  // 175px
-      height: '7.375rem',    // 118px
+      width:  '12rem',       // 192px
+      height: '8rem',        // 128px
     },
     small: {
       width : '13.500rem',   // 216px

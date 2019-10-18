@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { object, func, bool, array } from 'prop-types';
 import { ifProp } from 'styled-tools';
@@ -148,8 +148,7 @@ const CommunityFilterList = ({
   return (
     <WrapperElement>
       {!isModalView &&
-        <Fragment>
-          {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+        <>
           <ImageButtonWrapper isMapView={isMapView}>
             {isMapView && toggleMap &&
             <IconButton icon="list" onClick={toggleMap} iconPalette="primary" ghost>
@@ -157,17 +156,16 @@ const CommunityFilterList = ({
             </IconButton>
             }
             {!isMapView &&
-            <Fragment>
-              {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+            <>
               <StyledImage src={assetPath('images/map-placeholder.png')} />
               <IconButton icon="map" iconSize="regular" onClick={toggleMap} iconPalette="primary" ghost>
                 View Map
               </IconButton>
-            </Fragment>
+            </>
             }
           </ImageButtonWrapper>
           <StyledHr />
-        </Fragment>
+        </>
       }
       <CollapsibleSection size="small" title="Type of care" borderless>
         {tocFields}
