@@ -22,7 +22,7 @@ import {
   EXPLORE_AFFORDABLE_PRICING_OPTIONS,
 } from 'sly/constants/pricingForm';
 import { hasCCRC } from 'sly/services/helpers/community';
-import { DASHBOARD_PATH } from 'sly/constants/dashboardAppPaths';
+import { FAMILY_DASHBOARD_FAVORITES_PATH } from 'sly/constants/dashboardAppPaths';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
@@ -200,7 +200,7 @@ class PricingWizardPage extends Component {
     const subheading = 'We received your request and your Seniorly Partner Agent will work with you to get your exact pricing and availability.';
     const props = {
       similarCommunities: similarProperties,
-      buttonTo: DASHBOARD_PATH,
+      buttonTo: FAMILY_DASHBOARD_FAVORITES_PATH,
       onTileClick: hideModal,
       heading,
       subheading,
