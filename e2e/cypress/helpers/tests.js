@@ -1,50 +1,53 @@
-const MOBILE = 'iphone-6';
-const TABLET = 'ipad-2';
-const LAPTOP = 'macbook-13';
+const viewports = {
+  mobile: 'iphone-6',
+  tablet: 'ipad-2',
+  laptop: 'macbook-13',
+};
 
 const getViewport = () => {
-  switch (Cypress.env('viewport')) {
-    case 'mobile': return [MOBILE];
-    case 'desktop': return [TABLET];
-    case 'tablet': return [LAPTOP];
-    default: return [MOBILE, TABLET, LAPTOP];
+  const viewport = Cypress.env('viewport');
+  if (viewport) {
+    return {
+      [viewport]: viewports[viewport],
+    };
   }
+  return viewports;
 };
 
 export const responsive = (tests) =>  {
-  getViewport().forEach((viewport) => {
+  Object.entries(getViewport()).forEach(([viewport, id]) => {
     context(`in ${viewport}`, () => {
       beforeEach(() => {
-        cy.viewport(viewport);
+        cy.viewport(id);
       });
-      tests(viewport);
+      tests(viewport, id);
     });
   });
 };
 
 /**
- * Transforms selectors to make them more compatible with our e2e tests
+ * Transforms selector to make it more compatible with our e2e tests
  * ; classes are converted from '.something' to '[class*="something"]
  * to make easier to target styled-components and ids are converted
  * from '#something' to '[data-cy*="something"]'
  *
- * @param args A list of selectors to match
+ * @param selector A selector to transform
  * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
  */
-export const select = (...args) => cy.get(args.map((arg) => {
+export const select = (selector) => {
   const regexes = {
-    class: /\.[^\s.#\[,]+/g,
-    'data-cy': /\#[^\s.#\[,]+/g,
+    class: /\.[^\s.#[,]+/g,
+    'data-cy': /#[^\s.#[,]+/g,
   };
   Object.entries(regexes).forEach(([attr, regex]) => {
     let match;
-    while(match = regex.exec(arg)) {
+    while (match = regex.exec(selector)) {
       const { 0: matched, index } = match;
       const replaced = `[${attr}*="${matched.slice(1)}"]`;
-      arg = `${arg.substr(0, index)}${replaced}${arg.substr(index + matched.length)}`;
+      selector = `${selector.substr(0, index)}${replaced}${selector.substr(index + matched.length)}`;
       regex.lastIndex = index + replaced.length;
     }
   });
-  return arg;
-}).join(', '));
+  return cy.get(selector);
+};
 
