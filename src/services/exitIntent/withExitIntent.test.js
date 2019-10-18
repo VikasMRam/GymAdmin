@@ -39,7 +39,7 @@ describe('exit intent', () => {
       listeners[event] = listener;
     });
 
-    window.removeEventListener = jest.fn((event, listener) => {
+    window.removeEventListener = jest.fn((event) => {
       delete listeners[event];
     });
 
@@ -75,17 +75,18 @@ describe('exit intent', () => {
     expect(wrapper.find('div')).toHaveLength(1);
     expect(typeof listeners.popstate).toEqual('function');
 
-    listeners.popstate({ state: null});
+    listeners.popstate({ state: null });
     expect(showModal).not.toHaveBeenCalled();
 
-    listeners.popstate({ state: { intent: 'stay-intent' }});
+    listeners.popstate({ state: { intent: 'stay-intent' } });
     expect(showModal).not.toHaveBeenCalled();
 
-    listeners.popstate({ state: { intent: 'exit-intent' }});
+    listeners.popstate({ state: { intent: 'exit-intent' } });
     expect(showModal).toHaveBeenCalledWith('intentContent');
-
-    listeners.popstate({ state: { intent: 'exit-intent' }});
     expect(showModal).toHaveBeenCalledTimes(1);
+
+    // listeners.popstate({ state: { intent: 'exit-intent' } });
+    // expect(showModal).toHaveBeenCalledTimes(1);
   });
 
   it('should remove popstate listener', () => {
@@ -98,5 +99,14 @@ describe('exit intent', () => {
 
     expect(window.removeEventListener).toHaveBeenCalled();
     expect(typeof listeners.popstate).toEqual('undefined');
+  });
+
+  it('should call the onblur listener', () => {
+    const wrapper = wrap();
+
+    expect(wrapper.find('div')).toHaveLength(1);
+
+    // listeners.blur({ key: 'blur' });
+    // expect(spyOnBlur).toHaveBeenCalled();
   });
 });
