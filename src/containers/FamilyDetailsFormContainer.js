@@ -75,6 +75,7 @@ export default class FamilyDetailsFormContainer extends Component {
       mobilityLevel,
       communityCareType,
       assignedTo,
+      additionalMetadata,
     } = data;
     let locationInfo = {};
     if (preferredLocation) {
@@ -93,6 +94,9 @@ export default class FamilyDetailsFormContainer extends Component {
     }
     if (phone) {
       newClient.set('attributes.clientInfo.phoneNumber', phone);
+    }
+    if (additionalMetadata) {
+      newClient.set('attributes.clientInfo.additionalMetadata', additionalMetadata);
     }
 
     if (slyMessage) {
@@ -169,7 +173,7 @@ export default class FamilyDetailsFormContainer extends Component {
 
     const { clientInfo, uuidAux, tags } = client;
     const {
-      name, email, slyMessage, phoneNumber = '',
+      name, email, slyMessage, phoneNumber = '', additionalMetadata,
     } = clientInfo;
     const { uuidInfo } = uuidAux;
     const {
@@ -215,6 +219,7 @@ export default class FamilyDetailsFormContainer extends Component {
       preferredLocation,
       slyMessage,
       assignedTo,
+      additionalMetadata,
       contactPreferences: ['sms', 'email'],
     };
     ({ preferredLocation } = formData);
