@@ -10,7 +10,7 @@ const defaultValues = {
   task,
   onTaskClick,
 };
-const dueDateStr = dayjs(task.dueDate).format('MM/DD/YYYY, hh:mmA');
+const dueDateStr = dayjs(task.dueDate).format('MM/DD/YYYY');
 
 const wrap = (props = {}) => shallow(<TaskRowCard {...defaultValues} {...props} />);
 
