@@ -101,12 +101,12 @@ describe('exit intent', () => {
     expect(typeof listeners.popstate).toEqual('undefined');
   });
 
-  it('should call the onblur listener', () => {
+  it('should add the onblur listener', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('div')).toHaveLength(1);
+    console.log('listeners', listeners);
 
-    // listeners.blur({ key: 'blur' });
-    // expect(spyOnBlur).toHaveBeenCalled();
+    expect(wrapper.find('div')).toHaveLength(1);
+    expect(typeof listeners.blur).toEqual('function');
   });
 });

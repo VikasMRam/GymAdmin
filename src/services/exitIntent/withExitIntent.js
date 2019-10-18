@@ -44,6 +44,7 @@ const withExitIntent = (InnerComponent) => {
 
       this.ifvisible = ifvisible;
       this.addPopstateListener();
+
       // document.addEventListener('mouseout', this.onMouseout);
     }
 
