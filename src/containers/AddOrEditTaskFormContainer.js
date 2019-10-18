@@ -83,7 +83,6 @@ export default class AddOrEditTaskFormContainer extends Component {
       };
     }
 
-    // let addNotePromise = () => Promise.resolve();
     let taskApiCall;
     if (task) {
       taskApiCall = updateTask({ id: task.id }, payload);
