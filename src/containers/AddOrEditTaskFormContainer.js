@@ -3,11 +3,12 @@ import { arrayOf, string, object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 
 import { prefetch, query } from 'sly/services/newApi';
+import { withUser } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
 import taskPropType from 'sly/propTypes/task';
 import { createValidator, required } from 'sly/services/validation';
-import { TASK_RELATED_ENTITY_TYPE } from 'sly/constants/tasks';
+import { TASK_RELATED_ENTITY_TYPE, TASK_STATUS_NOT_STARTED } from 'sly/constants/tasks';
 import { TASK_RESOURCE_TYPE, USER_RESOURCE_TYPE, CLIENT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import AddTaskForm from 'sly/components/organisms/AddTaskForm';
 
@@ -29,7 +30,7 @@ const ReduxForm = reduxForm({
 @query('createTask', 'createTask')
 
 @query('updateTask', 'updateTask')
-
+@withUser
 export default class AddOrEditTaskFormContainer extends Component {
   static propTypes = {
     users: arrayOf(userPropType),
@@ -123,7 +124,7 @@ export default class AddOrEditTaskFormContainer extends Component {
 
   render() {
     const {
-      statuses, priorities, users, status, task, client,
+      statuses, priorities, users, status, task, client, user
     } = this.props;
     const { users: usersStatus } = status;
     const { hasFinished: usersHasFinished } = usersStatus;
@@ -136,6 +137,12 @@ export default class AddOrEditTaskFormContainer extends Component {
     if (client) {
       initialValues.relatedTo = client.clientInfo.name;
     }
+    if (user) {
+      initialValues.owner = user.id;
+    }
+
+    initialValues.status = TASK_STATUS_NOT_STARTED;
+
     let deleteTask;
     let completeTask;
     if (task) {
