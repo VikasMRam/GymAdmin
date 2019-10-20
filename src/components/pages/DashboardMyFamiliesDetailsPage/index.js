@@ -628,6 +628,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   parentClient={client}
                   parentRawClient={rawClient}
                   refetchClient={refetchClient}
+                  user={user}
                   referralMode="Community"
                 />
               </Role>
@@ -641,6 +642,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   parentClient={client}
                   parentRawClient={rawClient}
                   refetchClient={refetchClient}
+                  user={user}
                   referralMode="Agent"
                 />
               </Role>

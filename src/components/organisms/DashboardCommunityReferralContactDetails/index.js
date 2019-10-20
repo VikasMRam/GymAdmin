@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { func } from 'prop-types';
+import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
@@ -9,6 +9,7 @@ import DashboardAdminReferralCommunityTile from 'sly/components/organisms/Dashbo
 import pad from 'sly/components/helpers/pad';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import ReduxField from 'sly/components/organisms/ReduxField';
+import { getHasContract } from 'sly/services/helpers/communityReferral';
 
 const SendReferralTitleBlock = pad(Block);
 
@@ -20,20 +21,31 @@ const StyledDashboardAdminReferralCommunityTile = styled(DashboardAdminReferralC
   margin-bottom: ${size('spacing.large')};
 `;
 
-const DashboardCommunityReferralContactDetails = ({ community, handleSubmit, onChangeCommunity }) => (
-  <Form onSubmit={handleSubmit} name="DashboardCommunityReferralContactDetailsForm">
-    <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
-    <Hr size="large" />
-    <StyledDashboardAdminReferralCommunityTile community={community} actionText="Change Community" actionClick={() => onChangeCommunity()} />
-    <Field name="name" label="Community contact name" type="text" placeholder="Enter Community contact name" component={ReduxField} />
-    <Field name="email" label="Community email" type="text" placeholder="Enter Community email" component={ReduxField} />
-    <Field name="slyMessage" label="Message" type="textarea" placeholder="Enter Message" component={ReduxField} />
-    <Button type="submit">Send Referral</Button>
-  </Form>
-);
+const DashboardCommunityReferralContactDetails = ({ community, isAdminUser, handleSubmit, onChangeCommunity }) => {
+  const hasContract = getHasContract(community);
+  const showHasContract = hasContract && isAdminUser;
+  const showNoContract = !hasContract && isAdminUser;
+  const props = {
+    community,
+    showHasContract,
+    showNoContract,
+  };
+  return (
+    <Form onSubmit={handleSubmit} name="DashboardCommunityReferralContactDetailsForm">
+      <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
+      <Hr size="large" />
+      <StyledDashboardAdminReferralCommunityTile {...props} actionText="Change Community" actionClick={() => onChangeCommunity()} />
+      <Field name="name" label="Community contact name" type="text" placeholder="Enter Community contact name" component={ReduxField} />
+      <Field name="email" label="Community email" type="text" placeholder="Enter Community email" component={ReduxField} />
+      <Field name="slyMessage" label="Message" type="textarea" placeholder="Enter Message" component={ReduxField} />
+      <Button type="submit">Send Referral</Button>
+    </Form>
+  );
+};
 
 DashboardCommunityReferralContactDetails.propTypes = {
   community: adminCommunityPropType,
+  isAdminUser: bool,
   handleSubmit: func,
   onChangeCommunity: func,
 };
