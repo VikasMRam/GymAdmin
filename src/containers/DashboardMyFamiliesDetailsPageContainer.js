@@ -23,7 +23,7 @@ import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
 import SlyEvent from 'sly/services/helpers/events';
-import { CONVERSATION_PARTICIPANT_TYPE_CLIENT, CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION } from 'sly/constants/conversations';
+import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
 import withBreakpoint from 'sly/components/helpers/breakpoint';
 
 @withUser
@@ -46,15 +46,7 @@ import withBreakpoint from 'sly/components/helpers/breakpoint';
   invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
 }))
 
-@prefetch('conversations', 'getConversations', (req, { match }) => req({
-  'filter[participant_id]': match.params.id,
-  'filter[participant_type]': CONVERSATION_PARTICIPANT_TYPE_CLIENT,
-}))
-
-@prefetch('orgConversations', 'getConversations', (req, { user }) => req({
-  'filter[participant_id]': user && user.organization.id,
-  'filter[participant_type]': CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION,
-}))
+@prefetch('conversations', 'getConversations', req => req())
 
 @withBreakpoint
 
@@ -178,9 +170,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { status } = this.props;
     const { hasFinished: userHasFinished } = status.user;
     const { hasFinished: conversationsHasFinished } = status.conversations;
-    const { hasFinished: orgConversationsHasFinished } = status.orgConversations;
+    const { hasFinished: clientHasFinished } = status.client;
 
-    return userHasFinished && conversationsHasFinished && orgConversationsHasFinished;
+    return userHasFinished && conversationsHasFinished && clientHasFinished;
   };
 
   goToFamilyDetails = () => {
@@ -206,20 +198,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     this.setState({ selectedConversation: conversation });
   }
 
-  refetchMessagesTabConversations = () => {
-    const { status } = this.props;
-    status.orgConversations.refetch();
-  }
-
-  componentDidMount = () => {
-    const hasConversationFinished = this.getHasConversationFinished();
-    const { conversations, orgConversations } = this.props;
-    if (hasConversationFinished && orgConversations.length === 0) {
-      const [conversation] = conversations;
-      this.setState({ selectedConversation: conversation });
-    }
-  }
-
   render() {
     const {
       onRejectSuccess, onAddNote, onEditNote,
@@ -232,7 +210,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       notes,
       user,
       conversations,
-      orgConversations,
       breakpoint,
     } = this.props;
 
@@ -251,17 +228,23 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { hasFinished: clientHasFinished } = status.client;
     const { hasFinished: noteHasFinished } = status.notes;
     const hasConversationFinished = this.getHasConversationFinished();
+    const orgConversations = [];
     if (hasConversationFinished && conversations) {
-      console.log('conversations', conversations);
-      console.log('orgConversations', orgConversations);
-      // TODO: Alert when there are multiple conversation between user and entity.
-      // conversations.forEach((conv) => {
-      //   conv.conversationParticipants.forEach((participant) => {
-      //     if (participant.participantID === user.id && participant.participantType === CONVERSATION_PARTICIPANT_TYPE_USER) {
-      //       conversation = conv;
-      //     }
-      //   });
-      // });
+      // TODO: Alert when there are multiple conversation between user and entity.a
+      const childrenClientIds = [];
+      client.children.forEach((childrenClient) => {
+        childrenClientIds.push(childrenClient.id);
+      });
+      conversations.forEach((conv) => {
+        conv.conversationParticipants.forEach((participant) => {
+          if (participant.participantID === client.id && participant.participantType === CONVERSATION_PARTICIPANT_TYPE_CLIENT) {
+            return orgConversations.push(conv);
+          } else if (childrenClientIds.indexOf(participant.participantID) !== -1 && participant.participantType === CONVERSATION_PARTICIPANT_TYPE_CLIENT) {
+            return orgConversations.push(conv);
+          }
+          return null;
+        });
+      });
     }
 
     return (
@@ -293,7 +276,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 conversation={selectedConversation}
                 conversations={orgConversations}
                 onMessagesTabConversationClick={this.onMessagesTabConversationClick}
-                refetchMessagesTabConversations={this.refetchMessagesTabConversations}
                 hasConversationFinished={hasConversationFinished}
               />
             )}

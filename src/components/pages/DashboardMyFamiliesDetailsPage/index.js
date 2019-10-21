@@ -49,7 +49,7 @@ import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
 import StatusSelect from 'sly/components/molecules/StatusSelect';
 import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
-import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
+import DashboardMessages from 'sly/components/organisms/DashboardMessages';
 import { Datatable } from 'sly/services/datatable';
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
@@ -266,7 +266,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     conversation: conversationPropType,
     conversations: arrayOf(conversationPropType),
     onMessagesTabConversationClick: func,
-    refetchMessagesTabConversations: func,
     user: userPropType.isRequired,
   };
 
@@ -461,7 +460,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, conversations, onMessagesTabConversationClick, refetchMessagesTabConversations, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, conversations, onMessagesTabConversationClick, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
     } = this.props;
     const { admin } = user;
 
@@ -682,12 +681,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                     <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
                   </>
                 }
-                {hasConversationFinished && !conversation && conversations.length > 0 &&
+                {hasConversationFinished && !conversation &&
                   <DashboardMessagesContainerWrapper>
-                    <DashboardMessagesContainer
+                    <DashboardMessages
+                      isLoading={!hasConversationFinished}
+                      heading="Conversations"
                       conversations={conversations}
                       onConversationClick={onMessagesTabConversationClick}
-                      refetchConversations={refetchMessagesTabConversations}
+                      refetchConversations={refetchConversations}
                     />
                   </DashboardMessagesContainerWrapper>
                 }
