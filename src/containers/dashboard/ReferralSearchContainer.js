@@ -17,6 +17,7 @@ import DashboardAgentReferralSearch from 'sly/components/organisms/DashboardAgen
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import DashboardCommunityReferralContactDetailsContainer from 'sly/containers/DashboardCommunityReferralContactDetailsContainer';
 import DashboardAgentReferralContactDetailsContainer from 'sly/containers/DashboardAgentReferralContactDetailsContainer';
+import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 
 @query('getCommunities', 'getCommunities')
 @query('getAgents', 'getAgents')
@@ -227,7 +228,7 @@ export default class ReferralSearchContainer extends Component {
         communityReferralClients.push(childrenClient);
       }
     });
-    const isAdminUser = user.admin;
+    const isAdminUser = user.roleID === PLATFORM_ADMIN_ROLE;
     const communitiesInterestedIdsMap = communitiesInterested.reduce((accumulator, community) => {
       accumulator[community.id] = community;
       return accumulator;
