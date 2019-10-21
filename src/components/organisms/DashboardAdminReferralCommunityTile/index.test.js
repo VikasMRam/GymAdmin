@@ -1,11 +1,7 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import DashboardAdminReferralCommunityTile from 'sly/components/organisms/DashboardAdminReferralCommunityTile';
-import { Provider } from 'react-redux';
-import { CacheProvider } from '@emotion/core';
-import { createStore } from 'redux';
-import experimentsReducer from 'sly/store/experiments/reducer';
 
 const community = {
   name: 'Rhoda Goldname Plaza',
@@ -24,11 +20,6 @@ const defaultProps = {
 };
 
 const wrap = (props = {}) => shallow(<DashboardAdminReferralCommunityTile {...defaultProps} {...props} />);
-const wrapMount = (props = {}, store) => mount(
-  <Provider store={store}>
-    <DashboardAdminReferralCommunityTile {...defaultProps} {...props} />
-  </Provider>
-);
 
 describe('DashboardAdminReferralCommunityTile', () => {
   it('does not render passed children', () => {
@@ -85,43 +76,12 @@ describe('DashboardAdminReferralCommunityTile', () => {
   });
 
   it('renders shouldShowHasContract', () => {
-    const communityWithContract = {
-      ...community,
-      rgsAux: {
-        rgsInfo: {
-          contract_info: {
-            hasContract: true,
-          },
-        },
-      },
-    };
-    const wrapper = wrap({ community: communityWithContract });
+    const shouldShowHasContract = true;
+    const wrapper = wrap({ shouldShowHasContract });
     expect(wrapper.contains(community.name)).toBe(true);
     expect(wrapper.contains(addressString)).toBe(true);
 
     expect(wrapper.find('StyledIconBadge').find('[text="HAS CONTRACT"]')).toHaveLength(1);
-  });
-
-  it.only('doesn\'t renders shouldShowHasContract if not admin', () => {
-    const communityWithContract = {
-      ...community,
-      rgsAux: {
-        rgsInfo: {
-          contract_info: {
-            hasContract: true,
-          },
-        },
-      },
-    };
-
-    const mockStore = createStore(() => {}, {
-      bees....
-    });
-    const wrapper = wrapMount({ community: communityWithContract }, mockStore);
-    expect(wrapper.contains(community.name)).toBe(true);
-    expect(wrapper.contains(addressString)).toBe(true);
-
-    expect(wrapper.find('StyledIconBadge').find('[text="HAS CONTRACT"]')).toHaveLength(0);
   });
 
   it('renders shouldShowNoContract', () => {
