@@ -28,11 +28,31 @@ const setState = (state) => {
   });
 };
 
+const setHidden = (hidden) => {
+  Object.defineProperty(document, 'hidden', {
+    value: hidden,
+    configurable: true,
+  });
+};
+
 describe('exit intent', () => {
   let listeners;
 
+  const RealDate = Date;
+
+  function mockDate(isoDate) {
+    global.Date = class extends RealDate {
+      constructor() {
+        return new RealDate(isoDate);
+      }
+    };
+  }
+
   beforeEach(() => {
+    jest.resetModules();
+
     jest.resetAllMocks();
+    jest.useFakeTimers();
 
     listeners = {};
     window.addEventListener = jest.fn((event, listener) => {
@@ -43,11 +63,25 @@ describe('exit intent', () => {
       delete listeners[event];
     });
 
+    document.addEventListener = jest.fn((event, listener) => {
+      listeners[event] = listener;
+    });
+
+    document.removeEventListener = jest.fn((event) => {
+      delete listeners[event];
+    });
+
     window.history.replaceState = jest.fn();
     window.history.pushState = jest.fn();
 
     setReferrer('');
     setState(null);
+    setHidden(false);
+  });
+
+  afterEach(() => {
+    global.Date = RealDate;
+    localStorage.removeItem('modal-shown');
   });
 
   it('should not add the popstate listener in case of an internal referrer', () => {
@@ -101,12 +135,67 @@ describe('exit intent', () => {
     expect(typeof listeners.popstate).toEqual('undefined');
   });
 
-  it('should add the onblur listener', () => {
+  it('should add the focus blur listener', () => {
     const wrapper = wrap();
 
-    console.log('listeners', listeners);
+    expect(wrapper.find('div')).toHaveLength(1);
+
+    [
+      'visibilitychange',
+      'mousemove',
+      'keyup',
+      'touchstart',
+    ].forEach((event) => {
+      expect(typeof listeners[event]).toEqual('function');
+    });
+  });
+
+  it('should not fire popup when user returns before 10 seconds', () => {
+    const wrapper = wrap();
 
     expect(wrapper.find('div')).toHaveLength(1);
-    expect(typeof listeners.blur).toEqual('function');
+
+    mockDate('2017-11-25T12:34:10Z');
+    setHidden(true);
+    listeners.visibilitychange();
+
+    mockDate('2017-11-25T12:34:19Z');
+    setHidden(false);
+    listeners.visibilitychange();
+
+    mockDate('2017-11-25T12:34:20Z');
+    setHidden(true);
+    listeners.visibilitychange();
+
+    mockDate('2017-11-25T12:34:29Z');
+    setHidden(false);
+    listeners.visibilitychange();
+
+    expect(showModal).not.toHaveBeenCalled();
+  });
+
+  it('should fire popup once when user returns after 10 seconds', () => {
+    const wrapper = wrap();
+
+    expect(wrapper.find('div')).toHaveLength(1);
+
+    mockDate('2017-11-25T12:34:10Z');
+    setHidden(true);
+    listeners.visibilitychange();
+
+    mockDate('2017-11-25T12:34:22Z');
+    setHidden(false);
+    listeners.visibilitychange();
+
+    mockDate('2017-11-25T12:34:21Z');
+    setHidden(true);
+    listeners.visibilitychange();
+
+    mockDate('2017-11-25T12:34:32Z');
+    setHidden(false);
+    listeners.visibilitychange();
+
+    expect(showModal).toHaveBeenCalledWith('intentContent');
+    expect(showModal).toHaveBeenCalledTimes(1);
   });
 });

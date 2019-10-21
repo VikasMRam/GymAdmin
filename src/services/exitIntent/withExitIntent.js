@@ -2,18 +2,17 @@ import React, { Component } from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import { node, func } from 'prop-types';
 
-import { host } from 'sly/config';
+import { host, isServer, isBrowser } from 'sly/config';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
     || WrappedComponent.name
     || 'Component';
 }
-
+const FOCUS_THRESHOLD_TIME = 10000;
 const MODAL_SHOWN = 'modal-shown';
 const EXIT_INTENT = 'exit-intent';
 const STAY_INTENT = 'stay-intent';
-const FOCUS_THRESHOLD_TIME = 10;
 
 const withExitIntent = (InnerComponent) => {
   class Wrapper extends Component {
@@ -25,31 +24,27 @@ const withExitIntent = (InnerComponent) => {
     static displayName = `exitIntent(${getDisplayName(InnerComponent)})`;
     static WrappedComponent = InnerComponent;
 
+    constructor(props) {
+      super(props);
+
+      if (isBrowser) {
+        this.ifvisible = require('ifvisible.js');
+      }
+    }
+
     componentDidMount() {
-      const ifvisible = require('ifvisible.js');
-      let focusOutTime;
+      if (isServer) return;
 
-      ifvisible.on('blur', () => {
-        focusOutTime = new Date();
-      });
-
-      ifvisible.on('focus', () => {
-        const currentTime = new Date();
-        const inactiveTime = Math.abs((currentTime.getTime() - focusOutTime.getTime()) / 1000);
-
-        if (inactiveTime >= FOCUS_THRESHOLD_TIME) {
-          this.showIntent();
-        }
-      });
-
-      this.ifvisible = ifvisible;
+      this.addBlurFocusListeners();
       this.addPopstateListener();
 
       // document.addEventListener('mouseout', this.onMouseout);
     }
 
     componentWillUnmount() {
-      this.removeEventListeners();
+      if (isServer) return;
+
+      this.removeListeners();
     }
 
     /* Exit Intent Work: https://github.com/mrlagmer/exitintent/blob/master/src/App.js */
@@ -91,6 +86,26 @@ const withExitIntent = (InnerComponent) => {
       }
     };
 
+    blur = () => {
+      this.focusOutTime = new Date().getTime();
+    };
+
+    focus = () => {
+      const currentTime = new Date().getTime();
+      const inactiveTime = Math.abs(currentTime - this.focusOutTime);
+
+      if (inactiveTime >= FOCUS_THRESHOLD_TIME) {
+        this.showIntent();
+      } else {
+        this.focusOutTime = currentTime;
+      }
+    };
+
+    addBlurFocusListeners() {
+      this.ifvisible.on('blur', this.blur);
+      this.ifvisible.on('focus', this.focus);
+    }
+
     onPopstate = (event) => {
       if (event.state && event.state.intent === EXIT_INTENT) {
         this.showIntent();
@@ -106,16 +121,14 @@ const withExitIntent = (InnerComponent) => {
 
       localStorage.setItem(MODAL_SHOWN, MODAL_SHOWN);
       showModal(exitIntentContent);
-      this.removeEventListeners();
+      this.removeListeners();
     };
 
-    removeEventListeners = () => {
+    removeListeners() {
       window.removeEventListener('popstate', this.onPopstate);
-      // document.removeEventListener('mouseout', this.onMouseout);
-      if (this.ifvisible) {
-        this.ifvisible.off('blur');
-        this.ifvisible.off('focus');
-      }
+
+      this.ifvisible.off('blur', this.blur);
+      this.ifvisible.off('focus', this.focus);
     }
 
     render() {
