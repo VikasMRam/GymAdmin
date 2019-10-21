@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { string, bool, func } from 'prop-types';
-import dayjs from 'dayjs';
 
 import { size, palette } from 'sly/components/themes';
 import { Heading, Badge, Block, Span, Box } from 'sly/components/atoms';
@@ -10,6 +9,7 @@ import IconBadge from 'sly/components/molecules/IconBadge';
 import Stage from 'sly/components/molecules/Stage';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import pad from 'sly/components/helpers/pad';
+import { getReferralSentTimeText } from 'sly/services/helpers/communityReferral';
 
 const TopWrapper = styled.div`
   padding: ${size('spacing.large')};
@@ -75,6 +75,7 @@ const BigScreenSlyScorebadge = styled.div`
 const BottomActionBlock = cursor(styled(Block)`
   text-align: center;
 `);
+BottomActionBlock.displayName = 'BottomActionBlock';
 
 const ReferralSentAtWrapper = styled.div`
   display: none;
@@ -119,11 +120,6 @@ function transformAgent(agent) {
   };
   return agentProps;
 }
-
-const getReferralSentTimeText = (date) => {
-  date = dayjs(date).utc();
-  return date.format('M/D/YY, h:mmA');
-};
 
 const DashboardAdminReferralAgentTile = ({
   className, onClick, agent, isRecommended, bottomActionText, bottomActionOnClick, stage, referralSentAt,
