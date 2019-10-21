@@ -25,16 +25,7 @@ export const responsive = (tests) =>  {
   });
 };
 
-/**
- * Transforms selector to make it more compatible with our e2e tests
- * ; classes are converted from '.something' to '[class*="something"]
- * to make easier to target styled-components and ids are converted
- * from '#something' to '[data-cy*="something"]'
- *
- * @param selector A selector to transform
- * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
- */
-export const select = (selector) => {
+export const getSelector = (selector) => {
   const regexes = {
     class: /\.[^\s.#[,]+/g,
     'data-cy': /#[^\s.#[,]+/g,
@@ -48,6 +39,19 @@ export const select = (selector) => {
       regex.lastIndex = index + replaced.length;
     }
   });
-  return cy.get(selector);
+  return selector;
+};
+
+/**
+ * Transforms selector to make it more compatible with our e2e tests
+ * ; classes are converted from '.something' to '[class*="something"]
+ * to make easier to target styled-components and ids are converted
+ * from '#something' to '[data-cy*="something"]'
+ *
+ * @param selector A selector to transform
+ * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const select = (selector) => {
+  return cy.get(getSelector(selector));
 };
 
