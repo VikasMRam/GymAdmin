@@ -491,7 +491,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails,
     } = getStageDetails(stage);
     // Override based on role
-    if (admin) {
+    const { provider } = client;
+    const { entityType, id: proOrg } = provider;
+    const { roleID, organization } = user;
+    const { id: userOrg } = organization;
+    /* eslint-disable-next-line no-bitwise */
+    if ((PLATFORM_ADMIN_ROLE & roleID) || (entityType === 'Organization' && userOrg === proOrg)) {
       [showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails] = [false, true, true];
     }
     const { name } = clientInfo;
