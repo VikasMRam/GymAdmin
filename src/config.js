@@ -7,7 +7,6 @@ const publicPath = isStorybook
   ? ''
   : process.env.PUBLIC_PATH;
 
-
 const config = {
   all: {
     env: process.env.NODE_ENV,

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { string, func, object } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
@@ -77,7 +77,7 @@ const CommunityBookATourDateForm = ({
         onChange={onTimeChange}
       />
       {!(userDetails && userDetails.medicaidCoverage) &&
-        <Fragment>
+        <>
           <MedicaidLabel size="caption">
             Do you qualify for Medicaid?
             <StyledHelpBubble>
@@ -91,7 +91,7 @@ const CommunityBookATourDateForm = ({
             type="boxChoice"
             component={ReduxField}
           />
-        </Fragment>
+        </>
       }
       {error && <Block palette="danger">{error}</Block>}
     </form>

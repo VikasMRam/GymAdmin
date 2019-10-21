@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { object, func, bool } from 'prop-types';
 import styled from 'styled-components';
 
@@ -179,9 +179,8 @@ class InplaceWizardPage extends Component {
               subHeading = 'What is the best way to reach you?';
             }
 
-
             return (
-              <Fragment>
+              <>
                 <StyledBody>
                   <WizardSteps currentStep={currentStep} {...props}>
                     <Experiment name="InplaceWizard_Step1" defaultVariant="wizard">
@@ -251,7 +250,7 @@ class InplaceWizardPage extends Component {
                     }
                   </Controls>
                 </StyledBody>
-              </Fragment>
+              </>
             );
           }}
       </WizardController>

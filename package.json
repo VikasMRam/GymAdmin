@@ -28,7 +28,7 @@
     "test": "npm run jest",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
-    "lint": "eslint src/external src/components/common src/components/helpers src/components/atoms src/components/molecules src/constants src/propTypes private webpack.config.js e2e",
+    "lint": "eslint src/*.js src/external src/controllers src/components/common src/components/helpers src/components/atoms src/components/molecules src/constants src/propTypes private webpack.config.js e2e",
     "format": "prettier-eslint --write",
     "format-all": "npm run format -- \"src/**/*.js\"",
     "storybook": "start-storybook -s ./public -p 9001 -c private/storybook"
@@ -104,7 +104,7 @@
     "eslint-import-resolver-webpack": "^0.8.4",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.0.1",
+    "eslint-plugin-react": "^7.14.3",
     "express": "^4.16.2",
     "file-loader": "^1.1.6",
     "history": "^4.6.1",

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { arrayOf, oneOfType, string, number, func, bool } from 'prop-types';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
@@ -82,7 +82,7 @@ export default class DateChoice extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         {options.map(option => (
           <DateChoiceTile
             key={option}
@@ -98,7 +98,7 @@ export default class DateChoice extends Component {
             onClick={() => this.onClick(LATER_DATE)}
           />
         }
-      </Fragment>
+      </>
     );
   }
 }

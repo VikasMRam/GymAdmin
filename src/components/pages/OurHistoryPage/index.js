@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { object } from 'prop-types';
 import Helmet from 'react-helmet';
@@ -116,7 +116,7 @@ const PressTileWrapper = styled.div`
 const OurHistoryPage = ({ match, history }) => {
   const { push } = history;
   const intro = (
-    <Fragment>
+    <>
       <IntroText>
         Seniorly is committed to connecting our aging citizens with a home to love.
         We achieve this through a personalized experience built on industry expertise and powerful technology.
@@ -124,10 +124,10 @@ const OurHistoryPage = ({ match, history }) => {
       <IntroLogo>
         <Icon icon="logo" size="xxLarge" />
       </IntroLogo>
-    </Fragment>
+    </>
   );
   const description = (
-    <Fragment>
+    <>
       <Helmet>
         <title>Over 30,000 Senior Living Options Near You</title>
         <meta name="description" content="Seniorly provides pricing, availability, photos, amenities and more for assisted living, memory care, Alzheimer's care, home care, board and care homes, residential care homes, independent living and other senior living care types." />
@@ -142,7 +142,7 @@ const OurHistoryPage = ({ match, history }) => {
         <br /><br />
         Our company is headquartered in San Francisco, a place where technology, innovation, diversity, and passion come together. We also seek knowledge and collaboration from around the world via our offices in Bangalore and London. We pride ourselves on our diversity both in professional expertise and personal culture. We believe that in honoring our aging family members we are building the best way for us all to age. Each member at Seniorly has a personal connection and commitment to our mission. Together, we have created a simple and personalized solution proven to help our parents and loved ones in the next stage of their lives to find a new home to love.
       </DescriptionText>
-    </Fragment>
+    </>
   );
 
   const teamMemberTiles = profiles.map(p => (

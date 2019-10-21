@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import classes from 'classnames';
 import { string } from 'prop-types';
@@ -117,13 +117,13 @@ export const makeColumn = (Component) => {
 export const makeBody = (Component) => {
   function Body({ className, ...props }) {
     return (
-      <Fragment>
+      <>
         <Component
           className={classes('overlayBody', className)}
           {...props}
         />
         <ModalContainer />
-      </Fragment>
+      </>
     );
   }
   Body.propTypes = {

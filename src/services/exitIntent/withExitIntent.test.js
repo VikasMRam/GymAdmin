@@ -207,7 +207,7 @@ describe('exit intent', () => {
     expect(showModal).toHaveBeenCalledTimes(1);
   });
 
-  it('should add the mouseout listener and show the modal once', () => {
+  it('should add the mouseout listener', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('div')).toHaveLength(1);
@@ -226,6 +226,7 @@ describe('exit intent', () => {
     listeners.mouseout({ clientX: 30, clientY: 10 });
     expect(showModal).toHaveBeenCalledTimes(0);
   });
+
   it('should add the mouseout listener and should show the modal', () => {
     mockDate('2017-11-25T12:34:10Z');
 
@@ -237,7 +238,6 @@ describe('exit intent', () => {
 
     mockDate('2017-11-25T12:34:30Z');
     listeners.mouseout({ clientX: 30, clientY: 10 });
-
     expect(showModal).toHaveBeenCalledTimes(1);
   });
 

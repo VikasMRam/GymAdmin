@@ -1,5 +1,5 @@
 /* eslint-disable react/no-danger */
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
@@ -281,7 +281,7 @@ export default class App extends Component {
   };
 
   getChildContext = () => ({
-    routes: routes,
+    routes,
   });
 
   componentDidMount() {
@@ -290,8 +290,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <Fragment>
-        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+      <>
         <Helmet titleTemplate="%s | Seniorly">
           <title>Find The Best Senior Living Options Near You</title>
           <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
@@ -339,7 +338,7 @@ export default class App extends Component {
           </Router>
         </ThemeProvider>
         {!hideChatbox && <ChatBoxContainer />}
-      </Fragment>
+      </>
     );
   }
 }

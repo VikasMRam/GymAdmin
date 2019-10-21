@@ -1,13 +1,14 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { func, arrayOf, object } from 'prop-types';
 import styled from 'styled-components';
 import { generatePath } from 'react-router';
+
 import { size, palette } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
-import DashboardAdminReferralCommunityTile from 'sly/components/organisms/DashboardAdminReferralCommunityTile';
-import { Block, Button, Link } from 'sly/components/atoms';
 import pad from 'sly/components/helpers/pad';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
+import { Block, Button, Link } from 'sly/components/atoms';
+import DashboardAdminReferralCommunityTile from 'sly/components/organisms/DashboardAdminReferralCommunityTile';
 
 const TopWrapper = styled.div`
   display: flex;
@@ -35,7 +36,7 @@ const DashboardCommunityReferrals = ({
 }) => {
   const title = 'FAMILY INTERESTED IN COMMUNITY';
   return (
-    <Fragment>
+    <>
       <TopWrapper>
         <Block size="subtitle">Communities</Block>
         <SendNewReferralButton onClick={() => onSubmit()}>Send a new referral</SendNewReferralButton>
@@ -84,7 +85,7 @@ const DashboardCommunityReferrals = ({
           })
         }
       </CommunitiesWrapper>
-    </Fragment>
+    </>
   );
 };
 

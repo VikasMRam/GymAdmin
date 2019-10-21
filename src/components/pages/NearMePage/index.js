@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
@@ -88,8 +88,7 @@ const NearMePage = ({
   location,
 }) => {
   const HeaderContent = (
-    <Fragment>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+    <>
       <HeaderContainer />
       <HeroWrapper>
         <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
@@ -108,7 +107,7 @@ const NearMePage = ({
           </ImageCreditLabel>
         </ImageCreditDiv>
       </HeroWrapper>
-    </Fragment>
+    </>
   );
 
   const listSize = requestMeta['filtered-count'];
@@ -144,7 +143,7 @@ const NearMePage = ({
 
   const SEOContentAL = () => {
     return (
-      <Fragment>
+      <>
         <Paragraph innerRef={topRef} />
         <StyledHeading level="title"size="title">
           Table of Contents
@@ -748,22 +747,22 @@ const NearMePage = ({
             Back to top
           </Link>
         </StyledArticle>
-      </Fragment>
+      </>
     );
   };
 
   const TopContent = () => {
     return (
-      <Fragment>
+      <>
         <StyledHeading level="title"size="title">
           {listSize} {tocLabel} near {city}
         </StyledHeading>
-      </Fragment>);
+      </>);
   };
 
   const ListContent = () => {
     return (
-      <Fragment>
+      <>
         <CommunitySearchList
           communityList={communityList}
           searchParams={searchParams}
@@ -774,7 +773,7 @@ const NearMePage = ({
           isFetchingResults={isFetchingResults}
           location={location}
         />
-      </Fragment>
+      </>
     );
   };
 
@@ -783,7 +782,7 @@ const NearMePage = ({
 
 
   return (
-    <Fragment>
+    <>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
         <Helmet>
@@ -799,7 +798,7 @@ const NearMePage = ({
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>
       </TemplateContent>
       <Footer />
-    </Fragment>
+    </>
 
   );
 };

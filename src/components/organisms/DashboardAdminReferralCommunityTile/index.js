@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { string, func, bool } from 'prop-types';
 import dayjs from 'dayjs';
@@ -164,11 +164,11 @@ const DashboardAdminReferralCommunityTile = ({
         )}
       </SectionsWrapper>
       {stage && (
-        <Fragment>
+        <>
           <BottomSection title={title} titlePalette={titlePalette} disabled={disabled} >
             <Stage stage={stage} />
           </BottomSection>
-        </Fragment>
+        </>
       )}
     </Wrapper>
   );

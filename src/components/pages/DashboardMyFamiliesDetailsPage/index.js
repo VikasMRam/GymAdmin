@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { string, func, object, arrayOf, bool } from 'prop-types';
 import { generatePath } from 'react-router';
@@ -37,7 +37,6 @@ import BackLink from 'sly/components/molecules/BackLink';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
-import { userHasAdminRole } from 'sly/services/helpers/role';
 import Tab from 'sly/components/molecules/Tab';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import fullHeight from 'sly/components/helpers/fullHeight';
@@ -50,6 +49,8 @@ import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
 import StatusSelect from 'sly/components/molecules/StatusSelect';
 import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
+import { Datatable } from 'sly/services/datatable';
+
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
@@ -94,6 +95,10 @@ const StyledFamilyActivityItem = styled(FamilyActivityItem)`
 
 const FamilyDetailsTab = styled.div`
   ${SmallScreenBorder};
+`;
+
+const FamilyTasksTab = styled.div`
+  padding:${size('spacing', 'xLarge')};
 `;
 
 const TabWrapper = styled(Box)`
@@ -327,7 +332,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
   handleAcceptClick = () => {
     const {
-      showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails, goToMessagesTab, refetchConversations, refetchClient,
+      showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails, goToMessagesTab, refetchConversations, refetchClient, conversation, user,
     } = this.props;
     SlyEvent.getInstance().sendEvent({
       category: 'fdetails',
@@ -345,6 +350,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         goToMessagesTab={goToMessagesTab}
         refetchConversations={refetchConversations}
         refetchClient={refetchClient}
+        conversation={conversation}
+        user={user}
       />), null, 'noPadding', false);
   };
 
@@ -442,7 +449,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, clientResult, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
     } = this.props;
     const { admin } = user;
 
@@ -484,7 +491,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails,
     } = getStageDetails(stage);
     // Override based on role
-    if (admin) {
+    const { provider } = client;
+    const { entityType, id: proOrg } = provider;
+    const { roleID, organization } = user;
+    const { id: userOrg } = organization;
+    /* eslint-disable-next-line no-bitwise */
+    if ((PLATFORM_ADMIN_ROLE & roleID) || (entityType === 'Organization' && userOrg === proOrg)) {
       [showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails] = [false, true, true];
     }
     const { name } = clientInfo;
@@ -531,7 +543,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     const backLinkHref = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: TabMap[levelGroup] });
     const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
-    const { tasksPath } = this.getTabPathsForUser();
+
+    const taskFilters = {
+      'filter[client]': client.id,
+    };
 
     const clientName = <ClientName client={client} rawClient={rawClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} user={user} />;
 
@@ -552,6 +567,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               onRejectClick={handleRejectClick}
               onUpdateClick={handleUpdateClick}
               onAddNoteClick={handleAddNoteClick}
+              client={client}
               user={user}
             />
             {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
@@ -567,9 +583,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           </Tabs>
           <TabWrapper snap="top">
             {currentTab === SUMMARY && (
-              <Fragment>
+              <>
                 <SmallScreenBorderPaddedFamilySummary client={client} to={familyDetailsPath} noHeading />
-              </Fragment>
+              </>
             )}
 
             {currentTab === ACTIVITY && (
@@ -579,10 +595,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                 <TextAlignCenterBlock>There are no activities.</TextAlignCenterBlock>
                 }
                 {!noteIsLoading && activityCards.length > 0 &&
-                <Fragment>
+                <>
                   {/* <TableHeaderButtons hasColumnsButton={false} /> */}
                   {activityCards}
-                </Fragment>
+                </>
                 }
               </SmallScreenBorderDiv>
             )}
@@ -637,21 +653,27 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
             {currentTab === TASKS && (
               <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
-                <DashboardAgentTasksSectionContainer
-                  basePath={tasksPath}
-                  client={client}
-                  noBorder
-                />
+                <FamilyTasksTab>
+                  <Datatable
+                    id="tasks"
+                    filters={taskFilters}
+                  >
+                    {datatable => (
+                      <DashboardAgentTasksSectionContainer datatable={datatable} client={client} />
+                    )}
+                  </Datatable>
+                </FamilyTasksTab>
               </Role>
             )}
+
 
             {currentTab === MESSAGES && (
               <SmallScreenBorderDiv>
                 {!hasConversationFinished &&
-                  <Fragment>
+                  <>
                     <br />
                     <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
-                  </Fragment>
+                  </>
                 }
                 {hasConversationFinished &&
                   <ConversationMessagesContainer

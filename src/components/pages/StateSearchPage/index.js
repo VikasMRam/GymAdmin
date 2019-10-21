@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 
@@ -66,22 +66,22 @@ const StateSearchPage = ({
       const gg = geoGuide.guideContent;
       if (gg.autoDescription) {
         return (
-          <Fragment>
+          <>
             <Heading level="hero" size="title">
               {listSize} {tocLabel} in {state}
             </Heading>
             <div dangerouslySetInnerHTML={{ __html: gg.autoDescription }} />
-          </Fragment>
+          </>
         );
       }
     }
 
     return (
-      <Fragment>
+      <>
         <Heading level="hero" size="title">
           {listSize} {tocLabel} in {state}
         </Heading>
-      </Fragment>);
+      </>);
   };
   const gg = geoGuide.guideContent ? geoGuide.guideContent : {};
   const seoLinks = gg.seoLinks || [];
@@ -97,9 +97,9 @@ const StateSearchPage = ({
 
   const handleModalFilterClick = () => {
     const modalContent = (
-      <Fragment>
+      <>
         {stateSeachFilterList(true)}
-      </Fragment>
+      </>
     );
 
     showModal(modalContent, null, 'sidebar');
@@ -130,7 +130,7 @@ const StateSearchPage = ({
       }
 
       return (
-        <Fragment>
+        <>
           <CommunitySearchList
             communityList={communityList}
             onParamsChange={onParamsChange}
@@ -141,7 +141,7 @@ const StateSearchPage = ({
             location={location}
           />
           {additionalDivs}
-        </Fragment>
+        </>
       );
     }
 
@@ -160,11 +160,10 @@ const StateSearchPage = ({
   };
 
   return (
-    <Fragment>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+    <>
       {getHelmetForSearchPage({
         ...searchParams, url: location, communityList, listSize, geoGuide,
-        })}
+      })}
       <CommunitySearchPageTemplate
         column={stateSeachFilterList()}
       >
@@ -207,7 +206,7 @@ const StateSearchPage = ({
           />
         )}
       </CommunitySearchPageTemplate>
-    </Fragment>
+    </>
   );
 };
 

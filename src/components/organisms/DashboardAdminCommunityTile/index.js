@@ -1,14 +1,13 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import { bool, func } from 'prop-types';
 import { prop } from 'styled-tools';
+
 import { parseDate, durationInS } from 'sly/services/helpers/date';
 import { phoneFormatter } from 'sly/services/helpers/phone';
 import { buildPriceList } from 'sly/services/helpers/pricing';
 import { size, palette, columnWidth } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
-import { Heading, Badge, Link, Block, Icon, Box } from 'sly/components/atoms';
-
+import { Heading, Badge, Link, Block, Icon } from 'sly/components/atoms';
 
 const Header = styled.div`
   display: flex;
@@ -78,7 +77,7 @@ const buildPriceDisplay = (community) => {
 const buildAddressDisplay = (community) => {
   const { address } = community;
   return `${address.line1}, ${address.city}, ${address.zip}, ${address.state}`;
-}
+};
 
 export default class DashboardAdminCommunityTile extends Component {
   static propTypes = {
@@ -89,7 +88,6 @@ export default class DashboardAdminCommunityTile extends Component {
     isRecommended: false,
   };
 
-
   render() {
     const { community } = this.props;
     const { propInfo } = community;
@@ -98,7 +96,7 @@ export default class DashboardAdminCommunityTile extends Component {
     const lastViewedSecondsAgo = getLastViewedSAgo(lastViewedAt);
 
     return (
-      <Fragment>
+      <>
         <Header>
           <Heading level="subtitle"> { community.name } </Heading>
           {hasContract && <StyledBadge textPalette="green"><Icon icon="note" size="small" />Has Contract</StyledBadge> }
@@ -138,7 +136,7 @@ export default class DashboardAdminCommunityTile extends Component {
           <StyledIcon icon="note" size="small" />
           <StyledBlock>{propInfo.adminNote}</StyledBlock>
         </IconItem>
-      </Fragment>
+      </>
     );
   }
 }
