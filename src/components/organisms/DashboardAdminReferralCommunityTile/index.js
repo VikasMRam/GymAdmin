@@ -9,7 +9,9 @@ import { Heading, Block, Span, Button } from 'sly/components/atoms';
 import Stage from 'sly/components/molecules/Stage';
 // import cursor from 'sly/components/helpers/cursor';
 import IconBadge from 'sly/components/molecules/IconBadge';
-import { buildAddressDisplay, getReferralSentTimeText } from 'sly/services/helpers/communityReferral';
+import { buildAddressDisplay, getHasContract, getReferralSentTimeText } from 'sly/services/helpers/communityReferral';
+import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import Role from 'sly/components/common/Role';
 
 const getTitlePalette = variant => p => palette(p.titlePalette, variant);
 
@@ -108,18 +110,21 @@ const StyledIconBadge = styled(IconBadge)`
 `;
 
 const DashboardAdminReferralCommunityTile = ({
-  className, title, titlePalette, community, shouldShowHasContract, shouldShowNoContract, referralSentAt, stage, disabled, onClick, actionText, actionClick,
+  className, title, titlePalette, community, referralSentAt, stage, disabled, onClick, actionText, actionClick,
 }) => {
   const isBottomSectionPresent = !!stage;
   const isFloatingSectionPresent = !!(referralSentAt || (actionText && actionClick));
+  const hasContract = getHasContract(community);
   return (
     <Wrapper className={className} onClick={onClick}>
       {title && <TitleSection titlePalette={titlePalette}><Span weight="bold" size="micro" palette="white">{title}</Span></TitleSection>}
       <SectionsWrapper title={title} titlePalette={titlePalette} disabled={disabled} isBottomSectionPresent={isBottomSectionPresent}>
         <TopSection isFloatingSectionPresent={isFloatingSectionPresent}>
           <HeaderSection>
-            {shouldShowHasContract && <StyledIconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="HAS CONTRACT" />}
-            {shouldShowNoContract && <StyledIconBadge badgePalette="danger" palette="white" icon="checkmark-circle" text="NO CONTRACT" />}
+            <Role is={PLATFORM_ADMIN_ROLE}>
+              {hasContract && <StyledIconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="HAS CONTRACT" />}
+              {!hasContract && <StyledIconBadge badgePalette="danger" palette="white" icon="checkmark-circle" text="NO CONTRACT" />}
+            </Role>
             <CommunityName size="body" palette="primary">{community.name}</CommunityName>
           </HeaderSection>
           <CommunityAddressBlock palette="grey" variation="dark" size="caption">{buildAddressDisplay(community)}</CommunityAddressBlock>
