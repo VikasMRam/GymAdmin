@@ -10,6 +10,7 @@ function getDisplayName(WrappedComponent) {
     || 'Component';
 }
 const FOCUS_THRESHOLD_TIME = 10000;
+const MOUSEOUT_THRESHOLD_TIME = 20000;
 const MODAL_SHOWN = 'modal-shown';
 const EXIT_INTENT = 'exit-intent';
 const STAY_INTENT = 'stay-intent';
@@ -37,8 +38,7 @@ const withExitIntent = (InnerComponent) => {
 
       this.addBlurFocusListeners();
       this.addPopstateListener();
-
-      // document.addEventListener('mouseout', this.onMouseout);
+      this.addMouseoutListener();
     }
 
     componentWillUnmount() {
@@ -49,6 +49,9 @@ const withExitIntent = (InnerComponent) => {
 
     /* Exit Intent Work: https://github.com/mrlagmer/exitintent/blob/master/src/App.js */
     onMouseout = (e) => {
+      const currentTime = new Date().getTime();
+      const activeTime = Math.abs(currentTime - this.renderCompleteTime);
+
       // Get the current viewport width.
       const vpWidth = Math.max(
         document.documentElement.clientWidth,
@@ -59,6 +62,7 @@ const withExitIntent = (InnerComponent) => {
       // of the viewport, return.
       if (e.clientX >= vpWidth - 50) return;
 
+
       // If the current mouse Y position is not within 50px of the top
       // edge of the viewport, return.
       if (e.clientY >= 50) return;
@@ -67,7 +71,7 @@ const withExitIntent = (InnerComponent) => {
       // user switching active program
       const from = e.relatedTarget || e.toElement;
 
-      if (!from) {
+      if (!from && activeTime >= MOUSEOUT_THRESHOLD_TIME) {
         this.showIntent();
       }
     };
@@ -85,6 +89,11 @@ const withExitIntent = (InnerComponent) => {
         history.pushState({ intent: STAY_INTENT }, '');
       }
     };
+
+    addMouseoutListener = () => {
+      this.renderCompleteTime = new Date().getTime();
+      document.addEventListener('mouseout', this.onMouseout);
+    }
 
     blur = () => {
       this.lastBlur = new Date().getTime();
@@ -126,6 +135,8 @@ const withExitIntent = (InnerComponent) => {
 
     removeListeners() {
       window.removeEventListener('popstate', this.onPopstate);
+      document.removeEventListener('mouseout', this.onMouseout);
+
 
       this.ifvisible.off('blur', this.blur);
       this.ifvisible.off('focus', this.focus);

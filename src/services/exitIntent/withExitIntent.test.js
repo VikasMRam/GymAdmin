@@ -35,6 +35,14 @@ const setHidden = (hidden) => {
   });
 };
 
+
+const setViewportWidth = (width) => {
+  Object.defineProperty(window, 'innerWidth', {
+    value: width,
+    configurable: true,
+  });
+};
+
 describe('exit intent', () => {
   let listeners;
 
@@ -197,5 +205,51 @@ describe('exit intent', () => {
 
     expect(showModal).toHaveBeenCalledWith('intentContent');
     expect(showModal).toHaveBeenCalledTimes(1);
+  });
+
+  it('should add the mouseout listener and show the modal once', () => {
+    const wrapper = wrap();
+
+    expect(wrapper.find('div')).toHaveLength(1);
+    expect(typeof listeners.mouseout).toEqual('function');
+  });
+
+  it('should add the mouseout listener and should not show the modal', () => {
+    mockDate('2017-11-25T12:34:10Z');
+
+    const wrapper = wrap();
+    setViewportWidth(100);
+    expect(wrapper.find('div')).toHaveLength(1);
+    expect(typeof listeners.mouseout).toEqual('function');
+
+    mockDate('2017-11-25T12:34:20Z');
+    listeners.mouseout({ clientX: 30, clientY: 10 });
+    expect(showModal).toHaveBeenCalledTimes(0);
+  });
+  it('should add the mouseout listener and should show the modal', () => {
+    mockDate('2017-11-25T12:34:10Z');
+
+    const wrapper = wrap();
+
+    setViewportWidth(100);
+    expect(wrapper.find('div')).toHaveLength(1);
+    expect(typeof listeners.mouseout).toEqual('function');
+
+    mockDate('2017-11-25T12:34:30Z');
+    listeners.mouseout({ clientX: 30, clientY: 10 });
+
+    expect(showModal).toHaveBeenCalledTimes(1);
+  });
+
+  it('should remove mouseout listener', () => {
+    const wrapper = wrap();
+    expect(wrapper.find('div')).toHaveLength(1);
+
+    expect(typeof listeners.mouseout).toEqual('function');
+
+    wrapper.unmount();
+
+    expect(window.removeEventListener).toHaveBeenCalled();
+    expect(typeof listeners.mouseout).toEqual('undefined');
   });
 });
