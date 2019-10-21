@@ -87,17 +87,17 @@ const withExitIntent = (InnerComponent) => {
     };
 
     blur = () => {
-      this.focusOutTime = new Date().getTime();
+      this.lastBlur = new Date().getTime();
     };
 
     focus = () => {
       const currentTime = new Date().getTime();
-      const inactiveTime = Math.abs(currentTime - this.focusOutTime);
+      const inactiveTime = Math.abs(currentTime - this.lastBlur);
 
       if (inactiveTime >= FOCUS_THRESHOLD_TIME) {
         this.showIntent();
       } else {
-        this.focusOutTime = currentTime;
+        this.lastBlur = currentTime;
       }
     };
 
