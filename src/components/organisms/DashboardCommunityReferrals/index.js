@@ -46,14 +46,14 @@ const DashboardCommunityReferrals = ({
         {communitiesInterested.map((community) => {
             const client = childrenClientCommunityIdsMap[community.id];
             const hasContract = getHasContract(community);
-            const showHasContract = hasContract && isAdminUser;
-            const showNoContract = !hasContract && isAdminUser;
+            const shouldShowHasContract = hasContract && isAdminUser;
+            const shouldShowNoContract = !hasContract && isAdminUser;
             const props = {
               key: community.name,
               community,
               title,
-              showHasContract,
-              showNoContract,
+              shouldShowHasContract,
+              shouldShowNoContract,
             };
             if (client) {
               const { id, stage, createdAt } = client;
@@ -89,8 +89,8 @@ const DashboardCommunityReferrals = ({
           });
           const community = client.provider;
           const hasContract = getHasContract(community);
-          const showHasContract = hasContract && isAdminUser;
-          const showNoContract = !hasContract && isAdminUser;
+          const shouldShowHasContract = hasContract && isAdminUser;
+          const shouldShowNoContract = !hasContract && isAdminUser;
           return (
             <Link to={familyDetailsPath}>
               <StyledDashboardAdminReferralCommunityTile
@@ -98,8 +98,8 @@ const DashboardCommunityReferrals = ({
                 community={community}
                 stage={client.stage}
                 referralSentAt={client.createdAt}
-                showHasContract={showHasContract}
-                showNoContract={showNoContract}
+                shouldShowHasContract={shouldShowHasContract}
+                shouldShowNoContract={shouldShowNoContract}
               />
             </Link>
             );

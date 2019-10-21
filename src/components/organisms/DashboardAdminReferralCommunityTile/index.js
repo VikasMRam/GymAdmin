@@ -108,7 +108,7 @@ const StyledIconBadge = styled(IconBadge)`
 `;
 
 const DashboardAdminReferralCommunityTile = ({
-  className, title, titlePalette, community, showHasContract, showNoContract, referralSentAt, stage, disabled, onClick, actionText, actionClick,
+  className, title, titlePalette, community, shouldShowHasContract, shouldShowNoContract, referralSentAt, stage, disabled, onClick, actionText, actionClick,
 }) => {
   const isBottomSectionPresent = !!stage;
   const isFloatingSectionPresent = !!(referralSentAt || (actionText && actionClick));
@@ -118,8 +118,8 @@ const DashboardAdminReferralCommunityTile = ({
       <SectionsWrapper title={title} titlePalette={titlePalette} disabled={disabled} isBottomSectionPresent={isBottomSectionPresent}>
         <TopSection isFloatingSectionPresent={isFloatingSectionPresent}>
           <HeaderSection>
-            {showHasContract && <StyledIconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="HAS CONTRACT" />}
-            {showNoContract && <StyledIconBadge badgePalette="danger" palette="white" icon="checkmark-circle" text="NO CONTRACT" />}
+            {shouldShowHasContract && <StyledIconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="HAS CONTRACT" />}
+            {shouldShowNoContract && <StyledIconBadge badgePalette="danger" palette="white" icon="checkmark-circle" text="NO CONTRACT" />}
             <CommunityName size="body" palette="primary">{community.name}</CommunityName>
           </HeaderSection>
           <CommunityAddressBlock palette="grey" variation="dark" size="caption">{buildAddressDisplay(community)}</CommunityAddressBlock>
@@ -157,8 +157,8 @@ DashboardAdminReferralCommunityTile.propTypes = {
   onClick: func,
   actionText: string,
   actionClick: func,
-  showHasContract: bool,
-  showNoContract: bool,
+  shouldShowHasContract: bool,
+  shouldShowNoContract: bool,
 };
 
 DashboardAdminReferralCommunityTile.defaultProps = {

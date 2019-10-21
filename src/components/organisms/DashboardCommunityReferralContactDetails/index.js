@@ -23,18 +23,13 @@ const StyledDashboardAdminReferralCommunityTile = styled(DashboardAdminReferralC
 
 const DashboardCommunityReferralContactDetails = ({ community, isAdminUser, handleSubmit, onChangeCommunity }) => {
   const hasContract = getHasContract(community);
-  const showHasContract = hasContract && isAdminUser;
-  const showNoContract = !hasContract && isAdminUser;
-  const props = {
-    community,
-    showHasContract,
-    showNoContract,
-  };
+  const shouldShowHasContract = hasContract && isAdminUser;
+  const shouldShowNoContract = !hasContract && isAdminUser;
   return (
     <Form onSubmit={handleSubmit} name="DashboardCommunityReferralContactDetailsForm">
       <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
       <Hr size="large" />
-      <StyledDashboardAdminReferralCommunityTile {...props} actionText="Change Community" actionClick={() => onChangeCommunity()} />
+      <StyledDashboardAdminReferralCommunityTile community={community} shouldShowHasContract={shouldShowHasContract} shouldShowNoContract={shouldShowNoContract} actionText="Change Community" actionClick={() => onChangeCommunity()} />
       <Field name="name" label="Community contact name" type="text" placeholder="Enter Community contact name" component={ReduxField} />
       <Field name="email" label="Community email" type="text" placeholder="Enter Community email" component={ReduxField} />
       <Field name="slyMessage" label="Message" type="textarea" placeholder="Enter Message" component={ReduxField} />
