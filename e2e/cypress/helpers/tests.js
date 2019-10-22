@@ -27,8 +27,8 @@ export const responsive = (tests) =>  {
 
 export const getSelector = (selector) => {
   const regexes = {
-    class: /\.[^\s.#[,]+/g,
-    'data-cy': /#[^\s.#[,]+/g,
+    class: /\.[^\s.#[,:]+/g,
+    'data-cy': /#[^\s.#[,:]+/g,
   };
   Object.entries(regexes).forEach(([attr, regex]) => {
     let match;

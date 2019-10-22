@@ -12,6 +12,8 @@ describe('Review Community', () => {
     });
   });
 
+  const portal = selector => select(`.ReactModalPortal ${selector}`);
+
   responsive(() => {
     it('should leave a review', () => {
       cy.route('POST', '**/ratings').as('postRatings');
@@ -19,24 +21,31 @@ describe('Review Community', () => {
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
 
+      cy.wait('@postUuidActions');
+
       cy.get('button').contains('Write a Review').click();
 
-      const header = select('.ReactModal h2').contains(`Write a review for ${community.name}`);
-      cy.get(getSelector('.ReactModal h2 .Rating.Star :last-child')).click();
-      header.parent().get('textarea[name="comments"]').type('my comments');
+      portal('h2').contains(`Write a review for ${community.name}`).should('exist');
+      portal('.Rating.Star:last-child').click();
+      portal('textarea[name="comments"]').type('my comments');
+      portal('input[name="name"]').type('Fonz');
+      portal('input[name="email"]').type('fonz@seniorly.com');
+      portal('button[type="submit"]').click();
 
-      let rateId;
+      let ratedId;
 
       cy.wait('@postRatings').then(async (xhr) => {
         expect(xhr.status).to.equal(200);
         expect(xhr.requestBody).to.deep.equal({
-          communitySlug: 'rhoda-goldman-plaza',
+          communitySlug: community.id,
           comments: 'my comments',
+          email: 'fonz@seniorly.com',
+          name: 'Fonz',
           value: 5,
         });
         const responseText = await xhr.response.body.text();
         const response = JSON.parse(responseText);
-        rateId = response.id;
+        ratedId = response.data.id;
       });
 
       cy.wait('@postUuidActions').then((xhr) => {
@@ -47,8 +56,10 @@ describe('Review Community', () => {
               actionInfo: {
                 slug: community.id,
                 entityType: 'Community',
-                rateId,
+                ratedId,
                 ratedValue: 5,
+                email: 'fonz@seniorly.com',
+                name: 'Fonz',
               },
               actionPage: `/assisted-living/california/san-francisco/${community.id}`,
               actionType: 'profileRating',
@@ -57,7 +68,7 @@ describe('Review Community', () => {
         });
       });
 
-      cy.get('.Modal.Body .Thankyou').contains('Your review has been submitted for approval').should('exist');
+      portal('.Modal.Body .Thankyou').contains('Your review has been submitted for approval').should('exist');
     });
   });
 });
