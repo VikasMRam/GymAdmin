@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, arrayOf, object } from 'prop-types';
+import { func, arrayOf, object, bool } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -10,6 +10,7 @@ import DashboardAdminReferralCommunityTile from 'sly/components/organisms/Dashbo
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import pad from 'sly/components/helpers/pad';
 import cursor from 'sly/components/helpers/cursor';
+import { getHasContract } from 'sly/services/helpers/communityReferral';
 
 const Wrapper = styled.div`
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
@@ -29,7 +30,7 @@ const StyledDashboardAdminReferralCommunityTile = styled(DashboardAdminReferralC
 const CursorStyledDashboardAdminReferralCommunityTile = cursor(StyledDashboardAdminReferralCommunityTile);
 
 const DashboardCommunityReferralSearch = ({
-  communities, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit,
+  communities, isAdminUser, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit,
 }) => (
   <Wrapper>
     <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
@@ -42,6 +43,7 @@ const DashboardCommunityReferralSearch = ({
           const props = {
             key: community.name,
             community,
+            isAdminUser,
           };
           const client = childrenClientCommunityIdsMap[community.id];
           if (client) {
@@ -61,6 +63,7 @@ DashboardCommunityReferralSearch.propTypes = {
   handleSubmit: func,
   onSubmit: func,
   communities: arrayOf(adminCommunityPropType),
+  isAdminUser: bool,
   childrenClientCommunityIdsMap: object,
 };
 
