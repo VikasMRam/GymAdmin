@@ -1,13 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { func, string, bool } from 'prop-types';
-import isUndefined from 'lodash/isUndefined';
 
 import pad from 'sly/components/helpers/pad';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import { size } from 'sly/components/themes';
-import { getStageDetails } from 'sly/services/helpers/stage';
+import clientPropType from 'sly/propTypes/client';
+import userPropType from 'sly/propTypes/user';
+import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
 import { TOTAL_STAGES_COUNT, FAMILY_STAGE_NEW, FAMILY_STAGE_REJECTED } from 'sly/constants/familyDetails';
+import { userIs } from 'sly/services/helpers/role';
+import { getStageDetails } from 'sly/services/helpers/stage';
 import { Box, Heading, Button } from 'sly/components/atoms';
 import Stage from 'sly/components/molecules/Stage';
 
@@ -34,19 +38,21 @@ MarginBottomFullWidthButton.displayName = 'MarginBottomFullWidthButton';
 
 const FamilyStage = ({
   stageText, onAcceptClick, onRejectClick, snap, noBorderRadius, onAddNoteClick, onUpdateClick,
-  showAcceptRejectButtons, showUpdateAddNoteButtons, disableAddNoteUpdateButton,
+  user, client,
 }) => {
   const { group, palette, stage } = getStageDetails(stageText);
-  if (isUndefined(showAcceptRejectButtons)) {
-    showAcceptRejectButtons = stage === FAMILY_STAGE_NEW;
-  }
-  if (isUndefined(showUpdateAddNoteButtons)) {
-    showUpdateAddNoteButtons = stage !== FAMILY_STAGE_NEW;
-  }
-  if (isUndefined(disableAddNoteUpdateButton)) {
-    disableAddNoteUpdateButton = stage === FAMILY_STAGE_REJECTED;
-  }
+  const showAcceptRejectButtons = stage === FAMILY_STAGE_NEW;
+  let showUpdateAddNoteButtons = stage !== FAMILY_STAGE_NEW;
+  const disableAddNoteUpdateButton = stage === FAMILY_STAGE_REJECTED;
   const text = group ? `${group} - ${stageText}` : stageText;
+  const { provider } = client;
+  const { organization } = user;
+  const { entityType, id: providerOrg } = provider;
+  const { id: userOrg } = organization;
+  if (stage !== FAMILY_STAGE_NEW &&
+    (userIs(user, PLATFORM_ADMIN_ROLE) || (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg))) {
+    showUpdateAddNoteButtons = true;
+  }
 
   return (
     <Box snap={snap} noBorderRadius={noBorderRadius}>
@@ -68,9 +74,8 @@ FamilyStage.propTypes = {
   onAddNoteClick: func,
   snap: string,
   noBorderRadius: bool,
-  showAcceptRejectButtons: bool,
-  showUpdateAddNoteButtons: bool,
-  disableAddNoteUpdateButton: bool,
+  user: userPropType.isRequired,
+  client: clientPropType.isRequired,
 };
 
 export default FamilyStage;

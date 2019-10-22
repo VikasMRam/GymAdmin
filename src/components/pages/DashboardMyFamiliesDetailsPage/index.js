@@ -17,7 +17,9 @@ import {
 import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
 import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
-import userIs from 'sly/services/helpers/userIs';
+import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
+import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { userIs } from 'sly/services/helpers/role';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
@@ -47,8 +49,6 @@ import ConversationMessagesContainer from 'sly/containers/ConversationMessagesCo
 import userPropType from 'sly/propTypes/user';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import Role from 'sly/components/common/Role';
-import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
-import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
 import StatusSelect from 'sly/components/molecules/StatusSelect';
 import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
@@ -453,7 +453,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
     } = this.props;
-    const { roleID, organization } = user;
+    const { organization } = user;
 
     let conversationParticipants = [];
     let viewingAsParticipant;
@@ -492,11 +492,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const { entityType, id: providerOrg } = provider;
     const { id: userOrg } = organization;
     const { group, isConnected } = getStageDetails(stage);
-    let showAcceptRejectButtons;
+    const showAcceptRejectButtons = stage === FAMILY_STAGE_NEW;
     let showUpdateAddNoteButtons;
     let canEditFamilyDetails = isConnected;
     if (stage !== FAMILY_STAGE_NEW &&
-      ((PLATFORM_ADMIN_ROLE & roleID) || (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg))) {
+      (userIs(user, PLATFORM_ADMIN_ROLE) || (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg))) {
       showUpdateAddNoteButtons = true;
       canEditFamilyDetails = true;
     }
@@ -568,8 +568,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               onRejectClick={handleRejectClick}
               onUpdateClick={handleUpdateClick}
               onAddNoteClick={handleAddNoteClick}
-              showAcceptRejectButtons={showAcceptRejectButtons}
-              showUpdateAddNoteButtons={showUpdateAddNoteButtons}
+              user={user}
+              client={client}
             />
             {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
             {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
