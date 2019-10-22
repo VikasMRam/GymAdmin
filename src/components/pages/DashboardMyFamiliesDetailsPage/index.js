@@ -17,6 +17,7 @@ import {
 import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
 import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
+import userIs from 'sly/services/helpers/userIs';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
@@ -452,7 +453,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
     } = this.props;
-    const { admin, roleID, organization } = user;
+    const { roleID, organization } = user;
 
     let conversationParticipants = [];
     let viewingAsParticipant;
@@ -611,8 +612,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   refetchClient={refetchClient}
                   notifyInfo={notifyInfo}
                   notifyError={notifyError}
-                  accepted={!showAcceptRejectButtons || admin}
-                  canEditFamilyDetails={canEditFamilyDetails || admin}
+                  accepted={!showAcceptRejectButtons || userIs(user, PLATFORM_ADMIN_ROLE)}
+                  canEditFamilyDetails={canEditFamilyDetails || userIs(user, PLATFORM_ADMIN_ROLE)}
                   gender={gender}
                   lookingFor={lookingFor}
                   monthlyBudget={monthlyBudget}
