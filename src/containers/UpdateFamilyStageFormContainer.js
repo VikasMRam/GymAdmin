@@ -9,7 +9,13 @@ import dayjs from 'dayjs';
 import { query, getRelationship, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
-import { FAMILY_STATUS_ACTIVE, FAMILY_STATUS_ON_PAUSE, FAMILY_STAGE_WON, FAMILY_STAGE_LOST, ROOM_TYPES } from 'sly/constants/familyDetails';
+import {
+  FAMILY_STATUS_ACTIVE,
+  FAMILY_STATUS_ON_PAUSE,
+  FAMILY_STAGE_WON,
+  FAMILY_STAGE_LOST,
+  ROOM_TYPES,
+} from 'sly/constants/familyDetails';
 import { NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/notes';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { createValidator, required, float } from 'sly/services/validation';
@@ -35,7 +41,7 @@ const ReduxForm = reduxForm({
 })(UpdateFamilyStageForm);
 
 const mapStateToProps = state => ({
-  formState: state.form && state.form.UpdateFamilyStageForm ? state.form.UpdateFamilyStageForm.values : {},
+  formState: state.form && state.form.UpdateFamilyStageForm ? state.form.UpdateFamilyStageForm.values : null,
 });
 
 @query('updateClient', 'updateClient')
@@ -204,7 +210,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     SlyEvent.getInstance().sendEvent({
       category: 'f-details',
       action: 'stage-change',
-      label: `${this.nextStage.levelGroup}-${this.nextStage.level}`,
+      label: `${this.nextStage.group}-${this.nextStage.level}`,
       value: this.nextStage.level,
     });
 
@@ -216,8 +222,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
       .then(invalidateClients)
       .then(() => {
         let msg = 'Family stage updated';
-        if (currentStage.levelGroup !== nextStage.levelGroup) {
-          msg += ` and moved to ${nextStage.levelGroup}`;
+        if (currentStage.group !== nextStage.group) {
+          msg += ` and moved to ${nextStage.group}`;
         }
         notifyInfo(msg);
         if (onSuccess) {
@@ -242,7 +248,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
   render() {
     const { handleUpdateStage } = this;
     const {
-      client, formState, lossReasons, user,
+      client, formState, lossReasons,
     } = this.props;
     const { clientInfo, stage, status } = client;
     const isPaused = status === FAMILY_STATUS_ON_PAUSE;
@@ -259,9 +265,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
       invoicePaid: existingInvoicePaid,
       lossReason: existingLossReason,
     } = clientInfo;
-    let nextStageGroup;
-    let levelGroup;
-    let showRejectOption;
+    let nextGroup;
+    let group;
     let nextStage;
     let currentLossReason;
     let referralAgreementType;
@@ -269,12 +274,12 @@ export default class UpdateFamilyStageFormContainer extends Component {
     let monthlyFees;
     if (formState) {
       this.currentStage = getStageDetails(stage);
-      ({ levelGroup, showRejectOption } = this.currentStage);
+      ({ group } = this.currentStage);
       ({
         stage: nextStage, lossReason: currentLossReason, referralAgreementType, referralAgreement, monthlyFees,
       } = formState);
       this.nextStage = getStageDetails(nextStage);
-      ({ levelGroup: nextStageGroup } = this.nextStage);
+      ({ group: nextGroup } = this.nextStage);
     }
     const initialValues = {
       stage,
@@ -293,13 +298,12 @@ export default class UpdateFamilyStageFormContainer extends Component {
     return (
       <ReduxForm
         {...this.props}
-        currentStageGroup={levelGroup}
+        currentStageGroup={group}
         currentStage={stage}
-        nextStageGroup={nextStageGroup}
+        nextStageGroup={nextGroup}
         nextStage={nextStage}
         name={name}
         onSubmit={handleUpdateStage}
-        showRejectOption={showRejectOption}
         lossReasons={lossReasons}
         currentLossReason={currentLossReason}
         isPaused={isPaused}

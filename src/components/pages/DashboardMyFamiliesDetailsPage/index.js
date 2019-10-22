@@ -14,13 +14,18 @@ import {
   MESSAGES,
   TASKS, PROSPECTING, CONNECTED, CLOSED,
 } from 'sly/constants/dashboardAppPaths';
+import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
+import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
+import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
+import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
+import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { userIs } from 'sly/services/helpers/role';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
 import notePropType from 'sly/propTypes/note';
 import { size, palette } from 'sly/components/themes';
 import { getStageDetails } from 'sly/services/helpers/stage';
-import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
@@ -44,13 +49,10 @@ import ConversationMessagesContainer from 'sly/containers/ConversationMessagesCo
 import userPropType from 'sly/propTypes/user';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import Role from 'sly/components/common/Role';
-import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
-import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
 import StatusSelect from 'sly/components/molecules/StatusSelect';
 import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
 import { Datatable } from 'sly/services/datatable';
-
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
@@ -451,7 +453,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
     } = this.props;
-    const { admin } = user;
+    const { organization } = user;
 
     let conversationParticipants = [];
     let viewingAsParticipant;
@@ -485,19 +487,18 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       gender, lookingFor, monthlyBudget, timeToMove, roomTypes, careLevels, communityTypes, assignedTos,
     } = meta;
     const {
-      id, clientInfo, stage,
+      id, clientInfo, stage, provider,
     } = client;
-    let {
-      levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails,
-    } = getStageDetails(stage);
-    // Override based on role
-    const { provider } = client;
-    const { entityType, id: proOrg } = provider;
-    const { roleID, organization } = user;
+    const { entityType, id: providerOrg } = provider;
     const { id: userOrg } = organization;
-    /* eslint-disable-next-line no-bitwise */
-    if ((PLATFORM_ADMIN_ROLE & roleID) || (entityType === 'Organization' && userOrg === proOrg)) {
-      [showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails] = [false, true, true];
+    const { group, isConnected } = getStageDetails(stage);
+    const showAcceptRejectButtons = stage === FAMILY_STAGE_NEW;
+    let showUpdateAddNoteButtons;
+    let canEditFamilyDetails = isConnected;
+    if (stage !== FAMILY_STAGE_NEW &&
+      (userIs(user, PLATFORM_ADMIN_ROLE) || (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg))) {
+      showUpdateAddNoteButtons = true;
+      canEditFamilyDetails = true;
     }
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) => {
@@ -541,8 +542,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       ];
     }
 
-    const backLinkHref = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: TabMap[levelGroup] });
-    const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
+    const backLinkHref = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: TabMap[group] });
+    const backlink = <PaddedBackLink linkText={`Back to ${group}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${group}`)} />;
 
     const taskFilters = {
       'filter[client]': client.id,
@@ -567,8 +568,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               onRejectClick={handleRejectClick}
               onUpdateClick={handleUpdateClick}
               onAddNoteClick={handleAddNoteClick}
-              client={client}
               user={user}
+              client={client}
             />
             {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
             {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
@@ -611,8 +612,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   refetchClient={refetchClient}
                   notifyInfo={notifyInfo}
                   notifyError={notifyError}
-                  accepted={!showAcceptRejectButtons || admin}
-                  canEditFamilyDetails={canEditFamilyDetails || admin}
+                  accepted={!showAcceptRejectButtons || userIs(user, PLATFORM_ADMIN_ROLE)}
+                  canEditFamilyDetails={canEditFamilyDetails || userIs(user, PLATFORM_ADMIN_ROLE)}
                   gender={gender}
                   lookingFor={lookingFor}
                   monthlyBudget={monthlyBudget}
@@ -695,7 +696,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         <DashboardMyFamilyStickyFooterContainer
           options={stickyFooterOptions}
           stage={stage}
-          stageLabel={`${levelGroup} - ${stage}`}
+          stageLabel={`${group} - ${stage}`}
           showAcceptRejectButtons={showAcceptRejectButtons}
           user={user}
         />
