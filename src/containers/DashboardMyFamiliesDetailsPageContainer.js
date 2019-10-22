@@ -46,8 +46,13 @@ import withBreakpoint from 'sly/components/helpers/breakpoint';
   invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
 }))
 
-@prefetch('conversations', 'getConversations', (req, { match }) => req({
+@prefetch('clientConversations', 'getConversations', (req, { match }) => req({
   'filter[client]': match.params.id,
+}))
+
+@prefetch('conversations', 'getConversations', (req, { match }) => req({
+  'filter[participant_id]': match.params.id,
+  'filter[participant_type]': CONVERSATION_PARTICIPANT_TYPE_CLIENT,
 }))
 
 @withBreakpoint
@@ -57,7 +62,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     user: userPropType.isRequired,
     client: clientPropType,
     conversations: arrayOf(conversationPropType),
-    orgConversations: arrayOf(conversationPropType),
+    clientConversations: arrayOf(conversationPropType),
     match: object,
     status: object,
     history: object,
@@ -172,9 +177,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { status } = this.props;
     const { hasFinished: userHasFinished } = status.user;
     const { hasFinished: conversationsHasFinished } = status.conversations;
+    const { hasFinished: clientConversationsHasFinished } = status.clientConversations;
     const { hasFinished: clientHasFinished } = status.client;
 
-    return userHasFinished && conversationsHasFinished && clientHasFinished;
+    return userHasFinished && conversationsHasFinished && clientConversationsHasFinished && clientHasFinished;
   };
 
   goToFamilyDetails = () => {
@@ -194,6 +200,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   refetchConversations = () => {
     const { status } = this.props;
     status.conversations.refetch();
+    status.clientConversations.refetch();
   };
 
   onMessagesTabConversationClick = (conversation) => {
@@ -212,6 +219,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       notes,
       user,
       conversations,
+      clientConversations,
       breakpoint,
     } = this.props;
 
@@ -230,27 +238,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { hasFinished: clientHasFinished } = status.client;
     const { hasFinished: noteHasFinished } = status.notes;
     const hasConversationFinished = this.getHasConversationFinished();
-    // TODO: @pranesh remove when this is good to finish
-    // const orgConversations = [];
-    // if (hasConversationFinished && conversations) {
-    //   // TODO: Alert when there are multiple conversation between user and entity.a
-    //   const childrenClientIds = [];
-    //   client.children.forEach((childrenClient) => {
-    //     childrenClientIds.push(childrenClient.id);
-    //   });
-    //   conversations.forEach((conv) => {
-    //     orgConversations.push(conv);
-    //     // conv.conversationParticipants.forEach((participant) => {
-    //     //   if (participant.participantID === client.id && participant.participantType === CONVERSATION_PARTICIPANT_TYPE_CLIENT) {
-    //     //     return orgConversations.push(conv);
-    //     //   } else if (childrenClientIds.indexOf(participant.participantID) !== -1 && participant.participantType === CONVERSATION_PARTICIPANT_TYPE_CLIENT) {
-    //     //     return orgConversations.push(conv);
-    //     //   }
-    //     //   return null;
-    //     // });
-    //   });
-    // }
-
+    let allConversions = [];
+    if (hasConversationFinished) {
+      allConversions = conversations.concat(clientConversations);
+    }
     return (
       <NotificationController>
         {({ notifyError, notifyInfo }) => (
@@ -278,7 +269,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 refetchConversations={this.refetchConversations}
                 user={user}
                 conversation={selectedConversation}
-                conversations={conversations}
+                conversations={allConversions}
                 onMessagesTabConversationClick={this.onMessagesTabConversationClick}
                 hasConversationFinished={hasConversationFinished}
               />
