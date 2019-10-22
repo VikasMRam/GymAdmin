@@ -109,7 +109,7 @@ export default class FamilyDetailsFormContainer extends Component {
       });
     }
     if (tags) {
-      newClient.set('relationships.tags.data', tags);
+      newClient.set('relationships.tags.data', tags.map(({ value }) => ({ id: value, type: 'Tag' })));
     }
 
     let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
@@ -174,7 +174,8 @@ export default class FamilyDetailsFormContainer extends Component {
     const { client, formData, ...props } = this.props;
 
 
-    const { clientInfo, uuidAux, tags } = client;
+    const { clientInfo, uuidAux, tags: modelTags } = client;
+    const tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
     const {
       name, email, slyMessage, phoneNumber = '', additionalMetadata,
     } = clientInfo;
@@ -214,6 +215,7 @@ export default class FamilyDetailsFormContainer extends Component {
       lookingFor,
       gender,
       age,
+      tags,
       roomPreference,
       mobilityLevel: mobility,
       communityCareType: typeCare,

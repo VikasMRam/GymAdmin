@@ -159,7 +159,7 @@ class FamilyDetailsForm extends Component {
     const roomPreferenceOptions = roomTypes.map(i => <option key={i} value={i}>{i}</option>);
     const mobilityLevelOptions = careLevels.map(i => <option key={i} value={i}>{i}</option>);
     const communityCareTypeOptions = communityTypes.map(i => <option key={i} value={i}>{i}</option>);
-    const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
+    // const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
     const tagColumn = { typeInfo: { api: '/v0/platform/tags?filter[name]=' }, value: 'tag.name' };
     return (
       <div>
@@ -173,17 +173,17 @@ class FamilyDetailsForm extends Component {
             <Role is={PLATFORM_ADMIN_ROLE}>
               <FormSection>
                 <FormSectionHeading weight="medium">Metadata</FormSectionHeading>
-                <Field
-                  name="assignedTo"
-                  label="Assigned to"
-                  type="select"
-                  placeholder="Select an option"
-                  component={ReduxField}
-                  wideWidth
-                >
-                  <option value="" disabled>Select</option>
-                  {assignedToOptions}
-                </Field>
+                {/*<Field*/}
+                {/*  name="assignedTo"*/}
+                {/*  label="Assigned to"*/}
+                {/*  type="select"*/}
+                {/*  placeholder="Select an option"*/}
+                {/*  component={ReduxField}*/}
+                {/*  wideWidth*/}
+                {/*>*/}
+                {/*  <option value="" disabled>Select</option>*/}
+                {/*  {assignedToOptions}*/}
+                {/*</Field>*/}
                 <Field
                   name="additionalMetadata"
                   type="checkbox"
