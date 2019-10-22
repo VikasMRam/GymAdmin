@@ -109,7 +109,7 @@ export default class FamilyDetailsFormContainer extends Component {
       });
     }
     if (tags) {
-      newClient.set('relationships.tags.data', tags.map(({ value }) => ({ id: value, type: 'Tag' })));
+      newClient.set('relationships.tags.data', tags.map(({ label }) => ({ type: 'Tag', attributes: { name: label } })));
     }
 
     let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
