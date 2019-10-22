@@ -43,7 +43,7 @@ const FamilyStage = ({
   const { group, palette, stage } = getStageDetails(stageText);
   const showAcceptRejectButtons = stage === FAMILY_STAGE_NEW;
   let showUpdateAddNoteButtons = stage !== FAMILY_STAGE_NEW;
-  const disableAddNoteUpdateButton = stage === FAMILY_STAGE_REJECTED;
+  let disableAddNoteUpdateButton = stage === FAMILY_STAGE_REJECTED;
   const text = group ? `${group} - ${stageText}` : stageText;
   const { provider } = client;
   const { organization } = user;
@@ -52,6 +52,7 @@ const FamilyStage = ({
   if (stage !== FAMILY_STAGE_NEW &&
     (userIs(user, PLATFORM_ADMIN_ROLE) || (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg))) {
     showUpdateAddNoteButtons = true;
+    disableAddNoteUpdateButton = false;
   }
 
   return (
