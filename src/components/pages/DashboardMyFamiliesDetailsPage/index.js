@@ -502,7 +502,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     let { showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails } = stageDetails;
     const { levelGroup } = stageDetails;
     // Override based on role
-    if (admin) {
+    const { provider } = client;
+    const { entityType, id: proOrg } = provider;
+    const { roleID, organization } = user;
+    const { id: userOrg } = organization;
+    /* eslint-disable-next-line no-bitwise */
+    if ((PLATFORM_ADMIN_ROLE & roleID) || (entityType === 'Organization' && userOrg === proOrg)) {
       [showAcceptRejectButtons, showUpdateAddNoteButtons, canEditFamilyDetails] = [false, true, true];
     }
     const { name } = clientInfo;
@@ -639,6 +644,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   parentClient={client}
                   parentRawClient={rawClient}
                   refetchClient={refetchClient}
+                  user={user}
                   referralMode="Community"
                 />
               </Role>
@@ -652,6 +658,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   parentClient={client}
                   parentRawClient={rawClient}
                   refetchClient={refetchClient}
+                  user={user}
                   referralMode="Agent"
                 />
               </Role>
