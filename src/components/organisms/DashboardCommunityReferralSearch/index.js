@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, arrayOf, object } from 'prop-types';
+import { func, arrayOf, object, bool } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -29,7 +29,7 @@ const StyledDashboardAdminReferralCommunityTile = styled(DashboardAdminReferralC
 const CursorStyledDashboardAdminReferralCommunityTile = cursor(StyledDashboardAdminReferralCommunityTile);
 
 const DashboardCommunityReferralSearch = ({
-  communities, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit,
+  communities, isAdminUser, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit,
 }) => (
   <Wrapper>
     <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
@@ -42,6 +42,7 @@ const DashboardCommunityReferralSearch = ({
           const props = {
             key: community.name,
             community,
+            isAdminUser,
           };
           const client = childrenClientCommunityIdsMap[community.id];
           if (client) {
@@ -61,6 +62,7 @@ DashboardCommunityReferralSearch.propTypes = {
   handleSubmit: func,
   onSubmit: func,
   communities: arrayOf(adminCommunityPropType),
+  isAdminUser: bool,
   childrenClientCommunityIdsMap: object,
 };
 

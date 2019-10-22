@@ -70,7 +70,7 @@ const AdvisorHelpPopup = ({ onButtonClick }) => {
 };
 
 AdvisorHelpPopup.propTypes = {
-  onButtonClick: func.isRequired,
+  onButtonClick: func,
 };
 
 export default AdvisorHelpPopup;

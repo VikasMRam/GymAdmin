@@ -4,6 +4,8 @@ import { action } from '@storybook/addon-actions';
 
 import FamilyStage from 'sly/components/molecules/FamilyStage';
 import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
+import AmalFrancis from 'sly/../private/storybook/sample-data/user-amal-francis.json';
+import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
 
 const stageGroups = Object.keys(FAMILY_STAGE_ORDERED);
 const newStage = FAMILY_STAGE_ORDERED[stageGroups[0]][0];
@@ -17,6 +19,8 @@ storiesOf('Molecules|FamilyStage', module)
       stageText={newStage}
       onAcceptClick={action('onAcceptClick')}
       onRejectClick={action('onRejectClick')}
+      user={AmalFrancis}
+      client={PraneshKumar}
     />
   ))
   .add('intermediate stage', () => (
@@ -24,6 +28,8 @@ storiesOf('Molecules|FamilyStage', module)
       stageText={interStage}
       onUpdateClick={action('onUpdateClick')}
       onAddNoteClick={action('onAddNoteClick')}
+      user={AmalFrancis}
+      client={PraneshKumar}
     />
   ))
   .add('final stage', () => (
@@ -31,5 +37,7 @@ storiesOf('Molecules|FamilyStage', module)
       stageText={endStage}
       onUpdateClick={action('onUpdateClick')}
       onAddNoteClick={action('onAddNoteClick')}
+      user={AmalFrancis}
+      client={PraneshKumar}
     />
   ));

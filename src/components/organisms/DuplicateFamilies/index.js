@@ -1,9 +1,12 @@
 import React from 'react';
 import { func, arrayOf } from 'prop-types';
 import styled from 'styled-components';
+import { generatePath } from 'react-router';
 
 import { size } from 'sly/components/themes';
 import clientPropType from 'sly/propTypes/client';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
+import { Link } from 'sly/components/atoms';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
 import FamilyEntry from 'sly/components/molecules/FamilyEntry';
 
@@ -25,7 +28,7 @@ const DuplicateFamilies = ({
     onSubmit={handleSubmit}
   >
     <ClientsWrapper>
-      {clients.map(c => <FamilyEntry key={c.id} client={c} />)}
+      {clients.map(c => <Link key={c.id} target="_blank" to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: c.id })}><FamilyEntry client={c} /></Link>)}
     </ClientsWrapper>
   </ThreeSectionFormTemplate>
 );

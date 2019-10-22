@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { shape, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { getHelmetForAgentProfilePage } from 'sly/services/helpers/html_headers';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
@@ -51,6 +51,30 @@ const AskQuestionToAgentWrapper = styled.div`
   }
 `;
 
+const LegacyContent = styled.div`
+  margin-bottom: ${size('spacing.xLarge')};
+  a {
+    text-decoration: none;
+    color: ${palette('base')};
+
+    &:hover {
+      color: ${palette('filler')};
+      cursor: pointer;
+    }
+
+    &:active {
+      color: ${palette('base')};
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+`;
+LegacyContent.defaultProps = {
+  palette: 'primary',
+};
+
 class AgentProfilePage extends Component {
   static propTypes = {
     agent: shape({
@@ -78,9 +102,10 @@ class AgentProfilePage extends Component {
       id, info, aggregateRating, reviews, communities, address,
     } = agent;
     const { ratingValue } = aggregateRating;
-    const { displayName, bio } = info;
+    const { displayName, bio, cv } = info;
     const firstName = displayName.split(' ')[0];
     const { state, city } = address;
+    const similarCommunityStyle = { layout: 'column', imageSize: 'regular', showDescription: false };
     return (
       <>
         {getHelmetForAgentProfilePage({ agent, location })}
@@ -105,10 +130,13 @@ class AgentProfilePage extends Component {
 
           <StyledHr fullWidth />
 
+          {cv && <LegacyContent dangerouslySetInnerHTML={{ __html: cv }} />}
+          {cv && <StyledHr fullWidth />}
+
           {communities &&
             <>
-              <Section title={`Communities near ${firstName}`}>
-                <SimilarCommunities communities={communities} />
+              <Section title={`Assisted Living Communities in ${city}, ${state}`}>
+                <SimilarCommunities communities={communities} communityStyle={similarCommunityStyle} />
               </Section>
               <StyledHr fullWidth />
             </>
@@ -125,7 +153,7 @@ class AgentProfilePage extends Component {
 
           {bio &&
             <>
-              <StyledSection title={`About ${firstName}`}>
+              <StyledSection title={`More About ${firstName}`}>
                 {bio}
               </StyledSection>
               <StyledHr fullWidth />

@@ -91,13 +91,13 @@ const FormSectionHeading = pad(Block, 'large');
 
 // const contactPreferenceOptionsList = [{ value: 'sms', label: 'SMS' }, { value: 'email', label: 'Email' }, { value: 'phone', label: 'Phone' }];
 
-// const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
-//   { value: 'EmailOnly', label: 'EmailOnly' },
-//   { value: 'WarmTransfer', label: 'WarmTransfer' },
-//   { value: 'WarmTransferVM', label: 'WarmTransferVM' },
-//   { value: 'NoAgent', label: 'NoAgent' },
-//   { value: 'EmailToAgent', label: 'EmailToAgent' },
-// ];
+const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
+  { value: 'EmailOnly', label: 'EmailOnly' },
+  { value: 'WarmTransfer', label: 'WarmTransfer' },
+  { value: 'WarmTransferVM', label: 'WarmTransferVM' },
+  { value: 'NoAgent', label: 'NoAgent' },
+  { value: 'EmailToAgent', label: 'EmailToAgent' },
+];
 
 // const tagsOptions = [
 //   { value: 'chocolate', label: 'Chocolate' },
@@ -182,6 +182,14 @@ class FamilyDetailsForm extends Component {
                   <option value="" disabled>Select</option>
                   {assignedToOptions}
                 </Field>
+                <Field
+                  name="additionalMetadata"
+                  type="checkbox"
+                  label="Additional Attributes"
+                  component={ReduxField}
+                  options={additionalMDOptions}
+                  wideWidth
+                />
                 {/* <Field
                     name="tags"
                     label="Tags"
@@ -192,14 +200,7 @@ class FamilyDetailsForm extends Component {
                     options={tagsOptions}
                     isMulti
                   />
-                  <Field
-                    name="additionalAttributes"
-                    type="checkbox"
-                    label="Additional Attributes"
-                    component={ReduxField}
-                    options={additionalMDOptions}
-                    wideWidth
-                  /> */}
+                   */}
               </FormSection>
             </Role>
             <FormSection>

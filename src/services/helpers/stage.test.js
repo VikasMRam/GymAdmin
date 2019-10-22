@@ -1,67 +1,102 @@
-import { getStageDetails } from 'sly/services/helpers/stage';
-import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_NEW, FAMILY_STAGE_REJECTED } from 'sly/constants/familyDetails';
+import { getStageDetails, getPaletteFor } from 'sly/services/helpers/stage';
+import {
+  FAMILY_STAGE_ORDERED,
+  FAMILY_STAGE_REJECTED,
+  TOTAL_STAGES_COUNT,
+} from 'sly/constants/familyDetails';
+
+const allStages = Object.entries(FAMILY_STAGE_ORDERED)
+  .reduce((acc, [, stages]) => [...acc, ...stages], []);
+
+const groups = Object.keys(FAMILY_STAGE_ORDERED);
 
 describe('stage', () => {
-  it('getStageDetails - showPauseButton is false in Prospects stage', () => {
-    const stages = FAMILY_STAGE_ORDERED.Prospects;
-    stages.forEach((s) => {
-      const r = getStageDetails(s);
-      expect(r.showPauseButton).toBeFalsy();
+  describe('getStageDetails', () => {
+    it('palette correct according to stage', () => {
+      allStages.forEach((s) => {
+        const { palette } = getStageDetails(s);
+
+        expect(palette).toBe(getPaletteFor(s));
+      });
     });
-  });
 
-  it('getStageDetails - showPauseButton is true in Connected stage', () => {
-    const stages = FAMILY_STAGE_ORDERED.Connected;
-    stages.forEach((s) => {
-      const r = getStageDetails(s);
-      expect(r.showPauseButton).toBeTruthy();
+    it('isRejected true when stage is rejected', () => {
+      const { isRejected } = getStageDetails(FAMILY_STAGE_REJECTED);
+
+      expect(isRejected).toBeTruthy();
     });
-  });
 
-  it('getStageDetails - showPauseButton is false in Closed stage', () => {
-    const stages = FAMILY_STAGE_ORDERED.Closed;
-    stages.forEach((s) => {
-      const r = getStageDetails(s);
-      expect(r.showPauseButton).toBeFalsy();
+    it('isRejected false when stage is not rejected', () => {
+      allStages.filter(s => s !== FAMILY_STAGE_REJECTED).forEach((s) => {
+        const { isRejected } = getStageDetails(s);
+
+        expect(isRejected).toBeFalsy();
+      });
     });
-  });
 
-  it('getStageDetails - showRejectOption is false in all other Prospects stage', () => {
-    const r = getStageDetails(FAMILY_STAGE_NEW);
-    expect(r.showRejectOption).toBeTruthy();
-  });
+    it('correct group is returned', () => {
+      allStages.forEach((s) => {
+        const { group } = getStageDetails(s);
+        const gIndex = FAMILY_STAGE_ORDERED[group].indexOf(s);
 
-  it('getStageDetails - showRejectOption is false in all other Prospects stage', () => {
-    const stages = FAMILY_STAGE_ORDERED.Prospects.splice(1);
-    stages.forEach((s) => {
-      const r = getStageDetails(s);
-      expect(r.showRejectOption).toBeFalsy();
+        expect(gIndex).not.toBe(-1);
+      });
     });
-  });
 
-  it('getStageDetails - showRejectOption is false in Connected stage', () => {
-    const stages = FAMILY_STAGE_ORDERED.Connected;
-    stages.forEach((s) => {
-      const r = getStageDetails(s);
-      expect(r.showRejectOption).toBeFalsy();
+    it('correct stage is returned', () => {
+      allStages.forEach((s) => {
+        const { stage } = getStageDetails(s);
+
+        expect(stage).toBe(s);
+      });
     });
-  });
 
-  it('getStageDetails - showRejectOption is false in Connected stage', () => {
-    const stages = FAMILY_STAGE_ORDERED.Closed;
-    stages.forEach((s) => {
-      const r = getStageDetails(s);
-      expect(r.showRejectOption).toBeFalsy();
+    it('correct level is returned', () => {
+      allStages.forEach((s) => {
+        const { level, group } = getStageDetails(s);
+        if (group === groups[groups.length - 1]) {
+          expect(level).toBe(TOTAL_STAGES_COUNT);
+        } else {
+          const lIndex = FAMILY_STAGE_ORDERED[group].indexOf(s);
+
+          expect(level).toBe(lIndex + 1);
+        }
+      });
     });
-  });
 
-  it('getStageDetails - disableUpdateButton is true in Rejected stage', () => {
-    const r = getStageDetails(FAMILY_STAGE_REJECTED);
-    expect(r.disableUpdateButton).toBeTruthy();
-  });
+    it('correct groupIndex is returned', () => {
+      allStages.forEach((s) => {
+        const { group, groupIndex } = getStageDetails(s);
+        const gIndex = groups.indexOf(group);
 
-  it('getStageDetails - disableAddNoteButton is true in Rejected stage', () => {
-    const r = getStageDetails(FAMILY_STAGE_REJECTED);
-    expect(r.disableAddNoteButton).toBeTruthy();
+        expect(groupIndex).toBe(gIndex);
+      });
+    });
+
+    it('correct stageIndex is returned', () => {
+      allStages.forEach((s) => {
+        const { stageIndex, group } = getStageDetails(s);
+        const lIndex = FAMILY_STAGE_ORDERED[group].indexOf(s);
+
+        expect(stageIndex).toBe(lIndex);
+      });
+    });
+
+    it('correct stage group status is returned', () => {
+      groups.forEach((gn) => {
+        const statusKey = `is${gn}`;
+
+        FAMILY_STAGE_ORDERED[gn].forEach((s) => {
+          const r = getStageDetails(s);
+
+          expect(r[statusKey]).toBeTruthy();
+          groups.filter(g => g !== gn).forEach((gn) => {
+            const statusKey = `is${gn}`;
+
+            expect(r[statusKey]).toBeFalsy();
+          });
+        });
+      });
+    });
   });
 });

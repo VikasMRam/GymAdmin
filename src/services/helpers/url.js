@@ -302,12 +302,12 @@ export const getBreadCrumbsForAgent = ({ name, state, city, id }) => {
     });
     if (city) {
       baseBcs.push({
-        path: `${agentsPath}/${urlize(region)}/${urlize(city)}`,
-        label: city,
+        path: `${agentsPath}/${urlize(region)}/${urlize(city)}-${urlize(state)}`,
+        label: `${city}, ${state}`,
       });
       if (name) {
         baseBcs.push({
-          path: `${agentsPath}/${urlize(region)}/${urlize(city)}/${id}`,
+          path: `${agentsPath}/${urlize(region)}/${urlize(city)}-${urlize(state)}/${id}`,
           label: name,
         });
       }
@@ -350,7 +350,7 @@ export const getBreadCrumbsForGuides = ({ toc, region, regionName}) => {
 export const getAgentUrl = ({ id, address }) => {
   const { state, city } = address;
   const region = stateRegionMap[state];
-  return `${agentsPath}/${urlize(region)}/${urlize(city)}/${id}`;
+  return `${agentsPath}/${urlize(region)}/${urlize(city)}-${urlize(state)}/${id}`;
 };
 
 export const getCitySearchUrl = ({ propInfo, address }) => {

@@ -57,7 +57,7 @@ import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
-import exitIntent from 'sly/containers/ExitIntentContainer';
+import withExitIntent from 'sly/services/exitIntent/withExitIntent';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -148,7 +148,8 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
   value,
 });
 
-@exitIntent
+@withExitIntent
+
 export default class CommunityDetailPage extends Component {
   static propTypes = {
     user: object,
@@ -421,6 +422,7 @@ export default class CommunityDetailPage extends Component {
       mainImage,
       partnerAgents,
       twilioNumber,
+      guideUrl,
     } = community;
 
     const {
@@ -651,6 +653,7 @@ export default class CommunityDetailPage extends Component {
                         city={address.city}
                         state={address.state}
                         twilioNumber={twilioNumber}
+                        guideUrl={guideUrl}
                       />
                     </MainSection>
                   </TopCollapsibleSection>
