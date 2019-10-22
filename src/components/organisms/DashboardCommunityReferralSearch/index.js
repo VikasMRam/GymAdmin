@@ -10,7 +10,6 @@ import DashboardAdminReferralCommunityTile from 'sly/components/organisms/Dashbo
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import pad from 'sly/components/helpers/pad';
 import cursor from 'sly/components/helpers/cursor';
-import { getHasContract } from 'sly/services/helpers/communityReferral';
 
 const Wrapper = styled.div`
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};

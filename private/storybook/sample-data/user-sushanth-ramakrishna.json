@@ -8,5 +8,9 @@
   "phoneNumber": "123456789",
   "roleID": 1,
   "updatedAt": "2019-05-13T12:01:47Z",
-  "uuid": "5ca2c7bf-ecc9-4567-a8b8-d4a21cf8d856"
+  "uuid": "5ca2c7bf-ecc9-4567-a8b8-d4a21cf8d856",
+  "organization": {
+    "id": "bee877af68c08ce8502fcee0da9567f4",
+    "name": "Seniorly"
+  }
 }
