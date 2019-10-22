@@ -164,7 +164,7 @@ DashboardAdminReferralCommunityTile.propTypes = {
 };
 
 DashboardAdminReferralCommunityTile.defaultProps = {
-  titlePalette: 'green',
+  titlePalette: 'warning',
 };
 
 export default DashboardAdminReferralCommunityTile;
