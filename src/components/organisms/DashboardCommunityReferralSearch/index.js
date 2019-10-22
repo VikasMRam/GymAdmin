@@ -40,14 +40,10 @@ const DashboardCommunityReferralSearch = ({
         <Hr size="large" />
         <Block>Showing {communities.length} communities</Block>
         {communities.map((community) => {
-          const hasContract = getHasContract(community);
-          const shouldShowHasContract = hasContract && isAdminUser;
-          const shouldShowNoContract = !hasContract && isAdminUser;
           const props = {
             key: community.name,
             community,
-            shouldShowHasContract,
-            shouldShowNoContract,
+            isAdminUser,
           };
           const client = childrenClientCommunityIdsMap[community.id];
           if (client) {

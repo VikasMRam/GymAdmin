@@ -9,7 +9,6 @@ import DashboardAdminReferralCommunityTile from 'sly/components/organisms/Dashbo
 import pad from 'sly/components/helpers/pad';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { getHasContract } from 'sly/services/helpers/communityReferral';
 
 const SendReferralTitleBlock = pad(Block);
 
@@ -22,14 +21,11 @@ const StyledDashboardAdminReferralCommunityTile = styled(DashboardAdminReferralC
 `;
 
 const DashboardCommunityReferralContactDetails = ({ community, isAdminUser, handleSubmit, onChangeCommunity }) => {
-  const hasContract = getHasContract(community);
-  const shouldShowHasContract = hasContract && isAdminUser;
-  const shouldShowNoContract = !hasContract && isAdminUser;
   return (
     <Form onSubmit={handleSubmit} name="DashboardCommunityReferralContactDetailsForm">
       <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
       <Hr size="large" />
-      <StyledDashboardAdminReferralCommunityTile community={community} shouldShowHasContract={shouldShowHasContract} shouldShowNoContract={shouldShowNoContract} actionText="Change Community" actionClick={() => onChangeCommunity()} />
+      <StyledDashboardAdminReferralCommunityTile community={community} isAdminUser={isAdminUser} actionText="Change Community" actionClick={() => onChangeCommunity()} />
       <Field name="name" label="Community contact name" type="text" placeholder="Enter Community contact name" component={ReduxField} />
       <Field name="email" label="Community email" type="text" placeholder="Enter Community email" component={ReduxField} />
       <Field name="slyMessage" label="Message" type="textarea" placeholder="Enter Message" component={ReduxField} />

@@ -9,7 +9,7 @@ import { Heading, Block, Span, Button } from 'sly/components/atoms';
 import Stage from 'sly/components/molecules/Stage';
 // import cursor from 'sly/components/helpers/cursor';
 import IconBadge from 'sly/components/molecules/IconBadge';
-import { buildAddressDisplay, getReferralSentTimeText } from 'sly/services/helpers/communityReferral';
+import { buildAddressDisplay, getReferralSentTimeText, getHasContract } from 'sly/services/helpers/communityReferral';
 
 const getTitlePalette = variant => p => palette(p.titlePalette, variant);
 
@@ -108,10 +108,13 @@ const StyledIconBadge = styled(IconBadge)`
 `;
 
 const DashboardAdminReferralCommunityTile = ({
-  className, title, titlePalette, community, shouldShowHasContract, shouldShowNoContract, referralSentAt, stage, disabled, onClick, actionText, actionClick,
+  className, title, titlePalette, community, isAdminUser, referralSentAt, stage, disabled, onClick, actionText, actionClick,
 }) => {
   const isBottomSectionPresent = !!stage;
   const isFloatingSectionPresent = !!(referralSentAt || (actionText && actionClick));
+  const hasContract = getHasContract(community);
+  const shouldShowHasContract = hasContract && isAdminUser;
+  const shouldShowNoContract = !hasContract && isAdminUser;
   return (
     <Wrapper className={className} onClick={onClick}>
       {title && <TitleSection titlePalette={titlePalette}><Span weight="bold" size="micro" palette="white">{title}</Span></TitleSection>}
@@ -157,12 +160,11 @@ DashboardAdminReferralCommunityTile.propTypes = {
   onClick: func,
   actionText: string,
   actionClick: func,
-  shouldShowHasContract: bool,
-  shouldShowNoContract: bool,
+  isAdminUser: bool,
 };
 
 DashboardAdminReferralCommunityTile.defaultProps = {
-  titlePalette: 'warning',
+  titlePalette: 'green',
 };
 
 export default DashboardAdminReferralCommunityTile;

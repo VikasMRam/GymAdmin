@@ -11,6 +11,13 @@ const community = {
     state: 'CA',
     zip: '94115',
   },
+  rgsAux: {
+    rgsInfo: {
+      contract_info: {
+        hasContract: true,
+      },
+    },
+  },
 };
 
 const addressString = '2180 Post Street, San Francisco, 94115, CA';
@@ -76,8 +83,8 @@ describe('DashboardAdminReferralCommunityTile', () => {
   });
 
   it('renders shouldShowHasContract', () => {
-    const shouldShowHasContract = true;
-    const wrapper = wrap({ shouldShowHasContract });
+    const isAdminUser = true;
+    const wrapper = wrap({ isAdminUser });
     expect(wrapper.contains(community.name)).toBe(true);
     expect(wrapper.contains(addressString)).toBe(true);
 
@@ -85,8 +92,10 @@ describe('DashboardAdminReferralCommunityTile', () => {
   });
 
   it('renders shouldShowNoContract', () => {
-    const shouldShowNoContract = true;
-    const wrapper = wrap({ shouldShowNoContract });
+    const isAdminUser = true;
+    const newCommunity = { ...community };
+    newCommunity.rgsAux.rgsInfo.contract_info.hasContract = false;
+    const wrapper = wrap({ community: newCommunity, isAdminUser });
     expect(wrapper.contains(community.name)).toBe(true);
     expect(wrapper.contains(addressString)).toBe(true);
 
