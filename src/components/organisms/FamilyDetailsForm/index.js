@@ -97,6 +97,8 @@ const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
   { value: 'WarmTransferVM', label: 'WarmTransferVM' },
   { value: 'NoAgent', label: 'NoAgent' },
   { value: 'EmailToAgent', label: 'EmailToAgent' },
+  { value: 'ReferralSent', label: 'ReferralSent' },
+  { value: 'Voicemail', label: 'Voicemail' },
 ];
 
 // const tagsOptions = [
@@ -158,7 +160,7 @@ class FamilyDetailsForm extends Component {
     const mobilityLevelOptions = careLevels.map(i => <option key={i} value={i}>{i}</option>);
     const communityCareTypeOptions = communityTypes.map(i => <option key={i} value={i}>{i}</option>);
     const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
-    // const tagColumn = { typeInfo: { api: '/platform/tags?name=' } };
+    const tagColumn = { typeInfo: { api: '/v0/platform/tags?filter[name]=' }, value: 'tag.name' };
     return (
       <div>
         {!canEditFamilyDetails &&
@@ -190,17 +192,16 @@ class FamilyDetailsForm extends Component {
                   options={additionalMDOptions}
                   wideWidth
                 />
-                {/* <Field
-                    name="tags"
-                    label="Tags"
-                    type="choice"
-                    readOnly={!canEditFamilyDetails}
-                    component={ReduxField}
-                    wideWidth
-                    options={tagsOptions}
-                    isMulti
-                  />
-                   */}
+                <Field
+                  name="tags"
+                  label="Tags"
+                  type="autocomplete"
+                  readOnly={!canEditFamilyDetails}
+                  component={ReduxField}
+                  wideWidth
+                  column={tagColumn}
+                  isMulti
+                />
               </FormSection>
             </Role>
             <FormSection>
