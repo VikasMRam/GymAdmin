@@ -25,7 +25,7 @@
     "env:prod": "cross-env NODE_ENV=production SLY_ENV=production",
     "env:staging": "cross-env NODE_ENV=production SLY_ENV=staging",
     "env:test": "cross-env NODE_ENV=test SLY_ENV=test",
-    "test": "npm run jest",
+    "test": "jest",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
     "lint": "eslint src/*.js src/external src/controllers src/components/common src/components/helpers src/components/atoms src/components/molecules src/constants src/propTypes private webpack.config.js e2e",
