@@ -126,7 +126,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
         } else if (preferredLocation) {
           reason = `${lossReason}. Preferred in: ${preferredLocation}`;
         }
-        note = `Stage changed from ${previousStage} to ${stage}. Lost Reason: ${reason}`;
+        note = `Stage changed from ${previousStage} to ${stage}. Closed Reason: ${reason}`;
       }
       const payload = {
         type: NOTE_RESOURCE_TYPE,
