@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
-import { arrayOf, object, string, bool, func } from 'prop-types';
+import { arrayOf, shape, object, string, bool, func } from 'prop-types';
+import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
@@ -9,7 +10,10 @@ import SlyEvent from 'sly/services/helpers/events';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 import { Box, Table, THead, TBody, Tr, Heading } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
+import Tabs from 'sly/components/molecules/Tabs';
+import Tab from 'sly/components/molecules/Tab';
 import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
+import { AGENT_DASHBOARD_FAMILIES_PATH, PROSPECTING, CONNECTED, CLOSED } from 'sly/constants/dashboardAppPaths';
 import Th from 'sly/components/molecules/Th';
 import IconButton from 'sly/components/molecules/IconButton';
 import ClientRowCard from 'sly/components/organisms/ClientRowCard';
@@ -70,6 +74,25 @@ const TwoColumn = pad(styled.div`
     margin-bottom: 0;
   }
 `);
+const TabMap = {
+  Prospects: PROSPECTING,
+  Connected: CONNECTED,
+  Closed: CLOSED,
+};
+
+const onTabClick = (label) => {
+  const event = {
+    category: 'AgentDashboardFamilyOverviewTab',
+    action: 'click',
+    label,
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
+
+const getBasePath = (clientType, location) => {
+  const path = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType });
+  return location && location.search ? `${path}${location.search}` : path;
+};
 
 export default class DashboardAgentFamilyOverviewSection extends Component {
   static propTypes = {
@@ -87,6 +110,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
     hideModal: func.isRequired,
     notifyInfo: func.isRequired,
     onAddFamilySuccess: func,
+    location: object,
   };
 
   static defaultProps = {
@@ -126,9 +150,11 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
     const {
       clients,
       pagination,
+      activeTab,
       isPageLoading,
       datatable,
       meta,
+      location,
     } = this.props;
     const modelConfig = { name: 'Client', defaultSearchField: 'name' };
     const beforeTabHeader = (
@@ -142,7 +168,19 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
 
     return (
       <>
-        {beforeTabHeader}
+        <Tabs activeTab={activeTab} beforeHeader={beforeTabHeader} tabsOnly>
+          {Object.entries(TabMap)
+            .map(([name, key]) => (
+              <Tab
+                id={key}
+                key={key}
+                to={getBasePath(key, location)}
+                onClick={() => onTabClick(name)}
+              >
+                {`${name} (${pagination[`${key}Count`] || '0'})`}
+              </Tab>
+            ))}
+        </Tabs>
         <TableHeaderButtons
           datatable={datatable}
           meta={meta}
