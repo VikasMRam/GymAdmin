@@ -42,7 +42,7 @@ const HeadingBoxSection = ({
 HeadingBoxSection.propTypes = {
   className: string,
   heading: node.isRequired,
-  children: node.isRequired,
+  children: node,
   hasNoBodyPadding: bool,
   hasNoBorder: bool,
 };
