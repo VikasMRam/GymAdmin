@@ -96,9 +96,7 @@ const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
   { value: 'WarmTransfer', label: 'WarmTransfer' },
   { value: 'WarmTransferVM', label: 'WarmTransferVM' },
   { value: 'NoAgent', label: 'NoAgent' },
-  { value: 'EmailToAgent', label: 'EmailToAgent' },
   { value: 'ReferralSent', label: 'ReferralSent' },
-  { value: 'Voicemail', label: 'Voicemail' },
 ];
 
 // const tagsOptions = [
