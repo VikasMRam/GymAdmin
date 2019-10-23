@@ -387,7 +387,7 @@ export default class ConversationMessagesContainer extends Component {
           <BackLink to={AGENT_DASHBOARD_MESSAGES_PATH} />
         </Role>
         <FullWidthTextCenterBlock size="subtitle" palette={otherParticipantIsClient && 'primary'}>
-          {!otherParticipantIsClient
+          {otherParticipantIsClient
             ? <Link size="subtitle" to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: otherParticipant.participantID, tab: SUMMARY })}>{name}</Link>
             : name
           }
