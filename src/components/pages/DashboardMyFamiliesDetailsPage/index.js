@@ -43,6 +43,7 @@ import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFa
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import Tab from 'sly/components/molecules/Tab';
+import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import fullHeight from 'sly/components/helpers/fullHeight';
 import ConversationMessagesContainer from 'sly/containers/ConversationMessagesContainer';
@@ -188,10 +189,6 @@ const StyledClientNameBlock = styled(Block)`
 
 const DashboardMessagesContainerWrapper = styled.div`
   padding: ${size('spacing.large')};
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    padding: ${size('spacing.xLarge')};
-  }
 `;
 
 const ClientName = ({ client, rawClient, backLinkHref, ...props }) => {
@@ -238,6 +235,11 @@ const FullWidthTextCenterBlock = fullWidth(TextCenterBlock);
 
 const PaddedBackLink = pad(BackLink, 'regular');
 
+const HeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const TabMap = {
   Prospects: PROSPECTING,
   Connected: CONNECTED,
@@ -268,7 +270,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     hasConversationFinished: bool,
     conversation: conversationPropType,
     conversations: arrayOf(conversationPropType),
-    onMessagesTabConversationClick: func,
+    setSelectedConversation: func,
     user: userPropType.isRequired,
   };
 
@@ -323,7 +325,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const agentTabList = [
       { id: ACTIVITY, to: activityPath, label: 'Activity' },
       { id: FAMILY_DETAILS, to: familyDetailsPath, label: 'Family Details' },
-      // { id: MESSAGES, to: messagesPath, label: 'Messages' },
+      { id: MESSAGES, to: messagesPath, label: 'Messages' },
     ];
     const adminTabList = [
       { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
@@ -463,7 +465,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, conversations, onMessagesTabConversationClick, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, conversations, setSelectedConversation, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
     } = this.props;
     const { organization } = user;
 
@@ -562,6 +564,17 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     };
 
     const clientName = <ClientName client={client} rawClient={rawClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} user={user} />;
+
+    const heading = (
+      <HeaderWrapper>
+        <BackLink onClick={() => setSelectedConversation(null)} />
+        <FullWidthTextCenterBlock size="subtitle" palette="primary">{name}</FullWidthTextCenterBlock>
+      </HeaderWrapper>
+    );
+
+    const headingBoxSection = (
+      <HeadingBoxSection heading={heading} hasNoBodyPadding hasNoBorder />
+    );
 
     return (
       <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
@@ -684,24 +697,18 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
             {currentTab === MESSAGES && (
               <SmallScreenBorderDiv>
-                {!hasConversationFinished &&
-                  <>
-                    <br />
-                    <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
-                  </>
-                }
-                {hasConversationFinished && !conversation &&
+                {!conversation &&
                   <DashboardMessagesContainerWrapper>
                     <DashboardMessages
                       isLoading={!hasConversationFinished}
                       heading="Conversations"
                       conversations={conversations}
-                      onConversationClick={onMessagesTabConversationClick}
+                      onConversationClick={setSelectedConversation}
                       refetchConversations={refetchConversations}
                     />
                   </DashboardMessagesContainerWrapper>
                 }
-                {hasConversationFinished && conversation &&
+                {conversation &&
                   <ConversationMessagesContainer
                     conversation={conversation}
                     viewingAsParticipant={viewingAsParticipant}
@@ -710,6 +717,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                     otherParticipantId={id}
                     otherParticipantType={CONVERSATION_PARTICIPANT_TYPE_CLIENT}
                     onCreateConversationSuccess={refetchConversations}
+                    headingBoxSection={headingBoxSection}
                   />
                 }
               </SmallScreenBorderDiv>

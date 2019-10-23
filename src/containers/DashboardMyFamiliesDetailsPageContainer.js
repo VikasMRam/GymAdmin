@@ -25,6 +25,9 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
 import SlyEvent from 'sly/services/helpers/events';
 import withBreakpoint from 'sly/components/helpers/breakpoint';
 
+const mapStateToProps = (state, { conversations }) => ({
+  selectedConversation: conversations && conversations.length === 1 && conversations[0],
+});
 @withUser
 
 @prefetch('client', 'getClient', (req, { match }) => req({
@@ -49,6 +52,8 @@ import withBreakpoint from 'sly/components/helpers/breakpoint';
   'filter[client]': match.params.id,
 }))
 
+@connect(mapStateToProps)
+
 @withBreakpoint
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
@@ -56,6 +61,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     user: userPropType.isRequired,
     client: clientPropType,
     conversations: arrayOf(conversationPropType),
+    selectedConversation: conversationPropType,
     match: object,
     status: object,
     history: object,
@@ -195,21 +201,19 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     status.conversations.refetch();
   };
 
-  onMessagesTabConversationClick = (conversation) => {
+  setSelectedConversation = (conversation) => {
     this.setState({ selectedConversation: conversation });
   };
 
-  componentDidMount = () => {
-    const { conversations } = this.props;
-    const hasConversationFinished = this.getHasConversationFinished();
-    if (hasConversationFinished) {
-      if (conversations.length === 1) {
-        const [conversation] = conversations;
-        this.setState({ selectedConversation: conversation });
-      }
-      this.setState({ conversationsList: conversations });
-    }
-  };
+  static getDerivedStateFromProps(props, state) {
+    const { conversations } = props;
+    const selectedConversation = state.selectedConversation || props.selectedConversation;
+    return {
+      ...state,
+      selectedConversation,
+      conversationsList: conversations,
+    };
+  }
 
   render() {
     const {
@@ -240,7 +244,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { hasFinished: clientHasFinished } = status.client;
     const { hasFinished: noteHasFinished } = status.notes;
     const hasConversationFinished = this.getHasConversationFinished();
-    console.log(conversationsList);
+
     return (
       <NotificationController>
         {({ notifyError, notifyInfo }) => (
@@ -269,7 +273,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 user={user}
                 conversation={selectedConversation}
                 conversations={conversationsList}
-                onMessagesTabConversationClick={this.onMessagesTabConversationClick}
+                setSelectedConversation={this.setSelectedConversation}
                 hasConversationFinished={hasConversationFinished && conversationsList !== null}
               />
             )}
