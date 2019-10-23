@@ -11,6 +11,7 @@ import userPropType from 'sly/propTypes/user';
 import { USER_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { query, getRelationship, prefetch } from 'sly/services/newApi';
 import SlyEvent from 'sly/services/helpers/events';
+import { validateAM } from 'sly/services/helpers/client';
 import { selectFormData, trimFormData } from 'sly/services/helpers/forms';
 import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
 
@@ -96,7 +97,8 @@ export default class FamilyDetailsFormContainer extends Component {
       newClient.set('attributes.clientInfo.phoneNumber', phone);
     }
     if (additionalMetadata) {
-      newClient.set('attributes.clientInfo.additionalMetadata', additionalMetadata);
+      const validMD = validateAM(additionalMetadata);
+      newClient.set('attributes.clientInfo.additionalMetadata', validMD);
     }
 
     if (slyMessage) {
