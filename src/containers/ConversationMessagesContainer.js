@@ -3,7 +3,7 @@ import { arrayOf, object, func, string, node } from 'prop-types';
 import dayjs from 'dayjs';
 import build from 'redux-object';
 import styled from 'styled-components';
-import { branch } from 'recompose';
+import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
 import { prefetch, withUser, query } from 'sly/services/newApi';
@@ -11,26 +11,38 @@ import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import conversationParticipantPropType from 'sly/propTypes/conversation/conversationParticipant';
-import { MESSAGES_UPDATE_LAST_READ_TIMEOUT, CONVERSATION_PARTICIPANT_TYPE_USER } from 'sly/constants/conversations';
+import { MESSAGES_UPDATE_LAST_READ_TIMEOUT, CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
 import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 import withWS from 'sly/services/ws/withWS';
+import Role from 'sly/components/common/Role';
 import textAlign from 'sly/components/helpers/textAlign';
 import fullHeight from 'sly/components/helpers/fullHeight';
 import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
+import fullWidth from 'sly/components/helpers/fullWidth';
 import SlyEvent from 'sly/services/helpers/events';
 import pad from 'sly/components/helpers/pad';
 import { isAfter } from 'sly/services/helpers/date';
-import { Block, Button } from 'sly/components/atoms';
+import {
+  AGENT_DASHBOARD_MESSAGES_PATH,
+  FAMILY_DASHBOARD_MESSAGES_PATH,
+  AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
+  SUMMARY,
+} from 'sly/constants/dashboardAppPaths';
+import { CUSTOMER_ROLE, AGENT_ND_ROLE } from 'sly/constants/roles';
+import { Block, Button, Link } from 'sly/components/atoms';
 import ConversationMessages from 'sly/components/organisms/ConversationMessages';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import IconButton from 'sly/components/molecules/IconButton';
+import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
+import BackLink from 'sly/components/molecules/BackLink';
 import SendMessageFormContainer from 'sly/containers/SendMessageFormContainer';
 
 const categoryName = 'conversation-messages';
 
 const TextCenterBlock = textAlign(Block);
 const FullHeightTextCenterBlock = fullHeight(TextCenterBlock);
+const FullWidthTextCenterBlock = fullWidth(TextCenterBlock);
 
 const SmallScreen = displayOnlyIn(styled(Block)`
   > * {
@@ -79,21 +91,24 @@ const StyledSendMessageFormContainer = pad(styled(SendMessageFormContainer)`
   flex-grow: 0;
 `, 'large');
 
+const HeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
-@branch(
-  props => props.conversation,
-  prefetch('messages', 'getConversationMessages', (req, { conversation }) => req({
-    'filter[conversationID]': conversation.id,
-    sort: '-created_at',
-    'page-size': 1000, // todo: remove after api fix
-  }))
-)
+@prefetch('messages', 'getConversationMessages', (req, { conversationId }) => req({
+  'filter[conversationID]': conversationId,
+  sort: '-created_at',
+  'page-size': 1000, // todo: remove after api fix
+}))
+
+@prefetch('conversation', 'getConversation', (req, { conversationId }) => req({
+  id: conversationId,
+}))
 
 @query('getConversationMessages', 'getConversationMessages')
 
 @query('updateConversationParticipant', 'updateConversationParticipant')
-
-@query('getConversations', 'getConversations')
 
 @withWS
 
@@ -102,6 +117,7 @@ const StyledSendMessageFormContainer = pad(styled(SendMessageFormContainer)`
 export default class ConversationMessagesContainer extends Component {
   static propTypes = {
     ws: object,
+    conversationId: string.isRequired,
     messages: arrayOf(messagePropType),
     conversation: conversationPropType,
     user: userPropType,
@@ -110,7 +126,6 @@ export default class ConversationMessagesContainer extends Component {
     participants: arrayOf(conversationParticipantPropType),
     updateConversationParticipant: func.isRequired,
     getConversationMessages: func.isRequired,
-    getConversations: func.isRequired,
     sendMessageFormPlaceholder: string,
     headingBoxSection: node,
     className: string,
@@ -175,16 +190,14 @@ export default class ConversationMessagesContainer extends Component {
 
   // FIXME: query should not use redux
   onMessage = (message) => {
-    const {
-      conversation, status, getConversations, user,
-    } = this.props;
+    const { conversation, status } = this.props;
     if (conversation) {
       const { id } = conversation;
       if (message.payload.conversationId === id) {
         this.gotNewMessage = true;
         status.messages.refetch();
         // We need to fetch conversation when a new message appears as it contains total message
-        getConversations({ 'filter[participant_id]': user.id, 'filter[participant_type]': CONVERSATION_PARTICIPANT_TYPE_USER });
+        status.conversation.refetch();
         // Patch last read message immediately if the user is active on that conversation
         // if scroll at bottom
         if (!document.hidden && this.wasScrollAtBottom) {
@@ -227,13 +240,10 @@ export default class ConversationMessagesContainer extends Component {
 
   getHasFinished = () => {
     const { status } = this.props;
-    // Returning true if we dont load messages as conversation is not present
-    if (!status.messages) {
-      return true;
-    }
-    const { hasFinished } = status.messages;
+    const { hasFinished: messagesHasFinished } = status.messages;
+    const { hasFinished: conversationHasFinished } = status.conversation;
 
-    return hasFinished;
+    return messagesHasFinished && conversationHasFinished;
   };
 
   isScrollAtBottom = () => this.messagesRef.current && (this.messagesRef.current.scrollHeight -
@@ -339,9 +349,7 @@ export default class ConversationMessagesContainer extends Component {
   newMessageRef = createRef();
 
   render() {
-    const {
-      conversation, otherParticipantId, otherParticipantType, viewingAsParticipant, participants, className, sendMessageFormPlaceholder, headingBoxSection, onCreateConversationSuccess,
-    } = this.props;
+    const { conversation, className, onCreateConversationSuccess, user } = this.props;
     const { messages, loadingMore } = this.state;
 
     if (!this.getHasFinished() && !this.alreadyLoaded) {
@@ -352,6 +360,44 @@ export default class ConversationMessagesContainer extends Component {
         </>
       );
     }
+
+    if (!conversation) {
+      return (
+        <>
+          <br />
+          <FullHeightTextCenterBlock size="caption">Conversation not found!</FullHeightTextCenterBlock>
+        </>
+      );
+    }
+
+    const { conversationParticipants } = conversation;
+    const { id } = user;
+    const viewingAsParticipant = conversationParticipants.find(p => p.participantID === id);
+    const otherParticipant = conversationParticipants.find(p => p.participantID !== id);
+    const name = otherParticipant && otherParticipant.participantInfo ? otherParticipant.participantInfo.name : '';
+    const otherParticipantIsClient = otherParticipant.participantType === CONVERSATION_PARTICIPANT_TYPE_CLIENT;
+    const sendMessageFormPlaceholder = otherParticipant && otherParticipant.participantInfo && `Message ${otherParticipant.participantInfo.name.split(' ').shift()}...`;
+
+    const heading = (
+      <HeaderWrapper>
+        <Role is={CUSTOMER_ROLE}>
+          <BackLink to={FAMILY_DASHBOARD_MESSAGES_PATH} />
+        </Role>
+        <Role is={AGENT_ND_ROLE}>
+          <BackLink to={AGENT_DASHBOARD_MESSAGES_PATH} />
+        </Role>
+        <FullWidthTextCenterBlock size="subtitle" palette={otherParticipantIsClient && 'primary'}>
+          {!otherParticipantIsClient
+            ? <Link size="subtitle" to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: otherParticipant.participantID, tab: SUMMARY })}>{name}</Link>
+            : name
+          }
+        </FullWidthTextCenterBlock>
+      </HeaderWrapper>
+    );
+
+    const headingBoxSection = (
+      <HeadingBoxSection heading={heading} hasNoBodyPadding hasNoBorder />
+    );
 
     this.alreadyLoaded = true;
     const viewingAsParticipantUnreadMessageCount = viewingAsParticipant ? viewingAsParticipant.stats.unreadMessageCount : 0;
@@ -399,7 +445,7 @@ export default class ConversationMessagesContainer extends Component {
               <ConversationMessages
                 viewingAsParticipant={viewingAsParticipant}
                 messages={messages}
-                participants={participants}
+                participants={conversationParticipants}
                 newMessageRef={this.newMessageRef}
               />
             </>
@@ -407,10 +453,10 @@ export default class ConversationMessagesContainer extends Component {
         </MessagesWrapper>
         <StyledSendMessageFormContainer
           conversation={conversation}
-          otherParticipantId={otherParticipantId}
-          otherParticipantType={otherParticipantType}
+          otherParticipantId={otherParticipant.id}
+          otherParticipantType={otherParticipant.type}
           placeholder={sendMessageFormPlaceholder}
-          disabled={!(otherParticipantId && otherParticipantType) && !viewingAsParticipant}
+          disabled={!(otherParticipant.id && otherParticipant.type) && !viewingAsParticipant}
           onCreateConversationSuccess={onCreateConversationSuccess}
         />
       </ContainerWrapper>

@@ -17,7 +17,6 @@ import {
 import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
 import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
-import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import { userIs } from 'sly/services/helpers/role';
 import pad from 'sly/components/helpers/pad';
@@ -256,6 +255,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     goToFamilyDetails: func,
     goToMessagesTab: func,
     refetchConversations: func,
+    refetchConversation: func,
     hasConversationFinished: bool,
     conversation: conversationPropType,
     user: userPropType.isRequired,
@@ -451,18 +451,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchClient,
+      showModal, hideModal,
     } = this.props;
     const { organization } = user;
-
-    let conversationParticipants = [];
-    let viewingAsParticipant;
-
-    if (hasConversationFinished && conversation) {
-      ({ conversationParticipants } = conversation);
-      const { id } = user;
-      viewingAsParticipant = conversationParticipants.find(p => p.participantID === id);
-    }
 
     if (clientIsLoading) {
       return (
@@ -669,7 +661,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               </Role>
             )}
 
-
             {currentTab === MESSAGES && (
               <SmallScreenBorderDiv>
                 {!hasConversationFinished &&
@@ -680,13 +671,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                 }
                 {hasConversationFinished &&
                   <ConversationMessagesContainer
-                    conversation={conversation}
-                    viewingAsParticipant={viewingAsParticipant}
-                    participants={conversationParticipants}
+                    conversationId={conversation.id}
                     sendMessageFormPlaceholder={`Message ${name}...`}
-                    otherParticipantId={id}
-                    otherParticipantType={CONVERSATION_PARTICIPANT_TYPE_CLIENT}
-                    onCreateConversationSuccess={refetchConversations}
                   />
                 }
               </SmallScreenBorderDiv>
