@@ -1,18 +1,24 @@
 import { responsive, select, getSelector } from '../../helpers/tests';
 import buildEntity from '../../helpers/buildEntity';
 
+const randHash = () => Math.random().toString(36).substring(7);
+
 describe('Review Community', () => {
   let community;
+  let user;
 
   beforeEach(() => {
     cy.server();
 
-    cy.fixture('community-rhoda').then((response) => {
-      community = buildEntity(response);
-    });
+    cy.fixture('community-rhoda').then(response => community = buildEntity(response));
+
+    cy.fixture('user-slytest-admin').then(response => user = response);
   });
 
   const portal = selector => select(`.ReactModalPortal ${selector}`);
+
+  // nth-of-type 2 because it has already an element in position 1 that is not a review
+  const lastReview = selector => select(`.EntityReview__Wrapper:nth-of-type(2) ${selector}`);
 
   responsive(() => {
     it('should leave a review', () => {
@@ -25,9 +31,11 @@ describe('Review Community', () => {
 
       cy.get('button').contains('Write a Review').click();
 
+      const commentText = `my comments ${randHash()}`;
+
       portal('h2').contains(`Write a review for ${community.name}`).should('exist');
-      portal('.Rating.Star:last-child').click();
-      portal('textarea[name="comments"]').type('my comments');
+      portal('.Rating.Star:nth-of-type(4)').click();
+      portal('textarea[name="comments"]').type(commentText);
       portal('input[name="name"]').type('Fonz');
       portal('input[name="email"]').type('fonz@seniorly.com');
       portal('button[type="submit"]').click();
@@ -38,10 +46,10 @@ describe('Review Community', () => {
         expect(xhr.status).to.equal(200);
         expect(xhr.requestBody).to.deep.equal({
           communitySlug: community.id,
-          comments: 'my comments',
+          comments: commentText,
           email: 'fonz@seniorly.com',
           name: 'Fonz',
-          value: 5,
+          value: 4,
         });
         const responseText = await xhr.response.body.text();
         const response = JSON.parse(responseText);
@@ -57,7 +65,7 @@ describe('Review Community', () => {
                 slug: community.id,
                 entityType: 'Community',
                 ratedId,
-                ratedValue: 5,
+                ratedValue: 4,
                 email: 'fonz@seniorly.com',
                 name: 'Fonz',
               },
@@ -69,6 +77,26 @@ describe('Review Community', () => {
       });
 
       portal('.Modal.Body .Thankyou').contains('Your review has been submitted for approval').should('exist');
+
+      portal('#close').click();
+
+      cy.request('POST', '/v0/platform/auth/login', user)
+        .then(() => cy.visit(`/rating/${ratedId}/approve`));
+
+      cy.get('div').contains('Status: Success').should('exist');
+
+      cy.request('DELETE', '/v0/platform/auth/logout');
+      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+
+      const date = new Date();
+      const month = date.toLocaleString('en-GB', { month: 'long' });
+      const year = date.getYear();
+
+      lastReview('.Rating__Star:nth-of-type(4) .PositionedMask').should('have.attr', 'width', '90');
+      lastReview('.Rating__Star:last-of-type .PositionedMask').should('have.attr', 'width', '10');
+      lastReview('.CommentBlock').contains(commentText).should('exist');
+      lastReview('.BottomSection > :first-child').contains('By Fonz').should('exist');
+      lastReview('.BottomSection > :last-child').contains(`${month}, ${year}`).should('exist');
     });
   });
 });

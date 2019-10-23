@@ -43,7 +43,7 @@ const Icon = styled(({ icon, size, ...props }) => {
     svg = '<span>x</span>';
   }
   return (
-    <Wrapper size={size} {...props} dangerouslySetInnerHTML={{ __html: svg }} />
+    <Wrapper size={size} {...props} data-cy={icon} dangerouslySetInnerHTML={{ __html: svg }} />
   );
 })`
 `;
