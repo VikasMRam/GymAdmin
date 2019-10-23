@@ -23,7 +23,6 @@ import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
 import SlyEvent from 'sly/services/helpers/events';
-import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
 import withBreakpoint from 'sly/components/helpers/breakpoint';
 
 @withUser
@@ -46,13 +45,8 @@ import withBreakpoint from 'sly/components/helpers/breakpoint';
   invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
 }))
 
-@prefetch('clientConversations', 'getConversations', (req, { match }) => req({
-  'filter[client]': match.params.id,
-}))
-
 @prefetch('conversations', 'getConversations', (req, { match }) => req({
-  'filter[participant_id]': match.params.id,
-  'filter[participant_type]': CONVERSATION_PARTICIPANT_TYPE_CLIENT,
+  'filter[client]': match.params.id,
 }))
 
 @withBreakpoint
@@ -62,7 +56,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     user: userPropType.isRequired,
     client: clientPropType,
     conversations: arrayOf(conversationPropType),
-    clientConversations: arrayOf(conversationPropType),
     match: object,
     status: object,
     history: object,
@@ -178,10 +171,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { status } = this.props;
     const { hasFinished: userHasFinished } = status.user;
     const { hasFinished: conversationsHasFinished } = status.conversations;
-    const { hasFinished: clientConversationsHasFinished } = status.clientConversations;
     const { hasFinished: clientHasFinished } = status.client;
 
-    return userHasFinished && conversationsHasFinished && clientConversationsHasFinished && clientHasFinished;
+    return userHasFinished && conversationsHasFinished && clientHasFinished;
   };
 
   goToFamilyDetails = () => {
@@ -201,7 +193,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   refetchConversations = () => {
     const { status } = this.props;
     status.conversations.refetch();
-    status.clientConversations.refetch();
   };
 
   onMessagesTabConversationClick = (conversation) => {
@@ -209,16 +200,14 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   componentDidMount = () => {
-    const { conversations, clientConversations } = this.props;
+    const { conversations } = this.props;
     const hasConversationFinished = this.getHasConversationFinished();
-    let conversationsList = [];
     if (hasConversationFinished) {
-      conversationsList = conversations.concat(clientConversations);
-      if (conversationsList.length === 1) {
-        const [conversation] = conversationsList;
+      if (conversations.length === 1) {
+        const [conversation] = conversations;
         this.setState({ selectedConversation: conversation });
       }
-      this.setState({ conversationsList });
+      this.setState({ conversationsList: conversations });
     }
   };
 
@@ -251,7 +240,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { hasFinished: clientHasFinished } = status.client;
     const { hasFinished: noteHasFinished } = status.notes;
     const hasConversationFinished = this.getHasConversationFinished();
-
+    console.log(conversationsList);
     return (
       <NotificationController>
         {({ notifyError, notifyInfo }) => (
