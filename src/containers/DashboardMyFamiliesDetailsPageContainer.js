@@ -76,6 +76,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   state = {
     selectedConversation: null,
+    conversationsList: null,
   }
 
   onRejectSuccess = (hide) => {
@@ -205,7 +206,21 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   onMessagesTabConversationClick = (conversation) => {
     this.setState({ selectedConversation: conversation });
-  }
+  };
+
+  componentDidMount = () => {
+    const { conversations, clientConversations } = this.props;
+    const hasConversationFinished = this.getHasConversationFinished();
+    let conversationsList = [];
+    if (hasConversationFinished) {
+      conversationsList = conversations.concat(clientConversations);
+      if (conversationsList.length === 1) {
+        const [conversation] = conversationsList;
+        this.setState({ selectedConversation: conversation });
+      }
+      this.setState({ conversationsList });
+    }
+  };
 
   render() {
     const {
@@ -218,12 +233,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       status,
       notes,
       user,
-      conversations,
-      clientConversations,
       breakpoint,
     } = this.props;
 
-    const { selectedConversation } = this.state;
+    const { selectedConversation, conversationsList } = this.state;
 
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && client && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
@@ -238,10 +251,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { hasFinished: clientHasFinished } = status.client;
     const { hasFinished: noteHasFinished } = status.notes;
     const hasConversationFinished = this.getHasConversationFinished();
-    let allConversions = [];
-    if (hasConversationFinished) {
-      allConversions = conversations.concat(clientConversations);
-    }
+
     return (
       <NotificationController>
         {({ notifyError, notifyInfo }) => (
@@ -269,9 +279,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 refetchConversations={this.refetchConversations}
                 user={user}
                 conversation={selectedConversation}
-                conversations={allConversions}
+                conversations={conversationsList}
                 onMessagesTabConversationClick={this.onMessagesTabConversationClick}
-                hasConversationFinished={hasConversationFinished}
+                hasConversationFinished={hasConversationFinished && conversationsList !== null}
               />
             )}
           </ModalController>
