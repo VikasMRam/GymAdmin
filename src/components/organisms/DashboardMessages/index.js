@@ -8,14 +8,6 @@ import { Heading, Box } from 'sly/components/atoms';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
 
-const Wrapper = styled.div`
-  padding: ${size('spacing', 'xLarge')};
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    padding: 0;
-  }
-`;
-
 const HeadingWrapper = styled.div`
   padding: ${size('spacing', 'xLarge')};
   background-color: ${palette('white', 'base')};
@@ -54,14 +46,14 @@ const DashboardMessages = ({ isLoading, heading, conversations, onConversationCl
     messagesComponent = <DashboardMessagesContainer conversations={conversations} onConversationClick={onConversationClick} refetchConversations={refetchConversations} />;
   }
   return (
-    <Wrapper>
+    <>
       <HeadingWrapper>
         <Heading size="subtitle">{heading}</Heading>
       </HeadingWrapper>
       <MessagesWrapper snap="top" hasMessages={hasMessages}>
         {messagesComponent}
       </MessagesWrapper>
-    </Wrapper>
+    </>
   );
 };
 

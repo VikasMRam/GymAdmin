@@ -184,7 +184,9 @@ const StyledClientNameBlock = styled(Block)`
 `;
 
 const DashboardMessagesContainerWrapper = styled.div`
-  padding: ${size('spacing.large')};
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding: ${size('spacing.xLarge')};
+  }
 `;
 
 const ClientName = ({ client, rawClient, backLinkHref, ...props }) => {
