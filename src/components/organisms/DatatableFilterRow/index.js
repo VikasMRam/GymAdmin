@@ -21,10 +21,15 @@ const AUTOCOMPLETE = 'MultiSelectDynamicList';
 const SELECT = 'MultiSelectStaticList';
 const DATE_TIME = 'DateTime';
 
-const getValuesFor = (filter, name) => {
+const getValuesFor = (filter, name, value) => {
   switch (name) {
     case 'column': return {};
-    case 'operator': return { column: filter.column };
+    case 'operator': return {
+      column: filter.column,
+      value: noValueOperators.includes(value)
+        ? undefined
+        : filter.value,
+    };
     default: return filter;
   }
 };
@@ -148,7 +153,7 @@ export default class DatatableFilterRow extends Component {
 
   onValueChange = (name, value) => {
     const { filter, onFilterChange } = this.props;
-    const values = getValuesFor(filter, name);
+    const values = getValuesFor(filter, name, value);
     onFilterChange(filter, { ...values, [name]: value });
   };
 
