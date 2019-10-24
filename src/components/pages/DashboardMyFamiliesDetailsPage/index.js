@@ -325,7 +325,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const agentTabList = [
       { id: ACTIVITY, to: activityPath, label: 'Activity' },
       { id: FAMILY_DETAILS, to: familyDetailsPath, label: 'Family Details' },
-      { id: MESSAGES, to: messagesPath, label: 'Messages' },
     ];
     const adminTabList = [
       { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
