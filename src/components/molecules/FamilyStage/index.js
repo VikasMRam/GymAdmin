@@ -61,6 +61,7 @@ const FamilyStage = ({
     disableAddNoteUpdateButton = false;
     if (stage === FAMILY_STAGE_NEW) {
       showClaimReferralButton = true;
+      showUpdateStageButton = false;
       showAcceptRejectButtons = false;
       showAddNoteButton = true;
     }
