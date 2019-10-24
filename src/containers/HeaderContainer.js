@@ -16,7 +16,7 @@ import NotificationController from 'sly/controllers/NotificationController';
 import Notifications from 'sly/components/organisms/Notifications';
 import Header from 'sly/components/organisms/Header';
 import ModalController from 'sly/controllers/ModalController';
-import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContianer';
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
 import { withAuth } from 'sly/services/newApi';
 
 const defaultHeaderItems = [

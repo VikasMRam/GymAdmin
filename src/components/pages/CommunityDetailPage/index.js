@@ -8,7 +8,6 @@ import { size, palette, assetPath } from 'sly/components/themes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
-import SlyEvent from 'sly/services/helpers/events';
 import { calculatePricing, buildPriceList, buildEstimatedPriceList } from 'sly/services/helpers/pricing';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import pad from 'sly/components/helpers/pad';
@@ -53,7 +52,7 @@ import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuesti
 import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
-import HowSlyWorksVideoContainer from "sly/containers/HowSlyWorksVideoContianer";
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
