@@ -58,6 +58,7 @@ import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFo
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 import withExitIntent from 'sly/services/exitIntent/withExitIntent';
+import HowSlyWorksVideoContainer from "sly/containers/HowSlyWorksVideoContianer";
 
 const BackToSearch = styled.div`
   text-align: center
@@ -392,8 +393,6 @@ export default class CommunityDetailPage extends Component {
       setQueryParams,
       onBookATourClick,
       onGCPClick,
-      toggleHowSlyWorksVideoPlaying,
-      isHowSlyWorksVideoPlaying,
       history,
     } = this.props;
 
@@ -641,12 +640,7 @@ export default class CommunityDetailPage extends Component {
                 }
                 <TopCollapsibleSection title="How Seniorly Works">
                   <MainSection noPadding>
-                    <HowSlyWorksVideo
-                      isPlaying={isHowSlyWorksVideoPlaying}
-                      onThumbnailClick={toggleHowSlyWorksVideoPlaying}
-                      onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', id, e.target.currentTime)}
-                      onPlay={e => sendEvent('howSlyWorksVideo', 'play', id, e.target.currentTime)}
-                    />
+                    <HowSlyWorksVideoContainer eventLabel={community.id} />
                   </MainSection>
                 </TopCollapsibleSection>
                 {partnerAgent &&

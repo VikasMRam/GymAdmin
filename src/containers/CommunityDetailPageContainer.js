@@ -144,10 +144,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     }),
   };
 
-  state = {
-    isHowSlyWorksVideoPlaying: false,
-  };
-
   componentDidMount() {
     this.uuidActionPageView();
   }
@@ -230,22 +226,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     const event = {
       action: 'click', category: 'similarCommunity', label: index.toString(), value: to,
     };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleToggleHowSlyWorksVideoPlaying = () => {
-    const { community } = this.props;
-    const { isHowSlyWorksVideoPlaying } = this.state;
-    const { id } = community;
-
-    this.setState({ isHowSlyWorksVideoPlaying: !isHowSlyWorksVideoPlaying });
-
-    const event = {
-      action: 'start', category: 'howSlyWorksVideo', label: id,
-    };
-    if (isHowSlyWorksVideoPlaying) {
-      event.action = 'stop';
-    }
     SlyEvent.getInstance().sendEvent(event);
   };
 
@@ -415,10 +395,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     const { location } = history;
     const { pathname } = location;
 
-    const {
-      isHowSlyWorksVideoPlaying,
-    } = this.state;
-
     if (status.community.status === 301) {
       const newSlug = getLastSegment(status.community.headers.location);
       return <Redirect to={replaceLastSegment(location.pathname, newSlug)} />;
@@ -489,8 +465,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
                 profileContacted={profileContacted}
                 onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
                 userAction={userAction}
-                toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
-                isHowSlyWorksVideoPlaying={isHowSlyWorksVideoPlaying}
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 showModal={show}
