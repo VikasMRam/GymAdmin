@@ -3,12 +3,12 @@ import { arrayOf, func, bool } from 'prop-types';
 
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
-import DashboardMessages from 'sly/components/organisms/DashboardMessages';
+import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
 
 const DashboardMessagesPage = ({ isLoading, conversations, onConversationClick, refetchConversations }) => {
   return (
     <DashboardPageTemplate activeMenuItem="Messages">
-      <DashboardMessages
+      <DashboardMessagesContainer
         isLoading={isLoading}
         heading="Conversations"
         conversations={conversations}

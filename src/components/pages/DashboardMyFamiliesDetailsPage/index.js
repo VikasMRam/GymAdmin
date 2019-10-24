@@ -48,7 +48,7 @@ import Role from 'sly/components/common/Role';
 import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
 import StatusSelect from 'sly/components/molecules/StatusSelect';
 import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
-import DashboardMessages from 'sly/components/organisms/DashboardMessages';
+import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
 import { Datatable } from 'sly/services/datatable';
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
@@ -645,7 +645,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               <SmallScreenBorderDiv>
                 {!conversation &&
                   <DashboardMessagesContainerWrapper>
-                    <DashboardMessages
+                    <DashboardMessagesContainer
                       isLoading={!hasConversationFinished}
                       heading="Conversations"
                       conversations={conversations}

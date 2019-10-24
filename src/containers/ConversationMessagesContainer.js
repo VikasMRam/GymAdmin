@@ -370,19 +370,19 @@ export default class ConversationMessagesContainer extends Component {
     }
 
     const { conversationParticipants } = conversation;
-    const { id } = user;
-    const viewingAsParticipant = conversationParticipants.find(p => p.participantID === id);
-    const otherParticipant = conversationParticipants.find(p => p.participantID !== id);
-    const name = otherParticipant && otherParticipant.participantInfo ? otherParticipant.participantInfo.name : '';
-    const otherParticipantIsClient = otherParticipant.participantType === CONVERSATION_PARTICIPANT_TYPE_CLIENT;
-    const sendMessageFormPlaceholder = otherParticipant && otherParticipant.participantInfo && `Message ${otherParticipant.participantInfo.name.split(' ').shift()}...`;
+    const { id: userId } = user;
+    const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
+    const otherClientParticipant = conversationParticipants.find(p => p.participantID !== userId && p.participantType === CONVERSATION_PARTICIPANT_TYPE_CLIENT);
+    const name = otherClientParticipant && otherClientParticipant.participantInfo ? otherClientParticipant.participantInfo.name : '';
+    const otherParticipantIsClient = !!otherClientParticipant;
+    const sendMessageFormPlaceholder = otherClientParticipant && otherClientParticipant.participantInfo && `Message ${otherClientParticipant.participantInfo.name.split(' ').shift()}...`;
 
     const heading = (
       <HeaderWrapper>
         <BackLink onClick={onBackClick} />
         <FullWidthTextCenterBlock size="subtitle" palette={otherParticipantIsClient && 'primary'}>
           {otherParticipantIsClient
-            ? <Link size="subtitle" to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: otherParticipant.participantID, tab: SUMMARY })}>{name}</Link>
+            ? <Link size="subtitle" to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: otherClientParticipant.participantID, tab: SUMMARY })}>{name}</Link>
             : name
           }
         </FullWidthTextCenterBlock>
@@ -447,10 +447,8 @@ export default class ConversationMessagesContainer extends Component {
         </MessagesWrapper>
         <StyledSendMessageFormContainer
           conversation={conversation}
-          otherParticipantId={otherParticipant.id}
-          otherParticipantType={otherParticipant.type}
           placeholder={sendMessageFormPlaceholder}
-          disabled={!(otherParticipant.id && otherParticipant.type) && !viewingAsParticipant}
+          disabled={!viewingAsParticipant}
           onCreateConversationSuccess={onCreateConversationSuccess}
         />
       </ContainerWrapper>
