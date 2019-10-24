@@ -680,6 +680,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   <ConversationMessagesContainer
                     conversationId={conversation.id}
                     sendMessageFormPlaceholder={`Message ${name}...`}
+                    onBackClick={() => setSelectedConversation(null)}
                   />
                 }
               </SmallScreenBorderDiv>

@@ -15,7 +15,6 @@ import { MESSAGES_UPDATE_LAST_READ_TIMEOUT, CONVERSATION_PARTICIPANT_TYPE_CLIENT
 import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 import withWS from 'sly/services/ws/withWS';
-import Role from 'sly/components/common/Role';
 import textAlign from 'sly/components/helpers/textAlign';
 import fullHeight from 'sly/components/helpers/fullHeight';
 import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
@@ -24,12 +23,9 @@ import SlyEvent from 'sly/services/helpers/events';
 import pad from 'sly/components/helpers/pad';
 import { isAfter } from 'sly/services/helpers/date';
 import {
-  AGENT_DASHBOARD_MESSAGES_PATH,
-  FAMILY_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   SUMMARY,
 } from 'sly/constants/dashboardAppPaths';
-import { CUSTOMER_ROLE, AGENT_ND_ROLE } from 'sly/constants/roles';
 import { Block, Button, Link } from 'sly/components/atoms';
 import ConversationMessages from 'sly/components/organisms/ConversationMessages';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
@@ -132,6 +128,7 @@ export default class ConversationMessagesContainer extends Component {
     otherParticipantId: string,
     otherParticipantType: string,
     onCreateConversationSuccess: func,
+    onBackClick: func,
   };
 
   static defaultProps = {
@@ -349,7 +346,7 @@ export default class ConversationMessagesContainer extends Component {
   newMessageRef = createRef();
 
   render() {
-    const { conversation, className, onCreateConversationSuccess, user } = this.props;
+    const { conversation, className, onCreateConversationSuccess, user, onBackClick } = this.props;
     const { messages, loadingMore } = this.state;
 
     if (!this.getHasFinished() && !this.alreadyLoaded) {
@@ -380,12 +377,7 @@ export default class ConversationMessagesContainer extends Component {
 
     const heading = (
       <HeaderWrapper>
-        <Role is={CUSTOMER_ROLE}>
-          <BackLink to={FAMILY_DASHBOARD_MESSAGES_PATH} />
-        </Role>
-        <Role is={AGENT_ND_ROLE}>
-          <BackLink to={AGENT_DASHBOARD_MESSAGES_PATH} />
-        </Role>
+        <BackLink onClick={onBackClick} />
         <FullWidthTextCenterBlock size="subtitle" palette={otherParticipantIsClient && 'primary'}>
           {otherParticipantIsClient
             ? <Link size="subtitle" to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: otherParticipant.participantID, tab: SUMMARY })}>{name}</Link>

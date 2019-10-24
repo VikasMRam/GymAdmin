@@ -1,5 +1,5 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { string, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
@@ -11,16 +11,18 @@ const StyledConversationMessagesContainer = styled(ConversationMessagesContainer
   border-radius: ${size('border.xLarge')};
 `;
 
-const DashboardMessageDetailsPage = ({ conversationId }) => (
+const DashboardMessageDetailsPage = ({ conversationId, onBackClick }) => (
   <DashboardPageTemplate activeMenuItem="Messages" bodyHasOverflow>
     <StyledConversationMessagesContainer
       conversationId={conversationId}
+      onBackClick={onBackClick}
     />
   </DashboardPageTemplate>
 );
 
 DashboardMessageDetailsPage.propTypes = {
   conversationId: string,
+  onBackClick: func,
 };
 
 export default DashboardMessageDetailsPage;
