@@ -28,7 +28,6 @@ import { getStageDetails } from 'sly/services/helpers/stage';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
-import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFamilyContainer';
 import RejectFamilyContainer from 'sly/containers/RejectFamilyContainer';
 import UpdateFamilyStageFormContainer from 'sly/containers/UpdateFamilyStageFormContainer';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
@@ -263,6 +262,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     conversations: arrayOf(conversationPropType),
     setSelectedConversation: func,
     user: userPropType.isRequired,
+    onAcceptClick: func,
   };
 
   getTabPathsForUser = () => {
@@ -334,31 +334,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       tabs = tabs.concat(adminTabList.map(e => genTab(e)));
     }
     return tabs;
-  };
-
-  handleAcceptClick = () => {
-    const {
-      showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails, goToMessagesTab, refetchConversations, refetchClient, conversation, user,
-    } = this.props;
-    SlyEvent.getInstance().sendEvent({
-      category: 'fdetails',
-      action: 'launch',
-      label: 'accept-lead',
-      value: '',
-    });
-    showModal((
-      <AcceptAndContactFamilyContainer
-        notifyError={notifyError}
-        client={client}
-        rawClient={rawClient}
-        onCancel={hideModal}
-        goToFamilyDetails={goToFamilyDetails}
-        goToMessagesTab={goToMessagesTab}
-        refetchConversations={refetchConversations}
-        refetchClient={refetchClient}
-        conversation={conversation}
-        user={user}
-      />), null, 'noPadding', false);
   };
 
   handleRejectClick = () => {
@@ -450,13 +425,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
   render() {
     const {
-      handleAcceptClick, handleRejectClick, handleUpdateClick, handleAddNoteClick,
+      handleRejectClick, handleUpdateClick, handleAddNoteClick,
       handleEditNoteClick,
     } = this;
 
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchClient,
-      showModal, hideModal, conversations, refetchConversations, setSelectedConversation,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
+      conversation, conversations, setSelectedConversation, hasConversationFinished, refetchConversations, refetchClient,
+      showModal, hideModal, onAcceptClick,
     } = this.props;
     const { organization } = user;
 
@@ -521,7 +497,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     if (showAcceptRejectButtons) {
       stickyFooterOptions = [
         {
-          text: 'Accept and contact this family', icon: 'flag', palette: 'primary', iconPalette: 'slate', onClick: handleAcceptClick,
+          text: 'Accept and contact this family', icon: 'flag', palette: 'primary', iconPalette: 'slate', onClick: onAcceptClick,
         },
         {
           text: 'Reject', icon: 'add-note', iconPalette: 'slate', palette: 'danger', onClick: handleRejectClick, ghost: true,
@@ -560,7 +536,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               noBorderRadius
               snap="top"
               stageText={stage}
-              onAcceptClick={handleAcceptClick}
+              onAcceptClick={onAcceptClick}
               onRejectClick={handleRejectClick}
               onUpdateClick={handleUpdateClick}
               onAddNoteClick={handleAddNoteClick}

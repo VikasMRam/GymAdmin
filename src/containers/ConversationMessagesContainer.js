@@ -354,6 +354,7 @@ export default class ConversationMessagesContainer extends Component {
         <>
           <br />
           <FullHeightTextCenterBlock size="caption">Loading...</FullHeightTextCenterBlock>
+          <br />
         </>
       );
     }
@@ -363,6 +364,7 @@ export default class ConversationMessagesContainer extends Component {
         <>
           <br />
           <FullHeightTextCenterBlock size="caption">Conversation not found!</FullHeightTextCenterBlock>
+          <br />
         </>
       );
     }

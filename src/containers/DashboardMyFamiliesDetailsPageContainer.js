@@ -17,13 +17,15 @@ import {
   SUMMARY,
   MESSAGES, ACTIVITY,
 } from 'sly/constants/dashboardAppPaths';
+import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
 import { NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/notes';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import NotificationController from 'sly/controllers/NotificationController';
-import ModalController from 'sly/controllers/ModalController';
-import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
 import SlyEvent from 'sly/services/helpers/events';
 import withBreakpoint from 'sly/components/helpers/breakpoint';
+import NotificationController from 'sly/controllers/NotificationController';
+import ModalController from 'sly/controllers/ModalController';
+import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFamilyContainer';
+import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
 
 const mapStateToProps = (state, { conversations }) => ({
   selectedConversation: conversations && conversations.length === 1 ? conversations[0] : null,
@@ -173,6 +175,42 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       });
   };
 
+  handleAcceptClick = (showModal, hideModal, notifyError) => {
+    const { client, status, updateClient, conversations } = this.props;
+    const [conversation] = conversations;
+    const { result: rawClient } = status.client;
+    const { id } = client;
+    const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
+    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.stage']))
+      .set('attributes.stage', contactStatus)
+      .value();
+
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: 'accept-lead',
+      value: '',
+    });
+    return updateClient({ id }, newClient)
+      .then(() => {
+        showModal((
+          <AcceptAndContactFamilyContainer
+            client={client}
+            onCancel={hideModal}
+            refetchConversations={status.conversations.refetch}
+            conversation={conversation}
+          />), null, 'noPadding', false);
+        status.client.refetch();
+      })
+      .catch((r) => {
+        // TODO: Need to set a proper way to handle server side errors
+        const { body } = r;
+        const errorMessage = body.errors.map(e => e.title).join('. ');
+        console.error(errorMessage);
+        notifyError('Failed to update stage. Please try again.');
+      });
+  };
+
   getHasConversationFinished = () => {
     const { status } = this.props;
     const { hasFinished: userHasFinished } = status.user;
@@ -194,11 +232,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { id } = client;
     const path = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: MESSAGES });
     history.push(path);
-  };
-
-  refetchConversations = () => {
-    const { status } = this.props;
-    status.conversations.refetch();
   };
 
   setSelectedConversation = (conversation) => {
@@ -269,12 +302,13 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 clientIsLoading={!clientHasFinished}
                 goToFamilyDetails={this.goToFamilyDetails}
                 goToMessagesTab={this.goToMessagesTab}
-                refetchConversations={this.refetchConversations}
+                refetchConversations={status.conversations.refetch}
                 user={user}
                 conversation={selectedConversation}
                 conversations={conversationsList}
                 setSelectedConversation={this.setSelectedConversation}
                 hasConversationFinished={hasConversationFinished && conversationsList !== null}
+                onAcceptClick={() => this.handleAcceptClick(show, hide, notifyError)}
               />
             )}
           </ModalController>
