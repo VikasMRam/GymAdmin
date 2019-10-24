@@ -42,7 +42,7 @@ const FamilyStage = ({
 }) => {
   const { group, palette, stage } = getStageDetails(stageText);
   let showAcceptRejectButtons = stage === FAMILY_STAGE_NEW;
-  let showUpdateAddNoteButtons = stage !== FAMILY_STAGE_NEW;
+  let showUpdateStageButton = stage !== FAMILY_STAGE_NEW;
   let showAddNoteButton = stage !== FAMILY_STAGE_NEW;
   let disableAddNoteUpdateButton = stage === FAMILY_STAGE_REJECTED;
   let showClaimReferralButton = false;
@@ -53,14 +53,17 @@ const FamilyStage = ({
   const { id: userOrg } = organization;
   if (stage === FAMILY_STAGE_NEW &&
     (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg)) {
-    showUpdateAddNoteButtons = true;
+    showUpdateStageButton = true;
     showAcceptRejectButtons = false;
     disableAddNoteUpdateButton = false;
   }
-  if (userIs(user, PLATFORM_ADMIN_ROLE) && stage === FAMILY_STAGE_NEW) {
-    showClaimReferralButton = true;
-    showAcceptRejectButtons = false;
-    showAddNoteButton = true;
+  if (userIs(user, PLATFORM_ADMIN_ROLE)) {
+    disableAddNoteUpdateButton = false;
+    if (stage === FAMILY_STAGE_NEW) {
+      showClaimReferralButton = true;
+      showAcceptRejectButtons = false;
+      showAddNoteButton = true;
+    }
   }
 
   return (
@@ -70,9 +73,8 @@ const FamilyStage = ({
       {showAcceptRejectButtons && <MarginBottomFullWidthButton onClick={onAcceptClick}>Accept and contact this family</MarginBottomFullWidthButton>}
       {showAcceptRejectButtons && <FullWidthButton onClick={onRejectClick} palette="danger" ghost>Reject</FullWidthButton>}
       {showClaimReferralButton && <MarginBottomFullWidthButton onClick={onAcceptClick}>Claim Referral</MarginBottomFullWidthButton>}
-      {showAddNoteButton && <FullWidthButton onClick={onAddNoteClick} disabled={disableAddNoteUpdateButton} ghost>Add note</FullWidthButton>}}
-      {showUpdateAddNoteButtons && <MarginBottomFullWidthButton onClick={onUpdateClick} disabled={disableAddNoteUpdateButton}>Update stage</MarginBottomFullWidthButton>}
-      {showUpdateAddNoteButtons && <FullWidthButton onClick={onAddNoteClick} disabled={disableAddNoteUpdateButton} ghost>Add note</FullWidthButton>}
+      {showUpdateStageButton && <MarginBottomFullWidthButton onClick={onUpdateClick} disabled={disableAddNoteUpdateButton}>Update stage</MarginBottomFullWidthButton>}
+      {showAddNoteButton && <FullWidthButton onClick={onAddNoteClick} disabled={disableAddNoteUpdateButton} ghost>Add note</FullWidthButton>}
     </Box>
   );
 };
