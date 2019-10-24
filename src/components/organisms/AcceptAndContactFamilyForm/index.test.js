@@ -20,7 +20,8 @@ describe('AcceptAndContactFamilyForm', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
 
-    wrapper.find('ThreeSectionFormTemplate').find('[icon="phone"]').simulate('submit');
+    wrapper.find('ThreeSectionFormTemplate').find('[icon="phone"]').simulate('click');
+    wrapper.find('ThreeSectionFormTemplate').dive().find('form').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
 
@@ -28,7 +29,8 @@ describe('AcceptAndContactFamilyForm', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
 
-    wrapper.find('ThreeSectionFormTemplate').find('[icon="email"]').simulate('submit');
+    wrapper.find('ThreeSectionFormTemplate').find('[icon="email"]').simulate('click');
+    wrapper.find('ThreeSectionFormTemplate').dive().find('form').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
 
@@ -36,7 +38,8 @@ describe('AcceptAndContactFamilyForm', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
 
-    wrapper.find('ThreeSectionFormTemplate').find('[icon="message"]').simulate('submit');
+    wrapper.find('ThreeSectionFormTemplate').find('[icon="message"]').simulate('click');
+    wrapper.find('ThreeSectionFormTemplate').dive().find('form').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
 });
