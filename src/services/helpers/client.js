@@ -14,6 +14,5 @@ export const validateAM = (additionalMetadata, { phone, email }) => {
   if (!email || email === '') {
     a.delete('EmailOnly');
   }
-  console.log('Seeing set', a);
   return [...a];
 };
