@@ -138,22 +138,15 @@ export default class DashboardAgentTasksSectionContainer extends Component {
   }, 500);
 
   render() {
-    const { tasks, status, match, location, ...props } = this.props;
+    const { tasks, status, match, location, datatable, ...props } = this.props;
 
     const params = getPageParams({ match, location });
     const { type, taskName } = params;
     const { tasks: tasksStatus } = status;
-    const { hasFinished, error: tasksError, meta, result: tasksRaw } = tasksStatus;
+    const { error: tasksError, meta, result: tasksRaw } = tasksStatus;
 
     if (tasksError) {
       return <RefreshRedirect to="/" />;
-    }
-    if (!hasFinished) {
-      return (
-        <DashboardAgentTasksSection
-          isPageLoading={!hasFinished}
-        />
-      );
     }
     const pagination = getPaginationData(tasksStatus);
 
@@ -164,7 +157,8 @@ export default class DashboardAgentTasksSectionContainer extends Component {
             {({ show, hide }) => (
               <DashboardAgentTasksSection
                 {...props}
-                isPageLoading={!hasFinished}
+                isPageLoading={!datatable.hasFinished}
+                datatable={datatable}
                 tasks={tasks}
                 tasksRaw={tasksRaw}
                 pagination={pagination}
