@@ -1,9 +1,10 @@
 import React, { Component, createRef } from 'react';
-import { arrayOf, object, func, string, node } from 'prop-types';
+import { arrayOf, object, func, string } from 'prop-types';
 import dayjs from 'dayjs';
 import build from 'redux-object';
 import styled from 'styled-components';
 import { generatePath } from 'react-router';
+import { connect } from 'react-redux';
 
 import { size, palette } from 'sly/components/themes';
 import { prefetch, withUser, query } from 'sly/services/newApi';
@@ -92,6 +93,10 @@ const HeaderWrapper = styled.div`
   align-items: center;
 `;
 
+const mapStateToProps = (state, { conversation, user }) => ({
+  viewingAsParticipant: conversation && user && conversation.conversationParticipants.find(p => p.participantID === user.id),
+});
+
 @prefetch('messages', 'getConversationMessages', (req, { conversationId }) => req({
   'filter[conversationID]': conversationId,
   sort: '-created_at',
@@ -110,6 +115,8 @@ const HeaderWrapper = styled.div`
 
 @withUser
 
+@connect(mapStateToProps)
+
 export default class ConversationMessagesContainer extends Component {
   static propTypes = {
     ws: object,
@@ -119,14 +126,10 @@ export default class ConversationMessagesContainer extends Component {
     user: userPropType,
     status: object,
     viewingAsParticipant: conversationParticipantPropType,
-    participants: arrayOf(conversationParticipantPropType),
     updateConversationParticipant: func.isRequired,
     getConversationMessages: func.isRequired,
     sendMessageFormPlaceholder: string,
-    headingBoxSection: node,
     className: string,
-    otherParticipantId: string,
-    otherParticipantType: string,
     onCreateConversationSuccess: func,
     onBackClick: func,
   };
@@ -371,7 +374,7 @@ export default class ConversationMessagesContainer extends Component {
 
     const { conversationParticipants } = conversation;
     const { id: userId } = user;
-    const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
+    const { viewingAsParticipant } = this.props;
     const otherClientParticipant = conversationParticipants.find(p => p.participantID !== userId && p.participantType === CONVERSATION_PARTICIPANT_TYPE_CLIENT);
     const name = otherClientParticipant && otherClientParticipant.participantInfo ? otherClientParticipant.participantInfo.name : '';
     const otherParticipantIsClient = !!otherClientParticipant;
