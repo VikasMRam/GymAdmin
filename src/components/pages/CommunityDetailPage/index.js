@@ -34,7 +34,7 @@ import CommunityPricingComparison from 'sly/components/organisms/CommunityPricin
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
-import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
+import CommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
 import MorePictures from 'sly/components/organisms/MorePictures';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
@@ -155,10 +155,6 @@ export default class CommunityDetailPage extends Component {
     user: object,
     community: object.isRequired,
     location: object.isRequired,
-    mediaGallerySlideIndex: number,
-    isMediaGalleryFullscreenActive: bool,
-    onMediaGallerySlideChange: func,
-    onMediaGalleryToggleFullscreen: func,
     onMediaGalleryFavouriteClick: func,
     onMediaGalleryShareClick: func,
     onShareCommunityModalClose: func,
@@ -384,13 +380,9 @@ export default class CommunityDetailPage extends Component {
       openAdvisorHelpModal, openAnswerQuestionModal, handleFavouriteClick, handleAddReviewButtonClick,
     } = this;
     const {
-      mediaGallerySlideIndex,
-      isMediaGalleryFullscreenActive,
       community,
       profileContacted,
       location,
-      onMediaGallerySlideChange,
-      onMediaGalleryToggleFullscreen,
       onBackToSearchClicked,
       onSimilarCommunitiesClick,
       user,
@@ -516,18 +508,7 @@ export default class CommunityDetailPage extends Component {
               <Body>
                 {(images.length > 0 || videos.length > 0) &&
                   <Gallery>
-                    <CommunityMediaGallery
-                      communityName={name}
-                      city={address.city}
-                      state={address.state}
-                      currentSlide={mediaGallerySlideIndex}
-                      images={images}
-                      videos={videos}
-                      websiteUrl={websiteUrl}
-                      onSlideChange={onMediaGallerySlideChange}
-                      isFullscreenMode={isMediaGalleryFullscreenActive}
-                      onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
-                    />
+                    <CommunityMediaGalleryContainer community={community} />
                   </Gallery>
                 }
                 <StyledCommunitySummary

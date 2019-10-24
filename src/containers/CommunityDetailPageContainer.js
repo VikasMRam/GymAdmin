@@ -145,8 +145,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
   };
 
   state = {
-    mediaGallerySlideIndex: 0,
-    isMediaGalleryFullscreenActive: false,
     isHowSlyWorksVideoPlaying: false,
   };
 
@@ -249,66 +247,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       event.action = 'stop';
     }
     SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
-    const { community } = this.props;
-    if (fromMorePictures) {
-      const { id } = community;
-      const { gallery = {}, videoGallery = {} } = community;
-      const images = gallery.images || [];
-      const videos = videoGallery.videos || [];
-      const image = images[slideIndex - videos.length];
-      const event = {
-        action: 'show', category: 'images', label: id, value: image.id,
-      };
-      SlyEvent.getInstance().sendEvent(event);
-    }
-    this.setState({
-      mediaGallerySlideIndex: slideIndex,
-    });
-  };
-
-  handleToggleMediaGalleryFullscreen = (fromMorePictures, isVideo, fromSeeMoreButton) => {
-    const { community } = this.props;
-    const { isMediaGalleryFullscreenActive, mediaGallerySlideIndex } = this.state;
-
-    const { id, gallery = {}, videoGallery = {} } = community;
-    const images = gallery.images || [];
-    const videos = videoGallery.videos || [];
-    if (fromSeeMoreButton) {
-      const event = {
-        action: 'show', category: 'fullscreenMediaGallery', label: id, value: 'seeMoreButton',
-      };
-      SlyEvent.getInstance().sendEvent(event);
-    } else if (!fromMorePictures && !isVideo) {
-      const image = images[mediaGallerySlideIndex - videos.length];
-      const event = {
-        action: 'show', category: 'fullscreenMediaGallery', label: id,
-      };
-      if (image) {
-        event.value = image.id;
-      }
-      if (isMediaGalleryFullscreenActive) {
-        event.action = 'hide';
-      }
-      SlyEvent.getInstance().sendEvent(event);
-    } else if (isVideo) {
-      const video = videos[mediaGallerySlideIndex];
-      if (video) {
-        const event = {
-          action: 'show', category: 'mediaGalleryVideo', label: id, value: video.id,
-        };
-        if (isMediaGalleryFullscreenActive) {
-          event.action = 'hide';
-        }
-        SlyEvent.getInstance().sendEvent(event);
-      }
-    }
-
-    this.setState({
-      isMediaGalleryFullscreenActive: !isMediaGalleryFullscreenActive,
-    });
   };
 
   handleMediaGalleryFavouriteClick = () => {
@@ -478,8 +416,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     const { pathname } = location;
 
     const {
-      mediaGallerySlideIndex,
-      isMediaGalleryFullscreenActive,
       isHowSlyWorksVideoPlaying,
     } = this.state;
 
@@ -533,13 +469,9 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
                 user={user}
                 community={community}
                 location={location}
-                mediaGallerySlideIndex={mediaGallerySlideIndex}
-                onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
-                onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
                 onMediaGalleryFavouriteClick={this.handleMediaGalleryFavouriteClick}
                 onMediaGalleryShareClick={this.handleMediaGalleryShareClick}
                 onShareCommunityModalClose={this.handleShareCommunityModalClose}
-                isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
                 onBackToSearchClicked={this.handleBackToSearchClick}
                 onReviewLinkClicked={this.handleReviewLinkClick}
                 onConciergeNumberClicked={this.handleConciergeNumberClick}
