@@ -3,7 +3,11 @@ import { shallow } from 'enzyme';
 
 import AcceptAndContactFamilyForm from 'sly/components/organisms/AcceptAndContactFamilyForm';
 
-const wrap = (props = {}) => shallow(<AcceptAndContactFamilyForm {...props} />);
+const defaultProps = {
+  contactTypes: ['email', 'phone', 'message'],
+};
+
+const wrap = (props = {}) => shallow(<AcceptAndContactFamilyForm {...defaultProps} {...props} />);
 
 describe('AcceptAndContactFamilyForm', () => {
   it('renders', () => {
@@ -12,27 +16,27 @@ describe('AcceptAndContactFamilyForm', () => {
     expect(wrapper.find('ThreeSectionFormTemplate')).toHaveLength(1);
   });
 
-  it('onCallClick is called', () => {
-    const onCallClick = jest.fn();
-    const wrapper = wrap({ onCallClick });
+  it('click on phone is called with correct data', () => {
+    const handleSubmit = jest.fn();
+    const wrapper = wrap({ handleSubmit });
 
-    wrapper.find('ThreeSectionFormTemplate').find('[icon="phone"]').simulate('click');
-    expect(onCallClick).toHaveBeenCalled();
+    wrapper.find('ThreeSectionFormTemplate').find('[icon="phone"]').simulate('submit');
+    expect(handleSubmit).toHaveBeenCalled();
   });
 
-  it('onEmailClick is called', () => {
-    const onEmailClick = jest.fn();
-    const wrapper = wrap({ onEmailClick });
+  it('click on email is called with correct data', () => {
+    const handleSubmit = jest.fn();
+    const wrapper = wrap({ handleSubmit });
 
-    wrapper.find('ThreeSectionFormTemplate').find('[icon="email"]').simulate('click');
-    expect(onEmailClick).toHaveBeenCalled();
+    wrapper.find('ThreeSectionFormTemplate').find('[icon="email"]').simulate('submit');
+    expect(handleSubmit).toHaveBeenCalled();
   });
 
-  it('onMessageClick is called', () => {
-    const onMessageClick = jest.fn();
-    const wrapper = wrap({ onMessageClick });
+  it('click on message is called with correct data', () => {
+    const handleSubmit = jest.fn();
+    const wrapper = wrap({ handleSubmit });
 
-    wrapper.find('ThreeSectionFormTemplate').find('[icon="message"]').simulate('click');
-    expect(onMessageClick).toHaveBeenCalled();
+    wrapper.find('ThreeSectionFormTemplate').find('[icon="message"]').simulate('submit');
+    expect(handleSubmit).toHaveBeenCalled();
   });
 });

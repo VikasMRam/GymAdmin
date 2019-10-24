@@ -27,8 +27,8 @@ export const FAMILY_DETAILS = 'family-details';
 export const COMMUNITIES = 'communities';
 export const PARTNER_AGENTS = 'partner-agents';
 export const TASKS = 'tasks';
+export const MESSAGES = 'messages';
 
 export const ADMIN_DASHBOARD_CALLS_PATH = `${AGENT_DASHBOARD_PATH}/calls`;
 export const ADMIN_DASHBOARD_CALL_DETAILS_PATH = `${ADMIN_DASHBOARD_CALLS_PATH}/:id/:tab?`;
 
-export const MESSAGES = 'messages';
