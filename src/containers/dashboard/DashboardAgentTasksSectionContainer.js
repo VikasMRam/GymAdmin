@@ -16,6 +16,8 @@ import ModalController from 'sly/controllers/ModalController';
 import NotificationController from 'sly/controllers/NotificationController';
 
 const getPaginationData = ({ result, meta }) => {
+  if (!result) return {};
+
   const count = result.length;
   const current = meta['page-number'];
   const size = meta['page-size'];
@@ -100,6 +102,7 @@ export default class DashboardAgentTasksSectionContainer extends Component {
     client: clientPropType,
     status: object,
     history: object,
+    datatable: object,
     match: object,
     location: object,
   };
@@ -142,7 +145,7 @@ export default class DashboardAgentTasksSectionContainer extends Component {
 
     const params = getPageParams({ match, location });
     const { type, taskName } = params;
-    const { error, meta, result: tasksRaw } = status.tasks;
+    const { error, meta, hasFinished, result: tasksRaw } = status.tasks;
 
     if (error) {
       throw new Error(JSON.stringify(error));
@@ -155,7 +158,7 @@ export default class DashboardAgentTasksSectionContainer extends Component {
             {({ show, hide }) => (
               <DashboardAgentTasksSection
                 {...props}
-                isPageLoading={!datatable.hasFinished}
+                isPageLoading={!hasFinished || !datatable.hasFinished}
                 datatable={datatable}
                 tasks={tasks}
                 tasksRaw={tasksRaw}
@@ -164,7 +167,7 @@ export default class DashboardAgentTasksSectionContainer extends Component {
                 onSearchTextKeyUp={this.handleSearchTextKeyUp}
                 showModal={show}
                 hideModal={hide}
-                meta={meta}
+                meta={meta || {}}
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
                 refetchTasks={this.refetchTasks}
