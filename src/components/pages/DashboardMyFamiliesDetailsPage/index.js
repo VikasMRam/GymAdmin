@@ -256,7 +256,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     goToFamilyDetails: func,
     goToMessagesTab: func,
     refetchConversations: func,
-    refetchConversation: func,
     hasConversationFinished: bool,
     conversation: conversationPropType,
     conversations: arrayOf(conversationPropType),
@@ -522,7 +521,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     };
 
     const clientName = <ClientName client={client} rawClient={rawClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} user={user} />;
-    console.log('conversation', conversation);
+
     return (
       <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
         <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
