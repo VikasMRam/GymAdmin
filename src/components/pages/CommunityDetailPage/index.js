@@ -14,6 +14,7 @@ import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import pad from 'sly/components/helpers/pad';
 import { Button, Paragraph, Block } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
+import SampleMenu from 'sly/components/organisms/SampleMenu';
 import {
   CommunityDetailPageTemplate,
   makeHeader,
@@ -429,6 +430,10 @@ export default class CommunityDetailPage extends Component {
       careServices, websiteUrl, promoDescription, promoTitle, communitySize, communityInsights,
     } = propInfo;
 
+    const {
+      plusCommunity, plusCategory, menuLink, sampleAppetizers, sampleMain, sampleSide, sampleDessert, sampleEvents, eventsLink,
+    } = propInfo;
+
     // TODO: move this to common helper, used in multiple places
     const communityDefaultImages = {
       'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
@@ -737,6 +742,36 @@ export default class CommunityDetailPage extends Component {
                     <StyledButton onClick={openAskQuestionModal}>Ask a Question</StyledButton>
                   </ButtonBlock>
                 </TopCollapsibleSection>
+                {plusCommunity && eventsLink && sampleEvents &&
+                <TopCollapsibleSection title={`Event at ${name}`}>
+                  <MainSection>
+                    {sampleEvents.map(item => (
+                      <IconItemWrapper key={item}>
+                        <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
+                      </IconItemWrapper>))
+                    }
+                  </MainSection>
+                  <ButtonBlock>
+                    <StyledButton href={eventsLink} ghost>Download Events Calendar</StyledButton>
+                  </ButtonBlock>
+                </TopCollapsibleSection>
+                }
+
+                {plusCommunity && menuLink &&
+                <TopCollapsibleSection title={`Sample Menu at ${name}`}>
+                  <MainSection>
+                    <SampleMenu
+                      sampleAppetizers={sampleAppetizers}
+                      sampleMain={sampleMain}
+                      sampleSide={sampleSide}
+                      sampleDessert={sampleDessert} />
+                  </MainSection>
+                  <ButtonBlock>
+                    <StyledButton href={menuLink} ghost>Download Current Menu</StyledButton>
+                  </ButtonBlock>
+                </TopCollapsibleSection>
+                }
+
                 {rgsAux.stateLicensingWebsite &&
                   <StyledCommunityExtraInfoSection
                     title={`${name} at ${address.city} State Licensing`}
