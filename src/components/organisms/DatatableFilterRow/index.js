@@ -51,11 +51,9 @@ const stringifyDateValue = ifAry(value => dayjs(value).format('YYYY-MM-DD'));
 
 const Row = styled(mobileOnly(Box, css` 
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.small')} ${palette('slate', 'filler')}80;
-  display: flex;
   flex-wrap: wrap;
   padding: ${size('spacing.regular')};
   padding-bottom: 0;
-  margin-bottom: ${size('spacing.regular')};
   > :first-child {
     order: 1;
   }
@@ -66,27 +64,33 @@ const Row = styled(mobileOnly(Box, css`
     order: 2;
   }
 `, css`
-  display: table-row; 
+  border: 0;
+  padding: 0;
+  align-items: center;
   > * {
-    display: table-cell;
+    margin-bottom: 0;
   }
 `))`
+  display: flex;
   font-size: ${size('text.caption')};
   line-height: ${size('lineHeight.caption')};
+  margin-bottom: ${size('spacing.regular')};
 `;
 
-const CloseButton = mobileOnly(ButtonLink, css`
+const CloseButton = styled(mobileOnly(ButtonLink, css`
   margin: 0 ${size('spacing.regular')} ${size('spacing.regular')} 0; 
-  flex-grow: 0;
   order: 1;
   display: flex; 
   align-items: center;
 `, css`
+  margin: 0 ${size('spacing.large')} 0 0; 
   width: ${size('icon.regular')};
-`);
+`))`
+  flex-grow: 0;
+  flex-shrink: 0;
+`;
 
-const Where = mobileOnly('div', css`
-  flex-grow: 0.5;
+const Where = styled(mobileOnly('div', css`
   padding: 0 ${size('spacing.large')};
   margin: 0 ${size('spacing.regular')} ${size('spacing.regular')} 0; 
   height: ${size('element.small')};
@@ -94,18 +98,23 @@ const Where = mobileOnly('div', css`
   background: ${palette('grey.background')};
   border-radius: ${size('spacing.small')};
 `, css`
-  width: 80px; 
-`);
-
-const SmallField = styled(Field)`
-  margin: 0 ${size('spacing.regular')} ${size('spacing.regular')} 0; 
+  width: 70px; 
+  margin-right: ${size('spacing.regular')};
+`))`
+  flex-grow: 0;
+  flex-shrink: 0;
 `;
 
-const WhereField = mobileOnly(SmallField, css`
-  flex-grow: 0.5; 
-`, css`
-   width: 80px;
-`);
+const SmallField = styled(Field)`
+  margin: 0 ${size('spacing.regular')} 0 0; 
+`;
+
+const WhereField = styled(mobileOnly(SmallField, css``, css`
+  width: 70px;
+`))`
+  flex-grow: 0;
+  flex-shrink: 0;
+`;
 
 const GrowField = mobileOnly(SmallField, css`
   flex-grow: 1;
