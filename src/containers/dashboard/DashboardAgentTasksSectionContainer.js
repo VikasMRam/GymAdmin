@@ -142,13 +142,11 @@ export default class DashboardAgentTasksSectionContainer extends Component {
 
     const params = getPageParams({ match, location });
     const { type, taskName } = params;
-    const { tasks: tasksStatus } = status;
-    const { error: tasksError, meta, result: tasksRaw } = tasksStatus;
+    const { error, meta, result: tasksRaw } = status.tasks;
 
-    if (tasksError) {
-      return <RefreshRedirect to="/" />;
+    if (error) {
+      throw new Error(JSON.stringify(error));
     }
-    const pagination = getPaginationData(tasksStatus);
 
     return (
       <NotificationController>
@@ -161,7 +159,7 @@ export default class DashboardAgentTasksSectionContainer extends Component {
                 datatable={datatable}
                 tasks={tasks}
                 tasksRaw={tasksRaw}
-                pagination={pagination}
+                pagination={getPaginationData(status.tasks)}
                 activeTab={type}
                 onSearchTextKeyUp={this.handleSearchTextKeyUp}
                 showModal={show}
