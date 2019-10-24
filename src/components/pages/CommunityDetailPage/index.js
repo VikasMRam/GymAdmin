@@ -53,12 +53,11 @@ import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuesti
 import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
-import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
+import HowSlyWorksVideoContainer from "sly/containers/HowSlyWorksVideoContianer";
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 import withExitIntent from 'sly/services/exitIntent/withExitIntent';
-import HowSlyWorksVideoContainer from "sly/containers/HowSlyWorksVideoContianer";
 
 const BackToSearch = styled.div`
   text-align: center
@@ -756,7 +755,7 @@ export default class CommunityDetailPage extends Component {
                   top={24}
                   bottomBoundary="#sticky-sidebar-boundary"
                 >
-                  <ConciergeContainer history={history} community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
+                  <ConciergeContainer community={community} />
                 </Sticky>
               </Column>
             </TwoColumn>
