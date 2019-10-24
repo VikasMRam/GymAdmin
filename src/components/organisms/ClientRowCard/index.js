@@ -9,6 +9,7 @@ import {
   Block,
   Link,
   Icon,
+  ClampedText,
 } from 'sly/components/atoms';
 import {
   DoubleLineTd,
@@ -43,13 +44,21 @@ const Wrapper = mobileOnly(Tr, css`
   `)}
 `);
 
+const ClampedTextWrapper = styled.div`
+  display: flex;
+`;
+
 const StyledNameCell = styled(({ disabled, client, to, ...props }) => {
   return (
     <Td disabled={disabled} {...props}>
-      <Link to={to} {...props}>
-        {client.clientInfo.name}
+      <ClampedTextWrapper>
+        <ClampedText size="caption">
+          <Link to={to} {...props} >
+            {client.clientInfo.name}
+          </Link>
+        </ClampedText>
         {disabled && <Icon icon="pause" palette="danger" size="caption" />}
-      </Link>
+      </ClampedTextWrapper>
     </Td>
   );
 })`
@@ -58,12 +67,18 @@ const StyledNameCell = styled(({ disabled, client, to, ...props }) => {
   }
 `;
 
+StyledNameCell.displayName = 'StyledNameCell';
+
 const NameCell = mobileOnly(StyledNameCell, css`
   margin-bottom: ${size('spacing.regular')};
-  font-weight: ${size('weight.medium')};
 `);
 
+NameCell.displayName = 'NameCell';
+
 const ResidentCell = mobileOnly(TextTd, css`display: none`);
+
+ResidentCell.displayName = 'ResidentCell';
+
 
 const StageCell = mobileOnly(Td, css`
   order: 3;
@@ -71,6 +86,8 @@ const StageCell = mobileOnly(Td, css`
   margin: ${size('spacing.large')} -${size('spacing.large')} 0 -${size('spacing.large')};
   padding: ${size('spacing.regular')} ${size('spacing.large')} 0;
 `);
+
+StageCell.displayName = 'StageCell';
 
 const NoteCell = mobileOnly(({ disabled, note, ...props }) => (
   <>
@@ -90,7 +107,11 @@ const NoteCell = mobileOnly(({ disabled, note, ...props }) => (
 
 `);
 
+NoteCell.displayName = 'NoteCell';
+
 const DateAddedCell = mobileOnly(TextTd, css`display: none`);
+
+DateAddedCell.displayName = 'DateAddedCell';
 
 const onClientClick = (clientName, to) => {
   const event = {
@@ -107,6 +128,7 @@ const ClientRowCard = ({ client }) => {
   const {
     clientInfo, uuidAux, stage, status, createdAt, notes,
   } = client;
+
   const { uuidInfo } = uuidAux;
   let residentName = '';
   if (uuidInfo) {

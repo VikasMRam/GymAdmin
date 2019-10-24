@@ -58,9 +58,8 @@ const ChildrenClientsWrapper = styled.div`
 `;
 
 const StyledDashboardAdminReferralAgentTile = pad(DashboardAdminReferralAgentTile);
-const CursorStyledDashboardAdminReferralAgentTile = cursor(StyledDashboardAdminReferralAgentTile);
 
-const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients, recommendedAgents, recommendedAgentsIdsMap, setSelectedAgent }) => {
+const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients, recommendedAgents, setSelectedAgent }) => {
   const childrenComponents = [];
 
   if (childrenClients.length > 0) {
@@ -85,10 +84,11 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients, reco
       title,
     };
     recommendedAgentComponents.push((
-      <CursorStyledDashboardAdminReferralAgentTile
+      <StyledDashboardAdminReferralAgentTile
         {...props}
         agent={agent}
-        onClick={() => {
+        actionText="Send Referral"
+        actionClick={() => {
           setSelectedAgent(agent);
         }}
       />
@@ -98,7 +98,7 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients, reco
     <>
       <TopWrapper>
         <Block size="subtitle">Agents</Block>
-        <SendNewReferralButton onClick={onSendNewReferralClick}>Send a new referral</SendNewReferralButton>
+        <SendNewReferralButton onClick={onSendNewReferralClick}>Search for agents</SendNewReferralButton>
       </TopWrapper>
       {childrenComponents.length === 0 && (
         <EmptyResultWrapper>

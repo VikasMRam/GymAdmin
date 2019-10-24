@@ -40,7 +40,7 @@ const DashboardCommunityReferrals = ({
     <>
       <TopWrapper>
         <Block size="subtitle">Communities</Block>
-        <SendNewReferralButton onClick={() => onSubmit()}>Send a new referral</SendNewReferralButton>
+        <SendNewReferralButton onClick={() => onSubmit()}>Search for communities</SendNewReferralButton>
       </TopWrapper>
       <CommunitiesWrapper>
         {communitiesInterested.map((community) => {
