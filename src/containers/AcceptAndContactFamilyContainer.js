@@ -91,11 +91,13 @@ export default class AcceptAndContactFamilyContainer extends Component {
       );
     }
 
-    if (conversation) {
+    if (conversation && conversation.conversationParticipants && Array.isArray(conversation.conversationParticipants)) {
       const userParticipant = conversation.conversationParticipants
-        .find(participant => participant.participantID === userId);
-      const { participantID } = userParticipant;
-      email = `messaging+${participantID}@conversation.${domain}`;
+        .find(participant => participant && participant.participantID === userId);
+      if (userParticipant && userParticipant.participantID) {
+        const { participantID } = userParticipant;
+        email = `messaging+${participantID}@conversation.${domain}`;
+      }
     }
     const detail = {
       type: contactType,

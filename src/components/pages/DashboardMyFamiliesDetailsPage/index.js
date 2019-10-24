@@ -483,13 +483,37 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const { id: userOrg } = organization;
     const { group, isConnected } = getStageDetails(stage);
     const showAcceptRejectButtons = stage === FAMILY_STAGE_NEW;
-    let showUpdateAddNoteButtons;
+    let showUpdateAddNoteButtons = stage !== FAMILY_STAGE_NEW;
     let canEditFamilyDetails = isConnected;
-    if (stage !== FAMILY_STAGE_NEW &&
+    let stickyFooterOptions = []; // Sticky footer is for smaller width devices
+    // Rule when lead is created by self
+    if (stage === FAMILY_STAGE_NEW &&
       (userIs(user, PLATFORM_ADMIN_ROLE) || (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg))) {
       showUpdateAddNoteButtons = true;
       canEditFamilyDetails = true;
     }
+    if (showAcceptRejectButtons) {
+      stickyFooterOptions = [
+        {
+          text: 'Accept and contact this family', icon: 'flag', palette: 'primary', iconPalette: 'slate', onClick: onAcceptClick,
+        },
+        {
+          text: 'Reject', icon: 'add-note', iconPalette: 'slate', palette: 'danger', onClick: handleRejectClick, ghost: true,
+        },
+      ];
+    }
+    // showUpdateAddNote Button overrides showAcceptReject Buttons
+    if (showUpdateAddNoteButtons) {
+      stickyFooterOptions = [
+        {
+          text: 'Update Stage', icon: 'flag', iconPalette: 'slate', onClick: handleUpdateClick,
+        },
+        {
+          text: 'Add Note', icon: 'add-note', iconPalette: 'slate', onClick: handleAddNoteClick, ghost: true,
+        },
+      ];
+    }
+
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) => {
       const props = {
@@ -511,26 +535,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS });
 
-    let stickyFooterOptions = [];
-    if (showAcceptRejectButtons) {
-      stickyFooterOptions = [
-        {
-          text: 'Accept and contact this family', icon: 'flag', palette: 'primary', iconPalette: 'slate', onClick: onAcceptClick,
-        },
-        {
-          text: 'Reject', icon: 'add-note', iconPalette: 'slate', palette: 'danger', onClick: handleRejectClick, ghost: true,
-        },
-      ];
-    } else if (showUpdateAddNoteButtons) {
-      stickyFooterOptions = [
-        {
-          text: 'Update Stage', icon: 'flag', iconPalette: 'slate', onClick: handleUpdateClick,
-        },
-        {
-          text: 'Add Note', icon: 'add-note', iconPalette: 'slate', onClick: handleAddNoteClick, ghost: true,
-        },
-      ];
-    }
 
     const backLinkHref = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: TabMap[group] });
     const backlink = <PaddedBackLink linkText={`Back to ${group}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${group}`)} />;
