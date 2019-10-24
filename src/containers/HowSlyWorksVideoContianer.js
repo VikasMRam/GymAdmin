@@ -19,7 +19,7 @@ export default class HowSlyWorksVideoContainer extends Component {
   };
 
   state = {
-    isPlaying: false,
+    isPlaying: this.props.isPlaying || false,
   };
 
   toggleIsPlaying = () => {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { object, func, number, bool } from 'prop-types';
+import { object, func, bool } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
@@ -140,13 +140,6 @@ const makeBanner = (profileContacted) => {
 
   return `We have your ${requests.join('')} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
 };
-
-const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
-  category,
-  action,
-  label,
-  value,
-});
 
 @withExitIntent
 
@@ -416,7 +409,7 @@ export default class CommunityDetailPage extends Component {
     } = community;
 
     const {
-      careServices, websiteUrl, promoDescription, promoTitle, communitySize, communityInsights,
+      careServices, promoDescription, promoTitle, communitySize, communityInsights,
     } = propInfo;
 
     // TODO: move this to common helper, used in multiple places
