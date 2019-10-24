@@ -93,11 +93,11 @@ export default class FamilyDetailsFormContainer extends Component {
     if (email || email === '') {
       newClient.set('attributes.clientInfo.email', email);
     }
-    if (phone) {
+    if (phone || phone === '') {
       newClient.set('attributes.clientInfo.phoneNumber', phone);
     }
-    if (additionalMetadata) {
-      const validMD = validateAM(additionalMetadata);
+    const validMD = validateAM(additionalMetadata, { phone, email });
+    if (validMD) {
       newClient.set('attributes.clientInfo.additionalMetadata', validMD);
     }
 

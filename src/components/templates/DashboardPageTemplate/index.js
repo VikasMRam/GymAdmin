@@ -77,6 +77,7 @@ const Body = styled.main`
   }
 `;
 
+// min-width: 0 helps in avaoiding overflow when used with a clampped text children component like LatestMessage
 const DashboardPage = styled.div`
   position: absolute;
   top: 0;
@@ -93,6 +94,7 @@ const DashboardPage = styled.div`
 
   > :nth-child(n+2) {
     flex-grow: 1;
+    min-width: 0;
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {

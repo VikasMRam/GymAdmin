@@ -42,8 +42,6 @@ import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFa
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import Tab from 'sly/components/molecules/Tab';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import fullHeight from 'sly/components/helpers/fullHeight';
 import ConversationMessagesContainer from 'sly/containers/ConversationMessagesContainer';
 import userPropType from 'sly/propTypes/user';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
@@ -51,6 +49,7 @@ import Role from 'sly/components/common/Role';
 import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
 import StatusSelect from 'sly/components/molecules/StatusSelect';
 import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
+import DashboardMessages from 'sly/components/organisms/DashboardMessages';
 import { Datatable } from 'sly/services/datatable';
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
@@ -184,6 +183,10 @@ const StyledClientNameBlock = styled(Block)`
 
 `;
 
+const DashboardMessagesContainerWrapper = styled.div`
+  padding: ${size('spacing.large')};
+`;
+
 const ClientName = ({ client, rawClient, backLinkHref, ...props }) => {
   const { clientInfo } = client;
   const { name } = clientInfo;
@@ -223,9 +226,6 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   }
 `;
 
-const TextCenterBlock = fullHeight(textAlign(Block));
-const FullWidthTextCenterBlock = fullWidth(TextCenterBlock);
-
 const PaddedBackLink = pad(BackLink, 'regular');
 
 const TabMap = {
@@ -258,6 +258,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     refetchConversation: func,
     hasConversationFinished: bool,
     conversation: conversationPropType,
+    conversations: arrayOf(conversationPropType),
+    setSelectedConversation: func,
     user: userPropType.isRequired,
   };
 
@@ -312,12 +314,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const agentTabList = [
       { id: ACTIVITY, to: activityPath, label: 'Activity' },
       { id: FAMILY_DETAILS, to: familyDetailsPath, label: 'Family Details' },
-      { id: MESSAGES, to: messagesPath, label: 'Messages' },
     ];
     const adminTabList = [
       { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
       { id: PARTNER_AGENTS, to: agentsPath, label: 'Agents' },
       { id: TASKS, to: tasksPath, label: 'Tasks' },
+      { id: MESSAGES, to: messagesPath, label: 'Messages' },
     ];
     // TODO: CHANGE TO HAS ROLE INSTEAD OF IS ROLE...
     let tabs = [summaryTab];
@@ -452,7 +454,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     const {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, refetchClient,
-      showModal, hideModal,
+      showModal, hideModal, conversations, refetchConversations, setSelectedConversation,
     } = this.props;
     const { organization } = user;
 
@@ -542,7 +544,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     };
 
     const clientName = <ClientName client={client} rawClient={rawClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} user={user} />;
-
+    console.log('conversation', conversation);
     return (
       <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
         <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
@@ -663,13 +665,18 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
             {currentTab === MESSAGES && (
               <SmallScreenBorderDiv>
-                {!hasConversationFinished &&
-                  <>
-                    <br />
-                    <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
-                  </>
+                {!conversation &&
+                  <DashboardMessagesContainerWrapper>
+                    <DashboardMessages
+                      isLoading={!hasConversationFinished}
+                      heading="Conversations"
+                      conversations={conversations}
+                      onConversationClick={setSelectedConversation}
+                      refetchConversations={refetchConversations}
+                    />
+                  </DashboardMessagesContainerWrapper>
                 }
-                {hasConversationFinished &&
+                {conversation &&
                   <ConversationMessagesContainer
                     conversationId={conversation.id}
                     sendMessageFormPlaceholder={`Message ${name}...`}
