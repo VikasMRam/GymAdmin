@@ -144,12 +144,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     }),
   };
 
-  state = {
-    mediaGallerySlideIndex: 0,
-    isMediaGalleryFullscreenActive: false,
-    isHowSlyWorksVideoPlaying: false,
-  };
-
   componentDidMount() {
     this.uuidActionPageView();
   }
@@ -233,82 +227,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       action: 'click', category: 'similarCommunity', label: index.toString(), value: to,
     };
     SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleToggleHowSlyWorksVideoPlaying = () => {
-    const { community } = this.props;
-    const { isHowSlyWorksVideoPlaying } = this.state;
-    const { id } = community;
-
-    this.setState({ isHowSlyWorksVideoPlaying: !isHowSlyWorksVideoPlaying });
-
-    const event = {
-      action: 'start', category: 'howSlyWorksVideo', label: id,
-    };
-    if (isHowSlyWorksVideoPlaying) {
-      event.action = 'stop';
-    }
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
-    const { community } = this.props;
-    if (fromMorePictures) {
-      const { id } = community;
-      const { gallery = {}, videoGallery = {} } = community;
-      const images = gallery.images || [];
-      const videos = videoGallery.videos || [];
-      const image = images[slideIndex - videos.length];
-      const event = {
-        action: 'show', category: 'images', label: id, value: image.id,
-      };
-      SlyEvent.getInstance().sendEvent(event);
-    }
-    this.setState({
-      mediaGallerySlideIndex: slideIndex,
-    });
-  };
-
-  handleToggleMediaGalleryFullscreen = (fromMorePictures, isVideo, fromSeeMoreButton) => {
-    const { community } = this.props;
-    const { isMediaGalleryFullscreenActive, mediaGallerySlideIndex } = this.state;
-
-    const { id, gallery = {}, videoGallery = {} } = community;
-    const images = gallery.images || [];
-    const videos = videoGallery.videos || [];
-    if (fromSeeMoreButton) {
-      const event = {
-        action: 'show', category: 'fullscreenMediaGallery', label: id, value: 'seeMoreButton',
-      };
-      SlyEvent.getInstance().sendEvent(event);
-    } else if (!fromMorePictures && !isVideo) {
-      const image = images[mediaGallerySlideIndex - videos.length];
-      const event = {
-        action: 'show', category: 'fullscreenMediaGallery', label: id,
-      };
-      if (image) {
-        event.value = image.id;
-      }
-      if (isMediaGalleryFullscreenActive) {
-        event.action = 'hide';
-      }
-      SlyEvent.getInstance().sendEvent(event);
-    } else if (isVideo) {
-      const video = videos[mediaGallerySlideIndex];
-      if (video) {
-        const event = {
-          action: 'show', category: 'mediaGalleryVideo', label: id, value: video.id,
-        };
-        if (isMediaGalleryFullscreenActive) {
-          event.action = 'hide';
-        }
-        SlyEvent.getInstance().sendEvent(event);
-      }
-    }
-
-    this.setState({
-      isMediaGalleryFullscreenActive: !isMediaGalleryFullscreenActive,
-    });
   };
 
   handleMediaGalleryFavouriteClick = () => {
@@ -477,12 +395,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     const { location } = history;
     const { pathname } = location;
 
-    const {
-      mediaGallerySlideIndex,
-      isMediaGalleryFullscreenActive,
-      isHowSlyWorksVideoPlaying,
-    } = this.state;
-
     if (status.community.status === 301) {
       const newSlug = getLastSegment(status.community.headers.location);
       return <Redirect to={replaceLastSegment(location.pathname, newSlug)} />;
@@ -533,13 +445,9 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
                 user={user}
                 community={community}
                 location={location}
-                mediaGallerySlideIndex={mediaGallerySlideIndex}
-                onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
-                onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
                 onMediaGalleryFavouriteClick={this.handleMediaGalleryFavouriteClick}
                 onMediaGalleryShareClick={this.handleMediaGalleryShareClick}
                 onShareCommunityModalClose={this.handleShareCommunityModalClose}
-                isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
                 onBackToSearchClicked={this.handleBackToSearchClick}
                 onReviewLinkClicked={this.handleReviewLinkClick}
                 onConciergeNumberClicked={this.handleConciergeNumberClick}
@@ -557,8 +465,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
                 profileContacted={profileContacted}
                 onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
                 userAction={userAction}
-                toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
-                isHowSlyWorksVideoPlaying={isHowSlyWorksVideoPlaying}
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 showModal={show}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { object, func, number, bool } from 'prop-types';
+import { object, func, bool } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
@@ -8,7 +8,6 @@ import { size, palette, assetPath } from 'sly/components/themes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
-import SlyEvent from 'sly/services/helpers/events';
 import { calculatePricing, buildPriceList, buildEstimatedPriceList } from 'sly/services/helpers/pricing';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import pad from 'sly/components/helpers/pad';
@@ -34,7 +33,7 @@ import CommunityPricingComparison from 'sly/components/organisms/CommunityPricin
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
-import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
+import CommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
 import MorePictures from 'sly/components/organisms/MorePictures';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
@@ -53,7 +52,7 @@ import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuesti
 import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
-import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
@@ -141,13 +140,6 @@ const makeBanner = (profileContacted) => {
   return `We have your ${requests.join('')} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
 };
 
-const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
-  category,
-  action,
-  label,
-  value,
-});
-
 @withExitIntent
 
 export default class CommunityDetailPage extends Component {
@@ -155,10 +147,6 @@ export default class CommunityDetailPage extends Component {
     user: object,
     community: object.isRequired,
     location: object.isRequired,
-    mediaGallerySlideIndex: number,
-    isMediaGalleryFullscreenActive: bool,
-    onMediaGallerySlideChange: func,
-    onMediaGalleryToggleFullscreen: func,
     onMediaGalleryFavouriteClick: func,
     onMediaGalleryShareClick: func,
     onShareCommunityModalClose: func,
@@ -384,13 +372,9 @@ export default class CommunityDetailPage extends Component {
       openAdvisorHelpModal, openAnswerQuestionModal, handleFavouriteClick, handleAddReviewButtonClick,
     } = this;
     const {
-      mediaGallerySlideIndex,
-      isMediaGalleryFullscreenActive,
       community,
       profileContacted,
       location,
-      onMediaGallerySlideChange,
-      onMediaGalleryToggleFullscreen,
       onBackToSearchClicked,
       onSimilarCommunitiesClick,
       user,
@@ -400,8 +384,6 @@ export default class CommunityDetailPage extends Component {
       setQueryParams,
       onBookATourClick,
       onGCPClick,
-      toggleHowSlyWorksVideoPlaying,
-      isHowSlyWorksVideoPlaying,
       history,
     } = this.props;
 
@@ -426,7 +408,7 @@ export default class CommunityDetailPage extends Component {
     } = community;
 
     const {
-      careServices, websiteUrl, promoDescription, promoTitle, communitySize, communityInsights,
+      careServices, promoDescription, promoTitle, communitySize, communityInsights,
     } = propInfo;
 
     // TODO: move this to common helper, used in multiple places
@@ -516,18 +498,7 @@ export default class CommunityDetailPage extends Component {
               <Body>
                 {(images.length > 0 || videos.length > 0) &&
                   <Gallery>
-                    <CommunityMediaGallery
-                      communityName={name}
-                      city={address.city}
-                      state={address.state}
-                      currentSlide={mediaGallerySlideIndex}
-                      images={images}
-                      videos={videos}
-                      websiteUrl={websiteUrl}
-                      onSlideChange={onMediaGallerySlideChange}
-                      isFullscreenMode={isMediaGalleryFullscreenActive}
-                      onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
-                    />
+                    <CommunityMediaGalleryContainer community={community} />
                   </Gallery>
                 }
                 <StyledCommunitySummary
@@ -660,12 +631,7 @@ export default class CommunityDetailPage extends Component {
                 }
                 <TopCollapsibleSection title="How Seniorly Works">
                   <MainSection noPadding>
-                    <HowSlyWorksVideo
-                      isPlaying={isHowSlyWorksVideoPlaying}
-                      onThumbnailClick={toggleHowSlyWorksVideoPlaying}
-                      onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', id, e.target.currentTime)}
-                      onPlay={e => sendEvent('howSlyWorksVideo', 'play', id, e.target.currentTime)}
-                    />
+                    <HowSlyWorksVideoContainer eventLabel={community.id} />
                   </MainSection>
                 </TopCollapsibleSection>
                 {partnerAgent &&
@@ -781,7 +747,7 @@ export default class CommunityDetailPage extends Component {
                   top={24}
                   bottomBoundary="#sticky-sidebar-boundary"
                 >
-                  <ConciergeContainer history={history} community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
+                  <ConciergeContainer community={community} />
                 </Sticky>
               </Column>
             </TwoColumn>
