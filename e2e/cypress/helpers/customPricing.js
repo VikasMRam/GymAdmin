@@ -2,6 +2,8 @@ export const doCustomPricingFlow = (cy, data) => {
   const {
     communitySlug, name, phoneNumber, typeOfRoom, typeOfCare, medicaid,
   } = data;
+  cy.get('button').contains('Let\'s Begin').click();
+
   cy.contains('Get your Pricing and Availability');
 
   cy.get('div[class*=BoxChoiceTile__StyledBox]').contains(typeOfRoom).click();

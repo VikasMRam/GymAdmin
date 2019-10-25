@@ -141,7 +141,7 @@ const fixedHeadStyles = css`
 const Head = styled.div`
   padding: ${size('spacing.large')};
 
-${switchProp('layout', {
+  ${switchProp('layout', {
     fullScreen: fixedHeadStyles,
     gallery: fixedHeadStyles,
   })}
