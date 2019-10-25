@@ -97,9 +97,6 @@ export default class DashboardMessagesContainer extends Component {
       messagesComponent = <EmptyMessagesWrapper>Loading...</EmptyMessagesWrapper>;
     } else if (conversations.length === 0) {
       messagesComponent = <EmptyMessagesWrapper>No messages</EmptyMessagesWrapper>;
-    } else if (conversations.length === 1 && !conversations[0].latestMessage) {
-      // Scenario where there is a single conversation without a latest message
-      messagesComponent = <EmptyMessagesWrapper>No messages</EmptyMessagesWrapper>;
     } else {
       hasMessages = true;
       const messages = conversations

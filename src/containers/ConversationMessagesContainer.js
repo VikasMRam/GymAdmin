@@ -12,7 +12,7 @@ import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import conversationParticipantPropType from 'sly/propTypes/conversation/conversationParticipant';
-import { MESSAGES_UPDATE_LAST_READ_TIMEOUT, CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
+import { MESSAGES_UPDATE_LAST_READ_TIMEOUT, CONVERSATION_PARTICIPANT_TYPE_CLIENT, CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION, CONVERSATION_PARTICIPANT_TYPE_USER } from 'sly/constants/conversations';
 import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 import withWS from 'sly/services/ws/withWS';
@@ -374,9 +374,11 @@ export default class ConversationMessagesContainer extends Component {
     }
 
     const { conversationParticipants } = conversation;
-    const { id: userId } = user;
+    const { id: userId, organization: userOrganization } = user;
+    const { id: userOrganizationId } = userOrganization;
     const { viewingAsParticipant } = this.props;
     const otherClientParticipant = conversationParticipants.find(p => p.participantID !== userId && p.participantType === CONVERSATION_PARTICIPANT_TYPE_CLIENT);
+    const userOrgParticipant = conversationParticipants.find(p => p.participantID === userOrganizationId && p.participantType === CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION);
     const name = getConversationName(conversation, user);
     const otherParticipantIsClient = !!otherClientParticipant;
     const sendMessageFormPlaceholder = otherClientParticipant && otherClientParticipant.participantInfo && `Message ${otherClientParticipant.participantInfo.name.split(' ').shift()}...`;
@@ -384,7 +386,7 @@ export default class ConversationMessagesContainer extends Component {
     const heading = (
       <HeaderWrapper>
         <BackLink onClick={onBackClick} />
-        <FullWidthTextCenterBlock size="subtitle" palette={otherParticipantIsClient && 'primary'}>
+        <FullWidthTextCenterBlock size="subtitle" palette={otherParticipantIsClient ? 'primary' : 'slate'}>
           {otherParticipantIsClient
             ? <Link size="subtitle" to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: otherClientParticipant.participantID, tab: SUMMARY })}>{name}</Link>
             : name
@@ -452,7 +454,10 @@ export default class ConversationMessagesContainer extends Component {
         <StyledSendMessageFormContainer
           conversation={conversation}
           placeholder={sendMessageFormPlaceholder}
-          disabled={!viewingAsParticipant}
+          canCreateParticipant={!viewingAsParticipant && userOrgParticipant}
+          otherParticipantId={userId}
+          otherParticipantType={CONVERSATION_PARTICIPANT_TYPE_USER}
+          disabled={!viewingAsParticipant && !userOrgParticipant}
           onCreateConversationSuccess={onCreateConversationSuccess}
         />
       </ContainerWrapper>
