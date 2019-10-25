@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { string, arrayOf, shape, bool, number, func } from 'prop-types';
 import styled from 'styled-components';
 
@@ -92,7 +92,7 @@ export default class CommunityMediaGallery extends Component {
     );
 
     return (
-      <section>
+      <Fragment>
         <MediaGallery
           onSlideClick={i => onToggleFullscreenMode(false, Object.prototype.hasOwnProperty.call(this.sdGalleryImages[i], 'ofVideo'))}
           communityName={communityName}
@@ -112,7 +112,7 @@ export default class CommunityMediaGallery extends Component {
           ariaHideApp={ariaHideApp}
           onSlideChange={onSlideChange}
         />
-      </section>
+      </Fragment>
     );
   }
 }
