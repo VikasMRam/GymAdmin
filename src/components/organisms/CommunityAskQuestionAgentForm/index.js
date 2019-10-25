@@ -24,7 +24,7 @@ const StyledField = styled(Field)`
 const CommunityAskQuestionAgentForm = ({
   heading, description, handleSubmit, pristine, submitting, error, placeholder, user,
 }) => (
-  <form onSubmit={handleSubmit}>
+  <form onSubmit={handleSubmit} name="CommunityAskQuestionAgentForm">
     <TopSection>
       <Heading level="subtitle" size="subtitle">{heading}</Heading>
       {description && <Block>{description}</Block>}
