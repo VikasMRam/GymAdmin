@@ -45,7 +45,7 @@ const OfferNotification = ({
   hasLearnMore,
   className,
   community,
-  hasAlreadyRequestedPricing
+  hasAlreadyRequestedPricing,
 }) => (
   <Wrapper palette={paletteProp} className={className}>
     <LoyaltyIcon
@@ -65,23 +65,21 @@ const OfferNotification = ({
         {description && <Span>{description}</Span>}
       </TopWrapper>
       {hasLearnMore && (
-        <>
-          <GetCustomPricingContainer
-            community={community}
-            hasAlreadyRequestedPricing={hasAlreadyRequestedPricing}
-          >
-            {getPricing => (
-              <>
-                <BigScreenLearnMore onClick={getPricing}>
-                  Click here to learn more.
-                </BigScreenLearnMore>
-                <SmallScreenLearnMore onClick={getPricing}>
-                  Learn more.
-                </SmallScreenLearnMore>
-              </>
-            )}
-          </GetCustomPricingContainer>
-        </>
+        <GetCustomPricingContainer
+          community={community}
+          hasAlreadyRequestedPricing={hasAlreadyRequestedPricing}
+        >
+          {getPricing => (
+            <>
+              <BigScreenLearnMore onClick={getPricing}>
+                Click here to learn more.
+              </BigScreenLearnMore>
+              <SmallScreenLearnMore onClick={getPricing}>
+                Learn more.
+              </SmallScreenLearnMore>
+            </>
+          )}
+        </GetCustomPricingContainer>
       )}
     </div>
   </Wrapper>
@@ -94,7 +92,7 @@ OfferNotification.propTypes = {
   description: string,
   className: string,
   community: object,
-  hasAlreadyRequestedPricing: bool
+  hasAlreadyRequestedPricing: bool,
 };
 
 OfferNotification.defaultProps = {
