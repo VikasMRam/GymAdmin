@@ -38,16 +38,22 @@ const DashboardAgentReferralSearch = ({
       <>
         <Hr size="large" />
         <Block>Showing {agents.length} agents</Block>
-        {agents.map((agent) => {
+        {agents.map((agent, idx) => {
           const client = childrenClientAgentIdsMap[agent.id];
           if (client) {
             const { stage } = client;
-            return <StyledDashboardAdminReferralAgentTile agent={agent} stage={stage} disabled />;
+            return <StyledDashboardAdminReferralAgentTile agent={agent} stage={stage} disabled isRecommended={idx === 0} />;
           }
-          return <CursorStyledDashboardAdminReferralAgentTile agent={agent} onClick={() => { setSelectedAgent(agent); onSubmit(); }} />;
+          return <CursorStyledDashboardAdminReferralAgentTile agent={agent} onClick={() => { setSelectedAgent(agent); onSubmit(); }} isRecommended={idx === 0} />;
         })}
       </>
     )}
+    { (agents && agents.length < 1) &&
+      <>
+        <Hr size="large" />
+        <Block>Search for an agent</Block>
+      </>
+    }
   </Wrapper>
 );
 
