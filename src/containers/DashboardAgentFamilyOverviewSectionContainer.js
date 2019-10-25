@@ -49,6 +49,7 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
     history: object,
     datatable: object,
     match: object,
+    location: object,
   };
 
   onAddFamilySuccess = (client) => {
@@ -61,7 +62,7 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
 
   render() {
     const {
-      clients, status, datatable, match,
+      clients, status, datatable, match, location,
     } = this.props;
 
     const { error, hasFinished } = status.clients;
@@ -88,6 +89,7 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
                 hideModal={hide}
                 notifyInfo={notifyInfo}
                 onAddFamilySuccess={this.onAddFamilySuccess}
+                location={location}
               />
             )}
           </ModalController>

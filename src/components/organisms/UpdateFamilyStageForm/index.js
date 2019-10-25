@@ -247,7 +247,7 @@ export default class UpdateFamilyStageForm extends Component {
         {nextStage === FAMILY_STAGE_LOST &&
           <Field
             name="lossReason"
-            label={<span>Loss reason<Span palette="danger">*</Span></span>}
+            label={<span>Closed reason<Span palette="danger">*</Span></span>}
             type="select"
             component={ReduxField}
           >

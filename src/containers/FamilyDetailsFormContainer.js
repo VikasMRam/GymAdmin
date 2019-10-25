@@ -11,6 +11,7 @@ import userPropType from 'sly/propTypes/user';
 import { USER_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { query, getRelationship, prefetch } from 'sly/services/newApi';
 import SlyEvent from 'sly/services/helpers/events';
+import { validateAM } from 'sly/services/helpers/client';
 import { selectFormData, trimFormData } from 'sly/services/helpers/forms';
 import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
 
@@ -92,11 +93,12 @@ export default class FamilyDetailsFormContainer extends Component {
     if (email || email === '') {
       newClient.set('attributes.clientInfo.email', email);
     }
-    if (phone) {
+    if (phone || phone === '') {
       newClient.set('attributes.clientInfo.phoneNumber', phone);
     }
-    if (additionalMetadata) {
-      newClient.set('attributes.clientInfo.additionalMetadata', additionalMetadata);
+    const validMD = validateAM(additionalMetadata, { phone, email });
+    if (validMD) {
+      newClient.set('attributes.clientInfo.additionalMetadata', validMD);
     }
 
     if (slyMessage) {
@@ -107,6 +109,9 @@ export default class FamilyDetailsFormContainer extends Component {
         type: USER_RESOURCE_TYPE,
         id: assignedTo,
       });
+    }
+    if (tags) {
+      newClient.set('relationships.tags.data', tags.map(({ label }) => ({ type: 'Tag', attributes: { name: label } })));
     }
 
     let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
@@ -171,7 +176,8 @@ export default class FamilyDetailsFormContainer extends Component {
     const { client, formData, ...props } = this.props;
 
 
-    const { clientInfo, uuidAux, tags } = client;
+    const { clientInfo, uuidAux, tags: modelTags } = client;
+    const tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
     const {
       name, email, slyMessage, phoneNumber = '', additionalMetadata,
     } = clientInfo;
@@ -211,6 +217,7 @@ export default class FamilyDetailsFormContainer extends Component {
       lookingFor,
       gender,
       age,
+      tags,
       roomPreference,
       mobilityLevel: mobility,
       communityCareType: typeCare,
