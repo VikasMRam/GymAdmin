@@ -204,7 +204,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+            - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "e2e/package.json" }}
 
       - run:
           name: NPM Install and Run Local SlyReact in Background
