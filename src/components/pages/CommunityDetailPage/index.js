@@ -4,7 +4,6 @@ import { object, func, bool } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 import { size, palette, assetPath } from 'sly/components/themes';
-import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import {
   getBreadCrumbsForCommunity,
   getCitySearchUrl,
@@ -28,7 +27,6 @@ import {
   makeWrapper,
   makeGallery,
 } from 'sly/components/templates/CommunityDetailPageTemplate';
-import SaveCommunityContainer from 'sly/containers/SaveCommunityContainer';
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
 import CollapsibleSection, {
   MainSection,
@@ -42,7 +40,6 @@ import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
 import CommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
 import MorePictures from 'sly/components/organisms/MorePictures';
-import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
@@ -56,7 +53,6 @@ import IconItem from 'sly/components/molecules/IconItem';
 import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
-import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
 import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
@@ -163,22 +159,14 @@ export default class CommunityDetailPage extends Component {
     user: object,
     community: object.isRequired,
     location: object.isRequired,
-    onMediaGalleryFavouriteClick: func,
-    onMediaGalleryShareClick: func,
-    onShareCommunityModalClose: func,
     onBackToSearchClicked: func,
     onReviewLinkClicked: func,
     onConciergeNumberClicked: func,
     onLiveChatClicked: func,
     onReceptionNumberClicked: func,
     onSimilarCommunitiesClick: func,
-    userSave: object,
-    setQueryParams: func,
     profileContacted: object.isRequired,
-    onToggleAskAgentQuestionModal: func,
     userAction: object,
-    toggleHowSlyWorksVideoPlaying: func,
-    isHowSlyWorksVideoPlaying: bool,
     notifyInfo: func,
     notifyError: func,
     showModal: func,

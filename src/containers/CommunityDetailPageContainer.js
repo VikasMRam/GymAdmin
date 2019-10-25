@@ -89,7 +89,7 @@ const mapStateToProps = (state) => {
   ignoreSearchParams,
 )
 
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(mapStateToProps)
 
 export default class CommunityDetailPageContainer extends React.PureComponent {
   static propTypes = {

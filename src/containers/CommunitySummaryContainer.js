@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { bool, func, object, string } from 'prop-types';
+import { array, bool, func, object, string } from 'prop-types';
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
@@ -48,7 +48,7 @@ export default class CommunitySummaryContainer extends Component {
   static propTypes = {
     community: object.isRequired,
     isAdmin: bool,
-    userSaves: object,
+    userSaves: array,
     ensureAuthenticated: func,
     api: object,
     className: string,
