@@ -99,7 +99,6 @@ const StyledParagraph = styled(Paragraph)`
 `;
 
 export default class PlusBranding extends Component {
-
   render() {
     return (
       <FullWidthSection>
@@ -118,25 +117,25 @@ export default class PlusBranding extends Component {
               </ItalizeHeading>
             </Paragraph>
             <StyledParagraph>
-              Seniorly Plus is a selection of only the highest quality homes. Each Plus home is verified through in-person
-              quality inspection to ensure your next home is one you will love. Just look for the &nbsp;
+              Seniorly Plus is a curated list of senior homes. Each home is independently verified through an in-person
+              inspection to ensure your next home is a great fit. Just look for the&nbsp;
               <PlusBadge />
               &nbsp;badge.
             </StyledParagraph>
             <Paragraph>
               <IconItemWrapper>
-                <IconItem icon="house" iconPalette="secondary" borderPalette="secondary" borderVariation="base" borderless={false}>Each space is thoughfully designed for comfort and care</IconItem>
+                <IconItem icon="verified" iconPalette="secondary" borderPalette="secondary" borderVariation="base" borderless={false}>Quality verified through in-person inspections</IconItem>
               </IconItemWrapper>
               <IconItemWrapper>
-                <IconItem icon="care" iconPalette="secondary" borderPalette="secondary" borderVariation="base" borderless={false}>Seniorly Plus communities come with premium support</IconItem>
+                <IconItem icon="house" iconPalette="secondary" borderPalette="secondary" borderVariation="base" borderless={false}>Access to thoughtfully designed suites and apartments</IconItem>
               </IconItemWrapper>
               <IconItemWrapper>
-                <IconItem icon="verified" iconPalette="secondary" borderPalette="secondary" borderVariation="base" borderless={false}>Be at ease knowing each community is verified with an in-person inspection</IconItem>
+                <IconItem icon="phone" iconPalette="secondary" borderPalette="secondary" borderVariation="base" borderless={false}>Premium support during search and after the transition</IconItem>
               </IconItemWrapper>
             </Paragraph>
           </TextWrapper>
         </PlusWrapper>
       </FullWidthSection>
-    )
+    );
   }
 }

@@ -103,7 +103,7 @@ const CommunitySummary = ({
       </StyledHeading>
       <Address weight="regular" level="subtitle" size="body" palette="grey">{formattedAddress}</Address>
       {plusCommunity &&
-      <PlusBadge plusCategory={plusCategory}/>
+      <PlusBadge plusCategory={plusCategory} />
       }
       <Hr />
       <Wrapper>
