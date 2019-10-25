@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { func } from 'prop-types';
 import ifvisible from 'ifvisible.js';
 import { withRouter, matchPath } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { query, prefetch, withAuth, withApi } from 'sly/services/newApi';
 
 import { host } from 'sly/config';
 
@@ -23,15 +23,14 @@ const careTypes = [
 ].join('|');
 const PROFILE_PAGE_PATH = `/:toc(${careTypes})/:state/:city/:communitySlug`;
 
-
-const mapStateToProps = (state, {
-  match, location, history, userSaves,
-}) => {
-  console.log('state\n\n\n', state);
-};
+const getCommunitySlug = match => match.params.communitySlug;
 
 @withRouter
 
+@prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: getCommunitySlug(match),
+  include: 'similar-communities,questions,agents',
+}))
 // @connect(mapStateToProps)
 
 export default class RetentionPopups extends Component {
@@ -53,7 +52,7 @@ export default class RetentionPopups extends Component {
     this.manageProfilePageListeners(this.props.location);
     this.props.history.listen(this.manageProfilePageListeners);
     // console.log('\n\ndid mount', pathname, isProfilePage && isProfilePage.isExact);
-    console.log('did mount');
+    console.log('did mount', this.props.community);
     // this.addBlurFocusListeners();
     // this.addPopstateListener();
     // this.addMouseoutListener();
