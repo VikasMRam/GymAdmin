@@ -12,7 +12,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import { calculatePricing, buildPriceList, buildEstimatedPriceList } from 'sly/services/helpers/pricing';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import pad from 'sly/components/helpers/pad';
-import { Button, Paragraph, Block } from 'sly/components/atoms';
+import { Button, Paragraph, Block, Icon, Image } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';
 import {
@@ -58,6 +58,7 @@ import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
+import PlusBranding from 'sly/components/organisms/PlusBranding';
 import withExitIntent from 'sly/services/exitIntent/withExitIntent';
 
 const BackToSearch = styled.div`
@@ -431,7 +432,7 @@ export default class CommunityDetailPage extends Component {
     } = propInfo;
 
     const {
-      plusCommunity, plusCategory, menuLink, sampleAppetizers, sampleMain, sampleSide, sampleDessert, sampleEvents, eventsLink,
+      plusCommunity, menuLink, sampleAppetizers, sampleMain, sampleSide, sampleDessert, sampleEvents, eventsLink,
     } = propInfo;
 
     // TODO: move this to common helper, used in multiple places
@@ -641,7 +642,7 @@ export default class CommunityDetailPage extends Component {
                     />
                   </MainSection>
                 </TopCollapsibleSection>
-
+                {plusCommunity && <PlusBranding/>}
                 {(communityDescription || rgsAux.communityDescription) &&
                   <TopCollapsibleSection
                     title={`Details on ${name}`}
@@ -764,7 +765,8 @@ export default class CommunityDetailPage extends Component {
                       sampleAppetizers={sampleAppetizers}
                       sampleMain={sampleMain}
                       sampleSide={sampleSide}
-                      sampleDessert={sampleDessert} />
+                      sampleDessert={sampleDessert}
+                    />
                   </MainSection>
                   <ButtonBlock>
                     <StyledButton href={menuLink} ghost>Download Current Menu</StyledButton>
