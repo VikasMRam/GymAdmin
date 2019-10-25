@@ -62,7 +62,7 @@ const TooltipContent = styled(ReactTooltip)`
 `;
 const CommunitySummary = ({
   community, innerRef, isAdmin, onConciergeNumberClicked, className,
-  onFavouriteClick, userSave, onShareClick,
+  onFavouriteClick, isFavorited, onShareClick,
 }) => {
   const {
     address, name, startingRate, propRatings, propInfo, twilioNumber,
@@ -85,7 +85,6 @@ const CommunitySummary = ({
     conciergeNumber = '8558664515';
   }
 
-  const isFavorited = userSave && userSave.status !== USER_SAVE_DELETE_STATUS;
   const favIcon = isFavorited ? 'favourite-light' : 'favourite-empty';
 
   return (
@@ -146,7 +145,7 @@ CommunitySummary.propTypes = {
   className: string,
   onFavouriteClick: func,
   onShareClick: func,
-  userSave: object,
+  isFavorited: bool,
 };
 
 export default CommunitySummary;

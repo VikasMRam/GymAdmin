@@ -13,15 +13,9 @@ import {
   getLastSegment,
   replaceLastSegment,
 } from 'sly/services/helpers/url';
-import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
-import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
-import {
-  NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED,
-  NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS,
-} from 'sly/constants/notifications';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import { query, prefetch, withAuth, withApi } from 'sly/services/newApi';
@@ -66,24 +60,10 @@ const mapPropsToActions = () => ({
   userAction: resourceDetailReadRequest('userAction'),
 });
 
-// FIXME: hack because createUser is not JSON:API, should use @query
-const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
-  updateUserSave: (id, data) => ensureAuthenticated(
-    'Sign up to add to your favorites list',
-    api.updateOldUserSave({ id }, data),
-  ),
-});
-
-const mapStateToProps = (state, {
-  match, userSaves,
-}) => {
+const mapStateToProps = (state) => {
   // default state for ssr
-  const communitySlug = getCommunitySlug(match);
-  const userSaveOfCommunity = userSaves && userSaves.find(us => us.entityType === COMMUNITY_ENTITY_TYPE && us.entitySlug === communitySlug);
-
   return {
-    userAction: getDetail(state, 'userAction') || {},
-    userSaveOfCommunity,
+    userAction: getDetail(state, 'userAction') || {}
   };
 };
 
@@ -96,11 +76,6 @@ const mapStateToProps = (state, {
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: getCommunitySlug(match),
   include: 'similar-communities,questions,agents',
-}))
-
-@prefetch('userSaves', 'getUserSaves', (req, { match }) => req({
-  'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
-  'filter[entity_slug]': getCommunitySlug(match),
 }))
 
 @prefetch('uuidActions', 'getUuidActions', (req, { match }) => req({
@@ -123,16 +98,13 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     community: object,
     uuidActions: array,
     userAction: object,
-    userSaveOfCommunity: object,
     errorCode: number,
     history: object,
     location: object,
     user: object,
     isQuestionModalOpenValue: bool,
     searchParams: object,
-    isLoadingUserSaves: bool,
     setQueryParams: func,
-    updateUserSave: func,
     match: shape({
       url: string.isRequired,
     }),
@@ -223,33 +195,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     SlyEvent.getInstance().sendEvent(event);
   };
 
-  handleMediaGalleryFavouriteClick = () => {
-    const { community, userSaveOfCommunity } = this.props;
-    const { id } = community;
-    let initedUserSave;
-    if (userSaveOfCommunity) {
-      initedUserSave = userSaveOfCommunity.status !== USER_SAVE_DELETE_STATUS ? userSaveOfCommunity : null;
-    }
-
-    const event = {
-      action: 'click', category: 'saveCommunity', label: id,
-    };
-    if (initedUserSave) {
-      event.category = 'unsaveCommunity';
-    }
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleMediaGalleryShareClick = () => {
-    const { community } = this.props;
-    const { id } = community;
-    const event = {
-      action: 'click', category: 'shareCommunity', label: id,
-    };
-
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
   handleShareCommunityModalClose = () => {
     const { community } = this.props;
     const { id } = community;
@@ -270,20 +215,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     };
 
     SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleUnsaveCommunity = (notifyInfo, notifyError) => {
-    const { updateUserSave, userSaveOfCommunity } = this.props;
-    const { id } = userSaveOfCommunity;
-
-    return updateUserSave(id, {
-      status: USER_SAVE_DELETE_STATUS,
-    })
-      .then(() => {
-        notifyInfo(NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS);
-      }, () => {
-        notifyError(NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED);
-      });
   };
 
   getExitintent = (showModal, hideModal) => {
@@ -328,7 +259,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       user,
       uuidActions,
       community,
-      userSaveOfCommunity,
       history,
       userAction,
     } = this.props;
@@ -386,8 +316,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
                 user={user}
                 community={community}
                 location={location}
-                onMediaGalleryFavouriteClick={this.handleMediaGalleryFavouriteClick}
-                onMediaGalleryShareClick={this.handleMediaGalleryShareClick}
                 onShareCommunityModalClose={this.handleShareCommunityModalClose}
                 onBackToSearchClicked={this.handleBackToSearchClick}
                 onReviewLinkClicked={this.handleReviewLinkClick}
@@ -395,7 +323,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
                 onLiveChatClicked={this.handleLiveChatClick}
                 onReceptionNumberClicked={this.handleReceptionNumberClick}
                 onSimilarCommunitiesClick={this.handleSimilarCommunitiesClick}
-                userSave={userSaveOfCommunity}
                 onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
                 onToggleAskQuestionModal={this.handleToggleAskQuestionModal}
                 profileContacted={profileContacted}
@@ -404,7 +331,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
                 notifyError={notifyError}
                 showModal={show}
                 hideModal={hide}
-                onUnsaveCommunity={this.handleUnsaveCommunity}
                 history={history}
                 exitIntentContent={this.getExitintent(show, hide)}
               />

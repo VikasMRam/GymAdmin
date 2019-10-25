@@ -64,12 +64,13 @@ import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTabl
 import withExitIntent from 'sly/services/exitIntent/withExitIntent';
 import AskAgentQuestionButtonContainer from 'sly/containers/AskAgentQuestionButtonContainer';
 import GetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
+import CommunitySummaryContainer from 'sly/containers/CommunitySummaryContainer';
 
 const BackToSearch = styled.div`
   text-align: center;
 `;
 
-const StyledCommunitySummary = styled(CommunitySummary)`
+const StyledCommunitySummary = styled(CommunitySummaryContainer)`
   margin-bottom: ${size('spacing.xLarge')};
   margin-top: ${size('spacing.xLarge')};
   position: relative;
@@ -173,8 +174,6 @@ export default class CommunityDetailPage extends Component {
     onSimilarCommunitiesClick: func,
     userSave: object,
     setQueryParams: func,
-    onBookATourClick: func,
-    onGCPClick: func,
     profileContacted: object.isRequired,
     onToggleAskAgentQuestionModal: func,
     userAction: object,
@@ -185,7 +184,6 @@ export default class CommunityDetailPage extends Component {
     showModal: func,
     hideModal: func,
     onToggleAskQuestionModal: func,
-    onUnsaveCommunity: func,
     history: object,
   };
   handleMorePicturesClick = (image) => {
@@ -203,40 +201,6 @@ export default class CommunityDetailPage extends Component {
       onMediaGallerySlideChange(matchingIndex, true);
       onMediaGalleryToggleFullscreen(true);
     }
-  };
-
-  handleShareClick = () => {
-    const {
-      showModal,
-      hideModal,
-      notifyInfo,
-      onMediaGalleryShareClick,
-      community,
-      user,
-      onShareCommunityModalClose,
-    } = this.props;
-    const { id, mainImage } = community;
-    const onSuccess = () => {
-      onShareCommunityModalClose();
-      hideModal();
-    };
-    const onClose = () => {
-      onShareCommunityModalClose(true);
-    };
-
-    const modalComponentProps = {
-      mainImage,
-      fromEnabled: !user || !user.email,
-      communitySlug: id,
-      notifyInfo,
-      onSuccess,
-    };
-
-    onMediaGalleryShareClick();
-    showModal(
-      <ShareCommunityFormContainer {...modalComponentProps} />,
-      onClose
-    );
   };
 
   // todo clean up
@@ -343,43 +307,6 @@ export default class CommunityDetailPage extends Component {
     }
   };
 
-  handleFavouriteClick = () => {
-    const {
-      community,
-      onMediaGalleryFavouriteClick,
-      showModal,
-      notifyInfo,
-      notifyError,
-      userSave,
-      hideModal,
-      onUnsaveCommunity,
-    } = this.props;
-    const { id } = community;
-    let initedUserSave;
-    if (userSave) {
-      initedUserSave =
-        userSave.status !== USER_SAVE_DELETE_STATUS ? userSave : null;
-    }
-
-    if (initedUserSave) {
-      onUnsaveCommunity(notifyInfo, notifyError);
-    } else {
-      showModal(
-        <SaveCommunityContainer
-          slug={id}
-          onCancelClick={hideModal}
-          onDoneButtonClick={hideModal}
-          notifyInfo={notifyInfo}
-          notifyError={notifyError}
-        />,
-        null,
-        'noPadding',
-        false
-      );
-    }
-    onMediaGalleryFavouriteClick();
-  };
-
   handleAddReviewButtonClick = () => {
     const { showModal } = this.props;
 
@@ -394,11 +321,9 @@ export default class CommunityDetailPage extends Component {
 
   render() {
     const {
-      handleShareClick,
       openAskQuestionModal,
       openAdvisorHelpModal,
       openAnswerQuestionModal,
-      handleFavouriteClick,
       handleAddReviewButtonClick,
     } = this;
     const {
@@ -409,7 +334,6 @@ export default class CommunityDetailPage extends Component {
       onSimilarCommunitiesClick,
       user,
       onReviewLinkClicked,
-      userSave
     } = this.props;
 
     const {
@@ -556,9 +480,6 @@ export default class CommunityDetailPage extends Component {
                 <StyledCommunitySummary
                   community={community}
                   isAdmin={user && user.admin}
-                  userSave={userSave}
-                  onFavouriteClick={handleFavouriteClick}
-                  onShareClick={handleShareClick}
                 />
                 {(promoDescription || promoTitle) && (
                   <StyledOfferNotification
