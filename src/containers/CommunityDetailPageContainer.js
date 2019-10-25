@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { func, object, array, bool, number, shape, string } from 'prop-types';
 import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
@@ -15,10 +15,8 @@ import {
 } from 'sly/services/helpers/url';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
-import { getSearchParams } from 'sly/services/helpers/search';
 import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import {
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED,
@@ -77,19 +75,15 @@ const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
 });
 
 const mapStateToProps = (state, {
-  match, location, history, userSaves,
+  match, userSaves,
 }) => {
   // default state for ssr
-  const searchParams = getSearchParams(match, location);
   const communitySlug = getCommunitySlug(match);
   const userSaveOfCommunity = userSaves && userSaves.find(us => us.entityType === COMMUNITY_ENTITY_TYPE && us.entitySlug === communitySlug);
-  const setQueryParams = getQueryParamsSetter(history, location);
 
   return {
     userAction: getDetail(state, 'userAction') || {},
     userSaveOfCommunity,
-    searchParams,
-    setQueryParams,
   };
 };
 
@@ -266,57 +260,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     SlyEvent.getInstance().sendEvent(event);
   };
 
-  handleFloorPlanModalToggle = (floorPlan, isModalOpen) => {
-    const { community } = this.props;
-    const { id } = community;
-    const value = (floorPlan && floorPlan.info.roomType) || null;
-    let action = 'open-modal';
-    if (isModalOpen) {
-      action = 'close-modal';
-    }
-    const event = {
-      action, category: 'floorPlan', label: id, value,
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleBookATourClick = () => {
-    const { community, history } = this.props;
-    const { id } = community;
-    const event = {
-      action: 'click-sat-button', category: 'BAT', label: id,
-    };
-
-    SlyEvent.getInstance().sendEvent(event);
-    history.push(`/book-a-tour/${id}`);
-  };
-
-  handleGCPClick = () => {
-    const { community, history } = this.props;
-    const { id } = community;
-    const event = {
-      action: 'click-gcp-button', category: 'PricingWizard', label: id,
-    };
-
-    SlyEvent.getInstance().sendEvent(event);
-    history.push(`/custom-pricing/${id}`);
-  };
-
-  handleToggleAskAgentQuestionModal = (isAskAgentQuestionModalVisible, type = null) => {
-    const { community } = this.props;
-    const { id } = community;
-    const action = isAskAgentQuestionModalVisible ? 'close-modal' : 'open-modal';
-    let category = 'AskAgentQuestion';
-    if (type) {
-      category += `-${type}`;
-    }
-    const event = {
-      action, category, label: id,
-    };
-
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
   handleToggleAskQuestionModal = (isAskQuestionModalVisible) => {
     const { community } = this.props;
     const { id } = community;
@@ -377,7 +320,7 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     </Experiment>);
 
     return modalContent;
-  }
+  };
 
   render() {
     const {
@@ -387,8 +330,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       community,
       userSaveOfCommunity,
       history,
-      searchParams,
-      setQueryParams,
       userAction,
     } = this.props;
 
@@ -455,15 +396,9 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
                 onReceptionNumberClicked={this.handleReceptionNumberClick}
                 onSimilarCommunitiesClick={this.handleSimilarCommunitiesClick}
                 userSave={userSaveOfCommunity}
-                searchParams={searchParams}
-                setQueryParams={setQueryParams}
                 onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
-                onBookATourClick={this.handleBookATourClick}
-                onGCPClick={this.handleGCPClick}
-                onToggleAskAgentQuestionModal={this.handleToggleAskAgentQuestionModal}
                 onToggleAskQuestionModal={this.handleToggleAskQuestionModal}
                 profileContacted={profileContacted}
-                onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
                 userAction={userAction}
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}

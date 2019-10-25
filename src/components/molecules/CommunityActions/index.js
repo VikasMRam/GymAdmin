@@ -1,30 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
-import { func, bool } from 'prop-types';
+import { object, bool } from 'prop-types';
+import GetCustomPricingButtonContainer from "sly/containers/GetCustomPricingButtonContainer";
 
-import { Button } from 'sly/components/atoms/index';
+const CommunityActions = ({ community, isAlreadyPricingRequested }) => {
+  const GetPricingButton = styled(GetCustomPricingButtonContainer)`
+    width: 100%;
+  `;
 
-
-const MainButton = styled(Button)`
-  width: 100%;
-`;
-MainButton.displayName = 'MainButton';
-
-
-const CommunityActions = ({ onGCPClick, isAlreadyPricingRequested }) => (
-  <div>
-    {!isAlreadyPricingRequested &&
-    <MainButton kind="jumbo" onClick={onGCPClick}>Get Pricing</MainButton>}
-    {isAlreadyPricingRequested &&
-    <MainButton ghost kind="jumbo" onClick={onGCPClick}>Pricing requested</MainButton>}
-  </div>
-);
+  return (
+    <GetPricingButton
+      community={community}
+      hasAlreadyRequestedPricing={isAlreadyPricingRequested}
+      ghost={isAlreadyPricingRequested}
+      kind="jumbo"
+    >
+      {isAlreadyPricingRequested ? 'Pricing requested' : 'Get Pricing'}
+    </GetPricingButton>
+  );
+};
 
 CommunityActions.propTypes = {
-  onBookATourClick: func,
-  onGCPClick: func,
-  onAQClick: func,
-  isAlreadyTourScheduled: bool,
+  community: object.isRequired,
   isAlreadyPricingRequested: bool,
 };
 

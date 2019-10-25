@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { func, bool } from 'prop-types';
+import { object, bool } from 'prop-types';
 
 import { size, palette, key } from 'sly/components/themes';
 import CommunityActions from 'sly/components/molecules/CommunityActions';
@@ -23,21 +23,18 @@ const FullWrapper = styled.div`
 `;
 
 const CommunityStickyFooter = ({
-  onBookATourClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
+  community, isAlreadyPricingRequested,
 }) => (
   <FullWrapper>
     <CommunityActions
-      onGCPClick={onGCPClick}
+      community={community}
       isAlreadyPricingRequested={isAlreadyPricingRequested}
     />
   </FullWrapper>
 );
 
 CommunityStickyFooter.propTypes = {
-  onBookATourClick: func,
-  onGCPClick: func,
-  onAQClick: func,
-  isAlreadyTourScheduled: bool,
+  community: object.isRequired,
   isAlreadyPricingRequested: bool,
 };
 

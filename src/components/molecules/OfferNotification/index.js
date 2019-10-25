@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { bool, string, func } from 'prop-types';
-
+import { bool, string } from 'prop-types';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size, palette } from 'sly/components/themes';
 import { Icon, Span, Link } from 'sly/components/atoms';
+import AskAgentQuestionButtonContainer from 'sly/containers/AskAgentQuestionButtonContainer';
 
 const getColor = ({ palette: paletteProp }) => palette(paletteProp, 'filler');
 
@@ -23,14 +23,14 @@ const TopWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const SmallScreenLearnMore = styled(Link)`
+const SmallScreenLearnMore = styled(AskAgentQuestionButtonContainer)`
   font-weight: ${size('weight.medium')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: none;
   }
 `;
 
-const BigScreenLearnMore = styled(Link)`
+const BigScreenLearnMore = styled(AskAgentQuestionButtonContainer)`
   display: none;
   font-weight: ${size('weight.medium')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -39,21 +39,35 @@ const BigScreenLearnMore = styled(Link)`
 `;
 
 const OfferNotification = ({
-  palette: paletteProp, title, description, hasLearnMore, className, onLearnMoreClick,
+  palette: paletteProp,
+  title,
+  description,
+  hasLearnMore,
+  className,
 }) => (
   <Wrapper palette={paletteProp} className={className}>
-    <LoyaltyIcon icon="baseline-loyalty" size="large" palette={paletteProp} variation="dark" />
+    <LoyaltyIcon
+      icon="baseline-loyalty"
+      size="large"
+      palette={paletteProp}
+      variation="dark"
+    />
     <div>
       <TopWrapper>
-        {title && <Span weight="medium" size="body">{title}</Span>}
+        {title && (
+          <Span weight="medium" size="body">
+            {title}
+          </Span>
+        )}
         {title && description && <>&nbsp;-&nbsp;</>}
         {description && <Span>{description}</Span>}
       </TopWrapper>
-      {hasLearnMore &&
+      {hasLearnMore && (
         <>
-          <BigScreenLearnMore onClick={onLearnMoreClick}>Click here to learn more.</BigScreenLearnMore>
-          <SmallScreenLearnMore onClick={onLearnMoreClick}>Learn more.</SmallScreenLearnMore>
-        </>}
+          {/*<BigScreenLearnMore Component={Link}>Click here to learn more.</BigScreenLearnMore>*/}
+          {/*<SmallScreenLearnMore Component={Link}>Learn more.</SmallScreenLearnMore>*/}
+        </>
+      )}
     </div>
   </Wrapper>
 );
@@ -63,7 +77,6 @@ OfferNotification.propTypes = {
   hasLearnMore: bool,
   title: string.isRequired,
   description: string,
-  onLearnMoreClick: func,
   className: string,
 };
 
