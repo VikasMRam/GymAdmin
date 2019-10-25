@@ -20,7 +20,7 @@ const CommunityTextBox = styled(Field)`
 const CommunityAgentSearchForm = ({ label, handleSubmit }) => {
   return (
     <Form onSubmit={handleSubmit} name="CommunitySearchForm" >
-      <CommunityTextBox name="nameOrZip" label={label} type="text" placeholder="Search by zip code or community name" component={ReduxField} />
+      <CommunityTextBox name="nameOrZip" label={label} type="text" placeholder="Search by zip code or name" component={ReduxField} />
       <IconButton type="submit" icon="search" />
     </Form>
   );

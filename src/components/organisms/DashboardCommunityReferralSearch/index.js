@@ -52,6 +52,12 @@ const DashboardCommunityReferralSearch = ({
         })}
       </>
     )}
+    { communities && communities.length === 0 &&
+    <>
+      <Hr size="large" />
+      <Block>No communities found; try searching another name or zip </Block>
+    </>
+    }
   </Wrapper>
 );
 
