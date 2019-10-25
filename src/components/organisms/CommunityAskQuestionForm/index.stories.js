@@ -32,6 +32,6 @@ storiesOf('Organisms|CommunityAskQuestionForm', module).add('default', () => (
 )).add('Exit Form', () => (
   <CommunityAskQuestionFormContainer
     handleSubmit={withPreventDefault(action('form submitted'))}
-    type="exitForm"
+    type="exitIntent"
   />
 ));

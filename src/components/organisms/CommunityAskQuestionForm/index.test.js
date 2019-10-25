@@ -47,7 +47,7 @@ describe('CommunityAskQuestionForm', () => {
 
   it('should rednder title for exit form', () => {
     const title = 'Wait! Get support from a local senior living expert. This is a free service.';
-    const wrapper = wrap({ type: 'exitForm' });
+    const wrapper = wrap({ type: 'exitIntent' });
     const headingElem = wrapper.find('StyledHeading');
 
     expect(headingElem).toHaveLength(1);

@@ -19,6 +19,8 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
+const EXIT_INTENT = 'exitIntent';
+
 const CommunityAskQuestionForm = ({
   handleSubmit, submitting, communityName, user, error, type,
 }) => {
@@ -49,7 +51,7 @@ const CommunityAskQuestionForm = ({
     </>);
 
 
-  if (type === 'exitForm') {
+  if (type === EXIT_INTENT) {
     title = (<>
       <StyledHeading level="title" size="subtitle">Wait! Get support from a local senior living expert. This is a free service.</StyledHeading>
     </>);

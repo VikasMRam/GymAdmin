@@ -6,6 +6,7 @@ import isMatch from 'lodash/isMatch';
 import omit from 'lodash/omit';
 import { parse as parseSearch } from 'query-string';
 import { Redirect } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { withServerState } from 'sly/store';
 import SlyEvent from 'sly/services/helpers/events';
@@ -37,7 +38,6 @@ import {
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 import { Experiment, Variant } from 'sly/services/experiments';
-import styled from 'styled-components';
 import { Heading } from 'sly/components/atoms';
 import { size } from 'sly/components/themes';
 
@@ -446,7 +446,7 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
             communityName={name}
             communitySlug={id}
             onButtonClick={hideModal}
-            type="exitForm"
+            type="exitIntent"
           />
         </Variant>
         <Variant name="SimilarCommunities">
