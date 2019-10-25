@@ -101,8 +101,7 @@ export default class DashboardMessagesContainer extends Component {
       messagesComponent = <EmptyMessagesWrapper>No messages</EmptyMessagesWrapper>;
     } else {
       hasMessages = true;
-      let messages = [];
-      messages = conversations
+      const messages = conversations
         .filter(conversation => !!conversation.latestMessage)
         .map((conversation) => {
           const { conversationParticipants, latestMessage } = conversation;
