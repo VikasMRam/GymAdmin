@@ -59,6 +59,7 @@ import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFo
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 import PlusBranding from 'sly/components/organisms/PlusBranding';
+import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import withExitIntent from 'sly/services/exitIntent/withExitIntent';
 
 const BackToSearch = styled.div`
@@ -113,6 +114,17 @@ const ButtonBlock = styled(Block)`
 
 const StyledButton = styled(Button)`
   width: 100%;
+`;
+
+const EventsWrapper = styled(CollapsibleBlock)`
+  display: grid;
+  grid-template-columns: 100%;
+  grid-row-gap: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    grid-template-columns: 50% 50%;
+    grid-column-gap: ${size('layout.gutter')};
+  }
 `;
 
 const Header = makeHeader();
@@ -642,7 +654,7 @@ export default class CommunityDetailPage extends Component {
                     />
                   </MainSection>
                 </TopCollapsibleSection>
-                {plusCommunity && <PlusBranding/>}
+                {plusCommunity && <PlusBranding />}
                 {(communityDescription || rgsAux.communityDescription) &&
                   <TopCollapsibleSection
                     title={`Details on ${name}`}
@@ -746,11 +758,13 @@ export default class CommunityDetailPage extends Component {
                 {plusCommunity && eventsLink && sampleEvents &&
                 <TopCollapsibleSection title={`Event at ${name}`}>
                   <MainSection>
-                    {sampleEvents.map(item => (
-                      <IconItemWrapper key={item}>
-                        <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
-                      </IconItemWrapper>))
-                    }
+                    <EventsWrapper>
+                      {sampleEvents.map(item => (
+                        <IconItemWrapper key={item}>
+                          <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
+                        </IconItemWrapper>))
+                      }
+                    </EventsWrapper>
                   </MainSection>
                   <ButtonBlock>
                     <StyledButton href={eventsLink} ghost>Download Events Calendar</StyledButton>

@@ -56,7 +56,7 @@ IconItem.defaultProps = {
   textPalette: 'slate',
   textVariation: 'base',
   iconRightMarginSpacing: 'small',
-  borderPalette: 'gray',
+  borderPalette: 'grey',
   borderVariation: 'filler',
 };
 
