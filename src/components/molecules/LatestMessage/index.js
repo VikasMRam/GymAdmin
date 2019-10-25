@@ -23,25 +23,28 @@ const LatestMessage = ({
   message, name, hasUnread, onClick,
 }) => {
   let dateString = '';
-  const parsedDate = dayjs(message.createdAt);
-  if (!parsedDate.isValid()) {
-    dateString = 'Failed to parse date';
-  } else {
-    dateString = parsedDate.format('MM/DD/YYYY');
+  if (message && message.createdAt) {
+    const parsedDate = dayjs(message.createdAt);
+    if (!parsedDate.isValid()) {
+      dateString = 'Failed to parse date';
+    } else {
+      dateString = parsedDate.format('MM/DD/YYYY');
+    }
   }
+  const messageValue = message && message.data && message.data.value ? message.data.value : `This is the beginning of your conversation with ${name}`;
   return (
     <StyledBox noBorderRadius hasUnread={hasUnread} onClick={onClick}>
       <TopWrapper>
         <ClampedText weight="medium" palette="primary">{name}</ClampedText>
         <Block size="caption" palette="grey">{dateString}</Block>
       </TopWrapper>
-      <ClampedText size="caption">{message.data.value}</ClampedText>
+      <ClampedText size="caption">{messageValue}</ClampedText>
     </StyledBox>
   );
 };
 
 LatestMessage.propTypes = {
-  message: messagePropType.isRequired,
+  message: messagePropType,
   name: string.isRequired,
   hasUnread: bool,
   onClick: func,

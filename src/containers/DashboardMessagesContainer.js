@@ -11,6 +11,7 @@ import withWS from 'sly/services/ws/withWS';
 import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 import { Heading, Box } from 'sly/components/atoms';
 import LatestMessage from 'sly/components/molecules/LatestMessage';
+import { CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION } from 'sly/constants/conversations';
 
 const HeadingWrapper = styled.div`
   padding: ${size('spacing', 'xLarge')};
@@ -102,31 +103,44 @@ export default class DashboardMessagesContainer extends Component {
     } else {
       hasMessages = true;
       const messages = conversations
-        .filter(conversation => !!conversation.latestMessage)
         .map((conversation) => {
           const { conversationParticipants, latestMessage } = conversation;
-          const { conversationParticipantID } = latestMessage;
-          const userParticipant = conversationParticipants.find(conversationParticipant => conversationParticipant.participantID === userId);
-          const conversationParticipant = conversationParticipants.find(conversationParticipant => conversationParticipant.id === conversationParticipantID);
-          const { participantInfo } = conversationParticipant;
-          const { name } = participantInfo;
-          let hasUnread = false;
-          if (userParticipant == null) {
-            hasUnread = true;
-          } else {
-            hasUnread = userParticipant.stats ? userParticipant.stats.unreadMessageCount > 0 : false;
+          const nameList = conversationParticipants
+            .filter(conversationParticipant => conversationParticipant.participantID !== userId)
+            .filter(conversationParticipant => conversationParticipant.participantType !== CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION)
+            .reduce((accumulator, conversationParticipant) => {
+              const { participantInfo } = conversationParticipant;
+              const { name } = participantInfo;
+              if (name !== '' && accumulator.indexOf(name) === -1) {
+                accumulator.push(name);
+              }
+              return accumulator;
+            }, []);
+          const name = nameList.sort().join(', ');
+          if (latestMessage) {
+            const userParticipant = conversationParticipants.find(conversationParticipant => conversationParticipant.participantID === userId);
+            let hasUnread = false;
+            if (userParticipant == null) {
+              hasUnread = true;
+            } else {
+              hasUnread = userParticipant.stats ? userParticipant.stats.unreadMessageCount > 0 : false;
+            }
+            return {
+              name,
+              message: latestMessage,
+              hasUnread,
+              conversation,
+            };
           }
           return {
             name,
-            message: latestMessage,
-            hasUnread,
             conversation,
           };
         });
 
       messagesComponent = messages.map(message => (
         <LatestMessage
-          key={message.message.id}
+          key={message.name}
           name={message.name}
           message={message.message}
           hasUnread={message.hasUnread}
