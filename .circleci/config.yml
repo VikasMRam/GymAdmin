@@ -186,6 +186,8 @@ jobs:
   e2e:
     machine: true
 
+    resource_class: large
+
     working_directory: ~/project/e2e
 
     environment:
