@@ -4,41 +4,42 @@ import { connect } from 'react-redux';
 import { func, bool } from 'prop-types';
 
 import { createValidator, required, email } from 'sly/services/validation';
-import ResetPasswordForm from 'sly/components/organisms/ResetPasswordForm';
 import { withAuth } from 'sly/services/newApi';
+import EbookForm from 'sly/components/organisms/EbookForm';
 
 const validate = createValidator({
   email: [required, email],
 });
 
 const ReduxForm = reduxForm({
-  form: 'ResetPasswordForm',
+  form: 'EbookForm',
   validate,
-})(ResetPasswordForm);
+})(EbookForm);
 
 const mapDispatchToProps = dispatch => ({
-  clearSubmitErrors: () => dispatch(clearSubmitErrors('ResetPasswordForm')),
+  clearSubmitErrors: () => dispatch(clearSubmitErrors('EbookForm')),
 });
 
 @withAuth
 
 @connect(null, mapDispatchToProps)
 
-export default class ResetPasswordFormContainer extends Component {
+export default class EbookFormContainer extends Component {
   static propTypes = {
-    recoverPassword: func,
+    sendEbook: func,
     clearSubmitErrors: func,
     submitFailed: bool,
     onSubmitSuccess: func,
   };
 
   handleSubmit = (data) => {
-    const { recoverPassword, clearSubmitErrors, onSubmitSuccess } = this.props;
+    const { sendEbook, clearSubmitErrors, onSubmitSuccess } = this.props;
+
     clearSubmitErrors();
-    console.log('handleSubmit');
-    return recoverPassword(data).then(onSubmitSuccess).catch((response) => {
-      // TODO: Need to set a proper way to handle server side errors
+
+    return sendEbook(data).then(onSubmitSuccess).catch((response) => {
       const errorMessage = Object.values(response.body.errors).join('. ');
+
       throw new SubmissionError({ _error: errorMessage });
     });
   };

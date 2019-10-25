@@ -9,6 +9,8 @@ import { ServerStateProvider } from 'react-router-server';
 import Modal from 'react-modal';
 import { loadableReady } from '@loadable/component';
 
+// import RetentionPopupsInstaller from './services/retentionPopup/RetentionPopupsInstaller';
+
 import App from 'sly/components/App';
 import { ApiProvider, createApi } from 'sly/services/newApi';
 import configureStore from 'sly/store/configure';
@@ -29,9 +31,14 @@ const renderApp = () => (
         <WSProvider>
           <NotificationSubscriptions>
             <BrowserRouter>
+              {/* <RetentionPopupsInstaller> */}
+
               <App />
+              {/* </RetentionPopupsInstaller> */}
+
             </BrowserRouter>
           </NotificationSubscriptions>
+
         </WSProvider>
       </Provider>
     </ApiProvider>

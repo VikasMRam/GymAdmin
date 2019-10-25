@@ -6,6 +6,7 @@ import isMatch from 'lodash/isMatch';
 import omit from 'lodash/omit';
 import { parse as parseSearch } from 'query-string';
 import { Redirect } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { withServerState } from 'sly/store';
 import SlyEvent from 'sly/services/helpers/events';
@@ -37,7 +38,6 @@ import {
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 import { Experiment, Variant } from 'sly/services/experiments';
-import styled from 'styled-components';
 import { Heading } from 'sly/components/atoms';
 import { size } from 'sly/components/themes';
 
@@ -226,6 +226,11 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       action: 'click', category: 'receptionPhone', label: id,
     };
     SlyEvent.getInstance().sendEvent(event);
+  };
+
+  handleSimilarCommunitiesModalClick = (index, to, hideModal) => {
+    this.handleSimilarCommunitiesClick(index, to);
+    hideModal();
   };
 
   handleSimilarCommunitiesClick = (index, to) => {
@@ -430,33 +435,33 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       community: {
         id, name, similarProperties,
       },
-      onSimilarCommunitiesClick,
     } = this.props;
-    const communityStyle = { layout: 'row', imageSize: 'small', showDescription: false};
+    const communityStyle = { layout: 'row', imageSize: 'small', showDescription: false };
     // Track profiles on popup launch
-    const modalContent = (<Experiment name="User_Bounce_Popup" defaultVariant="QuestionModal">
-      <Variant name="QuestionModal">
-        <CommunityAskQuestionFormContainer
-          showModal={showModal}
-          communityName={name}
-          communitySlug={id}
-          onButtonClick={hideModal}
-          type="exitForm"
-        />
-      </Variant>
-      <Variant name="SimilarCommunities">
-        <StyledHeading>
+    const modalContent = (
+      <Experiment name="User_Bounce_Popup" defaultVariant="SimilarCommunities">
+        {/* <Variant name="QuestionModal">
+          <CommunityAskQuestionFormContainer
+            showModal={showModal}
+            communityName={name}
+            communitySlug={id}
+            onButtonClick={hideModal}
+            type="exitForm"
+          />
+        </Variant> */}
+        <Variant name="SimilarCommunities">
+          <StyledHeading>
           We found some Assisted Living communities you might like
-        </StyledHeading>
+          </StyledHeading>
 
-        <SimilarCommunities
-          communities={similarProperties}
-          onSimilarCommunityClick={onSimilarCommunitiesClick}
-          communityStyle={communityStyle}
-        />
+          <SimilarCommunities
+            communities={similarProperties}
+            onCommunityClick={(index, id) => this.handleSimilarCommunitiesModalClick(index, id, hideModal)}
+            communityStyle={communityStyle}
+          />
 
-      </Variant>
-    </Experiment>);
+        </Variant>
+      </Experiment>);
 
     return modalContent;
   }

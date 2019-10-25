@@ -26,7 +26,7 @@ const CommunityAskQuestionForm = ({
 
   if (type === 'exitForm') {
     title = (<>
-      <StyledHeading level="title" size="subtitle">Wait! Get support from a local senior living expert. This is a free service</StyledHeading>
+      <StyledHeading level="title" size="subtitle">Wait! Get support from a local senior living expert. This is a free service.</StyledHeading>
     </>);
   }
 

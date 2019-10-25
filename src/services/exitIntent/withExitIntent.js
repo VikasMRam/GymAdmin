@@ -116,6 +116,7 @@ const withExitIntent = (InnerComponent) => {
     }
 
     onPopstate = (event) => {
+      console.log('onpopstate intent');
       if (event.state && event.state.intent === EXIT_INTENT) {
         this.showIntent();
       }
@@ -127,6 +128,8 @@ const withExitIntent = (InnerComponent) => {
       if (localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN) {
         return;
       }
+
+      console.log('\n\n\nshow intent', MODAL_SHOWN, localStorage.getItem(MODAL_SHOWN));
 
       localStorage.setItem(MODAL_SHOWN, MODAL_SHOWN);
       showModal(exitIntentContent);

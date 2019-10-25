@@ -602,7 +602,7 @@ export default class CommunityDetailPage extends Component {
                       <Button onClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}>Get Detailed Pricing</Button>
                     </MainSection>
                   }
-                  {!hasCCRC  &&
+                  {!hasCCRC &&
                     <CommunityPricingTable
                       name={name}
                       pricesList={pricesList}
