@@ -4,18 +4,36 @@ const viewports = {
   laptop: 'macbook-13',
 };
 
-const getViewport = () => {
+const getViewport = (viewportList) => {
   const viewport = Cypress.env('viewport');
   if (viewport) {
     return {
       [viewport]: viewports[viewport],
     };
   }
-  return viewports;
+  if (!viewportList) {
+    return viewports;
+  }
+  if (Array.isArray(viewportList)) {
+    return viewportList.reduce((acc, viewport) => {
+      acc[viewport] = viewports[viewport];
+      return acc;
+    }, {});
+  }
+  return {
+    [viewportList]: viewports[viewportList],
+  };
 };
 
-export const responsive = (tests) =>  {
-  Object.entries(getViewport()).forEach(([viewport, id]) => {
+export const responsive = (viewportList, tests) =>  {
+  if (typeof viewportList === 'function') {
+    tests = viewportList;
+    viewportList = null;
+  }
+  Object.entries(getViewport(viewportList)).forEach(([viewport, id]) => {
+    if (!id) {
+      throw Error(`${viewport} does not seem to be a valid viewport name`);
+    }
     context(`in ${viewport}`, () => {
       beforeEach(() => {
         cy.viewport(id);
