@@ -67,12 +67,14 @@ export default class AcceptAndContactFamilyContainer extends Component {
   };
 
   render() {
-    const { onCancel, client, conversation, user } = this.props;
+    const { onCancel, client } = this.props;
+    // Reenable after messages
+    // const { conversation, user } = this.props;
     const { contactType, redirectToFamilyDetails, redirectToMessages } = this.state;
     const { id, clientInfo } = client;
     const { phoneNumber } = clientInfo;
-    let { email } = clientInfo;
-    const { id: userId } = user;
+    const { email } = clientInfo;
+    // const { id: userId } = user;
 
     if (redirectToFamilyDetails) {
       return <Redirect to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS })} />;
@@ -90,13 +92,16 @@ export default class AcceptAndContactFamilyContainer extends Component {
         />
       );
     }
-
-    if (conversation) {
+    /* REENABLE AFTER MESSAGES DONE
+    if (conversation && conversation.conversationParticipants && Array.isArray(conversation.conversationParticipants)) {
       const userParticipant = conversation.conversationParticipants
-        .find(participant => participant.participantID === userId);
-      const { participantID } = userParticipant;
-      email = `messaging+${participantID}@conversation.${domain}`;
+        .find(participant => participant && participant.participantID === userId);
+      if (userParticipant && userParticipant.participantID) {
+        const { participantID } = userParticipant;
+        email = `messaging+${participantID}@conversation.${domain}`;
+      }
     }
+    */
     const detail = {
       type: contactType,
       value: contactType === 'phone' ? phoneNumber : email,
@@ -114,7 +119,7 @@ export default class AcceptAndContactFamilyContainer extends Component {
               name="Contact"
               component={AcceptAndContactFamilyFormRedux}
               onCancelClick={onCancel}
-              contactTypes={['email', 'message']}
+              contactTypes={['email']}
             />
             <WizardStep
               name="Details"

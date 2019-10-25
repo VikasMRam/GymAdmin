@@ -166,7 +166,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
     const beforeTabHeader = (
       <TwoColumn>
         <Heading level="subtitle">My Families</Heading>
-        <Role className="addFamily" is={PLATFORM_ADMIN_ROLE}>>
+        <Role className="addFamily" is={PLATFORM_ADMIN_ROLE}>
           <IconButton icon="user-add" onClick={this.handleAddFamilyClick} hideTextInMobile>
             Add family
           </IconButton>
