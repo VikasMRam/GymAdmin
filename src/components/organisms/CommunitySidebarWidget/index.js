@@ -22,7 +22,7 @@ const Wrapper = styled(Box)`
 const CommunityPricingAndRatingWrapper = pad(styled.div``);
 
 const CommunitySidebarWidget = ({
-  community, onGCPClick, isAlreadyPricingRequested,
+  community, isAlreadyPricingRequested,
   onLearnMoreClick,
 }) => {
   const { startingRate, propRatings, propInfo } = community;
@@ -41,18 +41,19 @@ const CommunitySidebarWidget = ({
           </>
         }
         <CommunityActions
+          community={community}
           isAlreadyPricingRequested={isAlreadyPricingRequested}
-          onGCPClick={onGCPClick}
         />
       </Wrapper>
       {(promoDescription || promoTitle) &&
         (
           <OfferNotification
-            onLearnMoreClick={onLearnMoreClick}
             palette="warning"
             title={promoTitle}
             description={promoDescription}
             hasLearnMore
+            community={community}
+            hasAlreadyRequestedPricing={isAlreadyPricingRequested}
           />
         )}
     </>
