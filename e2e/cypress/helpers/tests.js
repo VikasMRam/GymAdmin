@@ -32,6 +32,7 @@ export const getSelector = (selector) => {
   };
   Object.entries(regexes).forEach(([attr, regex]) => {
     let match;
+    // eslint-disable-next-line no-cond-assign
     while (match = regex.exec(selector)) {
       const { 0: matched, index } = match;
       const replaced = `[${attr}*="${matched.slice(1)}"]`;

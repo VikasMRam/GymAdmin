@@ -1,4 +1,4 @@
-import { responsive, select, getSelector } from '../../helpers/tests';
+import { responsive, select } from '../../helpers/tests';
 import buildEntity from '../../helpers/buildEntity';
 
 const randHash = () => Math.random().toString(36).substring(7);
@@ -10,9 +10,13 @@ describe('Review Community', () => {
   beforeEach(() => {
     cy.server();
 
-    cy.fixture('community-rhoda').then(response => community = buildEntity(response));
+    cy.fixture('community-rhoda').then((response) => {
+      community = buildEntity(response);
+    });
 
-    cy.fixture('user-slytest-admin').then(response => user = response);
+    cy.fixture('user-slytest-admin').then((response) => {
+      user = response;
+    });
   });
 
   const portal = selector => select(`.ReactModalPortal ${selector}`);

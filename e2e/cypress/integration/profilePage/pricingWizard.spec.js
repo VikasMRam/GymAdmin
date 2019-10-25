@@ -1,5 +1,5 @@
-import { doCustomPricingFlow } from './../../helpers/customPricing';
-import { assertUserActionsForCustomPricing } from './../../helpers/userActions';
+import { doCustomPricingFlow } from '../../helpers/customPricing';
+import { assertUserActionsForCustomPricing } from '../../helpers/userActions';
 import { responsive } from '../../helpers/tests';
 
 describe('Marketplace Profile Page', () => {

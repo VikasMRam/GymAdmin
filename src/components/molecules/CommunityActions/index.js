@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { func, bool } from 'prop-types';
 
@@ -12,12 +12,12 @@ MainButton.displayName = 'MainButton';
 
 
 const CommunityActions = ({ onGCPClick, isAlreadyPricingRequested }) => (
-  <Fragment>
+  <>
     {!isAlreadyPricingRequested &&
     <MainButton kind="jumbo" onClick={onGCPClick}>Get Pricing</MainButton>}
     {isAlreadyPricingRequested &&
     <MainButton ghost kind="jumbo" onClick={onGCPClick}>Pricing requested</MainButton>}
-  </Fragment>
+  </>
 );
 
 CommunityActions.propTypes = {

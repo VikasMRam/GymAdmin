@@ -24,7 +24,7 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import { responsive, select } from '../helpers/tests';
+import { select } from '../helpers/tests';
 
 Cypress.Commands.add('registerWithEmailFlow', (email, password) => {
   cy.route('POST', '**/auth/register').as('registerUser');
@@ -35,7 +35,7 @@ Cypress.Commands.add('registerWithEmailFlow', (email, password) => {
   select('.SignupForm input[name="password"]').type(password);
   select('.SignupForm button[type="submit"]').click();
 
-  cy.wait('@registerUser').then(xhr => {
+  cy.wait('@registerUser').then((xhr) => {
     expect(xhr.status).to.equal(200);
     expect(xhr.requestBody).to.deep.equal({
       email, password,
