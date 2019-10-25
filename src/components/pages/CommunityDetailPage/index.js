@@ -566,6 +566,8 @@ export default class CommunityDetailPage extends Component {
                     title={promoTitle}
                     description={promoDescription}
                     hasLearnMore
+                    community={community}
+                    hasAlreadyRequested={isAlreadyPricingRequested}
                   />
                 )}
                 {communityInsights &&

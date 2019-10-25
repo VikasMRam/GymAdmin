@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { bool, string } from 'prop-types';
+import { bool, object, string } from 'prop-types';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size, palette } from 'sly/components/themes';
 import { Icon, Span, Link } from 'sly/components/atoms';
-import AskAgentQuestionButtonContainer from 'sly/containers/AskAgentQuestionButtonContainer';
+import GetCustomPricingContainer from 'sly/containers/GetCustomPricingContainer';
 
 const getColor = ({ palette: paletteProp }) => palette(paletteProp, 'filler');
 
@@ -23,14 +23,14 @@ const TopWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const SmallScreenLearnMore = styled(AskAgentQuestionButtonContainer)`
+const SmallScreenLearnMore = styled(Link)`
   font-weight: ${size('weight.medium')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: none;
   }
 `;
 
-const BigScreenLearnMore = styled(AskAgentQuestionButtonContainer)`
+const BigScreenLearnMore = styled(Link)`
   display: none;
   font-weight: ${size('weight.medium')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -44,6 +44,8 @@ const OfferNotification = ({
   description,
   hasLearnMore,
   className,
+  community,
+  hasAlreadyRequestedPricing
 }) => (
   <Wrapper palette={paletteProp} className={className}>
     <LoyaltyIcon
@@ -64,8 +66,21 @@ const OfferNotification = ({
       </TopWrapper>
       {hasLearnMore && (
         <>
-          {/*<BigScreenLearnMore Component={Link}>Click here to learn more.</BigScreenLearnMore>*/}
-          {/*<SmallScreenLearnMore Component={Link}>Learn more.</SmallScreenLearnMore>*/}
+          <GetCustomPricingContainer
+            community={community}
+            hasAlreadyRequestedPricing={hasAlreadyRequestedPricing}
+          >
+            {getPricing => (
+              <>
+                <BigScreenLearnMore onClick={getPricing}>
+                  Click here to learn more.
+                </BigScreenLearnMore>
+                <SmallScreenLearnMore onClick={getPricing}>
+                  Learn more.
+                </SmallScreenLearnMore>
+              </>
+            )}
+          </GetCustomPricingContainer>
         </>
       )}
     </div>
@@ -78,6 +93,8 @@ OfferNotification.propTypes = {
   title: string.isRequired,
   description: string,
   className: string,
+  community: object,
+  hasAlreadyRequestedPricing: bool
 };
 
 OfferNotification.defaultProps = {
