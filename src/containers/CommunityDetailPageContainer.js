@@ -228,6 +228,11 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     SlyEvent.getInstance().sendEvent(event);
   };
 
+  handleSimilarCommunitiesModalClick = (index, to, hideModal) => {
+    this.handleSimilarCommunitiesClick(index, to);
+    hideModal();
+  }
+
   handleSimilarCommunitiesClick = (index, to) => {
     const event = {
       action: 'click', category: 'similarCommunity', label: index.toString(), value: to,
@@ -430,33 +435,33 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       community: {
         id, name, similarProperties,
       },
-      onSimilarCommunitiesClick,
     } = this.props;
-    const communityStyle = { layout: 'row', imageSize: 'small', showDescription: false};
+    const communityStyle = { layout: 'row', imageSize: 'small', showDescription: false };
     // Track profiles on popup launch
-    const modalContent = (<Experiment name="User_Bounce_Popup" defaultVariant="QuestionModal">
-      <Variant name="QuestionModal">
-        <CommunityAskQuestionFormContainer
-          showModal={showModal}
-          communityName={name}
-          communitySlug={id}
-          onButtonClick={hideModal}
-          type="exitForm"
-        />
-      </Variant>
-      <Variant name="SimilarCommunities">
-        <StyledHeading>
+    const modalContent = (
+      <Experiment name="User_Bounce_Popup" defaultVariant="QuestionModal">
+        <Variant name="QuestionModal">
+          <CommunityAskQuestionFormContainer
+            showModal={showModal}
+            communityName={name}
+            communitySlug={id}
+            onButtonClick={hideModal}
+            type="exitForm"
+          />
+        </Variant>
+        <Variant name="SimilarCommunities">
+          <StyledHeading>
           We found some Assisted Living communities you might like
-        </StyledHeading>
+          </StyledHeading>
 
-        <SimilarCommunities
-          communities={similarProperties}
-          onSimilarCommunityClick={onSimilarCommunitiesClick}
-          communityStyle={communityStyle}
-        />
+          <SimilarCommunities
+            communities={similarProperties}
+            onCommunityClick={(index, to) => this.handleSimilarCommunitiesModalClick(index, to, hideModal)}
+            communityStyle={communityStyle}
+          />
 
-      </Variant>
-    </Experiment>);
+        </Variant>
+      </Experiment>);
 
     return modalContent;
   }
