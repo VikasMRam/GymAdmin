@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
-import { object, string } from 'prop-types';
+import { func, object, string } from 'prop-types';
 import { assetPath } from 'sly/components/themes';
-import ModalController from 'sly/controllers/ModalController';
-import NotificationController from 'sly/controllers/NotificationController';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import SlyEvent from 'sly/services/helpers/events';
-import Button from 'sly/components/atoms/Button';
+import withModal from "sly/controllers/withModal";
+import withNotification from "sly/controllers/withNotification";
 
-class AskAgentQuestionContainer extends Component {
+@withModal
+@withNotification
+export default class AskAgentQuestionContainer extends Component {
+  static propTypes = {
+    type: string.isRequired,
+    community: object.isRequired,
+    notifyInfo: func.isRequired,
+    showModal: func.isRequired,
+    hideModal: func.isRequired,
+  };
+
   handleToggleAskAgentQuestionModal = (isAskAgentQuestionModalVisible) => {
     const { community, type } = this.props;
     const action = isAskAgentQuestionModalVisible
@@ -71,27 +80,3 @@ class AskAgentQuestionContainer extends Component {
     return this.props.children(this.openAskAgentQuestionModal);
   }
 }
-
-function withNotificationAndModal(Component) {
-  return ({ ...props }) => (
-    <NotificationController>
-      {({ notifyInfo }) => (
-        <ModalController>
-          {({ show: showModal, hide: hideModal }) => (
-            <Component {...{ notifyInfo, showModal, hideModal }} {...props} />
-          )}
-        </ModalController>
-      )}
-    </NotificationController>
-  );
-}
-
-const WiredAskAgentQuestionContainer = withNotificationAndModal(
-  AskAgentQuestionContainer
-);
-WiredAskAgentQuestionContainer.propTypes = {
-  type: string.isRequired,
-  community: object.isRequired,
-};
-
-export default WiredAskAgentQuestionContainer;
