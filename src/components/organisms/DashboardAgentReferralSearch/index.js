@@ -51,7 +51,7 @@ const DashboardAgentReferralSearch = ({
     { (agents && agents.length < 1) &&
       <>
         <Hr size="large" />
-        <Block>No agents found; try searching another name or zip </Block>
+        <Block>Search for an agent</Block>
       </>
     }
   </Wrapper>
