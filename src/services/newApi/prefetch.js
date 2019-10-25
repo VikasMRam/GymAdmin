@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { object } from 'prop-types';
-import { withDone } from 'sly/components/common/fetchState';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
+import { withDone } from 'sly/components/common/fetchState';
 import { isServer } from 'sly/config';
 import { withApi } from 'sly/services/newApi';
 import { createMemoizedRequestInfoSelector } from 'sly/services/newApi/selectors';

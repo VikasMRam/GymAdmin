@@ -12,12 +12,12 @@ MainButton.displayName = 'MainButton';
 
 
 const CommunityActions = ({ onGCPClick, isAlreadyPricingRequested }) => (
-  <div>
+  <>
     {!isAlreadyPricingRequested &&
     <MainButton kind="jumbo" onClick={onGCPClick}>Get Pricing</MainButton>}
     {isAlreadyPricingRequested &&
     <MainButton ghost kind="jumbo" onClick={onGCPClick}>Pricing requested</MainButton>}
-  </div>
+  </>
 );
 
 CommunityActions.propTypes = {
