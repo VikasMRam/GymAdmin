@@ -204,7 +204,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "e2e/package.json" }}
+            - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
 
       - run:
           name: NPM Install and Run Local SlyReact in Background
@@ -272,7 +272,7 @@ jobs:
           name: Run Cypress tests
           command: |
             echo "Running cypress"
-            npx cypress run --reporter mocha-multi-reporters --reporter-options "configFile=reporter-config.json" --spec "cypress/integration/**/*"
+            npx cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec "cypress/integration/**/*"
 
       - run:
           name: Closing OpenVPN Tunnel
