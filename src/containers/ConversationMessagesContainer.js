@@ -34,6 +34,7 @@ import IconButton from 'sly/components/molecules/IconButton';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import BackLink from 'sly/components/molecules/BackLink';
 import SendMessageFormContainer from 'sly/containers/SendMessageFormContainer';
+import { getConversationName } from 'sly/services/helpers/conversation';
 
 const categoryName = 'conversation-messages';
 
@@ -376,7 +377,7 @@ export default class ConversationMessagesContainer extends Component {
     const { id: userId } = user;
     const { viewingAsParticipant } = this.props;
     const otherClientParticipant = conversationParticipants.find(p => p.participantID !== userId && p.participantType === CONVERSATION_PARTICIPANT_TYPE_CLIENT);
-    const name = otherClientParticipant && otherClientParticipant.participantInfo ? otherClientParticipant.participantInfo.name : '';
+    const name = getConversationName(conversation, user);
     const otherParticipantIsClient = !!otherClientParticipant;
     const sendMessageFormPlaceholder = otherClientParticipant && otherClientParticipant.participantInfo && `Message ${otherClientParticipant.participantInfo.name.split(' ').shift()}...`;
 

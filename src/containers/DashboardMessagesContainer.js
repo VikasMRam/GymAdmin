@@ -11,7 +11,7 @@ import withWS from 'sly/services/ws/withWS';
 import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 import { Heading, Box } from 'sly/components/atoms';
 import LatestMessage from 'sly/components/molecules/LatestMessage';
-import { CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION } from 'sly/constants/conversations';
+import { getConversationName } from 'sly/services/helpers/conversation';
 
 const HeadingWrapper = styled.div`
   padding: ${size('spacing', 'xLarge')};
@@ -105,18 +105,7 @@ export default class DashboardMessagesContainer extends Component {
       const messages = conversations
         .map((conversation) => {
           const { conversationParticipants, latestMessage } = conversation;
-          const nameList = conversationParticipants
-            .filter(conversationParticipant => conversationParticipant.participantID !== userId)
-            .filter(conversationParticipant => conversationParticipant.participantType !== CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION)
-            .reduce((accumulator, conversationParticipant) => {
-              const { participantInfo } = conversationParticipant;
-              const { name } = participantInfo;
-              if (name !== '' && accumulator.indexOf(name) === -1) {
-                accumulator.push(name);
-              }
-              return accumulator;
-            }, []);
-          const name = nameList.sort().join(', ');
+          const name = getConversationName(conversation, user);
           if (latestMessage) {
             const userParticipant = conversationParticipants.find(conversationParticipant => conversationParticipant.participantID === userId);
             let hasUnread = false;
