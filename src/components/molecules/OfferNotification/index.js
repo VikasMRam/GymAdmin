@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { bool, object, string } from 'prop-types';
+
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size, palette } from 'sly/components/themes';
 import { Icon, Span, Link } from 'sly/components/atoms';

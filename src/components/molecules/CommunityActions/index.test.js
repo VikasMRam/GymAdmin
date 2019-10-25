@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+
 import CommunityActions from 'sly/components/molecules/CommunityActions';
 
 const community = { id: 'The place 123' };
