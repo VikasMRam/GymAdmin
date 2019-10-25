@@ -14,7 +14,7 @@ jobs:
     working_directory: ~/project
 
     environment:
-      TEST_RESULTS: /tmp/test-results
+      TEST_RESULTS: test-results
 
     steps:
       - checkout:
@@ -53,7 +53,7 @@ jobs:
 
             - run:
                 name: JavaScript Linter
-                command: npm run lint -- --format junit -o "$TEST_RESULTS/js-lint-results.xml"
+                command: npm run lint -- --format junit -o "$TEST_RESULTS/lint/js-lint-results.xml"
 
             - run:
                 name: JS Test Suite
@@ -68,10 +68,10 @@ jobs:
       #       - .cache
 
       - store_test_results:
-          path: /tmp/test-results
+          path: test-results
 
       - store_artifacts:
-          path: /tmp/test-results
+          path: test-results
 
   deploy:
     docker:
@@ -191,7 +191,7 @@ jobs:
     working_directory: ~/project/e2e
 
     environment:
-      TEST_RESULTS: /tmp/test-results
+      TEST_RESULTS: test-results
       CYPRESS_reporter: junit
 
     steps:
@@ -272,7 +272,7 @@ jobs:
           name: Run Cypress tests
           command: |
             echo "Running cypress"
-            npx cypress run --reporter junit --reporter-options "mochaFile=$TEST_RESULTS/cypress-test-output.xml,toConsole=true" --spec "cypress/integration/**/*"
+            npx cypress run --reporter junit --reporter-options "mochaFile=$TEST_RESULTS/cypress/results.xml,toConsole=true" --spec "cypress/integration/**/*"
 
       - run:
           name: Closing OpenVPN Tunnel
@@ -302,12 +302,11 @@ jobs:
             fi
 
       - store_test_results:
-          path: /tmp/test-results
+          path: test-results
 
       - store_artifacts:
-          path: /tmp/test-results
-      - store_artifacts:
           path: cypress/videos
+
       - store_artifacts:
           path: cypress/screenshots
 
