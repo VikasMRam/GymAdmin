@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { size, palette, assetPath } from 'sly/components/themes';
 import { Heading, Image, Icon, Paragraph } from 'sly/components/atoms';
 import IconItem from 'sly/components/molecules/IconItem';
+import PlusBadge from 'sly/components/molecules/PlusBadge';
 
 const TextWrapper = styled.div`
   display: block;
@@ -118,7 +119,9 @@ export default class PlusBranding extends Component {
             </Paragraph>
             <StyledParagraph>
               Seniorly Plus is a selection of only the highest quality homes. Each Plus home is verified through in-person
-              quality inspection to ensure your next home is one you will love. Just look for the badge.
+              quality inspection to ensure your next home is one you will love. Just look for the &nbsp;
+              <PlusBadge />
+              &nbsp;badge.
             </StyledParagraph>
             <Paragraph>
               <IconItemWrapper>
