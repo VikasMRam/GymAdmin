@@ -34,10 +34,22 @@ const DashboardCommunityReferralSearch = ({
   <Wrapper>
     <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
     <DashboardCommunityAgentSearchBox label="Find a community" handleSubmit={handleCommunitySearch} />
-    {communities && communities.length > 0 && (
+    {!communities &&
+    <>
+      <Hr size="large" />
+      <Block>Search for Communities by entering Name or Zip</Block>
+    </>
+    }
+    {(communities && communities.length === 0) &&
+    <>
+      <Hr size="large" />
+      <Block>No Communities found; Try searching another Name or Zip</Block>
+    </>
+    }
+    {(communities && communities.length > 0) && (
       <>
         <Hr size="large" />
-        <Block>Showing {communities.length} communities</Block>
+        <Block>Showing {communities.length} Communities</Block>
         {communities.map((community) => {
           const props = {
             key: community.name,
@@ -52,12 +64,6 @@ const DashboardCommunityReferralSearch = ({
         })}
       </>
     )}
-    { communities && communities.length === 0 &&
-    <>
-      <Hr size="large" />
-      <Block>No communities found; try searching another name or zip </Block>
-    </>
-    }
   </Wrapper>
 );
 
