@@ -13,7 +13,7 @@ import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import Tab from 'sly/components/molecules/Tab';
 import clientPropType from 'sly/propTypes/client';
-import { ACTIVITY, AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_FAMILIES_NEW_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_TASKS_PATH} from 'sly/constants/dashboardAppPaths';
 import Th from 'sly/components/molecules/Th';
 
 const TASK_TABLE_HEADINGS = [
@@ -74,12 +74,9 @@ const onTabClick = (label) => {
 };
 
 const getBasePath = (tab, params) => {
-  const {
-    clientName, organization, provider, providerType,
-  } = params;
   const filters = {};
   const filterQs = qs.stringify(filters);
-  return filterQs !== '' ? `${AGENT_DASHBOARD_FAMILIES_PATH}?${filterQs}` : AGENT_DASHBOARD_FAMILIES_PATH;
+  return filterQs !== '' ? `${AGENT_DASHBOARD_TASKS_PATH}?${filterQs}` : AGENT_DASHBOARD_TASKS_PATH;
 };
 
 const TasksOverviewPage = ({

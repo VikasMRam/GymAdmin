@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
 import qs from 'query-string';
+import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
@@ -13,11 +14,16 @@ import textAlign from 'sly/components/helpers/textAlign';
 import { Box, Table, THead, TBody, Tr, Td, Heading, Block } from 'sly/components/atoms';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 import Pagination from 'sly/components/molecules/Pagination';
-
+import Tabs from 'sly/components/molecules/Tabs';
+import Tab from 'sly/components/molecules/Tab';
 import Th from 'sly/components/molecules/Th';
 import IconButton from 'sly/components/molecules/IconButton';
 import TaskRowCard from 'sly/components/organisms/TaskRowCard';
 import AddOrEditTaskFormContainer from 'sly/containers/AddOrEditTaskFormContainer';
+import {
+  AGENT_DASHBOARD_TASKS_PATH, TODAY, OVERDUE, UPCOMING, COMPLETED,
+} from 'sly/constants/dashboardAppPaths';
+import { stripPageNumber } from 'sly/services/helpers/appPaths';
 
 
 const TABLE_HEADINGS = [
@@ -98,14 +104,35 @@ const StyledSection = styled(Section)`
   border: none;
 `;
 
+const TabMap = {
+  Today: TODAY,
+  Overdue: OVERDUE,
+  Upcoming: UPCOMING,
+  Completed: COMPLETED,
+};
 const tabIDLabelMap = {
-  DueToday: 'DUE TODAY',
-  Overdue: 'OVERDUE',
-  Upcoming: 'UPCOMING',
-  Completed: 'COMPLETED',
+  today: 'DUE TODAY',
+  overdue: 'OVERDUE',
+  upcoming: 'UPCOMING',
+  completed: 'COMPLETED',
 };
 
 const tabIDs = Object.keys(tabIDLabelMap);
+
+const onTabClick = (label) => {
+  const event = {
+    category: 'DashboardAgentTasksTab',
+    action: 'click',
+    label,
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
+
+const getBasePath = (taskType, location) => {
+  const path = generatePath(AGENT_DASHBOARD_TASKS_PATH, { taskType });
+  // TODO: Apply default filters.
+  return location && location.search ? `${path}${stripPageNumber(location.search)}` : path;
+};
 
 export default class DashboardAgentTasksSection extends Component {
   static propTypes = {
@@ -185,10 +212,9 @@ export default class DashboardAgentTasksSection extends Component {
 
   render() {
     const {
-      tasks, pagination, activeTab, isPageLoading, noBorder, meta,
+      tasks, pagination, activeTab, isPageLoading, noBorder, meta, basePath, location,
       datatable,
     } = this.props;
-
     const beforeTabHeader = (
       <TwoColumn>
         <Heading level="subtitle">Tasks</Heading>
@@ -197,14 +223,8 @@ export default class DashboardAgentTasksSection extends Component {
         </IconButton>
       </TwoColumn>
     );
-    let noResultMessage = 'Nice! You are on top of all your tasks for today';
-    if (activeTab === tabIDs[1]) {
-      noResultMessage = 'Nice! You are on top of all your overdue tasks';
-    } else if (activeTab === tabIDs[2]) {
-      noResultMessage = 'Nice! You are on top of all your upcoming tasks';
-    } else if (activeTab === tabIDs[3]) {
-      noResultMessage = 'Nice! You are on top of all your completed tasks';
-    }
+    const noResultMessage = 'Nice! You are on top of all your tasks here.';
+
 
     const TableHeaderButtonComponent = noBorder ? StyledTableHeaderButtons : TableHeaderButtons;
     const SectionComponent = noBorder ? StyledSection : Section;
@@ -213,7 +233,19 @@ export default class DashboardAgentTasksSection extends Component {
 
     return (
       <>
-        {beforeTabHeader}
+        <Tabs activeTab={activeTab} beforeHeader={beforeTabHeader} tabsOnly>
+          {Object.entries(TabMap)
+            .map(([name, key]) => (
+              <Tab
+                id={key}
+                key={key}
+                to={getBasePath(key, location)}
+                onClick={() => onTabClick(name)}
+              >
+                {`${name} (${pagination[`${key}Count`] || '0'})`}
+              </Tab>
+            ))}
+        </Tabs>
         <TableHeaderButtonComponent
           datatable={datatable}
           modelConfig={modelConfig}

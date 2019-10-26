@@ -11,11 +11,23 @@ const familyTypes = [
   CONNECTED,
   CLOSED,
 ];
+
+export const OVERDUE = 'overdue';
+export const UPCOMING = 'upcoming';
+export const TODAY = 'today';
+export const COMPLETED = 'completed';
+const taskTypes = [
+  TODAY,
+  OVERDUE,
+  UPCOMING,
+  COMPLETED,
+];
+
 export const FAMILY_DASHBOARD_FAVORITES_PATH = `${FAMILY_DASHBOARD_PATH}/favorites`;
 export const FAMILY_DASHBOARD_PROFILE_PATH = `${FAMILY_DASHBOARD_PATH}/my-profile`;
 export const AGENT_DASHBOARD_FAMILIES_PATH = `${AGENT_DASHBOARD_PATH}/my-families/:clientType(${familyTypes.join('|')})?`;
 export const AGENT_DASHBOARD_FAMILIES_DETAILS_PATH = `${AGENT_DASHBOARD_PATH}/my-families/:id/:tab?`;
-export const AGENT_DASHBOARD_TASKS_PATH = `${AGENT_DASHBOARD_PATH}/tasks`;
+export const AGENT_DASHBOARD_TASKS_PATH = `${AGENT_DASHBOARD_PATH}/tasks/:taskType(${taskTypes.join('|')})?`;
 export const FAMILY_DASHBOARD_MESSAGES_PATH = `${FAMILY_DASHBOARD_PATH}/messages`;
 export const AGENT_DASHBOARD_MESSAGES_PATH = `${AGENT_DASHBOARD_PATH}/messages`;
 export const AGENT_DASHBOARD_MESSAGE_DETAILS_PATH = `${AGENT_DASHBOARD_PATH}/messages/:id`;

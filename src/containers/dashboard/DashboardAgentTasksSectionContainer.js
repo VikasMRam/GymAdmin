@@ -46,10 +46,10 @@ const getPaginationData = ({ result, meta }) => {
     completedCount,
   });
 };
-
+/*
 const getPageParams = ({ match, location }) => {
   const searchParams = getSearchParams(match, location);
-  const type = searchParams.type || 'DueToday';
+  const type = match.params.taskType
   const taskName = searchParams.title;
   let date;
   let status = `in:${TASK_STATUS_NOT_STARTED_CODE},${TASK_STATUS_IN_PROGRESS_CODE}`;
@@ -72,7 +72,7 @@ const getPageParams = ({ match, location }) => {
     pageNumber: searchParams['page-number'],
   };
 };
-
+*/
 @withRouter
 
 @withUser
@@ -112,39 +112,11 @@ export default class DashboardAgentTasksSectionContainer extends Component {
     status.tasks.refetch();
   };
 
-  // todo: temp implementation till datatables for tasks is ready
-  handleSearchTextKeyUp = (event) => {
-    const { value } = event.target;
-    const { match, location, history, client } = this.props;
-    const {
-      pageNumber, date, status, type,
-    } = getPageParams({ match, location });
-    const filters = {
-      title: value,
-      'filter[status]': status,
-      pageNumber,
-      type,
-    };
-    if (date) {
-      filters['filter[dueDate]'] = date;
-    }
-    if (client) {
-      const { id } = client;
-      filters['filter[client]'] = id;
-    }
-
-    this.sendQuery(history, qs.stringify(filters));
-  };
-
-  sendQuery = debounce((history, filtersQs) => {
-    history.push({ search: `?${filtersQs}` });
-  }, 500);
-
   render() {
     const { tasks, status, match, location, datatable, ...props } = this.props;
 
-    const params = getPageParams({ match, location });
-    const { type, taskName } = params;
+    // const params = getPageParams({ match, location });
+    // const { taskType, taskName } = params;
     const { error, meta, hasFinished, result: tasksRaw } = status.tasks;
 
     if (error) {
@@ -163,15 +135,14 @@ export default class DashboardAgentTasksSectionContainer extends Component {
                 tasks={tasks}
                 tasksRaw={tasksRaw}
                 pagination={getPaginationData(status.tasks)}
-                activeTab={type}
-                onSearchTextKeyUp={this.handleSearchTextKeyUp}
+                activeTab={match.params.taskType}
+                // onSearchTextKeyUp={this.handleSearchTextKeyUp}
                 showModal={show}
                 hideModal={hide}
                 meta={meta || {}}
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
                 refetchTasks={this.refetchTasks}
-                searchTextBoxValue={taskName}
               />
             )}
           </ModalController>

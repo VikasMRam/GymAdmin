@@ -18,13 +18,19 @@ import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
 import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
+import notePropType from 'sly/propTypes/note';
+import userPropType from 'sly/propTypes/user';
+import conversationPropType from 'sly/propTypes/conversation/conversation';
+import { size, palette } from 'sly/components/themes';
+import { getStageDetails } from 'sly/services/helpers/stage';
+import { isReferralSent } from 'sly/services/helpers/client';
+import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import { userIs } from 'sly/services/helpers/role';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
-import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
-import notePropType from 'sly/propTypes/note';
-import { size, palette } from 'sly/components/themes';
-import { getStageDetails } from 'sly/services/helpers/stage';
+import SlyEvent from 'sly/services/helpers/events';
+import Role from 'sly/components/common/Role';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
@@ -37,19 +43,16 @@ import FamilyStage from 'sly/components/molecules/FamilyStage';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 import BackLink from 'sly/components/molecules/BackLink';
-import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
-import SlyEvent from 'sly/services/helpers/events';
-import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
+import IconBadge from 'sly/components/molecules/IconBadge';
 import Tab from 'sly/components/molecules/Tab';
+import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 import ConversationMessagesContainer from 'sly/containers/ConversationMessagesContainer';
-import userPropType from 'sly/propTypes/user';
-import conversationPropType from 'sly/propTypes/conversation/conversation';
-import Role from 'sly/components/common/Role';
 import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
 import StatusSelect from 'sly/components/molecules/StatusSelect';
 import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
 import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
 import { Datatable } from 'sly/services/datatable';
+
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
@@ -187,10 +190,15 @@ const DashboardMessagesContainerWrapper = styled.div`
     padding: ${size('spacing.xLarge')};
   }
 `;
+const StyledIconBadge = styled(IconBadge)`
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    order: 2;
+  }
+`;
 
 const ClientName = ({ client, rawClient, backLinkHref, ...props }) => {
   const { clientInfo } = client;
-  const { name } = clientInfo;
+  const { name, additionalMetadata } = clientInfo;
   return (
     <StyledClientNameBlock
       weight="medium"
@@ -200,6 +208,7 @@ const ClientName = ({ client, rawClient, backLinkHref, ...props }) => {
         <Icon icon="arrow-left" palette="primary" />
       </Link>
       <span>{name}</span>
+      {isReferralSent(additionalMetadata) && <StyledIconBadge badgePalette="danger" palette="white" icon="checkmark-circle" text="R SENT" />}
       <StyledStatusSelect client={client} rawClient={rawClient} {...props} />
     </StyledClientNameBlock>
   );
