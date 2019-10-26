@@ -34,10 +34,22 @@ const DashboardAgentReferralSearch = ({
   <Wrapper>
     <SendReferralTitleBlock size="subtitle">Send referral to agent</SendReferralTitleBlock>
     <DashboardCommunityAgentSearchBox label="Find an agent" handleSubmit={handleAgentSearch} />
-    {agents && agents.length > 0 && (
+    {!agents &&
+    <>
+      <Hr size="large" />
+      <Block>Search for Agents by entering Name or Zip </Block>
+    </>
+    }
+    {(agents && agents.length === 0) &&
+    <>
+      <Hr size="large" />
+      <Block>No Agents found; Try searching another Name or Zip </Block>
+    </>
+    }
+    {(agents && agents.length > 0) && (
       <>
         <Hr size="large" />
-        <Block>Showing {agents.length} agents</Block>
+        <Block>Showing {agents.length} Agents</Block>
         {agents.map((agent, idx) => {
           const client = childrenClientAgentIdsMap[agent.id];
           if (client) {
@@ -48,12 +60,6 @@ const DashboardAgentReferralSearch = ({
         })}
       </>
     )}
-    { (agents && agents.length < 1) &&
-      <>
-        <Hr size="large" />
-        <Block>Search for an agent</Block>
-      </>
-    }
   </Wrapper>
 );
 
