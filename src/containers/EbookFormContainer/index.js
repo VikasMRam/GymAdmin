@@ -1,43 +1,62 @@
 import React, { Component } from 'react';
-import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
+import { reduxForm, SubmissionError, clearSubmitErrors, reset } from 'redux-form';
 import { connect } from 'react-redux';
-import { func, bool } from 'prop-types';
+import { func, string } from 'prop-types';
 
 import { createValidator, required, email } from 'sly/services/validation';
-import { withAuth } from 'sly/services/newApi';
+import { withAuth, query } from 'sly/services/newApi';
 import EbookForm from 'sly/components/organisms/EbookForm';
+import Thankyou from 'sly/components/molecules/Thankyou/index';
+import SlyEvent from 'sly/services/helpers/events';
 
+const EBOOK_FORM = 'EbookForm';
 const validate = createValidator({
   email: [required, email],
 });
 
+const afterSubmit = (result, dispatch) => dispatch(reset(EBOOK_FORM));
+
 const ReduxForm = reduxForm({
-  form: 'EbookForm',
+  form: EBOOK_FORM,
   validate,
+  onSubmitSuccess: afterSubmit,
 })(EbookForm);
 
 const mapDispatchToProps = dispatch => ({
-  clearSubmitErrors: () => dispatch(clearSubmitErrors('EbookForm')),
+  clearSubmitErrors: () => dispatch(clearSubmitErrors(EBOOK_FORM)),
 });
 
+@query('sendEbook', 'sendEbook')
 @withAuth
-
 @connect(null, mapDispatchToProps)
-
 export default class EbookFormContainer extends Component {
   static propTypes = {
-    sendEbook: func,
-    clearSubmitErrors: func,
-    submitFailed: bool,
-    onSubmitSuccess: func,
+    sendEbook: func.isRequired,
+    clearSubmitErrors: func.isRequired,
+    showModal: func.isRequired,
+    hideModal: func.isRequired,
+    pathname: string,
   };
 
+  handheSubmitSuccess = () => {
+    const { hideModal, showModal, pathname } = this.props;
+    const event = {
+      action: 'send-email', category: 'ebook', label: pathname,
+    };
+    hideModal();
+    showModal(<Thankyou />);
+
+    SlyEvent.getInstance().sendEvent(event);
+
+    console.log('handle success');
+  }
+
   handleSubmit = (data) => {
-    const { sendEbook, clearSubmitErrors, onSubmitSuccess } = this.props;
+    const { sendEbook, clearSubmitErrors } = this.props;
 
     clearSubmitErrors();
 
-    return sendEbook(data).then(onSubmitSuccess).catch((response) => {
+    return sendEbook(data).then(this.handheSubmitSuccess).catch((response) => {
       const errorMessage = Object.values(response.body.errors).join('. ');
 
       throw new SubmissionError({ _error: errorMessage });

@@ -440,7 +440,7 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     // Track profiles on popup launch
     const modalContent = (
       <Experiment name="User_Bounce_Popup" defaultVariant="SimilarCommunities">
-        {/* <Variant name="QuestionModal">
+        <Variant name="QuestionModal">
           <CommunityAskQuestionFormContainer
             showModal={showModal}
             communityName={name}
@@ -448,10 +448,10 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
             onButtonClick={hideModal}
             type="exitForm"
           />
-        </Variant> */}
+        </Variant>
         <Variant name="SimilarCommunities">
           <StyledHeading>
-          We found some Assisted Living communities you might like
+            We found some Assisted Living communities you might like
           </StyledHeading>
 
           <SimilarCommunities
@@ -530,51 +530,51 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
           notifyError,
         }) => (
           <ModalController>
-            {({
-              show,
-              hide,
-            }) => (
-              <CommunityDetailPage
-                user={user}
-                community={community}
-                location={location}
-                mediaGallerySlideIndex={mediaGallerySlideIndex}
-                onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
-                onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
-                onMediaGalleryFavouriteClick={this.handleMediaGalleryFavouriteClick}
-                onMediaGalleryShareClick={this.handleMediaGalleryShareClick}
-                onShareCommunityModalClose={this.handleShareCommunityModalClose}
-                isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
-                onBackToSearchClicked={this.handleBackToSearchClick}
-                onReviewLinkClicked={this.handleReviewLinkClick}
-                onConciergeNumberClicked={this.handleConciergeNumberClick}
-                onLiveChatClicked={this.handleLiveChatClick}
-                onReceptionNumberClicked={this.handleReceptionNumberClick}
-                onSimilarCommunitiesClick={this.handleSimilarCommunitiesClick}
-                userSave={userSaveOfCommunity}
-                searchParams={searchParams}
-                setQueryParams={setQueryParams}
-                onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
-                onBookATourClick={this.handleBookATourClick}
-                onGCPClick={this.handleGCPClick}
-                onToggleAskAgentQuestionModal={this.handleToggleAskAgentQuestionModal}
-                onToggleAskQuestionModal={this.handleToggleAskQuestionModal}
-                profileContacted={profileContacted}
-                onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
-                userAction={userAction}
-                toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
-                isHowSlyWorksVideoPlaying={isHowSlyWorksVideoPlaying}
-                notifyInfo={notifyInfo}
-                notifyError={notifyError}
-                showModal={show}
-                hideModal={hide}
-                onUnsaveCommunity={this.handleUnsaveCommunity}
-                history={history}
-                exitIntentContent={this.getExitintent(show, hide)}
-              />
-            )}
-          </ModalController>
-        )}
+              {({
+                show,
+                hide,
+              }) => (
+                <CommunityDetailPage
+                    user={user}
+                    community={community}
+                    location={location}
+                    mediaGallerySlideIndex={mediaGallerySlideIndex}
+                    onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
+                    onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
+                    onMediaGalleryFavouriteClick={this.handleMediaGalleryFavouriteClick}
+                    onMediaGalleryShareClick={this.handleMediaGalleryShareClick}
+                    onShareCommunityModalClose={this.handleShareCommunityModalClose}
+                    isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
+                    onBackToSearchClicked={this.handleBackToSearchClick}
+                    onReviewLinkClicked={this.handleReviewLinkClick}
+                    onConciergeNumberClicked={this.handleConciergeNumberClick}
+                    onLiveChatClicked={this.handleLiveChatClick}
+                    onReceptionNumberClicked={this.handleReceptionNumberClick}
+                    onSimilarCommunitiesClick={this.handleSimilarCommunitiesClick}
+                    userSave={userSaveOfCommunity}
+                    searchParams={searchParams}
+                    setQueryParams={setQueryParams}
+                    onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
+                    onBookATourClick={this.handleBookATourClick}
+                    onGCPClick={this.handleGCPClick}
+                    onToggleAskAgentQuestionModal={this.handleToggleAskAgentQuestionModal}
+                    onToggleAskQuestionModal={this.handleToggleAskQuestionModal}
+                    profileContacted={profileContacted}
+                    onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
+                    userAction={userAction}
+                    toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
+                    isHowSlyWorksVideoPlaying={isHowSlyWorksVideoPlaying}
+                    notifyInfo={notifyInfo}
+                    notifyError={notifyError}
+                    showModal={show}
+                    hideModal={hide}
+                    onUnsaveCommunity={this.handleUnsaveCommunity}
+                    history={history}
+                    exitIntentContent={this.getExitintent(show, hide)}
+                  />
+                )}
+            </ModalController>
+          )}
       </NotificationController>
     );
   }
