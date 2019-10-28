@@ -9,21 +9,21 @@ import EbookForm from 'sly/components/organisms/EbookForm';
 import Thankyou from 'sly/components/molecules/Thankyou/index';
 import SlyEvent from 'sly/services/helpers/events';
 
-const EBOOK_FORM = 'EbookForm';
+const formName = 'EbookForm';
 const validate = createValidator({
   email: [required, email],
 });
 
-const afterSubmit = (result, dispatch) => dispatch(reset(EBOOK_FORM));
+const afterSubmit = (result, dispatch) => dispatch(reset(formName));
 
 const ReduxForm = reduxForm({
-  form: EBOOK_FORM,
+  form: formName,
   validate,
   onSubmitSuccess: afterSubmit,
 })(EbookForm);
 
 const mapDispatchToProps = dispatch => ({
-  clearSubmitErrors: () => dispatch(clearSubmitErrors(EBOOK_FORM)),
+  clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
 });
 
 @query('sendEbook', 'sendEbook')

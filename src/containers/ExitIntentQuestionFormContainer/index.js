@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { func, object, string } from 'prop-types';
-import { reduxForm, reset } from 'redux-form';
+import { reduxForm, reset, clearSubmitErrors } from 'redux-form';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
@@ -8,13 +8,14 @@ import { createValidator, email, required } from 'sly/services/validation';
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { AGENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
 import { ASK_QUESTION } from 'sly/services/api/actions';
-import ExitIntentQuestionForm from 'sly/components/organisms/ExitIntentQuestionForm/index';
+import ExitIntentQuestionForm from 'sly/components/organisms/ExitIntentQuestionForm';
 import SlyEvent from 'sly/services/helpers/events';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 import { query } from 'sly/services/newApi';
 import withServerState from 'sly/store/withServerState';
+import Thankyou from 'sly/components/molecules/Thankyou';
 
-const form = 'ExitIntentQuestionForm';
+const formName = 'ExitIntentQuestionForm';
 const validate = createValidator({
   name: [required],
   email: [required, email],
@@ -22,17 +23,14 @@ const validate = createValidator({
 });
 
 
-const afterSubmit = (result, dispatch) => dispatch(reset(form));
-
 const ReduxForm = reduxForm({
-  form,
+  form: formName,
   validate,
-  onSubmitSuccess: afterSubmit,
-  destroyOnUnmount: false,
 })(ExitIntentQuestionForm);
 
 const mapDispatchToProps = dispatch => ({
   postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
+  clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
 });
 
 
@@ -52,13 +50,13 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
       createAction: func.isRequired,
       userDetails: object,
       postUserAction: func.isRequired,
-      postSubmit: func,
       pathname: string,
+      showModal: func.isRequired,
     };
 
     handleSubmit = (data) => {
       const {
-        createAction, postUserAction, userDetails, pathname,
+        createAction, postUserAction, userDetails, pathname, showModal,
       } = this.props;
       const { question } = data;
       const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
@@ -70,6 +68,8 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
         action: ASK_QUESTION,
         value,
       };
+
+      clearSubmitErrors();
 
       return Promise.all([
         postUserAction(payload),
@@ -94,7 +94,7 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
         };
 
         SlyEvent.getInstance().sendEvent(event);
-        // @todo handle post submit events
+        showModal(<Thankyou />);
       });
     };
 

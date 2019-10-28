@@ -1,5 +1,5 @@
 import React from 'react';
-import { bool, func, object, string } from 'prop-types';
+import { bool, func, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 

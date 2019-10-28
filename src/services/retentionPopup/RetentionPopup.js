@@ -6,12 +6,10 @@ import ifvisible from 'ifvisible.js';
 import SlyEvent from '../helpers/events';
 import withUser from '../newApi/withUser';
 
-import EbookFormContainer from 'sly/containers/EbookFormContainer/index';
-import ExitIntentQuestionFormContainer from 'sly/containers/ExitIntentQuestionFormContainer/index';
-import SimilarCommunitiesPopupContainer from 'sly/containers/SimilarCommunitiesPopupContainer/index';
+import EbookFormContainer from 'sly/containers/EbookFormContainer';
+import ExitIntentQuestionFormContainer from 'sly/containers/ExitIntentQuestionFormContainer';
+import SimilarCommunitiesPopupContainer from 'sly/containers/SimilarCommunitiesPopupContainer';
 import { host } from 'sly/config';
-import AskQuestionToAgentForm from 'sly/components/molecules/AskQuestionToAgentForm/index';
-
 
 const SHOW_EBOOK_THRESHOLD_TIME = 5000;
 const MOUSEOUT_THRESHOLD_TIME = 20000;
@@ -48,11 +46,11 @@ export default class RetentionPopup extends Component {
     if (!this.isEbookModalShown()) {
       this.addActiveListener();
 
-      ifvisible.on('idle', this.removeListeners);
+      // ifvisible.on('idle', this.removeListeners);
       ifvisible.on('wakeup', this.addActiveListener);
     }
     if (!this.isExitIntentShown()) {
-      console.log('inside exit intent');
+      console.log('add exit intent listeners');
       this.addBlurFocusListeners();
       this.addPopstateListener();
       this.addMouseoutListener();
@@ -91,7 +89,6 @@ export default class RetentionPopup extends Component {
     const event = {
       action: 'open-modal', category: 'ebook', label: pathname,
     };
-    console.log('\n\ninside show modal', event);
 
     localStorage.setItem(SEND_EBOOK, SEND_EBOOK);
     showModal(<EbookFormContainer showModal={showModal} hideModal={hideModal} pathname={pathname} />);
@@ -186,14 +183,13 @@ export default class RetentionPopup extends Component {
       return;
     }
 
-    let modalContent = <ExitIntentQuestionFormContainer />;
-
     const { hideModal, showModal, location: { pathname } } = this.props;
     const match = matchPath(pathname, {
       path: COMMUNITY_PROFILE_PAGE_PATH,
       exact: true,
       strict: false,
     });
+    let modalContent = <ExitIntentQuestionFormContainer showModal={showModal} hideModal={hideModal} />;
 
     if (match) {
       const { params: { communitySlug } } = match;
@@ -219,6 +215,6 @@ export default class RetentionPopup extends Component {
   }
 
   render() {
-    return null;
+    return <div />;
   }
 }
