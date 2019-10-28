@@ -1,5 +1,7 @@
 import { responsive, select } from '../../helpers/tests';
 import buildEntity from '../../helpers/buildEntity';
+import { toJson } from '../../helpers/request';
+import { getCommunity } from '../../helpers/getCommunity';
 
 const randHash = () => Math.random().toString(36).substring(7);
 
@@ -27,8 +29,8 @@ describe('Community Profile Sections', () => {
   beforeEach(() => {
     cy.server();
 
-    cy.fixture('community-rhoda').then((response) => {
-      community = buildEntity(response);
+    getCommunity('rhoda-goldman-plaza').then((response) => {
+      community = response;
     });
   });
 
@@ -104,8 +106,7 @@ describe('Community Profile Sections', () => {
           entitySlug: community.id,
           entityType: 'Community',
         });
-        const responseText = await xhr.response.body.text();
-        const response = JSON.parse(responseText);
+        const response = await toJson(xhr);
         userSave = buildEntity(response);
         expect(userSave.entitySlug).to.equal(community.id);
       });

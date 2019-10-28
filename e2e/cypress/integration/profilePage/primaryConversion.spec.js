@@ -1,15 +1,20 @@
 import { responsive, select } from '../../helpers/tests';
-import buildEntity from '../../helpers/buildEntity';
+import { toJson } from '../../helpers/request';
+import { getCommunity } from '../../helpers/getCommunity';
 
-const pad = (str, size) => {
-  while (str.length < (size || 2)) {
-    str = `${'0'}${str}`;
+const randChars = (characters, length = 1) => {
+  let result = '';
+  while (length > 0 && length--) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
-  return str;
+  return result;
 };
 
+const fromTwo = length => randChars('23456789', length);
+const fromZero = length => randChars('0123456789', length);
+
 const randHash = () => Math.random().toString(36).substring(7);
-const randPhone = () => `${'908'}${pad((10e9 * Math.random()).toString(10).substring(0, 7), 7)}`;
+const randPhone = () => `${fromTwo()}${fromZero(2)}${fromTwo()}${fromZero(6)}`;
 const formatPhone = phone => `${phone.substr(0, 3)}-${phone.substr(3, 3)}-${phone.substr(6)}`;
 
 describe('Primary Conversion', () => {
@@ -18,8 +23,8 @@ describe('Primary Conversion', () => {
   beforeEach(() => {
     cy.server();
 
-    cy.fixture('community-rhoda').then((response) => {
-      community = buildEntity(response);
+    getCommunity('rhoda-goldman-plaza').then((response) => {
+      community = response;
     });
   });
 
@@ -50,8 +55,7 @@ describe('Primary Conversion', () => {
       });
 
       cy.wait('@me').then(async (xhr) => {
-        const responseText = await xhr.response.body.text();
-        const response = JSON.parse(responseText);
+        const response = await toJson(xhr);
         const attrs = response.data.attributes;
         expect(attrs.email).to.equal(email);
         expect(attrs.name).to.equal('Fonz');
