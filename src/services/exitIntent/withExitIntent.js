@@ -129,8 +129,6 @@ const withExitIntent = (InnerComponent) => {
         return;
       }
 
-      console.log('\n\n\nshow intent', MODAL_SHOWN, localStorage.getItem(MODAL_SHOWN));
-
       localStorage.setItem(MODAL_SHOWN, MODAL_SHOWN);
       showModal(exitIntentContent);
       this.removeListeners();
