@@ -1,18 +1,10 @@
 import { responsive, select } from '../../helpers/tests';
-import buildEntity from '../../helpers/buildEntity';
 import { toJson } from '../../helpers/request';
 import { getCommunity } from '../../helpers/getCommunity';
 
-const pad = (str, size) => {
-  while (str.length < (size || 2)) {
-    str = `${'0'}${str}`;
-  }
-  return str;
-};
-
 const randChars = (characters, length = 1) => {
   let result = '';
-  while(length > 0 && length--) {
+  while (length > 0 && length--) {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
   return result;

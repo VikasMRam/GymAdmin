@@ -1,5 +1,4 @@
 import { responsive, select } from '../../helpers/tests';
-import buildEntity from '../../helpers/buildEntity';
 import { toJson } from '../../helpers/request';
 import { getCommunity } from '../../helpers/getCommunity';
 
