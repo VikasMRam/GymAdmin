@@ -60,6 +60,7 @@ import AskAgentQuestionButtonContainer from 'sly/containers/AskAgentQuestionButt
 import GetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
 import CommunitySummaryContainer from 'sly/containers/CommunitySummaryContainer';
 import CommunityAgentSectionContainer from 'sly/containers/CommunityAgentSectionContainer';
+import CommunityQuestionAnswersContainer from "sly/containers/CommunityQuestionAnswersContainer";
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -226,69 +227,6 @@ export default class CommunityDetailPage extends Component {
   //   );
   // };
 
-  openAskQuestionModal = (question) => {
-    const { showModal, community, user, onToggleAskQuestionModal } = this.props;
-    const { id, name, questions } = community;
-    const questionToAnswer = questions.find(
-      q => q.type === question.type && q.id === question.id
-    );
-    // if (!questionToAnswer) {
-    //   questionToAnswer = communityFaQs.find(communityFaQ => communityFaQ.type === question.type && communityFaQ.id === question.id);
-    // }
-    let questionId;
-    let contentData;
-    let initialValues;
-    if (questionToAnswer) {
-      ({ id: questionId, contentData } = questionToAnswer);
-      initialValues = { question: contentData };
-    }
-
-    const modalComponentProps = {
-      communityName: name,
-      communitySlug: id,
-      showModal,
-      user,
-      initialValues,
-      parentSlug: questionId,
-    };
-    const onClose = () => {
-      onToggleAskQuestionModal(true);
-    };
-
-    onToggleAskQuestionModal();
-    showModal(
-      <CommunityAskQuestionFormContainer {...modalComponentProps} />,
-      onClose
-    );
-  };
-
-  openAnswerQuestionModal = (type, questionId) => {
-    const { showModal, hideModal, community } = this.props;
-    const { id, questions, communityFaQs } = community;
-    let questionToAnswer = questions.find(
-      question => question.type === type && question.id === questionId
-    );
-    if (!questionToAnswer) {
-      questionToAnswer = communityFaQs.find(
-        communityFaQ =>
-          communityFaQ.type === type && communityFaQ.id === questionId
-      );
-    }
-    if (questionToAnswer) {
-      const { id: questionId, contentData } = questionToAnswer;
-      const modalComponentProps = {
-        onSuccess: hideModal,
-        communitySlug: id,
-        questionText: contentData,
-        questionId,
-      };
-
-      showModal(
-        <CommunityLeaveAnAnswerFormContainer {...modalComponentProps} />
-      );
-    }
-  };
-
   handleAddReviewButtonClick = () => {
     const { showModal } = this.props;
 
@@ -303,8 +241,6 @@ export default class CommunityDetailPage extends Component {
 
   render() {
     const {
-      openAskQuestionModal,
-      openAnswerQuestionModal,
       handleAddReviewButtonClick,
     } = this;
     const {
@@ -318,7 +254,6 @@ export default class CommunityDetailPage extends Component {
     } = this.props;
 
     const {
-      id,
       name,
       propInfo,
       propRatings,
@@ -329,8 +264,6 @@ export default class CommunityDetailPage extends Component {
       similarProperties,
       gallery = {},
       videoGallery = {},
-      questions,
-      communityFaQs,
       mainImage,
       partnerAgents,
       twilioNumber,
@@ -686,21 +619,8 @@ export default class CommunityDetailPage extends Component {
 
                 <TopCollapsibleSection title={`Questions About ${name}`}>
                   <MainSection>
-                    <CommunityQuestionAnswers
-                      communityName={name}
-                      communitySlug={id}
-                      questions={questions}
-                      communityFaQs={communityFaQs}
-                      onLeaveAnswerClick={openAnswerQuestionModal}
-                      onAskQuestionClick={openAskQuestionModal}
-                      user={user}
-                    />
+                    <CommunityQuestionAnswersContainer community={community} />
                   </MainSection>
-                  <ButtonBlock>
-                    <StyledButton onClick={openAskQuestionModal}>
-                      Ask a Question
-                    </StyledButton>
-                  </ButtonBlock>
                 </TopCollapsibleSection>
                 {rgsAux.stateLicensingWebsite && (
                   <StyledCommunityExtraInfoSection

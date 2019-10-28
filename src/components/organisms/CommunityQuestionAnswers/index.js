@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import styled from 'styled-components';
 import { string, arrayOf, func } from 'prop-types';
 
@@ -9,6 +9,7 @@ import cursor from 'sly/components/helpers/cursor';
 import { Hr, Block } from 'sly/components/atoms';
 import CommunityQuestion from 'sly/components/molecules/CommunityQuestion';
 import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
+import Button from "sly/components/atoms/Button";
 
 const AnswersDiv = pad(styled.div`
   margin-left: ${size('spacing.huge')};
@@ -26,6 +27,11 @@ CursorBlock.displayName = 'CursorBlock';
 
 const PaddedBlock = pad(Block);
 
+const StyledButton = styled(Button)`
+  margin-top: ${size('spacing.xLarge')};  
+  width: 100%;
+`;
+
 const sortByCreatedAt = (a, b) => a.createdAt > b.createdAt;
 
 const CommunityQuestionAnswers = ({
@@ -35,10 +41,10 @@ const CommunityQuestionAnswers = ({
     const { contents = [] } = question;
 
     const answersComponents = contents.sort(sortByCreatedAt).map((answer, i) => (
-      <div key={answer.id}>
+      <Fragment key={answer.id}>
         <CommunityAnswer answer={answer} />
         {i < contents.length - 1 && <StyledHr />}
-      </div>
+      </Fragment>
     ));
     const firstAnswerComponent = answersComponents[0];
     if (answersComponents.length) {
@@ -46,30 +52,30 @@ const CommunityQuestionAnswers = ({
     }
 
     return (
-      <div key={question.id}>
+      <>
         <PaddedCommunityQuestion question={question} />
         {firstAnswerComponent}
         <AnswersDiv>
           {answersComponents}
         </AnswersDiv>
-        <CursorBlock palette="primary" weight="medium" onClick={() => onLeaveAnswerClick(question.type, question.id)}>Leave an Answer</CursorBlock>
+        <CursorBlock palette="primary" weight="medium" onClick={() => onLeaveAnswerClick(question)}>Leave an Answer</CursorBlock>
         {i < questions.length - 1 && <StyledHr />}
-      </div>
+      </>
     );
   });
 
   const communityFaQsComponent = communityFaQs.sort(sortByCreatedAt).map((communityFaQ, i) => (
-    <div key={communityFaQ.id}>
+    <Fragment key={communityFaQ.id}>
       <PaddedCommunityQuestion question={communityFaQ} />
       <CursorBlock palette="primary" weight="medium" onClick={() => onAskQuestionClick(communityFaQ)}>Be the first to ask this question</CursorBlock>
       {i < communityFaQs.length - 1 && <StyledHr />}
-    </div>
+    </Fragment>
   ));
 
   return (
-    <div>
+    <>
       {questionsComponent}
-      {questionsComponent.length === 0 && <div>What would you like to know about senior living options at {communityName}? To ask a question, click the button below.</div>}
+      {questionsComponent.length === 0 && <>What would you like to know about senior living options at {communityName}? To ask a question, click the button below.</>}
       {communityFaQsComponent.length > 0 &&
         <>
           <StyledHr />
@@ -77,7 +83,8 @@ const CommunityQuestionAnswers = ({
           {communityFaQsComponent}
         </>
       }
-    </div>
+      <StyledButton onClick={() => onAskQuestionClick()}>Ask a Question</StyledButton>
+    </>
   );
 };
 

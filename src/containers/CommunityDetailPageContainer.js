@@ -205,18 +205,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     SlyEvent.getInstance().sendEvent(event);
   };
 
-  handleToggleAskQuestionModal = (isAskQuestionModalVisible) => {
-    const { community } = this.props;
-    const { id } = community;
-    const action = isAskQuestionModalVisible ? 'close-modal' : 'open-modal';
-    const category = 'AskQuestion';
-    const event = {
-      action, category, label: id,
-    };
-
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
   getExitintent = (showModal, hideModal) => {
     const {
       community: {
@@ -324,7 +312,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
                 onReceptionNumberClicked={this.handleReceptionNumberClick}
                 onSimilarCommunitiesClick={this.handleSimilarCommunitiesClick}
                 onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
-                onToggleAskQuestionModal={this.handleToggleAskQuestionModal}
                 profileContacted={profileContacted}
                 userAction={userAction}
                 notifyInfo={notifyInfo}
