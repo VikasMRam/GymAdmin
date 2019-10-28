@@ -45,6 +45,7 @@ export default class CommunityQuestionAnswersContainer extends Component {
     const onClose = () => this.sendEvent('close-modal', 'AskQuestion');
     showModal(
       <CommunityAskQuestionFormContainer
+        showModal={showModal}
         communitySlug={community.id}
         initialValues={{ question: question.contentData }}
         parentSlug={question.id}

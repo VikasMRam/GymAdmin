@@ -46,7 +46,7 @@ export default class CommunityAskQuestionFormContainer extends Component {
     createQuestion: func,
     initialValues: object,
     parentSlug: string,
-    showModal: func,
+    showModal: func.isRequired,
     createAction: func,
     type: string,
   };
