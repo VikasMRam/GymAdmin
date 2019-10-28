@@ -60,6 +60,8 @@ import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTabl
 import PlusBranding from 'sly/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import withExitIntent from 'sly/services/exitIntent/withExitIntent';
+import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
+
 
 const BackToSearch = styled.div`
   text-align: center
@@ -722,7 +724,7 @@ export default class CommunityDetailPage extends Component {
                   </ButtonBlock>
                 </TopCollapsibleSection>
                 {plusCommunity && eventsLink && sampleEvents &&
-                <TopCollapsibleSection title={`Event at ${name}`}>
+                <TopCollapsibleSection title={`Events at ${name}`}>
                   <MainSection>
                     <EventsWrapper>
                       {sampleEvents.map(item => (
@@ -733,7 +735,7 @@ export default class CommunityDetailPage extends Component {
                     </EventsWrapper>
                   </MainSection>
                   <ButtonBlock>
-                    <StyledButton href={eventsLink} ghost>Download Events Calendar</StyledButton>
+                    <StyledButton href={eventsLink} onClick={clickEventHandler('events', name)} target="_blank" ghost>Download Events Calendar</StyledButton>
                   </ButtonBlock>
                 </TopCollapsibleSection>
                 }
@@ -749,7 +751,7 @@ export default class CommunityDetailPage extends Component {
                     />
                   </MainSection>
                   <ButtonBlock>
-                    <StyledButton href={menuLink} ghost>Download Current Menu</StyledButton>
+                    <StyledButton href={menuLink} onClick={clickEventHandler('menu', name)} target="_blank" ghost>Download Current Menu</StyledButton>
                   </ButtonBlock>
                 </TopCollapsibleSection>
                 }
