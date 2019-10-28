@@ -530,51 +530,51 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
           notifyError,
         }) => (
           <ModalController>
-              {({
-                show,
-                hide,
-              }) => (
-                <CommunityDetailPage
-                    user={user}
-                    community={community}
-                    location={location}
-                    mediaGallerySlideIndex={mediaGallerySlideIndex}
-                    onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
-                    onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
-                    onMediaGalleryFavouriteClick={this.handleMediaGalleryFavouriteClick}
-                    onMediaGalleryShareClick={this.handleMediaGalleryShareClick}
-                    onShareCommunityModalClose={this.handleShareCommunityModalClose}
-                    isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
-                    onBackToSearchClicked={this.handleBackToSearchClick}
-                    onReviewLinkClicked={this.handleReviewLinkClick}
-                    onConciergeNumberClicked={this.handleConciergeNumberClick}
-                    onLiveChatClicked={this.handleLiveChatClick}
-                    onReceptionNumberClicked={this.handleReceptionNumberClick}
-                    onSimilarCommunitiesClick={this.handleSimilarCommunitiesClick}
-                    userSave={userSaveOfCommunity}
-                    searchParams={searchParams}
-                    setQueryParams={setQueryParams}
-                    onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
-                    onBookATourClick={this.handleBookATourClick}
-                    onGCPClick={this.handleGCPClick}
-                    onToggleAskAgentQuestionModal={this.handleToggleAskAgentQuestionModal}
-                    onToggleAskQuestionModal={this.handleToggleAskQuestionModal}
-                    profileContacted={profileContacted}
-                    onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
-                    userAction={userAction}
-                    toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
-                    isHowSlyWorksVideoPlaying={isHowSlyWorksVideoPlaying}
-                    notifyInfo={notifyInfo}
-                    notifyError={notifyError}
-                    showModal={show}
-                    hideModal={hide}
-                    onUnsaveCommunity={this.handleUnsaveCommunity}
-                    history={history}
-                    exitIntentContent={this.getExitintent(show, hide)}
-                  />
-                )}
-            </ModalController>
-          )}
+            {({
+              show,
+              hide,
+            }) => (
+              <CommunityDetailPage
+                user={user}
+                community={community}
+                location={location}
+                mediaGallerySlideIndex={mediaGallerySlideIndex}
+                onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
+                onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
+                onMediaGalleryFavouriteClick={this.handleMediaGalleryFavouriteClick}
+                onMediaGalleryShareClick={this.handleMediaGalleryShareClick}
+                onShareCommunityModalClose={this.handleShareCommunityModalClose}
+                isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
+                onBackToSearchClicked={this.handleBackToSearchClick}
+                onReviewLinkClicked={this.handleReviewLinkClick}
+                onConciergeNumberClicked={this.handleConciergeNumberClick}
+                onLiveChatClicked={this.handleLiveChatClick}
+                onReceptionNumberClicked={this.handleReceptionNumberClick}
+                onSimilarCommunitiesClick={this.handleSimilarCommunitiesClick}
+                userSave={userSaveOfCommunity}
+                searchParams={searchParams}
+                setQueryParams={setQueryParams}
+                onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
+                onBookATourClick={this.handleBookATourClick}
+                onGCPClick={this.handleGCPClick}
+                onToggleAskAgentQuestionModal={this.handleToggleAskAgentQuestionModal}
+                onToggleAskQuestionModal={this.handleToggleAskQuestionModal}
+                profileContacted={profileContacted}
+                onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
+                userAction={userAction}
+                toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
+                isHowSlyWorksVideoPlaying={isHowSlyWorksVideoPlaying}
+                notifyInfo={notifyInfo}
+                notifyError={notifyError}
+                showModal={show}
+                hideModal={hide}
+                onUnsaveCommunity={this.handleUnsaveCommunity}
+                history={history}
+                exitIntentContent={this.getExitintent(show, hide)}
+              />
+              )}
+          </ModalController>
+        )}
       </NotificationController>
     );
   }
