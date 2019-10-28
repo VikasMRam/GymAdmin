@@ -9,8 +9,19 @@ const pad = (str, size) => {
   return str;
 };
 
+const randChars = (characters, length = 1) => {
+  let result = '';
+  while(length > 0 && length--) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+};
+
+const fromTwo = length => randChars('23456789', length);
+const fromZero = length => randChars('0123456789', length);
+
 const randHash = () => Math.random().toString(36).substring(7);
-const randPhone = () => `${'908'}${pad((10e9 * Math.random()).toString(10).substring(0, 8), 8)}`;
+const randPhone = () => `${fromTwo()}${fromZero(2)}${fromTwo()}${fromZero(6)}`;
 const formatPhone = phone => `${phone.substr(0, 3)}-${phone.substr(3, 3)}-${phone.substr(6)}`;
 
 describe('Primary Conversion', () => {

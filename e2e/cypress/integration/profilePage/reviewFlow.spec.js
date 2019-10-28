@@ -56,7 +56,7 @@ describe('Review Community', () => {
           name: 'Fonz',
           value: 4,
         });
-        const response = toJson(xhr);
+        const response = await toJson(xhr);
         ratedId = response.data.id;
       });
 
