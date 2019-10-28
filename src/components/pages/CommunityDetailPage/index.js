@@ -61,6 +61,8 @@ import GetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButt
 import CommunitySummaryContainer from 'sly/containers/CommunitySummaryContainer';
 import CommunityAgentSectionContainer from 'sly/containers/CommunityAgentSectionContainer';
 import CommunityQuestionAnswersContainer from "sly/containers/CommunityQuestionAnswersContainer";
+import CommunityReviewsContainer from "sly/containers/CommunityReviewsContainer";
+import CommunityAddReviewButtonContainer from "sly/containers/CommunityAddReviewButtonContainer";
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -115,6 +117,9 @@ const ButtonBlock = styled(Block)`
 const StyledButton = styled(Button)`
   width: 100%;
 `;
+const StyledLeaveReviewButton = styled(CommunityAddReviewButtonContainer)`
+  width: 100%;
+`;
 
 const StyledAskAgentButton = styled(AskAgentQuestionButtonContainer)`
   width: 100%;
@@ -167,10 +172,6 @@ export default class CommunityDetailPage extends Component {
     onSimilarCommunitiesClick: func,
     profileContacted: object.isRequired,
     userAction: object,
-    notifyInfo: func,
-    notifyError: func,
-    showModal: func,
-    hideModal: func,
     onToggleAskQuestionModal: func,
     history: object,
   };
@@ -227,22 +228,7 @@ export default class CommunityDetailPage extends Component {
   //   );
   // };
 
-  handleAddReviewButtonClick = () => {
-    const { showModal } = this.props;
-
-    showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
-  };
-
-  showExitModal = () => {
-    const { showModal } = this.props;
-
-    showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
-  };
-
   render() {
-    const {
-      handleAddReviewButtonClick,
-    } = this;
     const {
       community,
       profileContacted,
@@ -250,14 +236,11 @@ export default class CommunityDetailPage extends Component {
       onBackToSearchClicked,
       onSimilarCommunitiesClick,
       user,
-      onReviewLinkClicked,
     } = this.props;
 
     const {
       name,
       propInfo,
-      propRatings,
-      reviews,
       address,
       rgsAux,
       floorPlans,
@@ -326,13 +309,6 @@ export default class CommunityDetailPage extends Component {
     const hasCCRC = typeCares.includes(
       'Continuing Care Retirement Community(CCRC)'
     );
-
-    // TODO: move this to a container for EntityReviews handling posts
-    const onLeaveReview = () => {};
-    // TODO: move this to a container PricingAndAvailability for handling bookings
-    const { reviewsValue } = propRatings;
-    const ratingsArray = propRatings.ratingsArray || [];
-    const reviewsFinal = reviews || [];
 
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
@@ -602,18 +578,10 @@ export default class CommunityDetailPage extends Component {
                   id="reviews"
                 >
                   <MainSection>
-                    <EntityReviews
-                      reviewsValue={reviewsValue}
-                      reviews={reviewsFinal}
-                      reviewRatings={ratingsArray}
-                      onLeaveReview={onLeaveReview}
-                      onReviewLinkClicked={onReviewLinkClicked}
-                    />
+                    <CommunityReviewsContainer community={community} />
                   </MainSection>
                   <ButtonBlock>
-                    <StyledButton onClick={handleAddReviewButtonClick}>
-                      Write a Review
-                    </StyledButton>
+                    <StyledLeaveReviewButton>Write a Review</StyledLeaveReviewButton>
                   </ButtonBlock>
                 </TopCollapsibleSection>
 
