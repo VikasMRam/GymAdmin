@@ -126,6 +126,14 @@ class FamilyDetailsForm extends Component {
     assignedTos: arrayOf(userPropType).isRequired,
   };
 
+  handleLookingForChange = (event, value) => {
+    const { change, initialValues } = this.props;
+    if (value === 'Self') {
+      const { name } = initialValues;
+      change('residentName', name);
+    }
+  }
+
   handleLocationChange = (value) => {
     const { change, onLocationChange } = this.props;
     change('preferredLocation', value.formatted_address);
@@ -262,6 +270,7 @@ class FamilyDetailsForm extends Component {
                 disabled={!canEditFamilyDetails}
                 component={ReduxField}
                 wideWidth
+                onChange={this.handleLookingForChange}
               >
                 <option value="" disabled>Select</option>
                 {lookingForOptions}
