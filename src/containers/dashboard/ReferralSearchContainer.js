@@ -48,8 +48,8 @@ export default class ReferralSearchContainer extends Component {
   };
 
   state = {
-    communities: [],
-    agents: [],
+    communities: null,
+    agents: null,
     selectedCommunity: null,
     selectedAgent: null,
   };

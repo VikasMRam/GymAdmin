@@ -3,6 +3,7 @@ import { string, number, shape, oneOf } from 'prop-types';
 import {
   CONVERSATION_PARTICIPANT_TYPE_USER,
   CONVERSATION_PARTICIPANT_TYPE_CLIENT,
+  CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION,
   CONVERSATION_STATUS_LIVE,
   CONVERSATION_STATUS_ARCHIVED,
 } from 'sly/constants/conversations';
@@ -14,6 +15,7 @@ export default shape({
   participantType: oneOf([
     CONVERSATION_PARTICIPANT_TYPE_USER,
     CONVERSATION_PARTICIPANT_TYPE_CLIENT,
+    CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION,
   ]).isRequired,
   stats: shape({
     unreadMessageCount: number.isRequired,

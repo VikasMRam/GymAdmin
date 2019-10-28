@@ -28,7 +28,7 @@ import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFami
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
 
 const mapStateToProps = (state, { conversations }) => ({
-  selectedConversation: conversations && conversations.length === 1 && conversations[0],
+  selectedConversation: conversations && conversations.length === 1 ? conversations[0] : null,
 });
 @withUser
 

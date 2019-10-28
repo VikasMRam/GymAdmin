@@ -10,4 +10,5 @@ const { name } = clientInfo;
 
 storiesOf('Molecules|LatestMessage', module)
   .add('default', () => <LatestMessage name={name} message={message} />)
-  .add('with hasUnread', () => <LatestMessage hasUnread name={name} message={message} />);
+  .add('with hasUnread', () => <LatestMessage hasUnread name={name} message={message} />)
+  .add('with No message', () => <LatestMessage name={name} />);
