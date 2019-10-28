@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { object, func, bool } from 'prop-types';
+import { object, func } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -45,8 +45,6 @@ import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
-import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
-import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
 import IconItem from 'sly/components/molecules/IconItem';
@@ -61,6 +59,7 @@ import withExitIntent from 'sly/services/exitIntent/withExitIntent';
 import AskAgentQuestionButtonContainer from 'sly/containers/AskAgentQuestionButtonContainer';
 import GetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
 import CommunitySummaryContainer from 'sly/containers/CommunitySummaryContainer';
+import CommunityAgentSectionContainer from 'sly/containers/CommunityAgentSectionContainer';
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -263,11 +262,6 @@ export default class CommunityDetailPage extends Component {
     );
   };
 
-  openAdvisorHelpModal = () => {
-    const { showModal, hideModal } = this.props;
-    showModal(<AdvisorHelpPopup onButtonClick={hideModal} />);
-  };
-
   openAnswerQuestionModal = (type, questionId) => {
     const { showModal, hideModal, community } = this.props;
     const { id, questions, communityFaQs } = community;
@@ -310,7 +304,6 @@ export default class CommunityDetailPage extends Component {
   render() {
     const {
       openAskQuestionModal,
-      openAdvisorHelpModal,
       openAnswerQuestionModal,
       handleAddReviewButtonClick,
     } = this;
@@ -624,10 +617,7 @@ export default class CommunityDetailPage extends Component {
                     title={`Your Seniorly Partner Agent for ${name}`}
                   >
                     <MainSection>
-                      <CommunityAgentSection
-                        agent={partnerAgent}
-                        onAdvisorHelpClick={openAdvisorHelpModal}
-                      />
+                      <CommunityAgentSectionContainer agent={partnerAgent} />
                     </MainSection>
                     <ButtonBlock>
                       <StyledAskAgentButton
