@@ -17,7 +17,6 @@ import {
 import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
 import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
-import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import { userIs } from 'sly/services/helpers/role';
 import pad from 'sly/components/helpers/pad';
@@ -29,7 +28,6 @@ import { getStageDetails } from 'sly/services/helpers/stage';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
-import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFamilyContainer';
 import RejectFamilyContainer from 'sly/containers/RejectFamilyContainer';
 import UpdateFamilyStageFormContainer from 'sly/containers/UpdateFamilyStageFormContainer';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
@@ -43,9 +41,6 @@ import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFa
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import Tab from 'sly/components/molecules/Tab';
-import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import fullHeight from 'sly/components/helpers/fullHeight';
 import ConversationMessagesContainer from 'sly/containers/ConversationMessagesContainer';
 import userPropType from 'sly/propTypes/user';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
@@ -53,7 +48,7 @@ import Role from 'sly/components/common/Role';
 import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
 import StatusSelect from 'sly/components/molecules/StatusSelect';
 import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
-import DashboardMessages from 'sly/components/organisms/DashboardMessages';
+import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
 import { Datatable } from 'sly/services/datatable';
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
@@ -188,7 +183,9 @@ const StyledClientNameBlock = styled(Block)`
 `;
 
 const DashboardMessagesContainerWrapper = styled.div`
-  padding: ${size('spacing.large')};
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding: ${size('spacing.xLarge')};
+  }
 `;
 
 const ClientName = ({ client, rawClient, backLinkHref, ...props }) => {
@@ -230,15 +227,7 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   }
 `;
 
-const TextCenterBlock = fullHeight(textAlign(Block));
-const FullWidthTextCenterBlock = fullWidth(TextCenterBlock);
-
 const PaddedBackLink = pad(BackLink, 'regular');
-
-const HeaderWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
 
 const TabMap = {
   Prospects: PROSPECTING,
@@ -272,6 +261,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     conversations: arrayOf(conversationPropType),
     setSelectedConversation: func,
     user: userPropType.isRequired,
+    onAcceptClick: func,
   };
 
   getTabPathsForUser = () => {
@@ -343,31 +333,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       tabs = tabs.concat(adminTabList.map(e => genTab(e)));
     }
     return tabs;
-  };
-
-  handleAcceptClick = () => {
-    const {
-      showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails, goToMessagesTab, refetchConversations, refetchClient, conversation, user,
-    } = this.props;
-    SlyEvent.getInstance().sendEvent({
-      category: 'fdetails',
-      action: 'launch',
-      label: 'accept-lead',
-      value: '',
-    });
-    showModal((
-      <AcceptAndContactFamilyContainer
-        notifyError={notifyError}
-        client={client}
-        rawClient={rawClient}
-        onCancel={hideModal}
-        goToFamilyDetails={goToFamilyDetails}
-        goToMessagesTab={goToMessagesTab}
-        refetchConversations={refetchConversations}
-        refetchClient={refetchClient}
-        conversation={conversation}
-        user={user}
-      />), null, 'noPadding', false);
   };
 
   handleRejectClick = () => {
@@ -459,23 +424,16 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
   render() {
     const {
-      handleAcceptClick, handleRejectClick, handleUpdateClick, handleAddNoteClick,
+      handleRejectClick, handleUpdateClick, handleAddNoteClick,
       handleEditNoteClick,
     } = this;
 
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, conversations, setSelectedConversation, hasConversationFinished, refetchConversations, refetchClient, showModal, hideModal,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
+      conversation, conversations, setSelectedConversation, hasConversationFinished, refetchConversations, refetchClient,
+      showModal, hideModal, onAcceptClick,
     } = this.props;
     const { organization } = user;
-
-    let conversationParticipants = [];
-    let viewingAsParticipant;
-
-    if (hasConversationFinished && conversation) {
-      ({ conversationParticipants } = conversation);
-      const { id } = user;
-      viewingAsParticipant = conversationParticipants.find(p => p.participantID === id);
-    }
 
     if (clientIsLoading) {
       return (
@@ -506,13 +464,37 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const { id: userOrg } = organization;
     const { group, isConnected } = getStageDetails(stage);
     const showAcceptRejectButtons = stage === FAMILY_STAGE_NEW;
-    let showUpdateAddNoteButtons;
+    let showUpdateAddNoteButtons = stage !== FAMILY_STAGE_NEW;
     let canEditFamilyDetails = isConnected;
-    if (stage !== FAMILY_STAGE_NEW &&
+    let stickyFooterOptions = []; // Sticky footer is for smaller width devices
+    // Rule when lead is created by self
+    if (stage === FAMILY_STAGE_NEW &&
       (userIs(user, PLATFORM_ADMIN_ROLE) || (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg))) {
       showUpdateAddNoteButtons = true;
       canEditFamilyDetails = true;
     }
+    if (showAcceptRejectButtons) {
+      stickyFooterOptions = [
+        {
+          text: 'Accept and contact this family', icon: 'flag', palette: 'primary', iconPalette: 'slate', onClick: onAcceptClick,
+        },
+        {
+          text: 'Reject', icon: 'add-note', iconPalette: 'slate', palette: 'danger', onClick: handleRejectClick, ghost: true,
+        },
+      ];
+    }
+    // showUpdateAddNote Button overrides showAcceptReject Buttons
+    if (showUpdateAddNoteButtons) {
+      stickyFooterOptions = [
+        {
+          text: 'Update Stage', icon: 'flag', iconPalette: 'slate', onClick: handleUpdateClick,
+        },
+        {
+          text: 'Add Note', icon: 'add-note', iconPalette: 'slate', onClick: handleAddNoteClick, ghost: true,
+        },
+      ];
+    }
+
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) => {
       const props = {
@@ -534,26 +516,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS });
 
-    let stickyFooterOptions = [];
-    if (showAcceptRejectButtons) {
-      stickyFooterOptions = [
-        {
-          text: 'Accept and contact this family', icon: 'flag', palette: 'primary', iconPalette: 'slate', onClick: handleAcceptClick,
-        },
-        {
-          text: 'Reject', icon: 'add-note', iconPalette: 'slate', palette: 'danger', onClick: handleRejectClick, ghost: true,
-        },
-      ];
-    } else if (showUpdateAddNoteButtons) {
-      stickyFooterOptions = [
-        {
-          text: 'Update Stage', icon: 'flag', iconPalette: 'slate', onClick: handleUpdateClick,
-        },
-        {
-          text: 'Add Note', icon: 'add-note', iconPalette: 'slate', onClick: handleAddNoteClick, ghost: true,
-        },
-      ];
-    }
 
     const backLinkHref = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: TabMap[group] });
     const backlink = <PaddedBackLink linkText={`Back to ${group}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${group}`)} />;
@@ -563,17 +525,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     };
 
     const clientName = <ClientName client={client} rawClient={rawClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} user={user} />;
-
-    const heading = (
-      <HeaderWrapper>
-        <BackLink onClick={() => setSelectedConversation(null)} />
-        <FullWidthTextCenterBlock size="subtitle" palette="primary">{name}</FullWidthTextCenterBlock>
-      </HeaderWrapper>
-    );
-
-    const headingBoxSection = (
-      <HeadingBoxSection heading={heading} hasNoBodyPadding hasNoBorder />
-    );
 
     return (
       <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
@@ -588,7 +539,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               noBorderRadius
               snap="top"
               stageText={stage}
-              onAcceptClick={handleAcceptClick}
+              onAcceptClick={onAcceptClick}
               onRejectClick={handleRejectClick}
               onUpdateClick={handleUpdateClick}
               onAddNoteClick={handleAddNoteClick}
@@ -693,12 +644,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               </Role>
             )}
 
-
             {currentTab === MESSAGES && (
               <SmallScreenBorderDiv>
                 {!conversation &&
                   <DashboardMessagesContainerWrapper>
-                    <DashboardMessages
+                    <DashboardMessagesContainer
                       isLoading={!hasConversationFinished}
                       heading="Conversations"
                       conversations={conversations}
@@ -709,14 +659,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                 }
                 {conversation &&
                   <ConversationMessagesContainer
-                    conversation={conversation}
-                    viewingAsParticipant={viewingAsParticipant}
-                    participants={conversationParticipants}
+                    conversationId={conversation.id}
                     sendMessageFormPlaceholder={`Message ${name}...`}
-                    otherParticipantId={id}
-                    otherParticipantType={CONVERSATION_PARTICIPANT_TYPE_CLIENT}
-                    onCreateConversationSuccess={refetchConversations}
-                    headingBoxSection={headingBoxSection}
+                    onBackClick={() => setSelectedConversation(null)}
                   />
                 }
               </SmallScreenBorderDiv>

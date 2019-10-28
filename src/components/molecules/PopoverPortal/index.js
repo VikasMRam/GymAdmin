@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, element, object } from 'prop-types';
+import { bool, string, element, object } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import Measure from 'react-measure';
@@ -67,6 +67,7 @@ export default class PopoverPortal extends Component {
   static propTypes = {
     title: string,
     subtitle: string,
+    isOpen: bool,
     button: element,
     headerButton: element,
     children: element,
@@ -74,7 +75,7 @@ export default class PopoverPortal extends Component {
   };
 
   state = {
-    isOpen: false,
+    isOpen: this.props.isOpen || false,
     buttonX: 0,
   };
 
