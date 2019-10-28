@@ -11,6 +11,7 @@ import IconButton from 'sly/components/molecules/IconButton';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { isBrowser } from 'sly/config';
+import PlusBadge from 'sly/components/molecules/PlusBadge';
 
 const Address = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
@@ -70,7 +71,7 @@ const CommunitySummary = ({
   const {
     line1, line2, city, state, zip,
   } = address;
-  const { communityPhone } = propInfo;
+  const { communityPhone, plusCommunity, plusCategory } = propInfo;
   const { reviewsValue } = propRatings;
   const formattedAddress = `${line1}, ${line2}, ${city},
     ${state}
@@ -101,7 +102,10 @@ const CommunitySummary = ({
         }
       </StyledHeading>
       <Address weight="regular" level="subtitle" size="body" palette="grey">{formattedAddress}</Address>
-      {startingRate > 0 && reviewsValue > 0 && <Hr />}
+      {plusCommunity &&
+      <PlusBadge plusCategory={plusCategory} />
+      }
+      <Hr />
       <Wrapper>
         <div>
           {conciergeNumber &&
