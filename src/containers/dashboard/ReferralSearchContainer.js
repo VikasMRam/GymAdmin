@@ -225,11 +225,11 @@ export default class ReferralSearchContainer extends Component {
   };
 
   render() {
-
     const {
       referralMode, parentClient, user,
     } = this.props;
-    const { communitiesInterested, children: childrenClients, recommendedAgents } = parentClient;
+    const { communitiesInterested, children: childrenClients, clientInfo, recommendedAgents } = parentClient;
+    const { slyCommunityMessage: communityMessage, slyAgentMessage: agentMessage } = clientInfo;
     const { communities, agents } = this.state;
     const communityReferralClients = [];
     const agentReferralClients = [];
@@ -263,10 +263,11 @@ export default class ReferralSearchContainer extends Component {
     if (referralMode === 'Community') {
       const selectedCommunity = this.getSelectedCommunity();
       const contact = (selectedCommunity && selectedCommunity.contacts && selectedCommunity.contacts.length > 0) ? selectedCommunity.contacts[0] : null;
-      let contactFormInitialValues = {};
+      const contactFormInitialValues = { slyMessage: communityMessage };
       if (contact) {
         const { email, name } = contact;
-        contactFormInitialValues = { email, name };
+        contactFormInitialValues.email = email;
+        contactFormInitialValues.name = name;
       }
       return (
         <WizardController
@@ -322,10 +323,11 @@ export default class ReferralSearchContainer extends Component {
     // Agent Referral Flow
     const selectedAgent = this.getSelectedAgent();
     const contact = (selectedAgent && selectedAgent.contacts &&  selectedAgent.contacts.length > 0) ? selectedAgent.contacts[0] : null;
-    let contactFormInitialValues = {};
+    const contactFormInitialValues = { slyMessage: agentMessage };
     if (contact) {
       const { email, name } = contact;
-      contactFormInitialValues = { email, name };
+      contactFormInitialValues.email = email;
+      contactFormInitialValues.name = name;
     }
     return (
       <WizardController
