@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import { func, object, string } from 'prop-types';
 import { reduxForm, reset } from 'redux-form';
-import { func, object, shape, string } from 'prop-types';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { query } from 'sly/services/newApi';
+import { createValidator, email, required } from 'sly/services/validation';
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { connectController } from 'sly/controllers';
-import AskQuestionToAgentForm from 'sly/components/molecules/AskQuestionToAgentForm';
-import { createValidator, required, email } from 'sly/services/validation';
-import withServerState from 'sly/store/withServerState';
-import SlyEvent from 'sly/services/helpers/events';
 import { AGENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
+import { ASK_QUESTION } from 'sly/services/api/actions';
+import ExitIntentQuestionForm from 'sly/components/organisms/ExitIntentQuestionForm/index';
+import SlyEvent from 'sly/services/helpers/events';
+import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
+import { query } from 'sly/services/newApi';
+import withServerState from 'sly/store/withServerState';
 
 const form = 'ExitIntentQuestionForm';
 const validate = createValidator({
@@ -19,6 +21,7 @@ const validate = createValidator({
   question: [required],
 });
 
+
 const afterSubmit = (result, dispatch) => dispatch(reset(form));
 
 const ReduxForm = reduxForm({
@@ -26,31 +29,45 @@ const ReduxForm = reduxForm({
   validate,
   onSubmitSuccess: afterSubmit,
   destroyOnUnmount: false,
-})(AskQuestionToAgentForm);
+})(ExitIntentQuestionForm);
 
-const mapStateToProps = (state, { location }) => ({
-  pathName: location.pathname,
+const mapDispatchToProps = dispatch => ({
+  postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
+});
+
+
+const mapPropsToActions = () => ({
+  userDetails: resourceDetailReadRequest('userAction'),
 });
 
 @withRouter
 
-@connectController(mapStateToProps)
+@withServerState(mapPropsToActions)
+
+@connect(null, mapDispatchToProps)
 
 @query('createAction', 'createUuidAction')
-export default class ExitIntentQuestionFormContainer extends Component {
+export default class ExitIntentQuestionFormContainer extends PureComponent {
     static propTypes = {
       createAction: func.isRequired,
+      userDetails: object,
+      postUserAction: func.isRequired,
+      postSubmit: func,
+      pathname: string,
     };
 
     handleSubmit = (data) => {
       const {
-        createAction,
+        createAction, postUserAction, userDetails, pathname,
       } = this.props;
-
       const { question } = data;
-
+      const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
+      const value = {
+        question,
+        user,
+      };
       const payload = {
-        action: ASK_AGENT,
+        action: ASK_QUESTION,
         value,
       };
 
@@ -60,10 +77,10 @@ export default class ExitIntentQuestionFormContainer extends Component {
           type: 'UUIDAction',
           attributes: {
             actionType: AGENT_ASK_QUESTIONS,
-            actionPage: match.url,
+            actionPage: pathname,
             actionInfo: {
-              slug: id,
-              question: data.question,
+              // slug: id,
+              question,
               entityType: 'Agent',
               name: data.full_name,
               email: data.email,
@@ -73,32 +90,25 @@ export default class ExitIntentQuestionFormContainer extends Component {
         }),
       ]).then(() => {
         const event = {
-          action: 'ask_question', category: 'agent', label: id,
+          action: 'ask_question', category: 'exit-intent', label: pathname,
         };
 
         SlyEvent.getInstance().sendEvent(event);
-
-        if (postSubmit) {
-          postSubmit();
-        }
+        // @todo handle post submit events
       });
     };
 
     render() {
-      if (!this.props.userDetails) {
-        return null;
-      }
-
       const initialValues = {
         question: '',
       };
 
       return (
-          <ReduxForm
-              initialValues={initialValues}
-              onSubmit={this.handleSubmit}
-              {...this.props}
-            />
+        <ReduxForm
+          initialValues={initialValues}
+          onSubmit={this.handleSubmit}
+          {...this.props}
+        />
       );
     }
 }

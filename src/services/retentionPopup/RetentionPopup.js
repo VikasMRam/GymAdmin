@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { func, object } from 'prop-types';
+import { matchPath, withRouter } from 'react-router';
 import ifvisible from 'ifvisible.js';
-import { withRouter } from 'react-router';
 
-
-import withUser from '../newApi/withUser';
 import SlyEvent from '../helpers/events';
+import withUser from '../newApi/withUser';
 
-import { host } from 'sly/config';
 import EbookFormContainer from 'sly/containers/EbookFormContainer/index';
+import ExitIntentQuestionFormContainer from 'sly/containers/ExitIntentQuestionFormContainer/index';
+import SimilarCommunitiesPopupContainer from 'sly/containers/SimilarCommunitiesPopupContainer/index';
+import { host } from 'sly/config';
+import AskQuestionToAgentForm from 'sly/components/molecules/AskQuestionToAgentForm/index';
+
 
 const SHOW_EBOOK_THRESHOLD_TIME = 5000;
 const MOUSEOUT_THRESHOLD_TIME = 20000;
@@ -19,7 +22,18 @@ const MODAL_SHOWN = 'modal-shown';
 const EXIT_INTENT = 'exit-intent';
 const STAY_INTENT = 'stay-intent';
 
-ifvisible.setIdleDuration(120); // change duration after testing
+const careTypes = [
+  'retirement-community',
+  'assisted-living',
+  'independent-living',
+  'board-and-care-home',
+  'memory-care',
+  'continuing-care-retirement-community',
+].join('|');
+
+const COMMUNITY_PROFILE_PAGE_PATH = `/:toc(${careTypes})/:state/:city/:communitySlug`;
+
+ifvisible.setIdleDuration(120); // @todo change duration after testing
 
 @withRouter
 @withUser
@@ -37,11 +51,12 @@ export default class RetentionPopup extends Component {
       ifvisible.on('idle', this.removeListeners);
       ifvisible.on('wakeup', this.addActiveListener);
     }
-    // if (!this.isExitIntentShown()) {
-    //   this.addBlurFocusListeners();
-    //   this.addPopstateListener();
-    //   this.addMouseoutListener();
-    // }
+    if (!this.isExitIntentShown()) {
+      console.log('inside exit intent');
+      this.addBlurFocusListeners();
+      this.addPopstateListener();
+      this.addMouseoutListener();
+    }
   }
 
   addActiveListener = () => {
@@ -167,21 +182,32 @@ export default class RetentionPopup extends Component {
   };
 
   showIntent = () => {
-    const { showModal, location: { pathname } } = this.props;
-
     if (localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN) {
       return;
     }
 
-    console.log('\n\n\nshow intent', MODAL_SHOWN, localStorage.getItem(MODAL_SHOWN));
+    let modalContent = <ExitIntentQuestionFormContainer />;
 
-    localStorage.setItem(MODAL_SHOWN, MODAL_SHOWN);
-    showModal('exit intetnt content');
+    const { hideModal, showModal, location: { pathname } } = this.props;
+    const match = matchPath(pathname, {
+      path: COMMUNITY_PROFILE_PAGE_PATH,
+      exact: true,
+      strict: false,
+    });
+
+    if (match) {
+      const { params: { communitySlug } } = match;
+
+      modalContent = <SimilarCommunitiesPopupContainer communitySlug={communitySlug} hideModal={hideModal} />;
+    }
+
+    showModal(modalContent);
     this.removeListeners();
+    localStorage.setItem(MODAL_SHOWN, MODAL_SHOWN);
   };
 
   removeListeners = () => {
-    console.log('remove listener');
+    console.log('remove listeners');
     clearTimeout(this.activeListener);
 
     // exit intent listeners
@@ -193,7 +219,6 @@ export default class RetentionPopup extends Component {
   }
 
   render() {
-    console.log('props', this.props);
     return null;
   }
 }

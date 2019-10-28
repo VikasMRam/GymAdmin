@@ -1,28 +1,28 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { object, func, number, bool } from 'prop-types';
+import { bool, func, number, object } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
-import { size, palette, assetPath } from 'sly/components/themes';
+import { assetPath, palette, size } from 'sly/components/themes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import SlyEvent from 'sly/services/helpers/events';
-import { calculatePricing, buildPriceList, buildEstimatedPriceList } from 'sly/services/helpers/pricing';
+import { buildEstimatedPriceList, buildPriceList, calculatePricing } from 'sly/services/helpers/pricing';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import pad from 'sly/components/helpers/pad';
-import { Button, Paragraph, Block } from 'sly/components/atoms';
+import { Block, Button, Paragraph } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import {
   CommunityDetailPageTemplate,
-  makeHeader,
-  makeColumn,
   makeBody,
+  makeColumn,
   makeFooter,
+  makeGallery,
+  makeHeader,
   makeTwoColumn,
   makeWrapper,
-  makeGallery,
 } from 'sly/components/templates/CommunityDetailPageTemplate';
 import SaveCommunityContainer from 'sly/containers/SaveCommunityContainer';
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
@@ -148,7 +148,7 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
   value,
 });
 
-@withExitIntent
+// @withExitIntent
 
 export default class CommunityDetailPage extends Component {
   static propTypes = {
