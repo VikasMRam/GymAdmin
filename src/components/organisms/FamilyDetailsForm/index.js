@@ -154,9 +154,9 @@ class FamilyDetailsForm extends Component {
     const femaleOptions = gender.map(i => <option key={i} value={i}>{i}</option>);
     const timeToMoveOptions = timeToMove.map(i => <option key={i} value={i}>{i}</option>);
     const monthlyBudgetOptions = monthlyBudget.map(i => <option key={i} value={i}>{i}</option>);
-    const roomPreferenceOptions = roomTypes.map(i => <option key={i} value={i}>{i}</option>);
-    const mobilityLevelOptions = careLevels.map(i => <option key={i} value={i}>{i}</option>);
-    const communityCareTypeOptions = communityTypes.map(i => <option key={i} value={i}>{i}</option>);
+    const roomPreferenceOptions = roomTypes.map(i => ({ value: i, label: i }));
+    const mobilityLevelOptions = careLevels.map(i => ({ value: i, label: i }));
+    const communityCareTypeOptions = communityTypes.map(i => ({ value: i, label: i }));
     const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
     const tagColumn = { typeInfo: { api: '/v0/platform/tags?filter[name]=' }, value: 'tag.name' };
     return (
@@ -304,21 +304,6 @@ class FamilyDetailsForm extends Component {
               />
             </FormSection>
             <FormSection>
-              <FormSectionHeading weight="medium">Care Needs</FormSectionHeading>
-              <Field
-                name="mobilityLevel"
-                label="Level of mobility"
-                type="select"
-                placeholder="Select an option"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              >
-                <option value="" disabled>Select</option>
-                {mobilityLevelOptions}
-              </Field>
-            </FormSection>
-            <FormSection>
               <FormSectionHeading weight="medium">Search Preferences</FormSectionHeading>
               <PaddedTwoColumnWrapper verticalCenter>
                 <StyledLabel>Preferred location</StyledLabel>
@@ -336,8 +321,8 @@ class FamilyDetailsForm extends Component {
                 />
               </PaddedTwoColumnWrapper>
               <Field
-                name="roomPreference"
-                label="Room type"
+                name="timeToMove"
+                label="Time to move"
                 type="select"
                 placeholder="Select an option"
                 disabled={!canEditFamilyDetails}
@@ -345,20 +330,24 @@ class FamilyDetailsForm extends Component {
                 wideWidth
               >
                 <option value="" disabled>Select</option>
-                {roomPreferenceOptions}
+                {timeToMoveOptions}
               </Field>
               <Field
                 name="communityCareType"
                 label="Community type"
-                type="select"
-                placeholder="Select an option"
-                disabled={!canEditFamilyDetails}
+                type="checkbox"
                 component={ReduxField}
+                options={communityCareTypeOptions}
                 wideWidth
-              >
-                <option value="" disabled>Select</option>
-                {communityCareTypeOptions}
-              </Field>
+              />
+              <Field
+                name="roomPreference"
+                label="Room type"
+                type="checkbox"
+                component={ReduxField}
+                options={roomPreferenceOptions}
+                wideWidth
+              />
               <Field
                 name="budget"
                 label="Monthly budget"
@@ -371,18 +360,17 @@ class FamilyDetailsForm extends Component {
                 <option value="" disabled>Select</option>
                 {monthlyBudgetOptions}
               </Field>
+            </FormSection>
+            <FormSection>
+              <FormSectionHeading weight="medium">Care Needs</FormSectionHeading>
               <Field
-                name="timeToMove"
-                label="Time to move"
-                type="select"
-                placeholder="Select an option"
-                disabled={!canEditFamilyDetails}
+                name="mobilityLevel"
+                label="Level of mobility"
+                type="checkbox"
                 component={ReduxField}
+                options={mobilityLevelOptions}
                 wideWidth
-              >
-                <option value="" disabled>Select</option>
-                {timeToMoveOptions}
-              </Field>
+              />
             </FormSection>
           </FormScrollSection>
           {accepted &&

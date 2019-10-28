@@ -126,8 +126,7 @@ export default class FamilyDetailsFormContainer extends Component {
       newUuidAux.set('attributes.uuidInfo.residentInfo.age', parseInt(age, 10));
     }
     if (mobilityLevel) {
-      // FIXME: Mobility on backend is an array
-      newUuidAux.set('attributes.uuidInfo.careInfo.mobility', [mobilityLevel]);
+      newUuidAux.set('attributes.uuidInfo.careInfo.mobility', mobilityLevel);
     }
     if (budget) {
       newUuidAux.set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', budget);
@@ -139,10 +138,10 @@ export default class FamilyDetailsFormContainer extends Component {
       newUuidAux.set('attributes.uuidInfo.housingInfo.moveTimeline', timeToMove);
     }
     if (communityCareType) {
-      newUuidAux.set('attributes.uuidInfo.housingInfo.typeCare', [communityCareType]);
+      newUuidAux.set('attributes.uuidInfo.housingInfo.typeCare', communityCareType);
     }
     if (roomPreference) {
-      newUuidAux.set('attributes.uuidInfo.housingInfo.roomPreference', [roomPreference]);
+      newUuidAux.set('attributes.uuidInfo.housingInfo.roomPreference', roomPreference);
     }
     if (locationInfo) {
       newUuidAux.set('attributes.uuidInfo.locationInfo', locationInfo);
@@ -185,20 +184,9 @@ export default class FamilyDetailsFormContainer extends Component {
     const {
       residentInfo, housingInfo, financialInfo, locationInfo, careInfo,
     } = uuidInfo;
-    // FIXME: Frontend and backend differ in []string and stringfor certain fields
-    let { mobility } = careInfo;
-    if (mobility) {
-      [mobility] = mobility;
-    }
+    const { mobility } = careInfo;
     const { fullName, gender, age } = residentInfo;
-    const { lookingFor, moveTimeline } = housingInfo;
-    let { typeCare, roomPreference } = housingInfo;
-    if (typeCare) {
-      [typeCare] = typeCare;
-    }
-    if (roomPreference) {
-      [roomPreference] = roomPreference;
-    }
+    const { typeCare, roomPreference, lookingFor, moveTimeline } = housingInfo;
     const { maxMonthlyBudget } = financialInfo;
     let preferredLocation = '';
     if (locationInfo) {
