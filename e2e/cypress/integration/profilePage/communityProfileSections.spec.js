@@ -2,6 +2,7 @@ import { responsive, select } from '../../helpers/tests';
 import buildEntity from '../../helpers/buildEntity';
 import { toJson } from '../../helpers/request';
 import { getCommunity } from '../../helpers/getCommunity';
+import { formatMoney } from '../../helpers/money';
 
 const randHash = () => Math.random().toString(36).substring(7);
 
@@ -23,19 +24,20 @@ export const buildEstimatedPriceList = (community) => {
 
   return priceList;
 };
+
 describe('Community Profile Sections', () => {
   let community;
 
   beforeEach(() => {
     cy.server();
 
-    getCommunity('rhoda-goldman-plaza').then((response) => {
+    getCommunity('buena-vista-manor-house').then((response) => {
       community = response;
     });
   });
 
   responsive(() => {
-    it('Should see details', () => {
+    it.only('Should see details', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
 
       cy.get('h1').contains(community.name).its('length').should('be', 1);
@@ -53,7 +55,7 @@ describe('Community Profile Sections', () => {
         expect($div.text().replace(/[^\d]/g, '')).to.equal(community.twilioNumber.numbers[0].toString());
       });
 
-      select('.CommunityPricingAndRating').should('contain', community.propInfo.ratesText);
+      select('.CommunityPricingAndRating').should('contain', formatMoney(community.startingRate));
 
       const rating = community.propRatings.reviewsValue.toFixed(1).replace(/\.0+$/, '');
       select('.CommunityPricingAndRating').should('contain', rating);
@@ -79,7 +81,7 @@ describe('Community Profile Sections', () => {
             'fonz@seniorly.com',
           ],
           message: 'check out this property',
-          entitySlug: 'rhoda-goldman-plaza',
+          entitySlug: community.id,
           entityType: 'Community',
           fromEmail: 'fonz@botverse.com',
         });
@@ -138,7 +140,7 @@ describe('Community Profile Sections', () => {
 
       const pricingContent = select('.CollapsibleSection__Header h2').contains(`Pricing at ${community.name}`).parent().next();
 
-      pricingContent.should('contain', community.propInfo.ratesText);
+      pricingContent.should('contain', formatMoney(community.startingRate));
 
       const list = buildEstimatedPriceList(community);
 

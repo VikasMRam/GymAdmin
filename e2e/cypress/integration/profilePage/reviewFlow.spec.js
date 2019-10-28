@@ -11,7 +11,7 @@ describe('Review Community', () => {
   beforeEach(() => {
     cy.server();
 
-    getCommunity('rhoda-goldman-plaza').then((response) => {
+    getCommunity('buena-vista-manor-house').then((response) => {
       community = response;
     });
 
