@@ -167,7 +167,7 @@ const DashboardAdminReferralCommunityTile = ({
         { communityUrl && (
           <>
             <Span size="caption" palette="grey" variation="dark">Community URL:</Span>
-            <Span size="caption"><Link to={communityUrl}>Link to Profile</Link></Span>
+            <Span size="caption"><Link to={communityUrl} target="_blank">Link to Profile</Link></Span>
           </>
         )}
         { childFamilyPath && (
