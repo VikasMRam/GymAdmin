@@ -1,6 +1,7 @@
 import { responsive, select } from '../../helpers/tests';
 import buildEntity from '../../helpers/buildEntity';
 import { toJson } from '../../helpers/request';
+import { getCommunity } from '../../helpers/getCommunity';
 
 const pad = (str, size) => {
   while (str.length < (size || 2)) {
@@ -30,8 +31,8 @@ describe('Primary Conversion', () => {
   beforeEach(() => {
     cy.server();
 
-    cy.fixture('community-rhoda').then((response) => {
-      community = buildEntity(response);
+    getCommunity('rhoda-goldman-plaza').then((response) => {
+      community = response;
     });
   });
 

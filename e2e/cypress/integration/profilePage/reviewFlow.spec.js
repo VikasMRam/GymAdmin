@@ -1,6 +1,7 @@
 import { responsive, select } from '../../helpers/tests';
 import buildEntity from '../../helpers/buildEntity';
 import { toJson } from '../../helpers/request';
+import { getCommunity } from '../../helpers/getCommunity';
 
 const randHash = () => Math.random().toString(36).substring(7);
 
@@ -11,8 +12,8 @@ describe('Review Community', () => {
   beforeEach(() => {
     cy.server();
 
-    cy.fixture('community-rhoda').then((response) => {
-      community = buildEntity(response);
+    getCommunity('rhoda-goldman-plaza').then((response) => {
+      community = response;
     });
 
     cy.fixture('user-slytest-admin').then((response) => {
