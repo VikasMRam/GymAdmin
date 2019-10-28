@@ -1,5 +1,6 @@
 import { responsive, select } from '../../helpers/tests';
 import buildEntity from '../../helpers/buildEntity';
+import { toJson } from '../../helpers/request';
 
 const randHash = () => Math.random().toString(36).substring(7);
 
@@ -55,8 +56,7 @@ describe('Review Community', () => {
           name: 'Fonz',
           value: 4,
         });
-        const responseText = await xhr.response.body.text();
-        const response = JSON.parse(responseText);
+        const response = toJson(xhr);
         ratedId = response.data.id;
       });
 

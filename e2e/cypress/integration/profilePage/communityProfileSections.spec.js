@@ -1,5 +1,6 @@
 import { responsive, select } from '../../helpers/tests';
 import buildEntity from '../../helpers/buildEntity';
+import { toJson } from '../../helpers/request';
 
 const randHash = () => Math.random().toString(36).substring(7);
 
@@ -104,8 +105,7 @@ describe('Community Profile Sections', () => {
           entitySlug: community.id,
           entityType: 'Community',
         });
-        const responseText = await xhr.response.body.text();
-        const response = JSON.parse(responseText);
+        const response = await toJson(xhr);
         userSave = buildEntity(response);
         expect(userSave.entitySlug).to.equal(community.id);
       });

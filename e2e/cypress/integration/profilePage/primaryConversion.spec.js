@@ -1,5 +1,6 @@
 import { responsive, select } from '../../helpers/tests';
 import buildEntity from '../../helpers/buildEntity';
+import { toJson } from '../../helpers/request';
 
 const pad = (str, size) => {
   while (str.length < (size || 2)) {
@@ -9,7 +10,7 @@ const pad = (str, size) => {
 };
 
 const randHash = () => Math.random().toString(36).substring(7);
-const randPhone = () => `${'908'}${pad((10e9 * Math.random()).toString(10).substring(0, 7), 7)}`;
+const randPhone = () => `${'908'}${pad((10e9 * Math.random()).toString(10).substring(0, 8), 8)}`;
 const formatPhone = phone => `${phone.substr(0, 3)}-${phone.substr(3, 3)}-${phone.substr(6)}`;
 
 describe('Primary Conversion', () => {
@@ -50,8 +51,7 @@ describe('Primary Conversion', () => {
       });
 
       cy.wait('@me').then(async (xhr) => {
-        const responseText = await xhr.response.body.text();
-        const response = JSON.parse(responseText);
+        const response = await toJson(xhr);
         const attrs = response.data.attributes;
         expect(attrs.email).to.equal(email);
         expect(attrs.name).to.equal('Fonz');
