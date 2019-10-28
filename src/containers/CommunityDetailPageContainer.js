@@ -572,7 +572,7 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
                 history={history}
                 exitIntentContent={this.getExitintent(show, hide)}
               />
-              )}
+            )}
           </ModalController>
         )}
       </NotificationController>
