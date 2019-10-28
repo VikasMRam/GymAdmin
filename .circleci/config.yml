@@ -272,7 +272,7 @@ jobs:
           name: Run Cypress tests
           command: |
             echo "Running cypress"
-            npx cypress run
+            npx cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec "cypress/integration/**/*"
 
       - run:
           name: Closing OpenVPN Tunnel
