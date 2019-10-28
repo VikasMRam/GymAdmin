@@ -29,11 +29,11 @@ const StyledDashboardAdminReferralAgentTile = styled(DashboardAdminReferralAgent
 const CursorStyledDashboardAdminReferralAgentTile = cursor(StyledDashboardAdminReferralAgentTile);
 
 const DashboardAgentReferralSearch = ({
-  agents, childrenClientAgentIdsMap, handleAgentSearch, setSelectedAgent, onSubmit,
+  agents, childrenClientAgentIdsMap, handleAgentSearch, setSelectedAgent, onSubmit, handleLocationSearch,
 }) => (
   <Wrapper>
     <SendReferralTitleBlock size="subtitle">Send referral to agent</SendReferralTitleBlock>
-    <DashboardCommunityAgentSearchBox label="Find an agent" handleSubmit={handleAgentSearch} />
+    <DashboardCommunityAgentSearchBox label="Find an agent" handleSubmit={handleAgentSearch} handleLocationSearch={handleLocationSearch} />
     {!agents &&
     <>
       <Hr size="large" />
@@ -65,6 +65,7 @@ const DashboardAgentReferralSearch = ({
 
 DashboardAgentReferralSearch.propTypes = {
   handleAgentSearch: func.isRequired,
+  handleLocationSearch: func.isRequired,
   setSelectedAgent: func,
   sendReferral: func,
   onSubmit: func,
