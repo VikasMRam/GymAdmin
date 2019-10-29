@@ -1,6 +1,6 @@
 import React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
-import NotificationController from 'sly/controllers/NotificationController';
+
 import ModalController from 'sly/controllers/ModalController';
 
 function getDisplayName(WrappedComponent) {
