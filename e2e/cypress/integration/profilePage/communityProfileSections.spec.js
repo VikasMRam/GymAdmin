@@ -52,8 +52,9 @@ describe('Community Profile Sections', () => {
         expect($h3.first().text().replace(/\s+/g, ' ')).to.equal(address);
       });
 
-      select('#concierge-number').should(($div) => {
-        expect($div.text().replace(/[^\d]/g, '')).to.equal(community.twilioNumber.numbers[0].toString());
+      const number = community.twilioNumber.numbers[0];
+      select(`.CommunitySummary [href="tel:${number}"]`).should(($div) => {
+        expect($div.text().replace(/[^\d]/g, '')).to.equal(number.toString());
       });
 
       select('.CommunityPricingAndRating').should('contain', formatMoney(community.startingRate));
