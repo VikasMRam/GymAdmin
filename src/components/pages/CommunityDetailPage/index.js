@@ -13,6 +13,7 @@ import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import pad from 'sly/components/helpers/pad';
 import { Button, Paragraph, Block } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
+import SampleMenu from 'sly/components/organisms/SampleMenu';
 import {
   CommunityDetailPageTemplate,
   makeHeader,
@@ -56,7 +57,11 @@ import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer'
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
+import PlusBranding from 'sly/components/organisms/PlusBranding';
+import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import withExitIntent from 'sly/services/exitIntent/withExitIntent';
+import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
+
 
 const BackToSearch = styled.div`
   text-align: center
@@ -110,6 +115,17 @@ const ButtonBlock = styled(Block)`
 
 const StyledButton = styled(Button)`
   width: 100%;
+`;
+
+const EventsWrapper = styled(CollapsibleBlock)`
+  display: grid;
+  grid-template-columns: 100%;
+  grid-row-gap: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    grid-template-columns: 50% 50%;
+    grid-column-gap: ${size('layout.gutter')};
+  }
 `;
 
 const Header = makeHeader();
@@ -411,6 +427,10 @@ export default class CommunityDetailPage extends Component {
       careServices, promoDescription, promoTitle, communitySize, communityInsights,
     } = propInfo;
 
+    const {
+      plusCommunity, menuLink, sampleAppetizers, sampleMain, sampleSide, sampleDessert, sampleEvents, eventsLink,
+    } = propInfo;
+
     // TODO: move this to common helper, used in multiple places
     const communityDefaultImages = {
       'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
@@ -607,7 +627,7 @@ export default class CommunityDetailPage extends Component {
                     />
                   </MainSection>
                 </TopCollapsibleSection>
-
+                {plusCommunity && <PlusBranding />}
                 {(communityDescription || rgsAux.communityDescription) &&
                   <TopCollapsibleSection
                     title={`Details on ${name}`}
@@ -703,6 +723,39 @@ export default class CommunityDetailPage extends Component {
                     <StyledButton onClick={openAskQuestionModal}>Ask a Question</StyledButton>
                   </ButtonBlock>
                 </TopCollapsibleSection>
+                {plusCommunity && eventsLink && sampleEvents &&
+                <TopCollapsibleSection title={`Events at ${name}`}>
+                  <MainSection>
+                    <EventsWrapper>
+                      {sampleEvents.map(item => (
+                        <IconItemWrapper key={item}>
+                          <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
+                        </IconItemWrapper>))
+                      }
+                    </EventsWrapper>
+                  </MainSection>
+                  <ButtonBlock>
+                    <StyledButton href={eventsLink} onClick={clickEventHandler('events', name)} target="_blank" ghost>Download Events Calendar</StyledButton>
+                  </ButtonBlock>
+                </TopCollapsibleSection>
+                }
+
+                {plusCommunity && menuLink &&
+                <TopCollapsibleSection title={`Sample Menu at ${name}`}>
+                  <MainSection>
+                    <SampleMenu
+                      sampleAppetizers={sampleAppetizers}
+                      sampleMain={sampleMain}
+                      sampleSide={sampleSide}
+                      sampleDessert={sampleDessert}
+                    />
+                  </MainSection>
+                  <ButtonBlock>
+                    <StyledButton href={menuLink} onClick={clickEventHandler('menu', name)} target="_blank" ghost>Download Current Menu</StyledButton>
+                  </ButtonBlock>
+                </TopCollapsibleSection>
+                }
+
                 {rgsAux.stateLicensingWebsite &&
                   <StyledCommunityExtraInfoSection
                     title={`${name} at ${address.city} State Licensing`}
