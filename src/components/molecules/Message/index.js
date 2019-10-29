@@ -63,12 +63,12 @@ const Message = ({
   let onButtonClicks = [];
   let selectedButtons = [];
   if (message.data.type === CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST) {
-    const onClickButtons = message.data.valueButtonList.buttons
-      .filter(b => onClickTypeButtons.includes(b.action.type));
-    onButtonClicks = onClickButtons.map(b => () => onButtonClick(message, b));
     const { data } = message;
     const { valueButtonList } = data;
     ({ selectedButtons } = valueButtonList);
+    const onClickButtons = message.data.valueButtonList.buttons
+      .filter(b => onClickTypeButtons.includes(b.action.type) && !selectedButtons.includes(b.text));
+    onButtonClicks = onClickButtons.map(b => () => onButtonClick(message, b));
   }
 
   return (
@@ -86,7 +86,7 @@ const Message = ({
           {message.data.valueButtonList.buttons.map((b, i) => (
             <Button
               ghost
-              disabled={selectedButtons.includes(b.text)}
+              selected={selectedButtons.includes(b.text)}
               key={b.text}
               onClick={onButtonClicks[i]}
               to={b.action.type === CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_OPEN_LINK ? b.action.value : null}
