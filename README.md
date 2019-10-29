@@ -4,7 +4,7 @@
 
 ### Ensure that you have an admin user 
 
-It has to have email slytest+admin@seniorly.com and password nopassword
+It has to have email `slytest+admin@seniorly.com` and `password` nopassword
 
 ```sql
 INSERT INTO public.users
