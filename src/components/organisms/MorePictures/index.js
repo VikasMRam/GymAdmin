@@ -30,7 +30,7 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function MorePictures({ images, onPictureClick }) {
+export default function MorePictures({ images = [], onPictureClick }) {
   return (
     <Wrapper>
       {images.map((image, i) => (

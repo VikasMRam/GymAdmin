@@ -52,7 +52,7 @@ const CommunityQuestionAnswers = ({
     }
 
     return (
-      <>
+      <Fragment key={question.id}>
         <PaddedCommunityQuestion question={question} />
         {firstAnswerComponent}
         <AnswersDiv>
@@ -60,7 +60,7 @@ const CommunityQuestionAnswers = ({
         </AnswersDiv>
         <CursorBlock palette="primary" weight="medium" onClick={() => onLeaveAnswerClick(question)}>Leave an Answer</CursorBlock>
         {i < questions.length - 1 && <StyledHr />}
-      </>
+      </Fragment>
     );
   });
 
