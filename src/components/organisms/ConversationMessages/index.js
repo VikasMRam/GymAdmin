@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, string, object } from 'prop-types';
+import { arrayOf, string, object, func } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
@@ -60,7 +60,7 @@ const getDateText = (date) => {
 };
 
 const ConversationMessages = ({
-  messages, participants, viewingAsParticipant, className, newMessageRef,
+  messages, participants, viewingAsParticipant, className, newMessageRef, onButtonClick,
 }) => {
   const lastMessageReadAt = viewingAsParticipant && viewingAsParticipant.stats.lastReadMessageAt;
   const participantsById = participants.reduce((a, b) => {
@@ -107,6 +107,7 @@ const ConversationMessages = ({
       message,
       isRightAligned,
       dark: isRightAligned,
+      onButtonClick,
     };
     if (!isRightAligned) {
       const participant = participantsById[message.conversationParticipantID];
@@ -130,6 +131,7 @@ ConversationMessages.propTypes = {
   viewingAsParticipant: participantPropType,
   className: string,
   newMessageRef: object,
+  onButtonClick: func,
 };
 
 export default ConversationMessages;

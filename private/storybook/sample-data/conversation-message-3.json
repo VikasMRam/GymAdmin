@@ -4,7 +4,7 @@
   "createdAt": "2019-04-01T12:59:31Z",
   "data": {
     "type": "Text",
-    "value": "It was great talking to you this morning. I'll send you some finance reasources you should read up on."
+    "valueText": "It was great talking to you this morning. I'll send you some finance reasources you should read up on."
   },
   "medium": "Email",
   "conversationParticipantID": "f6ffe132e1731b35039e42c61dfacf95",

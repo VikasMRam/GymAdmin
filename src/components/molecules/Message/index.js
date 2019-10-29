@@ -1,5 +1,5 @@
 import React from 'react';
-import { bool, string } from 'prop-types';
+import { bool, string, func } from 'prop-types';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
@@ -7,9 +7,15 @@ import { ifProp } from 'styled-tools';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import participantPropType from 'sly/propTypes/conversation/conversationParticipant';
 import { size, palette } from 'sly/components/themes';
+import {
+  CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST,
+  CONVERSATION_MESSAGE_DATA_TYPE_TEXT,
+  CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUTOMATED_RESPONSE,
+  CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_OPEN_LINK,
+} from 'sly/constants/conversations';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
-import { Box, Block, Avatar } from 'sly/components/atoms';
+import { Box, Block, Avatar, Button } from 'sly/components/atoms';
 
 const StyledBox = styled(Box)`
   ${ifProp('dark', css`background: ${palette('grey', 'background')}`, '')};
@@ -31,8 +37,17 @@ const StyledAvatar = styled(Avatar)`
 const TextAlignRightBlock = textAlign(Block, 'right');
 TextAlignRightBlock.displayName = 'TextAlignRightBlock';
 
+const ButtonsWrapper = styled.div`
+  display: grid;
+  grid-gap: ${size('spacing.regular')};
+`;
+
+const onClickTypeButtons = [CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUTOMATED_RESPONSE];
+
+const textMessageTypes = [CONVERSATION_MESSAGE_DATA_TYPE_TEXT, CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUTOMATED_RESPONSE];
+
 const Message = ({
-  message, participant, dark, className,
+  message, participant, dark, className, onButtonClick,
 }) => {
   let dateString = '';
   const parsedDate = dayjs(message.createdAt);
@@ -45,15 +60,42 @@ const Message = ({
   if (participant) {
     ({ participantInfo: user } = participant);
   }
+  let onButtonClicks = [];
+  let selectedButtons = [];
+  if (message.data.type === CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST) {
+    const onClickButtons = message.data.valueButtonList.buttons
+      .filter(b => onClickTypeButtons.includes(b.action.type));
+    onButtonClicks = onClickButtons.map(b => () => onButtonClick(message, b));
+    const { data } = message;
+    const { valueButtonList } = data;
+    ({ selectedButtons } = valueButtonList);
+  }
 
   return (
     <Wrapper className={className}>
       {user && <StyledAvatar size="small" user={user} />}
-      <StyledBox padding="large" dark={dark}>
-        <PaddedBlock size="caption">{message.data.value}</PaddedBlock>
-        {user && <Block size="tiny" palette="grey" variant="dark">{dateString}</Block>}
-        {!user && <TextAlignRightBlock size="tiny" palette="grey" variant="dark">{dateString}</TextAlignRightBlock>}
-      </StyledBox>
+      {textMessageTypes.includes(message.data.type) && (
+        <StyledBox padding="large" dark={dark}>
+          <PaddedBlock size="caption">{message.data.valueText}</PaddedBlock>
+          {user && <Block size="tiny" palette="grey" variant="dark">{dateString}</Block>}
+          {!user && <TextAlignRightBlock size="tiny" palette="grey" variant="dark">{dateString}</TextAlignRightBlock>}
+        </StyledBox>
+      )}
+      {message.data.type === CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST &&
+        <ButtonsWrapper>
+          {message.data.valueButtonList.buttons.map((b, i) => (
+            <Button
+              ghost
+              disabled={selectedButtons.includes(b.text)}
+              key={b.text}
+              onClick={onButtonClicks[i]}
+              to={b.action.type === CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_OPEN_LINK ? b.action.value : null}
+            >
+              {b.text}
+            </Button>
+          ))}
+        </ButtonsWrapper>
+      }
     </Wrapper>
   );
 };
@@ -63,6 +105,7 @@ Message.propTypes = {
   participant: participantPropType,
   dark: bool,
   className: string,
+  onButtonClick: func,
 };
 
 export default Message;

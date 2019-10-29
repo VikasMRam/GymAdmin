@@ -12,8 +12,14 @@ import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import conversationParticipantPropType from 'sly/propTypes/conversation/conversationParticipant';
-import { MESSAGES_UPDATE_LAST_READ_TIMEOUT, CONVERSATION_PARTICIPANT_TYPE_CLIENT, CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION, CONVERSATION_PARTICIPANT_TYPE_USER } from 'sly/constants/conversations';
-import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
+import {
+  MESSAGES_UPDATE_LAST_READ_TIMEOUT,
+  CONVERSATION_PARTICIPANT_TYPE_USER,
+  CONVERSATION_PARTICIPANT_TYPE_CLIENT,
+  CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION,
+  CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUTOMATED_RESPONSE,
+} from 'sly/constants/conversations';
+import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE, CONVERSTION_MESSAGE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 import withWS from 'sly/services/ws/withWS';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -110,7 +116,11 @@ const mapStateToProps = (state, { conversation, user }) => ({
 
 @query('getConversationMessages', 'getConversationMessages')
 
+@query('createConversationMessage', 'createConversationMessage')
+
 @query('updateConversationParticipant', 'updateConversationParticipant')
+
+@query('updateConversationMessage', 'updateConversationMessage')
 
 @withWS
 
@@ -129,6 +139,8 @@ export default class ConversationMessagesContainer extends Component {
     viewingAsParticipant: conversationParticipantPropType,
     updateConversationParticipant: func.isRequired,
     getConversationMessages: func.isRequired,
+    createConversationMessage: func.isRequired,
+    updateConversationMessage: func.isRequired,
     sendMessageFormPlaceholder: string,
     className: string,
     onCreateConversationSuccess: func,
@@ -291,6 +303,37 @@ export default class ConversationMessagesContainer extends Component {
     return null;
   };
 
+  updateButtonListMessageSelectedButtons = (message, button) => {
+    const { updateConversationMessage } = this.props;
+    const { id, data, conversationID, conversationParticipantID } = message;
+    const { valueButtonList } = data;
+    const { selectedButtons } = valueButtonList;
+
+    selectedButtons.push(button.text);
+    const payload = {
+      type: CONVERSTION_PARTICIPANT_RESOURCE_TYPE,
+      attributes: {
+        conversationID,
+        conversationParticipantID,
+        data: {
+          ...data,
+          valueButtonList: {
+            ...valueButtonList, // todo: clarify regarding json inner keys cleared on patch
+            selectedButtons,
+          },
+        },
+      },
+    };
+
+    return updateConversationMessage({ id }, payload)
+      .catch((r) => {
+        // TODO: Need to set a proper way to handle server side errors
+        const { body } = r;
+        const errorMessage = body.errors.map(e => e.title).join('. ');
+        console.error(errorMessage);
+      });
+  };
+
   handleScroll = () => {
     const { conversation, getConversationMessages } = this.props;
     if (conversation) {
@@ -344,6 +387,28 @@ export default class ConversationMessagesContainer extends Component {
     };
     SlyEvent.getInstance().sendEvent(event);
     this.updateLastReadMessageAt();
+  };
+
+  handleButtonClick = (message, button) => {
+    const { action, text } = button;
+
+    if (action.type === CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUTOMATED_RESPONSE) {
+      const { conversation, createConversationMessage } = this.props;
+      const { id: conversationId } = conversation;
+      const data = {
+        type: CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUTOMATED_RESPONSE,
+        valueText: text,
+      };
+      const payload = {
+        type: CONVERSTION_MESSAGE_RESOURCE_TYPE,
+        attributes: {
+          data,
+          conversationID: conversationId,
+        },
+      };
+
+      createConversationMessage(payload).then(() => this.updateButtonListMessageSelectedButtons(message, button));
+    }
   };
 
   messagesRef = createRef();
@@ -447,6 +512,7 @@ export default class ConversationMessagesContainer extends Component {
                 messages={messages}
                 participants={conversationParticipants}
                 newMessageRef={this.newMessageRef}
+                onButtonClick={this.handleButtonClick}
               />
             </>
           )}

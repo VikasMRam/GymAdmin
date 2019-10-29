@@ -17,7 +17,7 @@ describe('LatestMessage', () => {
     const wrapper = wrap({ message });
     expect(wrapper.find('TopWrapper').find('Block').contains(dateString)).toBeTruthy();
     expect(wrapper.find('TopWrapper').find('ClampedText').contains(PraneshKumar.clientInfo.name)).toBeTruthy();
-    expect(wrapper.find('ClampedText').contains(message.data.value)).toBeTruthy();
+    expect(wrapper.find('ClampedText').contains(message.data.valueText)).toBeTruthy();
   });
 
   it('invalid date', () => {
@@ -25,7 +25,7 @@ describe('LatestMessage', () => {
     const wrapper = wrap({ message: newMessage, name: PraneshKumar.clientInfo.name });
     expect(wrapper.find('TopWrapper').find('Block').contains('Failed to parse date')).toBeTruthy();
     expect(wrapper.find('TopWrapper').find('ClampedText').contains(PraneshKumar.clientInfo.name)).toBeTruthy();
-    expect(wrapper.find('ClampedText').contains(message.data.value)).toBeTruthy();
+    expect(wrapper.find('ClampedText').contains(message.data.valueText)).toBeTruthy();
   });
 
   it('no message', () => {
