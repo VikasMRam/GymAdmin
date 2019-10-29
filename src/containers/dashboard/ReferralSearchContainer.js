@@ -134,6 +134,9 @@ export default class ReferralSearchContainer extends Component {
     this.setState({ selectedAgent });
     return selectedAgent;
   };
+  handleLocationSearch = (location) => {
+    console.log('Handle Location Searc',location)
+  };
 
   getSearchFilters = (nameOrZip) => {
     // Based on regex matching use name or zip

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
-import qs from 'query-string';
 import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
@@ -21,7 +20,7 @@ import IconButton from 'sly/components/molecules/IconButton';
 import TaskRowCard from 'sly/components/organisms/TaskRowCard';
 import AddOrEditTaskFormContainer from 'sly/containers/AddOrEditTaskFormContainer';
 import {
-  AGENT_DASHBOARD_TASKS_PATH, TODAY, OVERDUE, UPCOMING, COMPLETED,
+  AGENT_DASHBOARD_TASKS_PATH, AGENT_DASHBOARD_CONTEXT_TASKS_PATH, TODAY, OVERDUE, UPCOMING, COMPLETED,
 } from 'sly/constants/dashboardAppPaths';
 import { stripPageNumber } from 'sly/services/helpers/appPaths';
 
@@ -110,14 +109,6 @@ const TabMap = {
   Upcoming: UPCOMING,
   Completed: COMPLETED,
 };
-const tabIDLabelMap = {
-  today: 'DUE TODAY',
-  overdue: 'OVERDUE',
-  upcoming: 'UPCOMING',
-  completed: 'COMPLETED',
-};
-
-const tabIDs = Object.keys(tabIDLabelMap);
 
 const onTabClick = (label) => {
   const event = {
@@ -129,8 +120,10 @@ const onTabClick = (label) => {
 };
 
 const getBasePath = (taskType, location) => {
+  // const getBasePath = (taskType, contextPath = AGENT_DASHBOARD_TASKS_PATH, location) => {
+  // TODO: Use AGENT_DASHBOARD_CONTEXT_TASKS_PATH below
   const path = generatePath(AGENT_DASHBOARD_TASKS_PATH, { taskType });
-  // TODO: Apply default filters.
+
   return location && location.search ? `${path}${stripPageNumber(location.search)}` : path;
 };
 
@@ -212,7 +205,7 @@ export default class DashboardAgentTasksSection extends Component {
 
   render() {
     const {
-      tasks, pagination, activeTab, isPageLoading, noBorder, meta, basePath, location,
+      tasks, pagination, activeTab, isPageLoading, noBorder, meta, contextPath, location,
       datatable,
     } = this.props;
     const beforeTabHeader = (
@@ -233,7 +226,7 @@ export default class DashboardAgentTasksSection extends Component {
 
     return (
       <>
-        <Tabs activeTab={activeTab} beforeHeader={beforeTabHeader} tabsOnly>
+        {/* <Tabs activeTab={activeTab} beforeHeader={beforeTabHeader} tabsOnly>
           {Object.entries(TabMap)
             .map(([name, key]) => (
               <Tab
@@ -245,7 +238,8 @@ export default class DashboardAgentTasksSection extends Component {
                 {`${name} (${pagination[`${key}Count`] || '0'})`}
               </Tab>
             ))}
-        </Tabs>
+        </Tabs> */}
+        {beforeTabHeader}
         <TableHeaderButtonComponent
           datatable={datatable}
           modelConfig={modelConfig}

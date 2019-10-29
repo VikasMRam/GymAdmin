@@ -78,20 +78,11 @@ const getPageParams = ({ match, location }) => {
 @withUser
 
 @prefetch('tasks', 'getTasks', (req, { datatable, client }) => {
-  // const { pageNumber, date, status, taskName } = getPageParams({ match, location });
-  // const filters = {
-  //   'filter[status]': status,
-  //   'page-number': pageNumber,
-  //   'filter[title]': taskName,
-  // };
-  // if (date) {
-  //   filters['filter[dueDate]'] = date;
-  // }
-  const filters  = {};
   if (client) {
+    const qs = datatable.query;
     const { id } = client;
-    filters['filter[client]'] = id;
-    return req(filters);
+    qs['filter[client]'] = id;
+    return req(qs);
   }
   return req(datatable.query);
 })

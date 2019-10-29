@@ -208,7 +208,7 @@ const ClientName = ({ client, rawClient, backLinkHref, ...props }) => {
         <Icon icon="arrow-left" palette="primary" />
       </Link>
       <span>{name}</span>
-      {isReferralSent(additionalMetadata) && <StyledIconBadge badgePalette="danger" palette="white" icon="checkmark-circle" text="R SENT" />}
+      {isReferralSent(additionalMetadata) && <StyledIconBadge badgePalette="secondary" palette="white" icon="checkmark-circle" text="R SENT" />}
       <StyledStatusSelect client={client} rawClient={rawClient} {...props} />
     </StyledClientNameBlock>
   );
@@ -524,6 +524,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
 
     const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS });
+    const familyTasksPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: TASKS });
 
 
     const backLinkHref = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: TabMap[group] });
@@ -646,7 +647,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                     filters={taskFilters}
                   >
                     {datatable => (
-                      <DashboardAgentTasksSectionContainer datatable={datatable} client={client} />
+                      <DashboardAgentTasksSectionContainer datatable={datatable} client={client} contextPath={familyTasksPath} />
                     )}
                   </Datatable>
                 </FamilyTasksTab>
