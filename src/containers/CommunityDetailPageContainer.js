@@ -146,18 +146,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     SlyEvent.getInstance().sendEvent(event);
   };
 
-  handleReviewLinkClick = (name) => {
-    const { community } = this.props;
-    const { id } = community;
-    const event = {
-      action: 'click',
-      category: 'externalReview',
-      label: id,
-      value: name,
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
   handleConciergeNumberClick = () => {
     const { community } = this.props;
     const { id } = community;

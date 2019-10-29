@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { object, func } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
+
 import { size, palette, assetPath } from 'sly/components/themes';
 import {
   getBreadCrumbsForCommunity,
@@ -32,15 +33,12 @@ import CollapsibleSection, {
   MainSection,
 } from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
-import EntityReviews from 'sly/components/organisms/EntityReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import CommunityPricingComparison from 'sly/components/organisms/CommunityPricingComparison';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
 import CommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
-import MorePictures from 'sly/components/organisms/MorePictures';
-import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
@@ -48,11 +46,8 @@ import OfferNotification from 'sly/components/molecules/OfferNotification';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
 import IconItem from 'sly/components/molecules/IconItem';
-import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
-import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
 import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
-import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 import withExitIntent from 'sly/services/exitIntent/withExitIntent';
