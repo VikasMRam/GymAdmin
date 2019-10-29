@@ -35,7 +35,7 @@ const CommunityAgentSearchForm = ({ label, handleLocationSearch, handleSubmit })
         <SearchBoxContainer
           allowOnlySelectionFromSuggestions
           clearLocationOnBlur={false}
-          onLocationSearch={handleSubmit}
+          onLocationSearch={handleLocationSearch}
         />
       </LocationSearchBox>*/}
       <CommunityTextBox name="city" label="Search By City, State" type="text" placeholder="Search by city, state" component={ReduxField} />

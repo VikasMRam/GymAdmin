@@ -134,8 +134,16 @@ export default class ReferralSearchContainer extends Component {
     this.setState({ selectedAgent });
     return selectedAgent;
   };
-  handleLocationSearch = (location) => {
-    console.log('Handle Location Searc',location)
+  handleLocationAgentSearch = (location) => {
+    console.log('Handle Location Search ', location);
+    // TODO Get lat,lng,string from // by default 30 mile radius
+    // geo = "37.402608,-121.875052,30"
+    // return this.doAgentSearch({geo});
+  };
+  handleLocationCommunitySearch = (location) => {
+    console.log('Handle Location Search ', location);
+    // geo = "37.402608,-121.875052,30"
+    // return this.doCommunitySearch({geo});
   };
 
   getSearchFilters = (nameOrZip) => {
@@ -150,12 +158,14 @@ export default class ReferralSearchContainer extends Component {
     return filters;
   }
 
-  doCommunitySearch = ({ name, city }) => {
+  doCommunitySearch = ({ name, city, geo }) => {
     const { getCommunities } = this.props;
     // const filters = this.getSearchFilters(nameOrZip);
     const filters = {};
     if (city) {
       [filters['filter[city]']] = [city.split(',')];
+    } else if (geo) {
+      filters['filter[geo]'] = geo;
     } else if (name) {
       filters['filter[name]'] = name;
     }
@@ -167,11 +177,13 @@ export default class ReferralSearchContainer extends Component {
     });
   };
 
-  doAgentSearch = ({ name, city }) => {
+  doAgentSearch = ({ name, city, geo }) => {
     const { getAgents } = this.props;
     const filters = {};
     if (city) {
       filters['filter[address]'] = city;
+    } else if (geo) {
+      filters['filter[geo]'] = geo;
     } else if (name) {
       filters['filter[name]'] = name;
     }
