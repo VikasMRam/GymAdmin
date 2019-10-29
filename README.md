@@ -32,6 +32,6 @@ $ CYPRESS_vieport=laptop npx cypress run
 To debug or develop the tests
 
 ```bash
-$ # good idea is to do it for only viewport as it has faster turn around
+$ # good idea is to do it for only one viewport as it has faster turn around
 $ CYPRESS_viewport=laptop npx cypress open
 ```
