@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { object, bool } from 'prop-types';
-import GetCustomPricingButtonContainer from "sly/containers/GetCustomPricingButtonContainer";
+
+import GetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
 
 const CommunityActions = ({ community, isAlreadyPricingRequested }) => {
   const GetPricingButton = styled(GetCustomPricingButtonContainer)`

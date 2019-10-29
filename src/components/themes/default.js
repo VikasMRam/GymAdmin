@@ -297,6 +297,17 @@ theme.sizes = {
     },
   },
 
+  plus: {
+    image: {
+      height: '30rem',
+    },
+    left: {
+      default: '1.0rem',
+      tablet:  '22.5rem',
+      laptop: '31.75rem',
+    },
+  },
+
   map: {
     propertyDetail: {
       small: {

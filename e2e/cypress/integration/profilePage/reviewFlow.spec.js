@@ -1,5 +1,6 @@
 import { responsive, select } from '../../helpers/tests';
-import buildEntity from '../../helpers/buildEntity';
+import { toJson } from '../../helpers/request';
+import { getCommunity } from '../../helpers/getCommunity';
 
 const randHash = () => Math.random().toString(36).substring(7);
 
@@ -10,8 +11,8 @@ describe('Review Community', () => {
   beforeEach(() => {
     cy.server();
 
-    cy.fixture('community-rhoda').then((response) => {
-      community = buildEntity(response);
+    getCommunity('buena-vista-manor-house').then((response) => {
+      community = response;
     });
 
     cy.fixture('user-slytest-admin').then((response) => {
@@ -55,8 +56,7 @@ describe('Review Community', () => {
           name: 'Fonz',
           value: 4,
         });
-        const responseText = await xhr.response.body.text();
-        const response = JSON.parse(responseText);
+        const response = await toJson(xhr);
         ratedId = response.data.id;
       });
 

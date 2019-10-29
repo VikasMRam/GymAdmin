@@ -3,7 +3,7 @@ import { func, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import pad from 'sly/components/helpers/pad';
 import ReduxField from 'sly/components/organisms/ReduxField';
@@ -16,6 +16,10 @@ const StyledButton = styled(Button)`
   font-weight: normal;
 `;
 
+const StyledBox = styled(Box)`
+  background-color: ${palette('white', 'base')};
+`;
+
 const PaddedHeading = pad(Heading);
 const LastField = pad(Field);
 
@@ -24,7 +28,7 @@ const ConversionForm = ({
   submitting,
   hasOnlyEmail,
 }) => (
-  <Box>
+  <StyledBox>
     <form name="ConversionForm" onSubmit={handleSubmit}>
       <PaddedHeading level="title" size="subtitle">Get Pricing & Availability</PaddedHeading>
 
@@ -56,7 +60,7 @@ const ConversionForm = ({
       </StyledButton>
       <TosAndPrivacy />
     </form>
-  </Box>
+  </StyledBox>
 );
 
 ConversionForm.propTypes = {
