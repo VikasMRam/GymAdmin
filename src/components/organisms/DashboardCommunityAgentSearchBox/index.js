@@ -69,9 +69,9 @@ const ReduxForm = reduxForm({
 class DashboardCommunityAgentSearchBox extends Component {
   handleLocationChange = (value) => {
     const { handleSubmit } = this.props;
-    if (handleSubmit) {
-      const { formatted_address: formattedAddress } =  value;
-      handleSubmit({ city: formattedAddress });
+    if (handleSubmit && value.geometry && value.geometry.location) {
+      const geo = [value.geometry.location.lat(), value.geometry.location.lng(), 10].join(',');
+      handleSubmit({ geo });
     }
   };
 

@@ -84,7 +84,7 @@ const TwoColumn = pad(styled.div`
   justify-content: space-between;
   align-items: center;
   text-transform: capitalize;
-
+  border-bottom: ${size('border.regular')} solid ${palette('slate.stroke')};
   ${Heading} {
     margin-bottom: 0;
   }
@@ -147,7 +147,7 @@ export default class DashboardAgentTasksSection extends Component {
     notifyError: func,
     refetchTasks: func,
     noBorder: bool,
-    basePath: string,
+    contextPath: string,
     searchTextBoxValue: string,
   };
 
@@ -216,6 +216,24 @@ export default class DashboardAgentTasksSection extends Component {
         </IconButton>
       </TwoColumn>
     );
+    let headerComponent = (
+      <Tabs activeTab={activeTab} beforeHeader={beforeTabHeader} tabsOnly>
+        {Object.entries(TabMap)
+          .map(([name, key]) => (
+            <Tab
+              id={key}
+              key={key}
+              to={getBasePath(key, location)}
+              onClick={() => onTabClick(name)}
+            >
+              {`${name} (${pagination[`${key}Count`] || '0'})`}
+            </Tab>
+          ))}
+      </Tabs>);
+    // Don't use tabs in context
+    if (contextPath) {
+      headerComponent = beforeTabHeader;
+    }
     const noResultMessage = 'Nice! You are on top of all your tasks here.';
 
 
@@ -226,26 +244,12 @@ export default class DashboardAgentTasksSection extends Component {
 
     return (
       <>
-        {/* <Tabs activeTab={activeTab} beforeHeader={beforeTabHeader} tabsOnly>
-          {Object.entries(TabMap)
-            .map(([name, key]) => (
-              <Tab
-                id={key}
-                key={key}
-                to={getBasePath(key, location)}
-                onClick={() => onTabClick(name)}
-              >
-                {`${name} (${pagination[`${key}Count`] || '0'})`}
-              </Tab>
-            ))}
-        </Tabs> */}
-        {beforeTabHeader}
+        {headerComponent}
         <TableHeaderButtonComponent
           datatable={datatable}
           modelConfig={modelConfig}
           meta={meta}
         />
-
 
         <SectionComponent>
           {!isPageLoading && (
