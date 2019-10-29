@@ -63,6 +63,7 @@ import CommunityAgentSectionContainer from 'sly/containers/CommunityAgentSection
 import CommunityQuestionAnswersContainer from "sly/containers/CommunityQuestionAnswersContainer";
 import CommunityReviewsContainer from "sly/containers/CommunityReviewsContainer";
 import CommunityAddReviewButtonContainer from "sly/containers/CommunityAddReviewButtonContainer";
+import CommunityMorePicturesContainer from "sly/containers/CommunityMorePicturesContainer";
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -174,22 +175,6 @@ export default class CommunityDetailPage extends Component {
     userAction: object,
     onToggleAskQuestionModal: func,
     history: object,
-  };
-  handleMorePicturesClick = (image) => {
-    const {
-      community,
-      onMediaGallerySlideChange,
-      onMediaGalleryToggleFullscreen,
-    } = this.props;
-    const { gallery = {}, videoGallery = {} } = community;
-    const images = gallery.images || [];
-    const videos = videoGallery.videos || [];
-    let matchingIndex = images.findIndex(i => image.id === i.id);
-    if (matchingIndex > -1) {
-      matchingIndex = videos.length + matchingIndex;
-      onMediaGallerySlideChange(matchingIndex, true);
-      onMediaGalleryToggleFullscreen(true);
-    }
   };
 
   // todo clean up
@@ -645,13 +630,7 @@ export default class CommunityDetailPage extends Component {
                 title={`More Photos of ${name}`}
                 titleSize="subtitle"
               >
-                <MorePictures
-                  gallery={gallery}
-                  communityName={name}
-                  city={address.city}
-                  state={address.state}
-                  onPictureClick={this.handleMorePicturesClick}
-                />
+                <CommunityMorePicturesContainer community={community} />
               </StyledSection>
             )}
             <Section title={`Map View of ${name}`} titleSize="subtitle" />

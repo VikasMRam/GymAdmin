@@ -12,7 +12,6 @@ import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
 import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
-import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import { query, prefetch, withAuth, withApi } from 'sly/services/newApi';
 import {
