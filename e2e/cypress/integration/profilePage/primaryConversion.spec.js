@@ -1,6 +1,7 @@
 import { responsive, select } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
 import { getCommunity } from '../../helpers/getCommunity';
+import { TEST_COMMUNITY } from '../../constants/community';
 
 const randChars = (characters, length = 1) => {
   let result = '';
@@ -23,7 +24,7 @@ describe('Primary Conversion', () => {
   beforeEach(() => {
     cy.server();
 
-    getCommunity('buena-vista-manor-house').then((response) => {
+    getCommunity(TEST_COMMUNITY).then((response) => {
       community = response;
     });
   });

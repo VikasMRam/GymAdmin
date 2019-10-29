@@ -63,7 +63,7 @@ const TooltipContent = styled(ReactTooltip)`
 `;
 const CommunitySummary = ({
   community, innerRef, isAdmin, onConciergeNumberClicked, className,
-  onFavouriteClick, userSave, onShareClick,
+  onFavouriteClick, isFavorited, onShareClick,
 }) => {
   const {
     address, name, startingRate, propRatings, propInfo, twilioNumber,
@@ -86,7 +86,6 @@ const CommunitySummary = ({
     conciergeNumber = '8558664515';
   }
 
-  const isFavorited = userSave && userSave.status !== USER_SAVE_DELETE_STATUS;
   const favIcon = isFavorited ? 'favourite-light' : 'favourite-empty';
 
   return (
@@ -108,23 +107,19 @@ const CommunitySummary = ({
       <Hr />
       <Wrapper>
         <div>
-          {conciergeNumber &&
-            <>
-              For pricing and availability, call&nbsp;
-              <Link data-cy="concierge-number" href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
-                <NumberFormat
-                  value={conciergeNumber}
-                  format="(###) ###-####"
-                  displayType="text"
-                />
-              </Link>
-              <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
-              {isBrowser &&
-                <TooltipContent id="phone" place="top" effect="solid" multiline>
-                  This phone number will connect you to the concierge team at Seniorly.
-                </TooltipContent>
-              }
-            </>
+          For pricing and availability, call&nbsp;
+          <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
+            <NumberFormat
+              value={conciergeNumber}
+              format="(###) ###-####"
+              displayType="text"
+            />
+          </Link>
+          <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
+          {isBrowser &&
+            <TooltipContent id="phone" place="top" effect="solid" multiline>
+              This phone number will connect you to the concierge team at Seniorly.
+            </TooltipContent>
           }
         </div>
         <div>
@@ -150,7 +145,7 @@ CommunitySummary.propTypes = {
   className: string,
   onFavouriteClick: func,
   onShareClick: func,
-  userSave: object,
+  isFavorited: bool,
 };
 
 export default CommunitySummary;

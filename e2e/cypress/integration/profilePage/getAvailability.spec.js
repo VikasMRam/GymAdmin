@@ -1,11 +1,12 @@
 import { doCustomPricingFlow } from '../../helpers/customPricing';
 import { assertUserActionsForGetAvailability } from '../../helpers/userActions';
 import { responsive } from '../../helpers/tests';
+import { TEST_COMMUNITY } from '../../constants/community';
 
 describe('Marketplace Profile Page', () => {
   responsive(() => {
     it('tests Get Availability Flow for Assisited Living Community', () => {
-      const communitySlug = 'buena-vista-manor-house';
+      const communitySlug = TEST_COMMUNITY;
       const name = 'Pranesh Kumar';
       const phoneNumber = '9999999999';
       const email = 'pranesh@seniorly.com';
