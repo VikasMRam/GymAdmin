@@ -1,5 +1,9 @@
 import { responsive, select } from '../../helpers/tests';
 import buildEntity from '../../helpers/buildEntity';
+import { toJson } from '../../helpers/request';
+import { getCommunity } from '../../helpers/getCommunity';
+import { formatMoney } from '../../helpers/money';
+import { TEST_COMMUNITY } from '../../constants/community';
 
 const randHash = () => Math.random().toString(36).substring(7);
 
@@ -13,22 +17,23 @@ export const buildEstimatedPriceList = (community) => {
   } = community.propInfo;
 
   const priceList = [];
-  sharedSuiteRate !== 'N/A' && priceList.push({ label: 'Shared Suite', value: sharedSuiteRate });
-  privateSuiteRate !== 'N/A' && priceList.push({ label: 'Private Suite', value: privateSuiteRate });
-  studioApartmentRate !== 'N/A' && priceList.push({ label: 'Studio Apartment', value: studioApartmentRate });
-  oneBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'One Bedroom Apartment', value: oneBedroomApartmentRate });
-  twoBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'Two Bedroom Apartment', value: twoBedroomApartmentRate });
+  sharedSuiteRate && sharedSuiteRate !== 'N/A' && priceList.push({ label: 'Shared Suite', value: sharedSuiteRate });
+  privateSuiteRate && privateSuiteRate !== 'N/A' && priceList.push({ label: 'Private Suite', value: privateSuiteRate });
+  studioApartmentRate && studioApartmentRate !== 'N/A' && priceList.push({ label: 'Studio Apartment', value: studioApartmentRate });
+  oneBedroomApartmentRate && oneBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'One Bedroom Apartment', value: oneBedroomApartmentRate });
+  twoBedroomApartmentRate && twoBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'Two Bedroom Apartment', value: twoBedroomApartmentRate });
 
   return priceList;
 };
+
 describe('Community Profile Sections', () => {
   let community;
 
   beforeEach(() => {
     cy.server();
 
-    cy.fixture('community-rhoda').then((response) => {
-      community = buildEntity(response);
+    getCommunity(TEST_COMMUNITY).then((response) => {
+      community = response;
     });
   });
 
@@ -47,11 +52,12 @@ describe('Community Profile Sections', () => {
         expect($h3.first().text().replace(/\s+/g, ' ')).to.equal(address);
       });
 
-      select('#concierge-number').should(($div) => {
-        expect($div.text().replace(/[^\d]/g, '')).to.equal(community.twilioNumber.numbers[0].toString());
+      const number = community.twilioNumber.numbers[0];
+      select(`.CommunitySummary [href="tel:${number}"]`).should(($div) => {
+        expect($div.text().replace(/[^\d]/g, '')).to.equal(number.toString());
       });
 
-      select('.CommunityPricingAndRating').should('contain', community.propInfo.ratesText);
+      select('.CommunityPricingAndRating').should('contain', formatMoney(community.startingRate));
 
       const rating = community.propRatings.reviewsValue.toFixed(1).replace(/\.0+$/, '');
       select('.CommunityPricingAndRating').should('contain', rating);
@@ -77,7 +83,7 @@ describe('Community Profile Sections', () => {
             'fonz@seniorly.com',
           ],
           message: 'check out this property',
-          entitySlug: 'rhoda-goldman-plaza',
+          entitySlug: community.id,
           entityType: 'Community',
           fromEmail: 'fonz@botverse.com',
         });
@@ -104,8 +110,7 @@ describe('Community Profile Sections', () => {
           entitySlug: community.id,
           entityType: 'Community',
         });
-        const responseText = await xhr.response.body.text();
-        const response = JSON.parse(responseText);
+        const response = await toJson(xhr);
         userSave = buildEntity(response);
         expect(userSave.entitySlug).to.equal(community.id);
       });
@@ -137,12 +142,12 @@ describe('Community Profile Sections', () => {
 
       const pricingContent = select('.CollapsibleSection__Header h2').contains(`Pricing at ${community.name}`).parent().next();
 
-      pricingContent.should('contain', community.propInfo.ratesText);
+      pricingContent.should('contain', formatMoney(community.startingRate));
 
       const list = buildEstimatedPriceList(community);
 
       list.forEach(({ label, value }) => {
-        pricingContent.get('tbody').contains(label).next().should('contain', value);
+        pricingContent.get('tbody').contains(label).next().should('contain', formatMoney(value));
       });
 
       select('button.CommunityPricingTable').contains('Get Detailed Pricing').click();

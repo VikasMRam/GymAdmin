@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import OfferNotification from 'sly/components/molecules/OfferNotification';
-import GetCustomPricingContainer from "sly/containers/GetCustomPricingContainer";
+import GetCustomPricingContainer from 'sly/containers/GetCustomPricingContainer';
 
 const title = 'test title';
 const community = { id: 'community 123' };

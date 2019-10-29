@@ -10,7 +10,7 @@ import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 export default class CommunityAgentSectionContainer extends Component {
   static propTypes = {
     agent: agentPropType.isRequired,
-    openModal: func,
+    showModal: func,
     closeModal: func,
   };
 
