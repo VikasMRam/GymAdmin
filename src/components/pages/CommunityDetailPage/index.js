@@ -59,6 +59,8 @@ import CommunityQuestionAnswersContainer from "sly/containers/CommunityQuestionA
 import CommunityReviewsContainer from "sly/containers/CommunityReviewsContainer";
 import CommunityAddReviewButtonContainer from "sly/containers/CommunityAddReviewButtonContainer";
 import CommunityMorePicturesContainer from "sly/containers/CommunityMorePicturesContainer";
+import BackToSearchButtonContainer from "sly/containers/BackToSearchButtonContainer";
+import TrackedSimilarCommunitiesContainer from "sly/containers/TrackedSimilarCommunitiesContainer";
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -160,61 +162,16 @@ export default class CommunityDetailPage extends Component {
     user: object,
     community: object.isRequired,
     location: object.isRequired,
-    onBackToSearchClicked: func,
-    onReviewLinkClicked: func,
-    onConciergeNumberClicked: func,
-    onLiveChatClicked: func,
-    onReceptionNumberClicked: func,
-    onSimilarCommunitiesClick: func,
     profileContacted: object.isRequired,
     userAction: object,
-    onToggleAskQuestionModal: func,
     history: object,
   };
-
-  // todo clean up
-  // openFloorPlanModal = (floorPlan) => {
-  //   const {
-  //     showModal,
-  //     hideModal,
-  //     community,
-  //     user,
-  //     userAction,
-  //     onFloorPlanModalToggle,
-  //   } = this.props;
-  //   const { userDetails } = userAction;
-  //   const { info: floorPlanInfo } = floorPlan;
-  //   const { id, propInfo } = community;
-  //   const { typeCare: typeCares } = propInfo;
-  //   const typeOfCare = typeCares[0];
-  //
-  //   const modalComponentProps = {
-  //     communitySlug: id,
-  //     typeOfCare,
-  //     user,
-  //     floorPlanInfo,
-  //     userDetails,
-  //     postSubmit: hideModal,
-  //   };
-  //   const onClose = () => {
-  //     onFloorPlanModalToggle(floorPlan, true);
-  //   };
-  //
-  //   onFloorPlanModalToggle(floorPlan);
-  //   showModal(
-  //     <CommunityFloorPlanPopupFormContainer {...modalComponentProps} />,
-  //     onClose,
-  //     'noPadding'
-  //   );
-  // };
 
   render() {
     const {
       community,
       profileContacted,
       location,
-      onBackToSearchClicked,
-      onSimilarCommunitiesClick,
       user,
     } = this.props;
 
@@ -407,19 +364,18 @@ export default class CommunityDetailPage extends Component {
                     id="sticky-sidebar-boundary"
                   >
                     <MainSection>
-                      <SimilarCommunities
+                      <TrackedSimilarCommunitiesContainer
                         communities={similarProperties}
-                        onCommunityClick={onSimilarCommunitiesClick}
                         communityStyle={similarCommunityStyle}
                       />
                       <BackToSearch>
-                        <Button
-                          ghost
-                          onClick={onBackToSearchClicked}
+                        <BackToSearchButtonContainer
+                          community={community}
                           href={getCitySearchUrl({ propInfo, address })}
+                          ghost
                         >
                           Communities In {address.city}
-                        </Button>
+                        </BackToSearchButtonContainer>
                       </BackToSearch>
                     </MainSection>
                   </TopCollapsibleSection>
@@ -592,19 +548,18 @@ export default class CommunityDetailPage extends Component {
                     id="sticky-sidebar-boundary"
                   >
                     <MainSection>
-                      <SimilarCommunities
+                      <TrackedSimilarCommunitiesContainer
                         communities={similarProperties}
-                        onCommunityClick={onSimilarCommunitiesClick}
                         communityStyle={similarCommunityStyle}
                       />
                       <BackToSearch>
-                        <Button
-                          ghost
-                          onClick={onBackToSearchClicked}
+                        <BackToSearchButtonContainer
+                          community={community}
                           href={getCitySearchUrl({ propInfo, address })}
+                          ghost
                         >
                           Communities In {address.city}
-                        </Button>
+                        </BackToSearchButtonContainer>
                       </BackToSearch>
                     </MainSection>
                   </BottomCollapsibleSection>

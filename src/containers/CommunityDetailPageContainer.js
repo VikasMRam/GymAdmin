@@ -7,7 +7,6 @@ import omit from 'lodash/omit';
 import { parse as parseSearch } from 'query-string';
 import { Redirect } from 'react-router-dom';
 import { withServerState } from 'sly/store';
-import SlyEvent from 'sly/services/helpers/events';
 import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
 import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
@@ -21,12 +20,12 @@ import {
   PROFILE_VIEWED,
   TOUR_BOOKED,
 } from 'sly/services/newApi/constants';
-import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 import { Experiment, Variant } from 'sly/services/experiments';
 import styled from 'styled-components';
 import { Heading } from 'sly/components/atoms';
 import { size } from 'sly/components/themes';
+import TrackedSimilarCommunitiesContainer from "sly/containers/TrackedSimilarCommunitiesContainer";
 
 const ignoreSearchParams = [
   'modal',
@@ -135,78 +134,8 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     });
   }
 
-  handleBackToSearchClick = () => {
-    const { community } = this.props;
-    const { id } = community;
-    const event = {
-      action: 'click',
-      category: 'backToSearch',
-      label: id,
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleConciergeNumberClick = () => {
-    const { community } = this.props;
-    const { id } = community;
-    const event = {
-      action: 'click',
-      category: 'conciergePhone',
-      label: id,
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleLiveChatClick = () => {
-    const { community } = this.props;
-    const { id } = community;
-    const event = {
-      action: 'click',
-      category: 'liveChat',
-      label: id,
-    };
-    SlyEvent.getInstance().sendEvent(event);
-    window && window.olark && window.olark('api.box.expand');
-  };
-
-  handleReceptionNumberClick = () => {
-    const { community } = this.props;
-    const { id } = community;
-    const event = {
-      action: 'click',
-      category: 'receptionPhone',
-      label: id,
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleSimilarCommunitiesClick = (index, to) => {
-    const event = {
-      action: 'click',
-      category: 'similarCommunity',
-      label: index.toString(),
-      value: to,
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleShareCommunityModalClose = () => {
-    const { community } = this.props;
-    const { id } = community;
-    const event = {
-      action: 'close-modal',
-      category: 'shareCommunity',
-      label: id,
-    };
-
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
   getExitintent = (showModal, hideModal) => {
-    const {
-      community: { id, name, similarProperties },
-      onSimilarCommunitiesClick,
-    } = this.props;
+    const { community } = this.props;
     const communityStyle = {
       layout: 'row',
       imageSize: 'small',
@@ -218,8 +147,8 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
         <Variant name="QuestionModal">
           <CommunityAskQuestionFormContainer
             showModal={showModal}
-            communityName={name}
-            communitySlug={id}
+            communityName={community.name}
+            communitySlug={community.id}
             onButtonClick={hideModal}
             type="exitForm"
           />
@@ -229,9 +158,8 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
             We found some Assisted Living communities you might like
           </StyledHeading>
 
-          <SimilarCommunities
-            communities={similarProperties}
-            onSimilarCommunityClick={onSimilarCommunitiesClick}
+          <TrackedSimilarCommunitiesContainer
+            communities={community.similarProperties}
             communityStyle={communityStyle}
           />
         </Variant>
@@ -296,13 +224,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
             user={user}
             community={community}
             location={location}
-            onShareCommunityModalClose={this.handleShareCommunityModalClose}
-            onBackToSearchClicked={this.handleBackToSearchClick}
-            onConciergeNumberClicked={this.handleConciergeNumberClick}
-            onLiveChatClicked={this.handleLiveChatClick}
-            onReceptionNumberClicked={this.handleReceptionNumberClick}
-            onSimilarCommunitiesClick={this.handleSimilarCommunitiesClick}
-            onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
             profileContacted={profileContacted}
             userAction={userAction}
             history={history}
