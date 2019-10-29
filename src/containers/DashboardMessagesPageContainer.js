@@ -9,10 +9,7 @@ import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import userPropType from 'sly/propTypes/user';
 import { AGENT_DASHBOARD_MESSAGE_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
 
-@prefetch('conversations', 'getConversations', (req, { user }) => req({
-  'filter[participant_id]': user && user.id,
-  'filter[participant_type]': 'User',
-}))
+@prefetch('conversations', 'getConversations', req => req())
 
 export default class DashboardMessagesPageContainer extends Component {
   static propTypes = {
