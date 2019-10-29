@@ -229,11 +229,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     SlyEvent.getInstance().sendEvent(event);
   };
 
-  handleSimilarCommunitiesModalClick = (index, to, hideModal) => {
-    this.handleSimilarCommunitiesClick(index, to);
-    hideModal();
-  }
-
   handleSimilarCommunitiesClick = (index, to) => {
     const event = {
       action: 'click', category: 'similarCommunity', label: index.toString(), value: to,
