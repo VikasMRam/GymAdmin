@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { object, func, bool } from 'prop-types';
+import { object, func } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 import { size, palette, assetPath } from 'sly/components/themes';
-import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import {
   getBreadCrumbsForCommunity,
   getCitySearchUrl,
@@ -29,7 +28,6 @@ import {
   makeWrapper,
   makeGallery,
 } from 'sly/components/templates/CommunityDetailPageTemplate';
-import SaveCommunityContainer from 'sly/containers/SaveCommunityContainer';
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
 import CollapsibleSection, {
   MainSection,
@@ -43,21 +41,17 @@ import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
 import CommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
 import MorePictures from 'sly/components/organisms/MorePictures';
-import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
-import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
-import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
 import IconItem from 'sly/components/molecules/IconItem';
 import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
-import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
 import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
@@ -68,13 +62,14 @@ import PlusBranding from 'sly/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import withExitIntent from 'sly/services/exitIntent/withExitIntent';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
-
+import CommunitySummaryContainer from 'sly/containers/CommunitySummaryContainer';
+import CommunityAgentSectionContainer from 'sly/containers/CommunityAgentSectionContainer';
 
 const BackToSearch = styled.div`
   text-align: center;
 `;
 
-const StyledCommunitySummary = styled(CommunitySummary)`
+const StyledCommunitySummary = styled(CommunitySummaryContainer)`
   margin-bottom: ${size('spacing.xLarge')};
   margin-top: ${size('spacing.xLarge')};
   position: relative;
@@ -178,30 +173,19 @@ export default class CommunityDetailPage extends Component {
     user: object,
     community: object.isRequired,
     location: object.isRequired,
-    onMediaGalleryFavouriteClick: func,
-    onMediaGalleryShareClick: func,
-    onShareCommunityModalClose: func,
     onBackToSearchClicked: func,
     onReviewLinkClicked: func,
     onConciergeNumberClicked: func,
     onLiveChatClicked: func,
     onReceptionNumberClicked: func,
     onSimilarCommunitiesClick: func,
-    userSave: object,
-    setQueryParams: func,
-    onBookATourClick: func,
-    onGCPClick: func,
     profileContacted: object.isRequired,
-    onToggleAskAgentQuestionModal: func,
     userAction: object,
-    toggleHowSlyWorksVideoPlaying: func,
-    isHowSlyWorksVideoPlaying: bool,
     notifyInfo: func,
     notifyError: func,
     showModal: func,
     hideModal: func,
     onToggleAskQuestionModal: func,
-    onUnsaveCommunity: func,
     history: object,
   };
   handleMorePicturesClick = (image) => {
@@ -219,40 +203,6 @@ export default class CommunityDetailPage extends Component {
       onMediaGallerySlideChange(matchingIndex, true);
       onMediaGalleryToggleFullscreen(true);
     }
-  };
-
-  handleShareClick = () => {
-    const {
-      showModal,
-      hideModal,
-      notifyInfo,
-      onMediaGalleryShareClick,
-      community,
-      user,
-      onShareCommunityModalClose,
-    } = this.props;
-    const { id, mainImage } = community;
-    const onSuccess = () => {
-      onShareCommunityModalClose();
-      hideModal();
-    };
-    const onClose = () => {
-      onShareCommunityModalClose(true);
-    };
-
-    const modalComponentProps = {
-      mainImage,
-      fromEnabled: !user || !user.email,
-      communitySlug: id,
-      notifyInfo,
-      onSuccess,
-    };
-
-    onMediaGalleryShareClick();
-    showModal(
-      <ShareCommunityFormContainer {...modalComponentProps} />,
-      onClose
-    );
   };
 
   // todo clean up
@@ -327,11 +277,6 @@ export default class CommunityDetailPage extends Component {
     );
   };
 
-  openAdvisorHelpModal = () => {
-    const { showModal, hideModal } = this.props;
-    showModal(<AdvisorHelpPopup onButtonClick={hideModal} />);
-  };
-
   openAnswerQuestionModal = (type, questionId) => {
     const { showModal, hideModal, community } = this.props;
     const { id, questions, communityFaQs } = community;
@@ -359,43 +304,6 @@ export default class CommunityDetailPage extends Component {
     }
   };
 
-  handleFavouriteClick = () => {
-    const {
-      community,
-      onMediaGalleryFavouriteClick,
-      showModal,
-      notifyInfo,
-      notifyError,
-      userSave,
-      hideModal,
-      onUnsaveCommunity,
-    } = this.props;
-    const { id } = community;
-    let initedUserSave;
-    if (userSave) {
-      initedUserSave =
-        userSave.status !== USER_SAVE_DELETE_STATUS ? userSave : null;
-    }
-
-    if (initedUserSave) {
-      onUnsaveCommunity(notifyInfo, notifyError);
-    } else {
-      showModal(
-        <SaveCommunityContainer
-          slug={id}
-          onCancelClick={hideModal}
-          onDoneButtonClick={hideModal}
-          notifyInfo={notifyInfo}
-          notifyError={notifyError}
-        />,
-        null,
-        'noPadding',
-        false
-      );
-    }
-    onMediaGalleryFavouriteClick();
-  };
-
   handleAddReviewButtonClick = () => {
     const { showModal } = this.props;
 
@@ -410,11 +318,8 @@ export default class CommunityDetailPage extends Component {
 
   render() {
     const {
-      handleShareClick,
       openAskQuestionModal,
-      openAdvisorHelpModal,
       openAnswerQuestionModal,
-      handleFavouriteClick,
       handleAddReviewButtonClick,
     } = this;
     const {
@@ -425,7 +330,6 @@ export default class CommunityDetailPage extends Component {
       onSimilarCommunitiesClick,
       user,
       onReviewLinkClicked,
-      userSave
     } = this.props;
 
     const {
@@ -576,9 +480,6 @@ export default class CommunityDetailPage extends Component {
                 <StyledCommunitySummary
                   community={community}
                   isAdmin={user && user.admin}
-                  userSave={userSave}
-                  onFavouriteClick={handleFavouriteClick}
-                  onShareClick={handleShareClick}
                 />
                 {(promoDescription || promoTitle) && (
                   <StyledOfferNotification
@@ -735,10 +636,7 @@ export default class CommunityDetailPage extends Component {
                     title={`Your Seniorly Partner Agent for ${name}`}
                   >
                     <MainSection>
-                      <CommunityAgentSection
-                        agent={partnerAgent}
-                        onAdvisorHelpClick={openAdvisorHelpModal}
-                      />
+                      <CommunityAgentSectionContainer agent={partnerAgent} />
                     </MainSection>
                     <ButtonBlock>
                       <StyledAskAgentButton
