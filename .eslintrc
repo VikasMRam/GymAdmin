@@ -14,13 +14,18 @@
     "__COVERAGE__": true,
     "__BASENAME__": true,
     "cy": true,
-    "Cypress": true
+    "Cypress": true,
+    "context": true,
+    "assert": true
   },
   "settings": {
     "import/resolver": {
       "webpack": {
         "config": "webpack.config.js"
       }
+    },
+    "react": {
+      "version": "detect"
     }
   },
   "rules": {
@@ -42,6 +47,7 @@
     "import/no-dynamic-require": 0,
     "import/no-extraneous-dependencies": 0,
     "import/prefer-default-export": 0,
+    "react/sort-comp": 0,
     "react/require-default-props": 0,
     "react/forbid-prop-types": 0,
     "react/no-unused-prop-types": 0,
@@ -54,6 +60,7 @@
     }],
     "import/newline-after-import": ["error", { "count": 1 }],
     "import/order": ["error", { "newlines-between": "always" }],
-    "import/first": ["error", "DISABLE-absolute-first"]
+    "import/first": ["error", "DISABLE-absolute-first"],
+    "react/jsx-fragments": [2]
   }
 }

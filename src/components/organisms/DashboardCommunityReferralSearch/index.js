@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { func, arrayOf, object } from 'prop-types';
+import React from 'react';
+import { func, arrayOf, object, bool } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -29,19 +29,32 @@ const StyledDashboardAdminReferralCommunityTile = styled(DashboardAdminReferralC
 const CursorStyledDashboardAdminReferralCommunityTile = cursor(StyledDashboardAdminReferralCommunityTile);
 
 const DashboardCommunityReferralSearch = ({
-  communities, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit,
+  communities, isAdminUser, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit,
 }) => (
   <Wrapper>
     <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
     <DashboardCommunityAgentSearchBox label="Find a community" handleSubmit={handleCommunitySearch} />
-    {communities && communities.length > 0 && (
-      <Fragment>
+    {!communities &&
+    <>
+      <Hr size="large" />
+      <Block>Search for Communities by entering Name or Zip</Block>
+    </>
+    }
+    {(communities && communities.length === 0) &&
+    <>
+      <Hr size="large" />
+      <Block>No Communities found; Try searching another Name or Zip</Block>
+    </>
+    }
+    {(communities && communities.length > 0) && (
+      <>
         <Hr size="large" />
-        <Block>Showing {communities.length} communities</Block>
+        <Block>Showing {communities.length} Communities</Block>
         {communities.map((community) => {
           const props = {
             key: community.name,
             community,
+            isAdminUser,
           };
           const client = childrenClientCommunityIdsMap[community.id];
           if (client) {
@@ -49,7 +62,7 @@ const DashboardCommunityReferralSearch = ({
           }
           return <CursorStyledDashboardAdminReferralCommunityTile {...props} onClick={() => { setSelectedCommunity(community); onSubmit(); }} />;
         })}
-      </Fragment>
+      </>
     )}
   </Wrapper>
 );
@@ -61,6 +74,7 @@ DashboardCommunityReferralSearch.propTypes = {
   handleSubmit: func,
   onSubmit: func,
   communities: arrayOf(adminCommunityPropType),
+  isAdminUser: bool,
   childrenClientCommunityIdsMap: object,
 };
 

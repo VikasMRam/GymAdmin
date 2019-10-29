@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { string, func, object } from 'prop-types';
 import { Field } from 'redux-form';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
@@ -47,9 +47,7 @@ const StyledHelpBubble = styled(HelpBubble)`
   margin-left: ${size('spacing.small')};
 `;
 
-const CommunityInpageWizardForm = ({
-                                           error, handleSubmit, communityName, onRoomTypeChange, onCareTypeChange, userDetails,
-                                         }) => (
+const CommunityInpageWizardForm = ({ error, handleSubmit, communityName, onRoomTypeChange, onCareTypeChange, userDetails }) => (
   <form name="CommunityPWEstimatedPricingForm" onSubmit={handleSubmit}>
     <HeadingSection level="subtitle" size="subtitle">Get your Pricing and Availability for {communityName}</HeadingSection>
     <StyledBlock size="caption">
@@ -80,7 +78,7 @@ const CommunityInpageWizardForm = ({
       multiChoice
     />
     {!(userDetails && userDetails.medicaidCoverage) &&
-    <Fragment>
+    <>
       <StyledBlock size="caption">
         Do you qualify for Medicaid?
         <StyledHelpBubble>
@@ -94,7 +92,7 @@ const CommunityInpageWizardForm = ({
         type="boxChoice"
         component={ReduxField}
       />
-    </Fragment>
+    </>
     }
     {error && <Block palette="danger">{error}</Block>}
   </form>

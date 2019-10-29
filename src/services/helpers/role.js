@@ -1,6 +1,5 @@
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
-
-export const userHasAdminRole = (user) => {
-  const { roleID } = user;
-  return roleID === PLATFORM_ADMIN_ROLE;
+export const userIs = (user, role) => {
+  /* eslint-disable-next-line no-bitwise */
+  return user.roleID & role;
 };
+

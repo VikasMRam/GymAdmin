@@ -1,5 +1,5 @@
 /* eslint-disable react/no-danger */
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
@@ -52,6 +52,8 @@ const BookATourPageContainer = loadable(() => import(/* webpackChunkName: "chunk
 const PricingWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkPricingWizard" */ 'sly/containers/PricingWizardPageContainer'));
 const AgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentProfile" */ 'sly/containers/AgentProfilePageContainer'));
 const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentRegion" */ 'sly/containers/AgentRegionPageContainer'));
+const CareTypeGuideContainer = loadable(() => import(/* webpackChunkName: "chunkCTGuide" */ 'sly/containers/CareTypeGuideContainer'));
+const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: "chunkRegionGuide" */ 'sly/containers/CareTypeRegionGuideContainer'));
 
 // Dashboard
 const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/containers/DashboardHomePageContainer'));
@@ -60,7 +62,7 @@ const DashboardMyProfilePageContainer = loadable(() => import(/* webpackChunkNam
 
 const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer'));
 const DashboardAgentFamilyOverviewPage = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/components/pages/DashboardAgentFamilyOverviewPage'));
-const DashboardMessagesContainer = loadable(() => import(/* webpackChunkName: "chunkMessagesOverview" */ 'sly/containers/DashboardMessagesContainer'));
+const DashboardMessagesPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessagesOverview" */ 'sly/containers/DashboardMessagesPageContainer'));
 const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/containers/DashboardMessageDetailsPageContainer'));
 const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallsOverview" */ 'sly/containers/DashboardCallsIndexPageContainer'));
 const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
@@ -80,6 +82,8 @@ const careTypes = [
   'memory-care',
   'continuing-care-retirement-community',
 ].join('|');
+
+const careTypeGuides = ['assisted-living-guide', 'memory-care-guide'].join('|');
 
 const howItWorksTypes = [
   'consumers',
@@ -127,7 +131,7 @@ const routes = [
   },
   {
     path: AGENT_DASHBOARD_MESSAGES_PATH,
-    component: DashboardMessagesContainer,
+    component: DashboardMessagesPageContainer,
     exact: true,
   },
   {
@@ -137,7 +141,7 @@ const routes = [
   },
   {
     path: FAMILY_DASHBOARD_MESSAGES_PATH,
-    component: DashboardMessagesContainer,
+    component: DashboardMessagesPageContainer,
     exact: true,
   },
   {
@@ -177,6 +181,16 @@ const routes = [
   {
     path: `/:toc(${careTypes})/:state`,
     component: StateSearchPageContainer,
+  },
+  {
+    path: `/:tocg(${careTypeGuides})`,
+    component: CareTypeGuideContainer,
+    exact: true,
+  },
+  {
+    path: `/:tocg(${careTypeGuides})/:region`,
+    component: CareTypeRegionGuideContainer,
+    exact: true,
   },
   {
     path: '/agents',
@@ -267,7 +281,7 @@ export default class App extends Component {
   };
 
   getChildContext = () => ({
-    routes: routes,
+    routes,
   });
 
   componentDidMount() {
@@ -276,8 +290,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <Fragment>
-        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+      <>
         <Helmet titleTemplate="%s | Seniorly">
           <title>Find The Best Senior Living Options Near You</title>
           <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
@@ -325,7 +338,7 @@ export default class App extends Component {
           </Router>
         </ThemeProvider>
         {!hideChatbox && <ChatBoxContainer />}
-      </Fragment>
+      </>
     );
   }
 }

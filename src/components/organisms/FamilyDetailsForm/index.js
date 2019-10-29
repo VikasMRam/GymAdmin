@@ -71,24 +71,33 @@ const FormSection = styled.div`
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
   padding-bottom: 0;
   border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.xLarge')};
+    padding-bottom: 0;
+  }
 `;
 const FormBottomSection = styled.div`
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
   border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')} ${palette('grey', 'filler')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.xLarge')};
+  }
 `;
 
 const FormSectionHeading = pad(Block, 'large');
 
 // const contactPreferenceOptionsList = [{ value: 'sms', label: 'SMS' }, { value: 'email', label: 'Email' }, { value: 'phone', label: 'Phone' }];
 
-// const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
-//   { value: 'EmailOnly', label: 'EmailOnly' },
-//   { value: 'WarmTransfer', label: 'WarmTransfer' },
-//   { value: 'WarmTransferVM', label: 'WarmTransferVM' },
-//   { value: 'NoAgent', label: 'NoAgent' },
-//   { value: 'EmailToAgent', label: 'EmailToAgent' },
-// ];
+const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
+  { value: 'EmailOnly', label: 'EmailOnly' },
+  { value: 'WarmTransfer', label: 'WarmTransfer' },
+  { value: 'WarmTransferVM', label: 'WarmTransferVM' },
+  { value: 'NoAgent', label: 'NoAgent' },
+  { value: 'ReferralSent', label: 'ReferralSent' },
+];
 
 // const tagsOptions = [
 //   { value: 'chocolate', label: 'Chocolate' },
@@ -149,7 +158,7 @@ class FamilyDetailsForm extends Component {
     const mobilityLevelOptions = careLevels.map(i => <option key={i} value={i}>{i}</option>);
     const communityCareTypeOptions = communityTypes.map(i => <option key={i} value={i}>{i}</option>);
     const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
-    // const tagColumn = { typeInfo: { api: '/platform/tags?name=' } };
+    const tagColumn = { typeInfo: { api: '/v0/platform/tags?filter[name]=' }, value: 'tag.name' };
     return (
       <div>
         {!canEditFamilyDetails &&
@@ -173,24 +182,24 @@ class FamilyDetailsForm extends Component {
                   <option value="" disabled>Select</option>
                   {assignedToOptions}
                 </Field>
-                {/* <Field
-                    name="tags"
-                    label="Tags"
-                    type="choice"
-                    readOnly={!canEditFamilyDetails}
-                    component={ReduxField}
-                    wideWidth
-                    options={tagsOptions}
-                    isMulti
-                  />
-                  <Field
-                    name="additionalAttributes"
-                    type="checkbox"
-                    label="Additional Attributes"
-                    component={ReduxField}
-                    options={additionalMDOptions}
-                    wideWidth
-                  /> */}
+                <Field
+                  name="additionalMetadata"
+                  type="checkbox"
+                  label="Additional Attributes"
+                  component={ReduxField}
+                  options={additionalMDOptions}
+                  wideWidth
+                />
+                <Field
+                  name="tags"
+                  label="Tags"
+                  type="autocomplete"
+                  readOnly={!canEditFamilyDetails}
+                  component={ReduxField}
+                  wideWidth
+                  column={tagColumn}
+                  isMulti
+                />
               </FormSection>
             </Role>
             <FormSection>

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { object, func, bool } from 'prop-types';
 import Helmet from 'react-helmet';
@@ -6,7 +6,6 @@ import Helmet from 'react-helmet';
 import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
-import { getCitySearchUrl } from 'sly/services/helpers/url';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import SlyEvent from 'sly/services/helpers/events';
 import {
@@ -22,16 +21,18 @@ import {
   WHAT_TO_NEXT_OPTIONS,
   EXPLORE_AFFORDABLE_PRICING_OPTIONS,
 } from 'sly/constants/pricingForm';
+import { hasCCRC } from 'sly/services/helpers/community';
+import { FAMILY_DASHBOARD_FAVORITES_PATH } from 'sly/constants/dashboardAppPaths';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
 import CommunityPricingWizardWhatToDoNextFormContainer from 'sly/containers/CommunityPricingWizardWhatToDoNextFormContainer';
+import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWizardAcknowledgementContainer';
 import CommunityPricingWizardExploreAffordableOptionsFormContainer
   from 'sly/containers/CommunityPricingWizardExploreAffordableOptionsFormContainer';
-import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
-import { hasCCRC } from 'sly/services/helpers/community';
+import CommunityPricingWizardLanding from 'sly/components/organisms/CommunityPricingWizardLanding';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -71,7 +72,7 @@ const contactFormHeadingMap = {
   'apply-financing': { heading: 'We Are Here to Help You', subheading: 'We have helped thousands of families to learn about and choose a community they love. This is a free service. ' },
 };
 
-const stepsWithoutControls = [3, 4];
+const stepsWithoutControls = ['Landing', 'WhatToDoNext', 'ExploreAffordableOptions'];
 
 class PricingWizardPage extends Component {
   static propTypes = {
@@ -114,6 +115,13 @@ class PricingWizardPage extends Component {
     sendEvent('careType-changed', id, newCareTypes.toString());
   };
 
+  handleBudgetChange = (e, budget) => {
+    const { community } = this.props;
+    const { id } = community;
+    this.budget = budget;
+    sendEvent('budget-selected', id, budget.toString());
+  }
+
   // This function is called after the step is changed,
   // goto() is a hack to make the page stay in current step
   handleStepChange = ({
@@ -125,26 +133,26 @@ class PricingWizardPage extends Component {
 
     sendEvent('step-completed', id, currentStep);
     userActionSubmit(data);
-    if (currentStep === 3) {
+    if (currentStep === 'WhatToDoNext') {
       if (interest === 'talk-advisor') {
         doSubmit(openConfirmationModal);
       } else if (interest !== 'explore-affordable-options') {
-        goto(4);
+        goto('ExploreAffordableOptions');
       }
     }
-    if (currentStep === 1 && userHas(['name', 'phoneNumber'])) {
+    if (currentStep === 'EstimatedPricing' && userHas(['name', 'phoneNumber'])) {
       if (hasCCRC(community)) {
-        goto(1);
+        goto('EstimatedPricing');
         doSubmit(openConfirmationModal);
       } else {
-        goto(3);
+        goto('WhatToDoNext');
       }
     }
-    if (currentStep === 2) {
+    if (currentStep === 'Contact') {
       // Track goal events
       sendEvent('pricing-contact-submitted', id, currentStep);
       if (hasCCRC(community)) {
-        goto(2);
+        goto('Contact');
         doSubmit(openConfirmationModal);
       }
     }
@@ -187,23 +195,24 @@ class PricingWizardPage extends Component {
     const {
       showModal, hideModal, community,
     } = this.props;
-    const { similarProperties, propInfo, address } = community;
+    const { similarProperties } = community;
     const heading = 'Thank you! Our team will be calling you from (855) 855-2629.';
     const subheading = 'We received your request and your Seniorly Partner Agent will work with you to get your exact pricing and availability.';
     const props = {
       similarCommunities: similarProperties,
-      similarCommunititesHref: getCitySearchUrl({ propInfo, address }),
+      buttonTo: FAMILY_DASHBOARD_FAVORITES_PATH,
       onTileClick: hideModal,
       heading,
       subheading,
+      type: 'pricingWizard',
     };
 
-    showModal(<CommunityBookATourConfirmationPopup {...props} />);
+    showModal(<CommunityWizardAcknowledgementContainer {...props} />);
   };
 
   render() {
     const {
-      handleRoomTypeChange, handleCareTypeChange, handleStepChange, openAdvisorHelp, openConfirmationModal,
+      handleRoomTypeChange, handleCareTypeChange, handleBudgetChange, handleStepChange, openAdvisorHelp, openConfirmationModal,
     } = this;
 
     const {
@@ -227,7 +236,7 @@ class PricingWizardPage extends Component {
         </Column>
         <WizardController
           formName="PricingWizardForm"
-          onComplete={data => onComplete(data, openConfirmationModal)}
+          onComplete={data => onComplete(data).then(openConfirmationModal)}
           onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
         >
           {({
@@ -242,9 +251,15 @@ class PricingWizardPage extends Component {
             }
 
             return (
-              <Fragment>
+              <>
                 <Body>
-                  <WizardSteps currentStep={currentStep} {...props}>
+                  <WizardSteps {...props}>
+                    <WizardStep
+                      component={CommunityPricingWizardLanding}
+                      name="Landing"
+                      user={user}
+                      onBeginClick={next}
+                    />
                     <WizardStep
                       component={CommunityPWEstimatedPricingFormContainer}
                       name="EstimatedPricing"
@@ -276,22 +291,22 @@ class PricingWizardPage extends Component {
                       component={CommunityPricingWizardExploreAffordableOptionsFormContainer}
                       name="ExploreAffordableOptions"
                       listOptions={EXPLORE_AFFORDABLE_PRICING_OPTIONS}
-                      onBudgetChange={(e, budget) => sendEvent('budget-selected', id, budget)}
+                      onBudgetChange={handleBudgetChange}
                       onSubmit={onSubmit}
                     />
                   </WizardSteps>
                 </Body>
-                <Controls>
-                  {!stepsWithoutControls.includes(currentStep) &&
+                {currentStep && !stepsWithoutControls.includes(currentStep) &&
+                  <Controls>
                     <PricingFormFooter
                       price={estimatedPrice}
                       onProgressClick={onSubmit}
                       isFinalStep={userHas(['phoneNumber', 'name']) || isFinalStep}
                       isButtonDisabled={!submitEnabled}
                     />
-                  }
-                </Controls>
-              </Fragment>
+                  </Controls>
+                }
+              </>
               );
             }}
         </WizardController>

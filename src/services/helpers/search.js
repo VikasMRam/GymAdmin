@@ -108,7 +108,7 @@ export const communitySizeSearchParamMap = {
   'up to 20 Beds': 'small',
   '20 - 51 Beds': 'medium',
   '51 +': 'large',
-}
+};
 
 export const budgets = [
   { label: 'Up to $2500', segment: '2500-dollars', value: 2500 },
@@ -205,6 +205,33 @@ export const getSearchParams = ({ params }, location) => {
   });
 };
 
+
+export const getAgentParams = ({ params }, location) => {
+  const qs = parseURLQueryParams(location.search);
+  const filters = {};
+  filters['filter[status]'] = 1;
+  filters['filter[region]'] = params.region;
+  if (qs.latitude && qs.longitude) {
+    filters['filter[geo]'] = `${qs.latitude},${qs.longitude},20`;
+  } else if (params.city) {
+    // parse state from city
+    const cityParts = params.city.split('-');
+    if (cityParts.length > 1) {
+      const state = cityParts.pop();
+      const city = cityParts.join('-');
+      filters['filter[address]'] = `${city},${state}`;
+    }
+  }
+  return filters;
+};
+
+export const getGuideParams = ({ params }) => {
+  const { tocg } = params;
+  params.toc = tocg.substring(0, tocg.indexOf('-guide'));
+  params['own-guide'] = true;
+  return params;
+};
+
 export const getSearchParamFromPlacesResponse = ({ address_components, geometry }) => {
   const cityFull = address_components.filter(e => e.types.indexOf('locality') > -1 || e.types.indexOf('sublocality') > -1 || e.types.indexOf('administrative_area_level_3') > -1 || e.types.indexOf('neighborhood') > -1);
   const stateFull = address_components.filter(e => e.types.indexOf('administrative_area_level_1') > -1);
@@ -223,7 +250,7 @@ export const getSearchParamFromPlacesResponse = ({ address_components, geometry 
     const state = urlize(stateFull[0].long_name);
     return {
       toc: 'assisted-living',
-      state
+      state,
     };
   }
   return { toc: 'assisted-living' };

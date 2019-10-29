@@ -8,17 +8,38 @@ import message from 'sly/../private/storybook/sample-data/conversation-message-1
 
 const dateString = dayjs(message.createdAt).format('MM/DD/YYYY');
 const defaultProps = {
-  message,
   name: PraneshKumar.clientInfo.name,
 };
 const wrap = (props = {}) => shallow(<LatestMessage {...defaultProps} {...props} />);
 
 describe('LatestMessage', () => {
   it('renders', () => {
-    const wrapper = wrap();
-
+    const wrapper = wrap({ message });
     expect(wrapper.find('TopWrapper').find('Block').contains(dateString)).toBeTruthy();
     expect(wrapper.find('TopWrapper').find('ClampedText').contains(PraneshKumar.clientInfo.name)).toBeTruthy();
     expect(wrapper.find('ClampedText').contains(message.data.value)).toBeTruthy();
+  });
+
+  it('invalid date', () => {
+    const newMessage = { ...message, createdAt: 'blah' };
+    const wrapper = wrap({ message: newMessage, name: PraneshKumar.clientInfo.name });
+    expect(wrapper.find('TopWrapper').find('Block').contains('Failed to parse date')).toBeTruthy();
+    expect(wrapper.find('TopWrapper').find('ClampedText').contains(PraneshKumar.clientInfo.name)).toBeTruthy();
+    expect(wrapper.find('ClampedText').contains(message.data.value)).toBeTruthy();
+  });
+
+  it('no message', () => {
+    const { name } = PraneshKumar.clientInfo;
+    const wrapper = wrap({ name });
+    expect(wrapper.find('TopWrapper').find('ClampedText').contains(PraneshKumar.clientInfo.name)).toBeTruthy();
+    expect(wrapper.find('ClampedText').contains(`This is the beginning of your conversation with ${name}`)).toBeTruthy();
+  });
+
+  it('handles onClick', () => {
+    const onClick = jest.fn();
+    const wrapper = wrap({ onClick });
+    expect(onClick).toHaveBeenCalledTimes(0);
+    wrapper.simulate('click');
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 });

@@ -10,6 +10,10 @@ configure({ adapter: new Adapter() });
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
 
+process.env = Object.assign(process.env, {
+  SLY_ENV: 'test',
+});
+
 /* eslint-disable-next-line no-console */
 console.error = (message) => {
   throw new Error(message);

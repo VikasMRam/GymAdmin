@@ -1,6 +1,6 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import { object, func, number, bool } from 'prop-types';
+import { object, func, bool } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
@@ -8,12 +8,12 @@ import { size, palette, assetPath } from 'sly/components/themes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
-import SlyEvent from 'sly/services/helpers/events';
 import { calculatePricing, buildPriceList, buildEstimatedPriceList } from 'sly/services/helpers/pricing';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import pad from 'sly/components/helpers/pad';
 import { Button, Paragraph, Block } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
+import SampleMenu from 'sly/components/organisms/SampleMenu';
 import {
   CommunityDetailPageTemplate,
   makeHeader,
@@ -26,7 +26,7 @@ import {
 } from 'sly/components/templates/CommunityDetailPageTemplate';
 import SaveCommunityContainer from 'sly/containers/SaveCommunityContainer';
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
-import CollapsibleSection, { MainSection, BottomSection } from 'sly/components/molecules/CollapsibleSection';
+import CollapsibleSection, { MainSection } from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
 import EntityReviews from 'sly/components/organisms/EntityReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
@@ -34,7 +34,7 @@ import CommunityPricingComparison from 'sly/components/organisms/CommunityPricin
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
-import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
+import CommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
 import MorePictures from 'sly/components/organisms/MorePictures';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
@@ -43,9 +43,7 @@ import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetail
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
-import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList';
 import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
-import TextBottomSection from 'sly/components/molecules/TextBottomSection';
 import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
@@ -55,11 +53,15 @@ import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuesti
 import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
-import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
-import { Experiment, Variant } from 'sly/services/experiments';
+import PlusBranding from 'sly/components/organisms/PlusBranding';
+import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
+import withExitIntent from 'sly/services/exitIntent/withExitIntent';
+import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
+
 
 const BackToSearch = styled.div`
   text-align: center
@@ -115,6 +117,17 @@ const StyledButton = styled(Button)`
   width: 100%;
 `;
 
+const EventsWrapper = styled(CollapsibleBlock)`
+  display: grid;
+  grid-template-columns: 100%;
+  grid-row-gap: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    grid-template-columns: 50% 50%;
+    grid-column-gap: ${size('layout.gutter')};
+  }
+`;
+
 const Header = makeHeader();
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
@@ -143,22 +156,13 @@ const makeBanner = (profileContacted) => {
   return `We have your ${requests.join('')} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
 };
 
-const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
-  category,
-  action,
-  label,
-  value,
-});
+@withExitIntent
 
 export default class CommunityDetailPage extends Component {
   static propTypes = {
     user: object,
     community: object.isRequired,
     location: object.isRequired,
-    mediaGallerySlideIndex: number,
-    isMediaGalleryFullscreenActive: bool,
-    onMediaGallerySlideChange: func,
-    onMediaGalleryToggleFullscreen: func,
     onMediaGalleryFavouriteClick: func,
     onMediaGalleryShareClick: func,
     onShareCommunityModalClose: func,
@@ -187,7 +191,6 @@ export default class CommunityDetailPage extends Component {
     onUnsaveCommunity: func,
     history: object,
   };
-
   handleMorePicturesClick = (image) => {
     const {
       community, onMediaGallerySlideChange, onMediaGalleryToggleFullscreen,
@@ -373,19 +376,21 @@ export default class CommunityDetailPage extends Component {
     showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
   };
 
+  showExitModal = () => {
+    const { showModal } = this.props;
+
+    showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
+  };
+
   render() {
     const {
-      handleShareClick, openAskAgentQuestionModal, openAskQuestionModal, openFloorPlanModal,
+      handleShareClick, openAskAgentQuestionModal, openAskQuestionModal,
       openAdvisorHelpModal, openAnswerQuestionModal, handleFavouriteClick, handleAddReviewButtonClick,
     } = this;
     const {
-      mediaGallerySlideIndex,
-      isMediaGalleryFullscreenActive,
       community,
       profileContacted,
       location,
-      onMediaGallerySlideChange,
-      onMediaGalleryToggleFullscreen,
       onBackToSearchClicked,
       onSimilarCommunitiesClick,
       user,
@@ -395,8 +400,6 @@ export default class CommunityDetailPage extends Component {
       setQueryParams,
       onBookATourClick,
       onGCPClick,
-      toggleHowSlyWorksVideoPlaying,
-      isHowSlyWorksVideoPlaying,
       history,
     } = this.props;
 
@@ -417,10 +420,15 @@ export default class CommunityDetailPage extends Component {
       mainImage,
       partnerAgents,
       twilioNumber,
+      guideUrl,
     } = community;
 
     const {
-      careServices, websiteUrl, promoDescription, promoTitle, communitySize, communityInsights,
+      careServices, promoDescription, promoTitle, communitySize, communityInsights,
+    } = propInfo;
+
+    const {
+      plusCommunity, menuLink, sampleAppetizers, sampleMain, sampleSide, sampleDessert, sampleEvents, eventsLink,
     } = propInfo;
 
     // TODO: move this to common helper, used in multiple places
@@ -469,7 +477,7 @@ export default class CommunityDetailPage extends Component {
     const hasCCRC = typeCares.includes('Continuing Care Retirement Community(CCRC)');
 
     // TODO: move this to a container for EntityReviews handling posts
-    const onLeaveReview = () => {};
+    const onLeaveReview = () => { };
     // TODO: move this to a container PricingAndAvailability for handling bookings
     const { reviewsValue } = propRatings;
     const ratingsArray = propRatings.ratingsArray || [];
@@ -496,9 +504,10 @@ export default class CommunityDetailPage extends Component {
 
     const showSimilarEarlier = pricesList.length === 0 && floorPlans.length > 0 && address.city === 'Sacramento' && address.state === 'CA' &&
       (!communityDescription || communityDescription === '');
+    const similarCommunityStyle = { layout: 'column', imageSize: 'regular', showDescription: true };
 
     return (
-      <Fragment>
+      <>
         {getHelmetForCommunityPage(community, location)}
         <Header noBottomMargin={!!bannerNotification} />
         {bannerNotification && <StyledBannerNotification>{bannerNotification}</StyledBannerNotification>}
@@ -509,18 +518,7 @@ export default class CommunityDetailPage extends Component {
               <Body>
                 {(images.length > 0 || videos.length > 0) &&
                   <Gallery>
-                    <CommunityMediaGallery
-                      communityName={name}
-                      city={address.city}
-                      state={address.state}
-                      currentSlide={mediaGallerySlideIndex}
-                      images={images}
-                      videos={videos}
-                      websiteUrl={websiteUrl}
-                      onSlideChange={onMediaGallerySlideChange}
-                      isFullscreenMode={isMediaGalleryFullscreenActive}
-                      onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
-                    />
+                    <CommunityMediaGalleryContainer community={community} />
                   </Gallery>
                 }
                 <StyledCommunitySummary
@@ -570,7 +568,7 @@ export default class CommunityDetailPage extends Component {
                 {showSimilarEarlier &&
                   <TopCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                     <MainSection>
-                      <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} />
+                      <SimilarCommunities communities={similarProperties} onCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
                       <BackToSearch>
                         <Button
                           ghost
@@ -592,10 +590,10 @@ export default class CommunityDetailPage extends Component {
                       <Paragraph>
                         Pricing for {name} may include both a one time buy-in fee and a monthly component. Connect directly with {name} to find out your pricing.
                       </Paragraph>
-                      <Button  onClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}>Get Detailed Pricing</Button>
+                      <Button onClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}>Get Detailed Pricing</Button>
                     </MainSection>
                   }
-                  {!hasCCRC && (pricesList.length > 0 || estimatedPriceList.length > 0 || floorPlans.length === 0) &&
+                  {!hasCCRC  &&
                     <CommunityPricingTable
                       name={name}
                       pricesList={pricesList}
@@ -606,56 +604,30 @@ export default class CommunityDetailPage extends Component {
                       showToolTip={address.state === 'TN'}
                     />
                   }
-
-                  {!hasCCRC && pricesList.length === 0 && estimatedPriceList.length === 0 && floorPlans.length > 0 &&
-                    <div>
-                      <MainSection>
-                        <CommunityFloorPlansList
-                          floorPlans={floorPlans}
-                          onItemClick={openFloorPlanModal}
-                        />
-                      </MainSection>
-                      <BottomSection>
-                        <GetCurrentAvailabilityContainer
-                          community={community}
-                          queryParams={{ modal, currentStep }}
-                          setQueryParams={setQueryParams}
-                          onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
-                          onSubmitExpressConversion={(e, submitExpressConversion) => {
-                            if (isAlreadyPricingRequested) {
-                              openAskAgentQuestionModal('pricing');
-                            } else {
-                              submitExpressConversion(e);
-                              onGCPClick();
-                            }
-                          }}
-                        />
-                      </BottomSection>
-                    </div>
-                  }
                 </TopCollapsibleSection>
-                {floorPlans.length === 0 && pricesList.length === 0 && estimatedPriceList.length === 0 &&
-                  <TopCollapsibleSection
-                    title={`Get Availability at ${name}`}
-                  >
-                    <MainSection>
-                      <GetCurrentAvailabilityContainer
-                        community={community}
-                        queryParams={{ modal, currentStep }}
-                        setQueryParams={setQueryParams}
-                        onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
-                        onSubmitExpressConversion={(e, submitExpressConversion) => {
-                          if (isAlreadyPricingRequested) {
-                            openAskAgentQuestionModal('pricing');
-                          } else {
-                            submitExpressConversion(e);
-                            onGCPClick();
-                          }
-                        }}
-                      />
-                    </MainSection>
-                  </TopCollapsibleSection>
-                }
+
+                <TopCollapsibleSection
+                  title={`Get Availability at ${name}`}
+                  id="availability"
+                >
+                  <MainSection>
+                    <GetCurrentAvailabilityContainer
+                      community={community}
+                      queryParams={{ modal, currentStep }}
+                      setQueryParams={setQueryParams}
+                      onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
+                      onSubmitExpressConversion={(e, submitExpressConversion) => {
+                        if (isAlreadyPricingRequested) {
+                          openAskAgentQuestionModal('pricing');
+                        } else {
+                          submitExpressConversion(e);
+                          onGCPClick();
+                        }
+                      }}
+                    />
+                  </MainSection>
+                </TopCollapsibleSection>
+                {plusCommunity && <PlusBranding />}
                 {(communityDescription || rgsAux.communityDescription) &&
                   <TopCollapsibleSection
                     title={`Details on ${name}`}
@@ -672,18 +644,14 @@ export default class CommunityDetailPage extends Component {
                         city={address.city}
                         state={address.state}
                         twilioNumber={twilioNumber}
+                        guideUrl={guideUrl}
                       />
                     </MainSection>
                   </TopCollapsibleSection>
                 }
                 <TopCollapsibleSection title="How Seniorly Works">
                   <MainSection noPadding>
-                    <HowSlyWorksVideo
-                      isPlaying={isHowSlyWorksVideoPlaying}
-                      onThumbnailClick={toggleHowSlyWorksVideoPlaying}
-                      onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', id, e.target.currentTime)}
-                      onPlay={e => sendEvent('howSlyWorksVideo', 'play', id, e.target.currentTime)}
-                    />
+                    <HowSlyWorksVideoContainer eventLabel={community.id} />
                   </MainSection>
                 </TopCollapsibleSection>
                 {partnerAgent &&
@@ -691,22 +659,9 @@ export default class CommunityDetailPage extends Component {
                     <MainSection>
                       <CommunityAgentSection agent={partnerAgent} onAdvisorHelpClick={openAdvisorHelpModal} />
                     </MainSection>
-                    <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
-                      <Variant name="FullWidth">
-                        <ButtonBlock>
-                          <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask a question</StyledButton>
-                        </ButtonBlock>
-                      </Variant>
-                      <Variant name="FooterSmall">
-                        <BottomSection>
-                          <TextBottomSection
-                            heading="Ask about pricing, floor plans, availability, anything."
-                            buttonText="Ask a question"
-                            onButtonClick={() => openAskAgentQuestionModal('services')}
-                          />
-                        </BottomSection>
-                      </Variant>
-                    </Experiment>
+                    <ButtonBlock>
+                      <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask a question</StyledButton>
+                    </ButtonBlock>
                   </TopCollapsibleSection>
                 }
                 {careServices && careServices.length > 0 &&
@@ -714,44 +669,18 @@ export default class CommunityDetailPage extends Component {
                     <MainSection>
                       <CommunityCareService careServices={careServices} />
                     </MainSection>
-                    <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
-                      <Variant name="FullWidth">
-                        <ButtonBlock>
-                          <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask About Care Services</StyledButton>
-                        </ButtonBlock>
-                      </Variant>
-                      <Variant name="FooterSmall">
-                        <BottomSection>
-                          <TextBottomSection
-                            heading="Need more detailed information on care services?"
-                            buttonText="Ask About Care Services"
-                            onButtonClick={() => openAskAgentQuestionModal('services')}
-                          />
-                        </BottomSection>
-                      </Variant>
-                    </Experiment>
+                    <ButtonBlock>
+                      <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask About Care Services</StyledButton>
+                    </ButtonBlock>
                   </TopCollapsibleSection>
                 }
                 <TopCollapsibleSection title={`Amenities at ${name}`}>
                   <MainSection>
                     <CommunityAmenities community={community} />
                   </MainSection>
-                  <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
-                    <Variant name="FullWidth">
-                      <ButtonBlock>
-                        <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask About Amenities</StyledButton>
-                      </ButtonBlock>
-                    </Variant>
-                    <Variant name="FooterSmall">
-                      <BottomSection>
-                        <TextBottomSection
-                          heading="Need more detailed information on amenities?"
-                          buttonText="Ask About Amenities"
-                          onButtonClick={() => openAskAgentQuestionModal('services')}
-                        />
-                      </BottomSection>
-                    </Variant>
-                  </Experiment>
+                  <ButtonBlock>
+                    <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask About Amenities</StyledButton>
+                  </ButtonBlock>
                 </TopCollapsibleSection>
                 {sortedEstimatedPrice.length > 0 &&
                   <TopCollapsibleSection title={`Compare Costs to Nearby ${typeOfCare} Communities`}>
@@ -773,23 +702,9 @@ export default class CommunityDetailPage extends Component {
                       onReviewLinkClicked={onReviewLinkClicked}
                     />
                   </MainSection>
-                  <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
-                    <Variant name="FullWidth">
-                      <ButtonBlock>
-                        <StyledButton onClick={handleAddReviewButtonClick}>Write a Review</StyledButton>
-                      </ButtonBlock>
-                    </Variant>
-                    <Variant name="FooterSmall">
-                      <BottomSection>
-                        <TextBottomSection
-                          heading={`Have experience with ${name}?`}
-                          subHeading="Your review can help other families with their senior living search."
-                          buttonText="Write a Review"
-                          onButtonClick={handleAddReviewButtonClick}
-                        />
-                      </BottomSection>
-                    </Variant>
-                  </Experiment>
+                  <ButtonBlock>
+                    <StyledButton onClick={handleAddReviewButtonClick}>Write a Review</StyledButton>
+                  </ButtonBlock>
                 </TopCollapsibleSection>
 
                 <TopCollapsibleSection title={`Questions About ${name}`}>
@@ -804,23 +719,43 @@ export default class CommunityDetailPage extends Component {
                       user={user}
                     />
                   </MainSection>
-                  <Experiment name="ProfileCTA_ButtonStyle" defaultVariant="FooterSmall">
-                    <Variant name="FullWidth">
-                      <ButtonBlock>
-                        <StyledButton onClick={openAskQuestionModal}>Ask a Question</StyledButton>
-                      </ButtonBlock>
-                    </Variant>
-                    <Variant name="FooterSmall">
-                      <BottomSection>
-                        <TextBottomSection
-                          heading="Don't see your question? Be the first to ask this community!"
-                          buttonText="Ask a Question"
-                          onButtonClick={openAskQuestionModal}
-                        />
-                      </BottomSection>
-                    </Variant>
-                  </Experiment>
+                  <ButtonBlock>
+                    <StyledButton onClick={openAskQuestionModal}>Ask a Question</StyledButton>
+                  </ButtonBlock>
                 </TopCollapsibleSection>
+                {plusCommunity && eventsLink && sampleEvents &&
+                <TopCollapsibleSection title={`Events at ${name}`}>
+                  <MainSection>
+                    <EventsWrapper>
+                      {sampleEvents.map(item => (
+                        <IconItemWrapper key={item}>
+                          <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
+                        </IconItemWrapper>))
+                      }
+                    </EventsWrapper>
+                  </MainSection>
+                  <ButtonBlock>
+                    <StyledButton href={eventsLink} onClick={clickEventHandler('events', name)} target="_blank" ghost>Download Events Calendar</StyledButton>
+                  </ButtonBlock>
+                </TopCollapsibleSection>
+                }
+
+                {plusCommunity && menuLink &&
+                <TopCollapsibleSection title={`Sample Menu at ${name}`}>
+                  <MainSection>
+                    <SampleMenu
+                      sampleAppetizers={sampleAppetizers}
+                      sampleMain={sampleMain}
+                      sampleSide={sampleSide}
+                      sampleDessert={sampleDessert}
+                    />
+                  </MainSection>
+                  <ButtonBlock>
+                    <StyledButton href={menuLink} onClick={clickEventHandler('menu', name)} target="_blank" ghost>Download Current Menu</StyledButton>
+                  </ButtonBlock>
+                </TopCollapsibleSection>
+                }
+
                 {rgsAux.stateLicensingWebsite &&
                   <StyledCommunityExtraInfoSection
                     title={`${name} at ${address.city} State Licensing`}
@@ -838,7 +773,7 @@ export default class CommunityDetailPage extends Component {
                 {!showSimilarEarlier &&
                   <BottomCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                     <MainSection>
-                      <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} />
+                      <SimilarCommunities communities={similarProperties} onCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
                       <BackToSearch>
                         <Button
                           ghost
@@ -865,7 +800,7 @@ export default class CommunityDetailPage extends Component {
                   top={24}
                   bottomBoundary="#sticky-sidebar-boundary"
                 >
-                  <ConciergeContainer history={history} community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
+                  <ConciergeContainer community={community} />
                 </Sticky>
               </Column>
             </TwoColumn>
@@ -901,7 +836,7 @@ export default class CommunityDetailPage extends Component {
           }
         </CommunityDetailPageTemplate>
         <Footer />
-      </Fragment>
+      </>
     );
   }
 }

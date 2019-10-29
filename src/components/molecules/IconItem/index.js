@@ -11,31 +11,27 @@ const getMarginRight = p => p.borderless ? size('spacing', p.iconRightMarginSpac
 
 const Wrapper = styled.div`
   display: flex;
-  align-items: center;
+  align-items: baseline;
 `;
 
 const IconWrapper = styled.div`
   margin-right: ${getMarginRight};
   padding: calc(${size('spacing.regular')} - ${size('border.regular')});
-  border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('grey', 'filler')};
+  border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${p => (palette(p.borderPalette, p.borderVariation))};
   border-radius: ${size('border.xxLarge')};
 `;
 
 const IconItem = ({
   icon, iconSize, iconPalette, iconVariation, size, children, borderless,
-  textPalette, textVariation, iconRightMarginSpacing, className,
-}) => {
-  const defIconSize = iconSize || size;
-
-  return (
-    <Wrapper className={className}>
-      <IconWrapper borderless={borderless} iconRightMarginSpacing={iconRightMarginSpacing}>
-        <Icon icon={icon} size={defIconSize} palette={iconPalette} variation={iconVariation} />
-      </IconWrapper>
-      <Block palette={textPalette} variation={textVariation}>{children}</Block>
-    </Wrapper>
-  );
-};
+  textPalette, textVariation, iconRightMarginSpacing, className, borderPalette, borderVariation,
+}) => (
+  <Wrapper className={className}>
+    <IconWrapper borderless={borderless} borderPalette={borderPalette} borderVariation={borderVariation} iconRightMarginSpacing={iconRightMarginSpacing}>
+      <Icon icon={icon} size={iconSize} palette={iconPalette} variation={iconVariation} />
+    </IconWrapper>
+    <Block size={size} palette={textPalette} variation={textVariation}>{children}</Block>
+  </Wrapper>
+);
 
 IconItem.propTypes = {
   icon: string.isRequired,
@@ -49,6 +45,8 @@ IconItem.propTypes = {
   textVariation: variationPropType,
   iconRightMarginSpacing: string,
   className: string,
+  borderPalette: palettePropType,
+  borderVariation: variationPropType,
 };
 
 IconItem.defaultProps = {
@@ -58,6 +56,8 @@ IconItem.defaultProps = {
   textPalette: 'slate',
   textVariation: 'base',
   iconRightMarginSpacing: 'small',
+  borderPalette: 'grey',
+  borderVariation: 'filler',
 };
 
 export default IconItem;

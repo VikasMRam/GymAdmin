@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 
@@ -103,7 +103,7 @@ const CommunitySearchPage = ({
 
   const handleModalFilterClick = () => {
     const modalContent = (
-      <Fragment>
+      <>
         <CommunityFilterListContainer
           onFieldChange={onParamsChange}
           toggleMap={toggleMap}
@@ -115,11 +115,14 @@ const CommunitySearchPage = ({
         <ApplyFilterButton kind="jumbo" onClick={hideModal}>
           Apply Filters
         </ApplyFilterButton>
-      </Fragment>
+      </>
     );
 
     showModal(modalContent, null, 'sidebar');
   };
+
+  const geoGuideList = (geoGuide && geoGuide.cityTOCGuides);
+
 
   const columnContent = (
     <CommunityFilterList
@@ -131,6 +134,7 @@ const CommunitySearchPage = ({
       isMapView={isMapView}
       toggleFilter={handleModalFilterClick}
       onParamsRemove={onParamsRemove}
+      geoGuideList={geoGuideList}
     />
   );
   const TopContent = () => {
@@ -138,23 +142,23 @@ const CommunitySearchPage = ({
       const gg = geoGuide.guideContent;
       if (gg.autoDescription || gg.manualDescription) {
         return (
-          <Fragment>
+          <>
             <StyledHeading level="hero" size="title">
               {listSize} {tocLabel} near {city}
             </StyledHeading>
-            { gg.manualDescription && <LegacyContent dangerouslySetInnerHTML={{ __html: gg.manualDescription}} />}
+            { gg.manualDescription && <LegacyContent dangerouslySetInnerHTML={{ __html: gg.manualDescription }} />}
             {!gg.manualDescription && <LegacyContent dangerouslySetInnerHTML={{ __html: gg.autoDescription }} />}
-          </Fragment>
+          </>
         );
       }
     }
 
     return (
-      <Fragment>
+      <>
         <StyledHeading level="hero" size="title">
           {listSize} {tocLabel} near {city}
         </StyledHeading>
-      </Fragment>
+      </>
     );
   };
 
@@ -169,7 +173,7 @@ const CommunitySearchPage = ({
      hospitals, <p>6</p>
      reviews, <p>7</p>
      */
-    if (geoGuide && geoGuide.guideContent) {
+    if (geoGuide && geoGuide.guideContent && !(geoGuide.guideContent.ownGuidePage && geoGuide.guideContent.ownGuidePage === 'true')) {
       const additionalDivs = [];
       const gg = geoGuide.guideContent;
       ['description', 'guide', 'articles', 'resources',
@@ -183,7 +187,7 @@ const CommunitySearchPage = ({
       }
 
       return (
-        <Fragment>
+        <>
           <CommunitySearchList
             communityList={communityList}
             onParamsChange={onParamsChange}
@@ -196,7 +200,7 @@ const CommunitySearchPage = ({
             onCommunityClick={onCommunityClick}
           />
           {additionalDivs}
-        </Fragment>
+        </>
       );
     }
     // If No Geo Content just return same
@@ -216,8 +220,7 @@ const CommunitySearchPage = ({
   };
 
   return (
-    <Fragment>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+    <>
       {getHelmetForSearchPage({
         ...searchParams, url: location, communityList, listSize, geoGuide,
       })}
@@ -258,7 +261,7 @@ const CommunitySearchPage = ({
           />
         )}
       </CommunitySearchPageTemplate>
-    </Fragment>
+    </>
   );
 };
 

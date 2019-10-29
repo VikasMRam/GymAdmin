@@ -16,6 +16,8 @@ import ModalController from 'sly/controllers/ModalController';
 import NotificationController from 'sly/controllers/NotificationController';
 
 const getPaginationData = ({ result, meta }) => {
+  if (!result) return {};
+
   const count = result.length;
   const current = meta['page-number'];
   const size = meta['page-size'];
@@ -73,25 +75,26 @@ const getPageParams = ({ match, location }) => {
 
 @withRouter
 
-@prefetch('tasks', 'getTasks', (getClients, { match, location, client }) => {
-  const { pageNumber, date, status, taskName } = getPageParams({ match, location });
-  const filters = {
-    'filter[status]': status,
-    'page-number': pageNumber,
-    'filter[title]': taskName,
-  };
-  if (date) {
-    filters['filter[dueDate]'] = date;
-  }
+@withUser
+
+@prefetch('tasks', 'getTasks', (req, { datatable, client }) => {
+  // const { pageNumber, date, status, taskName } = getPageParams({ match, location });
+  // const filters = {
+  //   'filter[status]': status,
+  //   'page-number': pageNumber,
+  //   'filter[title]': taskName,
+  // };
+  // if (date) {
+  //   filters['filter[dueDate]'] = date;
+  // }
+  const filters  = {};
   if (client) {
     const { id } = client;
     filters['filter[client]'] = id;
+    return req(filters);
   }
-
-  return getClients(filters);
+  return req(datatable.query);
 })
-
-@withUser
 
 export default class DashboardAgentTasksSectionContainer extends Component {
   static propTypes = {
@@ -99,6 +102,7 @@ export default class DashboardAgentTasksSectionContainer extends Component {
     client: clientPropType,
     status: object,
     history: object,
+    datatable: object,
     match: object,
     location: object,
   };
@@ -137,24 +141,15 @@ export default class DashboardAgentTasksSectionContainer extends Component {
   }, 500);
 
   render() {
-    const { tasks, status, match, location, ...props } = this.props;
+    const { tasks, status, match, location, datatable, ...props } = this.props;
 
     const params = getPageParams({ match, location });
     const { type, taskName } = params;
-    const { tasks: tasksStatus } = status;
-    const { hasFinished, error: tasksError, meta, result: tasksRaw } = tasksStatus;
+    const { error, meta, hasFinished, result: tasksRaw } = status.tasks;
 
-    if (tasksError) {
-      return <RefreshRedirect to="/" />;
+    if (error) {
+      throw new Error(JSON.stringify(error));
     }
-    if (!hasFinished) {
-      return (
-        <DashboardAgentTasksSection
-          isPageLoading={!hasFinished}
-        />
-      );
-    }
-    const pagination = getPaginationData(tasksStatus);
 
     return (
       <NotificationController>
@@ -163,15 +158,16 @@ export default class DashboardAgentTasksSectionContainer extends Component {
             {({ show, hide }) => (
               <DashboardAgentTasksSection
                 {...props}
-                isPageLoading={!hasFinished}
+                isPageLoading={!hasFinished || !datatable.hasFinished}
+                datatable={datatable}
                 tasks={tasks}
                 tasksRaw={tasksRaw}
-                pagination={pagination}
+                pagination={getPaginationData(status.tasks)}
                 activeTab={type}
                 onSearchTextKeyUp={this.handleSearchTextKeyUp}
                 showModal={show}
                 hideModal={hide}
-                meta={meta}
+                meta={meta || {}}
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
                 refetchTasks={this.refetchTasks}

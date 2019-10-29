@@ -11,6 +11,7 @@ import userPropType from 'sly/propTypes/user';
 import { USER_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { query, getRelationship, prefetch } from 'sly/services/newApi';
 import SlyEvent from 'sly/services/helpers/events';
+import { validateAM } from 'sly/services/helpers/client';
 import { selectFormData, trimFormData } from 'sly/services/helpers/forms';
 import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
 
@@ -27,8 +28,6 @@ const ReduxForm = reduxForm({
   validate,
 })(FamilyDetailsForm);
 
-@prefetch('users', 'getUsers')
-
 @query('updateClient', 'updateClient')
 
 @query('updateUuidAux', 'updateUuidAux')
@@ -41,6 +40,7 @@ const ReduxForm = reduxForm({
 export default class FamilyDetailsFormContainer extends Component {
   static propTypes = {
     updateClient: func.isRequired,
+    refetchClient: func.isRequired,
     updateUuidAux: func.isRequired,
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
@@ -54,7 +54,7 @@ export default class FamilyDetailsFormContainer extends Component {
 
   handleSubmit = (data) => {
     const {
-      client, updateClient, rawClient, notifyInfo, notifyError, uuidAux, updateUuidAux,
+      client, updateClient, refetchClient, rawClient, notifyInfo, notifyError, uuidAux,
     } = this.props;
     const { id } = client;
     const { id: uuidID } = uuidAux;
@@ -76,6 +76,7 @@ export default class FamilyDetailsFormContainer extends Component {
       mobilityLevel,
       communityCareType,
       assignedTo,
+      additionalMetadata,
     } = data;
     let locationInfo = {};
     if (preferredLocation) {
@@ -92,8 +93,12 @@ export default class FamilyDetailsFormContainer extends Component {
     if (email || email === '') {
       newClient.set('attributes.clientInfo.email', email);
     }
-    if (phone) {
+    if (phone || phone === '') {
       newClient.set('attributes.clientInfo.phoneNumber', phone);
+    }
+    const validMD = validateAM(additionalMetadata, { phone, email });
+    if (validMD) {
+      newClient.set('attributes.clientInfo.additionalMetadata', validMD);
     }
 
     if (slyMessage) {
@@ -104,6 +109,9 @@ export default class FamilyDetailsFormContainer extends Component {
         type: USER_RESOURCE_TYPE,
         id: assignedTo,
       });
+    }
+    if (tags) {
+      newClient.set('relationships.tags.data', tags.map(({ label }) => ({ type: 'Tag', attributes: { name: label } })));
     }
 
     let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
@@ -154,6 +162,7 @@ export default class FamilyDetailsFormContainer extends Component {
           value: '',
         });
       })
+      .then(refetchClient)
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
         const { body } = r;
@@ -164,16 +173,13 @@ export default class FamilyDetailsFormContainer extends Component {
   };
 
   render() {
-    const { client, formData, users, status, ...props } = this.props;
-    const { users: usersStatus } = status;
-    const { hasFinished: usersHasFinished } = usersStatus;
-    if (!usersHasFinished) {
-      return null;
-    }
+    const { client, formData, ...props } = this.props;
 
-    const { clientInfo, uuidAux, tags } = client;
+
+    const { clientInfo, uuidAux, tags: modelTags } = client;
+    const tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
     const {
-      name, email, slyMessage, phoneNumber = '',
+      name, email, slyMessage, phoneNumber = '', additionalMetadata,
     } = clientInfo;
     const { uuidInfo } = uuidAux;
     const {
@@ -211,6 +217,7 @@ export default class FamilyDetailsFormContainer extends Component {
       lookingFor,
       gender,
       age,
+      tags,
       roomPreference,
       mobilityLevel: mobility,
       communityCareType: typeCare,
@@ -219,6 +226,7 @@ export default class FamilyDetailsFormContainer extends Component {
       preferredLocation,
       slyMessage,
       assignedTo,
+      additionalMetadata,
       contactPreferences: ['sms', 'email'],
     };
     ({ preferredLocation } = formData);
@@ -228,7 +236,6 @@ export default class FamilyDetailsFormContainer extends Component {
         onSubmit={this.handleSubmit}
         initialValues={initialValues}
         preferredLocation={preferredLocation}
-        assignedTos={users}
         {...props}
       />
     );

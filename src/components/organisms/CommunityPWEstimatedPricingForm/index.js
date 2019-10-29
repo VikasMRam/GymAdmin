@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { string, func, object } from 'prop-types';
 import { Field } from 'redux-form';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
@@ -21,9 +21,12 @@ const StyledBlock = styled(Block)`
 const StyledField = styled(Field)`
   display: grid;
   grid-gap: ${size('spacing.large')};
-  grid-template-columns: repeat(auto-fit, ${size('mobileLayout.col2')});
   margin-right: -${size('spacing.regular')};
   margin-bottom: ${size('spacing.xLarge')};
+
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    grid-template-columns: repeat(auto-fit, ${size('mobileLayout.col2')});
+  }
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     grid-template-columns: repeat(auto-fit, calc(${size('layout.col1')} + (${size('layout.gutter')}) * 2));
@@ -36,8 +39,10 @@ const StyledField = styled(Field)`
 `;
 
 const CareTypesField = StyledField.extend`
-  grid-template-columns: repeat(auto-fit, ${size('mobileLayout.col2')});
-
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    grid-template-columns: repeat(auto-fit, ${size('mobileLayout.col2')});
+  }
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     grid-template-columns: repeat(auto-fit, ${size('layout.col3')});
   }
@@ -80,7 +85,7 @@ const CommunityPWEstimatedPricingForm = ({
       multiChoice
     />
     {!(uuidAux && uuidAux.uuidInfo.financialInfo.medicare !== undefined) &&
-      <Fragment>
+      <>
         <StyledBlock size="caption">
           Do you qualify for Medicaid?
           <StyledHelpBubble>
@@ -94,7 +99,7 @@ const CommunityPWEstimatedPricingForm = ({
           type="boxChoice"
           component={ReduxField}
         />
-      </Fragment>
+      </>
     }
     {error && <Block palette="danger">{error}</Block>}
   </form>

@@ -4,15 +4,19 @@ import { arrayOf, bool, string, func, number, shape, oneOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
-import { size, assetPath, getKey } from 'sly/components/themes';
+import { size, assetPath, getKey, palette } from 'sly/components/themes';
+import pad from 'sly/components/helpers/pad';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import cursor from 'sly/components/helpers/cursor';
+import borderRadius from 'sly/components/helpers/borderRadius';
+import border from 'sly/components/helpers/border';
 import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/constants/communityTile';
-import { Box, Button, Hr, Span, Image } from 'sly/components/atoms';
+import { Button, Hr, Span, Image } from 'sly/components/atoms';
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import IconButton from 'sly/components/molecules/IconButton';
+import PlusBadge from 'sly/components/molecules/PlusBadge';
 
 const communityDefaultImages = {
   'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
@@ -27,9 +31,8 @@ FullWidthButton.displayName = 'FullWidthButton';
 const CursorSpan = cursor(Span);
 CursorSpan.displayName = 'CursorSpan';
 
-const StyledCommunityInfo = styled(CommunityInfo)`
-  margin-bottom: ${ifProp('marginBottom', size('spacing.xLarge'), 0)};
-`;
+const PaddedCommunityInfo = pad(CommunityInfo);
+PaddedCommunityInfo.displayName = 'PaddedCommunityInfo';
 
 const AddNote = styled(CursorSpan)`
   display: block;
@@ -40,34 +43,21 @@ AddNote.displayName = 'AddNote';
 const StyledMediaGallery = styled(MediaGallery)`
   background: none;
   img {
-    border-top-left-radius: ${size('spacing.small')};
-    border-top-right-radius: ${size('spacing.small')};
+    border-radius: ${size('spacing.small')};
   }
-  ${p => p.layout === 'column' && css`
-    @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      img {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-      }
-    }
-  `}
 `;
 
-const StyledImage = styled(Image)`
+const StyledImage = styled(borderRadius(Image))`
   img {
-    border-top-left-radius: ${size('spacing.small')};
-    border-top-right-radius: ${size('spacing.small')};
+    border-radius: ${size('spacing.small')};
   }
-  ${p => p.layout === 'column' && css`
+  ${ifProp({ layout: 'column' }, css`
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       height: 100%;
-      img {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-      }
     }
-  `}
+  `)}
 `;
+
 const TopRightWrapper = styled.span`
   right: ${size('spacing.large')};
   top: ${size('spacing.large')};
@@ -75,35 +65,31 @@ const TopRightWrapper = styled.span`
   z-index: 1;
 `;
 
-const StyledBox = styled(Box)`
-  border: 0;
-  ${p => p.hasImages && css`
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  `}
-  ${p => p.layout === 'column' && css`
+const Details = styled.div`
+  padding: ${size('spacing.large')} ${size('spacing.regular')};
+  ${ifProp({ layout: 'column' }, css`
+    padding-left: ${size('spacing.large')};
     // required for text clipping
     overflow: hidden;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  `}
+  `)}
 `;
 
-const Wrapper = styled.div`
+const Wrapper = borderRadius(border(styled.div`
+  padding: ${size('spacing.regular')};
   // no column layout support below tablet
-  ${p => p.layout === 'column' && css`
+  ${ifProp({ layout: 'column' }, css`
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       display: grid;
       grid-template-columns: ${getImageSize} auto;
     }
-  `}
+  `)}
 
   &:hover {
     Button {
       display: initial;
     }
   }
-`;
+`, 'regular', 'grey', 'stroke'));
 
 const ImageWrapper = styled.div`
   position: relative;
@@ -120,6 +106,10 @@ const ImageWrapper = styled.div`
   }
 `;
 
+const MainWrapper = styled(Wrapper)`
+  background-color: ${p => p.plusCategory !== '' ? palette('secondary', 'background') : palette('white', 'base')};
+`;
+
 const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
   <FullWidthButton onClick={onClick} ghost={ghost} key={text}>
     {text}
@@ -133,7 +123,7 @@ const CommunityTile = ({
   canFavourite,
 }) => {
   const {
-    name, gallery = {}, mainImage, communitySize,
+    name, gallery = {}, mainImage, communitySize, plusCategory,
   } = community;
   let { imageUrl } = community;
   imageUrl = imageUrl || mainImage;
@@ -159,9 +149,15 @@ const CommunityTile = ({
     <IconButton transparent icon={icon} iconSize="regular" palette={iconPalette} onClick={onIconClick} />
   ) : null;
 
+  const CommunityInfoComponent = actionButtons.length ? PaddedCommunityInfo : CommunityInfo;
+
   return (
-    <Wrapper layout={layout} className={className} imageSize={imageSize}>
-      {!noGallery &&
+    <MainWrapper className={className} plusCategory={plusCategory}>
+      {plusCategory !== '' &&
+      <PlusBadge plusCategory={plusCategory} fullWidth={true}/>
+      }
+      <Wrapper layout={layout} imageSize={imageSize}>
+        {!noGallery &&
         <StyledMediaGallery
           communityName={name}
           images={galleryImages}
@@ -170,37 +166,38 @@ const CommunityTile = ({
           currentSlide={currentSlide}
           layout={layout}
         />
-      }
-      {noGallery &&
-        <Wrapper>
-          <ImageWrapper>
-            <StyledImage
-              layout={layout}
-              src={imageUrl}
-              aspectRatio={layout === 'column' ? '3:2' : '16:9'}
-            />
-            {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
-          </ImageWrapper>
-          <TopRightWrapper>
-            {topRightSection()}
-          </TopRightWrapper>
-        </Wrapper>
-      }
-      <StyledBox layout={layout} padding="large" hasImages={hasImages}>
-        <StyledCommunityInfo
-          palette={palette}
-          community={community}
-          showFloorPlan={showFloorPlan}
-          marginBottom={!!actionButtons.length}
-          showDescription={showDescription}
-        />
-        {buildActionButtons(actionButtons)}
-        {(note || addNote) && <Hr />}
-        {note && <Span size="caption">{note}</Span>}
-        {note && <CursorSpan palette="primary" size="caption" onClick={onEditNoteClick}> Edit note</CursorSpan>}
-        {!note && addNote && <AddNote palette="primary" size="caption" onClick={onAddNoteClick}>Add a note</AddNote>}
-      </StyledBox>
-    </Wrapper>
+        }
+        {noGallery &&
+        <>
+        <ImageWrapper>
+          <StyledImage
+            layout={layout}
+            src={imageUrl}
+            aspectRatio={layout === 'column' ? '3:2' : '16:9'}
+          />
+          {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
+        </ImageWrapper>
+        <TopRightWrapper>
+          {topRightSection()}
+        </TopRightWrapper>
+        </>
+        }
+        <Details layout={layout} padding="regular" hasImages={hasImages}>
+          <CommunityInfoComponent
+            palette={palette}
+            community={community}
+            showFloorPlan={showFloorPlan}
+            showDescription={showDescription}
+          />
+          {buildActionButtons(actionButtons)}
+          {(note || addNote) && <Hr />}
+          {note && <Span size="caption">{note}</Span>}
+          {note && <CursorSpan palette="primary" size="caption" onClick={onEditNoteClick}> Edit note</CursorSpan>}
+          {!note && addNote && <AddNote palette="primary" size="caption" onClick={onAddNoteClick}>Add a note</AddNote>}
+        </Details>
+      </Wrapper>
+    </MainWrapper>
+
   );
 };
 

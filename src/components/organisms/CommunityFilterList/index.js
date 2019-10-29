@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { object, func, bool } from 'prop-types';
+import { object, func, bool, array } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, assetPath, palette } from 'sly/components/themes';
@@ -123,6 +123,7 @@ const CommunityFilterList = ({
   searchParams,
   onFieldChange,
   onParamsRemove,
+  geoGuideList,
 }) => {
   const nofollow = searchParams.budget || searchParams.size;
 
@@ -138,6 +139,7 @@ const CommunityFilterList = ({
     const { path, selected } = filterLinkPath(searchParams, { size: elem.value });
     return generateRadioLink(elem, 'size', path, selected, nofollow);
   });
+
   const { sort } = searchParams;
   const WrapperElement = (isModalView) ? StyledWrapper : StyledBox;
 
@@ -146,8 +148,7 @@ const CommunityFilterList = ({
   return (
     <WrapperElement>
       {!isModalView &&
-        <Fragment>
-          {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+        <>
           <ImageButtonWrapper isMapView={isMapView}>
             {isMapView && toggleMap &&
             <IconButton icon="list" onClick={toggleMap} iconPalette="primary" ghost>
@@ -155,28 +156,27 @@ const CommunityFilterList = ({
             </IconButton>
             }
             {!isMapView &&
-            <Fragment>
-              {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+            <>
               <StyledImage src={assetPath('images/map-placeholder.png')} />
               <IconButton icon="map" iconSize="regular" onClick={toggleMap} iconPalette="primary" ghost>
                 View Map
               </IconButton>
-            </Fragment>
+            </>
             }
           </ImageButtonWrapper>
           <StyledHr />
-        </Fragment>
+        </>
       }
       <CollapsibleSection size="small" title="Type of care" borderless>
         {tocFields}
       </CollapsibleSection>
-      <CollapsibleSection size="small" title="Budget" borderless>
+      <CollapsibleSection size="small" title="Budget" collapsedDefault borderless>
         {budgetFields}
       </CollapsibleSection>
-      <CollapsibleSection size="small" title="Size" borderless>
+      <CollapsibleSection size="small" title="Size" collapsedDefault borderless>
         {sizeFields}
       </CollapsibleSection>
-      <CollapsibleSection size="small" title="Sort" borderless>
+      <CollapsibleSection size="small" title="Sort" collapsedDefault borderless>
         <Field
           name="Sort"
           type="select"
@@ -187,6 +187,13 @@ const CommunityFilterList = ({
           {sortOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
         </Field>
       </CollapsibleSection>
+      { geoGuideList && geoGuideList.length > 0 &&
+        <CollapsibleSection size="small" title="Guides" borderless>
+          {geoGuideList.map((elem) => {
+            return (<StyledLink href={elem.to} >{elem.title}</StyledLink>);
+          })}
+        </CollapsibleSection>
+      }
       {filtersApplied.length > 0 && (
         <ClearAllButton
           onClick={getEvtHandler(filtersApplied, onParamsRemove)}
@@ -206,6 +213,7 @@ CommunityFilterList.propTypes = {
   searchParams: object.isRequired,
   onFieldChange: func.isRequired,
   onParamsRemove: func.isRequired,
+  geoGuideList: array,
 };
 
 CommunityFilterList.defaultProps = {

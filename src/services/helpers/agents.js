@@ -44,7 +44,8 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
   const {
     state, city, ...qs
   } = filters;
-  const region = stateRegionMap[getStateAbbr(state)];
+  const stateAbbr = getStateAbbr(state);
+  const region = stateRegionMap[stateAbbr];
 
   const selected = !Object.keys(nextFilters)
     .some(key => currentFilters[key] !== nextFilters[key]);
@@ -58,7 +59,7 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
   if (region && city) {
     const qsString = objectToURLQueryParams(qs);
     const qsPart = qsString ? `?${qsString}` : '';
-    path = `${path}/${urlize(region)}/${city}${qsPart}`;
+    path = `${path}/${urlize(region)}/${urlize(city)}-${urlize(stateAbbr)}${qsPart}`;
   } else if (region) {
     const qsString = objectToURLQueryParams(qs);
     const qsPart = qsString ? `?${qsString}` : '';

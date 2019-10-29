@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { object, string, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
@@ -58,7 +58,7 @@ const ColumnsButton = styled(IconButton)`
 const isFilterable = datatable => datatable && datatable.columns.some(column => column.isFilterable);
 
 // eslint-disable-next-line react/prop-types
-const Filters = ({ datatable, meta = {} }) => {
+const Filters = ({ datatable, meta = {} }) => { /* eslint-disable react/prop-types */
   const autocompleteFilters = meta.autocomplete_filters || {};
   const filteredCount = meta.filtered_count || 0;
   const filtered = datatable.numberOfFilters > 0;
@@ -89,18 +89,18 @@ const Filters = ({ datatable, meta = {} }) => {
   );
 
   return (
-    <Fragment>
+    <>
       {isFilterable(datatable) && (
         <PopoverPortal headerButton={clearButton} title={filterTitle} subtitle={filterSubtitle} button={filterButton}>
           <DatatableFilters datatable={datatable} autocompleteFilters={autocompleteFilters} />
         </PopoverPortal>
       )}
-    </Fragment>
+    </>
   );
 };
 
 const TableHeaderButtons = ({
-  onColumnButtonClick, onSearchTextKeyUp, onSortButtonClick, datatable, className, meta, value,
+  onColumnButtonClick, onSearchTextKeyUp, onSortButtonClick, datatable, className, meta, value, modelConfig,
 }) => (
   <Wrappper className={className}>
     {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
@@ -109,9 +109,9 @@ const TableHeaderButtons = ({
         <SearchTextInput
           type="search"
           size="button"
-          placeholder="Type to filter by name"
-          value={(datatable.getFilter('name', 'cs') || {}).value || ''}
-          onChange={({ target }) => datatable.doSearch('name', 'cs', target.value)}
+          placeholder={`Type to filter by ${modelConfig.defaultSearchField}`}
+          value={(datatable.getFilter(modelConfig.defaultSearchField, 'cs') || {}).value || ''}
+          onChange={({ target }) => datatable.doSearch(modelConfig.defaultSearchField, 'cs', target.value)} // FIXME: Read default operator from dsf type
         />
       )
       : <SearchTextInput type="search" placeholder="Type to filter by name" value={value} onChange={onSearchTextKeyUp} />
@@ -130,6 +130,7 @@ TableHeaderButtons.propTypes = {
   onSortButtonClick: func,
   onSearchTextKeyUp: func,
   value: string,
+  modelConfig: object,
 };
 
 export default TableHeaderButtons;

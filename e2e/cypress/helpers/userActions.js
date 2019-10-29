@@ -17,12 +17,13 @@ const assertUserDetails = (response, data) => {
   expect(respJson.data.attributes.userDetails.roomType).to.contain('suite');
 };
 
-const assertUserDetailsEmail = (response, data) => {
-  const { email } = data;
-  const respJson = JSON.parse(response.body);
-  expect(respJson.data.attributes.userDetails).to.have.property('email');
-  expect(respJson.data.attributes.userDetails.email).to.equal(email);
-};
+// Use this function to assert email during Get Availability CTA
+// const assertUserDetailsEmail = (response, data) => {
+//   const { email } = data;
+//   const respJson = JSON.parse(response.body);
+//   expect(respJson.data.attributes.userDetails).to.have.property('email');
+//   expect(respJson.data.attributes.userDetails.email).to.equal(email);
+// };
 
 const assertProfilesContacted = (response, data, contactType) => {
   const { communitySlug } = data;
@@ -36,9 +37,9 @@ const assertProfilesContacted = (response, data, contactType) => {
 };
 
 export const assertUserActionsForGetAvailability = (response, data) => {
-  assertProfilesContacted(response, data, 'LEAD/REQUEST_AVAILABILITY');
+  assertProfilesContacted(response, data, 'LEAD/CUSTOM_PRICING');
   assertUserDetails(response, data);
-  assertUserDetailsEmail(response, data);
+  // assertUserDetailsEmail(response, data);
 };
 
 export const assertUserActionsForCustomPricing = (response, data) => {

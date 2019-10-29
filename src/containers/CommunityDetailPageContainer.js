@@ -34,6 +34,12 @@ import {
   PROFILE_VIEWED,
   TOUR_BOOKED,
 } from 'sly/services/newApi/constants';
+import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
+import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
+import { Experiment, Variant } from 'sly/services/experiments';
+import styled from 'styled-components';
+import { Heading } from 'sly/components/atoms';
+import { size } from 'sly/components/themes';
 
 const ignoreSearchParams = [
   'modal',
@@ -43,6 +49,11 @@ const ignoreSearchParams = [
   'token',
   'modal',
 ];
+
+
+const StyledHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.xLarge')};
+`;
 
 const createHasProfileAction = uuidActions => (type, actionInfo) => {
   if (!uuidActions) return false;
@@ -133,12 +144,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     }),
   };
 
-  state = {
-    mediaGallerySlideIndex: 0,
-    isMediaGalleryFullscreenActive: false,
-    isHowSlyWorksVideoPlaying: false,
-  };
-
   componentDidMount() {
     this.uuidActionPageView();
   }
@@ -222,82 +227,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       action: 'click', category: 'similarCommunity', label: index.toString(), value: to,
     };
     SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleToggleHowSlyWorksVideoPlaying = () => {
-    const { community } = this.props;
-    const { isHowSlyWorksVideoPlaying } = this.state;
-    const { id } = community;
-
-    this.setState({ isHowSlyWorksVideoPlaying: !isHowSlyWorksVideoPlaying });
-
-    const event = {
-      action: 'start', category: 'howSlyWorksVideo', label: id,
-    };
-    if (isHowSlyWorksVideoPlaying) {
-      event.action = 'stop';
-    }
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
-    const { community } = this.props;
-    if (fromMorePictures) {
-      const { id } = community;
-      const { gallery = {}, videoGallery = {} } = community;
-      const images = gallery.images || [];
-      const videos = videoGallery.videos || [];
-      const image = images[slideIndex - videos.length];
-      const event = {
-        action: 'show', category: 'images', label: id, value: image.id,
-      };
-      SlyEvent.getInstance().sendEvent(event);
-    }
-    this.setState({
-      mediaGallerySlideIndex: slideIndex,
-    });
-  };
-
-  handleToggleMediaGalleryFullscreen = (fromMorePictures, isVideo, fromSeeMoreButton) => {
-    const { community } = this.props;
-    const { isMediaGalleryFullscreenActive, mediaGallerySlideIndex } = this.state;
-
-    const { id, gallery = {}, videoGallery = {} } = community;
-    const images = gallery.images || [];
-    const videos = videoGallery.videos || [];
-    if (fromSeeMoreButton) {
-      const event = {
-        action: 'show', category: 'fullscreenMediaGallery', label: id, value: 'seeMoreButton',
-      };
-      SlyEvent.getInstance().sendEvent(event);
-    } else if (!fromMorePictures && !isVideo) {
-      const image = images[mediaGallerySlideIndex - videos.length];
-      const event = {
-        action: 'show', category: 'fullscreenMediaGallery', label: id,
-      };
-      if (image) {
-        event.value = image.id;
-      }
-      if (isMediaGalleryFullscreenActive) {
-        event.action = 'hide';
-      }
-      SlyEvent.getInstance().sendEvent(event);
-    } else if (isVideo) {
-      const video = videos[mediaGallerySlideIndex];
-      if (video) {
-        const event = {
-          action: 'show', category: 'mediaGalleryVideo', label: id, value: video.id,
-        };
-        if (isMediaGalleryFullscreenActive) {
-          event.action = 'hide';
-        }
-        SlyEvent.getInstance().sendEvent(event);
-      }
-    }
-
-    this.setState({
-      isMediaGalleryFullscreenActive: !isMediaGalleryFullscreenActive,
-    });
   };
 
   handleMediaGalleryFavouriteClick = () => {
@@ -414,17 +343,41 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       });
   };
 
-  handleToggleAskQuestionModal = (isAskQuestionModalVisible) => {
-    const { community } = this.props;
-    const { id } = community;
-    const action = isAskQuestionModalVisible ? 'close-modal' : 'open-modal';
-    const category = 'AskQuestion';
-    const event = {
-      action, category, label: id,
-    };
+  getExitintent = (showModal, hideModal) => {
+    const {
+      community: {
+        id, name, similarProperties,
+      },
+      onSimilarCommunitiesClick,
+    } = this.props;
+    const communityStyle = { layout: 'row', imageSize: 'small', showDescription: false};
+    // Track profiles on popup launch
+    const modalContent = (<Experiment name="User_Bounce_Popup" defaultVariant="QuestionModal">
+      <Variant name="QuestionModal">
+        <CommunityAskQuestionFormContainer
+          showModal={showModal}
+          communityName={name}
+          communitySlug={id}
+          onButtonClick={hideModal}
+          type="exitForm"
+        />
+      </Variant>
+      <Variant name="SimilarCommunities">
+        <StyledHeading>
+          We found some Assisted Living communities you might like
+        </StyledHeading>
 
-    SlyEvent.getInstance().sendEvent(event);
-  };
+        <SimilarCommunities
+          communities={similarProperties}
+          onSimilarCommunityClick={onSimilarCommunitiesClick}
+          communityStyle={communityStyle}
+        />
+
+      </Variant>
+    </Experiment>);
+
+    return modalContent;
+  }
 
   render() {
     const {
@@ -441,12 +394,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
 
     const { location } = history;
     const { pathname } = location;
-
-    const {
-      mediaGallerySlideIndex,
-      isMediaGalleryFullscreenActive,
-      isHowSlyWorksVideoPlaying,
-    } = this.state;
 
     if (status.community.status === 301) {
       const newSlug = getLastSegment(status.community.headers.location);
@@ -498,13 +445,9 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
                 user={user}
                 community={community}
                 location={location}
-                mediaGallerySlideIndex={mediaGallerySlideIndex}
-                onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
-                onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
                 onMediaGalleryFavouriteClick={this.handleMediaGalleryFavouriteClick}
                 onMediaGalleryShareClick={this.handleMediaGalleryShareClick}
                 onShareCommunityModalClose={this.handleShareCommunityModalClose}
-                isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
                 onBackToSearchClicked={this.handleBackToSearchClick}
                 onReviewLinkClicked={this.handleReviewLinkClick}
                 onConciergeNumberClicked={this.handleConciergeNumberClick}
@@ -522,14 +465,13 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
                 profileContacted={profileContacted}
                 onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
                 userAction={userAction}
-                toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
-                isHowSlyWorksVideoPlaying={isHowSlyWorksVideoPlaying}
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 showModal={show}
                 hideModal={hide}
                 onUnsaveCommunity={this.handleUnsaveCommunity}
                 history={history}
+                exitIntentContent={this.getExitintent(show, hide)}
               />
             )}
           </ModalController>

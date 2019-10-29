@@ -7,7 +7,6 @@ const publicPath = isStorybook
   ? ''
   : process.env.PUBLIC_PATH;
 
-
 const config = {
   all: {
     env: process.env.NODE_ENV,
@@ -37,6 +36,8 @@ const config = {
     muteReduxLogger: true,
     hideChatbox: false,
     loadAutoComplete: !process.env.OFFLINE_MODE,
+    disableExperiments: process.env.DISABLE_EXPERIMENTS,
+    enableExperimentsDebugger: process.env.ENABLE_EXPERIMENT_DEBUGGER,
   },
 
   test: {
@@ -44,13 +45,13 @@ const config = {
     isDev: false,
     publicPath: '',
     domain: 'localhost',
+    host: 'http://localhost',
     apiUrl: 'http://localhost/v0',
   },
 
   development: {
     muteReduxLogger: process.env.MUTE_REDUX_LOGGER,
     hideChatbox: process.env.HIDE_CHATBOX,
-    enableExperimentsDebugger: false,
     loadAutoComplete: !process.env.OFFLINE_MODE,
   },
 

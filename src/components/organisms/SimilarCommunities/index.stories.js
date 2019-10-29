@@ -6,6 +6,7 @@ import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rho
 
 const { similarProperties } = RhodaGoldmanPlaza;
 
-storiesOf('Organisms|SimilarCommunities', module).add('default', () => (
-  <SimilarCommunities similarProperties={similarProperties} />
-));
+storiesOf('Organisms|SimilarCommunities', module)
+  .add('default', () => <SimilarCommunities communities={similarProperties} />)
+  .add('with imageSize', () => <SimilarCommunities communities={similarProperties} communityStyle={{ imageSize: 'little' }} />);
+

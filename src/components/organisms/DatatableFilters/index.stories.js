@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
@@ -7,6 +7,9 @@ import DatatableFilters from '.';
 
 import datatableClient from 'sly/../private/storybook/sample-data/datatable-client.json';
 import { makeQuerystringFilters, parseQuerystringFilters, simpleQSParse } from 'sly/services/datatable/helpers';
+import PopoverPortal from 'sly/components/molecules/PopoverPortal';
+import ButtonLink from 'sly/components/molecules/ButtonLink';
+import Button from 'sly/components/atoms/Button';
 
 const StyledInput = styled.input`
   width: 100%;
@@ -28,7 +31,7 @@ class Container extends Component {
         // {},
       ],
       logicalOperator: 'and',
-    }
+    },
   };
 
   onChange = (filterState) => {
@@ -40,23 +43,46 @@ class Container extends Component {
 
   onInputChange = ({ target }) => {
     const queryString = target.value;
-    console.log(queryString, simpleQSParse(queryString));
+    // console.log(queryString, simpleQSParse(queryString));
     this.setState({ filterState: parseQuerystringFilters(simpleQSParse(queryString)) });
   };
 
   render() {
+    const datatable = {
+      filterState: this.state.filterState,
+      onFilterChange: this.onChange,
+      clearFilters: () => {},
+      columns: datatableClient.columns,
+    };
+
+    const filterTitle = 'Filters (10)';
+    const filterSubtitle = '10 Results';
+
+    const clearButton = (
+      <ButtonLink
+        palette="primary"
+        weight="medium"
+        size="caption"
+        onClick={datatable.clearFilters}
+      >
+        Clear filters
+      </ButtonLink>
+    );
+
+    const filterButton = <Button />;
+
+    const autocompleteFilters = {};
+
     return (
-      <Fragment>
+      <>
         <StyledInput
           onChange={this.onInputChange}
           value={makeQuerystringFilters(this.state.filterState)}
         />
-        <DatatableFilters
-          datatable={datatableClient}
-          onChange={this.onChange}
-          filterState={this.state.filterState}
-        />
-      </Fragment>
+        <PopoverPortal isOpen headerButton={clearButton} title={filterTitle} subtitle={filterSubtitle} button={filterButton}>
+          <DatatableFilters datatable={datatable} autocompleteFilters={autocompleteFilters} />
+        </PopoverPortal>
+      </>
     );
   }
 }

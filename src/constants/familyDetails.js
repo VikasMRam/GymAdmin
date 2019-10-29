@@ -7,7 +7,7 @@ export const FAMILY_STAGE_ACTIVE_TOURS = 'Active Tours';
 export const FAMILY_STAGE_POST_TOURS = 'Post Tours';
 export const FAMILY_STAGE_FAMILY_CHOSEN = 'Family Chose My Referral';
 export const FAMILY_STAGE_WON = 'Won';
-export const FAMILY_STAGE_LOST = 'Lost';
+export const FAMILY_STAGE_LOST = 'Closed';
 export const FAMILY_STAGE_REJECTED = 'Rejected';
 
 export const FAMILY_STAGE_ORDERED = {
@@ -41,13 +41,10 @@ export const PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS = [
 ];
 
 export const SOURCE_OPTIONS = [
-  'Online',
   'Direct Call',
   'Voicemail',
   'Bot',
-  'Question',
   'LiveChat',
-  'Partner',
   'Other',
 ];
 

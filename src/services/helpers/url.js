@@ -29,10 +29,14 @@ const tocPaths = (toc) => {
           label: 'Independent Living',
         };
       case 'Memory Care':
-      case 'Alzheimers Care':
         return {
           path: '/memory-care',
           label: 'Memory Care',
+        };
+      case 'Board And Care Home':
+        return {
+          path: '/board-and-care-home',
+          label: 'Board and Care Home',
         };
       default:
         return {
@@ -44,6 +48,33 @@ const tocPaths = (toc) => {
     return {
       path: '/retirement-community',
       label: 'Retirement Community',
+    };
+  }
+};
+
+const tocGuidePaths = (toc) => {
+  if (toc && toc.length > 0) {
+    switch (toc[0]) {
+      case 'Assisted Living':
+        return {
+          path: '/assisted-living-guide',
+          label: 'Assisted Living Guide',
+        };
+      case 'Memory Care':
+        return {
+          path: '/memory-care-guide',
+          label: 'Memory Care Guide',
+        };
+      default:
+        return {
+          path: '/retirement-community-guide',
+          label: 'Retirement Community Guide',
+        };
+    }
+  } else {
+    return {
+      path: '/retirement-community-guide',
+      label: 'Retirement Community Guide',
     };
   }
 };
@@ -275,12 +306,12 @@ export const getBreadCrumbsForAgent = ({ name, state, city, id }) => {
     });
     if (city) {
       baseBcs.push({
-        path: `${agentsPath}/${urlize(region)}/${urlize(city)}`,
-        label: city,
+        path: `${agentsPath}/${urlize(region)}/${urlize(city)}-${urlize(state)}`,
+        label: `${city}, ${state}`,
       });
       if (name) {
         baseBcs.push({
-          path: `${agentsPath}/${urlize(region)}/${urlize(city)}/${id}`,
+          path: `${agentsPath}/${urlize(region)}/${urlize(city)}-${urlize(state)}/${id}`,
           label: name,
         });
       }
@@ -293,10 +324,37 @@ export const getBreadCrumbsForAgent = ({ name, state, city, id }) => {
   return baseBcs;
 };
 
+export const getBreadCrumbsForGuides = ({ toc, region, regionName}) => {
+  const tocBc = tocGuidePaths([titleize(toc)]);
+  // TODO: use react router generated paths once router wiring is complete
+  const baseBcs = [{
+    path: '/',
+    label: 'Home',
+  }];
+  // TODO A better job
+  if (tocBc) {
+    baseBcs.push(tocBc);
+  } else {
+    // Safety
+    return baseBcs;
+  }
+
+  if (region) {
+    baseBcs.push({
+      path: `${tocBc.path}/${region}`,
+      label: regionName,
+    });
+  } else {
+    return baseBcs;
+  }
+
+  return baseBcs;
+};
+
 export const getAgentUrl = ({ id, address }) => {
   const { state, city } = address;
   const region = stateRegionMap[state];
-  return `${agentsPath}/${urlize(region)}/${urlize(city)}/${id}`;
+  return `${agentsPath}/${urlize(region)}/${urlize(city)}-${urlize(state)}/${id}`;
 };
 
 export const getCitySearchUrl = ({ propInfo, address }) => {

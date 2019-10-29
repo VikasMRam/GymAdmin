@@ -20,11 +20,26 @@ const StyledHeading = styled(Heading)`
 `;
 
 const CommunityAskQuestionForm = ({
-  handleSubmit, submitting, communityName, user, error,
+  handleSubmit, submitting, communityName, user, error, type,
 }) => {
+  let title = <StyledHeading level="subtitle" size="subtitle">Ask our experts about {communityName}</StyledHeading>;
+
+  if (type === 'exitForm') {
+    title = (<>
+      <StyledHeading level="title" size="subtitle">Wait! Get support from a local senior living expert. This is a free service</StyledHeading>
+    </>);
+  }
+
   return (
     <form onSubmit={handleSubmit}>
-      <StyledHeading level="subtitle" size="subtitle">Ask our experts about {communityName}</StyledHeading>
+      {title}
+      <Field
+        name="question"
+        label=""
+        type="textarea"
+        placeholder="Type your Question here..."
+        component={ReduxField}
+      />
       {!user && <Field
         name="name"
         label=""
@@ -39,13 +54,7 @@ const CommunityAskQuestionForm = ({
         placeholder="Type your Email here..."
         component={ReduxField}
       />}
-      <Field
-        name="question"
-        label=""
-        type="textarea"
-        placeholder="Type your Question here..."
-        component={ReduxField}
-      />
+
       {error && <strong>{error}</strong>}
       <StyledButton type="submit" kind="jumbo" disabled={submitting}>
         Submit Question
@@ -63,6 +72,7 @@ CommunityAskQuestionForm.propTypes = {
   submitting: bool,
   user: object,
   error: string,
+  type: string,
 };
 
 export default CommunityAskQuestionForm;

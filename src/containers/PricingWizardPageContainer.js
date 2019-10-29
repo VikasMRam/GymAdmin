@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 import produce from 'immer';
 import { withRouter } from 'react-router';
-import pick from 'lodash/pick';
 
 import { community as communityPropType } from 'sly/propTypes/community';
 import { connectController } from 'sly/controllers';
@@ -164,6 +163,9 @@ export default class PricingWizardPageContainer extends Component {
         if (data.medicaidCoverage) {
           financialInfo.medicare = medicareToBool(data.medicaidCoverage);
         }
+        if (data.budget) {
+          financialInfo.maxMonthlyBudget = data.budget;
+        }
         draft.attributes.uuidInfo.financialInfo = financialInfo;
       })),
       createAction({
@@ -185,14 +187,13 @@ export default class PricingWizardPageContainer extends Component {
     }));
   };
 
-  handleComplete = (data, openConfirmationModal) => {
+  handleComplete = (data) => {
     const {
       community, history,
     } = this.props;
 
     return this.submitUserAction(data).then(() => {
       history.push(community.url);
-      openConfirmationModal();
     });
   };
 
