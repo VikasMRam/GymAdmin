@@ -40,6 +40,7 @@ import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuesti
 import { Experiment, Variant } from 'sly/services/experiments';
 import { Heading } from 'sly/components/atoms';
 import { size } from 'sly/components/themes';
+import { EXIT_INTENT_TYPE } from 'sly/constants/retentionPopup';
 
 const ignoreSearchParams = [
   'modal',
@@ -446,7 +447,7 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
             communityName={name}
             communitySlug={id}
             onButtonClick={hideModal}
-            type="exitIntent"
+            type={EXIT_INTENT_TYPE}
           />
         </Variant>
         <Variant name="SimilarCommunities">
@@ -456,7 +457,10 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
 
           <SimilarCommunities
             communities={similarProperties}
-            onCommunityClick={(index, to) => this.handleSimilarCommunitiesModalClick(index, to, hideModal)}
+            onCommunityClick={(index, to) => {
+              this.handleSimilarCommunitiesClick(index, to);
+              hideModal();
+            }}
             communityStyle={communityStyle}
           />
 

@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
 import CommunityAskQuestionForm from 'sly/components/organisms/CommunityAskQuestionForm';
+import { EXIT_INTENT_TYPE } from 'sly/constants/retentionPopup';
 
 const handleSubmit = jest.fn();
 const communityName = 'Rhoda Goldman Plaza';
@@ -47,7 +48,7 @@ describe('CommunityAskQuestionForm', () => {
 
   it('should rednder title for exit form', () => {
     const title = 'Wait! Get support from a local senior living expert. This is a free service.';
-    const wrapper = wrap({ type: 'exitIntent' });
+    const wrapper = wrap({ type: EXIT_INTENT_TYPE });
     const headingElem = wrapper.find('StyledHeading');
 
     expect(headingElem).toHaveLength(1);
