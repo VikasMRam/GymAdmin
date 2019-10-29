@@ -16,11 +16,11 @@ export const buildEstimatedPriceList = (community) => {
   } = community.propInfo;
 
   const priceList = [];
-  sharedSuiteRate !== 'N/A' && priceList.push({ label: 'Shared Suite', value: sharedSuiteRate });
-  privateSuiteRate !== 'N/A' && priceList.push({ label: 'Private Suite', value: privateSuiteRate });
-  studioApartmentRate !== 'N/A' && priceList.push({ label: 'Studio Apartment', value: studioApartmentRate });
-  oneBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'One Bedroom Apartment', value: oneBedroomApartmentRate });
-  twoBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'Two Bedroom Apartment', value: twoBedroomApartmentRate });
+  sharedSuiteRate && sharedSuiteRate !== 'N/A' && priceList.push({ label: 'Shared Suite', value: sharedSuiteRate });
+  privateSuiteRate && privateSuiteRate !== 'N/A' && priceList.push({ label: 'Private Suite', value: privateSuiteRate });
+  studioApartmentRate && studioApartmentRate !== 'N/A' && priceList.push({ label: 'Studio Apartment', value: studioApartmentRate });
+  oneBedroomApartmentRate && oneBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'One Bedroom Apartment', value: oneBedroomApartmentRate });
+  twoBedroomApartmentRate && twoBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'Two Bedroom Apartment', value: twoBedroomApartmentRate });
 
   return priceList;
 };
@@ -145,7 +145,7 @@ describe('Community Profile Sections', () => {
       const list = buildEstimatedPriceList(community);
 
       list.forEach(({ label, value }) => {
-        pricingContent.get('tbody').contains(label).next().should('contain', value);
+        pricingContent.get('tbody').contains(label).next().should('contain', formatMoney(value));
       });
 
       select('button.CommunityPricingTable').contains('Get Detailed Pricing').click();
