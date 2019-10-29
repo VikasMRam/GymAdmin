@@ -4,5 +4,7 @@ export const formatMoney = (amount, decimalCount = 0) => {
     currency: 'USD',
     minimumFractionDigits: decimalCount,
   });
-  return formatter.format(amount);
+
+  const number = typeof amount === 'string' ? parseFloat(amount.replace(/[^\d.]/g, '')) : amount;
+  return formatter.format(number);
 };

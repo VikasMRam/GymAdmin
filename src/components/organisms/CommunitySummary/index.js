@@ -107,23 +107,19 @@ const CommunitySummary = ({
       <Hr />
       <Wrapper>
         <div>
-          {conciergeNumber &&
-            <>
-              For pricing and availability, call&nbsp;
-              <Link data-cy="concierge-number" href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
-                <NumberFormat
-                  value={conciergeNumber}
-                  format="(###) ###-####"
-                  displayType="text"
-                />
-              </Link>
-              <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
-              {isBrowser &&
-                <TooltipContent id="phone" place="top" effect="solid" multiline>
-                  This phone number will connect you to the concierge team at Seniorly.
-                </TooltipContent>
-              }
-            </>
+          For pricing and availability, call&nbsp;
+          <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
+            <NumberFormat
+              value={conciergeNumber}
+              format="(###) ###-####"
+              displayType="text"
+            />
+          </Link>
+          <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
+          {isBrowser &&
+            <TooltipContent id="phone" place="top" effect="solid" multiline>
+              This phone number will connect you to the concierge team at Seniorly.
+            </TooltipContent>
           }
         </div>
         <div>

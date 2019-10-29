@@ -1,6 +1,7 @@
 import { responsive, select } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
 import { getCommunity } from '../../helpers/getCommunity';
+import { TEST_COMMUNITY } from '../../constants/community';
 
 const randHash = () => Math.random().toString(36).substring(7);
 
@@ -11,7 +12,7 @@ describe('Review Community', () => {
   beforeEach(() => {
     cy.server();
 
-    getCommunity('buena-vista-manor-house').then((response) => {
+    getCommunity(TEST_COMMUNITY).then((response) => {
       community = response;
     });
 

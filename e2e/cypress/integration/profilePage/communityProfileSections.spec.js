@@ -3,6 +3,7 @@ import buildEntity from '../../helpers/buildEntity';
 import { toJson } from '../../helpers/request';
 import { getCommunity } from '../../helpers/getCommunity';
 import { formatMoney } from '../../helpers/money';
+import { TEST_COMMUNITY } from '../../constants/community';
 
 const randHash = () => Math.random().toString(36).substring(7);
 
@@ -16,11 +17,11 @@ export const buildEstimatedPriceList = (community) => {
   } = community.propInfo;
 
   const priceList = [];
-  sharedSuiteRate !== 'N/A' && priceList.push({ label: 'Shared Suite', value: sharedSuiteRate });
-  privateSuiteRate !== 'N/A' && priceList.push({ label: 'Private Suite', value: privateSuiteRate });
-  studioApartmentRate !== 'N/A' && priceList.push({ label: 'Studio Apartment', value: studioApartmentRate });
-  oneBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'One Bedroom Apartment', value: oneBedroomApartmentRate });
-  twoBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'Two Bedroom Apartment', value: twoBedroomApartmentRate });
+  sharedSuiteRate && sharedSuiteRate !== 'N/A' && priceList.push({ label: 'Shared Suite', value: sharedSuiteRate });
+  privateSuiteRate && privateSuiteRate !== 'N/A' && priceList.push({ label: 'Private Suite', value: privateSuiteRate });
+  studioApartmentRate && studioApartmentRate !== 'N/A' && priceList.push({ label: 'Studio Apartment', value: studioApartmentRate });
+  oneBedroomApartmentRate && oneBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'One Bedroom Apartment', value: oneBedroomApartmentRate });
+  twoBedroomApartmentRate && twoBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'Two Bedroom Apartment', value: twoBedroomApartmentRate });
 
   return priceList;
 };
@@ -31,13 +32,13 @@ describe('Community Profile Sections', () => {
   beforeEach(() => {
     cy.server();
 
-    getCommunity('buena-vista-manor-house').then((response) => {
+    getCommunity(TEST_COMMUNITY).then((response) => {
       community = response;
     });
   });
 
   responsive(() => {
-    it.only('Should see details', () => {
+    it('Should see details', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
 
       cy.get('h1').contains(community.name).its('length').should('be', 1);
@@ -51,8 +52,9 @@ describe('Community Profile Sections', () => {
         expect($h3.first().text().replace(/\s+/g, ' ')).to.equal(address);
       });
 
-      select('#concierge-number').should(($div) => {
-        expect($div.text().replace(/[^\d]/g, '')).to.equal(community.twilioNumber.numbers[0].toString());
+      const number = community.twilioNumber.numbers[0];
+      select(`.CommunitySummary [href="tel:${number}"]`).should(($div) => {
+        expect($div.text().replace(/[^\d]/g, '')).to.equal(number.toString());
       });
 
       select('.CommunityPricingAndRating').should('contain', formatMoney(community.startingRate));
@@ -145,7 +147,7 @@ describe('Community Profile Sections', () => {
       const list = buildEstimatedPriceList(community);
 
       list.forEach(({ label, value }) => {
-        pricingContent.get('tbody').contains(label).next().should('contain', value);
+        pricingContent.get('tbody').contains(label).next().should('contain', formatMoney(value));
       });
 
       select('button.CommunityPricingTable').contains('Get Detailed Pricing').click();
