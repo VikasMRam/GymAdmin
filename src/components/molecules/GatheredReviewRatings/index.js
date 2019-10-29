@@ -37,19 +37,6 @@ const ReviewProviderDiv = styled.div`
   }
 `;
 
-// const LeaveAReviewTextDiv = styled.div`
-//   padding-bottom: ${size('spacing.xLarge')};
-// `;
-
-// const LeaveAReviewButtonDiv = styled.div`
-//   padding-bottom: ${size('spacing.xLarge')};
-// `;
-
-// const PaddedHR = styled(Hr)`
-//   margin-top: ${size('spacing.xLarge')};
-//   margin-bottom: ${size('spacing.xLarge')};
-// `;
-
 const Link = styled.a`
   color: ${palette('primary', 'base')};
 `;
@@ -77,31 +64,21 @@ const GatheredReviewRatings = ({ reviewRatings, onReviewLinkClicked }) => {
     );
   });
   return (
-    <div>
+    <>
       {reviewRatings.length > 0 && (
-        <div>
+        <>
           <ReviewHeadingDiv weight="medium">
             Reviews gathered from across the web
           </ReviewHeadingDiv>
           <RatingsDiv>{ratings}</RatingsDiv>
-          {/* <PaddedHR />
-          <LeaveAReviewTextDiv>
-            If you are familiar with this community, your review will help
-            other families in a similar situation make a more informed
-            decision.
-          </LeaveAReviewTextDiv>
-          <LeaveAReviewButtonDiv>
-            <Button onClick={onLeaveReview}>Leave a Review</Button>
-          </LeaveAReviewButtonDiv>
-          <Hr /> */}
           <Block size="caption" palette="grey">
             {`Disclaimer: All trademarks and copyrights for names are owned by the respective companies.
             They do not endorse Seniorly and are not
             related to Seniorly's service in any way.`}
           </Block>
-        </div>
+        </>
       )}
-    </div>
+    </>
   );
 };
 
@@ -112,7 +89,6 @@ GatheredReviewRatings.propTypes = {
     reviewsUrl: string.isRequired,
     avgRating: number.isRequired,
   })).isRequired,
-  // onLeaveReview: func,
   onReviewLinkClicked: func,
 };
 

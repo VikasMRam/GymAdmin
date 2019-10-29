@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { object, func } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
+
 import { size, palette, assetPath } from 'sly/components/themes';
 import {
   getBreadCrumbsForCommunity,
@@ -33,15 +34,12 @@ import CollapsibleSection, {
   MainSection,
 } from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
-import EntityReviews from 'sly/components/organisms/EntityReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import CommunityPricingComparison from 'sly/components/organisms/CommunityPricingComparison';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
 import CommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
-import MorePictures from 'sly/components/organisms/MorePictures';
-import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
@@ -49,11 +47,8 @@ import OfferNotification from 'sly/components/molecules/OfferNotification';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
 import IconItem from 'sly/components/molecules/IconItem';
-import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
-import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
 import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
-import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 import AskAgentQuestionButtonContainer from 'sly/containers/AskAgentQuestionButtonContainer';
@@ -64,6 +59,12 @@ import withExitIntent from 'sly/services/exitIntent/withExitIntent';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import CommunitySummaryContainer from 'sly/containers/CommunitySummaryContainer';
 import CommunityAgentSectionContainer from 'sly/containers/CommunityAgentSectionContainer';
+import CommunityQuestionAnswersContainer from "sly/containers/CommunityQuestionAnswersContainer";
+import CommunityReviewsContainer from "sly/containers/CommunityReviewsContainer";
+import CommunityAddReviewButtonContainer from "sly/containers/CommunityAddReviewButtonContainer";
+import CommunityMorePicturesContainer from "sly/containers/CommunityMorePicturesContainer";
+import BackToSearchButtonContainer from "sly/containers/BackToSearchButtonContainer";
+import TrackedSimilarCommunitiesContainer from "sly/containers/TrackedSimilarCommunitiesContainer";
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -116,6 +117,9 @@ const ButtonBlock = styled(Block)`
 `;
 
 const StyledButton = styled(Button)`
+  width: 100%;
+`;
+const StyledLeaveReviewButton = styled(CommunityAddReviewButtonContainer)`
   width: 100%;
 `;
 
@@ -173,179 +177,28 @@ export default class CommunityDetailPage extends Component {
     user: object,
     community: object.isRequired,
     location: object.isRequired,
-    onBackToSearchClicked: func,
-    onReviewLinkClicked: func,
-    onConciergeNumberClicked: func,
-    onLiveChatClicked: func,
-    onReceptionNumberClicked: func,
-    onSimilarCommunitiesClick: func,
     profileContacted: object.isRequired,
     userAction: object,
-    notifyInfo: func,
-    notifyError: func,
-    showModal: func,
-    hideModal: func,
-    onToggleAskQuestionModal: func,
     history: object,
-  };
-  handleMorePicturesClick = (image) => {
-    const {
-      community,
-      onMediaGallerySlideChange,
-      onMediaGalleryToggleFullscreen,
-    } = this.props;
-    const { gallery = {}, videoGallery = {} } = community;
-    const images = gallery.images || [];
-    const videos = videoGallery.videos || [];
-    let matchingIndex = images.findIndex(i => image.id === i.id);
-    if (matchingIndex > -1) {
-      matchingIndex = videos.length + matchingIndex;
-      onMediaGallerySlideChange(matchingIndex, true);
-      onMediaGalleryToggleFullscreen(true);
-    }
-  };
-
-  // todo clean up
-  // openFloorPlanModal = (floorPlan) => {
-  //   const {
-  //     showModal,
-  //     hideModal,
-  //     community,
-  //     user,
-  //     userAction,
-  //     onFloorPlanModalToggle,
-  //   } = this.props;
-  //   const { userDetails } = userAction;
-  //   const { info: floorPlanInfo } = floorPlan;
-  //   const { id, propInfo } = community;
-  //   const { typeCare: typeCares } = propInfo;
-  //   const typeOfCare = typeCares[0];
-  //
-  //   const modalComponentProps = {
-  //     communitySlug: id,
-  //     typeOfCare,
-  //     user,
-  //     floorPlanInfo,
-  //     userDetails,
-  //     postSubmit: hideModal,
-  //   };
-  //   const onClose = () => {
-  //     onFloorPlanModalToggle(floorPlan, true);
-  //   };
-  //
-  //   onFloorPlanModalToggle(floorPlan);
-  //   showModal(
-  //     <CommunityFloorPlanPopupFormContainer {...modalComponentProps} />,
-  //     onClose,
-  //     'noPadding'
-  //   );
-  // };
-
-  openAskQuestionModal = (question) => {
-    const { showModal, community, user, onToggleAskQuestionModal } = this.props;
-    const { id, name, questions } = community;
-    const questionToAnswer = questions.find(
-      q => q.type === question.type && q.id === question.id
-    );
-    // if (!questionToAnswer) {
-    //   questionToAnswer = communityFaQs.find(communityFaQ => communityFaQ.type === question.type && communityFaQ.id === question.id);
-    // }
-    let questionId;
-    let contentData;
-    let initialValues;
-    if (questionToAnswer) {
-      ({ id: questionId, contentData } = questionToAnswer);
-      initialValues = { question: contentData };
-    }
-
-    const modalComponentProps = {
-      communityName: name,
-      communitySlug: id,
-      showModal,
-      user,
-      initialValues,
-      parentSlug: questionId,
-    };
-    const onClose = () => {
-      onToggleAskQuestionModal(true);
-    };
-
-    onToggleAskQuestionModal();
-    showModal(
-      <CommunityAskQuestionFormContainer {...modalComponentProps} />,
-      onClose
-    );
-  };
-
-  openAnswerQuestionModal = (type, questionId) => {
-    const { showModal, hideModal, community } = this.props;
-    const { id, questions, communityFaQs } = community;
-    let questionToAnswer = questions.find(
-      question => question.type === type && question.id === questionId
-    );
-    if (!questionToAnswer) {
-      questionToAnswer = communityFaQs.find(
-        communityFaQ =>
-          communityFaQ.type === type && communityFaQ.id === questionId
-      );
-    }
-    if (questionToAnswer) {
-      const { id: questionId, contentData } = questionToAnswer;
-      const modalComponentProps = {
-        onSuccess: hideModal,
-        communitySlug: id,
-        questionText: contentData,
-        questionId,
-      };
-
-      showModal(
-        <CommunityLeaveAnAnswerFormContainer {...modalComponentProps} />
-      );
-    }
-  };
-
-  handleAddReviewButtonClick = () => {
-    const { showModal } = this.props;
-
-    showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
-  };
-
-  showExitModal = () => {
-    const { showModal } = this.props;
-
-    showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
   };
 
   render() {
     const {
-      openAskQuestionModal,
-      openAnswerQuestionModal,
-      handleAddReviewButtonClick,
-    } = this;
-    const {
       community,
       profileContacted,
       location,
-      onBackToSearchClicked,
-      onSimilarCommunitiesClick,
       user,
-      onReviewLinkClicked,
     } = this.props;
 
     const {
-      id,
       name,
       propInfo,
-      propRatings,
-      reviews,
       address,
       rgsAux,
       floorPlans,
       similarProperties,
       gallery = {},
       videoGallery = {},
-      questions,
-      communityFaQs,
       mainImage,
       partnerAgents,
       twilioNumber,
@@ -412,13 +265,6 @@ export default class CommunityDetailPage extends Component {
     const hasCCRC = typeCares.includes(
       'Continuing Care Retirement Community(CCRC)'
     );
-
-    // TODO: move this to a container for EntityReviews handling posts
-    const onLeaveReview = () => {};
-    // TODO: move this to a container PricingAndAvailability for handling bookings
-    const { reviewsValue } = propRatings;
-    const ratingsArray = propRatings.ratingsArray || [];
-    const reviewsFinal = reviews || [];
 
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
@@ -537,19 +383,18 @@ export default class CommunityDetailPage extends Component {
                     id="sticky-sidebar-boundary"
                   >
                     <MainSection>
-                      <SimilarCommunities
+                      <TrackedSimilarCommunitiesContainer
                         communities={similarProperties}
-                        onCommunityClick={onSimilarCommunitiesClick}
                         communityStyle={similarCommunityStyle}
                       />
                       <BackToSearch>
-                        <Button
-                          ghost
-                          onClick={onBackToSearchClicked}
+                        <BackToSearchButtonContainer
+                          community={community}
                           href={getCitySearchUrl({ propInfo, address })}
+                          ghost
                         >
                           Communities In {address.city}
-                        </Button>
+                        </BackToSearchButtonContainer>
                       </BackToSearch>
                     </MainSection>
                   </TopCollapsibleSection>
@@ -688,38 +533,17 @@ export default class CommunityDetailPage extends Component {
                   id="reviews"
                 >
                   <MainSection>
-                    <EntityReviews
-                      reviewsValue={reviewsValue}
-                      reviews={reviewsFinal}
-                      reviewRatings={ratingsArray}
-                      onLeaveReview={onLeaveReview}
-                      onReviewLinkClicked={onReviewLinkClicked}
-                    />
+                    <CommunityReviewsContainer community={community} />
                   </MainSection>
                   <ButtonBlock>
-                    <StyledButton onClick={handleAddReviewButtonClick}>
-                      Write a Review
-                    </StyledButton>
+                    <StyledLeaveReviewButton>Write a Review</StyledLeaveReviewButton>
                   </ButtonBlock>
                 </TopCollapsibleSection>
 
                 <TopCollapsibleSection title={`Questions About ${name}`}>
                   <MainSection>
-                    <CommunityQuestionAnswers
-                      communityName={name}
-                      communitySlug={id}
-                      questions={questions}
-                      communityFaQs={communityFaQs}
-                      onLeaveAnswerClick={openAnswerQuestionModal}
-                      onAskQuestionClick={openAskQuestionModal}
-                      user={user}
-                    />
+                    <CommunityQuestionAnswersContainer community={community} />
                   </MainSection>
-                  <ButtonBlock>
-                    <StyledButton onClick={openAskQuestionModal}>
-                      Ask a Question
-                    </StyledButton>
-                  </ButtonBlock>
                 </TopCollapsibleSection>
                 {plusCommunity && eventsLink && sampleEvents &&
                 <TopCollapsibleSection title={`Events at ${name}`}>
@@ -776,19 +600,18 @@ export default class CommunityDetailPage extends Component {
                     id="sticky-sidebar-boundary"
                   >
                     <MainSection>
-                      <SimilarCommunities
+                      <TrackedSimilarCommunitiesContainer
                         communities={similarProperties}
-                        onCommunityClick={onSimilarCommunitiesClick}
                         communityStyle={similarCommunityStyle}
                       />
                       <BackToSearch>
-                        <Button
-                          ghost
-                          onClick={onBackToSearchClicked}
+                        <BackToSearchButtonContainer
+                          community={community}
                           href={getCitySearchUrl({ propInfo, address })}
+                          ghost
                         >
                           Communities In {address.city}
-                        </Button>
+                        </BackToSearchButtonContainer>
                       </BackToSearch>
                     </MainSection>
                   </BottomCollapsibleSection>
@@ -809,13 +632,7 @@ export default class CommunityDetailPage extends Component {
                 title={`More Photos of ${name}`}
                 titleSize="subtitle"
               >
-                <MorePictures
-                  gallery={gallery}
-                  communityName={name}
-                  city={address.city}
-                  state={address.state}
-                  onPictureClick={this.handleMorePicturesClick}
-                />
+                <CommunityMorePicturesContainer community={community} />
               </StyledSection>
             )}
             <Section title={`Map View of ${name}`} titleSize="subtitle" />

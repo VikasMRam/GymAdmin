@@ -17,7 +17,6 @@ const EntityReviews = ({
   reviewsValue,
   reviews,
   reviewRatings,
-  onLeaveReview,
   communityReviewsRef,
   onReviewLinkClicked,
 }) => {
@@ -40,7 +39,6 @@ const EntityReviews = ({
       {reviewRatings.length > 0 && (
         <GatheredReviewRatings
           reviewRatings={reviewRatings}
-          onLeaveReview={onLeaveReview}
           onReviewLinkClicked={onReviewLinkClicked}
         />
       )}
@@ -63,7 +61,6 @@ EntityReviews.propTypes = {
     reviewsUrl: string.isRequired,
     avgRating: number.isRequired,
   })),
-  onLeaveReview: func,
   communityReviewsRef: object,
   onReviewLinkClicked: func,
 };

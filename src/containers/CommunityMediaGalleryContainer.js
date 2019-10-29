@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
 import SlyEvent from 'sly/services/helpers/events';
 
 export default class CommunityMediaGalleryContainer extends React.Component {
   static propTypes = {
-    community: PropTypes.object,
+    community: PropTypes.object.isRequired,
   };
 
   state = {
@@ -13,74 +14,43 @@ export default class CommunityMediaGalleryContainer extends React.Component {
     isFullscreenActive: false,
   };
 
-  handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
-    const { community } = this.props;
-    if (fromMorePictures) {
-      const { id } = community;
-      const { gallery = {}, videoGallery = {} } = community;
-      const images = gallery.images || [];
-      const videos = videoGallery.videos || [];
-      const image = images[slideIndex - videos.length];
-      const event = {
-        action: 'show',
-        category: 'images',
-        label: id,
-        value: image.id,
-      };
-      SlyEvent.getInstance().sendEvent(event);
-    }
-    this.setState({
-      currentSlideIndex: slideIndex,
-    });
+  handleMediaGallerySlideChange = (slideIndex) => {
+    this.setState({ currentSlideIndex: slideIndex });
   };
 
-  handleToggleMediaGalleryFullscreen = (
-    fromMorePictures,
-    isVideo,
-    fromSeeMoreButton
-  ) => {
-    const { community } = this.props;
+  handleToggleMediaGalleryFullscreen = (isVideo, fromSeeMoreButton) => {
+    const { id: communityId, gallery = {}, videoGallery = {} } = this.props.community;
     const { isFullscreenActive, currentSlideIndex } = this.state;
 
-    const { id, gallery = {}, videoGallery = {} } = community;
     const images = gallery.images || [];
     const videos = videoGallery.videos || [];
+
     if (fromSeeMoreButton) {
       const event = {
         action: 'show',
         category: 'fullscreenMediaGallery',
-        label: id,
+        label: communityId,
         value: 'seeMoreButton',
       };
       SlyEvent.getInstance().sendEvent(event);
-    } else if (!fromMorePictures && !isVideo) {
-      const image = images[currentSlideIndex - videos.length];
-      const event = {
-        action: 'show',
-        category: 'fullscreenMediaGallery',
-        label: id,
-      };
-      if (image) {
-        event.value = image.id;
-      }
-      if (isFullscreenActive) {
-        event.action = 'hide';
-      }
-      SlyEvent.getInstance().sendEvent(event);
     } else if (isVideo) {
-      const video = videos[currentSlideIndex];
+      const video = videos[currentSlideIndex] || {};
       if (video) {
-        const event = {
-          action: 'show',
+        SlyEvent.getInstance().sendEvent({
+          action: isFullscreenActive ? 'hide' : 'show',
           category: 'mediaGalleryVideo',
-          label: id,
+          label: communityId,
           value: video.id,
-        };
-        if (isFullscreenActive) {
-          event.action = 'hide';
-        }
-        SlyEvent.getInstance().sendEvent(event);
+        });
       }
+    } else {
+      const image = images[currentSlideIndex - videos.length] || {};
+      SlyEvent.getInstance().sendEvent({
+        action: isFullscreenActive ? 'hide' : 'show',
+        category: 'fullscreenMediaGallery',
+        label: communityId,
+        value: image.id,
+      });
     }
 
     this.setState({
