@@ -222,6 +222,7 @@ jobs:
           POSTGRES_PASSWORD: slydev
           POSTGRES_USER: slydev
           POSTGRES_DB: slydev
+          SLY_APIRATELIMITENABLED: false
       - image: cypress/base:8
         environment:
           ## this enables colors in the output
