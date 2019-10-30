@@ -91,13 +91,13 @@ const FormSectionHeading = pad(Block, 'large');
 
 // const contactPreferenceOptionsList = [{ value: 'sms', label: 'SMS' }, { value: 'email', label: 'Email' }, { value: 'phone', label: 'Phone' }];
 
-// const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
-//   { value: 'EmailOnly', label: 'EmailOnly' },
-//   { value: 'WarmTransfer', label: 'WarmTransfer' },
-//   { value: 'WarmTransferVM', label: 'WarmTransferVM' },
-//   { value: 'NoAgent', label: 'NoAgent' },
-//   { value: 'EmailToAgent', label: 'EmailToAgent' },
-// ];
+const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
+  { value: 'EmailOnly', label: 'EmailOnly' },
+  { value: 'WarmTransfer', label: 'WarmTransfer' },
+  { value: 'WarmTransferVM', label: 'WarmTransferVM' },
+  { value: 'NoAgent', label: 'NoAgent' },
+  { value: 'ReferralSent', label: 'ReferralSent' },
+];
 
 // const tagsOptions = [
 //   { value: 'chocolate', label: 'Chocolate' },
@@ -158,7 +158,8 @@ class FamilyDetailsForm extends Component {
     const mobilityLevelOptions = careLevels.map(i => <option key={i} value={i}>{i}</option>);
     const communityCareTypeOptions = communityTypes.map(i => <option key={i} value={i}>{i}</option>);
     const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
-    // const tagColumn = { typeInfo: { api: '/platform/tags?name=' } };
+    const tagColumn = { typeInfo: { api: '/v0/platform/tags?filter[name]=' }, value: 'tag.name' };
+    // const medicaidOptions = [{ label: 'Yes', value: true }];
     return (
       <div>
         {!canEditFamilyDetails &&
@@ -182,28 +183,28 @@ class FamilyDetailsForm extends Component {
                   <option value="" disabled>Select</option>
                   {assignedToOptions}
                 </Field>
-                {/* <Field
-                    name="tags"
-                    label="Tags"
-                    type="choice"
-                    readOnly={!canEditFamilyDetails}
-                    component={ReduxField}
-                    wideWidth
-                    options={tagsOptions}
-                    isMulti
-                  />
-                  <Field
-                    name="additionalAttributes"
-                    type="checkbox"
-                    label="Additional Attributes"
-                    component={ReduxField}
-                    options={additionalMDOptions}
-                    wideWidth
-                  /> */}
+                <Field
+                  name="additionalMetadata"
+                  type="checkbox"
+                  label="Additional Attributes"
+                  component={ReduxField}
+                  options={additionalMDOptions}
+                  wideWidth
+                />
+                <Field
+                  name="tags"
+                  label="Tags"
+                  type="autocomplete"
+                  readOnly={!canEditFamilyDetails}
+                  component={ReduxField}
+                  wideWidth
+                  column={tagColumn}
+                  isMulti
+                />
               </FormSection>
             </Role>
             <FormSection>
-              <FormSectionHeading weight="medium">Contact Info</FormSectionHeading>
+              <FormSectionHeading weight="medium">Primary</FormSectionHeading>
               <Field
                 name="name"
                 label="Contact name"
@@ -232,6 +233,56 @@ class FamilyDetailsForm extends Component {
                 placeholder={!accepted ? 'Accept family to view' : null}
                 parse={phoneParser}
                 format={phoneFormatter}
+                component={ReduxField}
+                wideWidth
+              />
+              <PaddedTwoColumnWrapper verticalCenter>
+                <StyledLabel>Preferred location</StyledLabel>
+                <StyledSearchBoxContainer
+                  allowOnlySelectionFromSuggestions
+                  clearLocationOnBlur={false}
+                  onLocationSearch={handleLocationChange}
+                  address={preferredLocation}
+                  readOnly={!canEditFamilyDetails}
+                />
+                <Field
+                  name="preferredLocation"
+                  type="hidden"
+                  component={ReduxField}
+                />
+              </PaddedTwoColumnWrapper>
+              {/* todo: @pranesh fixme
+              <Field
+                name="medicaid"
+                label="Qualifies for Medicaid"
+                type="checkbox"
+                disabled={!canEditFamilyDetails}
+                component={ReduxField}
+                wideWidth
+              />
+              */
+              }
+              <Field
+                name="slyAgentMessage"
+                label="Summary for Agent"
+                type="textarea"
+                disabled={!canEditFamilyDetails}
+                component={ReduxField}
+                wideWidth
+              />
+              <Field
+                name="slyCommunityMessage"
+                label="Summary for Community"
+                type="textarea"
+                disabled={!canEditFamilyDetails}
+                component={ReduxField}
+                wideWidth
+              />
+              <Field
+                name="slyMessage"
+                label="Seniorly Introduction"
+                type="textarea"
+                disabled={!canEditFamilyDetails}
                 component={ReduxField}
                 wideWidth
               />
@@ -294,14 +345,7 @@ class FamilyDetailsForm extends Component {
                 component={ReduxField}
                 wideWidth
               />
-              <Field
-                name="slyMessage"
-                label="Summary"
-                type="textarea"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              />
+
             </FormSection>
             <FormSection>
               <FormSectionHeading weight="medium">Care Needs</FormSectionHeading>
@@ -320,21 +364,6 @@ class FamilyDetailsForm extends Component {
             </FormSection>
             <FormSection>
               <FormSectionHeading weight="medium">Search Preferences</FormSectionHeading>
-              <PaddedTwoColumnWrapper verticalCenter>
-                <StyledLabel>Preferred location</StyledLabel>
-                <StyledSearchBoxContainer
-                  allowOnlySelectionFromSuggestions
-                  clearLocationOnBlur={false}
-                  onLocationSearch={handleLocationChange}
-                  address={preferredLocation}
-                  readOnly={!canEditFamilyDetails}
-                />
-                <Field
-                  name="preferredLocation"
-                  type="hidden"
-                  component={ReduxField}
-                />
-              </PaddedTwoColumnWrapper>
               <Field
                 name="roomPreference"
                 label="Room type"

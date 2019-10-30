@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { func, object } from 'prop-types';
 import produce from 'immer';
@@ -23,7 +23,6 @@ import ConfirmReasonFormContainer from 'sly/containers/ConfirmReasonFormContaine
 import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
 
 const options = [
-
   { label: 'Active',    icon: 'active',     palette: 'green',  value: FAMILY_STATUS_ACTIVE, role: AGENT_ND_ROLE  },
   // { label: 'Hot',       icon: 'hot',        palette: 'yellow', value: FAMILY_STATUS_HOT },
   { label: 'Long Term', icon: 'hourglass',  palette: 'purple', value: FAMILY_STATUS_LONG_TERM, role: PLATFORM_ADMIN_ROLE },
@@ -31,6 +30,11 @@ const options = [
   { label: 'Archived',  icon: 'archived',   palette: 'slate',  value: FAMILY_STATUS_ARCHIVED, role: PLATFORM_ADMIN_ROLE  },
   { label: 'Deleted',   icon: 'trash-fill', palette: 'grey',   value: FAMILY_STATUS_DELETED, role: PLATFORM_ADMIN_ROLE },
 ];
+
+const reasonKeys = {
+  'Long Term': 'longTermReason',
+  'On Pause': 'onHoldReason',
+};
 
 const StyledField = styled(Field)`
   text-transform: uppercase;
@@ -81,7 +85,7 @@ export default class StatusSelect extends Component {
     type: 'date',
     size: 'small',
     required: true,
-    label: <Fragment>Expected resume date<Span palette="danger">*</Span></Fragment>,
+    label: <>Expected resume date<Span palette="danger">*</Span></>,
   });
 
   // FIXME: Because I am an idiot and am not clever in the slightest
@@ -133,7 +137,9 @@ export default class StatusSelect extends Component {
     return updateClient({ id: rawClient.id }, produce(rawClient, (draft) => {
       draft.attributes.status = clientStatus;
       if (reason) {
-        draft.attributes.clientInfo.onHoldReason = reason;
+        draft.attributes.clientInfo[reasonKeys[clientStatus]] = reason;
+      }
+      if (date) {
         draft.attributes.clientInfo.resumeDate = date;
       }
     }));

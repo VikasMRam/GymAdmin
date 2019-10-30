@@ -1,5 +1,4 @@
-/* eslint-disable react/self-closing-comp */
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { object, arrayOf, func } from 'prop-types';
 import queryString from 'query-string';
@@ -8,7 +7,7 @@ import theme from 'sly/components/themes/default';
 import { size, gridColumns, assetPath } from 'sly/components/themes';
 import { getPaginationData } from 'sly/services/helpers/pagination';
 import pad from 'sly/components/helpers/pad';
-import shadow from 'sly/components/helpers/shadow';
+import { shadowOnHover } from 'sly/components/helpers/shadow';
 import { Image, Centered, Link, Block } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
 import Heading from 'sly/components/atoms/Heading';
@@ -45,7 +44,7 @@ const MSCColumnWrapper = styled.div`
 
 const PaddedPagination = pad(Pagination, 'small');
 
-const ShadowCommunityTile = shadow(styled(CommunityTile)`
+const ShadowCommunityTile = shadowOnHover(styled(CommunityTile)`
   position: relative;
 `);
 
@@ -155,15 +154,13 @@ const CommunitySearchList = ({
   }
 
   return (
-    <Fragment>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+    <>
       <CommunityFilterBarWrapper>
         <CommunityFilterBar searchParams={searchParams} {...props} />
       </CommunityFilterBarWrapper>
       {components}
       {communityList.length < 1 &&
-        <Fragment>
-          {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+        <>
           <StyledHeading size="subtitle">Explore homes in popular cities</StyledHeading>
           <MSCColumnWrapper>
             {mostSearchedCitiesComponents}
@@ -172,17 +169,13 @@ const CommunitySearchList = ({
           <MSCColumnWrapper>
             {usefulInformationTilesComponents}
           </MSCColumnWrapper>
-        </Fragment>
+        </>
       }
-      <Fragment>
-        {`Showing ${start} to ${end} of ${count}`}
-      </Fragment>
+      {`Showing ${start} to ${end} of ${count}`}
       {communityList.length > 0 &&
-        <Fragment>
-          <PaddedPagination basePath={basePath} pageParam="page-number" current={current} total={total} />
-        </Fragment>
+        <PaddedPagination basePath={basePath} pageParam="page-number" current={current} total={total} />
       }
-    </Fragment>
+    </>
   );
 };
 

@@ -1,11 +1,19 @@
 import React from 'react';
-import { object, func } from 'prop-types';
-
+import { bool } from 'prop-types';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
+import {
+  createBooleanValidator,
+  email,
+  required,
+  usPhone,
+} from 'sly/services/validation';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import GetAvailabilitySuccessBox from 'sly/components/molecules/GetAvailabilitySuccessBox';
 import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
+import GetCustomPricingContainer from 'sly/containers/GetCustomPricingContainer';
+import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
+import { getSearchParams } from 'sly/services/helpers/search';
+import { withRouter } from 'react-router';
 
 const hasAllUserData = createBooleanValidator({
   fullName: [required],
@@ -13,42 +21,59 @@ const hasAllUserData = createBooleanValidator({
   phone: [required, usPhone],
 });
 
-const GetCurrentAvailabilityContainer = ({
-  community, queryParams, setQueryParams, onGotoGetCustomPricing, onSubmitExpressConversion, history,
-}) => {
+function GetCurrentAvailabilityContainer({
+  community,
+  hasAlreadyRequestedPricing,
+  history,
+  location,
+  match,
+}) {
   const { id } = community;
+  const setQueryParams = getQueryParamsSetter(history, location);
+  const queryParams = getSearchParams(match, location);
 
   return (
-    <ConciergeController
-      communitySlug={id}
-      queryParams={queryParams}
-      setQueryParams={setQueryParams}
-      gotoGetCustomPricing={onGotoGetCustomPricing}
-      history={history}
+    <GetCustomPricingContainer
+      community={community}
+      hasAlreadyRequestedPricing={hasAlreadyRequestedPricing}
     >
-      {({ concierge, submitExpressConversion, userDetails }) => {
-          if (concierge.contactRequested) {
-            return <GetAvailabilitySuccessBox hasAllUserData={hasAllUserData(userDetails)} />;
-          }
-          return (
-            <GetCurrentAvailabilityFormContainer
-              submitExpressConversion={e => onSubmitExpressConversion(e, submitExpressConversion)}
-              community={community}
-            />
-          );
-        }
-      }
-    </ConciergeController>
+      {getCustomPricing => (
+        <ConciergeController
+          communitySlug={id}
+          queryParams={queryParams}
+          setQueryParams={setQueryParams}
+          gotoGetCustomPricing={getCustomPricing}
+          history={history}
+        >
+          {({ concierge, submitExpressConversion, userDetails }) => {
+            if (concierge.contactRequested) {
+              return (
+                <GetAvailabilitySuccessBox
+                  hasAllUserData={hasAllUserData(userDetails)}
+                />
+              );
+            }
+            return (
+              <GetCurrentAvailabilityFormContainer
+                submitExpressConversion={(e) => {
+                  if (!hasAlreadyRequestedPricing) {
+                    submitExpressConversion(e);
+                  }
+                  getCustomPricing();
+                }}
+                community={community}
+              />
+            );
+          }}
+        </ConciergeController>
+      )}
+    </GetCustomPricingContainer>
   );
-};
+}
 
 GetCurrentAvailabilityContainer.propTypes = {
-  community: communityPropType,
-  queryParams: object,
-  setQueryParams: func,
-  onGotoGetCustomPricing: func,
-  onSubmitExpressConversion: func,
-  history: object,
+  community: communityPropType.isRequired,
+  hasAlreadyRequestedPricing: bool,
 };
 
-export default GetCurrentAvailabilityContainer;
+export default withRouter(GetCurrentAvailabilityContainer);

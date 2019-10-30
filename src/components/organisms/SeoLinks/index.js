@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { arrayOf, string, object } from 'prop-types';
 
@@ -46,22 +46,22 @@ export default class SeoLinks extends Component {
     links: arrayOf(object).isRequired,
   };
   renderSection = (title, data) => (
-    <Fragment>
+    <>
       <StyledHeading level="subtitle">{title}</StyledHeading>
       <PatchedCollapsibleBlock minHeight="small">
         <LinkList>
           {data.map(link => <Link size="tiny" key={link.to} {...link}>{link.title}</Link>)}
         </LinkList>
       </PatchedCollapsibleBlock>
-    </Fragment>
+    </>
   );
 
   render() {
     const { title, links } = this.props;
     return (
-      <Fragment>
+      <>
         {this.renderSection(title, links)}
-      </Fragment>
+      </>
     );
   }
 }

@@ -1,0 +1,3338 @@
+{
+  "data": {
+    "type": "Community",
+    "id": "rhoda-goldman-plaza",
+    "attributes": {
+      "createdAt": "2015-04-10T22:38:59Z",
+      "floorPlanString": "Suite, Studio, One Bedroom",
+      "lastViewedAt": "2019-10-14T12:44:23Z",
+      "mainImage": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_sd.jpg",
+      "name": "Rhoda Goldman Plaza",
+      "propInfo": {
+        "ownerImage": [
+          {
+            "name": "len and tablet.jpg",
+            "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%2520and%2520tablet_hd.jpg",
+            "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%2520and%2520tablet_sd.jpg"
+          }
+        ],
+        "ratesText": "$6,027",
+        "licenseNumber": "385600125",
+        "ownerName": "Scott Street Senior Housing",
+        "ownerExprience": "Rhoda Goldman Plaza welcomes all and was founded by Mt. Zion Hospital and Jewish Family and Children's Services in order to offer kosher food and Jewish services to seniors in San Francisco.",
+        "ownerYears": "2000",
+        "personalSpace": [
+          "2-Bedroom Apartments",
+          "1-Bedroom Apartments",
+          "Kitchenettes",
+          "Private Bathrooms",
+          "Internet",
+          "Cable",
+          "Wifi"
+        ],
+        "profileServices": null,
+        "typeCare": [
+          "Assisted Living",
+          "Memory Care"
+        ],
+        "careServices": [
+          "Activities of Daily Living Assistance",
+          "Meal Preparation and Service",
+          "Coordination with Health Care Providers",
+          "Medication Management",
+          "Transportation to Doctors Appointments",
+          "Transportation Arrangement",
+          "24-Hour Call System",
+          "Respite Program",
+          "Diabetes Diet",
+          "Diabetes Care",
+          "Parkinsons Care",
+          "Mild Cognitive Impairment",
+          "Hospice Waiver",
+          "Dementia Waiver"
+        ],
+        "nonCareServices": [
+          "Housekeeping & Linen Services",
+          "Scheduled Transportation (non-medical related)",
+          "Fitness Programs",
+          "Continuing Learning Programs",
+          "Resident-Run Activities",
+          "Community-Sponsored Activities"
+        ],
+        "staffDescription": "Our Department of Health Services is headed by a Registered Nurse. Our care staff is made up of LVN's, Med Tech's and CNA's and is located in offices on each residential floor. We have a dedicated Memory Care Floor called the Terrace, where all needed levels of care are included. In assisted living we offer Medication Management, Dressing and Bathing, Escort/Transfer service and Toileting or Incontinence Care. We also have a Hospice Care Waiver.",
+        "communityDescription": "Dine in our elegant and sunny dining room or light-filled cafe, enjoy our large outdoor patio, exercise in our Fitness Center or pamper yourself in our Hair Salon. Relax or read the newspaper in our living room/library. Catch our exercise classes, lectures and discussions, concerts, outings, art classes, games, shopping trips and daily movies. Walk or use our shuttle for doctor visits; we are very close to many renowned medical offices and facilities. Life at Rhoda Goldman Plaza awaits.",
+        "residentFaith": [
+          "Jewish"
+        ],
+        "residentLanguages": [
+          "English"
+        ],
+        "managementCompany": "Scott Street Senior Housing, a Non-Profit Organization",
+        "parentCompany": "Not Applicable",
+        "websiteUrl": "www.rgplaza.org",
+        "capacity": "195",
+        "minAge": "60 unless care needed due to condition or illness",
+        "secured": "Yes",
+        "communitySize": "51 +",
+        "communityFee": "$4,950",
+        "ccrcFee": "N/A",
+        "snfDailyRate": "N/A",
+        "sharedSuiteRate": "N/A",
+        "privateSuiteRate": "N/A",
+        "studioApartmentRate": "$6,027",
+        "oneBedroomApartmentRate": "$6,824",
+        "twoBedroomApartmentRate": "$8,868",
+        "serviceHighlights": [
+          "End of life care",
+          "Lifelong learning",
+          "Community operated transportation"
+        ],
+        "communityHighlights": [
+          "Cultural",
+          "Alzheimer’s / Dementia",
+          "Outdoor space"
+        ],
+        "admin": [
+          "Visited By Seniorly"
+        ],
+        "respiteAllowed": {
+          "checked": true,
+          "minlength": 14,
+          "label": "Respite Care"
+        },
+        "caringUrl": "https://www.caring.com/local/assisted-living-facilities-in-san-francisco-california/rhoda-goldman-plaza",
+        "senioradvisorsUrl": "https://www.senioradvisor.com/local/rhoda-goldman-plaza-san-francisco-ca",
+        "yelpUrl": "http://www.yelp.com/biz/rhoda-goldman-plaza-san-francisco",
+        "scriptDate": "0001-01-01T00:00:00Z"
+      },
+      "propRatings": {
+        "hasWebReviews": true,
+        "hasSlyReviews": false,
+        "ratingsArray": [
+          {
+            "name": "Yelp",
+            "numReviews": 9,
+            "reviewsUrl": "http://www.yelp.com/biz/rhoda-goldman-plaza-san-francisco",
+            "avgRating": 3.22
+          },
+          {
+            "name": "Caring.com",
+            "numReviews": 13,
+            "reviewsUrl": "https://www.caring.com/local/assisted-living-facilities-in-san-francisco-california/rhoda-goldman-plaza",
+            "avgRating": 4.23
+          },
+          {
+            "name": "Facebook",
+            "numReviews": 11,
+            "reviewsUrl": "https://www.facebook.com/Rhoda-Goldman-Plaza-170692986357988/",
+            "avgRating": 4.5
+          },
+          {
+            "name": "SeniorAdvisor.com",
+            "numReviews": 4,
+            "reviewsUrl": "https://www.senioradvisor.com/local/rhoda-goldman-plaza-san-francisco-ca",
+            "avgRating": 4.13
+          }
+        ],
+        "reviewsValue": 4.0540543,
+        "numReviews": 37
+      },
+      "rates": "6027",
+      "slyScore": 96.4873417721519,
+      "startingRate": 6027,
+      "status": 2,
+      "updatedAt": "2018-06-05T18:22:59Z",
+      "url": "/assisted-living/california/san-francisco/rhoda-goldman-plaza"
+    },
+    "relationships": {
+      "address": {
+        "data": {
+          "type": "Address",
+          "id": "2707e29ff183af005487e959a086dea0"
+        }
+      },
+      "agents": {
+        "data": []
+      },
+      "contacts": {
+        "data": [
+          {
+            "type": "Contact",
+            "id": "b65ba500cdfcd8fded56bde5c9160abf"
+          },
+          {
+            "type": "Contact",
+            "id": "b65ba500cdfcd8fded56bde5c9160abf"
+          },
+          {
+            "type": "Contact",
+            "id": "b65ba500cdfcd8fded56bde5c9160abf"
+          }
+        ]
+      },
+      "floorPlans": {
+        "data": []
+      },
+      "gallery": {
+        "data": {
+          "type": "Gallery",
+          "id": "c3e2a85523a03b2c3f9bbf1af19d21e9"
+        }
+      },
+      "organization": {
+        "data": {
+          "type": "Organization",
+          "id": "bee877af68c08ce8502fcee0da9567f4"
+        }
+      },
+      "partnerAgents": {
+        "data": []
+      },
+      "questions": {
+        "data": []
+      },
+      "reviews": {
+        "data": []
+      },
+      "rgsAux": {
+        "data": {
+          "type": "RgsAux",
+          "id": "028f3d43fe976da3e7cd8f560f8b4a63"
+        }
+      },
+      "similarProperties": {
+        "data": [
+          {
+            "type": "SearchResource",
+            "id": "victorian-manor"
+          },
+          {
+            "type": "SearchResource",
+            "id": "eden-villa-san-francisco"
+          },
+          {
+            "type": "SearchResource",
+            "id": "agesong-laguna-grove-care"
+          },
+          {
+            "type": "SearchResource",
+            "id": "agesong-hayes-valley-care"
+          }
+        ]
+      },
+      "twilioNumber": {
+        "data": {
+          "type": "TwilioNumber",
+          "id": "ac2fb468dd76b8e1bb1f4d8eaaa4e958"
+        }
+      },
+      "user": {
+        "data": {
+          "type": "User",
+          "id": "a2c9987ae9a50a52a199145df1061b10"
+        }
+      },
+      "videoGallery": {
+        "data": {
+          "type": "VideoGallery",
+          "id": "ffb714b0df795bd3ee310aafb7274a8e"
+        }
+      }
+    }
+  },
+  "included": [
+    {
+      "type": "Gallery",
+      "id": "b3935dab05699bc4ceeedea650f3078d",
+      "attributes": {
+        "createdAt": "2014-11-12T19:06:39Z",
+        "updatedAt": "2018-06-05T18:17:37Z"
+      },
+      "relationships": {
+        "images": {
+          "data": [
+            {
+              "type": "Image",
+              "id": "d33051da4e34d02f14aa21867ecd9bf8"
+            },
+            {
+              "type": "Image",
+              "id": "1ae8d507de6e937c26b67bb4a8248599"
+            },
+            {
+              "type": "Image",
+              "id": "ede41c270371cc93c7e66b30f0e83c84"
+            },
+            {
+              "type": "Image",
+              "id": "21aff52452aa07564f9a853a2845a47e"
+            },
+            {
+              "type": "Image",
+              "id": "7d7f1490dd0742cc40ea4ffb6dcd7478"
+            },
+            {
+              "type": "Image",
+              "id": "7a687dd4aee023ed744592c4eab062a3"
+            },
+            {
+              "type": "Image",
+              "id": "d871d2d42a6a36c7c37af3fd11bdd2ab"
+            },
+            {
+              "type": "Image",
+              "id": "dda45e6726bf5ebe054516e8b20c99c4"
+            },
+            {
+              "type": "Image",
+              "id": "c841a5a00b09e7e26285194d5e259b79"
+            },
+            {
+              "type": "Image",
+              "id": "9b3a6ec0181efd60f9fc04c9795cc792"
+            },
+            {
+              "type": "Image",
+              "id": "de319972a7eb68600630ea454e990828"
+            },
+            {
+              "type": "Image",
+              "id": "56bdadbf990fe8e1f389d2238aa5c203"
+            },
+            {
+              "type": "Image",
+              "id": "e4362d55171e8f881930fa38a3cd151c"
+            },
+            {
+              "type": "Image",
+              "id": "c8bfb30d537fed9d6bc4742a1efa9e33"
+            },
+            {
+              "type": "Image",
+              "id": "0e44823e622cdbf9e9a94f59e021872a"
+            },
+            {
+              "type": "Image",
+              "id": "f1ab2325d7ed3f08a840122b67e74b86"
+            },
+            {
+              "type": "Image",
+              "id": "9b625cc3a2b872f1a53b6f8ee25e82dd"
+            },
+            {
+              "type": "Image",
+              "id": "ed2223775cbf59d076f110c5a8fe930f"
+            },
+            {
+              "type": "Image",
+              "id": "84d45f7999bc749719fa9a486d958500"
+            },
+            {
+              "type": "Image",
+              "id": "b28ccce391df6ed909dca77ee2f6a6aa"
+            },
+            {
+              "type": "Image",
+              "id": "bc22ffee9321945269e49de80d655896"
+            },
+            {
+              "type": "Image",
+              "id": "407e55d000c28c17ba3e3f6a0849ea39"
+            },
+            {
+              "type": "Image",
+              "id": "33707e6512349eeddb4e136f82ea4e1c"
+            },
+            {
+              "type": "Image",
+              "id": "bcd5e2e96aa0632a2bd510d8bf3ff6bb"
+            },
+            {
+              "type": "Image",
+              "id": "83b45c95ab1a31b34143c2976bcdb7ac"
+            },
+            {
+              "type": "Image",
+              "id": "3158e9be0b35480d569b972119a0c13c"
+            },
+            {
+              "type": "Image",
+              "id": "5a072381d567cbed9f5fa990e4fa1679"
+            },
+            {
+              "type": "Image",
+              "id": "f28a69f138243481980dc3a3d544cdc1"
+            },
+            {
+              "type": "Image",
+              "id": "063194bf63b44a557ce4dac6b2d3a4c4"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "7cae6bc25a5f2b06b1c7184ab5899d84",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a217a6403603653e47bead24b809de66/AgeSong_Laguna_Grove_Care-2_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-2.jpg",
+        "path": "a217a6403603653e47bead24b809de66/AgeSong_Laguna_Grove_Care-2.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a217a6403603653e47bead24b809de66/AgeSong_Laguna_Grove_Care-2_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a217a6403603653e47bead24b809de66/AgeSong_Laguna_Grove_Care-2_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a217a6403603653e47bead24b809de66/AgeSong_Laguna_Grove_Care-2.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "5908cfae1970f541cac3160b8ab6a126",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-20_hd.jpg",
+        "name": "Agesong_logo-20.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-20.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-20_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-20_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-20.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "84d45f7999bc749719fa9a486d958500",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-4_hd.jpg",
+        "name": "Eden_Villa_logo-4.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-4.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-4_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-4_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-4.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "b28ccce391df6ed909dca77ee2f6a6aa",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-5_hd.jpg",
+        "name": "Eden_Villa_logo-5.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-5.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-5_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-5_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-5.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "5909552c67a804343c82094405bd1df7",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-8_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-8.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-8.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-8_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-8_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-8.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "30ad91a3df6fad8eecfc1ae4103db17d",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5666_sm_hd.jpg",
+        "name": "VM-5666_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5666_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5666_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5666_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5666_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "c493987e7802d43deeae8f2ed9add01a",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/front%2520of%2520RGP%2520building-4_hd.jpg",
+        "name": "front of RGP building-4.jpg",
+        "path": "9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/front%2520of%2520RGP%2520building-4_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/front%2520of%2520RGP%2520building-4_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "79bb276e8fdb1161daf9eec78dea0e12",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/4e657a543966412518fcd92150202aab/VM-5711_WEBSITE_FOOTER_hd.jpg",
+        "name": "VM-5711_WEBSITE_FOOTER.jpg",
+        "path": "4e657a543966412518fcd92150202aab/VM-5711_WEBSITE_FOOTER.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/4e657a543966412518fcd92150202aab/VM-5711_WEBSITE_FOOTER_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/4e657a543966412518fcd92150202aab/VM-5711_WEBSITE_FOOTER_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/4e657a543966412518fcd92150202aab/VM-5711_WEBSITE_FOOTER.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "3214d295fb57c6980c4b1bd1590c421f",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5710_sm_hd.jpg",
+        "name": "VM-5710_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5710_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5710_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5710_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5710_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "23c205e550ef7d8502769b7dcfb60173",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-11_hd.jpg",
+        "name": "Agesong_logo-11.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-11.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-11_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-11_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-11.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "User",
+      "id": "a2c9987ae9a50a52a199145df1061b10",
+      "attributes": {
+        "admin": true,
+        "confirmedAt": "2015-11-30T13:52:08Z",
+        "createdAt": "2015-11-21T01:20:30Z",
+        "email": "sushanth@seniorly.com",
+        "hasPasswordSet": true,
+        "name": "Sushanth Sly",
+        "phoneNumber": "4159978742",
+        "roleID": 2,
+        "updatedAt": "2018-12-20T16:36:42Z",
+        "uuid": "e2867c96-20b7-4379-b597-d7bd0e49bab8"
+      },
+      "relationships": {
+        "organization": {
+          "data": {
+            "type": "Organization",
+            "id": "bee877af68c08ce8502fcee0da9567f4"
+          }
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "f28a69f138243481980dc3a3d544cdc1",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_header-1_hd.jpg",
+        "name": "Eden_Villa_header-1.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_header-1.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_header-1_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_header-1_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_header-1.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "1ae8d507de6e937c26b67bb4a8248599",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-2_hd.jpg",
+        "name": "Eden_Villa_logo-2.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-2.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-2_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-2_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-2.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "3158e9be0b35480d569b972119a0c13c",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-25_hd.jpg",
+        "name": "Eden_Villa_logo-25.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-25.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-25_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-25_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-25.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "77630b58491c00b528ed6d794bfdefc3",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-29_hd.jpg",
+        "name": "Agesong_logo-29.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-29.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-29_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-29_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-29.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "33707e6512349eeddb4e136f82ea4e1c",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-29_hd.jpg",
+        "name": "Eden_Villa_logo-29.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-29.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-29_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-29_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-29.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "c8bfb30d537fed9d6bc4742a1efa9e33",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-26_hd.jpg",
+        "name": "Eden_Villa_logo-26.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-26.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-26_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-26_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-26.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "bcd5e2e96aa0632a2bd510d8bf3ff6bb",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-28_hd.jpg",
+        "name": "Eden_Villa_logo-28.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-28.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-28_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-28_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-28.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "8faa498dcf7a9a9e2aa36bf37f1d5ab9",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-16_hd.jpg",
+        "name": "Agesong_logo-16.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-16.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-16_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-16_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-16.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "a1474fbfe191107a6fc58b133939ea83",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-18_hd.jpg",
+        "name": "Agesong_logo-18.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-18.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-18_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-18_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-18.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "TwilioNumber",
+      "id": "ac2fb468dd76b8e1bb1f4d8eaaa4e958",
+      "attributes": {
+        "application": "",
+        "areaCode": 415,
+        "cityID": 2597,
+        "createdAt": "2017-03-15T18:39:24Z",
+        "numbers": [
+          4152639703
+        ],
+        "updatedAt": "2017-03-15T18:39:24Z"
+      }
+    },
+    {
+      "type": "Image",
+      "id": "caea2dd96fa133dd799b86fc94420152",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5676_sm_hd.jpg",
+        "name": "VM-5676_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5676_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5676_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5676_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5676_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "dda45e6726bf5ebe054516e8b20c99c4",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-21_hd.jpg",
+        "name": "Eden_Villa_logo-21.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-21.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-21_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-21_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-21.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "SearchResource",
+      "id": "agesong-laguna-grove-care",
+      "attributes": {
+        "addressString": "601 Laguna Street, San Francisco, CA",
+        "communitySize": "51 +",
+        "description": "AgeSong at Laguna Grove in San Francisco offers specialized meaning-based elder care for high needs assisted living, innovative fo...",
+        "estimated": false,
+        "floorPlanString": "Suite, Studio, One Bedroom",
+        "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2_sd.jpg",
+        "latitude": 37.7768864,
+        "longitude": -122.4266889,
+        "mainService": "Assisted Living",
+        "name": "AgeSong Laguna Grove Care",
+        "numReviews": 9,
+        "resourceType": "Community",
+        "reviewsValue": 4,
+        "startingRate": 5800,
+        "typeCare": [
+          "Assisted Living",
+          "Memory Care",
+          "Respite Care"
+        ],
+        "url": "/assisted-living/california/san-francisco/agesong-laguna-grove-care"
+      },
+      "relationships": {
+        "gallery": {
+          "data": {
+            "type": "Gallery",
+            "id": "d54d4b12de5caf30cc289b08e418a9bb"
+          }
+        },
+        "webViewInfo": {
+          "data": {
+            "type": "WebViewInfo",
+            "id": "agesong-laguna-grove-care"
+          }
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "15ff69c320cecba709e11eecd49da166",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%2520and%2520tablet_hd.jpg",
+        "name": "len and tablet.jpg",
+        "path": "9e98a8d1b8d59941d725a30737861441/len%20and%20tablet.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%2520and%2520tablet_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%2520and%2520tablet_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%20and%20tablet.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "0e44823e622cdbf9e9a94f59e021872a",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-23_hd.jpg",
+        "name": "Eden_Villa_logo-23.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-23.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-23_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-23_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-23.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "WebViewInfo",
+      "id": "agesong-hayes-valley-care",
+      "attributes": {
+        "ctaText": "Get Pricing.",
+        "firstLineValue": "Assisted Living, Memory Care, Respite Care",
+        "secondLineValue": "Suite"
+      }
+    },
+    {
+      "type": "Image",
+      "id": "f8702fb2614ad26c93a95f5ea575b17f",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-22_hd.jpg",
+        "name": "Agesong_logo-22.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-22.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-22_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-22_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-22.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "00c1d050656c72da0bb0311679cf5345",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/c37329918f7b31167a8c4e95895f81e4/AgeSong_Hayes_Valley_Care_Header-1_hd.jpg",
+        "name": "AgeSong_Hayes_Valley_Care_Header-1.jpg",
+        "path": "c37329918f7b31167a8c4e95895f81e4/AgeSong_Hayes_Valley_Care_Header-1.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/c37329918f7b31167a8c4e95895f81e4/AgeSong_Hayes_Valley_Care_Header-1_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/c37329918f7b31167a8c4e95895f81e4/AgeSong_Hayes_Valley_Care_Header-1_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/c37329918f7b31167a8c4e95895f81e4/AgeSong_Hayes_Valley_Care_Header-1.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Gallery",
+      "id": "c3e2a85523a03b2c3f9bbf1af19d21e9",
+      "attributes": {
+        "createdAt": "2015-04-10T22:38:59Z",
+        "updatedAt": "2018-06-05T18:17:38Z"
+      },
+      "relationships": {
+        "images": {
+          "data": [
+            {
+              "type": "Image",
+              "id": "3d9e64e069d3663c15975da4d8ca26e9"
+            },
+            {
+              "type": "Image",
+              "id": "15ff69c320cecba709e11eecd49da166"
+            },
+            {
+              "type": "Image",
+              "id": "3c699269c0ad5aa75c6a9f9d6648bb1e"
+            },
+            {
+              "type": "Image",
+              "id": "7c580d1d286425f89fb2f6c5ab0b0cc0"
+            },
+            {
+              "type": "Image",
+              "id": "8cfa9d337d817e35320950e4f7f1e9f9"
+            },
+            {
+              "type": "Image",
+              "id": "150be9bb1e1f913ec41513371d8f7c42"
+            },
+            {
+              "type": "Image",
+              "id": "c493987e7802d43deeae8f2ed9add01a"
+            },
+            {
+              "type": "Image",
+              "id": "937deb3f62eb131533742644942b8326"
+            },
+            {
+              "type": "Image",
+              "id": "efce94280a1b9c3d4562b33188242c58"
+            },
+            {
+              "type": "Image",
+              "id": "92da4333049c4d6ccec8d7662a3934f2"
+            },
+            {
+              "type": "Image",
+              "id": "b3865885185f4673196ba407c878d165"
+            },
+            {
+              "type": "Image",
+              "id": "ddb49929f3915891cb67da8ad0ea663e"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "3058f1b9af0595b1afeaf8a1dc9e1fa9",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5709_sm_hd.jpg",
+        "name": "VM-5709_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5709_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5709_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5709_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5709_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "56bdadbf990fe8e1f389d2238aa5c203",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-13_hd.jpg",
+        "name": "Eden_Villa_logo-13.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-13.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-13_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-13_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-13.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "06e3b7da10a6c97bf2cc64c955a3b3e0",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-25_hd.jpg",
+        "name": "Agesong_logo-25.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-25.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-25_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-25_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-25.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "WebViewInfo",
+      "id": "victorian-manor",
+      "attributes": {
+        "ctaText": "Get Pricing.",
+        "firstLineValue": "Assisted Living",
+        "secondLineValue": "Suite, Studio, One Bedroom"
+      }
+    },
+    {
+      "type": "Image",
+      "id": "efa35cfcdeb884e0ec35faa0ef99ce59",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-9_hd.jpg",
+        "name": "Agesong_logo-9.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-9.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-9_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-9_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-9.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "WebViewInfo",
+      "id": "eden-villa-san-francisco",
+      "attributes": {
+        "ctaText": "Get Pricing.",
+        "firstLineValue": "Assisted Living, Memory Care",
+        "secondLineValue": "Suite, Studio, One Bedroom"
+      }
+    },
+    {
+      "type": "Image",
+      "id": "b3865885185f4673196ba407c878d165",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_hd.jpg",
+        "name": "RGP-June-2014_hd2.jpg",
+        "path": "a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Contact",
+      "id": "b65ba500cdfcd8fded56bde5c9160abf",
+      "attributes": {
+        "createdAt": "2017-05-25T20:29:31Z",
+        "email": "sushanthr+may292920@gmail.com",
+        "firstName": "Sush",
+        "lastName": "Ra",
+        "mobilePhone": "3122182906",
+        "name": "Sush Ra",
+        "updatedAt": "2017-06-01T05:10:15Z",
+        "validEmail": false,
+        "validSMS": false,
+        "workPhone": "2202020202"
+      },
+      "relationships": {
+        "entities": {
+          "data": []
+        },
+        "organization": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Gallery",
+      "id": "e3720af5b21ec033ca920a2606522d1f",
+      "attributes": {
+        "createdAt": "2015-03-24T21:21:03Z",
+        "updatedAt": "2018-06-05T18:17:38Z"
+      },
+      "relationships": {
+        "images": {
+          "data": [
+            {
+              "type": "Image",
+              "id": "79bb276e8fdb1161daf9eec78dea0e12"
+            },
+            {
+              "type": "Image",
+              "id": "140d7be083a810f761a0411b6e17f3d2"
+            },
+            {
+              "type": "Image",
+              "id": "4da57d67c0ca2870cde1379d426b5bb3"
+            },
+            {
+              "type": "Image",
+              "id": "caea2dd96fa133dd799b86fc94420152"
+            },
+            {
+              "type": "Image",
+              "id": "4ff20ad16e327b287a9a447eec41f9fd"
+            },
+            {
+              "type": "Image",
+              "id": "30ad91a3df6fad8eecfc1ae4103db17d"
+            },
+            {
+              "type": "Image",
+              "id": "6d66f8423d53204cb5dd463153db80ae"
+            },
+            {
+              "type": "Image",
+              "id": "154b6412dea6277a1043c8aa1823c927"
+            },
+            {
+              "type": "Image",
+              "id": "25534671add3c276b1f1244f7ec3bfea"
+            },
+            {
+              "type": "Image",
+              "id": "0820bb88abcc50da1f6954bb25afde8b"
+            },
+            {
+              "type": "Image",
+              "id": "b79e5eee4585fb0b4d2e1d7fbed0a285"
+            },
+            {
+              "type": "Image",
+              "id": "3034de7e56537d9e007def807265482c"
+            },
+            {
+              "type": "Image",
+              "id": "3058f1b9af0595b1afeaf8a1dc9e1fa9"
+            },
+            {
+              "type": "Image",
+              "id": "a5a7b0dfbd20db129d08032dcb859cbd"
+            },
+            {
+              "type": "Image",
+              "id": "7308f45383da360873d06c3fc9f723a6"
+            },
+            {
+              "type": "Image",
+              "id": "96ee36ab24d0d4f6ffae26b72810207d"
+            },
+            {
+              "type": "Image",
+              "id": "8b6fa88ef100eca1be714b515ffc74fd"
+            },
+            {
+              "type": "Image",
+              "id": "b81c9cea8d064aaf6ad89459781f272d"
+            },
+            {
+              "type": "Image",
+              "id": "85a2ec454e0330d8e30e88163d6c1bdb"
+            },
+            {
+              "type": "Image",
+              "id": "00cf3872b426d5b5de1e85a49a9d01be"
+            },
+            {
+              "type": "Image",
+              "id": "3214d295fb57c6980c4b1bd1590c421f"
+            },
+            {
+              "type": "Image",
+              "id": "ace690b2851a3aa8b0c6b3014f7a59b7"
+            },
+            {
+              "type": "Image",
+              "id": "bb4f4b633a6361397a2c829ac816d7ca"
+            },
+            {
+              "type": "Image",
+              "id": "1a2f1ba0172d18e9b8269a2140cd2ac5"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "1970a4e7edc69128aae220c73bb726e4",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-18_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-18.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-18.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-18_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-18_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-18.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "2db171d4e1a7797933de0aff99179c5b",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-14_hd.jpg",
+        "name": "Agesong_logo-14.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-14.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-14_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-14_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-14.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Organization",
+      "id": "bee877af68c08ce8502fcee0da9567f4",
+      "attributes": {
+        "name": "Seniorly"
+      }
+    },
+    {
+      "type": "Image",
+      "id": "a5a7b0dfbd20db129d08032dcb859cbd",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5715_sm_hd.jpg",
+        "name": "VM-5715_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5715_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5715_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5715_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5715_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "d871d2d42a6a36c7c37af3fd11bdd2ab",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-22_hd.jpg",
+        "name": "Eden_Villa_logo-22.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-22.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-22_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-22_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-22.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "e4362d55171e8f881930fa38a3cd151c",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-17_hd.jpg",
+        "name": "Eden_Villa_logo-17.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-17.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-17_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-17_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-17.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "3f5edf8f9e62055f28b73cf94ae37d0a",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-4_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-4.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-4.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-4_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-4_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-4.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "9a6943c134c35e29c2bd63c5a855a80b",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-1_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-1.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-1.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-1_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-1_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-1.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "ba2d8f3125905151b042937f309ed872",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-17_hd.jpg",
+        "name": "Agesong_logo-17.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-17.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-17_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-17_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-17.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "e5161a1daf449b6eb5c91363d4b87f8c",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-6_hd.jpg",
+        "name": "Agesong_logo-6.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-6.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-6_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-6_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-6.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "25534671add3c276b1f1244f7ec3bfea",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5711_sm_hd.jpg",
+        "name": "VM-5711_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5711_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5711_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5711_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5711_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "VideoGallery",
+      "id": "ffb714b0df795bd3ee310aafb7274a8e",
+      "attributes": {
+        "createdAt": "2015-04-10T22:38:59Z",
+        "updatedAt": "2018-06-05T18:17:38Z"
+      },
+      "relationships": {
+        "videos": {
+          "data": []
+        }
+      }
+    },
+    {
+      "type": "RgsAux",
+      "id": "028f3d43fe976da3e7cd8f560f8b4a63",
+      "attributes": {
+        "amenityScore": "",
+        "autoHighlights": null,
+        "communityDescription": "<p>Rhoda Goldman Plaza is an assisted living community located in San Francisco, CA. This is a large sized assisted living community with 195 units. Communities this size typically offer 1-bedroom apartments, multiple levels of care, restaurant style dining, and a robust resident enrichment program. The listed community cost is $7,046 per month which is around 18% over the average of $5,950 in San Francisco. The community is managed by Scott Street Senior Housing and has been licensed since 2000. The community has an average star rating of 4.05 from 37 reviews. </p>",
+        "estimatedPrice": {
+          "providedAverage": 0,
+          "estimatedAverage": 0,
+          "cityAverage": 0,
+          "stateAverage": 0,
+          "nationalAverage": 0,
+          "homeCareMAverage": 0,
+          "homeCareHAverage": 0,
+          "adultDayAverage": 0,
+          "sharedSuiteRate": 0,
+          "privateSuiteRate": 0,
+          "studioApartmentRate": 0,
+          "oneBedroomApartmentRate": 0,
+          "twoBedroomApartmentRate": 0
+        },
+        "localDetails": "<strong>Services:</strong> There are around 20 convenience stores, like Walgreens, within 7 miles of Rhoda Goldman Plaza. Rhoda goldman plaza has many transit stations nearby, for example: Beach St & Hyde St is one of 20 close by. <br><strong>Shopping:</strong> There are around 20 department stores, like Target, within 8 miles of the community. You can find Teavana and 18 other shopping malls close to the community. <br><strong>Health:</strong> This facility has many hospitals nearby, for example: Connie Frank Transplant Center at UCSF is one of 20 close by. <br><strong>Entertainment:</strong> You can find Lers Ros Thai and 20 other restaurants close to the community. There are around 20 movie theaters, like Landmark Theaters Embarcadero Center Cinema, within 8 miles of Rhoda Goldman Plaza. This facility has many parks nearby, for example: Crissy Field is one of 14 close by. <br><strong>Places Of Worship:</strong> There are around 20 churches, like Old St Mary's Cathedral, within 9 miles of this facility. Rhoda goldman plaza has many mosques nearby, for example: Al Sabeel / Masjid Noor al-Islam is one of 5 close by. There are around 20 synagogues, like Torat Emet, within 8 miles of the community. <br>",
+        "manualHighlights": null,
+        "nearbyCities": null,
+        "rgsInfo": {
+          "localDetails": "<strong>Services:</strong> There are around 20 convenience stores, like Walgreens, within 7 miles of Rhoda Goldman Plaza. Rhoda goldman plaza has many transit stations nearby, for example: Beach St & Hyde St is one of 20 close by. <br><strong>Shopping:</strong> There are around 20 department stores, like Target, within 8 miles of the community. You can find Teavana and 18 other shopping malls close to the community. <br><strong>Health:</strong> This facility has many hospitals nearby, for example: Connie Frank Transplant Center at UCSF is one of 20 close by. <br><strong>Entertainment:</strong> You can find Lers Ros Thai and 20 other restaurants close to the community. There are around 20 movie theaters, like Landmark Theaters Embarcadero Center Cinema, within 8 miles of Rhoda Goldman Plaza. This facility has many parks nearby, for example: Crissy Field is one of 14 close by. <br><strong>Places Of Worship:</strong> There are around 20 churches, like Old St Mary's Cathedral, within 9 miles of this facility. Rhoda goldman plaza has many mosques nearby, for example: Al Sabeel / Masjid Noor al-Islam is one of 5 close by. There are around 20 synagogues, like Torat Emet, within 8 miles of the community. <br>",
+          "amenityScore": 0,
+          "seoCityLinks": "",
+          "personalSpaceScore": 0,
+          "prop_description": "<p>Rhoda Goldman Plaza is an assisted living community located in San Francisco, CA. This is a large sized assisted living community with 195 units. Communities this size typically offer 1-bedroom apartments, multiple levels of care, restaurant style dining, and a robust resident enrichment program. The listed community cost is $7,046 per month which is around 18% over the average of $5,950 in San Francisco. The community is managed by Scott Street Senior Housing and has been licensed since 2000. The community has an average star rating of 4.05 from 37 reviews. </p>",
+          "contract_info": {
+            "hasContract": false,
+            "url": ""
+          }
+        },
+        "stateLicensingWebsite": "https://secure.dss.ca.gov/ccld/TransparencyAPI/api/FacilitySearch?facType=740&facility=&Street=&city=&zip=&county=Alameda&facnum="
+      }
+    },
+    {
+      "type": "Image",
+      "id": "1165704edab9ed892606848e728f9b2a",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-19_hd.jpg",
+        "name": "Agesong_logo-19.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-19.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-19_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-19_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-19.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "0c281564e26cc3a788615759a4b5c839",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-13_hd.jpg",
+        "name": "Agesong_logo-13.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-13.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-13_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-13_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-13.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "f53f31603ca056c7a81c8dd8564e7e62",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-12_hd.jpg",
+        "name": "Agesong_logo-12.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-12.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-12_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-12_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-12.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "7c580d1d286425f89fb2f6c5ab0b0cc0",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/building%2520pics%2520jan%25202014-20_hd.jpg",
+        "name": "building pics jan 2014-20.jpg",
+        "path": "dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/building%2520pics%2520jan%25202014-20_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/building%2520pics%2520jan%25202014-20_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "2d4223ff7e677821e3be583fe92997e7",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-16_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-16.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-16.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-16_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-16_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-16.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "6e87179dd7484250aac0eada5f767034",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-24_hd.jpg",
+        "name": "Agesong_logo-24.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-24.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-24_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-24_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-24.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "ddb49929f3915891cb67da8ad0ea663e",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_hd.jpg",
+        "name": "RGP-June-2014.jpg",
+        "path": "dbede7dcc263e098e3705e818b5ff463/RGP-June-2014.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "0820bb88abcc50da1f6954bb25afde8b",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5659_sm_hd.jpg",
+        "name": "VM-5659_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5659_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5659_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5659_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5659_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "7d7f1490dd0742cc40ea4ffb6dcd7478",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-18_hd.jpg",
+        "name": "Eden_Villa_logo-18.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-18.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-18_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-18_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-18.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "bc22ffee9321945269e49de80d655896",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-24_hd.jpg",
+        "name": "Eden_Villa_logo-24.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-24.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-24_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-24_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-24.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "15d44ef29602743e592f8a08d143dc6c",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-27_hd.jpg",
+        "name": "Agesong_logo-27.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-27.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-27_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-27_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-27.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "204e20862b95122b5aff785ab4c0c970",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-10_hd.jpg",
+        "name": "Agesong_logo-10.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-10.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-10_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-10_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-10.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "7c3b69a8842abf8b1d29ddf3372953c8",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-2_hd.jpg",
+        "name": "Agesong_logo-2.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-2.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-2_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-2_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-2.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "SearchResource",
+      "id": "victorian-manor",
+      "attributes": {
+        "addressString": "1444 Mc Allister Street, San Francisco, CA",
+        "communitySize": "51 +",
+        "description": "We are a family owned assisted living facility located in the heart of the City amid many of San Francisco’s stately Victorian h...",
+        "estimated": false,
+        "floorPlanString": "Suite, Studio, One Bedroom",
+        "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5668_sm_sd.jpg",
+        "latitude": 37.7784716,
+        "longitude": -122.4357341,
+        "mainService": "Assisted Living",
+        "name": "Victorian Manor",
+        "numReviews": 7,
+        "resourceType": "Community",
+        "reviewsValue": 4.428571,
+        "startingRate": 3950,
+        "typeCare": [
+          "Assisted Living"
+        ],
+        "url": "/assisted-living/california/san-francisco/victorian-manor"
+      },
+      "relationships": {
+        "gallery": {
+          "data": {
+            "type": "Gallery",
+            "id": "e3720af5b21ec033ca920a2606522d1f"
+          }
+        },
+        "webViewInfo": {
+          "data": {
+            "type": "WebViewInfo",
+            "id": "victorian-manor"
+          }
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "4da57d67c0ca2870cde1379d426b5bb3",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5690_sm_hd.jpg",
+        "name": "VM-5690_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5690_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5690_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5690_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5690_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "140d7be083a810f761a0411b6e17f3d2",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/8f18311968949a1bc57f258e5da7fdcd/Victorian_Manor-1_hd.jpg",
+        "name": "Victorian_Manor-1.jpg",
+        "path": "8f18311968949a1bc57f258e5da7fdcd/Victorian_Manor-1.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/8f18311968949a1bc57f258e5da7fdcd/Victorian_Manor-1_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/8f18311968949a1bc57f258e5da7fdcd/Victorian_Manor-1_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/8f18311968949a1bc57f258e5da7fdcd/Victorian_Manor-1.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "21aff52452aa07564f9a853a2845a47e",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-16_hd.jpg",
+        "name": "Eden_Villa_logo-16.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-16.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-16_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-16_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-16.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "833c1a7d65a379a1d0cffe72bf32e50c",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-15_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-15.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-15.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-15_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-15_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-15.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "49feaf343870ce066cd62090d5d24fd4",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-23_hd.jpg",
+        "name": "Agesong_logo-23.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-23.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-23_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-23_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-23.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "92da4333049c4d6ccec8d7662a3934f2",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/exercise%2520class%25202_hd.jpg",
+        "name": "exercise class 2.jpg",
+        "path": "9e98a8d1b8d59941d725a30737861441/exercise%20class%202.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/exercise%2520class%25202_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/exercise%2520class%25202_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/exercise%20class%202.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "7a687dd4aee023ed744592c4eab062a3",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-20_hd.jpg",
+        "name": "Eden_Villa_logo-20.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-20.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-20_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-20_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-20.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "2c8e3d39c4274746b43429475b1de35b",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-11_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-11.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-11.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-11_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-11_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-11.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "85a2ec454e0330d8e30e88163d6c1bdb",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5655_sm_hd.jpg",
+        "name": "VM-5655_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5655_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5655_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5655_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5655_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "b79e5eee4585fb0b4d2e1d7fbed0a285",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5652_sm_hd.jpg",
+        "name": "VM-5652_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5652_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5652_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5652_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5652_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "8b6fa88ef100eca1be714b515ffc74fd",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5664_sm_hd.jpg",
+        "name": "VM-5664_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5664_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5664_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5664_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5664_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "a5a143b1bd9f71400c24608dd1587041",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-4_hd.jpg",
+        "name": "Agesong_logo-4.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-4.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-4_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-4_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-4.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "7308f45383da360873d06c3fc9f723a6",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5718_sm_hd.jpg",
+        "name": "VM-5718_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5718_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5718_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5718_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5718_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "00cf3872b426d5b5de1e85a49a9d01be",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5671_sm_hd.jpg",
+        "name": "VM-5671_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5671_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5671_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5671_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5671_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "f1ab2325d7ed3f08a840122b67e74b86",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-9_hd.jpg",
+        "name": "Eden_Villa_logo-9.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-9.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-9_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-9_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-9.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "be14569a07cbb5110ceba909baeea152",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-28_hd.jpg",
+        "name": "Agesong_logo-28.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-28.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-28_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-28_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-28.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "SearchResource",
+      "id": "agesong-hayes-valley-care",
+      "attributes": {
+        "addressString": "624 Laguna Street, San Francisco, CA",
+        "communitySize": "51 +",
+        "description": "Located close to Davies Symphony Hall in the heart of San Francisco, AgeSong at Hayes Valley is a beautifully restored Victorian t...",
+        "estimated": false,
+        "floorPlanString": "Suite",
+        "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-11_sd.jpg",
+        "latitude": 37.777075,
+        "longitude": -122.426129,
+        "mainService": "Assisted Living",
+        "name": "AgeSong Hayes Valley Care",
+        "numReviews": 16,
+        "resourceType": "Community",
+        "reviewsValue": 3.53125,
+        "startingRate": 6800,
+        "typeCare": [
+          "Assisted Living",
+          "Memory Care",
+          "Respite Care"
+        ],
+        "url": "/assisted-living/california/san-francisco/agesong-hayes-valley-care"
+      },
+      "relationships": {
+        "gallery": {
+          "data": {
+            "type": "Gallery",
+            "id": "1ce0c69b46e09e4651940fb363cb6960"
+          }
+        },
+        "webViewInfo": {
+          "data": {
+            "type": "WebViewInfo",
+            "id": "agesong-hayes-valley-care"
+          }
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "154b6412dea6277a1043c8aa1823c927",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5720_sm_hd.jpg",
+        "name": "VM-5720_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5720_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5720_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5720_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5720_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "ede41c270371cc93c7e66b30f0e83c84",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-19_hd.jpg",
+        "name": "Eden_Villa_logo-19.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-19.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-19_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-19_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-19.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "a361759fd2c0806918e4c64775a5bf37",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-5_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-5.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-5.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-5_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-5_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-5.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "b37ad9bee08bf38165936f99aef122ca",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-15_hd.jpg",
+        "name": "Agesong_logo-15.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-15.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-15_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-15_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-15.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "ace690b2851a3aa8b0c6b3014f7a59b7",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5675_sm_hd.jpg",
+        "name": "VM-5675_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5675_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5675_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5675_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5675_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "d33051da4e34d02f14aa21867ecd9bf8",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-3_hd.jpg",
+        "name": "Eden_Villa_logo-3.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-3.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-3_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-3_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-3.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "7d4de4d206013e13f0f5ba96a376fc11",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-5_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care_new-5.jpg",
+        "path": "611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-5.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-5_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-5_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-5.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "bb4f4b633a6361397a2c829ac816d7ca",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5669_sm_hd.jpg",
+        "name": "VM-5669_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5669_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5669_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5669_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5669_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "de319972a7eb68600630ea454e990828",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-15_hd.jpg",
+        "name": "Eden_Villa_logo-15.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-15.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-15_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-15_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-15.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "83b45c95ab1a31b34143c2976bcdb7ac",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-8_hd.jpg",
+        "name": "Eden_Villa_logo-8.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-8.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-8_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-8_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-8.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "b9fda36365032bb38ac736ceb4b69d54",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-4_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care_new-4.jpg",
+        "path": "611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-4.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-4_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-4_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-4.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "c8b7c27045ca5dd0e11098a98365c096",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-21_hd.jpg",
+        "name": "Agesong_logo-21.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-21.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-21_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-21_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-21.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "3d9e64e069d3663c15975da4d8ca26e9",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/library%2520lounge_hd.jpg",
+        "name": "library lounge.jpg",
+        "path": "9e98a8d1b8d59941d725a30737861441/library%20lounge.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/library%2520lounge_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/library%2520lounge_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/library%20lounge.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "3034de7e56537d9e007def807265482c",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5651_sm_hd.jpg",
+        "name": "VM-5651_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5651_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5651_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5651_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5651_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "1a2f1ba0172d18e9b8269a2140cd2ac5",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5706_sm_hd.jpg",
+        "name": "VM-5706_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5706_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5706_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5706_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5706_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "991b39188d7b17400a76865e6be64877",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-19_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-19.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-19.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-19_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-19_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-19.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Gallery",
+      "id": "1ce0c69b46e09e4651940fb363cb6960",
+      "attributes": {
+        "createdAt": "2014-12-03T00:55:54Z",
+        "updatedAt": "2018-06-05T18:17:37Z"
+      },
+      "relationships": {
+        "images": {
+          "data": [
+            {
+              "type": "Image",
+              "id": "be14569a07cbb5110ceba909baeea152"
+            },
+            {
+              "type": "Image",
+              "id": "77630b58491c00b528ed6d794bfdefc3"
+            },
+            {
+              "type": "Image",
+              "id": "15d44ef29602743e592f8a08d143dc6c"
+            },
+            {
+              "type": "Image",
+              "id": "ff6df7165bc9d2f7b85d34c941c912a4"
+            },
+            {
+              "type": "Image",
+              "id": "49feaf343870ce066cd62090d5d24fd4"
+            },
+            {
+              "type": "Image",
+              "id": "f8702fb2614ad26c93a95f5ea575b17f"
+            },
+            {
+              "type": "Image",
+              "id": "6e87179dd7484250aac0eada5f767034"
+            },
+            {
+              "type": "Image",
+              "id": "5908cfae1970f541cac3160b8ab6a126"
+            },
+            {
+              "type": "Image",
+              "id": "c8b7c27045ca5dd0e11098a98365c096"
+            },
+            {
+              "type": "Image",
+              "id": "1165704edab9ed892606848e728f9b2a"
+            },
+            {
+              "type": "Image",
+              "id": "06e3b7da10a6c97bf2cc64c955a3b3e0"
+            },
+            {
+              "type": "Image",
+              "id": "ba2d8f3125905151b042937f309ed872"
+            },
+            {
+              "type": "Image",
+              "id": "8faa498dcf7a9a9e2aa36bf37f1d5ab9"
+            },
+            {
+              "type": "Image",
+              "id": "2db171d4e1a7797933de0aff99179c5b"
+            },
+            {
+              "type": "Image",
+              "id": "b37ad9bee08bf38165936f99aef122ca"
+            },
+            {
+              "type": "Image",
+              "id": "a1474fbfe191107a6fc58b133939ea83"
+            },
+            {
+              "type": "Image",
+              "id": "0c281564e26cc3a788615759a4b5c839"
+            },
+            {
+              "type": "Image",
+              "id": "23c205e550ef7d8502769b7dcfb60173"
+            },
+            {
+              "type": "Image",
+              "id": "f53f31603ca056c7a81c8dd8564e7e62"
+            },
+            {
+              "type": "Image",
+              "id": "204e20862b95122b5aff785ab4c0c970"
+            },
+            {
+              "type": "Image",
+              "id": "7d63d5efe2b54e53044d8469bdbe693f"
+            },
+            {
+              "type": "Image",
+              "id": "55b97f2ed644e20ec569ddcda868f830"
+            },
+            {
+              "type": "Image",
+              "id": "efa35cfcdeb884e0ec35faa0ef99ce59"
+            },
+            {
+              "type": "Image",
+              "id": "e5161a1daf449b6eb5c91363d4b87f8c"
+            },
+            {
+              "type": "Image",
+              "id": "a5a143b1bd9f71400c24608dd1587041"
+            },
+            {
+              "type": "Image",
+              "id": "11c23199a50894fc663b430a996b619f"
+            },
+            {
+              "type": "Image",
+              "id": "d88e3b94dbb1a0a32f46acf42bf6d976"
+            },
+            {
+              "type": "Image",
+              "id": "7c3b69a8842abf8b1d29ddf3372953c8"
+            },
+            {
+              "type": "Image",
+              "id": "00c1d050656c72da0bb0311679cf5345"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "937deb3f62eb131533742644942b8326",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/3rd%2520floor%2520terrace_hd.jpg",
+        "name": "3rd floor terrace.jpg",
+        "path": "9e98a8d1b8d59941d725a30737861441/3rd%20floor%20terrace.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/3rd%2520floor%2520terrace_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/3rd%2520floor%2520terrace_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/3rd%20floor%20terrace.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "ed2223775cbf59d076f110c5a8fe930f",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-10_hd.jpg",
+        "name": "Eden_Villa_logo-10.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-10.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-10_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-10_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-10.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "5a072381d567cbed9f5fa990e4fa1679",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-11_hd.jpg",
+        "name": "Eden_Villa_logo-11.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-11.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-11_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-11_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-11.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "063194bf63b44a557ce4dac6b2d3a4c4",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-1_hd.jpg",
+        "name": "Eden_Villa_logo-1.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-1.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-1_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-1_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-1.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "c0c92eb9ab51c8d9d4ed902c7d98cc10",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-7_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-7.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-7.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-7_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-7_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-7.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "6d66f8423d53204cb5dd463153db80ae",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5649_sm_hd.jpg",
+        "name": "VM-5649_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5649_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5649_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5649_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5649_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "WebViewInfo",
+      "id": "agesong-laguna-grove-care",
+      "attributes": {
+        "ctaText": "Get Pricing.",
+        "firstLineValue": "Assisted Living, Memory Care, Respite Care",
+        "secondLineValue": "Suite, Studio, One Bedroom"
+      }
+    },
+    {
+      "type": "Image",
+      "id": "bf06bc25d238ddd2fc2d5eecafebf6f7",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-12_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-12.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-12.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-12_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-12_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-12.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "4f8cf39e8a855fced8d509a5c07c3b18",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care_new-2.jpg",
+        "path": "611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "55b97f2ed644e20ec569ddcda868f830",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-5_hd.jpg",
+        "name": "Agesong_logo-5.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-5.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-5_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-5_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-5.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "efce94280a1b9c3d4562b33188242c58",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1_hd.jpg",
+        "name": "Rhoda_Goldman_Plaza_header-1.jpg",
+        "path": "f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "ad4548374cd249682618cd79d44497b7",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-17_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-17.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-17.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-17_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-17_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-17.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "594e31cac3a562f6bd4b137e3fa3efab",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-7_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care_new-7.jpg",
+        "path": "611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-7.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-7_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-7_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-7.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "11c23199a50894fc663b430a996b619f",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-8_hd.jpg",
+        "name": "Agesong_logo-8.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-8.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-8_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-8_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-8.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "b8b39032984507ba9efabcc2d89ea02c",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-10_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-10.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-10.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-10_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-10_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-10.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "4ff20ad16e327b287a9a447eec41f9fd",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5668_sm_hd.jpg",
+        "name": "VM-5668_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5668_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5668_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5668_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5668_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "9d7542413d7821b84969f22d36a28556",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/759fea73ae103dd27dd869fef95bf6ca/AgeSong_header-1_hd.jpg",
+        "name": "AgeSong_header-1.jpg",
+        "path": "759fea73ae103dd27dd869fef95bf6ca/AgeSong_header-1.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/759fea73ae103dd27dd869fef95bf6ca/AgeSong_header-1_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/759fea73ae103dd27dd869fef95bf6ca/AgeSong_header-1_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/759fea73ae103dd27dd869fef95bf6ca/AgeSong_header-1.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "6d9e5510715aaf6af1739ebd3e1732d8",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-3_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care_new-3.jpg",
+        "path": "611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-3.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-3_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-3_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-3.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "7d63d5efe2b54e53044d8469bdbe693f",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-7_hd.jpg",
+        "name": "Agesong_logo-7.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-7.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-7_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-7_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-7.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "3c699269c0ad5aa75c6a9f9d6648bb1e",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/art%2520class%25204_hd.jpg",
+        "name": "art class 4.jpg",
+        "path": "9e98a8d1b8d59941d725a30737861441/art%20class%204.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/art%2520class%25204_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/art%2520class%25204_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/art%20class%204.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "1251bac3168d1ffc5e89f363cffc199a",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-14_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-14.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-14.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-14_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-14_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-14.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "7c349b41822c2dbf47e2ae4edb48a722",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-3_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-3.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-3.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-3_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-3_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-3.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "8cfa9d337d817e35320950e4f7f1e9f9",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602_hd.jpg",
+        "name": "RhodaGoldmanDSC_0602.jpg",
+        "path": "808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "7597b6ee9ff15a5def9fe8d07106f877",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-13_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-13.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-13.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-13_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-13_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-13.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "f4e2cc1c7f994d4e497c1279e9a7cf86",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-6_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-6.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-6.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-6_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-6_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-6.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "ff6df7165bc9d2f7b85d34c941c912a4",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-26_hd.jpg",
+        "name": "Agesong_logo-26.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-26.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-26_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-26_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-26.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "d88e3b94dbb1a0a32f46acf42bf6d976",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-3_hd.jpg",
+        "name": "Agesong_logo-3.jpg",
+        "path": "ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-3.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-3_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-3_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/ffbea1a26f4bbc36cb064746c5511139/Agesong_logo-3.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "9b3a6ec0181efd60f9fc04c9795cc792",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-14_hd.jpg",
+        "name": "Eden_Villa_logo-14.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-14.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-14_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-14_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-14.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "c841a5a00b09e7e26285194d5e259b79",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-27_hd.jpg",
+        "name": "Eden_Villa_logo-27.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-27.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-27_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-27_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-27.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "9b625cc3a2b872f1a53b6f8ee25e82dd",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-12_hd.jpg",
+        "name": "Eden_Villa_logo-12.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-12.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-12_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-12_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-12.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "407e55d000c28c17ba3e3f6a0849ea39",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-6_hd.jpg",
+        "name": "Eden_Villa_logo-6.jpg",
+        "path": "3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-6.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-6_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-6_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-6.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "c238e523c6c6861f361425f5e3c8a928",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-1_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care_new-1.jpg",
+        "path": "611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-1.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-1_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-1_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-1.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "SearchResource",
+      "id": "eden-villa-san-francisco",
+      "attributes": {
+        "addressString": "2750 Geary Boulevard, San Francisco, CA",
+        "communitySize": "51 +",
+        "description": "Eden Villa San Francisco is conveniently located near several hospitals: California Pacific Medical Center (California, Davies and...",
+        "estimated": false,
+        "floorPlanString": "Suite, Studio, One Bedroom",
+        "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/3c76e1c976dc7fa4477e1fc1659a3cd3/Eden_Villa_logo-13_sd.jpg",
+        "latitude": 37.7824935,
+        "longitude": -122.4488877,
+        "mainService": "Assisted Living",
+        "name": "Eden Villa  San Francisco",
+        "numReviews": 16,
+        "resourceType": "Community",
+        "reviewsValue": 3.625,
+        "startingRate": 4950,
+        "typeCare": [
+          "Assisted Living",
+          "Memory Care"
+        ],
+        "url": "/assisted-living/california/san-francisco/eden-villa-san-francisco"
+      },
+      "relationships": {
+        "gallery": {
+          "data": {
+            "type": "Gallery",
+            "id": "b3935dab05699bc4ceeedea650f3078d"
+          }
+        },
+        "webViewInfo": {
+          "data": {
+            "type": "WebViewInfo",
+            "id": "eden-villa-san-francisco"
+          }
+        }
+      }
+    },
+    {
+      "type": "Address",
+      "id": "2707e29ff183af005487e959a086dea0",
+      "attributes": {
+        "city": "San Francisco",
+        "county": "San Francisco",
+        "latitude": 37.78479069999999,
+        "line1": "2180 Post Street",
+        "line2": "",
+        "longitude": -122.4376589,
+        "state": "CA",
+        "zip": "94115"
+      }
+    },
+    {
+      "type": "Image",
+      "id": "96ee36ab24d0d4f6ffae26b72810207d",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5687_sm_hd.jpg",
+        "name": "VM-5687_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5687_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5687_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5687_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5687_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "b81c9cea8d064aaf6ad89459781f272d",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5653_sm_hd.jpg",
+        "name": "VM-5653_sm.jpg",
+        "path": "db8f52dcc7f603607d0ff91c68328b73/VM-5653_sm.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5653_sm_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5653_sm_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5653_sm.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "adc5958c4eb14bffc5c73b270895c5d5",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-9_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care-9.jpg",
+        "path": "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-9.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-9_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-9_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-9.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "6a82233ea918166e35a33f5127a26995",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-6_hd.jpg",
+        "name": "AgeSong_Laguna_Grove_Care_new-6.jpg",
+        "path": "611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-6.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-6_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-6_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-6.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    },
+    {
+      "type": "Gallery",
+      "id": "d54d4b12de5caf30cc289b08e418a9bb",
+      "attributes": {
+        "createdAt": "2014-12-03T00:55:25Z",
+        "updatedAt": "2018-06-05T18:17:37Z"
+      },
+      "relationships": {
+        "images": {
+          "data": [
+            {
+              "type": "Image",
+              "id": "b8b39032984507ba9efabcc2d89ea02c"
+            },
+            {
+              "type": "Image",
+              "id": "7597b6ee9ff15a5def9fe8d07106f877"
+            },
+            {
+              "type": "Image",
+              "id": "1251bac3168d1ffc5e89f363cffc199a"
+            },
+            {
+              "type": "Image",
+              "id": "7c349b41822c2dbf47e2ae4edb48a722"
+            },
+            {
+              "type": "Image",
+              "id": "2d4223ff7e677821e3be583fe92997e7"
+            },
+            {
+              "type": "Image",
+              "id": "3f5edf8f9e62055f28b73cf94ae37d0a"
+            },
+            {
+              "type": "Image",
+              "id": "a361759fd2c0806918e4c64775a5bf37"
+            },
+            {
+              "type": "Image",
+              "id": "9a6943c134c35e29c2bd63c5a855a80b"
+            },
+            {
+              "type": "Image",
+              "id": "f4e2cc1c7f994d4e497c1279e9a7cf86"
+            },
+            {
+              "type": "Image",
+              "id": "833c1a7d65a379a1d0cffe72bf32e50c"
+            },
+            {
+              "type": "Image",
+              "id": "2c8e3d39c4274746b43429475b1de35b"
+            },
+            {
+              "type": "Image",
+              "id": "c0c92eb9ab51c8d9d4ed902c7d98cc10"
+            },
+            {
+              "type": "Image",
+              "id": "adc5958c4eb14bffc5c73b270895c5d5"
+            },
+            {
+              "type": "Image",
+              "id": "5909552c67a804343c82094405bd1df7"
+            },
+            {
+              "type": "Image",
+              "id": "bf06bc25d238ddd2fc2d5eecafebf6f7"
+            },
+            {
+              "type": "Image",
+              "id": "1970a4e7edc69128aae220c73bb726e4"
+            },
+            {
+              "type": "Image",
+              "id": "991b39188d7b17400a76865e6be64877"
+            },
+            {
+              "type": "Image",
+              "id": "ad4548374cd249682618cd79d44497b7"
+            },
+            {
+              "type": "Image",
+              "id": "7cae6bc25a5f2b06b1c7184ab5899d84"
+            },
+            {
+              "type": "Image",
+              "id": "4f8cf39e8a855fced8d509a5c07c3b18"
+            },
+            {
+              "type": "Image",
+              "id": "9d7542413d7821b84969f22d36a28556"
+            },
+            {
+              "type": "Image",
+              "id": "b9fda36365032bb38ac736ceb4b69d54"
+            },
+            {
+              "type": "Image",
+              "id": "7d4de4d206013e13f0f5ba96a376fc11"
+            },
+            {
+              "type": "Image",
+              "id": "6a82233ea918166e35a33f5127a26995"
+            },
+            {
+              "type": "Image",
+              "id": "594e31cac3a562f6bd4b137e3fa3efab"
+            },
+            {
+              "type": "Image",
+              "id": "6d9e5510715aaf6af1739ebd3e1732d8"
+            },
+            {
+              "type": "Image",
+              "id": "c238e523c6c6861f361425f5e3c8a928"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Image",
+      "id": "150be9bb1e1f913ec41513371d8f7c42",
+      "attributes": {
+        "hd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/lobby_hd.jpg",
+        "name": "lobby.jpg",
+        "path": "9e98a8d1b8d59941d725a30737861441/lobby.jpg",
+        "processed": 2,
+        "sd": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/lobby_sd.jpg",
+        "thumb": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/lobby_thumb.jpg",
+        "url": "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/lobby.jpg"
+      },
+      "relationships": {
+        "gallery": {
+          "data": null
+        }
+      }
+    }
+  ],
+  "meta": {
+    "copyright": "Copyright 2018 Seniorly Inc.",
+    "description": "Rhoda Goldman Plaza offering Assisted Living is located at 2180 Post Street, San Francisco, CA. Compare to nearby communities offering Assisted Living",
+    "linked-data": {
+      "@context": "http://schema.org",
+      "@type": "LodgingBusiness",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "US",
+        "addressLocality": "San Francisco",
+        "addressRegion": "CA",
+        "streetAddress": "2180 Post Street"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingCount": "37",
+        "ratingValue": "4.05"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "37.78479",
+        "longitude": "-122.43766"
+      },
+      "name": "Rhoda Goldman Plaza",
+      "priceRange": "From $6027 / month",
+      "url": "/assisted-living/california/san-francisco/rhoda-goldman-plaza"
+    },
+    "og:image": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_sd.jpg",
+    "page_type": "Community_Auto",
+    "title": "Rhoda Goldman Plaza - Pricing & Photos San Francisco, CA",
+    "twitter:image:src": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_sd.jpg",
+    "version": "v0"
+  }
+}

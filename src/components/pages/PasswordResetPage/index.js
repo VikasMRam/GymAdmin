@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
@@ -32,7 +32,7 @@ const StyledButton = styled(Button)`
 StyledButton.displayName = 'StyledButton';
 
 const PasswordResetPage = ({ handleSubmit, submitting, error }) => (
-  <Fragment>
+  <>
     <TemplateHeader><HeaderContainer /></TemplateHeader>
     <TemplateContent>
       <Form onSubmit={handleSubmit}>
@@ -52,7 +52,7 @@ const PasswordResetPage = ({ handleSubmit, submitting, error }) => (
       </Form>
     </TemplateContent>
     <Footer />
-  </Fragment>
+  </>
 );
 
 PasswordResetPage.propTypes = {

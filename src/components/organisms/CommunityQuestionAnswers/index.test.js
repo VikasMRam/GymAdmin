@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
-import { ASK_QUESTION } from 'sly/constants/modalType';
 
 const communityName = 'Rhoda Goldman Plaza';
 const questions = [];
@@ -101,7 +100,7 @@ describe('CommuntityQuestionAnswers', () => {
 
   it('verify render Question', () => {
     const wrapper = wrap({ questions: [question1] });
-    const communityQuestion = wrapper.find('StyledCommunityQuestion');
+    const communityQuestion = wrapper.find('PaddedCommunityQuestion');
     expect(communityQuestion).toHaveLength(1);
     const communityAnswer = wrapper.find(CommunityAnswer);
     expect(communityAnswer).toHaveLength(0);
@@ -109,7 +108,7 @@ describe('CommuntityQuestionAnswers', () => {
 
   it('verify render FAQ', () => {
     const wrapper = wrap({ communityFaQs: [communityFaQ1] });
-    const communityQuestion = wrapper.find('StyledCommunityQuestion');
+    const communityQuestion = wrapper.find('PaddedCommunityQuestion');
     expect(communityQuestion).toHaveLength(1);
     const communityAnswer = wrapper.find(CommunityAnswer);
     expect(communityAnswer).toHaveLength(0);
@@ -117,7 +116,7 @@ describe('CommuntityQuestionAnswers', () => {
 
   it('verify render Question & FAQ', () => {
     const wrapper = wrap({ questions: [question1], communityFaQs: [communityFaQ1] });
-    const communityQuestion = wrapper.find('StyledCommunityQuestion');
+    const communityQuestion = wrapper.find('PaddedCommunityQuestion');
     expect(communityQuestion).toHaveLength(2);
     expect(communityQuestion.at(0).prop('question')).toEqual(question1);
     expect(communityQuestion.at(1).prop('question')).toEqual(communityFaQ1);
@@ -127,7 +126,7 @@ describe('CommuntityQuestionAnswers', () => {
 
   it('verify without any questions', () => {
     const wrapper = wrap({ questions: [] });
-    const communityQuestion = wrapper.find('StyledCommunityQuestion');
+    const communityQuestion = wrapper.find('PaddedCommunityQuestion');
     expect(communityQuestion).toHaveLength(0);
     const communityAnswer = wrapper.find(CommunityAnswer);
     expect(communityAnswer).toHaveLength(0);
@@ -137,7 +136,7 @@ describe('CommuntityQuestionAnswers', () => {
 
   it('verify render Question with Answer', () => {
     const wrapper = wrap({ questions: [question2] });
-    const communityQuestion = wrapper.find('StyledCommunityQuestion');
+    const communityQuestion = wrapper.find('PaddedCommunityQuestion');
     expect(communityQuestion).toHaveLength(1);
     const communityAnswer = wrapper.find(CommunityAnswer);
     expect(communityAnswer).toHaveLength(1);
@@ -148,7 +147,7 @@ describe('CommuntityQuestionAnswers', () => {
     const wrapper = wrap({ questions: [question1], onLeaveAnswerClick });
     const leaveAnswer = wrapper.find('CursorBlock');
     leaveAnswer.simulate('click');
-    expect(onLeaveAnswerClick).toHaveBeenCalledWith(question1.type, question1.id);
+    expect(onLeaveAnswerClick).toHaveBeenCalledWith(question1);
   });
 
   it('verify click on FAQ be the first to ask this question', () => {

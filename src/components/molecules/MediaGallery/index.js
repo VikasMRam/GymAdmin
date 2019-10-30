@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { string, bool, arrayOf, shape, number, func } from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
@@ -16,6 +16,7 @@ const videoMimeTypes = {
 
 const CarouselWrapper = styled.div`
   position: relative;
+  width: 100%;
   background: ${ifProp('transparent', 'transparent', palette('grey', 'base'))};
   text-align: center;
 
@@ -44,9 +45,9 @@ const StyledVideo = styled.video`
 const StyledIcon = styled(Icon)`
   position: absolute;
   z-index: 1;
-  margin: auto;
-  top: 0;
+  top: 50%;
   bottom: 0;
+  margin-top: calc(-${size('icon.xLarge')} / 2);
 
   :hover {
     cursor: pointer;
@@ -284,8 +285,7 @@ export default class MediaGallery extends Component {
     ));
 
     return (
-      <Fragment>
-        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+      <>
         <CarouselWrapper {...this.props}>
           {this.allMedia.length > 1 &&
             <PrevSlide
@@ -341,7 +341,7 @@ export default class MediaGallery extends Component {
             onClick={this.handleChangeIndex}
           />
         }
-      </Fragment>
+      </>
     );
   }
 }

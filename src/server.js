@@ -94,7 +94,8 @@ const clientConfigsMiddleware = (configs) => {
   });
   return (req, res, next) => {
     const path = parseUrl(req).pathname;
-    for (const config of configs) {
+    for (let i = 0; i < configs.length; i++) {
+      const config = configs[i];
       if (path.match(config.regexp)) {
         // we are going to modify this object in subsequent middlewares
         req.clientConfig = cloneDeep(config);

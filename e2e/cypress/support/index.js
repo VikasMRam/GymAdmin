@@ -40,3 +40,10 @@ import './commands';
 //     console.log(`${(options.displayName || options.name || '').toUpperCase()} ${options.message}`);
 //   }
 // });
+
+
+// we remove fetch to force the app to fall back to XHR
+// so cypress can intercept the calls
+Cypress.on('window:before:load', (win) => {
+  delete win.fetch;
+});

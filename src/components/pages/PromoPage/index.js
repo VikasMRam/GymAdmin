@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { bool, func } from 'prop-types';
 
@@ -328,8 +328,7 @@ const PromoPage = ({
   isModalOpen, isWizardActive, onLocationSearch, setActiveDiscoverHome, wizardStatus,
 }) => {
   const HeaderContent = (
-    <Fragment>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+    <>
       <HeaderContainer />
       <HeroTwoColumnWrapper>
         <HeroWrapper>
@@ -354,7 +353,7 @@ const PromoPage = ({
           <StyledImage src={assetPath('images/promo/motherdaughter.jpg')} alt="A Home To Love" />
         </HeroWrapper>
       </HeroTwoColumnWrapper>
-    </Fragment>
+    </>
   );
 
   const onButtonClick = (discoverHome) => {
@@ -412,7 +411,7 @@ const PromoPage = ({
   ));
 
   return (
-    <Fragment>
+    <>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
         <Modal layout="searchBox" closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}><Heading size="subtitle">Please enter a location:</Heading><SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} /></Modal>
@@ -482,7 +481,7 @@ const PromoPage = ({
         }
       </TemplateContent>
       <Footer />
-    </Fragment>
+    </>
   );
 };
 

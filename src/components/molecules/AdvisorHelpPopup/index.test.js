@@ -4,10 +4,8 @@ import { shallow } from 'enzyme';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup/index';
 import IconItem from 'sly/components/molecules/IconItem/index';
 
-const onButtonClick = jest.fn();
-
 const wrap = (props = {}) =>
-  shallow(<AdvisorHelpPopup onButtonClick={onButtonClick} {...props} />);
+  shallow(<AdvisorHelpPopup {...props} />);
 
 describe('AdvisorHelpPopup', () => {
   it('does not renders children when passed in', () => {
@@ -22,7 +20,11 @@ describe('AdvisorHelpPopup', () => {
   });
 
   it('handles onButtonClick', () => {
-    const wrapper = wrap();
+    const onButtonClick = jest.fn();
+    const wrapper = wrap({
+      onButtonClick,
+    });
+
     const GotItButton = wrapper.find('GotItButton');
     expect(onButtonClick).toHaveBeenCalledTimes(0);
     GotItButton.simulate('click');

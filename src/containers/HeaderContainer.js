@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
 import { generatePath } from 'react-router';
 
@@ -16,7 +16,7 @@ import NotificationController from 'sly/controllers/NotificationController';
 import Notifications from 'sly/components/organisms/Notifications';
 import Header from 'sly/components/organisms/Header';
 import ModalController from 'sly/controllers/ModalController';
-import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
 import { withAuth } from 'sly/services/newApi';
 
 const defaultHeaderItems = [
@@ -165,11 +165,7 @@ export default class HeaderContainer extends Component {
     ];
 
     const modalBody = (
-      <HowSlyWorksVideo
-        isPlaying
-        onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', 'header', e.target.currentTime)}
-        onPlay={e => sendEvent('howSlyWorksVideo', 'play', 'header', e.target.currentTime)}
-      />
+      <HowSlyWorksVideoContainer isPlaying eventLabel='header' />
     );
 
     return (
@@ -188,7 +184,7 @@ export default class HeaderContainer extends Component {
                 howItWorksItem.onClick = () => show(modalBody, null, 'fullScreen');
               }
               return (
-                <Fragment>
+                <>
                   <Header
                     menuOpen={isDropdownOpen}
                     onMenuIconClick={toggleDropdown}
@@ -201,7 +197,7 @@ export default class HeaderContainer extends Component {
                   />
                   <AuthContainer notifyInfo={notifyInfo} showModal={show} hideModal={hide} />
                   <Notifications messages={messages} dismiss={dismiss} />
-                </Fragment>
+                </>
               );
             }}
           </NotificationController>

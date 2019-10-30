@@ -3,6 +3,7 @@ import { number, node } from 'prop-types';
 
 import { withUser } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
+import { userIs } from 'sly/services/helpers/role';
 
 @withUser
 
@@ -14,13 +15,11 @@ class Role extends Component {
   };
 
   render() {
-    const { children, user, is } = this.props;
+    const { children, user, is: role } = this.props;
     if (!user) {
       return null;
     }
-    const { roleID } = user;
-    /* eslint-disable-next-line no-bitwise */
-    if (is & roleID) {
+    if (userIs(user, role)) {
       return children;
     }
     return null;

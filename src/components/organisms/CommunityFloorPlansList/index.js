@@ -16,7 +16,7 @@ const ListWrapper = styled.div`
 `;
 
 const CommunityFloorPlansList = ({ floorPlans, onItemClick }) => (
-  <Fragment>
+  <>
     <CollapsibleBlock minHeight="regular" blockClassName="floorplans-list">
       <ListWrapper>
         {floorPlans.map((floorPlan) => {
@@ -33,7 +33,7 @@ const CommunityFloorPlansList = ({ floorPlans, onItemClick }) => (
       </ListWrapper>
     </CollapsibleBlock>
     <Block size="tiny" palette="grey">*Pricing may not be all-inclusive. Your pricing may vary depending on your specific room and care needs.</Block>
-  </Fragment>
+  </>
 );
 
 CommunityFloorPlansList.propTypes = {

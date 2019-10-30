@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
-import qs from 'query-string';
+import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
@@ -10,7 +10,6 @@ import SlyEvent from 'sly/services/helpers/events';
 import taskPropType from 'sly/propTypes/task';
 import clientPropType from 'sly/propTypes/client';
 import textAlign from 'sly/components/helpers/textAlign';
-import { AGENT_DASHBOARD_TASKS_PATH } from 'sly/constants/dashboardAppPaths';
 import { Box, Table, THead, TBody, Tr, Td, Heading, Block } from 'sly/components/atoms';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 import Pagination from 'sly/components/molecules/Pagination';
@@ -20,6 +19,11 @@ import Th from 'sly/components/molecules/Th';
 import IconButton from 'sly/components/molecules/IconButton';
 import TaskRowCard from 'sly/components/organisms/TaskRowCard';
 import AddOrEditTaskFormContainer from 'sly/containers/AddOrEditTaskFormContainer';
+import {
+  AGENT_DASHBOARD_TASKS_PATH, AGENT_DASHBOARD_CONTEXT_TASKS_PATH, TODAY, OVERDUE, UPCOMING, COMPLETED,
+} from 'sly/constants/dashboardAppPaths';
+import { stripPageNumber } from 'sly/services/helpers/appPaths';
+
 
 const TABLE_HEADINGS = [
   { text: 'Task' },
@@ -80,7 +84,6 @@ const TwoColumn = pad(styled.div`
   justify-content: space-between;
   align-items: center;
   text-transform: capitalize;
-
   ${Heading} {
     margin-bottom: 0;
   }
@@ -99,14 +102,12 @@ const StyledSection = styled(Section)`
   border: none;
 `;
 
-const tabIDLabelMap = {
-  DueToday: 'DUE TODAY',
-  Overdue: 'OVERDUE',
-  Upcoming: 'UPCOMING',
-  Completed: 'COMPLETED',
+const TabMap = {
+  Today: TODAY,
+  Overdue: OVERDUE,
+  Upcoming: UPCOMING,
+  Completed: COMPLETED,
 };
-
-const tabIDs = Object.keys(tabIDLabelMap);
 
 const onTabClick = (label) => {
   const event = {
@@ -117,26 +118,17 @@ const onTabClick = (label) => {
   SlyEvent.getInstance().sendEvent(event);
 };
 
-const getBasePath = (tab, basePath = AGENT_DASHBOARD_TASKS_PATH) => {
-  const filters = {
-    type: tabIDs[0],
-  };
+const getBasePath = (taskType, location) => {
+  // const getBasePath = (taskType, contextPath = AGENT_DASHBOARD_TASKS_PATH, location) => {
+  // TODO: Use AGENT_DASHBOARD_CONTEXT_TASKS_PATH below
+  const path = generatePath(AGENT_DASHBOARD_TASKS_PATH, { taskType });
 
-  if (tab === tabIDs[1]) {
-    filters.type = 'Overdue';
-  } else if (tab === tabIDs[2]) {
-    filters.type = 'Upcoming';
-  } else if (tab === tabIDs[3]) {
-    filters.type = 'Completed';
-  }
-
-  const filterQs = qs.stringify(filters);
-
-  return filterQs !== '' ? `${basePath}?${filterQs}` : basePath;
+  return location && location.search ? `${path}${stripPageNumber(location.search)}` : path;
 };
 
 export default class DashboardAgentTasksSection extends Component {
   static propTypes = {
+    datatable: object,
     client: clientPropType,
     tasks: arrayOf(taskPropType),
     tasksRaw: arrayOf(object),
@@ -154,14 +146,19 @@ export default class DashboardAgentTasksSection extends Component {
     notifyError: func,
     refetchTasks: func,
     noBorder: bool,
-    basePath: string,
+    contextPath: string,
     searchTextBoxValue: string,
   };
 
   handleAddTaskClick = () => {
     const { showModal, hideModal, notifyInfo, notifyError, meta, client, refetchTasks } = this.props;
     const { priorities, statuses } = meta;
-
+    const event = {
+      category: 'AgentDashboardTasks',
+      action: 'click',
+      label: 'addTask',
+    };
+    SlyEvent.getInstance().sendEvent(event);
     showModal(
       (
         <AddOrEditTaskFormContainer
@@ -181,7 +178,12 @@ export default class DashboardAgentTasksSection extends Component {
   handleTaskClick = (task) => {
     const { showModal, hideModal, notifyInfo, notifyError, meta, tasksRaw, refetchTasks, client } = this.props;
     const { priorities, statuses } = meta;
-
+    const event = {
+      category: 'AgentDashboardTasks',
+      action: 'click',
+      label: 'viewTask',
+    };
+    SlyEvent.getInstance().sendEvent(event);
     showModal(
       (
         <AddOrEditTaskFormContainer
@@ -202,32 +204,9 @@ export default class DashboardAgentTasksSection extends Component {
 
   render() {
     const {
-      tasks, pagination, activeTab, onSearchTextKeyUp, isPageLoading, noBorder, basePath,
-      searchTextBoxValue,
+      tasks, pagination, activeTab, isPageLoading, noBorder, meta, contextPath, location,
+      datatable,
     } = this.props;
-    const dueTodayLabel = tabIDLabelMap[tabIDs[0]];
-    const overdueLabel = tabIDLabelMap[tabIDs[1]];
-    const upcomingLabel = tabIDLabelMap[tabIDs[2]];
-    const completedLabel = tabIDLabelMap[tabIDs[3]];
-
-    let dueTodayTabLabel = tabIDLabelMap[tabIDs[0]];
-    let overdueTabLabel = tabIDLabelMap[tabIDs[1]];
-    let upcomingTabLabel = tabIDLabelMap[tabIDs[2]];
-    let completedTabLabel = tabIDLabelMap[tabIDs[3]];
-
-    if (!isPageLoading) {
-      const {
-        dueTodayCount,
-        overdueCount,
-        upcomingCount,
-        completedCount,
-      } = pagination;
-      dueTodayTabLabel += ` (${dueTodayCount})`;
-      overdueTabLabel += ` (${overdueCount})`;
-      upcomingTabLabel += ` (${upcomingCount})`;
-      completedTabLabel += ` (${completedCount})`;
-    }
-
     const beforeTabHeader = (
       <TwoColumn>
         <Heading level="subtitle">Tasks</Heading>
@@ -236,41 +215,44 @@ export default class DashboardAgentTasksSection extends Component {
         </IconButton>
       </TwoColumn>
     );
-    let noResultMessage = 'Nice! You are on top of all your tasks for today';
-    if (activeTab === tabIDs[1]) {
-      noResultMessage = 'Nice! You are on top of all your overdue tasks';
-    } else if (activeTab === tabIDs[2]) {
-      noResultMessage = 'Nice! You are on top of all your upcoming tasks';
-    } else if (activeTab === tabIDs[3]) {
-      noResultMessage = 'Nice! You are on top of all your completed tasks';
+    let headerComponent = (
+      <Tabs activeTab={activeTab} beforeHeader={beforeTabHeader} tabsOnly>
+        {Object.entries(TabMap)
+          .map(([name, key]) => (
+            <Tab
+              id={key}
+              key={key}
+              to={getBasePath(key, location)}
+              onClick={() => onTabClick(name)}
+            >
+              {`${name} (${pagination[`${key}Count`] || '0'})`}
+            </Tab>
+          ))}
+      </Tabs>);
+    // Don't use tabs in context
+    if (contextPath) {
+      headerComponent = beforeTabHeader;
     }
+    const noResultMessage = 'Nice! You are on top of all your tasks here.';
+
 
     const TableHeaderButtonComponent = noBorder ? StyledTableHeaderButtons : TableHeaderButtons;
     const SectionComponent = noBorder ? StyledSection : Section;
     const StatusBlock = noBorder ? StyledFamiliesCountStatusBlock : FamiliesCountStatusBlock;
+    const modelConfig = { name: 'Task', defaultSearchField: 'title' };
 
     return (
-      <Fragment>
-        <Tabs activeTab={activeTab} tabsOnly noBorder={noBorder} beforeHeader={beforeTabHeader}>
-          <Tab id={tabIDs[0]} to={getBasePath(tabIDs[0], basePath)} onClick={() => onTabClick(dueTodayLabel)}>
-            {dueTodayTabLabel}
-          </Tab>
-          <Tab id={tabIDs[1]} to={getBasePath(tabIDs[1], basePath)} onClick={() => onTabClick(overdueLabel)}>
-            {overdueTabLabel}
-          </Tab>
-          <Tab id={tabIDs[2]} to={getBasePath(tabIDs[2], basePath)} onClick={() => onTabClick(upcomingLabel)}>
-            {upcomingTabLabel}
-          </Tab>
-          <Tab id={tabIDs[3]} to={getBasePath(tabIDs[3], basePath)} onClick={() => onTabClick(completedLabel)}>
-            {completedTabLabel}
-          </Tab>
-        </Tabs>
-
-        <TableHeaderButtonComponent onSearchTextKeyUp={onSearchTextKeyUp} value={searchTextBoxValue} />
+      <>
+        {headerComponent}
+        <TableHeaderButtonComponent
+          datatable={datatable}
+          modelConfig={modelConfig}
+          meta={meta}
+        />
 
         <SectionComponent>
           {!isPageLoading && (
-            <Fragment>
+            <>
               <StyledTable>
                 <THead>
                   <Tr>
@@ -295,11 +277,11 @@ export default class DashboardAgentTasksSection extends Component {
                   current={pagination.current}
                   total={pagination.total}
                   range={1}
-                  basePath={getBasePath(activeTab, basePath)}
+                  basePath={datatable.basePath}
                   pageParam="page-number"
                 />
               )}
-            </Fragment>
+            </>
           )}
           {isPageLoading && 'Loading...'}
         </SectionComponent>
@@ -309,7 +291,7 @@ export default class DashboardAgentTasksSection extends Component {
             {pagination.text}
           </StatusBlock>
         }
-      </Fragment>
+      </>
     );
   }
 }

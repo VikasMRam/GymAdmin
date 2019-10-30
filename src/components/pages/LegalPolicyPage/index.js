@@ -1,37 +1,33 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { object } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import { Hr } from 'sly/components/atoms';
+import pad from 'sly/components/helpers/pad';
 import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
 import Footer from 'sly/components/organisms/Footer';
 import PPHTML from 'sly/components/pages/LegalPolicyPage/privacypolicytext';
 import TOSHTML from 'sly/components/pages/LegalPolicyPage/tostext';
 
-const DescriptionText = styled.div`
+const DescriptionText = pad(styled.div`
   color: ${palette('slate', 'filler')};
-  margin-bottom: ${size('spacing.huge')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     order: 1;
     width: ${size('layout.col8')};
     margin-right: ${size('layout.gutter')};
   }
-`;
+`, 'huge');
 
-const StyledHr = styled(Hr)`
-  margin-bottom: ${size('spacing.huge')};
-`;
+const PaddedHr = pad(Hr, 'huge');
 
-
-const ContentWrapper = styled.div`
-  margin-bottom: ${size('spacing.xxxLarge')};
+const ContentWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-top: -${size('spacing.large')};
   }
-`;
+`, 'xxxLarge');
 
 /** TODO Check with Fonz/Amal about performance about below */
 const legalPageTypes = {
@@ -49,16 +45,13 @@ const LegalPolicyPage = ({ match }) => {
   const { component, title } = legalPageTypes[legalPage];
 
   const description = (
-    <Fragment>
-      <DescriptionText>
-        {component}
-      </DescriptionText>
-    </Fragment>
+    <DescriptionText>
+      {component}
+    </DescriptionText>
   );
 
   return (
-    <Fragment>
-
+    <>
       <Helmet>
         <meta name="robots" content="noindex" />
       </Helmet>
@@ -71,11 +64,10 @@ const LegalPolicyPage = ({ match }) => {
         footer={<Footer />}
       >
         <ContentWrapper>
-          <StyledHr />
-
+          <PaddedHr />
         </ContentWrapper>
       </OverlappingSectionsTemplate>
-    </Fragment>
+    </>
   );
 };
 

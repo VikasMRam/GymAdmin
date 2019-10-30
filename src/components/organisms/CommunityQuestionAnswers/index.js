@@ -1,32 +1,35 @@
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import styled from 'styled-components';
-import { string, arrayOf, shape, func, object, bool } from 'prop-types';
+import { string, arrayOf, func } from 'prop-types';
 
 import { content as contentPropType } from 'sly/propTypes/content';
 import { size } from 'sly/components/themes';
+import pad from 'sly/components/helpers/pad';
 import cursor from 'sly/components/helpers/cursor';
 import { Hr, Block } from 'sly/components/atoms';
 import CommunityQuestion from 'sly/components/molecules/CommunityQuestion';
 import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
+import Button from "sly/components/atoms/Button";
 
-const AnswersDiv = styled.div`
+const AnswersDiv = pad(styled.div`
   margin-left: ${size('spacing.huge')};
-  margin-bottom: ${size('spacing.large')};
-`;
+`, 'large');
 
 const StyledHr = styled(Hr)`
   margin: ${size('spacing.xLarge')} 0;
 `;
 
-const StyledCommunityQuestion = styled(CommunityQuestion)`
-  margin-bottom: ${size('spacing.large')};
-`;
+const PaddedCommunityQuestion = pad(CommunityQuestion, 'large');
+PaddedCommunityQuestion.displayName = 'PaddedCommunityQuestion';
 
 const CursorBlock = cursor(Block);
 CursorBlock.displayName = 'CursorBlock';
 
-const StyledBlock = styled(Block)`
-  margin-bottom: ${size('spacing.xLarge')};
+const PaddedBlock = pad(Block);
+
+const StyledButton = styled(Button)`
+  margin-top: ${size('spacing.xLarge')};  
+  width: 100%;
 `;
 
 const sortByCreatedAt = (a, b) => a.createdAt > b.createdAt;
@@ -38,10 +41,10 @@ const CommunityQuestionAnswers = ({
     const { contents = [] } = question;
 
     const answersComponents = contents.sort(sortByCreatedAt).map((answer, i) => (
-      <div key={answer.id}>
+      <Fragment key={answer.id}>
         <CommunityAnswer answer={answer} />
         {i < contents.length - 1 && <StyledHr />}
-      </div>
+      </Fragment>
     ));
     const firstAnswerComponent = answersComponents[0];
     if (answersComponents.length) {
@@ -49,38 +52,39 @@ const CommunityQuestionAnswers = ({
     }
 
     return (
-      <div key={question.id}>
-        <StyledCommunityQuestion question={question} />
+      <Fragment key={question.id}>
+        <PaddedCommunityQuestion question={question} />
         {firstAnswerComponent}
         <AnswersDiv>
           {answersComponents}
         </AnswersDiv>
-        <CursorBlock palette="primary" weight="medium" onClick={() => onLeaveAnswerClick(question.type, question.id)}>Leave an Answer</CursorBlock>
+        <CursorBlock palette="primary" weight="medium" onClick={() => onLeaveAnswerClick(question)}>Leave an Answer</CursorBlock>
         {i < questions.length - 1 && <StyledHr />}
-      </div>
+      </Fragment>
     );
   });
 
   const communityFaQsComponent = communityFaQs.sort(sortByCreatedAt).map((communityFaQ, i) => (
-    <div key={communityFaQ.id}>
-      <StyledCommunityQuestion question={communityFaQ} />
+    <Fragment key={communityFaQ.id}>
+      <PaddedCommunityQuestion question={communityFaQ} />
       <CursorBlock palette="primary" weight="medium" onClick={() => onAskQuestionClick(communityFaQ)}>Be the first to ask this question</CursorBlock>
       {i < communityFaQs.length - 1 && <StyledHr />}
-    </div>
+    </Fragment>
   ));
 
   return (
-    <div>
+    <>
       {questionsComponent}
-      {questionsComponent.length === 0 && <div>What would you like to know about senior living options at {communityName}? To ask a question, click the button below.</div>}
+      {questionsComponent.length === 0 && <>What would you like to know about senior living options at {communityName}? To ask a question, click the button below.</>}
       {communityFaQsComponent.length > 0 &&
-        <Fragment>
+        <>
           <StyledHr />
-          <StyledBlock size="subtitle" weight="medium">Other questions to consider</StyledBlock>
+          <PaddedBlock size="subtitle" weight="medium">Other questions to consider</PaddedBlock>
           {communityFaQsComponent}
-        </Fragment>
+        </>
       }
-    </div>
+      <StyledButton onClick={() => onAskQuestionClick()}>Ask a Question</StyledButton>
+    </>
   );
 };
 

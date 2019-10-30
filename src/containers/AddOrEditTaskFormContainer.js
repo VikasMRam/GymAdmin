@@ -3,13 +3,13 @@ import { arrayOf, string, object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 
 import { prefetch, query } from 'sly/services/newApi';
+import { withUser } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
 import taskPropType from 'sly/propTypes/task';
 import { createValidator, required } from 'sly/services/validation';
-import { NOTE_COMMENTABLE_TYPE_CLIENT, NOTE_CTYPE_ACTIVITY_TASK_COMPLETED } from 'sly/constants/notes';
-import { TASK_RELATED_ENTITY_TYPE, TASK_STATUS_COMPLETED } from 'sly/constants/tasks';
-import { TASK_RESOURCE_TYPE, USER_RESOURCE_TYPE, CLIENT_RESOURCE_TYPE, NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
+import { TASK_RELATED_ENTITY_TYPE, TASK_STATUS_NOT_STARTED } from 'sly/constants/tasks';
+import { TASK_RESOURCE_TYPE, USER_RESOURCE_TYPE, CLIENT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import AddTaskForm from 'sly/components/organisms/AddTaskForm';
 
 const validate = createValidator({
@@ -30,9 +30,7 @@ const ReduxForm = reduxForm({
 @query('createTask', 'createTask')
 
 @query('updateTask', 'updateTask')
-
-@query('createNote', 'createNote')
-
+@withUser
 export default class AddOrEditTaskFormContainer extends Component {
   static propTypes = {
     users: arrayOf(userPropType),
@@ -86,7 +84,6 @@ export default class AddOrEditTaskFormContainer extends Component {
       };
     }
 
-    let addNotePromise = () => Promise.resolve();
     let taskApiCall;
     if (task) {
       taskApiCall = updateTask({ id: task.id }, payload);
@@ -94,30 +91,7 @@ export default class AddOrEditTaskFormContainer extends Component {
       taskApiCall = createTask(payload);
     }
 
-    if (task && task.status !== postData.status && postData.status === TASK_STATUS_COMPLETED) {
-      const clients = task.relatedEntities.filter(r => r.entityType === CLIENT_RESOURCE_TYPE);
-      if (clients.length) {
-        const addNotePayloads = clients.map((client) => {
-          const { id } = client;
-          const { title } = task;
-          const payload = {
-            type: NOTE_RESOURCE_TYPE,
-            attributes: {
-              cType: NOTE_CTYPE_ACTIVITY_TASK_COMPLETED,
-              commentableID: id,
-              commentableType: NOTE_COMMENTABLE_TYPE_CLIENT,
-              body: title,
-              title: 'You completed a task',
-            },
-          };
-          return payload;
-        });
-        addNotePromise = () => Promise.all(addNotePayloads.map(p => createNote(p)));
-      }
-    }
-
     taskApiCall
-      .then(addNotePromise)
       .then(refetchTasks)
       .then(() => {
         if (task) {
@@ -150,7 +124,7 @@ export default class AddOrEditTaskFormContainer extends Component {
 
   render() {
     const {
-      statuses, priorities, users, status, task, client,
+      statuses, priorities, users, status, task, client, user
     } = this.props;
     const { users: usersStatus } = status;
     const { hasFinished: usersHasFinished } = usersStatus;
@@ -163,6 +137,12 @@ export default class AddOrEditTaskFormContainer extends Component {
     if (client) {
       initialValues.relatedTo = client.clientInfo.name;
     }
+    if (user) {
+      initialValues.owner = user.id;
+    }
+
+    initialValues.status = TASK_STATUS_NOT_STARTED;
+
     let deleteTask;
     let completeTask;
     if (task) {

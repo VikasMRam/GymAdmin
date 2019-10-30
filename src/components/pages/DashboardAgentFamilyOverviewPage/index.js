@@ -3,7 +3,7 @@ import { Redirect, generatePath } from 'react-router';
 
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardAgentFamilyOverviewSectionContainer from 'sly/containers/DashboardAgentFamilyOverviewSectionContainer';
-import { Datatable, simpleQSParse } from 'sly/services/datatable';
+import { Datatable } from 'sly/services/datatable';
 import { parse } from 'query-string';
 
 import {
@@ -23,7 +23,6 @@ const DashboardAgentFamilyOverviewPage = ({ match, location }) => {
       />
     );
   }
-
   const { 'page-number': pageNumber, ...filters } = parse(location.search);
 
   const sectionFilters = {

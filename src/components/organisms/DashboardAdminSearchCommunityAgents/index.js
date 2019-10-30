@@ -1,22 +1,20 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import { func, arrayOf } from 'prop-types';
-import { adminCommunityPropType } from 'sly/propTypes/community';
+
+import { community as communityPropType } from 'sly/propTypes/community';
 import DashboardCommunityAgentSearchBox from 'sly/components/organisms/DashboardCommunityAgentSearchBox';
 import DashboardAdminCommunityAgentList from 'sly/components/organisms/DashboardAdminCommunityAgentList';
 
-export default class DashboardAdminSearchCommunityAgents extends Component {
-  static propTypes = {
-    handleCommunitySearch: func.isRequired,
-    communities: arrayOf(adminCommunityPropType),
-  };
+const DashboardAdminSearchCommunityAgents = ({ handleCommunitySearch, communities }) => (
+  <>
+    <DashboardCommunityAgentSearchBox handleSubmit={handleCommunitySearch} />
+    <DashboardAdminCommunityAgentList communitiesWithAgents={communities || []} />
+  </>
+);
 
-  render() {
-    const { handleCommunitySearch, communities } = this.props;
-    return (
-      <Fragment>
-        <DashboardCommunityAgentSearchBox handleSubmit={handleCommunitySearch} />
-        <DashboardAdminCommunityAgentList communitiesWithAgents={communities || []} />
-      </Fragment>
-    );
-  }
-}
+DashboardAdminSearchCommunityAgents.propTypes = {
+  handleCommunitySearch: func.isRequired,
+  communities: arrayOf(communityPropType),
+};
+
+export default DashboardAdminSearchCommunityAgents;

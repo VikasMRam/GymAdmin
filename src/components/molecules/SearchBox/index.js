@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { oneOf, string, func, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { switchProp, ifProp } from 'styled-tools';
@@ -26,7 +26,7 @@ const searchTextBoxStyles = css`
 const ShadowedSearchTextBox = shadow(styled(Input)`
   ${searchTextBoxStyles}
 `, 'small');
-ShadowedSearchTextBox.displayName = 'ShadowedSearchTextBox';
+
 const SearchTextBox = styled(Input)`
   ${searchTextBoxStyles}
 `;
@@ -75,8 +75,7 @@ const SearchBox = ({
   <Wrapper layout={layout} {...props}>
     <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions} highlightFirstSuggestion>
       {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-        <Fragment>
-          {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+        <>
           {hasShadow &&
             <ShadowedSearchTextBox
               {...getInputProps({ onBlur, placeholder })}
@@ -107,7 +106,7 @@ const SearchBox = ({
               <GoogleLogo src={assetPath('images/powered_by_google.png')} />
             </SearchSuggestionsWrapper>
           )}
-        </Fragment>
+        </>
       )}
     </PlacesAutocomplete>
   </Wrapper>

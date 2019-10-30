@@ -2,9 +2,11 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import CommunityPricingWizardLanding from 'sly/components/organisms/CommunityPricingWizardLanding';
+import SushanthRamakrishna from 'sly/../private/storybook/sample-data/user-sushanth-ramakrishna.json';
 
-const name = 'test';
-const defaultProp = { name };
+const defaultProp = {
+  user: SushanthRamakrishna,
+};
 
 const wrap = (props = {}) =>
   shallow(<CommunityPricingWizardLanding {...defaultProp} {...props} />);
@@ -12,6 +14,8 @@ const wrap = (props = {}) =>
 describe('CommunityPricingWizardLanding', () => {
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.contains(name)).toBeTruthy();
+
+    expect(wrapper.find('PaddedHeading').dive().dive().dive()
+      .text()).toContain(SushanthRamakrishna.name);
   });
 });

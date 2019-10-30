@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { bool, func } from 'prop-types';
-import { prop } from 'styled-tools';
+import { prop, ifProp } from 'styled-tools';
 
 import { size, palette, columnWidth } from 'sly/components/themes';
 import { adminAgentPropType } from 'sly/propTypes/agent';
-import { Heading, Badge, Button, Box, Block, Icon } from 'sly/components/atoms';
+import { Heading, Badge, Button, Span } from 'sly/components/atoms';
 
 const Header = styled.div`
   display: flex;
@@ -35,31 +35,24 @@ const lineHeight = p => size('lineHeight', p.size);
 const textSize = p => size('text', p.size);
 
 const AgentInfoWrapper = styled.div`
+  padding: ${size('spacing.regular')};
+  padding-bottom: ${ifProp('isFloatingSectionPresent', 0)};
+  display: grid;
+  grid-template-columns: max-content auto;
+  grid-column-gap: ${size('spacing.large')};
+  grid-row-gap: ${size('spacing.regular')};
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: flex;
-    flex-flow: column wrap;
-    height: calc(${textSize} * ${lineHeight} * ${prop('rows')});
-    margin-right: -${size('spacing.xLarge')};
-    > * {
-      width: ${columnWidth(2, size('spacing.xLarge'))};
-      margin-right: ${size('spacing.xLarge')};
-    }
-   }
-`;
-
-const IconItem = styled.div`
-  display: flex;
-`;
-
-const StyledIcon = styled(Icon)`
-  margin-right: ${size('spacing.regular')};
+    margin-left: auto;
+    padding: ${size('spacing.regular')};
+  }
 `;
 
 const agentPropsMap = {
-  parentCompany: 'families',
-  cellPhone: 'phone',
-  workPhone: 'phone',
-  last5DayLeadCount: 'loyalty',
+  parentCompany: 'Parent Company',
+  cellPhone: 'Cell Phone',
+  workPhone: 'Work Phone',
+  last5DayLeadCount: 'Past 5 Day Count',
 };
 
 export default class DashboardAdminAgentTile extends Component {
@@ -75,14 +68,14 @@ export default class DashboardAdminAgentTile extends Component {
   };
 
   copyToClipboard = () => {
-    const { agent, notifyError, notifyInfo } = this.props;
-    const { slyPhone } = agent.info;
+    const { agent } = this.props;
+    const { cellPhone } = agent.info;
     if (navigator && navigator.clipboard) {
-      navigator.clipboard.writeText(slyPhone)
-        .then(() => notifyInfo(`Phone number ${slyPhone} copied to clipboard!`))
-        .catch(() => notifyError(`Could not copy ${slyPhone} to clipboard!`));
+      navigator.clipboard.writeText(cellPhone)
+        .then(() => alert(`Phone number ${cellPhone} copied to clipboard!`))
+        .catch(() => alert(`Could not copy ${cellPhone} to clipboard!`));
     } else {
-      notifyError(`Copy ${slyPhone} to clipboard unsupported!`);
+      alert(`Copy ${cellPhone} to clipboard unsupported!`);
     }
   };
 
@@ -90,7 +83,7 @@ export default class DashboardAdminAgentTile extends Component {
     const { agent, isRecommended } = this.props;
     const infoRowsNumber = Math.ceil(Object.keys(agentPropsMap).length / 2);
     return (
-      <Fragment>
+      <>
         <Header>
           <SlyScore>{agent.info.slyScore}</SlyScore>
           <Heading level="subtitle"> { agent.name } </Heading>
@@ -98,20 +91,21 @@ export default class DashboardAdminAgentTile extends Component {
         </Header>
         <AgentInfoWrapper size="caption" rows={infoRowsNumber}>
           {Object.entries(agentPropsMap)
-            .map(([key, icon]) => (
-              <IconItem>
-                <StyledIcon icon={icon} size="small" />
-                <Block size="caption">{agent.info[key]}</Block>
-              </IconItem>
+            .map(([key, item]) => (
+              <>
+                <Span size="caption" palette="grey" variation="dark">{item}</Span>
+                <Span size="caption">{agent.info[key]}</Span>
+              </>
             ))
           }
+          <>
+            <Span palette="grey" size="caption" variation="dark">Admin Notes</Span>
+            <Span size="caption">{agent.info.adminNotes}</Span>
+          </>
         </AgentInfoWrapper>
-        <IconItem>
-          <StyledIcon icon="note" size="small" />
-          <Block size="caption">{agent.info.adminNotes}</Block>
-        </IconItem>
-        <Button onClick={this.copyToClipboard}>WT: {agent.info.slyPhone}</Button>
-      </Fragment>
+
+        <Button onClick={this.copyToClipboard}>WT: {agent.info.cellPhone}</Button>
+      </>
     );
   }
 }

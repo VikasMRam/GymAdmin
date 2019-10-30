@@ -5,7 +5,13 @@ import uniqueId from 'lodash/uniqueId';
 import { TIMEOUT } from 'sly/constants/notifications';
 import { connectController } from 'sly/controllers';
 
-class NotificationController extends Component {
+const mapStateToProps = (state, { controller = {} }) => ({
+  messages: controller.messages || [],
+});
+
+@connectController(mapStateToProps)
+
+export default class NotificationController extends Component {
   static propTypes = {
     messages: arrayOf(shape({
       content: string,
@@ -62,9 +68,3 @@ class NotificationController extends Component {
     });
   }
 }
-
-const mapStateToProps = (state, { controller = {} }) => ({
-  messages: controller.messages || [],
-});
-
-export default connectController(mapStateToProps)(NotificationController);

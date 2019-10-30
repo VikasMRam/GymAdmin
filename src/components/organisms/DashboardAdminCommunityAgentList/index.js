@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react';
-import { bool, arrayOf } from 'prop-types';
+import React, { Component } from 'react';
+import { arrayOf } from 'prop-types';
+
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { Box, Link, Hr } from 'sly/components/atoms';
 import DashboardAdminCommunityTile from 'sly/components/organisms/DashboardAdminCommunityTile';
 import DashboardAdminAgentTile from 'sly/components/organisms/DashboardAdminAgentTile';
-
 
 export default class DashboardAdminCommunityAgentList extends Component {
   static propTypes = {
@@ -27,8 +27,7 @@ export default class DashboardAdminCommunityAgentList extends Component {
     const { communitiesWithAgents } = this.props;
     const { showAgents } = this.state;
     const listComponents = communitiesWithAgents.map((communityWithAgents, idx) => {
-      const { agents } = communityWithAgents;
-
+      const { partnerAgents: agents } = communityWithAgents;
       return (
         <Box>
           <DashboardAdminCommunityTile community={communityWithAgents} /><Hr />
@@ -40,9 +39,9 @@ export default class DashboardAdminCommunityAgentList extends Component {
     });
 
     return (
-      <div>
+      <>
         {listComponents}
-      </div>
+      </>
     );
   }
 }

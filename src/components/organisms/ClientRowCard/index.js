@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
-import { func, object } from 'prop-types';
+import { object } from 'prop-types';
 import { ifProp, ifNotProp } from 'styled-tools';
 import { generatePath } from 'react-router';
 
@@ -9,19 +9,17 @@ import {
   Block,
   Link,
   Icon,
-  Hr,
+  ClampedText,
 } from 'sly/components/atoms';
-
 import {
   DoubleLineTd,
   Td,
   TextTd,
   Tr,
 } from 'sly/components/atoms/Table';
-
 import Stage from 'sly/components/molecules/Stage';
 import { FAMILY_STATUS_ON_PAUSE } from 'sly/constants/familyDetails';
-import { ACTIVITY, AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
 import clientPropType from 'sly/propTypes/client';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import { size, palette } from 'sly/components/themes';
@@ -46,13 +44,21 @@ const Wrapper = mobileOnly(Tr, css`
   `)}
 `);
 
+const ClampedTextWrapper = styled.div`
+  display: flex;
+`;
+
 const StyledNameCell = styled(({ disabled, client, to, ...props }) => {
   return (
     <Td disabled={disabled} {...props}>
-      <Link to={to} {...props}>
-        {client.clientInfo.name}
+      <ClampedTextWrapper>
+        <ClampedText size="caption">
+          <Link to={to} {...props} >
+            {client.clientInfo.name}
+          </Link>
+        </ClampedText>
         {disabled && <Icon icon="pause" palette="danger" size="caption" />}
-      </Link>
+      </ClampedTextWrapper>
     </Td>
   );
 })`
@@ -61,12 +67,18 @@ const StyledNameCell = styled(({ disabled, client, to, ...props }) => {
   }
 `;
 
+StyledNameCell.displayName = 'StyledNameCell';
+
 const NameCell = mobileOnly(StyledNameCell, css`
   margin-bottom: ${size('spacing.regular')};
-  font-weight: ${size('weight.medium')};
 `);
 
+NameCell.displayName = 'NameCell';
+
 const ResidentCell = mobileOnly(TextTd, css`display: none`);
+
+ResidentCell.displayName = 'ResidentCell';
+
 
 const StageCell = mobileOnly(Td, css`
   order: 3;
@@ -75,15 +87,17 @@ const StageCell = mobileOnly(Td, css`
   padding: ${size('spacing.regular')} ${size('spacing.large')} 0;
 `);
 
+StageCell.displayName = 'StageCell';
+
 const NoteCell = mobileOnly(({ disabled, note, ...props }) => (
-  <Fragment>
+  <>
     {note && (
       <DoubleLineTd firstLine={note.body} secondLine={dayjs(note.createdAt).format('MM/DD/YYYY')} disabled={disabled} {...props} />
     )}
     {!note && (
       <TextTd disabled={disabled} {...props} />
     )}
-  </Fragment>
+  </>
 ), css`
   ${ifNotProp('note', css`display: none;`)}
 
@@ -93,7 +107,11 @@ const NoteCell = mobileOnly(({ disabled, note, ...props }) => (
 
 `);
 
+NoteCell.displayName = 'NoteCell';
+
 const DateAddedCell = mobileOnly(TextTd, css`display: none`);
+
+DateAddedCell.displayName = 'DateAddedCell';
 
 const onClientClick = (clientName, to) => {
   const event = {
@@ -110,6 +128,7 @@ const ClientRowCard = ({ client }) => {
   const {
     clientInfo, uuidAux, stage, status, createdAt, notes,
   } = client;
+
   const { uuidInfo } = uuidAux;
   let residentName = '';
   if (uuidInfo) {

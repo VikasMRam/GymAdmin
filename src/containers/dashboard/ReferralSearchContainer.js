@@ -6,6 +6,7 @@ import { arrayOf, func, oneOf, object } from 'prop-types';
 import { normalizeResponse, query } from 'sly/services/newApi';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { adminAgentPropType } from 'sly/propTypes/agent';
+import userPropType from 'sly/propTypes/user';
 import clientPropType from 'sly/propTypes/client';
 import { newProvider, newParentClient, newContact, newSlyEntity } from 'sly/constants/payloads/client';
 import { normJsonApi } from 'sly/services/helpers/jsonApi';
@@ -16,6 +17,8 @@ import DashboardAgentReferralSearch from 'sly/components/organisms/DashboardAgen
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import DashboardCommunityReferralContactDetailsContainer from 'sly/containers/DashboardCommunityReferralContactDetailsContainer';
 import DashboardAgentReferralContactDetailsContainer from 'sly/containers/DashboardAgentReferralContactDetailsContainer';
+import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { userIs } from 'sly/services/helpers/role';
 
 @query('getCommunities', 'getCommunities')
 @query('getAgents', 'getAgents')
@@ -32,11 +35,14 @@ export default class ReferralSearchContainer extends Component {
     referralMode: oneOf(['Agent', 'Community']),
     parentClient: clientPropType.isRequired,
     parentRawClient: object,
+    user: userPropType,
     getAgents: func,
     getCommunities: func,
     createClient: func,
     refetchClient: func,
     createContact: func,
+    change: func,
+    onLocationChange: func,
   };
 
   static defaultProps = {
@@ -44,8 +50,8 @@ export default class ReferralSearchContainer extends Component {
   };
 
   state = {
-    communities: [],
-    agents: [],
+    communities: null,
+    agents: null,
     selectedCommunity: null,
     selectedAgent: null,
   };
@@ -122,15 +128,26 @@ export default class ReferralSearchContainer extends Component {
   getSelectedAgent = () => {
     const { selectedAgent } = this.state;
     return selectedAgent;
-  }
+  };
 
   setSelectedAgent = (selectedAgent) => {
     this.setState({ selectedAgent });
     return selectedAgent;
-  }
+  };
+  handleLocationAgentSearch = (location) => {
+    console.log('Handle Location Search ', location);
+    // TODO Get lat,lng,string from // by default 30 mile radius
+    // geo = "37.402608,-121.875052,30"
+    // return this.doAgentSearch({geo});
+  };
+  handleLocationCommunitySearch = (location) => {
+    console.log('Handle Location Search ', location);
+    // geo = "37.402608,-121.875052,30"
+    // return this.doCommunitySearch({geo});
+  };
 
   getSearchFilters = (nameOrZip) => {
-  // Based on regex matching use name or zip
+    // Based on regex matching use name or zip
     const zipRe = new RegExp(/^\d{5}(-\d{4})?$/);
     const filters = {};
     if (nameOrZip.match(zipRe)) {
@@ -141,9 +158,17 @@ export default class ReferralSearchContainer extends Component {
     return filters;
   }
 
-  doCommunitySearch = ({ nameOrZip }) => {
+  doCommunitySearch = ({ name, city, geo }) => {
     const { getCommunities } = this.props;
-    const filters = this.getSearchFilters(nameOrZip);
+    // const filters = this.getSearchFilters(nameOrZip);
+    const filters = {};
+    if (city) {
+      [filters['filter[city]']] = [city.split(',')];
+    } else if (geo) {
+      filters['filter[geo]'] = geo;
+    } else if (name) {
+      filters['filter[name]'] = name;
+    }
     return getCommunities(filters).then((resp) => {
       const communities = normalizeResponse(resp.body);
       return this.setState({
@@ -152,10 +177,16 @@ export default class ReferralSearchContainer extends Component {
     });
   };
 
-  doAgentSearch = ({ nameOrZip }) => {
+  doAgentSearch = ({ name, city, geo }) => {
     const { getAgents } = this.props;
-    const filters = this.getSearchFilters(nameOrZip);
-
+    const filters = {};
+    if (city) {
+      filters['filter[address]'] = city;
+    } else if (geo) {
+      filters['filter[geo]'] = geo;
+    } else if (name) {
+      filters['filter[name]'] = name;
+    }
     return getAgents(filters).then((resp) => {
       const agents = normJsonApi(resp);
       this.setState({
@@ -210,9 +241,10 @@ export default class ReferralSearchContainer extends Component {
 
   render() {
     const {
-      referralMode, parentClient,
+      referralMode, parentClient, user,
     } = this.props;
-    const { communitiesInterested, children: childrenClients } = parentClient;
+    const { communitiesInterested, children: childrenClients, clientInfo, recommendedAgents } = parentClient;
+    const { slyCommunityMessage: communityMessage, slyAgentMessage: agentMessage } = clientInfo;
     const { communities, agents } = this.state;
     const communityReferralClients = [];
     const agentReferralClients = [];
@@ -225,6 +257,7 @@ export default class ReferralSearchContainer extends Component {
         communityReferralClients.push(childrenClient);
       }
     });
+    const isAdminUser = userIs(user, PLATFORM_ADMIN_ROLE);
     const communitiesInterestedIdsMap = communitiesInterested.reduce((accumulator, community) => {
       accumulator[community.id] = community;
       return accumulator;
@@ -233,24 +266,23 @@ export default class ReferralSearchContainer extends Component {
       accumulator[client.provider.id] = client;
       return accumulator;
     }, {});
+    const recommendedAgentsIdsMap = recommendedAgents.reduce((accumulator, community) => {
+      accumulator[community.id] = community;
+      return accumulator;
+    }, {});
     const childrenClientAgentIdsMap = agentReferralClients.reduce((accumulator, client) => {
       accumulator[client.provider.id] = client;
       return accumulator;
     }, {});
     // FIXME: @fonz, how does dynamic component choosing look? How do we choose properties , can we do
-    // const modeCompMap = { 'Community': DashboardCommunityReferrals, 'Agent': DashboardAgentReferrals };
-    // const ModeComp = modeCompMap[referralMode];
-    // return <ModeComp
-    //          communities={communities}
-    //          handleCommunitySearch={this.doCommunitySearch}
-    //          sendReferral={this.sendReferral} /> ;
     if (referralMode === 'Community') {
       const selectedCommunity = this.getSelectedCommunity();
-      const contact = (selectedCommunity && selectedCommunity.contacts.length > 0) ? selectedCommunity.contacts[0] : null;
-      let contactFormInitialValues = {};
+      const contact = (selectedCommunity && selectedCommunity.contacts && selectedCommunity.contacts.length > 0) ? selectedCommunity.contacts[0] : null;
+      const contactFormInitialValues = { slyMessage: communityMessage };
       if (contact) {
         const { email, name } = contact;
-        contactFormInitialValues = { email, name };
+        contactFormInitialValues.email = email;
+        contactFormInitialValues.name = name;
       }
       return (
         <WizardController
@@ -272,19 +304,21 @@ export default class ReferralSearchContainer extends Component {
                   communitiesInterestedIdsMap={communitiesInterestedIdsMap}
                   childrenClients={communityReferralClients}
                   childrenClientCommunityIdsMap={childrenClientCommunityIdsMap}
-                  handleCommunitySearch={this.doCommunitySearch}
+                  isAdminUser={isAdminUser}
                   sendNewReferral={this.sendReferral}
-                  setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto(3); }}
+                  setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto('DashboardCommunityReferralContactDetailsContainer'); }}
                 />
                 <WizardStep
                   component={DashboardCommunityReferralSearch}
                   onSubmit={onSubmit}
                   name="DashboardCommunityReferralSearch"
                   communities={communities}
+                  isAdminUser={isAdminUser}
                   childrenClients={communityReferralClients}
                   childrenClientCommunityIdsMap={childrenClientCommunityIdsMap}
                   handleCommunitySearch={this.doCommunitySearch}
-                  setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto(3); }}
+                  handleLocationSearch={this.handleLocationCommunitySearch}
+                  setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto('DashboardCommunityReferralContactDetailsContainer'); }}
                 />
                 <WizardStep
                   component={DashboardCommunityReferralContactDetailsContainer}
@@ -293,6 +327,7 @@ export default class ReferralSearchContainer extends Component {
                   name="DashboardCommunityReferralContactDetailsContainer"
                   community={selectedCommunity}
                   initialValues={contactFormInitialValues}
+                  isAdminUser={isAdminUser}
                 />
               </WizardSteps>
             );
@@ -302,11 +337,12 @@ export default class ReferralSearchContainer extends Component {
     }
     // Agent Referral Flow
     const selectedAgent = this.getSelectedAgent();
-    const contact = (selectedAgent && selectedAgent.contacts.length > 0) ? selectedAgent.contacts[0] : null;
-    let contactFormInitialValues = {};
+    const contact = (selectedAgent && selectedAgent.contacts &&  selectedAgent.contacts.length > 0) ? selectedAgent.contacts[0] : null;
+    const contactFormInitialValues = { slyMessage: agentMessage };
     if (contact) {
       const { email, name } = contact;
-      contactFormInitialValues = { email, name };
+      contactFormInitialValues.email = email;
+      contactFormInitialValues.name = name;
     }
     return (
       <WizardController
@@ -320,18 +356,22 @@ export default class ReferralSearchContainer extends Component {
             <WizardSteps currentStep={currentStep} {...props}>
               <WizardStep
                 component={DashboardAgentReferrals}
+                recommendedAgents={recommendedAgents}
+                recommendedAgentsIdsMap={recommendedAgentsIdsMap}
                 onSendNewReferralClick={onSubmit}
                 name="DashboardAgentReferrals"
                 childrenClients={agentReferralClients}
+                setSelectedAgent={(a) => { this.setSelectedAgent(a); goto('DashboardAgentReferralContactDetailsContainer'); }}
               />
               <WizardStep
                 component={DashboardAgentReferralSearch}
                 onSubmit={onSubmit}
                 name="DashboardAgentReferralSearch"
                 handleAgentSearch={this.doAgentSearch}
+                handleLocationSearch={this.handleLocationAgentSearch}
                 agents={agents}
                 childrenClientAgentIdsMap={childrenClientAgentIdsMap}
-                setSelectedAgent={(a) => { this.setSelectedAgent(a); goto(3); }}
+                setSelectedAgent={(a) => { this.setSelectedAgent(a); goto('DashboardAgentReferralContactDetailsContainer'); }}
               />
               <WizardStep
                 component={DashboardAgentReferralContactDetailsContainer}
