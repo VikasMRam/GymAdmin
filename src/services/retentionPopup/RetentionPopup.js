@@ -91,9 +91,9 @@ export default class RetentionPopup extends Component {
     };
 
     localStorage.setItem(SEND_EBOOK, SEND_EBOOK);
-    showModal(<EbookFormContainer showModal={showModal} hideModal={hideModal} pathname={pathname} />);
+    showModal(<EbookFormContainer showModal={showModal} hideModal={hideModal} pathname={pathname} />, null, 'noPadding', false);
 
-    this.removeListeners();
+    this.removeEbookEventListeners();
 
     SlyEvent.getInstance().sendEvent(event);
   };
@@ -198,20 +198,27 @@ export default class RetentionPopup extends Component {
     }
 
     showModal(modalContent);
-    this.removeListeners();
+    this.removeExitIntentEventListeners();
     localStorage.setItem(MODAL_SHOWN, MODAL_SHOWN);
   };
 
-  removeListeners = () => {
-    console.log('remove listeners');
-    clearTimeout(this.activeListener);
+  removeALlListeners = () => {
+    console.log('remove all listeners');
+    this.removeExitIntentEventListeners();
+    this.removeEbookEventListeners();
+  }
 
-    // exit intent listeners
+  removeExitIntentEventListeners =() => {
     window.removeEventListener('popstate', this.onPopstate);
     document.removeEventListener('mouseout', this.onMouseout);
 
     ifvisible.off('blur', this.blur);
     ifvisible.off('focus', this.focus);
+  }
+
+  removeEbookEventListeners =() => {
+    ifvisible.off('wakeup', this.addActiveListener);
+    clearTimeout(this.activeListener);
   }
 
   render() {

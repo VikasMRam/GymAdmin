@@ -5,6 +5,7 @@ import { reduxForm } from 'redux-form';
 
 import EbookForm from './index';
 
+import Modal from 'sly/components/molecules/Modal';
 import { withPreventDefault } from 'sly/services/helpers/forms';
 
 const EbookFormContainer = reduxForm({
@@ -17,4 +18,12 @@ storiesOf('Organisms|EbookForm', module)
     <EbookFormContainer
       handleSubmit={withPreventDefault(action('form submitted'))}
     />
+  )).add('within modal', () => (
+    <Modal
+      onClose={action('closed')}
+      isOpen
+      layout="noPadding"
+    >
+      <EbookFormContainer handleSubmit={withPreventDefault(action('form submitted'))} />
+    </Modal>
   ));

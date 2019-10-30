@@ -64,6 +64,9 @@ export default class EbookFormContainer extends Component {
   };
 
   render() {
-    return <ReduxForm onSubmit={this.handleSubmit} {...this.props} />;
+    return (
+
+      <ReduxForm onSubmit={this.handleSubmit} {...this.props} />
+    );
   }
 }

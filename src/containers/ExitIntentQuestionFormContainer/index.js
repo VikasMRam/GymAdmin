@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 
 import { createValidator, email, required } from 'sly/services/validation';
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { AGENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
+import { EXIT_INTENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
 import { ASK_QUESTION } from 'sly/services/api/actions';
 import ExitIntentQuestionForm from 'sly/components/organisms/ExitIntentQuestionForm';
 import SlyEvent from 'sly/services/helpers/events';
@@ -76,7 +76,7 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
         createAction({
           type: 'UUIDAction',
           attributes: {
-            actionType: AGENT_ASK_QUESTIONS,
+            actionType: EXIT_INTENT_ASK_QUESTIONS,
             actionPage: pathname,
             actionInfo: {
               // slug: id,
@@ -84,7 +84,6 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
               entityType: 'Agent',
               name: data.full_name,
               email: data.email,
-              phone: data.phone,
             },
           },
         }),
