@@ -46,6 +46,12 @@ const onClickTypeButtons = [CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUT
 
 const textMessageTypes = [CONVERSATION_MESSAGE_DATA_TYPE_TEXT, CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUTOMATED_RESPONSE];
 
+const isClickableButtonType = button => onClickTypeButtons.includes(button.action.type);
+
+const isLinkButtonType = button => button.action.type === CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_OPEN_LINK;
+
+const isButtonSelected = (message, button) => message.data.valueButtonList.selectedButtons.includes(button.text);
+
 const Message = ({
   message, participant, dark, className, onButtonClick,
 }) => {
@@ -60,16 +66,6 @@ const Message = ({
   if (participant) {
     ({ participantInfo: user } = participant);
   }
-  let onButtonClicks = [];
-  let selectedButtons = [];
-  if (message.data.type === CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST) {
-    const { data } = message;
-    const { valueButtonList } = data;
-    ({ selectedButtons } = valueButtonList);
-    const onClickButtons = message.data.valueButtonList.buttons
-      .filter(b => onClickTypeButtons.includes(b.action.type) && !selectedButtons.includes(b.text));
-    onButtonClicks = onClickButtons.map(b => () => onButtonClick(message, b));
-  }
 
   return (
     <Wrapper className={className}>
@@ -83,13 +79,13 @@ const Message = ({
       )}
       {message.data.type === CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST &&
         <ButtonsWrapper>
-          {message.data.valueButtonList.buttons.map((b, i) => (
+          {message.data.valueButtonList.buttons.map(b => (
             <Button
               ghost
-              selected={selectedButtons.includes(b.text)}
+              selected={isButtonSelected(message, b)}
               key={b.text}
-              onClick={onButtonClicks[i]}
-              to={b.action.type === CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_OPEN_LINK ? b.action.value : null}
+              onClick={() => isClickableButtonType(b) && !isButtonSelected(message, b) && onButtonClick(message, b)}
+              to={isLinkButtonType(b) ? b.action.value : null}
             >
               {b.text}
             </Button>

@@ -28,10 +28,10 @@ const ReduxForm = reduxForm({
 const mapDispatchToProps = dispatch => ({
   clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
 });
+
 @query('updateClient', 'updateClient')
 @query('createConversationParticipant', 'createConversationParticipant')
 @query('createConversationMessage', 'createConversationMessage')
-
 @connect(null, mapDispatchToProps)
 
 export default class SendMessageFormContainer extends Component {
@@ -48,9 +48,9 @@ export default class SendMessageFormContainer extends Component {
     clearSubmitErrors: func,
   };
 
-  handleOnSubmit = (formData) => {
+  handleOnSubmit = ({ message }) => {
     const {
-      conversation,
+      conversation: { id: conversationId },
       canCreateParticipant,
       otherParticipantId,
       otherParticipantType,
@@ -60,7 +60,7 @@ export default class SendMessageFormContainer extends Component {
       onSuccess,
       onCreateConversationSuccess,
     } = this.props;
-    const { id: conversationId } = conversation;
+
     if (canCreateParticipant) {
       const participantPayload = {
         type: CONVERSTION_PARTICIPANT_RESOURCE_TYPE,
@@ -70,40 +70,43 @@ export default class SendMessageFormContainer extends Component {
           participantType: otherParticipantType,
         },
       };
+
       return createConversationParticipant(participantPayload)
-        .then(({ body }) => {
-          const { data } = body;
-          const { id: participantId } = data;
+        .then(({ body: { data: { id: participantId } } }) => {
           const messagePayload = {
             type: CONVERSTION_MESSAGE_RESOURCE_TYPE,
             attributes: {
               conversationID: conversationId,
               participantID: participantId,
               data: {
-                value: formData.message,
+                type: CONVERSATION_MESSAGE_DATA_TYPE_TEXT,
+                valueText: message,
               },
             },
           };
+
           return createConversationMessage(messagePayload).then(onCreateConversationSuccess);
         })
         .catch(() => {
           throw new SubmissionError({ _error: 'Failed to create conversation. Please try again.' });
         });
     }
-    const data = {
-      type: CONVERSATION_MESSAGE_DATA_TYPE_TEXT,
-      value: formData.message,
-    };
+
+    clearSubmitErrors();
+
     const payload = {
       type: CONVERSTION_MESSAGE_RESOURCE_TYPE,
       attributes: {
-        data,
+        data: {
+          type: CONVERSATION_MESSAGE_DATA_TYPE_TEXT,
+          valueText: message,
+        },
         conversationID: conversationId,
         medium: CONVERSATION_MEDIUM_INAPP,
         sendingMedium: [CONVERSATION_MEDIUM_INAPP, CONVERSATION_MEDIUM_SMS, CONVERSATION_MEDIUM_EMAIL],
       },
     };
-    clearSubmitErrors();
+
     return createConversationMessage(payload)
       .then(onSuccess)
       .catch(() => {
@@ -112,12 +115,10 @@ export default class SendMessageFormContainer extends Component {
   };
 
   render() {
-    const { ...props } = this.props;
-
     return (
       <ReduxForm
         onSubmit={this.handleOnSubmit}
-        {...props}
+        {...this.props}
       />
     );
   }

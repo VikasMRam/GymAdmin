@@ -308,8 +308,8 @@ export default class ConversationMessagesContainer extends Component {
     const { id, data, conversationID, conversationParticipantID } = message;
     const { valueButtonList } = data;
     const { selectedButtons } = valueButtonList;
+    const newSelectedButtons = [...selectedButtons, button.text];
 
-    selectedButtons.push(button.text);
     const payload = {
       type: CONVERSTION_PARTICIPANT_RESOURCE_TYPE,
       attributes: {
@@ -319,7 +319,7 @@ export default class ConversationMessagesContainer extends Component {
           ...data,
           valueButtonList: {
             ...valueButtonList, // todo: clarify regarding json inner keys cleared on patch
-            selectedButtons,
+            selectedButtons: newSelectedButtons,
           },
         },
       },
@@ -390,25 +390,22 @@ export default class ConversationMessagesContainer extends Component {
   };
 
   handleButtonClick = (message, button) => {
-    const { action, text } = button;
+    const { text } = button;
+    const { conversation, createConversationMessage } = this.props;
+    const { id: conversationId } = conversation;
+    const data = {
+      type: CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUTOMATED_RESPONSE,
+      valueText: text,
+    };
+    const payload = {
+      type: CONVERSTION_MESSAGE_RESOURCE_TYPE,
+      attributes: {
+        data,
+        conversationID: conversationId,
+      },
+    };
 
-    if (action.type === CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUTOMATED_RESPONSE) {
-      const { conversation, createConversationMessage } = this.props;
-      const { id: conversationId } = conversation;
-      const data = {
-        type: CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUTOMATED_RESPONSE,
-        valueText: text,
-      };
-      const payload = {
-        type: CONVERSTION_MESSAGE_RESOURCE_TYPE,
-        attributes: {
-          data,
-          conversationID: conversationId,
-        },
-      };
-
-      createConversationMessage(payload).then(() => this.updateButtonListMessageSelectedButtons(message, button));
-    }
+    createConversationMessage(payload).then(() => this.updateButtonListMessageSelectedButtons(message, button));
   };
 
   messagesRef = createRef();
