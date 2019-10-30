@@ -12,13 +12,17 @@ describe('Review Community', () => {
   beforeEach(() => {
     cy.server();
 
-    getCommunity(TEST_COMMUNITY).then((response) => {
-      community = response;
-    });
+    if (!community) {
+      getCommunity(TEST_COMMUNITY).then((response) => {
+        community = response;
+      });
+    }
 
-    cy.fixture('user-slytest-admin').then((response) => {
-      user = response;
-    });
+    if (!user) {
+      cy.fixture('user-slytest-admin').then((response) => {
+        user = response;
+      });
+    }
   });
 
   const portal = selector => select(`.ReactModalPortal ${selector}`);
@@ -87,6 +91,10 @@ describe('Review Community', () => {
 
       cy.request('POST', '/v0/platform/auth/login', user)
         .then(() => cy.visit(`/rating/${ratedId}/approve`));
+
+      cy.get('input[name="email"]').type(user.email);
+      cy.get('input[name="password"]').type(user.password);
+      cy.get('button[type="submit"]').click();
 
       cy.get('div').contains('Status: Success').should('exist');
 
