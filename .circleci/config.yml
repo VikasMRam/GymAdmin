@@ -335,6 +335,8 @@ jobs:
             - store_artifacts:
                 path: cypress/screenshots
 
+# REFERENCE CODE for OPENVPN
+
       # - run:
       #     name: NPM Install and Run Local SlyReact in Background
       #     command: |
@@ -351,8 +353,6 @@ jobs:
       #       else
       #         echo "node_modules from cache exist. So skipping install."
       #       fi
-
-      
 
       # # The PEMs and credentials are set in OPENVPN context and are echoed into files
       # - run:
@@ -429,13 +429,13 @@ workflows:
   build:
     jobs:
       # run build (unit tests, linting, quality checks etc etc) for PRs
-      # - build
+      - build
       - e2e:
           context: OPENVPN
-      # - deploy:
-      #     requires:
-      #       - build
-      #       - e2e
+      - deploy:
+          requires:
+            - build
+            - e2e
 
 
 #  build-staging:
