@@ -42,8 +42,7 @@ export default class AddFamilyFormContainer extends Component {
     notifyInfo: func,
     onSuccess: func,
     updateTask: func,
-    lookingFor: arrayOf(string).isRequired,
-    timeToMove: arrayOf(string).isRequired,
+    initialValues: object,
     onCancel: func.isRequired,
   };
 
@@ -78,6 +77,10 @@ export default class AddFamilyFormContainer extends Component {
     const {
       name, phone, email, source, notes, residentName, preferredLocation, timeToMove, lookingFor,
     } = data;
+    const am =[];
+    if (source === 'Direct Call') {
+      am.push('PhoneConnect')
+    }
     const payload = {
       type: CLIENT_RESOURCE_TYPE,
       attributes: {
@@ -87,6 +90,7 @@ export default class AddFamilyFormContainer extends Component {
           email,
           referralSource: source,
           slyMessage: notes,
+          additionalMetadata: am,
         },
         stage: FAMILY_STAGE_CONTACT1,
       },
@@ -133,7 +137,7 @@ export default class AddFamilyFormContainer extends Component {
 
   render() {
     const { duplicates } = this.state;
-    const { lookingFor, timeToMove, onCancel } = this.props;
+    const { initialValues, onCancel } = this.props;
 
     return (
       <WizardController
@@ -148,8 +152,7 @@ export default class AddFamilyFormContainer extends Component {
             <WizardStep
               component={AddFamilyReduxForm}
               name="Add"
-              lookingFor={lookingFor}
-              timeToMove={timeToMove}
+              initialValues={initialValues}
               onCancel={onCancel}
             />
             <WizardStep
