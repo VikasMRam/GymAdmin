@@ -7,7 +7,6 @@ import { withRouter } from 'react-router';
 import { createValidator, email, required } from 'sly/services/validation';
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { EXIT_INTENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
-import { ASK_QUESTION } from 'sly/services/api/actions';
 import ExitIntentQuestionForm from 'sly/components/organisms/ExitIntentQuestionForm';
 import SlyEvent from 'sly/services/helpers/events';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
@@ -56,34 +55,25 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
 
     handleSubmit = (data) => {
       const {
-        createAction, postUserAction, userDetails, pathname, showModal,
+        createAction, userDetails, pathname, showModal,
       } = this.props;
       const { question } = data;
       const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
-      const value = {
-        question,
-        user,
-      };
-      const payload = {
-        action: ASK_QUESTION,
-        value,
-      };
+
+      console.log('\n\nform: ', user);
 
       clearSubmitErrors();
 
       return Promise.all([
-        postUserAction(payload),
         createAction({
           type: 'UUIDAction',
           attributes: {
             actionType: EXIT_INTENT_ASK_QUESTIONS,
             actionPage: pathname,
             actionInfo: {
-              // slug: id,
               question,
-              entityType: 'Agent',
-              name: data.full_name,
-              email: data.email,
+              name: user.full_name,
+              email: user.email,
             },
           },
         }),

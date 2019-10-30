@@ -73,7 +73,7 @@ export default class RetentionPopup extends Component {
   }
 
   componentWillUnmount() {
-    this.removeListeners();
+    this.removeALlEventListeners();
   }
 
   isEbookModalShown = () => {
@@ -189,7 +189,7 @@ export default class RetentionPopup extends Component {
       exact: true,
       strict: false,
     });
-    let modalContent = <ExitIntentQuestionFormContainer showModal={showModal} hideModal={hideModal} />;
+    let modalContent = <ExitIntentQuestionFormContainer showModal={showModal} hideModal={hideModal} pathname={pathname} />;
 
     if (match) {
       const { params: { communitySlug } } = match;
@@ -202,7 +202,7 @@ export default class RetentionPopup extends Component {
     localStorage.setItem(MODAL_SHOWN, MODAL_SHOWN);
   };
 
-  removeALlListeners = () => {
+  removeALlEventListeners = () => {
     console.log('remove all listeners');
     this.removeExitIntentEventListeners();
     this.removeEbookEventListeners();
