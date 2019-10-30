@@ -314,16 +314,25 @@ jobs:
                 name: Installing Cypress deps
                 command: sudo apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 
+            - restore_cache:
+                keys:
+                  - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+
             - run:
                 name: Run Cypress tests
                 command: |
                   echo "Running cypress"
                   $(npm bin)/cypress run --reporter junit --reporter-options "mochaFile=$TEST_RESULTS/cypress-test-output.xml,toConsole=true" --spec "cypress/integration/**/*"
 
+            - store_test_results:
+                path: /tmp/test-results
 
-      # - restore_cache:
-      #     keys:
-      #       - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+            - store_artifacts:
+                path: /tmp/test-results
+            - store_artifacts:
+                path: cypress/videos
+            - store_artifacts:
+                path: cypress/screenshots
 
       # - run:
       #     name: NPM Install and Run Local SlyReact in Background
@@ -412,15 +421,6 @@ jobs:
       #           -tl "$CIRCLE_BUILD_URL" -m "<!channel> $DESC_MSG" -c "#ed5c5c"
       #       fi
 
-      # - store_test_results:
-      #     path: /tmp/test-results
-
-      # - store_artifacts:
-      #     path: /tmp/test-results
-      # - store_artifacts:
-      #     path: cypress/videos
-      # - store_artifacts:
-      #     path: cypress/screenshots
 
 workflows:
   version: 2
