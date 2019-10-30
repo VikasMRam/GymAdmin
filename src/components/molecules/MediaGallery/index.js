@@ -26,6 +26,26 @@ const CarouselWrapper = styled.div`
       margin-bottom: ${size('spacing.large')};
     `};
 `;
+const ImageCaptionWrapper = styled.div`
+  background: ${palette('slate', 'base')}80;
+  color: ${palette('slate', 'filler')};
+  font-size: ${size('text.tiny')};
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: ${size('spacing.regular')};
+  max-height: ${size('spacing.huge')};
+  position: absolute;
+  z-index: 1;
+  text-align: left;
+  line-height: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; 
+`;
+
 const imageStyles = css`
   width: 100%;
   object-fit: cover;
@@ -218,15 +238,20 @@ export default class MediaGallery extends Component {
             aspectRatio={aspectRatio}
           />
         ) : (
-          <StyledImg
-            key="media-gallery-slide"
-            src={this.shouldLoadMedia(index) ? media.src : ''}
-            data-src={media.src}
-            alt={media.alt}
-            lazy={false}
-            innerRef={(c) => { this.mediaRefs[index] = c; }}
-            aspectRatio={aspectRatio}
-          />
+          <>
+            <StyledImg
+              key="media-gallery-slide"
+              src={this.shouldLoadMedia(index) ? media.src : ''}
+              data-src={media.src}
+              alt={media.alt}
+              lazy={false}
+              innerRef={(c) => { this.mediaRefs[index] = c; }}
+              aspectRatio={aspectRatio}
+            />
+            <ImageCaptionWrapper>
+              This is a description of the image. This is a description of the image. This is a description of the image. This is a description of the image.
+            </ImageCaptionWrapper>
+          </>
         );
       case 'video':
         return (
