@@ -27,8 +27,7 @@ export default class DashboardAdminCommunityAgentList extends Component {
     const { communitiesWithAgents } = this.props;
     const { showAgents } = this.state;
     const listComponents = communitiesWithAgents.map((communityWithAgents, idx) => {
-      const { agents } = communityWithAgents;
-
+      const { partnerAgents: agents } = communityWithAgents;
       return (
         <Box>
           <DashboardAdminCommunityTile community={communityWithAgents} /><Hr />
@@ -40,9 +39,9 @@ export default class DashboardAdminCommunityAgentList extends Component {
     });
 
     return (
-      <div>
+      <>
         {listComponents}
-      </div>
+      </>
     );
   }
 }

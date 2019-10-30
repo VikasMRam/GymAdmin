@@ -7,6 +7,7 @@ import { size, palette } from 'sly/components/themes';
 import { Block, Hr } from 'sly/components/atoms';
 import DashboardCommunityAgentSearchBox from 'sly/components/organisms/DashboardCommunityAgentSearchBox';
 import DashboardAdminReferralCommunityTile from 'sly/components/organisms/DashboardAdminReferralCommunityTile';
+import DashboardAdminCommunityAgentList from 'sly/components/organisms/DashboardAdminCommunityAgentList';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import pad from 'sly/components/helpers/pad';
 import cursor from 'sly/components/helpers/cursor';
@@ -29,7 +30,7 @@ const StyledDashboardAdminReferralCommunityTile = styled(DashboardAdminReferralC
 const CursorStyledDashboardAdminReferralCommunityTile = cursor(StyledDashboardAdminReferralCommunityTile);
 
 const DashboardCommunityReferralSearch = ({
-  communities, isAdminUser, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit, handleLocationSearch,
+  communities, isAdminUser, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit, handleLocationSearch, showAgentList,
 }) => {
   return (
     <Wrapper>
@@ -47,7 +48,7 @@ const DashboardCommunityReferralSearch = ({
         <Block>No Communities found; Try searching another Name or Zip</Block>
       </>
       }
-      {(communities && communities.length > 0) && (
+      {!showAgentList && (communities && communities.length > 0) && (
         <>
           <Hr size="large" />
           <Block>Showing {communities.length} Communities</Block>
@@ -65,6 +66,9 @@ const DashboardCommunityReferralSearch = ({
           })}
         </>
       )}
+      {showAgentList && (communities && communities.length > 0) && (
+        <DashboardAdminCommunityAgentList communitiesWithAgents={communities} />
+      )}
     </Wrapper>
   );
 };
@@ -79,6 +83,7 @@ DashboardCommunityReferralSearch.propTypes = {
   communities: arrayOf(adminCommunityPropType),
   isAdminUser: bool,
   childrenClientCommunityIdsMap: object,
+  showAgentList: bool,
 };
 
 export default DashboardCommunityReferralSearch;

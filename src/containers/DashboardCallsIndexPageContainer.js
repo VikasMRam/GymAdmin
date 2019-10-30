@@ -14,25 +14,8 @@ const ADMIN_CALLS_OVERVIEW_TABLE_HEADINGS = [
 ];
 
 const convertCallsToTableContents = (voiceCalls) => {
-  const contents = voiceCalls.map((voiceCall) => {
-    const {
-      id, fromNumber, toNumber, status, assignedTo,
-    } = voiceCall;
-    let assignedToName = 'unassigned';
-    if (assignedTo) {
-      const { name } = assignedTo;
-      assignedToName = name;
-    }
-    const rowItems = [];
-    rowItems.push({ type: 'link', data: { text: fromNumber, href: ADMIN_DASHBOARD_CALL_DETAILS_PATH.replace(':id', id) } });
-    rowItems.push({ type: 'text', data: { text: toNumber } });
-    rowItems.push({ type: 'text', data: { text: status } });
-    rowItems.push({ type: 'text', data: { text: assignedToName } });
-    return {
-      id,
-      rowItems,
-    };
-  });
+  const contents = voiceCalls;
+
   return {
     headings: ADMIN_CALLS_OVERVIEW_TABLE_HEADINGS,
     contents,
@@ -40,8 +23,8 @@ const convertCallsToTableContents = (voiceCalls) => {
   };
 };
 
-@prefetch('voiceCalls', 'getVoiceCalls', (getVoiceCalls) => {
-  return getVoiceCalls();
+@prefetch('voiceCalls', 'getVoiceCalls', (req, { callParams }) => {
+  return req(callParams);
 })
 
 export default class DashboardCallsIndexPageContainer extends Component {
@@ -64,7 +47,7 @@ export default class DashboardCallsIndexPageContainer extends Component {
       return <div>Error Loading voice calls</div>;
     }
     if (voiceCalls === null) {
-      return <div>Loading...</div>;
+      return <div>No Calls...</div>;
     }
 
     const tableContents = convertCallsToTableContents(voiceCalls);

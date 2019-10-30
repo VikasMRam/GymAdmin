@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { size } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
-import { SOURCE_OPTIONS } from 'sly/constants/familyDetails';
+import { SOURCE_OPTIONS, TIME_TO_MOVE_OPTIONS, LOOKING_FOR_OPTIONS } from 'sly/constants/familyDetails';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import { Label, Hr } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
@@ -36,8 +36,6 @@ export default class AddFamilyForm extends Component {
     initialValues: object,
     change: func,
     onLocationChange: func,
-    lookingFor: arrayOf(string).isRequired,
-    timeToMove: arrayOf(string).isRequired,
   };
 
   handleLocationChange = (value) => {
@@ -50,13 +48,13 @@ export default class AddFamilyForm extends Component {
 
   render() {
     const {
-      handleSubmit, onCancel, initialValues, timeToMove, lookingFor, ...props
+      handleSubmit, onCancel, ...props
     } = this.props;
 
     // todo: convert to new select options after enabling react select
     const sourceOptions = SOURCE_OPTIONS.map(s => <option key={s} value={s}>{s}</option>);
-    const lookingForOptions = lookingFor.map(i => <option key={i} value={i}>{i}</option>);
-    const timeToMoveOptions = timeToMove.map(i => <option key={i} value={i}>{i}</option>);
+    const lookingForOptions = LOOKING_FOR_OPTIONS.map(i => <option key={i} value={i}>{i}</option>);
+    const timeToMoveOptions = TIME_TO_MOVE_OPTIONS.map(i => <option key={i} value={i}>{i}</option>);
 
     return (
       <ThreeSectionFormTemplate

@@ -3,26 +3,40 @@ import styled from 'styled-components';
 import { object } from 'prop-types';
 
 import pad from 'sly/components/helpers/pad';
-import { Table } from 'sly/components/atoms';
+import { Table, THead, TBody, Tr } from 'sly/components/atoms';
+import Th from 'sly/components/molecules/Th';
+import VoiceRowCard from 'sly/components/organisms/VoiceRowCard';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 
 const TableSectionWrapper = styled.div`
   overflow: auto;
 `;
 
-const TableWrapper = pad(styled.div, 'large');
-
-const DashboardCallsIndexPage = ({ tableContents }) => (
-  <DashboardPageTemplate activeMenuItem="My Families">
-    <>
+const DashboardCallsIndexPage = ({ tableContents }) => {
+  const { headings, contents, tableEmptyText } = tableContents;
+  return (
+    <DashboardPageTemplate activeMenuItem="Calls">
       <TableSectionWrapper>
-        <TableWrapper>
-          <Table {...tableContents} />
-        </TableWrapper>
+        <Table>
+          <THead>
+            <Tr>
+              {headings
+                .map(({ text }) => <Th key={text}>{text}</Th>)
+              }
+            </Tr>
+          </THead>
+          <TBody>
+            {contents.map(voiceCall => (
+              <VoiceRowCard key={voiceCall.toNumber} voiceCall={voiceCall} />
+            ))}
+            {contents.length === 0 && <Tr>{tableEmptyText}</Tr>
+            }
+          </TBody>
+        </Table>
       </TableSectionWrapper>
-    </>
-  </DashboardPageTemplate>
-);
+    </DashboardPageTemplate>
+  );
+};
 
 DashboardCallsIndexPage.propTypes = {
   tableContents: object,

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { prop } from 'styled-tools';
+import { prop, ifProp } from 'styled-tools';
 
 import { parseDate, durationInS } from 'sly/services/helpers/date';
 import { phoneFormatter } from 'sly/services/helpers/phone';
 import { buildPriceList } from 'sly/services/helpers/pricing';
 import { size, palette, columnWidth } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
-import { Heading, Badge, Link, Block, Icon } from 'sly/components/atoms';
+import { Heading, Badge, Link, Block, Icon, Span } from 'sly/components/atoms';
+import { getHasContract, getIsCCRC } from 'sly/services/helpers/communityReferral';
+import  IconBadge from 'sly/components/molecules/IconBadge';
 
 const Header = styled.div`
   display: flex;
@@ -22,40 +24,26 @@ const StyledBadge = styled(Badge)`
   color: ${palette('white', 'base')};
   text-transform: uppercase;
 `;
-const lineHeight = p => size('lineHeight', p.size);
-const textSize = p => size('text', p.size);
 
 const CommunityInfoWrapper = styled.div`
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: flex;
-    flex-flow: column wrap;
-    height: calc(${textSize} * ${lineHeight} * ${prop('rows')});
-    margin-right: -${size('spacing.xLarge')};
-    > * {
-      width: ${columnWidth(2, size('spacing.xLarge'))};
-      margin-right: ${size('spacing.xLarge')};
-    }
-   }
-`;
-
-const IconItem = styled.div`
-  display: flex;
-`;
-
-const StyledIcon = styled(Icon)`
-  margin-right: ${size('spacing.regular')};
-`;
-
-const StyledLink = styled(Link)`
-  margin-right: ${size('spacing.regular')};
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  padding: ${size('spacing.regular')};
+  padding-bottom: 0;
+  display: grid;
+  grid-template-columns: max-content auto;
+  grid-column-gap: ${size('spacing.large')};
+  grid-row-gap: ${size('spacing.regular')};
   
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-left: auto;
+    padding: ${size('spacing.regular')};
+  }
 `;
 
-const StyledBlock = styled(Block)`
-  font-size:${size('text.caption')};
+
+const StyledIconBadge = styled(IconBadge)`
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    order: 2;
+  }
 `;
 
 
@@ -90,8 +78,10 @@ export default class DashboardAdminCommunityTile extends Component {
 
   render() {
     const { community } = this.props;
-    const { propInfo } = community;
-    const { hasContract, lastViewedAt } = propInfo;
+    const hasContract = getHasContract(community);
+    const hasCCRC = getIsCCRC(community);
+    const { url: communityUrl, propInfo } = community;
+    const { communityPhone, lastViewedAt } = propInfo;
 
     const lastViewedSecondsAgo = getLastViewedSAgo(lastViewedAt);
 
@@ -99,43 +89,42 @@ export default class DashboardAdminCommunityTile extends Component {
       <>
         <Header>
           <Heading level="subtitle"> { community.name } </Heading>
-          {hasContract && <StyledBadge textPalette="green"><Icon icon="note" size="small" />Has Contract</StyledBadge> }
+          {hasContract && <StyledIconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="HAS CONTRACT" /> }
+          {!hasContract && <StyledIconBadge badgePalette="danger" palette="white" icon="checkmark-circle" text="NO CONTRACT" /> }
+          {hasCCRC && <StyledIconBadge badgePalette="warning" palette="white" icon="checkmark-circle" text="CCRC" />}
           {lastViewedSecondsAgo > -1 && <StyledBadge textPalette="grey" ><Icon icon="note" size="small" /> Last Viewed: {lastViewedSecondsAgo} s ago</StyledBadge> }
         </Header>
         <CommunityInfoWrapper>
-          <IconItem>
-            <StyledIcon icon="link" size="small" />
-            <StyledBlock>{buildAddressDisplay(community)}</StyledBlock>
-          </IconItem>
-          <IconItem>
-            <StyledIcon icon="phone" size="small" />
-            <StyledBlock>{phoneFormatter(propInfo.communityPhone)}</StyledBlock>
-          </IconItem>
-          <IconItem>
-            <StyledIcon icon="hospital" size="small" />
-            <StyledBlock>{propInfo.typeCare.join(', ')}</StyledBlock>
-          </IconItem>
-          <IconItem>
-            <StyledIcon icon="house" size="small" />
-            <StyledBlock>{propInfo.communitySize}</StyledBlock>
-          </IconItem>
-          <IconItem>
-            <StyledIcon icon="link" size="small" />
-            <StyledLink href={community.url}>{community.url}</StyledLink>
-          </IconItem>
-          <IconItem>
-            <StyledIcon icon="link" size="small" />
-            <StyledLink href={propInfo.websiteUrl}>{propInfo.websiteUrl}</StyledLink>
-          </IconItem>
-          <IconItem>
-            <StyledIcon icon="dollar" size="small" />
-            <StyledBlock>{buildPriceDisplay(community)}</StyledBlock>
-          </IconItem>
+          <>
+            <Span size="caption" palette="grey" variation="dark">Address</Span>
+            <Span size="caption">{buildAddressDisplay(community)}</Span>
+          </>
+          <>
+            <Span size="caption" palette="grey" variation="dark">Phone</Span>
+            <Span size="caption">{phoneFormatter(communityPhone)}</Span>
+          </>
+          <>
+            <Span size="caption" palette="grey" variation="dark">Care Types</Span>
+            <Span size="caption">{propInfo.typeCare.join(', ')}</Span>
+          </>
+          <>
+            <Span size="caption" palette="grey" variation="dark">Community Size</Span>
+            <Span size="caption">{propInfo.communitySize}</Span>
+          </>
+          <>
+            <Span size="caption" palette="grey" variation="dark">Profile URL</Span>
+            <Span size="caption"><Link to={communityUrl} target="_blank">Click</Link></Span>
+          </>
+          <>
+            <Span size="caption" palette="grey" variation="dark">Price</Span>
+            <Span size="caption">{buildPriceDisplay(community)}</Span>
+          </>
+          <>
+            <Span size="caption" palette="grey" variation="dark">Admin Notes</Span>
+            <Span size="caption">{propInfo.adminNotes}</Span>
+          </>
         </CommunityInfoWrapper>
-        <IconItem>
-          <StyledIcon icon="note" size="small" />
-          <StyledBlock>{propInfo.adminNote}</StyledBlock>
-        </IconItem>
+
       </>
     );
   }

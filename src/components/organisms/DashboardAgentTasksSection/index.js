@@ -84,7 +84,6 @@ const TwoColumn = pad(styled.div`
   justify-content: space-between;
   align-items: center;
   text-transform: capitalize;
-  border-bottom: ${size('border.regular')} solid ${palette('slate.stroke')};
   ${Heading} {
     margin-bottom: 0;
   }
