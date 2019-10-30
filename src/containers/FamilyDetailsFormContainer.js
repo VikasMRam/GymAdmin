@@ -77,6 +77,9 @@ export default class FamilyDetailsFormContainer extends Component {
       communityCareType,
       assignedTo,
       additionalMetadata,
+      medicaid,
+      slyAgentMessage,
+      slyCommunityMessage,
     } = data;
     let locationInfo = {};
     if (preferredLocation) {
@@ -103,6 +106,12 @@ export default class FamilyDetailsFormContainer extends Component {
 
     if (slyMessage) {
       newClient.set('attributes.clientInfo.slyMessage', slyMessage);
+    }
+    if (slyAgentMessage) {
+      newClient.set('attributes.clientInfo.slyAgentMessage', slyAgentMessage);
+    }
+    if (slyCommunityMessage) {
+      newClient.set('attributes.clientInfo.slyCommunityMessage', slyCommunityMessage);
     }
     if (assignedTo) {
       newClient.set('relationships.admin.data', {
@@ -131,6 +140,9 @@ export default class FamilyDetailsFormContainer extends Component {
     }
     if (budget) {
       newUuidAux.set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', budget);
+    }
+    if (medicaid) {
+      newUuidAux.set('attributes.uuidInfo.financialInfo.medicaid', medicaid);
     }
     if (lookingFor) {
       newUuidAux.set('attributes.uuidInfo.housingInfo.lookingFor', lookingFor);
@@ -179,13 +191,14 @@ export default class FamilyDetailsFormContainer extends Component {
     const { clientInfo, uuidAux, tags: modelTags } = client;
     const tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
     const {
-      name, email, slyMessage, phoneNumber = '', additionalMetadata,
+      name, email, slyMessage, phoneNumber = '', additionalMetadata, slyAgentMessage,
+      slyCommunityMessage,
     } = clientInfo;
     const { uuidInfo } = uuidAux;
     const {
       residentInfo, housingInfo, financialInfo, locationInfo, careInfo,
     } = uuidInfo;
-    // FIXME: Frontend and backend differ in []string and stringfor certain fields
+    // FIXME: Frontend and backend differ in []string and string for certain fields
     let { mobility } = careInfo;
     if (mobility) {
       [mobility] = mobility;
@@ -199,7 +212,7 @@ export default class FamilyDetailsFormContainer extends Component {
     if (roomPreference) {
       [roomPreference] = roomPreference;
     }
-    const { maxMonthlyBudget } = financialInfo;
+    const { maxMonthlyBudget, medicaid } = financialInfo;
     let preferredLocation = '';
     if (locationInfo) {
       const { city, state } = locationInfo;
@@ -222,15 +235,18 @@ export default class FamilyDetailsFormContainer extends Component {
       mobilityLevel: mobility,
       communityCareType: typeCare,
       budget: maxMonthlyBudget,
+      medicaid,
       timeToMove: moveTimeline,
       preferredLocation,
       slyMessage,
       assignedTo,
       additionalMetadata,
+      slyAgentMessage,
+      slyCommunityMessage,
       contactPreferences: ['sms', 'email'],
     };
     ({ preferredLocation } = formData);
-
+    console.log('Ligging intiial values',initialValues);
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}

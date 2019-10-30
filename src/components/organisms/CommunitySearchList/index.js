@@ -7,7 +7,7 @@ import theme from 'sly/components/themes/default';
 import { size, gridColumns, assetPath } from 'sly/components/themes';
 import { getPaginationData } from 'sly/services/helpers/pagination';
 import pad from 'sly/components/helpers/pad';
-import shadow from 'sly/components/helpers/shadow';
+import { shadowOnHover } from 'sly/components/helpers/shadow';
 import { Image, Centered, Link, Block } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
 import Heading from 'sly/components/atoms/Heading';
@@ -44,7 +44,7 @@ const MSCColumnWrapper = styled.div`
 
 const PaddedPagination = pad(Pagination, 'small');
 
-const ShadowCommunityTile = shadow(styled(CommunityTile)`
+const ShadowCommunityTile = shadowOnHover(styled(CommunityTile)`
   position: relative;
 `);
 

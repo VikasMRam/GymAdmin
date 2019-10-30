@@ -5,11 +5,11 @@ import { ifProp, ifNotProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
-import { Heading, Block, Span, Button } from 'sly/components/atoms';
+import { Heading, Block, Span, Button, Link } from 'sly/components/atoms';
 import Stage from 'sly/components/molecules/Stage';
 // import cursor from 'sly/components/helpers/cursor';
 import IconBadge from 'sly/components/molecules/IconBadge';
-import { buildAddressDisplay, getReferralSentTimeText, getHasContract } from 'sly/services/helpers/communityReferral';
+import { buildAddressDisplay, getReferralSentTimeText, getHasContract, getIsCCRC } from 'sly/services/helpers/communityReferral';
 
 const getTitlePalette = variant => p => palette(p.titlePalette, variant);
 
@@ -66,9 +66,23 @@ const ReferralSentTime = styled(Block)`
 
 const TopSection = styled.div`
   padding: ${size('spacing.large')};
-  padding-bottom: ${ifProp('isFloatingSectionPresent', 0)};
+  padding-bottom: 0;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.xLarge')};
+    padding-bottom: 0;
+  }
+`;
+const DetailsTable = styled.div`
+  padding: ${size('spacing.large')};
+  padding-bottom: ${ifProp('isFloatingSectionPresent', 0)};
+  display: grid;
+  grid-template-columns: max-content auto;
+  grid-column-gap: ${size('spacing.large')};
+  grid-row-gap: ${size('spacing.regular')};
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-left: auto;
     padding: ${size('spacing.xLarge')};
   }
 `;
@@ -108,11 +122,14 @@ const StyledIconBadge = styled(IconBadge)`
 `;
 
 const DashboardAdminReferralCommunityTile = ({
-  className, title, titlePalette, community, isAdminUser, referralSentAt, stage, disabled, onClick, actionText, actionClick,
+  className, title, titlePalette, community, isAdminUser, childFamilyPath, referralSentAt, stage, disabled, onClick, actionText, actionClick,
 }) => {
   const isBottomSectionPresent = !!stage;
   const isFloatingSectionPresent = !!(referralSentAt || (actionText && actionClick));
   const hasContract = getHasContract(community);
+  const hasCCRC = getIsCCRC(community);
+  const { url: communityUrl, propInfo } = community;
+  const { communityPhone } = propInfo;
   const shouldShowHasContract = hasContract && isAdminUser;
   const shouldShowNoContract = !hasContract && isAdminUser;
   return (
@@ -123,9 +140,11 @@ const DashboardAdminReferralCommunityTile = ({
           <HeaderSection>
             {shouldShowHasContract && <StyledIconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="HAS CONTRACT" />}
             {shouldShowNoContract && <StyledIconBadge badgePalette="danger" palette="white" icon="checkmark-circle" text="NO CONTRACT" />}
+            {hasCCRC && <StyledIconBadge badgePalette="warning" palette="white" icon="checkmark-circle" text="CCRC" />}
             <CommunityName size="body" palette="primary">{community.name}</CommunityName>
           </HeaderSection>
           <CommunityAddressBlock palette="grey" variation="dark" size="caption">{buildAddressDisplay(community)}</CommunityAddressBlock>
+
         </TopSection>
         {actionText && actionClick && (
           <FloatingSection>
@@ -138,6 +157,26 @@ const DashboardAdminReferralCommunityTile = ({
           </FloatingSection>
         )}
       </SectionsWrapper>
+      <DetailsTable isFloatingSectionPresent={isFloatingSectionPresent}>
+        { communityPhone && (
+          <>
+            <Span size="caption" palette="grey" variation="dark">Community Phone:</Span>
+            <Span size="caption">{communityPhone}</Span>
+          </>
+        )}
+        { communityUrl && (
+          <>
+            <Span size="caption" palette="grey" variation="dark">Community URL:</Span>
+            <Span size="caption"><Link to={communityUrl} target="_blank">Link to Profile</Link></Span>
+          </>
+        )}
+        { childFamilyPath && (
+          <>
+            <Span size="caption" palette="grey" variation="dark">Referral Link:</Span>
+            <Span size="caption"><Link to={childFamilyPath} target="_blank">Referral</Link></Span>
+          </>
+        )}
+      </DetailsTable>
       {stage && (
         <>
           <BottomSection title={title} titlePalette={titlePalette} disabled={disabled} >
@@ -154,6 +193,7 @@ DashboardAdminReferralCommunityTile.propTypes = {
   title: string,
   titlePalette: string,
   community: adminCommunityPropType.isRequired,
+  childFamilyPath: string,
   referralSentAt: string,
   stage: string,
   disabled: bool,

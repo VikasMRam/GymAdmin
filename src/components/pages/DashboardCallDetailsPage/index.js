@@ -7,13 +7,11 @@ import { Hr, Box } from 'sly/components/atoms';
 import Tabs from 'sly/components/molecules/Tabs';
 import Tab from 'sly/components/molecules/Tab';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
-import DashboardAdminFamilyDetailsFormContainer from 'sly/containers/DashboardAdminFamilyDetailsFormContainer';
-import DashboardAdminSearchContainer from 'sly/containers/DashboardAdminSearchContainer';
+import DashboardCallCommunitiesContainer from 'sly/containers/dashboard/DashboardCallCommunitiesContainer';
+import AddFamilyFormContainer from 'sly/containers/dashboard/AddFamilyFormContainer';
 import {
   ADMIN_DASHBOARD_CALL_DETAILS_PATH,
   COMMUNITIES,
-  ACTIVITY,
-  SUMMARY,
 } from 'sly/constants/dashboardAppPaths';
 import { generatePath } from 'react-router';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
@@ -62,10 +60,13 @@ export default class DashboardCallDetailsPage extends Component {
       currentTab: tabName,
     });
   };
+  onCancel = () => {
+
+  };
 
   render() {
     const {
-      voiceCall, query, meta, handleCommunitySearch, postCreateClient, notifyInfo, notifyError,
+      voiceCall, query, handleCommunitySearch, postCreateClient, notifyInfo, notifyError,
     } = this.props;
 
     const { currentTab } =  this.state;
@@ -80,29 +81,28 @@ export default class DashboardCallDetailsPage extends Component {
     const { id } = voiceCall;
 
     const searchPath = generatePath(ADMIN_DASHBOARD_CALL_DETAILS_PATH, { id, tab: COMMUNITIES });
-    const activityPath = generatePath(ADMIN_DASHBOARD_CALL_DETAILS_PATH, { id, tab: ACTIVITY });
-    const initialFormData = { name: voiceCall.toNumber, phoneNumber: voiceCall.fromNumber, referralSource: 'Direct Call' };
+    const initialFormData = { name: voiceCall.fromNumber, phone: voiceCall.fromNumber, source: 'Direct Call' };
     return (
       <>
         <DashboardTwoColumnTemplate>
-          <Box><DashboardAdminFamilyDetailsFormContainer notifyInfo={notifyInfo} notifyError={notifyError} postCreateClient={postCreateClient} initialFormData={initialFormData} {...meta} /></Box>
+          <Box>
+            <AddFamilyFormContainer
+              onCancel={this.onCancel}
+              notifyInfo={notifyInfo}
+              onSuccess={postCreateClient}
+              initialValues={initialFormData}
+            />
+          </Box>
           <div>
-            <Tabs activeTab={currentTab}>
-              <Tab id="AdminSearch" to={searchPath} onClick={() => { this.changeTab(COMMUNITIES); return clickEventHandler('calldetails-tab', 'Communities'); }}>
-                Communities
-              </Tab>
-              <Tab id="Activity" to={activityPath} onClick={() => { this.changeTab(ACTIVITY); return clickEventHandler('calldetails-tab', 'Activity'); }}>
-                Activity
-              </Tab>
-            </Tabs>
+            {/*<Tabs activeTab={currentTab}>*/}
+              {/*<Tab id="AdminSearch" to={searchPath} onClick={() => { this.changeTab(COMMUNITIES); return clickEventHandler('calldetails-tab', 'Communities'); }}>*/}
+                {/*Communities*/}
+              {/*</Tab>*/}
+            {/*</Tabs>*/}
             <TabWrapper >
               { currentTab === COMMUNITIES && (
-                <DashboardAdminSearchContainer notifyInfo={notifyInfo} notifyError={notifyError} query={query} handleCommunitySearch={handleCommunitySearch} />
+                <DashboardCallCommunitiesContainer notifyInfo={notifyInfo} notifyError={notifyError} voiceCall={voiceCall} handleCommunitySearch={handleCommunitySearch} />
                 )
-              }
-              { currentTab === ACTIVITY && (
-                <div>TODO ACTIVITY</div>
-              )
               }
             </TabWrapper>
           </div>
@@ -112,3 +112,6 @@ export default class DashboardCallDetailsPage extends Component {
     );
   }
 }
+/*
+communities, isAdminUser, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit, handleLocationSearch,
+ */

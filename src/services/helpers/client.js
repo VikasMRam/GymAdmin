@@ -16,3 +16,10 @@ export const validateAM = (additionalMetadata, { phone, email }) => {
   }
   return [...a];
 };
+
+export const isReferralSent = (additionalMetadata) => {
+  if (Array.isArray(additionalMetadata)) {
+    return additionalMetadata.indexOf('ReferralSent') > -1 ;
+  }
+  return false;
+};

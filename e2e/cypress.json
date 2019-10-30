@@ -1,7 +1,7 @@
 {
   "baseUrl": "http://www.lvh.me",
-  "reporter": "junit",
+  "reporter": "cypress-multi-reporters",
   "reporterOptions": {
-    "toConsole": true
+    "configFile": "reporter-config.json"
   }
 }

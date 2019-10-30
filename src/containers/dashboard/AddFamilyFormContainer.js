@@ -7,6 +7,7 @@ import { createValidator, dependentRequired, usPhone, email, required } from 'sl
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { CLIENT_RESOURCE_TYPE, UUIDAUX_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { normJsonApi } from 'sly/services/helpers/jsonApi';
+import { FAMILY_STAGE_CONTACT1 } from 'sly/constants/familyDetails';
 import AddFamilyForm from 'sly/components/organisms/AddFamilyForm';
 import DuplicateFamilies from 'sly/components/organisms/DuplicateFamilies';
 
@@ -41,8 +42,7 @@ export default class AddFamilyFormContainer extends Component {
     notifyInfo: func,
     onSuccess: func,
     updateTask: func,
-    lookingFor: arrayOf(string).isRequired,
-    timeToMove: arrayOf(string).isRequired,
+    initialValues: object,
     onCancel: func.isRequired,
   };
 
@@ -77,6 +77,10 @@ export default class AddFamilyFormContainer extends Component {
     const {
       name, phone, email, source, notes, residentName, preferredLocation, timeToMove, lookingFor,
     } = data;
+    const am =[];
+    if (source === 'Direct Call') {
+      am.push('PhoneConnect')
+    }
     const payload = {
       type: CLIENT_RESOURCE_TYPE,
       attributes: {
@@ -86,7 +90,9 @@ export default class AddFamilyFormContainer extends Component {
           email,
           referralSource: source,
           slyMessage: notes,
+          additionalMetadata: am,
         },
+        stage: FAMILY_STAGE_CONTACT1,
       },
       relationships: {
         uuidAux: {
@@ -131,7 +137,7 @@ export default class AddFamilyFormContainer extends Component {
 
   render() {
     const { duplicates } = this.state;
-    const { lookingFor, timeToMove, onCancel } = this.props;
+    const { initialValues, onCancel } = this.props;
 
     return (
       <WizardController
@@ -146,8 +152,7 @@ export default class AddFamilyFormContainer extends Component {
             <WizardStep
               component={AddFamilyReduxForm}
               name="Add"
-              lookingFor={lookingFor}
-              timeToMove={timeToMove}
+              initialValues={initialValues}
               onCancel={onCancel}
             />
             <WizardStep

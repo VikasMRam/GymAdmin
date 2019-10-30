@@ -147,7 +147,7 @@ describe('CommuntityQuestionAnswers', () => {
     const wrapper = wrap({ questions: [question1], onLeaveAnswerClick });
     const leaveAnswer = wrapper.find('CursorBlock');
     leaveAnswer.simulate('click');
-    expect(onLeaveAnswerClick).toHaveBeenCalledWith(question1.type, question1.id);
+    expect(onLeaveAnswerClick).toHaveBeenCalledWith(question1);
   });
 
   it('verify click on FAQ be the first to ask this question', () => {

@@ -20,6 +20,7 @@ import ClientRowCard from 'sly/components/organisms/ClientRowCard';
 import Role from 'sly/components/common/Role';
 import AddFamilyFormContainer from 'sly/containers/dashboard/AddFamilyFormContainer';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { stripPageNumber } from 'sly/services/helpers/appPaths';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
@@ -90,10 +91,7 @@ const onTabClick = (label) => {
   };
   SlyEvent.getInstance().sendEvent(event);
 };
-// FIXME: move to right helper
-const stripPageNumber = (qs) => {
-  return qs.replace(/&page-number=\d+/,  '');
-};
+
 
 const getBasePath = (clientType, location) => {
   const path = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType });

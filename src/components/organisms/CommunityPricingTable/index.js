@@ -59,11 +59,6 @@ const StyledIcon = styled(Icon)`
   vertical-align: text-top;
 `;
 
-const StyledButton = styled(Button)`
-  width: 100%;
-  margin-bottom: ${size('spacing.xLarge')};
-`;
-
 const TooltipContent = styled(ReactTooltip)`
   padding: ${size('spacing.regular')};
   color: ${palette('white', 'base')} !important;
@@ -119,12 +114,16 @@ const toolTipCode = size => (
 );
 
 const CommunityPricingTable = ({
-  pricesList, estimatedPriceList, price, getPricing, name, size, showToolTip,
+  pricesList, estimatedPriceList, price, GetPricingButton, name, size: communitySize, showToolTip,
 }) => {
   const basePer = percentageOf(price, 20);
   const from = Math.round(price);
   const to = Math.round(price + basePer);
   const estimated = pricesList.length === 0;
+  const StyledGetPricingButton = styled(GetPricingButton)`
+    width: 100%;
+    margin-bottom: ${size('spacing.xLarge')};
+  `;
 
   return (
     <>
@@ -170,7 +169,7 @@ const CommunityPricingTable = ({
                 <tr>
                   {showToolTip &&
                   <StyledTh colSpan={2} color="slate" bgcolor="grey">
-                    {toolTipCode(size)}
+                    {toolTipCode(communitySize)}
                   </StyledTh>
                   }
                   {!showToolTip &&
@@ -193,9 +192,9 @@ const CommunityPricingTable = ({
           </StyledBlockNp>
         }
         <Block>
-          <StyledButton onClick={getPricing}>Get Detailed Pricing</StyledButton>
+          <StyledGetPricingButton>Get Detailed Pricing</StyledGetPricingButton>
           <Block>
-            {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === 'up to 20 Beds' &&
+            {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && communitySize === 'up to 20 Beds' &&
               <Paragraph>
                 **Pricing in assisted living communities can be difficult to estimate.
                 In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
@@ -205,7 +204,7 @@ const CommunityPricingTable = ({
                 service.
               </Paragraph>
             }
-            {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '20 - 51 Beds' &&
+            {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && communitySize === '20 - 51 Beds' &&
               <Paragraph>
                 **Pricing in assisted living communities can be difficult to estimate.
                 In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
@@ -216,7 +215,7 @@ const CommunityPricingTable = ({
                 service.
               </Paragraph>
             }
-            {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && size === '51 +' &&
+            {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && communitySize === '51 +' &&
               <Paragraph>
                 **Pricing in assisted living communities can be difficult to estimate.
                 In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.

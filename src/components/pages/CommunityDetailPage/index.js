@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { object, func, number, bool } from 'prop-types';
+import { object, func } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
 import { size, palette, assetPath } from 'sly/components/themes';
-import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
-import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
+import {
+  getBreadCrumbsForCommunity,
+  getCitySearchUrl,
+} from 'sly/services/helpers/url';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
-import SlyEvent from 'sly/services/helpers/events';
-import { calculatePricing, buildPriceList, buildEstimatedPriceList } from 'sly/services/helpers/pricing';
-import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
+import {
+  calculatePricing,
+  buildPriceList,
+  buildEstimatedPriceList,
+} from 'sly/services/helpers/pricing';
 import pad from 'sly/components/helpers/pad';
 import { Button, Paragraph, Block } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
+import SampleMenu from 'sly/components/organisms/SampleMenu';
 import {
   CommunityDetailPageTemplate,
   makeHeader,
@@ -24,46 +29,49 @@ import {
   makeWrapper,
   makeGallery,
 } from 'sly/components/templates/CommunityDetailPageTemplate';
-import SaveCommunityContainer from 'sly/containers/SaveCommunityContainer';
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
-import CollapsibleSection, { MainSection } from 'sly/components/molecules/CollapsibleSection';
+import CollapsibleSection, {
+  MainSection,
+} from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
-import EntityReviews from 'sly/components/organisms/EntityReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import CommunityPricingComparison from 'sly/components/organisms/CommunityPricingComparison';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
-import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
-import MorePictures from 'sly/components/organisms/MorePictures';
-import CommunitySummary from 'sly/components/organisms/CommunitySummary';
-import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
+import CommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
-import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
-import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
-import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
-import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
 import IconItem from 'sly/components/molecules/IconItem';
-import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
-import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
-import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
-import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
-import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
+import AskAgentQuestionButtonContainer from 'sly/containers/AskAgentQuestionButtonContainer';
+import GetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
+import PlusBranding from 'sly/components/organisms/PlusBranding';
+import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import withExitIntent from 'sly/services/exitIntent/withExitIntent';
+import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
+import CommunitySummaryContainer from 'sly/containers/CommunitySummaryContainer';
+import CommunityAgentSectionContainer from 'sly/containers/CommunityAgentSectionContainer';
+import CommunityQuestionAnswersContainer from "sly/containers/CommunityQuestionAnswersContainer";
+import CommunityReviewsContainer from "sly/containers/CommunityReviewsContainer";
+import CommunityAddReviewButtonContainer from "sly/containers/CommunityAddReviewButtonContainer";
+import CommunityMorePicturesContainer from "sly/containers/CommunityMorePicturesContainer";
+import BackToSearchButtonContainer from "sly/containers/BackToSearchButtonContainer";
+import TrackedSimilarCommunitiesContainer from "sly/containers/TrackedSimilarCommunitiesContainer";
+import withModal from 'sly/controllers/withModal';
 
 const BackToSearch = styled.div`
-  text-align: center
+  text-align: center;
 `;
 
-const StyledCommunitySummary = styled(CommunitySummary)`
+const StyledCommunitySummary = styled(CommunitySummaryContainer)`
   margin-bottom: ${size('spacing.xLarge')};
   margin-top: ${size('spacing.xLarge')};
   position: relative;
@@ -106,10 +114,28 @@ const StyledBannerNotification = pad(BannerNotification, 'large');
 
 const ButtonBlock = styled(Block)`
   padding: ${size('spacing.xLarge')};
-  padding-top:0;
+  padding-top: 0;
 `;
 
 const StyledButton = styled(Button)`
+  width: 100%;
+`;
+const StyledLeaveReviewButton = styled(CommunityAddReviewButtonContainer)`
+  width: 100%;
+`;
+
+const EventsWrapper = styled(CollapsibleBlock)`
+  display: grid;
+  grid-template-columns: 100%;
+  grid-row-gap: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    grid-template-columns: 50% 50%;
+    grid-column-gap: ${size('layout.gutter')};
+  }
+`;
+
+const StyledAskAgentButton = styled(AskAgentQuestionButtonContainer)`
   width: 100%;
 `;
 
@@ -122,13 +148,16 @@ const Wrapper = makeWrapper('div');
 const Gallery = makeGallery('div');
 
 const makeBanner = (profileContacted) => {
-  const requests = Object.entries(profileContacted).reduce((acc, [key, value]) => {
-    if (value) {
-      if (acc.length) acc.push(', ');
-      acc.push(key);
-    }
-    return acc;
-  }, []);
+  const requests = Object.entries(profileContacted).reduce(
+    (acc, [key, value]) => {
+      if (value) {
+        if (acc.length) acc.push(', ');
+        acc.push(key);
+      }
+      return acc;
+    },
+    []
+  );
 
   if (!requests.length) {
     return null;
@@ -138,287 +167,40 @@ const makeBanner = (profileContacted) => {
     requests[requests.length - 2] = ' and ';
   }
 
-  return `We have your ${requests.join('')} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
+  return `We have your ${requests.join(
+    ''
+  )} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
 };
 
-const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
-  category,
-  action,
-  label,
-  value,
-});
-
+@withModal
 @withExitIntent
-
 export default class CommunityDetailPage extends Component {
   static propTypes = {
     user: object,
     community: object.isRequired,
     location: object.isRequired,
-    mediaGallerySlideIndex: number,
-    isMediaGalleryFullscreenActive: bool,
-    onMediaGallerySlideChange: func,
-    onMediaGalleryToggleFullscreen: func,
-    onMediaGalleryFavouriteClick: func,
-    onMediaGalleryShareClick: func,
-    onShareCommunityModalClose: func,
-    onBackToSearchClicked: func,
-    onReviewLinkClicked: func,
-    onConciergeNumberClicked: func,
-    onLiveChatClicked: func,
-    onReceptionNumberClicked: func,
-    onSimilarCommunitiesClick: func,
-    userSave: object,
-    searchParams: object,
-    setQueryParams: func,
-    onBookATourClick: func,
-    onGCPClick: func,
     profileContacted: object.isRequired,
-    onToggleAskAgentQuestionModal: func,
     userAction: object,
-    onFloorPlanModalToggle: func,
-    toggleHowSlyWorksVideoPlaying: func,
-    isHowSlyWorksVideoPlaying: bool,
-    notifyInfo: func,
-    notifyError: func,
-    showModal: func,
-    hideModal: func,
-    onToggleAskQuestionModal: func,
-    onUnsaveCommunity: func,
     history: object,
-  };
-  handleMorePicturesClick = (image) => {
-    const {
-      community, onMediaGallerySlideChange, onMediaGalleryToggleFullscreen,
-    } = this.props;
-    const { gallery = {}, videoGallery = {} } = community;
-    const images = gallery.images || [];
-    const videos = videoGallery.videos || [];
-    let matchingIndex = images.findIndex(i => image.id === i.id);
-    if (matchingIndex > -1) {
-      matchingIndex = videos.length + matchingIndex;
-      onMediaGallerySlideChange(matchingIndex, true);
-      onMediaGalleryToggleFullscreen(true);
-    }
-  };
-
-  handleShareClick = () => {
-    const {
-      showModal, hideModal, notifyInfo, onMediaGalleryShareClick, community, user, onShareCommunityModalClose,
-    } = this.props;
-    const { id, mainImage } = community;
-    const onSuccess = () => {
-      onShareCommunityModalClose();
-      hideModal();
-    };
-    const onClose = () => {
-      onShareCommunityModalClose(true);
-    };
-
-    const modalComponentProps = {
-      mainImage,
-      fromEnabled: !user || !user.email,
-      communitySlug: id,
-      notifyInfo,
-      onSuccess,
-    };
-
-    onMediaGalleryShareClick();
-    showModal(<ShareCommunityFormContainer {...modalComponentProps} />, onClose);
-  };
-
-  openFloorPlanModal = (floorPlan) => {
-    const {
-      showModal, hideModal, community, user, userAction, onFloorPlanModalToggle,
-    } = this.props;
-    const { userDetails } = userAction;
-    const { info: floorPlanInfo } = floorPlan;
-    const { id, propInfo } = community;
-    const { typeCare: typeCares } = propInfo;
-    const typeOfCare = typeCares[0];
-
-    const modalComponentProps = {
-      communitySlug: id,
-      typeOfCare,
-      user,
-      floorPlanInfo,
-      userDetails,
-      postSubmit: hideModal,
-    };
-    const onClose = () => {
-      onFloorPlanModalToggle(floorPlan, true);
-    };
-
-    onFloorPlanModalToggle(floorPlan);
-    showModal(<CommunityFloorPlanPopupFormContainer {...modalComponentProps} />, onClose, 'noPadding');
-  };
-
-  openAskQuestionModal = (question) => {
-    const {
-      showModal, community, user, onToggleAskQuestionModal,
-    } = this.props;
-    const {
-      id, name, questions,
-    } = community;
-    const questionToAnswer = questions.find(q => q.type === question.type && q.id === question.id);
-    // if (!questionToAnswer) {
-    //   questionToAnswer = communityFaQs.find(communityFaQ => communityFaQ.type === question.type && communityFaQ.id === question.id);
-    // }
-    let questionId;
-    let contentData;
-    let initialValues;
-    if (questionToAnswer) {
-      ({ id: questionId, contentData } = questionToAnswer);
-      initialValues = { question: contentData };
-    }
-
-    const modalComponentProps = {
-      communityName: name,
-      communitySlug: id,
-      showModal,
-      user,
-      initialValues,
-      parentSlug: questionId,
-    };
-    const onClose = () => {
-      onToggleAskQuestionModal(true);
-    };
-
-    onToggleAskQuestionModal();
-    showModal(<CommunityAskQuestionFormContainer {...modalComponentProps} />, onClose);
-  };
-
-  openAdvisorHelpModal = () => {
-    const { showModal, hideModal } = this.props;
-    showModal(<AdvisorHelpPopup onButtonClick={hideModal} />);
-  };
-
-  openAnswerQuestionModal = (type, questionId) => {
-    const { showModal, hideModal, community } = this.props;
-    const { id, questions, communityFaQs } = community;
-    let questionToAnswer = questions.find(question => question.type === type && question.id === questionId);
-    if (!questionToAnswer) {
-      questionToAnswer = communityFaQs.find(communityFaQ => communityFaQ.type === type && communityFaQ.id === questionId);
-    }
-    if (questionToAnswer) {
-      const { id: questionId, contentData } = questionToAnswer;
-      const modalComponentProps = {
-        onSuccess: hideModal,
-        communitySlug: id,
-        questionText: contentData,
-        questionId,
-      };
-
-      showModal(<CommunityLeaveAnAnswerFormContainer {...modalComponentProps} />);
-    }
-  };
-
-  openAskAgentQuestionModal = (type) => {
-    const {
-      showModal, hideModal, notifyInfo, community, onToggleAskAgentQuestionModal,
-    } = this.props;
-    const { address, name } = community;
-    const { city } = address;
-    const agentImageUrl = assetPath('images/agent-xLarge.png');
-    const {
-      heading, description, placeholder, question,
-    } = generateAskAgentQuestionContents(name, city, type);
-
-    const toggleAskAgentQuestionModal = () => {
-      onToggleAskAgentQuestionModal(true, type);
-      hideModal();
-    };
-
-    const modalComponentProps = {
-      toggleAskAgentQuestionModal,
-      notifyInfo,
-      community,
-      heading,
-      description,
-      agentImageUrl,
-      placeholder,
-      question,
-    };
-    const onClose = () => {
-      onToggleAskAgentQuestionModal(true, type);
-    };
-
-    onToggleAskAgentQuestionModal(false, type);
-    showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />, onClose);
-  };
-
-  handleFavouriteClick = () => {
-    const {
-      community, onMediaGalleryFavouriteClick, showModal, notifyInfo, notifyError, userSave, hideModal,
-      onUnsaveCommunity,
-    } = this.props;
-    const { id } = community;
-    let initedUserSave;
-    if (userSave) {
-      initedUserSave = userSave.status !== USER_SAVE_DELETE_STATUS ? userSave : null;
-    }
-
-    if (initedUserSave) {
-      onUnsaveCommunity(notifyInfo, notifyError);
-    } else {
-      showModal(<SaveCommunityContainer slug={id} onCancelClick={hideModal} onDoneButtonClick={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} />, null, 'noPadding', false);
-    }
-    onMediaGalleryFavouriteClick();
-  };
-
-  handleAddReviewButtonClick = () => {
-    const { showModal } = this.props;
-
-    showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
-  };
-
-  showExitModal = () => {
-    const { showModal } = this.props;
-
-    showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
   };
 
   render() {
     const {
-      handleShareClick, openAskAgentQuestionModal, openAskQuestionModal,
-      openAdvisorHelpModal, openAnswerQuestionModal, handleFavouriteClick, handleAddReviewButtonClick,
-    } = this;
-    const {
-      mediaGallerySlideIndex,
-      isMediaGalleryFullscreenActive,
       community,
       profileContacted,
       location,
-      onMediaGallerySlideChange,
-      onMediaGalleryToggleFullscreen,
-      onBackToSearchClicked,
-      onSimilarCommunitiesClick,
       user,
-      onReviewLinkClicked,
-      userSave,
-      searchParams,
-      setQueryParams,
-      onBookATourClick,
-      onGCPClick,
-      toggleHowSlyWorksVideoPlaying,
-      isHowSlyWorksVideoPlaying,
-      history,
     } = this.props;
 
     const {
-      id,
       name,
       propInfo,
-      propRatings,
-      reviews,
       address,
       rgsAux,
       floorPlans,
       similarProperties,
       gallery = {},
       videoGallery = {},
-      questions,
-      communityFaQs,
       mainImage,
       partnerAgents,
       twilioNumber,
@@ -426,7 +208,15 @@ export default class CommunityDetailPage extends Component {
     } = community;
 
     const {
-      careServices, websiteUrl, promoDescription, promoTitle, communitySize, communityInsights,
+      careServices,
+      promoDescription,
+      promoTitle,
+      communitySize,
+      communityInsights,
+    } = propInfo;
+
+    const {
+      plusCommunity, menuLink, sampleAppetizers, sampleMain, sampleSide, sampleDessert, sampleEvents, eventsLink,
     } = propInfo;
 
     // TODO: move this to common helper, used in multiple places
@@ -445,7 +235,10 @@ export default class CommunityDetailPage extends Component {
     // if images is empty add default image
     if (images.length === 0) {
       const imgShape = {
-        sd: defaultImageUrl, hd: defaultImageUrl, thumb: defaultImageUrl, url: defaultImageUrl,
+        sd: defaultImageUrl,
+        hd: defaultImageUrl,
+        thumb: defaultImageUrl,
+        url: defaultImageUrl,
       };
       images.unshift(imgShape);
       gallery.images = images;
@@ -471,15 +264,9 @@ export default class CommunityDetailPage extends Component {
     } = propInfo;
 
     const typeOfCare = typeCares[0];
-    const { modal, currentStep } = searchParams;
-    const hasCCRC = typeCares.includes('Continuing Care Retirement Community(CCRC)');
-
-    // TODO: move this to a container for EntityReviews handling posts
-    const onLeaveReview = () => { };
-    // TODO: move this to a container PricingAndAvailability for handling bookings
-    const { reviewsValue } = propRatings;
-    const ratingsArray = propRatings.ratingsArray || [];
-    const reviewsFinal = reviews || [];
+    const hasCCRC = typeCares.includes(
+      'Continuing Care Retirement Community(CCRC)'
+    );
 
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
@@ -487,132 +274,170 @@ export default class CommunityDetailPage extends Component {
     const bannerNotification = makeBanner(profileContacted);
     // FIXME: @fonz cleaning this up
     const isAlreadyPricingRequested = profileContacted.pricing;
-    const isAlreadyTourScheduled = profileContacted.tour;
 
-    const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
+    const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(
+      community,
+      rgsAux.estimatedPrice
+    );
 
-    const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
+    const partnerAgent =
+      partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 
     const { autoHighlights, nearbyCities } = rgsAux;
 
-
     const pricesList = buildPriceList(community);
     const estimatedPriceList = buildEstimatedPriceList(community);
-    const pricingTitle = (pricesList.length === 0 && floorPlans.length > 0) ? 'Pricing and Floor Plans' : 'Pricing';
+    const pricingTitle =
+      pricesList.length === 0 && floorPlans.length > 0
+        ? 'Pricing and Floor Plans'
+        : 'Pricing';
 
-    const showSimilarEarlier = pricesList.length === 0 && floorPlans.length > 0 && address.city === 'Sacramento' && address.state === 'CA' &&
+    const showSimilarEarlier =
+      pricesList.length === 0 &&
+      floorPlans.length > 0 &&
+      address.city === 'Sacramento' &&
+      address.state === 'CA' &&
       (!communityDescription || communityDescription === '');
-    const similarCommunityStyle = { layout: 'column', imageSize: 'regular', showDescription: true };
+    const similarCommunityStyle = {
+      layout: 'column',
+      imageSize: 'regular',
+      showDescription: true,
+    };
 
     return (
       <>
         {getHelmetForCommunityPage(community, location)}
         <Header noBottomMargin={!!bannerNotification} />
-        {bannerNotification && <StyledBannerNotification>{bannerNotification}</StyledBannerNotification>}
+        {bannerNotification && (
+          <StyledBannerNotification>
+            {bannerNotification}
+          </StyledBannerNotification>
+        )}
         <CommunityDetailPageTemplate>
           <Wrapper>
-            <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} />
+            <BreadCrumb
+              items={getBreadCrumbsForCommunity({ name, propInfo, address })}
+            />
             <TwoColumn>
               <Body>
-                {(images.length > 0 || videos.length > 0) &&
+                {(images.length > 0 || videos.length > 0) && (
                   <Gallery>
-                    <CommunityMediaGallery
-                      communityName={name}
-                      city={address.city}
-                      state={address.state}
-                      currentSlide={mediaGallerySlideIndex}
-                      images={images}
-                      videos={videos}
-                      websiteUrl={websiteUrl}
-                      onSlideChange={onMediaGallerySlideChange}
-                      isFullscreenMode={isMediaGalleryFullscreenActive}
-                      onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
-                    />
+                    <CommunityMediaGalleryContainer community={community} />
                   </Gallery>
-                }
+                )}
                 <StyledCommunitySummary
                   community={community}
                   isAdmin={user && user.admin}
-                  userSave={userSave}
-                  onFavouriteClick={handleFavouriteClick}
-                  onShareClick={handleShareClick}
                 />
-                {(promoDescription || promoTitle) &&
-                  (
-                    <StyledOfferNotification
-                      palette="warning"
-                      title={promoTitle}
-                      description={promoDescription}
-                      onLearnMoreClick={() => openAskAgentQuestionModal('incentive')}
-                      hasLearnMore
-                    />
-                  )
-                }
-                {communityInsights && communityInsights.length > 0 &&
+                {(promoDescription || promoTitle) && (
+                  <StyledOfferNotification
+                    palette="warning"
+                    title={promoTitle}
+                    description={promoDescription}
+                    hasLearnMore
+                    community={community}
+                    hasAlreadyRequested={isAlreadyPricingRequested}
+                  />
+                )}
+                {communityInsights &&
+                  communityInsights.length > 0 && (
+                    <TopCollapsibleSection
+                      title={`Community Insights at ${name}`}
+                    >
+                      <MainSection>
+                        {communityInsights.map(item => (
+                          <IconItemWrapper key={item}>
+                            <IconItem
+                              icon="check"
+                              iconPalette="secondary"
+                              borderless={false}
+                            >
+                              {item}
+                            </IconItem>
+                          </IconItemWrapper>
+                        ))}
+                      </MainSection>
+                    </TopCollapsibleSection>
+                  )}
+                {!communityInsights &&
+                  autoHighlights && (
+                    <TopCollapsibleSection
+                      title={`Community Highlights at ${name}`}
+                    >
+                      <MainSection>
+                        {autoHighlights.map(item => (
+                          <IconItemWrapper key={item}>
+                            <IconItem
+                              icon="check"
+                              iconPalette="secondary"
+                              borderless={false}
+                            >
+                              {item}
+                            </IconItem>
+                          </IconItemWrapper>
+                        ))}
+                      </MainSection>
+                    </TopCollapsibleSection>
+                  )}
+                {showSimilarEarlier && (
                   <TopCollapsibleSection
-                    title={`Community Insights at ${name}`}
+                    title={`Similar ${typeOfCare} Communities`}
+                    id="sticky-sidebar-boundary"
                   >
                     <MainSection>
-                      {communityInsights.map(item => (
-                        <IconItemWrapper key={item}>
-                          <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
-                        </IconItemWrapper>))
-                      }
-                    </MainSection>
-                  </TopCollapsibleSection>
-                }
-                {!communityInsights && autoHighlights &&
-                  <TopCollapsibleSection
-                    title={`Community Highlights at ${name}`}
-                  >
-                    <MainSection>
-                      {autoHighlights.map(item => (
-                        <IconItemWrapper key={item}>
-                          <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
-                        </IconItemWrapper>))
-                      }
-                    </MainSection>
-                  </TopCollapsibleSection>
-                }
-                {showSimilarEarlier &&
-                  <TopCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
-                    <MainSection>
-                      <SimilarCommunities communities={similarProperties} onCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
+                      <TrackedSimilarCommunitiesContainer
+                        communities={similarProperties}
+                        communityStyle={similarCommunityStyle}
+                      />
                       <BackToSearch>
-                        <Button
-                          ghost
-                          onClick={onBackToSearchClicked}
+                        <BackToSearchButtonContainer
+                          community={community}
                           href={getCitySearchUrl({ propInfo, address })}
+                          ghost
                         >
                           Communities In {address.city}
-                        </Button>
+                        </BackToSearchButtonContainer>
                       </BackToSearch>
                     </MainSection>
                   </TopCollapsibleSection>
-                }
+                )}
                 <TopCollapsibleSection
                   title={`${pricingTitle} at ${name}`}
                   id="pricing-and-floor-plans"
                 >
-                  {hasCCRC &&
+                  {hasCCRC && (
                     <MainSection>
                       <Paragraph>
-                        Pricing for {name} may include both a one time buy-in fee and a monthly component. Connect directly with {name} to find out your pricing.
+                        Pricing for {name} may include both a one time buy-in
+                        fee and a monthly component. Connect directly with{' '}
+                        {name} to find out your pricing.
                       </Paragraph>
-                      <Button onClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}>Get Detailed Pricing</Button>
+                      <GetCustomPricingButtonContainer
+                        hasAlreadyRequestedPricing={isAlreadyPricingRequested}
+                        community={community}
+                      >
+                        Get Detailed Pricing
+                      </GetCustomPricingButtonContainer>
                     </MainSection>
-                  }
-                  {!hasCCRC  &&
+                  )}
+                  {!hasCCRC && (
                     <CommunityPricingTable
                       name={name}
                       pricesList={pricesList}
                       estimatedPriceList={estimatedPriceList}
                       price={estimatedPriceBase}
-                      getPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
+                      GetPricingButton={props => (
+                        <GetCustomPricingButtonContainer
+                          community={community}
+                          hasAlreadyRequestedPricing={isAlreadyPricingRequested}
+                          {...props}
+                        />
+                      )}
                       size={communitySize}
                       showToolTip={address.state === 'TN'}
+                      community={community}
                     />
-                  }
+                  )}
                 </TopCollapsibleSection>
 
                 <TopCollapsibleSection
@@ -622,22 +447,12 @@ export default class CommunityDetailPage extends Component {
                   <MainSection>
                     <GetCurrentAvailabilityContainer
                       community={community}
-                      queryParams={{ modal, currentStep }}
-                      setQueryParams={setQueryParams}
-                      onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
-                      onSubmitExpressConversion={(e, submitExpressConversion) => {
-                        if (isAlreadyPricingRequested) {
-                          openAskAgentQuestionModal('pricing');
-                        } else {
-                          submitExpressConversion(e);
-                          onGCPClick();
-                        }
-                      }}
+                      hasAlreadyRequestedPricing={isAlreadyPricingRequested}
                     />
                   </MainSection>
                 </TopCollapsibleSection>
-
-                {(communityDescription || rgsAux.communityDescription) &&
+                {plusCommunity && <PlusBranding />}
+                {(communityDescription || rgsAux.communityDescription) && (
                   <TopCollapsibleSection
                     title={`Details on ${name}`}
                     id="details"
@@ -657,139 +472,171 @@ export default class CommunityDetailPage extends Component {
                       />
                     </MainSection>
                   </TopCollapsibleSection>
-                }
+                )}
                 <TopCollapsibleSection title="How Seniorly Works">
                   <MainSection noPadding>
-                    <HowSlyWorksVideo
-                      isPlaying={isHowSlyWorksVideoPlaying}
-                      onThumbnailClick={toggleHowSlyWorksVideoPlaying}
-                      onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', id, e.target.currentTime)}
-                      onPlay={e => sendEvent('howSlyWorksVideo', 'play', id, e.target.currentTime)}
-                    />
+                    <HowSlyWorksVideoContainer eventLabel={community.id} />
                   </MainSection>
                 </TopCollapsibleSection>
-                {partnerAgent &&
-                  <TopCollapsibleSection title={`Your Seniorly Partner Agent for ${name}`}>
+                {partnerAgent && (
+                  <TopCollapsibleSection
+                    title={`Your Seniorly Partner Agent for ${name}`}
+                  >
                     <MainSection>
-                      <CommunityAgentSection agent={partnerAgent} onAdvisorHelpClick={openAdvisorHelpModal} />
+                      <CommunityAgentSectionContainer agent={partnerAgent} />
                     </MainSection>
                     <ButtonBlock>
-                      <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask a question</StyledButton>
+                      <StyledAskAgentButton
+                        type="services"
+                        community={community}
+                      >
+                        Ask a Question
+                      </StyledAskAgentButton>
                     </ButtonBlock>
                   </TopCollapsibleSection>
-                }
-                {careServices && careServices.length > 0 &&
-                  <TopCollapsibleSection title={`Care Services at ${name}`}>
-                    <MainSection>
-                      <CommunityCareService careServices={careServices} />
-                    </MainSection>
-                    <ButtonBlock>
-                      <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask About Care Services</StyledButton>
-                    </ButtonBlock>
-                  </TopCollapsibleSection>
-                }
+                )}
+                {careServices &&
+                  careServices.length > 0 && (
+                    <TopCollapsibleSection title={`Care Services at ${name}`}>
+                      <MainSection>
+                        <CommunityCareService careServices={careServices} />
+                      </MainSection>
+                      <ButtonBlock>
+                        <StyledAskAgentButton
+                          type="services"
+                          community={community}
+                        >
+                          Ask About Care Services
+                        </StyledAskAgentButton>
+                      </ButtonBlock>
+                    </TopCollapsibleSection>
+                  )}
                 <TopCollapsibleSection title={`Amenities at ${name}`}>
                   <MainSection>
                     <CommunityAmenities community={community} />
                   </MainSection>
                   <ButtonBlock>
-                    <StyledButton onClick={() => openAskAgentQuestionModal('services')}>Ask About Amenities</StyledButton>
+                    <StyledAskAgentButton type="services" community={community}>
+                      Ask About Amenities
+                    </StyledAskAgentButton>
                   </ButtonBlock>
                 </TopCollapsibleSection>
-                {sortedEstimatedPrice.length > 0 &&
-                  <TopCollapsibleSection title={`Compare Costs to Nearby ${typeOfCare} Communities`}>
+                {sortedEstimatedPrice.length > 0 && (
+                  <TopCollapsibleSection
+                    title={`Compare Costs to Nearby ${typeOfCare} Communities`}
+                  >
                     <MainSection>
                       <CommunityPricingComparison community={community} />
                     </MainSection>
                   </TopCollapsibleSection>
-                }
+                )}
                 <TopCollapsibleSection
                   title={`Reviews at ${name}`}
                   id="reviews"
                 >
                   <MainSection>
-                    <EntityReviews
-                      reviewsValue={reviewsValue}
-                      reviews={reviewsFinal}
-                      reviewRatings={ratingsArray}
-                      onLeaveReview={onLeaveReview}
-                      onReviewLinkClicked={onReviewLinkClicked}
-                    />
+                    <CommunityReviewsContainer community={community} />
                   </MainSection>
                   <ButtonBlock>
-                    <StyledButton onClick={handleAddReviewButtonClick}>Write a Review</StyledButton>
+                    <StyledLeaveReviewButton>Write a Review</StyledLeaveReviewButton>
                   </ButtonBlock>
                 </TopCollapsibleSection>
 
                 <TopCollapsibleSection title={`Questions About ${name}`}>
                   <MainSection>
-                    <CommunityQuestionAnswers
-                      communityName={name}
-                      communitySlug={id}
-                      questions={questions}
-                      communityFaQs={communityFaQs}
-                      onLeaveAnswerClick={openAnswerQuestionModal}
-                      onAskQuestionClick={openAskQuestionModal}
-                      user={user}
+                    <CommunityQuestionAnswersContainer community={community} />
+                  </MainSection>
+                </TopCollapsibleSection>
+                {plusCommunity && eventsLink && sampleEvents &&
+                <TopCollapsibleSection title={`Events at ${name}`}>
+                  <MainSection>
+                    <EventsWrapper>
+                      {sampleEvents.map(item => (
+                        <IconItemWrapper key={item}>
+                          <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
+                        </IconItemWrapper>))
+                      }
+                    </EventsWrapper>
+                  </MainSection>
+                  <ButtonBlock>
+                    <StyledButton href={eventsLink} onClick={clickEventHandler('events', name)} target="_blank" ghost>Download Events Calendar</StyledButton>
+                  </ButtonBlock>
+                </TopCollapsibleSection>
+                }
+
+                {plusCommunity && menuLink &&
+                <TopCollapsibleSection title={`Sample Menu at ${name}`}>
+                  <MainSection>
+                    <SampleMenu
+                      sampleAppetizers={sampleAppetizers}
+                      sampleMain={sampleMain}
+                      sampleSide={sampleSide}
+                      sampleDessert={sampleDessert}
                     />
                   </MainSection>
                   <ButtonBlock>
-                    <StyledButton onClick={openAskQuestionModal}>Ask a Question</StyledButton>
+                    <StyledButton href={menuLink} onClick={clickEventHandler('menu', name)} target="_blank" ghost>Download Current Menu</StyledButton>
                   </ButtonBlock>
                 </TopCollapsibleSection>
-                {rgsAux.stateLicensingWebsite &&
+                }
+
+                {rgsAux.stateLicensingWebsite && (
                   <StyledCommunityExtraInfoSection
                     title={`${name} at ${address.city} State Licensing`}
-                    description={`${name} is licensed by the state of ${address.state}`}
+                    description={`${name} is licensed by the state of ${
+                      address.state
+                    }`}
                     url={rgsAux.stateLicensingWebsite}
                     urlText="Visit the state licensing website"
                   />
-                }
+                )}
                 <StyledCommunityExtraInfoSection
                   title="Disclaimer"
                   description="The information on this page has been created to the best of our abilities. To ensure accuracy, please confirm with your local Seniorly Seniorly Partner Agent or directly with the property. If this is your senior living community, we would welcome any updates you wish to provide."
                   url="/providers/housing"
                   urlText="Simply claim your profile by clicking here"
                 />
-                {!showSimilarEarlier &&
-                  <BottomCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
+                {!showSimilarEarlier && (
+                  <BottomCollapsibleSection
+                    title={`Similar ${typeOfCare} Communities`}
+                    id="sticky-sidebar-boundary"
+                  >
                     <MainSection>
-                      <SimilarCommunities communities={similarProperties} onCommunityClick={onSimilarCommunitiesClick} communityStyle={similarCommunityStyle} />
+                      <TrackedSimilarCommunitiesContainer
+                        communities={similarProperties}
+                        communityStyle={similarCommunityStyle}
+                      />
                       <BackToSearch>
-                        <Button
-                          ghost
-                          onClick={onBackToSearchClicked}
+                        <BackToSearchButtonContainer
+                          community={community}
                           href={getCitySearchUrl({ propInfo, address })}
+                          ghost
                         >
                           Communities In {address.city}
-                        </Button>
+                        </BackToSearchButtonContainer>
                       </BackToSearch>
                     </MainSection>
                   </BottomCollapsibleSection>
-                }
+                )}
                 <CommunityStickyFooter
-                  isAlreadyTourScheduled={isAlreadyTourScheduled}
+                  community={community}
                   isAlreadyPricingRequested={isAlreadyPricingRequested}
-                  onBookATourClick={!isAlreadyTourScheduled ? onBookATourClick : () => openAskAgentQuestionModal('tour')}
-                  onGCPClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
-                  // onGCPClick={() => setQueryParams({ modal: CONCIERGE })}
-                  onAQClick={() => openAskAgentQuestionModal()}
                 />
               </Body>
               <Column>
-                <Sticky
-                  top={24}
-                  bottomBoundary="#sticky-sidebar-boundary"
-                >
-                  <ConciergeContainer history={history} community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
+                <Sticky top={24} bottomBoundary="#sticky-sidebar-boundary">
+                  <ConciergeContainer community={community} />
                 </Sticky>
               </Column>
             </TwoColumn>
-            {(images.length > 1) &&
-              <StyledSection title={`More Photos of ${name}`} titleSize="subtitle">
-                <MorePictures gallery={gallery} communityName={name} city={address.city} state={address.state} onPictureClick={this.handleMorePicturesClick} />
+            {images.length > 1 && (
+              <StyledSection
+                title={`More Photos of ${name}`}
+                titleSize="subtitle"
+              >
+                <CommunityMorePicturesContainer community={community} />
               </StyledSection>
-            }
+            )}
             <Section title={`Map View of ${name}`} titleSize="subtitle" />
           </Wrapper>
           <StyledSection>
@@ -801,20 +648,26 @@ export default class CommunityDetailPage extends Component {
             </Lazy>
           </StyledSection>
 
-          {(nearbyCities && nearbyCities.length > 0) &&
+          {nearbyCities &&
+            nearbyCities.length > 0 && (
+              <Wrapper>
+                <SeoLinks
+                  title={`Top Cities Near ${name}`}
+                  links={nearbyCities}
+                />
+              </Wrapper>
+            )}
+          {(address.state === 'NY' ||
+            address.state === 'FL' ||
+            address.state === 'TX') && (
             <Wrapper>
-              <SeoLinks title={`Top Cities Near ${name}`} links={nearbyCities} />
-            </Wrapper>
-          }
-          {(address.state === 'NY' || address.state === 'FL' || address.state === 'TX') &&
-            <Wrapper>
-              {(rgsAux && rgsAux.localDetails !== '') ? (
+              {rgsAux && rgsAux.localDetails !== '' ? (
                 <Section title="Local Details" titleSize="subtitle">
                   <CommunityLocalDetails localDetails={rgsAux.localDetails} />
-                </Section>) : null
-              }
+                </Section>
+              ) : null}
             </Wrapper>
-          }
+          )}
         </CommunityDetailPageTemplate>
         <Footer />
       </>
