@@ -13,3 +13,8 @@ export const getAppPathForEntity = (entity) => {
       return '';
   }
 };
+
+// FIXME: move to right helper
+export const stripPageNumber = (qs) => {
+  return qs.replace(/&page-number=\d+/,  '');
+};

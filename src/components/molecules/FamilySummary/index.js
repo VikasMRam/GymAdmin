@@ -10,6 +10,7 @@ import clientPropType from 'sly/propTypes/client';
 import { Box, Heading, Label, Block, Link, Hr } from 'sly/components/atoms';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
+import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 
 const ColumWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
@@ -41,7 +42,7 @@ const StyledLink = styled(Link)`
 `;
 
 const PaddedHeading = pad(Heading, 'large');
-const SlyIntro = pad(styled.div``, 'xLarge');
+const SlyIntro = pad(CollapsibleBlock, 'xLarge');
 SlyIntro.displayName = 'SlyIntro';
 const SeeMore = cursor(Block);
 SeeMore.displayName = 'SeeMore';
@@ -82,6 +83,12 @@ const FamilySummary = ({
           <StyledLink href={`mailto:${client.clientInfo.email}`} onClick={clickEventHandler('fdetails-summary', 'email')} target="_blank" >Click To Send Email</StyledLink>
         </ColumWrapper>
       }
+      {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.financialInfo.medicaid &&
+      <ColumWrapper>
+        <Label palette="danger">Medicaid</Label>
+        <Block size="caption">Chose Qualifies on Wizard</Block>
+      </ColumWrapper>
+      }
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.housingInfo.lookingFor &&
         <ColumWrapper>
           <Label palette="grey">Looking for</Label>
@@ -106,13 +113,25 @@ const FamilySummary = ({
           <Block size="caption">{client.uuidAux.uuidInfo.housingInfo.moveTimeline}</Block>
         </ColumWrapper>
       }
-    </OuterColumWrapper>
-    {client.clientInfo && client.clientInfo.slyMessage &&
+      {client.clientInfo && client.clientInfo.slyMessage &&
       <SlyIntro>
         <Label palette="grey">Seniorly introduction</Label>
         <Block size="caption">{client.clientInfo.slyMessage}</Block>
       </SlyIntro>
-    }
+      }
+      {client.clientInfo && client.clientInfo.slyAgentMessage &&
+      <SlyIntro>
+        <Label palette="grey">Message for Agents</Label>
+        <Block size="caption">{client.clientInfo.slyAgentMessage}</Block>
+      </SlyIntro>
+        }
+      {client.clientInfo && client.clientInfo.slyCommunityMessage &&
+      <SlyIntro>
+        <Label palette="grey">Message for Community</Label>
+        <Block size="caption">{client.clientInfo.slyCommunityMessage}</Block>
+      </SlyIntro>
+      }
+    </OuterColumWrapper>
     {(client.admin || client.organization) &&
       <Hr />
     }

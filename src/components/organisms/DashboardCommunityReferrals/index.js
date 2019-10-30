@@ -21,6 +21,13 @@ const TopWrapper = styled.div`
     padding: ${size('spacing.xLarge')};
   }
 `;
+const EmptyResultWrapper = styled.div`
+  padding: ${size('spacing', 'xLarge')} ${size('spacing', 'large')};
+`;
+
+const EmptyResultTextBlock = pad(styled(Block)`
+  text-align: center;
+`, 'large');
 
 const CommunitiesWrapper = styled.div`
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
@@ -42,6 +49,11 @@ const DashboardCommunityReferrals = ({
         <Block size="subtitle">Communities</Block>
         <SendNewReferralButton onClick={() => onSubmit()}>Search for communities</SendNewReferralButton>
       </TopWrapper>
+      {childrenClients.length === 0 && (
+        <EmptyResultWrapper>
+          <EmptyResultTextBlock palette="grey" variation="dark">You haven’t sent any referrals to any communities yet. </EmptyResultTextBlock>
+        </EmptyResultWrapper>
+      )}
       <CommunitiesWrapper>
         {communitiesInterested.map((community) => {
             const client = childrenClientCommunityIdsMap[community.id];
@@ -58,13 +70,13 @@ const DashboardCommunityReferrals = ({
                 tab: FAMILY_DETAILS,
               });
               return (
-                <Link to={familyDetailsPath}>
-                  <StyledDashboardAdminReferralCommunityTile
-                    {...props}
-                    stage={stage}
-                    referralSentAt={createdAt}
-                  />
-                </Link>);
+                <StyledDashboardAdminReferralCommunityTile
+                  {...props}
+                  stage={stage}
+                  referralSentAt={createdAt}
+                  childFamilyPath={familyDetailsPath}
+                />
+                );
             }
             return (<StyledDashboardAdminReferralCommunityTile
               {...props}
@@ -85,15 +97,14 @@ const DashboardCommunityReferrals = ({
           });
           const community = client.provider;
           return (
-            <Link to={familyDetailsPath}>
-              <StyledDashboardAdminReferralCommunityTile
-                key={client.name}
-                community={community}
-                stage={client.stage}
-                referralSentAt={client.createdAt}
-                isAdminUser={isAdminUser}
-              />
-            </Link>
+            <StyledDashboardAdminReferralCommunityTile
+              key={client.name}
+              community={community}
+              stage={client.stage}
+              referralSentAt={client.createdAt}
+              isAdminUser={isAdminUser}
+              childFamilyPath={familyDetailsPath}
+            />
             );
           })
         }
