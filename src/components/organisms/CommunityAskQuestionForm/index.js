@@ -21,7 +21,8 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const ExitIntentHeading = textAlign(StyledHeading)
+const ExitIntentHeading = textAlign(StyledHeading);
+ExitIntentHeading.displayName = 'ExitIntentHeading';
 
 const CommunityAskQuestionForm = ({
   handleSubmit, submitting, communityName, user, error, type,

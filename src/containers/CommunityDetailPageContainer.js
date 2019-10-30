@@ -29,6 +29,7 @@ import { size } from 'sly/components/themes';
 import { EXIT_INTENT_TYPE } from 'sly/constants/retentionPopup';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import SlyEvent from 'sly/services/helpers/events';
+import textAlign from 'sly/components/helpers/textAlign';
 
 const ignoreSearchParams = [
   'modal',
@@ -39,7 +40,7 @@ const ignoreSearchParams = [
   'modal',
 ];
 
-const StyledHeading = styled(Heading)`
+const StyledHeading = styled(textAlign(Heading))`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
