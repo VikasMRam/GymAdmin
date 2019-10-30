@@ -6,6 +6,8 @@ import isMatch from 'lodash/isMatch';
 import omit from 'lodash/omit';
 import { parse as parseSearch } from 'query-string';
 import { Redirect } from 'react-router-dom';
+import styled from 'styled-components';
+
 import { withServerState } from 'sly/store';
 import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
 import { getDetail } from 'sly/store/selectors';
@@ -22,10 +24,12 @@ import {
 } from 'sly/services/newApi/constants';
 import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 import { Experiment, Variant } from 'sly/services/experiments';
-import styled from 'styled-components';
 import { Heading } from 'sly/components/atoms';
 import { size } from 'sly/components/themes';
-import TrackedSimilarCommunitiesContainer from "sly/containers/TrackedSimilarCommunitiesContainer";
+import { EXIT_INTENT_TYPE } from 'sly/constants/retentionPopup';
+import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
+import SlyEvent from 'sly/services/helpers/events';
+import textAlign from 'sly/components/helpers/textAlign';
 
 const ignoreSearchParams = [
   'modal',
@@ -36,7 +40,7 @@ const ignoreSearchParams = [
   'modal',
 ];
 
-const StyledHeading = styled(Heading)`
+const StyledHeading = styled(textAlign(Heading))`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
@@ -134,6 +138,14 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     });
   }
 
+  handleSimilarCommunitiesClick = (index, to) => {
+    const event = {
+      action: 'exitintent-modal-click', category: 'similarCommunity', label: index.toString(), value: to,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+  };
+
+
   getExitintent = (showModal, hideModal) => {
     const { community } = this.props;
     const communityStyle = {
@@ -150,16 +162,19 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
             communityName={community.name}
             communitySlug={community.id}
             onButtonClick={hideModal}
-            type="exitForm"
+            type={EXIT_INTENT_TYPE}
           />
         </Variant>
         <Variant name="SimilarCommunities">
           <StyledHeading>
             We found some Assisted Living communities you might like
           </StyledHeading>
-
-          <TrackedSimilarCommunitiesContainer
+          <SimilarCommunities
             communities={community.similarProperties}
+            onCommunityClick={(index, to) => {
+              this.handleSimilarCommunitiesClick(index, to);
+              hideModal();
+            }}
             communityStyle={communityStyle}
           />
         </Variant>

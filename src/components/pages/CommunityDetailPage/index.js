@@ -65,6 +65,7 @@ import CommunityAddReviewButtonContainer from "sly/containers/CommunityAddReview
 import CommunityMorePicturesContainer from "sly/containers/CommunityMorePicturesContainer";
 import BackToSearchButtonContainer from "sly/containers/BackToSearchButtonContainer";
 import TrackedSimilarCommunitiesContainer from "sly/containers/TrackedSimilarCommunitiesContainer";
+import withModal from 'sly/controllers/withModal';
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -171,6 +172,7 @@ const makeBanner = (profileContacted) => {
   )} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
 };
 
+@withModal
 @withExitIntent
 export default class CommunityDetailPage extends Component {
   static propTypes = {
