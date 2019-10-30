@@ -92,10 +92,6 @@ describe('Review Community', () => {
       cy.request('POST', '/v0/platform/auth/login', user)
         .then(() => cy.visit(`/rating/${ratedId}/approve`));
 
-      cy.get('input[name="email"]').type(user.email);
-      cy.get('input[name="password"]').type(user.password);
-      cy.get('button[type="submit"]').click();
-
       cy.get('div').contains('Status: Success').should('exist');
 
       cy.request('DELETE', '/v0/platform/auth/logout');
