@@ -106,8 +106,8 @@ const ImageWrapper = styled.div`
   }
 `;
 
-const MainWrapper = styled(Wrapper)`
-  background-color: ${p => p.plusCategory !== '' ? palette('secondary', 'background') : palette('white', 'base')};
+const MainWrapper = styled.article`
+  background-color: ${ifProp('plusCategory', palette('secondary', 'background'), palette('white', 'base'))};
 `;
 
 const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
@@ -153,34 +153,32 @@ const CommunityTile = ({
 
   return (
     <MainWrapper className={className} plusCategory={plusCategory}>
-      {plusCategory !== '' &&
-      <PlusBadge plusCategory={plusCategory} fullWidth={true}/>
-      }
+      {plusCategory && <PlusBadge plusCategory={plusCategory} fullWidth />}
       <Wrapper layout={layout} imageSize={imageSize}>
         {!noGallery &&
-        <StyledMediaGallery
-          communityName={name}
-          images={galleryImages}
-          topRightSection={topRightSection}
-          onSlideChange={onSlideChange}
-          currentSlide={currentSlide}
-          layout={layout}
-        />
+          <StyledMediaGallery
+            communityName={name}
+            images={galleryImages}
+            topRightSection={topRightSection}
+            onSlideChange={onSlideChange}
+            currentSlide={currentSlide}
+            layout={layout}
+          />
         }
         {noGallery &&
-        <>
-        <ImageWrapper>
-          <StyledImage
-            layout={layout}
-            src={imageUrl}
-            aspectRatio={layout === 'column' ? '3:2' : '16:9'}
-          />
-          {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
-        </ImageWrapper>
-        <TopRightWrapper>
-          {topRightSection()}
-        </TopRightWrapper>
-        </>
+          <>
+            <ImageWrapper>
+              <StyledImage
+                layout={layout}
+                src={imageUrl}
+                aspectRatio={layout === 'column' ? '3:2' : '16:9'}
+              />
+              {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
+            </ImageWrapper>
+            <TopRightWrapper>
+              {topRightSection()}
+            </TopRightWrapper>
+          </>
         }
         <Details layout={layout} padding="regular" hasImages={hasImages}>
           <CommunityInfoComponent
