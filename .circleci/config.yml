@@ -184,10 +184,50 @@ jobs:
             - new_env_vars
 
   e2e:
-    machine: true
-
-    resource_class: large
-
+    docker:
+      - image: circleci/node:8.12 # though we use 8.9 only 8.12 has npm that supports npm ci
+      - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-db:latest
+        environment:
+          POSTGRES_DB: slydev
+          POSTGRES_USER: slydev
+          POSTGRES_PASSWORD: slydev
+      - image: redis:4
+      - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-goose:latest
+        environment:
+          SLY_DBHOST: localhost
+          SLY_DBNAME: slydev
+          SLY_DBUSER: slydev
+          SLY_DBPASSWORD: slydev
+          POSTGRES_PASSWORD: slydev
+          POSTGRES_USER: slydev
+          POSTGRES_DB: slydev
+      - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-pubsub:latest
+        environment:
+          SLY_DBHOST: localhost
+          SLY_DBNAME: slydev
+          SLY_DBUSER: slydev
+          SLY_DBPASSWORD: slydev
+          POSTGRES_PASSWORD: slydev
+          POSTGRES_USER: slydev
+          POSTGRES_DB: slydev
+      - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-slyapi:latest
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+        environment:
+          SLY_DBHOST: localhost
+          SLY_DBNAME: slydev
+          SLY_DBUSER: slydev
+          SLY_DBPASSWORD: slydev
+          POSTGRES_PASSWORD: slydev
+          POSTGRES_USER: slydev
+          POSTGRES_DB: slydev
+          SLY_APIRATELIMITENABLED: false
+      - image: cypress/base:8
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
+  
     working_directory: ~/project/e2e
 
     environment:
@@ -198,117 +238,190 @@ jobs:
       - checkout:
           path: ~/project
 
-      - node/install:
-          node-version: 8.16.0
-          install-yarn: false
-
-      - restore_cache:
-          keys:
-            - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
-
-      - run:
-          name: NPM Install and Run Local SlyReact in Background
-          command: |
-            npm install
-            DISABLE_EXPERIMENTS=true npm run staging
-          working_directory: ~/project
-          background: true
+      # - run:
+      #     name: Clone SlyApi
+      #     command: git clone --single-branch --branch feature/docker git@github.com:seniorly/SlyApi.git ~/SlyApi
+      
+      # - run:
+      #     command: |
+      #       cat docker-compose-test.yml
+      #       sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      #       sudo chmod +x /usr/local/bin/docker-compose
+      #       docker-compose --version
+      #       docker-compose -f docker-compose-test.yml up
+      #     working_directory: ~/SlyApi
+      #     background: true
 
       - run:
-          name: Install deps
-          command: |
-            if [ ! -d node_modules ]; then
-              npm ci
-            else
-              echo "node_modules from cache exist. So skipping install."
-            fi
-
-      - run:
-          command: npx cypress verify
-
-      - run:
-          name: Installing OpenVPN Client and HAproxy
+          name: Installing CUrl and HAproxy
           command: |
             sudo apt-get update
-            sudo apt-get install openvpn haproxy
-
-      # The PEMs and credentials are set in OPENVPN context and are echoed into files
-      - run:
-          name: Creating OpenVPN Client Credential file
-          command: |
-            echo -e "$OPENVPN_USERNAME\n$OPENVPN_PASSWORD" >> openVPN_cred.txt
-            echo -e "$OPENVPN_CA" >> ca.pem
-            echo -e "$OPENVPN_CERT" >> cert.pem
-            echo -e "$OPENVPN_KEY" >> key.pem
-            echo -e "$OPENVPN_TLS_AUTH" >> tls_auth.pem
-
-      # PEMs should be escaped like explained here https://discuss.circleci.com/t/issues-storing-firebase-keys-as-environment-variable/6197/6
-      - run:
-          name: Creating OpenVPN Tunnel
-          command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
+            sudo apt-get install curl haproxy
 
       - run:
           name: Running HAProxy
           command: sudo haproxy -f haproxy.conf
           background: true
+      
+      - node/with-cache:
+          cache-key: package-lock.json
+          cache-version: v3
+          use-strict-cache: true
+          include-branch-in-cache-key: false
+          steps:
+            - run:
+                name: Install deps
+                command: |
+                  if [ ! -d node_modules ]; then
+                    npm ci
+                  else
+                    echo "node_modules from cache exist. So skipping install."
+                  fi
+                working_directory: ~/project
 
-      - run:
-          name: Waiting for Local React to be up and running
-          command: npx wait-on http://localhost:8000
+            - run:
+                name: npm run dev
+                command: |
+                  npm run dev
+                working_directory: ~/project
+                background: true
 
-      - run:
-          name: Curl whether API is accessible
-          command: curl http://www.lvh.me/v0/ping
+            # - run:
+            #     command: npx cypress verify
 
-      - save_cache:
-          key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - ~/.npm
-            - ~/.cache
-            - ~/project/node_modules
-            - ~/project/e2e/node_modules
+            - run:
+                name: Waiting for Local Go to be up and running
+                command: npx wait-on -t http://localhost:8080
 
-      - run:
-          name: Run Cypress tests
-          command: |
-            echo "Running cypress"
-            npx cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec "cypress/integration/**/*"
+            - run:
+                name: Curl whether API is accessible
+                command: curl http://www.lvh.me/v0/ping
 
-      - run:
-          name: Closing OpenVPN Tunnel
-          command: sudo killall openvpn
+            - run:
+                name: Waiting for Local React to be up and running
+                command: npx wait-on http://localhost:8000
 
-      # TODO: remove once circle ci starts supporting customizable notifications in workflows
-      - run:
-          name: Send tests success notification
-          command: |
-            if [ -z "$CIRCLE_PULL_REQUEST" ] && [ "$CIRCLE_BRANCH" == "master" ]; then
-              export TEST_OUTPUT=$(cat test_output)
-              SLACK_NOTIFICATION_API_KEY=$SLACK_TEST_NOTIFICATION_API_KEY ../.circleci/push-slack-notification.sh -t "smoke tests success" \
-                -tl "$CIRCLE_BUILD_URL" -m "$TEST_OUTPUT" -c "#42c88a"
-            fi
+            - run:
+                name: Install deps
+                command: |
+                  if [ ! -d node_modules ]; then
+                    npm ci
+                  else
+                    echo "node_modules from cache exist. So skipping install."
+                  fi
 
-      - run:
-          name: Send tests failed notification
-          when: on_fail
-          command: |
-            if [ -z "$CIRCLE_PULL_REQUEST" ] && [ "$CIRCLE_BRANCH" == "master" ]; then
-              export DESC_MSG=$(cat test_output)
-              if [ -z "$DESC_MSG" ]; then
-                DESC_MSG="failed before running tests"
-              fi
-              SLACK_NOTIFICATION_API_KEY=$SLACK_TEST_NOTIFICATION_API_KEY ../.circleci/push-slack-notification.sh -t "smoke tests failed" \
-                -tl "$CIRCLE_BUILD_URL" -m "<!channel> $DESC_MSG" -c "#ed5c5c"
-            fi
+            - run:
+                name: Installing Cypress deps
+                command: sudo apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 
-      - store_test_results:
-          path: cypress/results
+            - save_cache:
+                key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+                paths:
+                  - ~/.npm
+                  - ~/.cache
+                  - ~/project/node_modules
+                  - ~/project/e2e/node_modules
 
-      - store_artifacts:
-          path: cypress/videos
+            - run:
+                name: Run Cypress tests
+                command: |
+                  echo "Running cypress"
+                  $(npm bin)/cypress run --reporter junit --reporter-options "mochaFile=$TEST_RESULTS/cypress-test-output.xml,toConsole=true" --spec "cypress/integration/**/*"
 
-      - store_artifacts:
-          path: cypress/screenshots
+            - store_artifacts:
+                path: /tmp/test-results
+            - store_artifacts:
+                path: cypress/videos
+            - store_artifacts:
+                path: cypress/screenshots
+
+# REFERENCE CODE for OPENVPN
+
+      # - run:
+      #     name: NPM Install and Run Local SlyReact in Background
+      #     command: |
+      #       npm install
+      #       npm run dev
+      #     working_directory: ~/project
+      #     background: true
+
+      # - run:
+      #     name: Install deps
+      #     command: |
+      #       if [ ! -d node_modules ]; then
+      #         npm ci
+      #       else
+      #         echo "node_modules from cache exist. So skipping install."
+      #       fi
+
+      # # The PEMs and credentials are set in OPENVPN context and are echoed into files
+      # - run:
+      #     name: Creating OpenVPN Client Credential file
+      #     command: |
+      #       echo -e "$OPENVPN_USERNAME\n$OPENVPN_PASSWORD" >> openVPN_cred.txt
+      #       echo -e "$OPENVPN_CA" >> ca.pem
+      #       echo -e "$OPENVPN_CERT" >> cert.pem
+      #       echo -e "$OPENVPN_KEY" >> key.pem
+      #       echo -e "$OPENVPN_TLS_AUTH" >> tls_auth.pem
+
+      # # PEMs should be escaped like explained here https://discuss.circleci.com/t/issues-storing-firebase-keys-as-environment-variable/6197/6
+      # - run:
+      #     name: Creating OpenVPN Tunnel
+      #     command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
+
+      # - run:
+      #     name: Waiting for Local Go to be up and running
+      #     command: npx wait-on -t 900000 http://localhost:8080
+
+      # - run:
+      #     name: Waiting for Local React to be up and running
+      #     command: npx wait-on http://localhost:8000
+
+      # - run:
+      #     name: Curl whether API is accessible
+      #     command: curl http://www.lvh.me/v0/ping
+
+      # - save_cache:
+      #     key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+      #     paths:
+      #       - ~/.npm
+      #       - ~/.cache
+      #       - ~/project/node_modules
+      #       - ~/project/e2e/node_modules
+
+      # - run:
+      #     name: Run Cypress tests
+      #     command: |
+      #       echo "Running cypress"
+      #       npx cypress run --reporter junit --reporter-options "mochaFile=$TEST_RESULTS/cypress-test-output.xml,toConsole=true" --spec "cypress/integration/**/*"
+
+      # - run:
+      #     name: Closing OpenVPN Tunnel
+      #     command: sudo killall openvpn
+
+      # # TODO: remove once circle ci starts supporting customizable notifications in workflows
+      # - run:
+      #     name: Send tests success notification
+      #     command: |
+      #       if [ -z "$CIRCLE_PULL_REQUEST" ] && [ "$CIRCLE_BRANCH" == "master" ]; then
+      #         export TEST_OUTPUT=$(cat test_output)
+      #         SLACK_NOTIFICATION_API_KEY=$SLACK_TEST_NOTIFICATION_API_KEY ../.circleci/push-slack-notification.sh -t "smoke tests success" \
+      #           -tl "$CIRCLE_BUILD_URL" -m "$TEST_OUTPUT" -c "#42c88a"
+      #       fi
+
+      # - run:
+      #     name: Send tests failed notification
+      #     when: on_fail
+      #     command: |
+      #       if [ -z "$CIRCLE_PULL_REQUEST" ] && [ "$CIRCLE_BRANCH" == "master" ]; then
+      #         export DESC_MSG=$(cat test_output)
+      #         if [ -z "$DESC_MSG" ]; then
+      #           DESC_MSG="failed before running tests"
+      #         fi
+      #         SLACK_NOTIFICATION_API_KEY=$SLACK_TEST_NOTIFICATION_API_KEY ../.circleci/push-slack-notification.sh -t "smoke tests failed" \
+      #           -tl "$CIRCLE_BUILD_URL" -m "<!channel> $DESC_MSG" -c "#ed5c5c"
+      #       fi
+
 
 workflows:
   version: 2
