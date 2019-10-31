@@ -5,10 +5,6 @@ import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
 import { Link } from 'sly/components/atoms';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-import {
-  USER_SAVE_DELETE_STATUS,
-  USER_SAVE_INIT_STATUS,
-} from 'sly/constants/userSave';
 
 const wrap = (props = {}) => shallow(<CommunitySummary {...props} />);
 
@@ -46,7 +42,7 @@ describe('CommunitySummary', () => {
   it('renders with favourited', () => {
     const wrapper = wrap({
       community: RhodaGoldmanPlaza,
-      userSave: { status: USER_SAVE_INIT_STATUS },
+      isFavorited: true,
     });
     verify(wrapper);
     expect(wrapper.find('Wrapper').childAt(1).find('StyledIconButton').find({ icon: 'favourite-light' })).toHaveLength(1);

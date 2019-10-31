@@ -8,10 +8,10 @@ import { size, palette } from 'sly/components/themes';
 import Link from 'sly/components/atoms/Link';
 
 const backgroundColor = ({
-  ghost, transparent, selectable, selected, secondary, disabled,
+  ghost, transparent, selected, secondary, disabled,
 }) => {
-  if (ghost || (selectable && !selected)) {
-    return palette('white', 'base');
+  if (ghost) {
+    return selected ? palette('stroke') : palette('white', 'base');
   }
   if (transparent) {
     return 'transparent';
@@ -19,11 +19,11 @@ const backgroundColor = ({
   if (secondary) {
     return disabled ? palette('grey', 'background') : palette('grey', 'background');
   }
-  return disabled ? palette('primary', 'filler') : palette('primary', 'base');
+  return disabled ? palette('filler') : palette('base');
 };
 
 const foregroundColor = ({
-  ghost, transparent, selectable, selected, secondary, disabled,
+  ghost, transparent, selected, secondary, disabled,
 }) => {
   if (ghost) {
     if (secondary) {
@@ -31,22 +31,19 @@ const foregroundColor = ({
     }
     return disabled ? palette('primary', 'filler') : palette('base');
   }
-  if (selectable && !selected) {
-    return palette('slate', 'base');
-  }
   if (transparent) {
     return 'none';
   }
   if (secondary) {
     return disabled ? palette('slate', 'filler') : palette('slate', 'base');
   }
-  return palette('white', 'base');
+  return selected ? palette('slate', 'base') : palette('white', 'base');
 };
 
 const borderColor = ({
-  ghost, selectable, selected, secondary, borderPalette, disabled,
+  ghost, secondary, borderPalette, disabled,
 }) => {
-  if ((selectable && !selected) || secondary) {
+  if (secondary) {
     return palette('slate', 'stroke');
   }
   if (ghost) {
@@ -68,14 +65,12 @@ const hoverBackgroundColor = ({
 };
 
 const hoverForegroundColor = ({
-  ghost, selectable, selected, secondary,
+  ghost, secondary,
 }) => {
   if (ghost) {
     return secondary ? palette('grey', 'dark') : palette('dark');
   }
-  return (selectable && !selected)
-    ? palette('white', 'base')
-    : null;
+  return null;
 };
 
 const activeBackgroundColor = ({ disabled, ghost, transparent }) =>
@@ -156,7 +151,7 @@ export const styles = css`
 const StyledLink = styled(({
   disabled, transparent, foregroundPalette, palette, height, theme, ...props
 }) => (
-  <Link {...props} />
+  <Link noHoverColorChange {...props} />
 ))`
   ${styles};
 `;
@@ -171,8 +166,7 @@ const StyledButton = styled.button`
 const Button = ({ type, kind, measureRef, ...props }) => {
   // rename type to kind to avoid collision with html button type
   if (props.to) {
-    const { selectable, ...linkProps } = props;
-    return <StyledLink kind={kind} {...linkProps} />;
+    return <StyledLink kind={kind} {...props} />;
   } else if (props.href) {
     return <Anchor kind={kind} {...props} />;
   }
@@ -188,7 +182,6 @@ Button.propTypes = {
   foregroundPalette: palettePropType,
   borderPalette: palettePropType,
   kind: oneOf(['jumbo', 'regular', 'tab', 'plain']),
-  selectable: bool,
   selected: bool,
   type: string,
   to: string,
@@ -197,8 +190,6 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  selectable: false,
-  selected: true,
   palette: 'primary',
   kind: 'regular',
   type: 'button',

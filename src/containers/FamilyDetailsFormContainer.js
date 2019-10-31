@@ -9,7 +9,7 @@ import { required, createValidator, email, usPhone, dependentRequired } from 'sl
 import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
 import { USER_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import { query, getRelationship, prefetch } from 'sly/services/newApi';
+import { query, getRelationship } from 'sly/services/newApi';
 import SlyEvent from 'sly/services/helpers/events';
 import { validateAM } from 'sly/services/helpers/client';
 import { selectFormData, trimFormData } from 'sly/services/helpers/forms';
@@ -57,7 +57,6 @@ export default class FamilyDetailsFormContainer extends Component {
       client, updateClient, refetchClient, rawClient, notifyInfo, notifyError, uuidAux,
     } = this.props;
     const { id } = client;
-    const { id: uuidID } = uuidAux;
     trimFormData(data);
     const {
       name,
@@ -77,6 +76,9 @@ export default class FamilyDetailsFormContainer extends Component {
       communityCareType,
       assignedTo,
       additionalMetadata,
+      medicaid,
+      slyAgentMessage,
+      slyCommunityMessage,
     } = data;
     let locationInfo = {};
     if (preferredLocation) {
@@ -104,6 +106,12 @@ export default class FamilyDetailsFormContainer extends Component {
     if (slyMessage) {
       newClient.set('attributes.clientInfo.slyMessage', slyMessage);
     }
+    if (slyAgentMessage) {
+      newClient.set('attributes.clientInfo.slyAgentMessage', slyAgentMessage);
+    }
+    if (slyCommunityMessage) {
+      newClient.set('attributes.clientInfo.slyCommunityMessage', slyCommunityMessage);
+    }
     if (assignedTo) {
       newClient.set('relationships.admin.data', {
         type: USER_RESOURCE_TYPE,
@@ -130,6 +138,9 @@ export default class FamilyDetailsFormContainer extends Component {
     }
     if (budget) {
       newUuidAux.set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', budget);
+    }
+    if (medicaid) {
+      newUuidAux.set('attributes.uuidInfo.financialInfo.medicaid', medicaid);
     }
     if (lookingFor) {
       newUuidAux.set('attributes.uuidInfo.housingInfo.lookingFor', lookingFor);
@@ -178,7 +189,8 @@ export default class FamilyDetailsFormContainer extends Component {
     const { clientInfo, uuidAux, tags: modelTags } = client;
     const tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
     const {
-      name, email, slyMessage, phoneNumber = '', additionalMetadata,
+      name, email, slyMessage, phoneNumber = '', additionalMetadata, slyAgentMessage,
+      slyCommunityMessage,
     } = clientInfo;
     const { uuidInfo } = uuidAux;
     const {
@@ -187,7 +199,7 @@ export default class FamilyDetailsFormContainer extends Component {
     const { mobility } = careInfo;
     const { fullName, gender, age } = residentInfo;
     const { typeCare, roomPreference, lookingFor, moveTimeline } = housingInfo;
-    const { maxMonthlyBudget } = financialInfo;
+    const { maxMonthlyBudget, medicaid } = financialInfo;
     let preferredLocation = '';
     if (locationInfo) {
       const { city, state } = locationInfo;
@@ -210,15 +222,18 @@ export default class FamilyDetailsFormContainer extends Component {
       mobilityLevel: mobility,
       communityCareType: typeCare,
       budget: maxMonthlyBudget,
+      medicaid,
       timeToMove: moveTimeline,
       preferredLocation,
       slyMessage,
       assignedTo,
       additionalMetadata,
+      slyAgentMessage,
+      slyCommunityMessage,
       contactPreferences: ['sms', 'email'],
     };
     ({ preferredLocation } = formData);
-
+    console.log('Ligging intiial values', initialValues);
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}

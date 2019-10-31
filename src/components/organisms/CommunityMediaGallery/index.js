@@ -78,7 +78,7 @@ export default class CommunityMediaGallery extends Component {
       return { ...vid, src, thumb: vid.thumbUrl };
     });
     const topRightSection = () => (
-      <Button secondary ghost transparent={false} onClick={() => onToggleFullscreenMode(false, false, true)}>View Photos</Button>
+      <Button secondary ghost transparent={false} onClick={() => onToggleFullscreenMode(false, true)}>View Photos</Button>
     );
 
     if (websiteUrl && !websiteUrl.includes('//')) {
@@ -92,9 +92,9 @@ export default class CommunityMediaGallery extends Component {
     );
 
     return (
-      <Fragment>
+      <>
         <MediaGallery
-          onSlideClick={i => onToggleFullscreenMode(false, Object.prototype.hasOwnProperty.call(this.sdGalleryImages[i], 'ofVideo'))}
+          onSlideClick={i => onToggleFullscreenMode(Object.prototype.hasOwnProperty.call(this.sdGalleryImages[i], 'ofVideo'))}
           communityName={communityName}
           images={this.sdGalleryImages}
           topRightSection={topRightSection}
@@ -108,11 +108,11 @@ export default class CommunityMediaGallery extends Component {
           communityName={communityName}
           videos={this.formattedVideos}
           images={this.hdGalleryImages}
-          onClose={() => onToggleFullscreenMode(false, Object.prototype.hasOwnProperty.call(this.sdGalleryImages[currentSlide], 'ofVideo'))}
+          onClose={() => onToggleFullscreenMode(Object.prototype.hasOwnProperty.call(this.sdGalleryImages[currentSlide], 'ofVideo'))}
           ariaHideApp={ariaHideApp}
           onSlideChange={onSlideChange}
         />
-      </Fragment>
+      </>
     );
   }
 }

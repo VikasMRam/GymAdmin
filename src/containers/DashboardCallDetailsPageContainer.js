@@ -18,15 +18,6 @@ export default class DashboardCallDetailsPageContainer extends Component {
     history: object,
   };
 
-  state = {
-    name: null,
-    zip: null,
-  };
-
-  handleCommunitySearch = ({ name, zip }) => {
-    this.setState({ name, zip });
-  };
-
   handleNewClientSubmit = (data) => {
     const { history } = this.props;
     const clientPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: data.id });
@@ -39,13 +30,8 @@ export default class DashboardCallDetailsPageContainer extends Component {
       return <div>Loading...</div>;
     }
 
-    const { name, zip } = this.state;
+    const query = { phone: voiceCall.toNumber };
 
-    const query = (!name && !zip) ? ({ phone: voiceCall.toNumber }) : ({ name, zip });
-
-    const meta = {
-      referralSource: ['Direct Call', 'Online'], lookingFor: ['Father', 'Mother'], gender: ['Female', 'Male'], timeToMove: ['Now','1+ Months', '3+ Months'], monthlyBudget: ['Under $2000', '$2k-$3k', '$3k-$4k', '$4k+'],
-    };
 
     return (
       <NotificationController>
@@ -53,7 +39,7 @@ export default class DashboardCallDetailsPageContainer extends Component {
         notifyInfo,
         notifyError,
         }) => (
-          <DashboardCallDetailsPage notifyInfo={notifyInfo} notifyError={notifyError} postCreateClient={this.handleNewClientSubmit} meta={meta} voiceCall={voiceCall} query={query} handleCommunitySearch={this.handleCommunitySearch} />
+          <DashboardCallDetailsPage notifyInfo={notifyInfo} notifyError={notifyError} postCreateClient={this.handleNewClientSubmit} voiceCall={voiceCall} query={query} />
         )}
       </NotificationController>
     );
