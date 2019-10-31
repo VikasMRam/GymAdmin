@@ -11,7 +11,7 @@ import FooterOrganism from 'sly/components/organisms/Footer';
 import BaseModalContainer from 'sly/containers/ModalContainer';
 
 const HeaderContainer = withHydration(BaseHeaderContainer);
-const ModalContainer = withHydration(BaseModalContainer);
+const ModalContainer = withHydration(BaseModalContainer, { alwaysHydrate: true });
 
 export const CommunityDetailPageTemplate = styled.main`
   .overlayWrapper {
