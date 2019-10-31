@@ -69,9 +69,14 @@ export default class CommunitySearchPageContainer extends PureComponent {
     const event = {
       action: 'search', category: searchParams.toc, label: queryString.stringify(searchParams),
     };
+
     SlyEvent.getInstance().sendEvent(event);
 
-    history.push(path);
+    if (searchParams.view === 'map') {
+      history.replace(path);
+    } else {
+      history.push(path);
+    }
   };
 
   removeSearchFilters = ({ paramsToRemove }) => {
