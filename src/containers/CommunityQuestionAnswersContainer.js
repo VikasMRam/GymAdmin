@@ -6,7 +6,7 @@ import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 import SlyEvent from 'sly/services/helpers/events';
-import withModal from "sly/controllers/withModal";
+import withModal from 'sly/controllers/withModal';
 
 @withModal
 export default class CommunityQuestionAnswersContainer extends Component {
@@ -38,7 +38,7 @@ export default class CommunityQuestionAnswersContainer extends Component {
   };
 
   openAskQuestionModal = (question = {}) => {
-    const { showModal, community } = this.props;
+    const { showModal, community: { id, name } } = this.props;
 
     this.sendEvent('open-modal', 'AskQuestion');
 
@@ -46,9 +46,10 @@ export default class CommunityQuestionAnswersContainer extends Component {
     showModal(
       <CommunityAskQuestionFormContainer
         showModal={showModal}
-        communitySlug={community.id}
+        communitySlug={id}
         initialValues={{ question: question.contentData }}
         parentSlug={question.id}
+        communityName={name}
       />,
       onClose
     );
