@@ -17,7 +17,10 @@ import { AGENT_DASHBOARD_FAMILIES_PATH, PROSPECTING, CONNECTED, CLOSED } from 's
 import Th from 'sly/components/molecules/Th';
 import IconButton from 'sly/components/molecules/IconButton';
 import ClientRowCard from 'sly/components/organisms/ClientRowCard';
+import Role from 'sly/components/common/Role';
 import AddFamilyFormContainer from 'sly/containers/dashboard/AddFamilyFormContainer';
+import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { stripPageNumber } from 'sly/services/helpers/appPaths';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
@@ -89,9 +92,10 @@ const onTabClick = (label) => {
   SlyEvent.getInstance().sendEvent(event);
 };
 
+
 const getBasePath = (clientType, location) => {
   const path = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType });
-  return location && location.search ? `${path}${location.search}` : path;
+  return location && location.search ? `${path}${stripPageNumber(location.search)}` : path;
 };
 
 export default class DashboardAgentFamilyOverviewSection extends Component {
@@ -160,9 +164,11 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
     const beforeTabHeader = (
       <TwoColumn>
         <Heading level="subtitle">My Families</Heading>
-        <IconButton icon="user-add" onClick={this.handleAddFamilyClick} hideTextInMobile>
-          Add family
-        </IconButton>
+        <Role className="addFamily" is={PLATFORM_ADMIN_ROLE}>
+          <IconButton icon="user-add" onClick={this.handleAddFamilyClick} hideTextInMobile>
+            Add family
+          </IconButton>
+        </Role>
       </TwoColumn>
     );
 

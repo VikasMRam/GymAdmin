@@ -41,14 +41,29 @@ export const PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS = [
 ];
 
 export const SOURCE_OPTIONS = [
-  'Online',
   'Direct Call',
   'Voicemail',
   'Bot',
-  'Question',
   'LiveChat',
-  'Partner',
   'Other',
+];
+
+export const LOOKING_FOR_OPTIONS = [
+  'Self',
+  'Parents',
+  'Mother',
+  'Father',
+  'Grandparents',
+  'Grandmother',
+  'Grandfather',
+  'Husband',
+  'Wife',
+  'Other',
+];
+export const TIME_TO_MOVE_OPTIONS = [
+  'Immediately',
+  '1-3 Months',
+  '3 Months+',
 ];
 
 export const STATUS_PALETTE_MAP = {};

@@ -1,4 +1,4 @@
-import { get, patch, post, put, destroy } from './httpMethods';
+import { get, patch, post, destroy } from './httpMethods';
 
 // method names should start with `get`, `create`, `update`, `delete`
 // patch is prefered over put as per specification
@@ -61,6 +61,7 @@ export default {
 
   getConversationMessages: { method: get, path: '/platform/conversation-messages' },
   createConversationMessage: { method: post, path: '/platform/conversation-messages' },
+  updateConversationMessage: { method: patch, path: '/platform/conversation-messages/:id' },
 
   getConversationParticipants: { method: get, path: '/platform/conversation-participants' },
   createConversationParticipant: { method: post, path: '/platform/conversation-participants' },

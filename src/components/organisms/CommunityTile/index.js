@@ -4,7 +4,7 @@ import { arrayOf, bool, string, func, number, shape, oneOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
-import { size, assetPath, getKey } from 'sly/components/themes';
+import { size, assetPath, getKey, palette } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import cursor from 'sly/components/helpers/cursor';
@@ -16,6 +16,7 @@ import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import IconButton from 'sly/components/molecules/IconButton';
+import PlusBadge from 'sly/components/molecules/PlusBadge';
 
 const communityDefaultImages = {
   'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
@@ -105,6 +106,10 @@ const ImageWrapper = styled.div`
   }
 `;
 
+const MainWrapper = styled.article`
+  background-color: ${ifProp('plusCategory', palette('secondary', 'background'), palette('white', 'base'))};
+`;
+
 const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
   <FullWidthButton onClick={onClick} ghost={ghost} key={text}>
     {text}
@@ -118,7 +123,7 @@ const CommunityTile = ({
   canFavourite,
 }) => {
   const {
-    name, gallery = {}, mainImage, communitySize,
+    name, gallery = {}, mainImage, communitySize, plusCategory,
   } = community;
   let { imageUrl } = community;
   imageUrl = imageUrl || mainImage;
@@ -147,46 +152,50 @@ const CommunityTile = ({
   const CommunityInfoComponent = actionButtons.length ? PaddedCommunityInfo : CommunityInfo;
 
   return (
-    <Wrapper layout={layout} className={className} imageSize={imageSize}>
-      {!noGallery &&
-        <StyledMediaGallery
-          communityName={name}
-          images={galleryImages}
-          topRightSection={topRightSection}
-          onSlideChange={onSlideChange}
-          currentSlide={currentSlide}
-          layout={layout}
-        />
-      }
-      {noGallery &&
-        <>
-          <ImageWrapper>
-            <StyledImage
-              layout={layout}
-              src={imageUrl}
-              aspectRatio={layout === 'column' ? '3:2' : '16:9'}
-            />
-            {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
-          </ImageWrapper>
-          <TopRightWrapper>
-            {topRightSection()}
-          </TopRightWrapper>
-        </>
-      }
-      <Details layout={layout} padding="regular" hasImages={hasImages}>
-        <CommunityInfoComponent
-          palette={palette}
-          community={community}
-          showFloorPlan={showFloorPlan}
-          showDescription={showDescription}
-        />
-        {buildActionButtons(actionButtons)}
-        {(note || addNote) && <Hr />}
-        {note && <Span size="caption">{note}</Span>}
-        {note && <CursorSpan palette="primary" size="caption" onClick={onEditNoteClick}> Edit note</CursorSpan>}
-        {!note && addNote && <AddNote palette="primary" size="caption" onClick={onAddNoteClick}>Add a note</AddNote>}
-      </Details>
-    </Wrapper>
+    <MainWrapper className={className} plusCategory={plusCategory}>
+      {plusCategory && <PlusBadge plusCategory={plusCategory} fullWidth />}
+      <Wrapper layout={layout} imageSize={imageSize}>
+        {!noGallery &&
+          <StyledMediaGallery
+            communityName={name}
+            images={galleryImages}
+            topRightSection={topRightSection}
+            onSlideChange={onSlideChange}
+            currentSlide={currentSlide}
+            layout={layout}
+          />
+        }
+        {noGallery &&
+          <>
+            <ImageWrapper>
+              <StyledImage
+                layout={layout}
+                src={imageUrl}
+                aspectRatio={layout === 'column' ? '3:2' : '16:9'}
+              />
+              {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
+            </ImageWrapper>
+            <TopRightWrapper>
+              {topRightSection()}
+            </TopRightWrapper>
+          </>
+        }
+        <Details layout={layout} padding="regular" hasImages={hasImages}>
+          <CommunityInfoComponent
+            palette={palette}
+            community={community}
+            showFloorPlan={showFloorPlan}
+            showDescription={showDescription}
+          />
+          {buildActionButtons(actionButtons)}
+          {(note || addNote) && <Hr />}
+          {note && <Span size="caption">{note}</Span>}
+          {note && <CursorSpan palette="primary" size="caption" onClick={onEditNoteClick}> Edit note</CursorSpan>}
+          {!note && addNote && <AddNote palette="primary" size="caption" onClick={onAddNoteClick}>Add a note</AddNote>}
+        </Details>
+      </Wrapper>
+    </MainWrapper>
+
   );
 };
 

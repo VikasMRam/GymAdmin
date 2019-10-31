@@ -17,15 +17,19 @@ import {
   SUMMARY,
   MESSAGES, ACTIVITY,
 } from 'sly/constants/dashboardAppPaths';
+import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
 import { NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/notes';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
+import SlyEvent from 'sly/services/helpers/events';
+import withBreakpoint from 'sly/components/helpers/breakpoint';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
+import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFamilyContainer';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
-import SlyEvent from 'sly/services/helpers/events';
-import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
-import withBreakpoint from 'sly/components/helpers/breakpoint';
 
+const mapStateToProps = (state, { conversations }) => ({
+  selectedConversation: conversations && conversations.length === 1 ? conversations[0] : null,
+});
 @withUser
 
 @prefetch('client', 'getClient', (req, { match }) => req({
@@ -47,9 +51,10 @@ import withBreakpoint from 'sly/components/helpers/breakpoint';
 }))
 
 @prefetch('conversations', 'getConversations', (req, { match }) => req({
-  'filter[participant_id]': match.params.id,
-  'filter[participant_type]': CONVERSATION_PARTICIPANT_TYPE_CLIENT,
+  'filter[client]': match.params.id,
 }))
+
+@connect(mapStateToProps)
 
 @withBreakpoint
 
@@ -58,6 +63,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     user: userPropType.isRequired,
     client: clientPropType,
     conversations: arrayOf(conversationPropType),
+    selectedConversation: conversationPropType,
     match: object,
     status: object,
     history: object,
@@ -68,6 +74,11 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     notes: arrayOf(notePropType),
     invalidateClients: func,
   };
+
+  state = {
+    selectedConversation: null,
+    conversationsList: null,
+  }
 
   onRejectSuccess = (hide) => {
     const { history } = this.props;
@@ -164,12 +175,49 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       });
   };
 
+  handleAcceptClick = (showModal, hideModal, notifyError) => {
+    const { client, status, updateClient, conversations } = this.props;
+    const [conversation] = conversations;
+    const { result: rawClient } = status.client;
+    const { id } = client;
+    const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
+    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.stage']))
+      .set('attributes.stage', contactStatus)
+      .value();
+
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: 'accept-lead',
+      value: '',
+    });
+    return updateClient({ id }, newClient)
+      .then(() => {
+        showModal((
+          <AcceptAndContactFamilyContainer
+            client={client}
+            onCancel={hideModal}
+            refetchConversations={status.conversations.refetch}
+            conversation={conversation}
+          />), null, 'noPadding', false);
+        status.client.refetch();
+      })
+      .catch((r) => {
+        // TODO: Need to set a proper way to handle server side errors
+        const { body } = r;
+        const errorMessage = body.errors.map(e => e.title).join('. ');
+        console.error(errorMessage);
+        notifyError('Failed to update stage. Please try again.');
+      });
+  };
+
   getHasConversationFinished = () => {
     const { status } = this.props;
     const { hasFinished: userHasFinished } = status.user;
     const { hasFinished: conversationsHasFinished } = status.conversations;
+    const { hasFinished: clientHasFinished } = status.client;
 
-    return userHasFinished && conversationsHasFinished;
+    return userHasFinished && conversationsHasFinished && clientHasFinished;
   };
 
   goToFamilyDetails = () => {
@@ -186,10 +234,19 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     history.push(path);
   };
 
-  refetchConversations = () => {
-    const { status } = this.props;
-    status.conversations.refetch();
+  setSelectedConversation = (conversation) => {
+    this.setState({ selectedConversation: conversation });
   };
+
+  static getDerivedStateFromProps(props, state) {
+    const { conversations } = props;
+    const selectedConversation = state.selectedConversation || props.selectedConversation;
+    return {
+      ...state,
+      selectedConversation,
+      conversationsList: conversations,
+    };
+  }
 
   render() {
     const {
@@ -202,9 +259,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       status,
       notes,
       user,
-      conversations,
       breakpoint,
     } = this.props;
+
+    const { selectedConversation, conversationsList } = this.state;
 
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && client && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
@@ -219,18 +277,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { hasFinished: clientHasFinished } = status.client;
     const { hasFinished: noteHasFinished } = status.notes;
     const hasConversationFinished = this.getHasConversationFinished();
-    let conversation = null;
-    if (hasConversationFinished && conversations) {
-      [conversation] = conversations;
-      // TODO: Alert when there are multiple conversation between user and entity.
-      // conversations.forEach((conv) => {
-      //   conv.conversationParticipants.forEach((participant) => {
-      //     if (participant.participantID === user.id && participant.participantType === CONVERSATION_PARTICIPANT_TYPE_USER) {
-      //       conversation = conv;
-      //     }
-      //   });
-      // });
-    }
 
     return (
       <NotificationController>
@@ -256,10 +302,13 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 clientIsLoading={!clientHasFinished}
                 goToFamilyDetails={this.goToFamilyDetails}
                 goToMessagesTab={this.goToMessagesTab}
-                refetchConversations={this.refetchConversations}
+                refetchConversations={status.conversations.refetch}
                 user={user}
-                conversation={conversation}
-                hasConversationFinished={hasConversationFinished}
+                conversation={selectedConversation}
+                conversations={conversationsList}
+                setSelectedConversation={this.setSelectedConversation}
+                hasConversationFinished={hasConversationFinished && conversationsList !== null}
+                onAcceptClick={() => this.handleAcceptClick(show, hide, notifyError)}
               />
             )}
           </ModalController>

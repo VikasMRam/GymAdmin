@@ -11,6 +11,9 @@ const community = {
     state: 'CA',
     zip: '94115',
   },
+  propInfo: {
+    typeCare: ['Assisted Living'],
+  },
   rgsAux: {
     rgsInfo: {
       contract_info: {

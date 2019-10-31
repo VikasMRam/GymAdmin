@@ -36,6 +36,10 @@ const withExitIntent = (InnerComponent) => {
     componentDidMount() {
       if (isServer) return;
 
+      if (localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN) {
+        return;
+      }
+
       this.addBlurFocusListeners();
       this.addPopstateListener();
       this.addMouseoutListener();

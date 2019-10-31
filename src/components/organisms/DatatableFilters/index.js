@@ -24,7 +24,6 @@ const Wrapper = styled(mobileOnly(Box,
 
 const Table = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: table;
     width: ${size('layout.col7')};
     border-collapse: separate;
     border-spacing: ${size('spacing.regular')};

@@ -16,6 +16,8 @@ import ModalController from 'sly/controllers/ModalController';
 import NotificationController from 'sly/controllers/NotificationController';
 
 const getPaginationData = ({ result, meta }) => {
+  if (!result) return {};
+
   const count = result.length;
   const current = meta['page-number'];
   const size = meta['page-size'];
@@ -44,10 +46,10 @@ const getPaginationData = ({ result, meta }) => {
     completedCount,
   });
 };
-
+/*
 const getPageParams = ({ match, location }) => {
   const searchParams = getSearchParams(match, location);
-  const type = searchParams.type || 'DueToday';
+  const type = match.params.taskType
   const taskName = searchParams.title;
   let date;
   let status = `in:${TASK_STATUS_NOT_STARTED_CODE},${TASK_STATUS_IN_PROGRESS_CODE}`;
@@ -70,26 +72,17 @@ const getPageParams = ({ match, location }) => {
     pageNumber: searchParams['page-number'],
   };
 };
-
+*/
 @withRouter
 
 @withUser
 
 @prefetch('tasks', 'getTasks', (req, { datatable, client }) => {
-  // const { pageNumber, date, status, taskName } = getPageParams({ match, location });
-  // const filters = {
-  //   'filter[status]': status,
-  //   'page-number': pageNumber,
-  //   'filter[title]': taskName,
-  // };
-  // if (date) {
-  //   filters['filter[dueDate]'] = date;
-  // }
-  const filters  = {};
   if (client) {
+    const qs = datatable.query;
     const { id } = client;
-    filters['filter[client]'] = id;
-    return req(filters);
+    qs['filter[client]'] = id;
+    return req(qs);
   }
   return req(datatable.query);
 })
@@ -100,6 +93,7 @@ export default class DashboardAgentTasksSectionContainer extends Component {
     client: clientPropType,
     status: object,
     history: object,
+    datatable: object,
     match: object,
     location: object,
   };
@@ -109,53 +103,16 @@ export default class DashboardAgentTasksSectionContainer extends Component {
     status.tasks.refetch();
   };
 
-  // todo: temp implementation till datatables for tasks is ready
-  handleSearchTextKeyUp = (event) => {
-    const { value } = event.target;
-    const { match, location, history, client } = this.props;
-    const {
-      pageNumber, date, status, type,
-    } = getPageParams({ match, location });
-    const filters = {
-      title: value,
-      'filter[status]': status,
-      pageNumber,
-      type,
-    };
-    if (date) {
-      filters['filter[dueDate]'] = date;
-    }
-    if (client) {
-      const { id } = client;
-      filters['filter[client]'] = id;
-    }
-
-    this.sendQuery(history, qs.stringify(filters));
-  };
-
-  sendQuery = debounce((history, filtersQs) => {
-    history.push({ search: `?${filtersQs}` });
-  }, 500);
-
   render() {
-    const { tasks, status, match, location, ...props } = this.props;
+    const { tasks, status, match, location, datatable, ...props } = this.props;
 
-    const params = getPageParams({ match, location });
-    const { type, taskName } = params;
-    const { tasks: tasksStatus } = status;
-    const { hasFinished, error: tasksError, meta, result: tasksRaw } = tasksStatus;
+    // const params = getPageParams({ match, location });
+    // const { taskType, taskName } = params;
+    const { error, meta, hasFinished, result: tasksRaw } = status.tasks;
 
-    if (tasksError) {
-      return <RefreshRedirect to="/" />;
+    if (error) {
+      throw new Error(JSON.stringify(error));
     }
-    if (!hasFinished) {
-      return (
-        <DashboardAgentTasksSection
-          isPageLoading={!hasFinished}
-        />
-      );
-    }
-    const pagination = getPaginationData(tasksStatus);
 
     return (
       <NotificationController>
@@ -164,19 +121,19 @@ export default class DashboardAgentTasksSectionContainer extends Component {
             {({ show, hide }) => (
               <DashboardAgentTasksSection
                 {...props}
-                isPageLoading={!hasFinished}
+                isPageLoading={!hasFinished || !datatable.hasFinished}
+                datatable={datatable}
                 tasks={tasks}
                 tasksRaw={tasksRaw}
-                pagination={pagination}
-                activeTab={type}
-                onSearchTextKeyUp={this.handleSearchTextKeyUp}
+                pagination={getPaginationData(status.tasks)}
+                activeTab={match.params.taskType}
+                // onSearchTextKeyUp={this.handleSearchTextKeyUp}
                 showModal={show}
                 hideModal={hide}
-                meta={meta}
+                meta={meta || {}}
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
                 refetchTasks={this.refetchTasks}
-                searchTextBoxValue={taskName}
               />
             )}
           </ModalController>

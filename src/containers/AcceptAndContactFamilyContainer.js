@@ -1,131 +1,130 @@
 import React, { Component } from 'react';
-import { object, func } from 'prop-types';
-import immutable from 'object-path-immutable';
-import pick from 'lodash/pick';
+import { func } from 'prop-types';
+import { Redirect, generatePath } from 'react-router-dom';
+import { reduxForm } from 'redux-form';
 
 import { domain } from 'sly/config';
-import { query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import userPropType from 'sly/propTypes/user';
+import {
+  AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
+  FAMILY_DETAILS,
+  MESSAGES,
+} from 'sly/constants/dashboardAppPaths';
+import { withUser } from 'sly/services/newApi';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
-import { withPreventDefault } from 'sly/services/helpers/forms';
-import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
 import AcceptAndContactFamilyForm from 'sly/components/organisms/AcceptAndContactFamilyForm';
 import AcceptFamilyContactDetails from 'sly/components/organisms/AcceptFamilyContactDetails';
 
-@query('updateClient', 'updateClient')
+const AcceptAndContactFamilyFormRedux = reduxForm({
+  form: 'AcceptAndContactFamilyForm',
+})(AcceptAndContactFamilyForm);
 
-class AcceptAndContactFamilyContainer extends Component {
+@withUser
+
+export default class AcceptAndContactFamilyContainer extends Component {
   static propTypes = {
     onCancel: func,
     client: clientPropType,
-    rawClient: object,
-    notifyError: func.isRequired,
-    updateClient: func,
-    refetchClient: func,
-    goToFamilyDetails: func,
-    goToMessagesTab: func,
     refetchConversations: func,
     conversation: conversationPropType,
-    user: userPropType,
+    user: userPropType.isRequired,
   };
 
-  state = { contactType: null };
-
-  handleUpdateStage = () => {
-    const {
-      updateClient, client, rawClient, refetchClient,
-    } = this.props;
-    const { id } = client;
-    const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
-    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.stage']))
-      .set('attributes.stage', contactStatus)
-      .value();
-
-    return updateClient({ id }, newClient)
-      .then(() => refetchClient())
-      .catch((r) => {
-        this.handleError(r, 'Failed to update stage. Please try again.');
-      });
+  state = {
+    contactType: null,
+    redirectToFamilyDetails: false,
+    redirectToMessages: false,
   };
 
-  handleAcceptFamilySubmit = () => {
-    const { onCancel, goToFamilyDetails } = this.props;
-    withPreventDefault(onCancel);
-    goToFamilyDetails();
+  handleComplete = () => {
+    const { onCancel } = this.props;
+
+    onCancel();
+    return this.setState({
+      redirectToFamilyDetails: true,
+    });
   };
 
-  handleError = (r, message) => {
-    const { notifyError } = this.props;
-    // TODO: Need to set a proper way to handle server side errors
-    const { body } = r;
-    const errorMessage = body.errors.map(e => e.title).join('. ');
-    console.error(errorMessage);
-    notifyError(message);
-  }
 
-  handleCallOrEmailClick = (contactType, next) => {
-    return this.handleUpdateStage(contactType)
-      .then(() => {
-        this.setState({
-          contactType,
-        });
-      })
-      .then(next);
-  }
+  handleStepChange = ({ data }) => {
+    const { contactType } = data;
+    if (contactType === 'message') {
+      const { onCancel, refetchConversations } = this.props;
 
-  handleMessageClick = (contactType) => {
-    const { onCancel, refetchConversations, goToMessagesTab } = this.props;
-    this.handleUpdateStage(contactType)
-      .then(() => refetchConversations())
-      .then(() => onCancel())
-      .then(() => goToMessagesTab());
-  }
+      return refetchConversations()
+        .then(onCancel)
+        .then(() =>
+          this.setState({
+            redirectToMessages: true,
+          }));
+    }
+
+    return this.setState({
+      contactType,
+    });
+  };
 
   render() {
-    const { onCancel, client, conversation, user } = this.props;
-    const { clientInfo } = client;
+    const { onCancel, client } = this.props;
+    // Reenable after messages
+    // const { conversation, user } = this.props;
+    const { contactType, redirectToFamilyDetails, redirectToMessages } = this.state;
+    const { id, clientInfo } = client;
     const { phoneNumber } = clientInfo;
-    let { email } = clientInfo;
-    const { contactType } = this.state;
-    const { id: userId } = user;
-    if (conversation) {
-      const userParticipant = conversation.conversationParticipants.find(participant => participant.participantID === userId);
-      const { participantID } = userParticipant;
-      email = `messaging+${participantID}@conversation.${domain}`;
+    const { email } = clientInfo;
+    // const { id: userId } = user;
+
+    if (redirectToFamilyDetails) {
+      return <Redirect to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS })} />;
     }
-    const detail = {
-      type: contactType,
-      value: contactType === 'phone' ? phoneNumber : email,
-    };
+    if (redirectToMessages) {
+      return <Redirect to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: MESSAGES })} />;
+    }
+
     if (phoneNumber) {
       return (
         <AcceptFamilyContactDetails
-          handleSubmit={() => this.handleCallOrEmailClick('phone')}
+          handleSubmit={this.handleComplete}
           label="Phone number"
           detail={{ type: 'phone', value: phoneNumber }}
         />
       );
     }
+    /* REENABLE AFTER MESSAGES DONE
+    if (conversation && conversation.conversationParticipants && Array.isArray(conversation.conversationParticipants)) {
+      const userParticipant = conversation.conversationParticipants
+        .find(participant => participant && participant.participantID === userId);
+      if (userParticipant && userParticipant.participantID) {
+        const { participantID } = userParticipant;
+        email = `messaging+${participantID}@conversation.${domain}`;
+      }
+    }
+    */
+    const detail = {
+      type: contactType,
+      value: contactType === 'phone' ? phoneNumber : email,
+    };
 
     return (
-      <WizardController>
-        {({
-          data, next, previous, ...props
-        }) => (
+      <WizardController
+        onStepChange={this.handleStepChange}
+        onComplete={this.handleComplete}
+        formName="AcceptAndContactFamilyForm"
+      >
+        {props => (
           <WizardSteps {...props}>
             <WizardStep
               name="Contact"
-              component={AcceptAndContactFamilyForm}
+              component={AcceptAndContactFamilyFormRedux}
               onCancelClick={onCancel}
-              onEmailClick={() => this.handleCallOrEmailClick('email', next)}
-              onMessageClick={this.handleMessageClick}
+              contactTypes={['email']}
             />
             <WizardStep
               name="Details"
               component={AcceptFamilyContactDetails}
-              handleSubmit={this.handleAcceptFamilySubmit}
+              handleSubmit={this.handleComplete}
               label={contactType === 'phone' ? 'Phone number' : 'Email'}
               detail={detail}
             />
@@ -135,5 +134,3 @@ class AcceptAndContactFamilyContainer extends Component {
     );
   }
 }
-
-export default AcceptAndContactFamilyContainer;

@@ -1,26 +1,52 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { func, string } from 'prop-types';
 import styled from 'styled-components';
 import { reduxForm, Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
+import { Label } from 'sly/components/atoms';
 import IconButton from 'sly/components/molecules/IconButton';
 import ReduxField from 'sly/components/organisms/ReduxField';
+import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 const Form = styled.form`
   display: flex;
-  align-items: center;
-`;
+  flex-direction: column;
 
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    flex-direction: row;
+    align-items: center;
+  }
+`;
+const LocationSearchBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-right: ${size('spacing.regular')};
+    flex-grow: 2;
+  }
+`;
 const CommunityTextBox = styled(Field)`
-  margin-right: ${size('spacing.regular')};
-  flex-grow: 2;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-right: ${size('spacing.regular')};
+    flex-grow: 2;
+  }
 `;
 
-const CommunityAgentSearchForm = ({ label, handleSubmit }) => {
+const CommunityAgentSearchForm = ({ label, handleLocationChange, handleSubmit }) => {
   return (
-    <Form onSubmit={handleSubmit} name="CommunitySearchForm" >
-      <CommunityTextBox name="nameOrZip" label={label} type="text" placeholder="Search by zip code or community name" component={ReduxField} />
+    <Form onSubmit={handleSubmit} name="CommunityAgentSearchForm" >
+      <LocationSearchBox>
+        <Label>Search By City, State</Label>
+        <SearchBoxContainer
+          allowOnlySelectionFromSuggestions
+          clearLocationOnBlur={false}
+          onLocationSearch={handleLocationChange}
+        />
+      </LocationSearchBox>
+      <CommunityTextBox name="name" label={label} type="text" placeholder="Search by name" component={ReduxField} />
       <IconButton type="submit" icon="search" />
     </Form>
   );
@@ -29,6 +55,7 @@ const CommunityAgentSearchForm = ({ label, handleSubmit }) => {
 CommunityAgentSearchForm.propTypes = {
   label: string,
   handleSubmit: func.isRequired,
+  handleLocationChange: func.isRequired,
 };
 
 const ReduxForm = reduxForm({
@@ -39,7 +66,26 @@ const ReduxForm = reduxForm({
   keepDirtyOnReinitialize: true,
 })(CommunityAgentSearchForm);
 
-const DashboardCommunityAgentSearchBox = ({ label, handleSubmit }) => <ReduxForm label={label} onSubmit={handleSubmit} />;
+class DashboardCommunityAgentSearchBox extends Component {
+  handleLocationChange = (value) => {
+    const { handleSubmit } = this.props;
+    if (handleSubmit && value.geometry && value.geometry.location) {
+      const geo = [value.geometry.location.lat(), value.geometry.location.lng(), 10].join(',');
+      handleSubmit({ geo });
+    }
+  };
+
+  render() {
+    const { label, handleSubmit } = this.props;
+    return (
+      <ReduxForm
+        label={label}
+        onSubmit={handleSubmit}
+        handleLocationChange={this.handleLocationChange}
+      />
+    );
+  }
+}
 
 DashboardCommunityAgentSearchBox.propTypes = {
   label: string,

@@ -9,7 +9,6 @@ import { Heading, Button } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 
-
 const StyledButton = fullWidth(styled(Button)`
   margin-bottom: ${size('spacing.regular')};
 `);
@@ -20,19 +19,11 @@ const StyledHeading = styled(Heading)`
 `;
 
 const CommunityAskQuestionForm = ({
-  handleSubmit, submitting, communityName, user, error, type,
+  handleSubmit, submitting, communityName, user, error,
 }) => {
-  let title = <StyledHeading level="subtitle" size="subtitle">Ask our experts about {communityName}</StyledHeading>;
-
-  if (type === 'exitForm') {
-    title = (<>
-      <StyledHeading level="title" size="subtitle">Wait! Get support from a local senior living expert. This is a free service.</StyledHeading>
-    </>);
-  }
-
   return (
     <form onSubmit={handleSubmit}>
-      {title}
+      <StyledHeading level="subtitle" size="subtitle">Ask our experts about {communityName}</StyledHeading>
       <Field
         name="question"
         label=""
@@ -57,10 +48,9 @@ const CommunityAskQuestionForm = ({
 
       {error && <strong>{error}</strong>}
       <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-        Submit Question
+        Get Free Support
       </StyledButton>
-
-      {<TosAndPrivacy />}
+      <TosAndPrivacy />
     </form>
 
   );
@@ -72,7 +62,6 @@ CommunityAskQuestionForm.propTypes = {
   submitting: bool,
   user: object,
   error: string,
-  type: string,
 };
 
 export default CommunityAskQuestionForm;

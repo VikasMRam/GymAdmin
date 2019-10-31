@@ -9,6 +9,7 @@ import CommunityAskQuestionForm from 'sly/components/organisms/CommunityAskQuest
 import Thankyou from 'sly/components/molecules/Thankyou';
 import { prefetch, query } from 'sly/services/newApi';
 import { PROFILE_ASK_QUESTION } from 'sly/services/newApi/constants';
+import withUser from 'sly/services/newApi/withUser';
 
 const validate = createValidator({
   question: [required],
@@ -26,6 +27,7 @@ const mapDispatchToProps = (dispatch, { api }) => ({
 });
 
 @withRouter
+@withUser
 
 @prefetch('community', 'getCommunity', (req, { communitySlug }) => req({
   id: communitySlug,
@@ -44,7 +46,7 @@ export default class CommunityAskQuestionFormContainer extends Component {
     createQuestion: func,
     initialValues: object,
     parentSlug: string,
-    showModal: func,
+    showModal: func.isRequired,
     createAction: func,
     type: string,
   };

@@ -29,10 +29,14 @@ const tocPaths = (toc) => {
           label: 'Independent Living',
         };
       case 'Memory Care':
-      case 'Alzheimers Care':
         return {
           path: '/memory-care',
           label: 'Memory Care',
+        };
+      case 'Board And Care Home':
+        return {
+          path: '/board-and-care-home',
+          label: 'Board and Care Home',
         };
       default:
         return {

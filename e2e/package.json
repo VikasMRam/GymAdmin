@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^3.4.1",
+    "cypress": "~3.4.1",
+    "cypress-multi-reporters": "^1.2.3",
+    "mocha": "^6.2.2",
+    "mocha-junit-reporters": "^1.23.6",
     "wait-on": "^3.3.0"
   }
 }

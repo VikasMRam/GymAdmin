@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { string, bool, func } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
-import { Heading, Badge, Block, Span, Box } from 'sly/components/atoms';
+import { Heading, Badge, Block, Span, Box, Button } from 'sly/components/atoms';
 import cursor from 'sly/components/helpers/cursor';
 import IconBadge from 'sly/components/molecules/IconBadge';
 import Stage from 'sly/components/molecules/Stage';
@@ -71,6 +71,19 @@ const BigScreenSlyScorebadge = styled.div`
     margin-right: ${size('spacing.large')};
   }
 `;
+const FloatingSection = styled.div`
+  padding: ${size('spacing.large')};
+  padding-top: 0;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-left: auto;
+    padding: ${size('spacing.xLarge')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding-top: ${size('spacing.large')};
+  }
+`;
 
 const BottomActionBlock = cursor(styled(Block)`
   text-align: center;
@@ -92,9 +105,10 @@ function transformAgent(agent) {
   let slyScoreValue = null;
   let name = null;
   let leadCount = null;
+  let an = null;
   const { name: businessName, info, contacts } = agent;
   if (info) {
-    const { slyScore, displayName, last5DayLeadCount } = info;
+    const { slyScore, displayName, last5DayLeadCount, adminNotes } = info;
     if (slyScore) {
       slyScoreValue = slyScore;
     }
@@ -103,6 +117,9 @@ function transformAgent(agent) {
     }
     if (last5DayLeadCount !== undefined && last5DayLeadCount !== null) {
       leadCount = last5DayLeadCount;
+    }
+    if (adminNotes) {
+      an = adminNotes;
     }
   }
   if (contacts && contacts.length > 0) {
@@ -117,15 +134,16 @@ function transformAgent(agent) {
     workPhone,
     cellPhone,
     leadCount,
+    adminNotes: an,
   };
   return agentProps;
 }
 
 const DashboardAdminReferralAgentTile = ({
-  className, onClick, agent, isRecommended, bottomActionText, bottomActionOnClick, stage, referralSentAt,
+  className, onClick, agent, isRecommended, bottomActionText, bottomActionOnClick, stage, referralSentAt, actionText, actionClick,
 }) => {
   const {
-    name, slyScore, businessName, workPhone, cellPhone, leadCount,
+    name, slyScore, businessName, workPhone, cellPhone, leadCount, adminNotes,
   } = transformAgent(agent);
   const slyScoreText = `${slyScore} SLYSCORE`;
   return (
@@ -170,7 +188,18 @@ const DashboardAdminReferralAgentTile = ({
               <Span size="caption">{leadCount}</Span>
             </>
           )}
+          {(adminNotes !== undefined && adminNotes !== null) && (
+            <>
+              <Span size="caption" palette="grey" variation="dark">Admin Notes</Span>
+              <Span size="caption">{adminNotes}</Span>
+            </>
+          )}
         </DetailsTable>
+        {actionText && actionClick && (
+          <FloatingSection>
+            <Button palette="primary" size="caption" ghost onClick={actionClick}>{actionText}</Button>
+          </FloatingSection>
+        )}
         {referralSentAt && <ReferralSentAtWrapper><Span palette="grey" variation="dark" size="tiny">Sent on {getReferralSentTimeText(referralSentAt)}</Span></ReferralSentAtWrapper>}
       </TopWrapper>
       {bottomActionText && bottomActionOnClick && (
@@ -192,6 +221,8 @@ DashboardAdminReferralAgentTile.propTypes = {
   onClick: func,
   agent: adminAgentPropType.isRequired,
   isRecommended: bool,
+  actionText: string,
+  actionClick: func,
   bottomActionText: string,
   bottomActionOnClick: func,
   stage: string,

@@ -19,11 +19,14 @@ const actionButtons = [
     onClick: action('onAskQuestionClick'),
   },
 ];
+const RhodaGoldmanPlazaPlus = { ...RhodaGoldmanPlaza, plusCategory: 'Plus' };
 
 storiesOf('Organisms|CommunityTile', module)
   .add('default', () => <div style={{ maxWidth: '380px' }} ><CommunityTile community={RhodaGoldmanPlaza} {...defaultProps} /></div>)
+  .add('default and plusCategory community', () => <div style={{ maxWidth: '380px' }} ><CommunityTile community={RhodaGoldmanPlazaPlus} {...defaultProps} /></div>)
   .add('with noGallery', () => <div style={{ maxWidth: '380px' }} ><CommunityTile community={RhodaGoldmanPlaza} noGallery {...defaultProps} /></div>)
   .add('with column layout', () => <CommunityTile layout="column" community={RhodaGoldmanPlaza} noGallery {...defaultProps} />)
+  .add('with column layout and plusCategory community', () => <CommunityTile layout="column" community={RhodaGoldmanPlazaPlus} noGallery {...defaultProps} />)
   .add('with column layout and showDescription', () => <CommunityTile layout="column" community={RhodaGoldmanPlaza} noGallery showDescription {...defaultProps} />)
   .add('with actionButtons', () => <div style={{ maxWidth: '380px' }} ><CommunityTile canFavourite community={RhodaGoldmanPlaza} actionButtons={actionButtons} {...defaultProps} /></div>)
   .add('with actionButtons and note', () => <div style={{ maxWidth: '380px' }} ><CommunityTile canFavourite note={note} community={RhodaGoldmanPlaza} actionButtons={actionButtons} {...defaultProps} /></div>)

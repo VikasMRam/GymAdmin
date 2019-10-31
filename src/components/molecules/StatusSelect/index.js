@@ -31,6 +31,11 @@ const options = [
   { label: 'Deleted',   icon: 'trash-fill', palette: 'grey',   value: FAMILY_STATUS_DELETED, role: PLATFORM_ADMIN_ROLE },
 ];
 
+const reasonKeys = {
+  'Long Term': 'longTermReason',
+  'On Pause': 'onHoldReason',
+};
+
 const StyledField = styled(Field)`
   text-transform: uppercase;
   & .react-select__single-value, & .react-select__option {
@@ -132,7 +137,9 @@ export default class StatusSelect extends Component {
     return updateClient({ id: rawClient.id }, produce(rawClient, (draft) => {
       draft.attributes.status = clientStatus;
       if (reason) {
-        draft.attributes.clientInfo.onHoldReason = reason;
+        draft.attributes.clientInfo[reasonKeys[clientStatus]] = reason;
+      }
+      if (date) {
         draft.attributes.clientInfo.resumeDate = date;
       }
     }));
