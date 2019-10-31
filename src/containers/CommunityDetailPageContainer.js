@@ -25,16 +25,10 @@ import { Experiment, Variant } from 'sly/services/experiments';
 import styled from 'styled-components';
 import { Heading } from 'sly/components/atoms';
 import { size } from 'sly/components/themes';
-import TrackedSimilarCommunitiesContainer from "sly/containers/TrackedSimilarCommunitiesContainer";
+import TrackedSimilarCommunitiesContainer from 'sly/containers/TrackedSimilarCommunitiesContainer';
+import { HydrationData } from 'sly/partialHydration';
 
-const ignoreSearchParams = [
-  'modal',
-  'action',
-  'entityId',
-  'currentStep',
-  'token',
-  'modal',
-];
+const ignoreSearchParams = ['modal', 'action', 'entityId', 'currentStep', 'token', 'modal'];
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
@@ -43,10 +37,7 @@ const StyledHeading = styled(Heading)`
 const createHasProfileAction = uuidActions => (type, actionInfo) => {
   if (!uuidActions) return false;
   return uuidActions.some((uuidAction) => {
-    return (
-      uuidAction.actionType === type &&
-      isMatch(uuidAction.actionInfo, actionInfo)
-    );
+    return uuidAction.actionType === type && isMatch(uuidAction.actionInfo, actionInfo);
   });
 };
 
@@ -109,10 +100,7 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       this.uuidActionPageView(nextProps);
     } else {
       const prev = omit(parseSearch(location.search), ignoreSearchParams);
-      const next = omit(
-        parseSearch(nextProps.location.search),
-        ignoreSearchParams
-      );
+      const next = omit(parseSearch(nextProps.location.search), ignoreSearchParams);
       if (!isEqual(prev, next)) {
         this.uuidActionPageView(nextProps);
       }
@@ -154,9 +142,7 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
           />
         </Variant>
         <Variant name="SimilarCommunities">
-          <StyledHeading>
-            We found some Assisted Living communities you might like
-          </StyledHeading>
+          <StyledHeading>We found some Assisted Living communities you might like</StyledHeading>
 
           <TrackedSimilarCommunitiesContainer
             communities={community.similarProperties}
@@ -170,14 +156,7 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
   };
 
   render() {
-    const {
-      status,
-      user,
-      uuidActions,
-      community,
-      history,
-      userAction,
-    } = this.props;
+    const { status, user, uuidActions, community, history, userAction } = this.props;
 
     const { location } = history;
     const { pathname } = location;
@@ -220,15 +199,18 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     return (
       <ModalController>
         {({ show, hide }) => (
-          <CommunityDetailPage
-            user={user}
-            community={community}
-            location={location}
-            profileContacted={profileContacted}
-            userAction={userAction}
-            history={history}
-            exitIntentContent={this.getExitintent(show, hide)}
-          />
+          <>
+            <CommunityDetailPage
+              user={user}
+              community={community}
+              location={location}
+              profileContacted={profileContacted}
+              userAction={userAction}
+              history={history}
+              exitIntentContent={this.getExitintent(show, hide)}
+            />
+            <HydrationData />
+          </>
         )}
       </ModalController>
     );

@@ -34,6 +34,14 @@ import ApiProvider, { makeApiCall } from 'sly/services/newApi/ApiProvider';
 
 const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
 const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
+const statsCommunityDetailsWeb = path.resolve(
+  process.cwd(),
+  'dist/loadable-stats-community-detail-web.json'
+);
+const statsCommunityDetailsNode = path.resolve(
+  process.cwd(),
+  'dist/loadable-stats-community-detail-node.json'
+);
 
 const clientConfigs = [
   {
@@ -278,15 +286,34 @@ app.use(async (req, res, next) => {
   next();
 });
 
+// create chunk extractors for community details route
+const careTypes = [
+  'retirement-community',
+  'assisted-living',
+  'independent-living',
+  'board-and-care-home',
+  'memory-care',
+  'continuing-care-retirement-community',
+];
+app.use(`/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`, (req, res, next) => {
+  req.nodeChunkExtractor = new ChunkExtractor({
+    statsFile: statsCommunityDetailsNode,
+  });
+  req.webChunkExtractor = new ChunkExtractor({
+    statsFile: statsCommunityDetailsWeb,
+  });
+  next();
+});
+
 // render
 app.use(async (req, res, next) => {
   const { store, api } = req.clientConfig;
 
   try {
-    const extractorNode = new ChunkExtractor({ statsFile: statsNode });
+    const extractorNode = req.nodeChunkExtractor || new ChunkExtractor({ statsFile: statsNode });
     const { default: ClientApp } = extractorNode.requireEntrypoint();
 
-    const extractorWeb = new ChunkExtractor({ statsFile: statsWeb });
+    const extractorWeb = req.webChunkExtractor || new ChunkExtractor({ statsFile: statsWeb });
 
     const sheet = new ServerStyleSheet();
     const context = {};

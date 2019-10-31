@@ -16,6 +16,7 @@ import {
   buildEstimatedPriceList,
 } from 'sly/services/helpers/pricing';
 import pad from 'sly/components/helpers/pad';
+import {withHydration} from 'sly/partialHydration';
 import { Button, Paragraph, Block } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';
@@ -39,7 +40,7 @@ import CommunityPricingComparison from 'sly/components/organisms/CommunityPricin
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
-import CommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
+import UnhydratedCommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
@@ -65,6 +66,8 @@ import CommunityAddReviewButtonContainer from "sly/containers/CommunityAddReview
 import CommunityMorePicturesContainer from "sly/containers/CommunityMorePicturesContainer";
 import BackToSearchButtonContainer from "sly/containers/BackToSearchButtonContainer";
 import TrackedSimilarCommunitiesContainer from "sly/containers/TrackedSimilarCommunitiesContainer";
+
+const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGalleryContainer);
 
 const BackToSearch = styled.div`
   text-align: center;

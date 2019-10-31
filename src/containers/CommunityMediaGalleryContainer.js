@@ -5,6 +5,7 @@ import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGaller
 import SlyEvent from 'sly/services/helpers/events';
 
 export default class CommunityMediaGalleryContainer extends React.Component {
+  static typeHydrationId = 'CommunityMediaGalleryContainer';
   static propTypes = {
     community: PropTypes.object.isRequired,
   };

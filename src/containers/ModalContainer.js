@@ -35,5 +35,6 @@ ModalContainer.propTypes = {
   location: object,
   match: object,
 };
+ModalContainer.typeHydrationId = 'ModalContainer';
 
 export default withRouter(ModalContainer);
