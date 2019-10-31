@@ -17,6 +17,7 @@ export default function BackToSearchButtonContainer({ community, ...props }) {
     />
   );
 }
+BackToSearchButtonContainer.typeHydrationId = 'BackToSearchButtonContainer';
 BackToSearchButtonContainer.propTypes = {
   community: object.isRequired,
 };

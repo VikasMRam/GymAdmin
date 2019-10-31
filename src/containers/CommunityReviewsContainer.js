@@ -4,6 +4,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import { community as communityPropType } from 'sly/propTypes/community';
 
 export default class CommunityReviewsContainer extends Component {
+  static typeHydrationId = 'CommunityReviewsContainer';
   static propTypes = {
     community: communityPropType,
   };

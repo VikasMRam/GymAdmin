@@ -47,6 +47,7 @@ const iconMap = {
 };
 
 class CommunityMap extends Component {
+  static typeHydrationId = 'CommunityMap';
   static propTypes = {
     community: shape({
       id: string.isRequired,

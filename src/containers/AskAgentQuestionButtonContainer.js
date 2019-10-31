@@ -15,6 +15,7 @@ export default function AskAgentQuestionButtonContainer({
     </WiredAskAgentQuestionContainer>
   );
 }
+AskAgentQuestionButtonContainer.typeHydrationId = 'AskAgentQuestionButtonContainer';
 AskAgentQuestionButtonContainer.propTypes = {
   type: string,
   community: object

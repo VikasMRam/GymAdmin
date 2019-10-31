@@ -1,7 +1,6 @@
 import React from 'react';
-import { bool, func, object } from 'prop-types';
-import SlyEvent from 'sly/services/helpers/events';
-import AskAgentQuestionContainer from 'sly/containers/AskAgentQuestionContainer';
+import { bool, object } from 'prop-types';
+
 import GetCustomPricingContainer from 'sly/containers/GetCustomPricingContainer';
 import Button from 'sly/components/atoms/Button';
 
@@ -19,7 +18,8 @@ export default function GetCustomPricingButtonContainer({
     </GetCustomPricingContainer>
   );
 }
-GetCustomPricingContainer.propTypes = {
+GetCustomPricingButtonContainer.typeHydrationId = 'GetCustomPricingButtonContainer';
+GetCustomPricingButtonContainer.propTypes = {
   community: object.isRequired,
   hasAlreadyRequestedPricing: bool,
 };

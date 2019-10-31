@@ -6,6 +6,7 @@ import Button from 'sly/components/atoms/Button';
 
 @withModal
 export default class CommunityAddReviewButtonContainer extends Component {
+  static typeHydrationId = 'CommunityAddReviewButtonContainer';
   render() {
     const { showModal, ...otherProps } = this.props;
 

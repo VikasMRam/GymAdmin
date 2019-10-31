@@ -1,4 +1,5 @@
 import React from 'react';
+import { object } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import Concierge from 'sly/components/organisms/Concierge';
@@ -50,5 +51,9 @@ function ConciergeContainer({
     </ConciergeController>
   );
 }
+ConciergeContainer.typeHydrationId = 'ConciergeContainer';
+ConciergeContainer.propTypes = {
+  community: object.isRequired
+};
 
 export default withRouter(ConciergeContainer);

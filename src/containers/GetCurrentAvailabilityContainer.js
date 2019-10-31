@@ -70,7 +70,7 @@ function GetCurrentAvailabilityContainer({
     </GetCustomPricingContainer>
   );
 }
-
+GetCurrentAvailabilityContainer.typeHydrationId = 'GetCurrentAvailabilityContainer';
 GetCurrentAvailabilityContainer.propTypes = {
   community: communityPropType.isRequired,
   hasAlreadyRequestedPricing: bool,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { object, func } from 'prop-types';
+import { object } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
@@ -30,44 +30,59 @@ import {
   makeWrapper,
   makeGallery,
 } from 'sly/components/templates/CommunityDetailPageTemplate';
-import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
+import UnhydratedCommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
 import CollapsibleSection, {
   MainSection,
 } from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import CommunityPricingComparison from 'sly/components/organisms/CommunityPricingComparison';
-import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
-import CommunityMap from 'sly/components/organisms/CommunityMap';
+import UnhydratedCommunityMap from 'sly/components/organisms/CommunityMap';
 import UnhydratedCommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
-import ConciergeContainer from 'sly/containers/ConciergeContainer';
-import OfferNotification from 'sly/components/molecules/OfferNotification';
+import UnhydratedConciergeContainer from 'sly/containers/ConciergeContainer';
+import UnhydratedOfferNotification from 'sly/components/molecules/OfferNotification';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
 import IconItem from 'sly/components/molecules/IconItem';
-import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
-import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
+import UnhydratedGetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
+import UnhydratedHowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
-import AskAgentQuestionButtonContainer from 'sly/containers/AskAgentQuestionButtonContainer';
-import GetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
+import UnhydratedAskAgentQuestionButtonContainer from 'sly/containers/AskAgentQuestionButtonContainer';
+import UnhydratedGetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
 import PlusBranding from 'sly/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import withExitIntent from 'sly/services/exitIntent/withExitIntent';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
-import CommunitySummaryContainer from 'sly/containers/CommunitySummaryContainer';
-import CommunityAgentSectionContainer from 'sly/containers/CommunityAgentSectionContainer';
-import CommunityQuestionAnswersContainer from "sly/containers/CommunityQuestionAnswersContainer";
-import CommunityReviewsContainer from "sly/containers/CommunityReviewsContainer";
-import CommunityAddReviewButtonContainer from "sly/containers/CommunityAddReviewButtonContainer";
-import CommunityMorePicturesContainer from "sly/containers/CommunityMorePicturesContainer";
-import BackToSearchButtonContainer from "sly/containers/BackToSearchButtonContainer";
-import TrackedSimilarCommunitiesContainer from "sly/containers/TrackedSimilarCommunitiesContainer";
+import UnhydratedCommunitySummaryContainer from 'sly/containers/CommunitySummaryContainer';
+import UnhydratedCommunityAgentSectionContainer from 'sly/containers/CommunityAgentSectionContainer';
+import UnhydratedCommunityQuestionAnswersContainer from "sly/containers/CommunityQuestionAnswersContainer";
+import UnhydratedCommunityReviewsContainer from 'sly/containers/CommunityReviewsContainer';
+import UnhydratedCommunityAddReviewButtonContainer from 'sly/containers/CommunityAddReviewButtonContainer';
+import UnhydratedCommunityMorePicturesContainer from 'sly/containers/CommunityMorePicturesContainer';
+import UnhydratedBackToSearchButtonContainer from 'sly/containers/BackToSearchButtonContainer';
+import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/containers/TrackedSimilarCommunitiesContainer';
 
 const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGalleryContainer);
+const CommunitySummaryContainer = withHydration(UnhydratedCommunitySummaryContainer);
+const OfferNotification = withHydration(UnhydratedOfferNotification);
+const GetCustomPricingButtonContainer = withHydration(UnhydratedGetCustomPricingButtonContainer);
+const TrackedSimilarCommunitiesContainer = withHydration(UnhydratedTrackedSimilarCommunitiesContainer);
+const BackToSearchButtonContainer = withHydration(UnhydratedBackToSearchButtonContainer);
+const GetCurrentAvailabilityContainer = withHydration(UnhydratedGetCurrentAvailabilityContainer);
+const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContainer);
+const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
+const AskAgentQuestionButtonContainer = withHydration(UnhydratedAskAgentQuestionButtonContainer);
+const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContainer);
+const CommunityAddReviewButtonContainer = withHydration(UnhydratedCommunityAddReviewButtonContainer);
+const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuestionAnswersContainer);
+const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter);
+const ConciergeContainer = withHydration(UnhydratedConciergeContainer);
+const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
+const CommunityMap = withHydration(UnhydratedCommunityMap);
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -560,6 +575,7 @@ export default class CommunityDetailPage extends Component {
                     </EventsWrapper>
                   </MainSection>
                   <ButtonBlock>
+                    {/* todo: fix this */}
                     <StyledButton href={eventsLink} onClick={clickEventHandler('events', name)} target="_blank" ghost>Download Events Calendar</StyledButton>
                   </ButtonBlock>
                 </TopCollapsibleSection>
@@ -576,6 +592,7 @@ export default class CommunityDetailPage extends Component {
                     />
                   </MainSection>
                   <ButtonBlock>
+                    {/* todo: fix this */}
                     <StyledButton href={menuLink} onClick={clickEventHandler('menu', name)} target="_blank" ghost>Download Current Menu</StyledButton>
                   </ButtonBlock>
                 </TopCollapsibleSection>
@@ -642,6 +659,7 @@ export default class CommunityDetailPage extends Component {
           </Wrapper>
           <StyledSection>
             <Lazy ltIE9 component="div">
+              {/* todo: fix this */}
               <CommunityMap
                 community={community}
                 similarProperties={similarProperties}

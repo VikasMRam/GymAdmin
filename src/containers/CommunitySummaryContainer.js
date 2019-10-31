@@ -45,6 +45,7 @@ function isCommunityAlreadySaved(community, userSaves) {
 @withModal
 @withNotification
 export default class CommunitySummaryContainer extends Component {
+  static typeHydrationId = 'CommunitySummaryContainer';
   static propTypes = {
     community: object.isRequired,
     isAdmin: bool,

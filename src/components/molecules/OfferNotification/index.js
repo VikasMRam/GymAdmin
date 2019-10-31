@@ -85,7 +85,7 @@ const OfferNotification = ({
     </div>
   </Wrapper>
 );
-
+OfferNotification.typeHydrationId = 'OfferNotification';
 OfferNotification.propTypes = {
   palette: palettePropType,
   hasLearnMore: bool,

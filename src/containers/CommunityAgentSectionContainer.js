@@ -8,6 +8,7 @@ import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 
 @withModal
 export default class CommunityAgentSectionContainer extends Component {
+  static typeHydrationId = 'CommunityAgentSectionContainer'
   static propTypes = {
     agent: agentPropType.isRequired,
     showModal: func,

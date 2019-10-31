@@ -33,7 +33,7 @@ const CommunityStickyFooter = ({
     />
   </Wrapper>
 );
-
+CommunityStickyFooter.typeHydrationId = 'CommunityStickyFooter';
 CommunityStickyFooter.propTypes = {
   community: object.isRequired,
   isAlreadyPricingRequested: bool,

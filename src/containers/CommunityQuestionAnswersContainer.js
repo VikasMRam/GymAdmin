@@ -10,6 +10,7 @@ import withModal from "sly/controllers/withModal";
 
 @withModal
 export default class CommunityQuestionAnswersContainer extends Component {
+  static typeHydrationId = 'CommunityQuestionAnswersContainer';
   static propTypes = {
     community: communityPropType,
     showModal: func,
