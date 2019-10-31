@@ -1,0 +1,46 @@
+{
+  "id": "01c1e9c32b9b2cd2f6e1857403595fcf",
+  "conversationID": "d75311a1e39c4b4142318a6517c36861",
+  "createdAt": "2019-05-01T12:59:31Z",
+  "data": {
+    "type": "ButtonList",
+    "valueButtonList": {
+      "selectedButtons": [
+        "How can a senior living expert help me?"
+      ],
+      "buttons": [
+        {
+          "text": "What does Seniorly do?",
+          "action": {
+            "type": "AutomatedResponse",
+            "value": ""
+          }
+        },
+        {
+          "text": "How can a senior living expert help me?",
+          "action": {
+            "type": "AutomatedResponse",
+            "value": ""
+          }
+        },
+        {
+          "text": "I don't need help from a senior living expert",
+          "action": {
+            "type": "OpenLink",
+            "value": "http://www.google.com"
+          }
+        },
+        {
+          "text": "Open in app link",
+          "action": {
+            "type": "OpenLink",
+            "value": "/dashboard"
+          }
+        }
+      ]
+    }
+  },
+  "medium": "InApp",
+  "conversationParticipantID": "f6ffe132e1731b35039e42c61dfacf95",
+  "updatedAt": "2019-04-01T12:59:31Z"
+}

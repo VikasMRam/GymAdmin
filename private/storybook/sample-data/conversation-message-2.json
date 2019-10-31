@@ -4,7 +4,7 @@
   "createdAt": "2019-04-01T12:59:31Z",
   "data": {
     "type": "Text",
-    "value": "I'll keep an eye out for your email"
+    "valueText": "I'll keep an eye out for your email"
   },
   "medium": "Email",
   "conversationParticipantID": "f6ffe132e1731b36039e42c61dfacf95",
