@@ -167,7 +167,7 @@ class FamilyDetailsForm extends Component {
     const communityCareTypeOptions = communityTypes.map(i => ({ value: i, label: i }));
     const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
     const tagColumn = { typeInfo: { api: '/v0/platform/tags?filter[name]=' }, value: 'tag.name' };
-    // const medicaidOptions = [{ label: 'Yes', value: true }];
+    const medicaidOptions = [{ label: '', value: true }];
     return (
       <div>
         {!canEditFamilyDetails &&
@@ -259,17 +259,14 @@ class FamilyDetailsForm extends Component {
                   component={ReduxField}
                 />
               </PaddedTwoColumnWrapper>
-              {/* todo: @pranesh fixme
               <Field
                 name="medicaid"
                 label="Qualifies for Medicaid"
                 type="checkbox"
-                disabled={!canEditFamilyDetails}
                 component={ReduxField}
+                options={medicaidOptions}
                 wideWidth
               />
-              */
-              }
               <Field
                 name="slyAgentMessage"
                 label="Summary for Agent"

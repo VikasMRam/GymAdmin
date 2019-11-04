@@ -140,7 +140,7 @@ export default class FamilyDetailsFormContainer extends Component {
       newUuidAux.set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', budget);
     }
     if (medicaid) {
-      newUuidAux.set('attributes.uuidInfo.financialInfo.medicaid', medicaid);
+      newUuidAux.set('attributes.uuidInfo.financialInfo.medicaid', (medicaid.length > 0));
     }
     if (lookingFor) {
       newUuidAux.set('attributes.uuidInfo.housingInfo.lookingFor', lookingFor);
@@ -209,6 +209,10 @@ export default class FamilyDetailsFormContainer extends Component {
     if (client.admin) {
       assignedTo = client.admin.id;
     }
+    let medicaidValue = [];
+    if (medicaid) {
+      medicaidValue = [true];
+    }
     const initialValues = {
       name,
       email,
@@ -222,7 +226,7 @@ export default class FamilyDetailsFormContainer extends Component {
       mobilityLevel: mobility,
       communityCareType: typeCare,
       budget: maxMonthlyBudget,
-      medicaid,
+      medicaid: medicaidValue,
       timeToMove: moveTimeline,
       preferredLocation,
       slyMessage,
