@@ -151,15 +151,6 @@ class AgentProfilePage extends Component {
             </StyledSection>
           }
 
-          {bio &&
-            <>
-              <StyledSection title={`More About ${firstName}`}>
-                {bio}
-              </StyledSection>
-              <StyledHr fullWidth />
-            </>
-          }
-
           <StyledSection>
             <AskQuestionToAgentWrapper innerRef={this.askAgentAQuestionRef}>
               <BannerNotificationController>
