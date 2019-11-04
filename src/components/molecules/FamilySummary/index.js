@@ -83,6 +83,12 @@ const FamilySummary = ({
           <StyledLink href={`mailto:${client.clientInfo.email}`} onClick={clickEventHandler('fdetails-summary', 'email')} target="_blank" >Click To Send Email</StyledLink>
         </ColumWrapper>
       }
+      {client.clientInfo && client.clientInfo.referralSource &&
+      <ColumWrapper>
+        <Label palette="grey">Source</Label>
+        <Block size="caption">{client.clientInfo.referralSource}</Block>
+      </ColumWrapper>
+      }
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.financialInfo.medicaid &&
       <ColumWrapper>
         <Label palette="danger">Medicaid</Label>
