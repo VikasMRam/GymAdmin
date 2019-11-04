@@ -9,8 +9,6 @@ import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/reso
 import { EXIT_INTENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
 import ExitIntentQuestionForm from 'sly/components/organisms/ExitIntentQuestionForm';
 import Thankyou from 'sly/components/molecules/Thankyou';
-import withModal from 'sly/controllers/withModal';
-import SlyEvent from 'sly/services/helpers/events';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 import { query } from 'sly/services/newApi';
 import withServerState from 'sly/store/withServerState';

@@ -3,14 +3,16 @@ import { func, object } from 'prop-types';
 import { matchPath, withRouter } from 'react-router';
 import ifvisible from 'ifvisible.js';
 
+
+import SlyEvent from '../helpers/events';
+import withUser from '../newApi/withUser';
+
 import EbookFormContainer from 'sly/containers/EbookFormContainer';
 import ExitIntentQuestionFormContainer from 'sly/containers/ExitIntentQuestionFormContainer';
 import SimilarCommunitiesPopupContainer from 'sly/containers/SimilarCommunitiesPopupContainer';
 import { host } from 'sly/config';
 import withModal from 'sly/controllers/withModal';
-
-import SlyEvent from '../helpers/events';
-import withUser from '../newApi/withUser';
+import careTypes from 'sly/constants/careTypes';
 
 const MOUSEOUT_TIME_DURATION = 20000;
 const FOCUS_TIME_DURATION = 10000;
@@ -20,15 +22,6 @@ const IDLE_TIME_DURATION = 10;
 const MODAL_SHOWN = 'modal-shown';
 const EXIT_INTENT = 'exit-intent';
 const STAY_INTENT = 'stay-intent';
-
-const careTypes = [
-  'retirement-community',
-  'assisted-living',
-  'independent-living',
-  'board-and-care-home',
-  'memory-care',
-  'continuing-care-retirement-community',
-].join('|');
 
 const COMMUNITY_PROFILE_PAGE_PATH = `/:toc(${careTypes})/:state/:city/:communitySlug`;
 
@@ -97,7 +90,8 @@ export default class RetentionPopup extends Component {
 
     this.showModal(<EbookFormContainer
       pathname={pathname}
-      sendEvent={sendEvent} />, 'eBook');
+      sendEvent={sendEvent}
+    />, 'eBook');
   };
 
   isModalShown = () => localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN

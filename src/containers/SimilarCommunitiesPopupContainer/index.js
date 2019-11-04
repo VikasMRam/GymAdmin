@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import { func, object, string } from 'prop-types';
 import styled from 'styled-components';
 
-import SlyEvent from 'sly/services/helpers/events';
 import { prefetch } from 'sly/services/newApi';
 import { Heading } from 'sly/components/atoms';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
@@ -51,7 +50,8 @@ export default class SimilarCommunitiesPopupContainer extends PureComponent {
             sendEvent('similar-community-click', index.toString(), to);
             hideModal();
           }}
-          communityStyle={communityStyle} />
+          communityStyle={communityStyle}
+        />
       </>
     );
   }

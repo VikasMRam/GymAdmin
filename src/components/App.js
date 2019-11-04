@@ -33,6 +33,7 @@ import {
   ADMIN_DASHBOARD_CALLS_PATH,
   ADMIN_DASHBOARD_CALL_DETAILS_PATH,
 } from 'sly/constants/dashboardAppPaths';
+import careTypes from 'sly/constants/careTypes';
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/components/pages/Error'));
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage'));
@@ -73,15 +74,6 @@ setDatepickerStyles();
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
-
-const careTypes = [
-  'retirement-community',
-  'assisted-living',
-  'independent-living',
-  'board-and-care-home',
-  'memory-care',
-  'continuing-care-retirement-community',
-].join('|');
 
 const careTypeGuides = ['assisted-living-guide', 'memory-care-guide'].join('|');
 
