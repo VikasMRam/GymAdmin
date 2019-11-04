@@ -48,7 +48,7 @@ const CommunityAskQuestionForm = ({
 
       {error && <strong>{error}</strong>}
       <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-        Get Free Support
+        Submit Question
       </StyledButton>
       <TosAndPrivacy />
     </form>
