@@ -36,6 +36,7 @@ export default {
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
   getCommunities: { method: get, path: '/marketplace/communities' },
 
+  getAgent: { method: get, path: '/marketplace/agents/:id' },
   getAgents: { method: get, path: '/marketplace/agents' },
 
   getSearchResources: { method: get, path: '/platform/search-resources' },
