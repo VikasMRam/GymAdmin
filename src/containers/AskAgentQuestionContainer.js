@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
+import loadable from "@loadable/component";
 import { assetPath } from 'sly/components/themes';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
-import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import withModal from "sly/controllers/withModal";
 import withNotification from "sly/controllers/withNotification";
+
+const CommunityAskQuestionAgentFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityAskQuestionAgentFormContainer" */'sly/containers/CommunityAskQuestionAgentFormContainer'));
 
 @withModal
 @withNotification

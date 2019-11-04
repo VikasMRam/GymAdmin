@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { array, bool, func, object, string } from 'prop-types';
-import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
+import loadable from '@loadable/component';
+
 import SlyEvent from 'sly/services/helpers/events';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
-import SaveCommunityContainer from 'sly/containers/SaveCommunityContainer';
 import { prefetch } from 'sly/services/newApi';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import {
@@ -15,6 +15,9 @@ import withApi from 'sly/services/newApi/withApi';
 import withAuth from 'sly/services/newApi/withAuth';
 import withNotification from 'sly/controllers/withNotification';
 import withModal from 'sly/controllers/withModal';
+
+const ShareCommunityFormContainer = loadable(() => import(/* webpackChunkName: "chunkShareCommunityFormContainer" */'sly/containers/ShareCommunityFormContainer'));
+const SaveCommunityContainer = loadable(() => import(/* webpackChunkName: "chunkSaveCommunityContainer" */'sly/containers/SaveCommunityContainer'));
 
 function getCommunityUserSave(community, userSaves) {
   return (

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { func } from 'prop-types';
+import loadable from '@loadable/component';
 
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import { community as communityPropType } from 'sly/propTypes/community';
-import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
-import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import withModal from "sly/controllers/withModal";
+
+const CommunityLeaveAnAnswerFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityLeaveAnAnswerFormContainer" */'sly/containers/CommunityLeaveAnAnswerFormContainer'));
+const CommunityAskQuestionFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityAskQuestionFormContainer" */'sly/containers/CommunityAskQuestionFormContainer'));
 
 @withModal
 export default class CommunityQuestionAnswersContainer extends Component {

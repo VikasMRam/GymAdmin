@@ -2,7 +2,7 @@ import React from 'react';
 import { object, string } from 'prop-types';
 
 import Button from 'sly/components/atoms/Button';
-import WiredAskAgentQuestionContainer from 'sly/containers/AskAgentQuestionContainer';
+import AskAgentQuestionContainer from 'sly/containers/AskAgentQuestionContainer';
 
 export default function AskAgentQuestionButtonContainer({
   type,
@@ -10,9 +10,9 @@ export default function AskAgentQuestionButtonContainer({
   ...props
 }) {
   return (
-    <WiredAskAgentQuestionContainer type={type} community={community}>
+    <AskAgentQuestionContainer type={type} community={community}>
       {askAgent => <Button {...props} onClick={askAgent} />}
-    </WiredAskAgentQuestionContainer>
+    </AskAgentQuestionContainer>
   );
 }
 AskAgentQuestionButtonContainer.typeHydrationId = 'AskAgentQuestionButtonContainer';
