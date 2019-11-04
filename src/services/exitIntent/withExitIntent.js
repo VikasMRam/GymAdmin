@@ -3,6 +3,7 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import { node, func } from 'prop-types';
 
 import { host, isServer, isBrowser } from 'sly/config';
+import withModal from 'sly/controllers/withModal';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -65,7 +66,6 @@ const withExitIntent = (InnerComponent) => {
       // If the current mouse X position is within 50px of the right edge
       // of the viewport, return.
       if (e.clientX >= vpWidth - 50) return;
-
 
       // If the current mouse Y position is not within 50px of the top
       // edge of the viewport, return.
@@ -142,7 +142,6 @@ const withExitIntent = (InnerComponent) => {
       window.removeEventListener('popstate', this.onPopstate);
       document.removeEventListener('mouseout', this.onMouseout);
 
-
       this.ifvisible.off('blur', this.blur);
       this.ifvisible.off('focus', this.focus);
     }
@@ -154,7 +153,7 @@ const withExitIntent = (InnerComponent) => {
 
   hoistNonReactStatic(Wrapper, InnerComponent);
 
-  return Wrapper;
+  return withModal(Wrapper);
 };
 
 export default withExitIntent;

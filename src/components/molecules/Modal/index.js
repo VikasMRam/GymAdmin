@@ -9,7 +9,7 @@ import IconButton from 'sly/components/molecules/IconButton';
 
 const closeButtonOutsideLayouts = ['gallery', 'fullScreen'];
 const bottomCloseButtonLayouts = ['bottomDrawer'];
-const noPaddingLayouts = ['noPadding', 'wizard', 'bottomDrawer'];
+const noPaddingLayouts = ['noPadding', 'wizard', 'bottomDrawer', 'eBook'];
 
 // https://www.drupal.org/project/drupal/issues/2707291#comment-12797758
 injectGlobal`
@@ -138,12 +138,16 @@ const fixedHeadStyles = css`
   top: ${size('spacing.large')};
   z-index: ${key('zIndexes.modal.galleryLayoutHeading')};`;
 
+const absoluteHeadStyles = css`
+  position: absolute;`;
+
 const Head = styled.div`
   padding: ${size('spacing.large')};
 
   ${switchProp('layout', {
     fullScreen: fixedHeadStyles,
     gallery: fixedHeadStyles,
+    eBook: absoluteHeadStyles,
   })}
 `;
 
@@ -192,7 +196,7 @@ const Modal = ({
       <ModalContext layout={layout}>
         {(closeable && !closeButtonOutsideLayouts.includes(layout) && !bottomCloseButtonLayouts.includes(layout)) && (
           <Head layout={layout}>
-            {iconClose()}
+            {iconClose(layout === 'eBook' && 'white')}
           </Head>
         )}
         <Body noPadding={noPadding} layout={layout}>
@@ -209,7 +213,7 @@ const Modal = ({
 };
 
 Modal.propTypes = {
-  layout: oneOf(['default', 'fullScreen', 'gallery', 'sidebar', 'wizard', 'searchBox', 'noPadding', 'bottomDrawer']).isRequired,
+  layout: oneOf(['default', 'fullScreen', 'gallery', 'sidebar', 'wizard', 'searchBox', 'noPadding', 'bottomDrawer', 'eBook']).isRequired,
   children: node,
   closeable: bool,
   onClose: func.isRequired,

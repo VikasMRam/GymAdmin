@@ -3,25 +3,25 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import EbookForm from './index';
+import ExitIntentQuestionForm from './index';
 
 import Modal from 'sly/components/molecules/Modal';
 import { withPreventDefault } from 'sly/services/helpers/forms';
 
-const EbookFormContainer = reduxForm({
-  form: 'EbookForm',
+const ExitIntentQuestionFormContainer = reduxForm({
+  form: 'ExitIntentQuestionForm',
   destroyOnUnmount: false,
-})(EbookForm);
+})(ExitIntentQuestionForm);
 
-storiesOf('Organisms|EbookForm', module)
+storiesOf('Organisms|ExitIntentQuestionForm', module)
   .add('default', () => (
-    <EbookFormContainer
+    <ExitIntentQuestionFormContainer
       handleSubmit={withPreventDefault(action('form submitted'))} />
   )).add('within modal', () => (
     <Modal
       onClose={action('closed')}
       isOpen
-      layout="eBook">
-      <EbookFormContainer handleSubmit={withPreventDefault(action('form submitted'))} />
+      layout="noPadding">
+      <ExitIntentQuestionFormContainer handleSubmit={withPreventDefault(action('form submitted'))} />
     </Modal>
   ));

@@ -3,19 +3,20 @@ import { func, object } from 'prop-types';
 import { matchPath, withRouter } from 'react-router';
 import ifvisible from 'ifvisible.js';
 
-import SlyEvent from '../helpers/events';
-import withUser from '../newApi/withUser';
-
 import EbookFormContainer from 'sly/containers/EbookFormContainer';
 import ExitIntentQuestionFormContainer from 'sly/containers/ExitIntentQuestionFormContainer';
 import SimilarCommunitiesPopupContainer from 'sly/containers/SimilarCommunitiesPopupContainer';
 import { host } from 'sly/config';
+import withModal from 'sly/controllers/withModal';
 
-const SHOW_EBOOK_THRESHOLD_TIME = 5000;
-const MOUSEOUT_THRESHOLD_TIME = 20000;
-const FOCUS_THRESHOLD_TIME = 10000;
+import SlyEvent from '../helpers/events';
+import withUser from '../newApi/withUser';
 
-const SEND_EBOOK = 'send-ebook';
+const MOUSEOUT_TIME_DURATION = 20000;
+const FOCUS_TIME_DURATION = 10000;
+const EBOOK_TIME_DURATION = 20000; // @todo change duration after testing
+const IDLE_TIME_DURATION = 10;
+
 const MODAL_SHOWN = 'modal-shown';
 const EXIT_INTENT = 'exit-intent';
 const STAY_INTENT = 'stay-intent';
@@ -31,8 +32,16 @@ const careTypes = [
 
 const COMMUNITY_PROFILE_PAGE_PATH = `/:toc(${careTypes})/:state/:city/:communitySlug`;
 
-ifvisible.setIdleDuration(120); // @todo change duration after testing
+ifvisible.setIdleDuration(IDLE_TIME_DURATION);
 
+const sendEvent = (action, label, value, category = 'exit-intent') => SlyEvent.getInstance().sendEvent({
+  category,
+  action,
+  label,
+  value,
+});
+
+@withModal
 @withRouter
 @withUser
 export default class RetentionPopup extends Component {
@@ -40,73 +49,62 @@ export default class RetentionPopup extends Component {
     showModal: func.isRequired,
     hideModal: func.isRequired,
     location: object,
+    user: object,
   };
 
   componentDidMount() {
-    if (!this.isEbookModalShown()) {
-      this.addActiveListener();
-
-      // ifvisible.on('idle', this.removeListeners);
-      ifvisible.on('wakeup', this.addActiveListener);
+    if (this.props.user) {
+      return;
     }
-    if (!this.isExitIntentShown()) {
-      console.log('add exit intent listeners');
+
+    this.renderTime = new Date().getTime();
+
+    console.log('render time', this.renderTime, this.referrer);
+    // console.log('hstory', this.props.history);
+
+    if (!this.isModalShown()) {
       this.addBlurFocusListeners();
       this.addPopstateListener();
       this.addMouseoutListener();
-    }
-  }
 
-  addActiveListener = () => {
-    console.log('add active listener');
-    if (this.isEbookModalShown()) {
-      return;
+      ifvisible.on('idle', this.idleHandler);
     }
-    this.activeListener = setTimeout(() => {
-      console.log('inside set timeout');
-      const info = ifvisible.getIdleInfo();
-
-      if (!info.isIdle) {
-        this.showSendEbookModal();
-      }
-    }, SHOW_EBOOK_THRESHOLD_TIME);
   }
 
   componentWillUnmount() {
     this.removeALlEventListeners();
   }
 
-  isEbookModalShown = () => {
-    return localStorage.getItem(SEND_EBOOK) === SEND_EBOOK;
+  idleHandler = () => {
+    const currentTime = new Date().getTime();
+    const activeTime = Math.abs(currentTime - this.renderTime);
+
+    console.log('idleHandler time', currentTime, this.renderTime, activeTime);
+
+    if (activeTime >= EBOOK_TIME_DURATION) {
+      this.showEbookModal();
+    } else {
+      ifvisible.wakeup();
+    }
   }
 
-  showSendEbookModal = () => {
-    if (this.isEbookModalShown()) {
+  showEbookModal = () => {
+    if (this.isModalShown()) {
       return;
     }
 
-    const { showModal, hideModal, location: { pathname } } = this.props;
-    const event = {
-      action: 'open-modal', category: 'ebook', label: pathname,
-    };
+    const { location: { pathname } } = this.props;
 
-    localStorage.setItem(SEND_EBOOK, SEND_EBOOK);
-    showModal(<EbookFormContainer showModal={showModal} hideModal={hideModal} pathname={pathname} />, null, 'noPadding', false);
-
-    this.removeEbookEventListeners();
-
-    SlyEvent.getInstance().sendEvent(event);
+    this.showModal(<EbookFormContainer
+      pathname={pathname}
+      sendEvent={sendEvent} />, 'eBook');
   };
 
-  // Code for exit intent popup
+  isModalShown = () => localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN
 
-  isExitIntentShown = () => {
-    return localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN;
-  }
-
-  onMouseout = (e) => {
+  mouseoutHandler = (e) => {
     const currentTime = new Date().getTime();
-    const activeTime = Math.abs(currentTime - this.renderCompleteTime);
+    const activeTime = Math.abs(currentTime - this.renderTime);
 
     // Get the current viewport width.
     const vpWidth = Math.max(
@@ -118,7 +116,6 @@ export default class RetentionPopup extends Component {
     // of the viewport, return.
     if (e.clientX >= vpWidth - 50) return;
 
-
     // If the current mouse Y position is not within 50px of the top
     // edge of the viewport, return.
     if (e.clientY >= 50) return;
@@ -127,19 +124,21 @@ export default class RetentionPopup extends Component {
     // user switching active program
     const from = e.relatedTarget || e.toElement;
 
-    if (!from && activeTime >= MOUSEOUT_THRESHOLD_TIME) {
-      this.showIntent();
+    if (!from && activeTime >= MOUSEOUT_TIME_DURATION) {
+      this.showExitIntent();
     }
   };
 
   addPopstateListener = () => {
     const { history } = window;
 
+    console.log('\n\n addPopstateListener ', document.referrer);
+
     const externalReferrer = document.referrer.indexOf(host) !== 0;
     const notRefreshing = !history.state || history.state.intent !== STAY_INTENT;
 
     if (externalReferrer && notRefreshing) {
-      window.addEventListener('popstate', this.onPopstate);
+      window.addEventListener('popstate', this.popstateHandler);
 
       history.replaceState({ intent: EXIT_INTENT }, '');
       history.pushState({ intent: STAY_INTENT }, '');
@@ -147,8 +146,7 @@ export default class RetentionPopup extends Component {
   };
 
   addMouseoutListener = () => {
-    this.renderCompleteTime = new Date().getTime();
-    document.addEventListener('mouseout', this.onMouseout);
+    document.addEventListener('mouseout', this.mouseoutHandler);
   }
 
   blur = () => {
@@ -159,8 +157,8 @@ export default class RetentionPopup extends Component {
     const currentTime = new Date().getTime();
     const inactiveTime = Math.abs(currentTime - this.lastBlur);
 
-    if (inactiveTime >= FOCUS_THRESHOLD_TIME) {
-      this.showIntent();
+    if (inactiveTime >= FOCUS_TIME_DURATION) {
+      this.showExitIntent();
     } else {
       this.lastBlur = currentTime;
     }
@@ -171,57 +169,49 @@ export default class RetentionPopup extends Component {
     ifvisible.on('focus', this.focus);
   }
 
-  onPopstate = (event) => {
-    console.log('onpopstate intent');
+  popstateHandler = (event) => {
     if (event.state && event.state.intent === EXIT_INTENT) {
-      this.showIntent();
+      this.showExitIntent();
     }
   };
 
-  showIntent = () => {
-    if (localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN) {
+  showExitIntent = () => {
+    if (this.isModalShown()) {
       return;
     }
 
-    const { hideModal, showModal, location: { pathname } } = this.props;
+    const { location: { pathname }, hideModal, showModal } = this.props;
     const match = matchPath(pathname, {
       path: COMMUNITY_PROFILE_PAGE_PATH,
       exact: true,
       strict: false,
     });
-    let modalContent = <ExitIntentQuestionFormContainer showModal={showModal} hideModal={hideModal} pathname={pathname} />;
+
+    let modalContent = <ExitIntentQuestionFormContainer pathname={pathname} showModal={showModal} sendEvent={sendEvent} />;
 
     if (match) {
       const { params: { communitySlug } } = match;
 
-      modalContent = <SimilarCommunitiesPopupContainer communitySlug={communitySlug} hideModal={hideModal} />;
+      modalContent = <SimilarCommunitiesPopupContainer communitySlug={communitySlug} hideModal={hideModal} sendEvent={sendEvent} />;
     }
 
-    showModal(modalContent);
-    this.removeExitIntentEventListeners();
-    localStorage.setItem(MODAL_SHOWN, MODAL_SHOWN);
+    this.showModal(modalContent);
   };
 
-  removeALlEventListeners = () => {
-    console.log('remove all listeners');
-    this.removeExitIntentEventListeners();
-    this.removeEbookEventListeners();
+  showModal = (modalContent, layout) => {
+    this.props.showModal(modalContent, null, layout);
+    localStorage.setItem(MODAL_SHOWN, MODAL_SHOWN);
+    this.removeALlEventListeners();
   }
 
-  removeExitIntentEventListeners =() => {
-    window.removeEventListener('popstate', this.onPopstate);
-    document.removeEventListener('mouseout', this.onMouseout);
+  removeALlEventListeners = () => {
+    window.removeEventListener('popstate', this.popstateHandler);
+    document.removeEventListener('mouseout', this.mouseoutHandler);
 
     ifvisible.off('blur', this.blur);
     ifvisible.off('focus', this.focus);
+    ifvisible.off('idle', this.idleHandler);
   }
 
-  removeEbookEventListeners =() => {
-    ifvisible.off('wakeup', this.addActiveListener);
-    clearTimeout(this.activeListener);
-  }
-
-  render() {
-    return <div />;
-  }
+  render = () => null
 }

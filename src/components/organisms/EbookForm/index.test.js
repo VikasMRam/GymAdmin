@@ -1,9 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-
-import EbookForm from './index';
-
 import { Block } from 'sly/components/atoms/index';
+import EbookForm from './index';
 
 const error = 'Required field';
 
@@ -28,7 +26,6 @@ describe('EbookForm', () => {
     expect(wrapper.find(Block)).toHaveLength(1);
     expect(wrapper.find(Block).contains(error)).toBeTruthy();
   });
-
 
   it('Should call handleSubmit prop for valid form submission', () => {
     const handleSubmit = jest.fn();

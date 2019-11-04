@@ -9,14 +9,14 @@ import { ServerStateProvider } from 'react-router-server';
 import Modal from 'react-modal';
 import { loadableReady } from '@loadable/component';
 
-import RetentionPopupsInstaller from './services/retentionPopup/RetentionPopupsInstaller';
-
 import App from 'sly/components/App';
 import { ApiProvider, createApi } from 'sly/services/newApi';
 import configureStore from 'sly/store/configure';
 import api from 'sly/services/api';
 import WSProvider from 'sly/services/ws/WSProvider';
 import NotificationSubscriptions from 'sly/services/notifications/Subscriptions';
+
+import RetentionPopup from './services/retentionPopup/RetentionPopup';
 
 const serverState = window.__SERVER_STATE__;
 const initialState = window.__INITIAL_STATE__;
@@ -31,14 +31,12 @@ const renderApp = () => (
         <WSProvider>
           <NotificationSubscriptions>
             <BrowserRouter>
-              <RetentionPopupsInstaller>
-
+              <>
+                <RetentionPopup />
                 <App />
-              </RetentionPopupsInstaller>
-
+              </>
             </BrowserRouter>
           </NotificationSubscriptions>
-
         </WSProvider>
       </Provider>
     </ApiProvider>

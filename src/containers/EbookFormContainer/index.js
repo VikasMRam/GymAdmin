@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { reduxForm, SubmissionError, clearSubmitErrors, reset } from 'redux-form';
+import React, { PureComponent } from 'react';
+import { SubmissionError, clearSubmitErrors, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { func, string } from 'prop-types';
 
-import { createValidator, required, email } from 'sly/services/validation';
-import { withAuth, query } from 'sly/services/newApi';
+import { createValidator, email, required } from 'sly/services/validation';
+import { query, withAuth } from 'sly/services/newApi';
 import EbookForm from 'sly/components/organisms/EbookForm';
 import Thankyou from 'sly/components/molecules/Thankyou/index';
-import SlyEvent from 'sly/services/helpers/events';
+import withNotification from 'sly/controllers/withNotification';
 
 const formName = 'EbookForm';
 const validate = createValidator({
@@ -23,40 +23,43 @@ const ReduxForm = reduxForm({
 })(EbookForm);
 
 const mapDispatchToProps = dispatch => ({
-  clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
+  clearErrors: () => dispatch(clearSubmitErrors(formName)),
 });
 
+@withNotification
 @query('sendEbook', 'sendEbook')
-@withAuth
 @connect(null, mapDispatchToProps)
-export default class EbookFormContainer extends Component {
+export default class EbookFormContainer extends PureComponent {
   static propTypes = {
     sendEbook: func.isRequired,
-    clearSubmitErrors: func.isRequired,
+    clearErrors: func.isRequired,
     showModal: func.isRequired,
     hideModal: func.isRequired,
     pathname: string,
+    notifyInfo: func.isRequired,
+    sendEvent: func.isRequired,
   };
 
-  handheSubmitSuccess = () => {
-    const { hideModal, showModal, pathname } = this.props;
-    const event = {
-      action: 'send-email', category: 'ebook', label: pathname,
-    };
-    hideModal();
-    showModal(<Thankyou />);
+  componentDidMount() {
+    this.props.sendEvent('ebook-form-open', this.props.pathname, '', 'ebook');
+  }
 
-    SlyEvent.getInstance().sendEvent(event);
-
-    console.log('handle success');
+  componentWillUnmount() {
+    this.props.sendEvent('ebook-form-close', this.props.pathname, '', 'ebook');
   }
 
   handleSubmit = (data) => {
-    const { sendEbook, clearSubmitErrors } = this.props;
+    const { sendEbook, clearErrors, notifyInfo } = this.props;
 
-    clearSubmitErrors();
+    clearErrors();
 
-    return sendEbook(data).then(this.handheSubmitSuccess).catch((response) => {
+    return sendEbook(data).then(
+      () => {
+        this.props.sendEvent('send-mail', this.props.pathname, '', 'ebook');
+
+        notifyInfo(`we have sent the booklet to your email ${data.email}`);
+      },
+    ).catch((response) => {
       const errorMessage = Object.values(response.body.errors).join('. ');
 
       throw new SubmissionError({ _error: errorMessage });
@@ -65,7 +68,6 @@ export default class EbookFormContainer extends Component {
 
   render() {
     return (
-
       <ReduxForm onSubmit={this.handleSubmit} {...this.props} />
     );
   }
