@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
 import CommunityAskQuestionForm from 'sly/components/organisms/CommunityAskQuestionForm';
-import { EXIT_INTENT_TYPE } from 'sly/constants/retentionPopup';
 
 const handleSubmit = jest.fn();
 const communityName = 'Rhoda Goldman Plaza';

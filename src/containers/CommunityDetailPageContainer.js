@@ -6,14 +6,12 @@ import isMatch from 'lodash/isMatch';
 import omit from 'lodash/omit';
 import { parse as parseSearch } from 'query-string';
 import { Redirect } from 'react-router-dom';
-import styled from 'styled-components';
 
 import { withServerState } from 'sly/store';
 import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
 import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
-import ModalController from 'sly/controllers/ModalController';
 import { query, prefetch, withAuth, withApi } from 'sly/services/newApi';
 import {
   AVAILABILITY_REQUEST,
@@ -22,14 +20,7 @@ import {
   PROFILE_VIEWED,
   TOUR_BOOKED,
 } from 'sly/services/newApi/constants';
-import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
-import { Experiment, Variant } from 'sly/services/experiments';
-import { Heading } from 'sly/components/atoms';
-import { size } from 'sly/components/themes';
-import { EXIT_INTENT_TYPE } from 'sly/constants/retentionPopup';
-import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import SlyEvent from 'sly/services/helpers/events';
-import textAlign from 'sly/components/helpers/textAlign';
 
 const ignoreSearchParams = [
   'modal',
