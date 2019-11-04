@@ -53,7 +53,6 @@ export default class RetentionPopup extends Component {
     this.renderTime = new Date().getTime();
 
     console.log('render time', this.renderTime, this.referrer);
-    // console.log('hstory', this.props.history);
 
     if (!this.isModalShown()) {
       this.addBlurFocusListeners();

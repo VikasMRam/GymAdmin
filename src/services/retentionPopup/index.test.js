@@ -1,16 +1,14 @@
 import React from 'react';
 import { shape } from 'prop-types';
 import { BrowserRouter } from 'react-router-dom';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import ifvisible from 'ifvisible.js';
 
 import RetentionPopup from './RetentionPopup';
 
 const showModal = jest.fn();
 const mockStore = configureStore([]);
 const store = mockStore({
-  myState: 'sample text',
 });
 
 // Instantiate router context
@@ -163,22 +161,22 @@ describe('Retention popup', () => {
     expect(typeof listeners.popstate).toEqual('undefined');
   });
 
-  // it('should add the focus blur listener', () => {
-  //   const wrapper = wrap();
+  it('should add the focus blur listener', () => {
+    const wrapper = wrap();
 
-  //   expect(wrapper.html()).toBeNull();
+    expect(wrapper.html()).toBeNull();
 
-  //   console.log('listeners', listeners);
+    console.log('listeners', listeners);
 
-  //   [
-  //     'visibilitychange',
-  //     'mousemove',
-  //     'keyup',
-  //     'touchstart',
-  //   ].forEach((event) => {
-  //     expect(typeof listeners[event]).toEqual('function');
-  //   });
-  // });
+    [
+      'visibilitychange',
+      'mousemove',
+      'keyup',
+      'touchstart',
+    ].forEach((event) => {
+      expect(typeof listeners[event]).toEqual('function');
+    });
+  });
 
   it('should not fire popup when user returns before 10 seconds', () => {
     const wrapper = wrap();
@@ -187,7 +185,7 @@ describe('Retention popup', () => {
 
     mockDate('2017-11-25T12:34:10Z');
     setHidden(true);
-    ifvisible.blur();
+    // ifvisible.blur();
     console.log('listeners 11', listeners);
 
     listeners.visibilitychange();
