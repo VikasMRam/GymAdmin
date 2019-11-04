@@ -77,6 +77,6 @@ export default {
   createContact: { method: post, path: '/platform/contacts' },
 
   getDatatable: { method: get, path: '/meta-data/datatables/:id' },
-  sendEbook: { method: get, path: '/marketplace/communities' }, // change the api end point
+  sendEbook: { method: get, path: '/platform/send-ebook' }, // change the api end point
 
 };

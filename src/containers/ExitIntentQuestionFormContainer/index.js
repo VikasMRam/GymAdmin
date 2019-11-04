@@ -22,12 +22,6 @@ const validate = createValidator({
   question: [required],
 });
 
-// const sendEvent = (action, label) => SlyEvent.getInstance().sendEvent({
-//   category: 'exit-intent',
-//   action,
-//   label,
-// });
-
 const afterSubmit = (result, dispatch) => dispatch(reset(formName));
 
 const ReduxForm = reduxForm({
@@ -104,7 +98,8 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
       <ReduxForm
         initialValues={initialValues}
         onSubmit={this.handleSubmit}
-        {...this.props} />
+        {...this.props}
+      />
     );
   }
 }

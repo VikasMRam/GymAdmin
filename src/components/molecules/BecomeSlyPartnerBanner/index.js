@@ -16,7 +16,7 @@ const Wrapper = styled(Block)`
 const Line = styled.div`
   background: ${palette('white', 'base')};
   width: ${size('border.regular')};
-  height: 420px;
+  height: 100%;
   margin-left: ${size('spacing.regular')};
   margin-right: ${size('spacing.regular')};
 `;

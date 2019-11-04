@@ -3,7 +3,6 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import { node, func } from 'prop-types';
 
 import { host, isServer, isBrowser } from 'sly/config';
-import withModal from 'sly/controllers/withModal';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -120,7 +119,6 @@ const withExitIntent = (InnerComponent) => {
     }
 
     onPopstate = (event) => {
-      console.log('onpopstate intent');
       if (event.state && event.state.intent === EXIT_INTENT) {
         this.showIntent();
       }
@@ -153,7 +151,7 @@ const withExitIntent = (InnerComponent) => {
 
   hoistNonReactStatic(Wrapper, InnerComponent);
 
-  return withModal(Wrapper);
+  return Wrapper;
 };
 
 export default withExitIntent;
