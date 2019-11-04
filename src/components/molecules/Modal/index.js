@@ -196,7 +196,7 @@ const Modal = ({
       <ModalContext layout={layout}>
         {(closeable && !closeButtonOutsideLayouts.includes(layout) && !bottomCloseButtonLayouts.includes(layout)) && (
           <Head layout={layout}>
-            {iconClose(layout === 'eBook' && 'white')}
+            {iconClose(layout === 'eBook' ? 'white' : 'slate')}
           </Head>
         )}
         <Body noPadding={noPadding} layout={layout}>
