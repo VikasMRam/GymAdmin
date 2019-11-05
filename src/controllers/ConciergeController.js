@@ -28,6 +28,7 @@ import {
 } from 'sly/services/validation';
 import userPropType from 'sly/propTypes/user';
 import { CONCIERGE } from 'sly/constants/modalType';
+import { withRedirectTo } from "sly/services/redirectTo";
 
 export const CONVERSION_FORM = 'conversionForm';
 export const EXPRESS_CONVERSION_FORM = 'expressConversionForm';
@@ -72,7 +73,7 @@ const getLegacyActionType = (action) => {
 };
 
 const mapStateToProps = (state, props) => {
-  const { communitySlug, queryParams, history } = props;
+  const { communitySlug, queryParams } = props;
   const {
     profilesContacted,
     consultationRequested,
@@ -80,7 +81,6 @@ const mapStateToProps = (state, props) => {
   } = getDetail(state, 'userAction') || {};
   const { modal, currentStep } = queryParams;
   return {
-    history,
     communitySlug,
     userDetails,
     concierge: {
@@ -97,6 +97,7 @@ const mapStateToProps = (state, props) => {
 const submit = data => resourceCreateRequest('userAction', data);
 
 @withRouter
+@withRedirectTo
 
 @connectController(
   mapStateToProps,
@@ -115,7 +116,7 @@ export default class ConciergeController extends Component {
 
   static propTypes = {
     match: shape({ url: string.isRequired }),
-    history: object,
+    redirectTo: func.isRequired,
     children: func.isRequired,
     set: func.isRequired,
     concierge: object.isRequired,
@@ -377,11 +378,11 @@ export default class ConciergeController extends Component {
       setQueryParams,
       userDetails,
       communitySlug,
-      history,
+      redirectTo,
     } = this.props;
 
     if (communitySlug) {
-      history.push(`/custom-pricing/${communitySlug}`);
+      redirectTo(`/custom-pricing/${communitySlug}`);
     } else {
       const {
         contactRequested,
