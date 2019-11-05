@@ -99,7 +99,7 @@ const StyledInput = styled.input`
 
 export default class Input extends Component {
   static propTypes = {
-    type: oneOf(['search', 'textarea', 'select', 'text', 'checkbox', 'radio', 'password', 'number', 'hidden', 'date']),
+    type: oneOf(['search', 'textarea', 'select', 'text', 'checkbox', 'radio', 'password', 'number', 'hidden', 'date', 'locationSearch']),
     size: oneOf(['small', 'regular', 'button', 'large', 'xLarge']),
     onFocus: func,
     invalid: bool,
