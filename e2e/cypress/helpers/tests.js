@@ -74,3 +74,4 @@ export const select = (selector) => {
   return cy.get(getSelector(selector));
 };
 
+export const waitForHydration = () => cy.wait(200);

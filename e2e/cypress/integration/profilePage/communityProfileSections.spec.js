@@ -1,4 +1,4 @@
-import { responsive, select } from '../../helpers/tests';
+import {responsive, select, waitForHydration} from '../../helpers/tests';
 import buildEntity from '../../helpers/buildEntity';
 import { toJson } from '../../helpers/request';
 import { getCommunity } from '../../helpers/getCommunity';
@@ -144,14 +144,12 @@ describe('Community Profile Sections', () => {
 
       pricingContent.should('contain', formatMoney(community.startingRate));
 
-      const list = buildEstimatedPriceList(community);
-
-      list.forEach(({ label, value }) => {
+      buildEstimatedPriceList(community).forEach(({ label, value }) => {
         pricingContent.get('tbody').contains(label).next().should('contain', formatMoney(value));
       });
 
-      select('button.CommunityPricingTable').contains('Get Detailed Pricing').click();
-
+      waitForHydration();
+      pricingContent.get('button').contains('Get Detailed Pricing').click();
       cy.url().should('include', `/custom-pricing/${community.id}`);
     });
 
@@ -165,6 +163,7 @@ describe('Community Profile Sections', () => {
         careContent.get('div').contains(service).should('exist');
       });
 
+      waitForHydration();
       careContent.get('button').contains('Ask About Care Services').click();
 
       select('form[name="CommunityAskQuestionAgentForm"] input[name="full_name"]').type('Fonz de la Osa');
@@ -212,6 +211,7 @@ describe('Community Profile Sections', () => {
         careContent.get('div').contains(service).should('exist');
       });
 
+      waitForHydration();
       careContent.get('button').contains('Ask About Amenities').click();
 
       select('form[name="CommunityAskQuestionAgentForm"] input[name="full_name"]').type('Fonz de la Osa');
@@ -255,6 +255,7 @@ describe('Community Profile Sections', () => {
         careContent.get('div').contains(service).should('exist');
       });
 
+      waitForHydration();
       careContent.get('button').contains('Ask About Care Services').click();
 
       select('form[name="CommunityAskQuestionAgentForm"] input[name="full_name"]').type('Fonz de la Osa');

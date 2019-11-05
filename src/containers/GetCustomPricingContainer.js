@@ -33,7 +33,7 @@ function GetCustomPricingContainer({
 GetCustomPricingContainer.propTypes = {
   community: object.isRequired,
   hasAlreadyRequestedPricing: bool,
-  history: object.isRequired,
+  redirectTo: func.isRequired,
   children: func.isRequired,
 };
 

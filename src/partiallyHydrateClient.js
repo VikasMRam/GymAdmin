@@ -7,14 +7,14 @@ import { BrowserRouter } from 'react-router-dom';
 import { ServerStateProvider } from 'react-router-server';
 import Modal from 'react-modal';
 import { ThemeProvider } from 'styled-components';
-
+import Route from 'react-router/Route';
 import { ApiProvider, createApi } from 'sly/services/newApi';
 import configureStore from 'sly/store/configure';
 import theme from 'sly/components/themes/default';
 import api from 'sly/services/api';
 import { hydrateComponents } from 'sly/partialHydration';
 
-export default function partiallyHydrateClient(componentsToHydrate, root) {
+export default function partiallyHydrateClient(componentsToHydrate, routePath, root) {
   const serverState = window.__SERVER_STATE__;
   const initialState = window.__INITIAL_STATE__;
   const store = configureStore(initialState, { api: api.create() });
@@ -29,7 +29,9 @@ export default function partiallyHydrateClient(componentsToHydrate, root) {
       <ApiProvider api={beesApi}>
         <Provider store={store}>
           <ThemeProvider theme={theme}>
-            <BrowserRouter>{children}</BrowserRouter>
+            <BrowserRouter>
+              <Route path={routePath} render={() => children} />
+            </BrowserRouter>
           </ThemeProvider>
         </Provider>
       </ApiProvider>

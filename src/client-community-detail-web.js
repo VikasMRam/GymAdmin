@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 
 import partiallyHydrateClient from 'sly/partiallyHydrateClient';
+import staticPageRoutes from 'sly/staticPageRoutes';
+
 import ModalContainer from 'sly/containers/ModalContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
@@ -45,5 +47,6 @@ partiallyHydrateClient(
     CommunityMorePicturesContainer,
     CommunityMap,
   ],
+  staticPageRoutes.communityDetailPage.path,
   root
 );
