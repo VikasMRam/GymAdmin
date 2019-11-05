@@ -255,12 +255,6 @@ class PricingWizardPage extends Component {
                 <Body>
                   <WizardSteps {...props}>
                     <WizardStep
-                      component={CommunityPricingWizardLanding}
-                      name="Landing"
-                      user={user}
-                      onBeginClick={next}
-                    />
-                    <WizardStep
                       component={CommunityPWEstimatedPricingFormContainer}
                       name="EstimatedPricing"
                       communityName={name}
@@ -293,6 +287,12 @@ class PricingWizardPage extends Component {
                       listOptions={EXPLORE_AFFORDABLE_PRICING_OPTIONS}
                       onBudgetChange={handleBudgetChange}
                       onSubmit={onSubmit}
+                    />
+                    <WizardStep
+                      component={CommunityPricingWizardLanding}
+                      name="Landing"
+                      user={user}
+                      onBeginClick={onSubmit}
                     />
                   </WizardSteps>
                 </Body>
