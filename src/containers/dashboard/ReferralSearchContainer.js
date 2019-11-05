@@ -159,6 +159,7 @@ export default class ReferralSearchContainer extends Component {
   }
 
   doCommunitySearch = ({ name, city, geo }) => {
+    let shouldMakeApiCall = true;
     const { getCommunities } = this.props;
     // const filters = this.getSearchFilters(nameOrZip);
     const filters = {};
@@ -168,16 +169,22 @@ export default class ReferralSearchContainer extends Component {
       filters['filter[geo]'] = geo;
     } else if (name) {
       filters['filter[name]'] = name;
+    } else {
+      shouldMakeApiCall = false;
     }
-    return getCommunities(filters).then((resp) => {
-      const communities = normalizeResponse(resp.body);
-      return this.setState({
-        communities,
+    if (shouldMakeApiCall) {
+      return getCommunities(filters).then((resp) => {
+        const communities = normalizeResponse(resp.body);
+        return this.setState({
+          communities,
+        });
       });
-    });
+    }
+    return null;
   };
 
   doAgentSearch = ({ name, city, geo }) => {
+    let shouldMakeApiCall = true;
     const { getAgents } = this.props;
     const filters = {};
     if (city) {
@@ -186,13 +193,18 @@ export default class ReferralSearchContainer extends Component {
       filters['filter[geo]'] = geo;
     } else if (name) {
       filters['filter[name]'] = name;
+    } else {
+      shouldMakeApiCall = false;
     }
-    return getAgents(filters).then((resp) => {
-      const agents = normJsonApi(resp);
-      this.setState({
-        agents,
+    if (shouldMakeApiCall) {
+      return getAgents(filters).then((resp) => {
+        const agents = normJsonApi(resp);
+        this.setState({
+          agents,
+        });
       });
-    });
+    }
+    return null;
   };
 
   createContactForProvider = ({ email, name }, partner) => {
