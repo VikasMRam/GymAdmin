@@ -1,6 +1,6 @@
 import { doCustomPricingFlow } from '../../helpers/customPricing';
 import { assertUserActionsForGetAvailability } from '../../helpers/userActions';
-import { responsive } from '../../helpers/tests';
+import {responsive, waitForHydration} from '../../helpers/tests';
 import { TEST_COMMUNITY } from '../../constants/community';
 
 describe('Marketplace Profile Page', () => {
@@ -16,6 +16,7 @@ describe('Marketplace Profile Page', () => {
 
       cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
 
+      waitForHydration();
       cy.get('button').contains('Get Detailed Pricing').click();
 
       const data = {

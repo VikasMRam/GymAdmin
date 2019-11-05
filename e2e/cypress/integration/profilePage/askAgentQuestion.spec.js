@@ -1,6 +1,6 @@
 import { doAskAgentQuestionFlow } from '../../helpers/askAgentQuestion';
 import { assertUserActionsForAskAgentQuestion } from '../../helpers/userActions';
-import { responsive } from '../../helpers/tests';
+import {responsive, waitForHydration} from '../../helpers/tests';
 import { TEST_COMMUNITY } from '../../constants/community';
 
 describe('Marketplace Profile Page', () => {
@@ -13,6 +13,7 @@ describe('Marketplace Profile Page', () => {
 
       cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
 
+      waitForHydration();
       cy.get('button').contains('Ask About Care Services').click();
 
       const data = { question, name, phone: phoneNumber, communitySlug };
@@ -35,6 +36,7 @@ describe('Marketplace Profile Page', () => {
 
       cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
 
+      waitForHydration();
       cy.get('button').contains('Ask About Amenities').click();
 
       const data = { question, name, phone: phoneNumber, communitySlug };
