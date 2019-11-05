@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { array, bool, func, object, string } from 'prop-types';
+import { withRouter } from 'react-router-dom';
+
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
@@ -44,6 +46,8 @@ function isCommunityAlreadySaved(community, userSaves) {
 )
 @withModal
 @withNotification
+@withRouter
+
 export default class CommunitySummaryContainer extends Component {
   static propTypes = {
     community: object.isRequired,
@@ -56,6 +60,7 @@ export default class CommunitySummaryContainer extends Component {
     hideModal: func,
     notifyInfo: func,
     notifyError: func,
+    history: object,
   };
 
   sendEvent = (action, category) =>
@@ -135,6 +140,10 @@ export default class CommunitySummaryContainer extends Component {
     this.sendEvent('click', 'shareCommunity');
   };
 
+  goToReviews = () => {
+    this.sendEvent('click', 'viewReviews');
+  };
+
   render() {
     const { community, isAdmin, userSaves, className } = this.props;
     return (
@@ -144,6 +153,7 @@ export default class CommunitySummaryContainer extends Component {
         isFavorited={isCommunityAlreadySaved(community, userSaves)}
         onFavouriteClick={this.handleFavouriteClick}
         onShareClick={this.handleShareClick}
+        goToReviews={this.goToReviews}
         className={className}
       />
     );
