@@ -9,6 +9,8 @@ import RetentionPopup from './RetentionPopup';
 const showModal = jest.fn();
 const mockStore = configureStore([]);
 const store = mockStore({
+  requests: {},
+  bees: {},
 });
 
 // Instantiate router context
@@ -21,8 +23,21 @@ const router = {
 };
 
 const createContext = () => ({
-  context: { router, store },
-  childContextTypes: { router: shape({}), store: shape({}) },
+  context: {
+    router,
+    store,
+    api: {
+      updateUser: jest.fn().mockReturnValue({
+        type: 'apicall',
+      }),
+    },
+  },
+  childContextTypes: {
+    router: shape({}),
+    store: shape({}),
+    api: shape({}),
+
+  },
 });
 
 const wrap = (props = {}) => mount(
@@ -144,9 +159,6 @@ describe('Retention popup', () => {
     listeners.popstate({ state: { intent: 'exit-intent' } });
     expect(showModal).toHaveBeenCalled();
     expect(showModal).toHaveBeenCalledTimes(1);
-
-    // listeners.popstate({ state: { intent: 'exit-intent' } });
-    // expect(showModal).toHaveBeenCalledTimes(1);
   });
 
   it('should remove popstate listener', () => {
@@ -166,8 +178,6 @@ describe('Retention popup', () => {
 
     expect(wrapper.html()).toBeNull();
 
-    console.log('listeners', listeners);
-
     [
       'visibilitychange',
       'mousemove',
@@ -179,102 +189,123 @@ describe('Retention popup', () => {
   });
 
   it('should not fire popup when user returns before 10 seconds', () => {
+    mockDate('2017-11-25T12:34:10Z');
+
     const wrapper = wrap();
 
     expect(wrapper.html()).toBeNull();
-
-    mockDate('2017-11-25T12:34:10Z');
     setHidden(true);
-    // ifvisible.blur();
-    console.log('listeners 11', listeners);
 
     listeners.visibilitychange();
 
     mockDate('2017-11-25T12:34:19Z');
     setHidden(false);
-    listeners.visibilitychange();
-
-    mockDate('2017-11-25T12:34:20Z');
-    setHidden(true);
-    listeners.visibilitychange();
-
-    mockDate('2017-11-25T12:34:29Z');
-    setHidden(false);
-    listeners.visibilitychange();
 
     expect(showModal).not.toHaveBeenCalled();
   });
 
-  // it('should fire popup once when user returns after 10 seconds', () => {
-  //   const wrapper = wrap();
+  it('should fire popup once when user returns after 10 seconds', () => {
+    mockDate('2017-11-25T12:34:10Z');
 
-  //   expect(wrapper.find('div')).toHaveLength(1);
+    const wrapper = wrap();
 
-  //   mockDate('2017-11-25T12:34:10Z');
-  //   setHidden(true);
-  //   listeners.visibilitychange();
+    expect(wrapper.html()).toBeNull();
 
-  //   mockDate('2017-11-25T12:34:22Z');
-  //   setHidden(false);
-  //   listeners.visibilitychange();
+    setHidden(true);
+    listeners.visibilitychange();
 
-  //   mockDate('2017-11-25T12:34:21Z');
-  //   setHidden(true);
-  //   listeners.visibilitychange();
+    mockDate('2017-11-25T12:34:22Z');
+    setHidden(false);
+    listeners.visibilitychange();
 
-  //   mockDate('2017-11-25T12:34:32Z');
-  //   setHidden(false);
-  //   listeners.visibilitychange();
+    mockDate('2017-11-25T12:34:21Z');
+    setHidden(true);
+    listeners.visibilitychange();
 
-  //   expect(showModal).toHaveBeenCalledWith('intentContent');
-  //   expect(showModal).toHaveBeenCalledTimes(1);
-  // });
+    mockDate('2017-11-25T12:34:32Z');
+    setHidden(false);
+    listeners.visibilitychange();
 
-  // it('should add the mouseout listener', () => {
-  //   const wrapper = wrap();
+    expect(showModal).toHaveBeenCalledTimes(1);
+  });
 
-  //   expect(wrapper.find('div')).toHaveLength(1);
-  //   expect(typeof listeners.mouseout).toEqual('function');
-  // });
+  it('should add the mouseout listener', () => {
+    const wrapper = wrap();
 
-  // it('should add the mouseout listener and should not show the modal', () => {
-  //   mockDate('2017-11-25T12:34:10Z');
+    expect(wrapper.html()).toBeNull();
 
-  //   const wrapper = wrap();
+    expect(typeof listeners.mouseout).toEqual('function');
+  });
 
-  //   setViewportWidth(100);
-  //   expect(wrapper.find('div')).toHaveLength(1);
-  //   expect(typeof listeners.mouseout).toEqual('function');
+  it('should add the mouseout listener and should not show the modal', () => {
+    mockDate('2017-11-25T12:34:10Z');
 
-  //   mockDate('2017-11-25T12:34:20Z');
-  //   listeners.mouseout({ clientX: 30, clientY: 10 });
-  //   expect(showModal).toHaveBeenCalledTimes(0);
-  // });
+    const wrapper = wrap();
 
-  // it('should add the mouseout listener and should show the modal', () => {
-  //   mockDate('2017-11-25T12:34:10Z');
+    setViewportWidth(100);
+    expect(wrapper.html()).toBeNull();
 
-  //   const wrapper = wrap();
+    expect(typeof listeners.mouseout).toEqual('function');
 
-  //   setViewportWidth(100);
-  //   expect(wrapper.find('div')).toHaveLength(1);
-  //   expect(typeof listeners.mouseout).toEqual('function');
+    mockDate('2017-11-25T12:34:20Z');
+    listeners.mouseout({ clientX: 30, clientY: 10 });
+    expect(showModal).toHaveBeenCalledTimes(0);
+  });
 
-  //   mockDate('2017-11-25T12:34:30Z');
-  //   listeners.mouseout({ clientX: 30, clientY: 10 });
-  //   expect(showModal).toHaveBeenCalledTimes(1);
-  // });
+  it('should add the mouseout listener and should show the modal', () => {
+    mockDate('2017-11-25T12:34:10Z');
 
-  // it('should remove mouseout listener', () => {
-  //   const wrapper = wrap();
+    const wrapper = wrap();
 
-  //   expect(wrapper.find('div')).toHaveLength(1);
+    setViewportWidth(100);
+    expect(wrapper.html()).toBeNull();
 
-  //   expect(typeof listeners.mouseout).toEqual('function');
+    expect(typeof listeners.mouseout).toEqual('function');
 
-  //   wrapper.unmount();
+    mockDate('2017-11-25T12:34:30Z');
+    listeners.mouseout({ clientX: 30, clientY: 10 });
+    expect(showModal).toHaveBeenCalledTimes(1);
+  });
 
-  //   expect(window.removeEventListener).toHaveBeenCalled();
-  //   expect(typeof listeners.mouseout).toEqual('undefined');
-  // });
+  it('should remove mouseout listener', () => {
+    const wrapper = wrap();
+
+    expect(wrapper.html()).toBeNull();
+
+    expect(typeof listeners.mouseout).toEqual('function');
+
+    wrapper.unmount();
+
+    expect(window.removeEventListener).toHaveBeenCalled();
+    expect(typeof listeners.mouseout).toEqual('undefined');
+  });
+
+  it('should show the ebook modal', () => {
+    mockDate('2017-11-25T12:34:10Z');
+
+    const wrapper = wrap();
+
+    expect(wrapper.html()).toBeNull();
+    mockDate('2017-11-25T15:05:19Z');
+    setHidden(true);
+
+    listeners.visibilitychange();
+
+    expect(showModal).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not show the ebook modal', () => {
+    mockDate('2017-11-25T12:34:10Z');
+
+    const wrapper = wrap();
+
+    expect(wrapper.html()).toBeNull();
+    mockDate('2017-11-25T12:36:09Z');
+
+    setHidden(true);
+
+    listeners.visibilitychange();
+
+    expect(showModal).not.toHaveBeenCalled();
+  });
 });

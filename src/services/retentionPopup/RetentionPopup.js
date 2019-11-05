@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
 import { func, object } from 'prop-types';
 import { matchPath, withRouter } from 'react-router';
-import ifvisible from 'ifvisible.js';
-
 
 import SlyEvent from '../helpers/events';
 import withUser from '../newApi/withUser';
 
+import { host, isServer, isBrowser } from 'sly/config';
 import EbookFormContainer from 'sly/containers/EbookFormContainer';
 import ExitIntentQuestionFormContainer from 'sly/containers/ExitIntentQuestionFormContainer';
 import SimilarCommunitiesPopupContainer from 'sly/containers/SimilarCommunitiesPopupContainer';
-import { host } from 'sly/config';
 import withModal from 'sly/controllers/withModal';
 import careTypes from 'sly/constants/careTypes';
 
 const MOUSEOUT_TIME_DURATION = 20000;
 const FOCUS_TIME_DURATION = 10000;
-const EBOOK_TIME_DURATION = 20000; // @todo change duration after testing
+const EBOOK_TIME_DURATION = 120000; // @todo change duration after testing
 const IDLE_TIME_DURATION = 10;
 
 const MODAL_SHOWN = 'modal-shown';
@@ -24,8 +22,6 @@ const EXIT_INTENT = 'exit-intent';
 const STAY_INTENT = 'stay-intent';
 
 const COMMUNITY_PROFILE_PAGE_PATH = `/:toc(${careTypes})/:state/:city/:communitySlug`;
-
-ifvisible.setIdleDuration(IDLE_TIME_DURATION);
 
 const sendEvent = (action, label, value, category = 'exit-intent') => SlyEvent.getInstance().sendEvent({
   category,
@@ -45,22 +41,28 @@ export default class RetentionPopup extends Component {
     user: object,
   };
 
+  constructor(props) {
+    super(props);
+
+    if (isBrowser) {
+      this.ifvisible = require('ifvisible.js');
+      this.ifvisible.setIdleDuration(IDLE_TIME_DURATION);
+    }
+  }
+
+
   componentDidMount() {
-    if (this.props.user) {
+    if (this.props.user || isServer || this.isModalShown()) {
       return;
     }
 
     this.renderTime = new Date().getTime();
 
-    console.log('render time', this.renderTime, this.referrer);
+    this.addBlurFocusListeners();
+    this.addPopstateListener();
+    this.ifvisible.on('idle', this.idleHandler);
 
-    if (!this.isModalShown()) {
-      this.addBlurFocusListeners();
-      this.addPopstateListener();
-      this.addMouseoutListener();
-
-      ifvisible.on('idle', this.idleHandler);
-    }
+    document.addEventListener('mouseout', this.mouseoutHandler);
   }
 
   componentWillUnmount() {
@@ -71,12 +73,10 @@ export default class RetentionPopup extends Component {
     const currentTime = new Date().getTime();
     const activeTime = Math.abs(currentTime - this.renderTime);
 
-    console.log('idleHandler time', currentTime, this.renderTime, activeTime);
-
     if (activeTime >= EBOOK_TIME_DURATION) {
       this.showEbookModal();
     } else {
-      ifvisible.wakeup();
+      this.ifvisible.wakeup();
     }
   }
 
@@ -125,8 +125,6 @@ export default class RetentionPopup extends Component {
   addPopstateListener = () => {
     const { history } = window;
 
-    console.log('\n\n addPopstateListener ', document.referrer);
-
     const externalReferrer = document.referrer.indexOf(host) !== 0;
     const notRefreshing = !history.state || history.state.intent !== STAY_INTENT;
 
@@ -137,10 +135,6 @@ export default class RetentionPopup extends Component {
       history.pushState({ intent: STAY_INTENT }, '');
     }
   };
-
-  addMouseoutListener = () => {
-    document.addEventListener('mouseout', this.mouseoutHandler);
-  }
 
   blur = () => {
     this.lastBlur = new Date().getTime();
@@ -158,8 +152,8 @@ export default class RetentionPopup extends Component {
   };
 
   addBlurFocusListeners() {
-    ifvisible.on('blur', this.blur);
-    ifvisible.on('focus', this.focus);
+    this.ifvisible.on('blur', this.blur);
+    this.ifvisible.on('focus', this.focus);
   }
 
   popstateHandler = (event) => {
@@ -201,9 +195,9 @@ export default class RetentionPopup extends Component {
     window.removeEventListener('popstate', this.popstateHandler);
     document.removeEventListener('mouseout', this.mouseoutHandler);
 
-    ifvisible.off('blur', this.blur);
-    ifvisible.off('focus', this.focus);
-    ifvisible.off('idle', this.idleHandler);
+    this.ifvisible.off('blur', this.blur);
+    this.ifvisible.off('focus', this.focus);
+    this.ifvisible.off('idle', this.idleHandler);
   }
 
   render = () => null
