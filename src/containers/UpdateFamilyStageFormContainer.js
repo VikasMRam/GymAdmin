@@ -14,7 +14,7 @@ import {
   FAMILY_STATUS_ON_PAUSE,
   FAMILY_STAGE_WON,
   FAMILY_STAGE_LOST,
-  ROOM_TYPES,
+  ROOM_TYPES, WAITLISTED,
 } from 'sly/constants/familyDetails';
 import { NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/notes';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
@@ -268,6 +268,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     let nextGroup;
     let group;
     let nextStage;
+    let chosenDetails;
     let currentLossReason;
     let referralAgreementType;
     let referralAgreement;
@@ -276,13 +277,14 @@ export default class UpdateFamilyStageFormContainer extends Component {
       this.currentStage = getStageDetails(stage);
       ({ group } = this.currentStage);
       ({
-        stage: nextStage, lossReason: currentLossReason, referralAgreementType, referralAgreement, monthlyFees,
+        stage: nextStage, lossReason: currentLossReason, referralAgreementType, referralAgreement, monthlyFees, chosenDetails,
       } = formState);
       this.nextStage = getStageDetails(nextStage);
       ({ group: nextGroup } = this.nextStage);
     }
     const initialValues = {
       stage,
+      chosenDetails: WAITLISTED,
       moveInDate: existingMoveInDate ? new Date(existingMoveInDate) : null,
       communityName: existingCommunityName,
       roomType: existingMoveRoomType,
@@ -301,6 +303,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
         currentStageGroup={group}
         currentStage={stage}
         nextStageGroup={nextGroup}
+        chosenDetails={chosenDetails}
         nextStage={nextStage}
         name={name}
         onSubmit={handleUpdateStage}

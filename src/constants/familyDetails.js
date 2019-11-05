@@ -25,6 +25,9 @@ export const FAMILY_STATUS_ARCHIVED = 'Archived';
 export const FAMILY_STATUS_LONG_TERM = 'Long Term';
 export const FAMILY_STATUS_DELETED = 'Deleted';
 
+export const ESTIMATED_MOVE_IN = 'estimated-move-in';
+export const WAITLISTED = 'waitlisted';
+
 export const STAGE_CLIENT_TYPE_MAP = {
   Prospects: 'prospecting',
   Connected: 'connected',

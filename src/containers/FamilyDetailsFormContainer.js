@@ -237,7 +237,6 @@ export default class FamilyDetailsFormContainer extends Component {
       contactPreferences: ['sms', 'email'],
     };
     ({ preferredLocation } = formData);
-    console.log('Ligging intiial values', initialValues);
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}
