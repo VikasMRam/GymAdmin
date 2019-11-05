@@ -295,6 +295,7 @@ export default class ReferralSearchContainer extends Component {
       return (
         <WizardController
           formName="SendCommunityReferral"
+          controllerKey="SendCommunityReferralControllerKey"
           onComplete={(data, { reset }) => this.onCommunitySendReferralComplete(data, { reset })}
           // todo: final step return to first step
           // onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
@@ -303,7 +304,7 @@ export default class ReferralSearchContainer extends Component {
             data, onSubmit, isFinalStep, submitEnabled, next, previous, goto, currentStep, ...props
           }) => {
             return (
-              <WizardSteps currentStep={currentStep} {...props}>
+              <WizardSteps {...props}>
                 <WizardStep
                   component={DashboardCommunityReferrals}
                   onSubmit={onSubmit}
@@ -355,13 +356,14 @@ export default class ReferralSearchContainer extends Component {
     return (
       <WizardController
         formName="SendAgentReferral"
+        controllerKey="SendAgentReferralControllerKey"
         onComplete={(data, { reset }) => this.onAgentSendReferralComplete(data, { reset })}
       >
         {({
           data, onSubmit, isFinalStep, submitEnabled, next, previous, goto, currentStep, ...props
         }) => {
           return (
-            <WizardSteps currentStep={currentStep} {...props}>
+            <WizardSteps {...props}>
               <WizardStep
                 component={DashboardAgentReferrals}
                 recommendedAgents={recommendedAgents}
