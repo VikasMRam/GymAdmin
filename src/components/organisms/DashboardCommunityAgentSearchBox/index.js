@@ -6,6 +6,7 @@ import { reduxForm, Field } from 'redux-form';
 import { size } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 import ReduxField from 'sly/components/organisms/ReduxField';
+import { createValidator, dependentRequired } from 'sly/services/validation';
 
 const Form = styled.form`
   display: flex;
@@ -39,9 +40,17 @@ CommunityAgentSearchForm.propTypes = {
   handleSubmit: func.isRequired,
 };
 
+const geoNameDependentValidateMessage = 'Either search by city/state or by name';
+const validate = createValidator({
+  geo: [dependentRequired('name', geoNameDependentValidateMessage)],
+  name: [dependentRequired('geo', geoNameDependentValidateMessage)],
+});
+
+
 const form = 'CommunityAgentSearchForm';
 const ReduxForm = reduxForm({
   form,
+  validate,
   destroyOnUnmount: false,
   // required to refresh when initialValues change. Ref: https://redux-form.com/6.7.0/examples/initializefromstate/
   enableReinitialize: true,

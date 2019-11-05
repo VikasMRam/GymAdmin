@@ -166,53 +166,41 @@ export default class ReferralSearchContainer extends Component {
   }
 
   doCommunitySearch = ({ name, city, geo }) => {
-    let shouldMakeApiCall = true;
     const { getCommunities } = this.props;
     // const filters = this.getSearchFilters(nameOrZip);
     const filters = {};
     if (city) {
       [filters['filter[city]']] = [city.split(',')];
-    } else if (geo) {
-      filters['filter[geo]'] = this.getGeoFromLocationValue(geo);
     } else if (name) {
       filters['filter[name]'] = name;
-    } else {
-      shouldMakeApiCall = false;
+    } else if (geo) {
+      filters['filter[geo]'] = this.getGeoFromLocationValue(geo);
     }
-    if (shouldMakeApiCall) {
-      return getCommunities(filters).then((resp) => {
-        const communities = normalizeResponse(resp.body);
-        return this.setState({
-          communities,
-        });
+    return getCommunities(filters).then((resp) => {
+      const communities = normalizeResponse(resp.body);
+      return this.setState({
+        communities,
       });
-    }
-    return null;
+    });
   };
 
   doAgentSearch = ({ name, city, geo }) => {
-    let shouldMakeApiCall = true;
     const { getAgents } = this.props;
     const filters = {};
     if (city) {
       filters['filter[address]'] = city;
-    } else if (geo) {
-      filters['filter[geo]'] = this.getGeoFromLocationValue(geo);
     } else if (name) {
       filters['filter[name]'] = name;
-    } else {
-      shouldMakeApiCall = false;
+    } else if (geo) {
+      filters['filter[geo]'] = this.getGeoFromLocationValue(geo);
     }
-    if (shouldMakeApiCall) {
-      return getAgents(filters).then((resp) => {
-        const allAgents = normJsonApi(resp);
-        const agents = allAgents.filter(e => !e.info.excludeFromMap);
-        this.setState({
-          agents,
-        });
+    return getAgents(filters).then((resp) => {
+      const allAgents = normJsonApi(resp);
+      const agents = allAgents.filter(e => !e.info.excludeFromMap);
+      this.setState({
+        agents,
       });
-    }
-    return null;
+    });
   };
 
   createContactForProvider = ({ email, name }, partner) => {
