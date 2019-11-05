@@ -4,13 +4,19 @@ import produce from 'immer';
 
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import { prefetch, query } from 'sly/services/newApi';
+import { assetPath } from 'sly/components/themes';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import SlyEvent from 'sly/services/helpers/events';
+import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
-import NotificationController from 'sly/controllers/NotificationController';
-import ModalController from 'sly/controllers/ModalController';
+import withModal from 'sly/controllers/withModal';
+import withNotification from 'sly/controllers/withNotification';
+import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
+import AddOrEditNoteForSavedCommunityContainer from 'sly/containers/AddOrEditNoteForSavedCommunityContainer';
 import DashboardFavoritesPage from 'sly/components/pages/DashboardFavoritesPage';
+
+const agentImageUrl = assetPath('images/agent-xLarge.png');
 
 @query('updateUserSave', 'updateUserSave')
 
@@ -19,12 +25,18 @@ import DashboardFavoritesPage from 'sly/components/pages/DashboardFavoritesPage'
   'filter[status]': USER_SAVE_INIT_STATUS,
 }))
 
+@withModal
+@withNotification
+
 export default class DashboardFavoritesPageContainer extends Component {
   static propTypes = {
     userSaves: arrayOf(object),
     updateUserSave: func.isRequired,
     status: object,
     history: object,
+    notifyInfo: func.isRequired,
+    showModal: func.isRequired,
+    hideModal: func.isRequired,
   };
 
   static defaultProps = {
@@ -70,57 +82,104 @@ export default class DashboardFavoritesPageContainer extends Component {
     history.push(path);
   };
 
-  handleUnfavouriteClick = (id, notifyInfo) => {
-    const { updateUserSave, status } = this.props;
+  handleUnfavouriteClick = (id) => {
+    const { updateUserSave, status, notifyInfo } = this.props;
     const { result: rawUserSaves } = status.userSaves;
     const rawUserSave = rawUserSaves.find(us => us.id === id);
 
     return updateUserSave({ id }, produce(rawUserSave, (draft) => {
       draft.attributes.status = USER_SAVE_DELETE_STATUS;
     }))
+      .then(() => status.userSaves.refetch())
       .then(() => notifyInfo('Community has been removed from favorites'));
   };
 
+  getClickHandler = (userSave, i) => {
+    const { status, showModal, hideModal, notifyInfo } = this.props;
+    const { result: rawUserSaves = [] } = status.userSaves;
+    const { community } = userSave;
+
+    const openAskAgentQuestionModal = (e) => {
+      e.preventDefault();
+
+      const { addressString, name } = community;
+      const [, city] = addressString.split(',');
+      const { heading, placeholder, question } = generateAskAgentQuestionContents(name, city);
+
+      const modalComponentProps = {
+        toggleAskAgentQuestionModal: hideModal,
+        notifyInfo,
+        community,
+        heading,
+        agentImageUrl,
+        placeholder,
+        question,
+      };
+
+      showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />);
+    };
+    const openNoteModification = (e) => {
+      e.preventDefault();
+
+      const rawUserSave = rawUserSaves[i];
+      const onComplete = () => {
+        hideModal();
+        status.userSaves.refetch();
+        notifyInfo(`Note ${userSave.info.note ? 'Edited' : 'Added'}`);
+      };
+      const initialValues = {
+        note: userSave.info.note,
+      };
+      const modalComponentProps = {
+        hideModal,
+        userSave,
+        rawUserSave,
+        community,
+        onComplete,
+        onCancel: hideModal,
+        isEditMode: !!userSave.info.note,
+        initialValues,
+      };
+
+      showModal(<AddOrEditNoteForSavedCommunityContainer {...modalComponentProps} />, null, 'noPadding', false);
+    };
+    const onUnfavouriteClick = (e) => {
+      e.preventDefault();
+
+      this.handleUnfavouriteClick(userSave.id);
+    };
+
+    return {
+      openAskAgentQuestionModal,
+      openNoteModification,
+      onUnfavouriteClick,
+    };
+  };
+
   render() {
-    const {
-      handleOnGallerySlideChange, handleOnLocationSearch, handleToggleHowSlyWorksVideoPlaying, handleUnfavouriteClick,
-    } = this;
-    const { status } = this.props;
-    let { userSaves } = this.props;
+    const { status, userSaves } = this.props;
+    const { currentGalleryImage, howSlyWorksVideoPlaying } = this.state;
+    let clickHandlers = [];
+
     if (status.userSaves && status.userSaves.error) {
       return <RefreshRedirect to="/" />;
     }
-    if (!userSaves) {
-      return 'Loading...';
+    if (status.userSaves.hasFinished) {
+      clickHandlers = userSaves.map(this.getClickHandler);
     }
-    let { result: rawUserSaves = [] } = status.userSaves;
-    const { currentGalleryImage, howSlyWorksVideoPlaying } = this.state;
-    // to prevent doing an api call after a user save is unsaved
-    userSaves = userSaves.filter(us => us.status === USER_SAVE_INIT_STATUS);
-    rawUserSaves = rawUserSaves.filter(us => us.attributes.status === USER_SAVE_INIT_STATUS);
 
     return (
-      <NotificationController>
-        {({ notifyInfo }) => (
-          <ModalController>
-            {({ show, hide }) => (
-              <DashboardFavoritesPage
-                notifyInfo={notifyInfo}
-                showModal={show}
-                hideModal={hide}
-                userSaves={userSaves}
-                rawUserSaves={rawUserSaves}
-                onGallerySlideChange={handleOnGallerySlideChange}
-                toggleHowSlyWorksVideoPlaying={handleToggleHowSlyWorksVideoPlaying}
-                currentGalleryImage={currentGalleryImage}
-                onLocationSearch={handleOnLocationSearch}
-                ishowSlyWorksVideoPlaying={howSlyWorksVideoPlaying}
-                onUnfavouriteClick={handleUnfavouriteClick}
-              />
-            )}
-          </ModalController>
-        )}
-      </NotificationController>
+      <DashboardFavoritesPage
+        userSaves={userSaves}
+        onGallerySlideChange={this.handleOnGallerySlideChange}
+        toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
+        currentGalleryImage={currentGalleryImage}
+        onLocationSearch={this.handleOnLocationSearch}
+        ishowSlyWorksVideoPlaying={howSlyWorksVideoPlaying}
+        onUnfavouriteClick={this.handleUnfavouriteClick}
+        clickHandlers={clickHandlers}
+        isLoading={!status.userSaves.hasFinished}
+      />
     );
   }
 }
