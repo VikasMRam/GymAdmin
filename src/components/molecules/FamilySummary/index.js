@@ -107,10 +107,10 @@ const FamilySummary = ({
           <Block size="caption">{client.uuidAux.uuidInfo.residentInfo.gender}</Block>
         </ColumWrapper>
       }
-      {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.locationInfo.city &&
+      {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.locationInfo &&
         <ColumWrapper>
           <Label palette="grey">Preferred location</Label>
-          <Block size="caption">{client.uuidAux.uuidInfo.locationInfo.city}</Block>
+          <Block size="caption">{client.uuidAux.uuidInfo.locationInfo.city}, {client.uuidAux.uuidInfo.locationInfo.state}</Block>
         </ColumWrapper>
       }
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.housingInfo.moveTimeline &&

@@ -188,7 +188,8 @@ export default class ReferralSearchContainer extends Component {
       filters['filter[name]'] = name;
     }
     return getAgents(filters).then((resp) => {
-      const agents = normJsonApi(resp);
+      const allAgents = normJsonApi(resp);
+      const agents = allAgents.filter(e => !e.info.excludeFromMap);
       this.setState({
         agents,
       });
