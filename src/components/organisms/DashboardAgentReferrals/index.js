@@ -107,6 +107,7 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients, reco
         </EmptyResultWrapper>
       )}
       {childrenComponents.length > 0 && <ChildrenClientsWrapper>{childrenComponents}</ChildrenClientsWrapper>}
+      {recommendedAgentComponents.length === 1 && <EmptyResultTextBlock palette="danger" variation="dark">There are no recommended agents for this area.</EmptyResultTextBlock>}
       {recommendedAgentComponents.length > 1 && <ChildrenClientsWrapper>{recommendedAgentComponents}</ChildrenClientsWrapper>}
     </>
   );
