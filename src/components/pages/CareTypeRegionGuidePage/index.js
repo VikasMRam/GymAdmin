@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
 
+import { host } from 'sly/config';
 import { size, assetPath, palette } from 'sly/components/themes';
 import { getBreadCrumbsForGuides, stateNames } from 'sly/services/helpers/url';
 import HeaderContainer from 'sly/containers/HeaderContainer';
@@ -110,13 +111,16 @@ const CareTypeRegionGuidePage = ({
   };
 
   const HelmetContent = () => {
-    const { title } = geoGuide;
+    const { title, url } = geoGuide;
     const description = `Learn everything about ${geoGuide.city}, ${geoGuide.state} ${geoGuide.caretype} facilities. Understand cost, compare retirement living communities and options, and find ${geoGuide.city} resources for senior residents.`;
+    const canonicalUrl = `${host}${url}`;
 
     return (
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalUrl} />
+
       </Helmet>
     );
   };

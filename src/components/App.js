@@ -288,7 +288,7 @@ export default class App extends Component {
         <Helmet titleTemplate="%s | Seniorly">
           <title>Find The Best Senior Living Options Near You</title>
           <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
           <meta content="Seniorly" property="author" />
           <meta content="English" property="language" />

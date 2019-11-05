@@ -31,7 +31,8 @@ const LatestMessage = ({
       dateString = parsedDate.format('MM/DD/YYYY');
     }
   }
-  const messageValue = message && message.data && message.data.value ? message.data.value : `This is the beginning of your conversation with ${name}`;
+  const messageValue = message && message.data && message.data.valueText ? message.data.valueText : `This is the beginning of your conversation with ${name}`;
+
   return (
     <StyledBox noBorderRadius hasUnread={hasUnread} onClick={onClick}>
       <TopWrapper>

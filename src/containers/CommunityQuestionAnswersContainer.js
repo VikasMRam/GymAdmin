@@ -5,7 +5,7 @@ import loadable from '@loadable/component';
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import { community as communityPropType } from 'sly/propTypes/community';
 import SlyEvent from 'sly/services/helpers/events';
-import withModal from "sly/controllers/withModal";
+import withModal from 'sly/controllers/withModal';
 
 const CommunityLeaveAnAnswerFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityLeaveAnAnswerFormContainer" */'sly/containers/CommunityLeaveAnAnswerFormContainer'));
 const CommunityAskQuestionFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityAskQuestionFormContainer" */'sly/containers/CommunityAskQuestionFormContainer'));
@@ -41,7 +41,7 @@ export default class CommunityQuestionAnswersContainer extends Component {
   };
 
   openAskQuestionModal = (question = {}) => {
-    const { showModal, community } = this.props;
+    const { showModal, community: { id, name } } = this.props;
 
     this.sendEvent('open-modal', 'AskQuestion');
 
@@ -49,9 +49,10 @@ export default class CommunityQuestionAnswersContainer extends Component {
     showModal(
       <CommunityAskQuestionFormContainer
         showModal={showModal}
-        communitySlug={community.id}
+        communitySlug={id}
         initialValues={{ question: question.contentData }}
         parentSlug={question.id}
+        communityName={name}
       />,
       onClose
     );

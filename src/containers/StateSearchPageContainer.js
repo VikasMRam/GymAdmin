@@ -45,7 +45,12 @@ class StateSearchPageContainer extends Component {
   changeSearchParams = ({ changedParams }) => {
     const { searchParams, history } = this.props;
     const { path } = filterLinkPath(searchParams, changedParams);
-    history.push(path);
+
+    if (searchParams.view === 'map') {
+      history.replace(path);
+    } else {
+      history.push(path);
+    }
   };
 
   removeSearchFilters = ({ paramsToRemove }) => {

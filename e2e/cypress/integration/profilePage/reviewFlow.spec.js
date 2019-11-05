@@ -12,13 +12,17 @@ describe('Review Community', () => {
   beforeEach(() => {
     cy.server();
 
-    getCommunity(TEST_COMMUNITY).then((response) => {
-      community = response;
-    });
+    if (!community) {
+      getCommunity(TEST_COMMUNITY).then((response) => {
+        community = response;
+      });
+    }
 
-    cy.fixture('user-slytest-admin').then((response) => {
-      user = response;
-    });
+    if (!user) {
+      cy.fixture('user-slytest-admin').then((response) => {
+        user = response;
+      });
+    }
   });
 
   const portal = selector => select(`.ReactModalPortal ${selector}`);
