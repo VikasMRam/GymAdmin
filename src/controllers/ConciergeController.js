@@ -28,7 +28,7 @@ import {
 } from 'sly/services/validation';
 import userPropType from 'sly/propTypes/user';
 import { CONCIERGE } from 'sly/constants/modalType';
-import { withRedirectTo } from "sly/services/redirectTo";
+import { withRedirectTo } from 'sly/services/redirectTo';
 
 export const CONVERSION_FORM = 'conversionForm';
 export const EXPRESS_CONVERSION_FORM = 'expressConversionForm';

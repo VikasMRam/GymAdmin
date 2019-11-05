@@ -8,7 +8,7 @@ import { size, palette } from 'sly/components/themes';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import { variation as variationPropType } from 'sly/propTypes/variation';
-import isPathInRoutes from "sly/services/helpers/isPathInRoutes";
+import isPathInRoutes from 'sly/services/helpers/isPathInRoutes';
 
 const getSize = type => p => size(type, p.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);

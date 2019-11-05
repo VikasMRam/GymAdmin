@@ -314,6 +314,7 @@ const client = (target, entries) => {
     //   ]),
     // ]),
 
+    // eslint-disable-next-line no-prototype-builtins
     when(entries.hasOwnProperty('external'), [externalWidget]),
 
     assets,

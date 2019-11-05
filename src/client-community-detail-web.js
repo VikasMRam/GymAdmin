@@ -15,11 +15,11 @@ import CommunityAgentSectionContainer from 'sly/containers/CommunityAgentSection
 import AskAgentQuestionButtonContainer from 'sly/containers/AskAgentQuestionButtonContainer';
 import CommunityReviewsContainer from 'sly/containers/CommunityReviewsContainer';
 import CommunityAddReviewButtonContainer from 'sly/containers/CommunityAddReviewButtonContainer';
-import CommunityQuestionAnswersContainer from "sly/containers/CommunityQuestionAnswersContainer";
-import CommunityStickyFooter from "sly/components/organisms/CommunityStickyFooter";
-import ConciergeContainer from "sly/containers/ConciergeContainer";
+import CommunityQuestionAnswersContainer from 'sly/containers/CommunityQuestionAnswersContainer';
+import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
+import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import CommunityMorePicturesContainer from 'sly/containers/CommunityMorePicturesContainer';
-import CommunityMap from "sly/components/organisms/CommunityMap";
+import CommunityMap from 'sly/components/organisms/CommunityMap';
 
 const root = document.getElementById('app');
 
@@ -43,7 +43,7 @@ partiallyHydrateClient(
     CommunityStickyFooter,
     ConciergeContainer,
     CommunityMorePicturesContainer,
-    CommunityMap
+    CommunityMap,
   ],
   root
 );
