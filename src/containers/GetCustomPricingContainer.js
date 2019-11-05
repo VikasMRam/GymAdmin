@@ -1,13 +1,13 @@
 import React from 'react';
 import { bool, func, object } from 'prop-types';
-import { withRouter } from 'react-router';
 import SlyEvent from 'sly/services/helpers/events';
 import AskAgentQuestionContainer from 'sly/containers/AskAgentQuestionContainer';
+import {withRedirectTo} from "sly/services/redirectTo";
 
 function GetCustomPricingContainer({
   community,
   hasAlreadyRequestedPricing,
-  history,
+  redirectTo,
   children,
 }) {
   const { id } = community;
@@ -25,7 +25,7 @@ function GetCustomPricingContainer({
       category: 'PricingWizard',
       label: id,
     });
-    history.push(`/custom-pricing/${id}`);
+    redirectTo(`/custom-pricing/${id}`);
   };
   return children(onGotoCustomPricing);
 }
@@ -37,4 +37,4 @@ GetCustomPricingContainer.propTypes = {
   children: func.isRequired,
 };
 
-export default withRouter(GetCustomPricingContainer);
+export default withRedirectTo(GetCustomPricingContainer);

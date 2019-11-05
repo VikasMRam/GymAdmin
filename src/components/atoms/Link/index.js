@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
-import { matchPath, Link as RRLink } from 'react-router-dom';
+import { Link as RRLink } from 'react-router-dom';
 import { string, bool } from 'prop-types';
 import { ifNotProp, ifProp } from 'styled-tools';
 
@@ -8,14 +8,10 @@ import { size, palette } from 'sly/components/themes';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import { variation as variationPropType } from 'sly/propTypes/variation';
+import isPathInRoutes from "sly/services/helpers/isPathInRoutes";
 
 const getSize = type => p => size(type, p.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
-
-const isLinkToAllowed = (routes, to) => {
-  const pathName = to.replace(/(\?|#).*/, '');
-  return routes.some(route => matchPath(pathName, route));
-};
 
 export const styles = css`
   color: ${getColor};
@@ -73,7 +69,7 @@ export default class Link extends Component {
   checkPropsForLinks() {
     const { to, ...props } = this.props;
     const { routes } = this.context;
-    if (to && routes && !isLinkToAllowed(routes, to)) {
+    if (to && !isPathInRoutes(routes, to)) {
       return {
         href: to,
         ...props,
