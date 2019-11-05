@@ -36,7 +36,6 @@ export default class Masonry extends Component {
 
   state = {
     width: 0,
-    columnsPerRows: 0,
     rowSpans: {},
   };
 
@@ -61,7 +60,6 @@ export default class Masonry extends Component {
   setDimensions = (width, columnsPerRows, rowSpans) => {
     this.setState({
       width,
-      columnsPerRows,
       rowSpans,
     });
   };
@@ -101,10 +99,10 @@ export default class Masonry extends Component {
   };
 
   render() {
-    const { width, rowSpans, columnsPerRows } = this.state;
+    const { width, rowSpans } = this.state;
 
     return (
-      <Parent innerRef={this.ref} width={width} hasSpans={columnsPerRows > 1 && this.props.children.length > 1}>
+      <Parent innerRef={this.ref} width={width}>
         {this.props.children.map((child, i) => (
           <Child key={i} order={i + 1} span={rowSpans[i]} isLastItem={i === this.props.children.length - 1}>
             {child}
