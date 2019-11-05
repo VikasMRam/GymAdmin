@@ -12,7 +12,6 @@ const Parent = styled.div`
   display: grid;
   grid-gap: ${size('spacing.xLarge')};
   grid-template-columns: repeat(auto-fill, minmax(${p => p.width}px, 1fr));
-  ${ifProp('hasSpans', 'grid-auto-rows: 1px;', '')};
 `;
 
 const Child = styled.div`
@@ -42,17 +41,30 @@ export default class Masonry extends Component {
   };
 
   componentDidMount() {
-    this.computeWidthsAndSpans();
-    window.addEventListener('load', this.computeWidthsAndSpans);
-    window.addEventListener('resize', this.computeWidthsAndSpans);
+    this.onScreenSizeChange();
+    window.addEventListener('load', this.onScreenSizeChange);
+    window.addEventListener('resize', this.onScreenSizeChange);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.computeWidthsAndSpans);
-    window.removeEventListener('load', this.computeWidthsAndSpans);
+    window.removeEventListener('resize', this.onScreenSizeChange);
+    window.removeEventListener('load', this.onScreenSizeChange);
   }
 
   ref = createRef();
+
+  onScreenSizeChange = () => {
+    const { width, columnsPerRows, rowSpans } = this.computeWidthsAndSpans();
+    this.setDimensions(width, columnsPerRows, rowSpans);
+  };
+
+  setDimensions = (width, columnsPerRows, rowSpans) => {
+    this.setState({
+      width,
+      columnsPerRows,
+      rowSpans,
+    });
+  };
 
   computeWidthsAndSpans = () => {
     const { columnCounts } = this.props;
@@ -71,7 +83,7 @@ export default class Masonry extends Component {
     const rowGap = remToPx(getKey('sizes.spacing.xLarge'));
     const rowHeight = 1;
     const availableWidth = this.ref.current.clientWidth - (rowGap * (columnsPerRows === 1 ? 0 : columnsPerRows));
-    const columnWidth = Math.floor(availableWidth / columnsPerRows);
+    const width = Math.floor(availableWidth / columnsPerRows);
 
     if (columnsPerRows > 1) {
       for (let x = 0; x < this.ref.current.children.length; x++) {
@@ -81,18 +93,18 @@ export default class Masonry extends Component {
       }
     }
 
-    this.setState({
-      width: columnWidth,
+    return {
+      width,
       columnsPerRows,
       rowSpans,
-    });
-  }
+    };
+  };
 
   render() {
     const { width, rowSpans, columnsPerRows } = this.state;
 
     return (
-      <Parent innerRef={this.ref} width={width} hasSpans={columnsPerRows > 1}>
+      <Parent innerRef={this.ref} width={width} hasSpans={columnsPerRows > 1 && this.props.children.length > 1}>
         {this.props.children.map((child, i) => (
           <Child key={i} order={i + 1} span={rowSpans[i]} isLastItem={i === this.props.children.length - 1}>
             {child}
