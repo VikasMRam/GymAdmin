@@ -22,6 +22,7 @@ import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFoote
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import CommunityMorePicturesContainer from 'sly/containers/CommunityMorePicturesContainer';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
+import PageViewActionContainer from 'sly/containers/PageViewActionContainer';
 
 const root = document.getElementById('app');
 
@@ -29,6 +30,7 @@ partiallyHydrateClient(
   [
     ModalContainer,
     HeaderContainer,
+    PageViewActionContainer,
     CommunityMediaGalleryContainer,
     CommunitySummaryContainer,
     OfferNotification,

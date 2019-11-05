@@ -65,7 +65,10 @@ import UnhydratedCommunityAddReviewButtonContainer from 'sly/containers/Communit
 import UnhydratedCommunityMorePicturesContainer from 'sly/containers/CommunityMorePicturesContainer';
 import UnhydratedBackToSearchButtonContainer from 'sly/containers/BackToSearchButtonContainer';
 import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/containers/TrackedSimilarCommunitiesContainer';
+import UnhydratedPageViewActionContainer from 'sly/containers/PageViewActionContainer';
+import {PROFILE_VIEWED} from "sly/services/newApi/constants";
 
+const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGalleryContainer);
 const CommunitySummaryContainer = withHydration(UnhydratedCommunitySummaryContainer);
 const OfferNotification = withHydration(UnhydratedOfferNotification);
@@ -323,6 +326,8 @@ export default class CommunityDetailPage extends Component {
     return (
       <>
         {getHelmetForCommunityPage(community, location)}
+        <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
+
         <Header noBottomMargin={!!bannerNotification} />
         {bannerNotification && (
           <StyledBannerNotification>

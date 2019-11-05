@@ -28,9 +28,11 @@ export const buildEstimatedPriceList = (community) => {
 
 describe('Community Profile Sections', () => {
   let community;
+  const pageViewedProfioleViewed =
 
   beforeEach(() => {
     cy.server();
+    cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
     getCommunity(TEST_COMMUNITY).then((response) => {
       community = response;
@@ -40,6 +42,21 @@ describe('Community Profile Sections', () => {
   responsive(() => {
     it('Should see details', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+
+      cy.wait('@postUuidActions').then((xhr) => {
+        expect(xhr.requestBody).to.deep.equal({
+          data: {
+            type: 'UUIDAction',
+            attributes: {
+              actionType: 'profileViewed',
+              actionPage: `/assisted-living/california/san-francisco/${community.id}`,
+              actionInfo: {
+                slug: community.id,
+              },
+            },
+          },
+        });
+      });
 
       cy.get('h1').contains(community.name).its('length').should('be', 1);
 
@@ -157,6 +174,7 @@ describe('Community Profile Sections', () => {
       cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.wait('@postUuidActions');
 
       const careContent = select('.CollapsibleSection__Header h2').contains(`Care Services at ${community.name}`).parent().next();
       community.propInfo.careServices.forEach((service) => {
@@ -170,8 +188,6 @@ describe('Community Profile Sections', () => {
       select('form[name="CommunityAskQuestionAgentForm"] input[name="phone"]').type('9087654321');
       select('form[name="CommunityAskQuestionAgentForm"] textarea[name="question"]').type('{selectall}{del}my message');
       select('form[name="CommunityAskQuestionAgentForm"]').contains('Send').click();
-
-      cy.wait('@postUuidActions');
 
       cy.wait('@postUuidActions').then((xhr) => {
         const uuidAction = {
@@ -200,6 +216,7 @@ describe('Community Profile Sections', () => {
       cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.wait('@postUuidActions')
 
       const careContent = select('.CollapsibleSection__Header h2').contains(`Amenities at ${community.name}`).parent().next();
 
@@ -218,9 +235,6 @@ describe('Community Profile Sections', () => {
       select('form[name="CommunityAskQuestionAgentForm"] input[name="phone"]').type('9087654321');
       select('form[name="CommunityAskQuestionAgentForm"] textarea[name="question"]').type('{selectall}{del}my message');
       select('form[name="CommunityAskQuestionAgentForm"]').contains('Send').click();
-
-      // page visit
-      cy.wait('@postUuidActions');
 
       cy.wait('@postUuidActions').then((xhr) => {
         const uuidAction = {
@@ -249,6 +263,7 @@ describe('Community Profile Sections', () => {
       cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.wait('@postUuidActions')
 
       const careContent = select('.CollapsibleSection__Header h2').contains(`Care Services at ${community.name}`).parent().next();
       community.propInfo.careServices.forEach((service) => {
@@ -262,8 +277,6 @@ describe('Community Profile Sections', () => {
       select('form[name="CommunityAskQuestionAgentForm"] input[name="phone"]').type('9087654321');
       select('form[name="CommunityAskQuestionAgentForm"] textarea[name="question"]').type('{selectall}{del}my message');
       select('form[name="CommunityAskQuestionAgentForm"]').contains('Send').click();
-
-      cy.wait('@postUuidActions');
 
       cy.wait('@postUuidActions').then((xhr) => {
         const uuidAction = {
