@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { func, string } from 'prop-types';
 import styled from 'styled-components';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, change } from 'redux-form';
 
 import { size } from 'sly/components/themes';
 import { Label } from 'sly/components/atoms';
@@ -35,7 +35,7 @@ const CommunityTextBox = styled(Field)`
   }
 `;
 
-const CommunityAgentSearchForm = ({ label, handleLocationChange, handleSubmit }) => {
+const CommunityAgentSearchForm = ({ label, handleLocationChange, handleLocationTextChange, handleSubmit, dispatch }) => {
   return (
     <Form onSubmit={handleSubmit} name="CommunityAgentSearchForm" >
       <LocationSearchBox>
@@ -43,7 +43,8 @@ const CommunityAgentSearchForm = ({ label, handleLocationChange, handleSubmit })
         <SearchBoxContainer
           allowOnlySelectionFromSuggestions
           clearLocationOnBlur={false}
-          onLocationSearch={handleLocationChange}
+          onLocationSearch={value => handleLocationChange(value, dispatch)}
+          onTextChange={value => handleLocationTextChange(value, dispatch)}
         />
       </LocationSearchBox>
       <CommunityTextBox name="name" label={label} type="text" placeholder="Search by name" component={ReduxField} />
@@ -56,10 +57,13 @@ CommunityAgentSearchForm.propTypes = {
   label: string,
   handleSubmit: func.isRequired,
   handleLocationChange: func.isRequired,
+  handleLocationTextChange: func.isRequired,
+  dispatch: func,
 };
 
+const form = 'CommunityAgentSearchForm';
 const ReduxForm = reduxForm({
-  form: 'CommunityAgentSearchForm',
+  form,
   destroyOnUnmount: false,
   // required to refresh when initialValues change. Ref: https://redux-form.com/6.7.0/examples/initializefromstate/
   enableReinitialize: true,
@@ -67,13 +71,20 @@ const ReduxForm = reduxForm({
 })(CommunityAgentSearchForm);
 
 class DashboardCommunityAgentSearchBox extends Component {
-  handleLocationChange = (value) => {
+  handleLocationChange = (value, dispatch) => {
     const { handleSubmit } = this.props;
-    if (handleSubmit && value.geometry && value.geometry.location) {
+    if (handleSubmit && value && value.geometry && value.geometry.location) {
       const geo = [value.geometry.location.lat(), value.geometry.location.lng(), 10].join(',');
+      dispatch(change(form, 'geo', geo));
       handleSubmit({ geo });
     }
   };
+
+  handleLocationTextChange = (value, dispatch) => {
+    if (value === '') {
+      dispatch(change(form, 'geo', null));
+    }
+  }
 
   render() {
     const { label, handleSubmit } = this.props;
@@ -82,6 +93,7 @@ class DashboardCommunityAgentSearchBox extends Component {
         label={label}
         onSubmit={handleSubmit}
         handleLocationChange={this.handleLocationChange}
+        handleLocationTextChange={this.handleLocationTextChange}
       />
     );
   }
