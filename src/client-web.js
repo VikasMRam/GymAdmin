@@ -10,6 +10,7 @@ import Modal from 'react-modal';
 import { loadableReady } from '@loadable/component';
 
 import RetentionPopup from './services/retentionPopup/RetentionPopup';
+
 import App from 'sly/components/App';
 import { ApiProvider, createApi } from 'sly/services/newApi';
 import configureStore from 'sly/store/configure';
