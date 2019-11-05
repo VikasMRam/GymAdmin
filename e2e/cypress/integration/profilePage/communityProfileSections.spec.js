@@ -1,4 +1,4 @@
-import {responsive, select, waitForHydration} from '../../helpers/tests';
+import { responsive, select, waitForHydration } from '../../helpers/tests';
 import buildEntity from '../../helpers/buildEntity';
 import { toJson } from '../../helpers/request';
 import { getCommunity } from '../../helpers/getCommunity';
@@ -28,7 +28,6 @@ export const buildEstimatedPriceList = (community) => {
 
 describe('Community Profile Sections', () => {
   let community;
-  const pageViewedProfioleViewed =
 
   beforeEach(() => {
     cy.server();
@@ -216,7 +215,7 @@ describe('Community Profile Sections', () => {
       cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-      cy.wait('@postUuidActions')
+      cy.wait('@postUuidActions');
 
       const careContent = select('.CollapsibleSection__Header h2').contains(`Amenities at ${community.name}`).parent().next();
 
@@ -263,7 +262,7 @@ describe('Community Profile Sections', () => {
       cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-      cy.wait('@postUuidActions')
+      cy.wait('@postUuidActions');
 
       const careContent = select('.CollapsibleSection__Header h2').contains(`Care Services at ${community.name}`).parent().next();
       community.propInfo.careServices.forEach((service) => {

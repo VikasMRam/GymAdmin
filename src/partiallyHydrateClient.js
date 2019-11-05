@@ -8,6 +8,7 @@ import { ServerStateProvider } from 'react-router-server';
 import Modal from 'react-modal';
 import { ThemeProvider } from 'styled-components';
 import Route from 'react-router/Route';
+
 import { ApiProvider, createApi } from 'sly/services/newApi';
 import configureStore from 'sly/store/configure';
 import theme from 'sly/components/themes/default';

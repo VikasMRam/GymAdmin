@@ -280,7 +280,7 @@ app.use(async (req, res, next) => {
 });
 
 // create chunk extractors for static page routes
-Object.values(staticPageRoutes).forEach(route => {
+Object.values(staticPageRoutes).forEach((route) => {
   app.use(route.path, (req, res, next) => {
     req.nodeChunkExtractor = new ChunkExtractor({
       statsFile: path.resolve(process.cwd(), route.nodeStatsFile),
