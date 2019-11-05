@@ -19,6 +19,7 @@ import IconInput from 'sly/components/molecules/IconInput';
 import InputMessage from 'sly/components/molecules/InputMessage';
 import Autocomplete from 'sly/components/molecules/Autocomplete';
 import CheckboxInput from 'sly/components/molecules/CheckboxInput';
+import LocationSearch from 'sly/components/molecules/LocationSearch';
 
 const textTypeInputs = ['email', 'iconInput'];
 const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
@@ -53,6 +54,8 @@ const getInputComponent = (type) => {
       return Autocomplete;
     case 'checkbox':
       return CheckboxInput;
+    case 'locationSearch':
+      return LocationSearch;
     default:
       return Input;
   }
@@ -294,6 +297,7 @@ Field.propTypes = {
     'iconInput',
     'hidden',
     'date',
+    'locationSearch',
   ]),
   placeholder: string,
   labelRight: node,
