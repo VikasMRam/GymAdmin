@@ -1,5 +1,5 @@
 import React from 'react';
-import { number, string } from 'prop-types';
+import { number, string, func } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
@@ -7,6 +7,7 @@ import { formatRating } from 'sly/services/helpers/rating';
 import { size } from 'sly/components/themes';
 import Block from 'sly/components/atoms/Block/index';
 import Icon from 'sly/components/atoms/Icon/index';
+import Link from 'sly/components/atoms/Link';
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,7 +36,7 @@ const StyledBlock = styled(Block)`
   margin: 0;
 `;
 
-const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
+const CommunityPricingAndRating = ({ priceDescription, price, rating, goToReviews }) => {
   const ratingFixed = formatRating(rating);
   return (
     <>
@@ -50,14 +51,14 @@ const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
           </StyledCommunityPricingWrapper>
         }
         {ratingFixed > 0 &&
-          <>
+          <Link href="#reviews" onClick={goToReviews}>
             <DescriptionBlock size="caption">Average Rating</DescriptionBlock>
             <Block size="title" weight="medium">
               <StyledIcon icon="star" palette="secondary" />
               {ratingFixed}
               <MoSpan size="caption">/5.0</MoSpan>
             </Block>
-          </>
+          </Link>
         }
       </Wrapper>
       {price > 0 &&
@@ -73,6 +74,7 @@ CommunityPricingAndRating.propTypes = {
   priceDescription: string,
   price: number,
   rating: number,
+  goToReviews: func,
 };
 
 CommunityPricingAndRating.defaultProps = {
