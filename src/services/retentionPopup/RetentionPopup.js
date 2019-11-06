@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { func, object } from 'prop-types';
 import { matchPath, withRouter } from 'react-router';
 
-import SlyEvent from '../helpers/events';
-import withUser from '../newApi/withUser';
-
 import { host, isServer, isBrowser } from 'sly/config';
 import EbookFormContainer from 'sly/containers/EbookFormContainer';
 import ExitIntentQuestionFormContainer from 'sly/containers/ExitIntentQuestionFormContainer';
@@ -12,23 +9,19 @@ import SimilarCommunitiesPopupContainer from 'sly/containers/SimilarCommunitiesP
 import withModal from 'sly/controllers/withModal';
 import careTypes from 'sly/constants/careTypes';
 
+import withUser from '../newApi/withUser';
+
 const MOUSEOUT_TIME_DURATION = 20000;
 const FOCUS_TIME_DURATION = 10000;
-const EBOOK_TIME_DURATION = 120000; // @todo change duration after testing
+const EBOOK_TIME_DURATION = 120000;
 const IDLE_TIME_DURATION = 10;
 
 const MODAL_SHOWN = 'modal-shown';
 const EXIT_INTENT = 'exit-intent';
 const STAY_INTENT = 'stay-intent';
+const IDLE = 'idle';
 
 const COMMUNITY_PROFILE_PAGE_PATH = `/:toc(${careTypes})/:state/:city/:communitySlug`;
-
-const sendEvent = (action, label, value, category = 'exit-intent') => SlyEvent.getInstance().sendEvent({
-  category,
-  action,
-  label,
-  value,
-});
 
 @withModal
 @withRouter
@@ -50,7 +43,6 @@ export default class RetentionPopup extends Component {
     }
   }
 
-
   componentDidMount() {
     if (this.props.user || isServer || this.isModalShown()) {
       return;
@@ -58,29 +50,35 @@ export default class RetentionPopup extends Component {
 
     this.renderTime = new Date().getTime();
 
+    document.addEventListener('mouseout', this.mouseoutHandler);
+
     this.addBlurFocusListeners();
     this.addPopstateListener();
     this.ifvisible.on('idle', this.idleHandler);
-
-    document.addEventListener('mouseout', this.mouseoutHandler);
   }
 
   componentWillUnmount() {
     this.removeALlEventListeners();
   }
 
-  idleHandler = () => {
+  isEbookAvailable = () => {
     const currentTime = new Date().getTime();
     const activeTime = Math.abs(currentTime - this.renderTime);
 
-    if (activeTime >= EBOOK_TIME_DURATION) {
-      this.showEbookModal();
-    } else {
+    return activeTime >= EBOOK_TIME_DURATION;
+  }
+
+  idleHandler = () => {
+    const idleInfo = this.ifvisible.getIdleInfo();
+
+    if (this.isEbookAvailable() && idleInfo.isIdle) {
+      this.showEbookModal(IDLE);
+    } else if (idleInfo.isIdle) {
       this.ifvisible.wakeup();
     }
   }
 
-  showEbookModal = () => {
+  showEbookModal = (event) => {
     if (this.isModalShown()) {
       return;
     }
@@ -89,8 +87,7 @@ export default class RetentionPopup extends Component {
 
     this.showModal(<EbookFormContainer
       pathname={pathname}
-      sendEvent={sendEvent}
-    />, 'eBook');
+      event={event} />, 'eBook');
   };
 
   isModalShown = () => localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN
@@ -118,7 +115,11 @@ export default class RetentionPopup extends Component {
     const from = e.relatedTarget || e.toElement;
 
     if (!from && activeTime >= MOUSEOUT_TIME_DURATION) {
-      this.showExitIntent();
+      if (this.isEbookAvailable()) {
+        this.showEbookModal(EXIT_INTENT);
+      } else {
+        this.showExitIntent();
+      }
     }
   };
 
@@ -145,7 +146,11 @@ export default class RetentionPopup extends Component {
     const inactiveTime = Math.abs(currentTime - this.lastBlur);
 
     if (inactiveTime >= FOCUS_TIME_DURATION) {
-      this.showExitIntent();
+      if (this.isEbookAvailable()) {
+        this.showEbookModal(EXIT_INTENT);
+      } else {
+        this.showExitIntent();
+      }
     } else {
       this.lastBlur = currentTime;
     }
@@ -174,12 +179,12 @@ export default class RetentionPopup extends Component {
       strict: false,
     });
 
-    let modalContent = <ExitIntentQuestionFormContainer pathname={pathname} showModal={showModal} sendEvent={sendEvent} />;
+    let modalContent = <ExitIntentQuestionFormContainer pathname={pathname} showModal={showModal} />;
 
     if (match) {
       const { params: { communitySlug } } = match;
 
-      modalContent = <SimilarCommunitiesPopupContainer communitySlug={communitySlug} hideModal={hideModal} sendEvent={sendEvent} />;
+      modalContent = <SimilarCommunitiesPopupContainer communitySlug={communitySlug} hideModal={hideModal} />;
     }
 
     this.showModal(modalContent);

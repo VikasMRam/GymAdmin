@@ -4,14 +4,20 @@ import { connect } from 'react-redux';
 import { func, string } from 'prop-types';
 
 import { createValidator, email, required } from 'sly/services/validation';
-import { query, withAuth } from 'sly/services/newApi';
+import { query } from 'sly/services/newApi';
 import EbookForm from 'sly/components/organisms/EbookForm';
-import Thankyou from 'sly/components/molecules/Thankyou/index';
 import withNotification from 'sly/controllers/withNotification';
+import SlyEvent from 'sly/services/helpers/events';
 
 const formName = 'EbookForm';
 const validate = createValidator({
   email: [required, email],
+});
+
+const sendEvent = (action, label) => SlyEvent.getInstance().sendEvent({
+  category: 'ebook',
+  action,
+  label,
 });
 
 const afterSubmit = (result, dispatch) => dispatch(reset(formName));
@@ -37,29 +43,37 @@ export default class EbookFormContainer extends PureComponent {
     hideModal: func.isRequired,
     pathname: string,
     notifyInfo: func.isRequired,
-    sendEvent: func.isRequired,
+    event: string,
   };
 
   componentDidMount() {
-    this.props.sendEvent('ebook-form-open', this.props.pathname, '', 'ebook');
+    const { event, pathname } = this.props;
+
+    sendEvent(`${event}-ebook-form-open`, pathname);
   }
 
   componentWillUnmount() {
-    this.props.sendEvent('ebook-form-close', this.props.pathname, '', 'ebook');
+    const { event, pathname } = this.props;
+
+    sendEvent(`${event}-ebook-form-close`, pathname);
   }
 
   handleSubmit = (data) => {
-    const { sendEbook, clearErrors, notifyInfo } = this.props;
+    const {
+      sendEbook, clearErrors, notifyInfo, event,
+    } = this.props;
 
     clearErrors();
 
     return sendEbook(data).then(
       () => {
-        this.props.sendEvent('send-mail', this.props.pathname, '', 'ebook');
+        sendEvent(`${event}-send-mail`, this.props.pathname);
 
         notifyInfo(`we have sent the booklet to your email ${data.email}`);
       },
     ).catch((response) => {
+      notifyInfo(`we have sent the booklet to your email ${data.email}`);
+
       const errorMessage = Object.values(response.body.errors).join('. ');
 
       throw new SubmissionError({ _error: errorMessage });

@@ -7,12 +7,20 @@ import { Heading } from 'sly/components/atoms';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import { size } from 'sly/components/themes';
 import textAlign from 'sly/components/helpers/textAlign';
+import SlyEvent from 'sly/services/helpers/events';
 
 const communityStyle = { layout: 'row', imageSize: 'small', showDescription: false };
 
 const StyledHeading = styled(textAlign(Heading))`
   margin-bottom: ${size('spacing.xLarge')};
 `;
+
+const sendEvent = (action, label, value = '') => SlyEvent.getInstance().sendEvent({
+  category: 'exit-intent',
+  action,
+  label,
+  value,
+});
 
 @prefetch('community', 'getCommunity', (req, { communitySlug }) => req({
   id: communitySlug,
@@ -23,19 +31,18 @@ export default class SimilarCommunitiesPopupContainer extends PureComponent {
     community: object,
     communitySlug: string,
     hideModal: func,
-    sendEvent: func,
   };
 
   componentDidMount() {
-    this.props.sendEvent('similar-communities-open', this.props.pathname);
+    sendEvent('similar-communities-open', this.props.pathname);
   }
 
   componentWillUnmount() {
-    this.props.sendEvent('similar-communities-close', this.props.pathname);
+    sendEvent('similar-communities-close', this.props.pathname);
   }
 
   render() {
-    const { community, hideModal, sendEvent } = this.props;
+    const { community, hideModal } = this.props;
 
     return (
       community && community.similarProperties &&
@@ -50,8 +57,7 @@ export default class SimilarCommunitiesPopupContainer extends PureComponent {
             sendEvent('similar-community-click', index.toString(), to);
             hideModal();
           }}
-          communityStyle={communityStyle}
-        />
+          communityStyle={communityStyle} />
       </>
     );
   }

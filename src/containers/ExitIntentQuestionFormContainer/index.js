@@ -12,6 +12,7 @@ import Thankyou from 'sly/components/molecules/Thankyou';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 import { query } from 'sly/services/newApi';
 import withServerState from 'sly/store/withServerState';
+import SlyEvent from 'sly/services/helpers/events';
 
 const formName = 'ExitIntentQuestionForm';
 const validate = createValidator({
@@ -20,6 +21,11 @@ const validate = createValidator({
   question: [required],
 });
 
+const sendEvent = (action, label) => SlyEvent.getInstance().sendEvent({
+  category: 'exit-intent',
+  action,
+  label,
+});
 const afterSubmit = (result, dispatch) => dispatch(reset(formName));
 
 const ReduxForm = reduxForm({
@@ -48,15 +54,14 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
     postUserAction: func.isRequired,
     pathname: string,
     showModal: func.isRequired,
-    sendEvent: func.isRequired,
   };
 
   componentDidMount() {
-    this.props.sendEvent('question-form-open', this.props.pathname);
+    sendEvent('question-form-open', this.props.pathname);
   }
 
   componentWillUnmount() {
-    this.props.sendEvent('question-form-close', this.props.pathname);
+    sendEvent('question-form-close', this.props.pathname);
   }
 
   handleSubmit = (data) => {
@@ -96,8 +101,7 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
       <ReduxForm
         initialValues={initialValues}
         onSubmit={this.handleSubmit}
-        {...this.props}
-      />
+        {...this.props} />
     );
   }
 }
