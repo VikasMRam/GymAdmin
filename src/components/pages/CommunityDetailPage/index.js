@@ -555,7 +555,7 @@ export default class CommunityDetailPage extends Component {
                   id="reviews"
                 >
                   <MainSection>
-                    <CommunityReviewsContainer community={community} />
+                    <CommunityReviewsContainer />
                   </MainSection>
                   <ButtonBlock>
                     <StyledLeaveReviewButton>Write a Review</StyledLeaveReviewButton>
@@ -564,7 +564,7 @@ export default class CommunityDetailPage extends Component {
 
                 <TopCollapsibleSection title={`Questions About ${name}`}>
                   <MainSection>
-                    <CommunityQuestionAnswersContainer community={community} />
+                    <CommunityQuestionAnswersContainer />
                   </MainSection>
                 </TopCollapsibleSection>
                 {plusCommunity && eventsLink && sampleEvents &&

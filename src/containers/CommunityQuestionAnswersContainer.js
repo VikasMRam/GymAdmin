@@ -1,22 +1,30 @@
 import React, { Component } from 'react';
 import { func } from 'prop-types';
 import loadable from '@loadable/component';
+import withRouter from 'react-router/withRouter';
 
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import { community as communityPropType } from 'sly/propTypes/community';
 import SlyEvent from 'sly/services/helpers/events';
 import withModal from 'sly/controllers/withModal';
+import { prefetch } from 'sly/services/newApi';
 
 const CommunityLeaveAnAnswerFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityLeaveAnAnswerFormContainer" */'sly/containers/CommunityLeaveAnAnswerFormContainer'));
 const CommunityAskQuestionFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityAskQuestionFormContainer" */'sly/containers/CommunityAskQuestionFormContainer'));
+
+@withRouter
+@prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: match.params.communitySlug,
+  include: 'similar-communities,questions,agents',
+}))
 
 @withModal
 export default class CommunityQuestionAnswersContainer extends Component {
   static typeHydrationId = 'CommunityQuestionAnswersContainer';
   static propTypes = {
-    community: communityPropType,
-    showModal: func,
-    hideModal: func,
+    community: communityPropType.isRequired,
+    showModal: func.isRequired,
+    hideModal: func.isRequired,
   };
 
   sendEvent = (action, category) => {
@@ -59,11 +67,10 @@ export default class CommunityQuestionAnswersContainer extends Component {
   };
 
   render() {
-    const { community: { name, id, questions, communityFaQs } } = this.props;
+    const { community: { name, questions, communityFaQs } } = this.props;
     return (
       <CommunityQuestionAnswers
         communityName={name}
-        communitySlug={id}
         questions={questions}
         communityFaQs={communityFaQs}
         onLeaveAnswerClick={this.openAnswerQuestionModal}
