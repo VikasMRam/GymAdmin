@@ -9,13 +9,14 @@ import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePa
 import Footer from 'sly/components/organisms/Footer';
 import AgentSummary from 'sly/components/molecules/AgentSummary';
 import Section from 'sly/components/molecules/Section';
-import { Hr } from 'sly/components/atoms';
+import { Hr, Paragraph } from 'sly/components/atoms';
 import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
 import EntityReviews from 'sly/components/organisms/EntityReviews';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import { getBreadCrumbsForAgent } from 'sly/services/helpers/url';
 import BannerNotificationController from 'sly/controllers/BannerNotificationController';
+import { formatDate } from 'sly/services/helpers/date';
 
 const StyledHr = styled(Hr)`
   margin-top: ${size('spacing.huge')};
@@ -99,10 +100,10 @@ class AgentProfilePage extends Component {
       return null;
     }
     const {
-      id, info, aggregateRating, reviews, communities, address,
+      id, info, aggregateRating, reviews, communities, address, updatedAt,
     } = agent;
     const { ratingValue } = aggregateRating;
-    const { displayName, bio, cv } = info;
+    const { displayName, cv } = info;
     const firstName = displayName.split(' ')[0];
     const { state, city } = address;
     const similarCommunityStyle = { layout: 'column', imageSize: 'regular', showDescription: false };
@@ -131,6 +132,11 @@ class AgentProfilePage extends Component {
           <StyledHr fullWidth />
 
           {cv && <LegacyContent dangerouslySetInnerHTML={{ __html: cv }} />}
+          {cv &&  updatedAt &&
+            <Paragraph>
+              This page was updated on {formatDate(updatedAt)}
+            </Paragraph>
+          }
           {cv && <StyledHr fullWidth />}
 
           {communities &&

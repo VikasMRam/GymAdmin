@@ -4,10 +4,9 @@ import styled from 'styled-components';
 import { reduxForm, Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
-import { Label } from 'sly/components/atoms';
 import IconButton from 'sly/components/molecules/IconButton';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
+import { createValidator, dependentRequired } from 'sly/services/validation';
 
 const Form = styled.form`
   display: flex;
@@ -18,35 +17,19 @@ const Form = styled.form`
     align-items: center;
   }
 `;
-const LocationSearchBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: ${size('spacing.large')};
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    margin-right: ${size('spacing.regular')};
-    flex-grow: 2;
-  }
-`;
-const CommunityTextBox = styled(Field)`
+const StyledField = styled(Field)`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-right: ${size('spacing.regular')};
     flex-grow: 2;
   }
 `;
 
-const CommunityAgentSearchForm = ({ label, handleLocationChange, handleSubmit }) => {
+const CommunityAgentSearchForm = ({ label, handleSubmit }) => {
   return (
     <Form onSubmit={handleSubmit} name="CommunityAgentSearchForm" >
-      <LocationSearchBox>
-        <Label>Search By City, State</Label>
-        <SearchBoxContainer
-          allowOnlySelectionFromSuggestions
-          clearLocationOnBlur={false}
-          onLocationSearch={handleLocationChange}
-        />
-      </LocationSearchBox>
-      <CommunityTextBox name="name" label={label} type="text" placeholder="Search by name" component={ReduxField} />
+      <StyledField name="geo" label="Search By City, State" type="locationSearch" placeholder="Search By City, State" component={ReduxField} />
+      <StyledField name="name" label={label} type="text" placeholder="Search by name" component={ReduxField} />
       <IconButton type="submit" icon="search" />
     </Form>
   );
@@ -55,11 +38,19 @@ const CommunityAgentSearchForm = ({ label, handleLocationChange, handleSubmit })
 CommunityAgentSearchForm.propTypes = {
   label: string,
   handleSubmit: func.isRequired,
-  handleLocationChange: func.isRequired,
 };
 
+const geoNameDependentValidateMessage = 'Either search by city/state or by name';
+const validate = createValidator({
+  geo: [dependentRequired('name', geoNameDependentValidateMessage)],
+  name: [dependentRequired('geo', geoNameDependentValidateMessage)],
+});
+
+
+const form = 'CommunityAgentSearchForm';
 const ReduxForm = reduxForm({
-  form: 'CommunityAgentSearchForm',
+  form,
+  validate,
   destroyOnUnmount: false,
   // required to refresh when initialValues change. Ref: https://redux-form.com/6.7.0/examples/initializefromstate/
   enableReinitialize: true,
@@ -67,21 +58,12 @@ const ReduxForm = reduxForm({
 })(CommunityAgentSearchForm);
 
 class DashboardCommunityAgentSearchBox extends Component {
-  handleLocationChange = (value) => {
-    const { handleSubmit } = this.props;
-    if (handleSubmit && value.geometry && value.geometry.location) {
-      const geo = [value.geometry.location.lat(), value.geometry.location.lng(), 10].join(',');
-      handleSubmit({ geo });
-    }
-  };
-
   render() {
     const { label, handleSubmit } = this.props;
     return (
       <ReduxForm
         label={label}
         onSubmit={handleSubmit}
-        handleLocationChange={this.handleLocationChange}
       />
     );
   }

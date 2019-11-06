@@ -2,7 +2,6 @@ export const doCustomPricingFlow = (cy, data) => {
   const {
     communitySlug, name, phoneNumber, typeOfRoom, typeOfCare, medicaid,
   } = data;
-  cy.get('button').contains('Let\'s Begin').click();
 
   cy.contains('Get your Pricing and Availability');
 
@@ -22,6 +21,8 @@ export const doCustomPricingFlow = (cy, data) => {
   cy.get('button').contains('Talk to an advisor').click();
 
   cy.get('button').contains('$2000 - $3000').click();
+
+  cy.get('button').contains('Let\'s Begin').click();
 
   cy.url().should('have.string', `/assisted-living/california/san-francisco/${communitySlug}`);
 };

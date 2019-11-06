@@ -244,6 +244,7 @@ Select.propTypes = {
   options: arrayOf(object).isRequired,
   components: object,
   loadOptions: func,
+  isSearchable: bool,
 };
 
 Select.defaultProps = {
@@ -251,6 +252,7 @@ Select.defaultProps = {
   async: false,
   options: [],
   components: {},
+  isSearchable: false,
 };
 
 export default Select;

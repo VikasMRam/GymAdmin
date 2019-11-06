@@ -54,9 +54,9 @@ const DashboardAgentReferralSearch = ({
           const client = childrenClientAgentIdsMap[agent.id];
           if (client) {
             const { stage } = client;
-            return <StyledDashboardAdminReferralAgentTile agent={agent} stage={stage} disabled isRecommended={idx === 0} />;
+            return <StyledDashboardAdminReferralAgentTile key={agent.id} agent={agent} stage={stage} disabled isRecommended={idx === 0} />;
           }
-          return <CursorStyledDashboardAdminReferralAgentTile agent={agent} onClick={() => { setSelectedAgent(agent); onSubmit(); }} isRecommended={idx === 0} />;
+          return <CursorStyledDashboardAdminReferralAgentTile key={agent.id} agent={agent} onClick={() => { setSelectedAgent(agent); onSubmit(); }} isRecommended={idx === 0} />;
         })}
       </>
     )}
