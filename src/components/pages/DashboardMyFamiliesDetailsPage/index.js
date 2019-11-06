@@ -51,8 +51,8 @@ import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchCont
 import StatusSelect from 'sly/components/molecules/StatusSelect';
 import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
 import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
+import AddOrEditTaskFormContainer from 'sly/containers/AddOrEditTaskFormContainer';
 import { Datatable } from 'sly/services/datatable';
-
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
@@ -431,6 +431,43 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     />, null, 'noPadding', false);
   };
 
+  handleAddTaskClick = () => {
+    const { showModal, hideModal, notifyInfo, notifyError, client } = this.props;
+    // todo: remove after clarifying. here since task api call
+    // won't be done meta is not available
+    const priorities = [
+      'Urgent',
+      'High',
+      'Medium',
+      'Low',
+    ];
+    const statuses = [
+      'Not Started',
+      'In Progress',
+      'Completed',
+      'Deleted',
+    ];
+    const event = {
+      category: 'fdetails',
+      action: 'launch',
+      label: 'addTask',
+    };
+    SlyEvent.getInstance().sendEvent(event);
+    showModal(
+      (
+        <AddOrEditTaskFormContainer
+          priorities={priorities}
+          statuses={statuses}
+          onCancel={hideModal}
+          notifyInfo={notifyInfo}
+          notifyError={notifyError}
+          onSuccess={hideModal}
+          client={client}
+        />
+      ), null, 'noPadding', false
+    );
+  };
+
   render() {
     const {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
@@ -495,14 +532,13 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         messagesPath,
         communitiesPath,
         agentsPath,
-        tasksPath,
       } = this.getTabPathsForUser();
       stickyFooterOptions = [
         {
           text: 'Add note', icon: 'add-note', iconPalette: 'slate', onClick: this.handleAddNoteClick, ghost: true,
         },
         {
-          text: 'Add task', icon: 'checkbox-fill', iconPalette: 'slate', onClick: hideModal, to: tasksPath, ghost: true,
+          text: 'Add task', icon: 'checkbox-fill', iconPalette: 'slate', onClick: this.handleAddTaskClick, ghost: true,
         },
         {
           text: 'Message family', icon: 'message', iconPalette: 'slate', onClick: hideModal, to: messagesPath, ghost: true,
