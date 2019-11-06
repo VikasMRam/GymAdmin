@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, func, object } from 'prop-types';
 
+import { host } from 'sly/config';
 import { size, assetPath, palette } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import { getBreadCrumbsForGuides } from 'sly/services/helpers/url';
@@ -105,7 +106,7 @@ const CareTypeGuidePage = ({
 
   const title = ' Assisted Living City Guides ';
   const description = ' Learn everything about assisted living facilities in the United States. Understand cost, compare retirement living communities and options, and find city specific resources for senior residents.';
-
+  const canonicalUrl = `${host}/assisted-living-guide`;
   return (
     <>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
@@ -113,6 +114,7 @@ const CareTypeGuidePage = ({
         <Helmet>
           <title>{title}</title>
           <meta name="description" content={description} />
+          <link rel="canonical" href={canonicalUrl} />
         </Helmet>
         <BreadCrumb items={getBreadCrumbsForGuides(searchParams)} />
         {guideList &&
