@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 
-import RetentionPopup from './RetentionPopup';
+import RetentionPopup from './index';
 
 const showModal = jest.fn();
 const mockStore = configureStore([]);
@@ -90,6 +90,8 @@ describe('Retention popup', () => {
 
     jest.resetAllMocks();
     jest.useFakeTimers();
+    showModal.mockClear();
+
 
     listeners = {};
     window.addEventListener = jest.fn((event, listener) => {
@@ -286,12 +288,21 @@ describe('Retention popup', () => {
     const wrapper = wrap();
 
     expect(wrapper.html()).toBeNull();
-    mockDate('2017-11-25T15:05:19Z');
     setHidden(true);
+    mockDate('2017-11-25T12:35:20Z');
 
+    listeners.visibilitychange();
+    setHidden(false);
+
+    mockDate('2017-11-25T12:37:20Z');
     listeners.visibilitychange();
 
     expect(showModal).toHaveBeenCalledTimes(1);
+    expect(showModal).toHaveBeenCalledWith(
+      expect.anything(),
+      null,
+      'eBook',
+    );
   });
 
   it('should not show the ebook modal', () => {
@@ -301,7 +312,6 @@ describe('Retention popup', () => {
 
     expect(wrapper.html()).toBeNull();
     mockDate('2017-11-25T12:36:09Z');
-
     setHidden(true);
 
     listeners.visibilitychange();
