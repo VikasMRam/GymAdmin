@@ -1,6 +1,6 @@
 import { doAskAgentQuestionFlow } from '../../helpers/askAgentQuestion';
 import { assertUserActionsForAskAgentQuestion } from '../../helpers/userActions';
-import {responsive, waitForHydration} from '../../helpers/tests';
+import { responsive, waitForHydration } from '../../helpers/tests';
 import { TEST_COMMUNITY } from '../../constants/community';
 
 describe('Marketplace Profile Page', () => {
