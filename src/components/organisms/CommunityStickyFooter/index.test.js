@@ -4,6 +4,8 @@ import { shallow } from 'enzyme';
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
 import CommunityActions from 'sly/components/molecules/CommunityActions';
 
+jest.mock('sly/containers/AskAgentQuestionContainer');
+
 const wrap = (props = {}) =>
   shallow(<CommunityStickyFooter {...props} />);
 

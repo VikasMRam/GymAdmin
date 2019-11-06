@@ -29,7 +29,7 @@ const StyledHr = styled(Hr)`
 `;
 
 const HeadingBoxSection = ({
-  heading, children, className, hasNoBodyPadding, hasNoBorder, hasNoHr
+  heading, children, className, hasNoBodyPadding, hasNoBorder, hasNoHr,
 }) => (
   <StyledSection className={className} hasNoBodyPadding={hasNoBodyPadding} hasNoBorder={hasNoBorder}>
     <HeadingBlock size="subtitle" weight="medium" hasNoBodyPadding={hasNoBodyPadding} hasNoHr={hasNoHr}>{heading}</HeadingBlock>

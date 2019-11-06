@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 
 import CommunityActions from 'sly/components/molecules/CommunityActions';
 
+jest.mock('sly/containers/AskAgentQuestionContainer');
+
 const community = { id: 'The place 123' };
 
 const wrap = (props = {}) =>
