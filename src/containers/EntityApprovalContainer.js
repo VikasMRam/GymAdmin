@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { object, func } from 'prop-types';
 
-import { resourceUpdateRequest} from 'sly/store/resource/actions';
-import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 import EntityApprovalPage from 'sly/components/pages/EntityApprovalPage/index';
 import { titleize } from 'sly/services/helpers/strings';
 import { logError } from 'sly/services/helpers/logging';
@@ -50,8 +48,7 @@ export default class EntityApprovalContainer extends Component {
       })
       .catch((err) => {
         logError(err);
-        const { response } = err;
-        const { status } = response;
+        const { status } = err;
         if (status === 405) {
           this.setState({ message: `${titleize(entity)} Already Approved` });
         } else if (status === 403) {
