@@ -1,11 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { object, bool } from 'prop-types';
-import { withRouter } from 'react-router';
+import { bool } from 'prop-types';
 
 import { size, palette, key } from 'sly/components/themes';
 import CommunityActions from 'sly/components/molecules/CommunityActions';
-import { prefetch } from 'sly/services/newApi';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -25,24 +23,14 @@ const Wrapper = styled.div`
   }
 `;
 
-const CommunityStickyFooter = ({
-  community, isAlreadyPricingRequested,
-}) => (
+const CommunityStickyFooter = ({ isAlreadyPricingRequested }) => (
   <Wrapper>
-    <CommunityActions
-      community={community}
-      isAlreadyPricingRequested={isAlreadyPricingRequested}
-    />
+    <CommunityActions isAlreadyPricingRequested={isAlreadyPricingRequested} />
   </Wrapper>
 );
 CommunityStickyFooter.typeHydrationId = 'CommunityStickyFooter';
 CommunityStickyFooter.propTypes = {
-  community: object.isRequired,
   isAlreadyPricingRequested: bool,
 };
 
-const withCommunity = prefetch('community', 'getCommunity', (req, { match }) => req({
-  id: match.params.communitySlug,
-  include: 'similar-communities,questions,agents',
-}));
-export default withRouter(withCommunity(CommunityStickyFooter));
+export default CommunityStickyFooter;

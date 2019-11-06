@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { bool, object, string } from 'prop-types';
-import { withRouter } from 'react-router';
+import { bool, string } from 'prop-types';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size, palette } from 'sly/components/themes';
 import { Icon, Span, Link } from 'sly/components/atoms';
 import GetCustomPricingContainer from 'sly/containers/GetCustomPricingContainer';
-import { prefetch } from 'sly/services/newApi';
 
 const getColor = ({ palette: paletteProp }) => palette(paletteProp, 'filler');
 
@@ -47,7 +45,6 @@ const OfferNotification = ({
   description,
   hasLearnMore,
   className,
-  community,
   hasAlreadyRequestedPricing,
 }) => (
   <Wrapper palette={paletteProp} className={className}>
@@ -68,10 +65,7 @@ const OfferNotification = ({
         {description && <Span>{description}</Span>}
       </TopWrapper>
       {hasLearnMore && (
-        <GetCustomPricingContainer
-          community={community}
-          hasAlreadyRequestedPricing={hasAlreadyRequestedPricing}
-        >
+        <GetCustomPricingContainer hasAlreadyRequestedPricing={hasAlreadyRequestedPricing}>
           {getPricing => (
             <>
               <BigScreenLearnMore onClick={getPricing}>
@@ -94,7 +88,6 @@ OfferNotification.propTypes = {
   title: string.isRequired,
   description: string,
   className: string,
-  community: object.isRequired,
   hasAlreadyRequestedPricing: bool,
 };
 
@@ -102,9 +95,4 @@ OfferNotification.defaultProps = {
   palette: 'primary',
 };
 
-const withCommunity = prefetch('community', 'getCommunity', (req, { match }) => req({
-  id: match.params.communitySlug,
-  include: 'similar-communities,questions,agents',
-}));
-
-export default withRouter(withCommunity(OfferNotification));
+export default OfferNotification;
