@@ -106,7 +106,7 @@ function transformAgent(agent) {
   let name = null;
   let leadCount = null;
   let an = null;
-  const { name: businessName, info, contacts } = agent;
+  const { name: businessName, info } = agent;
   if (info) {
     const { slyScore, displayName, last5DayLeadCount, adminNotes } = info;
     if (slyScore) {
@@ -121,12 +121,10 @@ function transformAgent(agent) {
     if (adminNotes) {
       an = adminNotes;
     }
+   cellPhone = info.cellPhone;
+   workPhone = info.workPhone;
   }
-  if (contacts && contacts.length > 0) {
-    const [contact] = contacts;
-    ({ workPhone } = contact);
-    cellPhone = contact.mobilePhone;
-  }
+
   const agentProps = {
     name,
     slyScore: slyScoreValue,

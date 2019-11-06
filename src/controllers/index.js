@@ -30,16 +30,16 @@ export function connectController(parentMapStateToProps, parentDispatchToProps) 
 
     const mapDispatchToProps = (dispatch, ownProps) => ({
       ...convertMapDispatchToObject(parentDispatchToProps)(dispatch, ownProps),
-      get: () => dispatch((dispatch, getState) => get(getState(), ['controller', controllerKey])),
-      set: data => dispatch(set({ data, controller: controllerKey })),
-      unset: key => dispatch(unset({ key, controller: controllerKey })),
-      resetController: () => dispatch(reset({ controller: controllerKey })),
+      get: () => dispatch((dispatch, getState) => get(getState(), ['controller', ownProps.controllerKey || controllerKey])),
+      set: data => dispatch(set({ data, controller: ownProps.controllerKey || controllerKey })),
+      unset: key => dispatch(unset({ key, controller: ownProps.controllerKey || controllerKey })),
+      resetController: () => dispatch(reset({ controller: ownProps.controllerKey || controllerKey })),
     });
 
     const mapStateToProps = (state, ownProps) => {
       return parentMapStateToProps(state, {
         ...ownProps,
-        controller: get(state, ['controller', controllerKey]) || {},
+        controller: get(state, ['controller', ownProps.controllerKey || controllerKey]) || {},
       });
     };
 
@@ -50,8 +50,6 @@ export function connectController(parentMapStateToProps, parentDispatchToProps) 
     if (typeof ConnectedController.WrappedComponent === 'undefined') {
       ConnectedController.WrappedComponent = WrappedComponent;
     }
-
-    ConnectedController.controllerKey = controllerKey;
 
     return ConnectedController;
   };

@@ -63,7 +63,7 @@ const TooltipContent = styled(ReactTooltip)`
 `;
 const CommunitySummary = ({
   community, innerRef, isAdmin, onConciergeNumberClicked, className,
-  onFavouriteClick, isFavorited, onShareClick,
+  onFavouriteClick, isFavorited, onShareClick, goToReviews,
 }) => {
   const {
     address, name, startingRate, propRatings, propInfo, twilioNumber,
@@ -132,7 +132,7 @@ const CommunitySummary = ({
         </div>
       </Wrapper>
       <Hr />
-      <CommunityPricingAndRating price={startingRate} rating={reviewsValue} />
+      <CommunityPricingAndRating price={startingRate} rating={reviewsValue} goToReviews={goToReviews} />
     </Box>
   );
 };
@@ -145,6 +145,7 @@ CommunitySummary.propTypes = {
   className: string,
   onFavouriteClick: func,
   onShareClick: func,
+  goToReviews: func,
   isFavorited: bool,
 };
 
