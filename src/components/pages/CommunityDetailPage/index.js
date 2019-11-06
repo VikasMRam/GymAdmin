@@ -66,7 +66,7 @@ import UnhydratedCommunityMorePicturesContainer from 'sly/containers/CommunityMo
 import UnhydratedBackToSearchButtonContainer from 'sly/containers/BackToSearchButtonContainer';
 import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/containers/TrackedSimilarCommunitiesContainer';
 import UnhydratedPageViewActionContainer from 'sly/containers/PageViewActionContainer';
-import {PROFILE_VIEWED} from "sly/services/newApi/constants";
+import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGalleryContainer);
 const CommunitySummaryContainer = withHydration(UnhydratedCommunitySummaryContainer);
@@ -342,13 +342,10 @@ export default class CommunityDetailPage extends Component {
               <Body>
                 {(images.length > 0 || videos.length > 0) && (
                   <Gallery>
-                    <CommunityMediaGalleryContainer community={community} />
+                    <CommunityMediaGalleryContainer />
                   </Gallery>
                 )}
-                <StyledCommunitySummary
-                  community={community}
-                  isAdmin={user && user.admin}
-                />
+                <StyledCommunitySummary isAdmin={user && user.admin} />
                 {(promoDescription || promoTitle) && (
                   <StyledOfferNotification
                     palette="warning"
@@ -411,7 +408,7 @@ export default class CommunityDetailPage extends Component {
                       />
                       <BackToSearch>
                         <BackToSearchButtonContainer
-                          community={community}
+                          communityId={community.id}
                           href={getCitySearchUrl({ propInfo, address })}
                           ghost
                         >
@@ -432,10 +429,7 @@ export default class CommunityDetailPage extends Component {
                         fee and a monthly component. Connect directly with{' '}
                         {name} to find out your pricing.
                       </Paragraph>
-                      <GetCustomPricingButtonContainer
-                        hasAlreadyRequestedPricing={isAlreadyPricingRequested}
-                        community={community}
-                      >
+                      <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested}>
                         Get Detailed Pricing
                       </GetCustomPricingButtonContainer>
                     </MainSection>
@@ -448,7 +442,6 @@ export default class CommunityDetailPage extends Component {
                       price={estimatedPriceBase}
                       GetPricingButton={props => (
                         <GetCustomPricingButtonContainer
-                          community={community}
                           hasAlreadyRequestedPricing={isAlreadyPricingRequested}
                           {...props}
                         />
@@ -466,7 +459,6 @@ export default class CommunityDetailPage extends Component {
                 >
                   <MainSection>
                     <GetCurrentAvailabilityContainer
-                      community={community}
                       hasAlreadyRequestedPricing={isAlreadyPricingRequested}
                     />
                   </MainSection>
@@ -508,7 +500,6 @@ export default class CommunityDetailPage extends Component {
                     <ButtonBlock>
                       <StyledAskAgentButton
                         type="services"
-                        community={community}
                       >
                         Ask a Question
                       </StyledAskAgentButton>
@@ -522,10 +513,7 @@ export default class CommunityDetailPage extends Component {
                         <CommunityCareService careServices={careServices} />
                       </MainSection>
                       <ButtonBlock>
-                        <StyledAskAgentButton
-                          type="services"
-                          community={community}
-                        >
+                        <StyledAskAgentButton type="services">
                           Ask About Care Services
                         </StyledAskAgentButton>
                       </ButtonBlock>
@@ -536,7 +524,7 @@ export default class CommunityDetailPage extends Component {
                     <CommunityAmenities community={community} />
                   </MainSection>
                   <ButtonBlock>
-                    <StyledAskAgentButton type="services" community={community}>
+                    <StyledAskAgentButton type="services">
                       Ask About Amenities
                     </StyledAskAgentButton>
                   </ButtonBlock>
@@ -630,7 +618,7 @@ export default class CommunityDetailPage extends Component {
                       />
                       <BackToSearch>
                         <BackToSearchButtonContainer
-                          community={community}
+                          communityId={community.id}
                           href={getCitySearchUrl({ propInfo, address })}
                           ghost
                         >
@@ -640,14 +628,11 @@ export default class CommunityDetailPage extends Component {
                     </MainSection>
                   </BottomCollapsibleSection>
                 )}
-                <CommunityStickyFooter
-                  community={community}
-                  isAlreadyPricingRequested={isAlreadyPricingRequested}
-                />
+                <CommunityStickyFooter isAlreadyPricingRequested={isAlreadyPricingRequested} />
               </Body>
               <Column>
                 <Sticky top={24} bottomBoundary="#sticky-sidebar-boundary">
-                  <ConciergeContainer community={community} />
+                  <ConciergeContainer />
                 </Sticky>
               </Column>
             </TwoColumn>
@@ -656,7 +641,7 @@ export default class CommunityDetailPage extends Component {
                 title={`More Photos of ${name}`}
                 titleSize="subtitle"
               >
-                <CommunityMorePicturesContainer community={community} />
+                <CommunityMorePicturesContainer />
               </StyledSection>
             )}
             <Section title={`Map View of ${name}`} titleSize="subtitle" />

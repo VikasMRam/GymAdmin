@@ -40,15 +40,19 @@ function isCommunityAlreadySaved(community, userSaves) {
 
 @withApi
 @withAuth
-@prefetch('userSaves', 'getUserSaves', (req, { community }) =>
+@withRouter
+@prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: match.params.communitySlug,
+  include: 'similar-communities,questions,agents',
+}))
+@prefetch('userSaves', 'getUserSaves', (req, { match }) =>
   req({
     'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
-    'filter[entity_slug]': community.id,
+    'filter[entity_slug]': match.params.communitySlug,
   })
 )
 @withModal
 @withNotification
-@withRouter
 export default class CommunitySummaryContainer extends Component {
   static typeHydrationId = 'CommunitySummaryContainer';
   static propTypes = {

@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
 import SlyEvent from 'sly/services/helpers/events';
+import { prefetch } from 'sly/services/newApi';
 
+@withRouter
+@prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: match.params.communitySlug,
+  include: 'similar-communities,questions,agents',
+}))
 export default class CommunityMediaGalleryContainer extends React.Component {
   static typeHydrationId = 'CommunityMediaGalleryContainer';
   static propTypes = {

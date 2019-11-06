@@ -1,20 +1,19 @@
 import React from 'react';
-import { bool, func, object } from 'prop-types';
+import { bool, func } from 'prop-types';
+import withRouter from 'react-router/withRouter';
 import SlyEvent from 'sly/services/helpers/events';
 import AskAgentQuestionContainer from 'sly/containers/AskAgentQuestionContainer';
-import {withRedirectTo} from "sly/services/redirectTo";
+import { withRedirectTo } from 'sly/services/redirectTo';
 
 function GetCustomPricingContainer({
-  community,
+  match: { params: { communitySlug } },
   hasAlreadyRequestedPricing,
   redirectTo,
   children,
 }) {
-  const { id } = community;
-
   if (hasAlreadyRequestedPricing) {
     return (
-      <AskAgentQuestionContainer type="pricing" community={community}>
+      <AskAgentQuestionContainer type="pricing">
         {askAgentAboutPricing => children(askAgentAboutPricing)}
       </AskAgentQuestionContainer>
     );
@@ -23,18 +22,17 @@ function GetCustomPricingContainer({
     SlyEvent.getInstance().sendEvent({
       action: 'click-gcp-button',
       category: 'PricingWizard',
-      label: id,
+      label: communitySlug,
     });
-    redirectTo(`/custom-pricing/${id}`);
+    redirectTo(`/custom-pricing/${communitySlug}`);
   };
   return children(onGotoCustomPricing);
 }
 
 GetCustomPricingContainer.propTypes = {
-  community: object.isRequired,
   hasAlreadyRequestedPricing: bool,
   redirectTo: func.isRequired,
   children: func.isRequired,
 };
 
-export default withRedirectTo(GetCustomPricingContainer);
+export default withRedirectTo(withRouter(GetCustomPricingContainer));

@@ -6,17 +6,15 @@ import AskAgentQuestionContainer from 'sly/containers/AskAgentQuestionContainer'
 
 export default function AskAgentQuestionButtonContainer({
   type,
-  community,
   ...props
 }) {
   return (
-    <AskAgentQuestionContainer type={type} community={community}>
+    <AskAgentQuestionContainer type={type}>
       {askAgent => <Button {...props} onClick={askAgent} />}
     </AskAgentQuestionContainer>
   );
 }
 AskAgentQuestionButtonContainer.typeHydrationId = 'AskAgentQuestionButtonContainer';
 AskAgentQuestionButtonContainer.propTypes = {
-  type: string,
-  community: object
+  type: string
 };

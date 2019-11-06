@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { bool, object, string } from 'prop-types';
+import { withRouter } from 'react-router';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size, palette } from 'sly/components/themes';
 import { Icon, Span, Link } from 'sly/components/atoms';
 import GetCustomPricingContainer from 'sly/containers/GetCustomPricingContainer';
+import { prefetch } from 'sly/services/newApi';
 
 const getColor = ({ palette: paletteProp }) => palette(paletteProp, 'filler');
 
@@ -92,7 +94,7 @@ OfferNotification.propTypes = {
   title: string.isRequired,
   description: string,
   className: string,
-  community: object,
+  community: object.isRequired,
   hasAlreadyRequestedPricing: bool,
 };
 
@@ -100,4 +102,9 @@ OfferNotification.defaultProps = {
   palette: 'primary',
 };
 
-export default OfferNotification;
+const withCommunity = prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: match.params.communitySlug,
+  include: 'similar-communities,questions,agents',
+}));
+
+export default withRouter(withCommunity(OfferNotification));

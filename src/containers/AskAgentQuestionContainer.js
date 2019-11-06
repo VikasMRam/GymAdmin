@@ -6,9 +6,16 @@ import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import SlyEvent from 'sly/services/helpers/events';
 import withModal from "sly/controllers/withModal";
 import withNotification from "sly/controllers/withNotification";
+import withRouter from 'react-router/withRouter';
+import { prefetch } from 'sly/services/newApi';
 
 const CommunityAskQuestionAgentFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityAskQuestionAgentFormContainer" */'sly/containers/CommunityAskQuestionAgentFormContainer'));
 
+@withRouter
+@prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: match.params.communitySlug,
+  include: 'similar-communities,questions,agents',
+}))
 @withModal
 @withNotification
 export default class AskAgentQuestionContainer extends Component {
