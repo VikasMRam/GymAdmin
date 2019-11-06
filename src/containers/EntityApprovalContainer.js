@@ -7,12 +7,32 @@ import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 import EntityApprovalPage from 'sly/components/pages/EntityApprovalPage/index';
 import { titleize } from 'sly/services/helpers/strings';
 import { logError } from 'sly/services/helpers/logging';
+import withAuth from 'sly/services/newApi/withAuth';
+import withApi from 'sly/services/newApi/withApi';
 
-class EntityApprovalContainer extends Component {
+const getApiFor = (api, entity) => {
+  switch (entity) {
+    case 'content': return api.updateContent;
+    case 'rating': return api.updateRating;
+    default: return null;
+  }
+};
+
+const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
+  approveEntity: (entity, id) => ensureAuthenticated(
+    `Sign up to approve ${entity}`,
+    getApiFor(api, entity)({ id }, { approve: true }),
+  ),
+});
+
+@withAuth
+@withApi
+@connect(null, mapDispatchToProps)
+
+export default class EntityApprovalContainer extends Component {
   static propTypes = {
     match: object.isRequired,
     approveEntity: func.isRequired,
-    fetchUserMe: func.isRequired,
     ensureAuthenticated: func.isRequired,
   };
 
@@ -56,8 +76,3 @@ class EntityApprovalContainer extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  approveEntity: (entity, entitySlug) => dispatch(ensureAuthenticated(resourceUpdateRequest(entity, entitySlug, { approve: true }))),
-});
-
-export default connect(null, mapDispatchToProps)(EntityApprovalContainer);
