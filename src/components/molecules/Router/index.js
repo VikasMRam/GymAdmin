@@ -86,6 +86,11 @@ export default class Router extends Component {
     const qs = parse(search);
     const prevQs = parse(prevSearch);
 
+    if (pathname !== prevPathname) {
+      // call component did mount here too
+      this.componentDidMount();
+    }
+
     if (pathname !== prevPathname || bumpOnSearch(prevQs, qs)) {
       window && window.scrollTo(0, 0);
     }

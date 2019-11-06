@@ -32,6 +32,7 @@ export default {
   setPassword: { method: post, path: '/platform/auth/password' },
   updatePassword: { method: post, path: '/platform/auth/password/update' },
   recoverPassword: { method: post, path: '/platform/auth/recover' },
+  resetPassword: { method: post, path: '/platform/auth/recover/end' },
 
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
   getCommunities: { method: get, path: '/marketplace/communities' },
