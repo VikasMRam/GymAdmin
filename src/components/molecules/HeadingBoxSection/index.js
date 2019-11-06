@@ -19,6 +19,7 @@ const StyledSection = styled.section`
 const HeadingBlock = styled(Block)`
   padding-left: ${ifProp('hasNoBodyPadding', size('spacing.xLarge'), 0)};
   padding-right: ${ifProp('hasNoBodyPadding', size('spacing.xLarge'), 0)};
+  padding-bottom: ${ifProp('hasNoHr', size('spacing.xLarge'), 0)};
 `;
 
 const StyledHr = styled(Hr)`
@@ -28,13 +29,11 @@ const StyledHr = styled(Hr)`
 `;
 
 const HeadingBoxSection = ({
-  heading, children, className, hasNoBodyPadding, hasNoBorder,
+  heading, children, className, hasNoBodyPadding, hasNoBorder, hasNoHr
 }) => (
   <StyledSection className={className} hasNoBodyPadding={hasNoBodyPadding} hasNoBorder={hasNoBorder}>
-    <div>
-      <HeadingBlock size="subtitle" weight="medium" hasNoBodyPadding={hasNoBodyPadding}>{heading}</HeadingBlock>
-      <StyledHr hasNoBodyPadding={hasNoBodyPadding} />
-    </div>
+    <HeadingBlock size="subtitle" weight="medium" hasNoBodyPadding={hasNoBodyPadding} hasNoHr={hasNoHr}>{heading}</HeadingBlock>
+    { !hasNoHr && <StyledHr hasNoBodyPadding={hasNoBodyPadding} /> }
     {children}
   </StyledSection>
 );
@@ -45,6 +44,7 @@ HeadingBoxSection.propTypes = {
   children: node,
   hasNoBodyPadding: bool,
   hasNoBorder: bool,
+  hasNoHr: bool,
 };
 
 export default HeadingBoxSection;

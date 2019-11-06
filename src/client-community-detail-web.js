@@ -20,7 +20,7 @@ import CommunityQuestionAnswersContainer from 'sly/containers/CommunityQuestionA
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import CommunityMorePicturesContainer from 'sly/containers/CommunityMorePicturesContainer';
-import CommunityMap from 'sly/components/organisms/CommunityMap';
+import LazyCommunityMapContainer from 'sly/containers/LazyCommunityMapContainer';
 import PageViewActionContainer from 'sly/containers/PageViewActionContainer';
 
 const root = document.getElementById('app');
@@ -46,7 +46,7 @@ partiallyHydrateClient(
     CommunityStickyFooter,
     ConciergeContainer,
     CommunityMorePicturesContainer,
-    CommunityMap,
+    LazyCommunityMapContainer,
   ],
   staticPageRoutes.communityDetailPage.path,
   root

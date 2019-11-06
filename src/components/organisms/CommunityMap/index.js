@@ -3,7 +3,6 @@ import { string, number, shape, arrayOf } from 'prop-types';
 import styled from 'styled-components';
 import { Marker, InfoWindow } from 'react-google-maps';
 
-import { isServer } from 'sly/config';
 import { size } from 'sly/components/themes';
 import Map from 'sly/components/atoms/Map';
 import MapTile from 'sly/components/molecules/MapTile';
@@ -47,7 +46,6 @@ const iconMap = {
 };
 
 class CommunityMap extends Component {
-  static typeHydrationId = 'CommunityMap';
   static propTypes = {
     community: shape({
       id: string.isRequired,
@@ -106,8 +104,6 @@ class CommunityMap extends Component {
         clickable: false,
       },
     ];
-
-    if (isServer) return null;
 
     similarProperties.forEach((prop) => {
       const {

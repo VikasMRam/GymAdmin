@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { object } from 'prop-types';
 import Sticky from 'react-stickynode';
-import { Lazy } from 'react-lazy';
+import { ifProp } from 'styled-tools';
 
 import { size, palette, assetPath } from 'sly/components/themes';
 import {
@@ -17,7 +17,7 @@ import {
 } from 'sly/services/helpers/pricing';
 import pad from 'sly/components/helpers/pad';
 import {withHydration} from 'sly/partialHydration';
-import { Button, Paragraph, Block } from 'sly/components/atoms';
+import { Button, Paragraph } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';
 import {
@@ -31,14 +31,11 @@ import {
   makeGallery,
 } from 'sly/components/templates/CommunityDetailPageTemplate';
 import UnhydratedCommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
-import CollapsibleSection, {
-  MainSection,
-} from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import CommunityPricingComparison from 'sly/components/organisms/CommunityPricingComparison';
 import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
-import UnhydratedCommunityMap from 'sly/components/organisms/CommunityMap';
+import UnhydratedLazyCommunityMap from 'sly/containers/LazyCommunityMapContainer';
 import UnhydratedCommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
@@ -67,6 +64,8 @@ import UnhydratedBackToSearchButtonContainer from 'sly/containers/BackToSearchBu
 import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/containers/TrackedSimilarCommunitiesContainer';
 import UnhydratedPageViewActionContainer from 'sly/containers/PageViewActionContainer';
 import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
+import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
+
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGalleryContainer);
 const CommunitySummaryContainer = withHydration(UnhydratedCommunitySummaryContainer);
@@ -84,7 +83,7 @@ const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuest
 const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { alwaysHydrate: true });
 const ConciergeContainer = withHydration(UnhydratedConciergeContainer);
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
-const CommunityMap = withHydration(UnhydratedCommunityMap);
+const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -113,12 +112,8 @@ const StyledOfferNotification = styled(OfferNotification)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const BottomCollapsibleSection = styled(CollapsibleSection)`
-  margin-bottom: ${size('spacing.xxxLarge')};
-`;
-
-const TopCollapsibleSection = styled(CollapsibleSection)`
-  margin-bottom: ${size('spacing.xLarge')};
+const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true })`
+  margin-bottom: ${ifProp('extraBottomMargin', size('spacing.xxxLarge'), size('spacing.xLarge'))};
 `;
 
 const StyledSection = styled(Section)`
@@ -131,16 +126,13 @@ const StyledCommunityExtraInfoSection = styled(CommunityExtraInfoSection)`
 
 const StyledBannerNotification = pad(BannerNotification, 'large');
 
-const ButtonBlock = styled(Block)`
-  padding: ${size('spacing.xLarge')};
-  padding-top: 0;
-`;
-
 const StyledButton = styled(Button)`
   width: 100%;
+  margin-top: ${size('spacing.xLarge')};
 `;
 const StyledLeaveReviewButton = styled(CommunityAddReviewButtonContainer)`
   width: 100%;
+  margin-top: ${size('spacing.xLarge')};
 `;
 
 const EventsWrapper = styled(CollapsibleBlock)`
@@ -156,6 +148,7 @@ const EventsWrapper = styled(CollapsibleBlock)`
 
 const StyledAskAgentButton = styled(AskAgentQuestionButtonContainer)`
   width: 100%;
+  margin-top: ${size('spacing.xLarge')};
 `;
 
 const Header = makeHeader();
@@ -358,81 +351,71 @@ export default class CommunityDetailPage extends Component {
                 )}
                 {communityInsights &&
                   communityInsights.length > 0 && (
-                    <TopCollapsibleSection
-                      title={`Community Insights at ${name}`}
-                    >
-                      <MainSection>
-                        {communityInsights.map(item => (
-                          <IconItemWrapper key={item}>
-                            <IconItem
-                              icon="check"
-                              iconPalette="secondary"
-                              borderless={false}
-                            >
-                              {item}
-                            </IconItem>
-                          </IconItemWrapper>
-                        ))}
-                      </MainSection>
-                    </TopCollapsibleSection>
+                    <StyledHeadingBoxSection heading={`Community Insights at ${name}`}>
+                      {communityInsights.map(item => (
+                        <IconItemWrapper key={item}>
+                          <IconItem
+                            icon="check"
+                            iconPalette="secondary"
+                            borderless={false}
+                          >
+                            {item}
+                          </IconItem>
+                        </IconItemWrapper>
+                      ))}
+                    </StyledHeadingBoxSection>
                   )}
                 {!communityInsights &&
                   autoHighlights && (
-                    <TopCollapsibleSection
-                      title={`Community Highlights at ${name}`}
-                    >
-                      <MainSection>
-                        {autoHighlights.map(item => (
-                          <IconItemWrapper key={item}>
-                            <IconItem
-                              icon="check"
-                              iconPalette="secondary"
-                              borderless={false}
-                            >
-                              {item}
-                            </IconItem>
-                          </IconItemWrapper>
-                        ))}
-                      </MainSection>
-                    </TopCollapsibleSection>
+                    <StyledHeadingBoxSection heading={`Community Highlights at ${name}`}>
+                      {autoHighlights.map(item => (
+                        <IconItemWrapper key={item}>
+                          <IconItem
+                            icon="check"
+                            iconPalette="secondary"
+                            borderless={false}
+                          >
+                            {item}
+                          </IconItem>
+                        </IconItemWrapper>
+                      ))}
+                    </StyledHeadingBoxSection>
                   )}
                 {showSimilarEarlier && (
-                  <TopCollapsibleSection
-                    title={`Similar ${typeOfCare} Communities`}
+                  <StyledHeadingBoxSection
+                    heading={`Similar ${typeOfCare} Communities`}
                     id="sticky-sidebar-boundary"
                   >
-                    <MainSection>
-                      <TrackedSimilarCommunitiesContainer
-                        communities={similarProperties}
-                        communityStyle={similarCommunityStyle}
-                      />
-                      <BackToSearch>
-                        <BackToSearchButtonContainer
-                          communityId={community.id}
-                          href={getCitySearchUrl({ propInfo, address })}
-                          ghost
-                        >
-                          Communities In {address.city}
-                        </BackToSearchButtonContainer>
-                      </BackToSearch>
-                    </MainSection>
-                  </TopCollapsibleSection>
+                    <TrackedSimilarCommunitiesContainer
+                      communities={similarProperties}
+                      communityStyle={similarCommunityStyle}
+                    />
+                    <BackToSearch>
+                      <BackToSearchButtonContainer
+                        communityId={community.id}
+                        href={getCitySearchUrl({ propInfo, address })}
+                        ghost
+                      >
+                        Communities In {address.city}
+                      </BackToSearchButtonContainer>
+                    </BackToSearch>
+                  </StyledHeadingBoxSection>
                 )}
-                <TopCollapsibleSection
-                  title={`${pricingTitle} at ${name}`}
+                <StyledHeadingBoxSection
+                  heading={`${pricingTitle} at ${name}`}
                   id="pricing-and-floor-plans"
                 >
                   {hasCCRC && (
-                    <MainSection>
+                    <>
                       <Paragraph>
                         Pricing for {name} may include both a one time buy-in
                         fee and a monthly component. Connect directly with{' '}
                         {name} to find out your pricing.
                       </Paragraph>
                       <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested}>
-                        Get Detailed Pricing
+                      Get Detailed Pricing
                       </GetCustomPricingButtonContainer>
-                    </MainSection>
+                    </>
                   )}
                   {!hasCCRC && (
                     <CommunityPricingTable
@@ -451,143 +434,92 @@ export default class CommunityDetailPage extends Component {
                       community={community}
                     />
                   )}
-                </TopCollapsibleSection>
+                </StyledHeadingBoxSection>
 
-                <TopCollapsibleSection
-                  title={`Get Availability at ${name}`}
+                <StyledHeadingBoxSection
+                  heading={`Get Availability at ${name}`}
                   id="availability"
                 >
-                  <MainSection>
-                    <GetCurrentAvailabilityContainer
-                      hasAlreadyRequestedPricing={isAlreadyPricingRequested}
-                    />
-                  </MainSection>
-                </TopCollapsibleSection>
+                  <GetCurrentAvailabilityContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested} />
+                </StyledHeadingBoxSection>
                 {plusCommunity && <PlusBranding />}
                 {(communityDescription || rgsAux.communityDescription) && (
-                  <TopCollapsibleSection
-                    title={`Details on ${name}`}
-                    id="details"
-                  >
-                    <MainSection>
-                      <CommunityDetails
-                        communityName={name}
-                        communityDescription={communityDescription}
-                        rgsAuxDescription={rgsAux.communityDescription}
-                        staffDescription={staffDescription}
-                        residentDescription={residentDescription}
-                        ownerExperience={ownerExperience}
-                        city={address.city}
-                        state={address.state}
-                        twilioNumber={twilioNumber}
-                        guideUrl={guideUrl}
-                      />
-                    </MainSection>
-                  </TopCollapsibleSection>
+                  <StyledHeadingBoxSection heading={`Details on ${name}`}>
+                    <CommunityDetails
+                      communityName={name}
+                      communityDescription={communityDescription}
+                      rgsAuxDescription={rgsAux.communityDescription}
+                      staffDescription={staffDescription}
+                      residentDescription={residentDescription}
+                      ownerExperience={ownerExperience}
+                      city={address.city}
+                      state={address.state}
+                      twilioNumber={twilioNumber}
+                      guideUrl={guideUrl}
+                    />
+                  </StyledHeadingBoxSection>
                 )}
-                <TopCollapsibleSection title={`How Seniorly Works in ${address.city}, ${address.state}`}>
-                  <MainSection noPadding>
-                    <HowSlyWorksVideoContainer eventLabel={community.id} />
-                  </MainSection>
-                </TopCollapsibleSection>
+                <StyledHeadingBoxSection heading={`How Seniorly Works in ${address.city}, ${address.state}`} hasNoBodyPadding>
+                  <HowSlyWorksVideoContainer eventLabel={community.id} />
+                </StyledHeadingBoxSection>
                 {partnerAgent && (
-                  <TopCollapsibleSection
-                    title={`Your Seniorly Partner Agent for ${name}`}
-                  >
-                    <MainSection>
-                      <CommunityAgentSectionContainer agent={partnerAgent} />
-                    </MainSection>
-                    <ButtonBlock>
-                      <StyledAskAgentButton
-                        type="services"
-                      >
-                        Ask a Question
-                      </StyledAskAgentButton>
-                    </ButtonBlock>
-                  </TopCollapsibleSection>
+                  <StyledHeadingBoxSection heading={`Your Seniorly Partner Agent for ${name}`}>
+                    <CommunityAgentSectionContainer agent={partnerAgent} />
+                    <StyledAskAgentButton type="services">Ask a Question</StyledAskAgentButton>
+                  </StyledHeadingBoxSection>
                 )}
                 {careServices &&
                   careServices.length > 0 && (
-                    <TopCollapsibleSection title={`Care Services at ${name}`}>
-                      <MainSection>
-                        <CommunityCareService careServices={careServices} />
-                      </MainSection>
-                      <ButtonBlock>
-                        <StyledAskAgentButton type="services">
-                          Ask About Care Services
-                        </StyledAskAgentButton>
-                      </ButtonBlock>
-                    </TopCollapsibleSection>
+                    <StyledHeadingBoxSection heading={`Care Services at ${name}`}>
+                      <CommunityCareService careServices={careServices} />
+                      <StyledAskAgentButton type="services">Ask About Care Services</StyledAskAgentButton>
+                    </StyledHeadingBoxSection>
                   )}
-                <TopCollapsibleSection title={`Amenities at ${name}`}>
-                  <MainSection>
-                    <CommunityAmenities community={community} />
-                  </MainSection>
-                  <ButtonBlock>
-                    <StyledAskAgentButton type="services">
-                      Ask About Amenities
-                    </StyledAskAgentButton>
-                  </ButtonBlock>
-                </TopCollapsibleSection>
+                <StyledHeadingBoxSection heading={`Amenities at ${name}`}>
+                  <CommunityAmenities community={community} />
+                  <StyledAskAgentButton type="services">Ask About Amenities</StyledAskAgentButton>
+                </StyledHeadingBoxSection>
                 {sortedEstimatedPrice.length > 0 && (
-                  <TopCollapsibleSection
-                    title={`Compare Costs to Nearby ${typeOfCare} Communities`}
-                  >
-                    <MainSection>
-                      <CommunityPricingComparison community={community} />
-                    </MainSection>
-                  </TopCollapsibleSection>
+                  <StyledHeadingBoxSection heading={`Compare Costs to Nearby ${typeOfCare} Communities`}>
+                    <CommunityPricingComparison community={community} />
+                  </StyledHeadingBoxSection>
                 )}
-                <TopCollapsibleSection
-                  title={`Reviews at ${name}`}
+                <StyledHeadingBoxSection
+                  heading={`Reviews at ${name}`}
                   id="reviews"
                 >
-                  <MainSection>
-                    <CommunityReviewsContainer />
-                  </MainSection>
-                  <ButtonBlock>
-                    <StyledLeaveReviewButton>Write a Review</StyledLeaveReviewButton>
-                  </ButtonBlock>
-                </TopCollapsibleSection>
+                  <CommunityReviewsContainer />
+                  <StyledLeaveReviewButton>Write a Review</StyledLeaveReviewButton>
+                </StyledHeadingBoxSection>
 
-                <TopCollapsibleSection title={`Questions About ${name}`}>
-                  <MainSection>
-                    <CommunityQuestionAnswersContainer />
-                  </MainSection>
-                </TopCollapsibleSection>
+                <StyledHeadingBoxSection heading={`Questions About ${name}`}>
+                  <CommunityQuestionAnswersContainer />
+                </StyledHeadingBoxSection>
                 {plusCommunity && eventsLink && sampleEvents &&
-                <TopCollapsibleSection title={`Events at ${name}`}>
-                  <MainSection>
-                    <EventsWrapper>
-                      {sampleEvents.map(item => (
-                        <IconItemWrapper key={item}>
-                          <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
-                        </IconItemWrapper>))
-                      }
-                    </EventsWrapper>
-                  </MainSection>
-                  <ButtonBlock>
-                    {/* todo: fix this */}
-                    <StyledButton href={eventsLink} onClick={clickEventHandler('events', name)} target="_blank" ghost>Download Events Calendar</StyledButton>
-                  </ButtonBlock>
-                </TopCollapsibleSection>
+                <StyledHeadingBoxSection heading={`Events at ${name}`}>
+                  <EventsWrapper>
+                    {sampleEvents.map(item => (
+                      <IconItemWrapper key={item}>
+                        <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
+                      </IconItemWrapper>))
+                    }
+                  </EventsWrapper>
+                  {/* todo: fix this */}
+                  <StyledButton href={eventsLink} onClick={clickEventHandler('events', name)} target="_blank" ghost>Download Events Calendar</StyledButton>
+                </StyledHeadingBoxSection>
                 }
 
                 {plusCommunity && menuLink &&
-                <TopCollapsibleSection title={`Sample Menu at ${name}`}>
-                  <MainSection>
-                    <SampleMenu
-                      sampleAppetizers={sampleAppetizers}
-                      sampleMain={sampleMain}
-                      sampleSide={sampleSide}
-                      sampleDessert={sampleDessert}
-                    />
-                  </MainSection>
-                  <ButtonBlock>
-                    {/* todo: fix this */}
-                    <StyledButton href={menuLink} onClick={clickEventHandler('menu', name)} target="_blank" ghost>Download Current Menu</StyledButton>
-                  </ButtonBlock>
-                </TopCollapsibleSection>
+                <StyledHeadingBoxSection heading={`Sample Menu at ${name}`}>
+                  <SampleMenu
+                    sampleAppetizers={sampleAppetizers}
+                    sampleMain={sampleMain}
+                    sampleSide={sampleSide}
+                    sampleDessert={sampleDessert}
+                  />
+                  {/* todo: fix this */}
+                  <StyledButton href={menuLink} onClick={clickEventHandler('menu', name)} target="_blank" ghost>Download Current Menu</StyledButton>
+                </StyledHeadingBoxSection>
                 }
 
                 {rgsAux.stateLicensingWebsite && (
@@ -607,26 +539,25 @@ export default class CommunityDetailPage extends Component {
                   urlText="Simply claim your profile by clicking here"
                 />
                 {!showSimilarEarlier && (
-                  <BottomCollapsibleSection
-                    title={`Similar ${typeOfCare} Communities`}
+                  <StyledHeadingBoxSection
+                    heading={`Similar ${typeOfCare} Communities`}
                     id="sticky-sidebar-boundary"
+                    extraBottomMargin
                   >
-                    <MainSection>
-                      <TrackedSimilarCommunitiesContainer
-                        communities={similarProperties}
-                        communityStyle={similarCommunityStyle}
-                      />
-                      <BackToSearch>
-                        <BackToSearchButtonContainer
-                          communityId={community.id}
-                          href={getCitySearchUrl({ propInfo, address })}
-                          ghost
-                        >
-                          Communities In {address.city}
-                        </BackToSearchButtonContainer>
-                      </BackToSearch>
-                    </MainSection>
-                  </BottomCollapsibleSection>
+                    <TrackedSimilarCommunitiesContainer
+                      communities={similarProperties}
+                      communityStyle={similarCommunityStyle}
+                    />
+                    <BackToSearch>
+                      <BackToSearchButtonContainer
+                        communityId={community.id}
+                        href={getCitySearchUrl({ propInfo, address })}
+                        ghost
+                      >
+                        Communities In {address.city}
+                      </BackToSearchButtonContainer>
+                    </BackToSearch>
+                  </StyledHeadingBoxSection>
                 )}
                 <CommunityStickyFooter isAlreadyPricingRequested={isAlreadyPricingRequested} />
               </Body>
@@ -647,13 +578,7 @@ export default class CommunityDetailPage extends Component {
             <Section title={`Map View of ${name}`} titleSize="subtitle" />
           </Wrapper>
           <StyledSection>
-            <Lazy ltIE9 component="div">
-              {/* todo: fix this */}
-              <CommunityMap
-                community={community}
-                similarProperties={similarProperties}
-              />
-            </Lazy>
+            <LazyCommunityMap />
           </StyledSection>
 
           {nearbyCities &&
