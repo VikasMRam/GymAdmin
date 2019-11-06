@@ -41,9 +41,8 @@ export default class Router extends Component {
     requiresAuth: [],
   };
 
-  componentDidMount() {
+  checkLoginRedirect() {
     const {
-      enableEvents,
       authenticated,
       location,
       history,
@@ -51,11 +50,6 @@ export default class Router extends Component {
     } = this.props;
 
     const { pathname, search, hash } = location;
-
-    if (enableEvents) {
-      SlyEvent.getInstance()
-        .sendPageView(pathname, search);
-    }
 
     const { loginRedirect } = parseURLQueryParams(search);
     if (!authenticated.loggingIn && loginRedirect) {
@@ -70,16 +64,22 @@ export default class Router extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { enableEvents } = this.props;
-    if (enableEvents && this.props.location !== nextProps.location) {
-      const { pathname, search } = nextProps.location;
-      SlyEvent.getInstance().sendPageView(pathname, search);
+  componentDidMount() {
+    const {
+      enableEvents,
+      location,
+    } = this.props;
+
+    const { pathname, search } = location;
+
+    if (enableEvents) {
+      SlyEvent.getInstance()
+        .sendPageView(pathname, search);
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { location } = this.props;
+    const { location, enableEvents } = this.props;
     const { pathname, search } = location;
     const { pathname: prevPathname, search: prevSearch } = prevProps.location;
 
@@ -88,7 +88,12 @@ export default class Router extends Component {
 
     if (pathname !== prevPathname) {
       // call component did mount here too
-      this.componentDidMount();
+      this.checkLoginRedirect();
+    }
+
+    if (enableEvents && prevProps.location !== location) {
+      const { pathname, search } = location;
+      SlyEvent.getInstance().sendPageView(pathname, search);
     }
 
     if (pathname !== prevPathname || bumpOnSearch(prevQs, qs)) {
