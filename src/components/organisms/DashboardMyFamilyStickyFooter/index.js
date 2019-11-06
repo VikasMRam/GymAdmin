@@ -15,8 +15,9 @@ const FooterWrapper = styled.div`
 
 const OptionsButton = styled(Button)`
   margin-left: auto;
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: none;
+    margin-left: initial;
   }
 `;
 
@@ -65,10 +66,10 @@ const DashboardMyFamilyStickyFooter = ({
       {!showAcceptRejectButtons &&
         <>
           <Stage stage={stage} stageLabel={stageLabel} />
-          <OptionsButton onClick={onOptionsClick} >...</OptionsButton>
           <RightSideButtons>
-            {[...options].reverse().map(option => <Button key={option.text} onClick={option.onClick} ghost={option.ghost}>{option.text}</Button>)}
+            {[...options].reverse().slice(0, 1).map(option => <Button key={option.text} onClick={option.onClick} ghost={option.ghost}>{option.text}</Button>)}
           </RightSideButtons>
+          {options.length > 1 && <OptionsButton onClick={onOptionsClick} >...</OptionsButton>}
         </>
       }
       {showAcceptRejectButtons &&
