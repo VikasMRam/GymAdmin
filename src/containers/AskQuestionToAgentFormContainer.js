@@ -4,15 +4,9 @@ import { func, object, shape, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { query } from 'sly/services/newApi';
-import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { connectController } from 'sly/controllers';
 import agentPropType from 'sly/propTypes/agent';
 import AskQuestionToAgentForm from 'sly/components/molecules/AskQuestionToAgentForm';
 import { createValidator, required, usPhone, email } from 'sly/services/validation';
-import withServerState from 'sly/store/withServerState';
-import { getDetail } from 'sly/store/selectors';
-import { ASK_AGENT } from 'sly/services/api/actions';
-import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 import SlyEvent from 'sly/services/helpers/events';
 import { AGENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
 
@@ -33,25 +27,7 @@ const ReduxForm = reduxForm({
   destroyOnUnmount: false,
 })(AskQuestionToAgentForm);
 
-const mapStateToProps = (state, { location }) => ({
-  userDetails: (getDetail(state, 'userAction') || {}).userDetails,
-  pathName: location.pathname,
-});
-
-const mapDispatchToProps = dispatch => ({
-  postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
-});
-
-const mapPropsToActions = () => ({
-  userDetails: resourceDetailReadRequest('userAction'),
-});
-
 @withRouter
-
-@withServerState(mapPropsToActions)
-
-@connectController(mapStateToProps, mapDispatchToProps)
-
 @query('createAction', 'createUuidAction')
 
 export default class AskQuestionToAgentFormContainer extends Component {
@@ -68,25 +44,11 @@ export default class AskQuestionToAgentFormContainer extends Component {
 
   handleSubmit = (data) => {
     const {
-      agent, userDetails, postUserAction, postSubmit, createAction, match,
+      agent, postSubmit, createAction, match,
     } = this.props;
 
-    const { question } = data;
-
     const { id } = agent;
-    const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
-    const value = {
-      question,
-      slug: id,
-      user,
-    };
-    const payload = {
-      action: ASK_AGENT,
-      value,
-    };
-
     return Promise.all([
-      postUserAction(payload),
       createAction({
         type: 'UUIDAction',
         attributes: {
@@ -116,17 +78,9 @@ export default class AskQuestionToAgentFormContainer extends Component {
   };
 
   render() {
-    if (!this.props.userDetails) {
-      return null;
-    }
-
-    const initialValues = {
-      question: '',
-    };
-
     return (
       <ReduxForm
-        initialValues={initialValues}
+        initialValues={{ question: '' }}
         onSubmit={this.handleSubmit}
         {...this.props}
       />

@@ -1,4 +1,4 @@
-import { get, patch, post, destroy } from './httpMethods';
+import { get, patch, put, post, destroy } from './httpMethods';
 
 // method names should start with `get`, `create`, `update`, `delete`
 // patch is prefered over put as per specification
@@ -32,6 +32,7 @@ export default {
   setPassword: { method: post, path: '/platform/auth/password' },
   updatePassword: { method: post, path: '/platform/auth/password/update' },
   recoverPassword: { method: post, path: '/platform/auth/recover' },
+  resetPassword: { method: post, path: '/platform/auth/recover/end' },
 
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
   getCommunities: { method: get, path: '/marketplace/communities' },
@@ -45,6 +46,8 @@ export default {
   createQuestion: { method: post, path: '/platform/questions' },
   createRating: { method: post, path: '/platform/ratings' },
   createAnswer: { method: post, path: '/platform/answers' },
+  updateContent: { method: put, path: '/platform/contents/:id' },
+  updateRating: { method: put, path: '/platform/ratings/:id' },
 
   getClients: { method: get, path: '/marketplace/clients' },
   getClient: { method: get, path: '/marketplace/clients/:id' },
