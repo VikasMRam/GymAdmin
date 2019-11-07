@@ -73,21 +73,19 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
 
     clearSubmitErrors();
 
-    return Promise.all([
-      createAction({
-        type: 'UUIDAction',
-        attributes: {
-          actionType: EXIT_INTENT_ASK_QUESTIONS,
-          actionPage: pathname,
-          actionInfo: {
-            question,
-            name: user.full_name,
-            email: user.email,
-          },
+    createAction({
+      type: 'UUIDAction',
+      attributes: {
+        actionType: EXIT_INTENT_ASK_QUESTIONS,
+        actionPage: pathname,
+        actionInfo: {
+          question,
+          name: user.full_name,
+          email: user.email,
         },
-      }),
-    ]).then(() => {
-      this.props.sendEvent('question-form-send', this.props.pathname);
+      },
+    }).then(() => {
+      sendEvent('question-form-send', this.props.pathname);
       showModal(<Thankyou />);
     });
   };
@@ -101,7 +99,8 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
       <ReduxForm
         initialValues={initialValues}
         onSubmit={this.handleSubmit}
-        {...this.props} />
+        {...this.props}
+      />
     );
   }
 }

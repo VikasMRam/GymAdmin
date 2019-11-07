@@ -9,8 +9,7 @@ import { ServerStateProvider } from 'react-router-server';
 import Modal from 'react-modal';
 import { loadableReady } from '@loadable/component';
 
-import RetentionPopup from './services/retentionPopup/index';
-
+import RetentionPopup from 'sly/services/retentionPopup';
 import App from 'sly/components/App';
 import { ApiProvider, createApi } from 'sly/services/newApi';
 import configureStore from 'sly/store/configure';

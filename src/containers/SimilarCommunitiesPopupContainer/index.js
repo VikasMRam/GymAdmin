@@ -57,7 +57,8 @@ export default class SimilarCommunitiesPopupContainer extends PureComponent {
             sendEvent('similar-community-click', index.toString(), to);
             hideModal();
           }}
-          communityStyle={communityStyle} />
+          communityStyle={communityStyle}
+        />
       </>
     );
   }

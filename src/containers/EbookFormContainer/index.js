@@ -8,6 +8,7 @@ import { query } from 'sly/services/newApi';
 import EbookForm from 'sly/components/organisms/EbookForm';
 import withNotification from 'sly/controllers/withNotification';
 import SlyEvent from 'sly/services/helpers/events';
+import { EBOOK_SEND_EMAIL } from 'sly/services/newApi/constants';
 
 const formName = 'EbookForm';
 const validate = createValidator({
@@ -28,21 +29,24 @@ const ReduxForm = reduxForm({
   onSubmitSuccess: afterSubmit,
 })(EbookForm);
 
+ReduxForm.displayName = 'EbookForm';
+
 const mapDispatchToProps = dispatch => ({
   clearErrors: () => dispatch(clearSubmitErrors(formName)),
 });
 
 @withNotification
 @query('sendEbook', 'sendEbook')
+@query('createAction', 'createUuidAction')
 @connect(null, mapDispatchToProps)
 export default class EbookFormContainer extends PureComponent {
   static propTypes = {
     sendEbook: func.isRequired,
     clearErrors: func.isRequired,
-    showModal: func.isRequired,
     hideModal: func.isRequired,
-    pathname: string,
     notifyInfo: func.isRequired,
+    createAction: func.isRequired,
+    pathname: string,
     event: string,
   };
 
@@ -60,20 +64,35 @@ export default class EbookFormContainer extends PureComponent {
 
   handleSubmit = (data) => {
     const {
-      sendEbook, clearErrors, notifyInfo, event,
+      clearErrors, event, hideModal, notifyInfo, sendEbook, createAction, pathname,
     } = this.props;
 
     clearErrors();
 
-    return sendEbook(data).then(
+    Promise.all([
+      sendEbook({
+        type: 'HealthyAging',
+        attributes: {
+          ...data,
+        },
+      }),
+      createAction({
+        type: 'UUIDAction',
+        attributes: {
+          actionType: EBOOK_SEND_EMAIL,
+          actionPage: pathname,
+          actionInfo: {
+            email: data.email,
+          },
+        },
+      }),
+    ]).then(
       () => {
+        hideModal();
         sendEvent(`${event}-send-mail`, this.props.pathname);
-
-        notifyInfo(`we have sent the booklet to your email ${data.email}`);
+        notifyInfo(`We have sent the booklet to your email ${data.email}`);
       },
     ).catch((response) => {
-      notifyInfo(`we have sent the booklet to your email ${data.email}`);
-
       const errorMessage = Object.values(response.body.errors).join('. ');
 
       throw new SubmissionError({ _error: errorMessage });

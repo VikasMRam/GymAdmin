@@ -76,37 +76,37 @@ const StyledButton = styled(Button)`
 
 const EbookForm = ({
   handleSubmit, submitting, error,
-}) => (
-  <Wrapper>
-    <Header>
-      <StyledHeading palette="white">
-          Exclusive Offer!
-        <br />
-          Get our free eBook
-        </StyledHeading>
-      <Description palette="white">
-          The Healthy Aging Handbook
-        <br />
-          A simple and comprehensive guide on senior living
-        </Description>
-    </Header>
-    <Content>
-      <Form onSubmit={handleSubmit}>
-        <StyledField
-          name="email"
-          label="Email Address"
-          type="email"
-          component={ReduxField} />
-        {error && <Block palette="danger">{error}</Block>}
-        <BottomWrapper>
-          <StyledButton error={error} type="submit" disabled={submitting}>
-              Email me the free eBook
-            </StyledButton>
-        </BottomWrapper>
-      </Form>
+}) => (<Wrapper>
+  <Header>
+    <StyledHeading palette="white">
+      Exclusive Offer!
+      <br />
+      Get our free eBook
+    </StyledHeading>
+    <Description palette="white">
+      The Healthy Aging Handbook
+      <br />
+      A simple and comprehensive guide on senior living
+    </Description>
+  </Header>
+  <Content>
+    <Form onSubmit={handleSubmit}>
+      <StyledField
+        name="email"
+        label="Email Address"
+        type="email"
+        component={ReduxField}
+      />
+      {error && <Block palette="danger">{error}</Block>}
+      <BottomWrapper>
+        <StyledButton error={error} type="submit" disabled={submitting}>
+          Email me the free eBook
+        </StyledButton>
+      </BottomWrapper>
+    </Form>
 
-    </Content>
-  </Wrapper>
+  </Content>
+</Wrapper>
 );
 
 EbookForm.propTypes = {
