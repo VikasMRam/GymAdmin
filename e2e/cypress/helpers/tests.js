@@ -74,4 +74,6 @@ export const select = (selector) => {
   return cy.get(getSelector(selector));
 };
 
-export const waitForHydration = () => cy.wait(200);
+export const waitForHydration = (cyElement) => {
+  return cyElement.scrollIntoView().wait(20000);
+};
