@@ -21,7 +21,7 @@ const submit = data => resourceCreateRequest('userAction', data);
 
 @connect(null, { submit })
 
-class CommunityInpageWizardContainer extends Component {
+export default class CommunityInpageWizardContainer extends Component {
   static propTypes = {
     community: communityPropType,
     userAction: object,
@@ -99,5 +99,3 @@ class CommunityInpageWizardContainer extends Component {
     );
   };
 }
-
-export default CommunityInpageWizardContainer;
