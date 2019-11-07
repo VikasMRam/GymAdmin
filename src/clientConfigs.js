@@ -7,10 +7,20 @@ const careTypes = [
   'continuing-care-retirement-community',
 ];
 
-export default {
-  communityDetailPage: {
-    path: `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
-    nodeStatsFile: 'dist/loadable-stats-community-detail-node.json',
-    webStatsFile: 'dist/loadable-stats-community-detail-web.json',
+export default [
+  {
+    bundle: 'external',
+    ssr: false,
+    path: '/external*',
   },
-};
+  {
+    bundle: 'community-details',
+    ssr: true,
+    path: `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
+  },
+  {
+    bundle: 'main',
+    ssr: true,
+    path: '*',
+  },
+];

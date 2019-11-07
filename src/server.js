@@ -31,23 +31,10 @@ import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 import { createApi as createBeesApi } from 'sly/services/newApi';
 import ApiProvider, { makeApiCall } from 'sly/services/newApi/ApiProvider';
-import staticPageRoutes from 'sly/staticPageRoutes';
+import clientConfigs from 'sly/clientConfigs';
 
 const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
 const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
-
-const clientConfigs = [
-  {
-    bundle: 'external',
-    ssr: false,
-    path: '/external*',
-  },
-  {
-    bundle: 'client',
-    ssr: true,
-    path: '*',
-  },
-];
 
 const getErrorContent = (err) => {
   if (isDev) {
@@ -279,29 +266,15 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// create chunk extractors for static page routes
-Object.values(staticPageRoutes).forEach((route) => {
-  app.use(route.path, (req, res, next) => {
-    req.nodeChunkExtractor = new ChunkExtractor({
-      statsFile: path.resolve(process.cwd(), route.nodeStatsFile),
-    });
-    req.webChunkExtractor = new ChunkExtractor({
-      statsFile: path.resolve(process.cwd(), route.webStatsFile),
-    });
-    next();
-  });
-});
-
-
 // render
 app.use(async (req, res, next) => {
-  const { store, api } = req.clientConfig;
+  const { store, api, bundle } = req.clientConfig;
 
   try {
-    const extractorNode = req.nodeChunkExtractor || new ChunkExtractor({ statsFile: statsNode });
+    const extractorNode = new ChunkExtractor({ statsFile: statsNode, entrypoints: [bundle] });
     const { default: ClientApp } = extractorNode.requireEntrypoint();
 
-    const extractorWeb = req.webChunkExtractor || new ChunkExtractor({ statsFile: statsWeb });
+    const extractorWeb = new ChunkExtractor({ statsFile: statsWeb, entrypoints: [bundle] });
 
     const sheet = new ServerStyleSheet();
     const context = {};

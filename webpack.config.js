@@ -321,12 +321,6 @@ const client = (target, entries) => {
 
     devCORS,
 
-    optimization({
-      splitChunks: {
-        chunks: 'all',
-      },
-    }),
-
     addPlugins([new LoadablePlugin({ filename: `../loadable-stats-${target}.json` })]),
 
     when(isDev || isStaging, [sourceMaps()]),
@@ -335,16 +329,12 @@ const client = (target, entries) => {
 
 module.exports = [
   client('web', {
+    'community-details': clientCommunityDetailWebEntryPath,
     main: clientWebEntryPath,
     external: externalEntryPath,
   }),
-  client('community-detail-web', {
-    main: clientCommunityDetailWebEntryPath,
-  }),
-  client('community-detail-node', {
-    main: clientCommunityDetailNodeEntryPath,
-  }),
   client('node', {
+    'community-details': clientCommunityDetailNodeEntryPath,
     main: clientNodeEntryPath,
   }),
   server,
