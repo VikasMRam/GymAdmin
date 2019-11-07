@@ -30,7 +30,7 @@ const StyledNameCell = ({
     <Td disabled={disabled} {...props}>
       <ClampedText size={size('weight.medium')}>
         <Link to={generatePath(ADMIN_DASHBOARD_CALL_DETAILS_PATH, {id})} {...props}>
-          {toNumber}
+          See Details
         </Link>
       </ClampedText>
     </Td>
