@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
+
 import { assetPath } from 'sly/components/themes';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import SlyEvent from 'sly/services/helpers/events';
-import withModal from "sly/controllers/withModal";
-import withNotification from "sly/controllers/withNotification";
+import withModal from 'sly/controllers/withModal';
+import withNotification from 'sly/controllers/withNotification';
 
 @withModal
 @withNotification
+
 export default class AskAgentQuestionContainer extends Component {
   static propTypes = {
     type: string.isRequired,

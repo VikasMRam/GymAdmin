@@ -24,10 +24,8 @@ describe('DashboardMyFamilyStickyFooter', () => {
     const wrapper = wrap();
 
     const buttons = wrapper.find('RightSideButtons').find('Button');
-    expect(buttons).toHaveLength(options.length);
-    buttons.forEach((button, i) => {
-      expect(button.contains(options[options.length - 1 - i].text)).toBeTruthy();
-    });
+    expect(buttons).toHaveLength(1);
+    expect(buttons.at(0).contains(options[options.length - 1].text)).toBeTruthy();
   });
 
   it('renders with showAcceptRejectButtons', () => {
