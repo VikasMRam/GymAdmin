@@ -42,7 +42,7 @@ describe('Ask Question Community', () => {
 
     cy.wait('@postUuidActions');
 
-    cy.get('button').contains('Ask a Question').click();
+    waitForHydration(cy.get('button').contains('Ask a Question')).click();
 
     const questionText = `my comments ${randHash()}`;
     let questionId;
@@ -102,11 +102,13 @@ describe('Ask Question Community', () => {
   };
 
   const leaveAnswer = (questionText) => {
-    waitForHydration();
-    select('.CollapsibleSection__MainSection').contains(questionText)
+    waitForHydration(
+    select('h3').contains(`Questions About ${community.name}`)
+      .parent()
+      .get('article').contains(questionText)
       .parent()
       .next()
-      .next()
+      .next())
       .click();
 
     const commentText = `my replay ${randHash()}`;
@@ -128,7 +130,7 @@ describe('Ask Question Community', () => {
       lastQuestion('div').contains(questionText).should('exist');
     });
 
-    it.only('should leave an answer', () => {
+    it('should leave an answer', () => {
       // add answer to question added in previous test
       cy.route('POST', '**/answers').as('postAnswers');
       cy.route('POST', '**/auth/login').as('postLogin');

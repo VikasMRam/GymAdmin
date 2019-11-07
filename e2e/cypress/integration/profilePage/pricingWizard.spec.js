@@ -15,8 +15,7 @@ describe('Marketplace Profile Page', () => {
       if (viewport === 'mobile' || viewport === 'tablet') {
         cy.visit(`/assisted-living/california/san-francisco/${TEST_COMMUNITY}`);
 
-        waitForHydration();
-        cy.get('button').contains('Get Pricing').click();
+        waitForHydration(cy.get('button').contains('Get Pricing')).click();
       } else {
         // FIXME: Fix going to custom pricing on Request Info button click
         // cy.get('form[name="ConversionForm"] input[name="full_name"]').type(name);

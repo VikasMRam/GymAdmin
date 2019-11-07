@@ -16,8 +16,7 @@ describe('Marketplace Profile Page', () => {
 
       cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
 
-      waitForHydration();
-      cy.get('button').contains('Get Detailed Pricing').click();
+      waitForHydration(cy.get('button').contains('Get Detailed Pricing')).click();
 
       const data = {
         communitySlug, name, phoneNumber, typeOfRoom, typeOfCare, medicaid, email,
