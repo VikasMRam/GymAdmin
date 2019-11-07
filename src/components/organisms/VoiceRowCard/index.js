@@ -99,8 +99,11 @@ const VoiceRowCard = ({ voiceCall }) => {
   const {
     toNumber, fromNumber, status, assignedTo,
   } = voiceCall;
-  console.log("thisis a toNumber",voiceCall);
-  return (
+  let name = null ;
+  if (assignedTo) {
+    ({name} = assignedTo);
+  }
+   return (
     <Wrapper>
       <NameCell call={voiceCall} />
       <DueDateCell>
@@ -113,8 +116,9 @@ const VoiceRowCard = ({ voiceCall }) => {
       </PriorityCell>
       <AssignedToCell>
         <span>Assigned to</span>
-        <span>{assignedTo}</span>
+        {name && <span>{name}</span>}
       </AssignedToCell>
+
     </Wrapper>
   );
 };
