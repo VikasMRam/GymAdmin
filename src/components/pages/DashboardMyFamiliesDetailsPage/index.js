@@ -468,6 +468,50 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     );
   };
 
+  getStickyFooterOptions = (showUpdateAddNoteButtons, showAcceptRejectButtons) => {
+    const { hideModal, onAcceptClick } = this.props;
+
+    // showUpdateAddNote Button overrides showAcceptReject Buttons
+    if (showUpdateAddNoteButtons) {
+      const {
+        messagesPath,
+        communitiesPath,
+        agentsPath,
+      } = this.getTabPathsForUser();
+      return [
+        {
+          text: 'Add note', icon: 'add-note', iconPalette: 'slate', onClick: this.handleAddNoteClick, ghost: true,
+        },
+        {
+          text: 'Add task', icon: 'checkbox-fill', iconPalette: 'slate', onClick: this.handleAddTaskClick, ghost: true,
+        },
+        {
+          text: 'Message family', icon: 'message', iconPalette: 'slate', onClick: hideModal, to: messagesPath, ghost: true,
+        },
+        {
+          text: 'Send agent refferal', icon: 'send', iconPalette: 'slate', onClick: hideModal, to: agentsPath, ghost: true,
+        },
+        {
+          text: 'Send community refferal', icon: 'send', iconPalette: 'slate', onClick: hideModal, to: communitiesPath, ghost: true,
+        },
+        {
+          text: 'Update stage', icon: 'flag', iconPalette: 'slate', onClick: this.handleUpdateClick,
+        },
+      ];
+    }
+    if (showAcceptRejectButtons) {
+      return [
+        {
+          text: 'Accept and contact this family', icon: 'flag', palette: 'primary', iconPalette: 'slate', onClick: onAcceptClick,
+        },
+        {
+          text: 'Reject', icon: 'add-note', iconPalette: 'slate', palette: 'danger', onClick: this.handleRejectClick, ghost: true,
+        },
+      ];
+    }
+    return [];
+  };
+
   render() {
     const {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
@@ -507,8 +551,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const showAcceptRejectButtons = stage === FAMILY_STAGE_NEW;
     let showUpdateAddNoteButtons = stage !== FAMILY_STAGE_NEW;
     let canEditFamilyDetails = isConnected;
-    // Sticky footer is for smaller width devices
-    let stickyFooterOptions = [];
     const isClientAdminUser = userIs(user, PLATFORM_ADMIN_ROLE) ||
       (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg);
     // Rule when lead is created by self
@@ -516,44 +558,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       showUpdateAddNoteButtons = true;
       canEditFamilyDetails = true;
     }
-    if (showAcceptRejectButtons) {
-      stickyFooterOptions = [
-        {
-          text: 'Accept and contact this family', icon: 'flag', palette: 'primary', iconPalette: 'slate', onClick: onAcceptClick,
-        },
-        {
-          text: 'Reject', icon: 'add-note', iconPalette: 'slate', palette: 'danger', onClick: this.handleRejectClick, ghost: true,
-        },
-      ];
-    }
-    // showUpdateAddNote Button overrides showAcceptReject Buttons
-    if (showUpdateAddNoteButtons) {
-      const {
-        messagesPath,
-        communitiesPath,
-        agentsPath,
-      } = this.getTabPathsForUser();
-      stickyFooterOptions = [
-        {
-          text: 'Add note', icon: 'add-note', iconPalette: 'slate', onClick: this.handleAddNoteClick, ghost: true,
-        },
-        {
-          text: 'Add task', icon: 'checkbox-fill', iconPalette: 'slate', onClick: this.handleAddTaskClick, ghost: true,
-        },
-        {
-          text: 'Message family', icon: 'message', iconPalette: 'slate', onClick: hideModal, to: messagesPath, ghost: true,
-        },
-        {
-          text: 'Send agent refferal', icon: 'send', iconPalette: 'slate', onClick: hideModal, to: agentsPath, ghost: true,
-        },
-        {
-          text: 'Send community refferal', icon: 'send', iconPalette: 'slate', onClick: hideModal, to: communitiesPath, ghost: true,
-        },
-        {
-          text: 'Update stage', icon: 'flag', iconPalette: 'slate', onClick: this.handleUpdateClick,
-        },
-      ];
-    }
+    // Sticky footer is for smaller width devices
+    const stickyFooterOptions = this.getStickyFooterOptions(showUpdateAddNoteButtons, showAcceptRejectButtons);
 
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) => {

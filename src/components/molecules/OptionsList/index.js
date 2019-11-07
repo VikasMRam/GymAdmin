@@ -3,16 +3,15 @@ import styled from 'styled-components';
 import { arrayOf, shape, string, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import cursor from 'sly/components/helpers/cursor';
 import { Hr, Link } from 'sly/components/atoms';
 import IconItem from 'sly/components/molecules/IconItem';
 
 const getMarginRight = p => p.borderless ? size('spacing', p.iconRightMarginSpacing) : size('spacing.large');
 
-const OptionItemWrapper = cursor(styled(Link)`
+const OptionItemWrapper = styled(Link)`
   margin: ${size('spacing.large')} 0;
   padding-left: ${size('spacing.regular')};
-`);
+`;
 OptionItemWrapper.displayName = 'OptionItemWrapper';
 
 const StyledHr = styled(Hr)`

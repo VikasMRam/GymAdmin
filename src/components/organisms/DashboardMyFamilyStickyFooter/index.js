@@ -66,10 +66,20 @@ const DashboardMyFamilyStickyFooter = ({
       {!showAcceptRejectButtons &&
         <>
           <Stage stage={stage} stageLabel={stageLabel} />
-          <RightSideButtons>
-            {[...options].reverse().slice(0, 1).map(option => <Button key={option.text} onClick={option.onClick} ghost={option.ghost}>{option.text}</Button>)}
-          </RightSideButtons>
-          {options.length > 1 && <OptionsButton onClick={onOptionsClick} >...</OptionsButton>}
+          {options.length > 1 &&
+            <>
+              <RightSideButtons>
+                <Button
+                  key={options[options.length - 1].text}
+                  onClick={options[options.length - 1].onClick}
+                  ghost={options[options.length - 1].ghost}
+                >
+                  {options[options.length - 1].text}
+                </Button>
+              </RightSideButtons>
+              <OptionsButton onClick={onOptionsClick} >...</OptionsButton>
+            </>
+          }
         </>
       }
       {showAcceptRejectButtons &&
