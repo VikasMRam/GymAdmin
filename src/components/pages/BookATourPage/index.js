@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
 import Helmet from 'react-helmet';
+import { Route } from 'react-router';
 
 import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
 import CommunityBookATourDateFormContainer from 'sly/containers/CommunityBookATourDateFormContainer';
@@ -22,6 +23,7 @@ import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWiz
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
+import Modal from 'sly/components/molecules/Modal';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -55,33 +57,16 @@ const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
 });
 
 const BookATourPage = ({
-  community, user, userDetails, onComplete, showModal, hideModal,
+  community, user, userDetails, onComplete, redirectTo, match
 }) => {
   const {
-    id, mainImage, similarProperties,
+    id, mainImage,
   } = community;
-  let formHeading = 'How can we contact you about this community tour?';
-  if (user) {
-    formHeading = 'Do you have any questions about this tour?';
-  }
-  const formSubheading = 'A local senior living advisor will help get you set up a tour with this community.';
-  const openAdvisorHelp = () => {
-    showModal(<AdvisorHelpPopup onButtonClick={hideModal} />);
-  };
-  const openConfirmationModal = () => {
-    const heading = 'Tour Request Sent!';
-    const subheading = 'Your Seniorly Partner Agent will check if this community is available at this time. They will get back to you shortly by phone or email.';
-    const props = {
-      similarCommunities: similarProperties,
-      buttonTo: DASHBOARD_PATH,
-      onTileClick: hideModal,
-      heading,
-      subheading,
-      type: 'bat',
-    };
+  const formHeading = user
+    ? 'Do you have any questions about this tour?'
+    : 'How can we contact you about this community tour?';
 
-    showModal(<CommunityWizardAcknowledgementContainer {...props} />);
-  };
+  const formSubheading = 'A local senior living advisor will help get you set up a tour with this community.';
   const handleStepChange = ({ currentStep, doSubmit }) => {
     sendEvent('step-completed', id, currentStep);
     if (userDetails && userDetails.phone && userDetails.fullName) {
@@ -101,7 +86,7 @@ const BookATourPage = ({
       </Column>
       <WizardController
         formName="BookATourWizardForm"
-        onComplete={data => onComplete(data).then(openConfirmationModal)}
+        onComplete={data => onComplete(data).then(() => redirectTo(`${match.url}/thank-you`))}
         onStepChange={handleStepChange}
       >
         {({
@@ -121,7 +106,7 @@ const BookATourPage = ({
                   component={CommunityBookATourContactFormContainer}
                   name="Contact"
                   onContactByTextMsgChange={(e, value) => sendEvent('contactByTextMsg-changed', id, value)}
-                  onAdvisorHelpClick={openAdvisorHelp}
+                  onAdvisorHelpClick={() => redirectTo(`${match.url}/help`)}
                   user={user}
                   userDetails={userDetails}
                   heading={formHeading}
@@ -141,6 +126,27 @@ const BookATourPage = ({
           </>
         )}
       </WizardController>
+      <Route path={`${match.url}/thank-you`}>
+        {({ match }) => (
+          <Modal isOpen={!!match} onClose={() => redirectTo(community.url)} closeable>
+            <CommunityWizardAcknowledgementContainer
+              similarCommunities={community.similarProperties}
+              buttonTo={DASHBOARD_PATH}
+              heading='Tour Request Sent!'
+              subheading='Your Seniorly Partner Agent will check if this community is available at this time. They will get back to you shortly by phone or email.'
+              type='bat'
+            />
+          </Modal>
+        )}
+      </Route>
+      <Route path={`${match.url}/help`}>
+        {(routeProps) => (
+          <Modal isOpen={!!routeProps.match} onClose={() => redirectTo(match.url)} closeable>
+            <AdvisorHelpPopup onButtonClick={() => redirectTo(match.url)} />
+          </Modal>
+        )}
+      </Route>
+
     </FullScreenWizard>
   );
 };
@@ -150,9 +156,8 @@ BookATourPage.propTypes = {
   user: object,
   userDetails: object,
   onComplete: func,
-  onAdvisorHelpClick: func,
-  showModal: func,
-  hideModal: func,
+  redirectTo: func.isRequired,
+  match: object.isRequired,
 };
 
 export default BookATourPage;
