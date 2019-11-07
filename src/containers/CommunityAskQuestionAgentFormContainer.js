@@ -39,9 +39,7 @@ const mapDispatchToProps = dispatch => ({
 
 @withRouter
 
-@connect(
-  mapDispatchToProps,
-)
+@connect(null, mapDispatchToProps)
 
 @query('createAction', 'createUuidAction')
 
