@@ -13,7 +13,6 @@ import { CUSTOM_PRICING } from 'sly/services/api/actions';
 import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
 import { getUserDetailsFromUAAndForm, medicareToBool } from 'sly/services/helpers/userDetails';
 import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
-import ModalController from 'sly/controllers/ModalController';
 import { query, withAuth } from 'sly/services/newApi';
 import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/services/newApi/constants';
 
@@ -187,43 +186,28 @@ export default class PricingWizardPageContainer extends Component {
     }));
   };
 
-  handleComplete = (data) => {
-    const {
-      community, history,
-    } = this.props;
-
-    return this.submitUserAction(data).then(() => {
-      history.push(community.url);
-    });
-  };
-
   render() {
     const {
-      community, user, userHas, uuidAux,
+      community, user, userHas, uuidAux, history, match
     } = this.props;
 
     if (!community) {
       return null;
     }
 
+    const redirectTo = path => history.push(path);
+
     return (
-      <ModalController>
-        {({
-          show,
-          hide,
-        }) => (
-          <PricingWizardPage
-            community={community}
-            user={user}
-            uuidAux={uuidAux}
-            userHas={userHas}
-            userActionSubmit={this.submitUserAction}
-            onComplete={this.handleComplete}
-            showModal={show}
-            hideModal={hide}
-          />
-        )}
-      </ModalController>
+      <PricingWizardPage
+        community={community}
+        user={user}
+        uuidAux={uuidAux}
+        userHas={userHas}
+        userActionSubmit={this.submitUserAction}
+        onComplete={this.submitUserAction}
+        redirectTo={redirectTo}
+        match={match}
+      />
     );
   }
 }
