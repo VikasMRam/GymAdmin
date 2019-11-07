@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { object, func } from 'prop-types';
+import { object, func, bool } from 'prop-types';
 import Helmet from 'react-helmet';
 
 import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
@@ -55,7 +55,7 @@ const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
 });
 
 const BookATourPage = ({
-  community, user, userDetails, onComplete, showModal, hideModal,
+  community, user, medicaidCoverage, onComplete, showModal, hideModal,
 }) => {
   const {
     id, mainImage, similarProperties,
@@ -84,7 +84,7 @@ const BookATourPage = ({
   };
   const handleStepChange = ({ currentStep, doSubmit }) => {
     sendEvent('step-completed', id, currentStep);
-    if (userDetails && userDetails.phone && userDetails.fullName) {
+    if (user && user.phoneNumber && user.name) {
       return doSubmit();
     }
     return null;
@@ -113,17 +113,15 @@ const BookATourPage = ({
                 <WizardStep
                   component={CommunityBookATourDateFormContainer}
                   name="Date"
-                  userDetails={userDetails}
+                  medicaidCoverage={medicaidCoverage}
                   onDateChange={(e, newValue) => sendEvent('date-changed', id, newValue.toString())}
                   onTimeChange={(e, newValue) => sendEvent('time-changed', id, newValue.toString())}
                 />
                 <WizardStep
                   component={CommunityBookATourContactFormContainer}
                   name="Contact"
-                  onContactByTextMsgChange={(e, value) => sendEvent('contactByTextMsg-changed', id, value)}
                   onAdvisorHelpClick={openAdvisorHelp}
                   user={user}
-                  userDetails={userDetails}
                   heading={formHeading}
                   subheading={formSubheading}
                 />
@@ -134,7 +132,7 @@ const BookATourPage = ({
                 date={data.scheduledDate}
                 time={data.scheduledTime}
                 onProgressClick={onSubmit}
-                isFinalStep={!!(userDetails && userDetails.phone && userDetails.fullName) || isFinalStep}
+                isFinalStep={!!(user && user.phoneNumber && user.name) || isFinalStep}
                 isButtonDisabled={!submitEnabled}
               />
             </Controls>
@@ -148,11 +146,11 @@ const BookATourPage = ({
 BookATourPage.propTypes = {
   community: communityPropType,
   user: object,
-  userDetails: object,
   onComplete: func,
   onAdvisorHelpClick: func,
   showModal: func,
   hideModal: func,
+  medicaidCoverage: bool,
 };
 
 export default BookATourPage;
