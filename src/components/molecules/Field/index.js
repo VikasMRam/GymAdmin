@@ -222,7 +222,7 @@ const Field = ({
   if (type === 'date') {
     inputProps.selected = inputProps.value;
     inputProps.placeholderText = inputProps.placeholder;
-    inputProps.customInput = <Input size={props.size} />;
+    inputProps.customInput = <Input size={props.size} autocomplete="off" />;
   }
 
   return (

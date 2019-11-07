@@ -47,7 +47,7 @@ const ifAry = func => value => Array.isArray(value)
   : func(value);
 
 const parseDateValue = ifAry(value => value && dayjs(value, 'YYYY-MM-DD').toDate());
-const stringifyDateValue = ifAry(value => dayjs(value).format('YYYY-MM-DD'));
+const stringifyDateValue = ifAry(value => value && dayjs(value).format('YYYY-MM-DD'));
 
 const Row = styled(mobileOnly(Box, css` 
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.small')} ${palette('slate', 'filler')}80;
