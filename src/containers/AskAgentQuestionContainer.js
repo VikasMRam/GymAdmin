@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
 import loadable from '@loadable/component';
 import withRouter from 'react-router/withRouter';
+
 import { assetPath } from 'sly/components/themes';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import SlyEvent from 'sly/services/helpers/events';
@@ -22,6 +23,7 @@ const CommunityAskQuestionAgentFormContainer = loadable(() =>
 )
 @withModal
 @withNotification
+
 export default class AskAgentQuestionContainer extends Component {
   static propTypes = {
     type: string.isRequired,

@@ -175,6 +175,7 @@ const routes = [
   {
     path: `/:toc(${careTypes})/:state`,
     component: StateSearchPageContainer,
+    exact: true,
   },
   {
     path: `/:tocg(${careTypeGuides})`,
@@ -223,12 +224,10 @@ const routes = [
   {
     path: '/book-a-tour/:communitySlug',
     component: BookATourPageContainer,
-    exact: true,
   },
   {
     path: '/custom-pricing/:communitySlug',
     component: PricingWizardPageContainer,
-    exact: true,
   },
   {
     path: '/about/:member?',
