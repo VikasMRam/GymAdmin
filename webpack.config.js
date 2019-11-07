@@ -24,7 +24,6 @@ const {
   sourceMaps,
   devServer,
   when,
-  optimization,
   setDevTool,
 } = require('webpack-blocks');
 

@@ -103,13 +103,15 @@ describe('Ask Question Community', () => {
 
   const leaveAnswer = (questionText) => {
     waitForHydration(
-    select('h3').contains(`Questions About ${community.name}`)
-      .parent()
-      .get('article').contains(questionText)
-      .parent()
-      .next()
-      .next())
-      .click();
+      select('h3')
+        .contains(`Questions About ${community.name}`)
+        .parent()
+        .get('article')
+        .contains(questionText)
+        .parent()
+        .next()
+        .next()
+    ).click();
 
     const commentText = `my replay ${randHash()}`;
 

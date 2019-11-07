@@ -14,6 +14,7 @@ import BookATourPage from 'sly/components/pages/BookATourPage';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
 import { TOUR_BOOKED } from 'sly/services/newApi/constants';
+import { withRedirectTo } from 'sly/services/redirectTo';
 
 const eventCategory = 'BAT';
 
@@ -74,6 +75,7 @@ const handleResponses = (responses, { location }, redirect) => {
 @query('createAction', 'createUuidAction')
 
 @withRouter
+@withRedirectTo
 
 export default class BookATourPageContainer extends Component {
   static propTypes = {
@@ -133,10 +135,8 @@ export default class BookATourPageContainer extends Component {
 
   render() {
     const {
-      community, user, userAction, history, match
+      community, user, userAction, redirectTo, match
     } = this.props;
-
-    const redirectTo = path => history.push(path);
 
     if (!community || !userAction) {
       return null;
