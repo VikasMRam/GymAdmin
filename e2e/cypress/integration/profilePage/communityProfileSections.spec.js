@@ -144,7 +144,7 @@ describe('Community Profile Sections', () => {
         });
       });
 
-      cy.get('h2').contains('Community Saved!').should.exist;
+      cy.get('.ReactModalPortal h2').contains('Community Saved!').should.exist;
 
       select('.CommunitySaved button').contains('Done').click();
 
