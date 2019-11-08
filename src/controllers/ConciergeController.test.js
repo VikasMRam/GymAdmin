@@ -11,6 +11,9 @@ import ConciergeController, {
 
 import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
 import { CONCIERGE } from 'sly/constants/modalType';
+import user from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
+
+const { uuidAux } = user;
 
 jest.mock('../services/helpers/events');
 
@@ -55,12 +58,6 @@ describe('ConciergeController', () => {
 
   const authenticated = {};
 
-  const resource = {
-    userAction: {
-      detail: { id: 'xx' },
-    },
-  };
-
   const userAction = {
     xx: {
       attributes: {
@@ -85,20 +82,6 @@ describe('ConciergeController', () => {
       },
     },
   };
-
-  const onlyEmailUserAction = {
-    xx: {
-      attributes: {
-        ...userAction.xx.attributes,
-        userDetails: {
-          email: 'xxx@xxx.xxx',
-        },
-      },
-    },
-  };
-
-  const entities = { userAction };
-  const emailOnlyEntities = { userAction: onlyEmailUserAction };
 
   const history = {
     push: jest.fn(),
@@ -135,6 +118,19 @@ describe('ConciergeController', () => {
   };
 
   const uuidAuxRequestInfo = userRequestInfo;
+  const uuidActionFor = id => id === 'my-community'
+    ? [{
+      actionInfo: {
+        contactType: 'pricingRequest',
+      },
+      actionType: 'profileContacted',
+    }] : [];
+
+  const uuidActionsRequestInfo = id => ({
+    hasStarted: true,
+    result: {},
+    normalized: uuidActionFor(id),
+  });
 
   const match = { url: '/myurl' };
 
@@ -158,6 +154,7 @@ describe('ConciergeController', () => {
         api={api}
         userRequestInfo={userRequestInfo}
         uuidAuxRequestInfo={uuidAuxRequestInfo}
+        uuidActionsRequestInfo={uuidActionsRequestInfo(communitySlug)}
         queryParams={{}}
         setQueryParams={setQueryParams}
         history={history}
@@ -166,7 +163,7 @@ describe('ConciergeController', () => {
       </ConciergeController>, { context: { router } }), 'ConciergeController').dive();
 
     it('should pass default values', () => {
-      const store = initStore({ bees, resource, entities, authenticated });
+      const store = initStore({ bees, authenticated });
       wrap(community.id, store);
       const { currentStep } = childProps().concierge;
       expect(setQueryParams).not.toBeCalled();
@@ -174,7 +171,7 @@ describe('ConciergeController', () => {
     });
 
     it('should know when a community has been converted', () => {
-      const store = initStore({ bees, resource, entities, authenticated });
+      const store = initStore({ bees, authenticated });
 
       wrap(community.id, store);
       expect(childProps().concierge.contactRequested).toBe(true);
@@ -183,37 +180,19 @@ describe('ConciergeController', () => {
       expect(childProps().concierge.contactRequested).toBe(false);
     });
 
-    // TODO REENABLE
-    // it('should go to express conversion when express mode', () => {
-    //   const store = initStore({ resource, entities: emailOnlyEntities });
-    //   const wrapper = wrap(otherCommunity, store);
-    //   wrapper.instance().next(true);
-    //   expect(getControllerAction(store)).toEqual({
-    //     currentStep: EXPRESS_CONVERSION_FORM,
-    //     modalIsOpen: true,
-    //   });
-    // });
-
     it('should redirect to custom piricing wizard', () => {
-      const store = initStore({ bees, resource, entities: emailOnlyEntities, authenticated });
+      const store = initStore({ bees, authenticated });
       const wrapper = wrap(otherCommunity.id, store);
-      wrapper.instance().next(true);
+      wrapper.instance().next();
 
       expect(history.push).toBeCalledWith(`/custom-pricing/${otherCommunity.id}`);
     });
 
     it('should go to conversion form mode when express mode', () => {
-      const store = initStore({ bees, resource, entities: emailOnlyEntities, authenticated });
+      const store = initStore({ bees, authenticated });
       const wrapper = wrap(null, store);
-      wrapper.instance().next(true);
+      wrapper.instance().next();
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
-    });
-
-    it('should not shortcircuit to thankYou when in express mode', () => {
-      const store = initStore({ bees, resource, entities, authenticated });
-      const wrapper = wrap(null, store);
-      wrapper.instance().next(true);
-      expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
     });
   });
 
@@ -241,12 +220,6 @@ describe('ConciergeController', () => {
       sendEvent.mockRestore();
       set.mockClear();
     });
-
-    const setPricingEvent = {
-      action: 'click-gcp-button',
-      category: 'PricingWizard',
-      label: 'my-community',
-    };
 
     const advancedInfoData = {
       message: 'MESSAGE',
@@ -302,94 +275,20 @@ describe('ConciergeController', () => {
       return component;
     };
 
-    it('should prompt the user if is not converted', async () => {
-      wrap({
-        userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
-        pathName: 'my-community',
-        concierge: { advancedInfoSent: true },
-      });
-
-      await childProps().getPricing();
-
-      expect(lastEvent()).toEqual(setPricingEvent);
-      expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
-    });
-
     it('should ask for advanced info when explicitly called', () => {
-      wrap({ communitySlug: community.id, userDetails: {}, concierge: {} });
+      wrap({ communitySlug: community.id, uuidAux, concierge: {} });
       childProps().gotoAdvancedInfo();
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
     });
 
-    it('should ask for conversionForm', () => {
-      wrap({
-        userDetails: {},
-        pathName: 'my-community',
-        concierge: {
-          contactRequested: true,
-        },
-      });
-      childProps().getPricing();
-      expect(lastEvent()).toEqual(setPricingEvent);
-      expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
-    });
-
-    it('should show thank you', () => {
-      wrap({
-        userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
-        pathName: 'my-community',
-        concierge: {
-          contactRequested: true,
-          advancedInfoSent: true,
-        },
-      });
-      childProps().getPricing();
-      expect(lastEvent()).toEqual(setPricingEvent);
-      expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
-    });
-
-    // TODO REENABLE
-
-    // it('should show thank you', () => {
-    //   wrap({
-    //     userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
-    //     community,
-    //     concierge: {
-    //       contactRequested: true,
-    //       advancedInfoSent: true,
-    //     }
-    //   });
-    //   childProps().getPricing();
-    //   expect(lastEvent()).toEqual(setPricingEvent);
-    //   expect(lastSet()).toEqual({
-    //     currentStep: WHAT_NEXT,
-    //     modalIsOpen: true,
-    //   });
-    // });
-
     it('should submit conversion', async () => {
       wrap({
         communitySlug: community.id,
-        submit,
         concierge: {},
       });
 
       const data = { full_name: 'Fonz',  email: 'fonz@fonz.io', phone: '0987654321' };
       await childProps().submitRegularConversion(data);
-
-      // expect(lastEvent()).toEqual({
-      //   action: 'contactCommunity',
-      //   category: 'requestCallback',
-      //   label: 'my-community',
-      // });
-      //
-      // expect(lastSubmit()).toEqual({
-      //   action: 'LEAD/REQUEST_CALLBACK',
-      //   value: {
-      //     user: { data: 'DATA' },
-      //     propertyIds: [ 'my-community' ],
-      //   },
-      // });
 
       expect(lastUuidPost()).toEqual({
         type: 'UUIDAction',
@@ -410,22 +309,12 @@ describe('ConciergeController', () => {
         label: 'my-community',
       });
 
-      expect(lastSubmit()).toEqual({
-        action: 'LEAD/REQUEST_CONSULTATION',
-        value: {
-          user: data,
-          propertyIds: ['my-community'],
-        },
-      });
-
       expect(gotoGetCustomPricing).toHaveBeenCalled();
     });
 
     it('should submit conversion when community not passed', async () => {
       const wrapper = wrap({
-        userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
         pathName: 'blah',
-        submit,
         concierge: {},
       });
 
@@ -452,14 +341,6 @@ describe('ConciergeController', () => {
         label: 'blah',
       });
 
-      expect(lastSubmit()).toEqual({
-        action: 'LEAD/REQUEST_CONSULTATION',
-        value: {
-          user: data,
-          propertyIds: [],
-        },
-      });
-
       expect(wrapper.instance().next).toHaveBeenCalled();
     });
 
@@ -467,7 +348,6 @@ describe('ConciergeController', () => {
       wrap({
         userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
         communitySlug: community.id,
-        submit,
         concierge: {},
       });
 
@@ -480,11 +360,15 @@ describe('ConciergeController', () => {
         label: 'my-community',
       });
 
-      expect(lastSubmit()).toEqual({
-        action: 'LEAD/REQUEST_AVAILABILITY',
-        value: {
-          user: { data: 'DATA' },
-          propertyIds: ['my-community'],
+      expect(lastUuidPost()).toEqual({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            contactType: 'availabilityRequest',
+            slug: 'my-community',
+          },
+          actionPage: '/myurl',
+          actionType: 'profileContacted',
         },
       });
 
@@ -493,7 +377,8 @@ describe('ConciergeController', () => {
 
     it('should submit express conversion', async () => {
       const wrapper = wrap({
-        userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
+        user,
+        uuidAux,
         pathName: 'Blah',
         submit,
         concierge: {},
@@ -508,11 +393,14 @@ describe('ConciergeController', () => {
         label: 'Blah',
       });
 
-      expect(lastSubmit()).toEqual({
-        action: 'LEAD/REQUEST_AVAILABILITY',
-        value: {
-          user: { data: 'DATA' },
-          propertyIds: [],
+      expect(lastUuidPost()).toEqual({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            contactType: 'availabilityRequest',
+          },
+          actionPage: '/myurl',
+          actionType: 'profileContacted',
         },
       });
 

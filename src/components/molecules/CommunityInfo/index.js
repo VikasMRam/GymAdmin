@@ -58,6 +58,7 @@ export default class CommunityInfo extends Component {
   static propTypes = {
     community: communityPropType,
     inverted: bool,
+    headerIsLink: bool,
     showFloorPlan: bool,
     showDescription: bool,
     palette: palettePropType,
@@ -105,15 +106,22 @@ export default class CommunityInfo extends Component {
   );
 
   renderName = (community, inverted) => {
+    const { headerIsLink } = this.props;
     const { name, url } = community;
+    const header = (
+      <Heading level="subtitle" size="subtitle">
+        <Name size="subtitle" weight="medium" title={name} palette={inverted ? 'white' : 'slate'}>{name}</Name>
+      </Heading>
+    );
+    if (!headerIsLink) {
+      return header;
+    }
     return (
       <Link href={url}>
-        <Heading level="subtitle" size="subtitle">
-          <Name size="subtitle" weight="medium" title={name} palette={inverted ? 'white' : 'slate'}>{name}</Name>
-        </Heading>
+        {header}
       </Link>
     );
-  }
+  };
 
   render() {
     const {

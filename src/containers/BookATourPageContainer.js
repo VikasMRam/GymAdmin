@@ -8,7 +8,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import BookATourPage from 'sly/components/pages/BookATourPage';
 import ModalController from 'sly/controllers/ModalController';
 import { TOUR_BOOKED } from 'sly/services/newApi/constants';
-import { medicareToBool } from 'sly/services/helpers/userDetails';
+import { medicareToBool, boolToMedicare } from 'sly/services/helpers/userDetails';
 import withAuth from 'sly/services/newApi/withAuth';
 
 const eventCategory = 'BAT';
@@ -94,7 +94,8 @@ export default class BookATourPageContainer extends Component {
       return null;
     }
 
-    const medicaid = uuidAux.financialInfo && uuidAux.financialInfo.medicaid;
+    const medicaid = boolToMedicare(uuidAux.financialInfo && uuidAux.financialInfo.medicaid);
+
     return (
       <ModalController>
         {({

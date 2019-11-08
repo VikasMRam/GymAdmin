@@ -232,7 +232,7 @@ class PricingWizardPage extends Component {
         </Helmet>
         <Header />
         <Column backgroundImage={mainImage}>
-          <StyledCommunityInfo inverted community={community} />
+          <StyledCommunityInfo inverted community={community} headerIsLink />
         </Column>
         <WizardController
           formName="PricingWizardForm"

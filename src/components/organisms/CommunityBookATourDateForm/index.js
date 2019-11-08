@@ -100,7 +100,7 @@ const CommunityBookATourDateForm = ({
 
 CommunityBookATourDateForm.propTypes = {
   error: string,
-  medicaidCoverage: bool,
+  medicaidCoverage: string,
   onDateChange: func,
   onTimeChange: func,
   handleSubmit: func,

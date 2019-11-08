@@ -79,7 +79,7 @@ const mapStateToProps = (state) => {
 @prefetch('uuidActions', 'getUuidActions', (req, { match }) =>
   req({
     'filter[actionType]': `${PROFILE_CONTACTED},${TOUR_BOOKED}`,
-    'filter[actionInfo][slug]': getCommunitySlug(match),
+    'filter[actionInfo-slug]': getCommunitySlug(match),
   })
 )
 @withServerState(mapPropsToActions, undefined, ignoreSearchParams)
@@ -215,19 +215,15 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       return <Redirect to={community.url} />;
     }
 
-    const hasProfileAction = createHasProfileAction(uuidActions, community.id);
+    const hasProfileAction = createHasProfileAction(uuidActions);
     const profileContacted = {
-      tour: hasProfileAction(TOUR_BOOKED, {
-        slug: community.id,
-      }),
+      tour: hasProfileAction(TOUR_BOOKED),
 
       pricing: hasProfileAction(PROFILE_CONTACTED, {
-        slug: community.id,
         contactType: PRICING_REQUEST,
       }),
 
       availability: hasProfileAction(PROFILE_CONTACTED, {
-        slug: community.id,
         contactType: AVAILABILITY_REQUEST,
       }),
     };

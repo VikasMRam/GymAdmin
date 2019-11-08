@@ -28,7 +28,6 @@ function ConciergeContainer({
     >
       {({
         concierge,
-        userDetails,
         submitExpressConversion,
         submitRegularConversion,
         gotoWhatNext,
@@ -38,7 +37,6 @@ function ConciergeContainer({
         <Concierge
           concierge={concierge}
           community={community}
-          userDetails={userDetails}
           gotoWhatNext={gotoWhatNext}
           submitExpressConversion={submitExpressConversion}
           submitRegularConversion={submitRegularConversion}
