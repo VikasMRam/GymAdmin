@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 
-import partiallyHydrateClient from 'sly/partiallyHydrateClient';
+import partiallyHydrateClient from 'sly/services/partialHydration/partiallyHydrateClient';
 import clientConfigs from 'sly/clientConfigs';
 import ModalContainer from 'sly/containers/ModalContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';

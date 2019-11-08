@@ -16,7 +16,7 @@ import {
   buildEstimatedPriceList,
 } from 'sly/services/helpers/pricing';
 import pad from 'sly/components/helpers/pad';
-import {withHydration} from 'sly/partialHydration';
+import { withHydration } from 'sly/services/partialHydration';
 import { Button, Paragraph } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';

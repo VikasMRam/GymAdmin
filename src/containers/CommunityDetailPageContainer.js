@@ -26,7 +26,7 @@ import { EXIT_INTENT_TYPE } from 'sly/constants/retentionPopup';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import SlyEvent from 'sly/services/helpers/events';
 import textAlign from 'sly/components/helpers/textAlign';
-import { HydrationData } from 'sly/partialHydration';
+import { HydrationData } from 'sly/services/partialHydration';
 
 const ignoreSearchParams = ['modal', 'action', 'entityId', 'currentStep', 'token', 'modal'];
 

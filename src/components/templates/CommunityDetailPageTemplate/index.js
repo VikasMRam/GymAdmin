@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import classes from 'classnames';
 
 import { size } from 'sly/components/themes';
-import {withHydration} from "sly/partialHydration";
+import { withHydration } from 'sly/services/partialHydration';
 import BaseHeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import FooterOrganism from 'sly/components/organisms/Footer';
