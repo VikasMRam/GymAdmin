@@ -61,6 +61,10 @@ const ReviewBlock = styled(Block)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
+const StyledIcon = styled(Icon)`
+  margin-left: -${size('spacing.xLarge')};
+`;
+
 const CommunityAgentSection = ({
   agent, onPhoneClick, onEmailClick, onAdvisorHelpClick,
 }) => {
@@ -108,7 +112,7 @@ const CommunityAgentSection = ({
       </AgentInfoSection>
       {chosenReview &&
         <AgentReviewSection>
-          <Icon icon="quote" size="xLarge" variation="filler" />
+          <StyledIcon icon="quote" size="xLarge" variation="filler" />
           <ReviewSection>
             <ReviewBlock>{chosenReview}</ReviewBlock>
             <Block size="caption" palette="grey">- {reviewedBy}</Block>

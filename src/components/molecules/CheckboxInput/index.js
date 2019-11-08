@@ -19,7 +19,7 @@ const StyledCheckbox = cursor(styled(Checkbox)`
 const CheckboxLabel = cursor(Span);
 
 class CheckboxInput extends Component {
-  propTypes={
+  static propTypes={
     value: arrayOf(string),
     onChange: func,
     options: object,

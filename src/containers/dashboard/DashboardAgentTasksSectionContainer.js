@@ -27,7 +27,7 @@ const getPaginationData = ({ result, meta }) => {
   const filteredCount = meta.filtered_count;
   const text = `Showing ${paginationRangeString} ${filteredCount} tasks`;
   const show = filteredCount > size;
-  const dueTodayCount = meta.due_today_count;
+  const todayCount = meta.due_today_count;
   const overdueCount = meta.over_due_count;
   const upcomingCount = meta.upcoming_count;
   const completedCount = meta.completed_count;
@@ -40,7 +40,7 @@ const getPaginationData = ({ result, meta }) => {
     filteredCount,
     text,
     show,
-    dueTodayCount,
+    todayCount,
     overdueCount,
     upcomingCount,
     completedCount,
