@@ -27,7 +27,7 @@ class CheckboxInput extends Component {
   constructor(props) {
     super(props);
     const { value } = props;
-    if (value) {
+    if (value && value instanceof Array) {
       this.state = { value };
     }
   }
