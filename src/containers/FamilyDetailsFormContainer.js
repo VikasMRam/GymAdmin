@@ -76,6 +76,7 @@ export default class FamilyDetailsFormContainer extends Component {
       communityCareType,
       assignedTo,
       additionalMetadata,
+      referralSource,
       medicaid,
       slyAgentMessage,
       slyCommunityMessage,
@@ -97,6 +98,9 @@ export default class FamilyDetailsFormContainer extends Component {
     }
     if (phone || phone === '') {
       newClient.set('attributes.clientInfo.phoneNumber', phone);
+    }
+    if (referralSource) {
+      newClient.set('attributes.clientInfo.referralSource', referralSource);
     }
     const validMD = validateAM(additionalMetadata, { phone, email });
     if (validMD) {
@@ -190,7 +194,7 @@ export default class FamilyDetailsFormContainer extends Component {
     const tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
     const {
       name, email, slyMessage, phoneNumber = '', additionalMetadata, slyAgentMessage,
-      slyCommunityMessage,
+      slyCommunityMessage, referralSource,
     } = clientInfo;
     const { uuidInfo } = uuidAux;
     const {
@@ -226,6 +230,7 @@ export default class FamilyDetailsFormContainer extends Component {
       mobilityLevel: mobility,
       communityCareType: typeCare,
       budget: maxMonthlyBudget,
+      referralSource,
       medicaid: medicaidValue,
       timeToMove: moveTimeline,
       preferredLocation,

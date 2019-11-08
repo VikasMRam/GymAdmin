@@ -14,6 +14,7 @@ import Role from 'sly/components/common/Role';
 import { Block, Button, Label } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
+import { SOURCE_OPTIONS } from 'sly/constants/familyDetails';
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -168,6 +169,8 @@ class FamilyDetailsForm extends Component {
     const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
     const tagColumn = { typeInfo: { api: '/v0/platform/tags?filter[name]=' }, value: 'tag.name' };
     const medicaidOptions = [{ label: '', value: true }];
+    const sourceOptions = SOURCE_OPTIONS.map(s => <option key={s} value={s}>{s}</option>);
+
     return (
       <div>
         {!canEditFamilyDetails &&
@@ -259,6 +262,16 @@ class FamilyDetailsForm extends Component {
                   component={ReduxField}
                 />
               </PaddedTwoColumnWrapper>
+              <Field
+                name="referralSource"
+                label="Referral Source"
+                type="select"
+                component={ReduxField}
+                wideWidth
+              >
+                <option>Select an option</option>
+                {sourceOptions}
+              </Field>
               <Field
                 name="medicaid"
                 label="Qualifies for Medicaid"
