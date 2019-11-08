@@ -8,8 +8,12 @@ import {
   FAMILY_STAGE_ORDERED,
   FAMILY_STAGE_WON,
   FAMILY_STAGE_LOST,
+  FAMILY_STAGE_REJECTED,
   DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS,
-  PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS, FAMILY_STAGE_FAMILY_CHOSEN, WAITLISTED, ESTIMATED_MOVE_IN,
+  PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
+  FAMILY_STAGE_FAMILY_CHOSEN,
+  WAITLISTED,
+  ESTIMATED_MOVE_IN,
 } from 'sly/constants/familyDetails';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import Role from 'sly/components/common/Role';
@@ -50,6 +54,7 @@ export default class UpdateFamilyStageForm extends Component {
     chosenDetails: string,
     lossReasons: arrayOf(string).isRequired,
     roomTypes: arrayOf(string).isRequired,
+    rejectReasons: arrayOf(string),
     currentLossReason: string,
     change: func.isRequired,
     onLocationChange: func,
@@ -57,11 +62,13 @@ export default class UpdateFamilyStageForm extends Component {
     monthlyFees: string,
     referralAgreement: string,
     referralAgreementType: string,
+    currentRejectReason: string,
   };
 
   static defaultProps = {
     referralAgreement: '',
     monthlyFees: '',
+    rejectReasons: [],
   };
 
   handleChange = () => {
@@ -80,8 +87,11 @@ export default class UpdateFamilyStageForm extends Component {
   render() {
     const {
       handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, chosenDetails, nextAllowedStages, lossReasons,
-      currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, roomTypes, ...props
+      currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, roomTypes, rejectReasons, currentRejectReason, ...props
     } = this.props;
+
+    // const reasonsOptions = rejectReasons.map(r => ({ value: r, label: r }));
+    const reasonsOptions = rejectReasons.map(i => <option key={i} value={i}>{i}</option>);
 
     const NEW_FAMILY_STAGE_ORDERED = { ...FAMILY_STAGE_ORDERED };
 
@@ -113,8 +123,8 @@ export default class UpdateFamilyStageForm extends Component {
         onCancelClick={onCancel}
         hasSubmit
         onSubmit={handleSubmit}
-        heading={`Updating ${name}'s Stage`}
-        submitButtonText="Update"
+        heading={isNext(FAMILY_STAGE_REJECTED) ? 'Reject lead' : `Updating ${name}'s Stage`}
+        submitButtonText={isNext(FAMILY_STAGE_REJECTED) ? 'Confirm' : 'Update'}
       >
         <StageField
           name="stage"
@@ -172,7 +182,7 @@ export default class UpdateFamilyStageForm extends Component {
             component={ReduxField}
           />
         }
-        {!isNext(FAMILY_STAGE_WON, FAMILY_STAGE_LOST) &&
+        {!isNext(FAMILY_STAGE_WON, FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST) &&
           <Field
             type="textarea"
             rows={3}
@@ -277,17 +287,35 @@ export default class UpdateFamilyStageForm extends Component {
             {lossReasonOptions}
           </Field>
         }
-        {isNext(FAMILY_STAGE_LOST) && DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) &&
+        {isNext(FAMILY_STAGE_REJECTED) &&
+          <Field
+            name="rejectReason"
+            label={<span>Select a reason<Span palette="danger">*</Span></span>}
+            type="select"
+            placeholder="Select rejection reason"
+            component={ReduxField}
+          >
+            <option value="" disabled>Select</option>
+            {reasonsOptions}
+          </Field>
+        }
+        {isNext(FAMILY_STAGE_LOST, FAMILY_STAGE_REJECTED) &&
+          (DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentRejectReason) ||
+          DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason)) &&
           <Field
             type="textarea"
             rows={3}
-            name="lostDescription"
+            showCharacterCount
+            name={FAMILY_STAGE_LOST ? 'lostDescription' : 'rejectDescription'}
             label={<span>Description<Span palette="danger">*</Span></span>}
             placeholder="Please leave a note on the reason for closing this lead..."
             component={ReduxField}
+            maxLength={200}
           />
         }
-        {isNext(FAMILY_STAGE_LOST) && PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) &&
+        {isNext(FAMILY_STAGE_LOST, FAMILY_STAGE_REJECTED) &&
+          (PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) ||
+          PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentRejectReason)) &&
           <div>
             <Field
               name="preferredLocation"

@@ -16,7 +16,7 @@ import {
 } from 'sly/constants/dashboardAppPaths';
 import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
-import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_NEW, FAMILY_STAGE_REJECTED } from 'sly/constants/familyDetails';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
 import notePropType from 'sly/propTypes/note';
@@ -34,7 +34,6 @@ import Role from 'sly/components/common/Role';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
-import RejectFamilyContainer from 'sly/containers/RejectFamilyContainer';
 import UpdateFamilyStageFormContainer from 'sly/containers/UpdateFamilyStageFormContainer';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import { Box, Block, Icon, Link, Hr } from 'sly/components/atoms';
@@ -344,35 +343,43 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     return tabs;
   };
 
-  handleRejectClick = () => {
-    const {
-      meta, showModal, hideModal, notifyError, notifyInfo, client, rawClient, onRejectSuccess,
-    } = this.props;
-    SlyEvent.getInstance().sendEvent({
-      category: 'details',
-      action: 'launch',
-      label: 'reject-lead',
-      value: '',
-    });
-    const { rejectReasons } = meta;
-    showModal(<RejectFamilyContainer onSuccess={onRejectSuccess} reasons={rejectReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
+  handleRejectClick = (e) => {
+    this.handleUpdateClick(e, true);
   };
 
-  handleUpdateClick = () => {
+  handleUpdateClick = (e, isReject) => {
     const {
       showModal, hideModal, notifyError, client, rawClient, notifyInfo, meta, refetchClient, refetchNotes,
+      onRejectSuccess,
     } = this.props;
     const { stage: clientStage } = client;
-    const { stage, lossReasons } = meta;
+    const { stage, lossReasons, rejectReasons } = meta;
+    const onSuccess = isReject ? onRejectSuccess : hideModal;
+    const initialValues = isReject ? { stage: FAMILY_STAGE_REJECTED } : {};
 
     SlyEvent.getInstance().sendEvent({
       category: 'fdetails',
       action: 'launch',
-      label: 'update-stage',
+      label: isReject ? 'reject-lead' : 'update-stage',
       value: '',
     });
     stage.push(clientStage);
-    showModal(<UpdateFamilyStageFormContainer refetchClient={refetchClient} refetchNotes={refetchNotes} onSuccess={hideModal} lossReasons={lossReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} nextAllowedStages={stage} onCancel={hideModal} />, null, 'noPadding', false);
+
+    showModal((
+      <UpdateFamilyStageFormContainer
+        refetchClient={refetchClient}
+        refetchNotes={refetchNotes}
+        onSuccess={onSuccess}
+        lossReasons={lossReasons}
+        notifyError={notifyError}
+        notifyInfo={notifyInfo}
+        client={client}
+        rawClient={rawClient}
+        nextAllowedStages={stage}
+        onCancel={hideModal}
+        rejectReasons={rejectReasons}
+        initialValues={initialValues}
+      />), null, 'noPadding', false);
   };
 
   handleAddNoteClick = () => {
