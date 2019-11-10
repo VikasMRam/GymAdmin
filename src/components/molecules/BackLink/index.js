@@ -15,7 +15,7 @@ const BackArrorIcon = styled(Icon)`
 `;
 
 const StyledLink = styled(Link)`
-  display: block;
+  display: inline-block;
 `;
 
 const BackLink = ({
