@@ -34,7 +34,7 @@ const ImageCaptionWrapper = styled.div`
   bottom: 0;
   width: 100%;
   padding: ${size('spacing.regular')};
-  max-height: ${size('spacing.huge')};
+  max-height: ${size('spacing.xxxLarge')};
   position: absolute;
   z-index: 1;
   text-align: left;
@@ -43,7 +43,7 @@ const ImageCaptionWrapper = styled.div`
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; 
+  -webkit-line-clamp: 2; 
 `;
 
 const imageStyles = css`
@@ -87,14 +87,15 @@ const TopRightWrapper = styled.span`
 `;
 const BottomLeftWrapper = styled.span`
   left: ${size('spacing.regular')};
-  bottom: ${size('spacing.regular')};
+  bottom: ${p => p.description ? size('spacing', 'huge'): size('spacing', 'regular')};
   position: absolute;
   z-index: 1;
 `;
 
 const BottomRightWrapper = styled.span`
   right: ${size('spacing.regular')};
-  bottom: ${size('spacing.regular')};
+  bottom: ${p => p.description ? size('spacing', 'huge') : size('spacing', 'regular')};
+  bottom: ;
   position: absolute;
   z-index: 1;
 `;
@@ -348,12 +349,12 @@ export default class MediaGallery extends Component {
             />
           }
           {bottomLeftSection &&
-            <BottomLeftWrapper>
+            <BottomLeftWrapper description={this.allMedia[currentSlide].description}>
               {bottomLeftSection(this.allMedia[currentSlide])}
             </BottomLeftWrapper>
           }
           {bottomRightSection &&
-            <BottomRightWrapper>
+            <BottomRightWrapper description={this.allMedia[currentSlide].description}>
               {bottomRightSection(this.allMedia[currentSlide])}
             </BottomRightWrapper>
           }
