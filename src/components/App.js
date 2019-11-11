@@ -39,7 +39,6 @@ const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/co
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage'));
 const LegalPolicyPage = loadable(() => import(/* webpackChunkName: "chunkLegalPolicy" */ 'sly/components/pages/LegalPolicyPage'));
 const PartnersPage = loadable(() => import(/* webpackChunkName: "chunkPartners" */ 'sly/components/pages/PartnersPage'));
-const CommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetail" */ 'sly/containers/CommunityDetailPageContainer'));
 const CommunitySearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunitySearch" */ 'sly/containers/CommunitySearchPageContainer'));
 const StateSearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkStateSearch" */ 'sly/containers/StateSearchPageContainer'));
 const HomePageContainer = loadable(() => import(/* webpackChunkName: "chunkHomePage" */ 'sly/containers/HomePageContainer'));
@@ -161,11 +160,6 @@ const routes = [
     component: DashboardCallDetailsPageContainer,
   },
   {
-    path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
-    component: CommunityDetailPageContainer,
-    exact: true,
-  },
-  {
     path: `/:toc(${careTypes})/:state/:city`,
     component: CommunitySearchPageContainer,
     exact: true,
@@ -173,6 +167,7 @@ const routes = [
   {
     path: `/:toc(${careTypes})/:state`,
     component: StateSearchPageContainer,
+    exact: true,
   },
   {
     path: `/:tocg(${careTypeGuides})`,
@@ -221,12 +216,10 @@ const routes = [
   {
     path: '/book-a-tour/:communitySlug',
     component: BookATourPageContainer,
-    exact: true,
   },
   {
     path: '/custom-pricing/:communitySlug',
     component: PricingWizardPageContainer,
-    exact: true,
   },
   {
     path: '/about/:member?',
@@ -286,7 +279,7 @@ export default class App extends Component {
         <Helmet titleTemplate="%s | Seniorly">
           <title>Find The Best Senior Living Options Near You</title>
           <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
           <meta content="Seniorly" property="author" />
           <meta content="English" property="language" />

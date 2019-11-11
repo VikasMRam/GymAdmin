@@ -1,4 +1,4 @@
-import { responsive, select } from '../../helpers/tests';
+import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
 import { getCommunity } from '../../helpers/getCommunity';
 import { TEST_COMMUNITY } from '../../constants/community';
@@ -39,7 +39,7 @@ describe('Review Community', () => {
 
       cy.wait('@postUuidActions');
 
-      cy.get('button').contains('Write a Review').click();
+      waitForHydration(cy.get('button').contains('Write a Review')).click();
 
       const commentText = `my comments ${randHash()}`;
 

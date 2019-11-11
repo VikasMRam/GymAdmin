@@ -4,7 +4,8 @@ import RRLink from 'react-router-dom/Link';
 
 import Link, { Anchor } from 'sly/components/atoms/Link';
 
-const wrap = (props = {}) => shallow(<Link {...props} />);
+const context = { routes: [{ path: '/test', component: () => null }] };
+const wrap = (props = {}) => shallow(<Link {...props} />, { context });
 
 it('renders anchor with href', () => {
   const wrapper = wrap({ href: 'http://google.com', children: 'Hey' });
@@ -27,6 +28,6 @@ it('renders Anchor by default', () => {
 });
 
 it('renders Link when to is passed in', () => {
-  const wrapper = wrap({ to: 'test' }).dive();
+  const wrapper = wrap({ to: '/test' }).dive();
   expect(wrapper.find(RRLink)).toHaveLength(1);
 });

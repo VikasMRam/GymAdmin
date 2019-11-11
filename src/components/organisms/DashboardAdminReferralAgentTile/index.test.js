@@ -15,6 +15,8 @@ const agent = {
     slyPhone: '9999999999',
     slyCellPhone: '8888888888',
     slyWorkPhone: '7777777777',
+    cellPhone: '8888888888',
+    workPhone: '7777777777',
     profileImageUrl: 'img.url',
   },
   contacts: [{
@@ -34,11 +36,10 @@ describe('DashboardAdminReferralAgentTile', () => {
 
   it('renders', () => {
     const wrapper = wrap();
-    const contact = agent.contacts[0];
     expect(wrapper.contains(agent.name)).toBe(true);
     expect(wrapper.contains(agent.info.slyScore)).toBe(true);
-    expect(wrapper.contains(contact.workPhone)).toBe(true);
-    expect(wrapper.contains(contact.mobilePhone)).toBe(true);
+    expect(wrapper.contains(agent.info.workPhone)).toBe(true);
+    expect(wrapper.contains(agent.info.cellPhone)).toBe(true);
     expect(wrapper.contains(agent.info.last5DayLeadCount)).toBe(true);
   });
 
@@ -46,21 +47,20 @@ describe('DashboardAdminReferralAgentTile', () => {
     const agentWithoutInfo = {
       name: 'Agent Business Name' };
     const wrapper = wrap({ agent: agentWithoutInfo });
-    const contact = agent.contacts[0];
+
     expect(wrapper.contains(agent.name)).toBe(true);
     expect(wrapper.contains(agent.info.slyScore)).toBe(false);
-    expect(wrapper.contains(contact.workPhone)).toBe(false);
-    expect(wrapper.contains(contact.mobilePhone)).toBe(false);
+    expect(wrapper.contains(agent.info.workPhone)).toBe(false);
+    expect(wrapper.contains(agent.info.cellPhone)).toBe(false);
     expect(wrapper.contains(agent.info.last5DayLeadCount)).toBe(false);
   });
 
   it('renders with Recommended', () => {
     const wrapper = wrap({ isRecommended: true });
-    const contact = agent.contacts[0];
     expect(wrapper.contains(agent.name)).toBe(true);
     expect(wrapper.contains(agent.info.slyScore)).toBe(true);
-    expect(wrapper.contains(contact.workPhone)).toBe(true);
-    expect(wrapper.contains(contact.mobilePhone)).toBe(true);
+    expect(wrapper.contains(agent.info.workPhone)).toBe(true);
+    expect(wrapper.contains(agent.info.cellPhone)).toBe(true);
     expect(wrapper.contains(agent.info.last5DayLeadCount)).toBe(true);
 
     expect(wrapper.find('IconBadge').find('[text="RECOMMENDED"]')).toHaveLength(2);
@@ -70,11 +70,10 @@ describe('DashboardAdminReferralAgentTile', () => {
     const referralSentAt = '2018-04-20T08:25:56Z';
     const referralSentAtString = '4/20/18, 8:25AM';
     const wrapper = wrap({ referralSentAt });
-    const contact = agent.contacts[0];
     expect(wrapper.contains(agent.name)).toBe(true);
     expect(wrapper.contains(agent.info.slyScore)).toBe(true);
-    expect(wrapper.contains(contact.workPhone)).toBe(true);
-    expect(wrapper.contains(contact.mobilePhone)).toBe(true);
+    expect(wrapper.contains(agent.info.workPhone)).toBe(true);
+    expect(wrapper.contains(agent.info.cellPhone)).toBe(true);
     expect(wrapper.contains(agent.info.last5DayLeadCount)).toBe(true);
 
     expect(wrapper.contains(referralSentAtString)).toBe(true);
@@ -83,11 +82,10 @@ describe('DashboardAdminReferralAgentTile', () => {
   it('renders stage', () => {
     const stage = 'New';
     const wrapper = wrap({ stage });
-    const contact = agent.contacts[0];
     expect(wrapper.contains(agent.name)).toBe(true);
     expect(wrapper.contains(agent.info.slyScore)).toBe(true);
-    expect(wrapper.contains(contact.workPhone)).toBe(true);
-    expect(wrapper.contains(contact.mobilePhone)).toBe(true);
+    expect(wrapper.contains(agent.info.workPhone)).toBe(true);
+    expect(wrapper.contains(agent.info.cellPhone)).toBe(true);
     expect(wrapper.contains(agent.info.last5DayLeadCount)).toBe(true);
 
     expect(wrapper.find('Stage').find('[stage="New"]')).toHaveLength(1);

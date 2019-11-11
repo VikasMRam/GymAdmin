@@ -29,22 +29,22 @@ describe('FamilySummary', () => {
       .contains(PraneshKumar.uuidAux.uuidInfo.residentInfo.fullName)).toBe(true);
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
-      .at(4)
+      .at(5)
       .find(Block)
       .contains(PraneshKumar.uuidAux.uuidInfo.housingInfo.lookingFor)).toBe(true);
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
-      .at(5)
+      .at(6)
       .find(Block)
       .contains(PraneshKumar.uuidAux.uuidInfo.residentInfo.gender)).toBe(true);
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
-      .at(6)
+      .at(7)
       .find(Block)
       .contains(PraneshKumar.uuidAux.uuidInfo.locationInfo.city)).toBe(true);
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
-      .at(7)
+      .at(8)
       .find(Block)
       .contains(PraneshKumar.uuidAux.uuidInfo.housingInfo.moveTimeline)).toBe(true);
     expect(wrapper

@@ -130,7 +130,7 @@ const CommunityDetails = ({
           A senior living expert is a professional who knows
           the {city}, {state} communities and specializes in helping you find the right fit for your
           unique budget, location, care, social and other needs. This is a free service. To learn more,&nbsp;
-          <Link href={`https://www.seniorly.com/agents?utm_content=${communityName}&utm_medium=link&utm_source=summary&utm_campaign=cta`}>
+          <Link href={`https://www.seniorly.com/agents?utm_content=agent-link&utm_medium=link&utm_source=summary&utm_campaign=cta`}>
             click here to visit our Seniorly Partner Agent page.
           </Link>
         </Paragraph>

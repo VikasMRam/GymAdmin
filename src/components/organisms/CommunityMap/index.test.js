@@ -6,7 +6,6 @@ import CommunityMap from 'sly/components/organisms/CommunityMap';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 import Map from 'sly/components/atoms/Map';
 
-
 const wrap = (props = {}) => shallow(<CommunityMap {...props} />);
 
 const {

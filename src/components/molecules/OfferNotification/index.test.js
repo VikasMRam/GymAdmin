@@ -4,11 +4,11 @@ import { shallow } from 'enzyme';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
 import GetCustomPricingContainer from 'sly/containers/GetCustomPricingContainer';
 
+jest.mock('sly/containers/AskAgentQuestionContainer');
+
 const title = 'test title';
-const community = { id: 'community 123' };
 const description = 'test description';
-const wrap = (props = {}) =>
-  shallow(<OfferNotification title={title} community={community} {...props} />);
+const wrap = (props = {}) => shallow(<OfferNotification title={title} {...props} />);
 
 describe('OfferNotification', () => {
   it('renders', () => {

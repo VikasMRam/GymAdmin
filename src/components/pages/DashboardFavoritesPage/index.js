@@ -1,17 +1,14 @@
 import React from 'react';
-import { arrayOf, object, func, bool } from 'prop-types';
+import { arrayOf, object, func, bool, shape } from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import SlyEvent from 'sly/services/helpers/events';
-import { size, assetPath } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import shadow from 'sly/components/helpers/shadow';
-import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import Masonry from 'sly/components/common/Masonry';
-import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
-import AddOrEditNoteForSavedCommunityContainer from 'sly/containers/AddOrEditNoteForSavedCommunityContainer';
 import { Heading, Paragraph, Hr } from 'sly/components/atoms';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
@@ -86,106 +83,58 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 });
 
 const DashboardFavoritesPage = ({
-  userSaves, onGallerySlideChange, currentGalleryImage, notifyInfo, showModal, hideModal,
-  onLocationSearch, ishowSlyWorksVideoPlaying, toggleHowSlyWorksVideoPlaying, rawUserSaves,
-  onUnfavouriteClick,
+  userSaves, onGallerySlideChange, currentGalleryImage, onLocationSearch, ishowSlyWorksVideoPlaying,
+  toggleHowSlyWorksVideoPlaying, clickHandlers, isLoading,
 }) => {
-  const communityTiles = userSaves ? userSaves.map((userSave, i) => {
-    const { community, id } = userSave;
-    const onSlideChange = i => onGallerySlideChange(id, i);
-    const currentSlide = currentGalleryImage[id];
-    const openAskAgentQuestionModal = (e) => {
-      e.preventDefault();
+  let communityTiles;
 
-      const { addressString, name } = community;
-      const [, city] = addressString.split(',');
-      const { heading, placeholder, question } = generateAskAgentQuestionContents(name, city);
-      const agentImageUrl = assetPath('images/agent-xLarge.png');
+  if (!isLoading) {
+    communityTiles =
+      userSaves.map((userSave, i) => {
+        const { community, id } = userSave;
+        const onSlideChange = i => onGallerySlideChange(id, i);
+        const currentSlide = currentGalleryImage[id];
+        const actionButtons = [
+          {
+            text: 'Ask Question',
+            onClick: clickHandlers[i].openAskAgentQuestionModal,
+          },
+        ];
 
-      const toggleAskAgentQuestionModal = () => {
-        hideModal();
-      };
-
-      const modalComponentProps = {
-        toggleAskAgentQuestionModal,
-        notifyInfo,
-        community,
-        heading,
-        agentImageUrl,
-        placeholder,
-        question,
-      };
-
-      showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />);
-    };
-    const openNoteModification = (e) => {
-      e.preventDefault();
-
-      const rawUserSave = rawUserSaves[i];
-      const onComplete = () => {
-        hideModal();
-        notifyInfo(`Note ${userSave.info.note ? 'Edited' : 'Added'}`);
-      };
-      const initialValues = {
-        note: userSave.info.note,
-      };
-      const modalComponentProps = {
-        hideModal,
-        userSave,
-        rawUserSave,
-        community,
-        onComplete,
-        onCancel: hideModal,
-        isEditMode: !!userSave.info.note,
-        initialValues,
-      };
-
-      showModal(<AddOrEditNoteForSavedCommunityContainer {...modalComponentProps} />, null, 'noPadding', false);
-    };
-    const actionButtons = [
-      {
-        text: 'Ask Question',
-        onClick: openAskAgentQuestionModal,
-      },
-    ];
-    const handleUnfavouriteClick = (e) => {
-      e.preventDefault();
-
-      onUnfavouriteClick(userSave.id, notifyInfo);
-    };
-
-    return (
-      <StyledLink to={community.url} key={community.id}>
-        <StyledCommunityTile
-          addNote
-          canFavourite
-          isFavourite
-          currentSlide={currentSlide}
-          onSlideChange={onSlideChange}
-          key={userSave.id}
-          community={userSave.community}
-          actionButtons={actionButtons}
-          note={userSave.info.note}
-          onAddNoteClick={openNoteModification}
-          onEditNoteClick={openNoteModification}
-          onUnfavouriteClick={handleUnfavouriteClick}
-        />
-      </StyledLink>
-    );
-  }) : 'loading...';
+        return (
+          <StyledLink to={community.url} key={community.id}>
+            <StyledCommunityTile
+              addNote
+              canFavourite
+              isFavourite
+              currentSlide={currentSlide}
+              onSlideChange={onSlideChange}
+              key={userSave.id}
+              community={userSave.community}
+              actionButtons={actionButtons}
+              note={userSave.info.note}
+              onAddNoteClick={clickHandlers[i].openNoteModification}
+              onEditNoteClick={clickHandlers[i].openNoteModification}
+              onUnfavouriteClick={clickHandlers[i].onUnfavouriteClick}
+            />
+          </StyledLink>
+        );
+      });
+  }
 
   return (
     <DashboardPageTemplate activeMenuItem="Favorites">
       <FormSection heading="Favorites">
-        {communityTiles.length > 0 &&
+        {isLoading && 'Loading...'}
+        {!isLoading && communityTiles.length > 0 &&
           <Masonry columnCounts={columnCounts}>
             {communityTiles}
           </Masonry>
         }
-        {!communityTiles.length &&
+        {!isLoading && !communityTiles.length &&
           <>
             <Wrapper>
-              <PaddedHeading size="subtitle" weight="regular">You haven’t saved any communities yet.</PaddedHeading>
+              <PaddedHeading size="subtitle" weight="regular">You haven&apos;t saved any communities yet.</PaddedHeading>
               <PaddedParagraph size="caption">Add communities to your saved list to organize and compare which options are the best fit for you.</PaddedParagraph>
               <SearchBoxWrapper>
                 <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
@@ -210,16 +159,17 @@ const DashboardFavoritesPage = ({
 
 DashboardFavoritesPage.propTypes = {
   userSaves: arrayOf(object),
-  rawUserSaves: arrayOf(object),
   onGallerySlideChange: func,
   currentGalleryImage: object,
-  notifyInfo: func,
-  showModal: func,
-  hideModal: func,
   onLocationSearch: func,
   ishowSlyWorksVideoPlaying: bool,
   toggleHowSlyWorksVideoPlaying: func,
-  onUnfavouriteClick: func,
+  isLoading: bool,
+  clickHandlers: arrayOf(shape({
+    openAskAgentQuestionModal: func.isRequired,
+    openNoteModification: func.isRequired,
+    onUnfavouriteClick: func.isRequired,
+  })),
 };
 
 export default DashboardFavoritesPage;

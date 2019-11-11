@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { object, bool } from 'prop-types';
+import { bool } from 'prop-types';
 
 import { size, palette, key } from 'sly/components/themes';
 import CommunityActions from 'sly/components/molecules/CommunityActions';
@@ -23,19 +23,13 @@ const Wrapper = styled.div`
   }
 `;
 
-const CommunityStickyFooter = ({
-  community, isAlreadyPricingRequested,
-}) => (
+const CommunityStickyFooter = ({ isAlreadyPricingRequested }) => (
   <Wrapper>
-    <CommunityActions
-      community={community}
-      isAlreadyPricingRequested={isAlreadyPricingRequested}
-    />
+    <CommunityActions isAlreadyPricingRequested={isAlreadyPricingRequested} />
   </Wrapper>
 );
-
+CommunityStickyFooter.typeHydrationId = 'CommunityStickyFooter';
 CommunityStickyFooter.propTypes = {
-  community: object.isRequired,
   isAlreadyPricingRequested: bool,
 };
 

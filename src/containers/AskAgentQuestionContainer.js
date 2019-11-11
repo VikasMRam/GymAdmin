@@ -1,14 +1,29 @@
 import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
+import loadable from '@loadable/component';
+import withRouter from 'react-router/withRouter';
+
 import { assetPath } from 'sly/components/themes';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
-import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import SlyEvent from 'sly/services/helpers/events';
-import withModal from "sly/controllers/withModal";
-import withNotification from "sly/controllers/withNotification";
+import withModal from 'sly/controllers/withModal';
+import withNotification from 'sly/controllers/withNotification';
+import { prefetch } from 'sly/services/newApi';
 
+const CommunityAskQuestionAgentFormContainer = loadable(() =>
+  import(/* webpackChunkName: "chunkCommunityAskQuestionAgentFormContainer" */ 'sly/containers/CommunityAskQuestionAgentFormContainer')
+);
+
+@withRouter
+@prefetch('community', 'getCommunity', (req, { match }) =>
+  req({
+    id: match.params.communitySlug,
+    include: 'similar-communities,questions,agents',
+  })
+)
 @withModal
 @withNotification
+
 export default class AskAgentQuestionContainer extends Component {
   static propTypes = {
     type: string.isRequired,
@@ -20,9 +35,7 @@ export default class AskAgentQuestionContainer extends Component {
 
   handleToggleAskAgentQuestionModal = (isAskAgentQuestionModalVisible) => {
     const { community, type } = this.props;
-    const action = isAskAgentQuestionModalVisible
-      ? 'close-modal'
-      : 'open-modal';
+    const action = isAskAgentQuestionModalVisible ? 'close-modal' : 'open-modal';
     let category = 'AskAgentQuestion';
     if (type) {
       category += `-${type}`;
@@ -40,12 +53,7 @@ export default class AskAgentQuestionContainer extends Component {
     const { type, community, showModal, hideModal, notifyInfo } = this.props;
 
     const agentImageUrl = assetPath('images/agent-xLarge.png');
-    const {
-      heading,
-      description,
-      placeholder,
-      question,
-    } = generateAskAgentQuestionContents(
+    const { heading, description, placeholder, question } = generateAskAgentQuestionContents(
       community.name,
       community.address.city,
       type
@@ -70,10 +78,7 @@ export default class AskAgentQuestionContainer extends Component {
     };
 
     this.handleToggleAskAgentQuestionModal(false);
-    showModal(
-      <CommunityAskQuestionAgentFormContainer {...modalComponentProps} />,
-      onClose
-    );
+    showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />, onClose);
   };
 
   render() {

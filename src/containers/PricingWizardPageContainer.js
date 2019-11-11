@@ -13,9 +13,9 @@ import { CUSTOM_PRICING } from 'sly/services/api/actions';
 import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
 import { getUserDetailsFromUAAndForm, medicareToBool } from 'sly/services/helpers/userDetails';
 import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
-import ModalController from 'sly/controllers/ModalController';
 import { query, withAuth } from 'sly/services/newApi';
 import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/services/newApi/constants';
+import { withRedirectTo } from 'sly/services/redirectTo';
 
 const eventCategory = 'PricingWizard';
 
@@ -87,6 +87,8 @@ const handleResponses = (responses, { location }, redirect) => {
   mapDispatchToProps,
 )
 
+@withRedirectTo
+
 export default class PricingWizardPageContainer extends Component {
   static propTypes = {
     community: communityPropType,
@@ -96,10 +98,10 @@ export default class PricingWizardPageContainer extends Component {
     uuidAux: object,
     status: object,
     postUserAction: func.isRequired,
-    history: object.isRequired,
     createAction: func.isRequired,
     updateUuidAux: func.isRequired,
     createOrUpdateUser: func.isRequired,
+    redirectTo: func.isRequired,
     match: object.isRequired,
   };
 
@@ -187,19 +189,9 @@ export default class PricingWizardPageContainer extends Component {
     }));
   };
 
-  handleComplete = (data) => {
-    const {
-      community, history,
-    } = this.props;
-
-    return this.submitUserAction(data).then(() => {
-      history.push(community.url);
-    });
-  };
-
   render() {
     const {
-      community, user, userHas, uuidAux,
+      community, user, userHas, uuidAux, redirectTo, match
     } = this.props;
 
     if (!community) {
@@ -207,23 +199,16 @@ export default class PricingWizardPageContainer extends Component {
     }
 
     return (
-      <ModalController>
-        {({
-          show,
-          hide,
-        }) => (
-          <PricingWizardPage
-            community={community}
-            user={user}
-            uuidAux={uuidAux}
-            userHas={userHas}
-            userActionSubmit={this.submitUserAction}
-            onComplete={this.handleComplete}
-            showModal={show}
-            hideModal={hide}
-          />
-        )}
-      </ModalController>
+      <PricingWizardPage
+        community={community}
+        user={user}
+        uuidAux={uuidAux}
+        userHas={userHas}
+        userActionSubmit={this.submitUserAction}
+        onComplete={this.submitUserAction}
+        redirectTo={redirectTo}
+        match={match}
+      />
     );
   }
 }

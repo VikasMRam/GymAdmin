@@ -1,10 +1,7 @@
 import React from 'react';
 import { func, object, array, bool, number, shape, string } from 'prop-types';
 import { connect } from 'react-redux';
-import isEqual from 'lodash/isEqual';
 import isMatch from 'lodash/isMatch';
-import omit from 'lodash/omit';
-import { parse as parseSearch } from 'query-string';
 import { Redirect } from 'react-router-dom';
 
 import { withServerState } from 'sly/store';
@@ -12,32 +9,23 @@ import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
 import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
-import { query, prefetch, withAuth, withApi } from 'sly/services/newApi';
+import { prefetch, withAuth, withApi } from 'sly/services/newApi';
 import {
   AVAILABILITY_REQUEST,
   PRICING_REQUEST,
   PROFILE_CONTACTED,
-  PROFILE_VIEWED,
   TOUR_BOOKED,
 } from 'sly/services/newApi/constants';
 import SlyEvent from 'sly/services/helpers/events';
+import { HydrationData } from 'sly/services/partialHydration';
 
-const ignoreSearchParams = [
-  'modal',
-  'action',
-  'entityId',
-  'currentStep',
-  'token',
-  'modal',
-];
+const ignoreSearchParams = ['modal', 'action', 'entityId', 'currentStep', 'token', 'modal'];
+
 
 const createHasProfileAction = uuidActions => (type, actionInfo) => {
   if (!uuidActions) return false;
   return uuidActions.some((uuidAction) => {
-    return (
-      uuidAction.actionType === type &&
-      isMatch(uuidAction.actionInfo, actionInfo)
-    );
+    return uuidAction.actionType === type && isMatch(uuidAction.actionInfo, actionInfo);
   });
 };
 
@@ -56,7 +44,6 @@ const mapStateToProps = (state) => {
 
 @withApi
 @withAuth
-@query('createAction', 'createUuidAction')
 @prefetch('community', 'getCommunity', (req, { match }) =>
   req({
     id: getCommunitySlug(match),
@@ -90,41 +77,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     }),
   };
 
-  componentDidMount() {
-    this.uuidActionPageView();
-  }
-
-  componentWillUpdate(nextProps) {
-    const { match, location } = this.props;
-    if (match.url !== nextProps.match.url) {
-      this.uuidActionPageView(nextProps);
-    } else {
-      const prev = omit(parseSearch(location.search), ignoreSearchParams);
-      const next = omit(
-        parseSearch(nextProps.location.search),
-        ignoreSearchParams
-      );
-      if (!isEqual(prev, next)) {
-        this.uuidActionPageView(nextProps);
-      }
-    }
-  }
-
-  uuidActionPageView(props = this.props) {
-    const { match, createAction } = props;
-
-    createAction({
-      type: 'UUIDAction',
-      attributes: {
-        actionInfo: {
-          slug: match.params.communitySlug,
-        },
-        actionPage: match.url,
-        actionType: PROFILE_VIEWED,
-      },
-    });
-  }
-
   handleSimilarCommunitiesClick = (index, to) => {
     const event = {
       action: 'exitintent-modal-click', category: 'similarCommunity', label: index.toString(), value: to,
@@ -133,14 +85,7 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
   };
 
   render() {
-    const {
-      status,
-      user,
-      uuidActions,
-      community,
-      history,
-      userAction,
-    } = this.props;
+    const { status, user, uuidActions, community, history, userAction } = this.props;
 
     const { location } = history;
     const { pathname } = location;
@@ -181,14 +126,17 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     };
 
     return (
-      <CommunityDetailPage
-        user={user}
-        community={community}
-        location={location}
-        profileContacted={profileContacted}
-        userAction={userAction}
-        history={history}
-      />
+      <>
+        <CommunityDetailPage
+          user={user}
+          community={community}
+          location={location}
+          profileContacted={profileContacted}
+          userAction={userAction}
+          history={history}
+        />
+        <HydrationData />
+      </>
     );
   }
 }

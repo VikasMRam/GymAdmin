@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { array, bool, func, object, string } from 'prop-types';
-import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
+import { withRouter } from 'react-router-dom';
+import loadable from '@loadable/component';
+
 import SlyEvent from 'sly/services/helpers/events';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
-import SaveCommunityContainer from 'sly/containers/SaveCommunityContainer';
 import { prefetch } from 'sly/services/newApi';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import {
@@ -15,6 +16,9 @@ import withApi from 'sly/services/newApi/withApi';
 import withAuth from 'sly/services/newApi/withAuth';
 import withNotification from 'sly/controllers/withNotification';
 import withModal from 'sly/controllers/withModal';
+
+const ShareCommunityFormContainer = loadable(() => import(/* webpackChunkName: "chunkShareCommunityFormContainer" */'sly/containers/ShareCommunityFormContainer'));
+const SaveCommunityContainer = loadable(() => import(/* webpackChunkName: "chunkSaveCommunityContainer" */'sly/containers/SaveCommunityContainer'));
 
 function getCommunityUserSave(community, userSaves) {
   return (
@@ -36,15 +40,21 @@ function isCommunityAlreadySaved(community, userSaves) {
 
 @withApi
 @withAuth
-@prefetch('userSaves', 'getUserSaves', (req, { community }) =>
+@withRouter
+@prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: match.params.communitySlug,
+  include: 'similar-communities,questions,agents',
+}))
+@prefetch('userSaves', 'getUserSaves', (req, { match }) =>
   req({
     'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
-    'filter[entity_slug]': community.id,
+    'filter[entity_slug]': match.params.communitySlug,
   })
 )
 @withModal
 @withNotification
 export default class CommunitySummaryContainer extends Component {
+  static typeHydrationId = 'CommunitySummaryContainer';
   static propTypes = {
     community: object.isRequired,
     isAdmin: bool,
@@ -56,6 +66,7 @@ export default class CommunitySummaryContainer extends Component {
     hideModal: func,
     notifyInfo: func,
     notifyError: func,
+    history: object,
   };
 
   sendEvent = (action, category) =>
@@ -135,6 +146,10 @@ export default class CommunitySummaryContainer extends Component {
     this.sendEvent('click', 'shareCommunity');
   };
 
+  goToReviews = () => {
+    this.sendEvent('click', 'viewReviews');
+  };
+
   render() {
     const { community, isAdmin, userSaves, className } = this.props;
     return (
@@ -144,6 +159,7 @@ export default class CommunitySummaryContainer extends Component {
         isFavorited={isCommunityAlreadySaved(community, userSaves)}
         onFavouriteClick={this.handleFavouriteClick}
         onShareClick={this.handleShareClick}
+        goToReviews={this.goToReviews}
         className={className}
       />
     );

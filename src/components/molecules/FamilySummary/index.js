@@ -83,6 +83,12 @@ const FamilySummary = ({
           <StyledLink href={`mailto:${client.clientInfo.email}`} onClick={clickEventHandler('fdetails-summary', 'email')} target="_blank" >Click To Send Email</StyledLink>
         </ColumWrapper>
       }
+      {client.clientInfo && client.clientInfo.referralSource &&
+      <ColumWrapper>
+        <Label palette="grey">Source</Label>
+        <Block size="caption">{client.clientInfo.referralSource}</Block>
+      </ColumWrapper>
+      }
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.financialInfo.medicaid &&
       <ColumWrapper>
         <Label palette="danger">Medicaid</Label>
@@ -101,10 +107,10 @@ const FamilySummary = ({
           <Block size="caption">{client.uuidAux.uuidInfo.residentInfo.gender}</Block>
         </ColumWrapper>
       }
-      {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.locationInfo.city &&
+      {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.locationInfo &&
         <ColumWrapper>
           <Label palette="grey">Preferred location</Label>
-          <Block size="caption">{client.uuidAux.uuidInfo.locationInfo.city}</Block>
+          <Block size="caption">{client.uuidAux.uuidInfo.locationInfo.city}, {client.uuidAux.uuidInfo.locationInfo.state}</Block>
         </ColumWrapper>
       }
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.housingInfo.moveTimeline &&

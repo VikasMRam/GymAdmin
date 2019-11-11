@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { object, func, string, shape } from 'prop-types';
+import { withRouter } from 'react-router';
 
 import { query } from 'sly/services/newApi';
 import { community as communityPropType } from 'sly/propTypes/community';
@@ -12,8 +13,8 @@ import { BOOK_A_TOUR } from 'sly/services/api/actions';
 import BookATourPage from 'sly/components/pages/BookATourPage';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
-import ModalController from 'sly/controllers/ModalController';
 import { TOUR_BOOKED } from 'sly/services/newApi/constants';
+import { withRedirectTo } from 'sly/services/redirectTo';
 
 const eventCategory = 'BAT';
 
@@ -73,6 +74,9 @@ const handleResponses = (responses, { location }, redirect) => {
 
 @query('createAction', 'createUuidAction')
 
+@withRouter
+@withRedirectTo
+
 export default class BookATourPageContainer extends Component {
   static propTypes = {
     community: communityPropType,
@@ -82,11 +86,13 @@ export default class BookATourPageContainer extends Component {
     history: object.isRequired,
     createAction: func.isRequired,
     match: shape({ url: string }),
+    redirectTo: func.isRequired
   };
+
 
   handleComplete = (data) => {
     const {
-      community, postUserAction, history, userAction, createAction, match,
+      community, postUserAction, userAction, createAction, match,
     } = this.props;
 
     const {
@@ -124,13 +130,12 @@ export default class BookATourPageContainer extends Component {
         action: 'tour-booked', category: eventCategory, label: community.id,
       };
       SlyEvent.getInstance().sendEvent(event);
-      history.push(community.url);
     });
   };
 
   render() {
     const {
-      community, user, userAction,
+      community, user, userAction, redirectTo, match
     } = this.props;
 
     if (!community || !userAction) {
@@ -139,21 +144,14 @@ export default class BookATourPageContainer extends Component {
 
     const userDetails = userAction ? userAction.userDetails : null;
     return (
-      <ModalController>
-        {({
-          show,
-          hide,
-        }) => (
-          <BookATourPage
-            community={community}
-            user={user}
-            userDetails={userDetails}
-            onComplete={this.handleComplete}
-            showModal={show}
-            hideModal={hide}
-          />
-        )}
-      </ModalController>
+      <BookATourPage
+        community={community}
+        user={user}
+        userDetails={userDetails}
+        onComplete={this.handleComplete}
+        redirectTo={redirectTo}
+        match={match}
+      />
     );
   }
 }

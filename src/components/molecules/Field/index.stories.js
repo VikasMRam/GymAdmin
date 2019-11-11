@@ -90,4 +90,8 @@ storiesOf('Molecules|Field', module)
   ))
   .add('type iconInput', () => (
     <Field name="field" label="Label" type="iconInput" />
+  ))
+  // Need to whitelist storybook domain in Google Console, else wont work
+  .add('type locationSearch', () => (
+    <Field name="field" label="Label" type="locationSearch" />
   ));

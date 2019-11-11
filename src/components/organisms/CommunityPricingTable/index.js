@@ -5,8 +5,7 @@ import NumberFormat from 'react-number-format';
 import ReactTooltip from 'react-tooltip';
 
 import { palette, size } from 'sly/components/themes';
-import { Button, Block, Span, Icon, Paragraph } from 'sly/components/atoms';
-import { MainSection } from 'sly/components/molecules/CollapsibleSection';
+import { Block, Span, Icon, Paragraph } from 'sly/components/atoms';
 import { isServer } from 'sly/config';
 
 const StyledNumberFormat = styled(NumberFormat)`
@@ -127,110 +126,108 @@ const CommunityPricingTable = ({
 
   return (
     <>
-      <MainSection>
-        {estimated &&
-          <StyledBlockNp size="title">
-            <StyledBlockSp size="body" palette="slate">The estimated monthly pricing for {name} ranges from</StyledBlockSp>
-            <StyledNumberFormat weight="weight.medium" color="secondary" value={from} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary" value={to} displayType="text" thousandSeparator prefix="$" /><Span weight="medium" size="title" palette="secondary"> per month*</Span>
-          </StyledBlockNp>
-        }
-        {!estimated &&
-          <StyledBlockNp size="title">
-            <StyledBlockSp size="body" palette="slate">The estimated pricing for {name} starts around</StyledBlockSp>
-            <StyledNumberFormat weight="weight.medium" color="secondary" value={price} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> per month*</Span>
-          </StyledBlockNp>
-        }
-        {pricesList.length > 0 &&
-          <StyledBlockNp>
-            <StyledTable>
-              <thead>
-                <tr>
-                  <StyledTh colSpan={2} color="slate" bgcolor="grey">
-                    Costs By Room Type**
-                  </StyledTh>
-                </tr>
-              </thead>
-              <tbody>
-                <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Average Monthly Cost</StyledTd> </Tr>
-                {pricesList.map((price) => {
-                const { label, value } = price;
-                return (
-                  <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
-                );
-              })}
-              </tbody>
-            </StyledTable>
-          </StyledBlockNp>
-        }
-        {pricesList.length === 0 && estimatedPriceList.length > 0 &&
-          <StyledBlockNp>
-            <StyledTable>
-              <thead>
-                <tr>
-                  {showToolTip &&
-                  <StyledTh colSpan={2} color="slate" bgcolor="grey">
-                    {toolTipCode(communitySize)}
-                  </StyledTh>
-                  }
-                  {!showToolTip &&
-                  <StyledTh colSpan={2} color="slate" bgcolor="grey">
-                    Costs By Room Type**
-                  </StyledTh>
-                  }
-                </tr>
-              </thead>
-              <tbody>
-                <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Estimated Monthly Cost</StyledTd> </Tr>
-                {estimatedPriceList.map((price) => {
-                const { label, value } = price;
-                return (
-                  <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
-                );
-              })}
-              </tbody>
-            </StyledTable>
-          </StyledBlockNp>
-        }
+      {estimated &&
+        <StyledBlockNp size="title">
+          <StyledBlockSp size="body" palette="slate">The estimated monthly pricing for {name} ranges from</StyledBlockSp>
+          <StyledNumberFormat weight="weight.medium" color="secondary" value={from} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary" value={to} displayType="text" thousandSeparator prefix="$" /><Span weight="medium" size="title" palette="secondary"> per month*</Span>
+        </StyledBlockNp>
+      }
+      {!estimated &&
+        <StyledBlockNp size="title">
+          <StyledBlockSp size="body" palette="slate">The estimated pricing for {name} starts around</StyledBlockSp>
+          <StyledNumberFormat weight="weight.medium" color="secondary" value={price} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> per month*</Span>
+        </StyledBlockNp>
+      }
+      {pricesList.length > 0 &&
+        <StyledBlockNp>
+          <StyledTable>
+            <thead>
+              <tr>
+                <StyledTh colSpan={2} color="slate" bgcolor="grey">
+                  Costs By Room Type**
+                </StyledTh>
+              </tr>
+            </thead>
+            <tbody>
+              <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Average Monthly Cost</StyledTd> </Tr>
+              {pricesList.map((price) => {
+              const { label, value } = price;
+              return (
+                <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
+              );
+            })}
+            </tbody>
+          </StyledTable>
+        </StyledBlockNp>
+      }
+      {pricesList.length === 0 && estimatedPriceList.length > 0 &&
+        <StyledBlockNp>
+          <StyledTable>
+            <thead>
+              <tr>
+                {showToolTip &&
+                <StyledTh colSpan={2} color="slate" bgcolor="grey">
+                  {toolTipCode(communitySize)}
+                </StyledTh>
+                }
+                {!showToolTip &&
+                <StyledTh colSpan={2} color="slate" bgcolor="grey">
+                  Costs By Room Type**
+                </StyledTh>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Estimated Monthly Cost</StyledTd> </Tr>
+              {estimatedPriceList.map((price) => {
+              const { label, value } = price;
+              return (
+                <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
+              );
+            })}
+            </tbody>
+          </StyledTable>
+        </StyledBlockNp>
+      }
+      <Block>
+        <StyledGetPricingButton>Get Detailed Pricing</StyledGetPricingButton>
         <Block>
-          <StyledGetPricingButton>Get Detailed Pricing</StyledGetPricingButton>
-          <Block>
-            {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && communitySize === 'up to 20 Beds' &&
-              <Paragraph>
-                **Pricing in assisted living communities can be difficult to estimate.
-                In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
-                Small communities like this typically have &quot;all-inclusive&quot; pricing that gives the resident one monthly
-                price.
-                Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
-                service.
-              </Paragraph>
-            }
-            {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && communitySize === '20 - 51 Beds' &&
-              <Paragraph>
-                **Pricing in assisted living communities can be difficult to estimate.
-                In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
-                Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
-                price.
-                Some communities will use a Points or Level of Care system to determine the care related fees.
-                Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
-                service.
-              </Paragraph>
-            }
-            {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && communitySize === '51 +' &&
-              <Paragraph>
-                **Pricing in assisted living communities can be difficult to estimate.
-                In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
-                Most large sized communities like this typically charge additional care fees.
-                Communities will use a Points or a Level of Care system to determine the care related fees.
-                Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
-                service.
-              </Paragraph>
-            }
-          </Block>
-          <Block size="caption" palette="grey">
-            *Seniorly&apos;s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.  If you manage the community and would like to update your pricing, please email us at communities@seniorly.com.
-          </Block>
+          {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && communitySize === 'up to 20 Beds' &&
+            <Paragraph>
+              **Pricing in assisted living communities can be difficult to estimate.
+              In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
+              Small communities like this typically have &quot;all-inclusive&quot; pricing that gives the resident one monthly
+              price.
+              Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+              service.
+            </Paragraph>
+          }
+          {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && communitySize === '20 - 51 Beds' &&
+            <Paragraph>
+              **Pricing in assisted living communities can be difficult to estimate.
+              In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
+              Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
+              price.
+              Some communities will use a Points or Level of Care system to determine the care related fees.
+              Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+              service.
+            </Paragraph>
+          }
+          {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && communitySize === '51 +' &&
+            <Paragraph>
+              **Pricing in assisted living communities can be difficult to estimate.
+              In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
+              Most large sized communities like this typically charge additional care fees.
+              Communities will use a Points or a Level of Care system to determine the care related fees.
+              Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+              service.
+            </Paragraph>
+          }
         </Block>
-      </MainSection>
+        <Block size="caption" palette="grey">
+          *Seniorly&apos;s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.  If you manage the community and would like to update your pricing, please email us at communities@seniorly.com.
+        </Block>
+      </Block>
     </>
   );
 };
