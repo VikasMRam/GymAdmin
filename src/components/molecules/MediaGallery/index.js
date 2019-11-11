@@ -30,11 +30,10 @@ const ImageCaptionWrapper = styled.div`
   background: ${palette('slate', 'base')}80;
   color: ${palette('slate', 'filler')};
   font-size: ${size('text.tiny')};
-  left: 0;
   bottom: 0;
   width: 100%;
   padding: ${size('spacing.regular')};
-  max-height: ${size('spacing.xxxLarge')};
+  max-height: ${size('spacing.xxLarge')};
   position: absolute;
   z-index: 1;
   text-align: left;
@@ -43,7 +42,7 @@ const ImageCaptionWrapper = styled.div`
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; 
+  -webkit-line-clamp: 1; 
 `;
 
 const imageStyles = css`
@@ -87,17 +86,17 @@ const TopRightWrapper = styled.span`
 `;
 const BottomLeftWrapper = styled.span`
   left: ${size('spacing.regular')};
-  bottom: ${p => p.description ? size('spacing', 'huge'): size('spacing', 'regular')};
   position: absolute;
   z-index: 1;
+  ${p => (p.description && p.description !== '')  ? css`bottom: calc(${size('spacing', 'xxLarge')} + ${size('spacing', 'regular')})` : css`bottom: ${size('spacing', 'regular')}`};
 `;
 
 const BottomRightWrapper = styled.span`
   right: ${size('spacing.regular')};
-  bottom: ${p => p.description ? size('spacing', 'huge') : size('spacing', 'regular')};
-  bottom: ;
   position: absolute;
   z-index: 1;
+   ${p => (p.description && p.description !== '') ? css`bottom: calc(${size('spacing', 'xxLarge')} + ${size('spacing', 'regular')})` : css`bottom: ${size('spacing', 'regular')}`};
+
 `;
 
 const sliderRootElementStyle = {
@@ -250,7 +249,7 @@ export default class MediaGallery extends Component {
               aspectRatio={aspectRatio}
             />
             <ImageCaptionWrapper>
-              This is a description of the image. This is a description of the image. This is a description of the image. This is a description of the image.
+              {media.description}
             </ImageCaptionWrapper>
           </>
         );
