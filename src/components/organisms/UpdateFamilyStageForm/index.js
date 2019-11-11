@@ -90,26 +90,23 @@ export default class UpdateFamilyStageForm extends Component {
       currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, roomTypes, rejectReasons, currentRejectReason, ...props
     } = this.props;
 
-    // const reasonsOptions = rejectReasons.map(r => ({ value: r, label: r }));
-    const reasonsOptions = rejectReasons.map(i => <option key={i} value={i}>{i}</option>);
-
+    const reasonsOptions = rejectReasons.map(r => ({ value: r, label: r }));
     const NEW_FAMILY_STAGE_ORDERED = { ...FAMILY_STAGE_ORDERED };
 
     const options = Object.keys(NEW_FAMILY_STAGE_ORDERED).map((sg) => {
-      let stages = NEW_FAMILY_STAGE_ORDERED[sg].map(s => nextAllowedStages.indexOf(s) !== -1 && <option key={s} value={s}>{s}</option>);
+      let stages = NEW_FAMILY_STAGE_ORDERED[sg].map(s => nextAllowedStages.indexOf(s) !== -1 && { value: s, label: s });
       stages = stages.filter(s => s);
 
       if (stages.length) {
-        return (
-          <optgroup label={sg} key={sg}>
-            {stages}
-          </optgroup>
-        );
+        return {
+          label: sg,
+          options: stages,
+        };
       }
       return null;
     });
-    const roomTypeOptions = roomTypes.map(t => <option key={t} value={t}>{t}</option>);
-    const lossReasonOptions = lossReasons.map(reason => <option key={reason} value={reason}>{reason}</option>);
+    const roomTypeOptions = roomTypes.map(t => ({ value: t, label: t }));
+    const lossReasonOptions = lossReasons.map(reason => ({ value: reason, label: reason }));
     const stageGroupChanged = nextStageGroup && currentStageGroup !== nextStageGroup;
     const stageChanged = currentStage !== nextStage;
     const StageField = stageGroupChanged ? Field : PaddedField;
@@ -129,12 +126,10 @@ export default class UpdateFamilyStageForm extends Component {
         <StageField
           name="stage"
           label="Stage"
-          type="select"
+          type="choice"
           component={ReduxField}
-        >
-          <option value="" disabled>Select a stage</option>
-          {options}
-        </StageField>
+          options={options}
+        />
         {stageGroupChanged && (!isPaused || (isPaused && stageChanged)) &&
           <Warning size="caption">
             Updating to this stage will move this family from <strong>{currentStageGroup}</strong> to <strong>{nextStageGroup}</strong>.
@@ -196,12 +191,10 @@ export default class UpdateFamilyStageForm extends Component {
           <Field
             name="roomType"
             label="Room type"
-            type="select"
+            type="choice"
             component={ReduxField}
-          >
-            <option value="" disabled>Select an option</option>
-            {roomTypeOptions}
-          </Field>
+            options={roomTypeOptions}
+          />
         }
         {isNext(FAMILY_STAGE_WON) &&
           <Field
@@ -266,13 +259,13 @@ export default class UpdateFamilyStageForm extends Component {
               <Field
                 name="invoicePaid"
                 label="Invoice Paid?"
-                type="select"
+                type="choice"
                 component={ReduxField}
-              >
-                <option value="" disabled>Select an option</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </Field>
+                options={[
+                  { value: 'yes', label: 'yes' },
+                  { value: 'no', label: 'no' },
+                ]}
+              />
             </Role>
           </>
         }
@@ -280,24 +273,20 @@ export default class UpdateFamilyStageForm extends Component {
           <Field
             name="lossReason"
             label={<span>Closed reason<Span palette="danger">*</Span></span>}
-            type="select"
+            type="choice"
             component={ReduxField}
-          >
-            <option value="" disabled>Select a reason</option>
-            {lossReasonOptions}
-          </Field>
+            options={lossReasonOptions}
+          />
         }
         {isNext(FAMILY_STAGE_REJECTED) &&
           <Field
             name="rejectReason"
             label={<span>Select a reason<Span palette="danger">*</Span></span>}
-            type="select"
+            type="choice"
             placeholder="Select rejection reason"
             component={ReduxField}
-          >
-            <option value="" disabled>Select</option>
-            {reasonsOptions}
-          </Field>
+            options={reasonsOptions}
+          />
         }
         {isNext(FAMILY_STAGE_LOST, FAMILY_STAGE_REJECTED) &&
           (DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentRejectReason) ||
