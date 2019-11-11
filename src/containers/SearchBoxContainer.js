@@ -5,7 +5,6 @@ import { geocodeByAddress } from 'react-places-autocomplete';
 import { gMapsApiKey, loadAutoComplete } from 'sly/config';
 import SearchBox from 'sly/components/molecules/SearchBox';
 import SlyEvent from 'sly/services/helpers/events';
-import { connectController } from 'sly/controllers';
 
 class SearchBoxContainer extends Component {
   static propTypes = {
@@ -13,8 +12,7 @@ class SearchBoxContainer extends Component {
     address: string,
     defaultAddress: string,
     location: object,
-    set: func,
-    resetController: func,
+
     clearLocationOnBlur: bool,
     onTextChange: func,
     onLocationSearch: func,
@@ -27,11 +25,16 @@ class SearchBoxContainer extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { isMounted: false };
+    const { address } = props;
+    this.state = {
+      isMounted: false,
+      address: address || '',
+      location: null,
+      defaultAddress: address,
+    };
   }
 
   componentDidMount() {
-    const { set, defaultAddress } = this.props;
     const scriptjs = require('scriptjs');
     if (loadAutoComplete) {
       scriptjs(
@@ -42,39 +45,33 @@ class SearchBoxContainer extends Component {
           });
         }
       );
-
-      if (defaultAddress) {
-        set({ defaultAddress });
-      }
     }
   }
 
   componentWillUnmount() {
-    const { resetController } = this.props;
     this.setState({
       isMounted: false,
     });
-    resetController();
   }
 
   handleBlur = () => {
     const { addressSelected } = this;
-    const { set, defaultAddress, address } = this.props;
+    const { defaultAddress, address } = this.state;
     if (address && address !== addressSelected) {
-      set({ defaultAddress });
+      this.setState({ defaultAddress });
     }
   };
 
   handleChange = (address) => {
-    const { onTextChange, set } = this.props;
+    const { onTextChange } = this.props;
     if (onTextChange) {
       onTextChange(address);
     }
-    set({ address });
+    this.setState({ address });
   };
 
   handleSelect = (address) => {
-    const { set, address: value } = this.props;
+    const { address: value } = this.state;
     this.addressSelected = address;
     geocodeByAddress(address)
       .then(results => results[0])
@@ -86,14 +83,14 @@ class SearchBoxContainer extends Component {
         SlyEvent.getInstance().sendEvent({
           action: 'googleSearchTyped', category: result.formatted_address, label: value,
         });
-        set({ location: result });
+        this.setState({ location: result });
         this.handleOnLocationSearch(result);
       })
       .catch(error => console.error('Error', error));
   };
 
   handleSearch = () => {
-    const { location, address } = this.props;
+    const { location, address } = this.state;
     if (address) {
       this.handleSelect(address);
     } else if (location) {
@@ -102,8 +99,7 @@ class SearchBoxContainer extends Component {
   };
 
   handleTextboxFocus = () => {
-    const { set } = this.props;
-    set({ location: null });
+    this.setState({ location: null });
   };
 
   handleOnLocationSearch = (result) => {
@@ -116,9 +112,9 @@ class SearchBoxContainer extends Component {
   render() {
     const { handleBlur } = this;
     const {
-      layout, address, clearLocationOnBlur, allowOnlySelectionFromSuggestions, ...props
+      layout, clearLocationOnBlur, allowOnlySelectionFromSuggestions, ...props
     } = this.props;
-    const { isMounted } = this.state;
+    const { isMounted, address } = this.state;
     if (!isMounted) {
       return <div />;
     }
@@ -152,11 +148,4 @@ class SearchBoxContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, { controller = {}, address }) => ({
-  address: controller.address || '',
-  location: controller.location || null,
-  defaultAddress: address,
-});
-
-
-export default connectController(mapStateToProps, null)(SearchBoxContainer);
+export default SearchBoxContainer;
