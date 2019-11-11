@@ -28,6 +28,7 @@ const COMMUNITY_PROFILE_PAGE_PATH = `/:toc(${careTypes})/:state/:city/:community
 @withRouter
 @withUser
 export default class RetentionPopup extends Component {
+  static typeHydrationId = 'RetentionPopup';
   static propTypes = {
     showModal: func.isRequired,
     hideModal: func.isRequired,
