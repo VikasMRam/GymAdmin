@@ -14,6 +14,7 @@ const sendEvent = (category, action, label, value) =>
 
 export default class HowSlyWorksVideoContainer extends Component {
   static displayName = 'HowSlyWorksVideoContainer';
+  static typeHydrationId = 'HowSlyWorksVideoContainer';
   static propTypes = {
     eventLabel: string,
   };

@@ -23,6 +23,7 @@ import {
 } from 'sly/services/validation';
 import userPropType, { uuidAux as uuidAuxProptype } from 'sly/propTypes/user';
 import { CONCIERGE } from 'sly/constants/modalType';
+import { withRedirectTo } from 'sly/services/redirectTo';
 
 export const CONVERSION_FORM = 'conversionForm';
 export const ADVANCED_INFO = 'advancedInfo';
@@ -76,6 +77,7 @@ const mapStateToProps = (state, { communitySlug, queryParams, uuidActions }) => 
 };
 
 @withRouter
+@withRedirectTo
 
 @withAuth
 @prefetch('uuidActions', 'getUuidActions', (req, { communitySlug }) =>
@@ -94,7 +96,7 @@ export default class ConciergeController extends Component {
 
   static propTypes = {
     match: shape({ url: string.isRequired }),
-    history: object,
+    redirectTo: func.isRequired,
     children: func.isRequired,
     concierge: object.isRequired,
     communitySlug: string,
@@ -313,11 +315,11 @@ export default class ConciergeController extends Component {
       user,
       uuidAux,
       communitySlug,
-      history,
+      redirectTo,
     } = this.props;
 
     if (communitySlug) {
-      history.push(`/custom-pricing/${communitySlug}`);
+      redirectTo(`/custom-pricing/${communitySlug}`);
     } else {
       const {
         contactRequested,

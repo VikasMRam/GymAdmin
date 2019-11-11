@@ -1,6 +1,6 @@
 import { doCustomPricingFlow } from '../../helpers/customPricing';
 import { assertUserActionsForCustomPricing } from '../../helpers/userActions';
-import { responsive } from '../../helpers/tests';
+import { responsive, waitForHydration } from '../../helpers/tests';
 import { TEST_COMMUNITY } from '../../constants/community';
 
 describe('Marketplace Profile Page', () => {
@@ -14,7 +14,8 @@ describe('Marketplace Profile Page', () => {
 
       if (viewport === 'mobile' || viewport === 'tablet') {
         cy.visit(`/assisted-living/california/san-francisco/${TEST_COMMUNITY}`);
-        cy.get('button').contains('Get Pricing').click();
+
+        waitForHydration(cy.get('button').contains('Get Pricing')).click();
       } else {
         // FIXME: Fix going to custom pricing on Request Info button click
         // cy.get('form[name="ConversionForm"] input[name="full_name"]').type(name);

@@ -1,10 +1,7 @@
 import React from 'react';
 import { func, object, array, bool, number, shape, string } from 'prop-types';
 import { connect } from 'react-redux';
-import isEqual from 'lodash/isEqual';
 import isMatch from 'lodash/isMatch';
-import omit from 'lodash/omit';
-import { parse as parseSearch } from 'query-string';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -14,12 +11,11 @@ import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ModalController from 'sly/controllers/ModalController';
-import { query, prefetch, withAuth, withApi } from 'sly/services/newApi';
+import { prefetch, withAuth, withApi } from 'sly/services/newApi';
 import {
   AVAILABILITY_REQUEST,
   PRICING_REQUEST,
   PROFILE_CONTACTED,
-  PROFILE_VIEWED,
   TOUR_BOOKED,
 } from 'sly/services/newApi/constants';
 import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
@@ -30,15 +26,10 @@ import { EXIT_INTENT_TYPE } from 'sly/constants/retentionPopup';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import SlyEvent from 'sly/services/helpers/events';
 import textAlign from 'sly/components/helpers/textAlign';
+import { HydrationData } from 'sly/services/partialHydration';
 
-const ignoreSearchParams = [
-  'modal',
-  'action',
-  'entityId',
-  'currentStep',
-  'token',
-  'modal',
-];
+const ignoreSearchParams = ['modal', 'action', 'entityId', 'currentStep', 'token', 'modal'];
+
 
 const StyledHeading = styled(textAlign(Heading))`
   margin-bottom: ${size('spacing.xLarge')};
@@ -47,10 +38,7 @@ const StyledHeading = styled(textAlign(Heading))`
 const createHasProfileAction = uuidActions => (type, actionInfo) => {
   if (!uuidActions) return false;
   return uuidActions.some((uuidAction) => {
-    return (
-      uuidAction.actionType === type &&
-      isMatch(uuidAction.actionInfo, actionInfo)
-    );
+    return uuidAction.actionType === type && isMatch(uuidAction.actionInfo, actionInfo);
   });
 };
 
@@ -69,7 +57,6 @@ const mapStateToProps = (state) => {
 
 @withApi
 @withAuth
-@query('createAction', 'createUuidAction')
 @prefetch('community', 'getCommunity', (req, { match }) =>
   req({
     id: getCommunitySlug(match),
@@ -102,41 +89,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       url: string.isRequired,
     }),
   };
-
-  componentDidMount() {
-    this.uuidActionPageView();
-  }
-
-  componentWillUpdate(nextProps) {
-    const { match, location } = this.props;
-    if (match.url !== nextProps.match.url) {
-      this.uuidActionPageView(nextProps);
-    } else {
-      const prev = omit(parseSearch(location.search), ignoreSearchParams);
-      const next = omit(
-        parseSearch(nextProps.location.search),
-        ignoreSearchParams
-      );
-      if (!isEqual(prev, next)) {
-        this.uuidActionPageView(nextProps);
-      }
-    }
-  }
-
-  uuidActionPageView(props = this.props) {
-    const { match, createAction } = props;
-
-    createAction({
-      type: 'UUIDAction',
-      attributes: {
-        actionInfo: {
-          slug: match.params.communitySlug,
-        },
-        actionPage: match.url,
-        actionType: PROFILE_VIEWED,
-      },
-    });
-  }
 
   handleSimilarCommunitiesClick = (index, to) => {
     const event = {
@@ -185,14 +137,7 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
   };
 
   render() {
-    const {
-      status,
-      user,
-      uuidActions,
-      community,
-      history,
-      userAction,
-    } = this.props;
+    const { status, user, uuidActions, community, history, userAction } = this.props;
 
     const { location } = history;
     const { pathname } = location;
@@ -231,15 +176,18 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     return (
       <ModalController>
         {({ show, hide }) => (
-          <CommunityDetailPage
-            user={user}
-            community={community}
-            location={location}
-            profileContacted={profileContacted}
-            userAction={userAction}
-            history={history}
-            exitIntentContent={this.getExitintent(show, hide)}
-          />
+          <>
+            <CommunityDetailPage
+              user={user}
+              community={community}
+              location={location}
+              profileContacted={profileContacted}
+              userAction={userAction}
+              history={history}
+              exitIntentContent={this.getExitintent(show, hide)}
+            />
+            <HydrationData />
+          </>
         )}
       </ModalController>
     );

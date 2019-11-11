@@ -1,10 +1,12 @@
 import React from 'react';
+import { object } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import Concierge from 'sly/components/organisms/Concierge';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import { getSearchParams } from 'sly/services/helpers/search';
+import { prefetch } from 'sly/services/newApi';
 
 function ConciergeContainer({
   community,
@@ -48,5 +50,14 @@ function ConciergeContainer({
     </ConciergeController>
   );
 }
+ConciergeContainer.typeHydrationId = 'ConciergeContainer';
+ConciergeContainer.propTypes = {
+  community: object.isRequired
+};
 
-export default withRouter(ConciergeContainer);
+const withCommunity = prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: match.params.communitySlug,
+  include: 'similar-communities,questions,agents',
+}));
+
+export default withRouter(withCommunity(ConciergeContainer));

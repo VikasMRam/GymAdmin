@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { object, func, bool } from 'prop-types';
+import { object, func } from 'prop-types';
 import Helmet from 'react-helmet';
+import { Route } from 'react-router';
 
 import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
 import { community as communityPropType } from 'sly/propTypes/community';
@@ -33,6 +34,7 @@ import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWiz
 import CommunityPricingWizardExploreAffordableOptionsFormContainer
   from 'sly/containers/CommunityPricingWizardExploreAffordableOptionsFormContainer';
 import CommunityPricingWizardLanding from 'sly/components/organisms/CommunityPricingWizardLanding';
+import Modal from 'sly/components/molecules/Modal';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -82,11 +84,8 @@ class PricingWizardPage extends Component {
     uuidAux: object,
     onComplete: func,
     userActionSubmit: func,
-    isAdvisorHelpVisible: bool,
-    onAdvisorHelpClick: func,
-    history: object,
-    showModal: func,
-    hideModal: func,
+    redirectTo: func,
+    match: object,
   };
 
   constructor(props) {
@@ -186,37 +185,13 @@ class PricingWizardPage extends Component {
     });
   };
 
-  openAdvisorHelp = () => {
-    const { showModal, hideModal } = this.props;
-    showModal(<AdvisorHelpPopup onButtonClick={hideModal} />);
-  };
-
-  openConfirmationModal = () => {
-    const {
-      showModal, hideModal, community,
-    } = this.props;
-    const { similarProperties } = community;
-    const heading = 'Thank you! Our team will be calling you from (855) 855-2629.';
-    const subheading = 'We received your request and your Seniorly Partner Agent will work with you to get your exact pricing and availability.';
-    const props = {
-      similarCommunities: similarProperties,
-      buttonTo: FAMILY_DASHBOARD_FAVORITES_PATH,
-      onTileClick: hideModal,
-      heading,
-      subheading,
-      type: 'pricingWizard',
-    };
-
-    showModal(<CommunityWizardAcknowledgementContainer {...props} />);
-  };
-
   render() {
     const {
-      handleRoomTypeChange, handleCareTypeChange, handleBudgetChange, handleStepChange, openAdvisorHelp, openConfirmationModal,
+      handleRoomTypeChange, handleCareTypeChange, handleBudgetChange, handleStepChange
     } = this;
 
     const {
-      community, user, uuidAux, userHas, onComplete,
+      community, user, uuidAux, userHas, onComplete, match, redirectTo
     } = this.props;
 
     const { id, mainImage, name } = community;
@@ -224,6 +199,9 @@ class PricingWizardPage extends Component {
     const compiledWhatToDoNextOptions = [...WHAT_TO_NEXT_OPTIONS];
     // const scheduleTourOption = compiledWhatToDoNextOptions.find(o => o.value === 'schedule-tour');
     // scheduleTourOption.to = `/book-a-tour/${id}`;
+
+    const openConfirmationModal = () => redirectTo(`${match.url}/thank-you`);
+    const openHelpModal = () => redirectTo(`${match.url}/help`);
 
     return (
       <FullScreenWizard>
@@ -266,7 +244,7 @@ class PricingWizardPage extends Component {
                     <WizardStep
                       component={CommunityBookATourContactFormContainer}
                       name="Contact"
-                      onAdvisorHelpClick={openAdvisorHelp}
+                      onAdvisorHelpClick={openHelpModal}
                       user={user}
                       heading={formHeading}
                       subheading={formSubheading}
@@ -310,6 +288,26 @@ class PricingWizardPage extends Component {
               );
             }}
         </WizardController>
+        <Route path={`${match.url}/thank-you`}>
+          {(routeProps) => (
+            <Modal isOpen={!!routeProps.match} onClose={() => redirectTo(community.url)} closeable>
+              <CommunityWizardAcknowledgementContainer
+                heading='Thank you! Our team will be calling you from (855) 855-2629.'
+                subheading='We received your request and your Seniorly Partner Agent will work with you to get your exact pricing and availability.'
+                similarCommunities={community.similarProperties}
+                buttonTo={FAMILY_DASHBOARD_FAVORITES_PATH}
+                type='pricingWizard'
+              />
+            </Modal>
+          )}
+        </Route>
+        <Route path={`${match.url}/help`}>
+          {(routeProps) => (
+            <Modal isOpen={!!routeProps.match} onClose={() => redirectTo(match.url)} closeable>
+              <AdvisorHelpPopup onButtonClick={() => redirectTo(match.url)} />
+            </Modal>
+          )}
+        </Route>
       </FullScreenWizard>
     );
   }

@@ -26,7 +26,7 @@ export default function TrackedSimilarCommunitiesContainer({
     />
   );
 }
-
+TrackedSimilarCommunitiesContainer.typeHydrationId = 'TrackedSimilarCommunitiesContainer';
 TrackedSimilarCommunitiesContainer.propTypes = {
   communities: arrayOf(communityPropType).isRequired,
   communityStyle: object,

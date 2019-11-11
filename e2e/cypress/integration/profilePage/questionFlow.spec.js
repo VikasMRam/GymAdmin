@@ -1,4 +1,4 @@
-import { responsive, select } from '../../helpers/tests';
+import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
 import { getCommunity } from '../../helpers/getCommunity';
 import { TEST_COMMUNITY } from '../../constants/community';
@@ -42,7 +42,7 @@ describe('Ask Question Community', () => {
 
     cy.wait('@postUuidActions');
 
-    cy.get('button').contains('Ask a Question').click();
+    waitForHydration(cy.get('button').contains('Ask a Question')).click();
 
     const questionText = `my comments ${randHash()}`;
     let questionId;
@@ -102,16 +102,21 @@ describe('Ask Question Community', () => {
   };
 
   const leaveAnswer = (questionText) => {
-    select('.CollapsibleSection__MainSection').contains(questionText)
-      .parent()
-      .next()
-      .next()
-      .click();
+    waitForHydration(
+      select('h3')
+        .contains(`Questions About ${community.name}`)
+        .parent()
+        .get('article')
+        .contains(questionText)
+        .parent()
+        .next()
+        .next()
+    ).click();
 
     const commentText = `my replay ${randHash()}`;
 
     portal('h3').contains('Provide an Answer').should('exist');
-    portal('.CommunityLeaveAnAnswerForm__QuestionTextDiv').contains(questionText).should('exist');
+    portal('.CommunityLeaveAnAnswerForm__QuestionTextDiv').should('contain', questionText);
     portal('textarea[name="answer"]').type(commentText);
     portal('button[type="submit"]').click();
 
@@ -157,8 +162,7 @@ describe('Ask Question Community', () => {
       lastQuestion('div')
         .parent()
         .next()
-        .contains(commentText)
-        .should('exist');
+        .should('contain', commentText);
     });
   });
 });

@@ -51,8 +51,8 @@ import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchCont
 import StatusSelect from 'sly/components/molecules/StatusSelect';
 import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
 import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
+import AddOrEditTaskFormContainer from 'sly/containers/AddOrEditTaskFormContainer';
 import { Datatable } from 'sly/services/datatable';
-
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
@@ -431,12 +431,88 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     />, null, 'noPadding', false);
   };
 
-  render() {
-    const {
-      handleRejectClick, handleUpdateClick, handleAddNoteClick,
-      handleEditNoteClick,
-    } = this;
+  handleAddTaskClick = () => {
+    const { showModal, hideModal, notifyInfo, notifyError, client } = this.props;
+    // todo: remove after clarifying. here since task api call
+    // won't be done meta is not available
+    const priorities = [
+      'Urgent',
+      'High',
+      'Medium',
+      'Low',
+    ];
+    const statuses = [
+      'Not Started',
+      'In Progress',
+      'Completed',
+      'Deleted',
+    ];
+    const event = {
+      category: 'fdetails',
+      action: 'launch',
+      label: 'addTask',
+    };
+    SlyEvent.getInstance().sendEvent(event);
+    showModal(
+      (
+        <AddOrEditTaskFormContainer
+          priorities={priorities}
+          statuses={statuses}
+          onCancel={hideModal}
+          notifyInfo={notifyInfo}
+          notifyError={notifyError}
+          onSuccess={hideModal}
+          client={client}
+        />
+      ), null, 'noPadding', false
+    );
+  };
 
+  getStickyFooterOptions = (showUpdateAddNoteButtons, showAcceptRejectButtons) => {
+    const { hideModal, onAcceptClick } = this.props;
+
+    // showUpdateAddNote Button overrides showAcceptReject Buttons
+    if (showUpdateAddNoteButtons) {
+      const {
+        messagesPath,
+        communitiesPath,
+        agentsPath,
+      } = this.getTabPathsForUser();
+      return [
+        {
+          text: 'Add note', icon: 'add-note', iconPalette: 'slate', onClick: this.handleAddNoteClick, ghost: true,
+        },
+        {
+          text: 'Add task', icon: 'checkbox-fill', iconPalette: 'slate', onClick: this.handleAddTaskClick, ghost: true,
+        },
+        {
+          text: 'Message family', icon: 'message', iconPalette: 'slate', onClick: hideModal, to: messagesPath, ghost: true,
+        },
+        {
+          text: 'Send agent refferal', icon: 'send', iconPalette: 'slate', onClick: hideModal, to: agentsPath, ghost: true,
+        },
+        {
+          text: 'Send community refferal', icon: 'send', iconPalette: 'slate', onClick: hideModal, to: communitiesPath, ghost: true,
+        },
+        {
+          text: 'Update stage', icon: 'flag', iconPalette: 'slate', onClick: this.handleUpdateClick,
+        },
+      ];
+    }
+    if (showAcceptRejectButtons) {
+      return [
+        {
+          text: 'Accept and contact this family', icon: 'flag', palette: 'primary', iconPalette: 'slate', onClick: onAcceptClick,
+        },
+        {
+          text: 'Reject', icon: 'add-note', iconPalette: 'slate', palette: 'danger', onClick: this.handleRejectClick, ghost: true,
+        },
+      ];
+    }
+    return [];
+  };
+
+  render() {
     const {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
       conversation, conversations, setSelectedConversation, hasConversationFinished, refetchConversations, refetchClient,
@@ -475,34 +551,15 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const showAcceptRejectButtons = stage === FAMILY_STAGE_NEW;
     let showUpdateAddNoteButtons = stage !== FAMILY_STAGE_NEW;
     let canEditFamilyDetails = isConnected;
-    let stickyFooterOptions = []; // Sticky footer is for smaller width devices
+    const isClientAdminUser = userIs(user, PLATFORM_ADMIN_ROLE) ||
+      (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg);
     // Rule when lead is created by self
-    if (stage === FAMILY_STAGE_NEW &&
-      (userIs(user, PLATFORM_ADMIN_ROLE) || (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg))) {
+    if (stage === FAMILY_STAGE_NEW && isClientAdminUser) {
       showUpdateAddNoteButtons = true;
       canEditFamilyDetails = true;
     }
-    if (showAcceptRejectButtons) {
-      stickyFooterOptions = [
-        {
-          text: 'Accept and contact this family', icon: 'flag', palette: 'primary', iconPalette: 'slate', onClick: onAcceptClick,
-        },
-        {
-          text: 'Reject', icon: 'add-note', iconPalette: 'slate', palette: 'danger', onClick: handleRejectClick, ghost: true,
-        },
-      ];
-    }
-    // showUpdateAddNote Button overrides showAcceptReject Buttons
-    if (showUpdateAddNoteButtons) {
-      stickyFooterOptions = [
-        {
-          text: 'Update Stage', icon: 'flag', iconPalette: 'slate', onClick: handleUpdateClick,
-        },
-        {
-          text: 'Add Note', icon: 'add-note', iconPalette: 'slate', onClick: handleAddNoteClick, ghost: true,
-        },
-      ];
-    }
+    // Sticky footer is for smaller width devices
+    const stickyFooterOptions = this.getStickyFooterOptions(showUpdateAddNoteButtons, showAcceptRejectButtons);
 
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) => {
@@ -516,7 +573,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         cType: a.cType,
       };
       if (a.cType === NOTE_CTYPE_NOTE) {
-        props.onEditClick = () => handleEditNoteClick(a);
+        props.onEditClick = () => this.handleEditNoteClick(a);
       }
 
       return <StyledFamilyActivityItem {...props} />;
@@ -550,9 +607,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               snap="top"
               stageText={stage}
               onAcceptClick={onAcceptClick}
-              onRejectClick={handleRejectClick}
-              onUpdateClick={handleUpdateClick}
-              onAddNoteClick={handleAddNoteClick}
+              onRejectClick={this.handleRejectClick}
+              onUpdateClick={this.handleUpdateClick}
+              onAddNoteClick={this.handleAddNoteClick}
               user={user}
               client={client}
             />
@@ -682,7 +739,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           options={stickyFooterOptions}
           stage={stage}
           stageLabel={`${group} - ${stage}`}
-          showAcceptRejectButtons={showAcceptRejectButtons}
+          showAcceptRejectButtons={showAcceptRejectButtons && !isClientAdminUser}
           user={user}
         />
       </StyledDashboardTwoColumnTemplate>

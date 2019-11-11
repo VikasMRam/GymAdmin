@@ -4,8 +4,16 @@ import { object } from 'prop-types';
 import MorePictures from 'sly/components/organisms/MorePictures';
 import SlyEvent from 'sly/services/helpers/events';
 import FullscreenMediaGallery from 'sly/components/molecules/FullscreenMediaGallery';
+import { withRouter } from 'react-router';
+import { prefetch } from 'sly/services/newApi';
 
+@withRouter
+@prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: match.params.communitySlug,
+  include: 'similar-communities,questions,agents',
+}))
 export default class CommunityMorePicturesContainer extends Component {
+  static typeHydrationId = 'CommunityMorePicturesContainer';
   static propTypes = {
     community: object.isRequired
   };

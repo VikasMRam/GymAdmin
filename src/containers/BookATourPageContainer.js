@@ -6,10 +6,10 @@ import { prefetch, query } from 'sly/services/newApi';
 import { community as communityPropType } from 'sly/propTypes/community';
 import SlyEvent from 'sly/services/helpers/events';
 import BookATourPage from 'sly/components/pages/BookATourPage';
-import ModalController from 'sly/controllers/ModalController';
 import { TOUR_BOOKED } from 'sly/services/newApi/constants';
 import { medicareToBool, boolToMedicare } from 'sly/services/helpers/userDetails';
 import withAuth from 'sly/services/newApi/withAuth';
+import { withRedirectTo } from 'sly/services/redirectTo';
 
 const eventCategory = 'BAT';
 
@@ -25,6 +25,7 @@ const getCommunitySlug = match => match.params.communitySlug;
 @withAuth
 @query('updateUuidAux', 'updateUuidAux')
 @query('createAction', 'createUuidAction')
+@withRedirectTo
 
 export default class BookATourPageContainer extends Component {
   static propTypes = {
@@ -37,11 +38,13 @@ export default class BookATourPageContainer extends Component {
     createAction: func.isRequired,
     uuidAux: object,
     match: shape({ url: string }),
+    redirectTo: func.isRequired
   };
+
 
   handleComplete = (data) => {
     const {
-      community, history, createAction, updateUuidAux, createOrUpdateUser, match, status,
+      community, createAction, updateUuidAux, createOrUpdateUser, status,
     } = this.props;
 
     const {
@@ -80,13 +83,12 @@ export default class BookATourPageContainer extends Component {
         action: 'tour-booked', category: eventCategory, label: community.id,
       };
       SlyEvent.getInstance().sendEvent(event);
-      history.push(community.url);
     });
   };
 
   render() {
     const {
-      community, user, uuidAux,
+      community, user, uuidAux, redirectTo, match,
     } = this.props;
 
     if (!community) {
@@ -96,21 +98,14 @@ export default class BookATourPageContainer extends Component {
     const medicaid = boolToMedicare(uuidAux.financialInfo && uuidAux.financialInfo.medicaid);
 
     return (
-      <ModalController>
-        {({
-          show,
-          hide,
-        }) => (
-          <BookATourPage
-            community={community}
-            user={user}
-            medicaidCoverage={medicaid}
-            onComplete={this.handleComplete}
-            showModal={show}
-            hideModal={hide}
-          />
-        )}
-      </ModalController>
+      <BookATourPage
+        community={community}
+        user={user}
+        medicaidCoverage={medicaid}
+        onComplete={this.handleComplete}
+        redirectTo={redirectTo}
+        match={match}
+      />
     );
   }
 }

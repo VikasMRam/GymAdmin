@@ -24,7 +24,6 @@ const {
   sourceMaps,
   devServer,
   when,
-  optimization,
   setDevTool,
 } = require('webpack-blocks');
 
@@ -35,7 +34,7 @@ const SLY_ENV = process.env.SLY_ENV || 'development';
 const GA_ENV = process.env.GA_ENV || 'development';
 const HOST = process.env.HOST || 'http://www.lvh.me';
 const PORT = process.env.PORT || 8000;
-const DEV_PORT = process.env.DEV_PORT || (+PORT + 1) || 8001;
+const DEV_PORT = process.env.DEV_PORT || +PORT + 1 || 8001;
 const PUBLIC_PATH = process.env.PUBLIC_PATH || (NODE_ENV === 'development' ? `${HOST}:${DEV_PORT}` : '/react-assets');
 const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
 const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
@@ -44,7 +43,8 @@ const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8'
 const SOURCE = process.env.SOURCE || 'src';
 const FB_CLIENT_ID = process.env.FB_CLIENT_ID || '624602444328776';
 const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY || 'AIzaSyALxJg-oMW7SvkQ27KFTuWjTLedXcAhrZE';
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID =
+  process.env.GOOGLE_CLIENT_ID || '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com';
 const MUTE_REDUX_LOGGER = process.env.MUTE_REDUX_LOGGER || false;
 const HIDE_CHATBOX = process.env.HIDE_CHATBOX || false;
 const ENABLE_EXPERIMENT_DEBUGGER = process.env.ENABLE_EXPERIMENT_DEBUGGER || false;
@@ -59,31 +59,38 @@ const EXTERNAL_ASSET_URL = `${PUBLIC_PATH}/external`;
 const EXTERNAL_URL = `${HOST}${EXTERNAL_PATH}`;
 const EXTERNAL_DEFAULT_WIDGET_TYPE = 'wizards/caw';
 
-console.info('Using config', JSON.stringify({
-  STORYBOOK_GIT_BRANCH,
-  NODE_ENV,
-  SLY_ENV,
-  GA_ENV,
-  PUBLIC_PATH,
-  HOST,
-  PORT,
-  DEV_PORT,
-  API_URL,
-  AUTH_URL,
-  DOMAIN,
-  GOOGLE_MAPS_API_KEY,
-  SOURCE,
-  EXTERNAL_ASSET_URL,
-  EXTERNAL_PATH,
-  EXTERNAL_URL,
-  EXTERNAL_DEFAULT_WIDGET_TYPE,
-  FB_CLIENT_ID,
-  GOOGLE_CLIENT_ID,
-  MUTE_REDUX_LOGGER,
-  HIDE_CHATBOX,
-  ENABLE_EXPERIMENT_DEBUGGER,
-  DISABLE_EXPERIMENTS,
-}, null, 2));
+console.info(
+  'Using config',
+  JSON.stringify(
+    {
+      STORYBOOK_GIT_BRANCH,
+      NODE_ENV,
+      SLY_ENV,
+      GA_ENV,
+      PUBLIC_PATH,
+      HOST,
+      PORT,
+      DEV_PORT,
+      API_URL,
+      AUTH_URL,
+      DOMAIN,
+      GOOGLE_MAPS_API_KEY,
+      SOURCE,
+      EXTERNAL_ASSET_URL,
+      EXTERNAL_PATH,
+      EXTERNAL_URL,
+      EXTERNAL_DEFAULT_WIDGET_TYPE,
+      FB_CLIENT_ID,
+      GOOGLE_CLIENT_ID,
+      MUTE_REDUX_LOGGER,
+      HIDE_CHATBOX,
+      ENABLE_EXPERIMENT_DEBUGGER,
+      DISABLE_EXPERIMENTS,
+    },
+    null,
+    2
+  )
+);
 
 const sourcePath = path.join(process.cwd(), SOURCE);
 const outputPath = path.join(process.cwd(), 'dist');
@@ -98,31 +105,36 @@ const closeIconSvg = fs.readFileSync(`${externalWidgetSourcePath}/close-regular.
 const clientWebEntryPath = path.join(sourcePath, 'client-web.js');
 const clientNodeEntryPath = path.join(sourcePath, 'client-node.js');
 const externalEntryPath = path.join(externalSourcePath, 'apps', 'index.js');
+const clientCommunityDetailWebEntryPath = path.join(sourcePath, 'client-community-detail-web.js');
+const clientCommunityDetailNodeEntryPath = path.join(sourcePath, 'client-community-detail-node.js');
 
-const mode = (context, { merge }) => merge({
-  mode: NODE_ENV,
-});
+const mode = (context, { merge }) =>
+  merge({
+    mode: NODE_ENV,
+  });
 
-const resolveModules = modules => (context, { merge }) => merge({
-  resolve: {
-    alias: {
-      sly: modules,
-    },
-    modules: [].concat(modules, 'node_modules'),
-  },
-});
-
-const assets = (context, { merge }) => merge({
-  module: {
-    rules: [
-      {
-        test: /\.(ico|png|jpe?g|svg|woff2?|ttf|eot)$/,
-        exclude: /node_modules/,
-        loader: 'url-loader?limit=8000',
+const resolveModules = modules => (context, { merge }) =>
+  merge({
+    resolve: {
+      alias: {
+        sly: modules,
       },
-    ],
-  },
-});
+      modules: [].concat(modules, 'node_modules'),
+    },
+  });
+
+const assets = (context, { merge }) =>
+  merge({
+    module: {
+      rules: [
+        {
+          test: /\.(ico|png|jpe?g|svg|woff2?|ttf|eot)$/,
+          exclude: /node_modules/,
+          loader: 'url-loader?limit=8000',
+        },
+      ],
+    },
+  });
 
 const base = group([
   mode,
@@ -185,11 +197,12 @@ const devCORS = group([
   ]),
 ]);
 
-const node = (context, { merge }) => merge({
-  target: 'node',
-  externals: [nodeExternals()],
-  stats: 'errors-only',
-});
+const node = (context, { merge }) =>
+  merge({
+    target: 'node',
+    externals: [nodeExternals()],
+    stats: 'errors-only',
+  });
 
 const server = createConfig([
   base,
@@ -206,9 +219,10 @@ const server = createConfig([
   assets,
 
   env('development', [
-    (context, { merge }) => merge({
-      watch: true,
-    }),
+    (context, { merge }) =>
+      merge({
+        watch: true,
+      }),
     setDevTool('eval-source-map'),
     addPlugins([
       new webpack.BannerPlugin({
@@ -273,55 +287,53 @@ const externalWidget = group([
   ]),
 ]);
 
-const client = (target, entries) => createConfig([
-  base,
+const client = (target, entries) => {
+  const isWeb = target.indexOf('web') !== -1;
+  return createConfig([
+    base,
 
-  setOutput({
-    filename: '[name].[hash].js',
-    chunkFilename: '[name].[hash].js',
-    path: path.join(outputPath, target === 'web' ? 'public' : 'node'),
-    libraryTarget: target === 'node' ? 'commonjs2' : undefined,
-    publicPath: `${PUBLIC_PATH}/`,
-  }),
+    setOutput({
+      filename: '[name].[hash].js',
+      chunkFilename: '[name].[hash].js',
+      path: path.join(outputPath, isWeb ? 'public' : 'node'),
+      libraryTarget: isWeb ? undefined : 'commonjs2',
+      publicPath: `${PUBLIC_PATH}/`,
+    }),
 
-  when(target === 'node', [node]),
+    when(!isWeb, [node]),
 
-  entryPoint(entries),
+    entryPoint(entries),
 
-  // when(isDev || isStaging, [
-  //   addPlugins([
-  //     new BundleAnalyzerPlugin({
-  //       openAnalyzer: false,
-  //       analyzerPort: 0,
-  //     }),
-  //   ]),
-  // ]),
+    // when(isDev || isStaging, [
+    //   addPlugins([
+    //     new BundleAnalyzerPlugin({
+    //       openAnalyzer: false,
+    //       analyzerPort: 0,
+    //     }),
+    //   ]),
+    // ]),
 
-  externalWidget,
+    // eslint-disable-next-line no-prototype-builtins
+    when(entries.hasOwnProperty('external'), [externalWidget]),
 
-  assets,
+    assets,
 
-  devCORS,
+    devCORS,
 
-  optimization({
-    splitChunks: {
-      chunks: 'all',
-    },
-  }),
+    addPlugins([new LoadablePlugin({ filename: `../loadable-stats-${target}.json` })]),
 
-  addPlugins([
-    new LoadablePlugin({ filename: `../loadable-stats-${target}.json` }),
-  ]),
-
-  when(isDev || isStaging, [sourceMaps()]),
-]);
+    when(isDev || isStaging, [sourceMaps()]),
+  ]);
+};
 
 module.exports = [
   client('web', {
+    'community-details': clientCommunityDetailWebEntryPath,
     main: clientWebEntryPath,
     external: externalEntryPath,
   }),
   client('node', {
+    'community-details': clientCommunityDetailNodeEntryPath,
     main: clientNodeEntryPath,
   }),
   server,
