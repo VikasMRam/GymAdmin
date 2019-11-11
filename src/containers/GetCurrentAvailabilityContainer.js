@@ -1,5 +1,7 @@
 import React from 'react';
 import { bool } from 'prop-types';
+import { withRouter } from 'react-router';
+
 import { community as communityPropType } from 'sly/propTypes/community';
 import {
   createBooleanValidator,
@@ -13,7 +15,7 @@ import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvaila
 import GetCustomPricingContainer from 'sly/containers/GetCustomPricingContainer';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import { getSearchParams } from 'sly/services/helpers/search';
-import { withRouter } from 'react-router';
+import { prefetch } from 'sly/services/newApi';
 
 const hasAllUserData = createBooleanValidator({
   fullName: [required],
@@ -70,10 +72,15 @@ function GetCurrentAvailabilityContainer({
     </GetCustomPricingContainer>
   );
 }
-
+GetCurrentAvailabilityContainer.typeHydrationId = 'GetCurrentAvailabilityContainer';
 GetCurrentAvailabilityContainer.propTypes = {
-  community: communityPropType.isRequired,
   hasAlreadyRequestedPricing: bool,
+  community: communityPropType,
 };
 
-export default withRouter(GetCurrentAvailabilityContainer);
+const withCommunity = prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: match.params.communitySlug,
+  include: 'similar-communities,questions,agents',
+}));
+
+export default withRouter(withCommunity(GetCurrentAvailabilityContainer));

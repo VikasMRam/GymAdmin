@@ -1,4 +1,4 @@
-import { responsive, select } from '../../helpers/tests';
+import { responsive, select, waitForHydration } from '../../helpers/tests';
 import buildEntity from '../../helpers/buildEntity';
 import { toJson } from '../../helpers/request';
 import { getCommunity } from '../../helpers/getCommunity';
@@ -31,6 +31,7 @@ describe('Community Profile Sections', () => {
 
   beforeEach(() => {
     cy.server();
+    cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
     getCommunity(TEST_COMMUNITY).then((response) => {
       community = response;
@@ -40,6 +41,21 @@ describe('Community Profile Sections', () => {
   responsive(() => {
     it('Should see details', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+
+      cy.wait('@postUuidActions').then((xhr) => {
+        expect(xhr.requestBody).to.deep.equal({
+          data: {
+            type: 'UUIDAction',
+            attributes: {
+              actionType: 'profileViewed',
+              actionPage: `/assisted-living/california/san-francisco/${community.id}`,
+              actionInfo: {
+                slug: community.id,
+              },
+            },
+          },
+        });
+      });
 
       cy.get('h1').contains(community.name).its('length').should('be', 1);
 
@@ -67,8 +83,9 @@ describe('Community Profile Sections', () => {
       cy.route('POST', '**/user-shares').as('postUserShares');
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-      cy.get('button').contains('Share').click();
-      select('.ReactModal h2').contains('Share this community').should('exist');
+
+      waitForHydration(cy.get('button').contains('Share')).click();
+      select('.ReactModal').contains('Share this community').should('exist');
 
       cy.get('form input[name="to"]').type('fonz@seniorly.com');
       cy.get('form input[name="from"]').type('fonz@botverse.com');
@@ -102,7 +119,7 @@ describe('Community Profile Sections', () => {
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
 
-      cy.get('button').contains('Save').click();
+      waitForHydration(cy.get('button').contains('Save')).click();
 
       cy.wait('@postUserSaves').then(async (xhr) => {
         expect(xhr.status).to.equal(200);
@@ -127,7 +144,7 @@ describe('Community Profile Sections', () => {
         });
       });
 
-      cy.get('h2').contains('Community Saved!').should.exist;
+      cy.get('.ReactModalPortal h2').contains('Community Saved!').should.exist;
 
       select('.CommunitySaved button').contains('Done').click();
 
@@ -140,18 +157,15 @@ describe('Community Profile Sections', () => {
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
 
-      const pricingContent = select('.CollapsibleSection__Header h2').contains(`Pricing at ${community.name}`).parent().next();
+      const pricingContent = cy.get('h3').contains(`Pricing at ${community.name}`).parent();
 
       pricingContent.should('contain', formatMoney(community.startingRate));
 
-      const list = buildEstimatedPriceList(community);
-
-      list.forEach(({ label, value }) => {
-        pricingContent.get('tbody').contains(label).next().should('contain', formatMoney(value));
+      buildEstimatedPriceList(community).forEach(({ label, value }) => {
+        pricingContent.get('tbody td').contains(label).next().should('contain', formatMoney(value));
       });
 
-      select('button.CommunityPricingTable').contains('Get Detailed Pricing').click();
-
+      waitForHydration(pricingContent.get('button').contains('Get Detailed Pricing')).click();
       cy.url().should('include', `/custom-pricing/${community.id}`);
     });
 
@@ -159,20 +173,19 @@ describe('Community Profile Sections', () => {
       cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.wait('@postUuidActions');
 
-      const careContent = select('.CollapsibleSection__Header h2').contains(`Care Services at ${community.name}`).parent().next();
+      const careContent = cy.get('h3').contains(`Care Services at ${community.name}`).parent().next();
       community.propInfo.careServices.forEach((service) => {
         careContent.get('div').contains(service).should('exist');
       });
 
-      careContent.get('button').contains('Ask About Care Services').click();
+      waitForHydration(careContent.get('button').contains('Ask About Care Services')).click();
 
       select('form[name="CommunityAskQuestionAgentForm"] input[name="full_name"]').type('Fonz de la Osa');
       select('form[name="CommunityAskQuestionAgentForm"] input[name="phone"]').type('9087654321');
       select('form[name="CommunityAskQuestionAgentForm"] textarea[name="question"]').type('{selectall}{del}my message');
       select('form[name="CommunityAskQuestionAgentForm"]').contains('Send').click();
-
-      cy.wait('@postUuidActions');
 
       cy.wait('@postUuidActions').then((xhr) => {
         const uuidAction = {
@@ -201,8 +214,9 @@ describe('Community Profile Sections', () => {
       cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.wait('@postUuidActions');
 
-      const careContent = select('.CollapsibleSection__Header h2').contains(`Amenities at ${community.name}`).parent().next();
+      const careContent = select('h3').contains(`Amenities at ${community.name}`).parent().next();
 
       [
         ...community.propInfo.communityHighlights,
@@ -212,15 +226,12 @@ describe('Community Profile Sections', () => {
         careContent.get('div').contains(service).should('exist');
       });
 
-      careContent.get('button').contains('Ask About Amenities').click();
+      waitForHydration(careContent.get('button').contains('Ask About Amenities')).click();
 
       select('form[name="CommunityAskQuestionAgentForm"] input[name="full_name"]').type('Fonz de la Osa');
       select('form[name="CommunityAskQuestionAgentForm"] input[name="phone"]').type('9087654321');
       select('form[name="CommunityAskQuestionAgentForm"] textarea[name="question"]').type('{selectall}{del}my message');
       select('form[name="CommunityAskQuestionAgentForm"]').contains('Send').click();
-
-      // page visit
-      cy.wait('@postUuidActions');
 
       cy.wait('@postUuidActions').then((xhr) => {
         const uuidAction = {

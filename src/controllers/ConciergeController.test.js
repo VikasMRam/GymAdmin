@@ -100,9 +100,7 @@ describe('ConciergeController', () => {
   const entities = { userAction };
   const emailOnlyEntities = { userAction: onlyEmailUserAction };
 
-  const history = {
-    push: jest.fn(),
-  };
+  const redirectTo = jest.fn();
   const spy = jest.fn().mockReturnValue('ok');
   const setQueryParams = jest.fn();
 
@@ -124,7 +122,7 @@ describe('ConciergeController', () => {
     createAction.mockClear();
     updateUuidAux.mockClear();
     setQueryParams.mockClear();
-    history.push.mockClear();
+    redirectTo.mockClear();
   });
 
   const userRequestInfo = {
@@ -139,7 +137,7 @@ describe('ConciergeController', () => {
   const match = { url: '/myurl' };
 
   const router = {
-    history,
+    history: { },
     route: {
       location: {
         pathname: '/my-url',
@@ -160,7 +158,7 @@ describe('ConciergeController', () => {
         uuidAuxRequestInfo={uuidAuxRequestInfo}
         queryParams={{}}
         setQueryParams={setQueryParams}
-        history={history}
+        redirectTo={redirectTo}
       >
         {spy}
       </ConciergeController>, { context: { router } }), 'ConciergeController').dive();
@@ -199,7 +197,7 @@ describe('ConciergeController', () => {
       const wrapper = wrap(otherCommunity.id, store);
       wrapper.instance().next(true);
 
-      expect(history.push).toBeCalledWith(`/custom-pricing/${otherCommunity.id}`);
+      expect(redirectTo).toBeCalledWith(`/custom-pricing/${otherCommunity.id}`);
     });
 
     it('should go to conversion form mode when express mode', () => {
@@ -289,7 +287,7 @@ describe('ConciergeController', () => {
           createOrUpdateUser={createOrUpdateUser}
           registerUser={registerUser}
           updateUuidAux={updateUuidAux}
-          history={history}
+          redirectTo={redirectTo}
           status={status}
         >
           {spy}

@@ -15,6 +15,7 @@ import { getUserDetailsFromUAAndForm, medicareToBool } from 'sly/services/helper
 import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
 import { query, withAuth } from 'sly/services/newApi';
 import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/services/newApi/constants';
+import { withRedirectTo } from 'sly/services/redirectTo';
 
 const eventCategory = 'PricingWizard';
 
@@ -86,6 +87,8 @@ const handleResponses = (responses, { location }, redirect) => {
   mapDispatchToProps,
 )
 
+@withRedirectTo
+
 export default class PricingWizardPageContainer extends Component {
   static propTypes = {
     community: communityPropType,
@@ -95,10 +98,10 @@ export default class PricingWizardPageContainer extends Component {
     uuidAux: object,
     status: object,
     postUserAction: func.isRequired,
-    history: object.isRequired,
     createAction: func.isRequired,
     updateUuidAux: func.isRequired,
     createOrUpdateUser: func.isRequired,
+    redirectTo: func.isRequired,
     match: object.isRequired,
   };
 
@@ -188,14 +191,12 @@ export default class PricingWizardPageContainer extends Component {
 
   render() {
     const {
-      community, user, userHas, uuidAux, history, match
+      community, user, userHas, uuidAux, redirectTo, match
     } = this.props;
 
     if (!community) {
       return null;
     }
-
-    const redirectTo = path => history.push(path);
 
     return (
       <PricingWizardPage

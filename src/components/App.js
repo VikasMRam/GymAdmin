@@ -38,7 +38,6 @@ const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/co
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage'));
 const LegalPolicyPage = loadable(() => import(/* webpackChunkName: "chunkLegalPolicy" */ 'sly/components/pages/LegalPolicyPage'));
 const PartnersPage = loadable(() => import(/* webpackChunkName: "chunkPartners" */ 'sly/components/pages/PartnersPage'));
-const CommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetail" */ 'sly/containers/CommunityDetailPageContainer'));
 const CommunitySearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunitySearch" */ 'sly/containers/CommunitySearchPageContainer'));
 const StateSearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkStateSearch" */ 'sly/containers/StateSearchPageContainer'));
 const HomePageContainer = loadable(() => import(/* webpackChunkName: "chunkHomePage" */ 'sly/containers/HomePageContainer'));
@@ -167,11 +166,6 @@ const routes = [
   {
     path: ADMIN_DASHBOARD_CALL_DETAILS_PATH,
     component: DashboardCallDetailsPageContainer,
-  },
-  {
-    path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
-    component: CommunityDetailPageContainer,
-    exact: true,
   },
   {
     path: `/:toc(${careTypes})/:state/:city`,

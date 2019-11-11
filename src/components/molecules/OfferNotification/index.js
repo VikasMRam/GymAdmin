@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { bool, object, string } from 'prop-types';
+import { bool, string } from 'prop-types';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size, palette } from 'sly/components/themes';
@@ -45,7 +45,6 @@ const OfferNotification = ({
   description,
   hasLearnMore,
   className,
-  community,
   hasAlreadyRequestedPricing,
 }) => (
   <Wrapper palette={paletteProp} className={className}>
@@ -66,10 +65,7 @@ const OfferNotification = ({
         {description && <Span>{description}</Span>}
       </TopWrapper>
       {hasLearnMore && (
-        <GetCustomPricingContainer
-          community={community}
-          hasAlreadyRequestedPricing={hasAlreadyRequestedPricing}
-        >
+        <GetCustomPricingContainer hasAlreadyRequestedPricing={hasAlreadyRequestedPricing}>
           {getPricing => (
             <>
               <BigScreenLearnMore onClick={getPricing}>
@@ -85,14 +81,13 @@ const OfferNotification = ({
     </div>
   </Wrapper>
 );
-
+OfferNotification.typeHydrationId = 'OfferNotification';
 OfferNotification.propTypes = {
   palette: palettePropType,
   hasLearnMore: bool,
   title: string.isRequired,
   description: string,
   className: string,
-  community: object,
   hasAlreadyRequestedPricing: bool,
 };
 

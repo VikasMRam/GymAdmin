@@ -31,4 +31,6 @@ export const doCustomPricingFlow = (cy, data) => {
   select('.Modal__Head button').click();
 
   cy.url().should('have.string', `/assisted-living/california/san-francisco/${communitySlug}`);
+
+  select('.CommunityDetailPage').should('exist');
 };

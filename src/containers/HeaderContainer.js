@@ -106,6 +106,7 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 @withAuth
 
 export default class HeaderContainer extends Component {
+  static typeHydrationId = 'HeaderContainer';
   static propTypes = {
     user: object,
     logoutUser: func,

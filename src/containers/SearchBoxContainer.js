@@ -13,6 +13,7 @@ import {
 } from 'sly/services/helpers/search';
 import SearchBox from 'sly/components/molecules/SearchBox';
 import SlyEvent from 'sly/services/helpers/events';
+import {withRedirectTo} from "sly/services/redirectTo";
 
 class SearchBoxContainer extends Component {
   static propTypes = {
@@ -26,7 +27,7 @@ class SearchBoxContainer extends Component {
     clearLocationOnBlur: bool,
     onTextChange: func,
     onLocationSearch: func,
-    history: object,
+    redirectTo: func.isRequired,
     allowOnlySelectionFromSuggestions: bool,
   };
 
@@ -97,7 +98,7 @@ class SearchBoxContainer extends Component {
         this.handleOnLocationSearch(result);
       })
       .catch(error => console.error('Error', error));
-  }
+  };
 
   handleSearch = () => {
     const { location, address } = this.props;
@@ -114,14 +115,13 @@ class SearchBoxContainer extends Component {
   };
 
   handleOnLocationSearch = (result) => {
-    const { onLocationSearch } = this.props;
+    const { onLocationSearch, redirectTo } = this.props;
     if (onLocationSearch) {
       onLocationSearch(result);
     } else {
-      const { history } = this.props;
       const searchParams = getSearchParamFromPlacesResponse(result);
       const { path } = filterLinkPath(searchParams);
-      history.push(path);
+      redirectTo(path);
     }
   };
 
@@ -176,4 +176,4 @@ const mapDispatchToProps = dispatch => ({
   clearLocation: () => dispatch(clearLocation()),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchBoxContainer));
+export default withRedirectTo(withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchBoxContainer)));

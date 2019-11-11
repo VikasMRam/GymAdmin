@@ -4,6 +4,8 @@ import { shallow } from 'enzyme';
 import CommunitySidebarWidget from 'sly/components/organisms/CommunitySidebarWidget';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
+jest.mock('sly/containers/AskAgentQuestionContainer');
+
 const onBookATourClick = jest.fn();
 
 const wrap = (props = {}) =>
