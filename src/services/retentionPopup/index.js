@@ -22,7 +22,7 @@ const EXIT_INTENT = 'exit-intent';
 const STAY_INTENT = 'stay-intent';
 const IDLE = 'idle';
 
-const COMMUNITY_PROFILE_PAGE_PATH = `/:toc(${careTypes})/:state/:city/:communitySlug`;
+const COMMUNITY_PROFILE_PAGE_PATH = `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`;
 
 @withModal
 @withRouter

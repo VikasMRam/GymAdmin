@@ -160,12 +160,12 @@ const routes = [
     component: DashboardCallDetailsPageContainer,
   },
   {
-    path: `/:toc(${careTypes})/:state/:city`,
+    path: `/:toc(${careTypes.join('|')})/:state/:city`,
     component: CommunitySearchPageContainer,
     exact: true,
   },
   {
-    path: `/:toc(${careTypes})/:state`,
+    path: `/:toc(${careTypes.join('|')})/:state`,
     component: StateSearchPageContainer,
     exact: true,
   },
