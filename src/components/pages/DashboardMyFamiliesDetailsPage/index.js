@@ -476,30 +476,32 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
   };
 
   getStickyFooterOptions = (showUpdateAddNoteButtons, showAcceptRejectButtons) => {
-    const { hideModal, onAcceptClick } = this.props;
+    const { /* hideModal, */ onAcceptClick } = this.props;
 
+    /* agent features to be released in future
+      {
+        text: 'Add task', icon: 'checkbox-fill', iconPalette: 'slate', onClick: this.handleAddTaskClick, ghost: true,
+      },
+      {
+        text: 'Send agent refferal', icon: 'send', iconPalette: 'slate', onClick: hideModal, to: agentsPath, ghost: true,
+      },
+      {
+        text: 'Send community refferal', icon: 'send', iconPalette: 'slate', onClick: hideModal, to: communitiesPath, ghost: true,
+      },
+      {
+        text: 'Message family', icon: 'message', iconPalette: 'slate', onClick: hideModal, to: messagesPath, ghost: true,
+      },
+    */
     // showUpdateAddNote Button overrides showAcceptReject Buttons
     if (showUpdateAddNoteButtons) {
-      const {
+      /* const {
         messagesPath,
         communitiesPath,
         agentsPath,
-      } = this.getTabPathsForUser();
+      } = this.getTabPathsForUser(); */
       return [
         {
           text: 'Add note', icon: 'add-note', iconPalette: 'slate', onClick: this.handleAddNoteClick, ghost: true,
-        },
-        {
-          text: 'Add task', icon: 'checkbox-fill', iconPalette: 'slate', onClick: this.handleAddTaskClick, ghost: true,
-        },
-        {
-          text: 'Message family', icon: 'message', iconPalette: 'slate', onClick: hideModal, to: messagesPath, ghost: true,
-        },
-        {
-          text: 'Send agent refferal', icon: 'send', iconPalette: 'slate', onClick: hideModal, to: agentsPath, ghost: true,
-        },
-        {
-          text: 'Send community refferal', icon: 'send', iconPalette: 'slate', onClick: hideModal, to: communitiesPath, ghost: true,
         },
         {
           text: 'Update stage', icon: 'flag', iconPalette: 'slate', onClick: this.handleUpdateClick,

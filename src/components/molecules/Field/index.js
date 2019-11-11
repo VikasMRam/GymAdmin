@@ -76,7 +76,7 @@ const Wrapper = styled.div`
     flex-direction: row;
     align-items: baseline;
   `)};
-  
+
   .react-datepicker__input-container {
     display: block;
   }
