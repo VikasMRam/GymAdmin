@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, func, number, array } from 'prop-types';
+import { string, func, number, array, bool } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 import { Field } from 'redux-form';
@@ -44,15 +44,19 @@ const WhatToDoNextText = styled(Block)`
 `;
 
 const CommunityPricingWizardWhatToDoNextForm = ({
-  handleSubmit, communityName, estimatedPrice, listOptions, onInterestChange,
+  handleSubmit, communityName, estimatedPrice, hideEstimatePrice, listOptions, onInterestChange,
 }) => (
   <Wrapper>
     <WrapperForm onSubmit={handleSubmit}>
-      <HeadingSection palette="grey" size="body">Your estimated pricing for {communityName}:</HeadingSection>
-      <PriceSection weight="bold">
-        <Price value={estimatedPrice} displayType="text" thousandSeparator prefix="$" />
-        <span>/mo</span>
-      </PriceSection>
+      {!hideEstimatePrice &&
+        <>
+          <HeadingSection palette="grey" size="body">Your estimated pricing for {communityName}:</HeadingSection>
+          <PriceSection weight="bold">
+            <Price value={estimatedPrice} displayType="text" thousandSeparator prefix="$" />
+            <span>/mo</span>
+          </PriceSection>
+        </>
+      }
       <WhatToDoNextText palette="grey">Here is what you can do next:</WhatToDoNextText>
       <Field
         name="interest"
@@ -72,6 +76,7 @@ const CommunityPricingWizardWhatToDoNextForm = ({
 CommunityPricingWizardWhatToDoNextForm.propTypes = {
   communityName: string.isRequired,
   estimatedPrice: number.isRequired,
+  hideEstimatePrice: bool,
   listOptions: array.isRequired,
   handleSubmit: func.isRequired,
   onSubmit: func.isRequired,

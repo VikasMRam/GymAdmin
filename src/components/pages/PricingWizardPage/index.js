@@ -140,20 +140,11 @@ class PricingWizardPage extends Component {
       }
     }
     if (currentStep === 'EstimatedPricing' && userHas(['name', 'phoneNumber'])) {
-      if (hasCCRC(community)) {
-        goto('EstimatedPricing');
-        doSubmit(openConfirmationModal);
-      } else {
-        goto('WhatToDoNext');
-      }
+      goto('WhatToDoNext');
     }
     if (currentStep === 'Contact') {
       // Track goal events
       sendEvent('pricing-contact-submitted', id, currentStep);
-      if (hasCCRC(community)) {
-        goto('Contact');
-        doSubmit(openConfirmationModal);
-      }
     }
   };
 
@@ -255,6 +246,7 @@ class PricingWizardPage extends Component {
                       name="WhatToDoNext"
                       communityName={name}
                       estimatedPrice={estimatedPrice}
+                      hideEstimatePrice={hasCCRC(community)}
                       listOptions={compiledWhatToDoNextOptions}
                       onInterestChange={(e, interest) => sendEvent('pricing-next-interest', id, interest)}
                       onSubmit={onSubmit}
