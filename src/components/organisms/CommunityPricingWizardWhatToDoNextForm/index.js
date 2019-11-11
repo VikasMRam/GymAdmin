@@ -44,11 +44,11 @@ const WhatToDoNextText = styled(Block)`
 `;
 
 const CommunityPricingWizardWhatToDoNextForm = ({
-  handleSubmit, communityName, estimatedPrice, hideEstimatePrice, listOptions, onInterestChange,
+  handleSubmit, communityName, estimatedPrice, showEstimatePrice, listOptions, onInterestChange,
 }) => (
   <Wrapper>
     <WrapperForm onSubmit={handleSubmit}>
-      {!hideEstimatePrice &&
+      {showEstimatePrice &&
         <>
           <HeadingSection palette="grey" size="body">Your estimated pricing for {communityName}:</HeadingSection>
           <PriceSection weight="bold">
@@ -76,7 +76,7 @@ const CommunityPricingWizardWhatToDoNextForm = ({
 CommunityPricingWizardWhatToDoNextForm.propTypes = {
   communityName: string.isRequired,
   estimatedPrice: number.isRequired,
-  hideEstimatePrice: bool,
+  showEstimatePrice: bool,
   listOptions: array.isRequired,
   handleSubmit: func.isRequired,
   onSubmit: func.isRequired,

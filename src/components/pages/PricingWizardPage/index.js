@@ -246,7 +246,7 @@ class PricingWizardPage extends Component {
                       name="WhatToDoNext"
                       communityName={name}
                       estimatedPrice={estimatedPrice}
-                      hideEstimatePrice={hasCCRC(community)}
+                      showEstimatePrice={!hasCCRC(community)}
                       listOptions={compiledWhatToDoNextOptions}
                       onInterestChange={(e, interest) => sendEvent('pricing-next-interest', id, interest)}
                       onSubmit={onSubmit}
