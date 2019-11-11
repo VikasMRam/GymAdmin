@@ -51,10 +51,6 @@ const form = 'CommunityAgentSearchForm';
 const ReduxForm = reduxForm({
   form,
   validate,
-  destroyOnUnmount: false,
-  // required to refresh when initialValues change. Ref: https://redux-form.com/6.7.0/examples/initializefromstate/
-  enableReinitialize: true,
-  keepDirtyOnReinitialize: true,
 })(CommunityAgentSearchForm);
 
 class DashboardCommunityAgentSearchBox extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { func } from 'prop-types';
 
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
+import SearchBoxContainer from 'sly/containers/IndependentSearchBoxContainer';
 
 class LocationSearch extends Component {
   static propTypes={
