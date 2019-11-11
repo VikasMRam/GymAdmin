@@ -9,7 +9,11 @@ import ExitIntentQuestionFormContainer from './index';
 const showModal = jest.fn();
 const hideModal = jest.fn();
 const notifyInfo = jest.fn();
-
+const createUuidAction = jest.fn().mockReturnValue(new Promise(((resolve) => {
+  resolve({
+    type: 'apicall',
+  });
+})));
 const mockStore = configureStore([]);
 const store = mockStore({
   requests: {},
@@ -29,9 +33,7 @@ const createContext = () => ({
     router,
     store,
     api: {
-      createUuidAction: jest.fn().mockReturnValue({
-        type: 'apicall',
-      }),
+      createUuidAction,
     },
   },
   childContextTypes: {
@@ -55,5 +57,19 @@ describe('ExitIntentQuestionFormContainer', () => {
     const wrapper = wrap();
 
     expect(wrapper.exists()).toBe(true);
+  });
+  it('should submit form with form data', () => {
+    const wrapper = wrap();
+
+    wrapper.find('form').simulate('submit');
+
+    expect(createUuidAction).toHaveBeenCalled();
+  });
+  it('should show the Thankyou modal', () => {
+    const wrapper = wrap();
+
+    wrapper.find('form').simulate('submit');
+
+    expect(showModal).toHaveBeenCalled();
   });
 });

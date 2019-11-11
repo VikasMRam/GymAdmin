@@ -13,17 +13,44 @@ const mockStore = configureStore([]);
 const store = mockStore({
   requests: {},
   bees: {},
+  form: {
+    EbookForm: {
+      registeredFields: {
+        email: {
+          name: 'email',
+          type: 'Field',
+          count: 1,
+        },
+      },
+      fields: {
+        email: {
+          visited: true,
+          touched: true,
+        },
+      },
+      values: {
+        email: 'test@seniorly.com',
+      },
+      anyTouched: true,
+    },
+  },
+});
+
+const sendEbook = jest.fn().mockReturnValue({
+  type: 'apicall',
+});
+
+const createUuidAction = jest.fn().mockReturnValue({
+  type: 'apicall',
 });
 
 const createContext = () => ({
   context: {
     store,
     api: {
-      sendEbook: jest.fn().mockReturnValue({
-        type: 'apicall',
-      }),
+      sendEbook,
+      createUuidAction,
     },
-
   },
   childContextTypes: {
     store: shape({}),
@@ -44,6 +71,34 @@ describe('EbookFormContainer', () => {
   it('should render EbookFormContainer', () => {
     const wrapper = wrap();
 
+    expect(wrapper.exists()).toBe(true);
+  });
+  it('should submit form with form data', () => {
+    const wrapper = wrap();
+
+    wrapper.find('form').simulate('submit');
+
+    expect(sendEbook).toHaveBeenCalled();
+    expect(createUuidAction).toHaveBeenCalled();
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should hide the ebook modal', () => {
+    const wrapper = wrap();
+
+    wrapper.find('form').simulate('submit');
+
+    expect(hideModal).toHaveBeenCalled();
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should show the notification', () => {
+    const wrapper = wrap();
+
+    wrapper.find('form').simulate('submit');
+
+    expect(notifyInfo).toHaveBeenCalled();
+    expect(notifyInfo).toHaveBeenCalledWith('We have sent the booklet to your email test@seniorly.com');
     expect(wrapper.exists()).toBe(true);
   });
 });

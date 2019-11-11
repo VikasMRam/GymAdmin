@@ -51,15 +51,15 @@ export default class RetentionPopup extends Component {
 
     this.renderTime = new Date().getTime();
 
-    document.addEventListener('mouseout', this.mouseoutHandler);
+    document.addEventListener('mouseout', this.onMouseoutHandler);
 
     this.addBlurFocusListeners();
     this.addPopstateListener();
-    this.ifvisible.on('idle', this.idleHandler);
+    this.ifvisible.on('idle', this.onIdleHandler);
   }
 
   componentWillUnmount() {
-    this.removeALlEventListeners();
+    this.removeAllEventListeners();
   }
 
   isEbookAvailable = () => {
@@ -69,7 +69,7 @@ export default class RetentionPopup extends Component {
     return activeTime >= EBOOK_TIME_DURATION;
   }
 
-  idleHandler = () => {
+  onIdleHandler = () => {
     const idleInfo = this.ifvisible.getIdleInfo();
 
     if (this.isEbookAvailable() && idleInfo.isIdle) {
@@ -95,7 +95,7 @@ export default class RetentionPopup extends Component {
 
   isModalShown = () => localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN
 
-  mouseoutHandler = (e) => {
+  onMouseoutHandler = (e) => {
     const currentTime = new Date().getTime();
     const activeTime = Math.abs(currentTime - this.renderTime);
 
@@ -132,18 +132,18 @@ export default class RetentionPopup extends Component {
     const notRefreshing = !history.state || history.state.intent !== STAY_INTENT;
 
     if (externalReferrer && notRefreshing) {
-      window.addEventListener('popstate', this.popstateHandler);
+      window.addEventListener('popstate', this.onPopstateHandler);
 
       history.replaceState({ intent: EXIT_INTENT }, '');
       history.pushState({ intent: STAY_INTENT }, '');
     }
   };
 
-  blur = () => {
+  onBlur = () => {
     this.lastBlur = new Date().getTime();
   };
 
-  focus = () => {
+  onFocus = () => {
     const currentTime = new Date().getTime();
     const inactiveTime = Math.abs(currentTime - this.lastBlur);
 
@@ -159,11 +159,11 @@ export default class RetentionPopup extends Component {
   };
 
   addBlurFocusListeners() {
-    this.ifvisible.on('blur', this.blur);
-    this.ifvisible.on('focus', this.focus);
+    this.ifvisible.on('blur', this.onBlur);
+    this.ifvisible.on('focus', this.onFocus);
   }
 
-  popstateHandler = (event) => {
+  onPopstateHandler = (event) => {
     if (event.state && event.state.intent === EXIT_INTENT) {
       this.showExitIntent();
     }
@@ -194,17 +194,17 @@ export default class RetentionPopup extends Component {
 
   showModal = (modalContent, layout) => {
     this.props.showModal(modalContent, null, layout);
-    this.removeALlEventListeners();
+    this.removeAllEventListeners();
     localStorage.setItem(MODAL_SHOWN, MODAL_SHOWN);
   }
 
-  removeALlEventListeners = () => {
-    window.removeEventListener('popstate', this.popstateHandler);
-    document.removeEventListener('mouseout', this.mouseoutHandler);
+  removeAllEventListeners = () => {
+    window.removeEventListener('popstate', this.onPopstateHandler);
+    document.removeEventListener('mouseout', this.onMouseoutHandler);
 
-    this.ifvisible.off('blur', this.blur);
-    this.ifvisible.off('focus', this.focus);
-    this.ifvisible.off('idle', this.idleHandler);
+    this.ifvisible.off('blur', this.onBlur);
+    this.ifvisible.off('focus', this.onFocus);
+    this.ifvisible.off('idle', this.onIdleHandler);
   }
 
   render = () => null
