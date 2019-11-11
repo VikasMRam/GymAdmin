@@ -3,8 +3,13 @@ import { string, func, object, bool } from 'prop-types';
 import { geocodeByAddress } from 'react-places-autocomplete';
 
 import { gMapsApiKey, loadAutoComplete } from 'sly/config';
+import {
+  filterLinkPath,
+  getSearchParamFromPlacesResponse,
+} from 'sly/services/helpers/search';
 import SearchBox from 'sly/components/molecules/SearchBox';
 import SlyEvent from 'sly/services/helpers/events';
+import { withRedirectTo } from 'sly/services/redirectTo';
 
 class SearchBoxContainer extends Component {
   static propTypes = {
@@ -16,6 +21,7 @@ class SearchBoxContainer extends Component {
     clearLocationOnBlur: bool,
     onTextChange: func,
     onLocationSearch: func,
+    redirectTo: func.isRequired,
     allowOnlySelectionFromSuggestions: bool,
   };
 
@@ -103,9 +109,13 @@ class SearchBoxContainer extends Component {
   };
 
   handleOnLocationSearch = (result) => {
-    const { onLocationSearch } = this.props;
+    const { onLocationSearch, redirectTo } = this.props;
     if (onLocationSearch) {
       onLocationSearch(result);
+    } else {
+      const searchParams = getSearchParamFromPlacesResponse(result);
+      const { path } = filterLinkPath(searchParams);
+      redirectTo(path);
     }
   };
 
@@ -148,4 +158,4 @@ class SearchBoxContainer extends Component {
   }
 }
 
-export default SearchBoxContainer;
+export default withRedirectTo(SearchBoxContainer);
