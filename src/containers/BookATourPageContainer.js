@@ -73,7 +73,6 @@ export default class BookATourPageContainer extends Component {
         draft.attributes.uuidInfo.financialInfo = financialInfo;
       })),
     ]).then(() => createOrUpdateUser({
-      email: 'fonz+test@asdf.com',
       name,
       phone,
     })).then(() => {
