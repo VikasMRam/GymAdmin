@@ -3,7 +3,7 @@ import { reduxForm, reset } from 'redux-form';
 import { func, object, shape, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { query } from 'sly/services/newApi';
+import { query, withAuth } from 'sly/services/newApi';
 import agentPropType from 'sly/propTypes/agent';
 import AskQuestionToAgentForm from 'sly/components/molecules/AskQuestionToAgentForm';
 import { createValidator, required, usPhone, email } from 'sly/services/validation';
@@ -28,6 +28,7 @@ const ReduxForm = reduxForm({
 })(AskQuestionToAgentForm);
 
 @withRouter
+@withAuth
 @query('createAction', 'createUuidAction')
 
 export default class AskQuestionToAgentFormContainer extends Component {
@@ -35,6 +36,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
     agent: agentPropType,
     userDetails: object.isRequired,
     postUserAction: func.isRequired,
+    createOrUpdateUser: func.isRequired,
     postSubmit: func,
     match: shape({
       url: string,
@@ -44,27 +46,30 @@ export default class AskQuestionToAgentFormContainer extends Component {
 
   handleSubmit = (data) => {
     const {
-      agent, postSubmit, createAction, match,
+      agent, postSubmit, createAction, createOrUpdateUser, match,
     } = this.props;
 
     const { id } = agent;
-    return Promise.all([
-      createAction({
-        type: 'UUIDAction',
-        attributes: {
-          actionType: AGENT_ASK_QUESTIONS,
-          actionPage: match.url,
-          actionInfo: {
-            slug: id,
-            question: data.question,
-            entityType: 'Agent',
-            name: data.full_name,
-            email: data.email,
-            phone: data.phone,
-          },
+
+    return createAction({
+      type: 'UUIDAction',
+      attributes: {
+        actionType: AGENT_ASK_QUESTIONS,
+        actionPage: match.url,
+        actionInfo: {
+          slug: id,
+          question: data.question,
+          entityType: 'Agent',
+          name: data.full_name,
+          email: data.email,
+          phone: data.phone,
         },
-      }),
-    ]).then(() => {
+      },
+    }).then(() => createOrUpdateUser({
+      name: data.full_name,
+      email: data.email,
+      phone: data.phone,
+    })).then(() => {
       const event = {
         action: 'ask_question', category: 'agent', label: id,
       };

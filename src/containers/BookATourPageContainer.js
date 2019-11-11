@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { object, func, string, shape } from 'prop-types';
 import produce from 'immer';
 
-import { prefetch, query } from 'sly/services/newApi';
+import { prefetch, query, withAuth } from 'sly/services/newApi';
 import { community as communityPropType } from 'sly/propTypes/community';
 import SlyEvent from 'sly/services/helpers/events';
 import BookATourPage from 'sly/components/pages/BookATourPage';
 import { TOUR_BOOKED } from 'sly/services/newApi/constants';
 import { medicareToBool, boolToMedicare } from 'sly/services/helpers/userDetails';
-import withAuth from 'sly/services/newApi/withAuth';
 import { withRedirectTo } from 'sly/services/redirectTo';
 
 const eventCategory = 'BAT';
@@ -44,7 +43,7 @@ export default class BookATourPageContainer extends Component {
 
   handleComplete = (data) => {
     const {
-      community, createAction, updateUuidAux, createOrUpdateUser, status,
+      community, createAction, updateUuidAux, createOrUpdateUser, status, match,
     } = this.props;
 
     const {
