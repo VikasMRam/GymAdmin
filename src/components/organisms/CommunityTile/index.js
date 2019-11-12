@@ -145,9 +145,9 @@ const CommunityTile = ({
     }
     imageUrl = communityDefaultImages[key];
   }
-  const topRightSection = () => canFavourite ? (
-    <IconButton transparent icon={icon} iconSize="regular" palette={iconPalette} onClick={onIconClick} />
-  ) : null;
+  const topRightSection = canFavourite ?
+    () => <IconButton transparent icon={icon} iconSize="regular" palette={iconPalette} onClick={onIconClick} /> :
+    null;
 
   const CommunityInfoComponent = actionButtons.length ? PaddedCommunityInfo : CommunityInfo;
 
@@ -176,9 +176,11 @@ const CommunityTile = ({
               />
               {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
             </ImageWrapper>
-            <TopRightWrapper>
-              {topRightSection()}
-            </TopRightWrapper>
+            {topRightSection && (
+              <TopRightWrapper>
+                {topRightSection()}
+              </TopRightWrapper>
+            )}
           </>
         }
         <Details layout={layout} padding="regular" hasImages={hasImages}>
