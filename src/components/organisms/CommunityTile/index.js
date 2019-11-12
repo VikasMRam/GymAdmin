@@ -120,7 +120,7 @@ const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
   layout, showFloorPlan, palette, showDescription, imageSize, showSeeMoreButtonOnHover,
-  canFavourite,
+  canFavourite, lazyLoadImage
 }) => {
   const {
     name, gallery = {}, mainImage, communitySize, plusCategory,
@@ -172,6 +172,7 @@ const CommunityTile = ({
                 layout={layout}
                 src={imageUrl}
                 aspectRatio={layout === 'column' ? '3:2' : '16:9'}
+                lazy={lazyLoadImage}
               />
               {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
             </ImageWrapper>
@@ -224,11 +225,13 @@ CommunityTile.propTypes = {
   showDescription: bool,
   showSeeMoreButtonOnHover: bool,
   imageSize: oneOf(Object.keys(getKey('sizes.tile'))),
+  lazyLoadImage: bool.isRequired,
 };
 
 CommunityTile.defaultProps = {
   actionButtons: [],
   layout: 'row',
+  lazyLoadImage: true,
 };
 
 export default CommunityTile;
