@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, func, arrayOf, string } from 'prop-types';
+import { object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 
 import { query } from 'sly/services/newApi';
