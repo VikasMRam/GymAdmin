@@ -76,6 +76,8 @@ export default class Router extends Component {
       SlyEvent.getInstance()
         .sendPageView(pathname, search);
     }
+
+    this.checkLoginRedirect();
   }
 
   componentDidUpdate(prevProps) {

@@ -1,92 +1,26 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 import produce from 'immer';
-import { withRouter } from 'react-router';
 
 import { community as communityPropType } from 'sly/propTypes/community';
-import { connectController } from 'sly/controllers';
-import withServerState from 'sly/store/withServerState';
-import { getDetail } from 'sly/store/selectors';
-import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/resource/actions';
 import SlyEvent from 'sly/services/helpers/events';
-import { CUSTOM_PRICING } from 'sly/services/api/actions';
 import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
-import { getUserDetailsFromUAAndForm, medicareToBool } from 'sly/services/helpers/userDetails';
-import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
-import { query, withAuth } from 'sly/services/newApi';
+import { medicareToBool } from 'sly/services/helpers/userDetails';
+import { prefetch, query, withAuth } from 'sly/services/newApi';
 import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/services/newApi/constants';
 import { withRedirectTo } from 'sly/services/redirectTo';
 
 const eventCategory = 'PricingWizard';
 
-const getCommunitySlug = match => match.params.communitySlug;
-const mapStateToProps = (state, { match }) => {
-  const communitySlug = getCommunitySlug(match);
-  return {
-    user: getDetail(state, 'user', 'me'),
-    userDetails: (getDetail(state, 'userAction') || {}).userDetails,
-    community: getDetail(state, 'community', communitySlug),
-  };
-};
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
-  };
-};
-
-const mapPropsToActions = ({ match }) => ({
-  community: resourceDetailReadRequest('community', getCommunitySlug(match), {
-    include: 'similar-communities',
-  }),
-  userAction: resourceDetailReadRequest('userAction'),
-});
-
-const handleResponses = (responses, { location }, redirect) => {
-  const {
-    community,
-  } = responses;
-
-  const {
-    pathname,
-  } = location;
-
-  community(null, (error) => {
-    if (error.response) {
-      if (error.response.status === 301) {
-        redirect(replaceLastSegment(pathname, getLastSegment(error.location)));
-        return null;
-      }
-
-      if (error.response.status === 404) {
-        // Not found so redirect to city page
-        redirect(replaceLastSegment(pathname));
-        return null;
-      }
-    }
-
-    return Promise.reject(error);
-  });
-};
+@prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: match.params.communitySlug,
+  include: 'similar-communities',
+}))
 
 @withAuth
-
-@withRouter
-
 @query('updateUuidAux', 'updateUuidAux')
-
 @query('createAction', 'createUuidAction')
-
-@withServerState(
-  mapPropsToActions,
-  handleResponses,
-)
-
-@connectController(
-  mapStateToProps,
-  mapDispatchToProps,
-)
-
 @withRedirectTo
 
 export default class PricingWizardPageContainer extends Component {
@@ -97,7 +31,6 @@ export default class PricingWizardPageContainer extends Component {
     userHas: func.isRequired,
     uuidAux: object,
     status: object,
-    postUserAction: func.isRequired,
     createAction: func.isRequired,
     updateUuidAux: func.isRequired,
     createOrUpdateUser: func.isRequired,
@@ -109,8 +42,6 @@ export default class PricingWizardPageContainer extends Component {
     const {
       match,
       community,
-      postUserAction,
-      userDetails,
       createAction,
       status,
       updateUuidAux,
@@ -119,28 +50,8 @@ export default class PricingWizardPageContainer extends Component {
 
     // here remove only fields that will be populated by getUserDetailsFromUAAndForm
     const {
-      name, phone, medicaidCoverage, budget, roomType, careType, contactByTextMsg, interest, ...restData
+      name, phone,
     } = data;
-
-    const user = getUserDetailsFromUAAndForm({
-      userDetails,
-      formData: data,
-    });
-
-    const value = {
-      ...restData,
-      propertyIds: [community.id],
-      user,
-    };
-
-    if (!user.email && !user.phone) {
-      return Promise.resolve();
-    }
-
-    const payload = {
-      action: CUSTOM_PRICING,
-      value,
-    };
 
     SlyEvent.getInstance().sendEvent({
       action: 'pricing-requested',
@@ -151,7 +62,6 @@ export default class PricingWizardPageContainer extends Component {
     const uuidAux = status.uuidAux.result;
 
     return Promise.all([
-      postUserAction(payload),
       updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
         const housingInfo = draft.attributes.uuidInfo.housingInfo || {};
         housingInfo.roomPreference = data.roomType;
@@ -184,14 +94,18 @@ export default class PricingWizardPageContainer extends Component {
         },
       }),
     ]).then(() => createOrUpdateUser({
+      // FIXME: hack so user pass through next step
+      email: `slytest+${Math.random().toString(36).substring(7)}@seniorly.com`,
       name,
       phone,
+    }, {
+      ignoreAlreadyRegistered: true,
     }));
   };
 
   render() {
     const {
-      community, user, userHas, uuidAux, redirectTo, match
+      community, user, userHas, uuidAux, redirectTo, match,
     } = this.props;
 
     if (!community) {
