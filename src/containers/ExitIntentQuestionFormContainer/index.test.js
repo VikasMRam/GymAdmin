@@ -1,6 +1,6 @@
 import React from 'react';
 import { shape } from 'prop-types';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import { BrowserRouter } from 'react-router-dom';
 

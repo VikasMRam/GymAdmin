@@ -2,6 +2,7 @@ import React from 'react';
 import { shape } from 'prop-types';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
+import { BrowserRouter } from 'react-router-dom';
 
 import EbookFormContainer from './index';
 
@@ -36,6 +37,14 @@ const store = mockStore({
   },
 });
 
+const router = {
+  history: new BrowserRouter().history,
+  route: {
+    location: { search: '' },
+    match: { url: '' },
+  },
+};
+
 const sendEbook = jest.fn().mockReturnValue({
   type: 'apicall',
 });
@@ -46,6 +55,7 @@ const createUuidAction = jest.fn().mockReturnValue({
 
 const createContext = () => ({
   context: {
+    router,
     store,
     api: {
       sendEbook,
@@ -53,6 +63,7 @@ const createContext = () => ({
     },
   },
   childContextTypes: {
+    router: shape({}),
     store: shape({}),
     api: shape({}),
   },
