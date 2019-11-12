@@ -50,6 +50,12 @@ const Name = styled(ClampedText)`
   margin-bottom: 0;
 `;
 
+const CommunityHeading = styled(Heading)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
+
 const Info = styled(ClampedText)`
   line-height: ${size('text.subtitle')};
 `;
@@ -103,17 +109,6 @@ export default class CommunityInfo extends Component {
       {reviewsValue > 0 && <Rating value={reviewsValue} palette="warning" size="small" />}
     </RatingWrapper>
   );
-
-  renderName = (community, inverted) => {
-    const { name, url } = community;
-    return (
-      <Link href={url}>
-        <Heading level="subtitle" size="subtitle">
-          <Name size="subtitle" weight="medium" title={name} palette={inverted ? 'white' : 'slate'}>{name}</Name>
-        </Heading>
-      </Link>
-    );
-  }
 
   render() {
     const {
@@ -202,7 +197,11 @@ export default class CommunityInfo extends Component {
 
     return (
       <Wrapper {...props}>
-        {this.renderName(community, inverted)}
+        <Link href={community.url}>
+          <CommunityHeading level="subtitle" size="subtitle" title={community.name} palette={inverted ? 'white' : 'slate'}>
+            {community.name}
+          </CommunityHeading>
+        </Link>
         <TopWrapper>
           {this.renderRate(community)}
           {this.renderReviews(reviewsValue)}
