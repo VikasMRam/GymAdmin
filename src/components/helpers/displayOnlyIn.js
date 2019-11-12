@@ -22,7 +22,7 @@ const displayOnlyIn = (Component, displayIn = ['mobile', 'tablet', 'laptop']) =>
     displayCss = css`
       ${displayCss}
       @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        display: initial;
+        display: block;
       }
     `;
   }
@@ -37,7 +37,7 @@ const displayOnlyIn = (Component, displayIn = ['mobile', 'tablet', 'laptop']) =>
     displayCss = css`
       ${displayCss}
       @media screen and (min-width: ${size('breakpoint.laptop')}) {
-        display: initial;
+        display: block;
       }
     `;
   }

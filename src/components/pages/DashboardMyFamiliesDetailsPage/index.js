@@ -30,13 +30,16 @@ import { userIs } from 'sly/services/helpers/role';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import SlyEvent from 'sly/services/helpers/events';
+import cursor from 'sly/components/helpers/cursor';
+import textDecoration from 'sly/components/helpers/textDecoration';
+import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
 import Role from 'sly/components/common/Role';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
 import UpdateFamilyStageFormContainer from 'sly/containers/UpdateFamilyStageFormContainer';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
-import { Box, Block, Icon, Link, Hr } from 'sly/components/atoms';
+import { Box, Block, Icon, Link, Hr, Span } from 'sly/components/atoms';
 import Tabs from 'sly/components/molecules/Tabs';
 import FamilyStage from 'sly/components/molecules/FamilyStage';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
@@ -48,6 +51,8 @@ import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFa
 import ConversationMessagesContainer from 'sly/containers/ConversationMessagesContainer';
 import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
 import StatusSelect from 'sly/components/molecules/StatusSelect';
+import BannerNotification from 'sly/components/molecules/BannerNotification';
+import DuplicateFamilies from 'sly/components/organisms/DuplicateFamilies';
 import DashboardAgentTasksSectionContainer from 'sly/containers/dashboard/DashboardAgentTasksSectionContainer';
 import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
 import AddOrEditTaskFormContainer from 'sly/containers/AddOrEditTaskFormContainer';
@@ -195,9 +200,12 @@ const StyledIconBadge = styled(IconBadge)`
   }
 `;
 
+const ClickHere = textDecoration(cursor(Span));
+
 const ClientName = ({ client, rawClient, backLinkHref, ...props }) => {
   const { clientInfo } = client;
   const { name, additionalMetadata } = clientInfo;
+
   return (
     <StyledClientNameBlock
       weight="medium"
@@ -237,6 +245,12 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
 
 const PaddedBackLink = pad(BackLink, 'regular');
 
+const PaddedBannerNotification = pad(BannerNotification);
+
+const BigScreenPaddedBannerNotification = displayOnlyIn(PaddedBannerNotification, ['laptop']);
+
+const SmallScreenBannerNotification = displayOnlyIn(BannerNotification, ['mobile', 'tablet']);
+
 const TabMap = {
   Prospects: PROSPECTING,
   Connected: CONNECTED,
@@ -246,6 +260,7 @@ const TabMap = {
 export default class DashboardMyFamiliesDetailsPage extends Component {
   static propTypes = {
     client: clientPropType,
+    clients: arrayOf(clientPropType),
     currentTab: string,
     showModal: func,
     hideModal: func,
@@ -521,11 +536,17 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     return [];
   };
 
+  handleClickHereForMore = () => {
+    const { showModal, clients } = this.props;
+
+    showModal(<DuplicateFamilies noTopSpacing clients={clients} heading="Duplicate family entries" />, null, 'noPadding');
+  };
+
   render() {
     const {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
       conversation, conversations, setSelectedConversation, hasConversationFinished, refetchConversations, refetchClient,
-      showModal, hideModal, onAcceptClick,
+      showModal, hideModal, onAcceptClick, clients,
     } = this.props;
     const { organization } = user;
 
@@ -602,8 +623,19 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     const clientName = <ClientName client={client} rawClient={rawClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} user={user} />;
 
+    const duplicateWarningContent = (
+      <>
+        There are families with same contact info.&nbsp;<ClickHere palette="white" onClick={this.handleClickHereForMore}>Click here to check.</ClickHere>
+      </>
+    );
+    const topSection = clients.length > 1 && (
+      <BigScreenPaddedBannerNotification hasBorderRadius palette="warning">
+        {duplicateWarningContent}
+      </BigScreenPaddedBannerNotification>
+    );
+
     return (
-      <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
+      <StyledDashboardTwoColumnTemplate top={topSection} activeMenuItem="My Families">
         <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
           <BigScreenSummarySection>
             <Box snap="bottom">
@@ -633,6 +665,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           <Tabs activeTab={currentTab}>
             {this.getTabsForUser()}
           </Tabs>
+          {clients.length > 1 &&
+            <SmallScreenBannerNotification palette="warning">
+              {duplicateWarningContent}
+            </SmallScreenBannerNotification>
+          }
           <TabWrapper snap="top">
             {currentTab === SUMMARY && (
               <>
