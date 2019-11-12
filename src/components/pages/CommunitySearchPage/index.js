@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
+import loadable from '@loadable/component';
 
 import { size, palette } from 'sly/components/themes';
 import { titleize } from 'sly/services/helpers/strings';
@@ -11,13 +12,13 @@ import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearc
 import { Heading, Button, Hr } from 'sly/components/atoms';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
-import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import pad from 'sly/components/helpers/pad';
-import CommunityFilterListContainer
-  from 'sly/containers/CommunityFilterListContainer';
+import CommunityFilterListContainer from 'sly/containers/CommunityFilterListContainer';
+
+const SearchMap = loadable(() => import(/* webpackChunkName: "chunkSearchMap" */'sly/components/organisms/SearchMap'));
 
 const TopWrapper = pad(styled.div`
   display: flex;
