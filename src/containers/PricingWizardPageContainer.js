@@ -12,6 +12,12 @@ import { withRedirectTo } from 'sly/services/redirectTo';
 
 const eventCategory = 'PricingWizard';
 
+const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
+  category: eventCategory,
+  action,
+  label,
+  value,
+});
 
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.communitySlug,
@@ -46,12 +52,11 @@ export default class PricingWizardPageContainer extends Component {
       createAction,
       status,
       updateUuidAux,
-      createOrUpdateUser,
     } = this.props;
 
     // here remove only fields that will be populated by getUserDetailsFromUAAndForm
     const {
-      name, phone,
+      name = user && user.name, phone = user && user.phoneNumber,
     } = data;
 
     SlyEvent.getInstance().sendEvent({
@@ -61,7 +66,6 @@ export default class PricingWizardPageContainer extends Component {
     });
 
     const uuidAux = status.uuidAux.result;
-    const email = user && user.email ? undefined : `slytest+${Math.random().toString(36).substring(7)}@seniorly.com`;
     return Promise.all([
       updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
         const housingInfo = draft.attributes.uuidInfo.housingInfo || {};
@@ -94,14 +98,31 @@ export default class PricingWizardPageContainer extends Component {
           actionType: PROFILE_CONTACTED,
         },
       }),
-    ]).then(() => createOrUpdateUser({
-      // FIXME: hack so user pass through next step
-      email,
+    ]);
+  };
+
+  createUser = (data, currentStep) => {
+    const {
+      community,
+      user,
+      createOrUpdateUser,
+    } = this.props;
+
+    const email = user && user.email ? undefined : `slytest+${Math.random().toString(36).substring(7)}@seniorly.com`;
+
+    const {
+      name, phone,
+    } = data;
+
+    return createOrUpdateUser({
+      // email,
       name,
       phone,
     }, {
       ignoreAlreadyRegistered: true,
-    }));
+    }).then(() => {
+      sendEvent('pricing-contact-submitted', community.id, currentStep);
+    });
   };
 
   render() {
@@ -119,8 +140,8 @@ export default class PricingWizardPageContainer extends Component {
         user={user}
         uuidAux={uuidAux}
         userHas={userHas}
-        userActionSubmit={this.submitUserAction}
-        onComplete={this.submitUserAction}
+        submitUserAction={this.submitUserAction}
+        createUser={this.createUser}
         redirectTo={redirectTo}
         match={match}
       />
