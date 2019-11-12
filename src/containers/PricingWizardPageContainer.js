@@ -44,26 +44,14 @@ export default class PricingWizardPageContainer extends Component {
     match: object.isRequired,
   };
 
-  submitUserAction = (data) => {
+  updateUuidAux = (data) => {
     const {
-      user,
-      match,
       community,
-      createAction,
       status,
       updateUuidAux,
     } = this.props;
 
-    // here remove only fields that will be populated by getUserDetailsFromUAAndForm
-    const {
-      name = user && user.name, phone = user && user.phoneNumber,
-    } = data;
-
-    SlyEvent.getInstance().sendEvent({
-      action: 'pricing-requested',
-      category: eventCategory,
-      label: community.id,
-    });
+    sendEvent('pricing-requested', community.id);
 
     const uuidAux = status.uuidAux.result;
     return Promise.all([
@@ -85,44 +73,46 @@ export default class PricingWizardPageContainer extends Component {
         }
         draft.attributes.uuidInfo.financialInfo = financialInfo;
       })),
-      createAction({
-        type: 'UUIDAction',
-        attributes: {
-          actionInfo: {
-            phone,
-            name,
-            contactType: PRICING_REQUEST,
-            slug: community.id,
-          },
-          actionPage: match.url,
-          actionType: PROFILE_CONTACTED,
-        },
-      }),
     ]);
   };
 
-  createUser = (data, currentStep) => {
+  submitActionAndCreateUser = (data, currentStep) => {
     const {
       community,
       user,
       createOrUpdateUser,
+      match,
+      createAction,
     } = this.props;
 
     const email = user && user.email ? undefined : `slytest+${Math.random().toString(36).substring(7)}@seniorly.com`;
 
     const {
-      name, phone,
+      name = (user && user.name) || undefined,
+      phone = (user && user.phoneNumber) || undefined,
     } = data;
 
-    return createOrUpdateUser({
-      // email,
+    return createAction({
+      type: 'UUIDAction',
+      attributes: {
+        actionInfo: {
+          phone,
+          name,
+          contactType: PRICING_REQUEST,
+          slug: community.id,
+        },
+        actionPage: match.url,
+        actionType: PROFILE_CONTACTED,
+      },
+    }).then(() => createOrUpdateUser({
+      email,
       name,
       phone,
     }, {
       ignoreAlreadyRegistered: true,
     }).then(() => {
       sendEvent('pricing-contact-submitted', community.id, currentStep);
-    });
+    }));
   };
 
   render() {
@@ -140,8 +130,8 @@ export default class PricingWizardPageContainer extends Component {
         user={user}
         uuidAux={uuidAux}
         userHas={userHas}
-        submitUserAction={this.submitUserAction}
-        createUser={this.createUser}
+        updateUuidAux={this.updateUuidAux()}
+        submitActionAndCreateUser={this.submitActionAndCreateUser}
         redirectTo={redirectTo}
         match={match}
       />

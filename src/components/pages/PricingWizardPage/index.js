@@ -83,7 +83,8 @@ class PricingWizardPage extends Component {
     userHas: func,
     uuidAux: object,
     onComplete: func,
-    submitUserAction: func,
+    submitActionAndCreateUser: func,
+    updateUuidAux: func,
     redirectTo: func,
     match: object,
   };
@@ -126,7 +127,7 @@ class PricingWizardPage extends Component {
   handleStepChange = ({
     currentStep, data, goto, openConfirmationModal,
   }) => {
-    const { community, userHas, submitUserAction, createUser } = this.props;
+    const { community, userHas, submitActionAndCreateUser, updateUuidAux } = this.props;
     const { id } = community;
     const { interest } = data;
 
@@ -134,23 +135,25 @@ class PricingWizardPage extends Component {
 
     const gotUserData = userHas(['name', 'phoneNumber']);
 
-    const forCCRC = () => {
-      if (hasCCRC(community) && gotUserData) {
+    const mayBeSkipSteps = () => {
+      if (hasCCRC(community)) {
         goto(currentStep);
         openConfirmationModal();
-      } else if (gotUserData) {
-        // this only happens in EstimatedPricing, because when in Contact we don't
-        // have user data, it's just to skip contact
-        goto('WhatToDoNext');
+        return;
       }
+      goto('WhatToDoNext');
     };
 
     if (currentStep === 'EstimatedPricing') {
-      submitUserAction(data).then(forCCRC);
+      updateUuidAux(data).then(() => {
+        if (gotUserData) {
+          submitActionAndCreateUser(data).then(mayBeSkipSteps);
+        }
+      });
     }
 
     if (currentStep === 'Contact') {
-      createUser(data, currentStep).then(forCCRC);
+      submitActionAndCreateUser(data, currentStep).then(mayBeSkipSteps);
     }
 
     if (currentStep === 'WhatToDoNext') {
