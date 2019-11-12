@@ -31,10 +31,7 @@ const TopWrapper = pad(styled.div`
     margin-right: ${size('spacing.large')};
   }
 `);
-const SearchMapContainer = styled(SearchMap)`
-  width: 100%;
-  height: 100%;
-`;
+
 const StyledHeading = pad(Heading, 'large');
 
 const StyledHr = styled(Hr)`
@@ -253,7 +250,7 @@ const CommunitySearchPage = ({
         <StyledHr fullWidth />
         {!isMapView && !isFetchingResults && ListContent()}
         {isMapView && (
-          <SearchMapContainer
+          <SearchMap
             latitude={latitude}
             longitude={longitude}
             communityList={communityList}
