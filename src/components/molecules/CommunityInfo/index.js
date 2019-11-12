@@ -73,34 +73,6 @@ export default class CommunityInfo extends Component {
     showFloorPlan: true,
   };
 
-  renderEstimatedRate = (startingRate) => {
-    const { inverted, palette } = this.props;
-    const paletteProp = palette || (inverted ? 'white' : 'primary');
-
-    return startingRate ? (
-      <Rate palette={paletteProp} weight="medium">
-        Estimated <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
-      </Rate>
-    ) : null;
-  };
-
-  renderProviderRate = (startingRate) => {
-    const { inverted, palette } = this.props;
-    const paletteProp = palette || (inverted ? 'white' : 'primary');
-
-    return startingRate ? (
-      <Rate palette={paletteProp} weight="medium">
-        <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
-      </Rate>
-    ) : null;
-  };
-
-  renderRate = ({ estimated, startingRate }) => estimated ? (
-    this.renderEstimatedRate(startingRate)
-  ) : (
-    this.renderProviderRate(startingRate)
-  );
-
   renderReviews = reviewsValue => (
     <RatingWrapper size="caption" palette={this.props.inverted ? 'white' : 'slate'}>
       <RatingValue>
@@ -112,7 +84,7 @@ export default class CommunityInfo extends Component {
 
   render() {
     const {
-      community, inverted, showFloorPlan, showDescription, ...props
+      community, inverted, showFloorPlan, showDescription, palette, className
     } = this.props;
     const {
       webViewInfo, floorPlanString, propInfo, propRatings,
@@ -196,14 +168,24 @@ export default class CommunityInfo extends Component {
     }
 
     return (
-      <Wrapper {...props}>
+      <Wrapper className={className}>
         <Link href={community.url}>
           <CommunityHeading level="subtitle" size="subtitle" title={community.name} palette={inverted ? 'white' : 'slate'}>
             {community.name}
           </CommunityHeading>
         </Link>
         <TopWrapper>
-          {this.renderRate(community)}
+          {community.startingRate && (
+            <Rate palette={palette || (inverted ? 'white' : 'primary')} weight="medium">
+              <NumberFormat
+                value={community.startingRate}
+                displayType="text"
+                prefix="$"
+                thousandSeparator
+                renderText={(number) => `${community.estimated ? 'Estimated ' : ''}${number}/month`}
+              />
+            </Rate>
+          )}
           {this.renderReviews(reviewsValue)}
           <Block size="caption" palette={inverted ? 'white' : 'grey'}>
             ({numReviews})
