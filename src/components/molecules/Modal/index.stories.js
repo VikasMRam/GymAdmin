@@ -21,4 +21,15 @@ storiesOf('Molecules|Modal', module)
         Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
       </Block>
     </Modal>
+  ))
+  .add('eBook', () => (
+    <Modal onClose={action('closed')} closeable isOpen>
+      <Heading>
+        Hey ho,
+        let&apos;s go
+      </Heading>
+      <Block>
+        Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
+      </Block>
+    </Modal>
   ));

@@ -22,13 +22,13 @@ import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';
 import {
   CommunityDetailPageTemplate,
-  makeHeader,
-  makeColumn,
   makeBody,
+  makeColumn,
   makeFooter,
+  makeGallery,
+  makeHeader,
   makeTwoColumn,
   makeWrapper,
-  makeGallery,
 } from 'sly/components/templates/CommunityDetailPageTemplate';
 import UnhydratedCommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
 import Section from 'sly/components/molecules/Section';
@@ -52,11 +52,10 @@ import UnhydratedAskAgentQuestionButtonContainer from 'sly/containers/AskAgentQu
 import UnhydratedGetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
 import PlusBranding from 'sly/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
-import withExitIntent from 'sly/services/exitIntent/withExitIntent';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import UnhydratedCommunitySummaryContainer from 'sly/containers/CommunitySummaryContainer';
 import UnhydratedCommunityAgentSectionContainer from 'sly/containers/CommunityAgentSectionContainer';
-import UnhydratedCommunityQuestionAnswersContainer from "sly/containers/CommunityQuestionAnswersContainer";
+import UnhydratedCommunityQuestionAnswersContainer from 'sly/containers/CommunityQuestionAnswersContainer';
 import UnhydratedCommunityReviewsContainer from 'sly/containers/CommunityReviewsContainer';
 import UnhydratedCommunityAddReviewButtonContainer from 'sly/containers/CommunityAddReviewButtonContainer';
 import UnhydratedCommunityMorePicturesContainer from 'sly/containers/CommunityMorePicturesContainer';
@@ -184,7 +183,6 @@ const makeBanner = (profileContacted) => {
   )} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
 };
 
-@withExitIntent
 export default class CommunityDetailPage extends Component {
   static propTypes = {
     user: object,

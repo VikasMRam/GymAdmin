@@ -5,7 +5,6 @@ import { reduxForm } from 'redux-form';
 
 import CommunityAskQuestionForm from 'sly/components/organisms/CommunityAskQuestionForm';
 import { withPreventDefault } from 'sly/services/helpers/forms';
-import { EXIT_INTENT_TYPE } from 'sly/constants/retentionPopup';
 
 const CommunityAskQuestionFormContainer = reduxForm({
   form: 'CommunityAskQuestionForm',
@@ -28,10 +27,5 @@ storiesOf('Organisms|CommunityAskQuestionForm', module).add('default', () => (
 )).add('Guest User', () => (
   <CommunityAskQuestionFormContainer
     handleSubmit={withPreventDefault(action('form submitted'))}
-  />
-)).add('Exit Form', () => (
-  <CommunityAskQuestionFormContainer
-    handleSubmit={withPreventDefault(action('form submitted'))}
-    type={EXIT_INTENT_TYPE}
   />
 ));
