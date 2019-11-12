@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import { SubmissionError, clearSubmitErrors, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
-import { func, string } from 'prop-types';
+import { withRouter } from 'react-router';
+import { func, string, object } from 'prop-types';
 
 import { createValidator, email, required } from 'sly/services/validation';
 import { query } from 'sly/services/newApi';
@@ -35,6 +36,7 @@ const mapDispatchToProps = dispatch => ({
   clearErrors: () => dispatch(clearSubmitErrors(formName)),
 });
 
+@withRouter
 @withNotification
 @query('sendEbook', 'sendEbook')
 @query('createAction', 'createUuidAction')
@@ -46,25 +48,25 @@ export default class EbookFormContainer extends PureComponent {
     hideModal: func.isRequired,
     notifyInfo: func.isRequired,
     createAction: func.isRequired,
-    pathname: string,
+    location: object,
     event: string,
   };
 
   componentDidMount() {
-    const { event, pathname } = this.props;
+    const { event, location: { pathname } } = this.props;
 
     sendEvent(`${event}-ebook-form-open`, pathname);
   }
 
   componentWillUnmount() {
-    const { event, pathname } = this.props;
+    const { event, location: { pathname } } = this.props;
 
     sendEvent(`${event}-ebook-form-close`, pathname);
   }
 
   handleSubmit = (data) => {
     const {
-      clearErrors, event, hideModal, notifyInfo, sendEbook, createAction, pathname,
+      clearErrors, event, hideModal, notifyInfo, sendEbook, createAction, location: { pathname },
     } = this.props;
 
     clearErrors();
@@ -89,7 +91,7 @@ export default class EbookFormContainer extends PureComponent {
     ]).then(
       () => {
         hideModal();
-        sendEvent(`${event}-send-mail`, this.props.pathname);
+        sendEvent(`${event}-send-mail`, pathname);
         notifyInfo(`We have sent the booklet to your email ${data.email}`);
       },
     ).catch((response) => {

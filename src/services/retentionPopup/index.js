@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object } from 'prop-types';
+import { func, object, string } from 'prop-types';
 import { matchPath, withRouter } from 'react-router';
 
 import withUser from '../newApi/withUser';
@@ -9,8 +9,6 @@ import EbookFormContainer from 'sly/containers/EbookFormContainer';
 import ExitIntentQuestionFormContainer from 'sly/containers/ExitIntentQuestionFormContainer';
 import SimilarCommunitiesPopupContainer from 'sly/containers/SimilarCommunitiesPopupContainer';
 import withModal from 'sly/controllers/withModal';
-import careTypes from 'sly/constants/careTypes';
-
 
 const MOUSEOUT_TIME_DURATION = 20000;
 const FOCUS_TIME_DURATION = 10000;
@@ -22,10 +20,7 @@ const EXIT_INTENT = 'exit-intent';
 const STAY_INTENT = 'stay-intent';
 const IDLE = 'idle';
 
-const COMMUNITY_PROFILE_PAGE_PATH = `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`;
-
 @withModal
-@withRouter
 @withUser
 export default class RetentionPopup extends Component {
   static typeHydrationId = 'RetentionPopup';
@@ -34,6 +29,7 @@ export default class RetentionPopup extends Component {
     hideModal: func.isRequired,
     location: object,
     user: object,
+    communityId: string,
   };
 
   constructor(props) {
@@ -49,7 +45,6 @@ export default class RetentionPopup extends Component {
     if (this.props.user || isServer || this.isModalShown()) {
       return;
     }
-
     this.renderTime = new Date().getTime();
 
     document.addEventListener('mouseout', this.onMouseoutHandler);
@@ -85,10 +80,9 @@ export default class RetentionPopup extends Component {
       return;
     }
 
-    const { hideModal, location: { pathname } } = this.props;
+    const { hideModal } = this.props;
 
     this.showModal(<EbookFormContainer
-      pathname={pathname}
       event={event}
       hideModal={hideModal}
     />, 'eBook');
@@ -175,19 +169,13 @@ export default class RetentionPopup extends Component {
       return;
     }
 
-    const { location: { pathname }, hideModal, showModal } = this.props;
-    const match = matchPath(pathname, {
-      path: COMMUNITY_PROFILE_PAGE_PATH,
-      exact: true,
-      strict: false,
-    });
+    const { hideModal, showModal, communityId } = this.props;
 
-    let modalContent = <ExitIntentQuestionFormContainer pathname={pathname} showModal={showModal} />;
+    let modalContent = <ExitIntentQuestionFormContainer showModal={showModal} />;
 
-    if (match) {
-      const { params: { communitySlug } } = match;
 
-      modalContent = <SimilarCommunitiesPopupContainer communitySlug={communitySlug} hideModal={hideModal} />;
+    if (communityId) {
+      modalContent = <SimilarCommunitiesPopupContainer communitySlug={communityId} hideModal={hideModal} />;
     }
 
     this.showModal(modalContent);
@@ -195,6 +183,7 @@ export default class RetentionPopup extends Component {
 
   showModal = (modalContent, layout) => {
     this.props.showModal(modalContent, null, layout);
+
     this.removeAllEventListeners();
     localStorage.setItem(MODAL_SHOWN, MODAL_SHOWN);
   }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router';
+import { object } from 'prop-types';
 
 import { withHydration } from './services/partialHydration/index';
 
@@ -10,17 +11,29 @@ import UnhydratedRetentionPopup from 'sly/services/retentionPopup';
 
 const HydratedRetentionPopup = withHydration(UnhydratedRetentionPopup, { alwaysHydrate: true });
 
-export default function () {
+
+function ClientCommunityDetailNode() {
   return (
     <AppTemplate>
       <Router>
         <Route
           path="/:toc/:state/:city/:communitySlug"
-          component={CommunityDetailPageContainer}
           exact
+          render={props => (
+            <>
+              <CommunityDetailPageContainer {...props} />
+              <HydratedRetentionPopup communityId={props.match.params.communitySlug} />
+            </>)
+          }
         />
-        <HydratedRetentionPopup />
       </Router>
     </AppTemplate>
   );
 }
+
+
+ClientCommunityDetailNode.propTypes = {
+  match: object,
+};
+
+export default ClientCommunityDetailNode;

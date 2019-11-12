@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { func, object, string } from 'prop-types';
 import styled from 'styled-components';
+import { withRouter } from 'react-router';
 
 import { prefetch } from 'sly/services/newApi';
 import { Heading } from 'sly/components/atoms';
@@ -22,6 +23,7 @@ const sendEvent = (action, label, value = '') => SlyEvent.getInstance().sendEven
   value,
 });
 
+@withRouter
 @prefetch('community', 'getCommunity', (req, { communitySlug }) => req({
   id: communitySlug,
   include: 'similar-communities',
@@ -31,14 +33,15 @@ export default class SimilarCommunitiesPopupContainer extends PureComponent {
     community: object,
     communitySlug: string,
     hideModal: func,
+    location: object,
   };
 
   componentDidMount() {
-    sendEvent('similar-communities-open', this.props.pathname);
+    sendEvent('similar-communities-open', this.props.location.pathname);
   }
 
   componentWillUnmount() {
-    sendEvent('similar-communities-close', this.props.pathname);
+    sendEvent('similar-communities-close', this.props.location.pathname);
   }
 
   render() {

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { func, object, string } from 'prop-types';
+import { func, object } from 'prop-types';
 import { clearSubmitErrors, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -52,21 +52,21 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
     createAction: func.isRequired,
     userDetails: object,
     postUserAction: func.isRequired,
-    pathname: string,
+    location: object,
     showModal: func.isRequired,
   };
 
   componentDidMount() {
-    sendEvent('question-form-open', this.props.pathname);
+    sendEvent('question-form-open', this.props.location.pathname);
   }
 
   componentWillUnmount() {
-    sendEvent('question-form-close', this.props.pathname);
+    sendEvent('question-form-close', this.props.location.pathname);
   }
 
   handleSubmit = (data) => {
     const {
-      createAction, userDetails, pathname, showModal,
+      createAction, userDetails, location: { pathname }, showModal,
     } = this.props;
     const { question } = data;
     const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
@@ -85,7 +85,7 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
         },
       },
     }).then(() => {
-      sendEvent('question-form-send', this.props.pathname);
+      sendEvent('question-form-send', pathname);
       showModal(<Thankyou />);
     });
   };
