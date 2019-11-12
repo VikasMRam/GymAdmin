@@ -30,35 +30,42 @@ const Rate = styled(Block)`
   line-height: ${size('lineHeight.minimal')};
 `;
 
-const RatingWrapper = styled(Block)`
-  display: flex;
-  margin-right: ${size('spacing.regular')};
-`;
-
 const TopWrapper = styled(Block)`
   display: flex;
   align-items: center;
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const RatingValue = styled.div`
+const StyledRating = styled(Rating)`
   margin-right: ${size('spacing.regular')};
 `;
 
-const Name = styled(ClampedText)`
-  line-height: ${size('text.title')};
-  margin-bottom: 0;
+const SpanWithRightMargin = styled(Span)`
+  margin-right: ${size('spacing.regular')};
 `;
 
 const CommunityHeading = styled(Heading)`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`
+`;
 
 const Info = styled(ClampedText)`
   line-height: ${size('text.subtitle')};
 `;
+
+const getAddress = ({ address, addressString }) => {
+  if(address) {
+    const { line1, line2, city, state, zip, } = address;
+    return `${line1}, ${line2}, ${city},
+        ${state}
+        ${zip}`
+      .replace(/\s/g, ' ')
+      .replace(/, ,/g, ', ')
+  }
+
+  return addressString;
+};
 
 export default class CommunityInfo extends Component {
   static propTypes = {
@@ -73,32 +80,14 @@ export default class CommunityInfo extends Component {
     showFloorPlan: true,
   };
 
-  renderReviews = reviewsValue => (
-    <RatingWrapper size="caption" palette={this.props.inverted ? 'white' : 'slate'}>
-      <RatingValue>
-        {reviewsValue > 0 ? formatRating(reviewsValue) : <Span size="tiny">Not Yet Rated</Span>}
-      </RatingValue>
-      {reviewsValue > 0 && <Rating value={reviewsValue} palette="warning" size="small" />}
-    </RatingWrapper>
-  );
-
   render() {
-    const {
-      community, inverted, showFloorPlan, showDescription, palette, className
-    } = this.props;
-    const {
-      webViewInfo, floorPlanString, propInfo, propRatings,
-      address, addressString, mainService,
-    } = community;
-    let { description } = community;
-    let { numReviews, typeCare = [] } = community;
-    let { reviewsValue } = community;
-    if (propInfo) {
-      ({ typeCare } = propInfo);
-      if (!description) {
-        ({ communityDescription: description } = propInfo);
-      }
-    }
+    const { community, inverted, showFloorPlan, showDescription, palette, className } = this.props;
+    const { webViewInfo, floorPlanString, propInfo = {}, propRatings, mainService } = community;
+
+    const address = getAddress(community);
+    const { reviewsValue, numReviews } = propRatings ? propRatings : community;
+    const typeCare = propInfo.typeCare || community.typeCare;
+
     let floorPlanComponent = null;
     let livingTypeComponent = null;
     let floorPlan = floorPlanString;
@@ -112,24 +101,6 @@ export default class CommunityInfo extends Component {
     }
     if (mainService) {
       livingTypes = mainService.split(',');
-    }
-    if (propRatings) {
-      ({ reviewsValue } = propRatings);
-    }
-    if (propRatings) {
-      ({ numReviews } = propRatings);
-    }
-    let formattedAddress = addressString;
-    let addressComponent;
-    if (address) {
-      const {
-        line1, line2, city, state, zip,
-      } = address;
-      formattedAddress = `${line1}, ${line2}, ${city},
-        ${state}
-        ${zip}`
-        .replace(/\s/g, ' ')
-        .replace(/, ,/g, ', ');
     }
 
     if (floorPlan && showFloorPlan) {
@@ -156,17 +127,6 @@ export default class CommunityInfo extends Component {
       );
     }
 
-    if (formattedAddress) {
-      addressComponent = (
-        <IconTextWrapper>
-          <StyledIcon icon="location" palette={inverted ? 'white' : 'grey'} size="small" />
-          <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
-            {formattedAddress}
-          </Info>
-        </IconTextWrapper>
-      );
-    }
-
     return (
       <Wrapper className={className}>
         <Link href={community.url}>
@@ -175,7 +135,7 @@ export default class CommunityInfo extends Component {
           </CommunityHeading>
         </Link>
         <TopWrapper>
-          {community.startingRate && (
+          {community.startingRate ? (
             <Rate palette={palette || (inverted ? 'white' : 'primary')} weight="medium">
               <NumberFormat
                 value={community.startingRate}
@@ -185,18 +145,28 @@ export default class CommunityInfo extends Component {
                 renderText={(number) => `${community.estimated ? 'Estimated ' : ''}${number}/month`}
               />
             </Rate>
-          )}
-          {this.renderReviews(reviewsValue)}
-          <Block size="caption" palette={inverted ? 'white' : 'grey'}>
+          ) : null }
+          <SpanWithRightMargin palette={inverted ? 'white' : 'slate'} size={reviewsValue > 0 ? 'caption' : 'tiny'}>
+            {reviewsValue > 0 ? formatRating(reviewsValue) : 'Not Yet Rated'}
+          </SpanWithRightMargin>
+          {reviewsValue > 0 && <StyledRating value={reviewsValue} palette="warning" size="small" />}
+          <Span size="caption" palette={inverted ? 'white' : 'grey'}>
             ({numReviews})
-          </Block>
+          </Span>
         </TopWrapper>
-        {addressComponent}
+        {address && (
+          <IconTextWrapper>
+            <StyledIcon icon="location" palette={inverted ? 'white' : 'grey'} size="small" />
+            <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
+              {address}
+            </Info>
+          </IconTextWrapper>
+        )}
         {livingTypeComponent}
         {floorPlanComponent}
         {showDescription &&
           <Block palette={inverted ? 'white' : 'grey'} size="caption">
-            {description}
+            {community.description || propInfo.communityDescription}
           </Block>
         }
       </Wrapper>
