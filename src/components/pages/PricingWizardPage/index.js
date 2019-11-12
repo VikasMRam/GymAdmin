@@ -126,32 +126,37 @@ class PricingWizardPage extends Component {
   handleStepChange = ({
     currentStep, data, goto, doSubmit, openConfirmationModal,
   }) => {
-    const { community, userActionSubmit, userHas } = this.props;
+    const { community, userHas } = this.props;
     const { id } = community;
     const { interest } = data;
 
     sendEvent('step-completed', id, currentStep);
+
+    const gotUserData = userHas(['name', 'phoneNumber']);
+
+    // Track goal events
+    if (currentStep === 'Contact') {
+      sendEvent('pricing-contact-submitted', id, currentStep);
+    }
+
+    // short wizard for ccrc won't pass beyond contact or pricing if we've got the contact
+    if ((currentStep === 'Contact' || gotUserData) && hasCCRC(community)) {
+      goto(currentStep);
+      doSubmit(openConfirmationModal);
+      return;
+    }
+
+    // skip Contact
+    if (currentStep === 'EstimatedPricing' && gotUserData) {
+      goto('WhatToDoNext');
+      return;
+    }
+
     if (currentStep === 'WhatToDoNext') {
       if (interest === 'talk-advisor') {
         doSubmit(openConfirmationModal);
       } else if (interest !== 'explore-affordable-options') {
         goto('ExploreAffordableOptions');
-      }
-    }
-    if (currentStep === 'EstimatedPricing' && userHas(['name', 'phoneNumber'])) {
-      if (hasCCRC(community)) {
-        goto('EstimatedPricing');
-        doSubmit(openConfirmationModal);
-      } else {
-        goto('WhatToDoNext');
-      }
-    }
-    if (currentStep === 'Contact') {
-      // Track goal events
-      sendEvent('pricing-contact-submitted', id, currentStep);
-      if (hasCCRC(community)) {
-        goto('Contact');
-        doSubmit(openConfirmationModal);
       }
     }
   };
@@ -241,7 +246,7 @@ class PricingWizardPage extends Component {
                       onRoomTypeChange={handleRoomTypeChange}
                       onCareTypeChange={handleCareTypeChange}
                       uuidAux={uuidAux}
-                      onSubmit={onSubmit}
+                      onSubmit={() => console.log('submitting first step')}
                     />
                     <WizardStep
                       component={CommunityBookATourContactFormContainer}

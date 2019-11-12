@@ -40,6 +40,7 @@ export default class PricingWizardPageContainer extends Component {
 
   submitUserAction = (data) => {
     const {
+      user,
       match,
       community,
       createAction,
@@ -60,7 +61,7 @@ export default class PricingWizardPageContainer extends Component {
     });
 
     const uuidAux = status.uuidAux.result;
-
+    const email = user && user.email ? undefined : `slytest+${Math.random().toString(36).substring(7)}@seniorly.com`;
     return Promise.all([
       updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
         const housingInfo = draft.attributes.uuidInfo.housingInfo || {};
@@ -95,7 +96,7 @@ export default class PricingWizardPageContainer extends Component {
       }),
     ]).then(() => createOrUpdateUser({
       // FIXME: hack so user pass through next step
-      email: `slytest+${Math.random().toString(36).substring(7)}@seniorly.com`,
+      email,
       name,
       phone,
     }, {
