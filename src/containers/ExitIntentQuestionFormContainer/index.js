@@ -5,14 +5,13 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import { createValidator, email, required } from 'sly/services/validation';
-import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
+import userPropType from 'sly/propTypes/user';
 import { EXIT_INTENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
 import ExitIntentQuestionForm from 'sly/components/organisms/ExitIntentQuestionForm';
 import Thankyou from 'sly/components/molecules/Thankyou';
-import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 import { query } from 'sly/services/newApi';
-import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
+import withAuth from 'sly/services/newApi/withAuth';
 
 const formName = 'ExitIntentQuestionForm';
 const validate = createValidator({
@@ -35,24 +34,19 @@ const ReduxForm = reduxForm({
 })(ExitIntentQuestionForm);
 
 const mapDispatchToProps = dispatch => ({
-  postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
   clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
 });
 
-const mapPropsToActions = () => ({
-  userDetails: resourceDetailReadRequest('userAction'),
-});
-
 @withRouter
-@withServerState(mapPropsToActions)
+@withAuth
 @connect(null, mapDispatchToProps)
 @query('createAction', 'createUuidAction')
 export default class ExitIntentQuestionFormContainer extends PureComponent {
   static propTypes = {
     createAction: func.isRequired,
     userDetails: object,
-    postUserAction: func.isRequired,
     location: object,
+    user: userPropType,
     showModal: func.isRequired,
   };
 
@@ -66,10 +60,13 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
 
   handleSubmit = (data) => {
     const {
-      createAction, userDetails, location: { pathname }, showModal,
+      createAction, location: { pathname }, showModal, user,
     } = this.props;
-    const { question } = data;
-    const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
+
+    const {
+      name = (user && user.name) || undefined,
+      email = (user && user.email) || undefined,
+    } = data;
 
     clearSubmitErrors();
 
@@ -79,9 +76,9 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
         actionType: EXIT_INTENT_ASK_QUESTIONS,
         actionPage: pathname,
         actionInfo: {
-          question,
-          name: user.full_name,
-          email: user.email,
+          question: data.question,
+          name,
+          email,
         },
       },
     }).then(() => {
