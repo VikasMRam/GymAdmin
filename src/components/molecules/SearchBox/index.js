@@ -70,15 +70,16 @@ const baseSearchOptions = { types: ['(regions)'] };
 
 const SearchBox = ({
   layout, value, onChange, onSelect, onSearchButtonClick, onTextboxFocus, onBlur,
-  placeholder, readOnly, hasShadow, ...props
+  placeholder, readOnly, hasShadow, callbackFunctionName, ...props
 }) => (
   <Wrapper layout={layout} {...props}>
-    <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions} highlightFirstSuggestion>
+    <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions} highlightFirstSuggestion googleCallbackName={callbackFunctionName}>
       {({ getInputProps, suggestions, getSuggestionItemProps }) => (
         <>
           {hasShadow &&
             <ShadowedSearchTextBox
               {...getInputProps({ onBlur, placeholder })}
+              disabled={false}
               layout={layout}
               onFocus={onTextboxFocus}
               readOnly={readOnly}
@@ -89,6 +90,7 @@ const SearchBox = ({
           {!hasShadow &&
             <SearchTextBox
               {...getInputProps({ onBlur, placeholder })}
+              disabled={false}
               layout={layout}
               onFocus={onTextboxFocus}
               readOnly={readOnly}

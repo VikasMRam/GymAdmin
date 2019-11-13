@@ -15,6 +15,8 @@ import SearchBox from 'sly/components/molecules/SearchBox';
 import SlyEvent from 'sly/services/helpers/events';
 import {withRedirectTo} from "sly/services/redirectTo";
 
+let searchBoxContainerCount = 0;
+
 class SearchBoxContainer extends Component {
   static propTypes = {
     layout: string,
@@ -35,10 +37,7 @@ class SearchBoxContainer extends Component {
     clearLocationOnBlur: true,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = { isMounted: false };
-  }
+  callbackFunctionName = `google-autocomplete-callback-${searchBoxContainerCount++}`;
 
   componentDidMount() {
     const { changeAddress, defaultAddress } = this.props;
@@ -46,11 +45,7 @@ class SearchBoxContainer extends Component {
     if (loadAutoComplete) {
       scriptjs(
         `https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&v=3.exp&libraries=geometry,drawing,places`,
-        () => {
-          this.setState({
-            isMounted: true,
-          });
-        }
+        () => window[this.callbackFunctionName] && window[this.callbackFunctionName]()
       );
 
       if (defaultAddress) {
@@ -126,31 +121,8 @@ class SearchBoxContainer extends Component {
   };
 
   render() {
-    const { handleBlur } = this;
-    const {
-      layout, address, clearLocationOnBlur, allowOnlySelectionFromSuggestions, ...props
-    } = this.props;
-    const { isMounted } = this.state;
-    if (!isMounted) {
-      return <div />;
-    }
-    if (allowOnlySelectionFromSuggestions) {
-      props.onBlur = handleBlur;
-    }
+    const { layout, address, clearLocationOnBlur, allowOnlySelectionFromSuggestions, onBlur, ...props } = this.props;
 
-    if (clearLocationOnBlur) {
-      return (
-        <SearchBox
-          layout={layout}
-          value={address}
-          onChange={this.handleChange}
-          onSelect={this.handleSelect}
-          onSearchButtonClick={this.handleSearch}
-          onTextboxFocus={this.handleTextboxFocus}
-          {...props}
-        />
-      );
-    }
     return (
       <SearchBox
         layout={layout}
@@ -158,6 +130,9 @@ class SearchBoxContainer extends Component {
         onChange={this.handleChange}
         onSelect={this.handleSelect}
         onSearchButtonClick={this.handleSearch}
+        onTextboxFocus={clearLocationOnBlur &&this.handleTextboxFocus}
+        callbackFunctionName={this.callbackFunctionName}
+        onBlur={allowOnlySelectionFromSuggestions ? this.handleBlur : onBlur}
         {...props}
       />
     );
