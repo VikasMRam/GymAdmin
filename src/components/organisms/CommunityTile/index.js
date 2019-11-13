@@ -120,7 +120,7 @@ const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
   layout, showFloorPlan, palette, showDescription, imageSize, showSeeMoreButtonOnHover,
-  canFavourite,
+  canFavourite, lazyLoadImage
 }) => {
   const {
     name, gallery = {}, mainImage, communitySize, plusCategory,
@@ -145,9 +145,9 @@ const CommunityTile = ({
     }
     imageUrl = communityDefaultImages[key];
   }
-  const topRightSection = () => canFavourite ? (
-    <IconButton transparent icon={icon} iconSize="regular" palette={iconPalette} onClick={onIconClick} />
-  ) : null;
+  const topRightSection = canFavourite ?
+    () => <IconButton transparent icon={icon} iconSize="regular" palette={iconPalette} onClick={onIconClick} /> :
+    null;
 
   const CommunityInfoComponent = actionButtons.length ? PaddedCommunityInfo : CommunityInfo;
 
@@ -172,12 +172,15 @@ const CommunityTile = ({
                 layout={layout}
                 src={imageUrl}
                 aspectRatio={layout === 'column' ? '3:2' : '16:9'}
+                lazy={lazyLoadImage}
               />
               {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
             </ImageWrapper>
-            <TopRightWrapper>
-              {topRightSection()}
-            </TopRightWrapper>
+            {topRightSection && (
+              <TopRightWrapper>
+                {topRightSection()}
+              </TopRightWrapper>
+            )}
           </>
         }
         <Details layout={layout} padding="regular" hasImages={hasImages}>
@@ -224,11 +227,13 @@ CommunityTile.propTypes = {
   showDescription: bool,
   showSeeMoreButtonOnHover: bool,
   imageSize: oneOf(Object.keys(getKey('sizes.tile'))),
+  lazyLoadImage: bool.isRequired,
 };
 
 CommunityTile.defaultProps = {
   actionButtons: [],
   layout: 'row',
+  lazyLoadImage: true,
 };
 
 export default CommunityTile;
