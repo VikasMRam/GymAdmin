@@ -7,10 +7,8 @@ import RatingInput from 'sly/components/molecules/RatingInput';
 const wrap = (props = {}) => shallow(<RatingInput {...props} />);
 
 const element = {
-  getBoundingClientRect: () => ({ left: 100 }),
   children: [{
-    getBoundingClientRect: () => ({ left: 150 }),
-    offsetWidth: 50,
+    getBoundingClientRect: () => ({ left: 100, right: 200 })
   }],
 };
 
