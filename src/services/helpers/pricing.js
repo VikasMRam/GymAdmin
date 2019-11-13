@@ -170,4 +170,4 @@ export const calculatePricing = (community, estimatedPrice) => {
 };
 
 export const priceParser = str => str.replace(/[^\d]/g, '');
-export const priceFormatter = value => value ? value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') : value;
+export const priceFormatter = value => value ? parseFloat(value).toFixed(2).replace(/\.00$/, '').replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') : value;

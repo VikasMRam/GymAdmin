@@ -624,9 +624,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const clientName = <ClientName client={client} rawClient={rawClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} user={user} />;
 
     const duplicateWarningContent = (
-      <>
+      <span>
         There are families with same contact info.&nbsp;<ClickHere palette="white" onClick={this.handleClickHereForMore}>Click here to check.</ClickHere>
-      </>
+      </span>
     );
     const topSection = clients.length > 1 && (
       <BigScreenPaddedBannerNotification hasBorderRadius palette="warning">
