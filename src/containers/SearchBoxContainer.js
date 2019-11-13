@@ -1,34 +1,26 @@
 import React, { Component } from 'react';
 import { string, func, object, bool } from 'prop-types';
-import { connect } from 'react-redux';
 import { geocodeByAddress } from 'react-places-autocomplete';
-import { withRouter } from 'react-router-dom';
 
 import { gMapsApiKey, loadAutoComplete } from 'sly/config';
-import { changeAddress, setLocation, clearLocation } from 'sly/store/actions';
-import { searchBoxAddress, searchBoxLocation } from 'sly/store/selectors';
 import {
   filterLinkPath,
   getSearchParamFromPlacesResponse,
 } from 'sly/services/helpers/search';
 import SearchBox from 'sly/components/molecules/SearchBox';
 import SlyEvent from 'sly/services/helpers/events';
-import {withRedirectTo} from "sly/services/redirectTo";
+import { withRedirectTo } from 'sly/services/redirectTo';
 
 class SearchBoxContainer extends Component {
   static propTypes = {
     layout: string,
     address: string,
-    defaultAddress: string,
     location: object,
-    changeAddress: func,
-    setLocation: func,
-    clearLocation: func,
+
     clearLocationOnBlur: bool,
     onTextChange: func,
     onLocationSearch: func,
     redirectTo: func.isRequired,
-    allowOnlySelectionFromSuggestions: bool,
   };
 
   static defaultProps = {
@@ -37,11 +29,15 @@ class SearchBoxContainer extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { isMounted: false };
+    const { address } = props;
+    this.state = {
+      isMounted: false,
+      address: address || '',
+      location: null,
+    };
   }
 
   componentDidMount() {
-    const { changeAddress, defaultAddress } = this.props;
     const scriptjs = require('scriptjs');
     if (loadAutoComplete) {
       scriptjs(
@@ -52,37 +48,25 @@ class SearchBoxContainer extends Component {
           });
         }
       );
-
-      if (defaultAddress) {
-        changeAddress(defaultAddress);
-      }
     }
-
   }
+
   componentWillUnmount() {
     this.setState({
       isMounted: false,
     });
   }
 
-  handleBlur = () => {
-    const { addressSelected } = this;
-    const { changeAddress, defaultAddress, address } = this.props;
-    if (address && address !== addressSelected) {
-      changeAddress(defaultAddress);
-    }
-  };
-
   handleChange = (address) => {
-    const { changeAddress, onTextChange } = this.props;
+    const { onTextChange } = this.props;
     if (onTextChange) {
       onTextChange(address);
     }
-    changeAddress(address);
+    this.setState({ address });
   };
 
   handleSelect = (address) => {
-    const { setLocation, address: value } = this.props;
+    const { address: value } = this.state;
     this.addressSelected = address;
     geocodeByAddress(address)
       .then(results => results[0])
@@ -94,14 +78,14 @@ class SearchBoxContainer extends Component {
         SlyEvent.getInstance().sendEvent({
           action: 'googleSearchTyped', category: result.formatted_address, label: value,
         });
-        setLocation(result);
+        this.setState({ location: result });
         this.handleOnLocationSearch(result);
       })
       .catch(error => console.error('Error', error));
   };
 
   handleSearch = () => {
-    const { location, address } = this.props;
+    const { location, address } = this.state;
     if (address) {
       this.handleSelect(address);
     } else if (location) {
@@ -110,8 +94,7 @@ class SearchBoxContainer extends Component {
   };
 
   handleTextboxFocus = () => {
-    const { clearLocation } = this.props;
-    clearLocation();
+    this.setState({ location: null });
   };
 
   handleOnLocationSearch = (result) => {
@@ -126,16 +109,12 @@ class SearchBoxContainer extends Component {
   };
 
   render() {
-    const { handleBlur } = this;
     const {
-      layout, address, clearLocationOnBlur, allowOnlySelectionFromSuggestions, ...props
+      layout, clearLocationOnBlur, ...props
     } = this.props;
-    const { isMounted } = this.state;
+    const { isMounted, address } = this.state;
     if (!isMounted) {
       return <div />;
-    }
-    if (allowOnlySelectionFromSuggestions) {
-      props.onBlur = handleBlur;
     }
 
     if (clearLocationOnBlur) {
@@ -164,16 +143,4 @@ class SearchBoxContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, { address }) => ({
-  address: searchBoxAddress(state),
-  defaultAddress: address,
-  location: searchBoxLocation(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-  changeAddress: value => dispatch(changeAddress(value)),
-  setLocation: value => (dispatch(setLocation(value))),
-  clearLocation: () => dispatch(clearLocation()),
-});
-
-export default withRedirectTo(withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchBoxContainer)));
+export default withRedirectTo(SearchBoxContainer);

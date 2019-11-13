@@ -7,7 +7,6 @@ import modal from './modal/reducer';
 import authenticated from './authenticated/reducer';
 import resource from './resource/reducer';
 import experiments from './experiments/reducer';
-import searchBox from './searchBox/reducer';
 import controller from './controller/reducer';
 import chatBox from './chatBox/reducer';
 
@@ -22,7 +21,6 @@ export default combineReducers({
   authenticated,
   resource,
   experiments,
-  searchBox,
   controller,
   chatBox,
 });

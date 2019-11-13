@@ -25,7 +25,6 @@ class LocationSearch extends Component {
   render() {
     return (
       <SearchBoxContainer
-        allowOnlySelectionFromSuggestions
         clearLocationOnBlur={false}
         onLocationSearch={this.handleLocationChange}
         onTextChange={this.handleLocationTextChange}
