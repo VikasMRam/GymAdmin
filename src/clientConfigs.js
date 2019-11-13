@@ -1,11 +1,4 @@
-const careTypes = [
-  'retirement-community',
-  'assisted-living',
-  'independent-living',
-  'board-and-care-home',
-  'memory-care',
-  'continuing-care-retirement-community',
-];
+import careTypes from 'sly/constants/careTypes';
 
 export default [
   {

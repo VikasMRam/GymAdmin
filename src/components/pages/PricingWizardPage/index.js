@@ -133,27 +133,16 @@ class PricingWizardPage extends Component {
 
     sendEvent('step-completed', id, currentStep);
 
-    const gotUserData = userHas(['name', 'phoneNumber']);
-
-    const mayBeSkipSteps = () => {
-      if (hasCCRC(community)) {
-        goto(currentStep);
-        openConfirmationModal();
-        return;
-      }
-      goto('WhatToDoNext');
-    };
-
     if (currentStep === 'EstimatedPricing') {
       updateUuidAux(data).then(() => {
-        if (gotUserData) {
-          submitActionAndCreateUser(data).then(mayBeSkipSteps);
+        if (userHas(['name', 'phoneNumber'])) {
+          submitActionAndCreateUser(data).then(() => goto('WhatToDoNext'));
         }
       });
     }
 
     if (currentStep === 'Contact') {
-      submitActionAndCreateUser(data, currentStep).then(mayBeSkipSteps);
+      submitActionAndCreateUser(data, currentStep);
     }
 
     if (currentStep === 'WhatToDoNext') {
@@ -203,7 +192,7 @@ class PricingWizardPage extends Component {
     } = this;
 
     const {
-      community, user, uuidAux, userHas, onComplete, match, redirectTo
+      community, user, uuidAux, userHas, onComplete, match, redirectTo,
     } = this.props;
 
     const { id, mainImage, name } = community;
@@ -268,6 +257,7 @@ class PricingWizardPage extends Component {
                       name="WhatToDoNext"
                       communityName={name}
                       estimatedPrice={estimatedPrice}
+                      showEstimatePrice={!hasCCRC(community)}
                       listOptions={compiledWhatToDoNextOptions}
                       onInterestChange={(e, interest) => sendEvent('pricing-next-interest', id, interest)}
                       onSubmit={onSubmit}

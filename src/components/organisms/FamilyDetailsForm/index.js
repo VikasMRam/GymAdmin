@@ -14,6 +14,7 @@ import Role from 'sly/components/common/Role';
 import { Block, Button, Label } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
+import { SOURCE_OPTIONS } from 'sly/constants/familyDetails';
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -126,6 +127,14 @@ class FamilyDetailsForm extends Component {
     assignedTos: arrayOf(userPropType).isRequired,
   };
 
+  handleLookingForChange = (event, value) => {
+    const { change, initialValues } = this.props;
+    if (value === 'Self') {
+      const { name } = initialValues;
+      change('residentName', name);
+    }
+  }
+
   handleLocationChange = (value) => {
     const { change, onLocationChange } = this.props;
     change('preferredLocation', value.formatted_address);
@@ -154,12 +163,14 @@ class FamilyDetailsForm extends Component {
     const femaleOptions = gender.map(i => <option key={i} value={i}>{i}</option>);
     const timeToMoveOptions = timeToMove.map(i => <option key={i} value={i}>{i}</option>);
     const monthlyBudgetOptions = monthlyBudget.map(i => <option key={i} value={i}>{i}</option>);
-    const roomPreferenceOptions = roomTypes.map(i => <option key={i} value={i}>{i}</option>);
-    const mobilityLevelOptions = careLevels.map(i => <option key={i} value={i}>{i}</option>);
-    const communityCareTypeOptions = communityTypes.map(i => <option key={i} value={i}>{i}</option>);
+    const roomPreferenceOptions = roomTypes.map(i => ({ value: i, label: i }));
+    const mobilityLevelOptions = careLevels.map(i => ({ value: i, label: i }));
+    const communityCareTypeOptions = communityTypes.map(i => ({ value: i, label: i }));
     const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
     const tagColumn = { typeInfo: { api: '/v0/platform/tags?filter[name]=' }, value: 'tag.name' };
-    // const medicaidOptions = [{ label: 'Yes', value: true }];
+    const medicaidOptions = [{ label: '', value: true }];
+    const sourceOptions = SOURCE_OPTIONS.map(s => <option key={s} value={s}>{s}</option>);
+
     return (
       <div>
         {!canEditFamilyDetails &&
@@ -251,17 +262,24 @@ class FamilyDetailsForm extends Component {
                   component={ReduxField}
                 />
               </PaddedTwoColumnWrapper>
-              {/* todo: @pranesh fixme
+              <Field
+                name="referralSource"
+                label="Referral Source"
+                type="select"
+                component={ReduxField}
+                wideWidth
+              >
+                <option>Select an option</option>
+                {sourceOptions}
+              </Field>
               <Field
                 name="medicaid"
                 label="Qualifies for Medicaid"
                 type="checkbox"
-                disabled={!canEditFamilyDetails}
                 component={ReduxField}
+                options={medicaidOptions}
                 wideWidth
               />
-              */
-              }
               <Field
                 name="slyAgentMessage"
                 label="Summary for Agent"
@@ -313,6 +331,7 @@ class FamilyDetailsForm extends Component {
                 disabled={!canEditFamilyDetails}
                 component={ReduxField}
                 wideWidth
+                onChange={this.handleLookingForChange}
               >
                 <option value="" disabled>Select</option>
                 {lookingForOptions}
@@ -348,58 +367,7 @@ class FamilyDetailsForm extends Component {
 
             </FormSection>
             <FormSection>
-              <FormSectionHeading weight="medium">Care Needs</FormSectionHeading>
-              <Field
-                name="mobilityLevel"
-                label="Level of mobility"
-                type="select"
-                placeholder="Select an option"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              >
-                <option value="" disabled>Select</option>
-                {mobilityLevelOptions}
-              </Field>
-            </FormSection>
-            <FormSection>
               <FormSectionHeading weight="medium">Search Preferences</FormSectionHeading>
-              <Field
-                name="roomPreference"
-                label="Room type"
-                type="select"
-                placeholder="Select an option"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              >
-                <option value="" disabled>Select</option>
-                {roomPreferenceOptions}
-              </Field>
-              <Field
-                name="communityCareType"
-                label="Community type"
-                type="select"
-                placeholder="Select an option"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              >
-                <option value="" disabled>Select</option>
-                {communityCareTypeOptions}
-              </Field>
-              <Field
-                name="budget"
-                label="Monthly budget"
-                type="select"
-                placeholder="Select an option"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              >
-                <option value="" disabled>Select</option>
-                {monthlyBudgetOptions}
-              </Field>
               <Field
                 name="timeToMove"
                 label="Time to move"
@@ -412,6 +380,45 @@ class FamilyDetailsForm extends Component {
                 <option value="" disabled>Select</option>
                 {timeToMoveOptions}
               </Field>
+              <Field
+                name="communityCareType"
+                label="Community type"
+                type="checkbox"
+                component={ReduxField}
+                options={communityCareTypeOptions}
+                wideWidth
+              />
+              <Field
+                name="roomPreference"
+                label="Room type"
+                type="checkbox"
+                component={ReduxField}
+                options={roomPreferenceOptions}
+                wideWidth
+              />
+              <Field
+                name="budget"
+                label="Monthly budget"
+                type="select"
+                placeholder="Select an option"
+                disabled={!canEditFamilyDetails}
+                component={ReduxField}
+                wideWidth
+              >
+                <option value="" disabled>Select</option>
+                {monthlyBudgetOptions}
+              </Field>
+            </FormSection>
+            <FormSection>
+              <FormSectionHeading weight="medium">Care Needs</FormSectionHeading>
+              <Field
+                name="mobilityLevel"
+                label="Level of mobility"
+                type="checkbox"
+                component={ReduxField}
+                options={mobilityLevelOptions}
+                wideWidth
+              />
             </FormSection>
           </FormScrollSection>
           {accepted &&

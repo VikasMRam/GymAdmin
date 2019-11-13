@@ -13,3 +13,6 @@ export const PRICING_REQUEST = 'pricingRequest';
 export const AVAILABILITY_REQUEST = 'availabilityRequest';
 
 export const API_CALL = 'SLY_API_CALL';
+export const EXIT_INTENT_ASK_QUESTIONS = 'exitIntentAskQuestions';
+export const EBOOK_SEND_EMAIL = 'ebookSendEmail';
+

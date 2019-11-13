@@ -9,7 +9,7 @@ import { required, createValidator, email, usPhone, dependentRequired } from 'sl
 import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
 import { USER_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import { query, getRelationship, prefetch } from 'sly/services/newApi';
+import { query, getRelationship } from 'sly/services/newApi';
 import SlyEvent from 'sly/services/helpers/events';
 import { validateAM } from 'sly/services/helpers/client';
 import { selectFormData, trimFormData } from 'sly/services/helpers/forms';
@@ -57,7 +57,6 @@ export default class FamilyDetailsFormContainer extends Component {
       client, updateClient, refetchClient, rawClient, notifyInfo, notifyError, uuidAux,
     } = this.props;
     const { id } = client;
-    const { id: uuidID } = uuidAux;
     trimFormData(data);
     const {
       name,
@@ -77,6 +76,7 @@ export default class FamilyDetailsFormContainer extends Component {
       communityCareType,
       assignedTo,
       additionalMetadata,
+      referralSource,
       medicaid,
       slyAgentMessage,
       slyCommunityMessage,
@@ -98,6 +98,9 @@ export default class FamilyDetailsFormContainer extends Component {
     }
     if (phone || phone === '') {
       newClient.set('attributes.clientInfo.phoneNumber', phone);
+    }
+    if (referralSource) {
+      newClient.set('attributes.clientInfo.referralSource', referralSource);
     }
     const validMD = validateAM(additionalMetadata, { phone, email });
     if (validMD) {
@@ -135,14 +138,13 @@ export default class FamilyDetailsFormContainer extends Component {
       newUuidAux.set('attributes.uuidInfo.residentInfo.age', parseInt(age, 10));
     }
     if (mobilityLevel) {
-      // FIXME: Mobility on backend is an array
-      newUuidAux.set('attributes.uuidInfo.careInfo.mobility', [mobilityLevel]);
+      newUuidAux.set('attributes.uuidInfo.careInfo.mobility', mobilityLevel);
     }
     if (budget) {
       newUuidAux.set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', budget);
     }
     if (medicaid) {
-      newUuidAux.set('attributes.uuidInfo.financialInfo.medicaid', medicaid);
+      newUuidAux.set('attributes.uuidInfo.financialInfo.medicaid', (medicaid.length > 0));
     }
     if (lookingFor) {
       newUuidAux.set('attributes.uuidInfo.housingInfo.lookingFor', lookingFor);
@@ -151,10 +153,10 @@ export default class FamilyDetailsFormContainer extends Component {
       newUuidAux.set('attributes.uuidInfo.housingInfo.moveTimeline', timeToMove);
     }
     if (communityCareType) {
-      newUuidAux.set('attributes.uuidInfo.housingInfo.typeCare', [communityCareType]);
+      newUuidAux.set('attributes.uuidInfo.housingInfo.typeCare', communityCareType);
     }
     if (roomPreference) {
-      newUuidAux.set('attributes.uuidInfo.housingInfo.roomPreference', [roomPreference]);
+      newUuidAux.set('attributes.uuidInfo.housingInfo.roomPreference', roomPreference);
     }
     if (locationInfo) {
       newUuidAux.set('attributes.uuidInfo.locationInfo', locationInfo);
@@ -192,26 +194,15 @@ export default class FamilyDetailsFormContainer extends Component {
     const tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
     const {
       name, email, slyMessage, phoneNumber = '', additionalMetadata, slyAgentMessage,
-      slyCommunityMessage,
+      slyCommunityMessage, referralSource,
     } = clientInfo;
     const { uuidInfo } = uuidAux;
     const {
       residentInfo, housingInfo, financialInfo, locationInfo, careInfo,
     } = uuidInfo;
-    // FIXME: Frontend and backend differ in []string and string for certain fields
-    let { mobility } = careInfo;
-    if (mobility) {
-      [mobility] = mobility;
-    }
+    const { mobility } = careInfo;
     const { fullName, gender, age } = residentInfo;
-    const { lookingFor, moveTimeline } = housingInfo;
-    let { typeCare, roomPreference } = housingInfo;
-    if (typeCare) {
-      [typeCare] = typeCare;
-    }
-    if (roomPreference) {
-      [roomPreference] = roomPreference;
-    }
+    const { typeCare, roomPreference, lookingFor, moveTimeline } = housingInfo;
     const { maxMonthlyBudget, medicaid } = financialInfo;
     let preferredLocation = '';
     if (locationInfo) {
@@ -221,6 +212,10 @@ export default class FamilyDetailsFormContainer extends Component {
     let assignedTo;
     if (client.admin) {
       assignedTo = client.admin.id;
+    }
+    let medicaidValue = [];
+    if (medicaid) {
+      medicaidValue = [true];
     }
     const initialValues = {
       name,
@@ -235,7 +230,8 @@ export default class FamilyDetailsFormContainer extends Component {
       mobilityLevel: mobility,
       communityCareType: typeCare,
       budget: maxMonthlyBudget,
-      medicaid,
+      referralSource,
+      medicaid: medicaidValue,
       timeToMove: moveTimeline,
       preferredLocation,
       slyMessage,

@@ -13,6 +13,7 @@ const PaddedLink = pad(styled(Link)`
 
 const SimilarCommunities = ({ communities, onCommunityClick, communityStyle }) => {
   const { layout = 'column', imageSize = 'regular', showDescription = false } = communityStyle;
+
   return (
     <section>
       {communities.map((community, index) => (

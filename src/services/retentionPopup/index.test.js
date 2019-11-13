@@ -1,18 +1,48 @@
 import React from 'react';
+import { shape } from 'prop-types';
+import { BrowserRouter } from 'react-router-dom';
 import { mount } from 'enzyme';
+import configureStore from 'redux-mock-store';
 
-import withExitIntent from './withExitIntent';
+import RetentionPopup from './index';
 
 const showModal = jest.fn();
-const Component = withExitIntent(() => <div>hi</div>);
+const mockStore = configureStore([]);
+const store = mockStore({
+  requests: {},
+  bees: {},
+});
+
+// Instantiate router context
+const router = {
+  history: new BrowserRouter().history,
+  route: {
+    location: {},
+    match: {},
+  },
+};
+
+const createContext = () => ({
+  context: {
+    router,
+    store,
+    api: {
+      updateUser: jest.fn().mockReturnValue({
+        type: 'apicall',
+      }),
+    },
+  },
+  childContextTypes: {
+    router: shape({}),
+    store: shape({}),
+    api: shape({}),
+
+  },
+});
 
 const wrap = (props = {}) => mount(
-  <Component
-    exitIntentContent="intentContent"
-    showModal={showModal}
-    {...props}
-  />
-);
+  <RetentionPopup {...props} store={store} showModal={showModal} />
+  , createContext());
 
 const setReferrer = (referrer) => {
   Object.defineProperty(document, 'referrer', {
@@ -35,7 +65,6 @@ const setHidden = (hidden) => {
   });
 };
 
-
 const setViewportWidth = (width) => {
   Object.defineProperty(window, 'innerWidth', {
     value: width,
@@ -43,7 +72,7 @@ const setViewportWidth = (width) => {
   });
 };
 
-describe('exit intent', () => {
+describe('Retention popup', () => {
   let listeners;
 
   const RealDate = Date;
@@ -61,6 +90,8 @@ describe('exit intent', () => {
 
     jest.resetAllMocks();
     jest.useFakeTimers();
+    showModal.mockClear();
+
 
     listeners = {};
     window.addEventListener = jest.fn((event, listener) => {
@@ -97,7 +128,8 @@ describe('exit intent', () => {
     setState({ intent: 'stay-intent' });
 
     const wrapper = wrap();
-    expect(wrapper.find('div')).toHaveLength(1);
+
+    expect(wrapper.html()).toBeNull();
     expect(typeof listeners.popstate).toEqual('undefined');
   });
 
@@ -106,7 +138,8 @@ describe('exit intent', () => {
     setState({ intent: 'stay-intent' });
 
     const wrapper = wrap();
-    expect(wrapper.find('div')).toHaveLength(1);
+
+    expect(wrapper.html()).toBeNull();
     expect(typeof listeners.popstate).toEqual('undefined');
   });
 
@@ -114,7 +147,9 @@ describe('exit intent', () => {
     setReferrer('http://google.com');
 
     const wrapper = wrap();
-    expect(wrapper.find('div')).toHaveLength(1);
+
+    expect(wrapper.html()).toBeNull();
+
     expect(typeof listeners.popstate).toEqual('function');
 
     listeners.popstate({ state: null });
@@ -124,17 +159,14 @@ describe('exit intent', () => {
     expect(showModal).not.toHaveBeenCalled();
 
     listeners.popstate({ state: { intent: 'exit-intent' } });
-    expect(showModal).toHaveBeenCalledWith('intentContent');
+    expect(showModal).toHaveBeenCalled();
     expect(showModal).toHaveBeenCalledTimes(1);
-
-    // listeners.popstate({ state: { intent: 'exit-intent' } });
-    // expect(showModal).toHaveBeenCalledTimes(1);
   });
 
   it('should remove popstate listener', () => {
     const wrapper = wrap();
-    expect(wrapper.find('div')).toHaveLength(1);
 
+    expect(wrapper.html()).toBeNull();
     expect(typeof listeners.popstate).toEqual('function');
 
     wrapper.unmount();
@@ -146,7 +178,7 @@ describe('exit intent', () => {
   it('should add the focus blur listener', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('div')).toHaveLength(1);
+    expect(wrapper.html()).toBeNull();
 
     [
       'visibilitychange',
@@ -159,35 +191,28 @@ describe('exit intent', () => {
   });
 
   it('should not fire popup when user returns before 10 seconds', () => {
+    mockDate('2017-11-25T12:34:10Z');
+
     const wrapper = wrap();
 
-    expect(wrapper.find('div')).toHaveLength(1);
-
-    mockDate('2017-11-25T12:34:10Z');
+    expect(wrapper.html()).toBeNull();
     setHidden(true);
+
     listeners.visibilitychange();
 
     mockDate('2017-11-25T12:34:19Z');
     setHidden(false);
-    listeners.visibilitychange();
-
-    mockDate('2017-11-25T12:34:20Z');
-    setHidden(true);
-    listeners.visibilitychange();
-
-    mockDate('2017-11-25T12:34:29Z');
-    setHidden(false);
-    listeners.visibilitychange();
 
     expect(showModal).not.toHaveBeenCalled();
   });
 
   it('should fire popup once when user returns after 10 seconds', () => {
+    mockDate('2017-11-25T12:34:10Z');
+
     const wrapper = wrap();
 
-    expect(wrapper.find('div')).toHaveLength(1);
+    expect(wrapper.html()).toBeNull();
 
-    mockDate('2017-11-25T12:34:10Z');
     setHidden(true);
     listeners.visibilitychange();
 
@@ -203,14 +228,14 @@ describe('exit intent', () => {
     setHidden(false);
     listeners.visibilitychange();
 
-    expect(showModal).toHaveBeenCalledWith('intentContent');
     expect(showModal).toHaveBeenCalledTimes(1);
   });
 
   it('should add the mouseout listener', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('div')).toHaveLength(1);
+    expect(wrapper.html()).toBeNull();
+
     expect(typeof listeners.mouseout).toEqual('function');
   });
 
@@ -218,8 +243,10 @@ describe('exit intent', () => {
     mockDate('2017-11-25T12:34:10Z');
 
     const wrapper = wrap();
+
     setViewportWidth(100);
-    expect(wrapper.find('div')).toHaveLength(1);
+    expect(wrapper.html()).toBeNull();
+
     expect(typeof listeners.mouseout).toEqual('function');
 
     mockDate('2017-11-25T12:34:20Z');
@@ -233,7 +260,8 @@ describe('exit intent', () => {
     const wrapper = wrap();
 
     setViewportWidth(100);
-    expect(wrapper.find('div')).toHaveLength(1);
+    expect(wrapper.html()).toBeNull();
+
     expect(typeof listeners.mouseout).toEqual('function');
 
     mockDate('2017-11-25T12:34:30Z');
@@ -243,7 +271,8 @@ describe('exit intent', () => {
 
   it('should remove mouseout listener', () => {
     const wrapper = wrap();
-    expect(wrapper.find('div')).toHaveLength(1);
+
+    expect(wrapper.html()).toBeNull();
 
     expect(typeof listeners.mouseout).toEqual('function');
 
@@ -251,5 +280,42 @@ describe('exit intent', () => {
 
     expect(window.removeEventListener).toHaveBeenCalled();
     expect(typeof listeners.mouseout).toEqual('undefined');
+  });
+
+  it('should show the ebook modal', () => {
+    mockDate('2017-11-25T12:34:10Z');
+
+    const wrapper = wrap();
+
+    expect(wrapper.html()).toBeNull();
+    setHidden(true);
+    mockDate('2017-11-25T12:35:20Z');
+
+    listeners.visibilitychange();
+    setHidden(false);
+
+    mockDate('2017-11-25T12:37:20Z');
+    listeners.visibilitychange();
+
+    expect(showModal).toHaveBeenCalledTimes(1);
+    expect(showModal).toHaveBeenCalledWith(
+      expect.anything(),
+      null,
+      'eBook',
+    );
+  });
+
+  it('should not show the ebook modal', () => {
+    mockDate('2017-11-25T12:34:10Z');
+
+    const wrapper = wrap();
+
+    expect(wrapper.html()).toBeNull();
+    mockDate('2017-11-25T12:36:09Z');
+    setHidden(true);
+
+    listeners.visibilitychange();
+
+    expect(showModal).not.toHaveBeenCalled();
   });
 });

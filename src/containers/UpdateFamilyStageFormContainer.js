@@ -14,6 +14,7 @@ import {
   FAMILY_STATUS_ON_PAUSE,
   FAMILY_STAGE_WON,
   FAMILY_STAGE_LOST,
+  FAMILY_STAGE_REJECTED,
   ROOM_TYPES, WAITLISTED,
 } from 'sly/constants/familyDetails';
 import { NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/notes';
@@ -32,7 +33,9 @@ const validate = createValidator({
   referralAgreement: [required],
   lossReason: [required],
   lostDescription: [required],
+  rejectDescription: [required],
   preferredLocation: [required],
+  rejectReason: [required],
 });
 
 const ReduxForm = reduxForm({
@@ -71,6 +74,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     onSuccess: func,
     formState: object,
     lossReasons: arrayOf(string).isRequired,
+    rejectReasons: arrayOf(string).isRequired,
     currentLossReason: string,
     updateUuidAux: func.isRequired,
     uuidAux: object,
@@ -78,13 +82,13 @@ export default class UpdateFamilyStageFormContainer extends Component {
     refetchNotes: func.isRequired,
     invalidateClients: func,
     user: userPropType,
+    initialValues: object,
   };
 
   currentStage = {};
   nextStage = {};
 
   handleUpdateStage = (data) => {
-    const { currentStage, nextStage } = this;
     const {
       updateClient, client, rawClient, notifyError, notifyInfo, onSuccess, createNote,
       updateUuidAux, uuidAux, refetchClient, refetchNotes, invalidateClients,
@@ -93,10 +97,12 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const {
       stage, note, moveInDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription,
       preferredLocation, referralAgreementType, invoiceAmount, invoiceNumber, invoicePaid, roomType,
+      rejectDescription, rejectReason,
     } = data;
     let notePromise = () => Promise.resolve();
     let uuidAuxPromise = () => Promise.resolve();
     let getNotesPromise = () => Promise.resolve();
+
     if (note) {
       const payload = {
         type: NOTE_RESOURCE_TYPE,
@@ -184,6 +190,12 @@ export default class UpdateFamilyStageFormContainer extends Component {
     if (roomType) {
       newClient.set('attributes.clientInfo.moveRoomType', roomType);
     }
+    if (rejectDescription) {
+      newClient.set('attributes.clientInfo.otherText', rejectDescription);
+    }
+    if (rejectReason) {
+      newClient.set('attributes.clientInfo.rejectReason', rejectReason);
+    }
     newClient.set('attributes.clientInfo.referralAgreementType', referralAgreementType);
     if (referralAgreementType === 'percentage') {
       const moveInFee = referralAgreement * monthlyFees * 0.01;
@@ -191,7 +203,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     } else if (referralAgreementType === 'flat-fee') {
       newClient.set('attributes.clientInfo.moveInFee', parseFloat(referralAgreement));
     }
-    const shouldUpdateUuidAux = preferredLocation;
+    const shouldUpdateUuidAux = !!preferredLocation;
     if (preferredLocation) {
       const [city, state] = preferredLocation.split(',');
       const locationInfo = {
@@ -222,8 +234,11 @@ export default class UpdateFamilyStageFormContainer extends Component {
       .then(invalidateClients)
       .then(() => {
         let msg = 'Family stage updated';
-        if (currentStage.group !== nextStage.group) {
-          msg += ` and moved to ${nextStage.group}`;
+        if (this.currentStage.group !== this.nextStage.group) {
+          msg += ` and moved to ${this.nextStage.group}`;
+        }
+        if (stage === FAMILY_STAGE_REJECTED) {
+          msg = 'Family successfully rejected';
         }
         notifyInfo(msg);
         if (onSuccess) {
@@ -246,9 +261,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
   };
 
   render() {
-    const { handleUpdateStage } = this;
     const {
-      client, formState, lossReasons,
+      client, formState, lossReasons, initialValues, ...props
     } = this.props;
     const { clientInfo, stage, status } = client;
     const isPaused = status === FAMILY_STATUS_ON_PAUSE;
@@ -273,7 +287,9 @@ export default class UpdateFamilyStageFormContainer extends Component {
     let referralAgreementType;
     let referralAgreement;
     let monthlyFees;
+    let currentRejectReason;
     if (formState) {
+      ({ rejectReason: currentRejectReason } = formState);
       this.currentStage = getStageDetails(stage);
       ({ group } = this.currentStage);
       ({
@@ -282,7 +298,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       this.nextStage = getStageDetails(nextStage);
       ({ group: nextGroup } = this.nextStage);
     }
-    const initialValues = {
+    const newInitialValues = {
       stage,
       chosenDetails: WAITLISTED,
       moveInDate: existingMoveInDate ? new Date(existingMoveInDate) : null,
@@ -295,26 +311,28 @@ export default class UpdateFamilyStageFormContainer extends Component {
       invoiceNumber: existingInvoiceNumber,
       invoicePaid: existingInvoicePaid,
       lossReason: existingLossReason,
+      ...initialValues,
     };
 
     return (
       <ReduxForm
-        {...this.props}
+        {...props}
         currentStageGroup={group}
         currentStage={stage}
         nextStageGroup={nextGroup}
         chosenDetails={chosenDetails}
         nextStage={nextStage}
         name={name}
-        onSubmit={handleUpdateStage}
+        onSubmit={this.handleUpdateStage}
         lossReasons={lossReasons}
         currentLossReason={currentLossReason}
         isPaused={isPaused}
-        initialValues={initialValues}
+        initialValues={newInitialValues}
         referralAgreementType={referralAgreementType}
         referralAgreement={referralAgreement}
         monthlyFees={monthlyFees}
         roomTypes={ROOM_TYPES}
+        currentRejectReason={currentRejectReason}
       />
     );
   }

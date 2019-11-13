@@ -22,6 +22,7 @@ import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import CommunityMorePicturesContainer from 'sly/containers/CommunityMorePicturesContainer';
 import LazyCommunityMapContainer from 'sly/containers/LazyCommunityMapContainer';
 import PageViewActionContainer from 'sly/containers/PageViewActionContainer';
+import RetentionPopup from 'sly/services/retentionPopup';
 
 const root = document.getElementById('app');
 
@@ -47,6 +48,7 @@ partiallyHydrateClient(
     ConciergeContainer,
     CommunityMorePicturesContainer,
     LazyCommunityMapContainer,
+    RetentionPopup,
   ],
   clientConfigs.find(x => x.bundle === 'community-details').path,
   root

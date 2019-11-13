@@ -81,4 +81,5 @@ export default {
   createContact: { method: post, path: '/platform/contacts' },
 
   getDatatable: { method: get, path: '/meta-data/datatables/:id' },
+  sendEbook: { method: post, path: '/platform/send-ebook' },
 };
