@@ -288,7 +288,7 @@ export default class ConciergeController extends Component {
 
         const financialInfo = uuidInfo.financialInfo || {};
         financialInfo.maxMonthlyBudget = data.budget;
-        financialInfo.medicare = data.medicaid_coverage;
+        financialInfo.medicaid = data.medicaid_coverage;
         uuidInfo.financialInfo = financialInfo;
 
         draft.attributes.uuidInfo = uuidInfo;

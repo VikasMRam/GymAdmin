@@ -70,7 +70,7 @@ export default class BookATourPageContainer extends Component {
       updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
         const financialInfo = draft.attributes.uuidInfo.financialInfo || {};
         if (medicaidCoverage) {
-          financialInfo.medicare = medicareToBool(medicaidCoverage);
+          financialInfo.medicaid = medicareToBool(medicaidCoverage);
         }
         draft.attributes.uuidInfo.financialInfo = financialInfo;
       })),

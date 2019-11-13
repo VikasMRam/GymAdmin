@@ -120,7 +120,7 @@ class PricingWizardPage extends Component {
     const { id } = community;
     this.budget = budget;
     sendEvent('budget-selected', id, budget.toString());
-  }
+  };
 
   // This function is called after the step is changed,
   // goto() is a hack to make the page stay in current step
@@ -162,6 +162,10 @@ class PricingWizardPage extends Component {
       } else if (interest !== 'explore-affordable-options') {
         goto('ExploreAffordableOptions');
       }
+    }
+
+    if (currentStep === 'ExploreAffordableOptions') {
+      updateUuidAux(data);
     }
   };
 
@@ -225,7 +229,7 @@ class PricingWizardPage extends Component {
 
         <WizardController
           formName="PricingWizardForm"
-          onComplete={data => onComplete(data).then(openConfirmationModal)}
+          onComplete={openConfirmationModal}
           onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
         >
           {({
@@ -266,17 +270,20 @@ class PricingWizardPage extends Component {
                       estimatedPrice={estimatedPrice}
                       listOptions={compiledWhatToDoNextOptions}
                       onInterestChange={(e, interest) => sendEvent('pricing-next-interest', id, interest)}
+                      onSubmit={onSubmit}
                     />
                     <WizardStep
                       component={CommunityPricingWizardExploreAffordableOptionsFormContainer}
                       name="ExploreAffordableOptions"
                       listOptions={EXPLORE_AFFORDABLE_PRICING_OPTIONS}
                       onBudgetChange={handleBudgetChange}
+                      onSubmit={onSubmit}
                     />
                     <WizardStep
                       component={CommunityPricingWizardLanding}
                       name="Landing"
                       user={user}
+                      onBeginClick={onSubmit}
                     />
                   </WizardSteps>
                 </Body>

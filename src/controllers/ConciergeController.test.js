@@ -430,7 +430,7 @@ describe('ConciergeController', () => {
           uuidInfo: {
             financialInfo: {
               maxMonthlyBudget: 5000,
-              medicare: false,
+              medicaid: false,
             },
             housingInfo: {
               moveTimeline: '1',

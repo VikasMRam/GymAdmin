@@ -84,7 +84,7 @@ const CommunityPWEstimatedPricingForm = ({
       onChange={onCareTypeChange}
       multiChoice
     />
-    {!(uuidAux && uuidAux.uuidInfo.financialInfo.medicare !== undefined) &&
+    {!(uuidAux && uuidAux.uuidInfo.financialInfo.medicaid !== undefined) &&
       <>
         <StyledBlock size="caption">
           Do you qualify for Medicaid?

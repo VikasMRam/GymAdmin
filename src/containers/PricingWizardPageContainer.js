@@ -57,16 +57,20 @@ export default class PricingWizardPageContainer extends Component {
     return Promise.all([
       updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
         const housingInfo = draft.attributes.uuidInfo.housingInfo || {};
-        housingInfo.roomPreference = data.roomType;
+        if (data.roomType) {
+          housingInfo.roomPreference = data.roomType;
+        }
         draft.attributes.uuidInfo.housingInfo = housingInfo;
 
         const careInfo = draft.attributes.uuidInfo.careInfo || {};
-        careInfo.adls = data.careType;
+        if (data.careType) {
+          careInfo.adls = data.careType;
+        }
         draft.attributes.uuidInfo.careInfo = careInfo;
 
         const financialInfo = draft.attributes.uuidInfo.financialInfo || {};
         if (data.medicaidCoverage) {
-          financialInfo.medicare = medicareToBool(data.medicaidCoverage);
+          financialInfo.medicaid = medicareToBool(data.medicaidCoverage);
         }
         if (data.budget) {
           financialInfo.maxMonthlyBudget = data.budget;
@@ -130,7 +134,7 @@ export default class PricingWizardPageContainer extends Component {
         user={user}
         uuidAux={uuidAux}
         userHas={userHas}
-        updateUuidAux={this.updateUuidAux()}
+        updateUuidAux={this.updateUuidAux}
         submitActionAndCreateUser={this.submitActionAndCreateUser}
         redirectTo={redirectTo}
         match={match}
