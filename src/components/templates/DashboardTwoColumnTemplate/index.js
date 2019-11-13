@@ -21,8 +21,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const DashboardTwoColumnTemplate = ({ children, className, activeMenuItem }) => (
+const DashboardTwoColumnTemplate = ({ top, children, className, activeMenuItem }) => (
   <DashboardPageTemplate className={className} activeMenuItem={activeMenuItem}>
+    {top}
     <Wrapper>
       {children}
     </Wrapper>
@@ -30,6 +31,7 @@ const DashboardTwoColumnTemplate = ({ children, className, activeMenuItem }) => 
 );
 
 DashboardTwoColumnTemplate.propTypes = {
+  top: node,
   children: node,
   activeMenuItem: string,
   className: string,

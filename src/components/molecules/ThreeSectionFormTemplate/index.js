@@ -1,7 +1,7 @@
 import React from 'react';
 import { func, node, string, bool, arrayOf, shape } from 'prop-types';
 import styled, { css } from 'styled-components';
-import { ifNotProp, prop } from 'styled-tools';
+import { ifNotProp, ifProp, prop } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
@@ -12,7 +12,7 @@ import cursor from 'sly/components/helpers/cursor';
 const Head = styled.div`
   display: flex;
   padding: 0 ${size('spacing.xLarge')};
-  padding-top: ${size('spacing.xLarge')};
+  padding-top: ${ifProp('noTopSpacing', 0, size('spacing.xLarge'))};
 `;
 
 const Wrapper = styled.div`
@@ -45,13 +45,13 @@ const TopRightIconButton = cursor(styled(Icon)`
 const ThreeSectionFormTemplate = ({
   onCancelClick, submitButtonText, cancelButtonText, children, heading, description, hasCancel, hasSubmit,
   onSubmit, pristine, submitting, invalid, extraActionButtonsAfterSubmit, noFooter, buttonsFullWidth,
-  topRightIcon, topRightIconOnClick, topRightIconPalette,
+  topRightIcon, topRightIconOnClick, topRightIconPalette, noTopSpacing,
 }) => {
   const ACWrapperComponent = buttonsFullWidth ? FullWidthActionButtonsWrapper : ActionButtonsWrapper;
 
   return (
     <form onSubmit={onSubmit}>
-      <Head>
+      <Head noTopSpacing={noTopSpacing}>
         <div>
           {!description && <Heading size="subtitle">{heading}</Heading>}
           {description && <PaddedHeading size="subtitle">{heading}</PaddedHeading>}
@@ -97,6 +97,7 @@ ThreeSectionFormTemplate.propTypes = {
   topRightIcon: string,
   topRightIconOnClick: func,
   topRightIconPalette: string,
+  noTopSpacing: bool,
 };
 
 ThreeSectionFormTemplate.defaultProps = {
