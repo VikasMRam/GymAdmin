@@ -3,6 +3,7 @@ import { oneOf, string, func, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { switchProp, ifProp } from 'styled-tools';
 import PlacesAutocomplete from 'react-places-autocomplete';
+
 import shadow from 'sly/components/helpers/shadow';
 import { size, assetPath, palette, key } from 'sly/components/themes';
 import { Input, Image } from 'sly/components/atoms';
