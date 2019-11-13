@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import { bool } from 'prop-types';
+import { bool, string } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
@@ -55,13 +55,11 @@ const Info = styled(ClampedText)`
 `;
 
 const getAddress = ({ address, addressString }) => {
-  if(address) {
-    const { line1, line2, city, state, zip, } = address;
-    return `${line1}, ${line2}, ${city},
-        ${state}
-        ${zip}`
-      .replace(/\s/g, ' ')
+  if (address) {
+    const { line1, line2, city, state, zip } = address;
+    return `${line1}, ${line2}, ${city}, ${state} ${zip}`
       .replace(/, ,/g, ', ')
+      .replace(/\s+/g, ' ');
   }
 
   return addressString;
@@ -74,6 +72,7 @@ export default class CommunityInfo extends Component {
     showFloorPlan: bool,
     showDescription: bool,
     palette: palettePropType,
+    className: string,
   };
 
   static defaultProps = {
@@ -85,7 +84,7 @@ export default class CommunityInfo extends Component {
     const { webViewInfo, floorPlanString, propInfo = {}, propRatings, mainService } = community;
 
     const address = getAddress(community);
-    const { reviewsValue, numReviews } = propRatings ? propRatings : community;
+    const { reviewsValue, numReviews } = propRatings || community;
     const typeCare = propInfo.typeCare || community.typeCare;
 
     let floorPlanComponent = null;
@@ -142,7 +141,7 @@ export default class CommunityInfo extends Component {
                 displayType="text"
                 prefix="$"
                 thousandSeparator
-                renderText={(number) => `${community.estimated ? 'Estimated ' : ''}${number}/month`}
+                renderText={number => `${community.estimated ? 'Estimated ' : ''}${number}/month`}
               />
             </Rate>
           ) : null }
