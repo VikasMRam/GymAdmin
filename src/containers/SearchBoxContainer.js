@@ -15,14 +15,12 @@ class SearchBoxContainer extends Component {
   static propTypes = {
     layout: string,
     address: string,
-    defaultAddress: string,
     location: object,
 
     clearLocationOnBlur: bool,
     onTextChange: func,
     onLocationSearch: func,
     redirectTo: func.isRequired,
-    allowOnlySelectionFromSuggestions: bool,
   };
 
   static defaultProps = {
@@ -36,7 +34,6 @@ class SearchBoxContainer extends Component {
       isMounted: false,
       address: address || '',
       location: null,
-      defaultAddress: address,
     };
   }
 
@@ -59,14 +56,6 @@ class SearchBoxContainer extends Component {
       isMounted: false,
     });
   }
-
-  handleBlur = () => {
-    const { addressSelected } = this;
-    const { defaultAddress, address } = this.state;
-    if (address && address !== addressSelected) {
-      this.setState({ defaultAddress });
-    }
-  };
 
   handleChange = (address) => {
     const { onTextChange } = this.props;
@@ -120,16 +109,12 @@ class SearchBoxContainer extends Component {
   };
 
   render() {
-    const { handleBlur } = this;
     const {
-      layout, clearLocationOnBlur, allowOnlySelectionFromSuggestions, ...props
+      layout, clearLocationOnBlur, ...props
     } = this.props;
     const { isMounted, address } = this.state;
     if (!isMounted) {
       return <div />;
-    }
-    if (allowOnlySelectionFromSuggestions) {
-      props.onBlur = handleBlur;
     }
 
     if (clearLocationOnBlur) {

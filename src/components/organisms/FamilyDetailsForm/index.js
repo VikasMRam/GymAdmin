@@ -239,7 +239,6 @@ class FamilyDetailsForm extends Component {
               <PaddedTwoColumnWrapper verticalCenter>
                 <StyledLabel>Preferred location</StyledLabel>
                 <StyledSearchBoxContainer
-                  allowOnlySelectionFromSuggestions
                   clearLocationOnBlur={false}
                   onLocationSearch={handleLocationChange}
                   address={preferredLocation}
