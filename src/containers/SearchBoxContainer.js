@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { string, func, object, bool } from 'prop-types';
+import { string, func, bool } from 'prop-types';
 import { geocodeByAddress } from 'react-places-autocomplete';
 
-import { gMapsApiKey, loadAutoComplete } from 'sly/config';
 import {
   filterLinkPath,
   getSearchParamFromPlacesResponse,
@@ -15,7 +14,6 @@ class SearchBoxContainer extends Component {
   static propTypes = {
     layout: string,
     address: string,
-    location: object,
 
     clearLocationOnBlur: bool,
     onTextChange: func,
@@ -29,32 +27,11 @@ class SearchBoxContainer extends Component {
 
   constructor(props) {
     super(props);
-    const { address } = props;
+
     this.state = {
-      isMounted: false,
-      address: address || '',
+      address: this.props.address || '',
       location: null,
     };
-  }
-
-  componentDidMount() {
-    const scriptjs = require('scriptjs');
-    if (loadAutoComplete) {
-      scriptjs(
-        `https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&v=3.exp&libraries=geometry,drawing,places`,
-        () => {
-          this.setState({
-            isMounted: true,
-          });
-        }
-      );
-    }
-  }
-
-  componentWillUnmount() {
-    this.setState({
-      isMounted: false,
-    });
   }
 
   handleChange = (address) => {
@@ -109,27 +86,9 @@ class SearchBoxContainer extends Component {
   };
 
   render() {
-    const {
-      layout, clearLocationOnBlur, ...props
-    } = this.props;
-    const { isMounted, address } = this.state;
-    if (!isMounted) {
-      return <div />;
-    }
+    const { layout, clearLocationOnBlur, ...props } = this.props;
+    const { address } = this.state;
 
-    if (clearLocationOnBlur) {
-      return (
-        <SearchBox
-          layout={layout}
-          value={address}
-          onChange={this.handleChange}
-          onSelect={this.handleSelect}
-          onSearchButtonClick={this.handleSearch}
-          onTextboxFocus={this.handleTextboxFocus}
-          {...props}
-        />
-      );
-    }
     return (
       <SearchBox
         layout={layout}
@@ -137,6 +96,7 @@ class SearchBoxContainer extends Component {
         onChange={this.handleChange}
         onSelect={this.handleSelect}
         onSearchButtonClick={this.handleSearch}
+        onTextboxFocus={clearLocationOnBlur && this.handleTextboxFocus}
         {...props}
       />
     );
