@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { geocodeByAddress } from 'react-places-autocomplete';
 import { withRouter } from 'react-router-dom';
 
-import { gMapsApiKey, loadAutoComplete } from 'sly/config';
 import { changeAddress, setLocation, clearLocation } from 'sly/store/actions';
 import { searchBoxAddress, searchBoxLocation } from 'sly/store/selectors';
 import {
@@ -14,8 +13,6 @@ import {
 import SearchBox from 'sly/components/molecules/SearchBox';
 import SlyEvent from 'sly/services/helpers/events';
 import {withRedirectTo} from "sly/services/redirectTo";
-
-let searchBoxContainerCount = 0;
 
 class SearchBoxContainer extends Component {
   static propTypes = {
@@ -37,27 +34,11 @@ class SearchBoxContainer extends Component {
     clearLocationOnBlur: true,
   };
 
-  callbackFunctionName = `google-autocomplete-callback-${searchBoxContainerCount++}`;
-
   componentDidMount() {
     const { changeAddress, defaultAddress } = this.props;
-    const scriptjs = require('scriptjs');
-    if (loadAutoComplete) {
-      scriptjs(
-        `https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&v=3.exp&libraries=geometry,drawing,places`,
-        () => window[this.callbackFunctionName] && window[this.callbackFunctionName]()
-      );
-
-      if (defaultAddress) {
-        changeAddress(defaultAddress);
-      }
+    if (defaultAddress) {
+      changeAddress(defaultAddress);
     }
-
-  }
-  componentWillUnmount() {
-    this.setState({
-      isMounted: false,
-    });
   }
 
   handleBlur = () => {
@@ -131,7 +112,6 @@ class SearchBoxContainer extends Component {
         onSelect={this.handleSelect}
         onSearchButtonClick={this.handleSearch}
         onTextboxFocus={clearLocationOnBlur &&this.handleTextboxFocus}
-        callbackFunctionName={this.callbackFunctionName}
         onBlur={allowOnlySelectionFromSuggestions ? this.handleBlur : onBlur}
         {...props}
       />
