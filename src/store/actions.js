@@ -8,7 +8,6 @@ import {
 export * from './modal/actions';
 export * from './chatBox/actions';
 export * from './entities/actions';
-export * from './searchBox/actions';
 export * from './authenticated/actions';
 
 const validKeys = ['type', 'payload', 'error', 'meta'];
