@@ -89,8 +89,6 @@ export default class PricingWizardPageContainer extends Component {
       createAction,
     } = this.props;
 
-    const email = user && user.email ? undefined : `slytest+${Math.random().toString(36).substring(7)}@seniorly.com`;
-
     const {
       name = (user && user.name) || undefined,
       phone = (user && user.phoneNumber) || undefined,
@@ -109,7 +107,6 @@ export default class PricingWizardPageContainer extends Component {
         actionType: PROFILE_CONTACTED,
       },
     }).then(() => createOrUpdateUser({
-      email,
       name,
       phone,
     }, {
