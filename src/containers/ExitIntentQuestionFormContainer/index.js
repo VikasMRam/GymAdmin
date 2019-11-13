@@ -12,6 +12,7 @@ import Thankyou from 'sly/components/molecules/Thankyou';
 import { query } from 'sly/services/newApi';
 import SlyEvent from 'sly/services/helpers/events';
 import withAuth from 'sly/services/newApi/withAuth';
+import withUser from 'sly/services/newApi/withUser';
 
 const formName = 'ExitIntentQuestionForm';
 const validate = createValidator({
@@ -38,13 +39,13 @@ const mapDispatchToProps = dispatch => ({
 });
 
 @withRouter
-@withAuth
+@withUser
 @connect(null, mapDispatchToProps)
 @query('createAction', 'createUuidAction')
+
 export default class ExitIntentQuestionFormContainer extends PureComponent {
   static propTypes = {
     createAction: func.isRequired,
-    userDetails: object,
     location: object,
     user: userPropType,
     showModal: func.isRequired,
@@ -70,7 +71,7 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
 
     clearSubmitErrors();
 
-    createAction({
+    return createAction({
       type: 'UUIDAction',
       attributes: {
         actionType: EXIT_INTENT_ASK_QUESTIONS,
