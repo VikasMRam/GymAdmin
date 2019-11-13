@@ -144,8 +144,7 @@ const InputWrapper = styled.div`
       }
       display: grid;
       grid-gap: ${size('spacing.large')};
-      grid-template-rows: auto auto auto;
-      grid-auto-flow: column;
+      grid-template-columns: auto auto;
     `};
   }
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
