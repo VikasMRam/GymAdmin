@@ -140,20 +140,11 @@ class PricingWizardPage extends Component {
       }
     }
     if (currentStep === 'EstimatedPricing' && userHas(['name', 'phoneNumber'])) {
-      if (hasCCRC(community)) {
-        goto('EstimatedPricing');
-        doSubmit(openConfirmationModal);
-      } else {
-        goto('WhatToDoNext');
-      }
+      goto('WhatToDoNext');
     }
     if (currentStep === 'Contact') {
       // Track goal events
       sendEvent('pricing-contact-submitted', id, currentStep);
-      if (hasCCRC(community)) {
-        goto('Contact');
-        doSubmit(openConfirmationModal);
-      }
     }
   };
 
@@ -187,11 +178,11 @@ class PricingWizardPage extends Component {
 
   render() {
     const {
-      handleRoomTypeChange, handleCareTypeChange, handleBudgetChange, handleStepChange
+      handleRoomTypeChange, handleCareTypeChange, handleBudgetChange, handleStepChange,
     } = this;
 
     const {
-      community, user, uuidAux, userHas, onComplete, match, redirectTo
+      community, user, uuidAux, userHas, onComplete, match, redirectTo,
     } = this.props;
 
     const { id, mainImage, name } = community;
@@ -255,6 +246,7 @@ class PricingWizardPage extends Component {
                       name="WhatToDoNext"
                       communityName={name}
                       estimatedPrice={estimatedPrice}
+                      showEstimatePrice={!hasCCRC(community)}
                       listOptions={compiledWhatToDoNextOptions}
                       onInterestChange={(e, interest) => sendEvent('pricing-next-interest', id, interest)}
                       onSubmit={onSubmit}
@@ -289,20 +281,20 @@ class PricingWizardPage extends Component {
             }}
         </WizardController>
         <Route path={`${match.url}/thank-you`}>
-          {(routeProps) => (
+          {routeProps => (
             <Modal isOpen={!!routeProps.match} onClose={() => redirectTo(community.url)} closeable>
               <CommunityWizardAcknowledgementContainer
-                heading='Thank you! Our team will be calling you from (855) 855-2629.'
-                subheading='We received your request and your Seniorly Partner Agent will work with you to get your exact pricing and availability.'
+                heading="Thank you! Our team will be calling you from (855) 855-2629."
+                subheading="We received your request and your Seniorly Partner Agent will work with you to get your exact pricing and availability."
                 similarCommunities={community.similarProperties}
                 buttonTo={FAMILY_DASHBOARD_FAVORITES_PATH}
-                type='pricingWizard'
+                type="pricingWizard"
               />
             </Modal>
           )}
         </Route>
         <Route path={`${match.url}/help`}>
-          {(routeProps) => (
+          {routeProps => (
             <Modal isOpen={!!routeProps.match} onClose={() => redirectTo(match.url)} closeable>
               <AdvisorHelpPopup onButtonClick={() => redirectTo(match.url)} />
             </Modal>
