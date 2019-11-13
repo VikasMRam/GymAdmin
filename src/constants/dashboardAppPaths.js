@@ -3,13 +3,16 @@ export const DASHBOARD_PATH = '/dashboard';
 const FAMILY_DASHBOARD_PATH = `${DASHBOARD_PATH}/family`;
 const AGENT_DASHBOARD_PATH = `${DASHBOARD_PATH}/agent`;
 
+export const NEWFAMILIES = 'new';
 export const PROSPECTING = 'prospecting';
 export const CONNECTED = 'connected';
 export const CLOSED = 'closed';
 const familyTypes = [
+  NEWFAMILIES,
   PROSPECTING,
   CONNECTED,
   CLOSED,
+
 ];
 
 export const OVERDUE = 'overdue';
