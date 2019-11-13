@@ -8,7 +8,7 @@ const wrap = (props = {}) => shallow(<RatingInput {...props} />);
 
 const element = {
   children: [{
-    getBoundingClientRect: () => ({ left: 100, right: 200 })
+    getBoundingClientRect: () => ({ left: 100, right: 200 }),
   }],
 };
 
