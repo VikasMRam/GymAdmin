@@ -4,14 +4,9 @@ import { reduxForm, reset } from 'redux-form';
 import { withRouter } from 'react-router';
 import produce from 'immer';
 
-import { connectController } from 'sly/controllers';
-import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
-import withServerState from 'sly/store/withServerState';
-import { getDetail } from 'sly/store/selectors';
 import { query, prefetch } from 'sly/services/newApi';
 import { createValidator, required, usPhone } from 'sly/services/validation';
 import TalkToAgentForm from 'sly/components/organisms/TalkToAgentForm';
-import { REQUEST_AGENT_CONSULT } from 'sly/services/api/actions';
 import SlyEvent from 'sly/services/helpers/events';
 import { CONSULTATION_REQUESTED } from 'sly/services/newApi/constants';
 
@@ -46,8 +41,6 @@ const ReduxForm = reduxForm({
 
 export default class TalkToAgentFormContainer extends Component {
   static propTypes = {
-    userDetails: object.isRequired,
-    postUserAction: func.isRequired,
     uuidAux: object.isRequired,
     updateUuidAux: func.isRequired,
     status: object.isRequired,
