@@ -11,7 +11,8 @@ export const FAMILY_STAGE_LOST = 'Closed';
 export const FAMILY_STAGE_REJECTED = 'Rejected';
 
 export const FAMILY_STAGE_ORDERED = {
-  Prospects: [FAMILY_STAGE_NEW, FAMILY_STAGE_CONTACT1, FAMILY_STAGE_CONTACT2, FAMILY_STAGE_CONTACT3],
+  New: [FAMILY_STAGE_NEW],
+  Prospects: [ FAMILY_STAGE_CONTACT1, FAMILY_STAGE_CONTACT2, FAMILY_STAGE_CONTACT3],
   Connected: [FAMILY_STAGE_DISCUSSING_OPTIONS, FAMILY_STAGE_ACTIVE_TOURS, FAMILY_STAGE_POST_TOURS, FAMILY_STAGE_FAMILY_CHOSEN],
   Closed: [FAMILY_STAGE_WON, FAMILY_STAGE_LOST, FAMILY_STAGE_REJECTED],
 };
@@ -29,6 +30,7 @@ export const ESTIMATED_MOVE_IN = 'estimated-move-in';
 export const WAITLISTED = 'waitlisted';
 
 export const STAGE_CLIENT_TYPE_MAP = {
+  New: 'new',
   Prospects: 'prospecting',
   Connected: 'connected',
   Closed: 'closed',

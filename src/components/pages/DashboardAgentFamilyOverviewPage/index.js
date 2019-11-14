@@ -8,7 +8,7 @@ import { parse } from 'query-string';
 
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
-  PROSPECTING,
+  NEWFAMILIES,
 } from 'sly/constants/dashboardAppPaths';
 
 global.generatePath = generatePath;
@@ -18,7 +18,7 @@ const DashboardAgentFamilyOverviewPage = ({ match, location }) => {
     return (
       <Redirect
         to={generatePath(AGENT_DASHBOARD_FAMILIES_PATH, {
-          clientType: PROSPECTING,
+          clientType: NEWFAMILIES,
         })}
       />
     );

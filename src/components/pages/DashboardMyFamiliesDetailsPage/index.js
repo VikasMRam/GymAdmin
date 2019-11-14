@@ -12,7 +12,7 @@ import {
   COMMUNITIES,
   PARTNER_AGENTS,
   MESSAGES,
-  TASKS, PROSPECTING, CONNECTED, CLOSED,
+  TASKS, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED,
 } from 'sly/constants/dashboardAppPaths';
 import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
@@ -239,6 +239,7 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
 const PaddedBackLink = pad(BackLink, 'regular');
 
 const TabMap = {
+  New: NEWFAMILIES,
   Prospects: PROSPECTING,
   Connected: CONNECTED,
   Closed: CLOSED,
@@ -529,8 +530,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }
 
     if (!client) {
-      const prospectingUrl = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: PROSPECTING });
-      const backlink = <BackLink linkText="Back to Prospects" to={prospectingUrl} onClick={clickEventHandler('fdetails', 'Back to Prospects')} />;
+      const newUrl = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: NEWFAMILIES });
+      const backlink = <BackLink linkText="Back to New" to={newUrl} onClick={clickEventHandler('fdetails', 'Back to Prospects')} />;
       return (
         <DashboardPageTemplate activeMenuItem="My Families">
           <TextAlignCenterBlock weight="medium" size="subtitle">Family not found!</TextAlignCenterBlock>
