@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, arrayOf } from 'prop-types';
+import { func, arrayOf, string, bool } from 'prop-types';
 import styled from 'styled-components';
 import { generatePath } from 'react-router';
 
@@ -16,16 +16,18 @@ const ClientsWrapper = styled.div`
 `;
 
 const DuplicateFamilies = ({
-  handleSubmit, clients,
+  handleSubmit, clients, heading, description, hasButton, className, noTopSpacing,
 }) => (
   <ThreeSectionFormTemplate
-    hasSubmit
+    hasSubmit={hasButton}
     noFooter
     buttonsFullWidth
-    heading="Duplicate families detected"
-    description="Looks like there are leads with matching phone numbers and/or emails. If you still want to proceed, click Add Family below."
+    heading={heading}
+    description={description}
     submitButtonText="Add family"
     onSubmit={handleSubmit}
+    className={className}
+    noTopSpacing={noTopSpacing}
   >
     <ClientsWrapper>
       {clients.map(c => <Link key={c.id} target="_blank" to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: c.id })}><FamilyEntry client={c} /></Link>)}
@@ -36,6 +38,15 @@ const DuplicateFamilies = ({
 DuplicateFamilies.propTypes = {
   handleSubmit: func,
   clients: arrayOf(clientPropType).isRequired,
+  heading: string.isRequired,
+  description: string,
+  hasButton: bool,
+  className: string,
+  noTopSpacing: bool,
+};
+
+DuplicateFamilies.defaultProps = {
+  heading: 'Duplicate families detected',
 };
 
 export default DuplicateFamilies;

@@ -159,6 +159,8 @@ export default class AddFamilyFormContainer extends Component {
               component={DuplicateFamiliesReduxForm}
               name="Duplicate"
               clients={duplicates}
+              description="Looks like there are leads with matching phone numbers and/or emails. If you still want to proceed, click Add Family below."
+              hasButton
             />
           </WizardSteps>
         )}

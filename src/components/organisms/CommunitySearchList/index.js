@@ -128,7 +128,15 @@ const CommunitySearchList = ({
         onClick={() => onCommunityClick(index, similarProperty.id)}
 
       >
-        <ShadowCommunityTile community={similarProperty} layout="column" imageSize="regular" noGallery showDescription showSeeMoreButtonOnHover />
+        <ShadowCommunityTile
+          community={similarProperty}
+          layout="column"
+          imageSize="regular"
+          noGallery
+          showDescription
+          showSeeMoreButtonOnHover
+          lazyLoadImage={index !== 0}
+        />
       </StyledLink>
     );
   });

@@ -4,6 +4,7 @@ import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 import { Redirect, generatePath } from 'react-router';
+import { branch } from 'recompose';
 
 import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
@@ -30,7 +31,6 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
 const mapStateToProps = (state, { conversations }) => ({
   selectedConversation: conversations && conversations.length === 1 ? conversations[0] : null,
 });
-@withUser
 
 @prefetch('client', 'getClient', (req, { match }) => req({
   id: match.params.id,
@@ -54,14 +54,27 @@ const mapStateToProps = (state, { conversations }) => ({
   'filter[client]': match.params.id,
 }))
 
+@branch(
+  props => props.client,
+  prefetch('clients', 'getClients',
+    (perform, props) => perform({
+      exp: 'or',
+      'filter[email]': props.client.clientInfo.email,
+      'filter[phone]': props.client.clientInfo.phoneNumber,
+    }))
+)
+
 @connect(mapStateToProps)
 
 @withBreakpoint
+
+@withUser
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
     user: userPropType.isRequired,
     client: clientPropType,
+    clients: arrayOf(clientPropType),
     conversations: arrayOf(conversationPropType),
     selectedConversation: conversationPropType,
     match: object,
@@ -255,6 +268,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
     const {
       client,
+      clients,
       match,
       status,
       notes,
@@ -275,8 +289,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
     const { result: rawClient, meta } = status.client;
     const { hasFinished: clientHasFinished } = status.client;
+    // since it's using conditional prefetch, in initial stage clients key won't be there
+    const { hasFinished: clientsHasFinished } = status.clients || {};
     const { hasFinished: noteHasFinished } = status.notes;
-    const hasConversationFinished = this.getHasConversationFinished();
 
     return (
       <NotificationController>
@@ -286,6 +301,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
               <DashboardMyFamiliesDetailsPage
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
+                clients={clients}
                 client={client}
                 rawClient={rawClient}
                 currentTab={match.params.tab || SUMMARY}
@@ -299,7 +315,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 onEditNote={onEditNote}
                 notes={notes}
                 noteIsLoading={!noteHasFinished}
-                clientIsLoading={!clientHasFinished}
+                clientIsLoading={!clientHasFinished || !clientsHasFinished}
                 goToFamilyDetails={this.goToFamilyDetails}
                 goToMessagesTab={this.goToMessagesTab}
                 refetchConversations={status.conversations.refetch}
@@ -307,7 +323,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 conversation={selectedConversation}
                 conversations={conversationsList}
                 setSelectedConversation={this.setSelectedConversation}
-                hasConversationFinished={hasConversationFinished && conversationsList !== null}
+                hasConversationFinished={this.getHasConversationFinished() && conversationsList !== null}
                 onAcceptClick={() => this.handleAcceptClick(show, hide, notifyError)}
               />
             )}

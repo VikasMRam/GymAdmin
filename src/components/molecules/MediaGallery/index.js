@@ -26,6 +26,25 @@ const CarouselWrapper = styled.div`
       margin-bottom: ${size('spacing.large')};
     `};
 `;
+const ImageCaptionWrapper = styled.div`
+  background: ${palette('slate', 'base')}80;
+  color: ${palette('slate', 'filler')};
+  font-size: ${size('text.tiny')};
+  bottom: 0;
+  width: 100%;
+  padding: ${size('spacing.regular')};
+  max-height: ${size('spacing.xxLarge')};
+  position: absolute;
+  z-index: 1;
+  text-align: left;
+  line-height: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; 
+`;
+
 const imageStyles = css`
   width: 100%;
   object-fit: cover;
@@ -67,16 +86,17 @@ const TopRightWrapper = styled.span`
 `;
 const BottomLeftWrapper = styled.span`
   left: ${size('spacing.regular')};
-  bottom: ${size('spacing.regular')};
   position: absolute;
   z-index: 1;
+  ${p => (p.description && p.description !== '')  ? css`bottom: calc(${size('spacing', 'xxLarge')} + ${size('spacing', 'regular')})` : css`bottom: ${size('spacing', 'regular')}`};
 `;
 
 const BottomRightWrapper = styled.span`
   right: ${size('spacing.regular')};
-  bottom: ${size('spacing.regular')};
   position: absolute;
   z-index: 1;
+   ${p => (p.description && p.description !== '') ? css`bottom: calc(${size('spacing', 'xxLarge')} + ${size('spacing', 'regular')})` : css`bottom: ${size('spacing', 'regular')}`};
+
 `;
 
 const sliderRootElementStyle = {
@@ -218,15 +238,20 @@ export default class MediaGallery extends Component {
             aspectRatio={aspectRatio}
           />
         ) : (
-          <StyledImg
-            key="media-gallery-slide"
-            src={this.shouldLoadMedia(index) ? media.src : ''}
-            data-src={media.src}
-            alt={media.alt}
-            lazy={false}
-            innerRef={(c) => { this.mediaRefs[index] = c; }}
-            aspectRatio={aspectRatio}
-          />
+          <>
+            <StyledImg
+              key="media-gallery-slide"
+              src={this.shouldLoadMedia(index) ? media.src : ''}
+              data-src={media.src}
+              alt={media.alt}
+              lazy={false}
+              innerRef={(c) => { this.mediaRefs[index] = c; }}
+              aspectRatio={aspectRatio}
+            />
+            <ImageCaptionWrapper>
+              {media.description}
+            </ImageCaptionWrapper>
+          </>
         );
       case 'video':
         return (
@@ -323,12 +348,12 @@ export default class MediaGallery extends Component {
             />
           }
           {bottomLeftSection &&
-            <BottomLeftWrapper>
+            <BottomLeftWrapper description={this.allMedia[currentSlide].description}>
               {bottomLeftSection(this.allMedia[currentSlide])}
             </BottomLeftWrapper>
           }
           {bottomRightSection &&
-            <BottomRightWrapper>
+            <BottomRightWrapper description={this.allMedia[currentSlide].description}>
               {bottomRightSection(this.allMedia[currentSlide])}
             </BottomRightWrapper>
           }

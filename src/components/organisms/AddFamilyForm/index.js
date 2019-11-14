@@ -94,7 +94,6 @@ export default class AddFamilyForm extends Component {
         <PaddedTwoColumnWrapper>
           <StyledLabel>Preferred location</StyledLabel>
           <StyledSearchBoxContainer
-            allowOnlySelectionFromSuggestions
             clearLocationOnBlur={false}
             onLocationSearch={this.handleLocationChange}
           />

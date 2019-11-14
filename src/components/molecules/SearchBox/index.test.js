@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
 import SearchBox from 'sly/components/molecules/SearchBox';
+import LoadGoogleMaps from 'sly/services/search/LoadGoogleMaps';
 
 const onChange = jest.fn();
 const onSelect = jest.fn();
@@ -51,7 +52,9 @@ beforeAll(() => {
 describe('SearchBox', () => {
   it('renders', () => {
     const wrapper = wrap();
-    const autocomplete = wrapper.dive().find(PlacesAutocomplete);
+
+    const loadMaps = wrapper.dive().find(LoadGoogleMaps);
+    const autocomplete = loadMaps.dive().find(PlacesAutocomplete);
 
     expect(autocomplete).toHaveLength(1);
     expect(autocomplete.dive().find('SearchTextBox')).toHaveLength(1);
@@ -59,7 +62,9 @@ describe('SearchBox', () => {
 
   it('renders with homeHero layout', () => {
     const wrapper = wrap({ layout: 'homeHero' });
-    const autocomplete = wrapper.dive().find(PlacesAutocomplete);
+
+    const loadMaps = wrapper.dive().find(LoadGoogleMaps);
+    const autocomplete = loadMaps.dive().find(PlacesAutocomplete);
 
     expect(autocomplete).toHaveLength(1);
     expect(autocomplete.dive().find('SearchTextBox')).toHaveLength(1);
@@ -67,7 +72,9 @@ describe('SearchBox', () => {
 
   it('renders with hasShadow', () => {
     const wrapper = wrap({ hasShadow: true });
-    const autocomplete = wrapper.dive().find(PlacesAutocomplete);
+
+    const loadMaps = wrapper.dive().find(LoadGoogleMaps);
+    const autocomplete = loadMaps.dive().find(PlacesAutocomplete);
 
     expect(autocomplete).toHaveLength(1);
     expect(autocomplete.dive().find('ShadowedSearchTextBox')).toHaveLength(1);

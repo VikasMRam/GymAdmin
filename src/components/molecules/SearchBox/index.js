@@ -7,6 +7,7 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 import shadow from 'sly/components/helpers/shadow';
 import { size, assetPath, palette, key } from 'sly/components/themes';
 import { Input, Image } from 'sly/components/atoms';
+import LoadGoogleMaps from 'sly/services/search/LoadGoogleMaps';
 
 const Wrapper = styled.div`
   position: relative;
@@ -17,18 +18,20 @@ const searchTextBoxStyles = css`
   border-radius: ${size('border.xxLarge')};
   ${switchProp('layout', {
     header: css`
-      height: auto;
-    `,
+      height: auto;`,
     homeHero: css`
       height: ${size('element.large')};`,
-  })}
+  })};
 `;
-const ShadowedSearchTextBox = shadow(styled(Input)`
-  ${searchTextBoxStyles}
-`, 'small');
+const ShadowedSearchTextBox = shadow(
+  styled(Input)`
+    ${searchTextBoxStyles};
+  `,
+  'small'
+);
 
 const SearchTextBox = styled(Input)`
-  ${searchTextBoxStyles}
+  ${searchTextBoxStyles};
 `;
 const SearchSuggestionsWrapper = styled.div`
   z-index: ${key('zIndexes.searchSuggestions')};
@@ -39,8 +42,7 @@ const SearchSuggestionsWrapper = styled.div`
   right: 0;
   background: ${palette('white', 'base')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')}
-    ${palette('slate', 'stroke')};
+  box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')} ${palette('slate', 'stroke')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     right: ${ifProp({ layout: 'header' }, size('spacing.xxxLarge'), 0)};
   }
@@ -48,7 +50,7 @@ const SearchSuggestionsWrapper = styled.div`
     right: 0;
   }
 `;
-const searchSuggestionBGColor = p => p.active ? palette('grey', 'stroke') : palette('white', 'base');
+const searchSuggestionBGColor = p => (p.active ? palette('grey', 'stroke') : palette('white', 'base'));
 const SearchSuggestion = styled.div`
   width: 100%;
   padding: ${size('spacing.large')};
@@ -69,46 +71,68 @@ const GoogleLogo = styled(Image)`
 const baseSearchOptions = { types: ['(regions)'] };
 
 const SearchBox = ({
-  layout, value, onChange, onSelect, onSearchButtonClick, onTextboxFocus, onBlur,
-  placeholder, readOnly, hasShadow, ...props
+  layout,
+  value,
+  onChange,
+  onSelect,
+  onSearchButtonClick,
+  onTextboxFocus,
+  onBlur,
+  placeholder,
+  readOnly,
+  hasShadow,
+  ...props
 }) => (
   <Wrapper layout={layout} {...props}>
-    <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions} highlightFirstSuggestion>
-      {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-        <>
-          {hasShadow &&
-            <ShadowedSearchTextBox
-              {...getInputProps({ onBlur, placeholder })}
-              layout={layout}
-              onFocus={onTextboxFocus}
-              readOnly={readOnly}
-              type="search"
-              size="large"
-            />
-          }
-          {!hasShadow &&
-            <SearchTextBox
-              {...getInputProps({ onBlur, placeholder })}
-              layout={layout}
-              onFocus={onTextboxFocus}
-              readOnly={readOnly}
-              type="search"
-              size="large"
-            />
-          }
-          {suggestions.length > 0 && (
-            <SearchSuggestionsWrapper layout={layout}>
-              {suggestions.map(suggestion => (
-                <SearchSuggestion {...getSuggestionItemProps(suggestion)} active={suggestion.active}>
-                  {suggestion.description}
-                </SearchSuggestion>
-              ))}
-              <GoogleLogo src={assetPath('images/powered_by_google.png')} />
-            </SearchSuggestionsWrapper>
+    <LoadGoogleMaps>
+      {googleCallbackName => (
+        <PlacesAutocomplete
+          value={value}
+          onChange={onChange}
+          onSelect={onSelect}
+          searchOptions={baseSearchOptions}
+          highlightFirstSuggestion
+          googleCallbackName={googleCallbackName}
+        >
+          {({ getInputProps, suggestions, getSuggestionItemProps }) => (
+            <>
+              {hasShadow && (
+                <ShadowedSearchTextBox
+                  {...getInputProps({ onBlur, placeholder })}
+                  disabled={false}
+                  layout={layout}
+                  onFocus={onTextboxFocus}
+                  readOnly={readOnly}
+                  type="search"
+                  size="large"
+                />
+              )}
+              {!hasShadow && (
+                <SearchTextBox
+                  {...getInputProps({ onBlur, placeholder })}
+                  disabled={false}
+                  layout={layout}
+                  onFocus={onTextboxFocus}
+                  readOnly={readOnly}
+                  type="search"
+                  size="large"
+                />
+              )}
+              {suggestions.length > 0 && (
+                <SearchSuggestionsWrapper layout={layout}>
+                  {suggestions.map(suggestion => (
+                    <SearchSuggestion {...getSuggestionItemProps(suggestion)} active={suggestion.active}>
+                      {suggestion.description}
+                    </SearchSuggestion>
+                  ))}
+                  <GoogleLogo src={assetPath('images/powered_by_google.png')} />
+                </SearchSuggestionsWrapper>
+              )}
+            </>
           )}
-        </>
+        </PlacesAutocomplete>
       )}
-    </PlacesAutocomplete>
+    </LoadGoogleMaps>
   </Wrapper>
 );
 

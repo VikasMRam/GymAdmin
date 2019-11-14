@@ -24,6 +24,7 @@ const getPaginationData = ({ result, meta }) => {
   const prospectingCount = meta.prospecting_count;
   const connectedCount = meta.connected_count;
   const closedCount = meta.closed_count;
+  const newCount = meta.new_count;
   return ({
     current,
     size,
@@ -32,6 +33,7 @@ const getPaginationData = ({ result, meta }) => {
     filteredCount,
     text,
     show,
+    newCount,
     prospectingCount,
     connectedCount,
     closedCount,
