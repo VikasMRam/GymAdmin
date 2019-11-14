@@ -39,7 +39,7 @@ export const required = value => isEmpty(value) && 'Required field';
 export const dependentRequired = (field, errorMessage = `Either this field or ${field} is required`) =>
   (value, allValues = {}) => isEmpty(value) && isEmpty(allValues[field]) && errorMessage;
 
-export const notZero = value => value === 0 && 'At least one star';
+export const isValidRating = value => (isNaN(value) || value === 0) && 'At least one star';
 
 export const notProvided = value => !isEmpty(value) && 'Value should be empty';
 
