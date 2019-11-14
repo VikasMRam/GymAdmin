@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
 import { object, number, array } from 'prop-types';
-import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import withServerState from 'sly/store/withServerState';
 import { stateNames, urlize, replaceLastSegment } from  'sly/services/helpers/url';
 import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
-import { logWarn } from 'sly/services/helpers/logging';
-import { resourceListReadRequest } from 'sly/store/resource/actions';
-import { getList, getListMeta } from 'sly/store/selectors';
 import ErrorPage from 'sly/components/pages/Error';
 import StateSearchPage from 'sly/components/pages/StateSearchPage';
+import ModalController from 'sly/controllers/ModalController';
+import { withProps } from 'sly/services/helpers/hocs';
+import { prefetch } from 'sly/services/newApi';
 import {
   filterLinkPath,
   getSearchParams,
 } from 'sly/services/helpers/search';
-import ModalController from 'sly/controllers/ModalController';
 
-class StateSearchPageContainer extends Component {
+@withProps(({ match, location }) => ({
+  searchParams: getSearchParams(match, location),
+}))
+
+@prefetch('geoGuide', 'getGeoGuides', (request, { searchParams }) => request(searchParams))
+@prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
+
+export default class StateSearchPageContainer extends Component {
   static propTypes = {
     searchParams: object.isRequired,
     serverState: object,
@@ -26,6 +30,7 @@ class StateSearchPageContainer extends Component {
     communityList: array.isRequired,
     geoGuide: array,
     requestMeta: object.isRequired,
+    status: object,
     errorCode: number,
   };
 
@@ -77,17 +82,17 @@ class StateSearchPageContainer extends Component {
   render() {
     const {
       searchParams,
-      serverState,
       communityList,
-      requestMeta,
+      status,
       location,
       geoGuide,
       history,
     } = this.props;
     const { pathname, search } = location;
 
-    if (serverState instanceof Error) {
-      const errorCode = (serverState.response && serverState.response.status) || 500;
+    if (status.communityList.error) {
+      const error = status.communityList.error.errors[0];
+      const errorCode = error.status || 500;
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
     const isMapView = searchParams.view === 'map';
@@ -111,13 +116,13 @@ class StateSearchPageContainer extends Component {
         }) => (
           <StateSearchPage
             isMapView={isMapView}
-            requestMeta={requestMeta}
+            requestMeta={status.communityList.meta || {}}
             toggleMap={this.toggleMap}
             searchParams={searchParams}
             onParamsChange={this.changeSearchParams}
             onParamsRemove={this.removeSearchFilters}
             onAdTileClick={this.handleOnAdTileClick}
-            communityList={communityList}
+            communityList={communityList || []}
             geoGuide={gg}
             location={location}
             showModal={show}
@@ -129,33 +134,3 @@ class StateSearchPageContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, { match, location }) => {
-  const searchParams = getSearchParams(match, location);
-  return {
-    searchParams,
-    communityList: getList(state, 'searchResource', searchParams),
-    requestMeta: getListMeta(state, 'searchResource', searchParams),
-    geoGuide: getList(state, 'geoGuide', searchParams),
-  };
-};
-
-const mapPropsToActions = ({ match, location }) => {
-  const searchParams = getSearchParams(match, location);
-  return {
-    searchResource: resourceListReadRequest('searchResource', searchParams),
-    geoGuide: resourceListReadRequest('geoGuide', searchParams),
-  };
-};
-
-const handleResponses = (responses) => {
-  const { geoGuide } = responses;
-  geoGuide(null, (error) => {
-    // ignore all geoGuides errors
-    logWarn(error);
-  });
-};
-
-export default withServerState(
-  mapPropsToActions,
-  handleResponses,
-)(connect(mapStateToProps)(StateSearchPageContainer));
