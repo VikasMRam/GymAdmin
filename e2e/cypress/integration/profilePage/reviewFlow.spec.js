@@ -101,8 +101,6 @@ describe('Review Community', () => {
       const month = date.toLocaleString('en-GB', { month: 'long' });
       const year = date.getFullYear();
 
-      lastReview('.Rating__Star:nth-of-type(4) .PositionedMask').should('have.attr', 'width', '90');
-      lastReview('.Rating__Star:last-of-type .PositionedMask').should('have.attr', 'width', '10');
       lastReview('.CommentBlock').contains(commentText).should('exist');
       lastReview('.BottomSection > :first-child').contains('By Fonz').should('exist');
       lastReview('.BottomSection > :last-child').contains(`${month} ${year}`).should('exist');
