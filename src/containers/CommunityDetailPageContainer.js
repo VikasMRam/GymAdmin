@@ -1,13 +1,9 @@
 import React from 'react';
 import { func, object, array, bool, number, shape, string } from 'prop-types';
-import { connect } from 'react-redux';
 import isMatch from 'lodash/isMatch';
 import { Redirect } from 'react-router-dom';
 
-import { withServerState } from 'sly/store';
 import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
-import { getDetail } from 'sly/store/selectors';
-import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import { prefetch, withAuth, withApi } from 'sly/services/newApi';
 import {
@@ -19,9 +15,6 @@ import {
 import SlyEvent from 'sly/services/helpers/events';
 import { HydrationData } from 'sly/services/partialHydration';
 
-const ignoreSearchParams = ['modal', 'action', 'entityId', 'currentStep', 'token', 'modal'];
-
-
 const createHasProfileAction = uuidActions => (type, actionInfo) => {
   if (!uuidActions) return false;
   return uuidActions.some((uuidAction) => {
@@ -30,17 +23,6 @@ const createHasProfileAction = uuidActions => (type, actionInfo) => {
 };
 
 const getCommunitySlug = match => match.params.communitySlug;
-
-const mapPropsToActions = () => ({
-  userAction: resourceDetailReadRequest('userAction'),
-});
-
-const mapStateToProps = (state) => {
-  // default state for ssr
-  return {
-    userAction: getDetail(state, 'userAction') || {},
-  };
-};
 
 @withApi
 @withAuth
@@ -56,15 +38,13 @@ const mapStateToProps = (state) => {
     'filter[actionInfo-slug]': getCommunitySlug(match),
   })
 )
-@withServerState(mapPropsToActions, undefined, ignoreSearchParams)
-@connect(mapStateToProps)
+
 export default class CommunityDetailPageContainer extends React.PureComponent {
   static propTypes = {
     set: func,
     status: object,
     community: object,
     uuidActions: array,
-    userAction: object,
     errorCode: number,
     history: object,
     location: object,
@@ -77,15 +57,8 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
     }),
   };
 
-  handleSimilarCommunitiesClick = (index, to) => {
-    const event = {
-      action: 'exitintent-modal-click', category: 'similarCommunity', label: index.toString(), value: to,
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
   render() {
-    const { status, user, uuidActions, community, history, userAction } = this.props;
+    const { status, user, uuidActions, community, history } = this.props;
 
     const { location } = history;
     const { pathname } = location;
@@ -99,7 +72,7 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
       return <Redirect to={replaceLastSegment(location.pathname)} />;
     }
 
-    if (!community || !userAction) {
+    if (!community) {
       return null;
     }
 
@@ -128,7 +101,6 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
           community={community}
           location={location}
           profileContacted={profileContacted}
-          userAction={userAction}
           history={history}
         />
         <HydrationData />
