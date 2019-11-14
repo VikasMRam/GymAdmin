@@ -70,11 +70,7 @@ export default class RatingInput extends Component {
   getValue = (event) => {
     const currentValue = this.state.value;
     const { current } = this.innerRef;
-    const clientRect = current.getBoundingClientRect();
-    const { left } = clientRect;
-    const last = current.children[current.children.length - 1];
-    const lastClientRect = last.getBoundingClientRect();
-    const right = lastClientRect.left + last.offsetWidth;
+    const { left, right } = current.children[0].getBoundingClientRect();
 
     if (event.clientX > right) {
       return currentValue;

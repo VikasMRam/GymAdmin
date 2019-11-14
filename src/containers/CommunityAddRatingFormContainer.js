@@ -10,7 +10,7 @@ import {
   createValidator,
   required,
   email,
-  notZero,
+  isValidRating,
 } from 'sly/services/validation';
 
 import { community as communityPropType } from 'sly/propTypes/community';
@@ -20,7 +20,7 @@ import { PROFILE_RATING } from 'sly/services/newApi/constants';
 
 const validate = createValidator({
   comments: [required],
-  value: [required, notZero],
+  value: [required, isValidRating],
   name: [required],
   email: [required, email],
 });

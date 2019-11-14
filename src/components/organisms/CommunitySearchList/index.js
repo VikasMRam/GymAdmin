@@ -21,9 +21,18 @@ const CommunityFilterBarWrapper = styled.div`
     display: block;
   }
 `;
-const StyledLink = pad(styled(Link)`
-  display: block;
+const CommunityTileWrapper = pad(styled.div`
+  position: relative;
 `, 'xLarge');
+
+const StyledLink = styled(Link)`
+  position: absolute !important;
+  top: 0px !important;
+  right: 0px !important;
+  bottom: 0px !important;
+  left: 0px !important;
+  z-index: 10;
+`;
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
@@ -115,32 +124,6 @@ const CommunitySearchList = ({
     ));
   }
 
-  const components = communityList.map((similarProperty, index) => {
-    const target = global.innerWidth && global.innerWidth >= parseInt(theme.sizes.breakpoint.laptop, 10)
-      ? `community_profile_${similarProperty.id}`
-      : '_self';
-    return (
-      <StyledLink
-        target={target}
-        key={similarProperty.id}
-        to={similarProperty.url}
-        rel="noopener"
-        onClick={() => onCommunityClick(index, similarProperty.id)}
-
-      >
-        <ShadowCommunityTile
-          community={similarProperty}
-          layout="column"
-          imageSize="regular"
-          noGallery
-          showDescription
-          showSeeMoreButtonOnHover
-          lazyLoadImage={index !== 0}
-        />
-      </StyledLink>
-    );
-  });
-  // components.splice(adIndex, 0, <AdTileWrapper key="ad" ><AdTile {...searchAdProps} onClick={() => onAdTileClick()} /></AdTileWrapper>);
   const { current, total } = getPaginationData(requestMeta);
   const count = requestMeta['filtered-count'];
   const present = (requestMeta['page-number'] * requestMeta['page-size']);
@@ -166,7 +149,23 @@ const CommunitySearchList = ({
       <CommunityFilterBarWrapper>
         <CommunityFilterBar searchParams={searchParams} {...props} />
       </CommunityFilterBarWrapper>
-      {components}
+      {communityList.map((similarProperty, index) => (
+        <CommunityTileWrapper key={similarProperty.id}>
+          <StyledLink
+            to={similarProperty.url}
+            onClick={() => onCommunityClick(index, similarProperty.id)}
+          />
+          <ShadowCommunityTile
+            community={similarProperty}
+            layout="column"
+            imageSize="regular"
+            noGallery
+            showDescription
+            showSeeMoreButtonOnHover
+            lazyLoadImage={index !== 0}
+          />
+        </CommunityTileWrapper>
+      ))}
       {communityList.length < 1 &&
         <>
           <StyledHeading size="subtitle">Explore homes in popular cities</StyledHeading>
