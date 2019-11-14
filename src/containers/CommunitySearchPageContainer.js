@@ -36,7 +36,6 @@ const onCommunityClick = (position, to) => {
 }))
 
 @prefetch('geoGuide', 'getGeoGuides', (request, { searchParams }) => request(searchParams))
-
 @prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
 
 export default class CommunitySearchPageContainer extends PureComponent {
