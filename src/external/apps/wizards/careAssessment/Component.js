@@ -126,7 +126,7 @@ const Component = ({
                     </Button>
                   )}
                   {currentStep !== totalNumberofSteps &&
-                    <Button type="button" disabled={invalid} onClick={handleSubmit}>
+                    <Button type="submit" disabled={invalid}>
                       Continue
                     </Button>
                   }
