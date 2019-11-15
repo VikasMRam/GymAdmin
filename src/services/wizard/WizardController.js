@@ -153,6 +153,9 @@ export default class WizardController extends Component {
         doSubmit,
       };
       const returnVal = onStepChange(args);
+      if (returnVal === false) {
+        return null;
+      }
       return Promise.resolve(returnVal)
         .then(() => {
           if (!wasGotoCalled) {

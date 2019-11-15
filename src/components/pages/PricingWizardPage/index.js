@@ -85,6 +85,8 @@ export default class PricingWizardPage extends Component {
     userActionSubmit: func,
     redirectTo: func,
     match: object,
+    submitActionAndCreateUser: func,
+    updateUuidAux: func,
   };
 
   constructor(props) {
@@ -122,9 +124,9 @@ export default class PricingWizardPage extends Component {
 
   // This function is called after the step is changed
   handleStepChange = ({
-    currentStep, data, goto,
+    currentStep, data, goto, doSubmit,
   }) => {
-    const { community, userHas, submitActionAndCreateUser, updateUuidAux } = this.props;
+    const { community, userHas, submitActionAndCreateUser, updateUuidAux, match } = this.props;
     const { id } = community;
     const { interest } = data;
 
@@ -144,7 +146,9 @@ export default class PricingWizardPage extends Component {
 
     if (currentStep === 'WhatToDoNext') {
       if (interest === 'talk-advisor') {
-        goto('Landing');
+        doSubmit({ redirectLink: `${match.url.replace(/\/+$/, '')}/thank-you` });
+        // this will prevent the step from changing to next
+        return false;
       } else if (interest !== 'explore-affordable-options') {
         goto('ExploreAffordableOptions');
       }
@@ -153,6 +157,7 @@ export default class PricingWizardPage extends Component {
     if (currentStep === 'ExploreAffordableOptions') {
       updateUuidAux(data);
     }
+    return null;
   };
 
   calculatePrice = (roomTypes, careTypes) => {
@@ -183,10 +188,10 @@ export default class PricingWizardPage extends Component {
     });
   };
 
-  handleComplete = (data, { buttonLink }) => {
+  handleComplete = (data, { redirectLink }) => {
     const { redirectTo } = this.props;
 
-    return redirectTo(buttonLink);
+    return redirectTo(redirectLink);
   };
 
   render() {
@@ -200,7 +205,7 @@ export default class PricingWizardPage extends Component {
     // const scheduleTourOption = compiledWhatToDoNextOptions.find(o => o.value === 'schedule-tour');
     // scheduleTourOption.to = `/book-a-tour/${id}`;
 
-    const openHelpModal = () => redirectTo(`${match.url}/help`);
+    const openHelpModal = () => redirectTo(`${match.url.replace(/\/+$/, '')}/help`);
 
     return (
       <FullScreenWizard>

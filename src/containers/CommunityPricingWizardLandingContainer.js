@@ -29,12 +29,12 @@ export default class CommunityPricingWizardLandingContainer extends Component {
 
   handleBeginClick = () => {
     const { conversations, onBeginClick } = this.props;
-    let buttonLink = FAMILY_DASHBOARD_MESSAGES_PATH;
+    let redirectLink = FAMILY_DASHBOARD_MESSAGES_PATH;
     if (conversations.length) {
-      buttonLink = generatePath(FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH, { id: conversations[0].id });
+      redirectLink = generatePath(FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH, { id: conversations[0].id });
     }
 
-    onBeginClick({ buttonLink });
+    onBeginClick({ redirectLink });
   };
 
   getHasFinished = () => {
