@@ -7,9 +7,6 @@ import isMatch from 'lodash/isMatch';
 
 import SlyEvent from 'sly/services/helpers/events';
 import {
-  ASSESSMENT,
-} from 'sly/services/api/actions';
-import {
   AVAILABILITY_REQUEST,
   CONSULTATION_REQUESTED, PRICING_REQUEST,
   PROFILE_CONTACTED,
@@ -105,7 +102,6 @@ export default class ConciergeController extends Component {
     uuidAux: uuidAuxProptype,
     queryParams: object,
     setQueryParams: func.isRequired,
-    submit: func,
     gotoGetCustomPricing: func,
     status: shape({
       uuidAux: object,
@@ -229,7 +225,6 @@ export default class ConciergeController extends Component {
 
   submitAdvancedInfo = (data) => {
     const {
-      submit,
       communitySlug,
       pathName,
       concierge,
@@ -273,10 +268,6 @@ export default class ConciergeController extends Component {
     const uuidAux = status.uuidAux.result;
 
     return Promise.all([
-      submit({
-        action: ASSESSMENT,
-        value,
-      }),
       updateUuidAux({ id: uuidAux }, produce(uuidAux, (draft) => {
         const uuidInfo = draft.attributes.uuidInfo || {};
 

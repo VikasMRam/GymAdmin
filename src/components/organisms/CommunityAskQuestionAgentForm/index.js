@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, string, bool, object } from 'prop-types';
+import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -8,6 +8,7 @@ import fullWidth from 'sly/components/helpers/fullWidth';
 import { Heading, Button, Block } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
+import userPropType from 'sly/propTypes/user';
 
 const StyledButton = fullWidth(styled(Button)`
   margin-bottom: ${size('spacing.regular')};
@@ -70,7 +71,7 @@ CommunityAskQuestionAgentForm.propTypes = {
   placeholder: string.isRequired,
   heading: string.isRequired,
   description: string,
-  userDetails: object,
+  user: userPropType,
 };
 
 export default CommunityAskQuestionAgentForm;

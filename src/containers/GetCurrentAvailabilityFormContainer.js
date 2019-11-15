@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
 
-import { getDetail } from 'sly/store/selectors';
 import { createValidator, required, email } from 'sly/services/validation';
 import { withUser } from 'sly/services/newApi';
 import GetCurrentAvailabilityForm from 'sly/components/molecules/GetCurrentAvailabilityForm';
