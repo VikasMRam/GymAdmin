@@ -31,7 +31,7 @@ import {
   FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
   FAMILY_DASHBOARD_MESSAGES_PATH,
   ADMIN_DASHBOARD_CALLS_PATH,
-  ADMIN_DASHBOARD_CALL_DETAILS_PATH,
+  ADMIN_DASHBOARD_CALL_DETAILS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import careTypes from 'sly/constants/careTypes';
 
@@ -67,6 +67,7 @@ const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChu
 const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallsOverview" */ 'sly/containers/DashboardCallsIndexPageContainer'));
 const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
 const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/components/pages/DashboardAgentTasksPage'));
+const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/components/pages/DashboardAgentContactsPage'));
 
 setGlobalStyles();
 setDatepickerStyles();
@@ -128,6 +129,11 @@ const routes = [
   {
     path: AGENT_DASHBOARD_TASKS_PATH,
     component: DashboardAgentTasksPage,
+    exact: true,
+  },
+  {
+    path: AGENT_DASHBOARD_CONTACTS_PATH,
+    component: DashboardAgentContactsPage,
     exact: true,
   },
   {
