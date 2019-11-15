@@ -8,8 +8,14 @@ export const getHasContract = (community) => {
 
 export const getIsCCRC = (community) => {
   const { propInfo } = community;
-  const { typeCare: typeCares } = propInfo;
-  return  typeCares.includes('Continuing Care Retirement Community(CCRC)');
+  if (propInfo) {
+    const { typeCare: typeCares } = propInfo;
+    if (typeCares){
+      return  typeCares.includes('Continuing Care Retirement Community(CCRC)');
+    }
+
+  }
+  return false;
 };
 
 export const buildAddressDisplay = (community) => {

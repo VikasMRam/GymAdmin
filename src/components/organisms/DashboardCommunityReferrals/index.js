@@ -96,6 +96,7 @@ const DashboardCommunityReferrals = ({
             tab: FAMILY_DETAILS,
           });
           const community = client.provider;
+          community.propInfo = {};
           return (
             <StyledDashboardAdminReferralCommunityTile
               key={client.name}
