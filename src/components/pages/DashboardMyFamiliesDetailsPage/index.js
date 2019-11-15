@@ -629,7 +629,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         There are families with same contact info.&nbsp;<ClickHere palette="white" onClick={this.handleClickHereForMore}>Click here to check.</ClickHere>
       </span>
     );
-    const topSection = clients.length > 1 && (
+    const topSection = clients && clients.length > 1 && (
       <BigScreenPaddedBannerNotification hasBorderRadius palette="warning">
         {duplicateWarningContent}
       </BigScreenPaddedBannerNotification>
