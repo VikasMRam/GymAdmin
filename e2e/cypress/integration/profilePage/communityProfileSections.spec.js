@@ -39,7 +39,7 @@ describe('Community Profile Sections', () => {
   });
 
   responsive(() => {
-    it.only('Should see details', () => {
+    it('Should see details', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
 
       cy.wait('@postUuidActions').then((xhr) => {

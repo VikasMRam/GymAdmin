@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import '@babel/polyfill';
-import 'isomorphic-fetch';
 import path from 'path';
 import crypto from 'crypto';
 
