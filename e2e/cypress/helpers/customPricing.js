@@ -1,8 +1,8 @@
 import { select } from './tests';
 
-export const doCustomPricingFlow = (cy, data) => {
+const submitTillContactStep = (data) => {
   const {
-    communitySlug, name, phone, typeOfRoom, typeOfCare, medicaid,
+    name, phone, typeOfRoom, typeOfCare, medicaid,
   } = data;
 
   cy.contains('Get your Pricing and Availability');
@@ -19,12 +19,14 @@ export const doCustomPricingFlow = (cy, data) => {
   cy.get('input[name="phone"]').type(phone);
 
   cy.get('button').contains('Continue').click();
+};
 
-  cy.get('button').contains('Explore more affordable options').click();
+export const doCustomPricingTalkToAdvisorFlow = (cy, data) => {
+  const { communitySlug } = data;
 
-  cy.get('button').contains('$2000 - $3000').click();
+  submitTillContactStep(data);
 
-  cy.get('button').contains('Let\'s Begin').click();
+  cy.get('button').contains('Talk to an advisor').click();
 
   select('.Modal__Body h2').contains('Thank you! Our team will be calling you from (855) 855-2629.');
 
@@ -33,4 +35,16 @@ export const doCustomPricingFlow = (cy, data) => {
   cy.url().should('have.string', `/assisted-living/california/san-francisco/${communitySlug}`);
 
   select('.CommunityDetailPage').should('exist');
+};
+
+export const doCustomPricingExploreAffordableOptionsFlow = (cy, data) => {
+  submitTillContactStep(data);
+
+  cy.get('button').contains('Explore more affordable options').click();
+
+  cy.get('button').contains('$2000 - $3000').click();
+
+  cy.get('button').contains('View Dashboard').click();
+
+  cy.url().should('have.string', '/dashboard/family/my-families');
 };

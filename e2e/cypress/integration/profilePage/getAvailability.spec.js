@@ -1,4 +1,6 @@
-import { doCustomPricingFlow } from '../../helpers/customPricing';
+import {
+  doCustomPricingTalkToAdvisorFlow,
+} from '../../helpers/customPricing';
 import { assertUserActionsForGetAvailability } from '../../helpers/userActions';
 import { responsive, waitForHydration } from '../../helpers/tests';
 import { TEST_COMMUNITY } from '../../constants/community';
@@ -6,7 +8,7 @@ import randomUser from '../../helpers/randomUser';
 
 describe('Marketplace Profile Page', () => {
   responsive(() => {
-    it('tests Get Availability Flow for Assisited Living Community', () => {
+    it('tests Get Availability Flow for Assisited Living Community - Talk to Advisor Flow', () => {
       const communitySlug = TEST_COMMUNITY;
       const { name, phone, email } = randomUser();
       const typeOfRoom = 'Suite';
@@ -21,7 +23,7 @@ describe('Marketplace Profile Page', () => {
         communitySlug, name, phone, typeOfRoom, typeOfCare, medicaid, email,
       };
 
-      doCustomPricingFlow(cy, data);
+      doCustomPricingTalkToAdvisorFlow(cy, data);
 
       cy.getUser().then((userData) => {
         assertUserActionsForGetAvailability(userData, data);

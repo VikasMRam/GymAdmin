@@ -1,4 +1,4 @@
-import { doCustomPricingFlow } from '../../helpers/customPricing';
+import { doCustomPricingTalkToAdvisorFlow } from '../../helpers/customPricing';
 import { assertUserActionsForCustomPricing } from '../../helpers/userActions';
 import { responsive, waitForHydration } from '../../helpers/tests';
 import { TEST_COMMUNITY } from '../../constants/community';
@@ -34,7 +34,7 @@ describe('Marketplace Profile Page', () => {
         communitySlug: TEST_COMMUNITY, name, phone, typeOfRoom, typeOfCare, medicaid,
       };
 
-      doCustomPricingFlow(cy, data);
+      doCustomPricingTalkToAdvisorFlow(cy, data);
 
       cy.getUser().then((userData) => {
         assertUserActionsForCustomPricing(userData, data);
