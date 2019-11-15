@@ -20,7 +20,7 @@ export const doCustomPricingFlow = (cy, data) => {
 
   cy.get('button').contains('Continue').click();
 
-  cy.get('button').contains('Talk to an advisor').click();
+  cy.get('button').contains('Explore more affordable options').click();
 
   cy.get('button').contains('$2000 - $3000').click();
 

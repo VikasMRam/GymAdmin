@@ -145,12 +145,9 @@ class PricingWizardPage extends Component {
       submitActionAndCreateUser(data, currentStep);
     }
 
-    if (currentStep === 'WhatToDoNext') {
-      if (interest === 'talk-advisor') {
-        openConfirmationModal();
-      } else if (interest !== 'explore-affordable-options') {
-        goto('ExploreAffordableOptions');
-      }
+    if (currentStep === 'WhatToDoNext' && interest === 'talk-advisor') {
+      goto('WhatToDoNext');
+      openConfirmationModal();
     }
 
     if (currentStep === 'ExploreAffordableOptions') {

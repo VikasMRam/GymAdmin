@@ -124,7 +124,7 @@ export default class WizardController extends Component {
 
   handleSubmit = () => {
     const {
-      next, previous, goto, doSubmit, isFinalStep,
+      next, previous, doSubmit, isFinalStep,
     } = this;
     const {
       onStepChange, data, currentStepIndex, steps,
@@ -137,6 +137,12 @@ export default class WizardController extends Component {
 
     // if onStepChange returns a promise then wait for it to resolve before
     // moving to next step
+
+    let wasGotoCalled = false;
+    const goto = (step) => {
+      wasGotoCalled = true;
+      return this.goto(step);
+    };
     if (onStepChange) {
       const args = {
         currentStep,
@@ -148,7 +154,12 @@ export default class WizardController extends Component {
       };
       const returnVal = onStepChange(args);
       return Promise.resolve(returnVal)
-        .then(this.next)
+        .then(() => {
+          if (!wasGotoCalled) {
+            return this.next();
+          }
+          return null;
+        })
         .catch((e) => {
           throw new SubmissionError({ _error: e.message });
         });

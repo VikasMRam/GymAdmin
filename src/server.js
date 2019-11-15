@@ -216,7 +216,7 @@ app.use(async (req, res, next) => {
   const ignoreUnauthorized = (e) => {
     if (e.status === 401) {
       // ignore 401
-      logWarn(e);
+      // logWarn(e);
     } else {
       return Promise.reject(e);
     }

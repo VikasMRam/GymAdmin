@@ -25,7 +25,7 @@ describe('Marketplace Profile Page', () => {
       doCustomPricingFlow(cy, data);
 
       cy.request({
-        url: '/v0/platform/user-actions',
+        url: '/v0/platform/uuid-actions',
       })
         .then((response) => {
           cy.log('response', response);
