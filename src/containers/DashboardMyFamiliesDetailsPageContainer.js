@@ -321,7 +321,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 refetchConversations={status.conversations.refetch}
                 user={user}
                 conversation={selectedConversation}
-                conversations={conversationsList}
+                conversations={conversationsList || []}
                 setSelectedConversation={this.setSelectedConversation}
                 hasConversationFinished={this.getHasConversationFinished() && conversationsList !== null}
                 onAcceptClick={() => this.handleAcceptClick(show, hide, notifyError)}
