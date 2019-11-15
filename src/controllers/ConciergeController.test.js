@@ -61,7 +61,7 @@ describe('ConciergeController', () => {
     xx: {
       attributes: {
         profilesContacted: [
-          { slug: 'my-community', contactType: REQUEST_CALLBACK },
+          { slug: 'my-community' },
         ],
         userDetails: { email: 'xxx@xxx.xxx', fullName: 'Fonz', phone: '9087654321' },
       },

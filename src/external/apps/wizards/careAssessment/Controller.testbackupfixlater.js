@@ -11,8 +11,9 @@ const initStore = (props = {}) => mockStore({
   ...props,
 });
 const set = jest.fn();
+// FIXME: hack to jump around the fact that we are not doing shallow render in the WrappedComponent directly
 const wrap = (store, props = {}) => shallow(<Controller {...props} api={{}} set={set} store={store} />)
-  .dive().dive().dive();
+  .dive().dive().dive().dive().dive().dive().dive().dive();
 
 describe('Controller', () => {
   beforeEach(() => {
@@ -155,7 +156,7 @@ describe('Controller', () => {
     expect(progressPathArr).toEqual(expectedProgressPath);
   });
 
-  it.only('handleSeeMore does nothing when called from non last step', () => {
+  it('handleSeeMore does nothing when called from non last step', () => {
     const store = initStore();
     const wrapper = wrap(store);
 
