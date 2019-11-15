@@ -12,8 +12,8 @@ const initStore = (props = {}) => mockStore({
 });
 const set = jest.fn();
 // FIXME: hack to jump around the fact that we are not doing shallow render in the WrappedComponent directly
-const wrap = (store, props = {}) => shallow(<Controller {...props} api={{}} set={set} store={store} />)
-  .dive().dive().dive().dive().dive().dive().dive().dive();
+// eslint-disable-next-line newline-per-chained-call
+const wrap = (store, props = {}) => shallow(<Controller {...props} api={{}} set={set} store={store} />).dive().dive().dive().dive().dive().dive().dive().dive();
 
 describe('Controller', () => {
   beforeEach(() => {
@@ -160,7 +160,6 @@ describe('Controller', () => {
     const store = initStore();
     const wrapper = wrap(store);
 
-    console.log(wrapper.instance())
     wrapper.instance().handleSeeMore();
 
     const lastAction = store.getActions().pop();
