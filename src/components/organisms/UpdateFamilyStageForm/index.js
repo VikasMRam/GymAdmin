@@ -92,19 +92,19 @@ export default class UpdateFamilyStageForm extends Component {
 
     const reasonsOptions = rejectReasons.map(r => ({ value: r, label: r }));
     const NEW_FAMILY_STAGE_ORDERED = { ...FAMILY_STAGE_ORDERED };
-
-    const options = Object.keys(NEW_FAMILY_STAGE_ORDERED).map((sg) => {
+    const options = Object.keys(NEW_FAMILY_STAGE_ORDERED).reduce((prev, sg) => {
       let stages = NEW_FAMILY_STAGE_ORDERED[sg].map(s => nextAllowedStages.indexOf(s) !== -1 && { value: s, label: s });
       stages = stages.filter(s => s);
 
       if (stages.length) {
-        return {
+        const option = {
           label: sg,
           options: stages,
         };
+        prev.push(option);
       }
-      return null;
-    });
+      return prev;
+    }, []);
     const roomTypeOptions = roomTypes.map(t => ({ value: t, label: t }));
     const lossReasonOptions = lossReasons.map(reason => ({ value: reason, label: reason }));
     const stageGroupChanged = nextStageGroup && currentStageGroup !== nextStageGroup;
@@ -129,6 +129,7 @@ export default class UpdateFamilyStageForm extends Component {
           type="choice"
           component={ReduxField}
           options={options}
+          disabled={isNext(FAMILY_STAGE_REJECTED)}
         />
         {stageGroupChanged && (!isPaused || (isPaused && stageChanged)) &&
           <Warning size="caption">
