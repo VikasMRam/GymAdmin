@@ -4,7 +4,7 @@ import { object } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { ifProp } from 'styled-tools';
 
-import { size, palette, assetPath } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import {
   getBreadCrumbsForCommunity,
   getCitySearchUrl,
@@ -209,8 +209,6 @@ export default class CommunityDetailPage extends Component {
       floorPlans,
       similarProperties,
       gallery = {},
-      videoGallery = {},
-      mainImage,
       partnerAgents,
       twilioNumber,
       guideUrl,
@@ -222,49 +220,14 @@ export default class CommunityDetailPage extends Component {
       promoTitle,
       communitySize,
       communityInsights,
-    } = propInfo;
-
-    const {
-      plusCommunity, menuLink, sampleAppetizers, sampleMain, sampleSide, sampleDessert, sampleEvents, eventsLink,
-    } = propInfo;
-
-    // TODO: move this to common helper, used in multiple places
-    const communityDefaultImages = {
-      'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
-      '20 - 51 Beds': assetPath('vectors/Medium_Assisted_Living.svg'),
-      '51 +': assetPath('vectors/Large_Assisted_Living.svg'),
-    };
-    let key = 'up to 20 Beds';
-    if (communitySize !== undefined && communitySize !== '') {
-      key = communitySize;
-    }
-    const defaultImageUrl = communityDefaultImages[key];
-
-    let images = gallery.images || [];
-    // if images is empty add default image
-    if (images.length === 0) {
-      const imgShape = {
-        sd: defaultImageUrl,
-        hd: defaultImageUrl,
-        thumb: defaultImageUrl,
-        url: defaultImageUrl,
-      };
-      images.unshift(imgShape);
-      gallery.images = images;
-    }
-
-    // If there is a mainImage put it in front
-    const communityMainImage = images.find((element) => {
-      return element.sd === mainImage;
-    });
-
-    if (communityMainImage) {
-      images = images.filter(img => img.sd !== communityMainImage.sd);
-      images.unshift(communityMainImage);
-      gallery.images = images;
-    }
-    const videos = videoGallery.videos || [];
-    const {
+      plusCommunity,
+      menuLink,
+      sampleAppetizers,
+      sampleMain,
+      sampleSide,
+      sampleDessert,
+      sampleEvents,
+      eventsLink,
       communityDescription,
       staffDescription,
       residentDescription,
@@ -284,15 +247,13 @@ export default class CommunityDetailPage extends Component {
     // FIXME: @fonz cleaning this up
     const isAlreadyPricingRequested = profileContacted.pricing;
 
-    const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(
-      community,
-      rgsAux.estimatedPrice
-    );
+    const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
-    const partnerAgent =
-      partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
+    const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 
     const { autoHighlights, nearbyCities } = rgsAux;
+
+    const showMoreImages = gallery.images && gallery.images.length > 0;
 
     const pricesList = buildPriceList(community);
     const estimatedPriceList = buildEstimatedPriceList(community);
@@ -331,11 +292,9 @@ export default class CommunityDetailPage extends Component {
             />
             <TwoColumn>
               <Body>
-                {(images.length > 0 || videos.length > 0) && (
-                  <Gallery>
-                    <CommunityMediaGalleryContainer />
-                  </Gallery>
-                )}
+                <Gallery>
+                  <CommunityMediaGalleryContainer />
+                </Gallery>
                 <StyledCommunitySummary isAdmin={user && user.admin} />
                 {(promoDescription || promoTitle) && (
                   <StyledOfferNotification
@@ -565,7 +524,7 @@ export default class CommunityDetailPage extends Component {
                 </Sticky>
               </Column>
             </TwoColumn>
-            {images.length > 1 && (
+            {showMoreImages && (
               <StyledSection
                 title={`More Photos of ${name}`}
                 titleSize="subtitle"
