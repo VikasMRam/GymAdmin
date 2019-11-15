@@ -9,7 +9,6 @@ import ConciergeController, {
   ADVANCED_INFO,
 } from './ConciergeController';
 
-import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
 import { CONCIERGE } from 'sly/constants/modalType';
 import user from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
 
@@ -209,9 +208,6 @@ describe('ConciergeController', () => {
 
     SlyEvent.getInstance.mockImplementation(() => events);
 
-    const submit = jest.fn().mockImplementation((...args) => Promise.resolve(args));
-    const lastSubmit = () => submit.mock.calls.pop()[0];
-
     const set = jest.fn();
 
     beforeEach(() => {
@@ -378,7 +374,6 @@ describe('ConciergeController', () => {
         user,
         uuidAux,
         pathName: 'Blah',
-        submit,
         concierge: {},
       });
       const data = { data: 'DATA' };
@@ -407,7 +402,6 @@ describe('ConciergeController', () => {
 
     it('should submit advanced info', async () => {
       const wrapper = wrap({ communitySlug: community.id, concierge: {} });
-      wrapper.setProps({ submit });
       await childProps().submitAdvancedInfo(advancedInfoData);
 
       expect(lastUuidPost()).toEqual({
@@ -437,22 +431,6 @@ describe('ConciergeController', () => {
               roomPreference: ['room1'],
               typeCare: ['none'],
             },
-          },
-        },
-      });
-
-      expect(lastSubmit()).toEqual({
-        action: ASSESSMENT,
-        value: {
-          message: 'MESSAGE',
-          propertyIds: ['my-community'],
-          user: {
-            user: 'USER',
-            type_of_care: ['none'],
-            type_of_room: ['room1'],
-            time_to_move: 1,
-            budget: 5000,
-            medicaid_coverage: false,
           },
         },
       });
