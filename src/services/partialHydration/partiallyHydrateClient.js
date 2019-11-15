@@ -12,13 +12,12 @@ import Route from 'react-router/Route';
 import { ApiProvider, createApi } from 'sly/services/newApi';
 import configureStore from 'sly/store/configure';
 import theme from 'sly/components/themes/default';
-import api from 'sly/services/api';
 import { hydrateComponents } from 'sly/services/partialHydration/index';
 
 export default function partiallyHydrateClient(componentsToHydrate, routePath, root) {
   const serverState = window.__SERVER_STATE__;
   const initialState = window.__INITIAL_STATE__;
-  const store = configureStore(initialState, { api: api.create() });
+  const store = configureStore(initialState);
 
   const beesApi = createApi();
 

@@ -58,7 +58,6 @@ export default class Controller extends Component {
     utmParams: object,
     pixel: string,
     searchCommunities: func,
-    postUserAction: func.isRequired,
     createAction: func.isRequired,
     searchResultCount: number,
     data: object,

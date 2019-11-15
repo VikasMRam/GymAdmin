@@ -34,8 +34,6 @@ const ReduxForm = reduxForm({
 export default class AskQuestionToAgentFormContainer extends Component {
   static propTypes = {
     agent: agentPropType,
-    userDetails: object.isRequired,
-    postUserAction: func.isRequired,
     createOrUpdateUser: func.isRequired,
     postSubmit: func,
     match: shape({

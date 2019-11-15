@@ -32,7 +32,6 @@ const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
 export default class PricingWizardPageContainer extends Component {
   static propTypes = {
     community: communityPropType,
-    userDetails: object,
     user: object,
     userHas: func.isRequired,
     uuidAux: object,

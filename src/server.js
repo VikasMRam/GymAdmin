@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import '@babel/polyfill';
+import 'isomorphic-fetch';
 import path from 'path';
 import crypto from 'crypto';
 
@@ -25,8 +26,6 @@ import { cleanError, logWarn } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';
 import { port, host, publicPath, isDev, domain, disableExperiments } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
-import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import apiService from 'sly/services/api';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 import { createApi as createBeesApi } from 'sly/services/newApi';
@@ -203,16 +202,6 @@ app.use(async (req, res, next) => {
       return cumul;
     }, {});
 
-  const api = apiService.create();
-
-  api.setHeader('cookie', cookies.join('; '));
-  api.setHeader('user-agent', req.headers['user-agent']);
-  api.setHeader('x-is-sly-ssr', 'true');
-  api.setHeader(
-    'x-forwarded-for',
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  );
-
   const beesApi = createBeesApi({
     configureHeaders: headers => ({
       ...headers,
@@ -223,20 +212,7 @@ app.use(async (req, res, next) => {
     }),
   });
 
-  const store = configureStore({ experiments: userExperiments }, { api });
-
-  try {
-    await store.dispatch(resourceDetailReadRequest('user', 'me'));
-  } catch (e) {
-    if (e.response && e.response.status === 401) {
-      // ignore 401
-      logWarn(e);
-    } else {
-      console.log('old user/me error', e);
-      next(e);
-      return;
-    }
-  }
+  const store = configureStore({ experiments: userExperiments });
 
   const ignoreUnauthorized = (e) => {
     if (e.status === 401) {
