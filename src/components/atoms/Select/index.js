@@ -206,6 +206,7 @@ const Select = ({
   options,
   async,
   loadOptions,
+  disabled,
   ...props
 }) => {
   const SelectComponent = async
@@ -230,6 +231,7 @@ const Select = ({
         textSize={textSize}
         components={{ Option: IconOption, Group: GroupSection, SingleValue: IconSingleValue, ...components }}
         blurInputOnSelect
+        isDisabled={disabled}
         {...props}
       />
     </Wrapper>
@@ -245,6 +247,7 @@ Select.propTypes = {
   components: object,
   loadOptions: func,
   isSearchable: bool,
+  disabled: bool,
 };
 
 Select.defaultProps = {
