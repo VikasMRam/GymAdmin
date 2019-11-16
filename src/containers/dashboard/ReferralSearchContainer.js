@@ -251,8 +251,10 @@ export default class ReferralSearchContainer extends Component {
     const {
       referralMode, parentClient, user,
     } = this.props;
-    const { communitiesInterested, children: childrenClients, clientInfo, recommendedAgents } = parentClient;
+    const { communitiesInterested, children: childrenClients, clientInfo, recommendedAgents, uuidAux } = parentClient;
     const { slyCommunityMessage: communityMessage, slyAgentMessage: agentMessage } = clientInfo;
+    const { uuidInfo } = uuidAux;
+    const { locationInfo } = uuidInfo;
     const { communities, agents } = this.state;
     const communityReferralClients = [];
     const agentReferralClients = [];
@@ -381,6 +383,7 @@ export default class ReferralSearchContainer extends Component {
                 handleLocationSearch={this.handleLocationAgentSearch}
                 agents={agents}
                 childrenClientAgentIdsMap={childrenClientAgentIdsMap}
+                preferredLocation={locationInfo}
                 setSelectedAgent={(a) => { this.setSelectedAgent(a); goto('DashboardAgentReferralContactDetailsContainer'); }}
               />
               <WizardStep

@@ -25,13 +25,25 @@ class SearchBoxContainer extends Component {
     clearLocationOnBlur: true,
   };
 
+  state = {
+    address: '',
+    location: null,
+  }
+
   constructor(props) {
     super(props);
-
-    this.state = {
-      address: this.props.address || '',
-      location: null,
-    };
+    if (this.props.address && this.props.address !== '') {
+      const { address } = this.props;
+      this.state = { address };
+      geocodeByAddress(address)
+        .then((results) => {
+          if (results && results.length > 0) {
+            const location = results[0];
+            this.state = { address, location };
+            this.handleOnLocationSearch(location);
+          }
+        });
+    }
   }
 
   handleChange = (address) => {

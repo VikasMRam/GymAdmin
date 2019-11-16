@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
 
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 class LocationSearch extends Component {
   static propTypes={
     onChange: func,
+    address: string,
   }
 
   handleLocationChange = (value) => {
@@ -23,11 +24,13 @@ class LocationSearch extends Component {
   }
 
   render() {
+    const { address } = this.props;
     return (
       <SearchBoxContainer
         clearLocationOnBlur={false}
         onLocationSearch={this.handleLocationChange}
         onTextChange={this.handleLocationTextChange}
+        address={address}
       />
     );
   }

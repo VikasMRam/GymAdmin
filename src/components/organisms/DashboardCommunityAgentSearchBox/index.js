@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, string } from 'prop-types';
+import { func, string, shape } from 'prop-types';
 import styled from 'styled-components';
 import { reduxForm, Field } from 'redux-form';
 
@@ -25,10 +25,10 @@ const StyledField = styled(Field)`
   }
 `;
 
-const CommunityAgentSearchForm = ({ label, handleSubmit }) => {
+const CommunityAgentSearchForm = ({ label, address, handleSubmit }) => {
   return (
     <Form onSubmit={handleSubmit} name="CommunityAgentSearchForm" >
-      <StyledField name="geo" label="Search By City, State" type="locationSearch" placeholder="Search By City, State" component={ReduxField} />
+      <StyledField name="geo" label="Search By City, State" type="locationSearch" placeholder="Search By City, State" address={address} component={ReduxField} />
       <StyledField name="name" label={label} type="text" placeholder="Search by name" component={ReduxField} />
       <IconButton type="submit" icon="search" />
     </Form>
@@ -37,6 +37,7 @@ const CommunityAgentSearchForm = ({ label, handleSubmit }) => {
 
 CommunityAgentSearchForm.propTypes = {
   label: string,
+  address: string,
   handleSubmit: func.isRequired,
 };
 
@@ -55,10 +56,18 @@ const ReduxForm = reduxForm({
 
 class DashboardCommunityAgentSearchBox extends Component {
   render() {
-    const { label, handleSubmit } = this.props;
+    const { label, preferredLocation, handleSubmit } = this.props;
+    let address = null;
+    if (preferredLocation) {
+      if (preferredLocation.city && preferredLocation.state) {
+        const { city, state } = preferredLocation;
+        address = `${city}, ${state}`;
+      }
+    }
     return (
       <ReduxForm
         label={label}
+        address={address}
         onSubmit={handleSubmit}
       />
     );
@@ -67,6 +76,10 @@ class DashboardCommunityAgentSearchBox extends Component {
 
 DashboardCommunityAgentSearchBox.propTypes = {
   label: string,
+  preferredLocation: shape({
+    city: string,
+    state: string,
+  }),
   handleSubmit: func.isRequired,
 };
 
