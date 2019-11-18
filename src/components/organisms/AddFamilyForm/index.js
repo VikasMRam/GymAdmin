@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, string, arrayOf, object } from 'prop-types';
+import { func, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -8,7 +8,7 @@ import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import { SOURCE_OPTIONS, TIME_TO_MOVE_OPTIONS, LOOKING_FOR_OPTIONS } from 'sly/constants/familyDetails';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
-import { Label, Hr } from 'sly/components/atoms';
+import { Label, Hr, Span } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
@@ -70,12 +70,14 @@ export default class AddFamilyForm extends Component {
           name="name"
           label="Contact name"
           type="text"
+          required
           component={ReduxField}
         />
         <Field
           name="residentName"
           label="Resident name"
           type="text"
+          required
           component={ReduxField}
         />
         <Field
@@ -83,16 +85,18 @@ export default class AddFamilyForm extends Component {
           label="Phone number"
           parse={phoneParser}
           format={phoneFormatter}
+          required
           component={ReduxField}
         />
         <Field
           name="email"
           label="Email"
           type="email"
+          required
           component={ReduxField}
         />
         <PaddedTwoColumnWrapper>
-          <StyledLabel>Preferred location</StyledLabel>
+          <StyledLabel>Preferred location<Span palette="danger">*</Span></StyledLabel>
           <StyledSearchBoxContainer
             clearLocationOnBlur={false}
             onLocationSearch={this.handleLocationChange}
