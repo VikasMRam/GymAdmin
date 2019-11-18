@@ -12,7 +12,7 @@ import {
   COMMUNITIES,
   PARTNER_AGENTS,
   MESSAGES,
-  TASKS, PROSPECTING, CONNECTED, CLOSED,
+  TASKS, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED,
 } from 'sly/constants/dashboardAppPaths';
 import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
@@ -252,6 +252,7 @@ const BigScreenPaddedBannerNotification = displayOnlyIn(PaddedBannerNotification
 const SmallScreenBannerNotification = displayOnlyIn(BannerNotification, ['mobile', 'tablet']);
 
 const TabMap = {
+  New: NEWFAMILIES,
   Prospects: PROSPECTING,
   Connected: CONNECTED,
   Closed: CLOSED,
@@ -559,8 +560,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }
 
     if (!client) {
-      const prospectingUrl = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: PROSPECTING });
-      const backlink = <BackLink linkText="Back to Prospects" to={prospectingUrl} onClick={clickEventHandler('fdetails', 'Back to Prospects')} />;
+      const newUrl = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: NEWFAMILIES });
+      const backlink = <BackLink linkText="Back to New" to={newUrl} onClick={clickEventHandler('fdetails', 'Back to Prospects')} />;
       return (
         <DashboardPageTemplate activeMenuItem="My Families">
           <TextAlignCenterBlock weight="medium" size="subtitle">Family not found!</TextAlignCenterBlock>
@@ -583,6 +584,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     let canEditFamilyDetails = isConnected;
     const isClientAdminUser = userIs(user, PLATFORM_ADMIN_ROLE) ||
       (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg);
+    const isAgentUser = userIs(user, AGENT_ND_ROLE);
     // Rule when lead is created by self
     if (stage === FAMILY_STAGE_NEW && isClientAdminUser) {
       showUpdateAddNoteButtons = true;
@@ -628,7 +630,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         There are families with same contact info.&nbsp;<ClickHere palette="white" onClick={this.handleClickHereForMore}>Click here to check.</ClickHere>
       </span>
     );
-    const topSection = clients.length > 1 && (
+    const topSection = clients && clients.length > 1 && (
       <BigScreenPaddedBannerNotification hasBorderRadius palette="warning">
         {duplicateWarningContent}
       </BigScreenPaddedBannerNotification>
@@ -654,8 +656,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               user={user}
               client={client}
             />
-            {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
-            {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
+            {showAcceptRejectButtons && <FamilySummary snap="top" client={client} isAgentUser={isAgentUser} to={familyDetailsPath} />}
+            {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} isAgentUser={isAgentUser} to={familyDetailsPath} />}
           </BigScreenSummarySection>
           <SmallScreenClientNameWrapper>
             {clientName}
@@ -696,6 +698,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               <FamilyDetailsTab>
                 <FamilyDetailsFormContainer
                   client={client}
+                  isAgentUser={isAgentUser}
                   rawClient={rawClient}
                   refetchClient={refetchClient}
                   notifyInfo={notifyInfo}

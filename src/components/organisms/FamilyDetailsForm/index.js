@@ -125,6 +125,7 @@ class FamilyDetailsForm extends Component {
     communityTypes: arrayOf(string).isRequired,
     preferredLocation: string,
     assignedTos: arrayOf(userPropType).isRequired,
+    isAgentUser: bool,
   };
 
   handleLookingForChange = (event, value) => {
@@ -146,7 +147,7 @@ class FamilyDetailsForm extends Component {
   render() {
     const { handleLocationChange } = this;
     const {
-      handleSubmit, submitting, invalid, accepted, initialValues, lookingFor,
+      handleSubmit, submitting, invalid, accepted, initialValues, lookingFor, isAgentUser,
       gender, timeToMove, monthlyBudget, roomTypes, communityTypes, careLevels, canEditFamilyDetails, assignedTos,
     } = this.props;
     let { preferredLocation } = this.props;
@@ -271,22 +272,26 @@ class FamilyDetailsForm extends Component {
                 <option>Select an option</option>
                 {sourceOptions}
               </Field>
-              <Field
-                name="medicaid"
-                label="Qualifies for Medicaid"
-                type="checkbox"
-                component={ReduxField}
-                options={medicaidOptions}
-                wideWidth
-              />
-              <Field
-                name="slyAgentMessage"
-                label="Summary for Agent"
-                type="textarea"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              />
+              {!isAgentUser &&
+                <>
+                  <Field
+                    name="medicaid"
+                    label="Qualifies for Medicaid"
+                    type="checkbox"
+                    component={ReduxField}
+                    options={medicaidOptions}
+                    wideWidth
+                  />
+                  <Field
+                    name="slyAgentMessage"
+                    label="Summary for Agent"
+                    type="textarea"
+                    disabled={!canEditFamilyDetails}
+                    component={ReduxField}
+                    wideWidth
+                  />
+                </>
+              }
               <Field
                 name="slyCommunityMessage"
                 label="Summary for Community"

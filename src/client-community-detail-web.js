@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+import 'intersection-observer';
 
 import partiallyHydrateClient from 'sly/services/partialHydration/partiallyHydrateClient';
 import clientConfigs from 'sly/clientConfigs';

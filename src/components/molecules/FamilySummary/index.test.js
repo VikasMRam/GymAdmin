@@ -5,6 +5,10 @@ import { Block } from 'sly/components/atoms';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
 
+// For deep cloning object
+const clientWithMedicaid = JSON.parse(JSON.stringify(PraneshKumar));
+clientWithMedicaid.uuidAux.uuidInfo.financialInfo.medicaid = true;
+
 const to = '/sdfsdf';
 const defaultProps = {
   to,
@@ -60,5 +64,22 @@ describe('FamilySummary', () => {
     });
 
     expect(wrapper.dive().find('StyledLink').at(2).prop('to')).toBe(to);
+  });
+
+  it('renders medicard', () => {
+    const wrapper = wrap({
+      client: clientWithMedicaid,
+    });
+    expect(wrapper.contains('Medicaid')).toBeTruthy();
+    expect(wrapper.contains('Chose Qualifies on Wizard')).toBeTruthy();
+  });
+
+  it('does not render medicard for agents', () => {
+    const wrapper = wrap({
+      client: clientWithMedicaid,
+      isAgentUser: true,
+    });
+    expect(wrapper.contains('Medicaid')).toBeFalsy();
+    expect(wrapper.contains('Chose Qualifies on Wizard')).toBeFalsy();
   });
 });

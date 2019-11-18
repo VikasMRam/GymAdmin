@@ -193,7 +193,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const [conversation] = conversations;
     const { result: rawClient } = status.client;
     const { id } = client;
-    const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
+    const [contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
     const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.stage']))
       .set('attributes.stage', contactStatus)
       .value();
@@ -321,7 +321,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 refetchConversations={status.conversations.refetch}
                 user={user}
                 conversation={selectedConversation}
-                conversations={conversationsList}
+                conversations={conversationsList || []}
                 setSelectedConversation={this.setSelectedConversation}
                 hasConversationFinished={this.getHasConversationFinished() && conversationsList !== null}
                 onAcceptClick={() => this.handleAcceptClick(show, hide, notifyError)}

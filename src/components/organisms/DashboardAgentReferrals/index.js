@@ -9,7 +9,6 @@ import pad from 'sly/components/helpers/pad';
 import clientPropType from 'sly/propTypes/client';
 import DashboardAdminReferralAgentTile from 'sly/components/organisms/DashboardAdminReferralAgentTile';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
-import cursor from 'sly/components/helpers/cursor';
 
 const TopWrapper = styled.div`
   display: flex;
@@ -75,7 +74,7 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients, reco
   }
   const title = 'Agent Recommended by Seniorly';
   const recommendedAgentComponents = [];
-  recommendedAgentComponents.push(<Heading level="subtitle">Recommended Agents:</Heading>);
+  recommendedAgentComponents.push(<Heading key="heading" level="subtitle">Recommended Agents:</Heading>);
   recommendedAgents.forEach((agent) => {
     // const client = recommendedAgentsIdsMap[agent.id];
     const props = {

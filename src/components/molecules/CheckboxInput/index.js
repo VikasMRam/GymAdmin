@@ -22,7 +22,7 @@ class CheckboxInput extends Component {
   static propTypes={
     value: arrayOf(string),
     onChange: func,
-    options: object,
+    options: arrayOf(object),
   }
   constructor(props) {
     super(props);
@@ -54,9 +54,8 @@ class CheckboxInput extends Component {
     }
     return options.map((option) => {
       return (
-        <CheckboxItem onClick={() => this.handleCheckboxItemOnClick(option)} >
+        <CheckboxItem key={option.label} onClick={() => this.handleCheckboxItemOnClick(option)} >
           <StyledCheckbox
-            key={option.label}
             palette="primary"
             uncheckedPalette="grey"
             checked={value.indexOf(option.value) !== -1}

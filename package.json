@@ -110,6 +110,7 @@
     "history": "^4.6.1",
     "ifvisible.js": "^1.0.6",
     "immer": "^2.0.0",
+    "intersection-observer": "^0.7.0",
     "isomorphic-fetch": "^2.2.1",
     "jest": "^24.8.0",
     "jest-babel": "^1.0.1",
