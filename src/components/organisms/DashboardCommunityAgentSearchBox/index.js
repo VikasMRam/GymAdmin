@@ -57,17 +57,30 @@ const ReduxForm = reduxForm({
 class DashboardCommunityAgentSearchBox extends Component {
   render() {
     const { label, preferredLocation, handleSubmit } = this.props;
+    const initialValues = {};
     let address = null;
+    let location = null;
     if (preferredLocation) {
       if (preferredLocation.city && preferredLocation.state) {
         const { city, state } = preferredLocation;
         address = `${city}, ${state}`;
+      }
+      if (preferredLocation.geo) {
+        location = {
+          geo: {
+            latitude: preferredLocation.geo.Latitude,
+            longitude: preferredLocation.geo.Longitude,
+          },
+        };
+        initialValues.geo = location;
       }
     }
     return (
       <ReduxForm
         label={label}
         address={address}
+        location={location}
+        initialValues={initialValues}
         onSubmit={handleSubmit}
       />
     );

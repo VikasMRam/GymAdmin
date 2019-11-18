@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, func, bool } from 'prop-types';
+import { string, func, bool, shape } from 'prop-types';
 import { geocodeByAddress } from 'react-places-autocomplete';
 
 import {
@@ -14,6 +14,12 @@ class SearchBoxContainer extends Component {
   static propTypes = {
     layout: string,
     address: string,
+    location: shape({
+      geo: shape({
+        latitude: string.isRequired,
+        longitude: string.isRequired,
+      }).isRequired,
+    }),
 
     clearLocationOnBlur: bool,
     onTextChange: func,
@@ -34,15 +40,11 @@ class SearchBoxContainer extends Component {
     super(props);
     if (this.props.address && this.props.address !== '') {
       const { address } = this.props;
-      this.state = { address };
-      geocodeByAddress(address)
-        .then((results) => {
-          if (results && results.length > 0) {
-            const location = results[0];
-            this.state = { address, location };
-            this.handleOnLocationSearch(location);
-          }
-        });
+      this.state.address = address;
+    }
+    if (this.props.location) {
+      const { location } = this.props;
+      this.state.location = location;
     }
   }
 
@@ -67,6 +69,11 @@ class SearchBoxContainer extends Component {
         SlyEvent.getInstance().sendEvent({
           action: 'googleSearchTyped', category: result.formatted_address, label: value,
         });
+        const geo = {
+          latitude: result.geometry.location.lat(),
+          longitude: result.geometry.location.lng(),
+        };
+        result.geo = geo;
         this.setState({ location: result });
         this.handleOnLocationSearch(result);
       })
