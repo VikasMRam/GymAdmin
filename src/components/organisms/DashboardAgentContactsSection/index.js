@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
-import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
@@ -15,10 +14,6 @@ import Pagination from 'sly/components/molecules/Pagination';
 import Th from 'sly/components/molecules/Th';
 import IconButton from 'sly/components/molecules/IconButton';
 import ContactRowCard from 'sly/components/organisms/ContactRowCard';
-import {
-  AGENT_DASHBOARD_TASKS_PATH, AGENT_DASHBOARD_CONTEXT_TASKS_PATH, TODAY, OVERDUE, UPCOMING, COMPLETED,
-} from 'sly/constants/dashboardAppPaths';
-import { stripPageNumber } from 'sly/services/helpers/appPaths';
 
 const TABLE_HEADINGS = [
   { text: 'Contact name' },
@@ -95,27 +90,6 @@ const StyledSection = styled(Section)`
   border: none;
 `;
 
-const TabMap = {
-  All: TODAY,
-};
-
-const onTabClick = (label) => {
-  const event = {
-    category: 'DashboardAgentTasksTab',
-    action: 'click',
-    label,
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
-const getBasePath = (taskType, location) => {
-  // const getBasePath = (taskType, contextPath = AGENT_DASHBOARD_TASKS_PATH, location) => {
-  // TODO: Use AGENT_DASHBOARD_CONTEXT_TASKS_PATH below
-  const path = generatePath(AGENT_DASHBOARD_TASKS_PATH, { taskType });
-
-  return location && location.search ? `${path}${stripPageNumber(location.search)}` : path;
-};
-
 export default class DashboardAgentContactsSection extends Component {
   static propTypes = {
     datatable: object,
@@ -123,52 +97,26 @@ export default class DashboardAgentContactsSection extends Component {
     contactsRaw: arrayOf(object),
     pagination: object,
     paginationString: string,
-    activeTab: string,
     showPagination: bool,
-    searchTextValue: string,
-    onSearchTextKeyUp: func,
     isPageLoading: bool,
-    showModal: func,
-    hideModal: func,
     meta: object,
-    notifyInfo: func,
-    notifyError: func,
     refetchContacts: func,
-    searchTextBoxValue: string,
   };
 
   handleAddContactClick = () => {
-    const { showModal, hideModal, notifyInfo, notifyError, meta, refetchContacts } = this.props;
-    const { priorities, statuses } = meta;
-
     SlyEvent.getInstance().sendEvent({
       category: 'AgentDashboardContacts',
       action: 'click',
       label: 'addContact',
     });
-
-    showModal(
-      (
-        <div>create contact here</div>
-      ), null, 'noPadding', false
-    );
   };
 
   handleContactClick = (contact) => {
-    const { showModal, hideModal, notifyInfo, notifyError, meta, tasksRaw, refetchTasks, client } = this.props;
-    const { priorities, statuses } = meta;
-
     SlyEvent.getInstance().sendEvent({
       category: 'AgentDashboardContacts',
       action: 'click',
       label: 'viewContact',
     });
-
-    showModal(
-      (
-        <div>You've clicked a contact. Prick!</div>
-      ), null, 'noPadding', false
-    );
   };
 
   render() {

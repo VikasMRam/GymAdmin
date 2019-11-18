@@ -5,19 +5,10 @@ import { parse } from 'query-string';
 import { Datatable } from 'sly/services/datatable';
 import DashboardAgentContactsSectionContainer from 'sly/containers/dashboard/DashboardAgentContactsSectionContainer';
 
-const DashboardAgentContactsPage = ({ location, match }) => {
+const DashboardAgentContactsPage = ({ location }) => {
   const { 'page-number': pageNumber, ...filters } = parse(location.search);
-  // if (!match.params.taskType) {
-  //   return (
-  //     <Redirect
-  //       to={generatePath(AGENT_DASHBOARD_TASKS_PATH, {
-  //         taskType: TODAY,
-  //       })}
-  //     />
-  //   );
-  // }
+
   const sectionFilters = {
-    // taskType: match.params.taskType,
     'page-number': pageNumber,
     include: 'entities',
     'filter[entity_type]': 'eq:Property'

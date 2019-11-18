@@ -4,8 +4,6 @@ import { withRouter } from 'react-router';
 
 import { prefetch, withUser } from 'sly/services/newApi';
 import contactPropType from 'sly/propTypes/contact';
-import ModalController from 'sly/controllers/ModalController';
-import NotificationController from 'sly/controllers/NotificationController';
 import DashboardAgentContactsSection from 'sly/components/organisms/DashboardAgentContactsSection';
 
 const getPaginationData = ({ result, meta }) => {
@@ -57,30 +55,17 @@ export default class DashboardAgentTasksSectionContainer extends Component {
     }
 
     return (
-      <NotificationController>
-        {({ notifyInfo, notifyError }) => (
-          <ModalController>
-            {({ show, hide }) => (
-              <DashboardAgentContactsSection
-                {...props}
-                isPageLoading={!hasFinished || !datatable.hasFinished}
-                datatable={datatable}
-                contacts={contacts}
-                contactsRaw={contactsRaw}
-                pagination={getPaginationData(status.contacts)}
-                activeTab={match.params.taskType}
-                // onSearchTextKeyUp={this.handleSearchTextKeyUp}
-                showModal={show}
-                hideModal={hide}
-                meta={meta || {}}
-                notifyError={notifyError}
-                notifyInfo={notifyInfo}
-                refetchContacts={this.props.status.contacts.refetch}
-              />
-            )}
-          </ModalController>
-        )}
-      </NotificationController>
+      <DashboardAgentContactsSection
+        {...props}
+        isPageLoading={!hasFinished || !datatable.hasFinished}
+        datatable={datatable}
+        contacts={contacts}
+        contactsRaw={contactsRaw}
+        pagination={getPaginationData(status.contacts)}
+        activeTab={match.params.taskType}
+        meta={meta || {}}
+        refetchContacts={this.props.status.contacts.refetch}
+      />
     );
   }
 }
