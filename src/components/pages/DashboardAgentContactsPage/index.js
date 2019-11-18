@@ -20,6 +20,7 @@ const DashboardAgentContactsPage = ({ location, match }) => {
     // taskType: match.params.taskType,
     'page-number': pageNumber,
     include: 'entities',
+    'filter[entity_type]': 'eq:Property'
   };
   return (
     <DashboardPageTemplate activeMenuItem="My Contacts">
