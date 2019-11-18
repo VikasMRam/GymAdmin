@@ -163,18 +163,20 @@ export default class UpdateFamilyStageForm extends Component {
         {(isNext(FAMILY_STAGE_WON) || chosenDetails === ESTIMATED_MOVE_IN) &&
           <Field
             name="moveInDate"
-            label={<span>Move-In date<Span palette="danger">*</Span></span>}
+            label="Move-In date"
             type="date"
             placeholder="mm/dd/yyyy"
             component={ReduxField}
+            required
             dateFormat="MM/dd/yyyy"
           />
         }
         {isNext(FAMILY_STAGE_WON, FAMILY_STAGE_FAMILY_CHOSEN) &&
           <Field
             name="communityName"
-            label={<span>Community name<Span palette="danger">*</Span></span>}
+            label="Community name"
             type="text"
+            required
             component={ReduxField}
           />
         }
@@ -200,11 +202,12 @@ export default class UpdateFamilyStageForm extends Component {
         {isNext(FAMILY_STAGE_WON) &&
           <Field
             name="monthlyFees"
-            label={<span>Resident&apos;s monthly fees (rent + care)<Span palette="danger">*</Span></span>}
+            label="Resident&apos;s monthly fees (rent + care)"
             type="iconInput"
             component={ReduxField}
             parse={priceParser}
             format={priceFormatter}
+            required
           />
         }
         {isNext(FAMILY_STAGE_WON) &&
@@ -273,20 +276,22 @@ export default class UpdateFamilyStageForm extends Component {
         {isNext(FAMILY_STAGE_LOST) &&
           <Field
             name="lossReason"
-            label={<span>Closed reason<Span palette="danger">*</Span></span>}
+            label="Closed reason"
             type="choice"
             component={ReduxField}
             options={lossReasonOptions}
+            required
           />
         }
         {isNext(FAMILY_STAGE_REJECTED) &&
           <Field
             name="rejectReason"
-            label={<span>Select a reason<Span palette="danger">*</Span></span>}
+            label="Select a reason"
             type="choice"
             placeholder="Select rejection reason"
             component={ReduxField}
             options={reasonsOptions}
+            required
           />
         }
         {isNext(FAMILY_STAGE_LOST, FAMILY_STAGE_REJECTED) &&
@@ -297,10 +302,11 @@ export default class UpdateFamilyStageForm extends Component {
             rows={3}
             showCharacterCount
             name={FAMILY_STAGE_LOST ? 'lostDescription' : 'rejectDescription'}
-            label={<span>Description<Span palette="danger">*</Span></span>}
+            label="Description"
             placeholder="Please leave a note on the reason for closing this lead..."
             component={ReduxField}
             maxLength={200}
+            required
           />
         }
         {isNext(FAMILY_STAGE_LOST, FAMILY_STAGE_REJECTED) &&
