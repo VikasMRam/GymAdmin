@@ -159,8 +159,8 @@ export default class ReferralSearchContainer extends Component {
   }
 
   getGeoFromLocationValue = (value) => {
-    if (value && value.geometry && value.geometry.location) {
-      return [value.geometry.location.lat(), value.geometry.location.lng(), 10].join(',');
+    if (value && value.geo) {
+      return [value.geo.latitude, value.geo.longitude, 10].join(',');
     }
     return null;
   }
@@ -251,8 +251,10 @@ export default class ReferralSearchContainer extends Component {
     const {
       referralMode, parentClient, user,
     } = this.props;
-    const { communitiesInterested, children: childrenClients, clientInfo, recommendedAgents } = parentClient;
+    const { communitiesInterested, children: childrenClients, clientInfo, recommendedAgents, uuidAux } = parentClient;
     const { slyCommunityMessage: communityMessage, slyAgentMessage: agentMessage } = clientInfo;
+    const { uuidInfo } = uuidAux;
+    const { locationInfo } = uuidInfo;
     const { communities, agents } = this.state;
     const communityReferralClients = [];
     const agentReferralClients = [];
@@ -327,6 +329,7 @@ export default class ReferralSearchContainer extends Component {
                   childrenClientCommunityIdsMap={childrenClientCommunityIdsMap}
                   handleCommunitySearch={this.doCommunitySearch}
                   handleLocationSearch={this.handleLocationCommunitySearch}
+                  preferredLocation={locationInfo}
                   setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto('DashboardCommunityReferralContactDetailsContainer'); }}
                 />
                 <WizardStep
@@ -381,6 +384,7 @@ export default class ReferralSearchContainer extends Component {
                 handleLocationSearch={this.handleLocationAgentSearch}
                 agents={agents}
                 childrenClientAgentIdsMap={childrenClientAgentIdsMap}
+                preferredLocation={locationInfo}
                 setSelectedAgent={(a) => { this.setSelectedAgent(a); goto('DashboardAgentReferralContactDetailsContainer'); }}
               />
               <WizardStep

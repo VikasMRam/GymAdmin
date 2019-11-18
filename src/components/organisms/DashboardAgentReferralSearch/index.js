@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, arrayOf, object } from 'prop-types';
+import { func, arrayOf, object, shape, string } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -29,11 +29,11 @@ const StyledDashboardAdminReferralAgentTile = styled(DashboardAdminReferralAgent
 const CursorStyledDashboardAdminReferralAgentTile = cursor(StyledDashboardAdminReferralAgentTile);
 
 const DashboardAgentReferralSearch = ({
-  agents, childrenClientAgentIdsMap, handleAgentSearch, setSelectedAgent, onSubmit, handleLocationSearch,
+  agents, childrenClientAgentIdsMap, handleAgentSearch, setSelectedAgent, onSubmit, handleLocationSearch, preferredLocation,
 }) => (
   <Wrapper>
     <SendReferralTitleBlock size="subtitle">Send referral to agent</SendReferralTitleBlock>
-    <DashboardCommunityAgentSearchBox label="Find an agent" handleSubmit={handleAgentSearch} handleLocationSearch={handleLocationSearch} />
+    <DashboardCommunityAgentSearchBox label="Find an agent" preferredLocation={preferredLocation} handleSubmit={handleAgentSearch} handleLocationSearch={handleLocationSearch} />
     {!agents &&
     <>
       <Hr size="large" />
@@ -70,6 +70,10 @@ DashboardAgentReferralSearch.propTypes = {
   sendReferral: func,
   onSubmit: func,
   agents: arrayOf(adminCommunityPropType),
+  preferredLocation: shape({
+    city: string,
+    state: string,
+  }),
   childrenClientAgentIdsMap: object,
 };
 
