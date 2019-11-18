@@ -25,7 +25,7 @@ const ReduxForm = reduxForm({
   validate,
 })(AddTaskForm);
 
-@prefetch('users', 'getUsers')
+@prefetch('users', 'getUsers',(request) => request({'page-size': 30}) )
 
 @query('createTask', 'createTask')
 
