@@ -282,7 +282,7 @@ jobs:
             # - run:
             #     command: npx cypress verify
 
-            - save_cache:
+            - restore_cache:
                 working_directory: ~/project/e2e
                 key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
 
