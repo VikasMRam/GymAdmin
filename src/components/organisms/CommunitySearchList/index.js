@@ -104,23 +104,23 @@ const CommunitySearchList = ({
 
   if (communityList.length < 1) {
     mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
-      <StyledLink key={mostSearchedCity.title} to={mostSearchedCity.to}>
+      <Link key={mostSearchedCity.title} to={mostSearchedCity.to}>
         <Image src={mostSearchedCity.image} aspectRatio="4:3">
           <Centered>
             <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
             <Block palette="white">{mostSearchedCity.title}</Block>
           </Centered>
         </Image>
-      </StyledLink>
+      </Link>
     ));
     usefulInformationTilesComponents = usefulInformationTiles.map(usefulInformation => (
-      <StyledLink key={usefulInformation.title} to={usefulInformation.to}>
+      <Link key={usefulInformation.title} to={usefulInformation.to}>
         <Image src={usefulInformation.image} aspectRatio="4:3">
           <Centered>
             <Heading size="subtitle" palette="white">{usefulInformation.title}</Heading>
           </Centered>
         </Image>
-      </StyledLink>
+      </Link>
     ));
   }
 
