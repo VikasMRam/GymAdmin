@@ -584,6 +584,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     let canEditFamilyDetails = isConnected;
     const isClientAdminUser = userIs(user, PLATFORM_ADMIN_ROLE) ||
       (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg);
+    const isAgentUser = userIs(user, AGENT_ND_ROLE);
     // Rule when lead is created by self
     if (stage === FAMILY_STAGE_NEW && isClientAdminUser) {
       showUpdateAddNoteButtons = true;
@@ -655,8 +656,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               user={user}
               client={client}
             />
-            {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
-            {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
+            {showAcceptRejectButtons && <FamilySummary snap="top" client={client} isAgentUser={isAgentUser} to={familyDetailsPath} />}
+            {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} isAgentUser={isAgentUser} to={familyDetailsPath} />}
           </BigScreenSummarySection>
           <SmallScreenClientNameWrapper>
             {clientName}
@@ -697,6 +698,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               <FamilyDetailsTab>
                 <FamilyDetailsFormContainer
                   client={client}
+                  isAgentUser={isAgentUser}
                   rawClient={rawClient}
                   refetchClient={refetchClient}
                   notifyInfo={notifyInfo}

@@ -48,7 +48,7 @@ const SeeMore = cursor(Block);
 SeeMore.displayName = 'SeeMore';
 
 const FamilySummary = ({
-  client, snap, to, className, noHeading,
+  client, isAgentUser, snap, to, className, noHeading,
 }) => (
   <Box snap={snap} className={className}>
     {!noHeading && <PaddedHeading size="body">Summary</PaddedHeading>}
@@ -89,7 +89,7 @@ const FamilySummary = ({
         <Block size="caption">{client.clientInfo.referralSource}</Block>
       </ColumWrapper>
       }
-      {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.financialInfo.medicaid &&
+      {!isAgentUser && client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.financialInfo.medicaid &&
       <ColumWrapper>
         <Label palette="danger">Medicaid</Label>
         <Block size="caption">Chose Qualifies on Wizard</Block>
@@ -159,6 +159,7 @@ const FamilySummary = ({
 
 FamilySummary.propTypes = {
   client: clientPropType,
+  isAgentUser: bool,
   to: string.isRequired,
   snap: string,
   className: string,
