@@ -40,6 +40,11 @@ describe('Field', () => {
       .text()).toBe(`0/${maxLength}`);
   });
 
+  it('renders * if marked as required', () => {
+    const wrapper = wrap({ label: 'label', required: true });
+    expect(wrapper.find('Span').children().text()).toEqual('*');
+  });
+
   it('character count is updated', () => {
     const maxLength = 20;
     const value = 'test val';
