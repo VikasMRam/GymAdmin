@@ -60,15 +60,21 @@ const StyledTd = styled(Td)`
 
 const CommunityCell = pad(mobileOnly(StyledTd, css`
   ${twoColumnCss};
-  order: 3;
+  order: 2;
 `), 'regular');
 CommunityCell.displayName = 'CommunityCell';
 
-const PriorityCell = pad(mobileOnly(StyledTd, css`
+const EmailCell = pad(mobileOnly(StyledTd, css`
   ${twoColumnCss};
-  order: 5;
+  order: 3;
 `), 'regular');
-PriorityCell.displayName = 'PriorityCell';
+EmailCell.displayName = 'EmailCell';
+
+const PhoneCell = pad(mobileOnly(StyledTd, css`
+  ${twoColumnCss};
+  order: 4;
+`), 'regular');
+PhoneCell.displayName = 'PhoneCell';
 
 const ContactRowCard = ({ contact, onContactClick }) => {
   const relatedCommunity = contact.entities[0];
@@ -83,6 +89,8 @@ const ContactRowCard = ({ contact, onContactClick }) => {
           </Link>
         }
       </CommunityCell>
+      <EmailCell>{contact.email}</EmailCell>
+      <PhoneCell>{contact.mobilePhone}</PhoneCell>
     </Wrapper>
   );
 };

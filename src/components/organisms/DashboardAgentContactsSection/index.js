@@ -21,7 +21,10 @@ import {
 import { stripPageNumber } from 'sly/services/helpers/appPaths';
 
 const TABLE_HEADINGS = [
-  { text: 'Contact Name' },
+  { text: 'Contact name' },
+  { text: 'Community' },
+  { text: 'Email' },
+  { text: 'Phone number' },
 ];
 
 const Section = styled.section`
@@ -169,10 +172,7 @@ export default class DashboardAgentContactsSection extends Component {
   };
 
   render() {
-    const {
-      contacts, pagination, activeTab, isPageLoading, noBorder, meta, location,
-      datatable,
-    } = this.props;
+    const { contacts, pagination, isPageLoading, noBorder, meta, datatable } = this.props;
 
     return (
       <>
@@ -184,7 +184,7 @@ export default class DashboardAgentContactsSection extends Component {
         </TwoColumn>
         <StyledTableHeaderButtons
           datatable={datatable}
-          modelConfig={{ name: 'Task', defaultSearchField: 'title' }}
+          modelConfig={{ name: 'Contact', defaultSearchField: 'name' }}
           meta={meta}
         />
 

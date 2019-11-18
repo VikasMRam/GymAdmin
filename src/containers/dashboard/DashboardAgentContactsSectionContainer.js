@@ -4,7 +4,6 @@ import { withRouter } from 'react-router';
 
 import { prefetch, withUser } from 'sly/services/newApi';
 import contactPropType from 'sly/propTypes/contact';
-import DashboardAgentTasksSection from 'sly/components/organisms/DashboardAgentTasksSection';
 import ModalController from 'sly/controllers/ModalController';
 import NotificationController from 'sly/controllers/NotificationController';
 import DashboardAgentContactsSection from 'sly/components/organisms/DashboardAgentContactsSection';
@@ -19,12 +18,8 @@ const getPaginationData = ({ result, meta }) => {
   const end = (current * size) + count;
   const paginationRangeString = count > 0 ? `${start}-${end} of` : '';
   const filteredCount = meta.filtered_count;
-  const text = `Showing ${paginationRangeString} ${filteredCount} tasks`;
+  const text = `Showing ${paginationRangeString} ${filteredCount} contacts`;
   const show = filteredCount > size;
-  const todayCount = meta.due_today_count;
-  const overdueCount = meta.over_due_count;
-  const upcomingCount = meta.upcoming_count;
-  const completedCount = meta.completed_count;
 
   return ({
     current,
@@ -34,10 +29,6 @@ const getPaginationData = ({ result, meta }) => {
     filteredCount,
     text,
     show,
-    todayCount,
-    overdueCount,
-    upcomingCount,
-    completedCount,
   });
 };
 @withRouter
