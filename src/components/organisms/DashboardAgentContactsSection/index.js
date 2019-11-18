@@ -126,9 +126,9 @@ export default class DashboardAgentContactsSection extends Component {
       <>
         <TwoColumn>
           <Heading level="subtitle">Contacts</Heading>
-          <IconButton icon="plus" hideTextInMobile onClick={this.handleAddContactClick}>
-            Add contact
-          </IconButton>
+          {/*<IconButton icon="plus" hideTextInMobile onClick={this.handleAddContactClick}>*/}
+          {/*  Add contact*/}
+          {/*</IconButton>*/}
         </TwoColumn>
         <StyledTableHeaderButtons
           datatable={datatable}
