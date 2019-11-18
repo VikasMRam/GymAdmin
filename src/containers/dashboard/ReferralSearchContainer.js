@@ -329,6 +329,7 @@ export default class ReferralSearchContainer extends Component {
                   childrenClientCommunityIdsMap={childrenClientCommunityIdsMap}
                   handleCommunitySearch={this.doCommunitySearch}
                   handleLocationSearch={this.handleLocationCommunitySearch}
+                  preferredLocation={locationInfo}
                   setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto('DashboardCommunityReferralContactDetailsContainer'); }}
                 />
                 <WizardStep

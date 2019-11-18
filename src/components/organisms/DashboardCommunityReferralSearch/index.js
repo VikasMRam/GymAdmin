@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, arrayOf, object, bool } from 'prop-types';
+import { func, arrayOf, object, bool, shape, string } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -31,11 +31,12 @@ const CursorStyledDashboardAdminReferralCommunityTile = cursor(StyledDashboardAd
 
 const DashboardCommunityReferralSearch = ({
   communities, isAdminUser, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit, handleLocationSearch, showAgentList,
+  preferredLocation,
 }) => {
   return (
     <Wrapper>
       <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
-      <DashboardCommunityAgentSearchBox label="Find a community" handleSubmit={handleCommunitySearch} handleLocationSearch={handleLocationSearch} />
+      <DashboardCommunityAgentSearchBox label="Find a community" preferredLocation={preferredLocation} handleSubmit={handleCommunitySearch} handleLocationSearch={handleLocationSearch} />
       {!communities &&
       <>
         <Hr size="large" />
@@ -84,6 +85,10 @@ DashboardCommunityReferralSearch.propTypes = {
   isAdminUser: bool,
   childrenClientCommunityIdsMap: object,
   showAgentList: bool,
+  preferredLocation: shape({
+    city: string,
+    state: string,
+  }),
 };
 
 export default DashboardCommunityReferralSearch;
