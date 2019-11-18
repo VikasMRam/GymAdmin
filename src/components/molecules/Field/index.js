@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import { Label, Input, Icon, Block, Select } from 'sly/components/atoms';
+import { Label, Input, Icon, Block, Select, Span } from 'sly/components/atoms';
 import textAlign from 'sly/components/helpers/textAlign';
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
@@ -201,6 +201,7 @@ const Field = ({
   hideValue,
   showCharacterCount,
   options,
+  required,
   ...props
 }) => {
   const inputProps = {
@@ -232,6 +233,7 @@ const Field = ({
           {label &&
             <StyledLabel htmlFor={inputProps.id} renderInputFirst={renderInputFirst}>
               {label}
+              {required && <Span palette="danger">*</Span>}
             </StyledLabel>
           }
           {labelRight &&
@@ -273,6 +275,7 @@ Field.propTypes = {
   message: string,
   hideErrors: bool,
   label: node,
+  required: bool,
   showCharacterCount: bool,
   type: oneOf([
     'textarea',
