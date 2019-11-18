@@ -5,7 +5,7 @@ import { generatePath } from 'react-router';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import userPropType from 'sly/propTypes/user';
 import { CONVERSATION_PARTICIPANT_TYPE_USER } from 'sly/constants/conversations';
-import { FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH, FAMILY_DASHBOARD_MESSAGES_PATH } from 'sly/constants/dashboardAppPaths';
+import { FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH, FAMILY_DASHBOARD_PROFILE_PATH } from 'sly/constants/dashboardAppPaths';
 import { prefetch, withUser } from 'sly/services/newApi';
 import CommunityPricingWizardLanding from 'sly/components/organisms/CommunityPricingWizardLanding';
 
@@ -29,7 +29,7 @@ export default class CommunityPricingWizardLandingContainer extends Component {
 
   handleBeginClick = () => {
     const { conversations, onBeginClick } = this.props;
-    let redirectLink = FAMILY_DASHBOARD_MESSAGES_PATH;
+    let redirectLink = FAMILY_DASHBOARD_PROFILE_PATH;
     if (conversations.length) {
       redirectLink = generatePath(FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH, { id: conversations[0].id });
     }
