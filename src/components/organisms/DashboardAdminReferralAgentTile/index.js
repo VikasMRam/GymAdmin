@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import { string, bool, func } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
-import { Heading, Badge, Block, Span, Box, Button } from 'sly/components/atoms';
+import { Heading, Badge, Block, Span, Box, Button, Link } from 'sly/components/atoms';
 import cursor from 'sly/components/helpers/cursor';
 import IconBadge from 'sly/components/molecules/IconBadge';
 import Stage from 'sly/components/molecules/Stage';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import pad from 'sly/components/helpers/pad';
 import { getReferralSentTimeText } from 'sly/services/helpers/communityReferral';
+import { copyToClipboard } from 'sly/services/helpers/utils';
 
 const TopWrapper = styled.div`
   padding: ${size('spacing.large')};
@@ -121,8 +122,8 @@ function transformAgent(agent) {
     if (adminNotes) {
       an = adminNotes;
     }
-   cellPhone = info.cellPhone;
-   workPhone = info.workPhone;
+    cellPhone = info.cellPhone;
+    workPhone = info.workPhone;
   }
 
   const agentProps = {
@@ -137,8 +138,21 @@ function transformAgent(agent) {
   return agentProps;
 }
 
+const getHeading = (path, name) => {
+  if (path) {
+    return (
+      <Link size="caption" to={path}>
+        <Heading palette="primary" size="body">{name}</Heading>
+      </Link>
+    );
+  }
+  return (
+    <Heading size="body">{name}</Heading>
+  );
+};
+/* eslint-disable jsx-a11y/anchor-is-valid */
 const DashboardAdminReferralAgentTile = ({
-  className, onClick, agent, isRecommended, bottomActionText, bottomActionOnClick, stage, referralSentAt, actionText, actionClick,
+  className, onClick, agent, isRecommended, bottomActionText, bottomActionOnClick, stage, referralSentAt, actionText, actionClick, path,
 }) => {
   const {
     name, slyScore, businessName, workPhone, cellPhone, leadCount, adminNotes,
@@ -149,7 +163,7 @@ const DashboardAdminReferralAgentTile = ({
       <TopWrapper>
         <BigScreenSlyScorebadge><Block weight="bold">{slyScore}</Block><Block weight="bold" palette="grey" size="tiny">SLY</Block></BigScreenSlyScorebadge>
         <SmallScreenSection>
-          <Heading size="body">{name}</Heading>
+          {getHeading(path, name)}
           <MobileSlyscoreSection>
             <SlyScoreBadge palette="grey" variation="stroke" borderRadius="small" >{slyScoreText}</SlyScoreBadge>
             {isRecommended && <IconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="RECOMMENDED" />}
@@ -157,7 +171,7 @@ const DashboardAdminReferralAgentTile = ({
         </SmallScreenSection>
         <DetailsTable>
           <BigScreenSection>
-            <Heading size="body">{name}</Heading>
+            {getHeading(path, name)}
           </BigScreenSection>
           <BigScreenSection>
             {isRecommended && <IconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="RECOMMENDED" />}
@@ -171,13 +185,13 @@ const DashboardAdminReferralAgentTile = ({
           {workPhone && (
             <>
               <Span size="caption" palette="grey" variation="dark">Work phone</Span>
-              <Span size="caption">{workPhone}</Span>
+              <Link palette="primary" size="caption" transparent onClick={() => { copyToClipboard(workPhone); }} >{workPhone}</Link>
             </>
           )}
           {cellPhone && (
             <>
               <Span size="caption" palette="grey" variation="dark">Cell phone</Span>
-              <Span size="caption">{cellPhone}</Span>
+              <Link palette="primary" size="caption" transparent onClick={() => { copyToClipboard(cellPhone); }} >{cellPhone}</Link>
             </>
           )}
           {(leadCount !== undefined && leadCount !== null) && (
@@ -225,6 +239,7 @@ DashboardAdminReferralAgentTile.propTypes = {
   bottomActionOnClick: func,
   stage: string,
   referralSentAt: string,
+  path: string,
 };
 
 export default DashboardAdminReferralAgentTile;
