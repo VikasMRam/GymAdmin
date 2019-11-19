@@ -54,6 +54,13 @@ export default class RetentionPopup extends Component {
     this.ifvisible.on('idle', this.onIdleHandler);
   }
 
+  componentDidUpdate(prevProps) {
+    if (!prevProps.user && this.props.user) {
+      this.removeAllEventListeners();
+    }
+  }
+
+
   componentWillUnmount() {
     this.removeAllEventListeners();
   }
@@ -88,7 +95,7 @@ export default class RetentionPopup extends Component {
     />, 'eBook');
   };
 
-  isModalShown = () => localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN
+  isModalShown = () => localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN || this.props.user
 
   onMouseoutHandler = (e) => {
     const currentTime = new Date().getTime();
