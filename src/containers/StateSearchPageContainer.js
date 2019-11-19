@@ -63,7 +63,7 @@ export default class StateSearchPageContainer extends Component {
 
     const changedParams = paramsToRemove.reduce((cumul, param) => {
       if (param === 'toc') {
-        cumul[param] = 'retirement-community';
+        cumul[param] = 'nursing-homes';
       } else {
         cumul[param] = undefined;
       }

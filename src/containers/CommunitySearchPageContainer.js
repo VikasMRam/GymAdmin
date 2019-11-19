@@ -83,7 +83,7 @@ export default class CommunitySearchPageContainer extends PureComponent {
 
     const changedParams = paramsToRemove.reduce((cumul, param) => {
       if (param === 'toc') {
-        cumul[param] = 'retirement-community';
+        cumul[param] = 'nursing-homes';
       } else {
         cumul[param] = undefined;
       }

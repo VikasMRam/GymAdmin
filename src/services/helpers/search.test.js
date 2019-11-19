@@ -28,10 +28,10 @@ it('type of care filters are transformed into url correctly', () => {
       selected: false,
     });
 
-  baseParams.toc = 'retirement-community';
-  expect(filterLinkPath({ ...baseParams, ...filterParams }, { toc: 'retirement-community' }))
+  baseParams.toc = 'nursing-homes';
+  expect(filterLinkPath({ ...baseParams, ...filterParams }, { toc: 'nursing-homes' }))
     .toEqual({
-      path: '/retirement-community/california/san-francisco?radius=20&size=small',
+      path: '/nursing-homes/california/san-francisco?radius=20&size=small',
       selected: true,
     });
 });

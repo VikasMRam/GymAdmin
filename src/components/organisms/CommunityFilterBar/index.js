@@ -35,7 +35,7 @@ const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
   const actualToc = tocs.find(elem => (elem.value === toc));
   const filtersApplied = getFiltersApplied(searchParams);
 
-  const tocApplied = (toc && toc !== 'retirement-community');
+  const tocApplied = (toc && toc !== 'nursing-homes');
   return (
     <SectionWrapper hasFilters={tocApplied || size || budget}>
       {tocApplied && (
