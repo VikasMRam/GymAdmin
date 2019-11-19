@@ -88,6 +88,12 @@ describe('FamilyDetailsForm', () => {
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' }).prop('disabled')).toBeTruthy();
     expect(wrapper.find(Field).filter({ name: 'residentName' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'preferredLocation' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'referralSource' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'medicaid' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'slyAgentMessage' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'slyCommunityMessage' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'slyMessage' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'lookingFor' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'gender' })).toHaveLength(1);
     expect(wrapper.find('StyledSearchBoxContainer')).toHaveLength(1);
@@ -106,6 +112,12 @@ describe('FamilyDetailsForm', () => {
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' }).prop('disabled')).toBeFalsy();
     expect(wrapper.find(Field).filter({ name: 'residentName' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'preferredLocation' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'referralSource' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'medicaid' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'slyAgentMessage' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'slyCommunityMessage' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'slyMessage' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'lookingFor' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'gender' })).toHaveLength(1);
     expect(wrapper.find('StyledSearchBoxContainer')).toHaveLength(1);
@@ -119,5 +131,13 @@ describe('FamilyDetailsForm', () => {
     const wrapper = wrap({ handleSubmit });
     wrapper.find('Form').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
+  });
+
+  it('does not render medicard and slyAgentMessage for agents', () => {
+    const wrapper = wrap({
+      isAgentUser: true,
+    });
+    expect(wrapper.find(Field).filter({ name: 'medicaid' })).toHaveLength(0);
+    expect(wrapper.find(Field).filter({ name: 'slyAgentMessage' })).toHaveLength(0);
   });
 });
