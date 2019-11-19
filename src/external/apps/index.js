@@ -10,12 +10,11 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { host, authTokenUrl } from 'sly/config';
 import { getOrigin } from 'sly/services/helpers/url';
-import api from 'sly/services/api';
 import { ApiProvider, createApi } from 'sly/services/newApi';
 import configureStore from 'sly/external/apps/store/configure';
 import App from 'sly/external/apps/App';
 
-const store = configureStore({}, { api: api.create({ credentials: 'include' }) });
+const store = configureStore({});
 const beesApi = createApi();
 
 const renderApp = () => (

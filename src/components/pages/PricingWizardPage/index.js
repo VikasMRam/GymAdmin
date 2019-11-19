@@ -83,7 +83,8 @@ class PricingWizardPage extends Component {
     userHas: func,
     uuidAux: object,
     onComplete: func,
-    userActionSubmit: func,
+    submitActionAndCreateUser: func,
+    updateUuidAux: func,
     redirectTo: func,
     match: object,
   };
@@ -119,32 +120,42 @@ class PricingWizardPage extends Component {
     const { id } = community;
     this.budget = budget;
     sendEvent('budget-selected', id, budget.toString());
-  }
+  };
 
   // This function is called after the step is changed,
   // goto() is a hack to make the page stay in current step
   handleStepChange = ({
-    currentStep, data, goto, doSubmit, openConfirmationModal,
+    currentStep, data, goto, openConfirmationModal,
   }) => {
-    const { community, userActionSubmit, userHas } = this.props;
+    const { community, userHas, submitActionAndCreateUser, updateUuidAux } = this.props;
     const { id } = community;
     const { interest } = data;
 
     sendEvent('step-completed', id, currentStep);
-    userActionSubmit(data);
+
+    if (currentStep === 'EstimatedPricing') {
+      updateUuidAux(data).then(() => {
+        if (userHas(['name', 'phoneNumber'])) {
+          submitActionAndCreateUser(data).then(() => goto('WhatToDoNext'));
+        }
+      });
+    }
+
+    if (currentStep === 'Contact') {
+      submitActionAndCreateUser(data, currentStep);
+    }
+
     if (currentStep === 'WhatToDoNext') {
       if (interest === 'talk-advisor') {
-        doSubmit(openConfirmationModal);
-      } else if (interest !== 'explore-affordable-options') {
-        goto('ExploreAffordableOptions');
+        goto('WhatToDoNext');
+        updateUuidAux(data).then(openConfirmationModal);
+      } else {
+        updateUuidAux(data);
       }
     }
-    if (currentStep === 'EstimatedPricing' && userHas(['name', 'phoneNumber'])) {
-      goto('WhatToDoNext');
-    }
-    if (currentStep === 'Contact') {
-      // Track goal events
-      sendEvent('pricing-contact-submitted', id, currentStep);
+
+    if (currentStep === 'ExploreAffordableOptions') {
+      updateUuidAux(data);
     }
   };
 
@@ -199,13 +210,16 @@ class PricingWizardPage extends Component {
         <Helmet>
           <meta name="robots" content="noindex" />
         </Helmet>
+
         <Header />
+
         <Column backgroundImage={mainImage}>
-          <StyledCommunityInfo inverted community={community} />
+          <StyledCommunityInfo inverted community={community} headerIsLink />
         </Column>
+
         <WizardController
           formName="PricingWizardForm"
-          onComplete={data => onComplete(data).then(openConfirmationModal)}
+          onComplete={openConfirmationModal}
           onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
         >
           {({
@@ -230,7 +244,6 @@ class PricingWizardPage extends Component {
                       onRoomTypeChange={handleRoomTypeChange}
                       onCareTypeChange={handleCareTypeChange}
                       uuidAux={uuidAux}
-                      onSubmit={onSubmit}
                     />
                     <WizardStep
                       component={CommunityBookATourContactFormContainer}
@@ -239,7 +252,6 @@ class PricingWizardPage extends Component {
                       user={user}
                       heading={formHeading}
                       subheading={formSubheading}
-                      onSubmit={onSubmit}
                     />
                     <WizardStep
                       component={CommunityPricingWizardWhatToDoNextFormContainer}
@@ -280,6 +292,7 @@ class PricingWizardPage extends Component {
               );
             }}
         </WizardController>
+
         <Route path={`${match.url}/thank-you`}>
           {routeProps => (
             <Modal isOpen={!!routeProps.match} onClose={() => redirectTo(community.url)} closeable>
@@ -293,6 +306,7 @@ class PricingWizardPage extends Component {
             </Modal>
           )}
         </Route>
+
         <Route path={`${match.url}/help`}>
           {routeProps => (
             <Modal isOpen={!!routeProps.match} onClose={() => redirectTo(match.url)} closeable>

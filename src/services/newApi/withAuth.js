@@ -46,7 +46,7 @@ export default function withAuth(InnerComponent) {
 
     static WrappedComponent = InnerComponent;
 
-    createOrUpdateUser = (data) => {
+    createOrUpdateUser = (data, { ignoreAlreadyRegistered } = {}) => {
       const { user, updateUser, status } = this.props;
       const { name, phone, email } = data;
 
@@ -57,6 +57,11 @@ export default function withAuth(InnerComponent) {
           name,
           email,
           phone_number: phone,
+        }).catch((error) => {
+          if (!(error.status === 400 && ignoreAlreadyRegistered)) {
+            return Promise.reject(error);
+          }
+          return Promise.resolve();
         });
       }
 

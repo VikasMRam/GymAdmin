@@ -1,5 +1,5 @@
 import React from 'react';
-import { bool } from 'prop-types';
+import { bool, object } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { community as communityPropType } from 'sly/propTypes/community';
@@ -76,6 +76,9 @@ GetCurrentAvailabilityContainer.typeHydrationId = 'GetCurrentAvailabilityContain
 GetCurrentAvailabilityContainer.propTypes = {
   hasAlreadyRequestedPricing: bool,
   community: communityPropType,
+  history: object,
+  match: object,
+  location: object,
 };
 
 const withCommunity = prefetch('community', 'getCommunity', (req, { match }) => req({

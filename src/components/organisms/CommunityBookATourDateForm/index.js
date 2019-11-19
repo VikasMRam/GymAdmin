@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, func, object } from 'prop-types';
+import { string, func, bool } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { Field } from 'redux-form';
@@ -50,7 +50,7 @@ const StyledHelpBubble = styled(HelpBubble)`
 `;
 
 const CommunityBookATourDateForm = ({
-  error, onDateChange, onTimeChange, handleSubmit, userDetails,
+  error, onDateChange, onTimeChange, handleSubmit, medicaidCoverage,
 }) => {
   const from = dayjs();
   const to = dayjs().add(8, 'days');
@@ -76,7 +76,7 @@ const CommunityBookATourDateForm = ({
         component={ReduxField}
         onChange={onTimeChange}
       />
-      {!(userDetails && userDetails.medicaidCoverage) &&
+      {!medicaidCoverage &&
         <>
           <MedicaidLabel size="caption">
             Do you qualify for Medicaid?
@@ -100,7 +100,7 @@ const CommunityBookATourDateForm = ({
 
 CommunityBookATourDateForm.propTypes = {
   error: string,
-  userDetails: object,
+  medicaidCoverage: string,
   onDateChange: func,
   onTimeChange: func,
   handleSubmit: func,

@@ -2,7 +2,7 @@ import { select } from './tests';
 
 export const doCustomPricingFlow = (cy, data) => {
   const {
-    communitySlug, name, phoneNumber, typeOfRoom, typeOfCare, medicaid,
+    communitySlug, name, phone, typeOfRoom, typeOfCare, medicaid,
   } = data;
 
   cy.contains('Get your Pricing and Availability');
@@ -16,11 +16,11 @@ export const doCustomPricingFlow = (cy, data) => {
   cy.get('button').contains('Continue').click();
 
   cy.get('input[name="name"]').type(name);
-  cy.get('input[name="phone"]').type(phoneNumber);
+  cy.get('input[name="phone"]').type(phone);
 
   cy.get('button').contains('Continue').click();
 
-  cy.get('button').contains('Talk to an advisor').click();
+  cy.get('button').contains('Explore more affordable options').click();
 
   cy.get('button').contains('$2000 - $3000').click();
 

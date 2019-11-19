@@ -80,6 +80,7 @@ describe('Retention popup', () => {
   function mockDate(isoDate) {
     global.Date = class extends RealDate {
       constructor() {
+        super();
         return new RealDate(isoDate);
       }
     };

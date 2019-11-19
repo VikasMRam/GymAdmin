@@ -1,9 +1,9 @@
 import { responsive, select, waitForHydration } from '../../helpers/tests';
-import buildEntity from '../../helpers/buildEntity';
 import { toJson } from '../../helpers/request';
-import { getCommunity } from '../../helpers/getCommunity';
 import { formatMoney } from '../../helpers/money';
 import { TEST_COMMUNITY } from '../../constants/community';
+
+import { normalizeResponse } from 'sly/services/newApi';
 
 const randHash = () => Math.random().toString(36).substring(7);
 
@@ -33,7 +33,7 @@ describe('Community Profile Sections', () => {
     cy.server();
     cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
-    getCommunity(TEST_COMMUNITY).then((response) => {
+    cy.getCommunity(TEST_COMMUNITY).then((response) => {
       community = response;
     });
   });
@@ -127,8 +127,8 @@ describe('Community Profile Sections', () => {
           entitySlug: community.id,
           entityType: 'Community',
         });
-        const response = await toJson(xhr);
-        userSave = buildEntity(response);
+        const response = await toJson(xhr.response);
+        userSave = normalizeResponse(response);
         expect(userSave.entitySlug).to.equal(community.id);
       });
 

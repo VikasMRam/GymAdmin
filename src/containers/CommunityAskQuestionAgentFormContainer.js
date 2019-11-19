@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
-import { func, string, object, shape } from 'prop-types';
+import { func, string, shape } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import SlyEvent from 'sly/services/helpers/events';
 import { query, withUser } from 'sly/services/newApi';
-import { ASK_QUESTION } from 'sly/services/api/actions';
-import { resourceCreateRequest } from 'sly/store/resource/actions';
 import {
   createValidator,
   required,
@@ -17,7 +15,6 @@ import {
 import userPropType from 'sly/propTypes/user';
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
-import { getDetail } from 'sly/store/selectors';
 import { AGENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
 
 const validate = createValidator({
@@ -32,19 +29,7 @@ const ReduxForm = reduxForm({
   validate,
 })(CommunityAskQuestionAgentForm);
 
-const mapStateToProps = (state, ownProps) => {
-  const { question } = ownProps;
-  return {
-    // todo: hack for this to not error till it's moved to new api and selector
-    userAction: getDetail(state, 'userAction') || {},
-    initialValues: {
-      question,
-    },
-  };
-};
-
 const mapDispatchToProps = dispatch => ({
-  postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
   clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
 });
 
@@ -52,16 +37,12 @@ const mapDispatchToProps = dispatch => ({
 
 @withRouter
 
-@connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)
+@connect(null, mapDispatchToProps)
 
 @query('createAction', 'createUuidAction')
 
 export default class CommunityAskQuestionAgentFormContainer extends Component {
   static propTypes = {
-    postUserAction: func.isRequired,
     notifyInfo: func.isRequired,
     clearSubmitErrors: func.isRequired,
     toggleAskAgentQuestionModal: func.isRequired,
@@ -72,72 +53,52 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
     description: string,
     agentImageUrl: string,
     placeholder: string,
-    userAction: object,
-    initialValues: object,
     user: userPropType,
+    question: string,
   };
 
   handleOnSubmit = (data) => {
     const {
-      postUserAction, notifyInfo, clearSubmitErrors, toggleAskAgentQuestionModal,
+      notifyInfo, clearSubmitErrors, toggleAskAgentQuestionModal,
       community, createAction, match,
     } = this.props;
     const { id } = community;
 
-    const value = {
-      question: data.question,
-      user: {
-        full_name: data.full_name,
-        phone: data.phone,
-      },
-      slug: id,
-    };
-
-    const body = {
-      action: ASK_QUESTION,
-      value,
-    };
-
     clearSubmitErrors();
 
-    return Promise.all([
-      postUserAction(body),
-      createAction({
-        type: 'UUIDAction',
-        attributes: {
-          actionType: AGENT_ASK_QUESTIONS,
-          actionPage: match.url,
-          actionInfo: {
-            slug: id,
-            question: data.question,
-            entityType: 'Property',
-            name: data.full_name,
-            phone: data.phone,
-          },
+    return createAction({
+      type: 'UUIDAction',
+      attributes: {
+        actionType: AGENT_ASK_QUESTIONS,
+        actionPage: match.url,
+        actionInfo: {
+          slug: id,
+          question: data.question,
+          entityType: 'Property',
+          name: data.full_name,
+          phone: data.phone,
         },
-      }),
-    ])
-
-      .then(() => {
-        const event = {
-          action: 'ask-question', category: 'BAT', label: id,
-        };
-        SlyEvent.getInstance().sendEvent(event);
-        toggleAskAgentQuestionModal();
-        notifyInfo('Question sent successfully.');
-      })
-
-      .catch(() => {
-        throw new SubmissionError({ _error: 'Failed to send question. Please try again.' });
-      });
+      },
+    }).then(() => {
+      const event = {
+        action: 'ask-question', category: 'BAT', label: id,
+      };
+      SlyEvent.getInstance().sendEvent(event);
+      toggleAskAgentQuestionModal();
+      notifyInfo('Question sent successfully.');
+    }).catch(() => {
+      throw new SubmissionError({ _error: 'Failed to send question. Please try again.' });
+    });
   };
 
   render() {
     const {
-      heading, description, agentImageUrl, placeholder, user,
+      heading, description, agentImageUrl, placeholder, user, question,
     } = this.props;
-    let { initialValues } = this.props;
 
+    let initialValues = {
+      question,
+    };
     if (user) {
       initialValues = {
         ...initialValues,

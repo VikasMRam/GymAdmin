@@ -11,12 +11,11 @@ import utc from 'dayjs/plugin/utc';
 
 
 import configureStore from 'sly/store/configure';
-import api from 'sly/services/api';
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import setDatepickerStyles from 'sly/components/themes/datepickerStyles';
 
-const store = configureStore({}, { api: api.create() });
+const store = configureStore({});
 const req = require.context('sly/components', true, /.stories.js$/);
 
 dayjs.extend(advancedFormat);

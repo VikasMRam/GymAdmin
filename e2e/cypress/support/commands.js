@@ -25,6 +25,9 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import { select } from '../helpers/tests';
+import { toJson } from '../helpers/request';
+
+import { normalizeResponse } from 'sly/services/newApi';
 
 Cypress.Commands.add('registerWithEmailFlow', (email, password) => {
   cy.route('POST', '**/auth/register').as('registerUser');
@@ -50,4 +53,33 @@ Cypress.Commands.add('registerWithEmail', (email, password) => {
   }).as('registerUser');
 
   cy.get('@registerUser').its('status').should('eq', 200);
+});
+
+Cypress.Commands.add('getUser', () => {
+  return Cypress.Promise.all([
+    fetch('/v0/platform/uuid-actions'),
+    fetch('/v0/platform/users/me'),
+  ])
+    .then(responses =>
+      Cypress.Promise.all(responses.map(toJson))
+    )
+    // .then(responses => Cypress.Promise.all(responses.map(toJson)))
+    .then((result) => {
+      const [
+        uuidActions,
+        user,
+      ] = result.map(body => normalizeResponse(body));
+
+      return {
+        uuidActions,
+        user,
+      };
+    });
+});
+
+Cypress.Commands.add('getCommunity', (community) => {
+  const url = `/v0/marketplace/communities/${community}?include=similar-communities%2Cquestions%2Cagents`;
+  return fetch(url)
+    .then(toJson)
+    .then(normalizeResponse);
 });

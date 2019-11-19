@@ -5,18 +5,18 @@ import queryString from 'query-string';
 import Cookies from 'universal-cookie';
 
 import { host, domain } from 'sly/config';
-import { resourceCreateRequest, resourceListReadRequest } from 'sly/store/resource/actions';
 import SlyEvent from 'sly/services/helpers/events';
 import { STEP_ORDERS, DEFAULT_STEP_ORDER, STEP_INPUT_FIELD_NAMES } from 'sly/external/constants/steps';
 import { connectController } from 'sly/controllers';
 import { createValidator } from 'sly/services/validation';
 import { selectFormData } from 'sly/services/helpers/forms';
-import { CARE_ASSESSMENT_PROGRESS } from 'sly/services/api/actions';
+import { CARE_ASSESSMENT } from 'sly/services/newApi/constants';
 import CareAssessmentComponent from 'sly/external/apps/wizards/careAssessment/Component';
 import {
   inputBasedNextSteps, getStepInputFieldValidations,
   getStepInputFieldDefaultValues, converStepInputToString,
 } from 'sly/external/apps/wizards/careAssessment/helpers';
+import { query } from 'sly/services/newApi';
 
 const formName = 'CareAssessmentForm';
 const validate = createValidator(getStepInputFieldValidations());
@@ -28,7 +28,29 @@ const ReduxForm = reduxForm({
   initialValues: getStepInputFieldDefaultValues(),
 })(CareAssessmentComponent);
 
-class Controller extends Component {
+const mapStateToProps = (state, { controller, ...ownProps }) => {
+  return {
+    progressPath: controller.progressPath || new Set([1]),
+    currentStep: controller.currentStep || ownProps.currentStep || 1,
+    locationSearchParams: controller.locationSearchParams || ownProps.locationSearchParams,
+    href: controller.href || '',
+    searchResultCount: controller.searchResultCount,
+    searching: controller.searching,
+    data: selectFormData(state, formName, {}),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatchResetForm: () => dispatch(reset(formName)),
+  };
+};
+
+@query('createAction', 'createUuidAction')
+@query('searchCommunities', 'getSearchResources')
+@connectController(mapStateToProps, mapDispatchToProps)
+
+export default class Controller extends Component {
   static propTypes = {
     currentStep: number.isRequired,
     set: func.isRequired,
@@ -36,7 +58,7 @@ class Controller extends Component {
     utmParams: object,
     pixel: string,
     searchCommunities: func,
-    postUserAction: func.isRequired,
+    createAction: func.isRequired,
     searchResultCount: number,
     data: object,
     location: shape({
@@ -105,59 +127,67 @@ class Controller extends Component {
 
   handleSeeMore = () => {
     const {
-      currentStep, postUserAction, data, dispatchResetForm, set,
+      currentStep, createAction, data, dispatchResetForm, set,
     } = this.props;
 
-    if (currentStep === this.flow.length) {
-      const newData = { ...data };
-      const {
-        email, fullName, phone, ...careAssessment
-      } = newData;
+    const currentStepName = this.flow[currentStep - 1];
 
-      const user = { email, full_name: fullName, phone };
-      const payload = {
-        action: CARE_ASSESSMENT_PROGRESS,
-        value: {
-          user,
-          wizard_progress: {
-            current_step: this.flow[currentStep - 1],
-          },
-          careAssessment,
-        },
-      };
-
-      const closePopup = () => {
-        if (window.parent && this.widgetType === 'popup') {
-          window.parent.postMessage(JSON.stringify({ action: 'closePopup' }), '*');
-        } else {
-          dispatchResetForm();
-          set({
-            currentStep: null,
-            progressPath: null,
-          });
-        }
-      };
-
-      const p = postUserAction(payload);
-      if (p.then) {
-        p.then(() => {
-          // Fire pixel
-          if (this.providedPixel) {
-            fetch(this.providedPixel, { mode: 'no-cors' })
-              .then(closePopup);
-          } else {
-            closePopup();
-          }
+    const closePopup = () => {
+      if (window.parent && this.widgetType === 'popup') {
+        window.parent.postMessage(JSON.stringify({ action: 'closePopup' }), '*');
+      } else {
+        dispatchResetForm();
+        set({
+          currentStep: null,
+          progressPath: null,
         });
       }
+    };
 
-      const currentStepName = this.flow[currentStep - 1];
+    const {
+      name,
+      email,
+      phone,
+      lookingFor,
+      careNeeds,
+      monthlyBudget,
+      medicaidCoverage,
+      location,
+      rentingOrBuying,
+    } = data;
+
+    return createAction({
+      type: 'UUIDAction',
+      attributes: {
+        actionInfo: {
+          name,
+          email,
+          phone,
+          currentStep,
+          stepData: {
+            lookingFor,
+            careNeeds: careNeeds.join(', '),
+            monthlyBudget: monthlyBudget.toString(),
+            medicaidCoverage: (medicaidCoverage || false).toString(),
+            location,
+            rentingOrBuying,
+          },
+        },
+        actionType: CARE_ASSESSMENT,
+      },
+    }).then(() => {
       const event = {
         action: `step_${currentStepName}`, category: 'cawizard', label: 'complete',
       };
       SlyEvent.getInstance().sendEvent(event);
-    }
-  }
+      // Fire pixel
+      if (this.providedPixel) {
+        return fetch(this.providedPixel, { mode: 'no-cors' })
+          .then(closePopup);
+      }
+      return closePopup();
+    });
+  };
 
   doSearch() {
     const {
@@ -166,37 +196,35 @@ class Controller extends Component {
     set({
       searching: true,
     });
-    const p = searchCommunities(locationSearchParams || this.providedLocationSearchParams);
-    if (p.then) {
-      p.then((result) => {
-        const newState = {
-          searchResultCount: result.meta['filtered-count'],
-          searching: false,
-        };
-        if (!this.providedLocationSearchParams) {
-          newState.currentStep = currentStep + 1;
-        } else {
-          newState.locationSearchParams = this.providedLocationSearchParams;
-        }
-        const state = this.providedLocationSearchParams ? this.providedLocationSearchParams.state : locationSearchParams.state;
-        const city = this.providedLocationSearchParams ? this.providedLocationSearchParams.city : locationSearchParams.city;
-        let href = `${host}/assisted-living/${state}/${city}?modal=thankyou`;
-        const utm = this.providedUtmParams;
-        if (utm) {
-          href = `${href}&utm_campaign=${utm.campaign}&utm_source=${utm.source}&utm_medium=${utm.medium}&utm_term=${utm.term}`;
-        }
-        newState.href = href;
 
-        set(newState);
-      }).catch((err) => {
-        // todo: use correct method for surfacing errors
-        // eslint-disable-next-line no-console
-        console.error(err);
-        set({
-          searching: false,
-        });
+    return searchCommunities(locationSearchParams || this.providedLocationSearchParams).then(({ body: result }) => {
+      const newState = {
+        searchResultCount: result.meta['filtered-count'],
+        searching: false,
+      };
+      if (!this.providedLocationSearchParams) {
+        newState.currentStep = currentStep + 1;
+      } else {
+        newState.locationSearchParams = this.providedLocationSearchParams;
+      }
+      const state = this.providedLocationSearchParams ? this.providedLocationSearchParams.state : locationSearchParams.state;
+      const city = this.providedLocationSearchParams ? this.providedLocationSearchParams.city : locationSearchParams.city;
+      let href = `${host}/assisted-living/${state}/${city}?modal=thankyou`;
+      const utm = this.providedUtmParams;
+      if (utm) {
+        href = `${href}&utm_campaign=${utm.campaign}&utm_source=${utm.source}&utm_medium=${utm.medium}&utm_term=${utm.term}`;
+      }
+      newState.href = href;
+
+      set(newState);
+    }).catch((err) => {
+      // todo: use correct method for surfacing errors
+      // eslint-disable-next-line no-console
+      console.error(err);
+      set({
+        searching: false,
       });
-    }
+    });
   }
 
   handleSubmit = (values, dispatch, props) => {
@@ -277,27 +305,3 @@ class Controller extends Component {
   }
 }
 
-const mapStateToProps = (state, { controller, ...ownProps }) => {
-  return {
-    progressPath: controller.progressPath || new Set([1]),
-    currentStep: controller.currentStep || ownProps.currentStep || 1,
-    locationSearchParams: controller.locationSearchParams || ownProps.locationSearchParams,
-    href: controller.href || '',
-    searchResultCount: controller.searchResultCount,
-    searching: controller.searching,
-    data: selectFormData(state, formName, {}),
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    searchCommunities: searchParams => dispatch(resourceListReadRequest('searchResource', searchParams)),
-    postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
-    dispatchResetForm: () => dispatch(reset(formName)),
-  };
-};
-
-export default connectController(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Controller);

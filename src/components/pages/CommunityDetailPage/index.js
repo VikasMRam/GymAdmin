@@ -189,7 +189,6 @@ export default class CommunityDetailPage extends Component {
     community: object.isRequired,
     location: object.isRequired,
     profileContacted: object.isRequired,
-    userAction: object,
     history: object,
   };
 
