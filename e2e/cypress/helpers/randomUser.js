@@ -12,7 +12,7 @@ const fromZero = length => randChars('0123456789', length);
 
 const randHash = () => Math.random().toString(36).substring(7);
 const randPhone = () => `${fromTwo()}${fromZero(2)}${fromTwo()}${fromZero(6)}`;
-const formatPhone = phone => `${phone.substr(0, 3)}-${phone.substr(3, 3)}-${phone.substr(6)}`;
+export const formatPhone = phone => `${phone.substr(0, 3)}-${phone.substr(3, 3)}-${phone.substr(6)}`;
 
 export default function randomUser() {
   const name = `Fonz ${randHash()}`;

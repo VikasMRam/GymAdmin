@@ -25,6 +25,8 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import { select } from '../helpers/tests';
+import { toJson } from '../helpers/request';
+
 import { normalizeResponse } from 'sly/services/newApi';
 
 Cypress.Commands.add('registerWithEmailFlow', (email, password) => {
@@ -59,7 +61,7 @@ Cypress.Commands.add('getUser', () => {
     fetch('/v0/platform/users/me'),
   ])
     .then(responses =>
-      Cypress.Promise.all(responses.map(async response => JSON.parse(await new Response(response.body).text())))
+      Cypress.Promise.all(responses.map(toJson))
     )
     // .then(responses => Cypress.Promise.all(responses.map(toJson)))
     .then((result) => {
@@ -73,4 +75,11 @@ Cypress.Commands.add('getUser', () => {
         user,
       };
     });
+});
+
+Cypress.Commands.add('getCommunity', (community) => {
+  const url = `/v0/marketplace/communities/${community}?include=similar-communities%2Cquestions%2Cagents`;
+  return fetch(url)
+    .then(toJson)
+    .then(normalizeResponse);
 });

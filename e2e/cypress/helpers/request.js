@@ -1,1 +1,1 @@
-export const toJson = async xhr => JSON.parse(await new Response(xhr.response.body).text());
+export const toJson = async response => JSON.parse(await new Response(response.body).text());

@@ -1,9 +1,8 @@
-import randomUser from 'e2e/helpers/randomUser';
-
 import { responsive, select } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
-import { getCommunity } from '../../helpers/getCommunity';
 import { TEST_COMMUNITY } from '../../constants/community';
+
+import randomUser, { formatPhone } from 'e2e/helpers/randomUser';
 
 describe('Primary Conversion', () => {
   let community;
@@ -11,7 +10,7 @@ describe('Primary Conversion', () => {
   beforeEach(() => {
     cy.server();
 
-    getCommunity(TEST_COMMUNITY).then((response) => {
+    cy.getCommunity(TEST_COMMUNITY).then((response) => {
       community = response;
     });
   });
@@ -42,7 +41,7 @@ describe('Primary Conversion', () => {
       });
 
       cy.wait('@me').then(async (xhr) => {
-        const response = await toJson(xhr);
+        const response = await toJson(xhr.response);
         const attrs = response.data.attributes;
         expect(attrs.email).to.equal(email);
         expect(attrs.name).to.equal('Fonz');

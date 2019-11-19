@@ -1,9 +1,9 @@
-import randomUser from 'e2e/helpers/randomUser';
-
 import { doCustomPricingFlow } from '../../helpers/customPricing';
 import { assertUserActionsForCustomPricing } from '../../helpers/userActions';
 import { responsive, waitForHydration } from '../../helpers/tests';
 import { TEST_COMMUNITY } from '../../constants/community';
+
+import randomUser from 'e2e/helpers/randomUser';
 
 describe('Marketplace Profile Page', () => {
   responsive((viewport) => {

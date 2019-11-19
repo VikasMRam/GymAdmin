@@ -21,7 +21,7 @@ import { cache } from 'emotion';
 import { CacheProvider } from '@emotion/core';
 import { renderStylesToString } from 'emotion-server';
 
-import { cleanError, logWarn } from 'sly/services/helpers/logging';
+import { cleanError } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';
 import { port, host, publicPath, isDev, domain, disableExperiments } from 'sly/config';
 import { configure as configureStore } from 'sly/store';

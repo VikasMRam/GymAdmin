@@ -46,7 +46,7 @@ export default function withAuth(InnerComponent) {
 
     static WrappedComponent = InnerComponent;
 
-    createOrUpdateUser = (data, { ignoreAlreadyRegistered }) => {
+    createOrUpdateUser = (data, { ignoreAlreadyRegistered } = {}) => {
       const { user, updateUser, status } = this.props;
       const { name, phone, email } = data;
 

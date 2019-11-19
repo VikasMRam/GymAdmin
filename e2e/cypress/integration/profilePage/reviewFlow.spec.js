@@ -1,6 +1,5 @@
 import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
-import { getCommunity } from '../../helpers/getCommunity';
 import { TEST_COMMUNITY } from '../../constants/community';
 
 const randHash = () => Math.random().toString(36).substring(7);
@@ -13,7 +12,7 @@ describe('Review Community', () => {
     cy.server();
 
     if (!community) {
-      getCommunity(TEST_COMMUNITY).then((response) => {
+      cy.getCommunity(TEST_COMMUNITY).then((response) => {
         community = response;
       });
     }
@@ -61,7 +60,7 @@ describe('Review Community', () => {
           name: 'Fonz',
           value: 4,
         });
-        const response = await toJson(xhr);
+        const response = await toJson(xhr.response);
         ratedId = response.data.id;
       });
 
