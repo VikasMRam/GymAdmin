@@ -107,12 +107,16 @@ function transformAgent(agent) {
   let name = null;
   let leadCount = null;
   let an = null;
-  const { businessName, info } = agent;
+  const { name: businessName, info } = agent;
   if (info) {
-    const { slyScore, last5DayLeadCount, adminNotes } = info;
+    const { slyScore, displayName, last5DayLeadCount, adminNotes } = info;
     if (slyScore) {
       slyScoreValue = slyScore;
     }
+    if (displayName) {
+      name = displayName;
+    }
+
     if (last5DayLeadCount !== undefined && last5DayLeadCount !== null) {
       leadCount = last5DayLeadCount;
     }
@@ -121,7 +125,9 @@ function transformAgent(agent) {
     }
     cellPhone = info.cellPhone;
     workPhone = info.workPhone;
-    name = info.displayName || 'Agent Name Missing';
+    if (name === null) {
+      name = businessName || 'Agent Lead';
+    }
   }
 
   const agentProps = {
