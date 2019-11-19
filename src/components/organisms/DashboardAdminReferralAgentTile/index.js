@@ -125,9 +125,10 @@ function transformAgent(agent) {
     }
     cellPhone = info.cellPhone;
     workPhone = info.workPhone;
-    if (name === null) {
-      name = businessName || 'Agent Lead';
-    }
+
+  }
+  if (name === null) {
+    name = agent.name || 'Agent Lead';
   }
 
   const agentProps = {
