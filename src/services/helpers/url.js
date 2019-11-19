@@ -40,13 +40,8 @@ export const tocPaths = (toc) => {
         };
       case 'Continuing Care Retirement Community(CCRC)':
         return {
-          path: '/continuing-care-retirement-community',
-          label: 'Continuing Care Retirement Community(CCRC)',
-        };
-      case 'Skilled Nursing Facility':
-        return {
-          path: '/skilled-nursing-facility',
-          label: 'Skilled Nursing Facility',
+          path: 'continuing-care-retirement-community',
+          label: 'Continuing Care Retirement Community',
         };
       default:
         return {

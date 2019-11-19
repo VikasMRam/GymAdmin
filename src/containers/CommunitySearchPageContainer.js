@@ -33,28 +33,6 @@ export default class CommunitySearchPageContainer extends PureComponent {
     generateFilterLinkPath: func.isRequired,
   };
 
-  state = {
-    areFiltersOpen: false,
-  };
-
-  changeSearchParams = ({ changedParams }) => {
-    const { searchParams, history } = this.props;
-    const { path } = filterLinkPath(searchParams, changedParams);
-    const event = {
-      action: 'search',
-      category: searchParams.toc,
-      label: queryString.stringify(searchParams),
-    };
-
-    SlyEvent.getInstance().sendEvent(event);
-
-    if (searchParams.view === 'map') {
-      history.replace(path);
-    } else {
-      history.push(path);
-    }
-  };
-
   // componentDidUpdate = whyDidComponentUpdate('CommunitySearchPageContainer');
 
   render() {
