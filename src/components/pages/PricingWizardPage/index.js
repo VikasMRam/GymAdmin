@@ -22,6 +22,7 @@ import {
   WHAT_TO_NEXT_OPTIONS,
   EXPLORE_AFFORDABLE_PRICING_OPTIONS,
 } from 'sly/constants/pricingForm';
+import { ABORT_WIZARD } from 'sly/constants/wizard';
 import { hasCCRC } from 'sly/services/helpers/community';
 import { FAMILY_DASHBOARD_FAVORITES_PATH } from 'sly/constants/dashboardAppPaths';
 import HeaderContainer from 'sly/containers/HeaderContainer';
@@ -146,9 +147,8 @@ export default class PricingWizardPage extends Component {
 
     if (currentStep === 'WhatToDoNext') {
       if (interest === 'talk-advisor') {
-        doSubmit({ redirectLink: `${match.url.replace(/\/+$/, '')}/thank-you` });
-        // this will prevent the step from changing to next
-        return false;
+        doSubmit({ redirectLink: `${match.url}/thank-you` });
+        return ABORT_WIZARD;
       } else if (interest !== 'explore-affordable-options') {
         goto('ExploreAffordableOptions');
       }
@@ -205,7 +205,7 @@ export default class PricingWizardPage extends Component {
     // const scheduleTourOption = compiledWhatToDoNextOptions.find(o => o.value === 'schedule-tour');
     // scheduleTourOption.to = `/book-a-tour/${id}`;
 
-    const openHelpModal = () => redirectTo(`${match.url.replace(/\/+$/, '')}/help`);
+    const openHelpModal = () => redirectTo(`${match.url}/help`);
 
     return (
       <FullScreenWizard>
