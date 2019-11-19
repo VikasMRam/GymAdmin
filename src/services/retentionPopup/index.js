@@ -60,7 +60,6 @@ export default class RetentionPopup extends Component {
     }
   }
 
-
   componentWillUnmount() {
     this.removeAllEventListeners();
   }
