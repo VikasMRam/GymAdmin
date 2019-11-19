@@ -25,6 +25,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import { select } from '../helpers/tests';
+import { normalizeResponse } from 'sly/services/newApi';
 
 Cypress.Commands.add('registerWithEmailFlow', (email, password) => {
   cy.route('POST', '**/auth/register').as('registerUser');
@@ -50,4 +51,26 @@ Cypress.Commands.add('registerWithEmail', (email, password) => {
   }).as('registerUser');
 
   cy.get('@registerUser').its('status').should('eq', 200);
+});
+
+Cypress.Commands.add('getUser', () => {
+  return Cypress.Promise.all([
+    fetch('/v0/platform/uuid-actions'),
+    fetch('/v0/platform/users/me'),
+  ])
+    .then(responses =>
+      Cypress.Promise.all(responses.map(async response => JSON.parse(await new Response(response.body).text())))
+    )
+    // .then(responses => Cypress.Promise.all(responses.map(toJson)))
+    .then((result) => {
+      const [
+        uuidActions,
+        user,
+      ] = result.map(body => normalizeResponse(body));
+
+      return {
+        uuidActions,
+        user,
+      };
+    });
 });

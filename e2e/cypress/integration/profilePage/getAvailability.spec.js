@@ -2,14 +2,13 @@ import { doCustomPricingFlow } from '../../helpers/customPricing';
 import { assertUserActionsForGetAvailability } from '../../helpers/userActions';
 import { responsive, waitForHydration } from '../../helpers/tests';
 import { TEST_COMMUNITY } from '../../constants/community';
+import randomUser from '../../helpers/randomUser';
 
 describe('Marketplace Profile Page', () => {
   responsive(() => {
     it('tests Get Availability Flow for Assisited Living Community', () => {
       const communitySlug = TEST_COMMUNITY;
-      const name = 'Pranesh Kumar';
-      const phoneNumber = '9999999999';
-      const email = 'pranesh@seniorly.com';
+      const { name, phone, email } = randomUser();
       const typeOfRoom = 'Suite';
       const typeOfCare = 'Medication Management';
       const medicaid = 'Yes';
@@ -19,18 +18,14 @@ describe('Marketplace Profile Page', () => {
       waitForHydration(cy.get('button').contains('Get Detailed Pricing')).click();
 
       const data = {
-        communitySlug, name, phoneNumber, typeOfRoom, typeOfCare, medicaid, email,
+        communitySlug, name, phone, typeOfRoom, typeOfCare, medicaid, email,
       };
 
       doCustomPricingFlow(cy, data);
 
-      cy.request({
-        url: '/v0/platform/uuid-actions',
-      })
-        .then((response) => {
-          cy.log('response', response);
-          assertUserActionsForGetAvailability(response, data);
-        });
+      cy.getUser().then((userData) => {
+        assertUserActionsForGetAvailability(userData, data);
+      });
     });
   });
 });

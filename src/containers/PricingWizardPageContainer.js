@@ -55,26 +55,30 @@ export default class PricingWizardPageContainer extends Component {
     const uuidAux = status.uuidAux.result;
     return Promise.all([
       updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
-        const housingInfo = draft.attributes.uuidInfo.housingInfo || {};
         if (data.roomType) {
+          const housingInfo = draft.attributes.uuidInfo.housingInfo || {};
           housingInfo.roomPreference = data.roomType;
+          draft.attributes.uuidInfo.housingInfo = housingInfo;
         }
-        draft.attributes.uuidInfo.housingInfo = housingInfo;
 
-        const careInfo = draft.attributes.uuidInfo.careInfo || {};
         if (data.careType) {
+          const careInfo = draft.attributes.uuidInfo.careInfo || {};
           careInfo.adls = data.careType;
+          draft.attributes.uuidInfo.careInfo = careInfo;
         }
-        draft.attributes.uuidInfo.careInfo = careInfo;
 
-        const financialInfo = draft.attributes.uuidInfo.financialInfo || {};
-        if (data.medicaidCoverage) {
-          financialInfo.medicaid = medicareToBool(data.medicaidCoverage);
+        if (data.interest) {
+          const residentInfo = draft.attributes.uuidInfo.residentInfo || {};
+          residentInfo.interest = data.interest;
+          draft.attributes.uuidInfo.residentInfo = residentInfo;
         }
-        if (data.budget) {
-          financialInfo.maxMonthlyBudget = data.budget;
+
+        if (data.medicaidCoverage || data.budget) {
+          const financialInfo = draft.attributes.uuidInfo.financialInfo || {};
+          if (data.medicaidCoverage) financialInfo.medicaid = medicareToBool(data.medicaidCoverage);
+          if (data.budget) financialInfo.maxMonthlyBudget = data.budget;
+          draft.attributes.uuidInfo.financialInfo = financialInfo;
         }
-        draft.attributes.uuidInfo.financialInfo = financialInfo;
       })),
     ]);
   };

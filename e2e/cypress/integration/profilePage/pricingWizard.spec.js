@@ -1,3 +1,5 @@
+import randomUser from 'e2e/helpers/randomUser';
+
 import { doCustomPricingFlow } from '../../helpers/customPricing';
 import { assertUserActionsForCustomPricing } from '../../helpers/userActions';
 import { responsive, waitForHydration } from '../../helpers/tests';
@@ -6,8 +8,8 @@ import { TEST_COMMUNITY } from '../../constants/community';
 describe('Marketplace Profile Page', () => {
   responsive((viewport) => {
     it('tests Pricing Wizard for Assisited Living Community in Mobile', () => {
-      const name = 'Pranesh Kumar';
-      const phoneNumber = '9999999999';
+      const { name, phone } = randomUser();
+
       const typeOfRoom = 'Suite';
       const typeOfCare = 'Medication Management';
       const medicaid = 'Yes';
@@ -29,19 +31,14 @@ describe('Marketplace Profile Page', () => {
       // cy.url().should('include', `/custom-pricing/${communitySlug}`);
 
       const data = {
-        communitySlug: TEST_COMMUNITY, name, phoneNumber, typeOfRoom, typeOfCare, medicaid,
+        communitySlug: TEST_COMMUNITY, name, phone, typeOfRoom, typeOfCare, medicaid,
       };
 
       doCustomPricingFlow(cy, data);
 
-      cy
-        .request({
-          url: '/v0/platform/user-actions',
-        })
-        .then((response) => {
-          cy.log('response', response);
-          assertUserActionsForCustomPricing(response, data);
-        });
+      cy.getUser().then((userData) => {
+        assertUserActionsForCustomPricing(userData, data);
+      });
     });
   });
 });
