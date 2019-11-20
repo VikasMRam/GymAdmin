@@ -144,8 +144,11 @@ export default class PricingWizardPage extends Component {
     }
 
     if (currentStep === 'Contact') {
-      // return promise so that wizard will wait till api call is complete
-      return submitActionAndCreateUser(data, currentStep);
+      submitActionAndCreateUser(data, currentStep);
+    }
+
+    if (currentStep === 'ExploreAffordableOptions' || currentStep === 'WhatToDoNext') {
+      updateUuidAux(data);
     }
 
     if (currentStep === 'WhatToDoNext' && interest === 'talk-advisor') {
@@ -153,10 +156,6 @@ export default class PricingWizardPage extends Component {
       return ABORT_WIZARD;
     }
 
-    if (currentStep === 'ExploreAffordableOptions' || currentStep === 'WhatToDoNext') {
-      // return promise so that wizard will wait till api call is complete
-      return updateUuidAux(data);
-    }
     return null;
   };
 
@@ -189,7 +188,9 @@ export default class PricingWizardPage extends Component {
   };
 
   handleComplete = (data, { redirectLink }) => {
-    const { redirectTo } = this.props;
+    const { redirectTo, community } = this.props;
+
+    sendEvent('pricing-requested', community.id);
 
     return redirectTo(redirectLink);
   };

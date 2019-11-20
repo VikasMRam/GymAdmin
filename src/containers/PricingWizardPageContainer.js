@@ -45,12 +45,9 @@ export default class PricingWizardPageContainer extends Component {
 
   updateUuidAux = (data) => {
     const {
-      community,
       status,
       updateUuidAux,
     } = this.props;
-
-    sendEvent('pricing-requested', community.id);
 
     const uuidAux = status.uuidAux.result;
 
