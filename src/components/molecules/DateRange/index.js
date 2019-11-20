@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import DatePicker from 'react-datepicker';
 import { func, string, array } from 'prop-types';
+
+const DatePicker = loadable(() => import(/* webpackChunkName: "chunkReactDatePicker" */'react-datepicker'));
 
 import { size } from 'sly/components/themes';
 import { Input } from 'sly/components/atoms';
+import loadable from '@loadable/component';
 
 const getDateFromValue = (value, pos) => value && Array.isArray(value)
   ? value[pos]

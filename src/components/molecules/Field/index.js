@@ -1,11 +1,11 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
 import { string, bool, oneOf, number, oneOfType, node, array, object, arrayOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
+import loadable from '@loadable/component';
 
 import { size } from 'sly/components/themes';
-import { Label, Input, Icon, Block, Select, Span } from 'sly/components/atoms';
+import { Label, Input, Icon, Block, Span } from 'sly/components/atoms';
 import textAlign from 'sly/components/helpers/textAlign';
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
@@ -20,6 +20,9 @@ import InputMessage from 'sly/components/molecules/InputMessage';
 import Autocomplete from 'sly/components/molecules/Autocomplete';
 import CheckboxInput from 'sly/components/molecules/CheckboxInput';
 import LocationSearch from 'sly/components/molecules/LocationSearch';
+
+const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/components/atoms/Select'));
+const DatePicker = loadable(() => import(/* webpackChunkName: "chunkReactDatePicker" */'react-datepicker'));
 
 const textTypeInputs = ['email', 'iconInput'];
 const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
