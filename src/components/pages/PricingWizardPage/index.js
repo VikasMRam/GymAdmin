@@ -134,10 +134,12 @@ export default class PricingWizardPage extends Component {
     sendEvent('step-completed', id, currentStep);
 
     if (currentStep === 'EstimatedPricing') {
-      updateUuidAux(data).then(() => {
+      // return promise so that wizard will wait till api call is complete
+      return updateUuidAux(data).then(() => {
         if (userHas(['name', 'phoneNumber'])) {
-          submitActionAndCreateUser(data).then(() => goto('WhatToDoNext'));
+          return submitActionAndCreateUser(data).then(() => goto('WhatToDoNext'));
         }
+        return null;
       });
     }
 
