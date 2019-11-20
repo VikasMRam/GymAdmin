@@ -6,7 +6,7 @@ import ReactTooltip from 'react-tooltip';
 
 import { size, palette } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { Link, Box, Heading, Hr, Icon } from 'sly/components/atoms';
+import { Link, Box, Heading, Hr, Icon, Tag } from 'sly/components/atoms';
 import IconButton from 'sly/components/molecules/IconButton';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
@@ -19,6 +19,15 @@ const Address = styled(Heading)`
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
+`;
+
+const StyledTag = styled(Tag)`
+  margin-right: ${size('spacing.regular')};
+  text-transform: uppercase;
+  background-color: #EEF9F9;
+  border: 1px solid #D5F0F0;
+  color: #56C4C2;
+  
 `;
 
 const Wrapper = styled.div`
@@ -71,7 +80,7 @@ const CommunitySummary = ({
   const {
     line1, line2, city, state, zip,
   } = address;
-  const { communityPhone, plusCommunity, plusCategory } = propInfo;
+  const { communityPhone, plusCommunity, plusCategory, typeCare } = propInfo;
   const { reviewsValue } = propRatings;
   const formattedAddress = `${line1}, ${line2}, ${city},
     ${state}
@@ -101,6 +110,13 @@ const CommunitySummary = ({
         }
       </StyledHeading>
       <Address weight="regular" level="subtitle" size="body" palette="grey">{formattedAddress}</Address>
+
+      {
+        typeCare.map((careType) => {
+          return <StyledTag key={careType}>{careType}</StyledTag>;
+        })
+      }
+
       {plusCommunity &&
       <PlusBadge plusCategory={plusCategory} />
       }
