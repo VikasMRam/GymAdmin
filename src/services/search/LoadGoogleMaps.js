@@ -5,8 +5,14 @@ import { gMapsApiKey, loadAutoComplete } from 'sly/config';
 let instanceId = 0;
 export default class LoadGoogleMaps extends Component {
   callbackFunctionName = `google-autocomplete-callback-${instanceId++}`;
+  hasLoadedMaps = false;
 
-  componentDidMount() {
+  loadMaps = () => {
+    if(this.hasLoadedMaps) {
+      return;
+    }
+    this.hasLoadedMaps = true;
+
     const scriptjs = require('scriptjs');
     if (loadAutoComplete) {
       scriptjs(
@@ -14,8 +20,9 @@ export default class LoadGoogleMaps extends Component {
         () => window[this.callbackFunctionName] && window[this.callbackFunctionName]()
       );
     }
-  }
+  };
+
   render() {
-    return this.props.children(this.callbackFunctionName)
+    return this.props.children(this.callbackFunctionName, this.loadMaps)
   }
 }

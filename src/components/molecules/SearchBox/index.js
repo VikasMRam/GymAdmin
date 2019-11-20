@@ -82,59 +82,53 @@ const SearchBox = ({
   readOnly,
   hasShadow,
   ...props
-}) => (
-  <Wrapper layout={layout} {...props}>
-    <LoadGoogleMaps>
-      {googleCallbackName => (
-        <PlacesAutocomplete
-          value={value}
-          onChange={onChange}
-          onSelect={onSelect}
-          searchOptions={baseSearchOptions}
-          highlightFirstSuggestion
-          googleCallbackName={googleCallbackName}
-        >
-          {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-            <>
-              {hasShadow && (
-                <ShadowedSearchTextBox
+}) => {
+  const SearchBox = hasShadow ? ShadowedSearchTextBox : SearchTextBox;
+
+  return (
+    <Wrapper layout={layout} {...props}>
+      <LoadGoogleMaps>
+        {(googleCallbackName, loadMaps) => (
+          <PlacesAutocomplete
+            value={value}
+            onChange={onChange}
+            onSelect={onSelect}
+            searchOptions={baseSearchOptions}
+            highlightFirstSuggestion
+            googleCallbackName={googleCallbackName}
+          >
+            {({ getInputProps, suggestions, getSuggestionItemProps }) => (
+              <>
+                <SearchBox
                   {...getInputProps({ onBlur, placeholder })}
                   disabled={false}
                   layout={layout}
-                  onFocus={onTextboxFocus}
+                  onFocus={(e) => {
+                    loadMaps();
+                    onTextboxFocus(e);
+                  }}
                   readOnly={readOnly}
                   type="search"
                   size="large"
                 />
-              )}
-              {!hasShadow && (
-                <SearchTextBox
-                  {...getInputProps({ onBlur, placeholder })}
-                  disabled={false}
-                  layout={layout}
-                  onFocus={onTextboxFocus}
-                  readOnly={readOnly}
-                  type="search"
-                  size="large"
-                />
-              )}
-              {suggestions.length > 0 && (
-                <SearchSuggestionsWrapper layout={layout}>
-                  {suggestions.map(suggestion => (
-                    <SearchSuggestion {...getSuggestionItemProps(suggestion)} active={suggestion.active}>
-                      {suggestion.description}
-                    </SearchSuggestion>
-                  ))}
-                  <GoogleLogo src={assetPath('images/powered_by_google.png')} />
-                </SearchSuggestionsWrapper>
-              )}
-            </>
-          )}
-        </PlacesAutocomplete>
-      )}
-    </LoadGoogleMaps>
-  </Wrapper>
-);
+                {suggestions.length > 0 && (
+                  <SearchSuggestionsWrapper layout={layout}>
+                    {suggestions.map(suggestion => (
+                      <SearchSuggestion {...getSuggestionItemProps(suggestion)} active={suggestion.active}>
+                        {suggestion.description}
+                      </SearchSuggestion>
+                    ))}
+                    <GoogleLogo src={assetPath('images/powered_by_google.png')} />
+                  </SearchSuggestionsWrapper>
+                )}
+              </>
+            )}
+          </PlacesAutocomplete>
+        )}
+      </LoadGoogleMaps>
+    </Wrapper>
+  );
+};
 
 SearchBox.propTypes = {
   layout: oneOf(['header', 'homeHero']),
