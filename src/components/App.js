@@ -134,7 +134,6 @@ const routes = [
   {
     path: AGENT_DASHBOARD_CONTACTS_PATH,
     component: DashboardAgentContactsPage,
-    exact: true,
   },
   {
     path: FAMILY_DASHBOARD_MESSAGES_PATH,

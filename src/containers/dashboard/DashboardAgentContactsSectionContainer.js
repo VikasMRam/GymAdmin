@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { arrayOf, object } from 'prop-types';
+import { arrayOf, object, func } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { prefetch, withUser } from 'sly/services/newApi';
 import contactPropType from 'sly/propTypes/contact';
 import DashboardAgentContactsSection from 'sly/components/organisms/DashboardAgentContactsSection';
+import { withRedirectTo } from 'sly/services/redirectTo';
 
 const getPaginationData = ({ result, meta }) => {
   if (!result) return {};
@@ -33,20 +34,22 @@ const getPaginationData = ({ result, meta }) => {
 
 @withUser
 
+@withRedirectTo
+
 @prefetch('contacts', 'getContacts', (req, { datatable }) => req(datatable.query))
 
 export default class DashboardAgentTasksSectionContainer extends Component {
   static propTypes = {
     contacts: arrayOf(contactPropType),
     status: object,
-    history: object,
     datatable: object,
-    match: object,
-    location: object,
+    match: object.isRequired,
+    location: object.isRequired,
+    redirectTo: func.isRequired
   };
 
   render() {
-    const { contacts, status, match, location, datatable, ...props } = this.props;
+    const { contacts, status, redirectTo, match, location, datatable, ...props } = this.props;
 
     const { error, meta, hasFinished, result: contactsRaw } = status.contacts;
 
@@ -65,6 +68,8 @@ export default class DashboardAgentTasksSectionContainer extends Component {
         activeTab={match.params.taskType}
         meta={meta || {}}
         refetchContacts={this.props.status.contacts.refetch}
+        match={match}
+        redirectTo={redirectTo}
       />
     );
   }

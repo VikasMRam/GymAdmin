@@ -25,9 +25,8 @@ export default function withRedirectTo(InnerComponent) {
     };
 
     render() {
-      const { history, ...props } = this.props;
       const { routes } = this.context;
-      return (<InnerComponent redirectTo={redirectTo(routes, history)} {...props} />);
+      return (<InnerComponent redirectTo={redirectTo(routes, this.props.history)} {...this.props} />);
     }
   }
 

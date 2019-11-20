@@ -13,3 +13,7 @@ export const USER_RESOURCE_TYPE = 'User';
 export const CLIENT_RESOURCE_TYPE = 'Client';
 
 export const UUIDAUX_RESOURCE_TYPE = 'UUIDAux';
+
+export const CONTACT_RESOURCE_TYPE = 'Contact';
+
+export const SLY_ENTITY_RESOURCE_TYPE = 'SlyEntity';
