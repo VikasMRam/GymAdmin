@@ -91,7 +91,7 @@ const SearchBox = ({
         {(googleCallbackName, loadMaps) => (
           <PlacesAutocomplete
             value={value}
-            onChange={onChange}
+            onChange={(e) => { loadMaps(); onChange(e); }}
             onSelect={onSelect}
             searchOptions={baseSearchOptions}
             highlightFirstSuggestion
@@ -103,10 +103,7 @@ const SearchBox = ({
                   {...getInputProps({ onBlur, placeholder })}
                   disabled={false}
                   layout={layout}
-                  onFocus={(e) => {
-                    loadMaps();
-                    onTextboxFocus(e);
-                  }}
+                  onFocus={(e) => { loadMaps(); onTextboxFocus(e); }}
                   readOnly={readOnly}
                   type="search"
                   size="large"
