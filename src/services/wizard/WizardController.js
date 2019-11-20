@@ -3,6 +3,7 @@ import { arrayOf, any, func, object, bool, string, number } from 'prop-types';
 import { isValid, isSubmitting, reset, SubmissionError } from 'redux-form';
 
 import { connectController } from 'sly/controllers';
+import { ABORT_WIZARD } from 'sly/constants/wizard';
 import { selectFormData } from 'sly/services/helpers/forms';
 
 const mapStateToProps = (state, { controller, ...ownProps }) => {
@@ -122,7 +123,7 @@ export default class WizardController extends Component {
     return onComplete(data, params);
   };
 
-  handleSubmit = () => {
+  handleSubmit = (params = {}) => {
     const {
       next, previous, doSubmit, isFinalStep,
     } = this;
@@ -132,7 +133,7 @@ export default class WizardController extends Component {
     const currentStep = steps[currentStepIndex];
 
     if (isFinalStep()) {
-      return doSubmit();
+      return doSubmit(params);
     }
 
     // if onStepChange returns a promise then wait for it to resolve before
@@ -153,6 +154,9 @@ export default class WizardController extends Component {
         doSubmit,
       };
       const returnVal = onStepChange(args);
+      if (returnVal === ABORT_WIZARD) {
+        return null;
+      }
       return Promise.resolve(returnVal)
         .then(() => {
           if (!wasGotoCalled) {

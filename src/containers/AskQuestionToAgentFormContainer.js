@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { reduxForm, reset } from 'redux-form';
-import { func, object, shape, string } from 'prop-types';
+import { func } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { query, withAuth } from 'sly/services/newApi';
+import { AGENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
+import matchPropType from 'sly/propTypes/match';
 import agentPropType from 'sly/propTypes/agent';
 import AskQuestionToAgentForm from 'sly/components/molecules/AskQuestionToAgentForm';
 import { createValidator, required, usPhone, email } from 'sly/services/validation';
 import SlyEvent from 'sly/services/helpers/events';
-import { AGENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
 
 const form = 'AskQuestionToAgentForm';
 const validate = createValidator({
@@ -36,9 +37,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
     agent: agentPropType,
     createOrUpdateUser: func.isRequired,
     postSubmit: func,
-    match: shape({
-      url: string,
-    }),
+    match: matchPropType.isRequired,
     createAction: func.isRequired,
   };
 
