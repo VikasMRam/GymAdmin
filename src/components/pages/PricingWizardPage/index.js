@@ -144,20 +144,18 @@ export default class PricingWizardPage extends Component {
     }
 
     if (currentStep === 'Contact') {
-      submitActionAndCreateUser(data, currentStep);
+      // return promise so that wizard will wait till api call is complete
+      return submitActionAndCreateUser(data, currentStep);
     }
 
-    if (currentStep === 'WhatToDoNext') {
-      if (interest === 'talk-advisor') {
-        doSubmit({ redirectLink: `${match.url}/thank-you` });
-        return ABORT_WIZARD;
-      } else if (interest !== 'explore-affordable-options') {
-        goto('ExploreAffordableOptions');
-      }
+    if (currentStep === 'WhatToDoNext' && interest === 'talk-advisor') {
+      doSubmit({ redirectLink: `${match.url}/thank-you` });
+      return ABORT_WIZARD;
     }
 
-    if (currentStep === 'ExploreAffordableOptions') {
-      updateUuidAux(data);
+    if (currentStep === 'ExploreAffordableOptions' || currentStep === 'WhatToDoNext') {
+      // return promise so that wizard will wait till api call is complete
+      return updateUuidAux(data);
     }
     return null;
   };

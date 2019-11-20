@@ -53,34 +53,33 @@ export default class PricingWizardPageContainer extends Component {
     sendEvent('pricing-requested', community.id);
 
     const uuidAux = status.uuidAux.result;
-    return Promise.all([
-      updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
-        if (data.roomType) {
-          const housingInfo = draft.attributes.uuidInfo.housingInfo || {};
-          housingInfo.roomPreference = data.roomType;
-          draft.attributes.uuidInfo.housingInfo = housingInfo;
-        }
 
-        if (data.careType) {
-          const careInfo = draft.attributes.uuidInfo.careInfo || {};
-          careInfo.adls = data.careType;
-          draft.attributes.uuidInfo.careInfo = careInfo;
-        }
+    return updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
+      if (data.roomType) {
+        const housingInfo = draft.attributes.uuidInfo.housingInfo || {};
+        housingInfo.roomPreference = data.roomType;
+        draft.attributes.uuidInfo.housingInfo = housingInfo;
+      }
 
-        if (data.interest) {
-          const residentInfo = draft.attributes.uuidInfo.residentInfo || {};
-          residentInfo.interest = data.interest;
-          draft.attributes.uuidInfo.residentInfo = residentInfo;
-        }
+      if (data.careType) {
+        const careInfo = draft.attributes.uuidInfo.careInfo || {};
+        careInfo.adls = data.careType;
+        draft.attributes.uuidInfo.careInfo = careInfo;
+      }
 
-        if (data.medicaidCoverage || data.budget) {
-          const financialInfo = draft.attributes.uuidInfo.financialInfo || {};
-          if (data.medicaidCoverage) financialInfo.medicaid = medicareToBool(data.medicaidCoverage);
-          if (data.budget) financialInfo.maxMonthlyBudget = data.budget;
-          draft.attributes.uuidInfo.financialInfo = financialInfo;
-        }
-      })),
-    ]);
+      if (data.interest) {
+        const residentInfo = draft.attributes.uuidInfo.residentInfo || {};
+        residentInfo.interest = data.interest;
+        draft.attributes.uuidInfo.residentInfo = residentInfo;
+      }
+
+      if (data.medicaidCoverage || data.budget) {
+        const financialInfo = draft.attributes.uuidInfo.financialInfo || {};
+        if (data.medicaidCoverage) financialInfo.medicaid = medicareToBool(data.medicaidCoverage);
+        if (data.budget) financialInfo.maxMonthlyBudget = data.budget;
+        draft.attributes.uuidInfo.financialInfo = financialInfo;
+      }
+    }));
   };
 
   submitActionAndCreateUser = (data, currentStep) => {
