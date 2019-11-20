@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { object, func } from 'prop-types';
 import Helmet from 'react-helmet';
 import { Route } from 'react-router';
+import { Redirect } from 'react-router-dom';
 
 import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
 import { community as communityPropType } from 'sly/propTypes/community';
@@ -90,12 +91,17 @@ export default class PricingWizardPage extends Component {
     updateUuidAux: func,
   };
 
+  state = { estimatedPrice: 0 };
+
   constructor(props) {
     super(props);
 
     const { community } = props;
-    const { startingRate } = community;
-    this.state = { estimatedPrice: startingRate };
+
+    if (community) {
+      const { startingRate } = community;
+      this.state = { estimatedPrice: startingRate };
+    }
   }
 
   handleRoomTypeChange = (e, newRoomTypes) => {
@@ -144,11 +150,7 @@ export default class PricingWizardPage extends Component {
     }
 
     if (currentStep === 'Contact') {
-      submitActionAndCreateUser(data, currentStep);
-    }
-
-    if (currentStep === 'ExploreAffordableOptions' || currentStep === 'WhatToDoNext') {
-      updateUuidAux(data);
+      return submitActionAndCreateUser(data, currentStep);
     }
 
     if (currentStep === 'WhatToDoNext' && interest === 'talk-advisor') {
@@ -156,7 +158,7 @@ export default class PricingWizardPage extends Component {
       return ABORT_WIZARD;
     }
 
-    return null;
+    return updateUuidAux(data);
   };
 
   calculatePrice = (roomTypes, careTypes) => {
@@ -188,17 +190,21 @@ export default class PricingWizardPage extends Component {
   };
 
   handleComplete = (data, { redirectLink }) => {
-    const { redirectTo, community } = this.props;
+    const { redirectTo, community, updateUuidAux } = this.props;
 
     sendEvent('pricing-requested', community.id);
 
-    return redirectTo(redirectLink);
+    return updateUuidAux(data).then(() => redirectTo(redirectLink));
   };
 
   render() {
     const {
       community, user, uuidAux, userHas, match, redirectTo,
     } = this.props;
+
+    if (!community) {
+      return <Redirect to="/" />;
+    }
 
     const { id, mainImage, name } = community;
     const { estimatedPrice } = this.state;

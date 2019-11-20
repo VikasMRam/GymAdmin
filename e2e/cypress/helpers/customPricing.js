@@ -5,6 +5,11 @@ const submitTillContactStep = (data) => {
     name, phone, typeOfRoom, typeOfCare, medicaid,
   } = data;
 
+  cy.server();
+  cy.route('POST', '**/uuid-actions').as('postUuidActions');
+  cy.route('POST', '**/auth/register').as('postAuthRegister');
+  cy.route('GET', '**/users/me').as('getUserMe');
+
   cy.contains('Get your Pricing and Availability');
 
   cy.get('div[class*=BoxChoiceTile__StyledBox]').contains(typeOfRoom).click();
@@ -19,6 +24,11 @@ const submitTillContactStep = (data) => {
   cy.get('input[name="phone"]').type(phone);
 
   cy.get('button').contains('Continue').click();
+
+  cy.wait(['@postUuidActions', '@postAuthRegister', '@getUserMe']);
+
+  // wait till step is progressed
+  cy.contains('Your estimated pricing');
 };
 
 export const doCustomPricingTalkToAdvisorFlow = (cy, data) => {
@@ -42,9 +52,13 @@ export const doCustomPricingExploreAffordableOptionsFlow = (cy, data) => {
 
   cy.get('button').contains('Explore more affordable options').click();
 
+  cy.contains('What is your monthly');
+
   cy.get('button').contains('$2000 - $3000').click();
+
+  cy.contains('what happens next');
 
   cy.get('button').contains('View Dashboard').click();
 
-  cy.url().should('have.string', '/dashboard/family/my-families');
+  cy.url().should('have.string', '/dashboard/family/my-profile');
 };

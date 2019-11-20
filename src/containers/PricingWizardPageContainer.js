@@ -115,12 +115,19 @@ export default class PricingWizardPageContainer extends Component {
     }));
   };
 
+  getHasFinished = () => {
+    const { status } = this.props;
+    const { hasFinished: communityHasFinished } = status.community;
+
+    return communityHasFinished;
+  };
+
   render() {
     const {
       community, user, userHas, uuidAux, redirectTo, match,
     } = this.props;
 
-    if (!community) {
+    if (!this.getHasFinished()) {
       return null;
     }
 
