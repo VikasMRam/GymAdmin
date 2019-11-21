@@ -20,9 +20,10 @@
   },
   "settings": {
     "import/resolver": {
-      "webpack": {
-        "config": "webpack.config.js"
-      }
+      "alias": [
+        ["sly", "./src"],
+        ["e2e", "./e2e/cypress"]
+      ]
     },
     "react": {
       "version": "detect"

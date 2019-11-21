@@ -14,6 +14,8 @@ export const CLIENT_RESOURCE_TYPE = 'Client';
 
 export const UUIDAUX_RESOURCE_TYPE = 'UUIDAux';
 
+export const UUIDACTION_RESOURCE_TYPE = 'UUIDAction';
+
 export const CONTACT_RESOURCE_TYPE = 'Contact';
 
 export const SLY_ENTITY_RESOURCE_TYPE = 'SlyEntity';

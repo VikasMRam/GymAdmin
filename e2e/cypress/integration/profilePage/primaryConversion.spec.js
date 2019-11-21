@@ -1,22 +1,8 @@
 import { responsive, select } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
-import { getCommunity } from '../../helpers/getCommunity';
 import { TEST_COMMUNITY } from '../../constants/community';
 
-const randChars = (characters, length = 1) => {
-  let result = '';
-  while (length > 0 && length--) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return result;
-};
-
-const fromTwo = length => randChars('23456789', length);
-const fromZero = length => randChars('0123456789', length);
-
-const randHash = () => Math.random().toString(36).substring(7);
-const randPhone = () => `${fromTwo()}${fromZero(2)}${fromTwo()}${fromZero(6)}`;
-const formatPhone = phone => `${phone.substr(0, 3)}-${phone.substr(3, 3)}-${phone.substr(6)}`;
+import randomUser, { formatPhone } from 'e2e/helpers/randomUser';
 
 describe('Primary Conversion', () => {
   let community;
@@ -24,7 +10,7 @@ describe('Primary Conversion', () => {
   beforeEach(() => {
     cy.server();
 
-    getCommunity(TEST_COMMUNITY).then((response) => {
+    cy.getCommunity(TEST_COMMUNITY).then((response) => {
       community = response;
     });
   });
@@ -38,8 +24,7 @@ describe('Primary Conversion', () => {
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
 
-      const email = `slytest+${randHash()}@seniorly.com`;
-      const phone = randPhone();
+      const { email, phone } = randomUser();
 
       form('input[name="full_name"]').type('Fonz');
       form('input[name="email"]').type(email);
@@ -56,7 +41,7 @@ describe('Primary Conversion', () => {
       });
 
       cy.wait('@me').then(async (xhr) => {
-        const response = await toJson(xhr);
+        const response = await toJson(xhr.response);
         const attrs = response.data.attributes;
         expect(attrs.email).to.equal(email);
         expect(attrs.name).to.equal('Fonz');

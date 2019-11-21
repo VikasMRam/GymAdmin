@@ -75,11 +75,9 @@ const CommunityBookATourContactForm = ({
 
 CommunityBookATourContactForm.propTypes = {
   user: object,
-  userDetails: object,
   displayContext: string,
   error: string,
   onAdvisorHelpClick: func.isRequired,
-  onContactByTextMsgChange: func,
   handleSubmit: func,
   heading: string.isRequired,
   subheading: string,

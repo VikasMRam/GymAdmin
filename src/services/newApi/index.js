@@ -1,3 +1,5 @@
+import 'isomorphic-fetch';
+
 export {
   get,
   post,

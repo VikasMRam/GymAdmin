@@ -3,14 +3,17 @@ import { arrayOf, object, func, string } from 'prop-types';
 import dayjs from 'dayjs';
 import build from 'redux-object';
 import styled from 'styled-components';
-import { generatePath } from 'react-router';
+import { generatePath, withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import immutable from 'object-path-immutable';
+import pick from 'lodash/pick';
 
 import { size, palette } from 'sly/components/themes';
 import { prefetch, withUser, query } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
+import matchPropType from 'sly/propTypes/match';
 import conversationParticipantPropType from 'sly/propTypes/conversation/conversationParticipant';
 import {
   MESSAGES_UPDATE_LAST_READ_TIMEOUT,
@@ -21,6 +24,8 @@ import {
 } from 'sly/constants/conversations';
 import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE, CONVERSTION_MESSAGE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
+import { newUuidAction } from 'sly/constants/payloads/uuidAction';
+import { CONVERSATION_MESSAGE_BUTTONLIST_BUTTON_CLICKED } from 'sly/services/newApi/constants';
 import withWS from 'sly/services/ws/withWS';
 import textAlign from 'sly/components/helpers/textAlign';
 import fullHeight from 'sly/components/helpers/fullHeight';
@@ -122,9 +127,13 @@ const mapStateToProps = (state, { conversation, user }) => ({
 
 @query('updateConversationMessage', 'updateConversationMessage')
 
+@query('createAction', 'createUuidAction')
+
 @withWS
 
 @withUser
+
+@withRouter
 
 @connect(mapStateToProps)
 
@@ -135,7 +144,7 @@ export default class ConversationMessagesContainer extends Component {
     messages: arrayOf(messagePropType),
     conversation: conversationPropType,
     user: userPropType,
-    status: object,
+    status: object.isRequired,
     viewingAsParticipant: conversationParticipantPropType,
     updateConversationParticipant: func.isRequired,
     getConversationMessages: func.isRequired,
@@ -145,6 +154,8 @@ export default class ConversationMessagesContainer extends Component {
     className: string,
     onCreateConversationSuccess: func,
     onBackClick: func,
+    createAction: func.isRequired,
+    match: matchPropType,
   };
 
   static defaultProps = {
@@ -304,28 +315,29 @@ export default class ConversationMessagesContainer extends Component {
   };
 
   updateButtonListMessageSelectedButtons = (message, button) => {
-    const { updateConversationMessage } = this.props;
-    const { id, data, conversationID, conversationParticipantID } = message;
+    const { updateConversationMessage, status, createAction, match } = this.props;
+    const { result } = status.messages;
+    const { id, data } = message;
     const { valueButtonList } = data;
     const { selectedButtons } = valueButtonList;
     const newSelectedButtons = [...selectedButtons, button.text];
 
-    const payload = {
-      type: CONVERSTION_PARTICIPANT_RESOURCE_TYPE,
-      attributes: {
-        conversationID,
-        conversationParticipantID,
-        data: {
-          ...data,
-          valueButtonList: {
-            ...valueButtonList, // todo: clarify regarding json inner keys cleared on patch
-            selectedButtons: newSelectedButtons,
-          },
-        },
-      },
-    };
+    const rawMessage = result.find(rMessage => rMessage.id === message.id);
+    const conversationMessagePayload = immutable(pick(rawMessage, ['id', 'type', 'attributes']))
+      .set('attributes.data.valueButtonList.selectedButtons', newSelectedButtons)
+      .value();
+    const uuidActionPayload = immutable(newUuidAction)
+      .set('attributes.actionType', CONVERSATION_MESSAGE_BUTTONLIST_BUTTON_CLICKED)
+      .set('attributes.actionPage', match.url)
+      .set('attributes.actionInfo.slug', id)
+      .set('attributes.actionInfo.buttonSelected', button.text)
+      .set('attributes.actionInfo.entityType', conversationMessagePayload.type)
+      .value();
 
-    return updateConversationMessage({ id }, payload)
+    return Promise.all([
+      updateConversationMessage({ id }, conversationMessagePayload),
+      createAction(uuidActionPayload),
+    ])
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
         const { body } = r;
@@ -404,7 +416,14 @@ export default class ConversationMessagesContainer extends Component {
         conversationID: conversationId,
       },
     };
+    const event = {
+      action: 'buttonListMessageButtonClicked',
+      category: categoryName,
+      label: message.id,
+      value: button.text,
+    };
 
+    SlyEvent.getInstance().sendEvent(event);
     createConversationMessage(payload).then(() => this.updateButtonListMessageSelectedButtons(message, button));
   };
 

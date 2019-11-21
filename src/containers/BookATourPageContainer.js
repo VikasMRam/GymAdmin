@@ -1,90 +1,41 @@
 import React, { Component } from 'react';
 import { object, func, string, shape } from 'prop-types';
-import { withRouter } from 'react-router';
+import produce from 'immer';
 
-import { query } from 'sly/services/newApi';
+import { prefetch, query, withAuth } from 'sly/services/newApi';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { connectController } from 'sly/controllers';
-import withServerState from 'sly/store/withServerState';
-import { getDetail } from 'sly/store/selectors';
-import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/resource/actions';
 import SlyEvent from 'sly/services/helpers/events';
-import { BOOK_A_TOUR } from 'sly/services/api/actions';
 import BookATourPage from 'sly/components/pages/BookATourPage';
-import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
-import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
 import { TOUR_BOOKED } from 'sly/services/newApi/constants';
+import { medicareToBool, boolToMedicare } from 'sly/services/helpers/userDetails';
 import { withRedirectTo } from 'sly/services/redirectTo';
 
 const eventCategory = 'BAT';
 
-const mapStateToProps = (state, { match }) => ({
-  user: getDetail(state, 'user', 'me'),
-  userAction: getDetail(state, 'userAction') || {},
-  community: getDetail(state, 'community', match.params.communitySlug),
-});
+const getCommunitySlug = match => match.params.communitySlug;
 
-const mapDispatchToProps = dispatch => ({
-  postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
-});
-
-const mapPropsToActions = ({ match }) => ({
-  community: resourceDetailReadRequest('community', match.params.communitySlug, {
-    include: 'similar-communities',
-  }),
-  userAction: resourceDetailReadRequest('userAction'),
-});
-
-const handleResponses = (responses, { location }, redirect) => {
-  const {
-    community,
-  } = responses;
-
-  const {
-    pathname,
-  } = location;
-
-  community(null, (error) => {
-    if (error.response) {
-      if (error.response.status === 301) {
-        redirect(replaceLastSegment(pathname, getLastSegment(error.location)));
-        return null;
-      }
-
-      if (error.response.status === 404) {
-        // Not found so redirect to city page
-        redirect(replaceLastSegment(pathname));
-        return null;
-      }
-    }
-
-    return Promise.reject(error);
-  });
-};
-
-@withServerState(
-  mapPropsToActions,
-  handleResponses,
+@prefetch('community', 'getCommunity', (req, { match }) =>
+  req({
+    id: getCommunitySlug(match),
+    include: 'similar-communities,questions,agents',
+  })
 )
 
-@connectController(
-  mapStateToProps,
-  mapDispatchToProps
-)
-
+@withAuth
+@query('updateUuidAux', 'updateUuidAux')
 @query('createAction', 'createUuidAction')
-
-@withRouter
 @withRedirectTo
 
 export default class BookATourPageContainer extends Component {
   static propTypes = {
     community: communityPropType,
     user: object,
-    userAction: object,
-    postUserAction: func.isRequired,
     history: object.isRequired,
+    status: object,
+    updateUuidAux: func,
+    createOrUpdateUser: func,
     createAction: func.isRequired,
+    uuidAux: object,
     match: shape({ url: string }),
     redirectTo: func.isRequired
   };
@@ -92,31 +43,22 @@ export default class BookATourPageContainer extends Component {
 
   handleComplete = (data) => {
     const {
-      community, postUserAction, userAction, createAction, match,
+      community, createAction, updateUuidAux, createOrUpdateUser, status, match,
     } = this.props;
 
     const {
-      name, phone, medicaidCoverage, contactByTextMsg, ...restData
+      name, phone, medicaidCoverage,
     } = data;
 
-    const { userDetails } = userAction;
-    const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
-    const value = {
-      ...restData,
-      slug: community.id,
-      user,
-    };
-    const payload = {
-      action: BOOK_A_TOUR,
-      value,
-    };
+    const uuidAux = status.uuidAux.result;
 
     return Promise.all([
-      postUserAction(payload),
       createAction({
         type: 'UUIDAction',
         attributes: {
           actionInfo: {
+            name,
+            phone,
             slug: community.id,
             scheduledDay: data.scheduledDate,
             scheduledTime: data.scheduledTime,
@@ -125,7 +67,17 @@ export default class BookATourPageContainer extends Component {
           actionPage: match.url,
         },
       }),
-    ]).then(() => {
+      updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
+        const financialInfo = draft.attributes.uuidInfo.financialInfo || {};
+        if (medicaidCoverage) {
+          financialInfo.medicaid = medicareToBool(medicaidCoverage);
+        }
+        draft.attributes.uuidInfo.financialInfo = financialInfo;
+      })),
+    ]).then(() => createOrUpdateUser({
+      name,
+      phone,
+    })).then(() => {
       const event = {
         action: 'tour-booked', category: eventCategory, label: community.id,
       };
@@ -135,19 +87,20 @@ export default class BookATourPageContainer extends Component {
 
   render() {
     const {
-      community, user, userAction, redirectTo, match
+      community, user, uuidAux, redirectTo, match,
     } = this.props;
 
-    if (!community || !userAction) {
+    if (!community) {
       return null;
     }
 
-    const userDetails = userAction ? userAction.userDetails : null;
+    const medicaid = boolToMedicare(uuidAux.financialInfo && uuidAux.financialInfo.medicaid);
+
     return (
       <BookATourPage
         community={community}
         user={user}
-        userDetails={userDetails}
+        medicaidCoverage={medicaid}
         onComplete={this.handleComplete}
         redirectTo={redirectTo}
         match={match}

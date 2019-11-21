@@ -76,7 +76,7 @@ class TalkToAgentForm extends Component {
           />
           <Field name="location" component={noRender} />
           <Field
-            name="full_name"
+            name="name"
             label="Full Name *"
             type="text"
             placeholder="Full Name"

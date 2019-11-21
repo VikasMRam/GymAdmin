@@ -1,10 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import queryString from 'query-string';
 
 import { SET } from 'sly/store/controller/actions';
-import { RESOURCE_LIST_READ_REQUEST, RESOURCE_CREATE_REQUEST } from 'sly/store/resource/actions';
 import { STEP_ORDERS, DEFAULT_STEP_ORDER } from 'sly/external/constants/steps';
 import Controller from 'sly/external/apps/wizards/careAssessment/Controller';
 
@@ -13,8 +11,9 @@ const initStore = (props = {}) => mockStore({
   ...props,
 });
 const set = jest.fn();
-const wrap = (store, props = {}) => shallow(<Controller {...props} set={set} store={store} />)
-  .dive().dive();
+// FIXME: hack to jump around the fact that we are not doing shallow render in the WrappedComponent directly
+// eslint-disable-next-line newline-per-chained-call
+const wrap = (store, props = {}) => shallow(<Controller {...props} api={{}} set={set} store={store} />).dive().dive().dive().dive().dive().dive().dive().dive();
 
 describe('Controller', () => {
   beforeEach(() => {
@@ -101,25 +100,6 @@ describe('Controller', () => {
     expect(payloadData.currentStep).toBe(1);
   });
 
-  it('should call doSearch when city and state passed', () => {
-    const store = initStore();
-    const params = {
-      city: 'san-fransisco',
-      state: 'california',
-    };
-    const locationPassed = {
-      search: `?${queryString.stringify(params)}`,
-    };
-    wrap(store, {
-      location: locationPassed,
-    });
-
-    const lastAction = store.getActions().pop();
-    expect(lastAction.type).toBe(RESOURCE_LIST_READ_REQUEST);
-    const payloadData = lastAction.payload.params;
-    expect(payloadData).toEqual(params);
-  });
-
   it('handleSubmit calls doSearch when on search step', () => {
     const stepOrderNames = Object.keys(STEP_ORDERS);
     const citySearchStep = STEP_ORDERS[stepOrderNames[0]].indexOf('CitySearch');
@@ -139,16 +119,13 @@ describe('Controller', () => {
 
     wrapper.instance().handleSubmit({}, jest.fn(), wrapper.props());
 
-    let lastAction = store.getActions().pop();
+    const lastAction = store.getActions().pop();
     expect(lastAction.type).toBe(SET);
     ({ currentStep: newCurrentStep } = lastAction.payload.data);
     const { progressPath } = lastAction.payload.data;
     expect(newCurrentStep).toBe(currentStep + 1);
     const progressPathArr = Array.from(progressPath);
     expect(progressPathArr).toEqual(expectedProgressPath);
-
-    lastAction = store.getActions().pop();
-    expect(lastAction.type).toBe(RESOURCE_LIST_READ_REQUEST);
   });
 
   it('handleSubmit does not call doSearch when not on search step', () => {
@@ -190,22 +167,5 @@ describe('Controller', () => {
 
     const { currentStep } = wrapper.props();
     expect(currentStep).toBe(1);
-  });
-
-  it('handleSeeMore creates userAction when called from last step', () => {
-    const stepOrderNames = Object.keys(STEP_ORDERS);
-    const locationPassed = {
-      search: `?order=${stepOrderNames[0]}`,
-    };
-    const store = initStore();
-    const wrapper = wrap(store, {
-      currentStep: STEP_ORDERS[stepOrderNames[0]].length,
-      location: locationPassed,
-    });
-
-    wrapper.instance().handleSeeMore();
-
-    const lastAction = store.getActions().pop();
-    expect(lastAction.type).toBe(RESOURCE_CREATE_REQUEST);
   });
 });

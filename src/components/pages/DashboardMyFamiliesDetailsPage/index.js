@@ -26,7 +26,7 @@ import { size, palette } from 'sly/components/themes';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import { isReferralSent } from 'sly/services/helpers/client';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
-import { userIs } from 'sly/services/helpers/role';
+import { userIs, userExact } from 'sly/services/helpers/role';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import SlyEvent from 'sly/services/helpers/events';
@@ -584,7 +584,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     let canEditFamilyDetails = isConnected;
     const isClientAdminUser = userIs(user, PLATFORM_ADMIN_ROLE) ||
       (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg);
-    const isAgentUser = userIs(user, AGENT_ND_ROLE);
+    const isAgentUser = userExact(user, AGENT_ND_ROLE);
     // Rule when lead is created by self
     if (stage === FAMILY_STAGE_NEW && isClientAdminUser) {
       showUpdateAddNoteButtons = true;

@@ -1,49 +1,23 @@
 import React, { Component } from 'react';
-import { string, arrayOf, object } from 'prop-types';
+import { arrayOf, object } from 'prop-types';
 
-import withServerState from 'sly/store/withServerState';
-import { resourceListReadRequest } from 'sly/store/resource/actions';
 import agentPropType from 'sly/propTypes/agent';
 import AgentRegionPage from 'sly/components/pages/AgentRegionPage';
-import { getList } from 'sly/store/selectors';
 import { titleize } from 'sly/services/helpers/strings';
 import { getAgentUrl } from 'sly/services/helpers/url';
 import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/agents';
 import { getAgentParams } from 'sly/services/helpers/search';
-import { connectController } from 'sly/controllers';
+import prefetch from 'sly/services/newApi/prefetch';
 
-const mapStateToProps = (state, { match, location }) => {
-  const { params } = match;
-  const { region, city } = params;
-  const searchParams = getAgentParams(match, location);
-  return {
-    regionSlug: region,
-    citySlug: city,
-    agentsList: getList(state, 'agent', searchParams),
-  };
-};
-
-const mapPropsToActions = ({ match, location }) => {
-  const searchParams = getAgentParams(match, location);
-  return {
-    agent: resourceListReadRequest('agent', searchParams),
-  };
-};
-
-@connectController(mapStateToProps)
-
-@withServerState(mapPropsToActions)
+@prefetch('agentsList', 'getAgents', (req, { match, location }) => req(getAgentParams(match, location)))
 
 export default class AgentRegionPageContainer extends Component {
   static propTypes = {
-    regionSlug: string.isRequired,
-    citySlug: string,
+    match: object,
     agentsList: arrayOf(agentPropType),
     history: object,
   };
-
-
 
   handleLocationSearch = (result) => {
     const { history } = this.props;
@@ -59,12 +33,13 @@ export default class AgentRegionPageContainer extends Component {
 
   render() {
     const {
-      agentsList, regionSlug, citySlug, history,
+      agentsList, match, history,
     } = this.props;
 
     const { location } = history;
+    const citySlug = match.params.city;
 
-    const newAgentsList = agentsList
+    const newAgentsList = (agentsList || [])
       .filter(agent => agent.status > 0)
       .map((agent) => {
         const url = getAgentUrl(agent);
@@ -82,7 +57,7 @@ export default class AgentRegionPageContainer extends Component {
         locationName = `${titleize(city)} ${state.toUpperCase()}`;
       }
     } else {
-      locationName = titleize(regionSlug);
+      locationName = titleize(match.params.region);
     }
 
     const title = `${locationName} Partner Agents`;

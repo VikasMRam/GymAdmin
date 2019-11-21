@@ -3,6 +3,7 @@ import { arrayOf, any, func, object, bool, string, number } from 'prop-types';
 import { isValid, isSubmitting, reset, SubmissionError } from 'redux-form';
 
 import { connectController } from 'sly/controllers';
+import { ABORT_WIZARD } from 'sly/constants/wizard';
 import { selectFormData } from 'sly/services/helpers/forms';
 
 const mapStateToProps = (state, { controller, ...ownProps }) => {
@@ -122,9 +123,9 @@ export default class WizardController extends Component {
     return onComplete(data, params);
   };
 
-  handleSubmit = () => {
+  handleSubmit = (params = {}) => {
     const {
-      next, previous, goto, doSubmit, isFinalStep,
+      next, previous, doSubmit, isFinalStep,
     } = this;
     const {
       onStepChange, data, currentStepIndex, steps,
@@ -132,11 +133,17 @@ export default class WizardController extends Component {
     const currentStep = steps[currentStepIndex];
 
     if (isFinalStep()) {
-      return doSubmit();
+      return doSubmit(params);
     }
 
     // if onStepChange returns a promise then wait for it to resolve before
     // moving to next step
+
+    let wasGotoCalled = false;
+    const goto = (step) => {
+      wasGotoCalled = true;
+      return this.goto(step);
+    };
     if (onStepChange) {
       const args = {
         currentStep,
@@ -147,8 +154,16 @@ export default class WizardController extends Component {
         doSubmit,
       };
       const returnVal = onStepChange(args);
+      if (returnVal === ABORT_WIZARD) {
+        return null;
+      }
       return Promise.resolve(returnVal)
-        .then(this.next)
+        .then(() => {
+          if (!wasGotoCalled) {
+            return this.next();
+          }
+          return null;
+        })
         .catch((e) => {
           throw new SubmissionError({ _error: e.message });
         });

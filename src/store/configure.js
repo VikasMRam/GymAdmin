@@ -4,8 +4,7 @@ import { middleware as sagaThunkMiddleware } from 'redux-saga-thunk';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
-import entitiesMiddleware from './entities/middleware';
-import { middleware as beesMiddleware } from '../services/newApi';
+import { middleware } from '../services/newApi';
 import reducer from './reducer';
 import sagas from './sagas';
 
@@ -22,7 +21,7 @@ export default function (initialState, services = {}) {
   const sagaMiddleware = createSagaMiddleware();
 
   const middlewares = [
-    beesMiddleware, entitiesMiddleware, thunkMiddleware, sagaThunkMiddleware, sagaMiddleware,
+    middleware, thunkMiddleware, sagaThunkMiddleware, sagaMiddleware,
   ];
 
   if (isBrowser && !muteReduxLogger) {

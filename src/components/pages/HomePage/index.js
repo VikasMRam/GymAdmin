@@ -494,7 +494,6 @@ const HomePage = ({
             <CWTImage src={assetPath('images/home/companies-we-trust/AssistedLivingLocators_BW.png')} alt="Assisted Living Locators Logo" />
           </CWTColumnWrapper>
         </StyledSection>
-        <ConciergeContainer pathName={pathName} />
         <SeoLinks title="Assisted living by Cities" links={ALSeoCities} />
         <SeoLinks title="Assisted living by State" links={ALSeoStates} />
       </TemplateContent>

@@ -17,7 +17,7 @@ describe('CommunityBookATourDateForm', () => {
   });
 
   it('does not render medicaid when medicaidCoverage is passed', () => {
-    const wrapper = wrap({ userDetails: { medicaidCoverage: 'no' } });
+    const wrapper = wrap({ medicaidCoverage: 'no' });
 
     expect(wrapper.find('StyledField')).toHaveLength(1);
     expect(wrapper.find('StyledTimeField')).toHaveLength(1);
