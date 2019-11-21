@@ -14,7 +14,7 @@ import { isBrowser } from 'sly/config';
 import PlusBadge from 'sly/components/molecules/PlusBadge';
 
 const Address = styled(Heading)`
-  margin-bottom: ${size('spacing.xLarge')};
+  margin-bottom: ${size('spacing.regular')};
 `;
 
 const StyledHeading = styled(Heading)`
@@ -24,10 +24,14 @@ const StyledHeading = styled(Heading)`
 const StyledTag = styled(Tag)`
   margin-right: ${size('spacing.regular')};
   text-transform: uppercase;
-  background-color: #EEF9F9;
-  border: 1px solid #D5F0F0;
-  color: #56C4C2;
-  
+  background-color: ${palette('secondary', 'background')};
+  border: 1px solid ${palette('secondary', 'filler')};
+  color: ${palette('secondary', 'base')};
+  border-radius: ${size('spacing.small')};
+  letter-spacing: ${size('spacing.nano')};
+  line-height: ${size('spacing.large')};
+  height: ${size('spacing.xLarge')};
+  font-size: ${size('spacing.medium')};
 `;
 
 const Wrapper = styled.div`
@@ -36,7 +40,7 @@ const Wrapper = styled.div`
   align-items: left;
   justify-content: space-between;
   > *:first-child {
-    margin-bottom: ${size('spacing.xLarge')};
+    margin-bottom: ${size('spacing.medium')};
   }
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -118,7 +122,7 @@ const CommunitySummary = ({
       }
 
       {plusCommunity &&
-      <PlusBadge plusCategory={plusCategory} />
+        <PlusBadge plusCategory={plusCategory} />
       }
       <Hr />
       <Wrapper>

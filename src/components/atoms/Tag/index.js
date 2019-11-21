@@ -15,9 +15,9 @@ const Tag = styled.div`
   border-radius: ${size('spacing.small')};
   padding: 0 1em;
   line-height: 1.5em;
-  &::before {
+  /* &::before {
     content: "#";
-  }
+  } */
 `;
 
 Tag.propTypes = {
