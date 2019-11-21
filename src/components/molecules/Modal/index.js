@@ -92,6 +92,9 @@ const ModalContext = styled.article`
       // same as single without overflow auto
       overflow: visible;
     `,
+    noPadding: css`
+      overflow: visible;
+    `,
     fullScreen: css`
       width: 100%!important;
       border-radius: 0!important;
