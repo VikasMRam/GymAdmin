@@ -8,7 +8,7 @@ const wrap = (props = {}) => shallow(<DuplicateFamilies {...props} />);
 
 describe('DuplicateFamilies', () => {
   it('renders', () => {
-    const wrapper = wrap({ clients });
+    const wrapper = wrap({ clients, currentClient: clients[0] });
 
     expect(wrapper.find('FamilyEntry')).toHaveLength(clients.length);
   });
