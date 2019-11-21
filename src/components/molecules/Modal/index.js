@@ -9,7 +9,7 @@ import IconButton from 'sly/components/molecules/IconButton';
 
 const closeButtonOutsideLayouts = ['gallery', 'fullScreen'];
 const bottomCloseButtonLayouts = ['bottomDrawer'];
-const noPaddingLayouts = ['noPadding', 'wizard', 'bottomDrawer', 'eBook'];
+const noPaddingLayouts = ['noPadding', 'wizard', 'bottomDrawer', 'eBook', 'noPaddingWithOverflow'];
 
 // https://www.drupal.org/project/drupal/issues/2707291#comment-12797758
 injectGlobal`
@@ -92,7 +92,7 @@ const ModalContext = styled.article`
       // same as single without overflow auto
       overflow: visible;
     `,
-    noPadding: css`
+    noPaddingWithOverflow: css`
       overflow: visible;
     `,
     fullScreen: css`
@@ -216,7 +216,7 @@ const Modal = ({
 };
 
 Modal.propTypes = {
-  layout: oneOf(['default', 'fullScreen', 'gallery', 'sidebar', 'wizard', 'searchBox', 'noPadding', 'bottomDrawer', 'eBook']).isRequired,
+  layout: oneOf(['default', 'fullScreen', 'gallery', 'sidebar', 'wizard', 'searchBox', 'noPadding', 'bottomDrawer', 'eBook', 'noPaddingWithOverflow']).isRequired,
   children: node,
   closeable: bool,
   onClose: func.isRequired,
