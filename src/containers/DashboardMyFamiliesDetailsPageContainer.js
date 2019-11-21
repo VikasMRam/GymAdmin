@@ -61,6 +61,7 @@ const mapStateToProps = (state, { conversations }) => ({
       exp: 'or',
       'filter[email]': props.client.clientInfo.email,
       'filter[phone]': props.client.clientInfo.phoneNumber,
+      'include': 'community',
     }))
 )
 
