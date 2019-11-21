@@ -23,7 +23,7 @@ const assertUserDetails = (user, data, shouldHave = [
     expect(uuidInfo.careInfo.adls).to.contain('medication-management');
   }
   if (shouldHave.includes('interest')) {
-    expect(uuidInfo.residentInfo.interest).to.equal('explore-affordable-options');
+    expect(uuidInfo.residentInfo.interest === 'explore-affordable-options' || uuidInfo.residentInfo.interest === 'talk-advisor').to.true;
   }
   if (shouldHave.includes('medicaidCoverage')) {
     expect(uuidInfo.financialInfo.medicaid).to.equal(true);
