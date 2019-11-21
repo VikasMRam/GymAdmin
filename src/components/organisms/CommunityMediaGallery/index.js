@@ -44,10 +44,9 @@ export default class CommunityMediaGallery extends Component {
 
   render() {
     const {
-      communityName, city, state, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
+      communityName, city, state, images, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
     } = this.props;
     let { websiteUrl } = this.props;
-    const { images } = this.props;
     this.sdGalleryImages = videos.map((vid, i) => {
       // Important: create new object instance having src & alt as we will be modifying same object below
       return {

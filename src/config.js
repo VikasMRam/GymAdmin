@@ -26,6 +26,7 @@ const config = {
     eventServerUrl: 'http://localhost:8888/events/new',
     domain: process.env.DOMAIN,
     publicPath,
+    assetsUrl: process.env.ASSETS_URL,
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-NTC7HG2',
     rokoApiKey: 'OgRs7tffvTdiKOKqsDSwwLgyJF6wHYVxFAK+qQO4paU=',
@@ -47,6 +48,7 @@ const config = {
     domain: 'localhost',
     host: 'http://localhost',
     apiUrl: 'http://localhost/v0',
+    assetsUrl: 'http://localhost/assets',
   },
 
   development: {

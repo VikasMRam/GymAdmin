@@ -14,7 +14,7 @@ const communityDefaultImages = {
   '51 +': assetPath('vectors/Large_Assisted_Living.svg'),
 };
 
-function getImages({ gallery = {}, videoGallery = {}, mainImage, propInfo = {} }) {
+function getImages({ gallery = {}, mainImage, propInfo = {} }) {
   const defaultImageUrl = communityDefaultImages[propInfo.communitySize] || communityDefaultImages['up to 20 Beds'];
 
   let images = gallery.images || [];
