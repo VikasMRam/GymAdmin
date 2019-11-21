@@ -55,8 +55,10 @@ const isButtonSelected = (message, button) => message.data.valueButtonList.selec
 
 const isHtmlMessage = message => message.data.type === CONVERSATION_MESSAGE_DATA_TYPE_HTML;
 
+const getValue = message => message.data[`value${message.data.type}`];
+
 const Message = ({
-  message, participant, dark, className, onButtonClick,
+  message, participant, viewingAsConversationParticipant, dark, className, onButtonClick,
 }) => {
   let dateString = '';
   const parsedDate = dayjs(message.createdAt);
@@ -75,17 +77,18 @@ const Message = ({
       {user && <StyledAvatar size="small" user={user} />}
       {textMessageTypes.includes(message.data.type) && (
         <StyledBox padding="large" dark={dark}>
-          {!isHtmlMessage(message) && <PaddedBlock size="caption">{message.data.valueText}</PaddedBlock>}
-          {isHtmlMessage(message) && <PaddedBlock size="caption" dangerouslySetInnerHTML={{ __html: message.data.valueText }} />}
+          {!isHtmlMessage(message) && <PaddedBlock size="caption">{getValue(message)}</PaddedBlock>}
+          {isHtmlMessage(message) && <PaddedBlock size="caption" dangerouslySetInnerHTML={{ __html: getValue(message) }} />}
           {user && <Block size="tiny" palette="grey" variant="dark">{dateString}</Block>}
           {!user && <TextAlignRightBlock size="tiny" palette="grey" variant="dark">{dateString}</TextAlignRightBlock>}
         </StyledBox>
       )}
       {message.data.type === CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST &&
         <ButtonsWrapper>
-          {message.data.valueButtonList.buttons.map(b => (
+          {getValue(message).buttons.map(b => (
             <Button
               ghost
+              disabled={!viewingAsConversationParticipant} // only participants should be able to click; eg: admin viewing shouldn't click
               selected={isButtonSelected(message, b)}
               key={b.text}
               onClick={() => isClickableButtonType(b) && !isButtonSelected(message, b) && onButtonClick(message, b)}
@@ -103,6 +106,7 @@ const Message = ({
 Message.propTypes = {
   message: messagePropType.isRequired,
   participant: participantPropType,
+  viewingAsConversationParticipant: bool,
   dark: bool,
   className: string,
   onButtonClick: func,
