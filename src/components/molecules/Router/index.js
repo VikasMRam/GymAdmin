@@ -10,6 +10,7 @@ import {
 import { withAuth } from 'sly/services/newApi';
 import SlyEvent from 'sly/services/helpers/events';
 import { isServer } from 'sly/config';
+import { extractEventFromQuery } from 'sly/services/helpers/queryParamEvents';
 
 const searchWhitelist = [
   'page-number',
@@ -64,6 +65,18 @@ export default class Router extends Component {
     }
   }
 
+  sendQueryEvents() {
+    const { history, location: { pathname, search, hash } } = this.props;
+
+    const { event, search: searchWithoutEvent } = extractEventFromQuery(search);
+    if(event) {
+      SlyEvent.getInstance().sendEvent(event);
+      history.push(pathname+searchWithoutEvent+hash);
+      return true;
+    }
+    return false;
+  }
+
   componentDidMount() {
     const {
       enableEvents,
@@ -73,8 +86,11 @@ export default class Router extends Component {
     const { pathname, search } = location;
 
     if (enableEvents) {
-      SlyEvent.getInstance()
-        .sendPageView(pathname, search);
+      if(this.sendQueryEvents()) {
+        return;
+      }
+
+      SlyEvent.getInstance().sendPageView(pathname, search);
     }
 
     this.checkLoginRedirect();
@@ -94,7 +110,10 @@ export default class Router extends Component {
     }
 
     if (enableEvents && prevProps.location !== location) {
-      const { pathname, search } = location;
+      if(this.sendQueryEvents()) {
+        return;
+      }
+
       SlyEvent.getInstance().sendPageView(pathname, search);
     }
 
