@@ -51,7 +51,7 @@ partiallyHydrateClient(
     CommunityMorePicturesContainer,
     LazyCommunityMapContainer,
     RetentionPopup,
-    Image
+    Image,
   ],
   clientConfigs.find(x => x.bundle === 'community-details').path,
   root
