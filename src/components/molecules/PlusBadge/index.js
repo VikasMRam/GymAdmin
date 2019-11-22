@@ -2,7 +2,7 @@ import React from 'react';
 import { string, bool } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette, getKey } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { Badge, Icon, Block } from 'sly/components/atoms';
 
 const StyledBadge = styled(Badge)`
@@ -22,7 +22,6 @@ const StyledIcon = styled(Icon)`
 `;
 const PlusBlock = styled(Block)`
   font-style: italic;
-  font-family: ${getKey('fonts.quote')};
   margin-right: ${size('spacing.small')};
 `;
 const CategoryBlock = styled(Block)`

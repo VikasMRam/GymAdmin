@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { size, palette, assetPath, getKey } from 'sly/components/themes';
+import { size, palette, assetPath } from 'sly/components/themes';
 import { Heading, Image as UnhydratedImage, Icon, Paragraph } from 'sly/components/atoms';
 import IconItem from 'sly/components/molecules/IconItem';
 import PlusBadge from 'sly/components/molecules/PlusBadge';
@@ -29,7 +29,6 @@ const StyledHeading = styled(Heading)`
 
 const Italicize = styled.span`
   font-style: italic;
-  font-family: ${getKey('fonts.quote')};
 `;
 
 const IconItemWrapper = styled.div`
@@ -71,7 +70,7 @@ const ImageWrapper = styled.div`
     top:0;
     width:100vw; 
     height:100%;
-    background: linear-gradient(to right,rgba(213, 240, 240,1), rgba(213, 240, 240,0));
+    background: linear-gradient(to right,rgba(213, 240, 240,1) 25%, rgba(213, 240, 240,0));
   }
 
 `;
