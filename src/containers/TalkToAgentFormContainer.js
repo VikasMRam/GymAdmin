@@ -4,8 +4,9 @@ import { reduxForm, reset } from 'redux-form';
 import { withRouter } from 'react-router';
 import produce from 'immer';
 
-import { query, prefetch } from 'sly/services/newApi';
-import { createValidator, required, usPhone } from 'sly/services/validation';
+import { query, prefetch, withUser, withAuth } from 'sly/services/newApi';
+import { createValidator, required, usPhone, email } from 'sly/services/validation';
+import userPropType from 'sly/propTypes/user';
 import TalkToAgentForm from 'sly/components/organisms/TalkToAgentForm';
 import SlyEvent from 'sly/services/helpers/events';
 import { CONSULTATION_REQUESTED } from 'sly/services/newApi/constants';
@@ -16,25 +17,21 @@ const validate = createValidator({
   phone: [usPhone, required],
   message: [required],
   name: [required],
+  email: [required, email],
 });
 
 const afterSubmit = (result, dispatch) => dispatch(reset(form));
 
-const initialValues = {
-  location: {},
-  phone: '',
-  message: '',
-  name: '',
-};
 const ReduxForm = reduxForm({
   form,
   validate,
-  initialValues,
   onSubmitSuccess: afterSubmit,
   destroyOnUnmount: false,
 })(TalkToAgentForm);
 
 @withRouter
+@withUser
+@withAuth
 @prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 @query('createAction', 'createUuidAction')
 @query('updateUuidAux', 'updateUuidAux')
@@ -47,19 +44,23 @@ export default class TalkToAgentFormContainer extends Component {
     postSubmit: func,
     createAction: func.isRequired,
     match: object.isRequired,
+    user: userPropType,
+    createOrUpdateUser: func.isRequired,
   };
 
   handleSubmit = (data) => {
     const {
-      postSubmit, createAction, match,
-      status,
-      updateUuidAux,
+      postSubmit, createAction, match, status, updateUuidAux, createOrUpdateUser,
+      user,
     } = this.props;
 
     const uuidAux = status.uuidAux.result;
+    const { message, location, name } = data;
+    let { phone } = data;
+    if (user && user.phoneNumber) {
+      ({ phoneNumber: phone } = user);
+    }
 
-    const { message, location, name, phone } = data;
-    const { formatted_address: formattedAddress } = location;
     return Promise.all([
       createAction({
         type: 'UUIDAction',
@@ -72,36 +73,42 @@ export default class TalkToAgentFormContainer extends Component {
       updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
         const uuidInfo = draft.attributes.uuidInfo || {};
         const locationInfo = uuidInfo.locationInfo || {};
-        const preferredLocations = locationInfo.preferredLocations || [];
 
-        if (formattedAddress && !preferredLocations.includes(formattedAddress)) {
-          preferredLocations.push(formattedAddress);
+        if (location) {
+          const { city, state, geo } = location;
+          locationInfo.city = city;
+          locationInfo.state = state;
+          locationInfo.geo = geo;
         }
 
-        locationInfo.preferredLocations = preferredLocations;
         uuidInfo.locationInfo = locationInfo;
         draft.attributes.uuidInfo = uuidInfo;
       })),
-    ]).then(() => {
-      const event = {
-        action: 'ask_question', category: 'agent', label: match.url,
-      };
-      SlyEvent.getInstance().sendEvent(event);
-      if (postSubmit) {
-        postSubmit();
-      }
-    }).catch((e) => {
-      console.error(e);
-      return Promise.reject(e);
-    });
+    ])
+      .then(() => createOrUpdateUser({
+        name,
+        phone,
+      }))
+      .then(() => {
+        const event = {
+          action: 'ask_question', category: 'agent', label: match.url,
+        };
+        SlyEvent.getInstance().sendEvent(event);
+        if (postSubmit) {
+          postSubmit();
+        }
+      }).catch((e) => {
+        console.error(e);
+        return Promise.reject(e);
+      });
   };
 
   render() {
-    const { ...props } = this.props;
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}
-        {...props}
+        hasLocation
+        {...this.props}
       />
     );
   }
