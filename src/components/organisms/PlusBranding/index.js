@@ -2,9 +2,16 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import { size, palette, assetPath, getKey } from 'sly/components/themes';
-import { Heading, Image, Icon, Paragraph } from 'sly/components/atoms';
+import { Heading, Image as UnhydratedImage, Icon, Paragraph } from 'sly/components/atoms';
 import IconItem from 'sly/components/molecules/IconItem';
 import PlusBadge from 'sly/components/molecules/PlusBadge';
+import { withHydration } from 'sly/services/partialHydration';
+
+const InlineWrapper = styled.div`
+  display: inline;
+`;
+
+const Image = withHydration(UnhydratedImage, { alwaysHydrate: true, Wrapper: InlineWrapper });
 
 const TextWrapper = styled.div`
   display: block;

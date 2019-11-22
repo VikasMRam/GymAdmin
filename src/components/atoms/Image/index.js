@@ -49,6 +49,7 @@ const ltIE9 = true;
 // TODO: a note for the future if we do the resampling of the images with lambda,
 // <Image /> should accept formatting props so we can manipulate the url to get the right size.
 export default class Image extends React.Component {
+  static typeHydrationId = 'Image';
   static propTypes = {
     lazy: bool.isRequired,
     src: string.isRequired,
