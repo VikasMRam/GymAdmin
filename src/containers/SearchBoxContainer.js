@@ -74,6 +74,9 @@ class SearchBoxContainer extends Component {
           longitude: result.geometry.location.lng(),
         };
         result.geo = geo;
+        const [city, state] = result.formatted_address.split(',');
+        result.city = city;
+        result.state = state;
         this.setState({ location: result });
         this.handleOnLocationSearch(result);
       })
