@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { size, palette, assetPath } from 'sly/components/themes';
+import { size, palette, assetPath, getKey } from 'sly/components/themes';
 import { Heading, Image, Icon, Paragraph } from 'sly/components/atoms';
 import IconItem from 'sly/components/molecules/IconItem';
 import PlusBadge from 'sly/components/molecules/PlusBadge';
@@ -16,17 +16,13 @@ const StyledHeading = styled(Heading)`
   font-size: ${size('text.hero')};
   margin: ${size('spacing.large')};
   font-weight: ${size('weight.bold')};
-  display: inline-block;
+  display: flex;
+  align-items: center;
 `;
 
-const ItalizeHeading = styled(Heading)`
-  color: ${palette('secondary', 'base')};
-  font-size: ${size('text.hero')};
-  margin: ${size('spacing.large')};
-  margin-left: 0;
+const Italicize = styled.span`
   font-style: italic;
-  display: inline-block;
-  
+  font-family: ${getKey('fonts.quote')};
 `;
 
 const IconItemWrapper = styled.div`
@@ -94,8 +90,11 @@ const SeniorlyIcon = styled(Icon)`
 
 `;
 
-const StyledParagraph = styled(Paragraph)`
+const StyledText = styled.div`
   font-size: ${size('text.subtitle')};
+  color: ${palette('slate', 'base')};
+  line-height: 1.5;
+  margin-bottom: 1rem;
 `;
 
 export default class PlusBranding extends Component {
@@ -107,21 +106,16 @@ export default class PlusBranding extends Component {
             <StyledImage src={assetPath('images/plus/plusbg.jpg')} alt="Seniorly Plus Home" />
           </ImageWrapper>
           <TextWrapper>
-            <Paragraph>
+            <StyledHeading>
               <SeniorlyIcon icon="logo" palette="secondary" size="xxLarge" />
-              <StyledHeading>
-                seniorly
-              </StyledHeading>
-              <ItalizeHeading>
-                plus
-              </ItalizeHeading>
-            </Paragraph>
-            <StyledParagraph>
+              <span>
+                &nbsp;seniorly&nbsp;<Italicize>plus</Italicize>
+              </span>
+            </StyledHeading>
+            <StyledText>
               Seniorly Plus is a curated list of senior homes. Each home is independently verified through an in-person
-              inspection to ensure your next home is a great fit. Just look for the&nbsp;
-              <PlusBadge />
-              &nbsp;badge.
-            </StyledParagraph>
+              inspection to ensure your next home is a great fit. Just look for the <PlusBadge /> badge.
+            </StyledText>
             <Paragraph>
               <IconItemWrapper>
                 <IconItem icon="verified" iconPalette="secondary" borderPalette="secondary" borderVariation="base" borderless={false}>Quality verified through in-person inspections</IconItem>
