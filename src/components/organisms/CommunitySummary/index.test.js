@@ -21,8 +21,7 @@ const verify = (wrapper) => {
   const {
     line1, line2, city, state, zip,
   } = address;
-  const renderedAddress = wrapper.find('Address').dive().dive().dive()
-    .text();
+  const renderedAddress = wrapper.find('Heading').dive().dive().text();
   const renderedWrapper = wrapper.find('Wrapper');
 
   expect(renderedAddress).toContain(line1);

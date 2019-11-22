@@ -9,14 +9,9 @@ import { community as communityPropType } from 'sly/propTypes/community';
 import { Link, Box, Heading, Hr, Icon, Tag } from 'sly/components/atoms';
 import IconButton from 'sly/components/molecules/IconButton';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
-import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { isBrowser } from 'sly/config';
 import PlusBadge from 'sly/components/molecules/PlusBadge';
 import { tocPaths } from 'sly/services/helpers/url';
-
-const Address = styled(Heading)`
-  margin-bottom: ${size('spacing.regular')};
-`;
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
@@ -33,6 +28,7 @@ const StyledTag = styled(Tag)`
   line-height: ${size('spacing.large')};
   height: ${size('spacing.xLarge')};
   font-size: ${size('spacing.medium')};
+  margin-top: ${size('spacing.regular')};
 `;
 StyledTag.displayName = 'StyledTag';
 
@@ -115,7 +111,7 @@ const CommunitySummary = ({
           </Link>
         }
       </StyledHeading>
-      <Address weight="regular" level="subtitle" size="body" palette="grey">{formattedAddress}</Address>
+      <Heading weight="regular" level="subtitle" size="body" palette="grey">{formattedAddress}</Heading>
 
       {
         typeCare.map((careType) => {
