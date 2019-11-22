@@ -12,6 +12,7 @@ import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricing
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { isBrowser } from 'sly/config';
 import PlusBadge from 'sly/components/molecules/PlusBadge';
+import { tocPaths } from 'sly/services/helpers/url';
 
 const Address = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
@@ -76,7 +77,7 @@ const TooltipContent = styled(ReactTooltip)`
 `;
 const CommunitySummary = ({
   community, innerRef, isAdmin, onConciergeNumberClicked, className,
-  onFavouriteClick, isFavorited, onShareClick, goToReviews,
+  onFavouriteClick, isFavorited, onShareClick, goToReviews, searchParams,
 }) => {
   const {
     address, name, startingRate, propRatings, propInfo, twilioNumber,
@@ -117,7 +118,15 @@ const CommunitySummary = ({
 
       {
         typeCare.map((careType) => {
-          return <StyledTag key={careType}>{careType}</StyledTag>;
+          const tocBc = tocPaths([careType]);
+
+          return (
+            <Link
+              to={`${tocBc.path}/${searchParams.state}/${searchParams.city}`}
+              target="_blank"
+            >
+              <StyledTag key={careType}>{careType}</StyledTag>
+            </Link>);
         })
       }
 
@@ -167,6 +176,7 @@ CommunitySummary.propTypes = {
   onShareClick: func,
   goToReviews: func,
   isFavorited: bool,
+  searchParams: object,
 };
 
 export default CommunitySummary;
