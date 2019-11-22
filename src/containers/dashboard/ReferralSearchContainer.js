@@ -100,7 +100,7 @@ export default class ReferralSearchContainer extends Component {
   };
 
   getCanCreateContact = (selectedPartner, data) => {
-    const { contacts=[] } = selectedPartner;
+    const { contacts = [] } = selectedPartner;
     let canCreateContact = false;
     if (contacts.length === 0) {
       canCreateContact = true;

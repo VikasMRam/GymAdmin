@@ -77,7 +77,6 @@ export default class AddFamilyForm extends Component {
           name="residentName"
           label="Resident name"
           type="text"
-          required
           component={ReduxField}
         />
         <Field
@@ -111,6 +110,7 @@ export default class AddFamilyForm extends Component {
           name="source"
           label="Source"
           type="select"
+          required
           component={ReduxField}
         >
           <option>Select an option</option>
