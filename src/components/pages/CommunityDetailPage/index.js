@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { object } from 'prop-types';
-import Sticky from 'react-stickynode';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
@@ -148,6 +147,11 @@ const EventsWrapper = styled(CollapsibleBlock)`
 const StyledAskAgentButton = styled(AskAgentQuestionButtonContainer)`
   width: 100%;
   margin-top: ${size('spacing.xLarge')};
+`;
+
+const StickToTop = styled.div`
+  position: sticky;
+  top: 24px;
 `;
 
 const Header = makeHeader();
@@ -518,9 +522,9 @@ export default class CommunityDetailPage extends Component {
                 <CommunityStickyFooter isAlreadyPricingRequested={isAlreadyPricingRequested} />
               </Body>
               <Column>
-                <Sticky top={24} bottomBoundary="#sticky-sidebar-boundary">
+                <StickToTop>
                   <ConciergeContainer />
-                </Sticky>
+                </StickToTop>
               </Column>
             </TwoColumn>
             {showMoreImages && (
