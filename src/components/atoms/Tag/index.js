@@ -7,17 +7,15 @@ const Tag = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
-  color: ${palette('base')};
-  font-size: ${size('text.caption')};
-  height: ${size('element.small')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  background-color: ${palette('secondary', 'background')};
+  color: ${palette('secondary', 'base')};
+  letter-spacing: ${size('spacing.nano')};
+  line-height: ${size('spacing.large')};
+  font-size: ${size('spacing.medium')};
+  height: ${size('spacing.xLarge')};
+  border: ${size('spacing.nano')} solid ${palette('secondary', 'filler')};
   border-radius: ${size('spacing.small')};
-  padding: 0 1em;
-  line-height: 1.5em;
-  /* &::before {
-    content: "#";
-  } */
+  padding: 0 ${size('spacing.regular')};
 `;
 
 Tag.propTypes = {

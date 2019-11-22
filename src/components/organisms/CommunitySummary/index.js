@@ -20,14 +20,6 @@ const StyledHeading = styled(Heading)`
 const StyledTag = styled(Tag)`
   margin-right: ${size('spacing.regular')};
   text-transform: uppercase;
-  background-color: ${palette('secondary', 'background')};
-  border: 1px solid ${palette('secondary', 'filler')};
-  color: ${palette('secondary', 'base')};
-  border-radius: ${size('spacing.small')};
-  letter-spacing: ${size('spacing.nano')};
-  line-height: ${size('spacing.large')};
-  height: ${size('spacing.xLarge')};
-  font-size: ${size('spacing.medium')};
   margin-top: ${size('spacing.regular')};
 `;
 StyledTag.displayName = 'StyledTag';
