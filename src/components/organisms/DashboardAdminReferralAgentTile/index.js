@@ -146,7 +146,7 @@ function transformAgent(agent) {
 const getHeading = (path, name) => {
   if (path) {
     return (
-      <Link size="caption" to={path}>
+      <Link size="caption" to={path} target="_blank">
         <Heading palette="primary" size="body">{name}</Heading>
       </Link>
     );
