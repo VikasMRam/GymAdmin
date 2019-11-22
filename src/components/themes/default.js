@@ -50,6 +50,18 @@ theme.sizes = {
     laptop           : '1080px',
   },
 
+  image: {
+    heroGallery: {
+      ratio: '3:2',
+      sizes: [320, 375, 425, 768, 1024, 1440],
+    },
+  },
+
+  // images: {
+  //   hero: { width: 1080, height: 512 },
+  //   column: { width: }
+  // },
+
   // only for tablet and wider
   layout: {
     gutter:      '1.500rem', // 24px

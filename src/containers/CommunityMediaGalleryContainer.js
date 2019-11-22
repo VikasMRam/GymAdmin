@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
+import { getKey } from 'sly/components/themes';
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
 import SlyEvent from 'sly/services/helpers/events';
 import { prefetch } from 'sly/services/newApi';
@@ -17,25 +18,23 @@ const communityDefaultImages = {
 function getImages({ gallery = {}, mainImage, propInfo = {} }) {
   const defaultImageUrl = communityDefaultImages[propInfo.communitySize] || communityDefaultImages['up to 20 Beds'];
 
-  let images = gallery.images || [];
+  let images = (gallery.images || []).map(image => ({
+    path: image.path,
+    formats: getKey('image.heroGallery'),
+  }));
 
   // if images is empty add default image
   if (images.length === 0) {
-    images = [{
-      sd: defaultImageUrl,
-      hd: defaultImageUrl,
-      thumb: defaultImageUrl,
-      url: defaultImageUrl,
-    }];
+    images = [{ src: defaultImageUrl }];
   }
 
   // If there is a mainImage put it in front
-  const communityMainImage = images.find((element) => {
-    return element.sd === mainImage;
+  const mainImageIndex = images.findIndex((image) => {
+    return image.path && mainImage.indexOf(image.path) !== -1;
   });
 
-  if (communityMainImage) {
-    images = images.filter(img => img.sd !== communityMainImage.sd);
+  if (mainImageIndex !== -1) {
+    const [communityMainImage] = images.splice(mainImageIndex, 1);
     images.unshift(communityMainImage);
   }
 
