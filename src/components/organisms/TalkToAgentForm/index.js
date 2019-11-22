@@ -16,7 +16,7 @@ import ReduxField from 'sly/components/organisms/ReduxField';
 const StyledBlock = textAlign(pad(Block));
 
 const StyledButton = styled(Button)`
-  margin-bottom: ${ifProp('error', size('spacing.large'), 0)};
+  margin-bottom: ${ifProp('hasMarginBottom', size('spacing.large'), 0)};
   width: 100%;
 `;
 
@@ -46,7 +46,7 @@ export default class TalkToAgentForm extends Component {
       firstName,
     } = this.props;
 
-    const showTos = !!user;
+    const showTos = !user;
 
     return (
       <section>
@@ -103,7 +103,7 @@ export default class TalkToAgentForm extends Component {
             component={ReduxField}
             required
           />
-          <StyledButton error={error || showTos} type="submit" kind="jumbo" disabled={invalid || submitting}>
+          <StyledButton hasMarginBottom={error || showTos} type="submit" kind="jumbo" disabled={invalid || submitting}>
             Send
           </StyledButton>
           {showTos && <TosAndPrivacy />}
