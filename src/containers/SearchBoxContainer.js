@@ -18,7 +18,7 @@ class SearchBoxContainer extends Component {
       geo: shape({
         latitude: string.isRequired,
         longitude: string.isRequired,
-      }).isRequired,
+      }),
     }),
 
     clearLocationOnBlur: bool,
