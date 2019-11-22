@@ -257,8 +257,6 @@ export default class UpdateFamilyStageForm extends Component {
                 label="Invoice Amount"
                 placeholder="0.00"
                 component={ReduxField}
-                parse={priceParser}
-                format={priceFormatter}
               />
               <Field
                 name="invoicePaid"

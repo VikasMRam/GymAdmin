@@ -29,9 +29,9 @@ const StyledHr = styled(Hr)`
 `;
 
 const HeadingBoxSection = ({
-  heading, children, className, hasNoBodyPadding, hasNoBorder, hasNoHr,
+  id, heading, children, className, hasNoBodyPadding, hasNoBorder, hasNoHr,
 }) => (
-  <StyledSection className={className} hasNoBodyPadding={hasNoBodyPadding} hasNoBorder={hasNoBorder}>
+  <StyledSection id={id} className={className} hasNoBodyPadding={hasNoBodyPadding} hasNoBorder={hasNoBorder}>
     <HeadingBlock level="subtitle" hasNoBodyPadding={hasNoBodyPadding} hasNoHr={hasNoHr}>{heading}</HeadingBlock>
     { !hasNoHr && <StyledHr hasNoBodyPadding={hasNoBodyPadding} /> }
     {children}
@@ -39,6 +39,7 @@ const HeadingBoxSection = ({
 );
 
 HeadingBoxSection.propTypes = {
+  id: string,
   className: string,
   heading: node.isRequired,
   children: node,

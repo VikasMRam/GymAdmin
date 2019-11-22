@@ -34,7 +34,9 @@ const TabWrapper = styled.div`
     margin-bottom: 0;
   }
 `;
-
+const formatPhoneAsName = (phoneNumber="") => {
+  return phoneNumber.replace(/^\+1/,'')
+};
 
 export default class DashboardCallDetailsPage extends Component {
   static propTypes = {
@@ -78,10 +80,10 @@ export default class DashboardCallDetailsPage extends Component {
         </DashboardTwoColumnTemplate>
       );
     }
-    const { id } = voiceCall;
-
+    const { id, fromNumber } = voiceCall;
+    const initialFormData = { name: formatPhoneAsName(fromNumber), phone: formatPhoneAsName(fromNumber), source: 'Direct Call' };
     const searchPath = generatePath(ADMIN_DASHBOARD_CALL_DETAILS_PATH, { id, tab: COMMUNITIES });
-    const initialFormData = { name: voiceCall.fromNumber, phone: voiceCall.fromNumber, source: 'Direct Call' };
+
     return (
       <>
         <DashboardTwoColumnTemplate>
@@ -94,11 +96,6 @@ export default class DashboardCallDetailsPage extends Component {
             />
           </Box>
           <div>
-            {/*<Tabs activeTab={currentTab}>*/}
-              {/*<Tab id="AdminSearch" to={searchPath} onClick={() => { this.changeTab(COMMUNITIES); return clickEventHandler('calldetails-tab', 'Communities'); }}>*/}
-                {/*Communities*/}
-              {/*</Tab>*/}
-            {/*</Tabs>*/}
             <TabWrapper >
               { currentTab === COMMUNITIES && (
                 <DashboardCallCommunitiesContainer notifyInfo={notifyInfo} notifyError={notifyError} voiceCall={voiceCall} handleCommunitySearch={handleCommunitySearch} />

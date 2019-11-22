@@ -108,6 +108,7 @@ const ConversationMessages = ({
       isRightAligned,
       dark: isRightAligned,
       onButtonClick,
+      viewingAsConversationParticipant: !!viewingAsParticipant,
     };
     if (!isRightAligned) {
       const participant = participantsById[message.conversationParticipantID];
