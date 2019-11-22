@@ -6,7 +6,13 @@ import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricing
 import { Link } from 'sly/components/atoms';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const wrap = (props = {}) => shallow(<CommunitySummary {...props} />);
+const  searchParams = { city: 'san-carlos',
+  communitySlug: 'bayview-villa',
+  state: 'california',
+  toc: 'assisted-living',
+};
+
+const wrap = (props = {}) => shallow(<CommunitySummary {...props} searchParams={searchParams} />);
 
 const verify = (wrapper) => {
   const {
@@ -91,5 +97,13 @@ describe('CommunitySummary', () => {
     });
     verify(wrapper);
     expect(wrapper.find('StyledHeading').dive().find(Link)).toHaveLength(1);
+  });
+
+  it('Should render the care types tag', () => {
+    const wrapper = wrap({
+      community: RhodaGoldmanPlaza,
+    });
+    verify(wrapper);
+    expect(wrapper.find('StyledTag')).toHaveLength(2);
   });
 });

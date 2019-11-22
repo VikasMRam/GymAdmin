@@ -34,6 +34,7 @@ const StyledTag = styled(Tag)`
   height: ${size('spacing.xLarge')};
   font-size: ${size('spacing.medium')};
 `;
+StyledTag.displayName = 'StyledTag';
 
 const Wrapper = styled.div`
   display: flex;
@@ -122,6 +123,7 @@ const CommunitySummary = ({
 
           return (
             <Link
+              key={tocBc.path}
               to={`${tocBc.path}/${searchParams.state}/${searchParams.city}`}
               target="_blank"
             >
