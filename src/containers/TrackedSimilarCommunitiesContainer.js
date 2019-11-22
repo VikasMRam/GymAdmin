@@ -1,27 +1,24 @@
 import React from 'react';
 import { arrayOf, object } from 'prop-types';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
-import SlyEvent from 'sly/services/helpers/events';
 import { community as communityPropType } from 'sly/propTypes/community';
+import { addEventToUrl } from 'sly/services/helpers/queryParamEvents';
 
-const sendEvent = (index, to) => {
-  const event = {
-    action: 'click',
-    category: 'similarCommunity',
-    label: index.toString(),
-    value: to,
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
-export default function TrackedSimilarCommunitiesContainer({
-  communities,
-  communityStyle,
-}) {
+export default function TrackedSimilarCommunitiesContainer({ communities, communityStyle }) {
   return (
     <SimilarCommunities
-      onCommunityClick={sendEvent}
-      communities={communities}
+      communities={communities.map((community, i) => ({
+        ...community,
+        url: addEventToUrl(
+          {
+            action: 'click',
+            category: 'similarCommunity',
+            label: i,
+            value: community.id,
+          },
+          community.url
+        ),
+      }))}
       communityStyle={communityStyle}
     />
   );
