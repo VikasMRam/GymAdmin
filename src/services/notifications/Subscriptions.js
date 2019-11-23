@@ -3,6 +3,9 @@ import { node, shape, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { assetPath } from 'sly/components/themes';
+import userPropType from 'sly/propTypes/user';
+import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { userIs } from 'sly/services/helpers/role';
 import { Link } from 'sly/components/atoms';
 import WSContext from 'sly/services/ws/WSContext';
 import NotificationController from 'sly/controllers/NotificationController';
@@ -24,10 +27,11 @@ class Notifications extends Component {
     }).isRequired,
     notifyInfo: func.isRequired,
     children: node.isRequired,
+    user: userPropType,
   };
 
   componentDidMount() {
-    const { ws, user } = this.props;
+    const { ws } = this.props;
     Object.keys(subscriptionList).forEach((key) => {
       // no capture showing a notification is indeed the last resort
       ws.on(key, this.onMessage);
@@ -47,6 +51,10 @@ class Notifications extends Component {
   }
 
   onMessage = (message) => {
+    const { user } = this.props;
+    if (userIs(user, PLATFORM_ADMIN_ROLE)) {
+      return null;
+    }
     const makeLink = subscriptionList[message.type];
     const to = makeLink({
       message,
