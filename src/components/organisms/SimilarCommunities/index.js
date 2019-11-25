@@ -32,7 +32,7 @@ SimilarCommunities.propTypes = {
   communityStyle: object,
 };
 
-SimilarCommunities.propTypes = {
+SimilarCommunities.defaultProps = {
   onCommunityClick: () => {},
   getEvent: () => {},
 };
