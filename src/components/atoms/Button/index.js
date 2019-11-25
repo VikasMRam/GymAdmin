@@ -164,13 +164,13 @@ const StyledButton = styled.button`
   ${styles};
 `;
 
-const withSendEvent = ({ onClick, event, ...props}) => {
+const withSendEvent = ({ onClick, event, ...props }) => {
   return {
     ...props,
     onClick: event ? (e) => {
       SlyEvent.getInstance().sendEvent(event);
       return onClick(e);
-    } : onClick
+    } : onClick,
   };
 };
 

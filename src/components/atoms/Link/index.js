@@ -56,7 +56,7 @@ export default class Link extends Component {
     palette: palettePropType,
     variation: variationPropType,
     noHoverColorChange: bool,
-    event: object
+    event: object,
   };
 
   static defaultProps = {

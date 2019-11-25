@@ -7,8 +7,13 @@ import SlyEvent from 'sly/services/helpers/events';
 const wrap = (props = {}) => shallow(<Button {...props} />).dive();
 
 describe('Button', () => {
+  const originalSendEvent = SlyEvent.getInstance().sendEvent;
   beforeEach(() => {
-    spyOn(SlyEvent.getInstance(), 'sendEvent');
+    SlyEvent.getInstance().sendEvent = jest.fn();
+  });
+
+  afterEach(() => {
+    SlyEvent.getInstance().sendEvent = originalSendEvent;
   });
 
   it('renders with different combination of props', () => {
