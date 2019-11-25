@@ -39,7 +39,7 @@ export function extractEventFromQuery(search) {
   };
 }
 
-export function addEventToQueryString(event, search) {
+export function addEventToQueryString(search, event) {
   if (!event || !event.action) {
     return search;
   }
@@ -59,10 +59,10 @@ export function addEventToQueryString(event, search) {
   return maybeQuestion+search+maybeAnd+serializedEvent;
 }
 
-export function addEventToUrl(event, urlString) {
+export function addEventToUrl(urlString, event) {
   const url = parseUrl(urlString);
 
-  url.search = addEventToQueryString(event, url.search || '');
+  url.search = addEventToQueryString(url.search || '', event);
 
   return url.format();
 }
