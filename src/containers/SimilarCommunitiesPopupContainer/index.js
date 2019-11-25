@@ -9,6 +9,7 @@ import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import { size } from 'sly/components/themes';
 import textAlign from 'sly/components/helpers/textAlign';
 import SlyEvent from 'sly/services/helpers/events';
+import { withUrlEvent } from 'sly/services/helpers/community';
 
 const communityStyle = { layout: 'row', imageSize: 'small', showDescription: false };
 
@@ -16,18 +17,21 @@ const StyledHeading = styled(textAlign(Heading))`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const sendEvent = (action, label, value = '') => SlyEvent.getInstance().sendEvent({
-  category: 'exit-intent',
-  action,
-  label,
-  value,
-});
+const sendEvent = (action, label, value = '') =>
+  SlyEvent.getInstance().sendEvent({
+    category: 'exit-intent',
+    action,
+    label,
+    value,
+  });
 
 @withRouter
-@prefetch('community', 'getCommunity', (req, { communitySlug }) => req({
-  id: communitySlug,
-  include: 'similar-communities',
-}))
+@prefetch('community', 'getCommunity', (req, { communitySlug }) =>
+  req({
+    id: communitySlug,
+    include: 'similar-communities',
+  })
+)
 export default class SimilarCommunitiesPopupContainer extends PureComponent {
   static propTypes = {
     community: object,
@@ -48,21 +52,25 @@ export default class SimilarCommunitiesPopupContainer extends PureComponent {
     const { community, hideModal } = this.props;
 
     return (
-      community && community.similarProperties &&
-      <>
-        <StyledHeading>
-          We found some Assisted Living communities you might like
-        </StyledHeading>
+      community &&
+      community.similarProperties && (
+        <>
+          <StyledHeading>We found some Assisted Living communities you might like</StyledHeading>
 
-        <SimilarCommunities
-          communities={community.similarProperties}
-          onCommunityClick={(index, to) => {
-            sendEvent('similar-community-click', index.toString(), to);
-            hideModal();
-          }}
-          communityStyle={communityStyle}
-        />
-      </>
+          <SimilarCommunities
+            communities={community.similarProperties.map((community, index) =>
+              withUrlEvent(community, {
+                category: 'exit-intent',
+                action: 'similar-community-click',
+                label: index,
+                value: community.id,
+              })
+            )}
+            onCommunityClick={() => hideModal()}
+            communityStyle={communityStyle}
+          />
+        </>
+      )
     );
   }
 }

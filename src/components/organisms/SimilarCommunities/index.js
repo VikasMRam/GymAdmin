@@ -16,8 +16,8 @@ const SimilarCommunities = ({ communities, onCommunityClick, communityStyle }) =
 
   return (
     <section>
-      {communities.map((community, index) => (
-        <PaddedLink key={community.id} to={community.url} onClick={() => onCommunityClick && onCommunityClick(index, community.id)}>
+      {communities.map((community) => (
+        <PaddedLink key={community.id} to={community.url} onClick={onCommunityClick}>
           <CommunityTile community={community} layout={layout} imageSize={imageSize} noGallery showDescription={showDescription} showSeeMoreButtonOnHover />
         </PaddedLink>
       ))}
@@ -30,5 +30,10 @@ SimilarCommunities.propTypes = {
   onCommunityClick: func,
   communityStyle: object,
 };
+
+SimilarCommunities.propTypes = {
+  onCommunityClick: () => {}
+};
+
 
 export default SimilarCommunities;
