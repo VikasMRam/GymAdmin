@@ -5,7 +5,6 @@ import { get, patch, put, post, destroy } from './httpMethods';
 export default {
   getUser: { method: get, path: '/platform/users/:id' },
   updateUser: { method: patch, path: '/platform/users/:id' },
-  updateContact: { method: patch, path: '/platforms/contacts/:id' },
 
   getUsers: { method: get, path: '/platform/users' },
 
@@ -78,7 +77,9 @@ export default {
   createTask: { method: post, path: '/platform/tasks' },
   updateTask: { method: patch, path: '/platform/tasks/:id' },
 
+  getContacts: { method: get, path: '/platform/contacts' },
   createContact: { method: post, path: '/platform/contacts' },
+  updateContact: { method: patch, path: '/platform/contacts/:id' },
 
   getDatatable: { method: get, path: '/meta-data/datatables/:id' },
   sendEbook: { method: post, path: '/platform/send-ebook' },

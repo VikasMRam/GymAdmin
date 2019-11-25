@@ -1,8 +1,5 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { isDev, isBrowser, isTest } from 'sly/config';
-
-import { makeColor, makeColorTable } from './color';
-
+import { makeColor } from './color';
 
 export { colorIndex } from './color';
 

@@ -574,9 +574,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       gender, lookingFor, monthlyBudget, timeToMove, roomTypes, careLevels, communityTypes, assignedTos,
     } = meta;
     const {
-      id, clientInfo, stage, provider,
+      id, clientInfo, stage, provider, organization: clientOrganization,
     } = client;
     const { entityType, id: providerOrg } = provider;
+    const { id: clientOrg } = clientOrganization;
     const { id: userOrg } = organization;
     const { group, isConnected } = getStageDetails(stage);
     const showAcceptRejectButtons = stage === FAMILY_STAGE_NEW;
@@ -585,6 +586,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const isClientAdminUser = userIs(user, PLATFORM_ADMIN_ROLE) ||
       (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg);
     const isAgentUser = userExact(user, AGENT_ND_ROLE);
+    const isOfDifferentOrg = userOrg !== clientOrg;
     // Rule when lead is created by self
     if (stage === FAMILY_STAGE_NEW && isClientAdminUser) {
       showUpdateAddNoteButtons = true;
@@ -623,17 +625,26 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       'filter[client]': client.id,
     };
 
-    const clientName = <ClientName client={client} rawClient={rawClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} user={user} />;
+    const clientName = <ClientName client={client} rawClient={rawClient} refetchClient={refetchClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} user={user} />;
 
     const duplicateWarningContent = (
       <span>
         There are families with same contact info.&nbsp;<ClickHere palette="white" onClick={this.handleClickHereForMore}>Click here to check.</ClickHere>
       </span>
     );
-    const topSection = clients && clients.length > 1 && (
-      <BigScreenPaddedBannerNotification hasBorderRadius palette="warning">
-        {duplicateWarningContent}
-      </BigScreenPaddedBannerNotification>
+    const topSection = (
+      <>
+        {clients && clients.length > 1 && (
+          <BigScreenPaddedBannerNotification hasBorderRadius palette="warning">
+            {duplicateWarningContent}
+          </BigScreenPaddedBannerNotification>
+        )}
+        {isOfDifferentOrg &&
+          <BigScreenPaddedBannerNotification hasBorderRadius palette="primary">
+            This Family belongs to a different organization named <i>{client.organization.name}</i>
+          </BigScreenPaddedBannerNotification>
+        }
+      </>
     );
 
     return (
@@ -656,8 +667,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               user={user}
               client={client}
             />
-            {showAcceptRejectButtons && <FamilySummary snap="top" client={client} isAgentUser={isAgentUser} to={familyDetailsPath} />}
-            {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} isAgentUser={isAgentUser} to={familyDetailsPath} />}
+            {showAcceptRejectButtons && <FamilySummary snap="top" client={client} isOfDifferentOrg={isOfDifferentOrg} isAgentUser={isAgentUser} to={familyDetailsPath} />}
+            {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} isOfDifferentOrg={isOfDifferentOrg} isAgentUser={isAgentUser} to={familyDetailsPath} />}
           </BigScreenSummarySection>
           <SmallScreenClientNameWrapper>
             {clientName}
@@ -670,6 +681,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           {clients.length > 1 &&
             <SmallScreenBannerNotification palette="warning">
               {duplicateWarningContent}
+            </SmallScreenBannerNotification>
+          }
+          {isOfDifferentOrg &&
+            <SmallScreenBannerNotification palette="primary">
+              This Family belongs to a different organization named <i>{client.organization.name}</i>
             </SmallScreenBannerNotification>
           }
           <TabWrapper snap="top">

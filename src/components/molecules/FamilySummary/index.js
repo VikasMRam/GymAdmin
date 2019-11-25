@@ -48,9 +48,9 @@ const SeeMore = cursor(Block);
 SeeMore.displayName = 'SeeMore';
 
 const FamilySummary = ({
-  client, isAgentUser, snap, to, className, noHeading,
+  client, isAgentUser, isOfDifferentOrg, snap, to, className, noHeading,
 }) => (
-  <Box snap={snap} className={className}>
+  <Box snap={snap} className={className} palette={isOfDifferentOrg ? 'warning' : undefined} variation={isOfDifferentOrg ? 'dark' : undefined}>
     {!noHeading && <PaddedHeading size="body">Summary</PaddedHeading>}
     <OuterColumWrapper>
       {client.clientInfo && client.clientInfo.name &&
@@ -160,6 +160,7 @@ const FamilySummary = ({
 FamilySummary.propTypes = {
   client: clientPropType,
   isAgentUser: bool,
+  isOfDifferentOrg: bool,
   to: string.isRequired,
   snap: string,
   className: string,

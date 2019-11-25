@@ -128,7 +128,7 @@ const DashboardAdminReferralCommunityTile = ({
   const isFloatingSectionPresent = !!(referralSentAt || (actionText && actionClick));
   const hasContract = getHasContract(community);
   const hasCCRC = getIsCCRC(community);
-  const { url: communityUrl, propInfo } = community;
+  const { url: communityUrl, propInfo = {} } = community;
   const { communityPhone } = propInfo;
   const shouldShowHasContract = hasContract && isAdminUser;
   const shouldShowNoContract = !hasContract && isAdminUser;
