@@ -101,6 +101,13 @@ export default class StatusSelect extends Component {
     const { showModal, hideModal, client } = this.props;
 
     const onCancel = () => this.setState({ status: client.status }, hideModal);
+    let pauseInitialValues = {};
+    if (client.status === FAMILY_STATUS_ON_PAUSE) {
+      pauseInitialValues = {
+        date: new Date(client.clientInfo.resumeDate),
+        reason: client.clientInfo.onHoldReason,
+      };
+    }
 
     return new Promise((resolve) => {
       switch (toStatus) {
@@ -119,6 +126,7 @@ export default class StatusSelect extends Component {
             title={`Place ${client.clientInfo.name} on ${toStatus}`}
             label="Pause reason"
             extraFieldProps={this.getDateProps()}
+            initialValues={pauseInitialValues}
           />
         ), onCancel, 'noPadding', false);
         default: return showModal((
