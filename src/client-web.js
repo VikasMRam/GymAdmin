@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import '@babel/polyfill';
 import 'react-hot-loader/patch';
+import 'isomorphic-fetch';
+
 import React from 'react';
 import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
