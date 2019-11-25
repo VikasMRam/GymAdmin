@@ -145,7 +145,7 @@ export default class PopoverPortal extends Component {
         <PopoverWrapper left={left} isOpen={isOpen}>
           <MobileHeader>
             {headerButton}
-            <Title hasHeaderButton={!!headerButton} size="regular" weight="medium">
+            <Title hasHeaderButton={!!headerButton} weight="medium">
               {title}
               {subtitle && <Block size="caption" weight="regular" palette="grey">{subtitle}</Block>}
             </Title>
