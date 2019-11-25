@@ -60,6 +60,10 @@ export function addEventToQueryString(search, event) {
 }
 
 export function addEventToUrl(urlString, event) {
+  if(!urlString) {
+    return urlString;
+  }
+
   const url = parseUrl(urlString);
 
   url.search = addEventToQueryString(url.search || '', event);

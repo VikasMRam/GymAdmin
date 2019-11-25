@@ -62,7 +62,6 @@ import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/containers/Tracked
 import UnhydratedPageViewActionContainer from 'sly/containers/PageViewActionContainer';
 import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
-import { addEventToUrl } from 'sly/services/helpers/queryParamEvents';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGalleryContainer);
@@ -351,11 +350,8 @@ export default class CommunityDetailPage extends Component {
                     />
                     <BackToSearch>
                       <Button
-                        href={addEventToUrl(getCitySearchUrl({ propInfo, address }), {
-                          action: 'click',
-                          category: 'backToSearch',
-                          label: community.id,
-                        })}
+                        href={getCitySearchUrl({ propInfo, address })}
+                        event={{ action: 'click', category: 'backToSearch', label: community.id }}
                         ghost
                       >
                         Communities In {address.city}
@@ -512,11 +508,8 @@ export default class CommunityDetailPage extends Component {
                     />
                     <BackToSearch>
                       <Button
-                        href={addEventToUrl(getCitySearchUrl({ propInfo, address }), {
-                          action: 'click',
-                          category: 'backToSearch',
-                          label: community.id,
-                        })}
+                        href={getCitySearchUrl({ propInfo, address })}
+                        event={{ action: 'click', category: 'backToSearch', label: community.id }}
                         ghost
                       >
                         Communities In {address.city}
