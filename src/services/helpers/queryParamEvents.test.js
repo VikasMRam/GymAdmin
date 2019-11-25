@@ -49,7 +49,7 @@ describe('Given the queryParamEvents helper functions', () => {
 
   describe('when serializing an empty event into an empty query string', () => {
     it('should return an empty string', () => {
-      expect(addEventToQueryString({}, '')).toBe('');
+      expect(addEventToQueryString('', {})).toBe('');
     });
   });
 
@@ -57,7 +57,7 @@ describe('Given the queryParamEvents helper functions', () => {
     it('should return a query string with just the event', () => {
       const event = { action: 'add', category: 'maths', label: 'simple', value: 3, nonInteraction: true };
 
-      const result = addEventToQueryString(event, '');
+      const result = addEventToQueryString('', event);
 
       expect(result).toBe('?sly_action=add&sly_category=maths&sly_label=simple&sly_value=3&sly_ni=true');
     });
@@ -68,7 +68,7 @@ describe('Given the queryParamEvents helper functions', () => {
       const event = { action: 'add', category: 'maths', label: 'simple' };
 
       const search = '?hello=world&please=true&maintain=order';
-      const result = addEventToQueryString(event, search);
+      const result = addEventToQueryString(search, event);
 
       expect(result).toBe(`${search}&sly_action=add&sly_category=maths&sly_label=simple`);
     });
@@ -77,9 +77,9 @@ describe('Given the queryParamEvents helper functions', () => {
   describe('when serializing an event onto a path with search params', () => {
     it('should return the path with the event params appended to the existing params', () => {
       const event = { action: 'add', category: 'maths', label: 'simple' };
-
+event
       const path = '/search/page?hello=world&please=true&maintain=order';
-      const result = addEventToUrl(event, path);
+      const result = addEventToUrl(path, event);
 
       expect(result).toBe(`${path}&sly_action=add&sly_category=maths&sly_label=simple`);
     });
@@ -90,7 +90,7 @@ describe('Given the queryParamEvents helper functions', () => {
       const event = { action: 'add', category: 'maths', label: 'simple' };
 
       const path = '/search/page';
-      const result = addEventToUrl(event, path);
+      const result = addEventToUrl(path, event);
 
       expect(result).toBe(`${path}?sly_action=add&sly_category=maths&sly_label=simple`);
     });
@@ -100,10 +100,10 @@ describe('Given the queryParamEvents helper functions', () => {
     it('should return the url with the event params appended', () => {
       const event = { action: 'add', category: 'maths', label: 'simple' };
 
-      const path = 'https://seniorly.com/search/page?foobar=true';
-      const result = addEventToUrl(event, path);
+      const url = 'https://seniorly.com/search/page?foobar=true';
+      const result = addEventToUrl(url, event);
 
-      expect(result).toBe(`${path}&sly_action=add&sly_category=maths&sly_label=simple`);
+      expect(result).toBe(`${url}&sly_action=add&sly_category=maths&sly_label=simple`);
     });
   });
 
@@ -112,7 +112,7 @@ describe('Given the queryParamEvents helper functions', () => {
       const event = { action: 'add', category: 'maths', label: 'simple' };
       const search = '?hello=world&please=true&maintain=order';
 
-      const searchWithEvent = addEventToQueryString(event, search);
+      const searchWithEvent = addEventToQueryString(search, event);
 
       expect(extractEventFromQuery(searchWithEvent)).toEqual({ event, search });
     });

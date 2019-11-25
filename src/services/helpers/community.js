@@ -20,6 +20,6 @@ export const hasCCRC = (community) => {
 export function withUrlEvent(community, event) {
   return {
     ...community,
-    url: addEventToUrl(event, community.url)
+    url: addEventToUrl(community.url, event)
   };
 }
