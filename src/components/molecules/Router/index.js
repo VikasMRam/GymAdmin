@@ -40,6 +40,7 @@ export default class Router extends Component {
   static defaultProps = {
     enableEvents: true,
     requiresAuth: [],
+    children: null,
   };
 
   checkLoginRedirect() {
@@ -60,7 +61,7 @@ export default class Router extends Component {
         })
         .catch(() => {
           const params = removeQueryParamFromURL('loginRedirect', search);
-          history.push(`${pathname}${stringify(params)}${hash}`);
+          history.replace(`${pathname}${stringify(params)}${hash}`);
         });
     }
   }
@@ -71,7 +72,7 @@ export default class Router extends Component {
     const { event, search: searchWithoutEvent } = extractEventFromQuery(search);
     if(event) {
       SlyEvent.getInstance().sendEvent(event);
-      history.push(pathname+searchWithoutEvent+hash);
+      history.replace(pathname+searchWithoutEvent+hash);
       return true;
     }
     return false;
