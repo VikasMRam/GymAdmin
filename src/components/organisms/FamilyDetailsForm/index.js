@@ -262,18 +262,18 @@ class FamilyDetailsForm extends Component {
                   component={ReduxField}
                 />
               </PaddedTwoColumnWrapper>
-              <Field
-                name="referralSource"
-                label="Referral Source"
-                type="select"
-                component={ReduxField}
-                wideWidth
-              >
-                <option>Select an option</option>
-                {sourceOptions}
-              </Field>
               {!isAgentUser &&
                 <>
+                  <Field
+                    name="referralSource"
+                    label="Referral Source"
+                    type="select"
+                    component={ReduxField}
+                    wideWidth
+                  >
+                    <option>Select an option</option>
+                    {sourceOptions}
+                  </Field>
                   <Field
                     name="medicaid"
                     label="Qualifies for Medicaid"
