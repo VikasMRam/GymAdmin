@@ -61,7 +61,7 @@ const Message = ({
   message, participant, viewingAsConversationParticipant, dark, className, onButtonClick,
 }) => {
   let dateString = '';
-  const parsedDate = dayjs(message.createdAt);
+  const parsedDate = dayjs(message.createdAt).utc();
   if (!parsedDate.isValid()) {
     dateString = 'Failed to parse date';
   } else {
