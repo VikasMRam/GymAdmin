@@ -202,9 +202,10 @@ const StyledIconBadge = styled(IconBadge)`
 
 const ClickHere = textDecoration(cursor(Span));
 
-const ClientName = ({ client, rawClient, backLinkHref, ...props }) => {
-  const { clientInfo } = client;
+const ClientName = ({ client, rawClient, backLinkHref, user, ...props }) => {
+  const { clientInfo, stage } = client;
   const { name, additionalMetadata } = clientInfo;
+  const { isNew, isProspects } = getStageDetails(stage);
 
   return (
     <StyledClientNameBlock
@@ -216,13 +217,14 @@ const ClientName = ({ client, rawClient, backLinkHref, ...props }) => {
       </Link>
       <span>{name}</span>
       {isReferralSent(additionalMetadata) && <StyledIconBadge badgePalette="secondary" palette="white" icon="checkmark-circle" text="R SENT" />}
-      <StyledStatusSelect client={client} rawClient={rawClient} {...props} />
+      {(userIs(user, PLATFORM_ADMIN_ROLE) || (!isNew && !isProspects)) && <StyledStatusSelect client={client} rawClient={rawClient} user={user} {...props} />}
     </StyledClientNameBlock>
   );
 };
 
 ClientName.propTypes = {
   client: clientPropType,
+  user: userPropType,
   rawClient: object,
   backLinkHref: string,
 };
