@@ -3,23 +3,23 @@ import { arrayOf, object } from 'prop-types';
 
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { withUrlEvent } from 'sly/services/helpers/community';
 
 export default function TrackedSimilarCommunitiesContainer({ communities, communityStyle }) {
   return (
     <SimilarCommunities
-      communities={communities.map((community, index) =>
-        withUrlEvent(community, {
-          action: 'click',
-          category: 'similarCommunity',
-          label: index,
-          value: community.id,
-        })
-      )}
+      communities={communities}
       communityStyle={communityStyle}
+      getEvent={(community, index) => ({
+        action: 'click',
+        category: 'similarCommunity',
+        label: index,
+        value: community.id,
+      })}
     />
   );
 }
+
+//EO: this really shouldn't need hydrating. now it only requires it for the lazy image loading.
 TrackedSimilarCommunitiesContainer.typeHydrationId = 'TrackedSimilarCommunitiesContainer';
 TrackedSimilarCommunitiesContainer.propTypes = {
   communities: arrayOf(communityPropType).isRequired,

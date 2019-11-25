@@ -1,5 +1,3 @@
-import { addEventToUrl } from 'sly/services/helpers/queryParamEvents';
-
 export const careServiceMap = {
   '24-Hour Call System': '24-Hour Supervision',
   'Mental Wellness Program': 'Mental Wellness Program',
@@ -17,9 +15,3 @@ export const hasCCRC = (community) => {
   return typeCare.includes('Continuing Care Retirement Community(CCRC)');
 };
 
-export function withUrlEvent(community, event) {
-  return {
-    ...community,
-    url: addEventToUrl(community.url, event)
-  };
-}

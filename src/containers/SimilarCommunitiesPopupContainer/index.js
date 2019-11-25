@@ -2,14 +2,12 @@ import React, { PureComponent } from 'react';
 import { func, object, string } from 'prop-types';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
-
 import { prefetch } from 'sly/services/newApi';
 import { Heading } from 'sly/components/atoms';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import { size } from 'sly/components/themes';
 import textAlign from 'sly/components/helpers/textAlign';
 import SlyEvent from 'sly/services/helpers/events';
-import { withUrlEvent } from 'sly/services/helpers/community';
 
 const communityStyle = { layout: 'row', imageSize: 'small', showDescription: false };
 
@@ -58,16 +56,15 @@ export default class SimilarCommunitiesPopupContainer extends PureComponent {
           <StyledHeading>We found some Assisted Living communities you might like</StyledHeading>
 
           <SimilarCommunities
-            communities={community.similarProperties.map((community, index) =>
-              withUrlEvent(community, {
-                category: 'exit-intent',
-                action: 'similar-community-click',
-                label: index,
-                value: community.id,
-              })
-            )}
+            communities={community.similarProperties}
             onCommunityClick={() => hideModal()}
             communityStyle={communityStyle}
+            getEvent={(community, index) => ({
+              category: 'exit-intent',
+              action: 'similar-community-click',
+              label: index,
+              value: community.id,
+            })}
           />
         </>
       )

@@ -11,13 +11,13 @@ const PaddedLink = pad(styled(Link)`
   display: block;
 `, 'xLarge');
 
-const SimilarCommunities = ({ communities, onCommunityClick, communityStyle }) => {
+const SimilarCommunities = ({ communities, onCommunityClick, communityStyle, getEvent }) => {
   const { layout = 'column', imageSize = 'regular', showDescription = false } = communityStyle;
 
   return (
     <section>
-      {communities.map((community) => (
-        <PaddedLink key={community.id} to={community.url} onClick={onCommunityClick}>
+      {communities.map((community, index) => (
+        <PaddedLink key={community.id} to={community.url} onClick={onCommunityClick} event={getEvent(community, index)}>
           <CommunityTile community={community} layout={layout} imageSize={imageSize} noGallery showDescription={showDescription} showSeeMoreButtonOnHover />
         </PaddedLink>
       ))}
@@ -28,11 +28,13 @@ const SimilarCommunities = ({ communities, onCommunityClick, communityStyle }) =
 SimilarCommunities.propTypes = {
   communities: arrayOf(communityPropType).isRequired,
   onCommunityClick: func,
+  getEvent: func,
   communityStyle: object,
 };
 
 SimilarCommunities.propTypes = {
-  onCommunityClick: () => {}
+  onCommunityClick: () => {},
+  getEvent: () => {},
 };
 
 
