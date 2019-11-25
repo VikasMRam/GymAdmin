@@ -120,22 +120,22 @@ const FamilySummary = ({
         </ColumWrapper>
       }
       {client.clientInfo && client.clientInfo.slyMessage &&
-      <SlyIntro>
-        <Label palette="grey">Seniorly introduction</Label>
-        <Block size="caption">{client.clientInfo.slyMessage}</Block>
-      </SlyIntro>
+        <SlyIntro minHeight="tiny">
+          <Label palette="grey">Seniorly introduction</Label>
+          <Block size="caption">{client.clientInfo.slyMessage}</Block>
+        </SlyIntro>
       }
       {client.clientInfo && client.clientInfo.slyAgentMessage &&
-      <SlyIntro>
-        <Label palette="grey">Message for Agents</Label>
-        <Block size="caption">{client.clientInfo.slyAgentMessage}</Block>
-      </SlyIntro>
+        <SlyIntro minHeight="tiny">
+          <Label palette="grey">Message for Agents</Label>
+          <Block size="caption">{client.clientInfo.slyAgentMessage}</Block>
+        </SlyIntro>
         }
       {client.clientInfo && client.clientInfo.slyCommunityMessage &&
-      <SlyIntro>
-        <Label palette="grey">Message for Community</Label>
-        <Block size="caption">{client.clientInfo.slyCommunityMessage}</Block>
-      </SlyIntro>
+        <SlyIntro minHeight="tiny">
+          <Label palette="grey">Message for Community</Label>
+          <Block size="caption">{client.clientInfo.slyCommunityMessage}</Block>
+        </SlyIntro>
       }
     </OuterColumWrapper>
     {(client.admin || client.organization) &&
