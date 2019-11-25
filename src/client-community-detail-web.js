@@ -1,6 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import 'intersection-observer';
-
 import partiallyHydrateClient from 'sly/services/partialHydration/partiallyHydrateClient';
 import clientConfigs from 'sly/clientConfigs';
 import ModalContainer from 'sly/containers/ModalContainer';
@@ -24,6 +22,7 @@ import CommunityMorePicturesContainer from 'sly/containers/CommunityMorePictures
 import LazyCommunityMapContainer from 'sly/containers/LazyCommunityMapContainer';
 import PageViewActionContainer from 'sly/containers/PageViewActionContainer';
 import RetentionPopup from 'sly/services/retentionPopup';
+import Image from 'sly/components/atoms/Image';
 
 const root = document.getElementById('app');
 
@@ -50,6 +49,7 @@ partiallyHydrateClient(
     CommunityMorePicturesContainer,
     LazyCommunityMapContainer,
     RetentionPopup,
+    Image,
   ],
   clientConfigs.find(x => x.bundle === 'community-details').path,
   root

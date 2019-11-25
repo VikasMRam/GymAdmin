@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { arrayOf, string, object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 
-import { prefetch, query } from 'sly/services/newApi';
-import { withUser } from 'sly/services/newApi';
+import { prefetch, query, withUser } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
 import taskPropType from 'sly/propTypes/task';
@@ -15,7 +14,6 @@ import AddTaskForm from 'sly/components/organisms/AddTaskForm';
 const validate = createValidator({
   title: [required],
   dueDate: [required],
-  stage: [required],
   status: [required],
   priority: [required],
 });
@@ -25,21 +23,23 @@ const ReduxForm = reduxForm({
   validate,
 })(AddTaskForm);
 
-@prefetch('users', 'getUsers',(request) => request({'page-size': 30}) )
+@prefetch('users', 'getUsers', request => request({ 'page-size': 30, sort: 'name' }))
 
 @query('createTask', 'createTask')
 
 @query('updateTask', 'updateTask')
+
 @withUser
+
 export default class AddOrEditTaskFormContainer extends Component {
   static propTypes = {
     users: arrayOf(userPropType),
+    user: userPropType,
     client: clientPropType,
     priorities: arrayOf(string).isRequired,
     statuses: arrayOf(string).isRequired,
     status: object,
     createTask: func.isRequired,
-    createNote: func.isRequired,
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
     onSuccess: func,
@@ -51,7 +51,7 @@ export default class AddOrEditTaskFormContainer extends Component {
 
   handleSubmitTask = (data) => {
     const {
-      createTask, updateTask, notifyInfo, onSuccess, client, task, refetchTasks, createNote,
+      createTask, updateTask, notifyInfo, onSuccess, client, task, refetchTasks,
       notifyError,
     } = this.props;
     const { owner, ...postData } = data;
@@ -124,7 +124,7 @@ export default class AddOrEditTaskFormContainer extends Component {
 
   render() {
     const {
-      statuses, priorities, users, status, task, client, user
+      statuses, priorities, users, status, task, client, user,
     } = this.props;
     const { users: usersStatus } = status;
     const { hasFinished: usersHasFinished } = usersStatus;

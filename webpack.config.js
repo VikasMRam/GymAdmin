@@ -45,7 +45,6 @@ const FB_CLIENT_ID = process.env.FB_CLIENT_ID || '624602444328776';
 const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY || 'AIzaSyALxJg-oMW7SvkQ27KFTuWjTLedXcAhrZE';
 const GOOGLE_CLIENT_ID =
   process.env.GOOGLE_CLIENT_ID || '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com';
-const MUTE_REDUX_LOGGER = process.env.MUTE_REDUX_LOGGER || false;
 const HIDE_CHATBOX = process.env.HIDE_CHATBOX || false;
 const ENABLE_EXPERIMENT_DEBUGGER = process.env.ENABLE_EXPERIMENT_DEBUGGER || false;
 const DISABLE_EXPERIMENTS = process.env.DISABLE_EXPERIMENTS || false;
@@ -82,7 +81,6 @@ console.info(
       EXTERNAL_DEFAULT_WIDGET_TYPE,
       FB_CLIENT_ID,
       GOOGLE_CLIENT_ID,
-      MUTE_REDUX_LOGGER,
       HIDE_CHATBOX,
       ENABLE_EXPERIMENT_DEBUGGER,
       DISABLE_EXPERIMENTS,
@@ -161,7 +159,6 @@ const base = group([
     'process.env.VERSION': VERSION,
     'process.env.FB_CLIENT_ID': FB_CLIENT_ID,
     'process.env.GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID,
-    'process.env.MUTE_REDUX_LOGGER': MUTE_REDUX_LOGGER,
     'process.env.HIDE_CHATBOX': HIDE_CHATBOX,
     'process.env.DISABLE_EXPERIMENTS': DISABLE_EXPERIMENTS,
     'process.env.ENABLE_EXPERIMENT_DEBUGGER': ENABLE_EXPERIMENT_DEBUGGER,
@@ -304,10 +301,10 @@ const client = (target, entries) => {
 
     entryPoint(entries),
 
-    // when(isDev || isStaging, [
+    // when(false, [
     //   addPlugins([
     //     new BundleAnalyzerPlugin({
-    //       openAnalyzer: false,
+    //       openAnalyzer: true,
     //       analyzerPort: 0,
     //     }),
     //   ]),

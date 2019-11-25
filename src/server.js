@@ -2,6 +2,7 @@
 import '@babel/polyfill';
 import path from 'path';
 import crypto from 'crypto';
+import 'isomorphic-fetch';
 
 import parseUrl from 'parseurl';
 import express from 'express';

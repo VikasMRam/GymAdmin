@@ -4,7 +4,6 @@ import { func, object } from 'prop-types';
 import produce from 'immer';
 
 import userPropType from 'sly/propTypes/user';
-import { Span } from 'sly/components/atoms';
 import clientPropType from 'sly/propTypes/client';
 import { size } from 'sly/components/themes';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
@@ -53,6 +52,7 @@ export default class StatusSelect extends Component {
     updateClient: func.isRequired,
     client: clientPropType,
     rawClient: object,
+    refetchClient: func.isRequired,
     showModal: func,
     hideModal: func,
     notifyInfo: func,
@@ -64,7 +64,7 @@ export default class StatusSelect extends Component {
   };
 
   onChange = ({ value }) => {
-    const { notifyInfo, hideModal } = this.props;
+    const { notifyInfo, hideModal, refetchClient } = this.props;
 
     this.setState({ status: value }, () => this.confirm(value)
       .then(data => this.submitUserStatus(value, data || {}))
@@ -77,7 +77,8 @@ export default class StatusSelect extends Component {
         });
         notifyInfo(`Family successfully set to "${value}"`);
       })
-      .then(hideModal));
+      .then(hideModal)
+      .then(refetchClient));
   };
 
   getDateProps = () => ({
@@ -85,7 +86,7 @@ export default class StatusSelect extends Component {
     type: 'date',
     size: 'small',
     required: true,
-    label: <>Expected resume date<Span palette="danger">*</Span></>,
+    label: 'Expected resume date',
   });
 
   // FIXME: Because I am an idiot and am not clever in the slightest
@@ -110,7 +111,7 @@ export default class StatusSelect extends Component {
             title={`Place ${client.clientInfo.name} on ${toStatus}`}
             label="Long-term reason"
           />
-        ));
+        ), onCancel, 'noPadding', false);
         case FAMILY_STATUS_ON_PAUSE: return showModal((
           <ConfirmReasonFormContainer
             onAgree={resolve}
@@ -119,7 +120,7 @@ export default class StatusSelect extends Component {
             label="Pause reason"
             extraFieldProps={this.getDateProps()}
           />
-        ));
+        ), onCancel, 'noPadding', false);
         default: return showModal((
           <ConfirmationDialog
             heading={`Set ${client.clientInfo.name} to "${toStatus}"`}
@@ -127,7 +128,7 @@ export default class StatusSelect extends Component {
             onConfirmClick={() => resolve()}
             onCancelClick={onCancel}
           />
-        ));
+        ), onCancel);
       }
     });
   };
