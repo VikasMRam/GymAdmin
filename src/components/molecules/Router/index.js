@@ -57,7 +57,7 @@ export default class Router extends Component {
     if (!authenticated.loggingIn && loginRedirect) {
       ensureAuthenticated()
         .then(() => {
-          history.push(decodeURIComponent(loginRedirect));
+          history.replace(decodeURIComponent(loginRedirect));
         })
         .catch(() => {
           const params = removeQueryParamFromURL('loginRedirect', search);
@@ -70,9 +70,9 @@ export default class Router extends Component {
     const { history, location: { pathname, search, hash } } = this.props;
 
     const { event, search: searchWithoutEvent } = extractEventFromQuery(search);
-    if(event) {
+    if (event) {
       SlyEvent.getInstance().sendEvent(event);
-      history.replace(pathname+searchWithoutEvent+hash);
+      history.replace(pathname + searchWithoutEvent + hash);
       return true;
     }
     return false;
@@ -87,7 +87,7 @@ export default class Router extends Component {
     const { pathname, search } = location;
 
     if (enableEvents) {
-      if(this.sendQueryEvents()) {
+      if (this.sendQueryEvents()) {
         return;
       }
 
@@ -111,7 +111,7 @@ export default class Router extends Component {
     }
 
     if (enableEvents && prevProps.location !== location) {
-      if(this.sendQueryEvents()) {
+      if (this.sendQueryEvents()) {
         return;
       }
 
