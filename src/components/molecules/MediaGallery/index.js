@@ -5,7 +5,7 @@ import SwipeableViews from 'react-swipeable-views';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
-import { Icon, Image } from 'sly/components/atoms';
+import { Icon, Image, ResponsiveImage } from 'sly/components/atoms';
 import ThumbnailScroller from 'sly/components/molecules/ThumbnailScroller';
 import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
 
@@ -31,7 +31,7 @@ const imageStyles = css`
   object-fit: cover;
   height: inherit;
 `;
-const StyledImg = styled(Image)`
+const StyledImg = styled(ResponsiveImage)`
   ${imageStyles};
 `;
 const StyledVideoThumbnail = styled(VideoThumbnail)`
@@ -206,6 +206,8 @@ export default class MediaGallery extends Component {
   generateSlideContent = (media, index) => {
     const { currentSlide, aspectRatio } = this.props;
 
+    console.log('media', media);
+
     switch (media.type) {
       case 'image':
         return media.ofVideo !== undefined ? (
@@ -220,10 +222,10 @@ export default class MediaGallery extends Component {
         ) : (
           <StyledImg
             key="media-gallery-slide"
-            src={this.shouldLoadMedia(index) ? media.src : ''}
-            data-src={media.src}
+            path={media.path}
+            sizes={media.sizes}
             alt={media.alt}
-            lazy={false}
+            loading={this.shouldLoadMedia(index) ? 'eager' : 'lazy'}
             innerRef={(c) => { this.mediaRefs[index] = c; }}
             aspectRatio={aspectRatio}
           />

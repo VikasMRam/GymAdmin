@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { getKey } from 'sly/components/themes';
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
 import SlyEvent from 'sly/services/helpers/events';
 import { prefetch } from 'sly/services/newApi';
-import { assetPath } from 'sly/components/themes';
+import { assetPath, getKey } from 'sly/components/themes';
 
 // TODO: move this to common helper, used in multiple places
 const communityDefaultImages = {
@@ -20,7 +19,7 @@ function getImages({ gallery = {}, mainImage, propInfo = {} }) {
 
   let images = (gallery.images || []).map(image => ({
     path: image.path,
-    formats: getKey('image.heroGallery'),
+    sizes: getKey('imageFormats.heroGallery'),
   }));
 
   // if images is empty add default image

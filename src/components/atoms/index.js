@@ -8,6 +8,7 @@ export Heading from './Heading';
 export Hr from './Hr';
 export Icon from './Icon';
 export Image from './Image';
+export ResponsiveImage from './ResponsiveImage';
 export Input from './Input';
 export Label from './Label';
 export Link from './Link';

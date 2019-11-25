@@ -34,6 +34,10 @@ theme.fonts = {
   quote  : 'Georgia, serif',
 };
 
+theme.imageFormats = {
+  heroGallery: '(max-width: 1079px) 100vw, 768px',
+};
+
 theme.sizes = {
   // pixel measurements
   // use mobile only in special cases
@@ -45,13 +49,6 @@ theme.sizes = {
     mobile           : '416px',
     tablet           : '768px',
     laptop           : '1080px',
-  },
-
-  image: {
-    heroGallery: {
-      ratio: '3:2',
-      sizes: [320, 375, 425, 768, 1024, 1440],
-    },
   },
 
   // images: {
