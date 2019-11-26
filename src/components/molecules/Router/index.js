@@ -8,9 +8,7 @@ import {
   removeQueryParamFromURL,
 } from 'sly/services/helpers/url';
 import { withAuth } from 'sly/services/newApi';
-import SlyEvent from 'sly/services/helpers/events';
 import { isServer } from 'sly/config';
-import { extractEventFromQuery } from 'sly/services/helpers/queryParamEvents';
 
 const searchWhitelist = [
   'page-number',
@@ -29,7 +27,6 @@ export default class Router extends Component {
     requiresAuth: array.isRequired,
     location: object,
     children: node,
-    enableEvents: bool,
     status: object,
     history: object,
     staticContext: object,
@@ -38,7 +35,6 @@ export default class Router extends Component {
   };
 
   static defaultProps = {
-    enableEvents: true,
     requiresAuth: [],
     children: null,
   };
@@ -66,39 +62,12 @@ export default class Router extends Component {
     }
   }
 
-  sendQueryEvents() {
-    const { history, location: { pathname, search, hash } } = this.props;
-
-    const { event, search: searchWithoutEvent } = extractEventFromQuery(search);
-    if (event) {
-      SlyEvent.getInstance().sendEvent(event);
-      history.replace(pathname + searchWithoutEvent + hash);
-      return true;
-    }
-    return false;
-  }
-
   componentDidMount() {
-    const {
-      enableEvents,
-      location,
-    } = this.props;
-
-    const { pathname, search } = location;
-
-    if (enableEvents) {
-      if (this.sendQueryEvents()) {
-        return;
-      }
-
-      SlyEvent.getInstance().sendPageView(pathname, search);
-    }
-
     this.checkLoginRedirect();
   }
 
   componentDidUpdate(prevProps) {
-    const { location, enableEvents } = this.props;
+    const { location } = this.props;
     const { pathname, search } = location;
     const { pathname: prevPathname, search: prevSearch } = prevProps.location;
 
@@ -108,14 +77,6 @@ export default class Router extends Component {
     if (pathname !== prevPathname) {
       // call component did mount here too
       this.checkLoginRedirect();
-    }
-
-    if (enableEvents && prevProps.location !== location) {
-      if (this.sendQueryEvents()) {
-        return;
-      }
-
-      SlyEvent.getInstance().sendPageView(pathname, search);
     }
 
     if (pathname !== prevPathname || bumpOnSearch(prevQs, qs)) {

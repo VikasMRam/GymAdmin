@@ -176,10 +176,8 @@ const withSendEvent = ({ onClick, event, ...props }) => {
 
 const Button = ({ type, kind, measureRef, ...props }) => {
   // rename type to kind to avoid collision with html button type
-  if (props.to) {
+  if (props.to || props.href) {
     return <StyledLink kind={kind} {...props} />;
-  } else if (props.href) {
-    return <Anchor kind={kind} {...props} />;
   }
   return <StyledButton innerRef={measureRef} {...withSendEvent(props)} kind={kind} type={type} />;
 };

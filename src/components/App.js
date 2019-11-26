@@ -34,6 +34,7 @@ import {
   ADMIN_DASHBOARD_CALL_DETAILS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import careTypes from 'sly/constants/careTypes';
+import PageEventsContainer from 'sly/containers/PageEventsContainer';
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/components/pages/Error'));
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage'));
@@ -263,7 +264,14 @@ const routes = [
   },
 ];
 
-const routeComponents = routes.map(({ component: Component, ...route }) => <Route key={route.path} component={props => <Component {...props} />} {...route} />);
+const routeComponents = routes.map(({ component: Component, ...route }) => (
+  <Route key={route.path} {...route} component={props => (
+    <>
+      <PageEventsContainer />
+      <Component {...props} />
+    </>
+  )} />
+));
 
 export default class App extends Component {
   static childContextTypes = {
