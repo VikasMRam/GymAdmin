@@ -20,6 +20,18 @@ import CommunityFilterListContainer from 'sly/containers/CommunityFilterListCont
 
 const SearchMap = loadable(() => import(/* webpackChunkName: "chunkSearchMap" */'sly/components/organisms/SearchMap'));
 
+/**
+ * Order of appearance as in editor :
+ * description, <p>1</p>
+ guide, <p>2</p>
+ articles, <p>3</p>
+ resources, <p>4</p>
+ neighborhoods, <p>5</p>
+ hospitals, <p>6</p>
+ reviews, <p>7</p>
+ */
+const guideTypes = ['description', 'guide', 'articles', 'resources', 'neighborhoods', 'hospitals', 'reviews'];
+
 const TopWrapper = pad(styled.div`
   display: flex;
 
@@ -119,103 +131,8 @@ const CommunitySearchPage = ({
     showModal(modalContent, null, 'sidebar');
   };
 
-  const geoGuideList = (geoGuide && geoGuide.cityTOCGuides);
-
-
-  const columnContent = (
-    <CommunityFilterList
-      latitude={latitude}
-      longitude={longitude}
-      onFieldChange={onParamsChange}
-      searchParams={searchParams}
-      toggleMap={toggleMap}
-      isMapView={isMapView}
-      toggleFilter={handleModalFilterClick}
-      onParamsRemove={onParamsRemove}
-      geoGuideList={geoGuideList}
-    />
-  );
-  const TopContent = () => {
-    if (geoGuide && geoGuide.guideContent) {
-      const gg = geoGuide.guideContent;
-      if (gg.autoDescription || gg.manualDescription) {
-        return (
-          <>
-            <StyledHeading level="hero" size="title">
-              {listSize} {tocLabel} near {city}
-            </StyledHeading>
-            { gg.manualDescription && <LegacyContent dangerouslySetInnerHTML={{ __html: gg.manualDescription }} />}
-            {!gg.manualDescription && <LegacyContent dangerouslySetInnerHTML={{ __html: gg.autoDescription }} />}
-          </>
-        );
-      }
-    }
-
-    return (
-      <>
-        <StyledHeading level="hero" size="title">
-          {listSize} {tocLabel} near {city}
-        </StyledHeading>
-      </>
-    );
-  };
-
-  const ListContent = () => {
-    /**
-     * Order of appearance as in editor :
-     * description, <p>1</p>
-     guide, <p>2</p>
-     articles, <p>3</p>
-     resources, <p>4</p>
-     neighborhoods, <p>5</p>
-     hospitals, <p>6</p>
-     reviews, <p>7</p>
-     */
-    if (geoGuide && geoGuide.guideContent && !(geoGuide.guideContent.ownGuidePage && geoGuide.guideContent.ownGuidePage === 'true')) {
-      const additionalDivs = [];
-      const gg = geoGuide.guideContent;
-      ['description', 'guide', 'articles', 'resources',
-        'neighborhoods', 'hospitals', 'reviews'].forEach((p) => {
-        if (gg[p]) {
-          additionalDivs.push(<LegacyContent dangerouslySetInnerHTML={{ __html: gg[p] }} key={p} />);
-        }
-      });
-      if (gg.seoLinks) {
-        additionalDivs.push(<SeoLinks key="seoLinks" title="Assisted Living in Nearby Cities" links={gg.seoLinks} />);
-      }
-
-      return (
-        <>
-          <CommunitySearchList
-            communityList={communityList}
-            onParamsChange={onParamsChange}
-            searchParams={searchParams}
-            requestMeta={requestMeta}
-            onParamsRemove={onParamsRemove}
-            onAdTileClick={onAdTileClick}
-            isFetchingResults={isFetchingResults}
-            location={location}
-            onCommunityClick={onCommunityClick}
-          />
-          {additionalDivs}
-        </>
-      );
-    }
-    // If No Geo Content just return same
-    return (
-      <CommunitySearchList
-        communityList={communityList}
-        onParamsChange={onParamsChange}
-        searchParams={searchParams}
-        requestMeta={requestMeta}
-        onParamsRemove={onParamsRemove}
-        onAdTileClick={onAdTileClick}
-        isFetchingResults={isFetchingResults}
-        location={location}
-        onCommunityClick={onCommunityClick}
-      />
-    );
-  };
+  const guideContent = geoGuide && geoGuide.guideContent;
+  const hasGeoGuideContent = guideContent && !(guideContent.ownGuidePage && guideContent.ownGuidePage === 'true');
 
   return (
     <>
@@ -223,10 +140,29 @@ const CommunitySearchPage = ({
         ...searchParams, url: location, communityList, listSize, geoGuide,
       })}
       <CommunitySearchPageTemplate
-        column={columnContent}
+        column={(
+          <CommunityFilterList
+            latitude={latitude}
+            longitude={longitude}
+            onFieldChange={onParamsChange}
+            searchParams={searchParams}
+            toggleMap={toggleMap}
+            isMapView={isMapView}
+            toggleFilter={handleModalFilterClick}
+            onParamsRemove={onParamsRemove}
+            geoGuideList={geoGuide && geoGuide.cityTOCGuides}
+          />
+        )}
       >
         <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
-        {!isMapView && !isFetchingResults && TopContent()}
+        {!isMapView && !isFetchingResults && (
+          <>
+            <StyledHeading level="hero" size="title">{listSize} {tocLabel} near {city}</StyledHeading>
+            {(guideContent && (guideContent.autoDescription || guideContent.manualDescription)) && (
+              <LegacyContent dangerouslySetInnerHTML={{ __html: guideContent.manualDescription || guideContent.autoDescription }} />
+            )}
+          </>
+        )}
         <TopWrapper>
           {isMapView && (
             <IconButton icon="list" ghost transparent onClick={toggleMap}>
@@ -248,7 +184,29 @@ const CommunitySearchPage = ({
           </IconButton>
         </TopWrapper>
         <StyledHr fullWidth />
-        {!isMapView && !isFetchingResults && ListContent()}
+        {!isMapView && !isFetchingResults && (
+          <>
+            <CommunitySearchList
+              communityList={communityList}
+              onParamsChange={onParamsChange}
+              searchParams={searchParams}
+              requestMeta={requestMeta}
+              onParamsRemove={onParamsRemove}
+              onAdTileClick={onAdTileClick}
+              isFetchingResults={isFetchingResults}
+              location={location}
+              onCommunityClick={onCommunityClick}
+            />
+            {hasGeoGuideContent && (
+              guideTypes.map((key) => (
+                guideContent[key] ? <LegacyContent dangerouslySetInnerHTML={{ __html: guideContent[key] }} key={key} /> : null
+              ))
+            )}
+            {hasGeoGuideContent && guideContent.seoLinks && (
+              <SeoLinks title="Assisted Living in Nearby Cities" links={guideContent.seoLinks} />
+            )}
+          </>
+        )}
         {isMapView && (
           <SearchMap
             latitude={latitude}
