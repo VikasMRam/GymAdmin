@@ -37,7 +37,7 @@ const getSrcsetForPath = imagePath => [
 // only doing 3:2 for now
 export const getSrcset = imagePath => ({
   src: getImagePath(imagePath, getFormatFromWidth(768)),
-  srcset: getSrcsetForPath(imagePath),
+  jpegSrcset: getSrcsetForPath(imagePath),
   webpSrcset: getSrcsetForPath(imagePath.replace(/\.jpe?g/, '.webp')),
 });
 

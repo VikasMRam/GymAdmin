@@ -5,15 +5,25 @@ import styled, { css } from 'styled-components';
 import { size } from 'sly/components/themes';
 import { getSrcset } from 'sly/services/images';
 
-const StyledImage = styled(({ alt, ...props }) => (
-  <img alt={alt} {...props} />
-))`
-  user-select: none;
-  border: none;
-  object-fit: cover;
-`;
-
 const paddingTop = ({ aspectRatio }) => size('picture.ratios', aspectRatio);
+
+const ResponsiveWrapper = styled.div`
+  position: relative;
+  height: 0;
+  width: 100%;
+  padding-top: ${paddingTop};
+
+  img {
+    user-select: none;
+    border: none;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 const getAlt = (src) => {
   if (typeof src === 'undefined') {
@@ -43,24 +53,21 @@ export default class ResponsiveImage extends React.Component {
 
   render() {
     const {
-      path, sizes, alt, loading, className: classNameProp, ...props
+      path, sizes, alt, loading, className: classNameProp, aspectRatio, ...props
     } = this.props;
 
-    const { srcset, webpSrcset, src } = getSrcset(path);
+    const { jpegSrcset, webpSrcset, src } = getSrcset(path);
 
     const srcProp = loading === 'lazy' ? 'data-src' : 'src';
     const srcSetProp = loading === 'lazy' ? 'data-srcset' : 'srcset';
     const className = loading === 'lazy' ? `lazy ${classNameProp}` : classNameProp;
 
     const imageProps = {
-      alt: alt || getAlt(path),
-      className,
       [srcProp]: src,
-      sizes,
     };
 
     const jpegSourceProps = {
-      [srcSetProp]: srcset,
+      [srcSetProp]: jpegSrcset,
     };
 
     const webpSourceProps = {
@@ -68,14 +75,18 @@ export default class ResponsiveImage extends React.Component {
     };
 
     return (
-      <picture>
-        <source type="image/webp" {...webpSourceProps} />
-        <source type="image/jpeg" {...jpegSourceProps} />
-        <StyledImage
-          {...imageProps}
-          {...props}
-        />
-      </picture>
+      <ResponsiveWrapper aspectRatio={aspectRatio}>
+        <picture>
+          <source type="image/webp" {...webpSourceProps} sizes={sizes} />
+          <source type="image/jpeg" {...jpegSourceProps} sizes={sizes} />
+          <img
+            alt={alt || getAlt(path)}
+            className={className}
+            {...imageProps}
+            {...props}
+          />
+        </picture>
+      </ResponsiveWrapper>
     );
   }
 }
