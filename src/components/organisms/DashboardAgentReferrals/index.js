@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
-import { Heading, Block, Button, Link } from 'sly/components/atoms';
+import { Heading, Block, Button } from 'sly/components/atoms';
 import pad from 'sly/components/helpers/pad';
 import clientPropType from 'sly/propTypes/client';
 import DashboardAdminReferralAgentTile from 'sly/components/organisms/DashboardAdminReferralAgentTile';
@@ -68,7 +68,7 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients, reco
         id,
         tab: FAMILY_DETAILS,
       });
-      const component = <StyledDashboardAdminReferralAgentTile stage={stage} agent={provider} path={familyDetailsPath} referralSentAt={createdAt} />;
+      const component = <StyledDashboardAdminReferralAgentTile key={id} stage={stage} agent={provider} path={familyDetailsPath} referralSentAt={createdAt} />;
       childrenComponents.push(component);
     });
   }
@@ -85,6 +85,7 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients, reco
     recommendedAgentComponents.push((
       <StyledDashboardAdminReferralAgentTile
         {...props}
+        key={agent.id}
         agent={agent}
         actionText="Send Referral"
         actionClick={() => {
