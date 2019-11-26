@@ -397,7 +397,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         onCancel={hideModal}
         rejectReasons={rejectReasons}
         initialValues={initialValues}
-      />), null, 'noPaddingWithOverflow', false);
+      />), null, 'letsmovetothismodaltypealltheothermodals', false);
   };
 
   handleAddNoteClick = () => {
