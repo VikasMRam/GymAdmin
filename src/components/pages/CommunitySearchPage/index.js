@@ -16,8 +16,8 @@ import IconButton from 'sly/components/molecules/IconButton';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import pad from 'sly/components/helpers/pad';
+import CommunityFilterListContainer from 'sly/containers/CommunityFilterListContainer';
 import { ifProp } from 'styled-tools';
-import ResponsiveSidebar from 'sly/components/molecules/ResponsiveSidebar';
 
 const SearchMap = loadable(() => import(/* webpackChunkName: "chunkSearchMap" */'sly/components/organisms/SearchMap'));
 
@@ -49,7 +49,8 @@ const StyledHeading = pad(Heading, 'large');
 
 const StyledHr = styled(Hr)`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none;
+    //display: none;
+    visibility: hidden;
   }
 `;
 
@@ -67,12 +68,12 @@ const ImageButtonWrapper = pad(styled.div`
     max-width: 100%;
   }
 
-  a {
+  button {
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   }
 
   ${ifProp('isMapView', '', `
-    a {
+    button {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -104,11 +105,24 @@ const LegacyContent = pad(styled.div`
 const ApplyFilterButton = styled(Button)`
   width: 100%;
   display: block;
-  margin-top: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none !important;
+    display: none;
   }
+`;
+
+const ResponsiveFilterWrapper = styled.div`
+  @media screen and (max-width: ${size('breakpoint.laptop')}) {
+    visibility: ${ifProp('isOpen', 'visible', 'hidden')};
+    position: absolute;
+    background-color: white;
+    z-index: 1000;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    padding: ${size('spacing', 'xxLarge')};
 `;
 
 LegacyContent.defaultProps = {
@@ -125,6 +139,7 @@ const CommunitySearchPage = ({
   geoGuide,
   location,
   isFetchingResults,
+  onCommunityClick,
   areFiltersOpen,
   toggleFiltersOpen,
 }) => {
@@ -157,13 +172,13 @@ const CommunitySearchPage = ({
             <>
               <ImageButtonWrapper isMapView={isMapView}>
                 {isMapView ? (
-                  <IconButton icon="list" to={listViewUrl} iconPalette="primary" ghost>
+                  <IconButton icon="list" onClick={toggleMap} iconPalette="primary" ghost>
                     View List
                   </IconButton>
                   ) : (
                   <>
                     <Image src={assetPath('images/map-placeholder.png')} />
-                    <IconButton icon="map" iconSize="regular" to={mapViewUrl} iconPalette="primary" ghost>
+                    <IconButton icon="map" iconSize="regular" onClick={toggleMap} iconPalette="primary" ghost>
                       View Map
                     </IconButton>
                   </>
@@ -171,13 +186,15 @@ const CommunitySearchPage = ({
               </ImageButtonWrapper>
               <StyledHr />
             </>
-            <ResponsiveSidebar isOpen={areFiltersOpen} onCloseRequested={toggleFiltersOpen}>
+            <ResponsiveFilterWrapper isOpen={areFiltersOpen}>
               <CommunityFilterList
+                onFieldChange={onParamsChange}
                 searchParams={searchParams}
+                onParamsRemove={onParamsRemove}
                 geoGuideList={geoGuide && geoGuide.cityTOCGuides}
               />
               <ApplyFilterButton kind="jumbo" onClick={toggleFiltersOpen}>Apply Filters</ApplyFilterButton>
-            </ResponsiveSidebar>
+            </ResponsiveFilterWrapper>
           </FilterColumnWrapper>
         )}
       >
@@ -252,6 +269,8 @@ CommunitySearchPage.propTypes = {
   searchParams: object,
   isFetchingResults: bool,
   onClientClick: func,
+  showModal: func,
+  hideModal: func,
   areFiltersOpen: bool,
   toggleFiltersOpen: func,
 };

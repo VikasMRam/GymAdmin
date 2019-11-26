@@ -16,9 +16,6 @@ import {
   getFiltersApplied,
 } from 'sly/services/helpers/search';
 
-import { withRedirectTo } from 'sly/services/redirectTo';
-import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
-
 const StyledLink = pad(styled(Link)`
   display: flex;
   color: ${palette('slate', 'base')};
@@ -27,6 +24,14 @@ const StyledLink = pad(styled(Link)`
     margin-right: ${size('spacing.small')};
   }
 `, 'regular');
+
+const getSortHandler = (origFn) => {
+  return (uiEvt) => {
+    // todo uncomment after enabling react select const changedParams = { sort: uiEvt.value };
+    const changedParams = { sort: uiEvt.target.value };
+    origFn({ origUiEvt: uiEvt, changedParams });
+  };
+};
 
 const generateRadioLink = (elem, type, path, selected, nofollow) => {
     return (
@@ -130,4 +135,4 @@ CommunityFilterList.propTypes = {
   redirectTo: func,
 };
 
-export default withRedirectTo(withGenerateFilterLinkPath(CommunityFilterList));
+export default CommunityFilterList;
