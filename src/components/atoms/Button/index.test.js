@@ -37,9 +37,9 @@ describe('Button', () => {
     expect(wrapper.find('button')).toHaveLength(1);
   });
 
-  it('renders anchor when href is passed in', () => {
-    const wrapper = wrap({ href: 'test' });
-    expect(wrapper.find('a')).toHaveLength(1);
+  it('renders Link when href is passed in', () => {
+    const wrapper = wrap({ href: 'test' }).dive();
+    expect(wrapper.find('Link')).toHaveLength(1);
   });
 
   it('renders Link when to is passed in', () => {
