@@ -95,7 +95,7 @@ describe('Component', () => {
       currentStep: totalNumberofSteps, totalNumberofSteps, handleSubmit, onBackButton, onSeeMore, href, flow,
     });
     const button = getButtons(wrapper, true);
-    expect(button.dive().dive().text()).toBe(buttonTextFinal);
+    expect(button.dive().dive().dive().dive().dive().text()).toBe(buttonTextFinal);
     expect(button.prop('href')).toBe(href);
   });
 });
