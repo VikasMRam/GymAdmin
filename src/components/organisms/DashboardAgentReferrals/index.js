@@ -68,7 +68,7 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients, reco
         id,
         tab: FAMILY_DETAILS,
       });
-      const component = <StyledDashboardAdminReferralAgentTile stage={stage} agent={provider} path={familyDetailsPath} referralSentAt={createdAt} />;
+      const component = <StyledDashboardAdminReferralAgentTile key={id} stage={stage} agent={provider} path={familyDetailsPath} referralSentAt={createdAt} />;
       childrenComponents.push(component);
     });
   }
