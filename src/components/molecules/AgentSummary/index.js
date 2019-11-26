@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, func } from 'prop-types';
+import { func } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
@@ -104,7 +104,7 @@ const AskQuestionPhoneSection = styled.div`
   }
 `;
 const AgentSummary = ({
-  firstName, agent, onButtonClick, onPhoneClick,
+  agent, onButtonClick, onPhoneClick,
 }) => {
   const { info, aggregateRating } = agent;
   const {
@@ -121,6 +121,8 @@ const AgentSummary = ({
       </ReviewValueSection>
     );
   }
+  const firstName = displayName.split(' ')[0];
+
   return (
     <Wrapper>
       <AgentImageWrapper>
@@ -178,7 +180,6 @@ const AgentSummary = ({
 
 AgentSummary.propTypes = {
   agent: agentPropType.isRequired,
-  firstName: string.isRequired,
   onButtonClick: func,
   onPhoneClick: func,
 };

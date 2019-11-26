@@ -3,17 +3,10 @@ import { shallow } from 'enzyme';
 
 import AgentSummary from 'sly/components/molecules/AgentSummary';
 import Image from 'sly/components/atoms/Image';
+import LindaIwamota from 'sly/../private/storybook/sample-data/agent-linda-iwamota.json';
 
 const defaultProp = {
-  firstName: 'Stephen',
-  agent: {
-    info: {
-      displayName: 'Stephen Anderson',
-      profileImageUrl: 'abc.def',
-      citiesServed: ['Sausalito', 'Mill Valley'],
-      slyPhone: '9258312050',
-    },
-  },
+  agent: LindaIwamota,
 };
 
 const wrap = (props = {}) =>
@@ -30,29 +23,41 @@ describe('AgentSummary', () => {
     expect(wrapper.find(Image)).toHaveLength(1);
     expect(wrapper.find(Image).prop('src')).toEqual(defaultProp.agent.info.profileImageUrl);
     expect(wrapper.contains(defaultProp.agent.info.displayName)).toBeTruthy();
-    expect(wrapper.contains('Stephen\'s Cities: ')).toBeTruthy();
-    expect(wrapper.contains('Sausalito, Mill Valley')).toBeTruthy();
+    expect(wrapper.contains(`${LindaIwamota.info.displayName.split(' ')[0]}'s Cities: `)).toBeTruthy();
+    expect(wrapper.contains(LindaIwamota.info.citiesServed.join(', '))).toBeTruthy();
   });
 
   it('renders aggregateRating and numRatings', () => {
-    const wrapper = wrap({ agent: { info: { ...defaultProp.agent.info }, aggregateRating: { ratingValue: 3.53223232, numRatings: 15 } } });
+    const newAgent = {
+      ...defaultProp.agent, aggregateRating: { ratingValue: 3.53223232, numRatings: 15 },
+    };
+    const wrapper = wrap({ agent: newAgent });
     expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.5 ');
     expect(wrapper.find('ReviewValueSection').childAt(2).dive().text()).toEqual('from 15 reviews');
   });
 
   it('renders aggregateRating and one numRatings', () => {
-    const wrapper = wrap({ agent: { info: { ...defaultProp.agent.info }, aggregateRating: { ratingValue: 3.53223232, numRatings: 1 } } });
+    const newAgent = {
+      ...defaultProp.agent, aggregateRating: { ratingValue: 3.53223232, numRatings: 1 },
+    };
+    const wrapper = wrap({ agent: newAgent });
     expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.5 ');
     expect(wrapper.find('ReviewValueSection').childAt(2).dive().text()).toEqual('from 1 review');
   });
 
   it('renders recentFamiliesHelped', () => {
-    const wrapper = wrap({ agent: { info: { ...defaultProp.agent.info, recentFamiliesHelped: 20 } } });
+    const newAgent = {
+      ...defaultProp.agent, info: { ...defaultProp.agent.info, recentFamiliesHelped: 20 },
+    };
+    const wrapper = wrap({ agent: newAgent });
     expect(wrapper.contains(20)).toBeTruthy();
   });
 
   it('renders parentCompany', () => {
-    const wrapper = wrap({ agent: { info: { ...defaultProp.agent.info, parentCompany: 'testParentCompany' } } });
+    const newAgent = {
+      ...defaultProp.agent, info: { ...defaultProp.agent.info, parentCompany: 'testParentCompany' },
+    };
+    const wrapper = wrap({ agent: newAgent });
     expect(wrapper.contains('testParentCompany')).toBeTruthy();
   });
 
