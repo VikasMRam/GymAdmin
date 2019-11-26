@@ -4,40 +4,16 @@ import { storiesOf } from '@storybook/react';
 
 import AgentTile from 'sly/components/molecules/AgentTile';
 import { size } from 'sly/components/themes';
+import LindaIwamota from 'sly/../private/storybook/sample-data/agent-linda-iwamota.json';
 
 const Wrapper = styled.div`
   width: ${size('layout.col4')};
   margin: ${size('spacing.large')};
 `;
 
-const address = {
-  city: 'San Anselmo',
-  state: 'CA',
-};
-
-const aggregateRating = {
-  ratingValue: 4.5,
-  numRatings: 14,
-};
-
-const agentInfo = {
-  displayName: 'Fonz Wasserstrom',
-  slyPhone: '9258906575',
-  recentFamiliesHelped: 17,
-  profileImageUrl: 'https://avatars.githubusercontent.com/u/113003',
-  citiesServed: ['Utah', 'Calcuta'],
-};
-
-export const agent = {
-  url: '/agents/midwest/fonz-wasserstrom',
-  address,
-  aggregateRating,
-  info: agentInfo,
-};
-
 storiesOf('Molecules|AgentTile', module)
   .add('default', () => (
     <Wrapper>
-      <AgentTile agent={agent} />
+      <AgentTile agent={LindaIwamota} />
     </Wrapper>
   ));

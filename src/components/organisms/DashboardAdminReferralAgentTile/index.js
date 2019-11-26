@@ -2,15 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, bool, func } from 'prop-types';
 
+import { AGENT_STATUS_NAME_MAP } from 'sly/constants/agents';
 import { size, palette } from 'sly/components/themes';
-import { Heading, Badge, Block, Span, Box, Button, Link } from 'sly/components/atoms';
 import cursor from 'sly/components/helpers/cursor';
-import IconBadge from 'sly/components/molecules/IconBadge';
-import Stage from 'sly/components/molecules/Stage';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import pad from 'sly/components/helpers/pad';
 import { getReferralSentTimeText } from 'sly/services/helpers/communityReferral';
 import { copyToClipboard } from 'sly/services/helpers/utils';
+import { Heading, Badge, Block, Span, Box, Button, Link } from 'sly/components/atoms';
+import IconBadge from 'sly/components/molecules/IconBadge';
+import Stage from 'sly/components/molecules/Stage';
 
 const TopWrapper = styled.div`
   padding: ${size('spacing.large')};
@@ -107,7 +108,8 @@ function transformAgent(agent) {
   let name = null;
   let leadCount = null;
   let an = null;
-  const { name: businessName, info } = agent;
+  let email;
+  const { name: businessName, info, status } = agent;
   if (info) {
     const { slyScore, displayName, last5DayLeadCount, adminNotes } = info;
     if (slyScore) {
@@ -123,15 +125,13 @@ function transformAgent(agent) {
     if (adminNotes) {
       an = adminNotes;
     }
-    cellPhone = info.cellPhone;
-    workPhone = info.workPhone;
-
+    ({ cellPhone, workPhone, email } = info);
   }
   if (name === null) {
     name = agent.name || 'Agent Lead';
   }
 
-  const agentProps = {
+  return {
     name,
     slyScore: slyScoreValue,
     businessName,
@@ -139,8 +139,9 @@ function transformAgent(agent) {
     cellPhone,
     leadCount,
     adminNotes: an,
+    status,
+    email,
   };
-  return agentProps;
 }
 
 const getHeading = (path, name) => {
@@ -160,7 +161,7 @@ const DashboardAdminReferralAgentTile = ({
   className, onClick, agent, isRecommended, bottomActionText, bottomActionOnClick, stage, referralSentAt, actionText, actionClick, path,
 }) => {
   const {
-    name, slyScore, businessName, workPhone, cellPhone, leadCount, adminNotes,
+    name, slyScore, businessName, workPhone, cellPhone, leadCount, adminNotes, status, email,
   } = transformAgent(agent);
   const slyScoreText = `${slyScore} SLYSCORE`;
   return (
@@ -199,13 +200,25 @@ const DashboardAdminReferralAgentTile = ({
               <Link palette="primary" size="caption" transparent onClick={() => { copyToClipboard(cellPhone); }} >{cellPhone}</Link>
             </>
           )}
+          {email && (
+            <>
+              <Span size="caption" palette="grey" variation="dark">Email</Span>
+              <Link palette="primary" size="caption" transparent href={`mailto:${email}`}>{email}</Link>
+            </>
+          )}
+          {status && (
+            <>
+              <Span size="caption" palette="grey" variation="dark">Status</Span>
+              <Span size="caption">{AGENT_STATUS_NAME_MAP[status]}</Span>
+            </>
+          )}
           {(leadCount !== undefined && leadCount !== null) && (
             <>
               <Span size="caption" palette="grey" variation="dark">Lead count</Span>
               <Span size="caption">{leadCount}</Span>
             </>
           )}
-          {(adminNotes !== undefined && adminNotes !== null) && (
+          {adminNotes && (
             <>
               <Span size="caption" palette="grey" variation="dark">Admin Notes</Span>
               <Span size="caption">{adminNotes}</Span>

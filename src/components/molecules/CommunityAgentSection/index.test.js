@@ -2,31 +2,10 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
-
-const agent = {
-  id: 'golden-placement-services-ca-lidia-parman-',
-  address: {
-    city: 'Menifee',
-    county: 'Riverside',
-    latitude: 33.6831035,
-    line1: '30141 Antelope Road #D-127',
-    line2: '',
-    longitude: -117.1700328,
-    state: 'CA',
-    zip: '92584',
-  },
-  url: 'agent.url',
-  info: {
-    displayName: 'Rachel Wasserstrom',
-    slyPhone: '9258906575',
-    email: 'rachelwassertrom@seniorly.com',
-    profileImageUrl: 'https://avatars.githubusercontent.com/u/113003',
-    citiesServed: ['abc', 'def'],
-  },
-};
+import LindaIwamota from 'sly/../private/storybook/sample-data/agent-linda-iwamota.json';
 
 const wrap = (props = {}) =>
-  shallow(<CommunityAgentSection agent={agent} {...props} />);
+  shallow(<CommunityAgentSection agent={LindaIwamota} {...props} />);
 
 describe('CommunityAgentSection', () => {
   it('does not renders children when passed in', () => {
@@ -36,23 +15,23 @@ describe('CommunityAgentSection', () => {
 
   it('renders CommunityAgentSection', () => {
     const wrapper = wrap();
-    expect(wrapper.contains(agent.info.displayName)).toBe(true);
-    expect(wrapper.contains(agent.info.email)).toBe(true);
-    expect(wrapper.find('Image').prop('src')).toEqual(agent.info.profileImageUrl);
+    expect(wrapper.contains(LindaIwamota.info.displayName)).toBe(true);
+    expect(wrapper.contains(LindaIwamota.info.email)).toBe(true);
+    expect(wrapper.find('Image').prop('src')).toEqual(LindaIwamota.info.profileImageUrl);
     expect(wrapper.find('NumberFormat')).toHaveLength(1);
-    expect(wrapper.find('NumberFormat').dive().text()).toEqual('(925) 890-6575');
+    expect(wrapper.find('NumberFormat').prop('value')).toEqual(LindaIwamota.info.slyPhone);
   });
 
   it('renders chosenReview', () => {
-    const mAgent = { ...agent };
+    const mAgent = { ...LindaIwamota };
     mAgent.info.chosenReview = 'abc';
     const wrapper = wrap({ agent: mAgent });
-    expect(wrapper.contains(agent.info.displayName)).toBe(true);
-    expect(wrapper.contains(agent.info.email)).toBe(true);
+    expect(wrapper.contains(LindaIwamota.info.displayName)).toBe(true);
+    expect(wrapper.contains(LindaIwamota.info.email)).toBe(true);
     expect(wrapper.contains('abc')).toBe(true);
-    expect(wrapper.find('Image').prop('src')).toEqual(agent.info.profileImageUrl);
+    expect(wrapper.find('Image').prop('src')).toEqual(LindaIwamota.info.profileImageUrl);
     expect(wrapper.find('NumberFormat')).toHaveLength(1);
-    expect(wrapper.find('NumberFormat').dive().text()).toEqual('(925) 890-6575');
+    expect(wrapper.find('NumberFormat').prop('value')).toEqual(LindaIwamota.info.slyPhone);
   });
 
   it('handles onPhoneClick', () => {
@@ -66,7 +45,7 @@ describe('CommunityAgentSection', () => {
   });
 
   it('handles onEmailClick', () => {
-    const { email } = agent.info;
+    const { email } = LindaIwamota.info;
     const onEmailClick = jest.fn();
     const wrapper = wrap({ onEmailClick });
     expect(onEmailClick).not.toHaveBeenCalled();
