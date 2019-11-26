@@ -49,6 +49,10 @@ export default class CommunitySearchPageContainer extends PureComponent {
     serverState: object,
   };
 
+  state = {
+    areFiltersOpen: false
+  };
+
   // TODO Define Search Parameters
   toggleMap = () => {
     const event = {
@@ -129,38 +133,27 @@ export default class CommunitySearchPageContainer extends PureComponent {
 
     const isFetchingResults = status.communityList.isLoading || !status.communityList.hasStarted;
 
-    // if (isFetchingResults) {
-    //   return null;
-    // }
-
     const requestMeta = status.communityList.meta;
 
     const isMapView = searchParams.view === 'map';
     const gg = geoGuide && geoGuide.length > 0 ? geoGuide[0] : {};
     return (
-      <ModalController>
-        {({
-          show,
-          hide,
-        }) => (
-          <CommunitySearchPage
-            isMapView={isMapView}
-            requestMeta={requestMeta || {}}
-            toggleMap={this.toggleMap}
-            searchParams={searchParams}
-            onParamsChange={this.changeSearchParams}
-            onParamsRemove={this.removeSearchFilters}
-            communityList={communityList || []}
-            geoGuide={gg}
-            location={location}
-            onAdTileClick={this.handleOnAdTileClick}
-            isFetchingResults={isFetchingResults}
-            onCommunityClick={onCommunityClick}
-            showModal={show}
-            hideModal={hide}
-          />
-        )}
-      </ModalController>
+      <CommunitySearchPage
+        isMapView={isMapView}
+        requestMeta={requestMeta || {}}
+        toggleMap={this.toggleMap}
+        searchParams={searchParams}
+        onParamsChange={this.changeSearchParams}
+        onParamsRemove={this.removeSearchFilters}
+        communityList={communityList || []}
+        geoGuide={gg}
+        location={location}
+        onAdTileClick={this.handleOnAdTileClick}
+        isFetchingResults={isFetchingResults}
+        onCommunityClick={onCommunityClick}
+        areFiltersOpen={this.state.areFiltersOpen}
+        toggleFiltersOpen={() => this.setState(({ areFiltersOpen }) => ({ areFiltersOpen: !areFiltersOpen }))}
+      />
     );
   }
 }
