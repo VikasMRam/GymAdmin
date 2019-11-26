@@ -3,8 +3,6 @@ import { object, string } from 'prop-types';
 import withRouter from 'react-router/withRouter';
 
 import { query } from 'sly/services/newApi';
-import SlyEvent from 'sly/services/helpers/events';
-import { extractEventFromQuery } from 'sly/services/helpers/queryParamEvents';
 
 @query('createAction', 'createUuidAction')
 @withRouter
@@ -16,15 +14,7 @@ export default class PageViewActionContainer extends Component {
   };
 
   componentDidMount() {
-    const { match, location: { pathname, search, hash }, history, createAction, actionType, actionInfo } = this.props;
-
-    const { event, search: searchWithoutEvent } = extractEventFromQuery(search);
-    if (event) {
-      SlyEvent.getInstance().sendEvent(event);
-      history.replace(pathname + searchWithoutEvent + hash);
-    }
-
-    SlyEvent.getInstance().sendPageView(pathname, searchWithoutEvent);
+    const { match, createAction, actionType, actionInfo } = this.props;
 
     createAction({
       type: 'UUIDAction',
@@ -34,16 +24,6 @@ export default class PageViewActionContainer extends Component {
         actionType,
       },
     });
-  }
-
-  componentDidUpdate() {
-    const { history, location: { pathname, search, hash } } = this.props;
-
-    const { event, search: searchWithoutEvent } = extractEventFromQuery(search);
-    if (event) {
-      SlyEvent.getInstance().sendEvent(event);
-      history.replace(pathname + searchWithoutEvent + hash);
-    }
   }
 
   render() {

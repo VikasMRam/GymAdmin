@@ -20,6 +20,7 @@ import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import CommunityMorePicturesContainer from 'sly/containers/CommunityMorePicturesContainer';
 import LazyCommunityMapContainer from 'sly/containers/LazyCommunityMapContainer';
 import PageViewActionContainer from 'sly/containers/PageViewActionContainer';
+import PageEventsContainer from 'sly/containers/PageEventsContainer';
 import RetentionPopup from 'sly/services/retentionPopup';
 import Image from 'sly/components/atoms/Image';
 
@@ -30,6 +31,7 @@ partiallyHydrateClient(
     ModalContainer,
     HeaderContainer,
     PageViewActionContainer,
+    PageEventsContainer,
     CommunityMediaGalleryContainer,
     CommunitySummaryContainer,
     OfferNotification,
