@@ -680,7 +680,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           <Tabs activeTab={currentTab}>
             {this.getTabsForUser()}
           </Tabs>
-          {clients.length > 1 &&
+          {clients && clients.length > 1 &&
             <SmallScreenBannerNotification palette="warning">
               {duplicateWarningContent}
             </SmallScreenBannerNotification>
