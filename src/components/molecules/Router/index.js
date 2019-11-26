@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object, node, bool, array } from 'prop-types';
+import { func, object, node, array } from 'prop-types';
 import { Redirect, withRouter } from 'react-router-dom';
 import { stringify, parse } from 'query-string';
 

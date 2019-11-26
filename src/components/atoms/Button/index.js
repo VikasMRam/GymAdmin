@@ -157,9 +157,6 @@ const StyledLink = styled(({
   ${styles};
 `;
 
-const Anchor = styled.a`
-  ${styles};
-`;
 const StyledButton = styled.button`
   ${styles};
 `;
