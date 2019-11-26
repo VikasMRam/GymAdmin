@@ -106,8 +106,8 @@ const DashboardAgentReferrals = ({ onSendNewReferralClick, childrenClients, reco
         </EmptyResultWrapper>
       )}
       {childrenComponents.length > 0 && <ChildrenClientsWrapper>{childrenComponents}</ChildrenClientsWrapper>}
-      {recommendedAgentComponents.length === 1 && <EmptyResultTextBlock palette="danger" variation="dark">There are no recommended agents for this area. Search by location manually to see if there are any agents in the vicinity.</EmptyResultTextBlock>}
-      {recommendedAgentComponents.length > 1 && <ChildrenClientsWrapper>{recommendedAgentComponents}</ChildrenClientsWrapper>}
+      {childrenComponents.length === 0 && recommendedAgentComponents.length === 1 && <EmptyResultTextBlock palette="danger" variation="dark">There are no recommended agents for this area. Search by location manually to see if there are any agents in the vicinity.</EmptyResultTextBlock>}
+      {childrenComponents.length === 0 && recommendedAgentComponents.length > 1 && <ChildrenClientsWrapper>{recommendedAgentComponents}</ChildrenClientsWrapper>}
     </>
   );
 };
