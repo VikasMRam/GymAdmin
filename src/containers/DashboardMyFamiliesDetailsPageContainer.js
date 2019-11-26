@@ -259,6 +259,21 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     this.setState({ selectedConversation: conversation });
   };
 
+  refetchClient = () => {
+    const { status } = this.props;
+    status.client.refetch();
+  }
+
+  refetchNotes = () => {
+    const { status } = this.props;
+    status.notes.refetch();
+  }
+
+  refetchConversations = () => {
+    const { status } = this.props;
+    status.conversations.refetch();
+  }
+
   static getDerivedStateFromProps(props, state) {
     const { conversations } = props;
     const selectedConversation = state.selectedConversation || props.selectedConversation;
@@ -315,8 +330,8 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 hideModal={hide}
                 meta={meta}
                 onRejectSuccess={() => onRejectSuccess(hide)}
-                refetchClient={status.client.refetch}
-                refetchNotes={status.notes.refetch}
+                refetchClient={this.refetchClient}
+                refetchNotes={this.refetchNotes}
                 onAddNote={onAddNote}
                 onEditNote={onEditNote}
                 notes={notes}
@@ -324,7 +339,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 clientIsLoading={!clientHasFinished}
                 goToFamilyDetails={this.goToFamilyDetails}
                 goToMessagesTab={this.goToMessagesTab}
-                refetchConversations={status.conversations.refetch}
+                refetchConversations={this.refetchConversations}
                 user={user}
                 conversation={selectedConversation}
                 conversations={conversationsList || []}
