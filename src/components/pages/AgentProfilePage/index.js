@@ -120,7 +120,6 @@ class AgentProfilePage extends Component {
             <BreadCrumb size="caption" items={getBreadCrumbsForAgent({ name: displayName, state, city, id })} />
             <AgentSummary
               agent={agent}
-              firstName={firstName}
               onButtonClick={() => {
                 if (this.askAgentAQuestionRef.current.scrollIntoView) {
                   this.askAgentAQuestionRef.current.scrollIntoView({ behavior: 'smooth' });

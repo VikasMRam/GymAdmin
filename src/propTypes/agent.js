@@ -28,8 +28,8 @@ const adminInfo = {
   lastFiveDayLeadCount: number,
   adminNote: string,
   slyScore: number,
-  slyCellPhone: string.isRequired,
-  slyWorkPhone: string.isRequired,
+  cellPhone: string.isRequired,
+  workPhone: string.isRequired,
 };
 
 export const adminAgentPropType = shape({
