@@ -20,17 +20,24 @@ export const getImagePath = (path, format) => {
   return `${assetsUrl}/uploads/${path}`;
 };
 
+const getFormatFromWidth = width => ({ width, height: Math.round(width / 1.5) });
 
-// only doing 3:2 for now
-export const getSrcset = imagePath => [
+const getSrcsetForPath = imagePath => [
   320,
   375,
-  416, // our mobile
-  768, // our tablet
+  416,  // our mobile
+  768,  // our tablet
   1080, // our tablet
   1200, // our max
 ].map((width) => {
-  const format = { width, height: Math.round(width / 1.5) };
+  const format = getFormatFromWidth(width);
   return `${getImagePath(imagePath, format)} ${width}w`;
 }).join(', ');
+
+// only doing 3:2 for now
+export const getSrcset = imagePath => ({
+  src: getImagePath(imagePath, getFormatFromWidth(768)),
+  srcset: getSrcsetForPath(imagePath),
+  webpSrcset: getSrcsetForPath(imagePath.replace(/\.jpe?g/, '.webp')),
+});
 

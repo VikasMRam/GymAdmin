@@ -18,6 +18,7 @@ function getImages({ gallery = {}, mainImage, propInfo = {} }) {
   const defaultImageUrl = communityDefaultImages[propInfo.communitySize] || communityDefaultImages['up to 20 Beds'];
 
   let images = (gallery.images || []).map(image => ({
+    id: image.id,
     path: image.path,
     sizes: getKey('imageFormats.heroGallery'),
   }));
@@ -27,6 +28,7 @@ function getImages({ gallery = {}, mainImage, propInfo = {} }) {
     images = [{ src: defaultImageUrl }];
   }
 
+  console.log('find mainImage', mainImage, images)
   // If there is a mainImage put it in front
   const mainImageIndex = images.findIndex((image) => {
     return image.path && mainImage.indexOf(image.path) !== -1;

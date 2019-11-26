@@ -186,6 +186,7 @@
     "webpack-merge-and-include-globally": "^2.1.16",
     "webpack-node-externals": "^1.7.2",
     "webpack-sort-chunks": "^0.2.0",
-    "webpack-spawn-plugin": "^0.3.0"
+    "webpack-spawn-plugin": "^0.3.0",
+    "yall-js": "^3.1.7"
   }
 }

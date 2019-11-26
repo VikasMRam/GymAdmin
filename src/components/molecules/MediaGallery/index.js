@@ -104,9 +104,8 @@ const StyledSlide = styled.div`
 export default class MediaGallery extends Component {
   static propTypes = {
     images: arrayOf(shape({
-      src: string.isRequired,
+      path: string.isRequired,
       alt: string.isRequired,
-      thumb: string.isRequired,
       ofVideo: number,
     })),
     videos: arrayOf(shape({
@@ -227,7 +226,7 @@ export default class MediaGallery extends Component {
             alt={media.alt}
             loading={this.shouldLoadMedia(index) ? 'eager' : 'lazy'}
             innerRef={(c) => { this.mediaRefs[index] = c; }}
-            aspectRatio={aspectRatio}
+            // aspectRatio={aspectRatio}
           />
         );
       case 'video':

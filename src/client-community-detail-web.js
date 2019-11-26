@@ -1,6 +1,7 @@
-/* eslint-disable no-underscore-dangle */
 import 'intersection-observer';
-
+// eslint-disable-next-line import/extensions
+import 'sly/services/yall';
+/* eslint-disable no-underscore-dangle */
 import partiallyHydrateClient from 'sly/services/partialHydration/partiallyHydrateClient';
 import clientConfigs from 'sly/clientConfigs';
 import ModalContainer from 'sly/containers/ModalContainer';
