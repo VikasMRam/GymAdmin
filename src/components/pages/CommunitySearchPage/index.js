@@ -17,6 +17,7 @@ import SeoLinks from 'sly/components/organisms/SeoLinks';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import pad from 'sly/components/helpers/pad';
 import { ifProp } from 'styled-tools';
+import ResponsiveSidebar from 'sly/components/molecules/ResponsiveSidebar';
 
 const SearchMap = loadable(() => import(/* webpackChunkName: "chunkSearchMap" */'sly/components/organisms/SearchMap'));
 
@@ -39,7 +40,7 @@ const TopWrapper = pad(styled.div`
     display: none;
   }
 
-  > button {
+  > a, button {
     margin-right: ${size('spacing.large')};
   }
 `);
@@ -109,20 +110,6 @@ const ApplyFilterButton = styled(Button)`
   }
 `;
 
-const ResponsiveFilterWrapper = styled.div`
-  @media screen and (max-width: ${size('breakpoint.laptop')}) {
-    visibility: ${ifProp('isOpen', 'visible', 'hidden')};
-    position: absolute;
-    background-color: white;
-    z-index: 1000;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    padding: ${size('spacing', 'xxLarge')};
-`;
-
 LegacyContent.defaultProps = {
   palette: 'primary',
 };
@@ -184,13 +171,13 @@ const CommunitySearchPage = ({
               </ImageButtonWrapper>
               <StyledHr />
             </>
-            <ResponsiveFilterWrapper isOpen={areFiltersOpen}>
+            <ResponsiveSidebar isOpen={areFiltersOpen} onCloseRequested={toggleFiltersOpen}>
               <CommunityFilterList
                 searchParams={searchParams}
                 geoGuideList={geoGuide && geoGuide.cityTOCGuides}
               />
               <ApplyFilterButton kind="jumbo" onClick={toggleFiltersOpen}>Apply Filters</ApplyFilterButton>
-            </ResponsiveFilterWrapper>
+            </ResponsiveSidebar>
           </FilterColumnWrapper>
         )}
       >
