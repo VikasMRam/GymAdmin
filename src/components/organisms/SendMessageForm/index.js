@@ -16,9 +16,15 @@ const TwoColumWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const StyledField = styled(Field)`
+const Textarea = styled(Field)`
   height: auto;
   margin-bottom: 0;
+  textarea {
+    height: ${size('element.button')};
+    overflow: hidden;
+    fonz-size: 14px;
+    line-height: 1.5;
+  }
 `;
 
 const SmallScreenButton = displayOnlyIn(IconButton, ['mobile']);
@@ -51,16 +57,34 @@ export default class SendMessageForm extends React.Component {
 
   formRef = React.createRef();
 
-  onChange = ({ target }) => {
+  onKeyPress = (event) => {
+    const { handleSubmit } = this.props;
+    if (!event.shiftKey && event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit();
+    }
+  };
+
+  onChange = ({ target }, text) => {
+    if (text === '') {
+      target.style.height = null;
+      target.style.overflow = null;
+      return;
+    }
+
+
     target.style.height = 'auto';
-    const contentHeight = target.scrollHeight;
+    target.style.overflow = 'auto';
+    const contentHeight = target.scrollHeight + 2;
     const formHeight = this.formRef.current.offsetHeight;
     const messagesHeight = this.formRef.current.previousSibling.offsetHeight;
     const totalHeight = formHeight + messagesHeight;
     const maxHeight = (totalHeight / 2) - 48;
     const height = getMinMax(contentHeight, minHeight, maxHeight);
 
-    console.log({ contentHeight, minHeight, maxHeight, totalHeight, formHeight, messagesHeight })
+    if (contentHeight > maxHeight) {
+      target.style.overflow = 'auto';
+    }
 
     target.style.height = `${height}px`;
   };
@@ -80,8 +104,8 @@ export default class SendMessageForm extends React.Component {
     return (
       <form ref={this.formRef} onSubmit={handleSubmit} className={className}>
         <TwoColumWrapper>
-          <StyledField
-            fieldRef={this.fieldRef}
+          <Textarea
+            onKeyDown={this.onKeyPress}
             onChange={this.onChange}
             type="textarea"
             name="message"
@@ -90,8 +114,10 @@ export default class SendMessageForm extends React.Component {
             hideErrors
             disabled={disabled}
           />
-          <BigScreenButton type="submit" disabled={invalid || pristine || submitting}>Send message</BigScreenButton>
-          <SmallScreenButton type="submit" icon="send" disabled={invalid || pristine || submitting} />
+          <div>
+            <BigScreenButton type="submit" disabled={invalid || pristine || submitting}>Send message</BigScreenButton>
+            <SmallScreenButton type="submit" icon="send" disabled={invalid || pristine || submitting} />
+          </div>
         </TwoColumWrapper>
         {error && <Block palette="danger" size="caption">{error}</Block>}
       </form>
