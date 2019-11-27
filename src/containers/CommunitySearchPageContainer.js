@@ -1,14 +1,16 @@
 import React, { PureComponent } from 'react';
 import { object, array, func } from 'prop-types';
+import queryString from 'query-string';
 import { Redirect } from 'react-router-dom';
 import { stateNames, urlize, replaceLastSegment } from 'sly/services/helpers/url';
+import SlyEvent from 'sly/services/helpers/events';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
-import { getSearchParams } from 'sly/services/helpers/search';
+import { filterLinkPath, getSearchParams } from 'sly/services/helpers/search';
 import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
 import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
-// import whyDidComponentUpdate from 'sly/services/helpers/whyDidComponentUpdate';
+import withRouter from 'react-router/withRouter';
 
 @withProps(({ match, location }) => ({
   searchParams: getSearchParams(match, location),
@@ -17,6 +19,7 @@ import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLi
 @prefetch('geoGuides', 'getGeoGuides', (request, { searchParams }) => request(searchParams))
 @prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
 @withGenerateFilterLinkPath
+@withRouter
 
 export default class CommunitySearchPageContainer extends PureComponent {
   static propTypes = {
@@ -31,27 +34,16 @@ export default class CommunitySearchPageContainer extends PureComponent {
   };
 
   state = {
-    areFiltersOpen: false
-  };
-
-  // TODO Define Search Parameters
-  toggleMap = () => {
-    const event = {
-      changedParams: {
-        view: 'map', 'page-number': 0, 'page-size': 50, searchOnMove: true, radius: '10',
-      },
-    };
-    if (this.props.searchParams && this.props.searchParams.view === 'map') {
-      event.changedParams = { view: 'list', 'page-size': 15 };
-    }
-    this.changeSearchParams(event);
+    areFiltersOpen: false,
   };
 
   changeSearchParams = ({ changedParams }) => {
     const { searchParams, history } = this.props;
     const { path } = filterLinkPath(searchParams, changedParams);
     const event = {
-      action: 'search', category: searchParams.toc, label: queryString.stringify(searchParams),
+      action: 'search',
+      category: searchParams.toc,
+      label: queryString.stringify(searchParams),
     };
 
     SlyEvent.getInstance().sendEvent(event);
@@ -98,26 +90,27 @@ export default class CommunitySearchPageContainer extends PureComponent {
     const requestMeta = status.communityList.meta;
     const isMapView = searchParams.view === 'map';
     const mapViewUrl = generateFilterLinkPath({
-      changedParams: {
-        view: 'map',
-        'page-number': 0,
-        'page-size': 50,
-        searchOnMove: true,
-        radius: '10',
-      },
-    });
-    const listViewUrl = generateFilterLinkPath({ changedParams: { view: 'list', 'page-size': 15 } });
+        changedParams: {
+          view: 'map',
+          'page-number': 0,
+          'page-size': 50,
+          searchOnMove: true,
+          radius: '10',
+        },
+      });
+    const listViewUrl = generateFilterLinkPath({ changedParams: { view: 'list', 'page-size': 15 } })
 
     return (
       <CommunitySearchPage
         isMapView={isMapView}
         requestMeta={requestMeta || {}}
-        toggleMap={this.toggleMap}
+        mapViewUrl={mapViewUrl}
+        listViewUrl={listViewUrl}
         searchParams={searchParams}
         onParamsChange={this.changeSearchParams}
         onParamsRemove={this.removeSearchFilters}
         communityList={communityList || []}
-        geoGuide={gg}
+        geoGuide={(geoGuides && geoGuides[0]) || {}}
         location={location}
         onAdTileClick={this.handleOnAdTileClick}
         isFetchingResults={isFetchingResults}

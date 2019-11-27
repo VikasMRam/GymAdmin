@@ -49,8 +49,7 @@ const StyledHeading = pad(Heading, 'large');
 
 const StyledHr = styled(Hr)`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    //display: none;
-    visibility: hidden;
+    display: none;
   }
 `;
 
@@ -68,12 +67,12 @@ const ImageButtonWrapper = pad(styled.div`
     max-width: 100%;
   }
 
-  button {
+  a {
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   }
 
   ${ifProp('isMapView', '', `
-    button {
+    a {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -133,6 +132,7 @@ const CommunitySearchPage = ({
   isMapView,
   mapViewUrl,
   listViewUrl,
+  onParamsChange,
   searchParams,
   requestMeta,
   communityList,
@@ -172,13 +172,13 @@ const CommunitySearchPage = ({
             <>
               <ImageButtonWrapper isMapView={isMapView}>
                 {isMapView ? (
-                  <IconButton icon="list" onClick={toggleMap} iconPalette="primary" ghost>
+                  <IconButton icon="list" to={listViewUrl} iconPalette="primary" ghost>
                     View List
                   </IconButton>
                   ) : (
                   <>
                     <Image src={assetPath('images/map-placeholder.png')} />
-                    <IconButton icon="map" iconSize="regular" onClick={toggleMap} iconPalette="primary" ghost>
+                    <IconButton icon="map" iconSize="regular" to={mapViewUrl} iconPalette="primary" ghost>
                       View Map
                     </IconButton>
                   </>
@@ -265,6 +265,7 @@ CommunitySearchPage.propTypes = {
   geoGuide: object,
   requestMeta: object.isRequired,
   isMapView: bool,
+  onParamsChange: func,
   location: object,
   searchParams: object,
   isFetchingResults: bool,
