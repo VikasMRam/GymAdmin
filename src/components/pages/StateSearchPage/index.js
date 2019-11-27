@@ -14,6 +14,18 @@ import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 import StateSearchFilterList from 'sly/components/organisms/StateSearchFilterList';
 
+/**
+* Order of appearance as in editor :
+* description, <p>1</p>
+guide, <p>2</p>
+hospitals, <p>3</p>
+resources, <p>4</p>
+neighborhoods, <p>5</p>
+hospitals, <p>6</p>
+reviews, <p>7</p>
+*/
+const guideTypes = ['description', 'guide', 'hospitals', 'transportation', 'sports', 'cultural', 'weather', 'reviews'];
+
 const TopWrapper = styled.div`
   display: flex;
   padding-bottom: ${size('spacing.xLarge')};
@@ -36,10 +48,8 @@ const SearchMapContainer = styled(SearchMap)`
 const StateSearchPage = ({
   isMapView,
   toggleMap,
-  onAdTileClick,
   searchParams,
   onParamsChange,
-  onParamsRemove,
   requestMeta,
   communityList,
   geoGuide,
@@ -61,28 +71,6 @@ const StateSearchPage = ({
     longitude = parseFloat(searchParams.longitude);
   }
 
-  const TopContent = () => {
-    if (geoGuide && geoGuide.guideContent) {
-      const gg = geoGuide.guideContent;
-      if (gg.autoDescription) {
-        return (
-          <>
-            <Heading level="hero" size="title">
-              {listSize} {tocLabel} in {state}
-            </Heading>
-            <div dangerouslySetInnerHTML={{ __html: gg.autoDescription }} />
-          </>
-        );
-      }
-    }
-
-    return (
-      <>
-        <Heading level="hero" size="title">
-          {listSize} {tocLabel} in {state}
-        </Heading>
-      </>);
-  };
   const gg = geoGuide.guideContent ? geoGuide.guideContent : {};
   const seoLinks = gg.seoLinks || [];
   const stateSeachFilterList = isModalView => (
@@ -105,60 +93,6 @@ const StateSearchPage = ({
     showModal(modalContent, null, 'sidebar');
   };
 
-  const ListContent = () => {
-    /**
-     * Order of appearance as in editor :
-     * description, <p>1</p>
-     guide, <p>2</p>
-      hospitals, <p>3</p>
-      resources, <p>4</p>
-      neighborhoods, <p>5</p>
-      hospitals, <p>6</p>
-      reviews, <p>7</p>
-      */
-    if (geoGuide && geoGuide.guideContent) {
-      const additionalDivs = [];
-      const gg = geoGuide.guideContent;
-      ['description', 'guide', 'hospitals', 'transportation',
-        'sports', 'cultural', 'weather', 'reviews'].forEach((p) => {
-        if (gg[p]) {
-          additionalDivs.push(<div dangerouslySetInnerHTML={{ __html: gg[p] }} key={p} />);
-        }
-      });
-      if (gg.seoLinks) {
-        additionalDivs.push(<SeoLinks title="Assisted Living in Nearby Cities" links={gg.seoLinks} />);
-      }
-
-      return (
-        <>
-          <CommunitySearchList
-            communityList={communityList}
-            onParamsChange={onParamsChange}
-            onParamsRemove={onParamsRemove}
-            searchParams={searchParams}
-            requestMeta={requestMeta}
-            onAdTileClick={onAdTileClick}
-            location={location}
-          />
-          {additionalDivs}
-        </>
-      );
-    }
-
-    // If No Geo Content just return same
-    return (
-      <CommunitySearchList
-        communityList={communityList}
-        onParamsChange={onParamsChange}
-        onParamsRemove={onParamsRemove}
-        searchParams={searchParams}
-        requestMeta={requestMeta}
-        onAdTileClick={onAdTileClick}
-        location={location}
-      />
-    );
-  };
-
   return (
     <>
       {getHelmetForSearchPage({
@@ -168,7 +102,10 @@ const StateSearchPage = ({
         column={stateSeachFilterList()}
       >
         {!isMapView && (
-          TopContent()
+          <>
+            <Heading level="hero" size="title">{listSize} {tocLabel} in {state}</Heading>s
+            {(gg.autoDescription) && <div dangerouslySetInnerHTML={{ __html: gg.autoDescription }} />}
+          </>
         )}
         <TopWrapper>
           {isMapView && (
@@ -194,7 +131,16 @@ const StateSearchPage = ({
         </TopWrapper>
 
         {!isMapView && (
-          ListContent()
+          <>
+            <CommunitySearchList
+              communityList={communityList}
+              searchParams={searchParams}
+              requestMeta={requestMeta}
+              location={location}
+            />
+            {guideTypes.map((key) => (gg[key] ? <div dangerouslySetInnerHTML={{ __html: gg[key] }} key={key} /> : null))}
+            {gg.seoLinks && <SeoLinks title="Assisted Living in Nearby Cities" links={gg.seoLinks} />}
+          </>
         )}
         {isMapView && (
           <SearchMapContainer
@@ -217,8 +163,6 @@ StateSearchPage.propTypes = {
   isMapView: bool,
   toggleMap: func,
   onParamsChange: func,
-  onParamsRemove: func,
-  onAdTileClick: func,
   location: object,
   searchParams: object,
   showModal: func,

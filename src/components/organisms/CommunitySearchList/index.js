@@ -95,7 +95,7 @@ const usefulInformationTiles = [
   },
 ];
 
-const CommunitySearchList = ({ communityList, requestMeta, searchParams, onAdTileClick, location }) => {
+const CommunitySearchList = ({ communityList, requestMeta, searchParams, location }) => {
   let mostSearchedCitiesComponents = null;
   let usefulInformationTilesComponents = null;
 
@@ -191,7 +191,6 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, onAdTil
 CommunitySearchList.propTypes = {
   requestMeta: object.isRequired,
   searchParams: object.isRequired,
-  onAdTileClick: func.isRequired,
   communityList: arrayOf(object).isRequired,
   location: object.isRequired,
 };

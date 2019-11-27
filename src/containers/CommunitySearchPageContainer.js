@@ -11,7 +11,6 @@ import {
 import SlyEvent from 'sly/services/helpers/events';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
-import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
 import {
   filterLinkPath,
   getSearchParams,
@@ -70,10 +69,6 @@ export default class CommunitySearchPageContainer extends PureComponent {
     }
   };
 
-  handleOnAdTileClick = () => {
-    this.changeSearchParams({ changedParams: { modal: CARE_ASSESSMENT_WIZARD } });
-  };
-
   render() {
     const {
       searchParams,
@@ -118,7 +113,6 @@ export default class CommunitySearchPageContainer extends PureComponent {
         communityList={communityList || []}
         geoGuide={gg}
         location={location}
-        onAdTileClick={this.handleOnAdTileClick}
         isFetchingResults={isFetchingResults}
         areFiltersOpen={this.state.areFiltersOpen}
         toggleFiltersOpen={() => this.setState(({ areFiltersOpen }) => ({ areFiltersOpen: !areFiltersOpen }))}

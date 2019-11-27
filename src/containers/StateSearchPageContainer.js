@@ -3,7 +3,6 @@ import { object, number, array } from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 import { stateNames, urlize, replaceLastSegment } from  'sly/services/helpers/url';
-import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
 import ErrorPage from 'sly/components/pages/Error';
 import StateSearchPage from 'sly/components/pages/StateSearchPage';
 import ModalController from 'sly/controllers/ModalController';
@@ -58,27 +57,6 @@ export default class StateSearchPageContainer extends Component {
     }
   };
 
-  removeSearchFilters = ({ paramsToRemove }) => {
-    const { searchParams, history } = this.props;
-
-    const changedParams = paramsToRemove.reduce((cumul, param) => {
-      if (param === 'toc') {
-        cumul[param] = 'retirement-community';
-      } else {
-        cumul[param] = undefined;
-      }
-      return cumul;
-    }, {});
-
-    const { path } = filterLinkPath(searchParams, changedParams);
-
-    history.push(path);
-  };
-
-  handleOnAdTileClick = () => {
-    this.changeSearchParams({ changedParams: { modal: CARE_ASSESSMENT_WIZARD } });
-  };
-
   render() {
     const {
       searchParams,
@@ -120,8 +98,6 @@ export default class StateSearchPageContainer extends Component {
             toggleMap={this.toggleMap}
             searchParams={searchParams}
             onParamsChange={this.changeSearchParams}
-            onParamsRemove={this.removeSearchFilters}
-            onAdTileClick={this.handleOnAdTileClick}
             communityList={communityList || []}
             geoGuide={gg}
             location={location}

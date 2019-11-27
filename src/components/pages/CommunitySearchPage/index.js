@@ -137,7 +137,6 @@ const CommunitySearchPage = ({
   communityList,
   geoGuide,
   location,
-  onAdTileClick,
   isFetchingResults,
   areFiltersOpen,
   toggleFiltersOpen,
@@ -231,7 +230,6 @@ const CommunitySearchPage = ({
               communityList={communityList}
               searchParams={searchParams}
               requestMeta={requestMeta}
-              onAdTileClick={onAdTileClick}
               location={location}
             />
             {hasGeoGuideContent && (
@@ -267,11 +265,8 @@ CommunitySearchPage.propTypes = {
   onParamsChange: func,
   location: object,
   searchParams: object,
-  onAdTileClick: func,
   isFetchingResults: bool,
   onClientClick: func,
-  showModal: func,
-  hideModal: func,
   areFiltersOpen: bool,
   toggleFiltersOpen: func,
 };

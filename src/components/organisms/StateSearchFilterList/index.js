@@ -60,14 +60,6 @@ const StyledHr = styled(Hr)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-export const ClearAllButton = styled(Button)`
-  color: ${palette('primary', 'base')};
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none;
-  }
-`;
-
 const StateSearchFilterList = ({
   isMapView, isModalView, seoLinks, toggleMap, onToggleModalFilterPanel,
 }) => {
