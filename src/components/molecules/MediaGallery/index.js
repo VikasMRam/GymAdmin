@@ -192,20 +192,17 @@ export default class MediaGallery extends Component {
     const { currentSlide } = this.props;
     const numItems = this.allMedia.length;
     // media can be loaded if:
-    // - it's already loaded(user viewed the slide)
     // - it's current slide
     // - it's one before current slide
     // - it's one after current slide
-    return this.mediaLoaded.has(i) || (Math.abs(i - currentSlide) < 2) ||
+    return (Math.abs(i - currentSlide) < 2) ||
       // if the current slide is last slide then also load first slide
       // if the current slide is first slide then also load last slide
       (currentSlide === 0 && i === numItems - 1) || (currentSlide === numItems - 1 && i === 0);
   };
 
   generateSlideContent = (media, index) => {
-    const { currentSlide, aspectRatio } = this.props;
-
-    console.log('media', media);
+    const { currentSlide, aspectRatio, sizes } = this.props;
 
     switch (media.type) {
       case 'image':
@@ -222,7 +219,7 @@ export default class MediaGallery extends Component {
           <StyledImg
             key="media-gallery-slide"
             path={media.path}
-            sizes={media.sizes}
+            sizes={sizes}
             alt={media.alt}
             loading={this.shouldLoadMedia(index) ? 'eager' : 'lazy'}
             innerRef={(c) => { this.mediaRefs[index] = c; }}

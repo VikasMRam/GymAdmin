@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { string, object, arrayOf, shape, bool, number, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
+import { size, palette, getKey } from 'sly/components/themes';
 import { Button, Link } from 'sly/components/atoms';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import FullscreenMediaGallery from 'sly/components/molecules/FullscreenMediaGallery';
@@ -45,6 +45,17 @@ export default class CommunityMediaGallery extends Component {
     const {
       communityName, city, state, images, videos, websiteUrl, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
     } = this.props;
+
+    console.log('videos', videos);
+    const videoThumbs = videos.map((vid, i) => {
+      // Important: create new object instance having src & alt as we will be modifying same object below
+      return {
+        ...vid, src: vid.thumbUrl, thumb: vid.thumbUrl,
+        ofVideo: i,
+        alt: `${communityName}, ${city}, ${state} ${i + 1}`,
+      };
+    });
+
     const galleryItems = images.map((image, i) => ({
       ...image,
       alt: `${communityName}, ${city}, ${state} ${i + 1}`,
@@ -89,6 +100,8 @@ export default class CommunityMediaGallery extends Component {
         </BottomRightWrapper> : null
     );
 
+    const inlineMediaSizes = getKey('imageFormats.heroGallery');
+    const fullscreenMediaSizes = getKey('imageFormats.fullscreenGallery');
     return (
       <>
         <MediaGallery
@@ -96,20 +109,22 @@ export default class CommunityMediaGallery extends Component {
           communityName={communityName}
           images={galleryItems}
           topRightSection={topRightSection}
+          sizes={inlineMediaSizes}
           bottomRightSection={bottomRightSection}
           currentSlide={currentSlide}
           onSlideChange={onSlideChange}
         />
-        {/*<FullscreenMediaGallery*/}
-        {/*  currentSlide={currentSlide}*/}
-        {/*  isOpen={isFullscreenMode}*/}
-        {/*  communityName={communityName}*/}
-        {/*  videos={this.formattedVideos}*/}
-        {/*  images={this.hdGalleryImages}*/}
-        {/*  onClose={() => onToggleFullscreenMode(Object.prototype.hasOwnProperty.call(this.sdGalleryImages[currentSlide], 'ofVideo'))}*/}
-        {/*  ariaHideApp={ariaHideApp}*/}
-        {/*  onSlideChange={onSlideChange}*/}
-        {/*/>*/}
+        <FullscreenMediaGallery
+          currentSlide={currentSlide}
+          isOpen={isFullscreenMode}
+          communityName={communityName}
+          sizes={fullscreenMediaSizes}
+          videos={this.formattedVideos}
+          images={this.hdGalleryImages}
+          onClose={() => onToggleFullscreenMode(Object.prototype.hasOwnProperty.call(this.sdGalleryImages[currentSlide], 'ofVideo'))}
+          ariaHideApp={ariaHideApp}
+          onSlideChange={onSlideChange}
+        />
       </>
     );
   }

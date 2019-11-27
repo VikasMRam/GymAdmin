@@ -20,7 +20,6 @@ function getImages({ gallery = {}, mainImage, propInfo = {} }) {
   let images = (gallery.images || []).map(image => ({
     id: image.id,
     path: image.path,
-    sizes: getKey('imageFormats.heroGallery'),
   }));
 
   // if images is empty add default image

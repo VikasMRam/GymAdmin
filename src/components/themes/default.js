@@ -36,6 +36,7 @@ theme.fonts = {
 
 theme.imageFormats = {
   heroGallery: '(max-width: 1079px) 100vw, 768px',
+  fullscreenGallery: '(max-width: 1199px) 100vw, 1200px',
 };
 
 theme.sizes = {

@@ -59,7 +59,7 @@ export default class ResponsiveImage extends React.Component {
     const { jpegSrcset, webpSrcset, src } = getSrcset(path);
 
     const srcProp = loading === 'lazy' ? 'data-src' : 'src';
-    const srcSetProp = loading === 'lazy' ? 'data-srcset' : 'srcset';
+    const srcSetProp = loading === 'lazy' ? 'data-srcset' : 'srcSet';
     const className = loading === 'lazy' ? `lazy ${classNameProp}` : classNameProp;
 
     const imageProps = {
