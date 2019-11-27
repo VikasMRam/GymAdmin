@@ -14,3 +14,4 @@ export const hasCCRC = (community) => {
   const { typeCare } = propInfo;
   return typeCare.includes('Continuing Care Retirement Community(CCRC)');
 };
+

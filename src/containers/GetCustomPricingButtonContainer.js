@@ -1,5 +1,5 @@
 import React from 'react';
-import { bool, object } from 'prop-types';
+import { bool } from 'prop-types';
 import GetCustomPricingContainer from 'sly/containers/GetCustomPricingContainer';
 import Button from 'sly/components/atoms/Button';
 

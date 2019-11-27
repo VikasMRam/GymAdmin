@@ -36,16 +36,6 @@ describe('Router', () => {
     global.scrollTo.mockReset();
   });
 
-  it('should call sendPageView', () => {
-    const wrapper = wrap({ location });
-    expect(sendPageView).toHaveBeenCalledWith('abc', '?foo=xyz');
-    wrapper.setProps({ location });
-    expect(sendPageView).toHaveBeenCalledTimes(1);
-    wrapper.setProps({ location: { pathname: 'cba', search: '?baz=xyz' } });
-    expect(sendPageView).toHaveBeenCalledTimes(2);
-    expect(sendPageView).toHaveBeenCalledWith('cba', '?baz=xyz');
-  });
-
   it('should call scrollTo only when path changes', () => {
     const wrapper = wrap({ location });
     expect(global.scrollTo).not.toHaveBeenCalled();
