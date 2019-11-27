@@ -431,7 +431,7 @@ workflows:
   build:
     jobs:
       # run build (unit tests, linting, quality checks etc etc) for PRs
-      - build
+      - build:
           filters:
             tags:
               only: /^v.*/
