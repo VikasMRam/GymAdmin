@@ -432,8 +432,14 @@ workflows:
     jobs:
       # run build (unit tests, linting, quality checks etc etc) for PRs
       - build
+          filters:
+            tags:
+              only: /^v.*/
       - e2e:
           context: OPENVPN
+          filters:
+            tags:
+              only: /^v.*/
       - deploy:
           requires:
             - build
