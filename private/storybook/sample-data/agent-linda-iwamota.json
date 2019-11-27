@@ -1,11 +1,12 @@
 {
   "id": "sarah-ordover-grass-valley",
   "aggregateRating": {
-    "ratingValue": 0,
-    "numRatings": 0
+    "ratingValue": 3,
+    "numRatings": 10
   },
   "communities": null,
   "info": {
+    "email": "test@test.com",
     "bio": "More stuff",
     "chosenReview": "What more ",
     "citiesServed": [
@@ -34,12 +35,12 @@
     "slyScore":87,
     "slyPhone":"+13122182900",
     "adminNote":"This is a long admin note",
-    "slyCellPhone": "+13122182900",
-    "slyWorkPhone": "+13122182900",
+    "cellPhone": "+13122182900",
+    "workPhone": "+13122182900",
     "parentCompany": "Assisted Living Locators"
   },
   "name": "Sarah Ordover",
-  "status": 2,
+  "status": 1,
   "address": {
     "city": "Grass Valley",
     "county": "",

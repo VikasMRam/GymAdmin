@@ -88,7 +88,7 @@ const AgentTile = ({
           {rating.numRatings > 0 &&
             <li>
               <IconItem size="caption" icon="star" iconSize="regular">
-                {rating.ratingValue} from  <Link to={url}>{rating.numRatings} reviews</Link>
+                {rating.ratingValue} from <Link to={url}>{rating.numRatings} reviews</Link>
               </IconItem>
             </li>
           }

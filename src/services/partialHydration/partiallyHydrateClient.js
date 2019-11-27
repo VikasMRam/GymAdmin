@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import '@babel/polyfill';
+import 'isomorphic-fetch';
 import 'react-hot-loader/patch';
+
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';

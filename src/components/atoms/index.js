@@ -24,4 +24,3 @@ export BoxChoiceTile from './BoxChoiceTile';
 export Logo from './Logo';
 export Badge from './Badge';
 export StickyFooter from './StickyFooter';
-export Select from './Select';

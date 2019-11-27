@@ -329,13 +329,13 @@ jobs:
                   npx cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec "cypress/integration/**/*"
 
             - store_test_results:
-                path: cypress/results
+                path: e2e/cypress/results
 
             - store_artifacts:
-                path: cypress/videos
+                path: e2e/cypress/videos
 
             - store_artifacts:
-                path: cypress/screenshots
+                path: e2e/cypress/screenshots
 
 # REFERENCE CODE for OPENVPN
 
@@ -431,29 +431,19 @@ workflows:
   build:
     jobs:
       # run build (unit tests, linting, quality checks etc etc) for PRs
-      - build
+      - build:
+          filters:
+            tags:
+              only: /^v.*/
       - e2e:
           context: OPENVPN
+          filters:
+            tags:
+              only: /^v.*/
       - deploy:
           requires:
             - build
             - e2e
-
-
-#  build-staging:
-#    jobs:
-#      - build:
-#          filters:
-#            branches:
-#              ignore: /.*/
-#            tags:
-#              only: /^v.*/
-#      - deploy:
-#          context: ReactStaging
-#          requires:
-#            - build
-#          filters:
-#            branches:
-#              ignore: /.*/
-#            tags:
-#              only: /^v.*/
+          filters:
+            tags:
+              only: /^v.*/
