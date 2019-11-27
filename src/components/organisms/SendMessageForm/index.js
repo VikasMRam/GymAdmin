@@ -72,7 +72,6 @@ export default class SendMessageForm extends React.Component {
       return;
     }
 
-
     target.style.height = 'auto';
     target.style.overflow = 'auto';
     const contentHeight = target.scrollHeight + 2;
