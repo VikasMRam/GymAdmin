@@ -329,13 +329,13 @@ jobs:
                   npx cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec "cypress/integration/**/*"
 
             - store_test_results:
-                path: cypress/results
+                path: e2e/cypress/results
 
             - store_artifacts:
-                path: cypress/videos
+                path: e2e/cypress/videos
 
             - store_artifacts:
-                path: cypress/screenshots
+                path: e2e/cypress/screenshots
 
 # REFERENCE CODE for OPENVPN
 
