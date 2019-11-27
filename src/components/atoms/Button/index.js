@@ -6,6 +6,7 @@ import { ifProp, switchProp } from 'styled-tools';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size, palette } from 'sly/components/themes';
 import Link from 'sly/components/atoms/Link';
+import SlyEvent from 'sly/services/helpers/events';
 
 const backgroundColor = ({
   ghost, transparent, selected, secondary, disabled,
@@ -156,21 +157,26 @@ const StyledLink = styled(({
   ${styles};
 `;
 
-const Anchor = styled.a`
-  ${styles};
-`;
 const StyledButton = styled.button`
   ${styles};
 `;
 
+const withSendEvent = ({ onClick, event, ...props }) => {
+  return {
+    ...props,
+    onClick: event ? (e) => {
+      SlyEvent.getInstance().sendEvent(event);
+      return onClick(e);
+    } : onClick,
+  };
+};
+
 const Button = ({ type, kind, measureRef, ...props }) => {
   // rename type to kind to avoid collision with html button type
-  if (props.to) {
+  if (props.to || props.href) {
     return <StyledLink kind={kind} {...props} />;
-  } else if (props.href) {
-    return <Anchor kind={kind} {...props} />;
   }
-  return <StyledButton innerRef={measureRef} {...props} kind={kind} type={type} />;
+  return <StyledButton innerRef={measureRef} {...withSendEvent(props)} kind={kind} type={type} />;
 };
 
 Button.propTypes = {

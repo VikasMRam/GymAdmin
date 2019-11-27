@@ -7,7 +7,6 @@ import CommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGallery
 import CommunitySummaryContainer from 'sly/containers/CommunitySummaryContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
 import GetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
-import BackToSearchButtonContainer from 'sly/containers/BackToSearchButtonContainer';
 import TrackedSimilarCommunitiesContainer from 'sly/containers/TrackedSimilarCommunitiesContainer';
 import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
 import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
@@ -21,6 +20,7 @@ import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import CommunityMorePicturesContainer from 'sly/containers/CommunityMorePicturesContainer';
 import LazyCommunityMapContainer from 'sly/containers/LazyCommunityMapContainer';
 import PageViewActionContainer from 'sly/containers/PageViewActionContainer';
+import PageEventsContainer from 'sly/containers/PageEventsContainer';
 import RetentionPopup from 'sly/services/retentionPopup';
 import Image from 'sly/components/atoms/Image';
 
@@ -31,11 +31,11 @@ partiallyHydrateClient(
     ModalContainer,
     HeaderContainer,
     PageViewActionContainer,
+    PageEventsContainer,
     CommunityMediaGalleryContainer,
     CommunitySummaryContainer,
     OfferNotification,
     GetCustomPricingButtonContainer,
-    BackToSearchButtonContainer,
     TrackedSimilarCommunitiesContainer,
     GetCurrentAvailabilityContainer,
     HowSlyWorksVideoContainer,

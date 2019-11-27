@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object, node, bool, array } from 'prop-types';
+import { func, object, node, array } from 'prop-types';
 import { Redirect, withRouter } from 'react-router-dom';
 import { stringify, parse } from 'query-string';
 
@@ -8,7 +8,6 @@ import {
   removeQueryParamFromURL,
 } from 'sly/services/helpers/url';
 import { withAuth } from 'sly/services/newApi';
-import SlyEvent from 'sly/services/helpers/events';
 import { isServer } from 'sly/config';
 
 const searchWhitelist = [
@@ -28,7 +27,6 @@ export default class Router extends Component {
     requiresAuth: array.isRequired,
     location: object,
     children: node,
-    enableEvents: bool,
     status: object,
     history: object,
     staticContext: object,
@@ -37,8 +35,8 @@ export default class Router extends Component {
   };
 
   static defaultProps = {
-    enableEvents: true,
     requiresAuth: [],
+    children: null,
   };
 
   checkLoginRedirect() {
@@ -55,33 +53,21 @@ export default class Router extends Component {
     if (!authenticated.loggingIn && loginRedirect) {
       ensureAuthenticated()
         .then(() => {
-          history.push(decodeURIComponent(loginRedirect));
+          history.replace(decodeURIComponent(loginRedirect));
         })
         .catch(() => {
           const params = removeQueryParamFromURL('loginRedirect', search);
-          history.push(`${pathname}${stringify(params)}${hash}`);
+          history.replace(`${pathname}${stringify(params)}${hash}`);
         });
     }
   }
 
   componentDidMount() {
-    const {
-      enableEvents,
-      location,
-    } = this.props;
-
-    const { pathname, search } = location;
-
-    if (enableEvents) {
-      SlyEvent.getInstance()
-        .sendPageView(pathname, search);
-    }
-
     this.checkLoginRedirect();
   }
 
   componentDidUpdate(prevProps) {
-    const { location, enableEvents } = this.props;
+    const { location } = this.props;
     const { pathname, search } = location;
     const { pathname: prevPathname, search: prevSearch } = prevProps.location;
 
@@ -91,11 +77,6 @@ export default class Router extends Component {
     if (pathname !== prevPathname) {
       // call component did mount here too
       this.checkLoginRedirect();
-    }
-
-    if (enableEvents && prevProps.location !== location) {
-      const { pathname, search } = location;
-      SlyEvent.getInstance().sendPageView(pathname, search);
     }
 
     if (pathname !== prevPathname || bumpOnSearch(prevQs, qs)) {

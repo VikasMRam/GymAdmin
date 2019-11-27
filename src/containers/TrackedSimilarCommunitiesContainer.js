@@ -1,31 +1,25 @@
 import React from 'react';
 import { arrayOf, object } from 'prop-types';
+
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
-import SlyEvent from 'sly/services/helpers/events';
 import { community as communityPropType } from 'sly/propTypes/community';
 
-const sendEvent = (index, to) => {
-  const event = {
-    action: 'click',
-    category: 'similarCommunity',
-    label: index.toString(),
-    value: to,
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
-export default function TrackedSimilarCommunitiesContainer({
-  communities,
-  communityStyle,
-}) {
+export default function TrackedSimilarCommunitiesContainer({ communities, communityStyle }) {
   return (
     <SimilarCommunities
-      onCommunityClick={sendEvent}
       communities={communities}
       communityStyle={communityStyle}
+      getEvent={(community, index) => ({
+        action: 'click',
+        category: 'similarCommunity',
+        label: index,
+        value: community.id,
+      })}
     />
   );
 }
+
+//EO: this really shouldn't need hydrating. now it only requires it for the lazy image loading.
 TrackedSimilarCommunitiesContainer.typeHydrationId = 'TrackedSimilarCommunitiesContainer';
 TrackedSimilarCommunitiesContainer.propTypes = {
   communities: arrayOf(communityPropType).isRequired,

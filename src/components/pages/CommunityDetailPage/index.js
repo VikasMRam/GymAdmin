@@ -58,19 +58,19 @@ import UnhydratedCommunityQuestionAnswersContainer from 'sly/containers/Communit
 import UnhydratedCommunityReviewsContainer from 'sly/containers/CommunityReviewsContainer';
 import UnhydratedCommunityAddReviewButtonContainer from 'sly/containers/CommunityAddReviewButtonContainer';
 import UnhydratedCommunityMorePicturesContainer from 'sly/containers/CommunityMorePicturesContainer';
-import UnhydratedBackToSearchButtonContainer from 'sly/containers/BackToSearchButtonContainer';
 import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/containers/TrackedSimilarCommunitiesContainer';
 import UnhydratedPageViewActionContainer from 'sly/containers/PageViewActionContainer';
 import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
+import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
+const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
 const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGalleryContainer);
 const CommunitySummaryContainer = withHydration(UnhydratedCommunitySummaryContainer);
 const OfferNotification = withHydration(UnhydratedOfferNotification);
 const GetCustomPricingButtonContainer = withHydration(UnhydratedGetCustomPricingButtonContainer);
 const TrackedSimilarCommunitiesContainer = withHydration(UnhydratedTrackedSimilarCommunitiesContainer);
-const BackToSearchButtonContainer = withHydration(UnhydratedBackToSearchButtonContainer);
 const GetCurrentAvailabilityContainer = withHydration(UnhydratedGetCurrentAvailabilityContainer);
 const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContainer);
 const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
@@ -281,6 +281,7 @@ export default class CommunityDetailPage extends Component {
       <>
         {getHelmetForCommunityPage(community, location)}
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
+        <PageEventsContainer />
 
         <Header noBottomMargin={!!bannerNotification} />
         {bannerNotification && (
@@ -351,13 +352,13 @@ export default class CommunityDetailPage extends Component {
                       communityStyle={similarCommunityStyle}
                     />
                     <BackToSearch>
-                      <BackToSearchButtonContainer
-                        communityId={community.id}
+                      <Button
                         href={getCitySearchUrl({ propInfo, address })}
+                        event={{ action: 'click', category: 'backToSearch', label: community.id }}
                         ghost
                       >
                         Communities In {address.city}
-                      </BackToSearchButtonContainer>
+                      </Button>
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
@@ -509,13 +510,13 @@ export default class CommunityDetailPage extends Component {
                       communityStyle={similarCommunityStyle}
                     />
                     <BackToSearch>
-                      <BackToSearchButtonContainer
-                        communityId={community.id}
+                      <Button
                         href={getCitySearchUrl({ propInfo, address })}
+                        event={{ action: 'click', category: 'backToSearch', label: community.id }}
                         ghost
                       >
                         Communities In {address.city}
-                      </BackToSearchButtonContainer>
+                      </Button>
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
