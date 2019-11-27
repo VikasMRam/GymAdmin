@@ -17,7 +17,7 @@ import {
   FAMILY_STAGE_REJECTED,
   ROOM_TYPES, WAITLISTED,
 } from 'sly/constants/familyDetails';
-import { NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/notes';
+import { NOTE_COMMENTABLE_TYPE_CLIENT, NOTE_CTYPE_ACTIVITY } from 'sly/constants/notes';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { createValidator, required, float } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
@@ -137,6 +137,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       const payload = {
         type: NOTE_RESOURCE_TYPE,
         attributes: {
+          cType: NOTE_CTYPE_ACTIVITY,
           commentableID: id,
           commentableType: NOTE_COMMENTABLE_TYPE_CLIENT,
           body: note,
