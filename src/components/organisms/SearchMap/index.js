@@ -1,104 +1,88 @@
 import React, { Component } from 'react';
-import { string, number, shape, arrayOf, func, bool } from 'prop-types';
+import { string, number, shape, arrayOf } from 'prop-types';
 import styled from 'styled-components';
-import { Marker, InfoWindow, OverlayView } from 'react-google-maps';
+import { Marker, InfoWindow } from 'react-google-maps';
 import debounce from 'lodash/debounce';
-
 import { isServer } from 'sly/config';
 import { size, palette } from 'sly/components/themes';
 import Checkbox from 'sly/components/molecules/Checkbox';
 import Map from 'sly/components/atoms/Map';
 import MapTile from 'sly/components/molecules/MapTile';
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
-import RedMarker from 'sly/../public/icons/redmarker.png';
 import { getRadiusFromMapBounds } from 'sly/services/helpers/search';
+
+const MapWrapper = styled.div`
+  width: 100%;
+  height: 80vh;
+  position: relative;
+`;
 
 const MapContainerElement = styled.div`
   width: 100%;
-  height: 80vh;
+  height: 100%;
   margin-bottom: ${size('spacing.large')};
 `;
 
-const StyledDiv = styled.div`
-  position: fixed;
-  top: -40vh;
-  left: -100px;
+const MapOverlayDiv = styled.div`
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
   background-color: ${palette('white', 'base')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  width: 200px;
+  width: 230px;
   height: auto;
-  padding: ${size('spacing.small')};
-  display: flex;
-`;
-
-const OverlayText = styled.div`
   padding: calc(${size('spacing.regular')} + ${size('spacing.small')}) ${size('spacing.regular')};
+  display: flex;
+  align-items: center;
 `;
 
 const StyledCheckbox = styled(Checkbox)`
   margin: ${size('spacing.regular')};
 `;
 
-const iconMap = {
-  blue: GreenMarker,
-  red: RedMarker,
-};
 const refs = {
   map: undefined,
 };
 
 const minRadius = 10;
 
-function preciseCoordinate(x) {
-  return Number.parseFloat(x).toPrecision(8);
-}
-
-class RedoSearchDiv extends Component {
-  static propTypes = {
-    latitude: number.isRequired,
-    longitude: number.isRequired,
-    redoSearchOnMove: bool.isRequired,
-    onToggleSearchOnMove: func.isRequired,
-  }
-  getPixelPositionOffset = (width, height) => ({
-    x: -(width / 2),
-    y: -(height / 2),
-  });
-  render() {
-    const {
-      latitude, longitude, redoSearchOnMove, onToggleSearchOnMove,
-    } = this.props;
-    return (
-      <OverlayView
-        position={{ lat: latitude, lng: longitude }}
-        getPixelPositionOffset={this.getPixelPositionOffset}
-        mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-      >
-        <StyledDiv>
-          <StyledCheckbox checked={redoSearchOnMove} onClick={onToggleSearchOnMove} />
-          <OverlayText>Redo Search on Move</OverlayText>
-        </StyledDiv>
-      </OverlayView>
-    );
-  }
-}
 class SearchMap extends Component {
   static propTypes = {
     latitude: number.isRequired,
     longitude: number.isRequired,
-    communityList: arrayOf(shape({
-      id: string.isRequired,
-      name: string.isRequired,
-      startingRate: number.isRequired,
-      imageUrl: string.isRequired,
-      latitude: number.isRequired,
-      longitude: number.isRequired,
-    })),
+    communityList: arrayOf(
+      shape({
+        id: string.isRequired,
+        name: string.isRequired,
+        startingRate: number.isRequired,
+        imageUrl: string.isRequired,
+        latitude: number.isRequired,
+        longitude: number.isRequired,
+      })
+    ),
+  };
+
+  static getDerivedStateFromProps = (props, state) => {
+    return Object.assign(
+      {},
+      !props.isLoading && { communityList: props.communityList },
+      state.hasValidDefaultLocation && {
+        defaultCenter: { lat: props.latitude, lng: props.longitude },
+        hasValidDefaultLocation: props.latitude !== 0 && props.longitude !== 0,
+      }
+    );
   };
 
   state = {
+    communityList: this.props.communityList,
     activeInfoWindowId: null,
     redoSearchOnMove: true,
+    hasValidDefaultLocation: this.props.latitude !== 0 && this.props.longitude !== 0,
+    defaultCenter: { lat: this.props.latitude, lng: this.props.longitude },
   };
 
   onMapMounted = (map) => {
@@ -111,15 +95,9 @@ class SearchMap extends Component {
     });
   };
 
-  onMarkerClick = marker => () => {
+  setActiveMarker = (id) => {
     this.setState({
-      activeInfoWindowId: marker.id,
-    });
-  };
-
-  onInfoWindowCloseClick = () => {
-    this.setState({
-      activeInfoWindowId: null,
+      activeInfoWindowId: id,
     });
   };
 
@@ -138,137 +116,82 @@ class SearchMap extends Component {
           if (radius < minRadius) {
             radius = minRadius;
           }
-          if (searchParams.latitude !== latitude.toString() ||
+          if (
+            searchParams.latitude !== latitude.toString() ||
             searchParams.longitude !== longitude.toString() ||
-            searchParams.radius !== radius.toString()) {
+            searchParams.radius !== radius.toString()
+          ) {
             onParamsChange({
               changedParams: {
-                latitude, longitude, radius,
+                latitude,
+                longitude,
+                radius,
               },
             });
           }
         }
       }
     }
-  }, 200) ;
+  }, 200);
 
   render() {
-    const { latitude, longitude, communityList } = this.props;
-    const center = {
-      latitude,
-      longitude,
-    };
+    const { latitude, longitude } = this.props;
+    const { defaultCenter, communityList, redoSearchOnMove } = this.state;
+
     if (latitude === 0 && longitude === 0) {
       return <div>Loading Map...</div>;
-    }
-    const markers = [];
-
-    const isMobile = (typeof window === 'undefined') ? false : window.innerWidth < size('breakpoint.tablet');
-    let defaultZoom = 13;
-    if (isMobile) {
-      defaultZoom = 12;
     }
 
     if (isServer) return null;
 
-    communityList.forEach((property) => {
-      const {
-        id,
-        url,
-        name,
-        description,
-        startingRate,
-        imageUrl,
-        numReviews,
-        reviewsValue,
-        latitude,
-        longitude,
-        webViewInfo,
-      } = property;
-      markers.push({
-        id,
-        url,
-        name,
-        description,
-        typeCare: webViewInfo.firstLineValue.split(','),
-        startingRate,
-        numReviews,
-        reviewsValue,
-        latitude,
-        longitude,
-        image: imageUrl,
-        icon: 'blue',
-        clickable: true,
-      });
-    });
+    const defaultZoom = window.innerWidth < size('breakpoint.tablet') ? 12 : 13;
 
-    const markerComponents = markers.map((marker) => {
-      const {
-        id,
-        url,
-        name,
-        description,
-        typeCare,
-        startingRate,
-        numReviews,
-        reviewsValue,
-        image,
-      } = marker;
-      const community = {
-        id,
-        name,
-        startingRate,
-        mainImage: image,
-        url,
-        propInfo: {
-          communityDescription: description,
-          typeCare,
-        },
-        propRatings: {
-          reviewsValue,
-          numReviews,
-        },
-      };
-
-      const infoWindowTile = (
-        <MapTile tileInfo={community} borderless />
-      );
-
-      return (
-        <Marker
-          key={marker.id}
-          position={{ lat: marker.latitude, lng: marker.longitude }}
-          defaultIcon={iconMap[marker.icon]}
-          onClick={this.onMarkerClick(marker)}
-        >
-          {this.state.activeInfoWindowId === marker.id && (
-            // TODO : Remove Close Button
-            <InfoWindow
-              key={marker.id}
-              onCloseClick={this.onInfoWindowCloseClick}
-            >
-              {infoWindowTile}
-            </InfoWindow>
-          )}
-        </Marker>
-      );
-    });
     return (
-      <Map
-        center={center}
-        defaultZoom={defaultZoom}
-        containerElement={<MapContainerElement />}
-        onIdle={this.onBoundsChange}
-        onMapMounted={this.onMapMounted}
-      >
-        {markerComponents}
-        <RedoSearchDiv
-          latitude={latitude}
-          longitude={longitude}
-          redoSearchOnMove={this.state.redoSearchOnMove}
-          onToggleSearchOnMove={this.onToggleSearchOnMove}
-        />
-      </Map>
+      <MapWrapper>
+        <MapOverlayDiv>
+          <StyledCheckbox checked={redoSearchOnMove} onClick={this.onToggleSearchOnMove} />
+          Redo Search on Move
+        </MapOverlayDiv>
+        <Map
+          defaultCenter={defaultCenter}
+          defaultZoom={defaultZoom}
+          containerElement={<MapContainerElement />}
+          onIdle={this.onBoundsChange}
+          onMapMounted={this.onMapMounted}
+        >
+          {communityList.map(community => (
+            <Marker
+              key={community.id}
+              position={{ lat: community.latitude, lng: community.longitude }}
+              defaultIcon={GreenMarker}
+              onClick={() => this.setActiveMarker(community.id)}
+            >
+              {this.state.activeInfoWindowId === community.id && (
+                <InfoWindow key={community.id} onCloseClick={() => this.setActiveMarker(null)}>
+                  <MapTile
+                    tileInfo={{
+                      id: community.id,
+                      name: community.name,
+                      startingRate: community.startingRate,
+                      mainImage: community.imageUrl,
+                      url: community.url,
+                      propInfo: {
+                        communityDescription: community.description,
+                        typeCare: community.webViewInfo.firstLineValue.split(','),
+                      },
+                      propRatings: {
+                        reviewsValue: community.reviewsValue,
+                        numReviews: community.numReviews,
+                      },
+                    }}
+                    borderless
+                  />
+                </InfoWindow>
+              )}
+            </Marker>
+          ))}
+        </Map>
+      </MapWrapper>
     );
   }
 }

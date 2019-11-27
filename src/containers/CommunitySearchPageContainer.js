@@ -36,6 +36,7 @@ const onCommunityClick = (position, to) => {
 }))
 
 @prefetch('geoGuide', 'getGeoGuides', (request, { searchParams }) => request(searchParams))
+
 @prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
 
 export default class CommunitySearchPageContainer extends PureComponent {
@@ -127,7 +128,7 @@ export default class CommunitySearchPageContainer extends PureComponent {
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
-    const isFetchingResults = status.communityList.isLoading || !status.communityList.hasStarted;
+    const isFetchingResults = !status.communityList.hasFinished;
 
     // if (isFetchingResults) {
     //   return null;
