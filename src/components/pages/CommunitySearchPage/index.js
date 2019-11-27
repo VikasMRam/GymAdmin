@@ -16,7 +16,6 @@ import IconButton from 'sly/components/molecules/IconButton';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import pad from 'sly/components/helpers/pad';
-import CommunityFilterListContainer from 'sly/containers/CommunityFilterListContainer';
 import { ifProp } from 'styled-tools';
 
 const SearchMap = loadable(() => import(/* webpackChunkName: "chunkSearchMap" */'sly/components/organisms/SearchMap'));
@@ -141,7 +140,6 @@ const CommunitySearchPage = ({
   location,
   onAdTileClick,
   isFetchingResults,
-  onCommunityClick,
   areFiltersOpen,
   toggleFiltersOpen,
 }) => {
@@ -241,7 +239,6 @@ const CommunitySearchPage = ({
               onAdTileClick={onAdTileClick}
               isFetchingResults={isFetchingResults}
               location={location}
-              onCommunityClick={onCommunityClick}
             />
             {hasGeoGuideContent && (
               guideTypes.map((key) => (

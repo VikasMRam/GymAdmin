@@ -97,7 +97,7 @@ const usefulInformationTiles = [
 ];
 
 const CommunitySearchList = ({
-  communityList, requestMeta, searchParams, onAdTileClick, onCommunityClick, location, ...props
+  communityList, requestMeta, searchParams, onAdTileClick, location, ...props
 }) => {
   let mostSearchedCitiesComponents = null;
   let usefulInformationTilesComponents = null;
@@ -153,7 +153,12 @@ const CommunitySearchList = ({
         <CommunityTileWrapper key={similarProperty.id}>
           <StyledLink
             to={similarProperty.url}
-            onClick={() => onCommunityClick(index, similarProperty.id)}
+            event={{
+              category: 'SearchPage',
+              action: 'communityClick',
+              label: index,
+              value: similarProperty.id,
+            }}
           />
           <ShadowCommunityTile
             community={similarProperty}
@@ -193,7 +198,6 @@ CommunitySearchList.propTypes = {
   onAdTileClick: func.isRequired,
   communityList: arrayOf(object).isRequired,
   location: object.isRequired,
-  onCommunityClick: func.isRequired,
 };
 
 export default CommunitySearchList;
