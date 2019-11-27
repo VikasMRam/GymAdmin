@@ -106,7 +106,7 @@ const ApplyFilterButton = styled(Button)`
   display: block;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none;
+    display: none !important;
   }
 `;
 
@@ -132,7 +132,6 @@ const CommunitySearchPage = ({
   isMapView,
   toggleMap,
   onParamsChange,
-  onParamsRemove,
   searchParams,
   requestMeta,
   communityList,
@@ -188,9 +187,7 @@ const CommunitySearchPage = ({
             </>
             <ResponsiveFilterWrapper isOpen={areFiltersOpen}>
               <CommunityFilterList
-                onFieldChange={onParamsChange}
                 searchParams={searchParams}
-                onParamsRemove={onParamsRemove}
                 geoGuideList={geoGuide && geoGuide.cityTOCGuides}
               />
               <ApplyFilterButton kind="jumbo" onClick={toggleFiltersOpen}>Apply Filters</ApplyFilterButton>
@@ -232,12 +229,9 @@ const CommunitySearchPage = ({
           <>
             <CommunitySearchList
               communityList={communityList}
-              onParamsChange={onParamsChange}
               searchParams={searchParams}
               requestMeta={requestMeta}
-              onParamsRemove={onParamsRemove}
               onAdTileClick={onAdTileClick}
-              isFetchingResults={isFetchingResults}
               location={location}
             />
             {hasGeoGuideContent && (
@@ -271,7 +265,6 @@ CommunitySearchPage.propTypes = {
   isMapView: bool,
   toggleMap: func,
   onParamsChange: func,
-  onParamsRemove: func,
   location: object,
   searchParams: object,
   onAdTileClick: func,

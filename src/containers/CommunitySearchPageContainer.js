@@ -70,23 +70,6 @@ export default class CommunitySearchPageContainer extends PureComponent {
     }
   };
 
-  removeSearchFilters = ({ paramsToRemove }) => {
-    const { searchParams, history } = this.props;
-
-    const changedParams = paramsToRemove.reduce((cumul, param) => {
-      if (param === 'toc') {
-        cumul[param] = 'retirement-community';
-      } else {
-        cumul[param] = undefined;
-      }
-      return cumul;
-    }, {});
-
-    const { path } = filterLinkPath(searchParams, changedParams);
-
-    history.push(path);
-  };
-
   handleOnAdTileClick = () => {
     this.changeSearchParams({ changedParams: { modal: CARE_ASSESSMENT_WIZARD } });
   };
@@ -132,7 +115,6 @@ export default class CommunitySearchPageContainer extends PureComponent {
         toggleMap={this.toggleMap}
         searchParams={searchParams}
         onParamsChange={this.changeSearchParams}
-        onParamsRemove={this.removeSearchFilters}
         communityList={communityList || []}
         geoGuide={gg}
         location={location}

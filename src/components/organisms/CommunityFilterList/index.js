@@ -14,8 +14,10 @@ import {
   sizes,
   filterLinkPath,
   getFiltersApplied,
-  getEvtHandler,
 } from 'sly/services/helpers/search';
+
+import { withRedirectTo } from 'sly/services/redirectTo';
+import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
 
 const StyledLink = pad(styled(Link)`
   display: flex;
@@ -25,14 +27,6 @@ const StyledLink = pad(styled(Link)`
     margin-right: ${size('spacing.small')};
   }
 `, 'regular');
-
-const getSortHandler = (origFn) => {
-  return (uiEvt) => {
-    // todo uncomment after enabling react select const changedParams = { sort: uiEvt.value };
-    const changedParams = { sort: uiEvt.target.value };
-    origFn({ origUiEvt: uiEvt, changedParams });
-  };
-};
 
 const generateRadioLink = (elem, type, path, selected, nofollow) => {
     return (
@@ -65,9 +59,9 @@ const sortOptions = [
 
 const CommunityFilterList = ({
   searchParams,
-  onFieldChange,
-  onParamsRemove,
+  generateFilterLinkPath,
   geoGuideList,
+  redirectTo,
 }) => {
   const nofollow = searchParams.budget || searchParams.size;
 
@@ -105,21 +99,21 @@ const CommunityFilterList = ({
           type="select"
           value={sort}
           // options={sortOptions} todo pass as option after enabling react select
-          onChange={getSortHandler(onFieldChange)}
+          onChange={(e) => {
+            redirectTo(generateFilterLinkPath({ origUiEvt: e, changedParams: { sort: e.target.value } }));
+          }}
         >
           {sortOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
         </Field>
       </CollapsibleSection>
       { geoGuideList && geoGuideList.length > 0 &&
         <CollapsibleSection size="small" title="Guides" borderless>
-          {geoGuideList.map((elem) => {
-            return (<StyledLink href={elem.to} >{elem.title}</StyledLink>);
-          })}
+          {geoGuideList.map((elem) => <StyledLink href={elem.to} key={elem.to} >{elem.title}</StyledLink>)}
         </CollapsibleSection>
       }
       {filtersApplied.length > 0 && (
         <ClearAllButton
-          onClick={getEvtHandler(filtersApplied, onParamsRemove)}
+          onClick={(e) => redirectTo(generateFilterLinkPath({ origUiEvt: e, paramsToRemove: filtersApplied }))}
           transparent
         >
           Clear all filters
@@ -131,9 +125,9 @@ const CommunityFilterList = ({
 
 CommunityFilterList.propTypes = {
   searchParams: object.isRequired,
-  onFieldChange: func.isRequired,
-  onParamsRemove: func.isRequired,
   geoGuideList: array,
+  generateFilterLinkPath: func,
+  redirectTo: func,
 };
 
-export default CommunityFilterList;
+export default withRedirectTo(withGenerateFilterLinkPath(CommunityFilterList));

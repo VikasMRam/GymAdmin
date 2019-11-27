@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { object, arrayOf, func } from 'prop-types';
 import queryString from 'query-string';
 
-import theme from 'sly/components/themes/default';
 import { size, gridColumns, assetPath } from 'sly/components/themes';
 import { getPaginationData } from 'sly/services/helpers/pagination';
 import pad from 'sly/components/helpers/pad';
@@ -96,9 +95,7 @@ const usefulInformationTiles = [
   },
 ];
 
-const CommunitySearchList = ({
-  communityList, requestMeta, searchParams, onAdTileClick, location, ...props
-}) => {
+const CommunitySearchList = ({ communityList, requestMeta, searchParams, onAdTileClick, location }) => {
   let mostSearchedCitiesComponents = null;
   let usefulInformationTilesComponents = null;
 
@@ -147,7 +144,7 @@ const CommunitySearchList = ({
   return (
     <>
       <CommunityFilterBarWrapper>
-        <CommunityFilterBar searchParams={searchParams} {...props} />
+        <CommunityFilterBar searchParams={searchParams} />
       </CommunityFilterBarWrapper>
       {communityList.map((similarProperty, index) => (
         <CommunityTileWrapper key={similarProperty.id}>
@@ -194,7 +191,6 @@ const CommunitySearchList = ({
 CommunitySearchList.propTypes = {
   requestMeta: object.isRequired,
   searchParams: object.isRequired,
-  onParamsChange: func.isRequired,
   onAdTileClick: func.isRequired,
   communityList: arrayOf(object).isRequired,
   location: object.isRequired,
