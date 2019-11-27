@@ -6,5 +6,6 @@ export default [
   'board-and-care-home',
   'memory-care',
   'continuing-care-retirement-community',
+  'skilled-nursing-facility',
 ];
 

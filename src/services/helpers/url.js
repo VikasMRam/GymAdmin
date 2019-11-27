@@ -43,6 +43,11 @@ const tocPaths = (toc) => {
           path: 'continuing-care-retirement-community',
           label: 'Continuing Care Retirement Community',
         };
+      case 'Skilled Nursing Facility':
+        return {
+          path: 'skilled-nursing-facility',
+          label: 'Skilled Nursing Facility',
+        };
       default:
         return {
           path: '/nursing-homes',

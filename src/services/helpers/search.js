@@ -96,6 +96,13 @@ export const tocs = [
     searchLabel: 'CCRCs',
     seoLabel: 'Continuing Care Retirement Communities',
   },
+  {
+    label: 'Skilled Nursing Facility',
+    value: 'skilled-nursing-facility',
+    segment: 'skilled-nursing-facility',
+    searchLabel: 'Skilled Nursing Facility',
+    seoLabel: 'Skilled Nursing Facility',
+  },
 ];
 
 export const sizes = [
