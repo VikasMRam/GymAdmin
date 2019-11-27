@@ -24,7 +24,6 @@ const generateFilterLinkPath = searchParams => ({ changedParams = {}, paramsToRe
   };
 
   return addEventToUrl(path, event);
-  // return path;
 };
 
 export default function withGenerateFilterLinkPath(ChildComponent) {
