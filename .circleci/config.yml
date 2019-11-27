@@ -438,22 +438,6 @@ workflows:
           requires:
             - build
             - e2e
-
-
-#  build-staging:
-#    jobs:
-#      - build:
-#          filters:
-#            branches:
-#              ignore: /.*/
-#            tags:
-#              only: /^v.*/
-#      - deploy:
-#          context: ReactStaging
-#          requires:
-#            - build
-#          filters:
-#            branches:
-#              ignore: /.*/
-#            tags:
-#              only: /^v.*/
+          filters:
+            tags:
+              only: /^v.*/
