@@ -102,6 +102,7 @@ describe('CommunitySummary', () => {
     const wrapper = wrap({
       community: RhodaGoldmanPlaza,
     });
+
     verify(wrapper);
     expect(wrapper.find('StyledTag')).toHaveLength(2);
   });

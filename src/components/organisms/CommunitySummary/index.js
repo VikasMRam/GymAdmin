@@ -12,6 +12,8 @@ import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricing
 import { isBrowser } from 'sly/config';
 import PlusBadge from 'sly/components/molecules/PlusBadge';
 import { tocPaths } from 'sly/services/helpers/url';
+import stateCareTypes from 'sly/constants/stateCareTypes';
+import careTypesMap from 'sly/constants/careTypesMap';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
@@ -64,6 +66,51 @@ const TooltipContent = styled(ReactTooltip)`
     }
   }
 `;
+const residentialCareTypes = [
+  'Residential Care',
+  'Residential Care Homes',
+  'Residential Homes for the Aged',
+  'Residential Care facilities',
+  'Residential Care Home',
+];
+const ASSISTED_LIVING = 'Assisted Living';
+const SMALL_COMMUNITY = 'up to 20 Beds';
+
+const buildCareTypes = (state, careTypes, communitySize) => {
+  const updatedCareTypes = [];
+  console.log('careTypes', careTypes);
+
+  careTypes.forEach((careType) => {
+    const tocBc = tocPaths([careType]);
+    const extraCareTypes = careTypesMap[careType];
+    console.log('extraCareTypes', careType, extraCareTypes);
+
+
+    if (extraCareTypes) {
+      extraCareTypes.forEach((extraCareType) => {
+        const hasCareType = stateCareTypes[state].includes(extraCareType);
+        const isAssistedLiving = careType === ASSISTED_LIVING;
+        const isResidentialCare = isAssistedLiving && communitySize === SMALL_COMMUNITY && residentialCareTypes.includes(extraCareType);
+        const isNotExists = !updatedCareTypes.find(data => data.careType === extraCareType);
+
+        console.log('extra care', hasCareType, isNotExists, (isResidentialCare || !isAssistedLiving), careType, isResidentialCare, !isAssistedLiving, communitySize, extraCareType);
+        console.log(state, stateCareTypes[state], stateCareTypes[state].includes(extraCareType));
+        if (hasCareType && isNotExists && (isResidentialCare || !isAssistedLiving)) {
+          updatedCareTypes.push({ name: extraCareType, path: tocBc.path });
+        }
+      });
+    } else {
+      const hasCareType = stateCareTypes[state].includes(careType);
+
+      if (hasCareType) {
+        updatedCareTypes.push({ name: careType, path: tocBc.path });
+      }
+    }
+  });
+
+  return updatedCareTypes;
+};
+
 const CommunitySummary = ({
   community, innerRef, isAdmin, onConciergeNumberClicked, className,
   onFavouriteClick, isFavorited, onShareClick, goToReviews, searchParams,
@@ -74,7 +121,7 @@ const CommunitySummary = ({
   const {
     line1, line2, city, state, zip,
   } = address;
-  const { communityPhone, plusCommunity, plusCategory, typeCare } = propInfo;
+  const { communityPhone, plusCommunity, plusCategory, typeCare, communitySize } = propInfo;
   const { reviewsValue } = propRatings;
   const formattedAddress = `${line1}, ${line2}, ${city},
     ${state}
@@ -90,6 +137,9 @@ const CommunitySummary = ({
   }
 
   const favIcon = isFavorited ? 'favourite-light' : 'favourite-empty';
+  const careTypes = buildCareTypes(state, typeCare, communitySize);
+
+  console.log('communitySize', communitySize);
 
   return (
     <Box innerRef={innerRef} className={className}>
@@ -106,18 +156,16 @@ const CommunitySummary = ({
       <Heading weight="regular" level="subtitle" size="body" palette="grey">{formattedAddress}</Heading>
 
       {
-        typeCare.map((careType) => {
-          const tocBc = tocPaths([careType]);
-
-          return (
+        careTypes.map(careType =>
+          (
             <Link
-              key={tocBc.path}
-              to={`${tocBc.path}/${searchParams.state}/${searchParams.city}`}
+              key={careType.path}
+              to={`${careType.path}/${searchParams.state}/${searchParams.city}`}
               target="_blank"
             >
-              <StyledTag key={careType}>{careType}</StyledTag>
-            </Link>);
-        })
+              <StyledTag key={careType.name}>{careType.name}</StyledTag>
+            </Link>)
+        )
       }
 
       {plusCommunity &&
