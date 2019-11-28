@@ -105,6 +105,10 @@ const HeaderWrapper = styled.div`
   align-items: center;
 `;
 
+const StyledHeadingBoxSection = styled(HeadingBoxSection)`
+  flex-grow: 0;
+`;
+
 const mapStateToProps = (state, { conversation, user }) => ({
   viewingAsParticipant: conversation && user && conversation.conversationParticipants.find(p => p.participantID === user.id),
 });
@@ -477,7 +481,7 @@ export default class ConversationMessagesContainer extends Component {
     );
 
     const headingBoxSection = (
-      <HeadingBoxSection heading={heading} hasNoBodyPadding hasNoBorder />
+      <StyledHeadingBoxSection heading={heading} hasNoBodyPadding hasNoBorder />
     );
 
     this.alreadyLoaded = true;

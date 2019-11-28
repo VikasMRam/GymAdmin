@@ -36,10 +36,6 @@ const mapStateToProps = (state, { conversations }) => ({
   id: match.params.id,
 }))
 
-@prefetch('notes', 'getNotes', (req, { match }) => req({
-  'filter[commentable_id]': match.params.id,
-}))
-
 @query('updateClient', 'updateClient')
 
 @query('createNote', 'createNote')
@@ -47,6 +43,8 @@ const mapStateToProps = (state, { conversations }) => ({
 @query('updateNote', 'updateNote')
 
 @query('getClients', 'getClients')
+
+@query('getNotes', 'getNotes')
 
 @connect(null, (dispatch, { api }) => ({
   invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
@@ -77,6 +75,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     createNote: func.isRequired,
     updateNote: func.isRequired,
     getClients: func.isRequired,
+    getNotes: func.isRequired,
     notes: arrayOf(notePropType),
     invalidateClients: func,
   };
@@ -85,6 +84,8 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     selectedConversation: null,
     conversationsList: null,
     clientsWithSameContacts: null,
+    rawNotes: null,
+    notes: null,
   }
 
   componentDidUpdate() {
@@ -99,6 +100,20 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
         .then(resp => normJsonApi(resp))
         .then(data => this.setState({ clientsWithSameContacts: data }));
     }
+    if (this.props.client && this.state.notes === null) {
+      this.getNotes();
+    }
+  }
+
+  getNotes = () => {
+    const { client, getNotes } = this.props;
+    const params = {
+      'filter[commentable_id]': client.id,
+    };
+    return getNotes(params)
+      .then((data) => { this.setState({ rawNotes: data.body.data }); return data; })
+      .then(resp => normJsonApi(resp))
+      .then(data => this.setState({ notes: data }));
   }
 
   onRejectSuccess = (hide) => {
@@ -109,7 +124,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   onAddNote = (data, notifyError, notifyInfo, hideModal) => {
     const {
-      createNote, client, status, invalidateClients,
+      createNote, client, invalidateClients,
     } = this.props;
     const { id } = client;
     const { note } = data;
@@ -129,7 +144,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       value: '',
     });
     const notePromise = () => createNote(payload);
-    const getNotesPromise = () => status.notes.refetch();
+    const getNotesPromise = () => this.getNotes();
 
     return notePromise()
       .then(getNotesPromise)
@@ -155,9 +170,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   onEditNote = (data, note, notifyError, notifyInfo, hideModal) => {
     const {
-      updateNote, status, invalidateClients,
+      updateNote, invalidateClients,
     } = this.props;
-    const { result: rawNotes } = status.notes;
+    const { rawNotes } = this.state;
     const { id } = note;
     const oldNote = rawNotes.find(n => n.id === id);
     const { note: newNoteBody } = data;
@@ -172,7 +187,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       value: id,
     });
     const notePromise = () => updateNote({ id }, payload);
-    const getNotesPromise = () => status.notes.refetch();
+    const getNotesPromise = () => this.getNotes();
 
     return notePromise()
       .then(getNotesPromise)
@@ -265,8 +280,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   }
 
   refetchNotes = () => {
-    const { status } = this.props;
-    status.notes.refetch();
+    this.getNotes();
   }
 
   refetchConversations = () => {
@@ -293,12 +307,11 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       client,
       match,
       status,
-      notes,
       user,
       breakpoint,
     } = this.props;
 
-    const { selectedConversation, conversationsList } = this.state;
+    const { selectedConversation, conversationsList, clientsWithSameContacts, notes } = this.state;
 
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && client && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
@@ -312,8 +325,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { result: rawClient, meta } = status.client;
     const { hasFinished: clientHasFinished } = status.client;
     // since it's using conditional prefetch, in initial stage clients key won't be there
-    const { hasFinished: noteHasFinished } = status.notes;
-    const { clientsWithSameContacts = [] } = this.state;
     return (
       <NotificationController>
         {({ notifyError, notifyInfo }) => (
@@ -322,7 +333,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
               <DashboardMyFamiliesDetailsPage
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
-                clients={clientsWithSameContacts}
+                clients={clientsWithSameContacts || []}
                 client={client}
                 rawClient={rawClient}
                 currentTab={match.params.tab || SUMMARY}
@@ -334,8 +345,8 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 refetchNotes={this.refetchNotes}
                 onAddNote={onAddNote}
                 onEditNote={onEditNote}
-                notes={notes}
-                noteIsLoading={!noteHasFinished}
+                notes={notes || []}
+                noteIsLoading={!notes}
                 clientIsLoading={!clientHasFinished}
                 goToFamilyDetails={this.goToFamilyDetails}
                 goToMessagesTab={this.goToMessagesTab}

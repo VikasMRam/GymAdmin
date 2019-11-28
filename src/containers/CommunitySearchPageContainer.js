@@ -16,8 +16,11 @@ import withRouter from 'react-router/withRouter';
   searchParams: getSearchParams(match, location),
 }))
 @prefetch('geoGuides', 'getGeoGuides', (request, { searchParams }) => request(searchParams))
+
 @prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
+
 @withGenerateFilterLinkPath
+
 @withRouter
 
 export default class CommunitySearchPageContainer extends PureComponent {
@@ -83,7 +86,7 @@ export default class CommunitySearchPageContainer extends PureComponent {
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
-    const isFetchingResults = status.communityList.isLoading || !status.communityList.hasStarted;
+    const isFetchingResults = !status.communityList.hasFinished;
     const requestMeta = status.communityList.meta;
     const isMapView = searchParams.view === 'map';
     const mapViewUrl = generateFilterLinkPath({
