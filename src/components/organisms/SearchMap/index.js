@@ -81,7 +81,7 @@ class SearchMap extends Component {
     return Object.assign(
       {},
       !props.isLoading && { communityList: props.communityList },
-      state.hasValidDefaultLocation && {
+      !state.hasValidDefaultLocation && {
         defaultCenter: { lat: props.latitude, lng: props.longitude },
         hasValidDefaultLocation: props.latitude !== 0 && props.longitude !== 0,
       }
@@ -143,10 +143,9 @@ class SearchMap extends Component {
   }, 200);
 
   render() {
-    const { latitude, longitude } = this.props;
-    const { defaultCenter, communityList, redoSearchOnMove } = this.state;
+    const { defaultCenter, hasValidDefaultLocation, communityList, redoSearchOnMove } = this.state;
 
-    if (latitude === 0 && longitude === 0) {
+    if (!hasValidDefaultLocation) {
       return <div>Loading Map...</div>;
     }
 

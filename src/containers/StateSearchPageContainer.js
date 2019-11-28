@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { object, number, array } from 'prop-types';
+import { object, number, array, func } from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import withRouter from 'react-router/withRouter';
 
 import { stateNames, urlize, replaceLastSegment } from  'sly/services/helpers/url';
 import ErrorPage from 'sly/components/pages/Error';
@@ -8,10 +9,8 @@ import StateSearchPage from 'sly/components/pages/StateSearchPage';
 import ModalController from 'sly/controllers/ModalController';
 import { withProps } from 'sly/services/helpers/hocs';
 import { prefetch } from 'sly/services/newApi';
-import {
-  filterLinkPath,
-  getSearchParams,
-} from 'sly/services/helpers/search';
+import { getSearchParams } from 'sly/services/helpers/search';
+import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
 
 @withProps(({ match, location }) => ({
   searchParams: getSearchParams(match, location),
@@ -19,6 +18,9 @@ import {
 
 @prefetch('geoGuide', 'getGeoGuides', (request, { searchParams }) => request(searchParams))
 @prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
+
+@withGenerateFilterLinkPath
+@withRouter
 
 export default class StateSearchPageContainer extends Component {
   static propTypes = {
@@ -31,30 +33,7 @@ export default class StateSearchPageContainer extends Component {
     requestMeta: object.isRequired,
     status: object,
     errorCode: number,
-  };
-
-  // TODO Define Search Parameters
-  toggleMap = () => {
-    const event = {
-      changedParams: {
-        view: 'map', 'page-number': 0, 'page-size': 50, searchOnMove: true,
-      },
-    };
-    if (this.props.searchParams && this.props.searchParams.view === 'map') {
-      event.changedParams = { view: 'list', 'page-size': 15 };
-    }
-    this.changeSearchParams(event);
-  };
-
-  changeSearchParams = ({ changedParams }) => {
-    const { searchParams, history } = this.props;
-    const { path } = filterLinkPath(searchParams, changedParams);
-
-    if (searchParams.view === 'map') {
-      history.replace(path);
-    } else {
-      history.push(path);
-    }
+    generateFilterLinkPath: func.isRequired,
   };
 
   render() {
@@ -65,6 +44,7 @@ export default class StateSearchPageContainer extends Component {
       location,
       geoGuide,
       history,
+      generateFilterLinkPath,
     } = this.props;
     const { pathname, search } = location;
 
@@ -86,6 +66,18 @@ export default class StateSearchPageContainer extends Component {
       return <Redirect to={replaceLastSegment(pathname, urlize(ucStateQp)) + search} />;
     }
 
+
+    const mapViewUrl = generateFilterLinkPath({
+      changedParams: {
+        view: 'map',
+        'page-number': 0,
+        'page-size': 50,
+        searchOnMove: true,
+        radius: '10',
+      },
+    });
+    const listViewUrl = generateFilterLinkPath({ changedParams: { view: 'list', 'page-size': 15 } })
+
     return (
       <ModalController>
         {({
@@ -95,12 +87,13 @@ export default class StateSearchPageContainer extends Component {
           <StateSearchPage
             isMapView={isMapView}
             requestMeta={status.communityList.meta || {}}
-            toggleMap={this.toggleMap}
             searchParams={searchParams}
-            onParamsChange={this.changeSearchParams}
             communityList={communityList || []}
             geoGuide={gg}
             location={location}
+            isLoading={!status.communityList.hasFinished}
+            mapViewUrl={mapViewUrl}
+            listViewUrl={listViewUrl}
             showModal={show}
             hideModal={hide}
           />
