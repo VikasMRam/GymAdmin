@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { bool, func, any } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -36,8 +37,14 @@ const ResponsiveContent = styled.div`
 `;
 
 export default class ResponsiveSidebar extends Component {
+  static propTypes = {
+    isOpen: bool,
+    onCloseRequested: func.isRequired,
+    children: any,
+  };
+
   componentDidMount() {
-    if(this.props.isOpen) {
+    if (this.props.isOpen) {
       document.body.classList.add();
     }
   }
@@ -45,8 +52,8 @@ export default class ResponsiveSidebar extends Component {
   componentDidUpdate({ isOpen: wasOpen }) {
     const { isOpen } = this.props;
 
-    if(wasOpen !== isOpen) {
-      if(isOpen) {
+    if (wasOpen !== isOpen) {
+      if (isOpen) {
         document.body.classList.add(bodyClassName);
       } else {
         document.body.classList.remove(bodyClassName);
@@ -59,7 +66,7 @@ export default class ResponsiveSidebar extends Component {
   }
 
   handleOverlayClick = (e) => {
-    if(e.target === e.currentTarget) {
+    if (e.target === e.currentTarget) {
       this.props.onCloseRequested();
     }
 
@@ -73,6 +80,6 @@ export default class ResponsiveSidebar extends Component {
       <ResponsiveOverlay onClick={this.handleOverlayClick} isOpen={isOpen} ref={this.overlayRef}>
         <ResponsiveContent isOpen={isOpen}>{children}</ResponsiveContent>
       </ResponsiveOverlay>
-    )
+    );
   }
 }
