@@ -16,6 +16,7 @@ const validate = createValidator({
   dueDate: [required],
   status: [required],
   priority: [required],
+  owner: [required],
 });
 
 const ReduxForm = reduxForm({

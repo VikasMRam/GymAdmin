@@ -91,10 +91,6 @@ class CommunityMap extends Component {
       className,
     } = this.props;
     const { latitude, longitude } = community.address;
-    const center = {
-      latitude,
-      longitude,
-    };
     const markers = [
       {
         community,
@@ -161,15 +157,12 @@ class CommunityMap extends Component {
     });
 
     const isMobile = window.innerWidth < 768;
-    let defaultZoom = 13;
-    if (isMobile) {
-      defaultZoom = 12;
-    }
+    const defaultZoom = isMobile ? 12 : 13;
 
     return (
       <Wrapper className={className}>
         <Map
-          center={center}
+          defaultCenter={{ lat: latitude, lng: longitude }}
           defaultZoom={defaultZoom}
           containerElement={<MapContainerElement />}
         >
