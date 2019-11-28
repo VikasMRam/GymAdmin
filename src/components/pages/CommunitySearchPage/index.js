@@ -119,7 +119,6 @@ const CommunitySearchPage = ({
   isMapView,
   mapViewUrl,
   listViewUrl,
-  onParamsChange,
   searchParams,
   requestMeta,
   communityList,
@@ -237,7 +236,6 @@ const CommunitySearchPage = ({
             communityList={communityList}
             isLoading={isFetchingResults}
             searchParams={searchParams}
-            onParamsChange={onParamsChange}
           />
         )}
       </CommunitySearchPageTemplate>
@@ -250,7 +248,6 @@ CommunitySearchPage.propTypes = {
   geoGuide: object,
   requestMeta: object.isRequired,
   isMapView: bool,
-  onParamsChange: func,
   location: object,
   searchParams: object,
   isFetchingResults: bool,

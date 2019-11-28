@@ -1,12 +1,10 @@
 import React, { PureComponent } from 'react';
 import { object, array, func } from 'prop-types';
-import queryString from 'query-string';
 import { Redirect } from 'react-router-dom';
 import { stateNames, urlize, replaceLastSegment } from 'sly/services/helpers/url';
-import SlyEvent from 'sly/services/helpers/events';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
-import { filterLinkPath, getSearchParams } from 'sly/services/helpers/search';
+import { getSearchParams } from 'sly/services/helpers/search';
 import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
 import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
@@ -37,24 +35,6 @@ export default class CommunitySearchPageContainer extends PureComponent {
 
   state = {
     areFiltersOpen: false,
-  };
-
-  changeSearchParams = ({ changedParams }) => {
-    const { searchParams, history } = this.props;
-    const { path } = filterLinkPath(searchParams, changedParams);
-    const event = {
-      action: 'search',
-      category: searchParams.toc,
-      label: queryString.stringify(searchParams),
-    };
-
-    SlyEvent.getInstance().sendEvent(event);
-
-    if (searchParams.view === 'map') {
-      history.replace(path);
-    } else {
-      history.push(path);
-    }
   };
 
   render() {
@@ -107,7 +87,6 @@ export default class CommunitySearchPageContainer extends PureComponent {
         mapViewUrl={mapViewUrl}
         listViewUrl={listViewUrl}
         searchParams={searchParams}
-        onParamsChange={this.changeSearchParams}
         communityList={communityList || []}
         geoGuide={(geoGuides && geoGuides[0]) || {}}
         location={location}
