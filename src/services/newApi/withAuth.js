@@ -55,6 +55,7 @@ export default function withAuth(InnerComponent) {
       updatePassword: func.isRequired,
       thirdPartyLogin: func.isRequired,
       authenticated: object.isRequired,
+      authenticated: object,
       ensureAuthenticated: func.isRequired,
       status: object.isRequired,
       user: object,
