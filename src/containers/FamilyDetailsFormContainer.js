@@ -205,9 +205,9 @@ export default class FamilyDetailsFormContainer extends Component {
     const { typeCare, roomPreference, lookingFor, moveTimeline } = housingInfo;
     const { maxMonthlyBudget, medicaid } = financialInfo;
     let preferredLocation = '';
-    if (locationInfo) {
+    if (locationInfo && locationInfo.city) {
       const { city, state } = locationInfo;
-      preferredLocation = `${city}, ${state}`;
+      preferredLocation = [city, state].filter(v => v).join(', ');
     }
     let assignedTo;
     if (client.admin) {
