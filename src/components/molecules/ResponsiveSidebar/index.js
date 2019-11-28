@@ -9,7 +9,7 @@ const bodyClassName = 'ReactModal__Body--open';
 const ResponsiveOverlay = styled.div`
   @media screen and (max-width: ${size('breakpoint.laptop')}) {
     visibility: ${ifProp('isOpen', 'visible', 'hidden')};
-    position: absolute;
+    position: fixed;
     background-color: ${palette('slate', 'base')};
     background-color: ${palette('slate', 'base')}e5;
     z-index: 100;
@@ -23,13 +23,15 @@ const ResponsiveOverlay = styled.div`
 const ResponsiveContent = styled.div`
   @media screen and (max-width: ${size('breakpoint.laptop')}) {
     visibility: ${ifProp('isOpen', 'visible', 'hidden')};
-    position: absolute;
+    position: fixed;
     background-color: ${palette('white', 'base')};
     z-index: 101 !important;
     top: 0;
     bottom: 0;
     left: 0;
+    max-width: 90vw;
     padding: ${size('spacing', 'xxLarge')};
+    overflow-y: auto;
   }
 `;
 

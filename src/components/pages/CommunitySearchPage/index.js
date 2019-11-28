@@ -104,6 +104,7 @@ const LegacyContent = pad(styled.div`
 const ApplyFilterButton = styled(Button)`
   width: 100%;
   display: block;
+  margin-top: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none !important;
