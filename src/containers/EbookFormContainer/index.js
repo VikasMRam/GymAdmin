@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { SubmissionError, clearSubmitErrors, reduxForm, reset } from 'redux-form';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { func, string, object } from 'prop-types';
 
@@ -11,6 +11,7 @@ import withNotification from 'sly/controllers/withNotification';
 import SlyEvent from 'sly/services/helpers/events';
 import { EBOOK_SEND_EMAIL } from 'sly/services/newApi/constants';
 import withAuth from 'sly/services/newApi/withAuth';
+import { connectController } from 'sly/controllers';
 
 const formName = 'EbookForm';
 const validate = createValidator({
@@ -42,7 +43,7 @@ const mapDispatchToProps = dispatch => ({
 @withAuth
 @query('sendEbook', 'sendEbook')
 @query('createAction', 'createUuidAction')
-@connect(null, mapDispatchToProps)
+@connectController(null, mapDispatchToProps)
 export default class EbookFormContainer extends PureComponent {
   static propTypes = {
     sendEbook: func.isRequired,
@@ -74,7 +75,7 @@ export default class EbookFormContainer extends PureComponent {
 
     clearErrors();
 
-    Promise.all([
+    return Promise.all([
       sendEbook({
         type: 'HealthyAging',
         attributes: {
@@ -95,6 +96,7 @@ export default class EbookFormContainer extends PureComponent {
       email: data.email,
     })).then(
       () => {
+        console.log('hideModal');
         hideModal();
         sendEvent(`${event}-send-mail`, pathname);
         notifyInfo(`We have sent the booklet to your email ${data.email}`);

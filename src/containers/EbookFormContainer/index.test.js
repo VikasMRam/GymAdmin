@@ -6,9 +6,10 @@ import { BrowserRouter } from 'react-router-dom';
 
 import EbookFormContainer from './index';
 
-const showModal = jest.fn();
-const hideModal = jest.fn();
-const notifyInfo = jest.fn();
+import withAuth from 'sly/services/newApi/withAuth';
+
+console.log(EbookFormContainer.WrappedComponent)
+const spy = jest.spyOn(EbookFormContainer.WrappedComponent.prototype, 'handleSubmit');
 
 const mockStore = configureStore([]);
 const store = mockStore({
@@ -53,6 +54,11 @@ const createUuidAction = jest.fn().mockReturnValue({
   type: 'apicall',
 });
 
+jest.mock('sly/services/newApi/withAuth', () => ({
+  __esModule: true,
+  default: Component => (props) => { console.log("render"); return <Component {...props} createOrUpdateUser={() => Promise.resolve()} />; },
+}));
+
 const createContext = () => ({
   context: {
     router,
@@ -72,20 +78,26 @@ const createContext = () => ({
 const wrap = (props = {}) => mount(
   <EbookFormContainer
     {...props}
-    notifyInfo={notifyInfo}
     store={store}
-    showModal={showModal}
-    hideModal={hideModal}
   />, createContext());
 
 describe('EbookFormContainer', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
   it('should render EbookFormContainer', () => {
-    const wrapper = wrap();
+    const showModal = jest.fn();
+    const hideModal = jest.fn();
+    const notifyInfo = jest.fn();
+    const wrapper = wrap({ showModal, hideModal, notifyInfo });
 
     expect(wrapper.exists()).toBe(true);
   });
   it('should submit form with form data', () => {
-    const wrapper = wrap();
+    const showModal = jest.fn();
+    const hideModal = jest.fn();
+    const notifyInfo = jest.fn();
+    const wrapper = wrap({ showModal, hideModal, notifyInfo });
 
     wrapper.find('form').simulate('submit');
 
@@ -94,17 +106,33 @@ describe('EbookFormContainer', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('should hide the ebook modal', () => {
-    const wrapper = wrap();
+  it.only('should hide the ebook modal', async () => {
+    const showModal = jest.fn();
+    const hideModal = jest.fn();
+    const notifyInfo = jest.fn();
+
+    const wrapper = wrap({ showModal, hideModal, notifyInfo });
+    
 
     wrapper.find('form').simulate('submit');
+    const wait = time => new Promise(resolve => setTimeout(resolve, time));
+    // await wait(100);
+    // console.log(wrapper.find('EbookFormContainer').instance());
+    console.log(spy.mock);
+    console.log(spy.mock.calls);
+    const call = spy.mock.calls.pop();
+    console.log(call);
+
 
     expect(hideModal).toHaveBeenCalled();
     expect(wrapper.exists()).toBe(true);
   });
 
   it('should show the notification', () => {
-    const wrapper = wrap();
+    const showModal = jest.fn();
+    const hideModal = jest.fn();
+    const notifyInfo = jest.fn();
+    const wrapper = wrap({ showModal, hideModal, notifyInfo });
 
     wrapper.find('form').simulate('submit');
 

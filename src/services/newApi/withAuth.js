@@ -34,13 +34,12 @@ export default function withAuth(InnerComponent) {
     static displayName = `withAuth(${getDisplayName(InnerComponent)})`;
 
     static propTypes = {
-      authenticated: object.isRequired,
+      authenticated: object,
       ensureAuthenticated: func.isRequired,
       api: object.isRequired,
       dispatch: func.isRequired,
       status: object.isRequired,
       user: object,
-      uuidAux: object.isRequired,
       updateUser: func.isRequired,
     };
 
