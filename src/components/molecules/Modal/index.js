@@ -6,10 +6,11 @@ import { ifProp, switchProp } from 'styled-tools';
 
 import { size, palette, key } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
+import NewModal from 'sly/components/atoms/NewModal';
 
 const closeButtonOutsideLayouts = ['gallery', 'fullScreen'];
 const bottomCloseButtonLayouts = ['bottomDrawer'];
-const noPaddingLayouts = ['noPadding', 'wizard', 'bottomDrawer', 'eBook'];
+const noPaddingLayouts = ['noPadding', 'wizard', 'bottomDrawer', 'eBook', 'noPaddingWithOverflow'];
 
 // https://www.drupal.org/project/drupal/issues/2707291#comment-12797758
 injectGlobal`
@@ -92,6 +93,9 @@ const ModalContext = styled.article`
       // same as single without overflow auto
       overflow: visible;
     `,
+    noPaddingWithOverflow: css`
+      overflow: visible;
+    `,
     fullScreen: css`
       width: 100%!important;
       border-radius: 0!important;
@@ -167,7 +171,7 @@ const BottomIconClose = styled.div`
 `;
 
 const Modal = ({
-  children, closeable, layout, onClose, ...props
+  children, closeable, layout, onClose, isOpen, ...props
 }) => {
   const noPadding = noPaddingLayouts.includes(layout) || closeButtonOutsideLayouts.includes(layout);
   const iconClose = (palette = 'slate') => (
@@ -181,8 +185,17 @@ const Modal = ({
     />
   );
 
+  if (isOpen && layout === 'letsmovetothismodaltypealltheothermodals') {
+    return (
+      <NewModal onClose={onClose}>
+        {children}
+      </NewModal>
+    );
+  }
+
   return (
     <StyledReactModal
+      isOpen={isOpen}
       onRequestClose={onClose}
       layout={layout}
       onClose={onClose}
@@ -213,8 +226,9 @@ const Modal = ({
 };
 
 Modal.propTypes = {
-  layout: oneOf(['default', 'fullScreen', 'gallery', 'sidebar', 'wizard', 'searchBox', 'noPadding', 'bottomDrawer', 'eBook']).isRequired,
+  layout: oneOf(['letsmovetothismodaltypealltheothermodals', 'default', 'fullScreen', 'gallery', 'sidebar', 'wizard', 'searchBox', 'noPadding', 'bottomDrawer', 'eBook', 'noPaddingWithOverflow']).isRequired,
   children: node,
+  isOpen: bool,
   closeable: bool,
   onClose: func.isRequired,
 };

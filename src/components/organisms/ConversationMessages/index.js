@@ -45,7 +45,7 @@ const today = dayjs().utc();
 const thisYear = dayjs().utc().format('YYYY');
 
 const getDateText = (date) => {
-  date = dayjs(date).utc();
+  date = dayjs(date);
   const createdAtYear = date.format('YYYY');
 
   switch (date.startOf('day').diff(today.startOf('day'), 'day')) {
@@ -108,6 +108,7 @@ const ConversationMessages = ({
       isRightAligned,
       dark: isRightAligned,
       onButtonClick,
+      viewingAsConversationParticipant: !!viewingAsParticipant,
     };
     if (!isRightAligned) {
       const participant = participantsById[message.conversationParticipantID];

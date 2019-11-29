@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object, node, bool, array } from 'prop-types';
+import { func, object, node, array } from 'prop-types';
 import { Redirect, withRouter } from 'react-router-dom';
 import { stringify, parse } from 'query-string';
 
@@ -8,7 +8,6 @@ import {
   removeQueryParamFromURL,
 } from 'sly/services/helpers/url';
 import { withAuth } from 'sly/services/newApi';
-import SlyEvent from 'sly/services/helpers/events';
 import { isServer } from 'sly/config';
 
 const searchWhitelist = [
@@ -28,7 +27,6 @@ export default class Router extends Component {
     requiresAuth: array.isRequired,
     location: object,
     children: node,
-    enableEvents: bool,
     status: object,
     history: object,
     staticContext: object,
@@ -37,13 +35,12 @@ export default class Router extends Component {
   };
 
   static defaultProps = {
-    enableEvents: true,
     requiresAuth: [],
+    children: null,
   };
 
-  componentDidMount() {
+  checkLoginRedirect() {
     const {
-      enableEvents,
       authenticated,
       location,
       history,
@@ -52,30 +49,21 @@ export default class Router extends Component {
 
     const { pathname, search, hash } = location;
 
-    if (enableEvents) {
-      SlyEvent.getInstance()
-        .sendPageView(pathname, search);
-    }
-
     const { loginRedirect } = parseURLQueryParams(search);
     if (!authenticated.loggingIn && loginRedirect) {
       ensureAuthenticated()
         .then(() => {
-          history.push(decodeURIComponent(loginRedirect));
+          history.replace(decodeURIComponent(loginRedirect));
         })
         .catch(() => {
           const params = removeQueryParamFromURL('loginRedirect', search);
-          history.push(`${pathname}${stringify(params)}${hash}`);
+          history.replace(`${pathname}${stringify(params)}${hash}`);
         });
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { enableEvents } = this.props;
-    if (enableEvents && this.props.location !== nextProps.location) {
-      const { pathname, search } = nextProps.location;
-      SlyEvent.getInstance().sendPageView(pathname, search);
-    }
+  componentDidMount() {
+    this.checkLoginRedirect();
   }
 
   componentDidUpdate(prevProps) {
@@ -85,6 +73,11 @@ export default class Router extends Component {
 
     const qs = parse(search);
     const prevQs = parse(prevSearch);
+
+    if (pathname !== prevPathname) {
+      // call component did mount here too
+      this.checkLoginRedirect();
+    }
 
     if (pathname !== prevPathname || bumpOnSearch(prevQs, qs)) {
       window && window.scrollTo(0, 0);

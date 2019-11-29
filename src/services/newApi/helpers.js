@@ -1,13 +1,13 @@
 import build from 'redux-object';
 
-export const normalizeResponse = ({ data, included = []}) => {
+export const normalizeResponse = ({ data, included = [] }) => {
   if (!data) return data;
 
   const resultEntities = Array.isArray(data)
     ? data
     : [data];
 
-  const entities = [...data, ...included];
+  const entities = [...resultEntities, ...included];
 
   const result = entities.reduce((acc, item) => {
     if (!acc[item.type]) {

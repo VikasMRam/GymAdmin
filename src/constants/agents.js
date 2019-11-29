@@ -87,3 +87,17 @@ export const agentsFAQs = [
     description: "It's easy. Simply sign up above or complete an inquiry form on any page throughout our site and we will connect you with a preferred agent in your area.",
   },
 ];
+
+export const AGENT_STATUS_DELETED = -2;
+
+export const AGENT_STATUS_NOT_LIVE = -1;
+
+export const AGENT_STATUS_LIVE = 0;
+
+export const AGENT_STATUS_LIVE_ON_PROFILE = 1;
+
+export const AGENT_STATUS_NAME_MAP = {};
+AGENT_STATUS_NAME_MAP[AGENT_STATUS_DELETED] = 'Deleted';
+AGENT_STATUS_NAME_MAP[AGENT_STATUS_NOT_LIVE] = 'Not Live';
+AGENT_STATUS_NAME_MAP[AGENT_STATUS_LIVE] = 'Live';
+AGENT_STATUS_NAME_MAP[AGENT_STATUS_LIVE_ON_PROFILE] = 'Live on Profile';

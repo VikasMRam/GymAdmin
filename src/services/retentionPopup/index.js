@@ -54,6 +54,12 @@ export default class RetentionPopup extends Component {
     this.ifvisible.on('idle', this.onIdleHandler);
   }
 
+  componentDidUpdate(prevProps) {
+    if (!prevProps.user && this.props.user) {
+      this.removeAllEventListeners();
+    }
+  }
+
   componentWillUnmount() {
     this.removeAllEventListeners();
   }
@@ -63,7 +69,7 @@ export default class RetentionPopup extends Component {
     const activeTime = Math.abs(currentTime - this.renderTime);
 
     return activeTime >= EBOOK_TIME_DURATION;
-  }
+  };
 
   onIdleHandler = () => {
     const idleInfo = this.ifvisible.getIdleInfo();
@@ -73,7 +79,7 @@ export default class RetentionPopup extends Component {
     } else if (idleInfo.isIdle) {
       this.ifvisible.wakeup();
     }
-  }
+  };
 
   showEbookModal = (event) => {
     if (this.isModalShown()) {
@@ -82,13 +88,15 @@ export default class RetentionPopup extends Component {
 
     const { hideModal } = this.props;
 
-    this.showModal(<EbookFormContainer
-      event={event}
-      hideModal={hideModal}
-    />, 'eBook');
+    this.showModal((
+      <EbookFormContainer
+        event={event}
+        hideModal={hideModal}
+      />
+    ), 'eBook');
   };
 
-  isModalShown = () => localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN
+  isModalShown = () => localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN || this.props.user
 
   onMouseoutHandler = (e) => {
     const currentTime = new Date().getTime();

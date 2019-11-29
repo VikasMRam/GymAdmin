@@ -100,7 +100,7 @@ export default class ReferralSearchContainer extends Component {
   };
 
   getCanCreateContact = (selectedPartner, data) => {
-    const { contacts=[] } = selectedPartner;
+    const { contacts = [] } = selectedPartner;
     let canCreateContact = false;
     if (contacts.length === 0) {
       canCreateContact = true;
@@ -227,6 +227,7 @@ export default class ReferralSearchContainer extends Component {
     const newBareClient = immutable(pick(parentRawClient, ['id', 'type', 'attributes.clientInfo', 'attributes.uuid', 'relationships']));
     newBareClient.set('id', null);
     newBareClient.set('attributes.clientInfo.slyMessage', partner.slyMessage);
+    newBareClient.set('attributes.clientInfo.referralSource', '');
     const provider = immutable(pick, newProvider, ['id', 'type', 'attributes']);
     provider.set('id', partner.id);
     provider.set('type', 'Provider');

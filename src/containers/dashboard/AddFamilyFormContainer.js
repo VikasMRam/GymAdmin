@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
+import immutable from 'object-path-immutable';
 
 import { query } from 'sly/services/newApi';
 import { createValidator, dependentRequired, usPhone, email, required } from 'sly/services/validation';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { CLIENT_RESOURCE_TYPE, UUIDAUX_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
+import { newClient } from 'sly/constants/payloads/client';
 import { normJsonApi } from 'sly/services/helpers/jsonApi';
 import { FAMILY_STAGE_CONTACT1 } from 'sly/constants/familyDetails';
 import AddFamilyForm from 'sly/components/organisms/AddFamilyForm';
@@ -48,6 +50,7 @@ export default class AddFamilyFormContainer extends Component {
 
   state = {
     duplicates: [],
+    currentClient: {},
   };
 
   handleStepChange = ({ data, doSubmit }) => {
@@ -62,7 +65,13 @@ export default class AddFamilyFormContainer extends Component {
       .then((data) => {
         const matchingClients = normJsonApi(data);
         if (matchingClients.length) {
+          const currentClient = immutable(newClient.data.attributes)
+            .set('clientInfo.email', email)
+            .set('clientInfo.phoneNumber', phone)
+            .value();
+
           return this.setState({
+            currentClient,
             duplicates: matchingClients,
           });
         }
@@ -136,7 +145,7 @@ export default class AddFamilyFormContainer extends Component {
   };
 
   render() {
-    const { duplicates } = this.state;
+    const { duplicates, currentClient } = this.state;
     const { initialValues, onCancel } = this.props;
 
     return (
@@ -158,6 +167,7 @@ export default class AddFamilyFormContainer extends Component {
             <WizardStep
               component={DuplicateFamiliesReduxForm}
               name="Duplicate"
+              currentClient={currentClient}
               clients={duplicates}
               description="Looks like there are leads with matching phone numbers and/or emails. If you still want to proceed, click Add Family below."
               hasButton

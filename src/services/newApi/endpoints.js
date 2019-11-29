@@ -1,11 +1,10 @@
-import { get, patch, post, destroy } from './httpMethods';
+import { get, patch, put, post, destroy } from './httpMethods';
 
 // method names should start with `get`, `create`, `update`, `delete`
 // patch is prefered over put as per specification
 export default {
   getUser: { method: get, path: '/platform/users/:id' },
   updateUser: { method: patch, path: '/platform/users/:id' },
-  updateContact: { method: patch, path: '/platforms/contacts/:id' },
 
   getUsers: { method: get, path: '/platform/users' },
 
@@ -32,10 +31,12 @@ export default {
   setPassword: { method: post, path: '/platform/auth/password' },
   updatePassword: { method: post, path: '/platform/auth/password/update' },
   recoverPassword: { method: post, path: '/platform/auth/recover' },
+  resetPassword: { method: post, path: '/platform/auth/recover/end' },
 
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
   getCommunities: { method: get, path: '/marketplace/communities' },
 
+  getAgent: { method: get, path: '/marketplace/agents/:id' },
   getAgents: { method: get, path: '/marketplace/agents' },
 
   getSearchResources: { method: get, path: '/platform/search-resources' },
@@ -44,6 +45,8 @@ export default {
   createQuestion: { method: post, path: '/platform/questions' },
   createRating: { method: post, path: '/platform/ratings' },
   createAnswer: { method: post, path: '/platform/answers' },
+  updateContent: { method: put, path: '/platform/contents/:id' },
+  updateRating: { method: put, path: '/platform/ratings/:id' },
 
   getClients: { method: get, path: '/marketplace/clients' },
   getClient: { method: get, path: '/marketplace/clients/:id' },
@@ -74,7 +77,9 @@ export default {
   createTask: { method: post, path: '/platform/tasks' },
   updateTask: { method: patch, path: '/platform/tasks/:id' },
 
+  getContacts: { method: get, path: '/platform/contacts' },
   createContact: { method: post, path: '/platform/contacts' },
+  updateContact: { method: patch, path: '/platform/contacts/:id' },
 
   getDatatable: { method: get, path: '/meta-data/datatables/:id' },
   sendEbook: { method: post, path: '/platform/send-ebook' },

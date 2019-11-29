@@ -41,6 +41,14 @@ const ReferralAgreementWrapper = styled.div`
   align-items: baseline;
 `;
 
+// FIXME: (new modals) hack to keep the options for closed inside the viewport, as they are overflowing
+const ClosedReasonField = styled(Field)`
+  .react-select__menu-list {
+    max-height: 200px;
+  } 
+`;
+
+
 export default class UpdateFamilyStageForm extends Component {
   static propTypes = {
     handleSubmit: func,
@@ -257,8 +265,6 @@ export default class UpdateFamilyStageForm extends Component {
                 label="Invoice Amount"
                 placeholder="0.00"
                 component={ReduxField}
-                parse={priceParser}
-                format={priceFormatter}
               />
               <Field
                 name="invoicePaid"
@@ -274,7 +280,7 @@ export default class UpdateFamilyStageForm extends Component {
           </>
         }
         {isNext(FAMILY_STAGE_LOST) &&
-          <Field
+          <ClosedReasonField
             name="lossReason"
             label="Closed reason"
             type="choice"

@@ -1,31 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { AGENT_STATUS_NAME_MAP } from 'sly/constants/agents';
+import { getReferralSentTimeText } from 'sly/services/helpers/communityReferral';
 import DashboardAdminReferralAgentTile from 'sly/components/organisms/DashboardAdminReferralAgentTile';
+import AgentLinda from 'sly/../private/storybook/sample-data/agent-linda-iwamota.json';
 
 const handleSubmit = jest.fn();
 
-const agent = {
-  name: 'Agent Business Name',
-  info: {
-    slyScore: 97,
-    displayName: 'Agent Name',
-    last5DayLeadCount: 5,
-    citiesServed: ['San Francisco'],
-    slyPhone: '9999999999',
-    slyCellPhone: '8888888888',
-    slyWorkPhone: '7777777777',
-    cellPhone: '8888888888',
-    workPhone: '7777777777',
-    profileImageUrl: 'img.url',
-  },
-  contacts: [{
-    workPhone: '6666666666',
-    mobilePhone: '5555555555',
-  }],
-};
-
-const wrap = (props = {}) => shallow(<DashboardAdminReferralAgentTile agent={agent} handleSubmit={handleSubmit} {...props} />);
+const wrap = (props = {}) => shallow(<DashboardAdminReferralAgentTile agent={AgentLinda} handleSubmit={handleSubmit} {...props} />);
 
 describe('DashboardAdminReferralAgentTile', () => {
   it('does not render passed children', () => {
@@ -36,57 +19,76 @@ describe('DashboardAdminReferralAgentTile', () => {
 
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.contains(agent.name)).toBe(true);
-    expect(wrapper.contains(agent.info.slyScore)).toBe(true);
-    expect(wrapper.contains(agent.info.workPhone)).toBe(true);
-    expect(wrapper.contains(agent.info.cellPhone)).toBe(true);
-    expect(wrapper.contains(agent.info.last5DayLeadCount)).toBe(true);
+    expect(wrapper.contains(AgentLinda.name)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.slyScore)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.workPhone)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.cellPhone)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.last5DayLeadCount)).toBeTruthy();
+    expect(wrapper.contains(AGENT_STATUS_NAME_MAP[AgentLinda.status])).toBeTruthy();
   });
 
   it('renders without info', () => {
     const agentWithoutInfo = {
-      name: 'Agent Business Name' };
+      name: AgentLinda.name,
+      status: AgentLinda.status,
+    };
     const wrapper = wrap({ agent: agentWithoutInfo });
 
-    expect(wrapper.contains(agent.name)).toBe(true);
-    expect(wrapper.contains(agent.info.slyScore)).toBe(false);
-    expect(wrapper.contains(agent.info.workPhone)).toBe(false);
-    expect(wrapper.contains(agent.info.cellPhone)).toBe(false);
-    expect(wrapper.contains(agent.info.last5DayLeadCount)).toBe(false);
+    expect(wrapper.contains(AgentLinda.name)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.slyScore)).toBeFalsy();
+    expect(wrapper.contains(AgentLinda.info.workPhone)).toBeFalsy();
+    expect(wrapper.contains(AgentLinda.info.cellPhone)).toBeFalsy();
+    expect(wrapper.contains(AgentLinda.info.last5DayLeadCount)).toBeFalsy();
+    expect(wrapper.contains(AGENT_STATUS_NAME_MAP[agentWithoutInfo.status])).toBeTruthy();
+  });
+
+  it('renders with status 0', () => {
+    const newAgent = { ...AgentLinda };
+    newAgent.status = 0;
+    const wrapper = wrap({ agent: newAgent });
+    expect(wrapper.contains(AgentLinda.name)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.slyScore)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.workPhone)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.cellPhone)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.last5DayLeadCount)).toBeTruthy();
+    expect(wrapper.contains(AGENT_STATUS_NAME_MAP[newAgent.status])).toBeTruthy();
   });
 
   it('renders with Recommended', () => {
     const wrapper = wrap({ isRecommended: true });
-    expect(wrapper.contains(agent.name)).toBe(true);
-    expect(wrapper.contains(agent.info.slyScore)).toBe(true);
-    expect(wrapper.contains(agent.info.workPhone)).toBe(true);
-    expect(wrapper.contains(agent.info.cellPhone)).toBe(true);
-    expect(wrapper.contains(agent.info.last5DayLeadCount)).toBe(true);
+    expect(wrapper.contains(AgentLinda.name)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.slyScore)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.workPhone)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.cellPhone)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.last5DayLeadCount)).toBeTruthy();
+    expect(wrapper.contains(AGENT_STATUS_NAME_MAP[AgentLinda.status])).toBeTruthy();
 
     expect(wrapper.find('IconBadge').find('[text="RECOMMENDED"]')).toHaveLength(2);
   });
 
   it('renders referralSentAt', () => {
     const referralSentAt = '2018-04-20T08:25:56Z';
-    const referralSentAtString = '4/20/18, 8:25AM';
+    const referralSentAtString = getReferralSentTimeText(referralSentAt);
     const wrapper = wrap({ referralSentAt });
-    expect(wrapper.contains(agent.name)).toBe(true);
-    expect(wrapper.contains(agent.info.slyScore)).toBe(true);
-    expect(wrapper.contains(agent.info.workPhone)).toBe(true);
-    expect(wrapper.contains(agent.info.cellPhone)).toBe(true);
-    expect(wrapper.contains(agent.info.last5DayLeadCount)).toBe(true);
+    expect(wrapper.contains(AgentLinda.name)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.slyScore)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.workPhone)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.cellPhone)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.last5DayLeadCount)).toBeTruthy();
+    expect(wrapper.contains(AGENT_STATUS_NAME_MAP[AgentLinda.status])).toBeTruthy();
 
-    expect(wrapper.contains(referralSentAtString)).toBe(true);
+    expect(wrapper.contains(referralSentAtString)).toBeTruthy();
   });
 
   it('renders stage', () => {
     const stage = 'New';
     const wrapper = wrap({ stage });
-    expect(wrapper.contains(agent.name)).toBe(true);
-    expect(wrapper.contains(agent.info.slyScore)).toBe(true);
-    expect(wrapper.contains(agent.info.workPhone)).toBe(true);
-    expect(wrapper.contains(agent.info.cellPhone)).toBe(true);
-    expect(wrapper.contains(agent.info.last5DayLeadCount)).toBe(true);
+    expect(wrapper.contains(AgentLinda.name)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.slyScore)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.workPhone)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.cellPhone)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.last5DayLeadCount)).toBeTruthy();
+    expect(wrapper.contains(AGENT_STATUS_NAME_MAP[AgentLinda.status])).toBeTruthy();
 
     expect(wrapper.find('Stage').find('[stage="New"]')).toHaveLength(1);
   });
@@ -94,8 +96,8 @@ describe('DashboardAdminReferralAgentTile', () => {
   it('render DashboardAdminReferralAgentTile to handle bottom Action ', () => {
     const bottomActionText = 'Change Agent';
     const bottomActionOnClick = jest.fn();
-    const wrapper = wrap({ agent, bottomActionText, bottomActionOnClick });
-    expect(wrapper.contains(bottomActionText)).toBe(true);
+    const wrapper = wrap({ bottomActionText, bottomActionOnClick });
+    expect(wrapper.contains(bottomActionText)).toBeTruthy();
     const BottomActionBlock = wrapper.find('BottomActionBlock');
     BottomActionBlock.simulate('click');
     expect(bottomActionOnClick).toHaveBeenCalledTimes(1);

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { object, func } from 'prop-types';
+import { object, func, bool } from 'prop-types';
 import Helmet from 'react-helmet';
 import { Route } from 'react-router';
 
@@ -57,7 +57,7 @@ const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
 });
 
 const BookATourPage = ({
-  community, user, userDetails, onComplete, redirectTo, match
+  community, user, medicaidCoverage, onComplete, redirectTo, match,
 }) => {
   const {
     id, mainImage,
@@ -69,7 +69,7 @@ const BookATourPage = ({
   const formSubheading = 'A local senior living advisor will help get you set up a tour with this community.';
   const handleStepChange = ({ currentStep, doSubmit }) => {
     sendEvent('step-completed', id, currentStep);
-    if (userDetails && userDetails.phone && userDetails.fullName) {
+    if (user && user.phoneNumber && user.name) {
       return doSubmit();
     }
     return null;
@@ -82,7 +82,7 @@ const BookATourPage = ({
       </Helmet>
       <Header />
       <Column backgroundImage={mainImage}>
-        <StyledCommunityInfo inverted community={community} />
+        <StyledCommunityInfo inverted community={community} headerIsLink />
       </Column>
       <WizardController
         formName="BookATourWizardForm"
@@ -98,7 +98,7 @@ const BookATourPage = ({
                 <WizardStep
                   component={CommunityBookATourDateFormContainer}
                   name="Date"
-                  userDetails={userDetails}
+                  medicaidCoverage={medicaidCoverage}
                   onDateChange={(e, newValue) => sendEvent('date-changed', id, newValue.toString())}
                   onTimeChange={(e, newValue) => sendEvent('time-changed', id, newValue.toString())}
                 />
@@ -108,7 +108,6 @@ const BookATourPage = ({
                   onContactByTextMsgChange={(e, value) => sendEvent('contactByTextMsg-changed', id, value)}
                   onAdvisorHelpClick={() => redirectTo(`${match.url}/help`)}
                   user={user}
-                  userDetails={userDetails}
                   heading={formHeading}
                   subheading={formSubheading}
                 />
@@ -119,7 +118,7 @@ const BookATourPage = ({
                 date={data.scheduledDate}
                 time={data.scheduledTime}
                 onProgressClick={onSubmit}
-                isFinalStep={!!(userDetails && userDetails.phone && userDetails.fullName) || isFinalStep}
+                isFinalStep={!!(user && user.phoneNumber && user.name) || isFinalStep}
                 isButtonDisabled={!submitEnabled}
               />
             </Controls>
@@ -154,8 +153,8 @@ const BookATourPage = ({
 BookATourPage.propTypes = {
   community: communityPropType,
   user: object,
-  userDetails: object,
   onComplete: func,
+  medicaidCoverage: bool,
   redirectTo: func.isRequired,
   match: object.isRequired,
 };

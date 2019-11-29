@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { hydrate } from 'react-dom';
+import styled from 'styled-components';
 
 const HYDRATION_DATA_TYPE = 'application/hydration-data';
 const HYDRATION_MARKER_TYPE = 'application/hydration-marker';
@@ -30,14 +31,19 @@ function storeProps(Component, props) {
   return hid;
 }
 
-export const withHydration = (Component, { alwaysHydrate } = {}) => (props) => {
+function HydratedComponentWrapper({ children }) {
+  return <div>{children}</div>;
+}
+
+export const withHydration = (Component, { alwaysHydrate, Wrapper = HydratedComponentWrapper } = {}) => (props) => {
   const hid = storeProps(Component, props);
+
   return (
     <>
       <script type={HYDRATION_MARKER_TYPE} data-hid={hid} data-always-hydrate={!!alwaysHydrate} />
-      <div>
+      <Wrapper>
         <Component {...props} />
-      </div>
+      </Wrapper>
     </>
   );
 };
@@ -67,11 +73,11 @@ export function hydrateComponents(components, container, Wrapper) {
   const componentMap = createComponentMap(components);
 
   const observer = new IntersectionObserver((entries) => {
-    for(const entry of entries) {
+    for (const entry of entries) {
       const hydrateRootElement = entry.target;
       const markerElement = hydrateRootElement.previousElementSibling;
 
-      if(entry.isIntersecting || markerElement.getAttribute('data-always-hydrate') === 'true') {
+      if (entry.isIntersecting || markerElement.getAttribute('data-always-hydrate') === 'true') {
         const { componentName, props } = data[markerElement.getAttribute('data-hid')];
         const Component = componentMap[componentName];
 

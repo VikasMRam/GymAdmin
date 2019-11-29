@@ -2,18 +2,10 @@ import { Component } from 'react';
 import { string, func, object, shape } from 'prop-types';
 import produce from 'immer';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import isMatch from 'lodash/isMatch';
 
-import { resourceCreateRequest } from 'sly/store/resource/actions';
-import { getDetail } from 'sly/store/selectors';
-import { connectController } from 'sly/controllers';
 import SlyEvent from 'sly/services/helpers/events';
-import {
-  ASSESSMENT,
-  REQUEST_CALLBACK,
-  REQUEST_CONSULTATION,
-  REQUEST_PRICING,
-  REQUEST_AVAILABILITY,
-} from 'sly/services/api/actions';
 import {
   AVAILABILITY_REQUEST,
   CONSULTATION_REQUESTED, PRICING_REQUEST,
@@ -26,90 +18,75 @@ import {
   email,
   usPhone,
 } from 'sly/services/validation';
-import userPropType from 'sly/propTypes/user';
+import userPropType, { uuidAux as uuidAuxProptype } from 'sly/propTypes/user';
 import { CONCIERGE } from 'sly/constants/modalType';
 import { withRedirectTo } from 'sly/services/redirectTo';
 
 export const CONVERSION_FORM = 'conversionForm';
-export const EXPRESS_CONVERSION_FORM = 'expressConversionForm';
 export const ADVANCED_INFO = 'advancedInfo';
-export const SIMILAR_COMMUNITIES = 'similarCommunities';
 export const WHAT_NEXT = 'whatNext';
 export const HOW_IT_WORKS = 'howItWorks';
 
 const isAssessment = ({
-  typeOfCare,
-  timeToMove,
-  budget,
-}) => !!(typeOfCare && timeToMove && budget);
+  housingInfo,
+  financialInfo,
+}) => typeof housingInfo.moveTimeline !== 'undefined'
+  && typeof housingInfo.typeCare !== 'undefined'
+  && typeof financialInfo.maxMonthlyBudget !== 'undefined';
 
 const hasAllUserData = createBooleanValidator({
-  fullName: [required],
+  name: [required],
   email: [required, email],
-  phone: [required, usPhone],
+  phoneNumber: [required, usPhone],
 });
 
-const isCallbackorPricingAvailReq = slug => contact =>
-  contact.slug === slug
-  && (contact.contactType === REQUEST_CALLBACK || contact.contactType === REQUEST_PRICING || contact.contactType === REQUEST_AVAILABILITY);
-
-const isPricingReq = slug => contact =>
-  contact.slug === slug
-  && (contact.contactType === REQUEST_PRICING);
-
-const isAvailReq = slug => contact =>
-  contact.slug === slug
-  && (contact.contactType === REQUEST_AVAILABILITY);
-
-const getLegacyActionType = (action) => {
-  if (action === CONSULTATION_REQUESTED) {
-    return REQUEST_CONSULTATION;
-  } else if (action === PROFILE_CONTACTED) {
-    return REQUEST_AVAILABILITY;
-  } else if (action === PRICING_REQUEST) {
-    return REQUEST_PRICING;
-  }
-  return null;
+const createHasProfileAction = uuidActions => (type, actionInfo) => {
+  if (!uuidActions) return false;
+  return uuidActions.some((uuidAction) => {
+    return (
+      uuidAction.actionType === type &&
+      isMatch(uuidAction.actionInfo, actionInfo)
+    );
+  });
 };
 
-const mapStateToProps = (state, props) => {
-  const { communitySlug, queryParams } = props;
-  const {
-    profilesContacted,
-    consultationRequested,
-    userDetails = {},
-  } = getDetail(state, 'userAction') || {};
+const mapStateToProps = (state, { communitySlug, queryParams, uuidActions }) => {
   const { modal, currentStep } = queryParams;
+  const hasProfileAction = createHasProfileAction(uuidActions);
+  const pricingRequested = hasProfileAction(PROFILE_CONTACTED, {
+    contactType: PRICING_REQUEST,
+  });
+
+  const availabilityRequested = hasProfileAction(PROFILE_CONTACTED, {
+    contactType: AVAILABILITY_REQUEST,
+  });
+
   return {
     communitySlug,
-    userDetails,
     concierge: {
       currentStep: currentStep || CONVERSION_FORM,
       modalIsOpen: modal === CONCIERGE || false,
-      consultationRequested,
-      pricingRequested: (profilesContacted || []).some(isPricingReq(communitySlug)),
-      availabilityRequested: (profilesContacted || []).some(isAvailReq(communitySlug)),
-      contactRequested: (profilesContacted || []).some(isCallbackorPricingAvailReq(communitySlug)),
+      pricingRequested,
+      availabilityRequested,
+      contactRequested: pricingRequested || availabilityRequested,
     },
   };
 };
 
-const submit = data => resourceCreateRequest('userAction', data);
-
 @withRouter
 @withRedirectTo
 
-@connectController(
-  mapStateToProps,
-  dispatch => ({
-    submit: data => dispatch(submit(data)),
-  }),
-)
-
 @withAuth
+@prefetch('uuidActions', 'getUuidActions', (req, { communitySlug }) =>
+  req({
+    'filter[actionType]': `${PROFILE_CONTACTED}`,
+    'filter[actionInfo-slug]': communitySlug,
+  })
+)
 @prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 @query('createAction', 'createUuidAction')
 @query('updateUuidAux', 'updateUuidAux')
+@connect(mapStateToProps)
 
 export default class ConciergeController extends Component {
   static displayName = 'ConciergeController';
@@ -118,16 +95,14 @@ export default class ConciergeController extends Component {
     match: shape({ url: string.isRequired }),
     redirectTo: func.isRequired,
     children: func.isRequired,
-    set: func.isRequired,
     concierge: object.isRequired,
     communitySlug: string,
     pathName: string,
     user: userPropType,
+    uuidAux: uuidAuxProptype,
     queryParams: object,
     setQueryParams: func.isRequired,
-    submit: func,
     gotoGetCustomPricing: func,
-    userDetails: object,
     status: shape({
       uuidAux: object,
       user: object,
@@ -137,33 +112,9 @@ export default class ConciergeController extends Component {
     createOrUpdateUser: func,
   };
 
-  getPricing = () => {
-    const {
-      concierge,
-      communitySlug,
-      pathName,
-      userDetails,
-    } = this.props;
-
-    const {
-      pricingRequested,
-    } = concierge;
-
-    SlyEvent.getInstance().sendEvent({
-      action: 'click-gcp-button',
-      category: 'PricingWizard',
-      label: communitySlug || pathName,
-    });
-
-    if (!pricingRequested && hasAllUserData(userDetails)) {
-      return this.doSubmitConversion(userDetails, PRICING_REQUEST, true);
-    }
-    return this.next();
-  };
-
   gotoAdvancedInfo = () => {
     const {
-      userDetails,
+      uuidAux,
       setQueryParams,
     } = this.props;
 
@@ -173,7 +124,7 @@ export default class ConciergeController extends Component {
       label: 'profilePage',
     });
 
-    if (!isAssessment(userDetails)) {
+    if (!isAssessment(uuidAux.uuidInfo)) {
       setQueryParams({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
     } else {
       this.next();
@@ -234,9 +185,8 @@ export default class ConciergeController extends Component {
     return this.doSubmitConversion(data, CONSULTATION_REQUESTED, false);
   };
 
-  doSubmitConversion = (data = {}, action, isExpress = false) => {
+  doSubmitConversion = (data = {}, action) => {
     const {
-      submit,
       communitySlug,
       gotoGetCustomPricing,
       createAction,
@@ -244,17 +194,7 @@ export default class ConciergeController extends Component {
       createOrUpdateUser,
     } = this.props;
 
-    const value = {
-      user: { ...data },
-      propertyIds: [],
-    };
-
-    if (communitySlug) {
-      value.propertyIds = [communitySlug];
-    }
-
-    const { email: dataEmail, phone, full_name: name } = data;
-    const email = dataEmail || undefined;
+    const { email, phone, full_name: name } = data;
 
     const attributes = {
       actionInfo: { email, phone, name },
@@ -265,20 +205,12 @@ export default class ConciergeController extends Component {
     if (action === PROFILE_CONTACTED) {
       attributes.actionInfo.slug = communitySlug;
       attributes.actionInfo.contactType = AVAILABILITY_REQUEST;
-    } else if (action === PRICING_REQUEST) {
-      // attributes.actionType = PRICING_REQUEST;
     }
 
-    return Promise.all([
-      submit({
-        action: getLegacyActionType(action),
-        value,
-      }),
-      createAction({
-        type: 'UUIDAction',
-        attributes,
-      }),
-    ]).then(() => createOrUpdateUser({
+    return createAction({
+      type: 'UUIDAction',
+      attributes,
+    }).then(() => createOrUpdateUser({
       email,
       name,
       phone,
@@ -286,14 +218,13 @@ export default class ConciergeController extends Component {
       if (communitySlug && gotoGetCustomPricing) {
         gotoGetCustomPricing();
       } else {
-        this.next(isExpress);
+        this.next();
       }
     });
   };
 
   submitAdvancedInfo = (data) => {
     const {
-      submit,
       communitySlug,
       pathName,
       concierge,
@@ -337,10 +268,6 @@ export default class ConciergeController extends Component {
     const uuidAux = status.uuidAux.result;
 
     return Promise.all([
-      submit({
-        action: ASSESSMENT,
-        value,
-      }),
       updateUuidAux({ id: uuidAux }, produce(uuidAux, (draft) => {
         const uuidInfo = draft.attributes.uuidInfo || {};
 
@@ -352,7 +279,7 @@ export default class ConciergeController extends Component {
 
         const financialInfo = uuidInfo.financialInfo || {};
         financialInfo.maxMonthlyBudget = data.budget;
-        financialInfo.medicare = data.medicaid_coverage;
+        financialInfo.medicaid = data.medicaid_coverage;
         uuidInfo.financialInfo = financialInfo;
 
         draft.attributes.uuidInfo = uuidInfo;
@@ -376,7 +303,8 @@ export default class ConciergeController extends Component {
     const {
       concierge,
       setQueryParams,
-      userDetails,
+      user,
+      uuidAux,
       communitySlug,
       redirectTo,
     } = this.props;
@@ -386,20 +314,17 @@ export default class ConciergeController extends Component {
     } else {
       const {
         contactRequested,
-        consultationRequested,
       } = concierge;
 
-      const done = (
-        (contactRequested || consultationRequested)
-        && isAssessment(userDetails)
-        && hasAllUserData(userDetails)
-      );
+      const done = contactRequested
+        && isAssessment(uuidAux.uuidInfo)
+        && hasAllUserData(user);
 
       if (done) {
         setQueryParams({ modal: CONCIERGE, currentStep: WHAT_NEXT });
-      } else if (!hasAllUserData(userDetails)) {
+      } else if (!hasAllUserData(user)) {
         setQueryParams({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
-      } else if (!isAssessment(userDetails)) {
+      } else if (!isAssessment(uuidAux.uuidInfo)) {
         setQueryParams({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
       }
     }
@@ -414,11 +339,9 @@ export default class ConciergeController extends Component {
     const {
       children,
       concierge,
-      userDetails,
     } = this.props;
 
     const {
-      getPricing,
       gotoAdvancedInfo,
       gotoWhatNext,
       submitRegularConversion,
@@ -429,8 +352,6 @@ export default class ConciergeController extends Component {
 
     return children({
       concierge,
-      userDetails,
-      getPricing,
       gotoWhatNext,
       gotoAdvancedInfo,
       submitRegularConversion,

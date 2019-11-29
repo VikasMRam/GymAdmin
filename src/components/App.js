@@ -31,9 +31,10 @@ import {
   FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
   FAMILY_DASHBOARD_MESSAGES_PATH,
   ADMIN_DASHBOARD_CALLS_PATH,
-  ADMIN_DASHBOARD_CALL_DETAILS_PATH,
+  ADMIN_DASHBOARD_CALL_DETAILS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import careTypes from 'sly/constants/careTypes';
+import PageEventsContainer from 'sly/containers/PageEventsContainer';
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/components/pages/Error'));
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage'));
@@ -67,6 +68,7 @@ const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChu
 const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallsOverview" */ 'sly/containers/DashboardCallsIndexPageContainer'));
 const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
 const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/components/pages/DashboardAgentTasksPage'));
+const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/components/pages/DashboardAgentContactsPage'));
 
 setGlobalStyles();
 setDatepickerStyles();
@@ -129,6 +131,10 @@ const routes = [
     path: AGENT_DASHBOARD_TASKS_PATH,
     component: DashboardAgentTasksPage,
     exact: true,
+  },
+  {
+    path: AGENT_DASHBOARD_CONTACTS_PATH,
+    component: DashboardAgentContactsPage,
   },
   {
     path: FAMILY_DASHBOARD_MESSAGES_PATH,
@@ -258,7 +264,14 @@ const routes = [
   },
 ];
 
-const routeComponents = routes.map(({ component: Component, ...route }) => <Route key={route.path} component={props => <Component {...props} />} {...route} />);
+const routeComponents = routes.map(({ component: Component, ...route }) => (
+  <Route key={route.path} {...route} component={props => (
+    <>
+      <PageEventsContainer />
+      <Component {...props} />
+    </>
+  )} />
+));
 
 export default class App extends Component {
   static childContextTypes = {

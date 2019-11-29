@@ -6,10 +6,10 @@ export const STEP_ORDERS = {
 export const DEFAULT_STEP_ORDER = 'flow2';
 
 export const STEP_INPUT_FIELD_NAMES = {
-  LookingFor: ['looking_for'],
-  CareNeeds: ['care_needs'],
-  BuyingOrRenting: ['renting_or_buying'],
-  MonthlyBudget: ['monthly_budget', 'medicaid_coverage'],
+  LookingFor: ['lookingFor'],
+  CareNeeds: ['careNeeds'],
+  BuyingOrRenting: ['rentingOrBuying'],
+  MonthlyBudget: ['monthlyBudget', 'medicaidCoverage'],
   CitySearch: ['location'],
-  LeadFound: ['fullName', 'email', 'phone'],
+  LeadFound: ['name', 'email', 'phone'],
 };

@@ -8,7 +8,7 @@ const uuidInfo = shape({
   }),
   financialInfo: shape({
     maxMonthlyBudget: string,
-    medicare: bool,
+    medicaid: bool,
     payment: string,
   }),
   housingInfo: shape({

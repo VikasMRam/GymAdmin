@@ -7,8 +7,8 @@ import { ADMIN_DASHBOARD_CALL_DETAILS_PATH } from 'sly/constants/dashboardAppPat
 import DashboardCallsIndexPage from 'sly/components/pages/DashboardCallsIndexPage';
 
 const ADMIN_CALLS_OVERVIEW_TABLE_HEADINGS = [
-  { text: 'Calling From' },
   { text: 'Calling To' },
+  { text: 'Calling From' },
   { text: 'Status' },
   { text: 'Assigned To' },
 ];

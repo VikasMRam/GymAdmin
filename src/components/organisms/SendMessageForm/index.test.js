@@ -16,7 +16,7 @@ describe('SendMessageForm', () => {
   it('renders', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
-    expect(wrapper.find('StyledField').filter({ name: 'message' })).toHaveLength(1);
+    expect(wrapper.find('Textarea').filter({ name: 'message' })).toHaveLength(1);
     expect(wrapper.find('SmallScreenButton')).toHaveLength(1);
     expect(wrapper.find('BigScreenButton')).toHaveLength(1);
     expect(wrapper.find(Block)).toHaveLength(0);
@@ -25,7 +25,7 @@ describe('SendMessageForm', () => {
   it('render error when error is passed', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit, error });
-    expect(wrapper.find('StyledField').filter({ name: 'message' })).toHaveLength(1);
+    expect(wrapper.find('Textarea').filter({ name: 'message' })).toHaveLength(1);
     expect(wrapper.find('SmallScreenButton')).toHaveLength(1);
     expect(wrapper.find('BigScreenButton')).toHaveLength(1);
     expect(wrapper.find(Block)).toHaveLength(1);

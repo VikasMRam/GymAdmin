@@ -49,7 +49,7 @@ describe('Subscriptions', () => {
 
   it('should notify with in-page', async () => {
     const makeLink = jest.fn(() => 'test-link');
-    subscriptionList['TEST_MESSAGE'] = makeLink;
+    subscriptionList.TEST_MESSAGE = makeLink;
 
     const notificationMessage = 'not mess';
     const message = { type: 'TEST_MESSAGE', payload: { notificationMessage } };
@@ -71,7 +71,7 @@ describe('Subscriptions', () => {
   it('should notify with in-page when it is logged in but not granted', async () => {
     global.Notification.requestPermission = jest.fn(fn => fn('default'));
     const makeLink = jest.fn(() => 'test-link');
-    subscriptionList['TEST_MESSAGE'] = makeLink;
+    subscriptionList.TEST_MESSAGE = makeLink;
 
     const notificationMessage = 'not mess';
     const message = { type: 'TEST_MESSAGE', payload: { notificationMessage } };
@@ -92,7 +92,7 @@ describe('Subscriptions', () => {
 
   it('should notify with notification', async () => {
     const makeLink = jest.fn(() => 'test-link');
-    subscriptionList['TEST_MESSAGE'] = makeLink;
+    subscriptionList.TEST_MESSAGE = makeLink;
 
     const notificationMessage = 'not mess';
     const message = { type: 'TEST_MESSAGE', payload: { notificationMessage } };

@@ -4,7 +4,6 @@ import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 import { Redirect, generatePath } from 'react-router';
-import { branch } from 'recompose';
 
 import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
@@ -23,6 +22,7 @@ import { NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/notes';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import SlyEvent from 'sly/services/helpers/events';
 import withBreakpoint from 'sly/components/helpers/breakpoint';
+import { normJsonApi } from 'sly/services/helpers/jsonApi';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFamilyContainer';
@@ -36,15 +36,15 @@ const mapStateToProps = (state, { conversations }) => ({
   id: match.params.id,
 }))
 
-@prefetch('notes', 'getNotes', (req, { match }) => req({
-  'filter[commentable_id]': match.params.id,
-}))
-
 @query('updateClient', 'updateClient')
 
 @query('createNote', 'createNote')
 
 @query('updateNote', 'updateNote')
+
+@query('getClients', 'getClients')
+
+@query('getNotes', 'getNotes')
 
 @connect(null, (dispatch, { api }) => ({
   invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
@@ -53,16 +53,6 @@ const mapStateToProps = (state, { conversations }) => ({
 @prefetch('conversations', 'getConversations', (req, { match }) => req({
   'filter[client]': match.params.id,
 }))
-
-@branch(
-  props => props.client,
-  prefetch('clients', 'getClients',
-    (perform, props) => perform({
-      exp: 'or',
-      'filter[email]': props.client.clientInfo.email,
-      'filter[phone]': props.client.clientInfo.phoneNumber,
-    }))
-)
 
 @connect(mapStateToProps)
 
@@ -84,6 +74,8 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     updateClient: func.isRequired,
     createNote: func.isRequired,
     updateNote: func.isRequired,
+    getClients: func.isRequired,
+    getNotes: func.isRequired,
     notes: arrayOf(notePropType),
     invalidateClients: func,
   };
@@ -91,6 +83,37 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   state = {
     selectedConversation: null,
     conversationsList: null,
+    clientsWithSameContacts: null,
+    rawNotes: null,
+    notes: null,
+  }
+
+  componentDidUpdate() {
+    if (this.props.client && this.state.clientsWithSameContacts === null) {
+      const { client, getClients } = this.props;
+      const params = {
+        exp: 'or',
+        'filter[email]': client.clientInfo.email,
+        'filter[phone]': client.clientInfo.phoneNumber,
+      };
+      getClients(params)
+        .then(resp => normJsonApi(resp))
+        .then(data => this.setState({ clientsWithSameContacts: data }));
+    }
+    if (this.props.client && this.state.notes === null) {
+      this.getNotes();
+    }
+  }
+
+  getNotes = () => {
+    const { client, getNotes } = this.props;
+    const params = {
+      'filter[commentable_id]': client.id,
+    };
+    return getNotes(params)
+      .then((data) => { this.setState({ rawNotes: data.body.data }); return data; })
+      .then(resp => normJsonApi(resp))
+      .then(data => this.setState({ notes: data }));
   }
 
   onRejectSuccess = (hide) => {
@@ -101,7 +124,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   onAddNote = (data, notifyError, notifyInfo, hideModal) => {
     const {
-      createNote, client, status, invalidateClients,
+      createNote, client, invalidateClients,
     } = this.props;
     const { id } = client;
     const { note } = data;
@@ -121,7 +144,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       value: '',
     });
     const notePromise = () => createNote(payload);
-    const getNotesPromise = () => status.notes.refetch();
+    const getNotesPromise = () => this.getNotes();
 
     return notePromise()
       .then(getNotesPromise)
@@ -147,9 +170,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   onEditNote = (data, note, notifyError, notifyInfo, hideModal) => {
     const {
-      updateNote, status, invalidateClients,
+      updateNote, invalidateClients,
     } = this.props;
-    const { result: rawNotes } = status.notes;
+    const { rawNotes } = this.state;
     const { id } = note;
     const oldNote = rawNotes.find(n => n.id === id);
     const { note: newNoteBody } = data;
@@ -164,7 +187,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       value: id,
     });
     const notePromise = () => updateNote({ id }, payload);
-    const getNotesPromise = () => status.notes.refetch();
+    const getNotesPromise = () => this.getNotes();
 
     return notePromise()
       .then(getNotesPromise)
@@ -251,6 +274,20 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     this.setState({ selectedConversation: conversation });
   };
 
+  refetchClient = () => {
+    const { status } = this.props;
+    status.client.refetch();
+  }
+
+  refetchNotes = () => {
+    this.getNotes();
+  }
+
+  refetchConversations = () => {
+    const { status } = this.props;
+    status.conversations.refetch();
+  }
+
   static getDerivedStateFromProps(props, state) {
     const { conversations } = props;
     const selectedConversation = state.selectedConversation || props.selectedConversation;
@@ -268,15 +305,13 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
     const {
       client,
-      clients,
       match,
       status,
-      notes,
       user,
       breakpoint,
     } = this.props;
 
-    const { selectedConversation, conversationsList } = this.state;
+    const { selectedConversation, conversationsList, clientsWithSameContacts, notes } = this.state;
 
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && client && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
@@ -290,9 +325,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { result: rawClient, meta } = status.client;
     const { hasFinished: clientHasFinished } = status.client;
     // since it's using conditional prefetch, in initial stage clients key won't be there
-    const { hasFinished: clientsHasFinished } = status.clients || {};
-    const { hasFinished: noteHasFinished } = status.notes;
-
     return (
       <NotificationController>
         {({ notifyError, notifyInfo }) => (
@@ -301,7 +333,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
               <DashboardMyFamiliesDetailsPage
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
-                clients={clients}
+                clients={clientsWithSameContacts || []}
                 client={client}
                 rawClient={rawClient}
                 currentTab={match.params.tab || SUMMARY}
@@ -309,16 +341,16 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 hideModal={hide}
                 meta={meta}
                 onRejectSuccess={() => onRejectSuccess(hide)}
-                refetchClient={status.client.refetch}
-                refetchNotes={status.notes.refetch}
+                refetchClient={this.refetchClient}
+                refetchNotes={this.refetchNotes}
                 onAddNote={onAddNote}
                 onEditNote={onEditNote}
-                notes={notes}
-                noteIsLoading={!noteHasFinished}
-                clientIsLoading={!clientHasFinished || !clientsHasFinished}
+                notes={notes || []}
+                noteIsLoading={!notes}
+                clientIsLoading={!clientHasFinished}
                 goToFamilyDetails={this.goToFamilyDetails}
                 goToMessagesTab={this.goToMessagesTab}
-                refetchConversations={status.conversations.refetch}
+                refetchConversations={this.refetchConversations}
                 user={user}
                 conversation={selectedConversation}
                 conversations={conversationsList || []}

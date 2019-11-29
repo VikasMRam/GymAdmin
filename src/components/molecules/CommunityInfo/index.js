@@ -73,6 +73,7 @@ export default class CommunityInfo extends Component {
     showDescription: bool,
     palette: palettePropType,
     className: string,
+    headerIsLink: bool,
   };
 
   static defaultProps = {
@@ -80,7 +81,7 @@ export default class CommunityInfo extends Component {
   };
 
   render() {
-    const { community, inverted, showFloorPlan, showDescription, palette, className } = this.props;
+    const { community, inverted, showFloorPlan, showDescription, palette, className, headerIsLink } = this.props;
     const { webViewInfo, floorPlanString, propInfo = {}, propRatings, mainService } = community;
 
     const address = getAddress(community);
@@ -126,13 +127,22 @@ export default class CommunityInfo extends Component {
       );
     }
 
+    const headerContent  = (
+      <CommunityHeading level="subtitle" size="subtitle" title={community.name} palette={inverted ? 'white' : 'slate'}>
+        {community.name}
+      </CommunityHeading>
+    );
+
+    const header = headerIsLink
+      ? (
+        <Link href={community.url}>
+          {headerContent}
+        </Link>
+      ) : headerContent;
+
     return (
       <Wrapper className={className}>
-        <Link href={community.url}>
-          <CommunityHeading level="subtitle" size="subtitle" title={community.name} palette={inverted ? 'white' : 'slate'}>
-            {community.name}
-          </CommunityHeading>
-        </Link>
+        {header}
         <TopWrapper>
           {community.startingRate ? (
             <Rate palette={palette || (inverted ? 'white' : 'primary')} weight="medium">

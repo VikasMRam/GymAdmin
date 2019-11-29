@@ -54,6 +54,7 @@ const AddTaskForm = ({
         type="text"
         placeholder="Task description"
         component={ReduxField}
+        required
       />
       <Field
         name="dueDate"
@@ -62,6 +63,7 @@ const AddTaskForm = ({
         placeholder="mm/dd/yyyy"
         component={ReduxField}
         dateFormat="MM/dd/yyyy"
+        required
       />
       {initialValues && initialValues.relatedTo &&
         <Field
@@ -78,6 +80,7 @@ const AddTaskForm = ({
         label="Assigned to"
         type="select"
         component={ReduxField}
+        required
       >
         <option>Select an option</option>
         {assignedTosOptions}
@@ -87,6 +90,7 @@ const AddTaskForm = ({
         label="Status"
         type="select"
         component={ReduxField}
+        required
       >
         <option>Select an option</option>
         {statusesOptions}
@@ -96,6 +100,7 @@ const AddTaskForm = ({
         label="Priority"
         type="select"
         component={ReduxField}
+        required
       >
         <option>Select an option</option>
         {prioritiesOptions}

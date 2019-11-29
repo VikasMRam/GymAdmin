@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { object } from 'prop-types';
+import loadable from '@loadable/component';
 
 import { getAutocompleteValues } from 'sly/services/datatable/helpers';
-import { Select } from 'sly/components/atoms';
 import { normalizeResponse } from 'sly/services/newApi';
+
+const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/components/atoms/Select'));
 
 export default class Autocomplete extends Component {
   static propTypes = {
