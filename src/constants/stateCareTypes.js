@@ -38,7 +38,7 @@ export default {
   NE: ['Assisted Living', 'Adult Day Care', 'Respite Care', 'Home Care', 'Skilled Nursing'],
   WV: ['Assisted Living', 'Respite Care', 'Nursing Home', 'Independent Living', 'Retirement Community', 'Adult Foster Care'],
   ID: ['Nursing Homes', 'Residential Care', 'Assisted Living', 'Retirement Communities'],
-  HI: ['Assisted Living', 'Adult Day Care', 'Intermediate Care Facilities', 'Long term Care', 'Skilled Nursing'],
+  HI: ['Assisted Living', 'Adult Day Care', 'Intermediate Care Facilities', 'Skilled Nursing'],
   NH: ['Assisted Living', 'Adult Day Care', 'Home Care', 'Skilled Nursing'],
   ME: ['Adult Day Care', 'Home Care', 'Long term Care Facilities', 'Respite Care'],
   RI: ['Assisted Living', 'Home Care', 'Adult Day Care', 'Memory Care'],

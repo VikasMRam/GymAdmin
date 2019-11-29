@@ -6,8 +6,8 @@ import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricing
 import { Link } from 'sly/components/atoms';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const  searchParams = { city: 'san-carlos',
-  communitySlug: 'bayview-villa',
+const searchParams = { city: 'san-carlos',
+  communitySlug: 'rhoda-goldman-plaza',
   state: 'california',
   toc: 'assisted-living',
 };
@@ -102,6 +102,7 @@ describe('CommunitySummary', () => {
     const wrapper = wrap({
       community: RhodaGoldmanPlaza,
     });
+    // console.log(wrapper.debug());
 
     verify(wrapper);
     expect(wrapper.find('StyledTag')).toHaveLength(2);

@@ -24,6 +24,7 @@ const StyledTag = styled(Tag)`
   text-transform: uppercase;
   margin-top: ${size('spacing.regular')};
 `;
+
 StyledTag.displayName = 'StyledTag';
 
 const Wrapper = styled.div`
@@ -73,30 +74,29 @@ const residentialCareTypes = [
   'Residential Care facilities',
   'Residential Care Home',
 ];
+const rcStates = ['ID', 'OR'];
 const ASSISTED_LIVING = 'Assisted Living';
 const SMALL_COMMUNITY = 'up to 20 Beds';
 
-const buildCareTypes = (state, careTypes, communitySize) => {
+const getCareTypes = (state, careTypes, communitySize) => {
   const updatedCareTypes = [];
-  console.log('careTypes', careTypes);
 
   careTypes.forEach((careType) => {
     const tocBc = tocPaths([careType]);
     const extraCareTypes = careTypesMap[careType];
-    console.log('extraCareTypes', careType, extraCareTypes);
-
 
     if (extraCareTypes) {
       extraCareTypes.forEach((extraCareType) => {
         const hasCareType = stateCareTypes[state].includes(extraCareType);
-        const isAssistedLiving = careType === ASSISTED_LIVING;
-        const isResidentialCare = isAssistedLiving && communitySize === SMALL_COMMUNITY && residentialCareTypes.includes(extraCareType);
+        const isResidentialCare = careType === ASSISTED_LIVING && residentialCareTypes.includes(extraCareType);
         const isNotExists = !updatedCareTypes.find(data => data.careType === extraCareType);
 
-        console.log('extra care', hasCareType, isNotExists, (isResidentialCare || !isAssistedLiving), careType, isResidentialCare, !isAssistedLiving, communitySize, extraCareType);
-        console.log(state, stateCareTypes[state], stateCareTypes[state].includes(extraCareType));
-        if (hasCareType && isNotExists && (isResidentialCare || !isAssistedLiving)) {
-          updatedCareTypes.push({ name: extraCareType, path: tocBc.path });
+        if (hasCareType && isNotExists) {
+          if (isResidentialCare && (rcStates.includes(state) || communitySize === SMALL_COMMUNITY)) {
+            updatedCareTypes.push({ name: extraCareType, path: tocBc.path });
+          } else if (!isResidentialCare) {
+            updatedCareTypes.push({ name: extraCareType, path: tocBc.path });
+          }
         }
       });
     } else {
@@ -121,7 +121,9 @@ const CommunitySummary = ({
   const {
     line1, line2, city, state, zip,
   } = address;
-  const { communityPhone, plusCommunity, plusCategory, typeCare, communitySize } = propInfo;
+  const {
+    communityPhone, plusCommunity, plusCategory, typeCare, communitySize,
+  } = propInfo;
   const { reviewsValue } = propRatings;
   const formattedAddress = `${line1}, ${line2}, ${city},
     ${state}
@@ -129,6 +131,7 @@ const CommunitySummary = ({
     .replace(/\s/g, ' ')
     .replace(/, ,/g, ', ');
   let conciergeNumber = communityPhone;
+
   if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
     [conciergeNumber] = twilioNumber.numbers;
   }
@@ -137,9 +140,7 @@ const CommunitySummary = ({
   }
 
   const favIcon = isFavorited ? 'favourite-light' : 'favourite-empty';
-  const careTypes = buildCareTypes(state, typeCare, communitySize);
-
-  console.log('communitySize', communitySize);
+  const careTypes = getCareTypes(state, typeCare, communitySize);
 
   return (
     <Box innerRef={innerRef} className={className}>
@@ -162,9 +163,14 @@ const CommunitySummary = ({
               key={careType.path}
               to={`${careType.path}/${searchParams.state}/${searchParams.city}`}
               target="_blank"
+              event={{
+                category: 'care-type-tags',
+                action: 'tag-click',
+                label: careType,
+              }}
             >
               <StyledTag key={careType.name}>{careType.name}</StyledTag>
-            </Link>)
+            </Link>),
         )
       }
 
