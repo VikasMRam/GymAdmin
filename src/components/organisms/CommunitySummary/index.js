@@ -96,12 +96,8 @@ const getCareTypes = (state, careTypes, communitySize) => {
           }
         }
       });
-    } else {
-      const hasCareType = stateCareTypes[state].includes(careType);
-
-      if (hasCareType) {
-        updatedCareTypes.push({ name: careType, path: tocBc.path });
-      }
+    } else if (stateCareTypes[state].includes(careType)) {
+      updatedCareTypes.push({ name: careType, path: tocBc.path });
     }
   });
 
