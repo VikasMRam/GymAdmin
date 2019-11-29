@@ -3,7 +3,6 @@ import { object, bool, func, string } from 'prop-types';
 import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
-
 import { size, palette } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { Link, Box, Heading, Hr, Icon, Tag } from 'sly/components/atoms';
@@ -92,9 +91,7 @@ const getCareTypes = (state, careTypes, communitySize) => {
         const isNotExists = !updatedCareTypes.find(data => data.careType === extraCareType);
 
         if (hasCareType && isNotExists) {
-          if (isResidentialCare && (rcStates.includes(state) || communitySize === SMALL_COMMUNITY)) {
-            updatedCareTypes.push({ name: extraCareType, path: tocBc.path });
-          } else if (!isResidentialCare) {
+          if ((isResidentialCare && (rcStates.includes(state) || communitySize === SMALL_COMMUNITY)) || !isResidentialCare) {
             updatedCareTypes.push({ name: extraCareType, path: tocBc.path });
           }
         }
@@ -166,7 +163,7 @@ const CommunitySummary = ({
               event={{
                 category: 'care-type-tags',
                 action: 'tag-click',
-                label: careType,
+                label: careType.name,
               }}
             >
               <StyledTag key={careType.name}>{careType.name}</StyledTag>
