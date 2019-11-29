@@ -1,9 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { object, func } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
-import { withApi } from 'sly/services/newApi';
+import api from 'sly/services/newApi/apiInstance';
 
 const defaultDispatcher = (call, props, ...args) => call(...args);
 
@@ -17,27 +16,17 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
   return (InnerComponent) => {
     const makeApiCall = call => (...args) => {
       if (['get', 'destroy'].includes(call.method)) {
-        return call.call(...args);
+        return call(...args);
       }
 
       const placeholders = args.length >= 2 ? args[0] : {};
       const data = args.length >= 2 ? args[1] : args[0];
       const options = args.length === 3 ? args[2] : {};
 
-      return call.call(placeholders, { data }, options);
+      return call(placeholders, { data }, options);
     };
 
-    const mapDispatchToActions = (dispatch, { api }) => {
-      const call = makeApiCall(api[apiCall]);
-
-      return {
-        fetch: (props, ...args) => dispatcher(call, props, ...args),
-      };
-    };
-
-    @withApi
-
-    @connect(undefined, mapDispatchToActions)
+    const fetch = (props, ...args) => dispatcher(makeApiCall(api[apiCall]), props, ...args);
 
     class Wrapper extends React.Component {
       static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
@@ -51,7 +40,7 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
 
       // props fetch bound to dispatch
       fetch = (...args) => {
-        return this.props.fetch(this.props, ...args);
+        return fetch(this.props, ...args);
       };
 
       render() {

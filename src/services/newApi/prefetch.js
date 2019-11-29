@@ -4,7 +4,8 @@ import { object, func } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { isServer } from 'sly/config';
-import { withApi } from 'sly/services/newApi';
+import makeApiCall from 'sly/services/newApi/makeApiCall';
+import api from 'sly/services/newApi/apiInstance';
 import { createMemoizedRequestInfoSelector } from 'sly/services/newApi/selectors';
 import withPrefetchWait from 'sly/services/newApi/withPrefetchWait';
 
@@ -19,6 +20,7 @@ function getDisplayName(WrappedComponent) {
 export default function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
   return (InnerComponent) => {
     const getMemoizedRequestInfo = createMemoizedRequestInfoSelector();
+
     const mapStateToProps = (state, props) => {
       const argumentsAbsorber = (...args) => args;
 
@@ -39,18 +41,15 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       };
     };
 
-    const mapDispatchToActions = (dispatch, { api }) => ({
-      fetch: props => dispatch(dispatcher(api[apiCall], props)),
-    });
+    const fetch = (props, config) => dispatcher(
+      placeholders => makeApiCall(
+        api[apiCall], [placeholders, config]
+      ),
+      props
+    );
 
-    // FIXME: For now we have to continue using withDone (which uses componentWillUpdate)
-    // we have to re-engineer this to be able to use react 17, or to start using hooks in
-    // react 16.8 (methods renamed to UNSAFE_xxxx)
-    // @withDone
-
-    @withApi
     @withPrefetchWait
-    @connect(mapStateToProps, mapDispatchToActions)
+    @connect(mapStateToProps, { fetch })
 
     class Wrapper extends React.PureComponent {
       static displayName = `prefetch(${getDisplayName(InnerComponent)}, ${propName})`;
@@ -62,16 +61,22 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
         requestInfo: object,
         fetch: func,
         prefetchWait: func,
+        apiConfig: object,
         status: object,
+      };
+
+      // necessary because we configure the request options
+      // in the server with the credentials taken from the
+      // ssr request
+      static defaultProps = {
+        apiConfig: {},
       };
 
       constructor(props) {
         super(props);
 
-        const { prefetchWait } = props;
-
         if (isServer) {
-          prefetchWait(this.mayBeFetch());
+          props.prefetchWait(this.mayBeFetch());
         }
       }
 
@@ -89,8 +94,8 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
 
       // props fetch bound to dispatch
       fetch = () => {
-        const { fetch } = this.props;
-        return fetch(this.props);
+        const { fetch, apiConfig } = this.props;
+        return fetch(this.props, apiConfig);
       };
 
       render() {
