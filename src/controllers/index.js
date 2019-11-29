@@ -25,12 +25,12 @@ export function connectController(parentMapStateToProps, parentDispatchToProps) 
     };
 
     const ConnectedController = connect(mapStateToProps, mapDispatchToProps)(props => (
-        <Controller
-          {...props}
-          set={(data) => props.set({ data, controller: props.controllerKey })}
-          unset={(key) => props.unset({ key, controller: props.controllerKey })}
-          resetController={() => props.reset({ controller: props.controllerKey })}
-        />
+      <Controller
+        {...props}
+        set={data => props.set({ data, controller: props.controllerKey })}
+        unset={key => props.unset({ key, controller: props.controllerKey })}
+        resetController={() => props.reset({ controller: props.controllerKey })}
+      />
     ));
 
     hoistNonReactStatic(ConnectedController, WrappedComponent);
