@@ -27,7 +27,7 @@ import { port, host, publicPath, isDev, domain, disableExperiments } from 'sly/c
 import { configure as configureStore } from 'sly/store';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
-import { createApi as createBeesApi, renderToString } from 'sly/services/newApi';
+import { createApi, renderToString } from 'sly/services/newApi';
 import ApiProvider, { makeApiCall } from 'sly/services/newApi/ApiProvider';
 import clientConfigs from 'sly/clientConfigs';
 
@@ -200,7 +200,7 @@ app.use(async (req, res, next) => {
       return cumul;
     }, {});
 
-  const beesApi = createBeesApi({
+  const api = createApi({
     configureHeaders: headers => ({
       ...headers,
       Cookie: cookies.join('; '),
@@ -225,8 +225,8 @@ app.use(async (req, res, next) => {
   // prefetch user data
   try {
     await Promise.all([
-      store.dispatch(makeApiCall(beesApi.getUser, [{ id: 'me' }])).catch(ignoreUnauthorized),
-      store.dispatch(makeApiCall(beesApi.getUuidAux, [{ id: 'me' }])),
+      store.dispatch(makeApiCall(api.getUser, [{ id: 'me' }])).catch(ignoreUnauthorized),
+      store.dispatch(makeApiCall(api.getUuidAux, [{ id: 'me' }])),
     ]);
   } catch (e) {
     e.message = `Error trying to prefetch user data: ${e.message}`;
@@ -236,7 +236,7 @@ app.use(async (req, res, next) => {
   }
 
   req.clientConfig.store = store;
-  req.clientConfig.api = beesApi;
+  req.clientConfig.api = api;
 
   next();
 });

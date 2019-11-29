@@ -20,10 +20,10 @@ import NotificationSubscriptions from 'sly/services/notifications/Subscriptions'
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState);
 
-const beesApi = createApi();
+const api = createApi();
 
 const renderApp = () => (
-  <ApiProvider api={beesApi}>
+  <ApiProvider api={api}>
     <Provider store={store}>
       <WSProvider>
         <NotificationSubscriptions>

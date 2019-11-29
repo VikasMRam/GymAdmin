@@ -8,7 +8,7 @@ import Role from 'sly/components/common/Role';
 const mockStore = configureStore([thunkMiddleware]);
 const wrap = (props = {}, children) => shallow((
   <Role
-    store={mockStore({ bees: { requests: {} } })}
+    store={mockStore({ api: { requests: {} } })}
     api={{}}
     {...props}
   >

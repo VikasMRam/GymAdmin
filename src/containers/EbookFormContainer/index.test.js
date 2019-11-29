@@ -13,7 +13,7 @@ const notifyInfo = jest.fn();
 const mockStore = configureStore([]);
 const store = mockStore({
   requests: {},
-  bees: {},
+  api: {},
   form: {
     EbookForm: {
       registeredFields: {

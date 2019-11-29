@@ -15,10 +15,10 @@ import configureStore from 'sly/external/apps/store/configure';
 import App from 'sly/external/apps/App';
 
 const store = configureStore({});
-const beesApi = createApi();
+const api = createApi();
 
 const renderApp = () => (
-  <ApiProvider api={beesApi}>
+  <ApiProvider api={api}>
     <Provider store={store}>
       <BrowserRouter>
         <App />

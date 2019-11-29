@@ -20,13 +20,13 @@ export default function partiallyHydrateClient(componentsToHydrate, routePath, r
   const initialState = window.__INITIAL_STATE__;
   const store = configureStore(initialState);
 
-  const beesApi = createApi();
+  const api = createApi();
 
   Modal.setAppElement('#app');
 
   // eslint-disable-next-line react/prop-types
   const Providers = ({ children }) => (
-    <ApiProvider api={beesApi}>
+    <ApiProvider api={api}>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <BrowserRouter>
