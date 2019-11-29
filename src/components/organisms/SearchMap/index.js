@@ -112,7 +112,7 @@ class SearchMap extends Component {
     });
   };
 
-  onBoundsChange = debounce(() => {
+  onIdle = debounce(() => {
     // Do something if this is checked
     if (this.state.redoSearchOnMove) {
       const { generateFilterLinkPath, searchParams, history } = this.props;
@@ -140,7 +140,7 @@ class SearchMap extends Component {
         }
       }
     }
-  }, 200);
+  }, 500);
 
   render() {
     const { defaultCenter, hasValidDefaultLocation, communityList, redoSearchOnMove } = this.state;
@@ -163,7 +163,8 @@ class SearchMap extends Component {
           defaultCenter={defaultCenter}
           defaultZoom={defaultZoom}
           containerElement={<MapContainerElement />}
-          onIdle={this.onBoundsChange}
+          onIdle={this.onIdle}
+          onDragStart={this.onIdle.cancel}
           onMapMounted={this.onMapMounted}
         >
           {communityList.map(community => (
