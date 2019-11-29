@@ -6,44 +6,32 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import { randomHexNumber } from 'sly/services/helpers/utils';
 import { set, unset, reset } from 'sly/store/controller/actions';
 
-const convertMapDispatchToObject = mapDispatchToProps => (dispatch, props) => {
-  if (!mapDispatchToProps) {
-    return {};
-  }
-
-  return typeof mapDispatchToProps === 'function'
-    ? mapDispatchToProps(dispatch, props)
-    : Object.keys(mapDispatchToProps)
-      .reduce((cumul, key) => {
-        cumul[key] = (...args) => dispatch(mapDispatchToProps[key](...args));
-        return cumul;
-      }, {});
-};
-
 // TODO: tests
 export function connectController(parentMapStateToProps, parentDispatchToProps) {
   return function controllerCreator(WrappedComponent) {
-    const rand = randomHexNumber();
     const Controller = props => <WrappedComponent {...props} />;
     Controller.displayName = `WrappedController(${WrappedComponent.name || 'Controller'})`;
-    const controllerKey = `${WrappedComponent.name}_${rand}`;
+    const generatedControllerKey = `${WrappedComponent.name}_${randomHexNumber()}`;
 
-    const mapDispatchToProps = (dispatch, ownProps) => ({
-      ...convertMapDispatchToObject(parentDispatchToProps)(dispatch, ownProps),
-      get: () => dispatch((dispatch, getState) => get(getState(), ['controller', ownProps.controllerKey || controllerKey])),
-      set: data => dispatch(set({ data, controller: ownProps.controllerKey || controllerKey })),
-      unset: key => dispatch(unset({ key, controller: ownProps.controllerKey || controllerKey })),
-      resetController: () => dispatch(reset({ controller: ownProps.controllerKey || controllerKey })),
-    });
+    const mapDispatchToProps = { ...parentDispatchToProps, set, unset, reset };
 
     const mapStateToProps = (state, ownProps) => {
+      const controllerKey = ownProps.controllerKey || generatedControllerKey;
       return parentMapStateToProps(state, {
         ...ownProps,
-        controller: get(state, ['controller', ownProps.controllerKey || controllerKey]) || {},
+        controllerKey,
+        controller: get(state, ['controller', controllerKey]) || {},
       });
     };
 
-    const ConnectedController = connect(mapStateToProps, mapDispatchToProps)(Controller);
+    const ConnectedController = connect(mapStateToProps, mapDispatchToProps)(props => (
+        <Controller
+          {...props}
+          set={(data) => props.set({ data, controller: props.controllerKey })}
+          unset={(key) => props.unset({ key, controller: props.controllerKey })}
+          resetController={() => props.reset({ controller: props.controllerKey })}
+        />
+    ));
 
     hoistNonReactStatic(ConnectedController, WrappedComponent);
 
