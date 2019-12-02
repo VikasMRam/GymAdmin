@@ -4,7 +4,6 @@ import { object, func } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { isServer } from 'sly/config';
-import makeApiCall from 'sly/services/newApi/makeApiCall';
 import api from 'sly/services/newApi/apiInstance';
 import { createMemoizedRequestInfoSelector } from 'sly/services/newApi/selectors';
 import withPrefetchWait from 'sly/services/newApi/withPrefetchWait';
@@ -31,9 +30,12 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
         };
       }
 
+      const args = dispatcher(argumentsAbsorber, props);
+      const { placeholders = {} } = api[apiCall].method(...args);
+
       const requestInfo = getMemoizedRequestInfo(
         state,
-        { call: apiCall, args: dispatcher(argumentsAbsorber, props) },
+        { call: apiCall, args: placeholders },
       );
 
       return {
@@ -42,9 +44,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
     };
 
     const fetch = (props, config) => dispatcher(
-      placeholders => makeApiCall(
-        api[apiCall], [placeholders, config]
-      ),
+      placeholders => api[apiCall].asAction(placeholders, config),
       props
     );
 

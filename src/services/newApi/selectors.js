@@ -32,7 +32,7 @@ export function getEntity(entities, handle, isNormalized) {
   return isNormalized ? build(entities, handle.type, handle.id, { eager: true }) : entities[handle.type][handle.id];
 }
 
-// TODO: memoize fully from scratch as it's applied externaly
+// TODO: memoize fully from scratch as it's applied externally
 
 export function getRelationship(state, entity, relationshipName) {
   if (!entity) {

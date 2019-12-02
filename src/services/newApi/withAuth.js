@@ -8,6 +8,7 @@ import set from 'lodash/set';
 
 import withUser from './withUser';
 
+import api from 'sly/services/newApi/apiInstance';
 import { ensureAuthenticated } from 'sly/store/actions';
 
 function getDisplayName(WrappedComponent) {
@@ -27,7 +28,6 @@ const mapDispatchToProps = dispatch => ({
 
 export default function withAuth(InnerComponent) {
   @withUser
-
   @connect(mapStateToProps, mapDispatchToProps)
 
   class Wrapper extends PureComponent {
@@ -36,7 +36,6 @@ export default function withAuth(InnerComponent) {
     static propTypes = {
       authenticated: object.isRequired,
       ensureAuthenticated: func.isRequired,
-      api: object.isRequired,
       dispatch: func.isRequired,
       status: object.isRequired,
       user: object,
@@ -73,7 +72,6 @@ export default function withAuth(InnerComponent) {
         'attributes.email',
       ]);
 
-
       const willUpdate = Object.entries({
         'attributes.name': name,
         'attributes.phoneNumber': phone,
@@ -94,7 +92,7 @@ export default function withAuth(InnerComponent) {
     };
 
     registerUser = (options = {}) => {
-      const { dispatch, api, status } = this.props;
+      const { dispatch, status } = this.props;
       const { ignoreExisting, ...data } = options;
 
       return dispatch(api.registerUser(data)).catch((e) => {
@@ -110,22 +108,22 @@ export default function withAuth(InnerComponent) {
     };
 
     loginUser = (data) => {
-      const { dispatch, api, status } = this.props;
+      const { dispatch, status } = this.props;
       return dispatch(api.loginUser(data)).then(status.user.refetch);
     };
 
     logoutUser = (data) => {
-      const { dispatch, api, status } = this.props;
+      const { dispatch, status } = this.props;
       return dispatch(api.logoutUser(data)).then(status.user.refetch);
     };
 
     recoverPassword = (data) => {
-      const { dispatch, api } = this.props;
+      const { dispatch } = this.props;
       return dispatch(api.recoverPassword(data));
     };
 
     setPassword = (data) => {
-      const { dispatch, api, status } = this.props;
+      const { dispatch, status } = this.props;
       return dispatch(api.setPassword(data)).then(status.user.refetch);
     };
 
@@ -135,12 +133,12 @@ export default function withAuth(InnerComponent) {
     };
 
     updatePassword = (data) => {
-      const { dispatch, api, status } = this.props;
+      const { dispatch, status } = this.props;
       return dispatch(api.updatePassword(data)).then(status.user.refetch);
     };
 
     thirdPartyLogin = (data) => {
-      const { dispatch, api, status } = this.props;
+      const { dispatch, status } = this.props;
       return dispatch(api.thirdPartyLogin(data)).then(status.user.refetch);
     };
 

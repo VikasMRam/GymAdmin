@@ -27,7 +27,7 @@ import { port, host, publicPath, isDev, domain, disableExperiments } from 'sly/c
 import { configure as configureStore } from 'sly/store';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
-import { ApiProvider, makeApiCall, renderToString, apiInstance as api } from 'sly/services/newApi';
+import { ApiProvider, renderToString, apiInstance as api } from 'sly/services/newApi';
 import clientConfigs from 'sly/clientConfigs';
 
 const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
@@ -224,8 +224,8 @@ app.use(async (req, res, next) => {
   // prefetch user data
   try {
     await Promise.all([
-      store.dispatch(makeApiCall(api.getUser, [{ id: 'me' }, apiConfig])).catch(ignoreUnauthorized),
-      store.dispatch(makeApiCall(api.getUuidAux, [{ id: 'me' }, apiConfig])),
+      store.dispatch(api.getUser.asAction({ id: 'me' }, apiConfig)).catch(ignoreUnauthorized),
+      store.dispatch(api.getUuidAux.asAction({ id: 'me' }, apiConfig)),
     ]);
   } catch (e) {
     e.message = `Error trying to prefetch user data: ${e.message}`;

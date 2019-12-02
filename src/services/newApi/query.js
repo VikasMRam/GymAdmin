@@ -1,10 +1,8 @@
 import React from 'react';
-import { object, func } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
+import { destroy, get } from 'sly/services/newApi/httpMethods';
 import api from 'sly/services/newApi/apiInstance';
-
-const defaultDispatcher = (call, props, ...args) => call(...args);
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -12,35 +10,26 @@ function getDisplayName(WrappedComponent) {
     || 'Component';
 }
 
-export default function query(propName, apiCall, dispatcher = defaultDispatcher) {
+export default function query(propName, apiCall) {
   return (InnerComponent) => {
-    const makeApiCall = call => (...args) => {
-      if (['get', 'destroy'].includes(call.method)) {
-        return call(...args);
-      }
-
-      const placeholders = args.length >= 2 ? args[0] : {};
-      const data = args.length >= 2 ? args[1] : args[0];
-      const options = args.length === 3 ? args[2] : {};
-
-      return call(placeholders, { data }, options);
-    };
-
-    const fetch = (props, ...args) => dispatcher(makeApiCall(api[apiCall]), props, ...args);
-
     class Wrapper extends React.Component {
       static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
+      static WrappedComponent = InnerComponent.WrappedComponent || InnerComponent;
 
-      static propTypes = {
-        api: object.isRequired,
-        fetch: func.isRequired,
-      };
-
-      static WrappedComponent = InnerComponent;
-
-      // props fetch bound to dispatch
+      // props fetch not bound to dispatch
+      // FIXME: dispatch posts and patches, dispatch invalidate for delete
       fetch = (...args) => {
-        return fetch(this.props, ...args);
+        const call = api[apiCall];
+
+        if ([destroy, get].contains(call.method)) {
+          return call(...args);
+        }
+
+        const placeholders = args.length >= 2 ? args[0] : {};
+        const data = args.length >= 2 ? args[1] : args[0];
+        const options = args.length === 3 ? args[2] : {};
+
+        return call(placeholders, { data }, options);
       };
 
       render() {

@@ -8,8 +8,6 @@ export const get = function get(placeholders = {}, options = {}) {
   };
 };
 
-get.method = 'get';
-
 // body
 // placeholders, body
 // placeholders, body, options
@@ -29,8 +27,6 @@ export const post = function post(...args) {
     },
   };
 };
-
-post.method = 'post';
 
 // body
 // placeholders, body
@@ -52,8 +48,6 @@ export const patch = function patch(...args) {
   };
 };
 
-patch.method = 'patch';
-
 // body
 // placeholders, body
 // placeholders, body, options
@@ -74,8 +68,6 @@ export const put = function patch(...args) {
   };
 };
 
-put.method = 'put';
-
 // placeholders
 // placeholders, options
 
@@ -89,6 +81,4 @@ export const destroy = function destroy(placeholders = {}, options = {}) {
     },
   };
 };
-
-destroy.method = 'destroy';
 

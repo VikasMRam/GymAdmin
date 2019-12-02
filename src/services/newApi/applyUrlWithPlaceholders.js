@@ -7,7 +7,7 @@ export default function applyUrlWithPlaceholders(url, placeholders) {
     const token = `:${key}`;
 
     if (acc.indexOf(token) !== -1) {
-      return acc.replace(token, encodeURIComponent(placeholders[key]))
+      return acc.replace(token, encodeURIComponent(placeholders[key]));
     }
 
     if (placeholders[key] !== null) {
@@ -22,4 +22,4 @@ export default function applyUrlWithPlaceholders(url, placeholders) {
   }
 
   return completeUrl;
-};
+}

@@ -34,7 +34,7 @@ export withAuth from './withAuth';
 
 export renderToString from './renderToString';
 export withPrefetchWait from './withPrefetchWait';
-export makeApiCall from './makeApiCall';
+export makeApiCallAction from './makeApiCallAction';
 export apiInstance from './apiInstance';
 
 export { normalizeResponse } from './helpers';
