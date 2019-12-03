@@ -23,8 +23,13 @@ const MainWrapper = styled.section`
 `;
 
 const ColumnWrapper = styled.aside`
-  display: none;
+  visibility: hidden;
+  height: 0;
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    visibility: visible;
+    height: unset;
+
     position: relative;
     display: block;
     margin-right: ${size('spacing.xLarge')};

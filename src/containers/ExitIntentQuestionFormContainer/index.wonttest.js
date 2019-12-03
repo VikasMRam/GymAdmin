@@ -24,7 +24,7 @@ const router = {
 
 const createStore = () => configureStore([])({
   requests: {},
-  bees: {},
+  api: {},
 });
 
 const createContext = store => ({

@@ -15,7 +15,7 @@ export const getSearchUrl = (matchParams) => {
   return outUrl;
 };
 
-const tocPaths = (toc) => {
+export const tocPaths = (toc) => {
   if (toc && toc.length > 0) {
     switch (toc[0]) {
       case 'Assisted Living':
@@ -324,7 +324,7 @@ export const getBreadCrumbsForAgent = ({ name, state, city, id }) => {
   return baseBcs;
 };
 
-export const getBreadCrumbsForGuides = ({ toc, region, regionName}) => {
+export const getBreadCrumbsForGuides = ({ toc, region, regionName }) => {
   const tocBc = tocGuidePaths([titleize(toc)]);
   // TODO: use react router generated paths once router wiring is complete
   const baseBcs = [{

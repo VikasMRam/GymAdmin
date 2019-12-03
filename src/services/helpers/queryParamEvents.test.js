@@ -117,4 +117,15 @@ event
       expect(extractEventFromQuery(searchWithEvent)).toEqual({ event, search });
     });
   });
+
+  describe('when an event that looks like a query string is added', () => {
+    it('should encode and decode the values', () => {
+      const event = { action: 'add', category: 'query=frozen&which=2', label: 'simple' };
+      const search = '?hello=world&please=true&maintain=order';
+
+      const searchWithEvent = addEventToQueryString(search, event);
+
+      expect(extractEventFromQuery(searchWithEvent)).toEqual({ event, search });
+    });
+  });
 });

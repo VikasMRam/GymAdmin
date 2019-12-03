@@ -40,6 +40,7 @@ describe('ConciergeController', () => {
   const mockStore = configureStore([asyncMiddleware]);
   const initStore = (props = {}, conciergeProps = {}) => mockStore({
     controller: { concierge: { ...conciergeProps } },
+    api: {},
     ...props,
   });
 
@@ -52,8 +53,6 @@ describe('ConciergeController', () => {
     id: 'other-community',
     url: 'baz',
   };
-
-  const bees = {};
 
   const authenticated = {};
 
@@ -160,7 +159,7 @@ describe('ConciergeController', () => {
       </ConciergeController>, { context: { router } }), 'ConciergeController').dive();
 
     it('should pass default values', () => {
-      const store = initStore({ bees, authenticated });
+      const store = initStore({ authenticated });
       wrap(community.id, store);
       const { currentStep } = childProps().concierge;
       expect(setQueryParams).not.toBeCalled();
@@ -168,7 +167,7 @@ describe('ConciergeController', () => {
     });
 
     it('should know when a community has been converted', () => {
-      const store = initStore({ bees, authenticated });
+      const store = initStore({ authenticated });
 
       wrap(community.id, store);
       expect(childProps().concierge.contactRequested).toBe(true);
@@ -178,7 +177,7 @@ describe('ConciergeController', () => {
     });
 
     it('should redirect to custom piricing wizard', () => {
-      const store = initStore({ bees, authenticated });
+      const store = initStore({ authenticated });
       const wrapper = wrap(otherCommunity.id, store);
       wrapper.instance().next();
 
@@ -186,7 +185,7 @@ describe('ConciergeController', () => {
     });
 
     it('should go to conversion form mode when express mode', () => {
-      const store = initStore({ bees, authenticated });
+      const store = initStore({ authenticated });
       const wrapper = wrap(null, store);
       wrapper.instance().next();
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });

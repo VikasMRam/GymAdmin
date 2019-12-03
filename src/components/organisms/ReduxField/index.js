@@ -17,12 +17,14 @@ const ReduxField = ({
     ...props,
     ...input,
     invalid: meta.touched && !!meta.error,
-    message: meta.error || meta.warning || message,
+    message: message || meta.error || meta.warning,
     warning: !!meta.warning || warning,
   };
 
   if (fieldProps.type === 'date') {
     const oldBlur = fieldProps.onBlur;
+    // date ui won't fire blur event after date pick so touched will be false
+    fieldProps.invalid = meta.dirty && !!meta.error;
     fieldProps.onBlur = () => oldBlur(null, true);
   }
 

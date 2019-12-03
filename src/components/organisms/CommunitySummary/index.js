@@ -3,23 +3,28 @@ import { object, bool, func, string } from 'prop-types';
 import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
-
 import { size, palette } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { Link, Box, Heading, Hr, Icon } from 'sly/components/atoms';
+import { Link, Box, Heading, Hr, Icon, Tag } from 'sly/components/atoms';
 import IconButton from 'sly/components/molecules/IconButton';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
-import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { isBrowser } from 'sly/config';
 import PlusBadge from 'sly/components/molecules/PlusBadge';
-
-const Address = styled(Heading)`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
+import { tocPaths } from 'sly/services/helpers/url';
+import stateCareTypes from 'sly/constants/stateCareTypes';
+import careTypesMap from 'sly/constants/careTypesMap';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
 `;
+
+const StyledTag = styled(Tag)`
+  margin-right: ${size('spacing.regular')};
+  text-transform: uppercase;
+  margin-top: ${size('spacing.regular')};
+`;
+
+StyledTag.displayName = 'StyledTag';
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,7 +32,7 @@ const Wrapper = styled.div`
   align-items: left;
   justify-content: space-between;
   > *:first-child {
-    margin-bottom: ${size('spacing.xLarge')};
+    margin-bottom: ${size('spacing.medium')};
   }
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -61,9 +66,47 @@ const TooltipContent = styled(ReactTooltip)`
     }
   }
 `;
+const residentialCareTypes = [
+  'Residential Care',
+  'Residential Care Homes',
+  'Residential Homes for the Aged',
+  'Residential Care facilities',
+  'Residential Care Home',
+];
+const rcStates = ['ID', 'OR'];
+const ASSISTED_LIVING = 'Assisted Living';
+const SMALL_COMMUNITY = 'up to 20 Beds';
+
+const getCareTypes = (state, careTypes, communitySize) => {
+  const updatedCareTypes = [];
+
+  careTypes.forEach((careType) => {
+    const tocBc = tocPaths([careType]);
+    const extraCareTypes = careTypesMap[careType];
+
+    if (extraCareTypes) {
+      extraCareTypes.forEach((extraCareType) => {
+        const hasCareType = stateCareTypes[state].includes(extraCareType);
+        const isResidentialCare = careType === ASSISTED_LIVING && residentialCareTypes.includes(extraCareType);
+        const isNotExists = !updatedCareTypes.find(data => data.careType === extraCareType);
+
+        if (hasCareType && isNotExists) {
+          if ((isResidentialCare && (rcStates.includes(state) || communitySize === SMALL_COMMUNITY)) || !isResidentialCare) {
+            updatedCareTypes.push({ name: extraCareType, path: tocBc.path });
+          }
+        }
+      });
+    } else if (stateCareTypes[state].includes(careType)) {
+      updatedCareTypes.push({ name: careType, path: tocBc.path });
+    }
+  });
+
+  return updatedCareTypes;
+};
+
 const CommunitySummary = ({
   community, innerRef, isAdmin, onConciergeNumberClicked, className,
-  onFavouriteClick, isFavorited, onShareClick, goToReviews,
+  onFavouriteClick, isFavorited, onShareClick, goToReviews, searchParams,
 }) => {
   const {
     address, name, startingRate, propRatings, propInfo, twilioNumber,
@@ -71,7 +114,9 @@ const CommunitySummary = ({
   const {
     line1, line2, city, state, zip,
   } = address;
-  const { communityPhone, plusCommunity, plusCategory } = propInfo;
+  const {
+    communityPhone, plusCommunity, plusCategory, typeCare, communitySize,
+  } = propInfo;
   const { reviewsValue } = propRatings;
   const formattedAddress = `${line1}, ${line2}, ${city},
     ${state}
@@ -79,6 +124,7 @@ const CommunitySummary = ({
     .replace(/\s/g, ' ')
     .replace(/, ,/g, ', ');
   let conciergeNumber = communityPhone;
+
   if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
     [conciergeNumber] = twilioNumber.numbers;
   }
@@ -87,6 +133,7 @@ const CommunitySummary = ({
   }
 
   const favIcon = isFavorited ? 'favourite-light' : 'favourite-empty';
+  const careTypes = getCareTypes(state, typeCare, communitySize);
 
   return (
     <Box innerRef={innerRef} className={className}>
@@ -100,9 +147,28 @@ const CommunitySummary = ({
           </Link>
         }
       </StyledHeading>
-      <Address weight="regular" level="subtitle" size="body" palette="grey">{formattedAddress}</Address>
+      <Heading weight="regular" level="subtitle" size="body" palette="grey">{formattedAddress}</Heading>
+
+      {
+        careTypes.map(careType =>
+          (
+            <Link
+              key={careType.path}
+              to={`${careType.path}/${searchParams.state}/${searchParams.city}`}
+              target="_blank"
+              event={{
+                category: 'care-type-tags',
+                action: 'tag-click',
+                label: careType.name,
+              }}
+            >
+              <StyledTag key={careType.name}>{careType.name}</StyledTag>
+            </Link>),
+        )
+      }
+
       {plusCommunity &&
-      <PlusBadge plusCategory={plusCategory} />
+        <PlusBadge plusCategory={plusCategory} />
       }
       <Hr />
       <Wrapper>
@@ -147,6 +213,7 @@ CommunitySummary.propTypes = {
   onShareClick: func,
   goToReviews: func,
   isFavorited: bool,
+  searchParams: object,
 };
 
 export default CommunitySummary;

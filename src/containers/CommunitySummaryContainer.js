@@ -67,6 +67,7 @@ export default class CommunitySummaryContainer extends Component {
     notifyInfo: func,
     notifyError: func,
     history: object,
+    match: object,
   };
 
   sendEvent = (action, category) =>
@@ -151,7 +152,8 @@ export default class CommunitySummaryContainer extends Component {
   };
 
   render() {
-    const { community, isAdmin, userSaves, className } = this.props;
+    const { community, isAdmin, userSaves, className, match } = this.props;
+
     return (
       <CommunitySummary
         community={community}
@@ -161,6 +163,7 @@ export default class CommunitySummaryContainer extends Component {
         onShareClick={this.handleShareClick}
         goToReviews={this.goToReviews}
         className={className}
+        searchParams={match.params}
       />
     );
   }
