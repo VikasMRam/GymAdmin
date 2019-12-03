@@ -41,8 +41,8 @@ StyledMessage.displayName = 'StyledMessage';
 const PaddedHrWithText = pad(HrWithText, 'large');
 PaddedHrWithText.displayName = 'PaddedHrWithText';
 
-const today = dayjs().utc();
-const thisYear = dayjs().utc().format('YYYY');
+const today = dayjs();
+const thisYear = dayjs().format('YYYY');
 
 const getDateText = (date) => {
   date = dayjs(date);
