@@ -252,7 +252,7 @@ export default class ReferralSearchContainer extends Component {
     const {
       referralMode, parentClient, user,
     } = this.props;
-    const { communitiesInterested, children: childrenClients, clientInfo, recommendedAgents, uuidAux } = parentClient;
+    const { communitiesInterested, children: childrenClients, clientInfo, recommendedAgents: allRecommendedAgents, uuidAux } = parentClient;
     const { slyCommunityMessage: communityMessage, slyAgentMessage: agentMessage } = clientInfo;
     const { uuidInfo } = uuidAux;
     const { locationInfo } = uuidInfo;
@@ -277,7 +277,8 @@ export default class ReferralSearchContainer extends Component {
       accumulator[client.provider.id] = client;
       return accumulator;
     }, {});
-    const recommendedAgentsIdsMap = recommendedAgents.reduce((accumulator, community) => {
+    const recommendedAgentsFiltered =  allRecommendedAgents.filter(e => !e.info.excludeFromMap);
+    const recommendedAgentsIdsMap = recommendedAgentsFiltered.reduce((accumulator, community) => {
       accumulator[community.id] = community;
       return accumulator;
     }, {});
@@ -349,6 +350,7 @@ export default class ReferralSearchContainer extends Component {
       );
     }
     // Agent Referral Flow
+
     const selectedAgent = this.getSelectedAgent();
     const contact = (selectedAgent && selectedAgent.contacts &&  selectedAgent.contacts.length > 0) ? selectedAgent.contacts[0] : null;
     const contactFormInitialValues = { slyMessage: agentMessage };
@@ -370,7 +372,7 @@ export default class ReferralSearchContainer extends Component {
             <WizardSteps {...props}>
               <WizardStep
                 component={DashboardAgentReferrals}
-                recommendedAgents={recommendedAgents}
+                recommendedAgents={recommendedAgentsFiltered}
                 recommendedAgentsIdsMap={recommendedAgentsIdsMap}
                 onSendNewReferralClick={onSubmit}
                 name="DashboardAgentReferrals"
