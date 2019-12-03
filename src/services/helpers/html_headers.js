@@ -135,11 +135,10 @@ export const getHelmetForSearchPage = ({
   const description = seoDescription || (city ? `Get pricing & read reviews for ${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, photos & talk to local ${titleize(city)} senior living experts.` :
     `${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, pricing, reviews & local senior care advice for ${locationStr} ${actualToc.label} communities`);
 
-  const canonicalUrl = `${host}${url.pathname}`;
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'Webpage';
-  ld.url = canonicalUrl;
+  ld.url = `${host}${url.pathname}`;
   const ldCommunities = [];
   if (communityList.length > 0) {
     communityList.map(e => ldCommunities.push(getSDForSearchResource({ ...e })));
@@ -167,11 +166,9 @@ export const getHelmetForSearchPage = ({
       <meta name="description" content={description} />
       <meta content={description} property="og:description" />
       <meta content={`${title} | Seniorly`} property="og:title" />
-      <meta content={canonicalUrl} property="og:url" />
 
       <meta content={description} property="twitter:description" />
       <meta content={`${title} | Seniorly`} property="twitter:title" />
-      <link rel="canonical" href={canonicalUrl} />
 
       {
         url.search && url.search.length > 0 && <meta name="robots" content="noindex" />
@@ -191,18 +188,14 @@ export const getHelmetForCommunityPage = (community, location) => {
   const {
     name, mainImage, address, propInfo, propRatings, rates, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions,
   } = community;
-  const {
-    search, pathname,
-  } = location;
+  const { search } = location;
   const {
     line1, city, state, country, zip, latitude, longitude,
   } = address;
   const { websiteUrl, websiteTitle, websiteMetaDescription } = propInfo;
   const { numReviews, reviewsValue } = propRatings;
 
-
   // const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);
-  const canonicalUrl = `${host}${pathname}`;
 
   let toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
   if (typeof toc === 'undefined') {
@@ -347,7 +340,6 @@ export const getHelmetForCommunityPage = (community, location) => {
       {imageUrl && <meta content={imageUrl} property="twitter:image:src" /> }
 
 
-      <link rel="canonical" href={canonicalUrl} />
       {
         search && search.length > 0 && <meta name="robots" content="noindex" />
       }
@@ -358,15 +350,12 @@ export const getHelmetForCommunityPage = (community, location) => {
   );
 };
 
-export const getHelmetForAgentsPage = ({ location }) => {
-  const { pathname } = location;
+export const getHelmetForAgentsPage = () => {
   const description = 'Talk to our senior living advisors and partner agents at Seniorly. Connect with a local senior living advisor for personalized senior housing support!';
-  const canonicalUrl = `${host}${pathname}`;
   return (
     <Helmet>
       <title>Find Senior Living Advisors | Seniorly Partner Agents</title>
       <meta name="description" content={description} />
-      <link rel="canonical" href={canonicalUrl} />
     </Helmet>
   );
 };
@@ -380,34 +369,28 @@ export const getHelmetForPartnersPage = () => {
   );
 };
 
-export const getHelmetForAgentProfilePage = ({ agent, location }) => {
-  const { pathname } = location;
+export const getHelmetForAgentProfilePage = ({ agent }) => {
   const { info } = agent;
   const { displayName, citiesServed } = info;
   const firstName = displayName.split(' ')[0];
   const firstThreeCities = citiesServed.slice(3).join(', ');
   const description = `Talk to expert senior living advisor ${info.displayName}. ${firstName} helps families find senior housing in ${firstThreeCities}& more locations!`;
   const title = `${info.displayName} Senior Living Advisor | Seniorly Partner Agents`;
-  const canonicalUrl = `${host}${pathname}`;
   return (
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <link rel="canonical" href={canonicalUrl} />
     </Helmet>
   );
 };
 
-export const getHelmetForAgentsRegionPage = ({ locationName, location }) => {
-  const { pathname } = location;
+export const getHelmetForAgentsRegionPage = ({ locationName }) => {
   const description = `Talk to local senior living advisors and partner agents in the ${locationName} region. Find a ${locationName} senior living advisor for personalized support!`;
   const title = `${locationName} Senior Living Advisors | Seniorly Partner Agents`;
-  const canonicalUrl = `${host}${pathname}`;
   return (
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <link rel="canonical" href={canonicalUrl} />
     </Helmet>
   );
 };

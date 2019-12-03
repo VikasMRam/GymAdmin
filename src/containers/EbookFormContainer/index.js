@@ -10,6 +10,7 @@ import EbookForm from 'sly/components/organisms/EbookForm';
 import withNotification from 'sly/controllers/withNotification';
 import SlyEvent from 'sly/services/helpers/events';
 import { EBOOK_SEND_EMAIL } from 'sly/services/newApi/constants';
+import withAuth from 'sly/services/newApi/withAuth';
 
 const formName = 'EbookForm';
 const validate = createValidator({
@@ -38,6 +39,7 @@ const mapDispatchToProps = dispatch => ({
 
 @withRouter
 @withNotification
+@withAuth
 @query('sendEbook', 'sendEbook')
 @query('createAction', 'createUuidAction')
 @connect(null, mapDispatchToProps)
@@ -48,6 +50,7 @@ export default class EbookFormContainer extends PureComponent {
     hideModal: func.isRequired,
     notifyInfo: func.isRequired,
     createAction: func.isRequired,
+    createOrUpdateUser: func.isRequired,
     location: object,
     event: string,
   };
@@ -66,12 +69,12 @@ export default class EbookFormContainer extends PureComponent {
 
   handleSubmit = (data) => {
     const {
-      clearErrors, event, hideModal, notifyInfo, sendEbook, createAction, location: { pathname },
+      clearErrors, event, hideModal, notifyInfo, sendEbook, createAction, createOrUpdateUser, location: { pathname },
     } = this.props;
 
     clearErrors();
 
-    Promise.all([
+    return Promise.all([
       sendEbook({
         type: 'HealthyAging',
         attributes: {
@@ -88,7 +91,9 @@ export default class EbookFormContainer extends PureComponent {
           },
         },
       }),
-    ]).then(
+    ]).then(() => createOrUpdateUser({
+      email: data.email,
+    })).then(
       () => {
         hideModal();
         sendEvent(`${event}-send-mail`, pathname);

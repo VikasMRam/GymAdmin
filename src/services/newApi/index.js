@@ -32,4 +32,7 @@ export withApi from './withApi';
 export withUser from './withUser';
 export withAuth from './withAuth';
 
+export renderToString from './renderToString';
+export withPrefetchWait from './withPrefetchWait';
+
 export { normalizeResponse } from './helpers';

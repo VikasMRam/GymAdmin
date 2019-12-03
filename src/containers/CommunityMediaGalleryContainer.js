@@ -120,6 +120,7 @@ export default class CommunityMediaGalleryContainer extends React.Component {
         onSlideChange={this.handleMediaGallerySlideChange}
         isFullscreenMode={isFullscreenActive}
         onToggleFullscreenMode={this.handleToggleMediaGalleryFullscreen}
+        typeCare={community.propInfo.typeCare}
       />
     );
   }

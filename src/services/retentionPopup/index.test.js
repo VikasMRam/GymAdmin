@@ -9,8 +9,7 @@ import RetentionPopup from './index';
 const showModal = jest.fn();
 const mockStore = configureStore([]);
 const store = mockStore({
-  requests: {},
-  bees: {},
+  api: {},
 });
 
 // Instantiate router context

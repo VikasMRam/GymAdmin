@@ -12,7 +12,6 @@ import { ServerStyleSheet } from 'styled-components';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
-import { renderToString } from 'react-router-server';
 import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import pathToRegexp from 'path-to-regexp';
@@ -28,7 +27,7 @@ import { port, host, publicPath, isDev, domain, disableExperiments } from 'sly/c
 import { configure as configureStore } from 'sly/store';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
-import { createApi as createBeesApi } from 'sly/services/newApi';
+import { createApi, renderToString } from 'sly/services/newApi';
 import ApiProvider, { makeApiCall } from 'sly/services/newApi/ApiProvider';
 import clientConfigs from 'sly/clientConfigs';
 
@@ -44,14 +43,13 @@ const getErrorContent = (err) => {
 };
 
 const renderHtml = ({
-  serverState, initialState, content, sheet, extractorWeb,
+  initialState, content, sheet, extractorWeb,
 }) => {
   const linkElements = extractorWeb && extractorWeb.getLinkElements();
   const styleElements = sheet && sheet.getStyleElement();
   const scriptElements = extractorWeb && extractorWeb.getScriptElements();
 
   const state = `
-    ${serverState ? `window.__SERVER_STATE__ = ${serialize(serverState)};` : ''}
     ${initialState ? `window.__INITIAL_STATE__ = ${serialize(initialState)};` : ''}
   `;
 
@@ -202,7 +200,7 @@ app.use(async (req, res, next) => {
       return cumul;
     }, {});
 
-  const beesApi = createBeesApi({
+  const api = createApi({
     configureHeaders: headers => ({
       ...headers,
       Cookie: cookies.join('; '),
@@ -224,10 +222,11 @@ app.use(async (req, res, next) => {
     return null;
   };
 
+  // prefetch user data
   try {
     await Promise.all([
-      store.dispatch(makeApiCall(beesApi.getUser, [{ id: 'me' }])).catch(ignoreUnauthorized),
-      store.dispatch(makeApiCall(beesApi.getUuidAux, [{ id: 'me' }])),
+      store.dispatch(makeApiCall(api.getUser, [{ id: 'me' }])).catch(ignoreUnauthorized),
+      store.dispatch(makeApiCall(api.getUuidAux, [{ id: 'me' }])),
     ]);
   } catch (e) {
     e.message = `Error trying to prefetch user data: ${e.message}`;
@@ -237,7 +236,7 @@ app.use(async (req, res, next) => {
   }
 
   req.clientConfig.store = store;
-  req.clientConfig.api = beesApi;
+  req.clientConfig.api = api;
 
   next();
 });
@@ -267,16 +266,8 @@ app.use(async (req, res, next) => {
       </CacheProvider>
     )));
 
-    const { state: serverState, html: result } = await renderToString(app);
+    const result = await renderToString(app);
     const content = renderStylesToString(result);
-
-    if (serverState) {
-      Object.values(serverState).forEach((val) => {
-        if (val && val.stack) {
-          throw val;
-        }
-      });
-    }
 
     if (context.status) {
       res.status(context.status);
@@ -287,7 +278,6 @@ app.use(async (req, res, next) => {
     } else {
       const initialState = store.getState();
       res.send(renderHtml({
-        serverState,
         initialState,
         content,
         sheet,

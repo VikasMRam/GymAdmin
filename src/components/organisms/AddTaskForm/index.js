@@ -80,6 +80,7 @@ const AddTaskForm = ({
         label="Assigned to"
         type="select"
         component={ReduxField}
+        required
       >
         <option>Select an option</option>
         {assignedTosOptions}

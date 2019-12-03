@@ -5,12 +5,8 @@ import { withScriptjs, withGoogleMap, GoogleMap } from 'react-google-maps';
 import mapsTheme from 'sly/components/themes/maps';
 import { gMapsApiKey } from 'sly/config';
 
-const mapConfig = {
-  theme: mapsTheme.propertyDetailTheme,
-};
-
 const mapOptions = {
-  styles: mapConfig.theme,
+  styles: mapsTheme.propertyDetailTheme,
   // zoom: 12,
   // center: this.centerLatLng,
   panControl: false,
@@ -29,41 +25,47 @@ const mapOptions = {
 
 const Map = compose(
   withProps({
-    googleMapURL:
-      `https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&v=3.exp&libraries=geometry,drawing,places`,
+    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&v=3.exp&libraries=geometry,drawing,places`,
     loadingElement: <div style={{ height: '100%' }} />,
     // containerElement: <div style={{ height: '400px' }} />,
     mapElement: <div style={{ height: '100%' }} />,
   }),
   withScriptjs,
   withGoogleMap
-)((props) => {
-  const {
-    center, defaultZoom, children, zoomControl, fullscreenControl, draggable,
-  } = props;
-  const { latitude, longitude } = center;
-  const {
-    onBoundsChanged, onMapMounted, onCenterChanged, onIdle,
-  } = props;
-  const defaultCenter = { lat: latitude, lng: longitude };
-  mapOptions.zoomControl = zoomControl;
-  mapOptions.fullscreenControl = fullscreenControl;
-  mapOptions.draggable = draggable;
+)(
+  ({
+    defaultZoom,
+    children,
+    zoomControl,
+    fullscreenControl,
+    draggable,
+    defaultCenter,
+    onBoundsChanged,
+    onMapMounted,
+    onCenterChanged,
+    onIdle,
+    onDragStart,
+  }) => {
+    mapOptions.zoomControl = zoomControl;
+    mapOptions.fullscreenControl = fullscreenControl;
+    mapOptions.draggable = draggable;
 
-  return (
-    <GoogleMap
-      defaultZoom={defaultZoom}
-      // refresh map when center changes
-      center={defaultCenter}
-      defaultOptions={mapOptions}
-      onBoundsChanged={onBoundsChanged}
-      onCenterChanged={onCenterChanged}
-      onIdle={onIdle}
-      ref={onMapMounted}
-    >
-      {children}
-    </GoogleMap>
-  );
-});
+    return (
+      <GoogleMap
+        defaultZoom={defaultZoom}
+        // refresh map when center changes
+        defaultCenter={defaultCenter}
+        defaultOptions={mapOptions}
+        onBoundsChanged={onBoundsChanged}
+        onCenterChanged={onCenterChanged}
+        onIdle={onIdle}
+        onDragStart={onDragStart}
+        ref={onMapMounted}
+      >
+        {children}
+      </GoogleMap>
+    );
+  }
+);
 
 export default Map;

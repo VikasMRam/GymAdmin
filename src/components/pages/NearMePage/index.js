@@ -114,9 +114,6 @@ const NearMePage = ({
   const { geo } = requestMeta;
   const city = geo && geo.city;
   const tocLabel = getTocSeoLabel('assisted-living');
-  const onAdTileClick = () => {};
-  const onParamsChange = () => {};
-  const onParamsRemove = () => {};
 
   const topRef = React.createRef();
   const alRef = React.createRef();
@@ -139,7 +136,6 @@ const NearMePage = ({
     alvsil: 'al-vs-il',
     next: 'next',
   };
-
 
   const SEOContentAL = () => {
     return (
@@ -751,35 +747,8 @@ const NearMePage = ({
     );
   };
 
-  const TopContent = () => {
-    return (
-      <>
-        <StyledHeading level="title"size="title">
-          {listSize} {tocLabel} near {city}
-        </StyledHeading>
-      </>);
-  };
-
-  const ListContent = () => {
-    return (
-      <>
-        <CommunitySearchList
-          communityList={communityList}
-          searchParams={searchParams}
-          requestMeta={requestMeta}
-          onParamsChange={onParamsChange}
-          onParamsRemove={onParamsRemove}
-          onAdTileClick={onAdTileClick}
-          isFetchingResults={isFetchingResults}
-          location={location}
-        />
-      </>
-    );
-  };
-
   const title = 'Find the Best Assisted Living Near You ';
   const description = 'Find the best assisted living near you with local senior living communities & providers. Browse assisted living nearby with prices, reviews & photos.';
-
 
   return (
     <>
@@ -789,9 +758,18 @@ const NearMePage = ({
           <title>{title}</title>
           <meta name="description" content={description} />
         </Helmet>
-        {TopContent()}
+        <StyledHeading level="title" size="title">
+          {listSize} {tocLabel} near {city}
+        </StyledHeading>
         {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
-        {!isFetchingResults && ListContent()}
+        {!isFetchingResults && (
+          <CommunitySearchList
+            communityList={communityList}
+            searchParams={searchParams}
+            requestMeta={requestMeta}
+            location={location}
+          />
+        )}
         {SEOContentAL()}
 
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by Cities" links={ALSeoCities} /></StyledArticle>

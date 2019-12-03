@@ -17,7 +17,7 @@ import {
   FAMILY_STAGE_REJECTED,
   ROOM_TYPES, WAITLISTED,
 } from 'sly/constants/familyDetails';
-import { NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/notes';
+import { NOTE_COMMENTABLE_TYPE_CLIENT, NOTE_CTYPE_ACTIVITY } from 'sly/constants/notes';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { createValidator, required, float } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
@@ -123,7 +123,9 @@ export default class UpdateFamilyStageFormContainer extends Component {
       if (parsedDate.isValid()) {
         moveInDateFormatted = parsedDate.format('MM/DD/YYYY');
       }
-      let note = `${name} moved into ${communityName} on ${moveInDateFormatted} with a monthly rent of $${monthlyFees} and a referral fee of ${referralAgreement}% referral fee `;
+      let note = `${name} moved into ${communityName} on ${moveInDateFormatted} with a monthly rent of $${monthlyFees} and a referral fee of `;
+      note = referralAgreementType === 'flat-fee' ? `${note}${referralAgreement}% referral fee` : `${note}$${referralAgreement} flat fee`;
+
       const title = 'Stage Change';
       if (stage === FAMILY_STAGE_LOST) {
         let reason = lossReason;
@@ -137,6 +139,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       const payload = {
         type: NOTE_RESOURCE_TYPE,
         attributes: {
+          cType: NOTE_CTYPE_ACTIVITY,
           commentableID: id,
           commentableType: NOTE_COMMENTABLE_TYPE_CLIENT,
           body: note,

@@ -206,7 +206,7 @@ const DashboardAdminReferralAgentTile = ({
               <Link palette="primary" size="caption" transparent href={`mailto:${email}`}>{email}</Link>
             </>
           )}
-          {status && (
+          {(status === 0 || status) && (
             <>
               <Span size="caption" palette="grey" variation="dark">Status</Span>
               <Span size="caption">{AGENT_STATUS_NAME_MAP[status]}</Span>

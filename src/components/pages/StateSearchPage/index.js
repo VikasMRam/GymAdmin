@@ -1,18 +1,36 @@
 import React from 'react';
 import styled from 'styled-components';
-import { array, bool, func, object } from 'prop-types';
+import { array, bool, func, object, string } from 'prop-types';
+import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
+import { size, palette, assetPath } from 'sly/components/themes';
 import { titleize } from 'sly/services/helpers/strings';
 import { getHelmetForSearchPage } from 'sly/services/helpers/html_headers';
 import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
-import { Heading } from 'sly/components/atoms';
+import { Box, Heading, Image, Link } from 'sly/components/atoms';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
-import StateSearchFilterList from 'sly/components/organisms/StateSearchFilterList';
+import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
+
+/**
+* Order of appearance as in editor :
+* description, <p>1</p>
+guide, <p>2</p>
+hospitals, <p>3</p>
+resources, <p>4</p>
+neighborhoods, <p>5</p>
+hospitals, <p>6</p>
+reviews, <p>7</p>
+*/
+const guideTypes = ['description', 'guide', 'hospitals', 'transportation', 'sports', 'cultural', 'weather', 'reviews'];
+
+const FilterColumnWrapper = styled(Box)`
+  padding: ${size('spacing.large')};
+  width: ${size('layout.col3')};
+`;
 
 const TopWrapper = styled.div`
   display: flex;
@@ -24,22 +42,53 @@ const TopWrapper = styled.div`
     display: none;
   }
 
-  > button {
+  > button, a {
     margin-right: ${size('spacing.large')};
   }
 `;
-const SearchMapContainer = styled(SearchMap)`
-  width: 100%;
-  height: 100%;
+
+const ImageButtonWrapper = styled.div`
+  position: relative;
+  text-align: center;
+
+  img {
+    width: 100%;
+  }
+
+  a {
+    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  }
+
+  ${ifProp('isMapView', '', `
+    a {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  `)};
+`;
+
+const StyledImage = styled(Image)`
+  max-width: 100%;
+`;
+
+const StyledLink = styled(Link)`
+  display: flex;
+  margin-bottom: ${size('spacing.regular')};
+  color: ${palette('slate', 'base')};
+
+  span {
+    margin-right: ${size('spacing.small')};
+  }
 `;
 
 const StateSearchPage = ({
   isMapView,
-  toggleMap,
-  onAdTileClick,
+  mapViewUrl,
+  listViewUrl,
   searchParams,
-  onParamsChange,
-  onParamsRemove,
+  isLoading,
   requestMeta,
   communityList,
   geoGuide,
@@ -61,102 +110,26 @@ const StateSearchPage = ({
     longitude = parseFloat(searchParams.longitude);
   }
 
-  const TopContent = () => {
-    if (geoGuide && geoGuide.guideContent) {
-      const gg = geoGuide.guideContent;
-      if (gg.autoDescription) {
-        return (
-          <>
-            <Heading level="hero" size="title">
-              {listSize} {tocLabel} in {state}
-            </Heading>
-            <div dangerouslySetInnerHTML={{ __html: gg.autoDescription }} />
-          </>
-        );
-      }
-    }
-
-    return (
-      <>
-        <Heading level="hero" size="title">
-          {listSize} {tocLabel} in {state}
-        </Heading>
-      </>);
-  };
   const gg = geoGuide.guideContent ? geoGuide.guideContent : {};
   const seoLinks = gg.seoLinks || [];
-  const stateSeachFilterList = isModalView => (
-    <StateSearchFilterList
-      seoLinks={seoLinks}
-      isMapView={isMapView}
-      toggleMap={toggleMap}
-      isModalView={isModalView}
-      onToggleModalFilterPanel={hideModal}
-    />
-  );
 
-  const handleModalFilterClick = () => {
-    const modalContent = (
-      <>
-        {stateSeachFilterList(true)}
-      </>
-    );
-
-    showModal(modalContent, null, 'sidebar');
-  };
-
-  const ListContent = () => {
-    /**
-     * Order of appearance as in editor :
-     * description, <p>1</p>
-     guide, <p>2</p>
-      hospitals, <p>3</p>
-      resources, <p>4</p>
-      neighborhoods, <p>5</p>
-      hospitals, <p>6</p>
-      reviews, <p>7</p>
-      */
-    if (geoGuide && geoGuide.guideContent) {
-      const additionalDivs = [];
-      const gg = geoGuide.guideContent;
-      ['description', 'guide', 'hospitals', 'transportation',
-        'sports', 'cultural', 'weather', 'reviews'].forEach((p) => {
-        if (gg[p]) {
-          additionalDivs.push(<div dangerouslySetInnerHTML={{ __html: gg[p] }} key={p} />);
-        }
-      });
-      if (gg.seoLinks) {
-        additionalDivs.push(<SeoLinks title="Assisted Living in Nearby Cities" links={gg.seoLinks} />);
-      }
-
-      return (
-        <>
-          <CommunitySearchList
-            communityList={communityList}
-            onParamsChange={onParamsChange}
-            onParamsRemove={onParamsRemove}
-            searchParams={searchParams}
-            requestMeta={requestMeta}
-            onAdTileClick={onAdTileClick}
-            location={location}
-          />
-          {additionalDivs}
-        </>
-      );
-    }
-
-    // If No Geo Content just return same
-    return (
-      <CommunitySearchList
-        communityList={communityList}
-        onParamsChange={onParamsChange}
-        onParamsRemove={onParamsRemove}
-        searchParams={searchParams}
-        requestMeta={requestMeta}
-        onAdTileClick={onAdTileClick}
-        location={location}
-      />
-    );
+  const openCityListModal = () => {
+    showModal((
+      <CollapsibleSection size="small" title="Cities" borderless>
+        {seoLinks.map(seoLink => (
+          <StyledLink
+            to={seoLink.to}
+            id={seoLink.title}
+            key={seoLink.title}
+            selected={false}
+            rel="nofollow"
+            onClick={hideModal}
+          >
+            {seoLink.title}
+          </StyledLink>
+        ))}
+      </CollapsibleSection>
+    ), null, 'sidebar');
   };
 
   return (
@@ -165,19 +138,40 @@ const StateSearchPage = ({
         ...searchParams, url: location, communityList, listSize, geoGuide,
       })}
       <CommunitySearchPageTemplate
-        column={stateSeachFilterList()}
+        column={(
+          <FilterColumnWrapper>
+            <ImageButtonWrapper isMapView={isMapView}>
+              {isMapView &&
+              <IconButton icon="list" to={listViewUrl} palette="primary" ghost>
+                View List
+              </IconButton>
+              }
+              {!isMapView &&
+              <>
+                <StyledImage src={assetPath('images/map-placeholder.png')} />
+                <IconButton icon="map" iconSize="regular" to={mapViewUrl} palette="primary" ghost>
+                  View Map
+                </IconButton>
+              </>
+              }
+            </ImageButtonWrapper>
+          </FilterColumnWrapper>
+        )}
       >
         {!isMapView && (
-          TopContent()
+          <>
+            <Heading level="hero" size="title">{listSize} {tocLabel} in {state}</Heading>
+            {(gg.autoDescription) && <div dangerouslySetInnerHTML={{ __html: gg.autoDescription }} />}
+          </>
         )}
         <TopWrapper>
           {isMapView && (
-            <IconButton icon="list" ghost transparent onClick={toggleMap}>
+            <IconButton icon="list" ghost transparent to={listViewUrl}>
               View List
             </IconButton>
           )}
           {!isMapView && (
-            <IconButton icon="map" iconSize="regular" ghost transparent onClick={toggleMap}>
+            <IconButton icon="map" iconSize="regular" ghost transparent to={mapViewUrl}>
               View Map
             </IconButton>
           )}
@@ -186,7 +180,7 @@ const StateSearchPage = ({
               icon="tweak"
               ghost
               transparent
-              onClick={handleModalFilterClick}
+              onClick={openCityListModal}
             >
               Cities
             </IconButton>
@@ -194,15 +188,24 @@ const StateSearchPage = ({
         </TopWrapper>
 
         {!isMapView && (
-          ListContent()
+          <>
+            <CommunitySearchList
+              communityList={communityList}
+              searchParams={searchParams}
+              requestMeta={requestMeta}
+              location={location}
+            />
+            {guideTypes.map((key) => (gg[key] ? <div dangerouslySetInnerHTML={{ __html: gg[key] }} key={key} /> : null))}
+            {gg.seoLinks && <SeoLinks title="Assisted Living in Nearby Cities" links={gg.seoLinks} />}
+          </>
         )}
         {isMapView && (
-          <SearchMapContainer
+          <SearchMap
             latitude={latitude}
             longitude={longitude}
             communityList={communityList}
             searchParams={searchParams}
-            onParamsChange={onParamsChange}
+            isLoading={isLoading}
           />
         )}
       </CommunitySearchPageTemplate>
@@ -215,10 +218,9 @@ StateSearchPage.propTypes = {
   geoGuide: object,
   requestMeta: object.isRequired,
   isMapView: bool,
-  toggleMap: func,
-  onParamsChange: func,
-  onParamsRemove: func,
-  onAdTileClick: func,
+  mapViewUrl: string,
+  listViewUrl: string,
+  isLoading: bool,
   location: object,
   searchParams: object,
   showModal: func,

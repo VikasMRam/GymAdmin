@@ -55,11 +55,11 @@ const searchParamsWhitelist = [
 
 export const tocs = [
   {
-    label: 'All Communities',
-    value: 'retirement-community',
-    segment: 'retirement-community',
-    searchLabel: 'Retirement Communities',
-    seoLabel: 'Retirement Communities',
+    label: 'Nursing Homes',
+    value: 'nursing-homes',
+    segment: 'nursing-homes',
+    searchLabel: 'Nursing Homes',
+    seoLabel: 'Nursing Homes',
   },
   {
     label: 'Assisted Living',

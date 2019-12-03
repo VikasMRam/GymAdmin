@@ -1,42 +1,25 @@
 import React, { PureComponent } from 'react';
-import { object, array } from 'prop-types';
-import queryString from 'query-string';
+import { object, array, func } from 'prop-types';
 import { Redirect } from 'react-router-dom';
-
-import {
-  stateNames,
-  urlize,
-  replaceLastSegment,
-} from 'sly/services/helpers/url';
-import SlyEvent from 'sly/services/helpers/events';
+import { stateNames, urlize, replaceLastSegment } from 'sly/services/helpers/url';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
-import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
-import {
-  filterLinkPath,
-  getSearchParams,
-} from 'sly/services/helpers/search';
-import ModalController from 'sly/controllers/ModalController';
+import { getSearchParams } from 'sly/services/helpers/search';
 import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
-
-
-const onCommunityClick = (position, to) => {
-  const event = {
-    category: 'SearchPage',
-    action: 'communityClick',
-    label: position.toString(),
-    value: to,
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
+import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
+import withRouter from 'react-router/withRouter';
 
 @withProps(({ match, location }) => ({
   searchParams: getSearchParams(match, location),
 }))
+@prefetch('geoGuides', 'getGeoGuides', (request, { searchParams }) => request(searchParams))
 
-@prefetch('geoGuide', 'getGeoGuides', (request, { searchParams }) => request(searchParams))
 @prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
+
+@withGenerateFilterLinkPath
+
+@withRouter
 
 export default class CommunitySearchPageContainer extends PureComponent {
   static propTypes = {
@@ -45,58 +28,13 @@ export default class CommunitySearchPageContainer extends PureComponent {
     history: object.isRequired,
     location: object.isRequired,
     communityList: array,
-    geoGuide: array,
+    geoGuides: array,
     serverState: object,
+    generateFilterLinkPath: func.isRequired,
   };
 
-  // TODO Define Search Parameters
-  toggleMap = () => {
-    const event = {
-      changedParams: {
-        view: 'map', 'page-number': 0, 'page-size': 50, searchOnMove: true, radius: '10',
-      },
-    };
-    if (this.props.searchParams && this.props.searchParams.view === 'map') {
-      event.changedParams = { view: 'list', 'page-size': 15 };
-    }
-    this.changeSearchParams(event);
-  };
-
-  changeSearchParams = ({ changedParams }) => {
-    const { searchParams, history } = this.props;
-    const { path } = filterLinkPath(searchParams, changedParams);
-    const event = {
-      action: 'search', category: searchParams.toc, label: queryString.stringify(searchParams),
-    };
-
-    SlyEvent.getInstance().sendEvent(event);
-
-    if (searchParams.view === 'map') {
-      history.replace(path);
-    } else {
-      history.push(path);
-    }
-  };
-
-  removeSearchFilters = ({ paramsToRemove }) => {
-    const { searchParams, history } = this.props;
-
-    const changedParams = paramsToRemove.reduce((cumul, param) => {
-      if (param === 'toc') {
-        cumul[param] = 'nursing-homes';
-      } else {
-        cumul[param] = undefined;
-      }
-      return cumul;
-    }, {});
-
-    const { path } = filterLinkPath(searchParams, changedParams);
-
-    history.push(path);
-  };
-
-  handleOnAdTileClick = () => {
-    this.changeSearchParams({ changedParams: { modal: CARE_ASSESSMENT_WIZARD } });
+  state = {
+    areFiltersOpen: false,
   };
 
   render() {
@@ -104,10 +42,11 @@ export default class CommunitySearchPageContainer extends PureComponent {
       searchParams,
       serverState,
       communityList,
-      geoGuide,
+      geoGuides,
       location,
       history,
       status,
+      generateFilterLinkPath,
     } = this.props;
 
     const { pathname, search } = location;
@@ -127,40 +66,34 @@ export default class CommunitySearchPageContainer extends PureComponent {
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
-    const isFetchingResults = status.communityList.isLoading || !status.communityList.hasStarted;
-
-    // if (isFetchingResults) {
-    //   return null;
-    // }
-
+    const isFetchingResults = !status.communityList.hasFinished;
     const requestMeta = status.communityList.meta;
-
     const isMapView = searchParams.view === 'map';
-    const gg = geoGuide && geoGuide.length > 0 ? geoGuide[0] : {};
+    const mapViewUrl = generateFilterLinkPath({
+      changedParams: {
+        view: 'map',
+        'page-number': 0,
+        'page-size': 50,
+        searchOnMove: true,
+        radius: '10',
+      },
+    });
+    const listViewUrl = generateFilterLinkPath({ changedParams: { view: 'list', 'page-size': 15 } });
+
     return (
-      <ModalController>
-        {({
-          show,
-          hide,
-        }) => (
-          <CommunitySearchPage
-            isMapView={isMapView}
-            requestMeta={requestMeta || {}}
-            toggleMap={this.toggleMap}
-            searchParams={searchParams}
-            onParamsChange={this.changeSearchParams}
-            onParamsRemove={this.removeSearchFilters}
-            communityList={communityList || []}
-            geoGuide={gg}
-            location={location}
-            onAdTileClick={this.handleOnAdTileClick}
-            isFetchingResults={isFetchingResults}
-            onCommunityClick={onCommunityClick}
-            showModal={show}
-            hideModal={hide}
-          />
-        )}
-      </ModalController>
+      <CommunitySearchPage
+        isMapView={isMapView}
+        requestMeta={requestMeta || {}}
+        mapViewUrl={mapViewUrl}
+        listViewUrl={listViewUrl}
+        searchParams={searchParams}
+        communityList={communityList || []}
+        geoGuide={(geoGuides && geoGuides[0]) || {}}
+        location={location}
+        isFetchingResults={isFetchingResults}
+        areFiltersOpen={this.state.areFiltersOpen}
+        toggleFiltersOpen={() => this.setState(({ areFiltersOpen }) => ({ areFiltersOpen: !areFiltersOpen }))}
+      />
     );
   }
 }

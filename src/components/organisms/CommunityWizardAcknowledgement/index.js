@@ -59,7 +59,6 @@ const CommunityWizardAcknowledgement = ({
   onVideoPlay,
   onVideoThumbnailClick,
   similarCommunities,
-  onTileClick,
 }) => (
   <TopWrapper className={className}>
     <Wrapper>
@@ -78,7 +77,7 @@ const CommunityWizardAcknowledgement = ({
     <PaddedHowSlyWorksVideo isPlaying={isVideoPlaying} onPause={onVideoPause} onPlay={onVideoPlay} onThumbnailClick={onVideoThumbnailClick} />
     <PaddedHr />
     <StyledHeading>You might like these communities.</StyledHeading>
-    <SimilarCommunities communityStyle={{ imageSize: 'little', layout: 'row', showDescription: false }} communities={similarCommunities} onCommunityClick={onTileClick} />
+    <SimilarCommunities communityStyle={{ imageSize: 'little', layout: 'row', showDescription: false }} communities={similarCommunities} />
   </TopWrapper>
 );
 
@@ -93,7 +92,6 @@ CommunityWizardAcknowledgement.propTypes = {
   onVideoPause: func,
   onVideoPlay: func,
   onVideoThumbnailClick: func,
-  onTileClick: func,
 };
 
 CommunityWizardAcknowledgement.defaultProps = {

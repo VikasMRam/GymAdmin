@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { object, string } from 'prop-types';
 import withRouter from 'react-router/withRouter';
+
 import { query } from 'sly/services/newApi';
-import SlyEvent from 'sly/services/helpers/events';
 
 @query('createAction', 'createUuidAction')
 @withRouter
@@ -14,9 +14,7 @@ export default class PageViewActionContainer extends Component {
   };
 
   componentDidMount() {
-    const { match, location, createAction, actionType, actionInfo } = this.props;
-
-    SlyEvent.getInstance().sendPageView(location.pathname, location.search);
+    const { match, createAction, actionType, actionInfo } = this.props;
 
     createAction({
       type: 'UUIDAction',
