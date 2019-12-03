@@ -23,7 +23,7 @@ jest.mock('sly/services/newApi/withAuth', () => ({
 const mockStore = configureStore([]);
 const store = mockStore({
   requests: {},
-  bees: {},
+  api: {},
   form: {
     EbookForm: {
       registeredFields: {

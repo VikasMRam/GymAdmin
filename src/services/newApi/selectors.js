@@ -1,8 +1,8 @@
 import build from 'redux-object';
 import { createSelector } from 'reselect';
 
-const getRequests = ({ bees }) => bees.requests;
-const getEntities = ({ bees }) => bees.entities;
+const getRequests = ({ api }) => api.requests;
+const getEntities = ({ api }) => api.entities;
 
 function getRawRequest(requests, apiCall, args) {
   if (!requests) {

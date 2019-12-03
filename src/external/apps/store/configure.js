@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { middleware as thunkMiddleware } from 'redux-saga-thunk';
 import { createLogger } from 'redux-logger';
 
-import { middleware as beesMiddleware } from 'sly/services/newApi';
+import { middleware as apiMiddleware } from 'sly/services/newApi';
 import { isDev, isBrowser } from 'sly/config';
 
 const devtools =
@@ -14,7 +14,7 @@ const loggerMiddleware = createLogger();
 
 const configureStore = (initialState) => {
   const middlewares = [
-    beesMiddleware, thunkMiddleware,
+    apiMiddleware, thunkMiddleware,
   ];
 
   if (isBrowser && isDev) {

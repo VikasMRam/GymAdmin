@@ -35,7 +35,7 @@ const mockStore = configureStore([() => next => (action) => {
   return Promise.resolve(action);
 }]);
 const mockWrap = (props = {}, state = {}) => {
-  const storeInstance = mockStore({ authenticated: state, bees: {} });
+  const storeInstance = mockStore({ authenticated: state, api: {} });
   storeInstance.replaceReducer(reducer);
   const wrapper = shallow(
     <AuthContainer {...props} />,
@@ -57,7 +57,7 @@ const getStepComponent = (showModal, i = 0) => {
 describe('AuthContainer', () => {
   // FIXME: done in completely different manner now
   it.skip('Should derive state correctly', () => {
-    const wrapper = wrap(null, { bees: {} });
+    const wrapper = wrap(null, { api: {} });
     expect(wrapper.dive().state('currentStep')).toEqual(null);
     wrapper.store.dispatch(actions.authenticate('For the lolz'));
     wrapper.update();
@@ -69,7 +69,7 @@ describe('AuthContainer', () => {
 
   it.skip('Should display each step correctly', () => {
     const showModal = jest.fn();
-    const wrapper = wrap({ showModal }, { bees: {} });
+    const wrapper = wrap({ showModal }, { api: {} });
     expect(wrapper.dive().state('currentStep')).toEqual(null);
     wrapper.store.dispatch(actions.authenticate('For the lolz'));
     wrapper.update();
