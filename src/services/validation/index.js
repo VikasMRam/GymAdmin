@@ -4,6 +4,7 @@ import isIn from 'validator/lib/isIn';
 import isURL from 'validator/lib/isURL';
 import isMobilePhone from 'validator/lib/isMobilePhone';
 import isFloat from 'validator/lib/isFloat';
+import dayjs from 'dayjs';
 
 const isEmpty = value => value === undefined || value === null ||
   (value && value.trim ? value.trim() === '' : value === '');
@@ -66,6 +67,10 @@ export const oneOf = values => value =>
 
 export const match = field => (value, data) =>
   data && value !== data[field] && 'Must match';
+
+export const isBeforeNow = value => value && dayjs(value).isAfter(dayjs(), 'day') && `Must be before ${new Date().toDateString()}`;
+
+export const isAfterNow =  value => value && dayjs(value).isBefore(dayjs(), 'day') && `Must be after ${new Date().toDateString()}`;
 
 export const createValidator = (rules, messageObj) => (data = {}) => {
   const errors = {};

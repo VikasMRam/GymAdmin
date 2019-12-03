@@ -254,6 +254,7 @@ const CommunitySearchPage = ({
             latitude={latitude}
             longitude={longitude}
             communityList={communityList}
+            isLoading={isFetchingResults}
             searchParams={searchParams}
             onParamsChange={onParamsChange}
           />

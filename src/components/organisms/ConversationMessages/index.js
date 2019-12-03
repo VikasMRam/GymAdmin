@@ -80,7 +80,7 @@ const ConversationMessages = ({
       const hrProps = {
         text: dayName,
       };
-      if (isAfter(message.createdAt, lastMessageReadAt) && ((nextMessage &&
+      if (!addedNewMarker && isAfter(message.createdAt, lastMessageReadAt) && ((nextMessage &&
         isAfter(nextMessage.createdAt, lastMessageReadAt)) || messages.length === 1)) {
         hrProps.badgeText = 'New';
         hrProps.palette = 'warning';
