@@ -6,9 +6,19 @@ import { BrowserRouter } from 'react-router-dom';
 
 import EbookFormContainer from './index';
 
-const showModal = jest.fn();
-const hideModal = jest.fn();
-const notifyInfo = jest.fn();
+jest.mock('sly/services/newApi/withAuth', () => ({
+  __esModule: true,
+  default: (Component) => {
+    const Wrapper = props => (
+      <Component
+        {...props}
+        createOrUpdateUser={() => Promise.resolve()}
+      />
+    );
+    Wrapper.WrappedComponent = Component.WrappedComponent || Component;
+    return Wrapper;
+  },
+}));
 
 const mockStore = configureStore([]);
 const store = mockStore({
@@ -72,20 +82,28 @@ const createContext = () => ({
 const wrap = (props = {}) => mount(
   <EbookFormContainer
     {...props}
-    notifyInfo={notifyInfo}
     store={store}
-    showModal={showModal}
-    hideModal={hideModal}
-  />, createContext());
+  />,
+  createContext()
+);
 
 describe('EbookFormContainer', () => {
+  const showModal = jest.fn();
+  const hideModal = jest.fn();
+  const notifyInfo = jest.fn();
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('should render EbookFormContainer', () => {
-    const wrapper = wrap();
+    const wrapper = wrap({ showModal, hideModal, notifyInfo });
 
     expect(wrapper.exists()).toBe(true);
   });
+
   it('should submit form with form data', () => {
-    const wrapper = wrap();
+    const wrapper = wrap({ showModal, hideModal, notifyInfo });
 
     wrapper.find('form').simulate('submit');
 
@@ -94,19 +112,33 @@ describe('EbookFormContainer', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('should hide the ebook modal', () => {
-    const wrapper = wrap();
+  it('should hide the ebook modal', async () => {
+    const wrapper = wrap({ showModal, hideModal, notifyInfo });
 
-    wrapper.find('form').simulate('submit');
+    const container = wrapper.find('EbookFormContainer');
+    const handleSubmitSpy = jest.spyOn(container.instance(), 'handleSubmit');
+    container.instance().forceUpdate();
+
+    container.find('form').simulate('submit');
+
+    const result = handleSubmitSpy.mock.results.pop();
+    await result.value;
 
     expect(hideModal).toHaveBeenCalled();
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('should show the notification', () => {
-    const wrapper = wrap();
+  it('should show the notification', async () => {
+    const wrapper = wrap({ showModal, hideModal, notifyInfo });
+
+    const container = wrapper.find('EbookFormContainer');
+    const handleSubmitSpy = jest.spyOn(container.instance(), 'handleSubmit');
+    container.instance().forceUpdate();
 
     wrapper.find('form').simulate('submit');
+
+    const result = handleSubmitSpy.mock.results.pop();
+    await result.value;
 
     expect(notifyInfo).toHaveBeenCalled();
     expect(notifyInfo).toHaveBeenCalledWith('We have sent the booklet to your email test@seniorly.com');

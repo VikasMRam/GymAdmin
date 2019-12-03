@@ -110,7 +110,7 @@ const FamilySummary = ({
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.locationInfo &&
         <ColumWrapper>
           <Label palette="grey">Preferred location</Label>
-          <Block size="caption">{client.uuidAux.uuidInfo.locationInfo.city}, {client.uuidAux.uuidInfo.locationInfo.state}</Block>
+          <Block size="caption">{client.uuidAux.uuidInfo.locationInfo.city ? [client.uuidAux.uuidInfo.locationInfo.city, client.uuidAux.uuidInfo.locationInfo.state].filter(v => v).join(', ') : 'None'}</Block>
         </ColumWrapper>
       }
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.housingInfo.moveTimeline &&
