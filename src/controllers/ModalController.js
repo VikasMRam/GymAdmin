@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import { string, func, bool, node } from 'prop-types';
 
 import { connectController } from 'sly/controllers';
@@ -13,7 +13,7 @@ const mapStateToProps = (state, { controller = {} }) => ({
 
 @connectController(mapStateToProps)
 
-export default class ModalController extends Component {
+export default class ModalController extends PureComponent {
   static propTypes = {
     modalType: string,
     set: func,
