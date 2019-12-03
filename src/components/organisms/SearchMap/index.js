@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { string, number, shape, arrayOf } from 'prop-types';
+import { string, number, shape, arrayOf, func, object, bool } from 'prop-types';
 import styled from 'styled-components';
 import { Marker, InfoWindow } from 'react-google-maps';
 import debounce from 'lodash/debounce';
+
 import { isServer } from 'sly/config';
 import { size, palette } from 'sly/components/themes';
 import Checkbox from 'sly/components/molecules/Checkbox';
@@ -10,6 +11,8 @@ import Map from 'sly/components/atoms/Map';
 import MapTile from 'sly/components/molecules/MapTile';
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import { getRadiusFromMapBounds } from 'sly/services/helpers/search';
+import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
+import withRouter from 'react-router/withRouter';
 
 const MapWrapper = styled.div`
   width: 100%;
@@ -50,6 +53,10 @@ const refs = {
 
 const minRadius = 10;
 
+@withGenerateFilterLinkPath
+
+@withRouter
+
 class SearchMap extends Component {
   static propTypes = {
     latitude: number.isRequired,
@@ -64,13 +71,17 @@ class SearchMap extends Component {
         longitude: number.isRequired,
       })
     ),
+    isLoading: bool,
+    searchParams: object,
+    history: object.isRequired,
+    generateFilterLinkPath: func.isRequired,
   };
 
   static getDerivedStateFromProps = (props, state) => {
     return Object.assign(
       {},
       !props.isLoading && { communityList: props.communityList },
-      state.hasValidDefaultLocation && {
+      !state.hasValidDefaultLocation && {
         defaultCenter: { lat: props.latitude, lng: props.longitude },
         hasValidDefaultLocation: props.latitude !== 0 && props.longitude !== 0,
       }
@@ -101,44 +112,40 @@ class SearchMap extends Component {
     });
   };
 
-  onBoundsChange = debounce(() => {
+  onIdle = debounce(() => {
     // Do something if this is checked
     if (this.state.redoSearchOnMove) {
-      const { onParamsChange, searchParams } = this.props;
-      if (onParamsChange && typeof onParamsChange === 'function') {
-        // Get Map's center and get latitude and longitude
-        if (refs.map) {
-          const center = refs.map.getCenter();
-          const latitude = center.lat();
-          const longitude = center.lng();
-          // Calculate radius
-          let radius = getRadiusFromMapBounds(refs.map.getBounds());
-          if (radius < minRadius) {
-            radius = minRadius;
-          }
-          if (
-            searchParams.latitude !== latitude.toString() ||
-            searchParams.longitude !== longitude.toString() ||
-            searchParams.radius !== radius.toString()
-          ) {
-            onParamsChange({
-              changedParams: {
-                latitude,
-                longitude,
-                radius,
-              },
-            });
-          }
+      const { generateFilterLinkPath, searchParams, history } = this.props;
+      if (refs.map) {
+        const center = refs.map.getCenter();
+        const latitude = center.lat();
+        const longitude = center.lng();
+        // Calculate radius
+        let radius = getRadiusFromMapBounds(refs.map.getBounds());
+        if (radius < minRadius) {
+          radius = minRadius;
+        }
+        if (
+          searchParams.latitude !== latitude.toString() ||
+          searchParams.longitude !== longitude.toString() ||
+          searchParams.radius !== radius.toString()
+        ) {
+          history.replace(generateFilterLinkPath({
+            changedParams: {
+              latitude,
+              longitude,
+              radius,
+            },
+          }));
         }
       }
     }
-  }, 200);
+  }, 500);
 
   render() {
-    const { latitude, longitude } = this.props;
-    const { defaultCenter, communityList, redoSearchOnMove } = this.state;
+    const { defaultCenter, hasValidDefaultLocation, communityList, redoSearchOnMove } = this.state;
 
-    if (latitude === 0 && longitude === 0) {
+    if (!hasValidDefaultLocation) {
       return <div>Loading Map...</div>;
     }
 
@@ -156,7 +163,8 @@ class SearchMap extends Component {
           defaultCenter={defaultCenter}
           defaultZoom={defaultZoom}
           containerElement={<MapContainerElement />}
-          onIdle={this.onBoundsChange}
+          onIdle={this.onIdle}
+          onDragStart={this.onIdle.cancel}
           onMapMounted={this.onMapMounted}
         >
           {communityList.map(community => (
