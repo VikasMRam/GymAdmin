@@ -4,7 +4,8 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import { object, func } from 'prop-types';
 import get from 'lodash/get';
 
-import { query, withApi, createMemoizedRequestInfoSelector } from 'sly/services/newApi';
+import api from 'sly/services/newApi/apiInstance';
+import { query, createMemoizedRequestInfoSelector } from 'sly/services/newApi';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -35,12 +36,11 @@ export default function withUser(InnerComponent) {
     };
   };
 
-  const mapDispatchToActions = (dispatch, { api }) => ({
-    fetchUser: () => dispatch(api.getUser({ id: 'me' })),
-    fetchUuidAux: () => dispatch(api.getUuidAux({ id: 'me' })),
-  });
+  const mapDispatchToActions = {
+    fetchUser: () => api.getUser.asAction({ id: 'me' }),
+    fetchUuidAux: () => api.getUuidAux.asAction({ id: 'me' }),
+  };
 
-  @withApi
   @query('updateUser', 'updateUser')
   @connect(makeMapStateToProps, mapDispatchToActions)
 

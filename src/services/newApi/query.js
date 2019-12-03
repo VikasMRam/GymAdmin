@@ -21,7 +21,7 @@ export default function query(propName, apiCall) {
       fetch = (...args) => {
         const call = api[apiCall];
 
-        if ([destroy, get].contains(call.method)) {
+        if ([destroy, get].includes(call.method)) {
           return call(...args);
         }
 
