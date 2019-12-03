@@ -6,7 +6,13 @@ import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricing
 import { Link } from 'sly/components/atoms';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const wrap = (props = {}) => shallow(<CommunitySummary {...props} />);
+const searchParams = { city: 'san-carlos',
+  communitySlug: 'rhoda-goldman-plaza',
+  state: 'california',
+  toc: 'assisted-living',
+};
+
+const wrap = (props = {}) => shallow(<CommunitySummary {...props} searchParams={searchParams} />);
 
 const verify = (wrapper) => {
   const {
@@ -15,8 +21,7 @@ const verify = (wrapper) => {
   const {
     line1, line2, city, state, zip,
   } = address;
-  const renderedAddress = wrapper.find('Address').dive().dive().dive()
-    .text();
+  const renderedAddress = wrapper.find('Heading').dive().dive().text();
   const renderedWrapper = wrapper.find('Wrapper');
 
   expect(renderedAddress).toContain(line1);
@@ -91,5 +96,15 @@ describe('CommunitySummary', () => {
     });
     verify(wrapper);
     expect(wrapper.find('StyledHeading').dive().find(Link)).toHaveLength(1);
+  });
+
+  it('Should render the care types tag', () => {
+    const wrapper = wrap({
+      community: RhodaGoldmanPlaza,
+    });
+    // console.log(wrapper.debug());
+
+    verify(wrapper);
+    expect(wrapper.find('StyledTag')).toHaveLength(2);
   });
 });
