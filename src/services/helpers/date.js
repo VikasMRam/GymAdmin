@@ -34,4 +34,4 @@ export const durationInS = (startDayjs, endDayjs) => startDayjs.diff(endDayjs, '
 
 export const isAfter = (a, b) => dayjs(a).utc().isAfter(dayjs(b).utc());
 
-export const isSameDay = (a, b) => a.substr(0, 10) === b.substr(0, 10);
+export const isSameDay = (a, b) => dayjs(a).isSame(dayjs(b), 'day');
