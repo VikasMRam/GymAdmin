@@ -6,9 +6,9 @@ import EntityApprovalPage from 'sly/components/pages/EntityApprovalPage/index';
 import { titleize } from 'sly/services/helpers/strings';
 import { logError } from 'sly/services/helpers/logging';
 import withAuth from 'sly/services/newApi/withAuth';
-import withApi from 'sly/services/newApi/withApi';
+import api from 'sly/services/newApi/apiInstance';
 
-const getApiFor = (api, entity) => {
+const getApiFor = (entity) => {
   switch (entity) {
     case 'content': return api.updateContent;
     case 'rating': return api.updateRating;
@@ -16,15 +16,14 @@ const getApiFor = (api, entity) => {
   }
 };
 
-const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
+const mapDispatchToProps = (dispatch, { ensureAuthenticated }) => ({
   approveEntity: (entity, id) => ensureAuthenticated(
     `Sign up to approve ${entity}`,
-    getApiFor(api, entity)({ id }, { approve: true }),
+    getApiFor(entity)({ id }, { approve: true }),
   ),
 });
 
 @withAuth
-@withApi
 @connect(null, mapDispatchToProps)
 
 export default class EntityApprovalContainer extends Component {

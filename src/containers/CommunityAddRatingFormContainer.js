@@ -4,7 +4,8 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { func, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { withUser, withApi, prefetch, query } from 'sly/services/newApi';
+import api from 'sly/services/newApi/apiInstance';
+import { withUser, prefetch, query } from 'sly/services/newApi';
 
 import {
   createValidator,
@@ -33,12 +34,6 @@ const ReduxForm = reduxForm({
 
 @withRouter
 
-// FIXME: hack because addRating is not JSON:API so we can't use @query
-@withApi
-@connect(null, (dispatch, { api }) => ({
-  createRating: data => dispatch(api.createRating(data)),
-}))
-
 @withUser
 
 @query('createAction', 'createUuidAction')
@@ -50,9 +45,9 @@ const ReduxForm = reduxForm({
 
 export default class CommunityAddRatingFormContainer extends Component {
   static propTypes = {
+    match: object,
     user: object,
     community: communityPropType,
-    createRating: func,
     status: object.isRequired,
     showModal: func,
     createAction: func,
@@ -60,7 +55,7 @@ export default class CommunityAddRatingFormContainer extends Component {
 
   handleOnSubmit = (values) => {
     const {
-      community, createRating, status, showModal, createAction, match,
+      community, status, showModal, createAction, match,
     } = this.props;
     const {
       comments, value, name, email,
@@ -73,7 +68,7 @@ export default class CommunityAddRatingFormContainer extends Component {
       email,
     };
 
-    return createRating(payload)
+    return api.createRating(payload)
       .then(({ body }) => createAction({
         type: 'UUIDAction',
         attributes: {

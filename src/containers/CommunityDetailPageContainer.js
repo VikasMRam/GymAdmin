@@ -12,7 +12,6 @@ import {
   PROFILE_CONTACTED,
   TOUR_BOOKED,
 } from 'sly/services/newApi/constants';
-import SlyEvent from 'sly/services/helpers/events';
 import { HydrationData } from 'sly/services/partialHydration';
 
 const createHasProfileAction = uuidActions => (type, actionInfo) => {
@@ -24,7 +23,6 @@ const createHasProfileAction = uuidActions => (type, actionInfo) => {
 
 const getCommunitySlug = match => match.params.communitySlug;
 
-@withApi
 @withAuth
 @prefetch('community', 'getCommunity', (req, { match }) =>
   req({

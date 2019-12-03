@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { createValidator, required } from 'sly/services/validation';
 import PasswordResetPage from 'sly/components/pages/PasswordResetPage';
-import withApi from 'sly/services/newApi/withApi';
+import api from 'sly/services/newApi/apiInstance';
 
 const validate = createValidator({
   password: [required],
@@ -22,12 +22,11 @@ const mapStateToProps = (state, { history, match, location }) => ({
   searchParams: getSearchParams(match, location),
 });
 
-const mapDispatchToProps = (dispatch, { api }) => ({
-  resetPassword: data => dispatch(api.resetPassword(data)),
-  clearSubmitErrors: () => dispatch(clearSubmitErrors('PasswordResetForm')),
-});
+const mapDispatchToProps = {
+  resetPassword: data => api.resetPassword(data).asAction,
+  clearSubmitErrors: () => clearSubmitErrors('PasswordResetForm'),
+};
 
-@withApi
 @connect(mapStateToProps, mapDispatchToProps)
 
 export default class PasswordResetPageContainer extends Component {
