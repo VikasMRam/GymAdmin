@@ -67,8 +67,8 @@ describe('DashboardAdminReferralCommunityTile', () => {
   });
 
   it('renders referralSentAt', () => {
-    const referralSentAt = '2018-04-20T08:25:56Z';
-    const referralSentAtString = '4/20/18, 8:25AM';
+    const referralSentAt = '2018-03-20T08:25:56Z';
+    const referralSentAtString = '3/20/18, 8:25AM';
     const wrapper = wrap({ referralSentAt });
     expect(wrapper.contains(community.name)).toBe(true);
     expect(wrapper.contains(addressString)).toBe(true);

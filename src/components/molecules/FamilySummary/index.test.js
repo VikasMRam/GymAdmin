@@ -45,7 +45,7 @@ describe('FamilySummary', () => {
       .find('ColumWrapper')
       .at(7)
       .find(Block)
-      .contains(PraneshKumar.uuidAux.uuidInfo.locationInfo.city)).toBe(true);
+      .contains(`${PraneshKumar.uuidAux.uuidInfo.locationInfo.city}, ${PraneshKumar.uuidAux.uuidInfo.locationInfo.state}`)).toBe(true);
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
       .at(8)

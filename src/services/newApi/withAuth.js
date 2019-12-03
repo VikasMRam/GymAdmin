@@ -58,7 +58,6 @@ export default function withAuth(InnerComponent) {
       ensureAuthenticated: func.isRequired,
       status: object.isRequired,
       user: object,
-      uuidAux: object.isRequired,
       updateUser: func.isRequired,
     };
 

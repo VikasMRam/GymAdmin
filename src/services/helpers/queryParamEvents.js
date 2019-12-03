@@ -47,7 +47,7 @@ export function addEventToQueryString(search, event) {
 
   const serializedEvent = Object.keys(event).reduce((acc, key) => {
     if(event[key] !== 'undefined') {
-      acc.push(`${propToQueryParam[key]}=${event[key]}`);
+      acc.push(`${propToQueryParam[key]}=${encodeURIComponent(event[key])}`);
     }
 
     return acc;

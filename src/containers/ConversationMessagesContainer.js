@@ -9,7 +9,7 @@ import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
 import { size, palette } from 'sly/components/themes';
-import { prefetch, withUser, query } from 'sly/services/newApi';
+import { prefetch, withUser, query, invalidateRequests } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
@@ -139,7 +139,9 @@ const mapStateToProps = (state, { conversation, user }) => ({
 
 @withRouter
 
-@connect(mapStateToProps)
+@connect(mapStateToProps, (dispatch, { api }) => ({
+  invalidateConversationMessages: () => dispatch(invalidateRequests(api.getConversationMessages)),
+}))
 
 export default class ConversationMessagesContainer extends Component {
   static propTypes = {
@@ -160,6 +162,7 @@ export default class ConversationMessagesContainer extends Component {
     onBackClick: func,
     createAction: func.isRequired,
     match: matchPropType,
+    invalidateConversationMessages: func.isRequired,
   };
 
   static defaultProps = {
@@ -208,12 +211,14 @@ export default class ConversationMessagesContainer extends Component {
   }
 
   componentWillUnmount() {
-    const { ws } = this.props;
+    const { ws, invalidateConversationMessages } = this.props;
 
     ws.off(NOTIFY_MESSAGE_NEW, this.onMessage);
     if (this.messagesRef.current) {
       this.messagesRef.current.removeEventListener('scroll', this.handleScroll);
     }
+    // this is required so that users who come back to this page after navigating will see new messages
+    invalidateConversationMessages();
   }
 
   // FIXME: query should not use redux
@@ -296,7 +301,7 @@ export default class ConversationMessagesContainer extends Component {
 
   updateLastReadMessageAt = () => {
     const {
-      updateConversationParticipant, viewingAsParticipant,
+      updateConversationParticipant, viewingAsParticipant, status,
     } = this.props;
     if (viewingAsParticipant) {
       const { id } = viewingAsParticipant;
@@ -308,6 +313,7 @@ export default class ConversationMessagesContainer extends Component {
       payload.attributes.stats.lastReadMessageAt = dayjs().utc().format();
 
       return updateConversationParticipant({ id }, payload)
+        .then(() => status.conversation.refetch())
         .catch((r) => {
           // TODO: Need to set a proper way to handle server side errors
           const { body } = r;

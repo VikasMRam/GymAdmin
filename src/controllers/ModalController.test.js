@@ -28,7 +28,7 @@ describe('ModalController', () => {
     const store = initStore();
     const wrapper = wrap({ store });
 
-    wrapper.dive().instance().show(content, null);
+    wrapper.dive().dive().instance().show(content, null);
     const action = store.getActions().pop();
     expect(action.type).toBe(SET);
     expect(action.payload.data.modalType).toBeFalsy();
@@ -40,7 +40,7 @@ describe('ModalController', () => {
     const store = initStore();
     const wrapper = wrap({ store });
 
-    wrapper.dive().instance().show(content, null, type);
+    wrapper.dive().dive().instance().show(content, null, type);
     const action = store.getActions().pop();
     expect(action.type).toBe(SET);
     expect(action.payload.data.modalType).toBe(type);
@@ -53,7 +53,7 @@ describe('ModalController', () => {
     const store = initStore();
     const wrapper = wrap({ store });
 
-    wrapper.dive().instance().show(content, null, type, false);
+    wrapper.dive().dive().instance().show(content, null, type, false);
     const action = store.getActions().pop();
     expect(action.type).toBe(SET);
     expect(action.payload.data.modalType).toBe(type);
@@ -66,7 +66,7 @@ describe('ModalController', () => {
     const store = initStore({}, { modalType: type, modalContent: content });
     const wrapper = wrap({ store });
 
-    wrapper.dive().instance().hide();
+    wrapper.dive().dive().instance().hide();
     const action = store.getActions().pop();
     expect(action.type).toBe(SET);
     expect(action.payload.data.isModalOpen).toBeFalsy();

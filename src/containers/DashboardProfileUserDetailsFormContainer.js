@@ -5,7 +5,7 @@ import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
 import DashboardProfileUserDetailsForm from 'sly/components/organisms/DashboardProfileUserDetailsForm';
-import { createValidator, required, email, usPhone } from 'sly/services/validation/index';
+import { createValidator, required, email, usPhone } from 'sly/services/validation';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
 import { withUser, query } from 'sly/services/newApi';
 
@@ -27,8 +27,7 @@ const validate = createValidator({
 });
 
 const ReduxForm = reduxForm({
-  form: 'DashboardProfileUserD' +
-  'etailsForm',
+  form: 'DashboardProfileUserDetailsForm',
   destroyOnUnmount: false,
   warn,
   validate,

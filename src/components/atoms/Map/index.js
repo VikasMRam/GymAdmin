@@ -44,6 +44,7 @@ const Map = compose(
     onMapMounted,
     onCenterChanged,
     onIdle,
+    onDragStart,
   }) => {
     mapOptions.zoomControl = zoomControl;
     mapOptions.fullscreenControl = fullscreenControl;
@@ -58,6 +59,7 @@ const Map = compose(
         onBoundsChanged={onBoundsChanged}
         onCenterChanged={onCenterChanged}
         onIdle={onIdle}
+        onDragStart={onDragStart}
         ref={onMapMounted}
       >
         {children}
