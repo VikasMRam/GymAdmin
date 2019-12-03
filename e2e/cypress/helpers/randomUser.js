@@ -1,3 +1,4 @@
+import isMobilePhone from 'validator/lib/isMobilePhone';
 
 const randChars = (characters, length = 1) => {
   let result = '';
@@ -17,8 +18,11 @@ export const formatPhone = phone => `${phone.substr(0, 3)}-${phone.substr(3, 3)}
 export default function randomUser() {
   const name = `Fonz ${randHash()}`;
   const email = `slytest+${randHash()}@seniorly.com`;
-  const phone = randPhone();
-
+  let phone = null;
+  do {
+    phone = randPhone();
+  }
+  while (!isMobilePhone(phone));
   return {
     name,
     email,
