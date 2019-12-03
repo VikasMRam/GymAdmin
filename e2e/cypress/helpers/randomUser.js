@@ -22,7 +22,7 @@ export default function randomUser() {
   do {
     phone = randPhone();
   }
-  while (!isMobilePhone(phone));
+  while (!isMobilePhone(phone, 'en-US'));
   return {
     name,
     email,
