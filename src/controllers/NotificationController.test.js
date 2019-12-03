@@ -24,7 +24,7 @@ describe('NotificationController', () => {
   const message = 'test message';
 
   const wrap = (props = {}) =>
-    shallow(<NotificationController {...props}>{spy}</NotificationController>).dive();
+    shallow(<NotificationController {...props}>{spy}</NotificationController>).dive().dive();
 
   const getControllerStore = (messages) => {
     const key = 'NotificationController_123';
