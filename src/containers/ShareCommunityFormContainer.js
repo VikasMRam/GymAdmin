@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { func, bool, string, object } from 'prop-types';
+import { func, string, object } from 'prop-types';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { withRouter } from 'react-router';
 
+import api from 'sly/services/newApi/apiInstance';
 import { query } from 'sly/services/newApi';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import ShareCommunityForm from 'sly/components/organisms/ShareCommunityForm';
@@ -30,10 +31,10 @@ const ReduxForm = reduxForm({
   validate,
 })(ShareCommunityForm);
 
-const mapDispatchToProps = (dispatch, { api }) => ({
-  createUserShare: data => dispatch(api.createUserShare(data)),
-  clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
-});
+const mapDispatchToProps = {
+  createUserShare: api.createUserShare.asAction,
+  clearSubmitErrors,
+};
 
 @withRouter
 
@@ -72,7 +73,7 @@ export default class ShareCommunityFormContainer extends Component {
       body.fromEmail = data.from;
     }
 
-    clearSubmitErrors();
+    clearSubmitErrors(formName);
     return this.setState({ submitting: true }, () => createUserShare(body)
       .then(() => createAction({
         type: 'UUIDAction',

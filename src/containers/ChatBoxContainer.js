@@ -46,10 +46,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    dispatchToggleAction: () => dispatch(toggleChatBoxFooterReached()),
-  };
+const mapDispatchToProps = {
+  dispatchToggleAction: toggleChatBoxFooterReached,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatBoxContainer);

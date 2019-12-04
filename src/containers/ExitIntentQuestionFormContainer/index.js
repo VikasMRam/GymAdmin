@@ -34,9 +34,9 @@ const ReduxForm = reduxForm({
   onSubmitSuccess: afterSubmit,
 })(ExitIntentQuestionForm);
 
-const mapDispatchToProps = dispatch => ({
-  clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
-});
+const mapDispatchToProps = {
+  clearSubmitErrors: () => clearSubmitErrors(formName),
+};
 
 @withRouter
 @withUser

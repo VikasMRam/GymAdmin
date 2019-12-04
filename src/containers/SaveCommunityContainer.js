@@ -18,6 +18,7 @@ import { Block } from 'sly/components/atoms';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import CommunitySaved from 'sly/components/organisms/CommunitySaved';
 import { USER_SAVE } from 'sly/services/newApi/constants';
+import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 
 const PaddedBlock = styled(Block)`
   padding: ${size('spacing.xxLarge')};
@@ -32,7 +33,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 // FIXME: hack because createUser is not JSON:API, should use @query
-const mapDispatchToProps = (dispatch, { ensureAuthenticated }) => ({
+const mapDispatchToProps = {
   createUserSave: data => ensureAuthenticated(
     'Sign up to add to your favorites list',
     api.createOldUserSave.asAction(data),
@@ -41,7 +42,7 @@ const mapDispatchToProps = (dispatch, { ensureAuthenticated }) => ({
     'Sign up to add to your favorites list',
     api.updateOldUserSave.asAction({ id }, data),
   ),
-});
+};
 
 const getCommunitySlug = match => match.params.communitySlug;
 

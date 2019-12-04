@@ -29,9 +29,9 @@ const ReduxForm = reduxForm({
   validate,
 })(CommunityAskQuestionAgentForm);
 
-const mapDispatchToProps = dispatch => ({
-  clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
-});
+const mapDispatchToProps = {
+  clearSubmitErrors: () => clearSubmitErrors(formName),
+};
 
 @withUser
 
