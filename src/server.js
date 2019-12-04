@@ -200,13 +200,12 @@ app.use(async (req, res, next) => {
     }, {});
 
   const apiConfig = {
-    configureHeaders: headers => ({
-      ...headers,
+    headers: {
       Cookie: cookies.join('; '),
       'User-Agent': req.headers['user-agent'],
       'X-is-sly-ssr': 'true',
       'X-forwarded-for': req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-    }),
+    },
   };
 
   const store = configureStore({ experiments: userExperiments });

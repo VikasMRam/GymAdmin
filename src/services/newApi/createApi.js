@@ -11,9 +11,6 @@ const config = {
   }),
 };
 
-export default (initConfig = {}) => {
-  return buildApi(apiEndpoints, {
-    ...config,
-    ...initConfig,
-  });
+export default () => {
+  return buildApi(apiEndpoints, config);
 };

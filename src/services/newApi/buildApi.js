@@ -12,13 +12,13 @@ export default function buildApi(endpoints, config = {}) {
   } = config;
 
   // wrap config
-  const request = (path, placeholders, options) => {
+  const request = (path, placeholders, requestOptions) => {
     const augmentedOptions = {
-      ...options,
+      ...requestOptions,
       headers: configureHeaders({
         'Content-Type': 'application/vnd.api+json',
         Accept: 'application/vnd.api+json',
-        ...options.headers,
+        ...requestOptions.headers,
       }),
     };
 
