@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { bool, func, arrayOf, shape, string, oneOf } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
-import { pure } from 'recompose';
 
 import { size, palette, key } from 'sly/components/themes';
 import { palette as palettePropType } from 'sly/propTypes/palette';
@@ -290,4 +289,4 @@ Header.defaultProps = {
   smallScreenMenuItems: [],
 };
 
-export default pure(Header);
+export default Header;
