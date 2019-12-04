@@ -27,8 +27,8 @@ const generateFilterLinkPath = searchParams => ({ changedParams = {}, paramsToRe
 };
 
 export default function withGenerateFilterLinkPath(ChildComponent) {
-  const WithGenerateFilterLinkPath = ({ match, location, ...props }) => (
-    <ChildComponent generateFilterLinkPath={generateFilterLinkPath(getSearchParams(match, location))} {...props} />
+  const WithGenerateFilterLinkPath = (props) => (
+    <ChildComponent generateFilterLinkPath={generateFilterLinkPath(props.searchParams)} {...props} />
   );
 
   WithGenerateFilterLinkPath.displayName = `WithGenerateFilterLinkPath(${getDisplayName(ChildComponent)})`;
