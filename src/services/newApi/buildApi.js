@@ -2,8 +2,6 @@ import applyUrlWithPlaceholders from './applyUrlWithPlaceholders';
 import apiFetch from './apiFetch';
 import makeApiCallAction from 'sly/services/newApi/makeApiCallAction';
 
-const pendingPromises = {};
-
 const defaultConfigure = options => options;
 
 export default function buildApi(endpoints, config = {}) {
