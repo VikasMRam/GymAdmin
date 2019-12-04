@@ -124,24 +124,18 @@ const mapStateToProps = (state, { conversation, user }) => ({
 }))
 
 @query('getConversationMessages', 'getConversationMessages')
-
 @query('createConversationMessage', 'createConversationMessage')
-
 @query('updateConversationParticipant', 'updateConversationParticipant')
-
 @query('updateConversationMessage', 'updateConversationMessage')
-
 @query('createAction', 'createUuidAction')
 
 @withWS
-
 @withUser
-
 @withRouter
 
-@connect(mapStateToProps, (dispatch, { api }) => ({
-  invalidateConversationMessages: () => dispatch(invalidateRequests(api.getConversationMessages)),
-}))
+@connect(mapStateToProps, {
+  invalidateConversationMessages: () => invalidateRequests('getConversationMessages'),
+})
 
 export default class ConversationMessagesContainer extends Component {
   static propTypes = {

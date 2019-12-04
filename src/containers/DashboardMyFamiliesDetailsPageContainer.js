@@ -36,29 +36,21 @@ const mapStateToProps = (state, { conversations }) => ({
   id: match.params.id,
 }))
 
-@query('updateClient', 'updateClient')
-
-@query('createNote', 'createNote')
-
-@query('updateNote', 'updateNote')
-
-@query('getClients', 'getClients')
-
-@query('getNotes', 'getNotes')
-
-@connect(null, (dispatch, { api }) => ({
-  invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
-}))
-
 @prefetch('conversations', 'getConversations', (req, { match }) => req({
   'filter[client]': match.params.id,
 }))
 
-@connect(mapStateToProps)
-
+@query('updateClient', 'updateClient')
+@query('createNote', 'createNote')
+@query('updateNote', 'updateNote')
+@query('getClients', 'getClients')
+@query('getNotes', 'getNotes')
 @withBreakpoint
-
 @withUser
+
+@connect(mapStateToProps, {
+  invalidateClients: () => invalidateRequests('getClients'),
+})
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {

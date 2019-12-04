@@ -43,25 +43,18 @@ const ReduxForm = reduxForm({
   validate,
 })(UpdateFamilyStageForm);
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
+  uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
   formState: state.form && state.form.UpdateFamilyStageForm ? state.form.UpdateFamilyStageForm.values : null,
 });
 
 @query('updateClient', 'updateClient')
-
 @query('createNote', 'createNote')
-
 @query('updateUuidAux', 'updateUuidAux')
 
-@connect(mapStateToProps)
-
-@connect((state, props) => ({
-  uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
-}))
-
-@connect(null, (dispatch, { api }) => ({
-  invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
-}))
+@connect(mapStateToProps, {
+  invalidateClients: () => invalidateRequests('getClients'),
+})
 
 export default class UpdateFamilyStageFormContainer extends Component {
   static propTypes = {
