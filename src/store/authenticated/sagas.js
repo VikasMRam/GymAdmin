@@ -5,7 +5,7 @@ import { getRequestInfo } from 'sly/services/newApi';
 
 import * as actions from './actions';
 
-const getUser = state => getRequestInfo(state, 'getUser', [{ id: 'me' }]);
+const getUser = state => getRequestInfo(state, 'getUser', { id: 'me' });
 
 export function* authenticate(reason) {
   // check if there is an user
