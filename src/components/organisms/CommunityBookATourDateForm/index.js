@@ -28,7 +28,7 @@ const StyledField = styled(Field)`
 `;
 StyledField.displayName = 'StyledField';
 
-const StyledTimeField = StyledField.extend`
+const StyledTimeField = styled(StyledField)`
   > * {
     height: ${size('element.large')};
     font-size: ${size('text.caption')};
@@ -40,7 +40,7 @@ const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const MedicaidLabel = StyledBlock.extend`
+const MedicaidLabel = styled(StyledBlock)`
   display: flex;
   align-items: center;
 `;

@@ -66,7 +66,7 @@ const BackLinkWrapper = pad(styled.div`
 `, 'regular');
 
 const TextAlignCenterBlock = pad(textAlign(Block, 'center'), 'regular');
-const AlignCenterBackLinkWrapper = BackLinkWrapper.extend`
+const AlignCenterBackLinkWrapper = styled(BackLinkWrapper)`
   justify-content: center;
 `;
 
@@ -84,7 +84,7 @@ const SmallScreenBorderDiv = styled.div`
   ${p => p.padding && css`padding: ${size('spacing', p.padding)};`}
 `;
 
-const SmallScreenBorderPaddedFamilySummary = PaddedFamilySummary.extend`
+const SmallScreenBorderPaddedFamilySummary = styled(PaddedFamilySummary)`
   ${SmallScreenBorder}
 `;
 

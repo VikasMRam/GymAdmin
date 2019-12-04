@@ -8,7 +8,7 @@ import { getSearchParams } from 'sly/services/helpers/search';
 import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
 import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
-import withRouter from 'react-router/withRouter';
+import { withRouter } from 'react-router';
 import whyDidComponentUpdate from 'sly/services/helpers/whyDidComponentUpdate';
 
 @withProps(({ match, location }) => ({

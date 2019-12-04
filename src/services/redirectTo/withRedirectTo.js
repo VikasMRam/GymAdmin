@@ -1,9 +1,9 @@
 import React from 'react';
 import { object } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
-import withRouter from "react-router/withRouter";
+import { withRouter } from 'react-router-dom';
 
-import {routes as routesPropType} from 'sly/propTypes/routes';
+import { routes as routesPropType } from 'sly/propTypes/routes';
 import redirectTo from './redirectTo';
 
 function getDisplayName(WrappedComponent) {

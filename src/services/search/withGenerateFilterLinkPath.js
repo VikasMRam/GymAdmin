@@ -1,6 +1,6 @@
 import React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
-import withRouter from 'react-router/withRouter';
+import { withRouter } from 'react-router';
 import queryString from 'query-string';
 
 import { filterLinkPath, getSearchParams } from 'sly/services/helpers/search';

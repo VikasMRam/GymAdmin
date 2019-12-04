@@ -148,7 +148,7 @@ const StyledLink = styled(Link)`
   display: block;
 `;
 
-const VideoSection = StyledSection.extend`
+const VideoSection = styled(StyledSection)`
   width: 100%;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {

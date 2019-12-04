@@ -5,7 +5,7 @@ import { Lazy } from 'react-lazy';
 
 import { size, assetPath } from 'sly/components/themes';
 
-const CUSHION = 500;
+const CUSHION = '500px';
 
 const StyledImage = styled.img`
   user-select: none;

@@ -38,11 +38,11 @@ const StyledField = styled(Field)`
   }
 `;
 
-const CareTypesField = StyledField.extend`
+const CareTypesField = styled(StyledField)`
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
     grid-template-columns: repeat(auto-fit, ${size('mobileLayout.col2')});
   }
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     grid-template-columns: repeat(auto-fit, ${size('layout.col3')});
   }

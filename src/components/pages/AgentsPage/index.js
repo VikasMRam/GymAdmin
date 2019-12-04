@@ -64,7 +64,7 @@ const StyledSection = styled(Section)`
   }
 `;
 
-const FormSection = StyledSection.extend`
+const FormSection = styled(StyledSection)`
   width: 100%;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {

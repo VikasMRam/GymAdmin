@@ -26,11 +26,11 @@ const StyledCollapsibleSection = styled(CollapsibleSection)`
   }
 `;
 
-const FirstCollapsibleSection = StyledCollapsibleSection.extend`
+const FirstCollapsibleSection = styled(StyledCollapsibleSection)`
   border: 0;
 `;
 
-const OneCollapsibleSection = StyledCollapsibleSection.extend`
+const OneCollapsibleSection = styled(StyledCollapsibleSection)`
   border-top: 0;
 `;
 

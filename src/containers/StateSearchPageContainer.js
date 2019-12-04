@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { object, number, array, func } from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import withRouter from 'react-router/withRouter';
+import { withRouter } from 'react-router';
 
 import { stateNames, urlize, replaceLastSegment } from  'sly/services/helpers/url';
 import ErrorPage from 'sly/components/pages/Error';
