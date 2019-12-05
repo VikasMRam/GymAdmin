@@ -97,11 +97,11 @@ export const tocs = [
     seoLabel: 'Continuing Care Retirement Communities',
   },
   {
-    label: 'Skilled Nursing Facility',
+    label: 'Skilled Nursing Facilities',
     value: 'skilled-nursing-facility',
     segment: 'skilled-nursing-facility',
     searchLabel: 'Skilled Nursing Facility',
-    seoLabel: 'Skilled Nursing Facility',
+    seoLabel: 'Skilled Nursing Facilities',
   },
 ];
 
@@ -280,7 +280,7 @@ export const getEvtHandler = (paramsToRemove, origFn) => {
 export const getTocSeoLabel = (toc) => {
   const actualToc = tocs.find(elem => (elem.value === toc));
   if (typeof actualToc === 'undefined') {
-    return 'retirement communities';
+    return 'nursing homes';
   }
   return actualToc.seoLabel;
 };
