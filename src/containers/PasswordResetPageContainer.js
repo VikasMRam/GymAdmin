@@ -23,7 +23,7 @@ const mapStateToProps = (state, { history, match, location }) => ({
 });
 
 const mapDispatchToProps = {
-  resetPassword: data => api.resetPassword(data).asAction,
+  resetPassword: api.resetPassword.asAction,
   clearSubmitErrors: () => clearSubmitErrors('PasswordResetForm'),
 };
 

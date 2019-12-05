@@ -181,6 +181,8 @@ const groups = {
     { name: 'Home Care', url: '/in-home-care', target: '_blank' },
     { name: 'Respite Care', url: '/respite-care', target: '_blank' },
     { name: 'CCRC', url: '/continuing-care-retirement-community', target: '_blank' },
+    { name: 'Nursing Homes', url: '/nursing-homes', target: '_blank' },
+    { name: 'Skilled Nursing Facilities', url: '/skilled-nursing-facility', target: '_blank' },
   ],
 };
 

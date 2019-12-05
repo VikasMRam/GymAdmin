@@ -191,7 +191,7 @@ const NearMePage = ({
                 href={`#${sectionIdMap.alvsnh}`}
                 onClick={e => handleAnchor(e, alvsnhRef)}
               >
-                Assisted Living vs. Nursing Homes
+                Assisted Living vs. Skilled Nursing
               </Link>
             </li>
             <li>
@@ -526,7 +526,7 @@ const NearMePage = ({
           </StyledHeading>
           <Paragraph innerRef={alvsnhRef} />
           <StyledHeading level="subtitle" size="subtitle" >
-            Assisted Living vs Nursing Homes
+            Assisted Living vs Skilled Nursing
           </StyledHeading>
           <Paragraph>
             Also commonly called Skilled Nursing, there is a definable difference between Assisted Living communities

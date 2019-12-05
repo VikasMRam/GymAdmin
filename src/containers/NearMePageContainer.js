@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { object, number, array, bool, func } from 'prop-types';
-
 import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 import ErrorPage from 'sly/components/pages/Error';
 import NearMePage from 'sly/components/pages/NearMePage';
+import NursingHomesNearMePage from 'sly/components/pages/NursingHomesNearMePage';
+import SNFNearMePage from 'sly/components/pages/SNFNearMePage';
 import { parseURLQueryParams } from 'sly/services/helpers/url';
 import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
@@ -20,8 +21,9 @@ const handleClick = (e, sectionRef) => {
 
 @withProps(({ location }) => {
   const qs = parseURLQueryParams(location.search);
+  const toc = location.pathname.slice(1);
   return {
-    searchParams: { toc: 'assisted-living', nearme: 'true', 'page-number': qs['page-number'] },
+    searchParams: { toc, nearme: 'true', 'page-number': qs['page-number'] },
   };
 })
 
@@ -46,8 +48,10 @@ export default class NearMePageContainer extends Component {
     };
     SlyEvent.getInstance().sendEvent(event);
 
-    const { history } = this.props;
+    const { history, location } = this.props;
     const searchParams = getSearchParamFromPlacesResponse(result);
+    const toc = location.pathname.slice(1);
+    searchParams.toc = toc
     const { path } = filterLinkPath(searchParams, {});
     history.push(path);
   };
@@ -67,6 +71,34 @@ export default class NearMePageContainer extends Component {
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
+    const { toc } = searchParams;
+
+    if (toc === 'nursing-homes') {
+      return (
+        <NursingHomesNearMePage
+          onLocationSearch={this.handleOnLocationSearch}
+          requestMeta={status.communityList.meta || {}}
+          searchParams={searchParams}
+          communityList={communityList}
+          isFetchingResults={!status.communityList.hasFinished}
+          handleAnchor={handleClick}
+          location={location}
+        />
+      );
+    }
+    if (toc === 'skilled-nursing-facility') {
+      return (
+        <SNFNearMePage
+          onLocationSearch={this.handleOnLocationSearch}
+          requestMeta={status.communityList.meta || {}}
+          searchParams={searchParams}
+          communityList={communityList}
+          isFetchingResults={!status.communityList.hasFinished}
+          handleAnchor={handleClick}
+          location={location}
+        />
+      );
+    }
     return (
       <NearMePage
         onLocationSearch={this.handleOnLocationSearch}

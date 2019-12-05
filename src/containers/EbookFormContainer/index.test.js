@@ -4,7 +4,10 @@ import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import { BrowserRouter } from 'react-router-dom';
 
+import api from 'sly/services/newApi/apiInstance';
 import EbookFormContainer from './index';
+
+jest.mock('sly/services/newApi/apiInstance');
 
 jest.mock('sly/services/newApi/withAuth', () => ({
   __esModule: true,
@@ -55,27 +58,14 @@ const router = {
   },
 };
 
-const sendEbook = jest.fn().mockReturnValue({
-  type: 'apicall',
-});
-
-const createUuidAction = jest.fn().mockReturnValue({
-  type: 'apicall',
-});
-
 const createContext = () => ({
   context: {
     router,
     store,
-    api: {
-      sendEbook,
-      createUuidAction,
-    },
   },
   childContextTypes: {
     router: shape({}),
     store: shape({}),
-    api: shape({}),
   },
 });
 
@@ -96,6 +86,10 @@ describe('EbookFormContainer', () => {
     jest.resetAllMocks();
   });
 
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
+
   it('should render EbookFormContainer', () => {
     const wrapper = wrap({ showModal, hideModal, notifyInfo });
 
@@ -107,8 +101,8 @@ describe('EbookFormContainer', () => {
 
     wrapper.find('form').simulate('submit');
 
-    expect(sendEbook).toHaveBeenCalled();
-    expect(createUuidAction).toHaveBeenCalled();
+    expect(api.sendEbook).toHaveBeenCalled();
+    expect(api.createUuidAction).toHaveBeenCalled();
     expect(wrapper.exists()).toBe(true);
   });
 

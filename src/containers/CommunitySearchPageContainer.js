@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { object, array, func } from 'prop-types';
 import { Redirect } from 'react-router-dom';
+
 import { stateNames, urlize, replaceLastSegment } from 'sly/services/helpers/url';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
@@ -8,19 +9,14 @@ import { getSearchParams } from 'sly/services/helpers/search';
 import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
 import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
-import { withRouter } from 'react-router';
-import whyDidComponentUpdate from 'sly/services/helpers/whyDidComponentUpdate';
 
 @withProps(({ match, location }) => ({
   searchParams: getSearchParams(match, location),
 }))
+
 @prefetch('geoGuides', 'getGeoGuides', (request, { searchParams }) => request(searchParams))
-
 @prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
-
 @withGenerateFilterLinkPath
-
-@withRouter
 
 export default class CommunitySearchPageContainer extends PureComponent {
   static propTypes = {
@@ -38,7 +34,7 @@ export default class CommunitySearchPageContainer extends PureComponent {
     areFiltersOpen: false,
   };
 
-  componentDidUpdate = whyDidComponentUpdate('CommunitySearchPageContainer');
+  // componentDidUpdate = whyDidComponentUpdate('CommunitySearchPageContainer');
 
   render() {
     const {
@@ -81,7 +77,7 @@ export default class CommunitySearchPageContainer extends PureComponent {
         radius: '10',
       },
     });
-    const listViewUrl = generateFilterLinkPath({ changedParams: { view: 'list', 'page-size': 15 } })
+    const listViewUrl = generateFilterLinkPath({ changedParams: { view: 'list', 'page-size': 15 } });
 
     return (
       <CommunitySearchPage

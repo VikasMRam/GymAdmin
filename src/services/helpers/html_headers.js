@@ -118,10 +118,10 @@ export const getHelmetForSearchPage = ({
   let actualToc = tocs.find(elem => (elem.value === toc));
   if (typeof actualToc === 'undefined') {
     actualToc = {
-      label: 'All Communities',
-      value: 'retirement-community',
-      segment: 'retirement-community',
-      seoLabel: 'Retirement Communities',
+      label: 'Nursing Homes',
+      value: 'nursing-homes',
+      segment: 'nursing-homes',
+      seoLabel: 'Nursing Homes',
     };
   }
 
@@ -200,9 +200,9 @@ export const getHelmetForCommunityPage = (community, location) => {
   let toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
   if (typeof toc === 'undefined') {
     toc = {
-      label: 'Retirement',
-      value: 'retirement-community',
-      segment: 'retirement-community',
+      label: 'Nursing Homes',
+      value: 'nursing-homes',
+      segment: 'nursing-homes',
     };
   }
 

@@ -14,16 +14,12 @@ const mapStateToProps = state => ({
   authenticated: state.authenticated,
 });
 
-const mapDispatchToProps = dispatch => ({
-  authenticateCancel: () => dispatch(authenticateCancel()),
-  authenticateSuccess: () => dispatch(authenticateSuccess()),
-});
-
 @withRouter
-
 @withAuth
-
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(mapStateToProps, {
+  authenticateCancel,
+  authenticateSuccess,
+})
 
 export default class AuthContainer extends Component {
   static propTypes = {

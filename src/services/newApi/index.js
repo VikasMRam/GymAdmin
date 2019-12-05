@@ -18,7 +18,6 @@ export {
   hasRequestStarted,
   getRequestHeaders,
   getRequestMeta,
-  getRequestInfo,
   createMemoizedRequestInfoSelector,
 } from './selectors';
 

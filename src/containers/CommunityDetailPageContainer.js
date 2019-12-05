@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
-import { prefetch, withAuth, withApi } from 'sly/services/newApi';
+import { prefetch, withAuth } from 'sly/services/newApi';
 import {
   AVAILABILITY_REQUEST,
   PRICING_REQUEST,

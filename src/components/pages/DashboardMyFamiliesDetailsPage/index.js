@@ -693,7 +693,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           <TabWrapper snap="top">
             {currentTab === SUMMARY && (
               <>
-                <SmallScreenBorderPaddedFamilySummary client={client} to={familyDetailsPath} noHeading />
+                <SmallScreenBorderPaddedFamilySummary client={client} isAgentUser={isAgentUser} to={familyDetailsPath} noHeading />
               </>
             )}
 

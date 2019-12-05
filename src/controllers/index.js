@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 import hoistNonReactStatic from 'hoist-non-react-statics';
+import { func, string } from 'prop-types';
 
 import { randomHexNumber } from 'sly/services/helpers/utils';
 import { set, unset, reset } from 'sly/store/controller/actions';
@@ -43,6 +44,13 @@ export function connectController(parentMapStateToProps, parentDispatchToProps) 
     class ConnectedController extends React.Component {
       static displayName = `controller(${getDisplayName(WrappedComponent)})`;
       static WrappedComponent = WrappedComponent.WrappedComponent || WrappedComponent;
+
+      static propTypes = {
+        set: func.isRequired,
+        controllerKey: string.isRequired,
+        unset: func.isRequired,
+        reset: func.isRequired,
+      };
 
       set = (data) => {
         const { set, controllerKey } = this.props;

@@ -1,3 +1,4 @@
+global.fetch = require('isomorphic-fetch');
 
 global.requestAnimationFrame = /* istanbul ignore next */ (callback) => {
   setTimeout(callback, 0);

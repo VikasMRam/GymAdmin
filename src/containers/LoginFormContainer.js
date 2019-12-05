@@ -17,9 +17,9 @@ const ReduxForm = reduxForm({
   validate,
 })(LoginForm);
 
-const mapDispatchToProps = dispatch => ({
-  clearSubmitErrors: () => dispatch(clearSubmitErrors('LoginForm')),
-});
+const mapDispatchToProps = {
+  clearSubmitErrors: () => clearSubmitErrors('LoginForm'),
+};
 
 @withAuth
 

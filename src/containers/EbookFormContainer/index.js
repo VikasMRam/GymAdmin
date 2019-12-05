@@ -33,9 +33,9 @@ const ReduxForm = reduxForm({
 
 ReduxForm.displayName = 'EbookForm';
 
-const mapDispatchToProps = dispatch => ({
-  clearErrors: () => dispatch(clearSubmitErrors(formName)),
-});
+const mapDispatchToProps = {
+  clearErrors: () => clearSubmitErrors(formName),
+};
 
 @withRouter
 @withNotification
