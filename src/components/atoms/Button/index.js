@@ -150,7 +150,7 @@ export const styles = css`
 `;
 
 const StyledLink = styled(({
-  disabled, transparent, foregroundPalette, palette, height, theme, ...props
+  disabled, ghost, transparent, foregroundPalette, palette, height, theme, ...props
 }) => (
   <Link noHoverColorChange {...props} />
 ))`

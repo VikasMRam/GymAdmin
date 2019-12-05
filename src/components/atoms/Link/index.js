@@ -33,19 +33,19 @@ export const styles = css`
   ${ifProp('size', css`
     font-size: ${getSize('text')};
   `)};
-  
+
   line-height: ${getSize('lineHeight')};
-  
+
   ${ifProp('weight', css`
     font-weight: ${p => size('weight', p.weight)};
   `)}
 `;
 
-export const Anchor = styled.a`
+export const Anchor = styled(({ noHoverColorChange, ...props }) => <a {...props} />)`
   ${styles};
 `;
 
-const StyledLink = styled(RRLink)`
+const StyledLink = styled(({ noHoverColorChange, ...props }) => <RRLink {...props} />)`
   ${styles};
 `;
 

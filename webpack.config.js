@@ -139,7 +139,6 @@ const base = group([
     filename: '[name].[hash].js',
     chunkFilename: '[name].[hash].js',
     path: outputPath,
-    libraryTarget: 'esm',
     publicPath: PUBLIC_PATH,
   }),
 

@@ -65,9 +65,9 @@ const Text = styled.span`
 `;
 
 const IconButton = ({
-  icon, iconSize, transparent, fill, children, hideTextInMobile, iconPalette, ...props
+  icon, iconSize, transparent, fill, children, hideTextInMobile, iconPalette, right, ...props
 }) => {
-  const { right, palette } = props;
+  const { palette } = props;
   const iconElement = (
     <StyledIcon
       icon={icon}
