@@ -10,6 +10,7 @@ import {
 import CommunityLeaveAnAnswerForm from 'sly/components/organisms/CommunityLeaveAnAnswerForm';
 import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 import { prefetch } from 'sly/services/newApi';
+import api from 'sly/services/newApi/apiInstance';
 
 const validate = createValidator({
   answer: [required],
@@ -20,12 +21,12 @@ const ReduxForm = reduxForm({
   validate,
 })(CommunityLeaveAnAnswerForm);
 
-const mapDispatchToProps = (dispatch, { api }) => ({
-  leaveAnAnswer: data => dispatch(ensureAuthenticated(
+const mapDispatchToProps = {
+  leaveAnAnswer: data => ensureAuthenticated(
     'Please Login to Answer this Question',
-    api.createAnswer(data),
-  )),
-});
+    api.createAnswer.asAction(data),
+  ),
+};
 
 @prefetch('community', 'getCommunity', (req, { communitySlug }) => req({
   id: communitySlug,

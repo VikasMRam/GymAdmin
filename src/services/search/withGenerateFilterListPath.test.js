@@ -6,15 +6,20 @@ import queryString from 'query-string';
 import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
 import careTypes from 'sly/constants/careTypes';
 import { addEventToUrl } from 'sly/services/helpers/queryParamEvents';
+import { getSearchParams } from 'sly/services/helpers/search';
+import { withProps } from 'sly/services/helpers/hocs';
 
 function Component() {
   return null;
 }
 
 function mountComponent(url) {
+  const DecoratedComponent = withProps(({ match, location }) => ({
+    searchParams: getSearchParams(match, location),
+  }))(withGenerateFilterLinkPath(Component));
   const wrapper = mount(
     <StaticRouter location={url} context={{}}>
-      <Route path={`/:toc(${careTypes.join('|')})/:state/:city`} component={withGenerateFilterLinkPath(Component)} />
+      <Route path={`/:toc(${careTypes.join('|')})/:state/:city`} component={DecoratedComponent} />
     </StaticRouter>
   );
 
@@ -22,13 +27,6 @@ function mountComponent(url) {
     wrapper,
   };
 }
-
-const withEvent = url =>
-  addEventToUrl(url, {
-    action: 'search',
-    category: 'assisted-living',
-    label: queryString.stringify(searchParams),
-  });
 
 describe('Given the withGenerateFilterListPath higher-order component', () => {
   describe('when a component is wrapped in withGenerateFilterListPath', () => {

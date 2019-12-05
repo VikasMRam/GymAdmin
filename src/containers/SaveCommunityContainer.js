@@ -12,11 +12,13 @@ import { USER_SAVE_INIT_STATUS } from 'sly/constants/userSave';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_SUCCESS, NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED } from 'sly/constants/notifications';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { withApi, withAuth, prefetch, query } from 'sly/services/newApi';
+import api from 'sly/services/newApi/apiInstance';
+import { withAuth, prefetch, query } from 'sly/services/newApi';
 import { Block } from 'sly/components/atoms';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import CommunitySaved from 'sly/components/organisms/CommunitySaved';
 import { USER_SAVE } from 'sly/services/newApi/constants';
+import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 
 const PaddedBlock = styled(Block)`
   padding: ${size('spacing.xxLarge')};
@@ -31,24 +33,22 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 // FIXME: hack because createUser is not JSON:API, should use @query
-const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
+const mapDispatchToProps = {
   createUserSave: data => ensureAuthenticated(
     'Sign up to add to your favorites list',
-    api.createOldUserSave(data),
+    api.createOldUserSave.asAction(data),
   ),
   updateUserSave: (id, data) => ensureAuthenticated(
     'Sign up to add to your favorites list',
-    api.updateOldUserSave({ id }, data),
+    api.updateOldUserSave.asAction({ id }, data),
   ),
-});
+};
 
 const getCommunitySlug = match => match.params.communitySlug;
 
 @withAuth
 
 @withRouter
-
-@withApi
 
 @prefetch('community', 'getCommunity', (req, { slug }) => req({
   id: slug,

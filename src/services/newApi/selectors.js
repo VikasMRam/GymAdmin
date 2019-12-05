@@ -32,7 +32,7 @@ export function getEntity(entities, handle, isNormalized) {
   return isNormalized ? build(entities, handle.type, handle.id, { eager: true }) : entities[handle.type][handle.id];
 }
 
-// TODO: memoize fully from scratch as it's applied externaly
+// TODO: memoize fully from scratch as it's applied externally
 
 export function getRelationship(state, entity, relationshipName) {
   if (!entity) {
@@ -93,30 +93,6 @@ export function hasRequestStarted(request) {
   }
 
   return true;
-}
-
-export function getRequestInfo(state, apiCall, args) {
-  const argsKey = JSON.stringify(args);
-  const requests = getRequests(state);
-  const entities = getEntities(state);
-
-  const request = getRawRequest(requests, apiCall, argsKey);
-  const error = request && request.error ? request.error : false;
-  const hasStarted = hasRequestStarted(request);
-  const isLoading = isRequestLoading(request);
-
-  return {
-    hasStarted,
-    isLoading,
-    hasFinished: hasStarted && !isLoading,
-    hasFailed: !!error,
-    result: getRequestResult(entities, request),
-    normalized: getRequestResult(entities, request, true),
-    headers: getRequestHeaders(request),
-    meta: getRequestMeta(request),
-    status: request && request.status,
-    error,
-  };
 }
 
 // MEMOIZATION

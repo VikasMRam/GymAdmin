@@ -12,7 +12,6 @@ import { loadableReady } from '@loadable/component';
 
 import RetentionPopup from 'sly/services/retentionPopup';
 import App from 'sly/components/App';
-import { ApiProvider, createApi } from 'sly/services/newApi';
 import configureStore from 'sly/store/configure';
 import WSProvider from 'sly/services/ws/WSProvider';
 import NotificationSubscriptions from 'sly/services/notifications/Subscriptions';
@@ -20,23 +19,19 @@ import NotificationSubscriptions from 'sly/services/notifications/Subscriptions'
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState);
 
-const api = createApi();
-
 const renderApp = () => (
-  <ApiProvider api={api}>
-    <Provider store={store}>
-      <WSProvider>
-        <NotificationSubscriptions>
-          <BrowserRouter>
-            <>
-              <RetentionPopup />
-              <App />
-            </>
-          </BrowserRouter>
-        </NotificationSubscriptions>
-      </WSProvider>
-    </Provider>
-  </ApiProvider>
+  <Provider store={store}>
+    <WSProvider>
+      <NotificationSubscriptions>
+        <BrowserRouter>
+          <>
+            <RetentionPopup />
+            <App />
+          </>
+        </BrowserRouter>
+      </NotificationSubscriptions>
+    </WSProvider>
+  </Provider>
 );
 
 const root = document.getElementById('app');

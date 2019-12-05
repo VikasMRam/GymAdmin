@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { func, object, string } from 'prop-types';
 import { generatePath } from 'react-router';
 
@@ -105,7 +105,7 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 
 @withAuth
 
-export default class HeaderContainer extends Component {
+export default class HeaderContainer extends PureComponent {
   static typeHydrationId = 'HeaderContainer';
   static propTypes = {
     user: object,

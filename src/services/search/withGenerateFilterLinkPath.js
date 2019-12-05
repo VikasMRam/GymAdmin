@@ -2,6 +2,7 @@ import React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import withRouter from 'react-router/withRouter';
 import queryString from 'query-string';
+import { object } from 'prop-types';
 
 import { filterLinkPath, getSearchParams } from 'sly/services/helpers/search';
 import { addEventToUrl } from 'sly/services/helpers/queryParamEvents';
@@ -27,12 +28,18 @@ const generateFilterLinkPath = searchParams => ({ changedParams = {}, paramsToRe
 };
 
 export default function withGenerateFilterLinkPath(ChildComponent) {
-  const WithGenerateFilterLinkPath = ({ match, location, ...props }) => (
-    <ChildComponent generateFilterLinkPath={generateFilterLinkPath(getSearchParams(match, location))} {...props} />
+  const WithGenerateFilterLinkPath = props => (
+    <ChildComponent
+      generateFilterLinkPath={generateFilterLinkPath(props.searchParams)}
+      {...props}
+    />
   );
 
   WithGenerateFilterLinkPath.displayName = `WithGenerateFilterLinkPath(${getDisplayName(ChildComponent)})`;
   WithGenerateFilterLinkPath.WrappedComponent = ChildComponent;
+  WithGenerateFilterLinkPath.propTypes = {
+    searchParams: object,
+  };
 
   hoistNonReactStatic(WithGenerateFilterLinkPath, ChildComponent);
 

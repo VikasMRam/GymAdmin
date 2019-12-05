@@ -4,7 +4,8 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import { object, func } from 'prop-types';
 import get from 'lodash/get';
 
-import { query, withApi, createMemoizedRequestInfoSelector } from 'sly/services/newApi';
+import api from 'sly/services/newApi/apiInstance';
+import { query, createMemoizedRequestInfoSelector } from 'sly/services/newApi';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -20,12 +21,12 @@ export default function withUser(InnerComponent) {
       // let this rescue this from props to bypass store for testing porpuses
       const userRequestInfo = props.userRequestInfo || getMemoizedUserRequestInfo(
         state,
-        { call: 'getUser', args: [{ id: 'me' }] }
+        { call: 'getUser', args: { id: 'me' } }
       );
 
       const uuidAuxRequestInfo = props.uuidAuxRequestInfo || getMemoizedUuidAuxRequestInfo(
         state,
-        { call: 'getUuidAux', args: [{ id: 'me' }] }
+        { call: 'getUuidAux', args: { id: 'me' } }
       );
 
       return {
@@ -35,15 +36,12 @@ export default function withUser(InnerComponent) {
     };
   };
 
-  const mapDispatchToActions = (dispatch, { api }) => ({
-    fetchUser: () => dispatch(api.getUser({ id: 'me' })),
-    fetchUuidAux: () => dispatch(api.getUuidAux({ id: 'me' })),
-  });
-
-  @withApi
+  const mapDispatchToActions = {
+    fetchUser: () => api.getUser.asAction({ id: 'me' }),
+    fetchUuidAux: () => api.getUuidAux.asAction({ id: 'me' }),
+  };
 
   @query('updateUser', 'updateUser')
-
   @connect(makeMapStateToProps, mapDispatchToActions)
 
   class Wrapper extends React.PureComponent {
@@ -52,7 +50,6 @@ export default function withUser(InnerComponent) {
     static WrappedComponent = InnerComponent;
 
     static propTypes = {
-      api: object,
       userRequestInfo: object,
       uuidAuxRequestInfo: object,
       fetchUser: func,
