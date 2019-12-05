@@ -243,6 +243,16 @@ const routes = [
     exact: true,
   },
   {
+    path: '/nursing-homes',
+    component: NearMePageContainer,
+    exact: true,
+  },
+  {
+    path: '/skilled-nursing-facility',
+    component: NearMePageContainer,
+    exact: true,
+  },
+  {
     path: `/:legalPage(${legalPages})`,
     component: LegalPolicyPage,
     exact: true,

@@ -81,7 +81,7 @@ export default class CommunitySearchPageContainer extends PureComponent {
         radius: '10',
       },
     });
-    const listViewUrl = generateFilterLinkPath({ changedParams: { view: 'list', 'page-size': 15 } })
+    const listViewUrl = generateFilterLinkPath({ changedParams: { view: 'list', 'page-size': 15 } });
 
     return (
       <CommunitySearchPage

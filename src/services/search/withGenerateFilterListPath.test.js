@@ -86,7 +86,7 @@ describe('Given the withGenerateFilterListPath higher-order component', () => {
           city: 'dallas',
         }),
       };
-      expect(generatedPath).toBe(addEventToUrl('/retirement-community/texas/dallas', expectedEvent));
+      expect(generatedPath).toBe(addEventToUrl('/nursing-homes/texas/dallas', expectedEvent));
     });
   });
 });

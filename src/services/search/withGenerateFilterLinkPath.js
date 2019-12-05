@@ -13,7 +13,7 @@ function getDisplayName(WrappedComponent) {
 
 const generateFilterLinkPath = searchParams => ({ changedParams = {}, paramsToRemove = [] }) => {
   const changedAndRemovedParams = paramsToRemove.reduce((cumul, param) => {
-    cumul[param] = param === 'toc' ? 'retirement-community' : undefined;
+    cumul[param] = param === 'toc' ? 'nursing-homes' : undefined;
     return cumul;
   }, changedParams);
 

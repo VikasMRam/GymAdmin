@@ -55,11 +55,11 @@ const searchParamsWhitelist = [
 
 export const tocs = [
   {
-    label: 'All Communities',
-    value: 'retirement-community',
-    segment: 'retirement-community',
-    searchLabel: 'Retirement Communities',
-    seoLabel: 'Retirement Communities',
+    label: 'Nursing Homes',
+    value: 'nursing-homes',
+    segment: 'nursing-homes',
+    searchLabel: 'Nursing Homes',
+    seoLabel: 'Nursing Homes',
   },
   {
     label: 'Assisted Living',
@@ -95,6 +95,13 @@ export const tocs = [
     segment: 'continuing-care-retirement-community',
     searchLabel: 'CCRCs',
     seoLabel: 'Continuing Care Retirement Communities',
+  },
+  {
+    label: 'Skilled Nursing Facilities',
+    value: 'skilled-nursing-facility',
+    segment: 'skilled-nursing-facility',
+    searchLabel: 'Skilled Nursing Facility',
+    seoLabel: 'Skilled Nursing Facilities',
   },
 ];
 
@@ -273,7 +280,7 @@ export const getEvtHandler = (paramsToRemove, origFn) => {
 export const getTocSeoLabel = (toc) => {
   const actualToc = tocs.find(elem => (elem.value === toc));
   if (typeof actualToc === 'undefined') {
-    return 'retirement communities';
+    return 'nursing homes';
   }
   return actualToc.seoLabel;
 };

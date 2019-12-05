@@ -38,16 +38,26 @@ export const tocPaths = (toc) => {
           path: '/board-and-care-home',
           label: 'Board and Care Home',
         };
+      case 'Continuing Care Retirement Community(CCRC)':
+        return {
+          path: 'continuing-care-retirement-community',
+          label: 'Continuing Care Retirement Community',
+        };
+      case 'Skilled Nursing Facility':
+        return {
+          path: 'skilled-nursing-facility',
+          label: 'Skilled Nursing Facility',
+        };
       default:
         return {
-          path: '/retirement-community',
-          label: 'Retirement Community',
+          path: '/nursing-homes',
+          label: 'Nursing Homes',
         };
     }
   } else {
     return {
-      path: '/retirement-community',
-      label: 'Retirement Community',
+      path: '/nursing-homes',
+      label: 'Nursing Homes',
     };
   }
 };
@@ -67,14 +77,14 @@ const tocGuidePaths = (toc) => {
         };
       default:
         return {
-          path: '/retirement-community-guide',
-          label: 'Retirement Community Guide',
+          path: '/nursing-homes-guide',
+          label: 'Nursing Homes Guide',
         };
     }
   } else {
     return {
-      path: '/retirement-community-guide',
-      label: 'Retirement Community Guide',
+      path: '/nursing-homes-guide',
+      label: 'Nursing Homes Guide',
     };
   }
 };
