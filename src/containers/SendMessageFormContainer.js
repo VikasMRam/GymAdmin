@@ -25,9 +25,9 @@ const ReduxForm = reduxForm({
   onSubmitSuccess: afterSubmit,
 })(SendMessageForm);
 
-const mapDispatchToProps = dispatch => ({
-  clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
-});
+const mapDispatchToProps = {
+  clearSubmitErrors: () => clearSubmitErrors(formName),
+};
 
 @query('updateClient', 'updateClient')
 @query('createConversationParticipant', 'createConversationParticipant')

@@ -8,30 +8,28 @@ export default () => next => (action) => {
     return next(action);
   }
 
-  const { call, args } = payload;
+  const { call, placeholders, options, actionName, path } = payload;
 
-  if (!call || !arguments) {
+  if (!call || !actionName || !placeholders) {
     logWarn(new Error('dispatching undefined action, check redux-bees queries'));
-    return;
+    return Promise.reject();
   }
-
-  const promise = call(...args);
 
   const meta = {
     api: true,
-    name: promise.actionName,
-    params: promise.params,
+    name: actionName,
+    params: placeholders,
   };
 
   next({
-    type: `api/${promise.actionName}/request`,
+    type: `api/${actionName}/request`,
     meta: { ...meta, type: 'request' },
   });
 
-  return promise
+  return call(path, placeholders, options)
     .then((result) => {
       next({
-        type: `api/${promise.actionName}/response`,
+        type: `api/${actionName}/response`,
         payload: result,
         meta: { ...meta, type: 'response' },
       });
@@ -39,7 +37,7 @@ export default () => next => (action) => {
     })
     .catch((result) => {
       next({
-        type: `api/${promise.actionName}/error`,
+        type: `api/${actionName}/error`,
         payload: result,
         meta: { ...meta, type: 'error' },
       });

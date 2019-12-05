@@ -12,7 +12,7 @@ import {
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS,
 } from 'sly/constants/notifications';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
-import withApi from 'sly/services/newApi/withApi';
+import api from 'sly/services/newApi/apiInstance';
 import withAuth from 'sly/services/newApi/withAuth';
 import withNotification from 'sly/controllers/withNotification';
 import withModal from 'sly/controllers/withModal';
@@ -38,7 +38,6 @@ function isCommunityAlreadySaved(community, userSaves) {
   );
 }
 
-@withApi
 @withAuth
 @withRouter
 @prefetch('community', 'getCommunity', (req, { match }) => req({
@@ -60,7 +59,6 @@ export default class CommunitySummaryContainer extends Component {
     isAdmin: bool,
     userSaves: array,
     ensureAuthenticated: func,
-    api: object,
     className: string,
     showModal: func,
     hideModal: func,
@@ -80,7 +78,7 @@ export default class CommunitySummaryContainer extends Component {
   updateUserSave = (id, data) =>
     this.props.ensureAuthenticated(
       'Sign up to add to your favorites list',
-      this.props.api.updateOldUserSave({ id }, data)
+      api.updateOldUserSave.asAction({ id }, data)
     );
 
   handleFavouriteClick = () => {

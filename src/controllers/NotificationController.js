@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import { string, func, shape, arrayOf, oneOf } from 'prop-types';
 import uniqueId from 'lodash/uniqueId';
 
@@ -13,7 +13,7 @@ const mapStateToProps = (state, { controller = {} }) => ({
 
 @connectController(mapStateToProps)
 
-export default class NotificationController extends Component {
+export default class NotificationController extends PureComponent {
   static propTypes = {
     messages: arrayOf(shape({
       content: string,

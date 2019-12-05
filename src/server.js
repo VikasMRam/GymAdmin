@@ -27,8 +27,7 @@ import { port, host, publicPath, isDev, domain, disableExperiments } from 'sly/c
 import { configure as configureStore } from 'sly/store';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
-import { createApi, renderToString } from 'sly/services/newApi';
-import ApiProvider, { makeApiCall } from 'sly/services/newApi/ApiProvider';
+import { ApiProvider, renderToString, apiInstance as api } from 'sly/services/newApi';
 import clientConfigs from 'sly/clientConfigs';
 
 const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
@@ -200,15 +199,14 @@ app.use(async (req, res, next) => {
       return cumul;
     }, {});
 
-  const api = createApi({
-    configureHeaders: headers => ({
-      ...headers,
+  const apiConfig = {
+    headers: {
       Cookie: cookies.join('; '),
       'User-Agent': req.headers['user-agent'],
       'X-is-sly-ssr': 'true',
       'X-forwarded-for': req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-    }),
-  });
+    },
+  };
 
   const store = configureStore({ experiments: userExperiments });
 
@@ -225,8 +223,8 @@ app.use(async (req, res, next) => {
   // prefetch user data
   try {
     await Promise.all([
-      store.dispatch(makeApiCall(api.getUser, [{ id: 'me' }])).catch(ignoreUnauthorized),
-      store.dispatch(makeApiCall(api.getUuidAux, [{ id: 'me' }])),
+      store.dispatch(api.getUser.asAction({ id: 'me' }, apiConfig)).catch(ignoreUnauthorized),
+      store.dispatch(api.getUuidAux.asAction({ id: 'me' }, apiConfig)),
     ]);
   } catch (e) {
     e.message = `Error trying to prefetch user data: ${e.message}`;
@@ -236,14 +234,14 @@ app.use(async (req, res, next) => {
   }
 
   req.clientConfig.store = store;
-  req.clientConfig.api = api;
+  req.clientConfig.apiConfig = apiConfig;
 
   next();
 });
 
 // render
 app.use(async (req, res, next) => {
-  const { store, api, bundle } = req.clientConfig;
+  const { store, apiConfig, bundle } = req.clientConfig;
 
   try {
     const extractorNode = new ChunkExtractor({ statsFile: statsNode, entrypoints: [bundle] });
@@ -258,7 +256,7 @@ app.use(async (req, res, next) => {
       <CacheProvider value={cache}>
         <Provider store={store}>
           <StaticRouter context={context} location={req.url}>
-            <ApiProvider api={api}>
+            <ApiProvider apiConfig={apiConfig}>
               <ClientApp />
             </ApiProvider>
           </StaticRouter>

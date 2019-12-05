@@ -8,13 +8,15 @@
  * @return {Promise}
  */
 
-export default function request(baseUrl, path, options) {
+export default function apiFetch(baseUrl, path, options) {
   const url = (typeof baseUrl === 'function' ? baseUrl() : baseUrl) + path;
   return fetch(url, options)
     .then((res) => {
       const headers = {};
 
-      res.headers.forEach((value, name) => headers[name] = value);
+      res.headers.forEach((value, name) => {
+        headers[name] = value;
+      });
 
       const response = {
         status: res.status,

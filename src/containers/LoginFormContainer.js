@@ -17,9 +17,9 @@ const ReduxForm = reduxForm({
   validate,
 })(LoginForm);
 
-const mapDispatchToProps = dispatch => ({
-  clearSubmitErrors: () => dispatch(clearSubmitErrors('LoginForm')),
-});
+const mapDispatchToProps = {
+  clearSubmitErrors: () => clearSubmitErrors('LoginForm'),
+};
 
 @withAuth
 
@@ -40,7 +40,13 @@ export default class LoginFormContainer extends Component {
     const payload = { email, password };
 
     clearSubmitErrors();
-    return loginUser(payload).then(onSubmitSuccess).catch((error) => {
+    return loginUser(payload)
+      .then(res => {
+        console.log('here then')
+        return res;
+      })
+      .then(onSubmitSuccess).catch((error) => {
+      console.log('here catch')
       // TODO: Need to set a proper way to handle server side errors
       if (error.status === 400) {
         return Promise.reject(new SubmissionError({ _error: 'Oops! That email / password combination is not valid.' }));

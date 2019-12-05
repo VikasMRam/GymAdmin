@@ -9,6 +9,7 @@ import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
 import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
 import withRouter from 'react-router/withRouter';
+// import whyDidComponentUpdate from 'sly/services/helpers/whyDidComponentUpdate';
 
 @withProps(({ match, location }) => ({
   searchParams: getSearchParams(match, location),
@@ -36,6 +37,8 @@ export default class CommunitySearchPageContainer extends PureComponent {
   state = {
     areFiltersOpen: false,
   };
+
+  // componentDidUpdate = whyDidComponentUpdate('CommunitySearchPageContainer');
 
   render() {
     const {

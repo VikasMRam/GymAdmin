@@ -4,6 +4,7 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { string, func, object } from 'prop-types';
 import { withRouter } from 'react-router';
 
+import api from 'sly/services/newApi/apiInstance';
 import { createValidator, required } from 'sly/services/validation';
 import CommunityAskQuestionForm from 'sly/components/organisms/CommunityAskQuestionForm';
 import Thankyou from 'sly/components/molecules/Thankyou';
@@ -22,9 +23,9 @@ const ReduxForm = reduxForm({
   validate,
 })(CommunityAskQuestionForm);
 
-const mapDispatchToProps = (dispatch, { api }) => ({
-  createQuestion: data => dispatch(api.createQuestion(data)),
-});
+const mapDispatchToProps = {
+  createQuestion: api.createQuestion.asAction,
+};
 
 @withRouter
 @withUser

@@ -1,5 +1,6 @@
 import React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
+import { object } from 'prop-types';
 
 import { apiContextPropType } from './context';
 
@@ -13,6 +14,7 @@ export default function withPrefetchWait(Component) {
   class WithPrefetchWait extends React.Component {
     static contextTypes = {
       apiContext: apiContextPropType,
+      apiConfig: object,
     };
 
     static displayName = `WithPrefetchWait(${getDisplayName(Component)})`;
@@ -25,7 +27,15 @@ export default function withPrefetchWait(Component) {
     };
 
     render() {
-      return <Component prefetchWait={this.prefetchWait} {...this.props } />;
+      const { apiConfig } = this.context;
+
+      return (
+        <Component
+          apiConfig={apiConfig}
+          prefetchWait={this.prefetchWait}
+          {...this.props }
+        />
+      );
     }
   }
 

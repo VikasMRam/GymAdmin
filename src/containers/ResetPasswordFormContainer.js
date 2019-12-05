@@ -16,9 +16,9 @@ const ReduxForm = reduxForm({
   validate,
 })(ResetPasswordForm);
 
-const mapDispatchToProps = dispatch => ({
-  clearSubmitErrors: () => dispatch(clearSubmitErrors('ResetPasswordForm')),
-});
+const mapDispatchToProps = {
+  clearSubmitErrors: () => clearSubmitErrors('ResetPasswordForm'),
+};
 
 @withAuth
 
