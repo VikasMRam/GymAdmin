@@ -3,6 +3,7 @@ import { middleware as thunkMiddleware } from 'redux-saga-thunk';
 import { createLogger } from 'redux-logger';
 
 import { middleware as apiMiddleware } from 'sly/services/newApi';
+import reducer from 'sly/external/apps/store/reducer';
 import { isDev, isBrowser } from 'sly/config';
 
 const devtools =
@@ -26,7 +27,7 @@ const configureStore = (initialState) => {
     devtools(),
   ];
 
-  const store = createStore(null, initialState, compose(...enhancers));
+  const store = createStore(reducer, initialState, compose(...enhancers));
 
   return store;
 };
