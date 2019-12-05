@@ -2,6 +2,8 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
+
+import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, assetPath, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
@@ -75,6 +77,16 @@ const StyledArticle = styled.article`
   }
 `;
 
+const StyledTable = styled.table`
+  border-collapse: collapse;
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  td, th {
+    white-space: nowrap;
+    padding: ${size('spacing.regular')};
+    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  };
+`;
+
 const NearMePage = ({
   onLocationSearch,
   searchParams,
@@ -109,6 +121,7 @@ const NearMePage = ({
 
   const { geo } = requestMeta;
   const city = geo && geo.city;
+  const state = geo && geo.state && getStateAbbr(geo.state);
   const tocLabel = getTocSeoLabel('nursing-homes');
 
   const topRef = React.createRef();
@@ -175,7 +188,7 @@ const NearMePage = ({
                 href={`#${sectionIdMap.how}`}
                 onClick={e => handleAnchor(e, howRef)}
               >
-                Choosing a Nursing Home: Your Nursing Home Comparison Checklist
+                Choosing a Nursing Home
               </Link>
             </li>
             <li>
@@ -183,7 +196,7 @@ const NearMePage = ({
                 href={`#${sectionIdMap.snf}`}
                 onClick={e => handleAnchor(e, snfRef)}
               >
-                What Type of Care is Offered by Skilled Nursing Facility?
+                What Type of Care is Offered at a Skilled Nursing Facility?
               </Link>
             </li>
             <li>
@@ -242,7 +255,7 @@ const NearMePage = ({
             searching for the wrong type of care. Most people simply type in the phrase “nursing home”
             when they’re looking for any kind of{' '}
             <Link href="https://www.nia.nih.gov/health/residential-facilities-assisted-living-and-nursing-homes" target="_blank" rel="noopener">
-              senior housing options
+              senior living options
             </Link>
             {' '}for a loved one.
           </Paragraph>
@@ -416,7 +429,7 @@ const NearMePage = ({
             </li>
             <li>
               <Paragraph>
-                What is the home’s procedure for dealing with a medical emergency?
+                What is the community’s procedure for dealing with a medical emergency
               </Paragraph>
             </li>
             <li>
@@ -436,7 +449,7 @@ const NearMePage = ({
             </li>
             <li>
               <Paragraph>
-                Does the nursing home have a waiting period prior to admittance?
+                Does the senior living facility have a waiting period prior to admittance?
               </Paragraph>
             </li>
             <li>
@@ -456,7 +469,7 @@ const NearMePage = ({
             </li>
             <li>
               <Paragraph>
-                Does the home reveal which services will cost extra?
+                Does the senior living facility reveal which services will cost extra?
               </Paragraph>
             </li>
             <li>
@@ -466,12 +479,12 @@ const NearMePage = ({
             </li>
             <li>
               <Paragraph>
-                How to staff members treat residents?
+                How do staff members treat senior residents?
               </Paragraph>
             </li>
             <li>
               <Paragraph>
-                Do current residents appear comfortable and happy?
+                Do current senior residents appear comfortable and happy?
               </Paragraph>
             </li>
             <li>
@@ -486,7 +499,7 @@ const NearMePage = ({
             </li>
             <li>
               <Paragraph>
-                What can residents bring?
+                What can senior residents bring?
               </Paragraph>
             </li>
             <li>
@@ -516,7 +529,7 @@ const NearMePage = ({
         <StyledArticle>
           <Paragraph innerRef={snfRef} />
           <StyledHeading level="title" size="title">
-            What Type of Care is Offered by Skilled Nursing Facility?
+            What Type of Care is Offered at a Skilled Nursing Facility?
           </StyledHeading>
           <Paragraph>
             A{' '}
@@ -571,7 +584,7 @@ const NearMePage = ({
           </Paragraph>
 
           <StyledArticle>
-            <table>
+            <StyledTable>
               <thead>
                 <tr>
                   <th>
@@ -664,7 +677,7 @@ const NearMePage = ({
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </StyledTable>
           </StyledArticle>
           <Link
             href={`#${sectionIdMap.top}`}
@@ -690,7 +703,7 @@ const NearMePage = ({
             who need 24-hour medical care.
           </Paragraph>
           <StyledArticle>
-            <table>
+            <StyledTable>
               <thead>
                 <tr>
                   <th>
@@ -783,7 +796,7 @@ const NearMePage = ({
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </StyledTable>
           </StyledArticle>
           <Link
             href={`#${sectionIdMap.top}`}
@@ -807,7 +820,7 @@ const NearMePage = ({
             {' '}are part of an assisted living facility, or they are stand alone properties.
           </Paragraph>
           <StyledArticle>
-            <table>
+            <StyledTable>
               <thead>
                 <tr>
                   <th>
@@ -900,7 +913,7 @@ const NearMePage = ({
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </StyledTable>
           </StyledArticle>
           <Link
             href={`#${sectionIdMap.top}`}
@@ -928,7 +941,7 @@ const NearMePage = ({
             include options for memory care.
           </Paragraph>
           <StyledArticle>
-            <table>
+            <StyledTable>
               <thead>
                 <tr>
                   <th>
@@ -1021,7 +1034,7 @@ const NearMePage = ({
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </StyledTable>
           </StyledArticle>
           <Link
             href={`#${sectionIdMap.top}`}
@@ -1049,7 +1062,7 @@ const NearMePage = ({
 
           </Paragraph>
           <StyledArticle>
-            <table>
+            <StyledTable>
               <thead>
                 <tr>
                   <th>
@@ -1142,7 +1155,7 @@ const NearMePage = ({
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </StyledTable>
           </StyledArticle>
           <Link
             href={`#${sectionIdMap.top}`}
@@ -1210,7 +1223,7 @@ const NearMePage = ({
         {SEOContentNH()}
         <StyledArticle>
           <StyledHeading level="title" size="title">
-            {tocLabel} near {city}
+            {tocLabel} near {city}, {state}
           </StyledHeading>
           {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
           {!isFetchingResults && (
