@@ -1,9 +1,9 @@
 {
   "presets": [
     ["@babel/preset-env", {
-      "modules": false,
+      "modules": false
     }],
-    "@babel/preset-react",
+    "@babel/preset-react"
   ],
   "plugins": [
     // Stage 1
@@ -23,7 +23,11 @@
       "displayName": true
     }],
     "@babel/plugin-syntax-dynamic-import",
-    "@loadable/babel-plugin"
+    "@loadable/babel-plugin",
+
+    "add-module-exports"
+
+    // "transform-es2015-modules-commonjs"
   ],
   "env": {
     "development": {
@@ -37,7 +41,6 @@
     "test": {
       "plugins": [
         "babel-plugin-dynamic-import-node",
-        "transform-es2015-modules-commonjs",
         ["styled-components", {
           "fileName": false,
           "minify": false

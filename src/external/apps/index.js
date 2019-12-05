@@ -8,7 +8,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-import { host, authTokenUrl } from 'sly/config';
+import { host } from 'sly/config';
 import { getOrigin } from 'sly/services/helpers/url';
 import configureStore from 'sly/external/apps/store/configure';
 import App from 'sly/external/apps/App';
@@ -27,8 +27,7 @@ const root = document.getElementById('app');
 const origin = getOrigin();
 
 if (origin.indexOf(host) !== -1) {
-  fetch(authTokenUrl, { credentials: 'same-origin' })
-    .then(() => render(renderApp(), root));
+  render(renderApp(), root);
 } else {
   console.warn('Javascript not loading because CORS: got', origin, 'but was expecting', host);
 }

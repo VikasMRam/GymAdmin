@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { object, func, arrayOf, string } from 'prop-types';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';

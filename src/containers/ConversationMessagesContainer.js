@@ -5,7 +5,7 @@ import build from 'redux-object';
 import styled from 'styled-components';
 import { generatePath, withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
 import { size, palette } from 'sly/components/themes';

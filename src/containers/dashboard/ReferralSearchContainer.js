@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { arrayOf, func, oneOf, object } from 'prop-types';
 

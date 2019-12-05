@@ -1,4 +1,4 @@
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 
 const invalidate = (state, actionName, key) => (
   immutable.set(state, [actionName, key, 'invalid'], true)

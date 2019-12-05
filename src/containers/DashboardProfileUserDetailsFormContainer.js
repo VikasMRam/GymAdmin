@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { shape, object, func } from 'prop-types';
 import { reduxForm, SubmissionError } from 'redux-form';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
 import DashboardProfileUserDetailsForm from 'sly/components/organisms/DashboardProfileUserDetailsForm';
