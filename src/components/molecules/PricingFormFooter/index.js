@@ -14,14 +14,6 @@ const Wrapper = styled.div`
   border-top: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 `;
 
-const PreferenceWrapper = styled.div`
-  display: inline-flex;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: block;
-  }
-`;
-PreferenceWrapper.displayName = 'PreferenceWrapper';
-
 const StyledButton = styled(Button)`
   margin: 0 auto;
   width: ${size('mobileLayout.col4')};

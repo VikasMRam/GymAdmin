@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import GetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
 import CommunityActions from 'sly/components/molecules/CommunityActions';
 
 jest.mock('sly/containers/AskAgentQuestionContainer');
@@ -21,7 +22,6 @@ describe('CommunityActions', () => {
     expect(
       wrapper
         .dive()
-        .find('GetCustomPricingButtonContainer')
         .prop('children')
     ).toContain('Pricing requested');
   });
@@ -30,8 +30,7 @@ describe('CommunityActions', () => {
     const onGCPClick = jest.fn();
     const wrapper = wrap({ onGCPClick });
     const getCustomPriceButton = wrapper
-      .dive()
-      .find('GetCustomPricingButtonContainer');
+      .dive();
 
     expect(getCustomPriceButton).toHaveLength(1);
   });

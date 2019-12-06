@@ -1,10 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import Button from 'sly/components/atoms/Button';
 import SlyEvent from 'sly/services/helpers/events';
 
-const wrap = (props = {}) => shallow(<Button {...props} />).dive();
+const wrap = (props = {}) => mount(<Button {...props} />);
 
 describe('Button', () => {
   const originalSendEvent = SlyEvent.getInstance().sendEvent;
@@ -29,7 +29,7 @@ describe('Button', () => {
 
   it('renders props when passed in', () => {
     const wrapper = wrap({ type: 'submit' });
-    expect(wrapper.find({ type: 'submit' })).toHaveLength(1);
+    expect(wrapper.find('button[type="submit"]')).toHaveLength(1);
   });
 
   it('renders button by default', () => {
@@ -38,12 +38,12 @@ describe('Button', () => {
   });
 
   it('renders Link when href is passed in', () => {
-    const wrapper = wrap({ href: 'test' }).dive();
+    const wrapper = wrap({ href: 'test' });
     expect(wrapper.find('Link')).toHaveLength(1);
   });
 
   it('renders Link when to is passed in', () => {
-    const wrapper = wrap({ to: 'test' }).dive();
+    const wrapper = wrap({ to: 'test' });
     expect(wrapper.find('Link')).toHaveLength(1);
   });
 
