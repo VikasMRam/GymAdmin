@@ -18,8 +18,7 @@ describe('CommunityInfo', () => {
         .find('IconTextWrapper')
         .at(0)
         .find('Info')
-        .dive()
-        .dive()
+        .render()
         .text()
     ).toContain(expectedAddress);
     RhodaGoldmanPlaza.webViewInfo.firstLineValue.split(',').forEach((livingType) => {
@@ -28,8 +27,7 @@ describe('CommunityInfo', () => {
           .find('IconTextWrapper')
           .at(1)
           .find('Info')
-          .dive()
-          .dive()
+          .render()
           .text()
       ).toContain(livingType);
     });
@@ -39,8 +37,7 @@ describe('CommunityInfo', () => {
           .find('IconTextWrapper')
           .at(2)
           .find('Info')
-          .dive()
-          .dive()
+          .render()
           .text()
       ).toContain(roomType);
     });

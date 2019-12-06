@@ -9,7 +9,6 @@ const mockStore = configureStore([thunkMiddleware]);
 const wrap = (props = {}, children) => shallow((
   <Role
     store={mockStore({ api: { requests: {} } })}
-    api={{}}
     {...props}
   >
     {children}

@@ -1,20 +1,20 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import IconButton from 'sly/components/molecules/IconButton';
 import Notification from 'sly/components/molecules/Notification';
 
-const wrap = (props = {}) => shallow(<Notification {...props} />);
+const wrap = (props = {}) => mount(<Notification {...props} />);
 
 describe('Notification', () => {
   it('renders with default status', () => {
     const wrapper = wrap({ status: 'default', children: 'test children' });
-    expect(wrapper.dive().text()).toContain('test children');
+    expect(wrapper.text()).toContain('test children');
   });
 
   it('renders with error status', () => {
     const wrapper = wrap({ status: 'error', children: 'test children' });
-    expect(wrapper.dive().text()).toContain('test children');
+    expect(wrapper.text()).toContain('test children');
   });
 
   it('does not render close button for not closeable', () => {
