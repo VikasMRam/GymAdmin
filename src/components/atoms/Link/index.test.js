@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import RRLink from 'react-router-dom/Link';
+import { Link as RRLink } from 'react-router-dom';
 
 import Link, { Anchor } from 'sly/components/atoms/Link';
 import { addEventToUrl } from 'sly/services/helpers/queryParamEvents';
