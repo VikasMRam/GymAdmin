@@ -15,7 +15,7 @@ import SearchComponent from 'sly/external/apps/search/Component';
   queryParams: parseURLQueryParams(location.search),
 }))
 
-class Container extends Component {
+export default class SearchContainer extends Component {
   static propTypes = {
     searchParams: object,
     queryParams: object,
@@ -59,4 +59,3 @@ class Container extends Component {
   }
 }
 
-export default Container;

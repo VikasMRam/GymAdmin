@@ -8,19 +8,15 @@ import { getSearchParams } from 'sly/services/helpers/search';
 import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
 import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
-import withRouter from 'react-router/withRouter';
 // import whyDidComponentUpdate from 'sly/services/helpers/whyDidComponentUpdate';
 
 @withProps(({ match, location }) => ({
   searchParams: getSearchParams(match, location),
 }))
+
 @prefetch('geoGuides', 'getGeoGuides', (request, { searchParams }) => request(searchParams))
-
 @prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
-
 @withGenerateFilterLinkPath
-
-@withRouter
 
 export default class CommunitySearchPageContainer extends PureComponent {
   static propTypes = {
