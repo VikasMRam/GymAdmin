@@ -140,7 +140,7 @@ export const getHelmetForSearchPage = ({
   }
 
   if (toc === 'skilled-nursing-facility') {
-    description = `Search skilled nursing facilities in ${locationStr}. Compare cost, medicare and medicaid options, property highlights and more.`;
+    description = `Search skilled nursing facilities in ${locationStr}. Learn about medicare and medicaid options, property highlights and more.`;
   }
 
   const ld = {};
