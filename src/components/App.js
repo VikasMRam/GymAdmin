@@ -13,8 +13,8 @@ import utc from 'dayjs/plugin/utc';
 
 import { hideChatbox } from 'sly/config';
 import theme from 'sly/components/themes/default';
-import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
-import setDatepickerStyles from 'sly/components/themes/datepickerStyles';
+import GlobalStyles from 'sly/components/themes/GlobalStyles';
+import DatepickerStyles from 'sly/components/themes/DatepickerStyles';
 import { assetPath } from 'sly/components/themes';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Router from 'sly/components/molecules/Router';
@@ -69,9 +69,6 @@ const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkNa
 const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
 const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/components/pages/DashboardAgentTasksPage'));
 const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/components/pages/DashboardAgentContactsPage'));
-
-setGlobalStyles();
-setDatepickerStyles();
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -325,6 +322,9 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          <DatepickerStyles />
+
           <Router requiresAuth={[/^\/dashboard/]}>
             <Switch>
               <Route

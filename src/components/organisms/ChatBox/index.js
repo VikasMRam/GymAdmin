@@ -1,27 +1,27 @@
 /* eslint-disable react/no-danger */
 import React, { Component } from 'react';
-//import { injectGlobal } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import { bool } from 'prop-types';
 
 import { /* isBrowser, olarkSiteId, */ rokoApiKey } from 'sly/config';
 import { getKey } from 'sly/components/themes';
 
-// injectGlobal`
-//   body.ChatBox-page-with-sticky-footer #hbl-live-chat-wrapper .olark-launch-button {
-//     bottom: ${getKey('sizes.chatBox.pageWithStickyFooterBottomMargin')}!important;
-//   }
-//   body.ChatBox-footer-reached #hbl-live-chat-wrapper .olark-launch-button {
-//     bottom: ${getKey('sizes.chatBox.footerReachedBottomMargin')}!important;
-//   }
-//   .roko-instabot-widget-button  {
-//     z-index: 10000!important;
-//     margin-bottom: ${getKey('sizes.spacing.massive')}!important;
-//   }
-//   .olark-launch-button {
-//     z-index: 10000!important;
-//     margin-bottom: ${getKey('sizes.spacing.massive')}!important;
-//   }
-// `;
+const ChatBoxGlobalStyle = createGlobalStyle`
+  body.ChatBox-page-with-sticky-footer #hbl-live-chat-wrapper .olark-launch-button {
+    bottom: ${getKey('sizes.chatBox.pageWithStickyFooterBottomMargin')}!important;
+  }
+  body.ChatBox-footer-reached #hbl-live-chat-wrapper .olark-launch-button {
+    bottom: ${getKey('sizes.chatBox.footerReachedBottomMargin')}!important;
+  }
+  .roko-instabot-widget-button  {
+    z-index: 10000!important;
+    margin-bottom: ${getKey('sizes.spacing.massive')}!important;
+  }
+  .olark-launch-button {
+    z-index: 10000!important;
+    margin-bottom: ${getKey('sizes.spacing.massive')}!important;
+  }
+`;
 
 const loadOlark = () => {
   // /* eslint-disable */
@@ -76,19 +76,22 @@ export default class ChatBox extends Component {
     } */
 
     return (
-      <script
-        defer
-        type="text/javascript"
-        dangerouslySetInnerHTML={{ __html: `
-          setTimeout(function(){
-            (function(s,d,r) {
-              var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
-              j.text="apiKey: '${rokoApiKey}'";j.async=true;j.src=r;
-              f.parentNode.insertBefore(j,f);
-            })('script', document, '//widget.instabot.io/jsapi/rokoInstabot.js');
-          }, 30000);
-        ` }}
-      />
+      <>
+        <ChatBoxGlobalStyle />
+        <script
+          defer
+          type="text/javascript"
+          dangerouslySetInnerHTML={{ __html: `
+            setTimeout(function(){
+              (function(s,d,r) {
+                var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
+                j.text="apiKey: '${rokoApiKey}'";j.async=true;j.src=r;
+                f.parentNode.insertBefore(j,f);
+              })('script', document, '//widget.instabot.io/jsapi/rokoInstabot.js');
+            }, 30000);
+          ` }}
+        />
+      </>
     );
   }
 }

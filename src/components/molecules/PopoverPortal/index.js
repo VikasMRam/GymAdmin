@@ -27,7 +27,7 @@ const PopoverWrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     top: calc(100% + 5px);
     ${ifProp('left', css`left: ${p => p.left}px;`)}
@@ -42,15 +42,15 @@ const MobileHeader = styled.div`
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
   border-bottom: 1px solid ${palette('slate.stroke')};
   align-items: center;
-   
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: none;
   }
 `;
 
 const Title = styled(Block)`
-  ${ifProp('hasHeaderButton', css`text-align: center;`)};  
-  flex-grow: 1; 
+  ${ifProp('hasHeaderButton', css`text-align: center;`)};
+  flex-grow: 1;
 `;
 
 const StyledFilterButton = styled.div``;
@@ -131,7 +131,7 @@ export default class PopoverPortal extends Component {
       : 0;
 
     return (
-      <Wrapper innerRef={this.ref}>
+      <Wrapper ref={this.ref}>
         <Measure bounds onResize={this.onButtonResize}>
           {({ measureRef }) => (
             <StyledFilterButton
