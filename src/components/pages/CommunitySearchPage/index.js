@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 import loadable from '@loadable/component';
+import { ifProp } from 'styled-tools';
 
 import { size, palette, assetPath } from 'sly/components/themes';
 import { titleize } from 'sly/services/helpers/strings';
@@ -16,8 +17,7 @@ import IconButton from 'sly/components/molecules/IconButton';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import pad from 'sly/components/helpers/pad';
-import CommunityFilterListContainer from 'sly/containers/CommunityFilterListContainer';
-import { ifProp } from 'styled-tools';
+import ResponsiveSidebar from 'sly/components/molecules/ResponsiveSidebar';
 
 const SearchMap = loadable(() => import(/* webpackChunkName: "chunkSearchMap" */'sly/components/organisms/SearchMap'));
 
@@ -104,24 +104,11 @@ const LegacyContent = pad(styled.div`
 const ApplyFilterButton = styled(Button)`
   width: 100%;
   display: block;
+  margin-top: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none;
+    display: none!important;
   }
-`;
-
-const ResponsiveFilterWrapper = styled.div`
-  @media screen and (max-width: ${size('breakpoint.laptop')}) {
-    visibility: ${ifProp('isOpen', 'visible', 'hidden')};
-    position: absolute;
-    background-color: white;
-    z-index: 1000;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    padding: ${size('spacing', 'xxLarge')};
 `;
 
 LegacyContent.defaultProps = {
@@ -132,14 +119,12 @@ const CommunitySearchPage = ({
   isMapView,
   mapViewUrl,
   listViewUrl,
-  onParamsChange,
   searchParams,
   requestMeta,
   communityList,
   geoGuide,
   location,
   isFetchingResults,
-  onCommunityClick,
   areFiltersOpen,
   toggleFiltersOpen,
 }) => {
@@ -186,15 +171,13 @@ const CommunitySearchPage = ({
               </ImageButtonWrapper>
               <StyledHr />
             </>
-            <ResponsiveFilterWrapper isOpen={areFiltersOpen}>
+            <ResponsiveSidebar isOpen={areFiltersOpen} onCloseRequested={toggleFiltersOpen}>
               <CommunityFilterList
-                onFieldChange={onParamsChange}
                 searchParams={searchParams}
-                onParamsRemove={onParamsRemove}
                 geoGuideList={geoGuide && geoGuide.cityTOCGuides}
               />
               <ApplyFilterButton kind="jumbo" onClick={toggleFiltersOpen}>Apply Filters</ApplyFilterButton>
-            </ResponsiveFilterWrapper>
+            </ResponsiveSidebar>
           </FilterColumnWrapper>
         )}
       >
@@ -265,13 +248,10 @@ CommunitySearchPage.propTypes = {
   geoGuide: object,
   requestMeta: object.isRequired,
   isMapView: bool,
-  onParamsChange: func,
   location: object,
   searchParams: object,
   isFetchingResults: bool,
   onClientClick: func,
-  showModal: func,
-  hideModal: func,
   areFiltersOpen: bool,
   toggleFiltersOpen: func,
 };
