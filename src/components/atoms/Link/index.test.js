@@ -1,12 +1,13 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Link as RRLink } from 'react-router-dom';
+import { mount } from 'enzyme';
+import { Link as RRLink, Router, BrowserRouter } from 'react-router-dom';
 
-import Link, { Anchor } from 'sly/components/atoms/Link';
+import Link, { Anchor, StyledLink } from 'sly/components/atoms/Link';
 import { addEventToUrl } from 'sly/services/helpers/queryParamEvents';
 
+const history = new BrowserRouter().history;
 const context = { routes: [{ path: '/test', component: () => null }] };
-const wrap = (props = {}) => shallow(<Link {...props} />, { context });
+const wrap = (props = {}) => mount(<Router history={history}><Link {...props} /></Router>, { context });
 
 it('renders anchor with href', () => {
   const wrapper = wrap({ href: 'http://google.com', children: 'Hey' });
@@ -20,7 +21,7 @@ it('renders children when passed in', () => {
 
 it('renders props when passed in', () => {
   const wrapper = wrap({ type: 'submit' });
-  expect(wrapper.find({ type: 'submit' })).toHaveLength(1);
+  expect(wrapper.find('a[type="submit"]')).toHaveLength(1);
 });
 
 it('renders Anchor by default', () => {
@@ -29,20 +30,19 @@ it('renders Anchor by default', () => {
 });
 
 it('renders Link when to is passed in', () => {
-  const wrapper = wrap({ to: '/test' }).dive();
-  expect(wrapper.find(RRLink)).toHaveLength(1);
+  const wrapper = wrap({ to: '/test' });
+  expect(wrapper.find(StyledLink)).toHaveLength(1);
 });
 
 it('renders a Link and adds sly_event params when an event is included', () => {
   const event = { action: 'clicky-clicky', category: 'mousey-mousey' };
-  const wrapper = wrap({ to: '/test', event }).dive();
-
-  expect(wrapper.find(RRLink).prop('to')).toEqual(addEventToUrl('/test', event));
+  const wrapper = wrap({ to: '/test', event });
+  expect(wrapper.find(StyledLink).prop('href')).toEqual(addEventToUrl('/test', event));
 });
 
 it('renders an Anchor and adds sly_event params when an event is included', () => {
   const event = { action: 'clicky-clicky', category: 'mousey-mousey' };
-  const wrapper = wrap({ href: 'http://google.com', event }).dive();
+  const wrapper = wrap({ href: 'http://google.com', event });
 
   expect(wrapper.find('a').prop('href')).toEqual(addEventToUrl('http://google.com', event));
 });

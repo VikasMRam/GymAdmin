@@ -45,7 +45,7 @@ export const Anchor = styled(({ noHoverColorChange, ...props }) => <a {...props}
   ${styles};
 `;
 
-const StyledLink = styled(({ noHoverColorChange, ...props }) => <RRLink {...props} />)`
+export const StyledLink = styled(({ noHoverColorChange, ...props }) => <RRLink {...props} />)`
   ${styles};
 `;
 

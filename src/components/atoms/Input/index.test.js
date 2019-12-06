@@ -1,14 +1,14 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import Input from 'sly/components/atoms/Input';
 
-const wrap = (props = {}) => shallow(<Input {...props} />).dive();
+const wrap = (props = {}) => mount(<Input {...props} />);
 
 describe('Input', () => {
   it('renders props when passed in', () => {
     const wrapper = wrap({ type: 'text' });
-    expect(wrapper.find({ type: 'text' })).toHaveLength(1);
+    expect(wrapper.find('input[type="text"]')).toHaveLength(1);
   });
 
   it('renders input by default', () => {
@@ -26,4 +26,3 @@ describe('Input', () => {
     expect(wrapper.find('textarea')).toHaveLength(1);
   });
 });
-
