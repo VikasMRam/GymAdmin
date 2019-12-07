@@ -7,8 +7,7 @@ import { apiContextPropType } from './context';
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
-// FIXME: when upgrading react, this hack for react 16.3 that can't read
-//  `static contextType` from ssr, we have to move to new context api
+// FIXME: we have to move to new context api
 
 export default function withPrefetchWait(Component) {
   class WithPrefetchWait extends React.Component {
@@ -39,7 +38,8 @@ export default function withPrefetchWait(Component) {
     }
   }
 
-  hoistNonReactStatic(WithPrefetchWait, Component);
+  // FIXME: hoistNon... broken due to misuse of isReact.isMemo
+  // hoistNonReactStatic(WithPrefetchWait, Component);
 
   return WithPrefetchWait;
 }
