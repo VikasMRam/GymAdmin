@@ -37,10 +37,10 @@ describe('Component', () => {
 
     expect(wrapper.find('ProgressWrapper')).toHaveLength(1);
     expect(cstep).toHaveLength(1);
-    expect(cstep.dive().text()).toContain(`Step ${currentStep} of ${totalNumberofSteps}`);
+    expect(cstep.dive().render().text()).toContain(`Step ${currentStep} of ${totalNumberofSteps}`);
 
     buttons.forEach((button, i) => {
-      expect(button.dive().dive().text()).toBe(buttonTextsInProgress[i]);
+      expect(button.dive().dive().render().text()).toBe(buttonTextsInProgress[i]);
       if (i === 0) {
         expect(button.prop('disabled')).toBeTruthy();
       } else {
@@ -71,7 +71,7 @@ describe('Component', () => {
       currentStep, totalNumberofSteps, handleSubmit, onBackButton, onSeeMore, href, flow,
     });
     const cstep = wrapper.find('CurrentStep');
-    expect(cstep.dive().text()).toContain(`Step ${currentStep} of ${totalNumberofSteps}`);
+    expect(cstep.dive().render().text()).toContain(`Step ${currentStep} of ${totalNumberofSteps}`);
   });
 
   it('submit button becomes active for valid form', () => {
@@ -102,6 +102,7 @@ describe('Component', () => {
         .dive()
         .dive()
         .dive()
+        .render()
         .text()
     ).toBe(buttonTextFinal);
     expect(button.prop('href')).toBe(href);

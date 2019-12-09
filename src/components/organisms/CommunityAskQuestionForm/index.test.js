@@ -14,7 +14,7 @@ const wrap = (props = {}) => shallow(<CommunityAskQuestionForm handleSubmit={han
 describe('CommunityAskQuestionForm', () => {
   it('render name and email when user is not passed', () => {
     const wrapper = wrap({});
-    expect(wrapper.find('StyledHeading').dive().dive().dive()
+    expect(wrapper.find('StyledHeading').dive().dive().dive().render()
       .text()).toContain(communityName);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
@@ -25,7 +25,7 @@ describe('CommunityAskQuestionForm', () => {
 
   it('does not render name and email when user is passed', () => {
     const wrapper = wrap({ user });
-    expect(wrapper.find('StyledHeading').dive().dive().dive()
+    expect(wrapper.find('StyledHeading').dive().dive().dive().render()
       .text()).toContain(communityName);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(0);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(0);
@@ -36,7 +36,7 @@ describe('CommunityAskQuestionForm', () => {
 
   it('render error when error is passed', () => {
     const wrapper = wrap({ error });
-    expect(wrapper.find('StyledHeading').dive().dive().dive()
+    expect(wrapper.find('StyledHeading').dive().dive().dive().render()
       .text()).toContain(communityName);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);

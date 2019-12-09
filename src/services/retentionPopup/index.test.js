@@ -2,15 +2,14 @@ import React from 'react';
 import { shape } from 'prop-types';
 import { BrowserRouter } from 'react-router-dom';
 import { mount } from 'enzyme';
+import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import RetentionPopup from './index';
 
 const showModal = jest.fn();
 const mockStore = configureStore([]);
-const store = mockStore({
-  api: {},
-});
+const store = mockStore({ api: {} });
 
 // Instantiate router context
 const router = {
@@ -24,24 +23,17 @@ const router = {
 const createContext = () => ({
   context: {
     router,
-    store,
-    api: {
-      updateUser: jest.fn().mockReturnValue({
-        type: 'apicall',
-      }),
-    },
   },
   childContextTypes: {
     router: shape({}),
-    store: shape({}),
-    api: shape({}),
-
   },
 });
 
 const wrap = (props = {}) => mount(
-  <RetentionPopup {...props} store={store} showModal={showModal} />
-  , createContext());
+  <Provider store={store}>
+    <RetentionPopup {...props} showModal={showModal} />
+  </Provider>, createContext()
+);
 
 const setReferrer = (referrer) => {
   Object.defineProperty(document, 'referrer', {
@@ -129,7 +121,7 @@ describe('Retention popup', () => {
 
     const wrapper = wrap();
 
-    expect(wrapper.html()).toBeNull();
+    expect(wrapper.html()).toEqual('');
     expect(typeof listeners.popstate).toEqual('undefined');
   });
 
@@ -139,7 +131,7 @@ describe('Retention popup', () => {
 
     const wrapper = wrap();
 
-    expect(wrapper.html()).toBeNull();
+    expect(wrapper.html()).toEqual('');
     expect(typeof listeners.popstate).toEqual('undefined');
   });
 
@@ -148,7 +140,7 @@ describe('Retention popup', () => {
 
     const wrapper = wrap();
 
-    expect(wrapper.html()).toBeNull();
+    expect(wrapper.html()).toEqual('');
 
     expect(typeof listeners.popstate).toEqual('function');
 
@@ -166,7 +158,7 @@ describe('Retention popup', () => {
   it('should remove popstate listener', () => {
     const wrapper = wrap();
 
-    expect(wrapper.html()).toBeNull();
+    expect(wrapper.html()).toEqual('');
     expect(typeof listeners.popstate).toEqual('function');
 
     wrapper.unmount();
@@ -178,7 +170,7 @@ describe('Retention popup', () => {
   it('should add the focus blur listener', () => {
     const wrapper = wrap();
 
-    expect(wrapper.html()).toBeNull();
+    expect(wrapper.html()).toEqual('');
 
     [
       'visibilitychange',
@@ -195,7 +187,7 @@ describe('Retention popup', () => {
 
     const wrapper = wrap();
 
-    expect(wrapper.html()).toBeNull();
+    expect(wrapper.html()).toEqual('');
     setHidden(true);
 
     listeners.visibilitychange();
@@ -211,7 +203,7 @@ describe('Retention popup', () => {
 
     const wrapper = wrap();
 
-    expect(wrapper.html()).toBeNull();
+    expect(wrapper.html()).toEqual('');
 
     setHidden(true);
     listeners.visibilitychange();
@@ -234,7 +226,7 @@ describe('Retention popup', () => {
   it('should add the mouseout listener', () => {
     const wrapper = wrap();
 
-    expect(wrapper.html()).toBeNull();
+    expect(wrapper.html()).toEqual('');
 
     expect(typeof listeners.mouseout).toEqual('function');
   });
@@ -245,7 +237,7 @@ describe('Retention popup', () => {
     const wrapper = wrap();
 
     setViewportWidth(100);
-    expect(wrapper.html()).toBeNull();
+    expect(wrapper.html()).toEqual('');
 
     expect(typeof listeners.mouseout).toEqual('function');
 
@@ -260,7 +252,7 @@ describe('Retention popup', () => {
     const wrapper = wrap();
 
     setViewportWidth(100);
-    expect(wrapper.html()).toBeNull();
+    expect(wrapper.html()).toEqual('');
 
     expect(typeof listeners.mouseout).toEqual('function');
 
@@ -272,7 +264,7 @@ describe('Retention popup', () => {
   it('should remove mouseout listener', () => {
     const wrapper = wrap();
 
-    expect(wrapper.html()).toBeNull();
+    expect(wrapper.html()).toEqual('');
 
     expect(typeof listeners.mouseout).toEqual('function');
 
@@ -287,7 +279,7 @@ describe('Retention popup', () => {
 
     const wrapper = wrap();
 
-    expect(wrapper.html()).toBeNull();
+    expect(wrapper.html()).toEqual('');
     setHidden(true);
     mockDate('2017-11-25T12:35:20Z');
 
@@ -310,7 +302,7 @@ describe('Retention popup', () => {
 
     const wrapper = wrap();
 
-    expect(wrapper.html()).toBeNull();
+    expect(wrapper.html()).toEqual('');
     mockDate('2017-11-25T12:36:09Z');
     setHidden(true);
 
