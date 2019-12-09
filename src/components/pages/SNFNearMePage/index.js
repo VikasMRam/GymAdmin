@@ -5,7 +5,6 @@ import { array, bool, func, object } from 'prop-types';
 
 import { size, assetPath, palette } from 'sly/components/themes';
 
-import { getStateAbbr } from 'sly/services/helpers/url';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Image, Label, Heading, Paragraph } from 'sly/components/atoms';
@@ -112,7 +111,7 @@ const NearMePage = ({
 
   const { geo } = requestMeta;
   const city = geo && geo.city;
-  const state = geo && geo.state && getStateAbbr(geo.state);;
+  const state = geo && geo.state;
   const tocLabel = getTocSeoLabel('skilled-nursing-facility');
 
   const topRef = React.createRef();
