@@ -32,8 +32,8 @@ describe('AgentSummary', () => {
       ...defaultProp.agent, aggregateRating: { ratingValue: 3.53223232, numRatings: 15 },
     };
     const wrapper = wrap({ agent: newAgent });
-    expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.5 ');
-    expect(wrapper.find('ReviewValueSection').childAt(2).dive().text()).toEqual('from 15 reviews');
+    expect(wrapper.find('ReviewValueSection').childAt(1).render().text()).toEqual(' 3.5 ');
+    expect(wrapper.find('ReviewValueSection').childAt(2).render().text()).toEqual('from 15 reviews');
   });
 
   it('renders aggregateRating and one numRatings', () => {
@@ -41,8 +41,8 @@ describe('AgentSummary', () => {
       ...defaultProp.agent, aggregateRating: { ratingValue: 3.53223232, numRatings: 1 },
     };
     const wrapper = wrap({ agent: newAgent });
-    expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.5 ');
-    expect(wrapper.find('ReviewValueSection').childAt(2).dive().text()).toEqual('from 1 review');
+    expect(wrapper.find('ReviewValueSection').childAt(1).render().text()).toEqual(' 3.5 ');
+    expect(wrapper.find('ReviewValueSection').childAt(2).render().text()).toEqual('from 1 review');
   });
 
   it('renders recentFamiliesHelped', () => {

@@ -120,7 +120,7 @@ const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
   layout, showFloorPlan, palette, showDescription, imageSize, showSeeMoreButtonOnHover,
-  canFavourite, lazyLoadImage
+  canFavourite, lazyLoadImage,
 }) => {
   const {
     name, gallery = {}, mainImage, communitySize, plusCategory,

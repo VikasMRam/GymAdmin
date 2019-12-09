@@ -25,7 +25,7 @@ describe('SignupForm', () => {
     const blocks = wrapper.find(Block);
 
     expect(blocks).toHaveLength(2);
-    expect(blocks.at(0).dive().text()).toBe(error);
+    expect(blocks.at(0).dive().render().text()).toBe(error);
   });
 
   it('handles onFormSubmit', () => {

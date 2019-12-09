@@ -195,7 +195,7 @@ const StateSearchPage = ({
               requestMeta={requestMeta}
               location={location}
             />
-            {guideTypes.map((key) => (gg[key] ? <div dangerouslySetInnerHTML={{ __html: gg[key] }} key={key} /> : null))}
+            {guideTypes.map(key => (gg[key] ? <div dangerouslySetInnerHTML={{ __html: gg[key] }} key={key} /> : null))}
             {gg.seoLinks && <SeoLinks title="Assisted Living in Nearby Cities" links={gg.seoLinks} />}
           </>
         )}

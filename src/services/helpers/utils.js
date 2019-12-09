@@ -15,5 +15,4 @@ export const copyToClipboard = (text) => {
       alert(`Copy ${text} to clipboard unsupported!`);
     }
   }
-
 };

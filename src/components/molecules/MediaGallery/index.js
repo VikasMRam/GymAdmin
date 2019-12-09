@@ -253,8 +253,9 @@ export default class MediaGallery extends Component {
 
   render() {
     const {
-      currentSlide, videos, images, topRightSection, bottomLeftSection, bottomRightSection, showThumbnails, onSlideClick, onSlideChange,
+      currentSlide, videos, images, topRightSection, bottomLeftSection, bottomRightSection, showThumbnails, onSlideClick,
     } = this.props;
+    const { onSlideChange, ...rest } = this.props;
     const thumbnails = [];
     const formattedVideos = videos.map((video) => {
       thumbnails.push({
@@ -286,7 +287,7 @@ export default class MediaGallery extends Component {
 
     return (
       <>
-        <CarouselWrapper {...this.props}>
+        <CarouselWrapper {...rest}>
           {this.allMedia.length > 1 &&
             <PrevSlide
               className="media-carousel-control-prev"

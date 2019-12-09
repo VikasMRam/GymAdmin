@@ -32,7 +32,7 @@ export default function withPrefetchWait(Component) {
         <Component
           apiConfig={apiConfig}
           prefetchWait={this.prefetchWait}
-          {...this.props }
+          {...this.props}
         />
       );
     }

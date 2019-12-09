@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { object, string, shape, func } from 'prop-types';
+import { generatePath } from 'react-router';
+
 import voiceCallPropType from 'sly/propTypes/calls';
 import { palette, size } from 'sly/components/themes';
 import { Hr, Box } from 'sly/components/atoms';
@@ -13,7 +15,6 @@ import {
   ADMIN_DASHBOARD_CALL_DETAILS_PATH,
   COMMUNITIES,
 } from 'sly/constants/dashboardAppPaths';
-import { generatePath } from 'react-router';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 
 const TabWrapper = styled.div`
@@ -34,8 +35,8 @@ const TabWrapper = styled.div`
     margin-bottom: 0;
   }
 `;
-const formatPhoneAsName = (phoneNumber="") => {
-  return phoneNumber.replace(/^\+1/,'')
+const formatPhoneAsName = (phoneNumber = '') => {
+  return phoneNumber.replace(/^\+1/, '');
 };
 
 export default class DashboardCallDetailsPage extends Component {

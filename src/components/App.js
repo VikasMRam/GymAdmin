@@ -272,12 +272,16 @@ const routes = [
 ];
 
 const routeComponents = routes.map(({ component: Component, ...route }) => (
-  <Route key={route.path} {...route} component={props => (
-    <>
-      <PageEventsContainer />
-      <Component {...props} />
-    </>
-  )} />
+  <Route
+    key={route.path}
+    {...route}
+    component={props => (
+      <>
+        <PageEventsContainer />
+        <Component {...props} />
+      </>
+  )}
+  />
 ));
 
 export default class App extends Component {

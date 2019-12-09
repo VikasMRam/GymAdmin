@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
 import qs from 'query-string';
+
 import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import pad from 'sly/components/helpers/pad';
@@ -13,7 +14,7 @@ import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import Tab from 'sly/components/molecules/Tab';
 import clientPropType from 'sly/propTypes/client';
-import { AGENT_DASHBOARD_TASKS_PATH} from 'sly/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_TASKS_PATH } from 'sly/constants/dashboardAppPaths';
 import Th from 'sly/components/molecules/Th';
 
 const TASK_TABLE_HEADINGS = [
@@ -85,10 +86,10 @@ const TasksOverviewPage = ({
   const prospectsLabel = tabIDLabelMap[tabIDs[0]];
   const connectedLabel = tabIDLabelMap[tabIDs[1]];
   const closedLabel = tabIDLabelMap[tabIDs[2]];
-  let prospectsTabLabel = tabIDLabelMap[tabIDs[0]];
-  let connectedTabLabel = tabIDLabelMap[tabIDs[1]];
-  let closedTabLabel = tabIDLabelMap[tabIDs[2]];
-  let params = {}
+  const prospectsTabLabel = tabIDLabelMap[tabIDs[0]];
+  const connectedTabLabel = tabIDLabelMap[tabIDs[1]];
+  const closedTabLabel = tabIDLabelMap[tabIDs[2]];
+  const params = {};
   const defaultTab = SUMMARY;
   return (
     <div activeMenuItem="Upcoming">
@@ -123,15 +124,15 @@ const TasksOverviewPage = ({
                ))}
               </TBody>
             </StyledTable>
-            {/*{pagination.show && (*/}
-              {/*<StyledPagination*/}
-                {/*current={pagination.current}*/}
-                {/*total={pagination.total}*/}
-                {/*range={1}*/}
-                {/*basePath={getBasePath(activeTab, params)}*/}
-                {/*pageParam="page-number"*/}
-              {/*/>*/}
-            {/*)}*/}
+            {/* {pagination.show && ( */}
+              {/* <StyledPagination */}
+            {/* current={pagination.current} */}
+            {/* total={pagination.total} */}
+            {/* range={1} */}
+            {/* basePath={getBasePath(activeTab, params)} */}
+            {/* pageParam="page-number" */}
+              {/* /> */}
+            {/* )} */}
           </>
         )}
         {isPageLoading && 'Loading...'}

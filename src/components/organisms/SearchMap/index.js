@@ -69,7 +69,7 @@ class SearchMap extends Component {
         imageUrl: string.isRequired,
         latitude: number.isRequired,
         longitude: number.isRequired,
-      })
+      }),
     ),
     isLoading: bool,
     searchParams: object,
@@ -84,7 +84,7 @@ class SearchMap extends Component {
       !state.hasValidDefaultLocation && {
         defaultCenter: { lat: props.latitude, lng: props.longitude },
         hasValidDefaultLocation: props.latitude !== 0 && props.longitude !== 0,
-      }
+      },
     );
   };
 

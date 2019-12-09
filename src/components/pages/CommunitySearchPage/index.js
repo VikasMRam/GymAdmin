@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 import loadable from '@loadable/component';
+import { ifProp } from 'styled-tools';
 
 import { size, palette, assetPath } from 'sly/components/themes';
 import { titleize } from 'sly/services/helpers/strings';
@@ -16,7 +17,6 @@ import IconButton from 'sly/components/molecules/IconButton';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import pad from 'sly/components/helpers/pad';
-import { ifProp } from 'styled-tools';
 import ResponsiveSidebar from 'sly/components/molecules/ResponsiveSidebar';
 
 const SearchMap = loadable(() => import(/* webpackChunkName: "chunkSearchMap" */'sly/components/organisms/SearchMap'));
@@ -161,12 +161,12 @@ const CommunitySearchPage = ({
                     View List
                   </IconButton>
                   ) : (
-                  <>
-                    <Image src={assetPath('images/map-placeholder.png')} />
-                    <IconButton icon="map" iconSize="regular" to={mapViewUrl} iconPalette="primary" ghost>
+                    <>
+                      <Image src={assetPath('images/map-placeholder.png')} />
+                      <IconButton icon="map" iconSize="regular" to={mapViewUrl} iconPalette="primary" ghost>
                       View Map
-                    </IconButton>
-                  </>
+                      </IconButton>
+                    </>
                 )}
               </ImageButtonWrapper>
               <StyledHr />
@@ -220,7 +220,7 @@ const CommunitySearchPage = ({
               location={location}
             />
             {hasGeoGuideContent && (
-              guideTypes.map((key) => (
+              guideTypes.map(key => (
                 guideContent[key] ? <LegacyContent dangerouslySetInnerHTML={{ __html: guideContent[key] }} key={key} /> : null
               ))
             )}

@@ -5,4 +5,4 @@ export default function isPathInRoutes(routes, path) {
 
   const pathName = path.replace(/(\?|#).*/, '');
   return routes.some(route => matchPath(pathName, route));
-};
+}

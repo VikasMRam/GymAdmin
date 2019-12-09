@@ -31,17 +31,20 @@ const ExitIntentQuestionForm = ({
       name="question"
       label="Your question"
       type="textarea"
-      component={ReduxField} />
+      component={ReduxField}
+    />
     {<Field
       name="name"
       label="Full name"
       type="text"
-      component={ReduxField} />}
+      component={ReduxField}
+    />}
     {<Field
       name="email"
       label="Email"
       type="text"
-      component={ReduxField} />}
+      component={ReduxField}
+    />}
     {error && <strong>{error}</strong>}
     <StyledButton type="submit" kind="jumbo" disabled={submitting}>
         Get Free Support

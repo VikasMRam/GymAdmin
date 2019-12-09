@@ -41,6 +41,7 @@ export const styles = css`
   `)}
 `;
 
+// eslint-disable-next-line jsx-a11y/anchor-has-content
 export const Anchor = styled(({ noHoverColorChange, ...props }) => <a {...props} />)`
   ${styles};
 `;

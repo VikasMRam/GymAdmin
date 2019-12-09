@@ -21,7 +21,7 @@ export default function withNotification(ChildComponent) {
   );
 
   WithNotification.displayName = `WithNotification(${getDisplayName(
-    ChildComponent
+    ChildComponent,
   )})`;
   WithNotification.WrappedComponent = ChildComponent;
 

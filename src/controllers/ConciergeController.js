@@ -81,7 +81,7 @@ const mapStateToProps = (state, { communitySlug, queryParams, uuidActions }) => 
   req({
     'filter[actionType]': `${PROFILE_CONTACTED}`,
     'filter[actionInfo-slug]': communitySlug,
-  })
+  }),
 )
 @prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 @query('createAction', 'createUuidAction')

@@ -36,14 +36,15 @@ function renderHydration(children) {
     <>
       {children}
       <HydrationData />
-    </>
+    </>,
   );
 
   return root;
 }
 
 describe('Partial hydration (integration)', () => {
-  let wrappers, intersectionObserver;
+  let wrappers; let
+    intersectionObserver;
 
   beforeEach(() => {
     wrappers = [];
@@ -102,7 +103,7 @@ describe('Partial hydration (integration)', () => {
       function Foobar() {}
 
       expect(() => hydrateComponents([Foobar], container, Wrapper)).toThrowError(
-        'Can only hydrate components with a `typeHydrationId` property defined.'
+        'Can only hydrate components with a `typeHydrationId` property defined.',
       );
     });
   });
@@ -125,9 +126,9 @@ describe('Partial hydration (integration)', () => {
     it('should hydrate each of them with the correct props', async () => {
       const container = renderHydration(
         <>
-          <HydratedButton value='first' />
-          <HydratedButton value='second' />
-        </>
+          <HydratedButton value="first" />
+          <HydratedButton value="second" />
+        </>,
       );
 
       hydrateComponents([Button], container, Wrapper);
@@ -149,9 +150,9 @@ describe('Partial hydration (integration)', () => {
     it('should hydrate each of them with the correct props', async () => {
       const container = renderHydration(
         <>
-          <HydratedButton value='button' />
-          <HydratedSea name='Caspian' isBig />
-        </>
+          <HydratedButton value="button" />
+          <HydratedSea name="Caspian" isBig />
+        </>,
       );
 
       hydrateComponents([Button, Sea], container, Wrapper);
@@ -171,9 +172,9 @@ describe('Partial hydration (integration)', () => {
     it('should only hydrate the components that appear on screen', async () => {
       const container = renderHydration(
         <>
-          <HydratedButton value='first' />
-          <HydratedButton value='second' />
-        </>
+          <HydratedButton value="first" />
+          <HydratedButton value="second" />
+        </>,
       );
 
       hydrateComponents([Button], container, Wrapper);

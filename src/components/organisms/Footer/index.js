@@ -191,7 +191,7 @@ const Version = styled.span`
 `;
 
 class Footer extends PureComponent {
-  render () {
+  render() {
     const currentYear = (new Date()).getFullYear();
     const groupComponents = Object.keys(groups).map((group) => {
       const groupItemComponents = groups[group].map((item) => {

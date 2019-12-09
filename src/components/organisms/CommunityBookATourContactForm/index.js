@@ -29,7 +29,7 @@ const StyledContainer = styled.div`
 `;
 
 const CommunityBookATourContactForm = ({
-  error, user, heading, subheading, onAdvisorHelpClick, handleSubmit, displayContext
+  error, user, heading, subheading, onAdvisorHelpClick, handleSubmit, displayContext,
 }) => {
   return (
     <StyledContainer displayContext={displayContext}>

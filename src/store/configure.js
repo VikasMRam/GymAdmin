@@ -4,6 +4,7 @@ import { middleware as sagaThunkMiddleware } from 'redux-saga-thunk';
 import thunkMiddleware from 'redux-thunk';
 
 import { middleware } from '../services/newApi';
+
 import reducer from './reducer';
 import sagas from './sagas';
 
@@ -16,7 +17,7 @@ const devtools =
 
 
 const optionalMiddleware = [];
-if(process.env.NODE_ENV !== 'production' && isBrowser) {
+if (process.env.NODE_ENV !== 'production' && isBrowser) {
   optionalMiddleware.push(require('redux-logger').createLogger());
 }
 
@@ -24,7 +25,7 @@ export default function (initialState, services = {}) {
   const sagaMiddleware = createSagaMiddleware();
 
   const middlewares = [
-    middleware, thunkMiddleware, sagaThunkMiddleware, sagaMiddleware, ...optionalMiddleware
+    middleware, thunkMiddleware, sagaThunkMiddleware, sagaMiddleware, ...optionalMiddleware,
   ];
 
   const enhancers = [

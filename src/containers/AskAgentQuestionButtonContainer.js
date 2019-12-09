@@ -16,5 +16,5 @@ export default function AskAgentQuestionButtonContainer({
 }
 AskAgentQuestionButtonContainer.typeHydrationId = 'AskAgentQuestionButtonContainer';
 AskAgentQuestionButtonContainer.propTypes = {
-  type: string
+  type: string,
 };

@@ -2,8 +2,9 @@ import { css } from 'styled-components';
 import { key, palette as styledPalette } from 'styled-theme';
 import { prop } from 'styled-tools';
 
-import { publicPath } from 'sly/config';
 import theme, { colorIndex } from './default';
+
+import { publicPath } from 'sly/config';
 
 export { key, font } from 'styled-theme';
 

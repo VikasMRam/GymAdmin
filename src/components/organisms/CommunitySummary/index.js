@@ -3,6 +3,7 @@ import { object, bool, func, string } from 'prop-types';
 import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
+
 import { size, palette } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { Link, Box, Heading, Hr, Icon, Tag } from 'sly/components/atoms';
@@ -136,7 +137,7 @@ const CommunitySummary = ({
   const careTypes = getCareTypes(state, typeCare, communitySize);
 
   return (
-    <Box innerRef={innerRef} className={className}>
+    <Box ref={innerRef} className={className}>
       <StyledHeading level="hero" size="title">
         {name}
         {isAdmin &&

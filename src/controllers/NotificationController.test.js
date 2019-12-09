@@ -99,7 +99,7 @@ describe('NotificationController', () => {
   it('add multiple notifications and close one', () => {
     const store = initStore(
       {},
-      getControllerStore([getNotificationObj(message), getNotificationObj(message + message)])
+      getControllerStore([getNotificationObj(message), getNotificationObj(message + message)]),
     );
     const wrapper = wrap({ store });
 

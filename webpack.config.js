@@ -84,8 +84,8 @@ console.info(
       DISABLE_EXPERIMENTS,
     },
     null,
-    2
-  )
+    2,
+  ),
 );
 
 const sourcePath = path.join(process.cwd(), SOURCE);

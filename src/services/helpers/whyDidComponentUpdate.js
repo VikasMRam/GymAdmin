@@ -20,7 +20,7 @@ export default function whyDidComponentUpdate(componentName) {
       const label = `Component ${componentName} did update`;
       console.group(label);
       unequalProps.forEach((prop) => {
-        console.group(prop)
+        console.group(prop);
         console.info(a[prop]);
         console.info(b[prop]);
         console.groupEnd(prop);

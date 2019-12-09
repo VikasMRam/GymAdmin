@@ -489,7 +489,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           onSuccess={hideModal}
           client={client}
         />
-      ), null, 'noPadding', false
+      ), null, 'noPadding', false,
     );
   };
 

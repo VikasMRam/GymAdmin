@@ -39,9 +39,10 @@ const mockWrap = (props = {}, state = {}) => {
   storeInstance.replaceReducer(reducer);
   const wrapper = shallow(
     <AuthContainer {...props} />,
-    { context: { store: storeInstance, api: { getUser: jest.fn().mockReturnValue({
-      type: 'apicall'
-    }) } } },
+    { context: { store: storeInstance,
+      api: { getUser: jest.fn().mockReturnValue({
+        type: 'apicall',
+      }) } } },
   );
   wrapper.store = storeInstance;
   return wrapper;

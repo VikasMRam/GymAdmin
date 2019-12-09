@@ -1,7 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Block } from 'sly/components/atoms/index';
+
 import EbookForm from './index';
+
+import { Block } from 'sly/components/atoms/index';
 
 const error = 'Required field';
 

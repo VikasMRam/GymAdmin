@@ -40,6 +40,6 @@ describe('MeetOthersTile', () => {
     const descElem = wrapper.find(Block);
 
     expect(descElem).toHaveLength(1);
-    expect(descElem.dive().text()).toBe(description);
+    expect(descElem.text()).toBe(description);
   });
 });

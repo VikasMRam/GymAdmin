@@ -6,7 +6,7 @@ import Link, { Anchor } from 'sly/components/atoms/Link';
 import { addEventToUrl } from 'sly/services/helpers/queryParamEvents';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 
-const history = new BrowserRouter().history;
+const { history } = new BrowserRouter();
 const context = { routes: [{ path: '/test', component: () => null }] };
 const childContextTypes = {
   routes: routesPropType,

@@ -29,6 +29,7 @@ describe('DiscoverHomeTile', () => {
     });
     expect(wrapper.find(StyledHeading)).toHaveLength(1);
     expect(wrapper.find(StyledHeading).dive().dive().dive()
+      .render()
       .text()).toBe(title);
   });
 
@@ -37,7 +38,7 @@ describe('DiscoverHomeTile', () => {
       image, title, description, buttonText, onButtonClick,
     });
     expect(wrapper.find(Block)).toHaveLength(1);
-    expect(wrapper.find(Block).dive().text()).toBe(description);
+    expect(wrapper.find(Block).dive().render().text()).toBe(description);
   });
 
   it('renders buttonText', () => {
@@ -45,7 +46,8 @@ describe('DiscoverHomeTile', () => {
       image, title, description, buttonText, onButtonClick,
     });
     expect(wrapper.find(Button)).toHaveLength(1);
-    expect(wrapper.find(Button).dive().dive().text()).toBe(buttonText);
+    expect(wrapper.find(Button).dive().dive().render()
+      .text()).toBe(buttonText);
   });
 
   it('onButtonClick fires', () => {

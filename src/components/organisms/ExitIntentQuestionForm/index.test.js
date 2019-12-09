@@ -16,6 +16,7 @@ describe('ExitIntentQuestionForm', () => {
 
     expect(wrapper.find('StyledHeading').dive().dive().dive()
       .dive()
+      .render()
       .text()).toContain(title);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
@@ -29,6 +30,7 @@ describe('ExitIntentQuestionForm', () => {
 
     expect(wrapper.find('StyledHeading').dive().dive().dive()
       .dive()
+      .render()
       .text()).toContain(title);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
