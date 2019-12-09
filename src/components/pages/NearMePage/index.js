@@ -220,7 +220,7 @@ const NearMePage = ({
           <Paragraph>
             Assisted living near you can be defined as 24-hour non-medical care delivered in a residential setting.
             Previously  known as{' '}
-            <Link href="https://www.medicare.gov/nursinghomecompare/Resources/Nursing-Home-Alternatives.html" target="_blank" rel="noopener">
+            <Link href="https://www.seniorly.com/nursing-homes">
               nursing homes
             </Link>
             , the properties and amenities have improved immensely over the years
@@ -761,6 +761,13 @@ const NearMePage = ({
         <StyledHeading level="title" size="title">
           {listSize} {tocLabel} near {city}
         </StyledHeading>
+        <StyledArticle>
+          <Paragraph>
+            Seniorly promises to make your search for assisted living near you easy and stress-free. In 2019, the
+            national average monthly cost has been $4,051 for an assisted living facility. Below, compare assisted
+            living communities near you and then let us connect you to your local senior living expert.
+            They can answer all your questions, share costs, arrange tours, and even negotiate rent. Our services are free.
+          </Paragraph>
         {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
         {!isFetchingResults && (
           <CommunitySearchList
