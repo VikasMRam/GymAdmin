@@ -137,7 +137,7 @@ const CommunitySummary = ({
   const careTypes = getCareTypes(state, typeCare, communitySize);
 
   return (
-    <Box innerRef={innerRef} className={className}>
+    <Box ref={innerRef} className={className}>
       <StyledHeading level="hero" size="title">
         {name}
         {isAdmin &&
