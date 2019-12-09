@@ -7,7 +7,7 @@ const LoadablePlugin = require('@loadable/webpack-plugin');
 const UglifyJs = require('uglify-es');
 const cssmin = require('cssmin');
 const nodeExternals = require('webpack-node-externals');
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const SpawnPlugin = require('webpack-spawn-plugin');
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 const webpack = require('webpack');
@@ -25,6 +25,7 @@ const {
   devServer,
   when,
   setDevTool,
+  optimization,
 } = require('webpack-blocks');
 
 // defaults to dev env, otherwise specify with env vars
@@ -298,14 +299,23 @@ const client = (target, entries) => {
 
     entryPoint(entries),
 
-    // when(false, [
-    //   addPlugins([
-    //     new BundleAnalyzerPlugin({
-    //       openAnalyzer: true,
-    //       analyzerPort: 0,
-    //     }),
-    //   ]),
-    // ]),
+    when(isWeb, [
+      optimization({
+        // concatenateModules: false,
+        splitChunks: {
+          chunks: 'all',
+        },
+      }),
+    ]),
+
+    when(false && isWeb, [
+      addPlugins([
+        new BundleAnalyzerPlugin({
+          openAnalyzer: true,
+          analyzerPort: 0,
+        }),
+      ]),
+    ]),
 
     // eslint-disable-next-line no-prototype-builtins
     when(entries.hasOwnProperty('external'), [externalWidget]),
