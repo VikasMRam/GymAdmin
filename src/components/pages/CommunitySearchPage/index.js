@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 import loadable from '@loadable/component';
+import { ifProp } from 'styled-tools';
 
 import { size, palette, assetPath } from 'sly/components/themes';
 import { titleize } from 'sly/services/helpers/strings';
@@ -16,7 +17,6 @@ import IconButton from 'sly/components/molecules/IconButton';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import pad from 'sly/components/helpers/pad';
-import { ifProp } from 'styled-tools';
 import ResponsiveSidebar from 'sly/components/molecules/ResponsiveSidebar';
 
 const SearchMap = loadable(() => import(/* webpackChunkName: "chunkSearchMap" */'sly/components/organisms/SearchMap'));
@@ -107,7 +107,7 @@ const ApplyFilterButton = styled(Button)`
   margin-top: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none !important;
+    display: none!important;
   }
 `;
 

@@ -15,7 +15,6 @@ import {
   filterLinkPath,
   getFiltersApplied,
 } from 'sly/services/helpers/search';
-
 import { withRedirectTo } from 'sly/services/redirectTo';
 import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
 
