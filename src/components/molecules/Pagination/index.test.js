@@ -37,7 +37,7 @@ describe('Pagination', () => {
   it('should render next button but not prev', () => {
     const wrapper = wrap({ ...small, current: 0 });
     const nextButton = wrapper.childAt(5);
-    const nextIcon = nextButton.dive().dive().find(Icon);
+    const nextIcon = nextButton.dive().dive().dive().dive().dive().find('Icon');
     expect(nextIcon.prop('rotate')).toEqual(-1);
     expect(nextButton.prop('to')).toEqual('/test?page-number=1');
   });
@@ -45,7 +45,7 @@ describe('Pagination', () => {
   it('should render prev button but not next', () => {
     const wrapper = wrap({ ...small, current: 4 });
     const prevButton = wrapper.childAt(0);
-    const prevIcon = prevButton.dive().dive().find(Icon);
+    const prevIcon = prevButton.dive().dive().dive().dive().dive().find('Icon');
     expect(prevIcon.prop('rotate')).toEqual(1);
     expect(prevButton.prop('to')).toEqual('/test?page-number=3');
   });
@@ -55,13 +55,12 @@ describe('Pagination', () => {
     expect(wrapper.children()).toHaveLength(7);
 
     const prevButton = wrapper.childAt(0);
-    const prevIcon = prevButton.dive().dive().find(Icon);
+    const prevIcon = prevButton.dive().dive().dive().dive().dive().find('Icon');
     expect(prevIcon.prop('rotate')).toEqual(1);
     expect(prevButton.prop('to')).toEqual('/test?page-number=2');
 
-
     const nextButton = wrapper.childAt(6);
-    const nextIcon = nextButton.dive().dive().find(Icon);
+    const nextIcon = nextButton.dive().dive().dive().dive().dive().find('Icon');
     expect(nextIcon.prop('rotate')).toEqual(-1);
     expect(nextButton.prop('to')).toEqual('/test?page-number=4');
   });

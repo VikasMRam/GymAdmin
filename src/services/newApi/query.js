@@ -44,7 +44,7 @@ export default function query(propName, apiCall) {
       }
     }
 
-    hoistNonReactStatic(Wrapper, InnerComponent);
+    // hoistNonReactStatic(Wrapper, InnerComponent);
 
     return Wrapper;
   };

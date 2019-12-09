@@ -115,7 +115,7 @@ export default function withUser(InnerComponent) {
     }
   }
 
-  hoistNonReactStatic(Wrapper, InnerComponent);
+  // hoistNonReactStatic(Wrapper, InnerComponent);
 
   return Wrapper;
 }

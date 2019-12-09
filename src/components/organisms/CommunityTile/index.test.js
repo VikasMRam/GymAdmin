@@ -23,7 +23,7 @@ describe('CommunityTile', () => {
 
   it('renders note', () => {
     const wrapper = wrap({ note });
-    expect(wrapper.find('Span').dive().text()).toContain(note);
+    expect(wrapper.find('Span').dive().render().text()).toContain(note);
   });
 
   it('onEditNoteClick gets called', () => {
@@ -57,7 +57,7 @@ describe('CommunityTile', () => {
     expect(wrapper.find('PaddedCommunityInfo')).toHaveLength(1);
     actionButtons.forEach((actionButton, i) => {
       expect(wrapper.find('FullWidthButton').at(i).dive().dive()
-        .dive()
+        .dive().render()
         .text()).toBe(actionButton.text);
       wrapper.find('FullWidthButton').at(i).simulate('click');
       expect(actionButton.onClick).toHaveBeenCalled();

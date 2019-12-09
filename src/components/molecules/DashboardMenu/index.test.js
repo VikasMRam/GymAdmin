@@ -22,7 +22,7 @@ describe('DashboardMenu', () => {
 
   it('renders DashboardMenu', () => {
     const wrapper = wrap({ menuItems });
-    const menuItemComponents = wrapper.find('MenuItem');
+    const menuItemComponents = wrapper.find('MenuItemIcon');
     expect(menuItemComponents).toHaveLength(menuItems.length);
   });
 
@@ -41,7 +41,7 @@ describe('DashboardMenu', () => {
     const menuItemOnClick = jest.fn();
     newMenuItems[index].onClick = menuItemOnClick;
     const wrapper = wrap({ menuItems: newMenuItems });
-    const menuItemComponents = wrapper.find('MenuItem');
+    const menuItemComponents = wrapper.find('ActiveMenuItem');
     menuItemComponents.at(index).simulate('click');
     expect(menuItemOnClick).toHaveBeenCalled();
   });

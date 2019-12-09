@@ -33,8 +33,7 @@ describe('CommunityExtraInfoSection', () => {
     expect(section.prop('title')).toBe(title);
     expect(section.contains(description)).toBe(true);
     expect(section.find('StyledLink').prop('href')).toBe(url);
-    expect(section.find('StyledLink').dive().dive().dive()
-      .text()).toBe(urlText);
+    expect(section.find('StyledLink').render().text()).toBe(urlText);
   });
 
   it('renders without url', () => {
