@@ -44,6 +44,8 @@ export default function query(propName, apiCall) {
       }
     }
 
+    // FIXME: hack because hoist... loses contextTypes
+    Wrapper.typeHydrationId = InnerComponent.typeHydrationId;
     // hoistNonReactStatic(Wrapper, InnerComponent);
 
     return Wrapper;
