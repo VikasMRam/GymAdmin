@@ -15,7 +15,6 @@ import {
   filterLinkPath,
   getFiltersApplied,
 } from 'sly/services/helpers/search';
-
 import { withRedirectTo } from 'sly/services/redirectTo';
 import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
 
@@ -29,17 +28,17 @@ const StyledLink = pad(styled(Link)`
 `, 'regular');
 
 const generateRadioLink = (elem, type, path, selected, nofollow) => {
-    return (
-      <StyledLink
-        to={path}
-        id={`${type}-${elem.value}`}
-        key={`${type}-${elem.value}`}
-        selected={selected}
-        rel={nofollow && "nofollow"}
-      >
-        <Radio checked={selected} />{elem.label}
-      </StyledLink>
-    );
+  return (
+    <StyledLink
+      to={path}
+      id={`${type}-${elem.value}`}
+      key={`${type}-${elem.value}`}
+      selected={selected}
+      rel={nofollow && 'nofollow'}
+    >
+      <Radio checked={selected} />{elem.label}
+    </StyledLink>
+  );
 };
 
 export const ClearAllButton = styled(Button)`
@@ -108,12 +107,12 @@ const CommunityFilterList = ({
       </CollapsibleSection>
       { geoGuideList && geoGuideList.length > 0 &&
         <CollapsibleSection size="small" title="Guides" borderless>
-          {geoGuideList.map((elem) => <StyledLink href={elem.to} key={elem.to} >{elem.title}</StyledLink>)}
+          {geoGuideList.map(elem => <StyledLink href={elem.to} key={elem.to} >{elem.title}</StyledLink>)}
         </CollapsibleSection>
       }
       {filtersApplied.length > 0 && (
         <ClearAllButton
-          onClick={(e) => redirectTo(generateFilterLinkPath({ origUiEvt: e, paramsToRemove: filtersApplied }))}
+          onClick={e => redirectTo(generateFilterLinkPath({ origUiEvt: e, paramsToRemove: filtersApplied }))}
           transparent
         >
           Clear all filters

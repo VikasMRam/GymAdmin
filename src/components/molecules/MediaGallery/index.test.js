@@ -44,7 +44,6 @@ describe.skip('MediaGallery', () => {
     const wrapper = wrap({
       images: galleryImages, videos: galleryVideos, ariaHideApp: false, onClose, onSlideChange,
     });
-    console.log(wrapper.debug());
     expect(wrapper.find('Image')).toHaveLength(galleryImages.length);
     expect(wrapper.find('video')).toHaveLength(galleryVideos.length);
     expect(wrapper.find(ThumbnailScroller)).toHaveLength(0);

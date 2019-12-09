@@ -95,7 +95,8 @@ describe('AgentTile', () => {
 
     expect(wrapper.find('IconItem').last().dive().dive()
       .find('Block')
-      .dive().render()
+      .dive()
+      .render()
       .text()).toEqual(`${LindaIwamota.address.city}, ${LindaIwamota.address.state}`);
   });
 });

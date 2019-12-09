@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import GetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
 import CommunityActions from 'sly/components/molecules/CommunityActions';
 
 jest.mock('sly/containers/AskAgentQuestionContainer');
@@ -22,7 +21,7 @@ describe('CommunityActions', () => {
     expect(
       wrapper
         .dive()
-        .prop('children')
+        .prop('children'),
     ).toContain('Pricing requested');
   });
 

@@ -19,7 +19,7 @@ describe('CommunityInfo', () => {
         .at(0)
         .find('Info')
         .render()
-        .text()
+        .text(),
     ).toContain(expectedAddress);
     RhodaGoldmanPlaza.webViewInfo.firstLineValue.split(',').forEach((livingType) => {
       expect(
@@ -28,7 +28,7 @@ describe('CommunityInfo', () => {
           .at(1)
           .find('Info')
           .render()
-          .text()
+          .text(),
       ).toContain(livingType);
     });
     RhodaGoldmanPlaza.webViewInfo.secondLineValue.split(',').forEach((roomType) => {
@@ -38,7 +38,7 @@ describe('CommunityInfo', () => {
           .at(2)
           .find('Info')
           .render()
-          .text()
+          .text(),
       ).toContain(roomType);
     });
     expect(wrapper.find(NumberFormat).html()).toBe('$6,027/month');

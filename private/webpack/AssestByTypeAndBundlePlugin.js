@@ -6,7 +6,7 @@ const cloneDeep = require('lodash/cloneDeep');
 const getAssetsByType = (
   assets,
   type,
-  prependPath = ''
+  prependPath = '',
 ) => [].concat(assets)
   .filter(p => (new RegExp(`${type}$`).test(p)))
   .map(p => prependPath + p);

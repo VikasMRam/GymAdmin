@@ -57,7 +57,8 @@ describe('CommunityTile', () => {
     expect(wrapper.find('PaddedCommunityInfo')).toHaveLength(1);
     actionButtons.forEach((actionButton, i) => {
       expect(wrapper.find('FullWidthButton').at(i).dive().dive()
-        .dive().render()
+        .dive()
+        .render()
         .text()).toBe(actionButton.text);
       wrapper.find('FullWidthButton').at(i).simulate('click');
       expect(actionButton.onClick).toHaveBeenCalled();

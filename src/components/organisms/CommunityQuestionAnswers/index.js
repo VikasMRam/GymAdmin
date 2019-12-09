@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, arrayOf, func } from 'prop-types';
 
@@ -9,7 +9,7 @@ import cursor from 'sly/components/helpers/cursor';
 import { Hr, Block } from 'sly/components/atoms';
 import CommunityQuestion from 'sly/components/molecules/CommunityQuestion';
 import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
-import Button from "sly/components/atoms/Button";
+import Button from 'sly/components/atoms/Button';
 
 const AnswersDiv = pad(styled.div`
   margin-left: ${size('spacing.huge')};

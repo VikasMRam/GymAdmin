@@ -16,7 +16,8 @@ describe('CommunityAmenities', () => {
       community: noInfoCommunity,
     });
 
-    expect(wrapper.find('Paragraph').dive().dive().render().text()).toContain('No information about amenities currently available');
+    expect(wrapper.find('Paragraph').dive().dive().render()
+      .text()).toContain('No information about amenities currently available');
   });
 
   it('verify communityHighlights shown', () => {

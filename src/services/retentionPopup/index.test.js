@@ -32,7 +32,7 @@ const createContext = () => ({
 const wrap = (props = {}) => mount(
   <Provider store={store}>
     <RetentionPopup {...props} showModal={showModal} />
-  </Provider>, createContext()
+  </Provider>, createContext(),
 );
 
 const setReferrer = (referrer) => {

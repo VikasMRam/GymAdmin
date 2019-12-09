@@ -63,7 +63,7 @@ export const simpleQSObjectify = (qsAry) => {
 
 export const makeQuerystringFilters = (filterState, sectionFilters = {}, strict = false) => {
   const filters = filterState.filters.filter(filter => (
-           (!strict || (strict && filter.operator))
+    (!strict || (strict && filter.operator))
         && (!strict || ((strict && filter.value) || (strict && noValueOperators.includes(filter.operator))))
   ));
 

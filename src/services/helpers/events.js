@@ -1,6 +1,7 @@
 import ReactGA from 'react-ga';
 import { Cookies } from 'react-cookie';
 import { stringify } from 'query-string';
+
 import { isServer, isTest, gAnalyticsKey, eventServerUrl, isDev, gaEnv } from 'sly/config';
 
 const cookie = new Cookies();
@@ -11,13 +12,11 @@ export default class SlyEvent {
     if (this.seInstance === null) {
       this.seInstance = new SlyEvent();
       if (!isTest) {
-
         ReactGA.initialize(gAnalyticsKey);
-        let ga = ReactGA.ga();
+        const ga = ReactGA.ga();
         ga('require', 'displayfeatures');
-        ga('set', 'dimension1',cookie.get('sly_uuid'));
-        ga('set', 'dimension3',gaEnv);
-
+        ga('set', 'dimension1', cookie.get('sly_uuid'));
+        ga('set', 'dimension3', gaEnv);
       }
     }
     return this.seInstance;
@@ -28,7 +27,7 @@ export default class SlyEvent {
   sid = cookie.get('sly_sid');
   ga = null;
 
-  sendPageView(path, search='') {
+  sendPageView(path, search = '') {
     if (isServer) {
       return;
     }
@@ -93,7 +92,7 @@ export default class SlyEvent {
     } else {
       fetch(`${eventServerUrl}?${stringify(se)}`);
       ReactGA.event(gaEvent);
-      if (typeof window.dataLayer !== 'undefined'){
+      if (typeof window.dataLayer !== 'undefined') {
         window.dataLayer.push(gaEvent);
       }
     }

@@ -37,7 +37,7 @@ const StyledButton = styled(({ noPadding, padRight, ...props }) => <Button {...p
           margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
         }
       }
-    `
+    `,
   )};
 `;
 

@@ -43,7 +43,8 @@ describe('EntityReviews', () => {
 
   it('renders Reviews Value only when reviewsValue is passed', () => {
     const wrapper = wrap({ reviewsValue });
-    expect(wrapper.find('ReviewValueSection').childAt(1).dive().render().text()).toEqual(' 3.4');
+    expect(wrapper.find('ReviewValueSection').childAt(1).dive().render()
+      .text()).toEqual(' 3.4');
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(0);
     expect(wrapper.find(EntityReview)).toHaveLength(0);
   });

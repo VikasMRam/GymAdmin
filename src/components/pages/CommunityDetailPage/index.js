@@ -171,7 +171,7 @@ const makeBanner = (profileContacted) => {
       }
       return acc;
     },
-    []
+    [],
   );
 
   if (!requests.length) {
@@ -183,7 +183,7 @@ const makeBanner = (profileContacted) => {
   }
 
   return `We have your ${requests.join(
-    ''
+    '',
   )} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
 };
 
@@ -240,7 +240,7 @@ export default class CommunityDetailPage extends Component {
 
     const typeOfCare = typeCares[0];
     const hasCCRC = typeCares.includes(
-      'Continuing Care Retirement Community(CCRC)'
+      'Continuing Care Retirement Community(CCRC)',
     );
 
     // TODO: mock as USA until country becomes available

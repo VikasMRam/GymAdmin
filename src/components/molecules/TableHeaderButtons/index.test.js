@@ -12,7 +12,7 @@ const wrap = (props = {}) => shallow(
         {...props}
       />
     )}
-  </Datatable>
+  </Datatable>,
 );
 
 // FIXME: rewrite test

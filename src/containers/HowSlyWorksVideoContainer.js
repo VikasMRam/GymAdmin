@@ -40,7 +40,7 @@ export default class HowSlyWorksVideoContainer extends Component {
             'howSlyWorksVideo',
             e.target.ended ? 'complete' : 'pause',
             eventLabel,
-            e.target.currentTime
+            e.target.currentTime,
           )
         }
         onPlay={e =>
@@ -48,7 +48,7 @@ export default class HowSlyWorksVideoContainer extends Component {
             'howSlyWorksVideo',
             'play',
             eventLabel,
-            e.target.currentTime
+            e.target.currentTime,
           )
         }
       />

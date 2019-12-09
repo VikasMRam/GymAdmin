@@ -31,7 +31,7 @@ const Map = compose(
     mapElement: <div style={{ height: '100%' }} />,
   }),
   withScriptjs,
-  withGoogleMap
+  withGoogleMap,
 )(
   ({
     defaultZoom,
@@ -65,7 +65,7 @@ const Map = compose(
         {children}
       </GoogleMap>
     );
-  }
+  },
 );
 
 export default Map;

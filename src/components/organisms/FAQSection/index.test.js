@@ -13,11 +13,13 @@ describe('FAQSection', () => {
 
     const cs = wrapper.find('StyledBox').find('FirstCollapsibleSection').at(0);
     expect(cs.prop('title')).toBe(firstFaq.title);
-    expect(cs.dive().find('Block').dive().render().text()).toBe(firstFaq.description);
+    expect(cs.dive().find('Block').dive().render()
+      .text()).toBe(firstFaq.description);
     restFaqs.forEach((faq, i) => {
       const cs = wrapper.find('StyledCollapsibleSection').at(i);
       expect(cs.prop('title')).toBe(faq.title);
-      expect(cs.dive().find('Block').dive().render().text()).toBe(faq.description);
+      expect(cs.dive().find('Block').dive().render()
+        .text()).toBe(faq.description);
     });
   });
 
@@ -26,6 +28,7 @@ describe('FAQSection', () => {
 
     const cs = wrapper.find('StyledBox').find('OneCollapsibleSection');
     expect(cs.prop('title')).toBe(partnerFAQs[0].title);
-    expect(cs.dive().find('Block').dive().render().text()).toBe(partnerFAQs[0].description);
+    expect(cs.dive().find('Block').dive().render()
+      .text()).toBe(partnerFAQs[0].description);
   });
 });

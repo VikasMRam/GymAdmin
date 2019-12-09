@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Button } from 'sly/components/atoms';
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 
 const wrap = (props = {}) => shallow(<MultipleChoice {...props} />);

@@ -52,7 +52,7 @@ function ConciergeContainer({
 }
 ConciergeContainer.typeHydrationId = 'ConciergeContainer';
 ConciergeContainer.propTypes = {
-  community: object.isRequired
+  community: object.isRequired,
 };
 
 const withCommunity = prefetch('community', 'getCommunity', (req, { match }) => req({
