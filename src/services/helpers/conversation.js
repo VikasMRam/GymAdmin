@@ -1,4 +1,5 @@
 import { CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION } from 'sly/constants/conversations';
+import { titleize } from 'sly/services/helpers/strings';
 
 export const getConversationName = (conversation, user) => {
   const { conversationParticipants } = conversation;
@@ -8,9 +9,12 @@ export const getConversationName = (conversation, user) => {
     .filter(conversationParticipant => conversationParticipant.participantType !== CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION)
     .reduce((accumulator, conversationParticipant) => {
       const { participantInfo } = conversationParticipant;
-      const { name } = participantInfo;
-      if (name !== '' && accumulator.indexOf(name) === -1) {
-        accumulator.push(name);
+      const { name, roleName } = participantInfo;
+      if (name !== '' && roleName !== 'slyUser') {
+        const result = `[${titleize(roleName)}]: ${name}`;
+        if (accumulator.indexOf(name) === -1) {
+          accumulator.push(result);
+        }
       }
       return accumulator;
     }, []);
