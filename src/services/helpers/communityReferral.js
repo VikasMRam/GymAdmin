@@ -17,6 +17,17 @@ export const getIsCCRC = (community) => {
   return false;
 };
 
+export const getIsSNF = (community) => {
+  const { propInfo } = community;
+  if (propInfo) {
+    const { typeCare: typeCares } = propInfo;
+    if (typeCares) {
+      return typeCares.includes('Skilled Nursing Facility');
+    }
+  }
+  return false;
+};
+
 export const buildAddressDisplay = (community) => {
   const { address } = community;
   return `${address.line1}, ${address.city}, ${address.zip}, ${address.state}`;

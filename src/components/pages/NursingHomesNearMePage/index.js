@@ -3,7 +3,6 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 
-import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, assetPath, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
@@ -121,7 +120,7 @@ const NearMePage = ({
 
   const { geo } = requestMeta;
   const city = geo && geo.city;
-  const state = geo && geo.state && getStateAbbr(geo.state);
+  const state = geo && geo.state;
   const tocLabel = getTocSeoLabel('nursing-homes');
 
   const topRef = React.createRef();

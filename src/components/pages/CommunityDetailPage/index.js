@@ -243,6 +243,10 @@ export default class CommunityDetailPage extends Component {
       'Continuing Care Retirement Community(CCRC)'
     );
 
+    const hasSNF = typeCares.includes(
+      'Skilled Nursing Facility'
+    );
+
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
 
@@ -378,7 +382,17 @@ export default class CommunityDetailPage extends Component {
                       </GetCustomPricingButtonContainer>
                     </>
                   )}
-                  {!hasCCRC && (
+                  {!hasCCRC && hasSNF && (
+                    <>
+                      <Paragraph>
+                        90% of Skilled Nursing Facilities in the United States are Medicare-certified. Some also accept Medicaid. To learn about pricing at {name}, click the button below.
+                      </Paragraph>
+                      <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested}>
+                        Get Pricing
+                      </GetCustomPricingButtonContainer>
+                    </>
+                  )}
+                  {!hasCCRC && !hasSNF && (
                     <CommunityPricingTable
                       name={name}
                       pricesList={pricesList}
