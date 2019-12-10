@@ -329,6 +329,7 @@ export default class ReferralSearchContainer extends Component {
                   isAdminUser={isAdminUser}
                   childrenClients={communityReferralClients}
                   childrenClientCommunityIdsMap={childrenClientCommunityIdsMap}
+                  communitiesInterestedIdsMap={communitiesInterestedIdsMap}
                   handleCommunitySearch={this.doCommunitySearch}
                   handleLocationSearch={this.handleLocationCommunitySearch}
                   preferredLocation={locationInfo}
@@ -337,9 +338,10 @@ export default class ReferralSearchContainer extends Component {
                 <WizardStep
                   component={DashboardCommunityReferralContactDetailsContainer}
                   onSubmit={onSubmit}
-                  onChangeCommunity={previous}
+                  onChangeCommunity={() => goto('DashboardCommunityReferralSearch')}
                   name="DashboardCommunityReferralContactDetailsContainer"
                   community={selectedCommunity}
+                  communitiesInterestedIdsMap={communitiesInterestedIdsMap}
                   initialValues={contactFormInitialValues}
                   isAdminUser={isAdminUser}
                 />
@@ -393,7 +395,7 @@ export default class ReferralSearchContainer extends Component {
               <WizardStep
                 component={DashboardAgentReferralContactDetailsContainer}
                 onSubmit={onSubmit}
-                onChangeAgent={previous}
+                onChangeAgent={() => goto('DashboardAgentReferralSearch')}
                 name="DashboardAgentReferralContactDetailsContainer"
                 agent={selectedAgent}
                 initialValues={contactFormInitialValues}
