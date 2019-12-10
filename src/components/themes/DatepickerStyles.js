@@ -6,7 +6,7 @@ try {
   css = require('!raw-loader!./react-datepicker.css');
 } catch (e) {
   // eslint-disable-next-line no-console
-  console.error('datepicker CSS file not found: ', e);
+  console.error(`datepicker CSS file not found: ${e.message} ${e.stack}`);
 }
 
 export default createGlobalStyle`${css}`;
