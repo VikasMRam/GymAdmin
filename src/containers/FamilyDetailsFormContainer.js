@@ -9,7 +9,6 @@ import { required, createValidator, email, usPhone, dependentRequired } from 'sl
 import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
 import { USER_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import { FAMILY_STAGE_WON } from 'sly/constants/familyDetails';
 import { query, getRelationship } from 'sly/services/newApi';
 import SlyEvent from 'sly/services/helpers/events';
 import { validateAM } from 'sly/services/helpers/client';
@@ -189,7 +188,7 @@ export default class FamilyDetailsFormContainer extends Component {
 
   render() {
     const { client, formData, ...props } = this.props;
-    const { stage, clientInfo, uuidAux, tags: modelTags } = client;
+    const { clientInfo, uuidAux, tags: modelTags } = client;
     const tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
     const {
       name, email, slyMessage, phoneNumber = '', additionalMetadata, slyAgentMessage,
@@ -243,12 +242,12 @@ export default class FamilyDetailsFormContainer extends Component {
       slyCommunityMessage,
       contactPreferences: ['sms', 'email'],
     };
+
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}
         initialValues={initialValues}
         preferredLocation={preferredLocation}
-        isWon={stage === FAMILY_STAGE_WON}
         client={client}
         {...props}
       />

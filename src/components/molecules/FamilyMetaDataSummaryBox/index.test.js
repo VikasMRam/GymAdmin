@@ -3,21 +3,22 @@ import { shallow } from 'enzyme';
 import dayjs from 'dayjs';
 
 import { priceFormatter } from 'sly/services/helpers/pricing';
-import FamilyWonDetailsSummaryBox from 'sly/components/molecules/FamilyWonDetailsSummaryBox';
+import FamilyMetaDataSummaryBox from 'sly/components/molecules/FamilyMetaDataSummaryBox';
+import { FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST } from 'sly/constants/familyDetails';
 import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
 
 const defaultProps = {
   client: PraneshKumar,
 };
-const wrap = (props = {}) => shallow(<FamilyWonDetailsSummaryBox {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<FamilyMetaDataSummaryBox {...defaultProps} {...props} />);
 
-describe('FamilyWonDetailsSummaryBox', () => {
+describe('FamilyMetaDataSummaryBox', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();
   });
 
-  it('renders', () => {
+  it('renders with Won stage', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('ValueColumn').at(0).contains(dayjs(PraneshKumar.clientInfo.moveInDate).format('MM/DD/YYYY'))).toBeTruthy();
@@ -33,6 +34,38 @@ describe('FamilyWonDetailsSummaryBox', () => {
     expect(wrapper.find('ValueColumn').at(6).contains(priceFormatter(PraneshKumar.clientInfo.invoiceAmount))).toBeTruthy();
     expect(wrapper.find('ValueColumn').at(7).contains(PraneshKumar.clientInfo.invoiceNumber)).toBeTruthy();
     expect(wrapper.find('ValueColumn').at(8).contains(PraneshKumar.clientInfo.invoicePaid ? 'Yes' : 'No')).toBeTruthy();
+  });
+
+  it('renders with Rejected stage', () => {
+    const newClient = { ...PraneshKumar };
+    newClient.stage = FAMILY_STAGE_REJECTED;
+    newClient.clientInfo = {
+      ...newClient.clientInfo,
+      rejectReason: 'test',
+      otherText: 'test',
+    };
+    const wrapper = wrap({
+      client: newClient,
+    });
+
+    expect(wrapper.find('ValueColumn').at(0).contains(newClient.clientInfo.rejectReason)).toBeTruthy();
+    expect(wrapper.find('ValueColumn').at(1).contains(newClient.clientInfo.otherText)).toBeTruthy();
+  });
+
+  it('renders with Closed stage', () => {
+    const newClient = { ...PraneshKumar };
+    newClient.stage = FAMILY_STAGE_LOST;
+    newClient.clientInfo = {
+      ...newClient.clientInfo,
+      lossReason: 'test',
+      otherText: 'test',
+    };
+    const wrapper = wrap({
+      client: newClient,
+    });
+
+    expect(wrapper.find('ValueColumn').at(0).contains(newClient.clientInfo.lossReason)).toBeTruthy();
+    expect(wrapper.find('ValueColumn').at(1).contains(newClient.clientInfo.otherText)).toBeTruthy();
   });
 
   it('onEditClick is called', () => {

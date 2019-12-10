@@ -12,11 +12,13 @@ import textAlign from 'sly/components/helpers/textAlign';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import Role from 'sly/components/common/Role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
-import { SOURCE_OPTIONS } from 'sly/constants/familyDetails';
+import { SOURCE_OPTIONS, FAMILY_STAGE_WON, FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST } from 'sly/constants/familyDetails';
 import { Block, Button, Label } from 'sly/components/atoms';
-import FamilyWonDetailsSummaryBox from 'sly/components/molecules/FamilyWonDetailsSummaryBox';
+import FamilyMetaDataSummaryBox from 'sly/components/molecules/FamilyMetaDataSummaryBox';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
+
+const showSummaryStages = [FAMILY_STAGE_WON, FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST];
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -92,7 +94,7 @@ const FormBottomSection = styled.div`
 
 const FormSectionHeading = pad(Block, 'large');
 
-const StyledFamilyWonDetailsSummaryBox = pad(styled(FamilyWonDetailsSummaryBox)`
+const StyledFamilyMetaDataSummaryBox = pad(styled(FamilyMetaDataSummaryBox)`
   flex: 1;
 `);
 
@@ -159,8 +161,9 @@ class FamilyDetailsForm extends Component {
     const {
       handleSubmit, submitting, invalid, accepted, initialValues, lookingFor, isAgentUser,
       gender, timeToMove, monthlyBudget, roomTypes, communityTypes, careLevels, canEditFamilyDetails, assignedTos,
-      isWon, client, onEditWonDetailsClick,
+      client, onEditWonDetailsClick,
     } = this.props;
+    const { stage } = client;
     let { preferredLocation } = this.props;
     if (initialValues && !preferredLocation) {
       ({ preferredLocation } = initialValues);
@@ -182,6 +185,7 @@ class FamilyDetailsForm extends Component {
     const tagColumn = { typeInfo: { api: '/v0/platform/tags?filter[name]=' }, value: 'tag.name' };
     const medicaidOptions = [{ label: '', value: true }];
     const sourceOptions = SOURCE_OPTIONS.map(s => <option key={s} value={s}>{s}</option>);
+    const showSummary = showSummaryStages.includes(stage);
 
     return (
       <div>
@@ -195,10 +199,10 @@ class FamilyDetailsForm extends Component {
             <Role is={PLATFORM_ADMIN_ROLE}>
               <FormSection>
                 <FormSectionHeading weight="medium">Metadata</FormSectionHeading>
-                {isWon &&
+                {showSummary &&
                   <TwoColumnWrapper>
-                    <StyledLabel>Won Details</StyledLabel>
-                    <StyledFamilyWonDetailsSummaryBox client={client} onEditClick={onEditWonDetailsClick} />
+                    <StyledLabel>{stage} Details</StyledLabel>
+                    <StyledFamilyMetaDataSummaryBox client={client} onEditClick={onEditWonDetailsClick} />
                   </TwoColumnWrapper>
                 }
                 <Field
