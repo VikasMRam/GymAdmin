@@ -46,6 +46,7 @@
       "enzyme-to-json/serializer"
     ],
     "moduleNameMapper": {
+      "^!raw-loader": "<rootDir>/private/jest/fileMock.js",
       "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/private/jest/fileMock.js",
       "^sly[/](components|containers)$": "<rootDir>/private/jest/componentsMock.js",
       "^sly[/](.*)$": "<rootDir>/src/$1",

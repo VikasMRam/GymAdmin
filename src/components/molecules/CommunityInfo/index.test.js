@@ -40,7 +40,7 @@ describe('CommunityInfo', () => {
           .text(),
       ).toContain(roomType);
     });
-    expect(wrapper.find('Rate').html()).toBe('$6,027/month');
+    expect(wrapper.find('Rate').text()).toBe('$6,027/month');
     expect(wrapper.find('TopWrapper').html()).toContain(formatRating(RhodaGoldmanPlaza.propRatings.reviewsValue));
   });
 
@@ -52,7 +52,7 @@ describe('CommunityInfo', () => {
   it('renders with estimated price', () => {
     const wrapper = wrap({ community: { ...RhodaGoldmanPlaza, estimated: true } });
 
-    expect(wrapper.find('Rate').html()).toBe('Estimated $6,027/month');
+    expect(wrapper.find('Rate').text()).toBe('Estimated $6,027/month');
   });
 
   it('renders without reviews', () => {
