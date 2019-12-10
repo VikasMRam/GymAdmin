@@ -81,7 +81,6 @@ const StyledTable = styled.table`
   border-collapse: collapse;
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   td, th {
-    white-space: nowrap;
     padding: ${size('spacing.regular')};
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   };
