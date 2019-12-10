@@ -302,7 +302,6 @@ const client = (target, entries) => {
     when(isWeb, [
       optimization({
         // concatenateModules: false,
-        usedExports: true,
         splitChunks: {
           chunks: 'all',
         },
