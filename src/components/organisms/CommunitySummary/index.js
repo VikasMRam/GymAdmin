@@ -88,7 +88,7 @@ const getCareTypes = (state, careTypes, communitySize) => {
       extraCareTypes.forEach((extraCareType) => {
         const hasCareType = stateCareTypes[state].includes(extraCareType);
         const isResidentialCare = careType === ASSISTED_LIVING && residentialCareTypes.includes(extraCareType);
-        const isNotExists = !updatedCareTypes.find(data => data.careType === extraCareType);
+        const isNotExists = !updatedCareTypes.find(data => data.name === extraCareType);
 
         if (hasCareType && isNotExists) {
           if ((isResidentialCare && (rcStates.includes(state) || communitySize === SMALL_COMMUNITY)) || !isResidentialCare) {
