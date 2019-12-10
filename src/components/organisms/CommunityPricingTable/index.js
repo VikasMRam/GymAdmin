@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, object, func, string, number, bool } from 'prop-types';
-import NumberFormat from 'react-number-format';
 import ReactTooltip from 'react-tooltip';
 
 import { palette, size } from 'sly/components/themes';
 import { Block, Span, Icon, Paragraph } from 'sly/components/atoms';
 import { isServer } from 'sly/config';
+import { formatMoney } from 'sly/services/helpers/numbers';
 
-const StyledNumberFormat = styled(NumberFormat)`
+const StyledNumberFormat = styled.span`
   font-weight: ${p => size(p.weight)};
   color: ${p => palette(p.color, 'base')};
 `;
@@ -129,13 +129,13 @@ const CommunityPricingTable = ({
       {estimated &&
         <StyledBlockNp size="title">
           <StyledBlockSp size="body" palette="slate">The estimated monthly pricing for {name} ranges from</StyledBlockSp>
-          <StyledNumberFormat weight="weight.medium" color="secondary" value={from} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary" value={to} displayType="text" thousandSeparator prefix="$" /><Span weight="medium" size="title" palette="secondary"> per month*</Span>
+          <StyledNumberFormat weight="weight.medium" color="secondary">{formatMoney(from)}</StyledNumberFormat> <Span weight="medium" size="title" palette="secondary"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary" value={to} displayType="text" thousandSeparator prefix="$" /><Span weight="medium" size="title" palette="secondary"> per month*</Span>
         </StyledBlockNp>
       }
       {!estimated &&
         <StyledBlockNp size="title">
           <StyledBlockSp size="body" palette="slate">The estimated pricing for {name} starts around</StyledBlockSp>
-          <StyledNumberFormat weight="weight.medium" color="secondary" value={price} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> per month*</Span>
+          <StyledNumberFormat weight="weight.medium" color="secondary">{formatMoney(price)}</StyledNumberFormat> <Span weight="medium" size="title" palette="secondary"> per month*</Span>
         </StyledBlockNp>
       }
       {pricesList.length > 0 &&
@@ -153,7 +153,7 @@ const CommunityPricingTable = ({
               {pricesList.map((price) => {
               const { label, value } = price;
               return (
-                <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
+                <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate">{formatMoney(value)}</StyledNumberFormat></StyledTd></Tr>
               );
             })}
             </tbody>
@@ -182,7 +182,7 @@ const CommunityPricingTable = ({
               {estimatedPriceList.map((price) => {
               const { label, value } = price;
               return (
-                <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
+                <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate">{formatMoney(value)}</StyledNumberFormat></StyledTd></Tr>
               );
             })}
             </tbody>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { object, bool, func, string } from 'prop-types';
-import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
@@ -14,6 +13,7 @@ import PlusBadge from 'sly/components/molecules/PlusBadge';
 import { tocPaths } from 'sly/services/helpers/url';
 import stateCareTypes from 'sly/constants/stateCareTypes';
 import careTypesMap from 'sly/constants/careTypesMap';
+import { phoneFormatter } from 'sly/services/helpers/phone';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
@@ -176,11 +176,7 @@ const CommunitySummary = ({
         <div>
           For pricing and availability, call&nbsp;
           <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
-            <NumberFormat
-              value={conciergeNumber}
-              format="(###) ###-####"
-              displayType="text"
-            />
+            {phoneFormatter(conciergeNumber, true)}
           </Link>
           <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
           {isBrowser &&

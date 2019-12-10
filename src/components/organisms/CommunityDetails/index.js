@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import NumberFormat from 'react-number-format';
 
 import { size, palette } from 'sly/components/themes';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import { Link, Paragraph, Heading } from 'sly/components/atoms';
+import { phoneFormatter } from 'sly/services/helpers/phone';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
@@ -113,11 +113,7 @@ const CommunityDetails = ({
           The information above has not been verified or approved by the owner or operator.
           For exact details, connect to a local senior living expert in {city} by calling&nbsp;
           <Link href={`tel:${phone}`}>
-            <NumberFormat
-              value={phone}
-              format="(###) ###-####"
-              displayType="text"
-            />
+            {phoneFormatter(phone, true)}
           </Link>
           . There is no cost for this service. We are compensated by the community you select.
         </Paragraph>
