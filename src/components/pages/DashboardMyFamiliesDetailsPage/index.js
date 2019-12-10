@@ -692,9 +692,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           }
           <TabWrapper snap="top">
             {currentTab === SUMMARY && (
-              <>
-                <SmallScreenBorderPaddedFamilySummary client={client} isAgentUser={isAgentUser} to={familyDetailsPath} noHeading />
-              </>
+              <SmallScreenBorderPaddedFamilySummary client={client} isAgentUser={isAgentUser} to={familyDetailsPath} noHeading />
             )}
 
             {currentTab === ACTIVITY && (
@@ -731,6 +729,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   roomTypes={roomTypes}
                   communityTypes={communityTypes}
                   assignedTos={assignedTos}
+                  onEditWonDetailsClick={this.handleUpdateClick}
                 />
               </FamilyDetailsTab>
             )}
