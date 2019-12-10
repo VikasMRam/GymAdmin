@@ -1,4 +1,6 @@
-export default function whyDidComponentUpdate(componentName) {
+import React from 'react';
+
+function getDidComponentUpdate(componentName) {
   return function (a) {
     const b = this.props;
     const aProps = Object.keys(a);
@@ -26,6 +28,19 @@ export default function whyDidComponentUpdate(componentName) {
         console.groupEnd(prop);
       });
       console.groupEnd(label);
+    }
+  };
+}
+
+export default function whyDidComponentUpdate(Component) {
+  if (typeof Component === 'string') {
+    return getDidComponentUpdate(Component);
+  }
+
+  return class WDCU extends React.PureComponent {
+    componentDidUpdate = getDidComponentUpdate(Component.name);
+    render() {
+      return <Component {...this.props} />;
     }
   };
 }

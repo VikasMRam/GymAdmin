@@ -6,6 +6,7 @@ import { ifProp } from 'styled-tools';
 import { size, palette, assetPath } from 'sly/components/themes';
 import { titleize } from 'sly/services/helpers/strings';
 import { getHelmetForSearchPage } from 'sly/services/helpers/html_headers';
+import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
 import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
 import { Box, Heading, Image, Link } from 'sly/components/atoms';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
@@ -14,6 +15,8 @@ import { getTocSeoLabel } from 'sly/services/helpers/search';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
+import BreadCrumb from 'sly/components/molecules/BreadCrumb';
+
 
 /**
 * Order of appearance as in editor :
@@ -160,6 +163,7 @@ const StateSearchPage = ({
       >
         {!isMapView && (
           <>
+            <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
             <Heading level="hero" size="title">{listSize} {tocLabel} in {state}</Heading>
             {(gg.autoDescription) && <div dangerouslySetInnerHTML={{ __html: gg.autoDescription }} />}
           </>

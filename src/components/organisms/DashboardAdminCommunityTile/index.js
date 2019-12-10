@@ -8,7 +8,7 @@ import { buildPriceList } from 'sly/services/helpers/pricing';
 import { size, palette, columnWidth } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { Heading, Badge, Link, Block, Icon, Span } from 'sly/components/atoms';
-import { getHasContract, getIsCCRC } from 'sly/services/helpers/communityReferral';
+import { getHasContract, getIsCCRC, getIsSNF } from 'sly/services/helpers/communityReferral';
 import  IconBadge from 'sly/components/molecules/IconBadge';
 
 const Header = styled.div`
@@ -80,6 +80,7 @@ export default class DashboardAdminCommunityTile extends Component {
     const { community } = this.props;
     const hasContract = getHasContract(community);
     const hasCCRC = getIsCCRC(community);
+    const hasSNF = getIsSNF(community);
     const { url: communityUrl, propInfo } = community;
     const { communityPhone, lastViewedAt } = propInfo;
 
@@ -92,6 +93,7 @@ export default class DashboardAdminCommunityTile extends Component {
           {hasContract && <StyledIconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="HAS CONTRACT" /> }
           {!hasContract && <StyledIconBadge badgePalette="danger" palette="white" icon="checkmark-circle" text="NO CONTRACT" /> }
           {hasCCRC && <StyledIconBadge badgePalette="warning" palette="white" icon="checkmark-circle" text="CCRC" />}
+          {hasSNF && <StyledIconBadge badgePalette="warning" palette="white" icon="checkmark-circle" text="SNF" />}
           {lastViewedSecondsAgo > -1 && <StyledBadge textPalette="grey" ><Icon icon="note" size="small" /> Last Viewed: {lastViewedSecondsAgo} s ago</StyledBadge> }
         </Header>
         <CommunityInfoWrapper>

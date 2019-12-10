@@ -21,6 +21,7 @@ import { NOTE_COMMENTABLE_TYPE_CLIENT, NOTE_CTYPE_ACTIVITY } from 'sly/constants
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { createValidator, required, float } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
+import { selectFormData } from 'sly/services/helpers/forms';
 import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
 import SlyEvent from 'sly/services/helpers/events';
 
@@ -45,7 +46,7 @@ const ReduxForm = reduxForm({
 
 const mapStateToProps = (state, props) => ({
   uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
-  formState: state.form && state.form.UpdateFamilyStageForm ? state.form.UpdateFamilyStageForm.values : null,
+  formState: selectFormData(state, 'UpdateFamilyStageForm'),
 });
 
 @query('updateClient', 'updateClient')
@@ -117,7 +118,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
         moveInDateFormatted = parsedDate.format('MM/DD/YYYY');
       }
       let note = `${name} moved into ${communityName} on ${moveInDateFormatted} with a monthly rent of $${monthlyFees} and a referral fee of `;
-      note = referralAgreementType === 'flat-fee' ? `${note}${referralAgreement}% referral fee` : `${note}$${referralAgreement} flat fee`;
+      note = referralAgreementType === 'flat-fee' ? `${note}$${referralAgreement} flat fee` : `${note}${referralAgreement}% referral fee`;
 
       const title = 'Stage Change';
       if (stage === FAMILY_STAGE_LOST) {

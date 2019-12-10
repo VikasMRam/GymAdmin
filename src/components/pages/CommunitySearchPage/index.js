@@ -107,7 +107,7 @@ const ApplyFilterButton = styled(Button)`
   margin-top: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none !important;
+    display: none!important;
   }
 `;
 

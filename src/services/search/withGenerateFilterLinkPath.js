@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import queryString from 'query-string';
 import { object } from 'prop-types';
 
-import { filterLinkPath, getSearchParams } from 'sly/services/helpers/search';
+import { filterLinkPath } from 'sly/services/helpers/search';
 import { addEventToUrl } from 'sly/services/helpers/queryParamEvents';
 
 function getDisplayName(WrappedComponent) {

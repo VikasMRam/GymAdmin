@@ -40,12 +40,12 @@ export const tocPaths = (toc) => {
         };
       case 'Continuing Care Retirement Community(CCRC)':
         return {
-          path: 'continuing-care-retirement-community',
-          label: 'Continuing Care Retirement Community',
+          path: '/continuing-care-retirement-community',
+          label: 'Continuing Care Retirement Community(CCRC)',
         };
       case 'Skilled Nursing Facility':
         return {
-          path: 'skilled-nursing-facility',
+          path: '/skilled-nursing-facility',
           label: 'Skilled Nursing Facility',
         };
       default:
@@ -393,8 +393,10 @@ export const objectToURLQueryParams = (obj, options) => stringify(obj, options);
 export const parseURLQueryParams = obj => parse(obj);
 
 export const getStateAbbr = (state) => {
-  const st = titleize(state);
-  return stateAbbr[st];
+  if ( state ) {
+    const st = titleize(state);
+    return stateAbbr[st];
+  }
 };
 
 export const removeQueryParamFromURL = (key, sourceURL) => {

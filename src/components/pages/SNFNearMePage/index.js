@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 
 import { size, assetPath, palette } from 'sly/components/themes';
+
+import { getStateAbbr } from 'sly/services/helpers/url';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Image, Label, Heading, Paragraph } from 'sly/components/atoms';
@@ -110,6 +112,7 @@ const NearMePage = ({
 
   const { geo } = requestMeta;
   const city = geo && geo.city;
+  const state = geo && geo.state;
   const tocLabel = getTocSeoLabel('skilled-nursing-facility');
 
   const topRef = React.createRef();
@@ -204,7 +207,7 @@ const NearMePage = ({
                 href={`#${sectionIdMap.more}`}
                 onClick={e => handleAnchor(e, moreRef)}
               >
-                For More Information
+                More Information
               </Link>
             </li>
           </ul>
@@ -393,7 +396,7 @@ const NearMePage = ({
           </Paragraph>
           <Paragraph>
             More simply, <strong>rehab is intended for acute care,</strong> while <strong>skilled nursing is intended for subacute care.</strong>
-            It’s common for people who have been in an IRF to transfer to a skilled nursing facility if they no
+            {' '}It’s common for people who have been in an IRF to transfer to a skilled nursing facility if they no
             longer require acute care, but are not yet ready to return home.
           </Paragraph>
 
@@ -454,12 +457,12 @@ const NearMePage = ({
             </li>
             <li>
               <Paragraph>
-                What happens if a resident requires a more intensive level of care than you typically provide?
+                What happens if a senior resident requires a more intensive level of care than you typically provide?
               </Paragraph>
             </li>
             <li>
               <Paragraph>
-                Do residents have private for semi-private rooms?
+                Do senior residents have private for semi-private rooms?
               </Paragraph>
             </li>
             <li>
@@ -589,7 +592,7 @@ const NearMePage = ({
         <StyledArticle>
           <Paragraph innerRef={moreRef} />
           <StyledHeading level="title" size="title">
-            For More Information
+            More Information
           </StyledHeading>
           <Paragraph>
             If you have more questions about a skilled nursing facility or how to find a skilled nursing facility, Seniorly is here to help.
@@ -618,6 +621,7 @@ const NearMePage = ({
 
   const title = 'Find the Best Skilled Nursing Facility Near You';
   const description = 'Search skilled nursing facilities near you. Compare cost, medicare and medicaid options, property highlights and more.';
+  const heading = state ? `${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${tocLabel} near ${city}`;
 
   return (
     <>
@@ -630,7 +634,7 @@ const NearMePage = ({
         {SEOContentSNF()}
         <StyledArticle>
           <StyledHeading level="title" size="title">
-            {tocLabel} near {city}
+            {heading}
           </StyledHeading>
           {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
           {!isFetchingResults && (

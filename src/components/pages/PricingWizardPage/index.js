@@ -24,7 +24,7 @@ import {
   EXPLORE_AFFORDABLE_PRICING_OPTIONS,
 } from 'sly/constants/pricingForm';
 import { ABORT_WIZARD } from 'sly/constants/wizard';
-import { hasCCRC } from 'sly/services/helpers/community';
+import { hasCCRC, hasSNF } from 'sly/services/helpers/community';
 import { FAMILY_DASHBOARD_FAVORITES_PATH } from 'sly/constants/dashboardAppPaths';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
@@ -267,7 +267,7 @@ export default class PricingWizardPage extends Component {
                       name="WhatToDoNext"
                       communityName={name}
                       estimatedPrice={estimatedPrice}
-                      showEstimatePrice={!hasCCRC(community)}
+                      showEstimatePrice={!hasCCRC(community) && !hasSNF(community)}
                       listOptions={compiledWhatToDoNextOptions}
                       onInterestChange={(e, interest) => sendEvent('pricing-next-interest', id, interest)}
                       onSubmit={onSubmit}
