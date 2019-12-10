@@ -1,13 +1,13 @@
 import React from 'react';
 import { number, string, node } from 'prop-types';
 import styled from 'styled-components';
-import NumberFormat from 'react-number-format';
 import isString from 'lodash/isString';
 
 import { size } from 'sly/components/themes';
 import { Bar, Block, ClampedText } from 'sly/components/atoms';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { variation as variationPropType } from 'sly/propTypes/variation';
+import { formatMoney } from 'sly/services/helpers/numbers';
 
 const StyledBlock = styled(Block)`
   display: flex;
@@ -42,7 +42,7 @@ const PriceBar = ({
       <StyledBar width={width * 0.8} palette={palette} variation={variation}>
         <Label size="caption" title={title}>{children}</Label>
       </StyledBar>
-      <NumberFormat value={price} displayType="text" thousandSeparator prefix="$" />
+      here {formatMoney(price)}
     </StyledBlock>
   );
 };

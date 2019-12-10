@@ -308,14 +308,14 @@ const client = (target, entries) => {
       }),
     ]),
 
-    when(false && isWeb, [
-      addPlugins([
-        new BundleAnalyzerPlugin({
-          openAnalyzer: true,
-          analyzerPort: 0,
-        }),
-      ]),
-    ]),
+    // when(false && isWeb, [
+    //   addPlugins([
+    //     new BundleAnalyzerPlugin({
+    //       analyzerMode: 'disabled',
+    //       generateStatsFile: 'true',
+    //     }),
+    //   ]),
+    // ]),
 
     // eslint-disable-next-line no-prototype-builtins
     when(entries.hasOwnProperty('external'), [externalWidget]),
