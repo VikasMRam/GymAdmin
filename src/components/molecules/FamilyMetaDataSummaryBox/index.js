@@ -25,6 +25,7 @@ const Row = styled.div`
 `;
 
 const ValueColumn = textTransform(styled.div``);
+ValueColumn.displayName = 'ValueColumn';
 
 const EditDetails = cursor(Block);
 EditDetails.displayName = 'EditDetails';
