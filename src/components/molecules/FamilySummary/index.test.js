@@ -12,56 +12,53 @@ clientWithMedicaid.uuidAux.uuidInfo.financialInfo.medicaid = true;
 const to = '/sdfsdf';
 const defaultProps = {
   to,
+  client: PraneshKumar,
 };
 const wrap = (props = {}) => shallow(<FamilySummary {...defaultProps} {...props} />);
 
 describe('FamilySummary', () => {
+  it('does not render children when passed in', () => {
+    const wrapper = wrap({ children: 'test' });
+    expect(wrapper.contains('test')).toBeFalsy();
+  });
+
   it('renders', () => {
-    const wrapper = wrap({
-      client: PraneshKumar,
-    });
+    const wrapper = wrap();
 
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
       .at(0)
       .find(Block)
-      .contains(PraneshKumar.clientInfo.name)).toBe(true);
+      .contains(PraneshKumar.uuidAux.uuidInfo.residentInfo.fullName)).toBeTruthy();
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
-      .at(1)
+      .at(4)
       .find(Block)
-      .contains(PraneshKumar.uuidAux.uuidInfo.residentInfo.fullName)).toBe(true);
+      .contains(PraneshKumar.uuidAux.uuidInfo.housingInfo.lookingFor)).toBeTruthy();
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
       .at(5)
       .find(Block)
-      .contains(PraneshKumar.uuidAux.uuidInfo.housingInfo.lookingFor)).toBe(true);
+      .contains(PraneshKumar.uuidAux.uuidInfo.residentInfo.gender)).toBeTruthy();
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
       .at(6)
       .find(Block)
-      .contains(PraneshKumar.uuidAux.uuidInfo.residentInfo.gender)).toBe(true);
+      .contains(`${PraneshKumar.uuidAux.uuidInfo.locationInfo.city}, ${PraneshKumar.uuidAux.uuidInfo.locationInfo.state}`)).toBeTruthy();
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
       .at(7)
       .find(Block)
-      .contains(`${PraneshKumar.uuidAux.uuidInfo.locationInfo.city}, ${PraneshKumar.uuidAux.uuidInfo.locationInfo.state}`)).toBe(true);
-    expect(wrapper.dive().find('OuterColumWrapper').dive()
-      .find('ColumWrapper')
-      .at(8)
-      .find(Block)
-      .contains(PraneshKumar.uuidAux.uuidInfo.housingInfo.moveTimeline)).toBe(true);
+      .contains(PraneshKumar.uuidAux.uuidInfo.housingInfo.moveTimeline)).toBeTruthy();
     expect(wrapper
       .dive()
       .find('SlyIntro')
       .find(Block)
-      .contains(PraneshKumar.clientInfo.slyMessage)).toBe(true);
+      .contains(PraneshKumar.clientInfo.slyMessage)).toBeTruthy();
   });
 
   it('see more details href', () => {
-    const wrapper = wrap({
-      client: PraneshKumar,
-    });
+    const wrapper = wrap();
 
     expect(wrapper.dive().find('StyledLink').at(2).prop('to')).toBe(to);
   });

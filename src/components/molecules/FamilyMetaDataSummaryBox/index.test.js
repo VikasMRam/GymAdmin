@@ -7,6 +7,22 @@ import FamilyMetaDataSummaryBox from 'sly/components/molecules/FamilyMetaDataSum
 import { FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST } from 'sly/constants/familyDetails';
 import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
 
+// For deep cloning object
+const clientWithRejectedStage = JSON.parse(JSON.stringify(PraneshKumar));
+clientWithRejectedStage.stage = FAMILY_STAGE_REJECTED;
+clientWithRejectedStage.clientInfo = {
+  ...PraneshKumar.clientInfo,
+  rejectReason: 'test',
+  otherText: 'test',
+};
+const clientWithClosedStage = JSON.parse(JSON.stringify(PraneshKumar));
+clientWithClosedStage.stage = FAMILY_STAGE_LOST;
+clientWithClosedStage.clientInfo = {
+  ...PraneshKumar.clientInfo,
+  lossReason: 'test',
+  otherText: 'test',
+};
+
 const defaultProps = {
   client: PraneshKumar,
 };
@@ -37,35 +53,21 @@ describe('FamilyMetaDataSummaryBox', () => {
   });
 
   it('renders with Rejected stage', () => {
-    const newClient = { ...PraneshKumar };
-    newClient.stage = FAMILY_STAGE_REJECTED;
-    newClient.clientInfo = {
-      ...newClient.clientInfo,
-      rejectReason: 'test',
-      otherText: 'test',
-    };
     const wrapper = wrap({
-      client: newClient,
+      client: clientWithRejectedStage,
     });
 
-    expect(wrapper.find('ValueColumn').at(0).contains(newClient.clientInfo.rejectReason)).toBeTruthy();
-    expect(wrapper.find('ValueColumn').at(1).contains(newClient.clientInfo.otherText)).toBeTruthy();
+    expect(wrapper.find('ValueColumn').at(0).contains(clientWithRejectedStage.clientInfo.rejectReason)).toBeTruthy();
+    expect(wrapper.find('ValueColumn').at(1).contains(clientWithRejectedStage.clientInfo.otherText)).toBeTruthy();
   });
 
   it('renders with Closed stage', () => {
-    const newClient = { ...PraneshKumar };
-    newClient.stage = FAMILY_STAGE_LOST;
-    newClient.clientInfo = {
-      ...newClient.clientInfo,
-      lossReason: 'test',
-      otherText: 'test',
-    };
     const wrapper = wrap({
-      client: newClient,
+      client: clientWithClosedStage,
     });
 
-    expect(wrapper.find('ValueColumn').at(0).contains(newClient.clientInfo.lossReason)).toBeTruthy();
-    expect(wrapper.find('ValueColumn').at(1).contains(newClient.clientInfo.otherText)).toBeTruthy();
+    expect(wrapper.find('ValueColumn').at(0).contains(clientWithClosedStage.clientInfo.lossReason)).toBeTruthy();
+    expect(wrapper.find('ValueColumn').at(1).contains(clientWithClosedStage.clientInfo.otherText)).toBeTruthy();
   });
 
   it('onEditClick is called', () => {
