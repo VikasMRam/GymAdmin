@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { object, string } from 'prop-types';
-import withRouter from 'react-router/withRouter';
+import { withRouter } from 'react-router';
 
 import { query } from 'sly/services/newApi';
 

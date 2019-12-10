@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { string, bool } from 'prop-types';
-import NumberFormat from 'react-number-format';
 
 import pad from 'sly/components/helpers/pad';
 import cursor from 'sly/components/helpers/cursor';
@@ -11,6 +10,7 @@ import { Box, Heading, Label, Block, Link, Hr } from 'sly/components/atoms';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
+import { phoneFormatter } from 'sly/services/helpers/phone';
 
 const ColumWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
@@ -63,11 +63,7 @@ const FamilySummary = ({
         <ColumWrapper>
           <Label palette="grey">Phone number</Label>
           <StyledLink href={`tel:+1${client.clientInfo.phoneNumber}`} onClick={clickEventHandler('fdetails-summary', 'phone')} target="_blank">
-            <NumberFormat
-              value={client.clientInfo.phoneNumber}
-              format="(###) ###-####"
-              displayType="text"
-            />
+            {phoneFormatter(client.clientInfo.phoneNumber, true)}
           </StyledLink>
         </ColumWrapper>
       }

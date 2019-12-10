@@ -3,10 +3,11 @@ import { mount } from 'enzyme';
 import { Route, Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 
+import PageEventsContainer from './PageEventsContainer';
+
 import SlyEvent from 'sly/services/helpers/events';
 import config from 'sly/config';
 
-import PageEventsContainer from './PageEventsContainer';
 
 jest.mock('sly/services/helpers/events');
 jest.mock('sly/config');
@@ -27,7 +28,7 @@ function mountComponent(url) {
   const wrapper = mount(
     <Router history={history}>
       <Route path="*" render={() => <PageEventsContainer />} />
-    </Router>
+    </Router>,
   );
 
   return { wrapper, history };

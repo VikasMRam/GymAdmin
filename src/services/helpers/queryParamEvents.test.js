@@ -77,7 +77,7 @@ describe('Given the queryParamEvents helper functions', () => {
   describe('when serializing an event onto a path with search params', () => {
     it('should return the path with the event params appended to the existing params', () => {
       const event = { action: 'add', category: 'maths', label: 'simple' };
-event
+      event;
       const path = '/search/page?hello=world&please=true&maintain=order';
       const result = addEventToUrl(path, event);
 

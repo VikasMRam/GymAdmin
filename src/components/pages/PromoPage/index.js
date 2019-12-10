@@ -80,12 +80,12 @@ const ColumnWrapper = styled.div`
     justify-content: flex-start;
   }
 `;
-const HeroTwoColumnWrapper = ColumnWrapper.extend`
+const HeroTwoColumnWrapper = styled(ColumnWrapper)`
   > * {
     margin: 0;
   }
 `;
-const TwoColumnWrapper = ColumnWrapper.extend`
+const TwoColumnWrapper = styled(ColumnWrapper)`
   > * {
     margin-right: 0;
   }
@@ -95,7 +95,7 @@ const TwoColumnWrapper = ColumnWrapper.extend`
     }
   }
 `;
-const ThreeColumnWrapper = ColumnWrapper.extend`
+const ThreeColumnWrapper = styled(ColumnWrapper)`
   > * {
     margin-right: 0;
   }
@@ -113,7 +113,7 @@ const ThreeColumnWrapper = ColumnWrapper.extend`
 const StyledHr = styled(Hr)`
   border-color: ${palette('primary', 'stroke')};
 `;
-const UIColumnWrapper = ColumnWrapper.extend`
+const UIColumnWrapper = styled(ColumnWrapper)`
   > * {
     margin-bottom: ${size('spacing.large')};
   }
@@ -131,7 +131,7 @@ const UIColumnWrapper = ColumnWrapper.extend`
     }
   }
 `;
-const MSCColumnWrapper = ColumnWrapper.extend`
+const MSCColumnWrapper = styled(ColumnWrapper)`
   > * {
     margin-bottom: ${size('spacing.large')};
   }
@@ -156,7 +156,7 @@ const CWTImage = styled(Image)`
   margin-bottom: ${size('spacing.regular')};
   height: ${size('picture.tiny.height')};
 `;
-const CWTColumnWrapper = ColumnWrapper.extend`
+const CWTColumnWrapper = styled(ColumnWrapper)`
   margin-bottom: ${size('spacing.xxLarge')};
   > * {
     margin-right: ${size('spacing.large')};

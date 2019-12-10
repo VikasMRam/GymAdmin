@@ -21,7 +21,8 @@ const verify = (wrapper) => {
   const {
     line1, line2, city, state, zip,
   } = address;
-  const renderedAddress = wrapper.find('Heading').dive().dive().text();
+  const renderedAddress = wrapper.find('Heading').dive().dive().render()
+    .text();
   const renderedWrapper = wrapper.find('Wrapper');
 
   expect(renderedAddress).toContain(line1);
@@ -30,6 +31,7 @@ const verify = (wrapper) => {
   expect(renderedAddress).toContain(state);
   expect(renderedAddress).toContain(zip);
   expect(wrapper.find('StyledHeading').dive().dive().dive()
+    .render()
     .text()).toContain(name);
   expect(wrapper.find(CommunityPricingAndRating)).toHaveLength(1);
   expect(renderedWrapper.childAt(0).find(Link)).toHaveLength(1);

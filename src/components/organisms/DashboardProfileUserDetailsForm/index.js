@@ -97,7 +97,7 @@ class DashboardProfileUserDetailsForm extends Component {
           type="text"
           placeholder="925-555-5555"
           parse={phoneParser}
-          format={phoneFormatter}
+          format={phone => phoneFormatter(phone)}
           component={ReduxField}
           wideWidth
         />

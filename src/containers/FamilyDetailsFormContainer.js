@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func, arrayOf } from 'prop-types';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
@@ -89,7 +89,7 @@ export default class FamilyDetailsFormContainer extends Component {
         state,
       };
     }
-    let newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.clientInfo']));
+    let newClient = immutable.wrap(pick(rawClient, ['id', 'type', 'attributes.clientInfo']));
     if (name) {
       newClient.set('attributes.clientInfo.name', name);
     }
@@ -126,7 +126,7 @@ export default class FamilyDetailsFormContainer extends Component {
       newClient.set('relationships.tags.data', tags.map(({ label }) => ({ type: 'Tag', attributes: { name: label } })));
     }
 
-    let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
+    let newUuidAux = immutable.wrap(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
     if (residentName) {
       newUuidAux.set('attributes.uuidInfo.residentInfo.fullName', residentName);
     }

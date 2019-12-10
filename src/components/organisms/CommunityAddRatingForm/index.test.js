@@ -17,7 +17,7 @@ const wrap = (props = {}) => shallow(
     handleSubmit={handleSubmit}
     community={community}
     {...props}
-  />
+  />,
 );
 
 describe('CommunityAddRatingForm', () => {

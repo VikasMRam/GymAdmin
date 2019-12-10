@@ -21,8 +21,7 @@ describe('CommunityActions', () => {
     expect(
       wrapper
         .dive()
-        .find('GetCustomPricingButtonContainer')
-        .prop('children')
+        .prop('children'),
     ).toContain('Pricing requested');
   });
 
@@ -30,8 +29,7 @@ describe('CommunityActions', () => {
     const onGCPClick = jest.fn();
     const wrapper = wrap({ onGCPClick });
     const getCustomPriceButton = wrapper
-      .dive()
-      .find('GetCustomPricingButtonContainer');
+      .dive();
 
     expect(getCustomPriceButton).toHaveLength(1);
   });

@@ -5,7 +5,7 @@ import { Lazy } from 'react-lazy';
 
 import { size, assetPath } from 'sly/components/themes';
 
-const CUSHION = 500;
+const CUSHION = '500px';
 
 const StyledImage = styled.img`
   user-select: none;
@@ -74,10 +74,11 @@ export default class Image extends React.Component {
     failed: false,
   };
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     // what if src of a failed image is changed(a failed image has placeholder as src),
     // state change here won't trigger render
-    if (nextProps.src !== this.props.src && this.state.failed) {
+    if (this.props.src !== prevProps.src && this.state.failed) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         failed: false,
       });

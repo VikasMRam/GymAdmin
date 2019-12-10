@@ -3,6 +3,7 @@ export const formatMoney = (amount, decimalCount = 0) => {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: decimalCount,
+    maximumFractionDigits: decimalCount,
   });
 
   const number = typeof amount === 'string' ? parseFloat(amount.replace(/[^\d.]/g, '')) : amount;

@@ -62,7 +62,7 @@ function createComponentMap(components) {
       ...map,
       [getComponentTypeHydrationId(component)]: component,
     }),
-    {}
+    {},
   );
 }
 
@@ -86,7 +86,7 @@ export function hydrateComponents(components, container, Wrapper) {
             <Wrapper>
               <Component {...props} />
             </Wrapper>,
-            hydrateRootElement
+            hydrateRootElement,
           );
         }
 

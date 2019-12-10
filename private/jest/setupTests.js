@@ -1,5 +1,6 @@
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import 'intersection-observer';
 import '@babel/polyfill';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';

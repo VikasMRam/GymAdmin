@@ -12,9 +12,6 @@ import {
 import ConciergeController from 'sly/controllers/ConciergeController';
 import GetAvailabilitySuccessBox from 'sly/components/molecules/GetAvailabilitySuccessBox';
 import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
-import GetCustomPricingContainer from 'sly/containers/GetCustomPricingContainer';
-import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
-import { getSearchParams } from 'sly/services/helpers/search';
 import { prefetch } from 'sly/services/newApi';
 
 const hasAllUserData = createBooleanValidator({
@@ -25,51 +22,29 @@ const hasAllUserData = createBooleanValidator({
 
 function GetCurrentAvailabilityContainer({
   community,
-  hasAlreadyRequestedPricing,
-  history,
-  location,
-  match,
 }) {
   const { id } = community;
-  const setQueryParams = getQueryParamsSetter(history, location);
-  const queryParams = getSearchParams(match, location);
 
   return (
-    <GetCustomPricingContainer
-      community={community}
-      hasAlreadyRequestedPricing={hasAlreadyRequestedPricing}
+    <ConciergeController
+      communitySlug={id}
     >
-      {getCustomPricing => (
-        <ConciergeController
-          communitySlug={id}
-          queryParams={queryParams}
-          setQueryParams={setQueryParams}
-          gotoGetCustomPricing={getCustomPricing}
-          history={history}
-        >
-          {({ concierge, submitExpressConversion, userDetails }) => {
-            if (concierge.contactRequested) {
-              return (
-                <GetAvailabilitySuccessBox
-                  hasAllUserData={hasAllUserData(userDetails)}
-                />
-              );
-            }
-            return (
-              <GetCurrentAvailabilityFormContainer
-                submitExpressConversion={(e) => {
-                  if (!hasAlreadyRequestedPricing) {
-                    submitExpressConversion(e);
-                  }
-                  getCustomPricing();
-                }}
-                community={community}
-              />
-            );
-          }}
-        </ConciergeController>
-      )}
-    </GetCustomPricingContainer>
+      {({ concierge, submitExpressConversion, userDetails }) => {
+        if (concierge.contactRequested) {
+          return (
+            <GetAvailabilitySuccessBox
+              hasAllUserData={hasAllUserData(userDetails)}
+            />
+          );
+        }
+        return (
+          <GetCurrentAvailabilityFormContainer
+            submitExpressConversion={submitExpressConversion}
+            community={community}
+          />
+        );
+      }}
+    </ConciergeController>
   );
 }
 GetCurrentAvailabilityContainer.typeHydrationId = 'GetCurrentAvailabilityContainer';

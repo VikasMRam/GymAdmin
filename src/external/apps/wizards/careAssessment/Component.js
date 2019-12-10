@@ -57,7 +57,7 @@ const BottomWrapper = styled.div`
 const StyledHeading = styled(Heading)`
   font-weight: normal;
 `;
-const SearchingWrapper = Wrapper.extend`
+const SearchingWrapper = styled(Wrapper)`
   top: 50%;
   transform: translate(0%, -50%);
   position: absolute;

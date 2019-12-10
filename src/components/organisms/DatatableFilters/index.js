@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { object } from 'prop-types';
 import styled, { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { Box } from 'sly/components/atoms';
 import { size, palette } from 'sly/components/themes';
@@ -8,7 +9,6 @@ import mobileOnly from 'sly/components/helpers/mobileOnly';
 import DatatableFilterRow from 'sly/components/organisms/DatatableFilterRow';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
 import IconButton from 'sly/components/molecules/IconButton';
-import { ifProp } from 'styled-tools';
 
 const Wrapper = styled(mobileOnly(Box,
   css`
@@ -17,7 +17,7 @@ const Wrapper = styled(mobileOnly(Box,
   `,
   css`
     box-shadow: 0 ${size('spacing.small')} ${size('spacing.small')} ${palette('slate', 'filler')}80;
-  `
+  `,
 ))`
   background: ${palette('white.base')};
 `;

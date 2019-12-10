@@ -19,7 +19,6 @@ const bumpOnSearch = (prev, next) => searchWhitelist
   .some(key => next[key] !== prev[key]);
 
 @withAuth
-
 @withRouter
 
 export default class Router extends Component {

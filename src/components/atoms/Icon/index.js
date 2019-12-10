@@ -17,7 +17,7 @@ const Wrapper = styled.span`
   ${ifProp('palette', css`color: ${getColor}`)};
   // sizes relative to set font-size
   vertical-align: top;
-  
+
   width: ${iconSize};
   height: ${iconSize};
   text-align: center;
@@ -36,7 +36,7 @@ const Wrapper = styled.span`
 const Icon = styled(({ icon, size, ...props }) => {
   let svg;
   try {
-    svg = require(`!raw-loader!./icons/${icon}-regular.svg`);
+    svg = require(`!raw-loader!./icons/${icon}-regular.svg`).default;
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error('Icon not found:', `${icon}-regular`);

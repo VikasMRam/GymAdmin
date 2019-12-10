@@ -13,7 +13,7 @@ describe('JoinSlyButtons', () => {
 
     expect(wrapper.find(Block)).toHaveLength(1);
     expect(heading).toHaveLength(1);
-    expect(heading.dive().dive().dive().text()).toBe(JoinSlyButtons.defaultProps.heading);
+    expect(heading.render().text()).toBe(JoinSlyButtons.defaultProps.heading);
     expect(wrapper.find('StyledButton')).toHaveLength(1);
     expect(wrapper.find('FacebookButton')).toHaveLength(1);
     expect(wrapper.find('GoogleButton')).toHaveLength(1);
@@ -75,7 +75,7 @@ describe('JoinSlyButtons', () => {
     const heading = wrapper.find('StyledHeading');
 
     expect(heading).toHaveLength(1);
-    expect(heading.dive().dive().dive().text()).toBe('test heading');
+    expect(heading.render().text()).toBe('test heading');
   });
 
   it('shows social login errros', () => {
@@ -85,6 +85,6 @@ describe('JoinSlyButtons', () => {
     const err = wrapper.find('SocialLoginError');
 
     expect(err).toHaveLength(1);
-    expect(err.dive().dive().text()).toBe('test error');
+    expect(err.render().text()).toBe('test error');
   });
 });

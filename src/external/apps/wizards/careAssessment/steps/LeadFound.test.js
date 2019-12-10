@@ -10,7 +10,7 @@ const wrap = (props = {}) => shallow(<LeadFound {...props} />);
 const verifyLayout = (wrapper, searchResultCount = 0) => {
   const h = wrapper.find('PaddedHeading');
   expect(h).toHaveLength(1);
-  expect(h.dive().dive().dive().text()).toContain(searchResultCount);
+  expect(h.render().text()).toContain(searchResultCount);
   expect(wrapper.find('Description')).toHaveLength(1);
   expect(wrapper.find(Field)).toHaveLength(3);
   expect(wrapper.find(TosAndPrivacy)).toHaveLength(1);

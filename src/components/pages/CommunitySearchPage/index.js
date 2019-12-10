@@ -161,12 +161,12 @@ const CommunitySearchPage = ({
                     View List
                   </IconButton>
                   ) : (
-                  <>
-                    <Image src={assetPath('images/map-placeholder.png')} />
-                    <IconButton icon="map" iconSize="regular" to={mapViewUrl} iconPalette="primary" ghost>
+                    <>
+                      <Image src={assetPath('images/map-placeholder.png')} />
+                      <IconButton icon="map" iconSize="regular" to={mapViewUrl} iconPalette="primary" ghost>
                       View Map
-                    </IconButton>
-                  </>
+                      </IconButton>
+                    </>
                 )}
               </ImageButtonWrapper>
               <StyledHr />
@@ -220,7 +220,7 @@ const CommunitySearchPage = ({
               location={location}
             />
             {hasGeoGuideContent && (
-              guideTypes.map((key) => (
+              guideTypes.map(key => (
                 guideContent[key] ? <LegacyContent dangerouslySetInnerHTML={{ __html: guideContent[key] }} key={key} /> : null
               ))
             )}

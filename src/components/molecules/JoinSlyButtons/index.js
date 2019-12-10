@@ -16,7 +16,7 @@ const StyledButton = styled(Button)`
 `;
 StyledButton.displayName = 'StyledButton';
 
-const GoogleButton = StyledButton.extend`
+const GoogleButton = styled(StyledButton)`
   border-color: ${palette('slate', 'stroke')};
 
   span {
@@ -25,7 +25,7 @@ const GoogleButton = StyledButton.extend`
 `;
 GoogleButton.displayName = 'GoogleButton';
 
-const FacebookButton = StyledButton.extend`
+const FacebookButton = styled(StyledButton)`
   background-color: #4568b2;
   margin-bottom: ${size('spacing.large')};
 `;

@@ -1,11 +1,10 @@
 import React from 'react';
 import { Redirect, generatePath } from 'react-router';
+import { parse } from 'query-string';
 
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardAgentFamilyOverviewSectionContainer from 'sly/containers/DashboardAgentFamilyOverviewSectionContainer';
 import { Datatable } from 'sly/services/datatable';
-import { parse } from 'query-string';
-
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
   NEWFAMILIES,

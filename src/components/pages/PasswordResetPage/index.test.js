@@ -26,7 +26,7 @@ describe('PasswordResetPage', () => {
     expect(wrapper.find('StyledBlock')).toHaveLength(1);
     expect(wrapper.find('StyledButton')).toHaveLength(1);
     expect(errorMsg).toHaveLength(1);
-    expect(errorMsg.dive().text()).toContain(error);
+    expect(errorMsg.dive().render().text()).toContain(error);
   });
 
   it('handles onSubmit', () => {

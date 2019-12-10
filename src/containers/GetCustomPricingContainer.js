@@ -1,6 +1,7 @@
 import React from 'react';
 import { bool, func } from 'prop-types';
-import withRouter from 'react-router/withRouter';
+import { withRouter } from 'react-router';
+
 import SlyEvent from 'sly/services/helpers/events';
 import AskAgentQuestionContainer from 'sly/containers/AskAgentQuestionContainer';
 import { withRedirectTo } from 'sly/services/redirectTo';
