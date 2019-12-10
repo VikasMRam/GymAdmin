@@ -53,12 +53,6 @@ const FamilySummary = ({
   <Box snap={snap} className={className} palette={isOfDifferentOrg ? 'warning' : undefined} variation={isOfDifferentOrg ? 'dark' : undefined}>
     {!noHeading && <PaddedHeading size="body">Summary</PaddedHeading>}
     <OuterColumWrapper>
-      {client.clientInfo && client.clientInfo.name &&
-        <ColumWrapper>
-          <Label palette="grey">Contact name</Label>
-          <Block size="caption">{client.clientInfo.name}</Block>
-        </ColumWrapper>
-      }
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.residentInfo.fullName &&
         <ColumWrapper>
           <Label palette="grey">Resident name</Label>

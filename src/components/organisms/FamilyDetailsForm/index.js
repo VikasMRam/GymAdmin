@@ -6,17 +6,19 @@ import { ifProp } from 'styled-tools';
 
 import { size, palette, columnWidth } from 'sly/components/themes';
 import userPropType from 'sly/propTypes/user';
+import clientPropType from 'sly/propTypes/client';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
-import { priceFormatter, priceParser } from 'sly/services/helpers/pricing';
 import Role from 'sly/components/common/Role';
-import { isBeforeNow } from 'sly/services/validation';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
-import { SOURCE_OPTIONS, ROOM_TYPES } from 'sly/constants/familyDetails';
+import { SOURCE_OPTIONS, FAMILY_STAGE_WON, FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST } from 'sly/constants/familyDetails';
 import { Block, Button, Label } from 'sly/components/atoms';
+import FamilyMetaDataSummaryBox from 'sly/components/molecules/FamilyMetaDataSummaryBox';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
+
+const showSummaryStages = [FAMILY_STAGE_WON, FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST];
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -92,12 +94,9 @@ const FormBottomSection = styled.div`
 
 const FormSectionHeading = pad(Block, 'large');
 
-const ReferralAgreementWrapper = styled.div`
-  display: grid;
-  grid-template-columns: max-content max-content;
-  grid-gap: ${size('spacing.large')};
-  align-items: baseline;
-`;
+const StyledFamilyMetaDataSummaryBox = pad(styled(FamilyMetaDataSummaryBox)`
+  flex: 1;
+`);
 
 // const contactPreferenceOptionsList = [{ value: 'sms', label: 'SMS' }, { value: 'email', label: 'Email' }, { value: 'phone', label: 'Phone' }];
 
@@ -114,8 +113,6 @@ const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
 //   { value: 'strawberry', label: 'Strawberry' },
 //   { value: 'vanilla', label: 'Vanilla' },
 // ];
-
-const roomTypeOptions = ROOM_TYPES.map(i => ({ value: i, label: i }));
 
 class FamilyDetailsForm extends Component {
   static propTypes = {
@@ -138,8 +135,9 @@ class FamilyDetailsForm extends Component {
     preferredLocation: string,
     assignedTos: arrayOf(userPropType).isRequired,
     isAgentUser: bool,
-    referralAgreementType: string,
     isWon: bool,
+    client: clientPropType.isRequired,
+    onEditWonDetailsClick: func,
   };
 
   handleLookingForChange = (event, value) => {
@@ -163,8 +161,9 @@ class FamilyDetailsForm extends Component {
     const {
       handleSubmit, submitting, invalid, accepted, initialValues, lookingFor, isAgentUser,
       gender, timeToMove, monthlyBudget, roomTypes, communityTypes, careLevels, canEditFamilyDetails, assignedTos,
-      referralAgreementType, isWon,
+      client, onEditWonDetailsClick,
     } = this.props;
+    const { stage } = client;
     let { preferredLocation } = this.props;
     if (initialValues && !preferredLocation) {
       ({ preferredLocation } = initialValues);
@@ -186,6 +185,7 @@ class FamilyDetailsForm extends Component {
     const tagColumn = { typeInfo: { api: '/v0/platform/tags?filter[name]=' }, value: 'tag.name' };
     const medicaidOptions = [{ label: '', value: true }];
     const sourceOptions = SOURCE_OPTIONS.map(s => <option key={s} value={s}>{s}</option>);
+    const showSummary = showSummaryStages.includes(stage);
 
     return (
       <div>
@@ -199,104 +199,11 @@ class FamilyDetailsForm extends Component {
             <Role is={PLATFORM_ADMIN_ROLE}>
               <FormSection>
                 <FormSectionHeading weight="medium">Metadata</FormSectionHeading>
-                {isWon &&
-                  <>
-                    <Field
-                      name="moveInDate"
-                      label="Move-in date"
-                      type="date"
-                      placeholder="mm/dd/yyyy"
-                      component={ReduxField}
-                      dateFormat="MM/dd/yyyy"
-                      validate={isBeforeNow}
-                      wideWidth
-                    />
-                    <Field
-                      name="communityName"
-                      label="Community name"
-                      type="text"
-                      component={ReduxField}
-                      wideWidth
-                    />
-                    <Field
-                      name="moveRoomType"
-                      label="Room type"
-                      type="choice"
-                      component={ReduxField}
-                      options={roomTypeOptions}
-                      wideWidth
-                    />
-                    <Field
-                      name="monthlyFees"
-                      label="Monthly fees (rent + care)"
-                      type="iconInput"
-                      component={ReduxField}
-                      parse={priceParser}
-                      format={priceFormatter}
-                      wideWidth
-                    />
-                    <ReferralAgreementWrapper>
-                      <Label>Community referral agreement</Label>
-                      <ReferralAgreementWrapper>
-                        <Field
-                          name="referralAgreementType"
-                          label="Percentage"
-                          type="radio"
-                          value="percentage"
-                          component={ReduxField}
-                        />
-                        <Field
-                          name="referralAgreementType"
-                          label="Flat-fee"
-                          type="radio"
-                          value="flat-fee"
-                          component={ReduxField}
-                        />
-                      </ReferralAgreementWrapper>
-                    </ReferralAgreementWrapper>
-                    {referralAgreementType &&
-                      <ReferralAgreementWrapper>
-                        <Field
-                          name="referralAgreement"
-                          type="iconInput"
-                          icon={referralAgreementType === 'percentage' ? 'percentage' : 'dollar'}
-                          label={referralAgreementType === 'percentage' ? 'Percent amount' : 'Fee amount'}
-                          component={ReduxField}
-                          parse={priceParser}
-                          format={priceFormatter}
-                          wideWidth
-                        />
-                      </ReferralAgreementWrapper>
-                    }
-                    <Field
-                      name="invoiceNumber"
-                      label="Invoice number"
-                      type="text"
-                      placeholder="0000000"
-                      component={ReduxField}
-                      wideWidth
-                    />
-                    <Field
-                      name="invoiceAmount"
-                      type="iconInput"
-                      icon="dollar"
-                      label="Invoice amount"
-                      placeholder="0.00"
-                      component={ReduxField}
-                      wideWidth
-                    />
-                    <Field
-                      name="invoicePaid"
-                      label="Invoice paid"
-                      type="choice"
-                      component={ReduxField}
-                      options={[
-                        { value: 'yes', label: 'yes' },
-                        { value: 'no', label: 'no' },
-                      ]}
-                      wideWidth
-                    />
-                  </>
+                {showSummary &&
+                  <TwoColumnWrapper>
+                    <StyledLabel>{stage} Details</StyledLabel>
+                    <StyledFamilyMetaDataSummaryBox client={client} onEditClick={onEditWonDetailsClick} />
+                  </TwoColumnWrapper>
                 }
                 <Field
                   name="assignedTo"
