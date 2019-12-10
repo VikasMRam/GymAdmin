@@ -393,8 +393,10 @@ export const objectToURLQueryParams = (obj, options) => stringify(obj, options);
 export const parseURLQueryParams = obj => parse(obj);
 
 export const getStateAbbr = (state) => {
-  const st = titleize(state);
-  return stateAbbr[st];
+  if ( state ) {
+    const st = titleize(state);
+    return stateAbbr[st];
+  }
 };
 
 export const removeQueryParamFromURL = (key, sourceURL) => {

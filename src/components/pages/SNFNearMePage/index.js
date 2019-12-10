@@ -5,6 +5,7 @@ import { array, bool, func, object } from 'prop-types';
 
 import { size, assetPath, palette } from 'sly/components/themes';
 
+import { getStateAbbr } from 'sly/services/helpers/url';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Image, Label, Heading, Paragraph } from 'sly/components/atoms';
@@ -620,6 +621,7 @@ const NearMePage = ({
 
   const title = 'Find the Best Skilled Nursing Facility Near You';
   const description = 'Search skilled nursing facilities near you. Compare cost, medicare and medicaid options, property highlights and more.';
+  const heading = state ? `${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${tocLabel} near ${city}`;
 
   return (
     <>
@@ -632,7 +634,7 @@ const NearMePage = ({
         {SEOContentSNF()}
         <StyledArticle>
           <StyledHeading level="title" size="title">
-            {tocLabel} near {city}, {state}
+            {heading}
           </StyledHeading>
           {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
           {!isFetchingResults && (

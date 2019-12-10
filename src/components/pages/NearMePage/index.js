@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 
+import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, assetPath, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
@@ -113,6 +114,7 @@ const NearMePage = ({
   const listSize = requestMeta['filtered-count'];
   const { geo } = requestMeta;
   const city = geo && geo.city;
+  const state = geo && geo.state;
   const tocLabel = getTocSeoLabel('assisted-living');
 
   const topRef = React.createRef();
@@ -749,6 +751,7 @@ const NearMePage = ({
 
   const title = 'Find the Best Assisted Living Near You ';
   const description = 'Find the best assisted living near you with local senior living communities & providers. Browse assisted living nearby with prices, reviews & photos.';
+  const heading = state ? `${listSize} ${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${listSize} ${tocLabel} near ${city}`;
 
   return (
     <>
@@ -759,7 +762,7 @@ const NearMePage = ({
           <meta name="description" content={description} />
         </Helmet>
         <StyledHeading level="title" size="title">
-          {listSize} {tocLabel} near {city}
+          {heading}
         </StyledHeading>
         <StyledArticle>
           <Paragraph>
@@ -768,6 +771,7 @@ const NearMePage = ({
             living communities near you and then let us connect you to your local senior living expert.
             They can answer all your questions, share costs, arrange tours, and even negotiate rent. Our services are free.
           </Paragraph>
+        </StyledArticle>
         {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
         {!isFetchingResults && (
           <CommunitySearchList
