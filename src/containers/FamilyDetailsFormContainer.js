@@ -4,7 +4,6 @@ import { object, func, arrayOf } from 'prop-types';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
-import dayjs from 'dayjs';
 
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
 import clientPropType from 'sly/propTypes/client';
@@ -82,15 +81,6 @@ export default class FamilyDetailsFormContainer extends Component {
       medicaid,
       slyAgentMessage,
       slyCommunityMessage,
-      moveInDate,
-      communityName,
-      moveRoomType,
-      monthlyFees,
-      referralAgreement,
-      referralAgreementType,
-      invoiceAmount,
-      invoiceNumber,
-      invoicePaid,
     } = data;
     let locationInfo = {};
     if (preferredLocation) {
@@ -136,45 +126,6 @@ export default class FamilyDetailsFormContainer extends Component {
     if (tags) {
       newClient.set('relationships.tags.data', tags.map(({ label }) => ({ type: 'Tag', attributes: { name: label } })));
     }
-    if (moveInDate) {
-      let moveInDateFormatted;
-      const parsedDate = dayjs(moveInDate);
-      if (parsedDate.isValid()) {
-        moveInDateFormatted = parsedDate.format('YYYY-MM-DDTHH:mm:ss[Z]');
-      } else {
-        notifyError('Move-In date is invalid');
-        return false;
-      }
-      newClient.set('attributes.clientInfo.moveInDate', moveInDateFormatted);
-    }
-    if (communityName) {
-      newClient.set('attributes.clientInfo.communityName', communityName);
-    }
-    if (monthlyFees) {
-      newClient.set('attributes.clientInfo.monthlyFees', parseFloat(monthlyFees));
-    }
-    if (referralAgreement) {
-      newClient.set('attributes.clientInfo.referralAgreement', parseFloat(referralAgreement));
-    }
-    if (invoiceAmount) {
-      newClient.set('attributes.clientInfo.invoiceAmount', parseFloat(invoiceAmount));
-    }
-    if (invoiceNumber) {
-      newClient.set('attributes.clientInfo.invoiceNumber', invoiceNumber);
-    }
-    if (invoicePaid) {
-      newClient.set('attributes.clientInfo.invoicePaid', invoicePaid === 'yes');
-    }
-    if (moveRoomType) {
-      newClient.set('attributes.clientInfo.moveRoomType', moveRoomType);
-    }
-    if (referralAgreementType === 'percentage') {
-      const moveInFee = referralAgreement * monthlyFees * 0.01;
-      newClient.set('attributes.clientInfo.moveInFee', parseFloat(moveInFee));
-    } else if (referralAgreementType === 'flat-fee') {
-      newClient.set('attributes.clientInfo.moveInFee', parseFloat(referralAgreement));
-    }
-    newClient.set('attributes.clientInfo.referralAgreementType', referralAgreementType);
 
     let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
     if (residentName) {
@@ -242,15 +193,8 @@ export default class FamilyDetailsFormContainer extends Component {
     const tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
     const {
       name, email, slyMessage, phoneNumber = '', additionalMetadata, slyAgentMessage,
-      slyCommunityMessage, referralSource, communityName, moveRoomType, invoiceNumber,
-      invoiceAmount, moveInDate,
+      slyCommunityMessage, referralSource,
     } = clientInfo;
-    let { monthlyFees, referralAgreementType, referralAgreement, invoicePaid } = clientInfo;
-    if (invoicePaid === true) {
-      invoicePaid = 'yes';
-    } else if (invoicePaid === false) {
-      invoicePaid = 'no';
-    }
     const { uuidInfo } = uuidAux;
     const {
       residentInfo, housingInfo, financialInfo, locationInfo, careInfo,
@@ -273,7 +217,7 @@ export default class FamilyDetailsFormContainer extends Component {
       medicaidValue = [true];
     }
     if (formData) {
-      ({ referralAgreementType, referralAgreement, monthlyFees, preferredLocation } = formData);
+      ({ preferredLocation } = formData);
     }
     const initialValues = {
       name,
@@ -298,23 +242,14 @@ export default class FamilyDetailsFormContainer extends Component {
       slyAgentMessage,
       slyCommunityMessage,
       contactPreferences: ['sms', 'email'],
-      communityName,
-      moveRoomType,
-      monthlyFees,
-      referralAgreementType,
-      referralAgreement,
-      invoiceNumber,
-      invoiceAmount,
-      invoicePaid,
-      moveInDate: moveInDate ? new Date(moveInDate) : null,
     };
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}
         initialValues={initialValues}
         preferredLocation={preferredLocation}
-        referralAgreementType={referralAgreementType}
         isWon={stage === FAMILY_STAGE_WON}
+        client={client}
         {...props}
       />
     );
