@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import { string, func, object, shape } from 'prop-types';
-import produce from 'immer';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import isMatch from 'lodash/isMatch';
@@ -12,7 +11,6 @@ import {
   PROFILE_CONTACTED,
 } from 'sly/services/newApi/constants';
 import { prefetch, query, withAuth } from 'sly/services/newApi';
-import userPropType, { uuidAux as uuidAuxProptype } from 'sly/propTypes/user';
 import { withRedirectTo } from 'sly/services/redirectTo';
 
 export const CONVERSION_FORM = 'conversionForm';
@@ -60,9 +58,7 @@ const mapStateToProps = (state, { communitySlug, uuidActions }) => {
     'filter[actionInfo-slug]': communitySlug,
   }),
 )
-@prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 @query('createAction', 'createUuidAction')
-@query('updateUuidAux', 'updateUuidAux')
 @connect(mapStateToProps)
 
 export default class ConciergeController extends Component {
@@ -74,16 +70,6 @@ export default class ConciergeController extends Component {
     children: func.isRequired,
     concierge: object.isRequired,
     communitySlug: string,
-    user: userPropType,
-    uuidAux: uuidAuxProptype,
-    queryParams: object,
-    setQueryParams: func.isRequired,
-    gotoGetCustomPricing: func,
-    status: shape({
-      uuidAux: object,
-      user: object,
-    }).isRequired,
-    updateUuidAux: func,
     createAction: func,
     createOrUpdateUser: func,
   };

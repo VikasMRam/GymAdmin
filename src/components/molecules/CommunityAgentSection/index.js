@@ -5,7 +5,7 @@ import { func } from 'prop-types';
 import { size } from 'sly/components/themes';
 import agentPropType from 'sly/propTypes/agent';
 import { getAgentUrl } from 'sly/services/helpers/url';
-import { Icon, Block, Image, Link, Span } from 'sly/components/atoms';
+import { Icon, Block, Image, Link } from 'sly/components/atoms';
 import { phoneFormatter } from 'sly/services/helpers/phone';
 
 const SubHeadingSection = styled.div`
