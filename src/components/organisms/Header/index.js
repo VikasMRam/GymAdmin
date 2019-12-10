@@ -162,14 +162,14 @@ const OnlyInTablet = styled.div`
 `;
 
 const Header = ({
-  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, onMenuItemClick, onHeaderBlur, className, smallScreenMenuItems,
+  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, onMenuItemClick, onHeaderBlur, className, smallScreenMenuItems, onLogoClick,
 }) => {
   const headerItemComponents = headerItems.map(item => item.isButton ? (
-    <Button onClick={item.onClick} key={item.name}>
+    <Button onClick={() => item.onClick(item)} key={item.name}>
       {item.name}
     </Button>
   ) : (
-    <HeaderItem noHoverColorChange size="caption" onClick={item.onClick} to={item.to} palette={item.palette ? item.palette : 'slate'} key={item.name}>
+    <HeaderItem noHoverColorChange size="caption" onClick={() => item.onClick(item)} to={item.to} palette={item.palette ? item.palette : 'slate'} key={item.name}>
       {item.name}
     </HeaderItem>
   ));
@@ -178,7 +178,7 @@ const Header = ({
   const headerMenuItemComponents = menuItems
     .map((item) => {
       const mi = (
-        <HeaderMenuItem key={item.to} noHoverColorChange size="caption" to={item.to} palette={item.palette ? item.palette : 'slate'} onClick={item.onClick}>
+        <HeaderMenuItem key={item.to} noHoverColorChange size="caption" to={item.to} palette={item.palette ? item.palette : 'slate'} onClick={() => item.onClick(item)}>
           {item.name}
           {item.icon && <Icon size="caption" icon={item.icon} palette={item.palette ? item.palette : 'slate'} />}
         </HeaderMenuItem>
@@ -200,7 +200,7 @@ const Header = ({
     });
   const smallScreenMenuItemComponents = smallScreenMenuItems
     .map(item => (
-      <HeaderMenuItem key={item.to} noHoverColorChange size="caption" to={item.to} palette={item.palette ? item.palette : 'slate'} onClick={item.onClick}>
+      <HeaderMenuItem key={item.to} noHoverColorChange size="caption" to={item.to} palette={item.palette ? item.palette : 'slate'} onClick={() => item.onClick(item)}>
         {item.name}
         {item.icon && <Icon size="caption" icon={item.icon} palette={item.palette ? item.palette : 'slate'} />}
       </HeaderMenuItem>
@@ -216,7 +216,7 @@ const Header = ({
   return (
     // tabIndex necessary for onBlur to work
     <HeaderWrapper tabIndex="-1" onBlur={handleHeaderMenuBlur} className={className}>
-      <SeniorlyLogoWrapper>
+      <SeniorlyLogoWrapper onClick={onLogoClick}>
         <Link to="/">
           <Logo />
         </Link>
@@ -260,6 +260,7 @@ Header.propTypes = {
   onMenuItemClick: func,
   onLocationSearch: func,
   onHeaderBlur: func,
+  onLogoClick: func,
   headerItems: arrayOf(shape({
     name: string.isRequired,
     to: string,
