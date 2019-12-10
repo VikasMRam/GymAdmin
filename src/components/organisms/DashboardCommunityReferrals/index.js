@@ -6,10 +6,10 @@ import { generatePath } from 'react-router';
 import { size, palette } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import pad from 'sly/components/helpers/pad';
-import { getHasContract } from 'sly/services/helpers/communityReferral';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
-import { Block, Button, Link } from 'sly/components/atoms';
+import { Block, Button } from 'sly/components/atoms';
 import DashboardAdminReferralCommunityTile from 'sly/components/organisms/DashboardAdminReferralCommunityTile';
+import { FAMILIES_INTERESTED_COMMUNITY_TITLE } from 'sly/constants/referrals';
 
 const TopWrapper = styled.div`
   display: flex;
@@ -42,7 +42,6 @@ const StyledDashboardAdminReferralCommunityTile = pad(DashboardAdminReferralComm
 const DashboardCommunityReferrals = ({
   communitiesInterested, communitiesInterestedIdsMap, childrenClients, childrenClientCommunityIdsMap, isAdminUser, onSubmit, setSelectedCommunity,
 }) => {
-  const title = 'FAMILY INTERESTED IN COMMUNITY';
   return (
     <>
       <TopWrapper>
@@ -60,7 +59,7 @@ const DashboardCommunityReferrals = ({
             const props = {
               key: community.name,
               community,
-              title,
+              title: FAMILIES_INTERESTED_COMMUNITY_TITLE,
               isAdminUser,
             };
             if (client) {
