@@ -65,7 +65,7 @@ export default class AddFamilyFormContainer extends Component {
       .then((data) => {
         const matchingClients = normJsonApi(data);
         if (matchingClients.length) {
-          const currentClient = immutable(newClient.data.attributes)
+          const currentClient = immutable.wrap(newClient.data.attributes)
             .set('clientInfo.email', email)
             .set('clientInfo.phoneNumber', phone)
             .value();

@@ -327,10 +327,10 @@ export default class ConversationMessagesContainer extends Component {
     const newSelectedButtons = [...selectedButtons, button.text];
 
     const rawMessage = result.find(rMessage => rMessage.id === message.id);
-    const conversationMessagePayload = immutable(pick(rawMessage, ['id', 'type', 'attributes.conversationID', 'attributes.conversationParticipantID', 'attributes.data']))
+    const conversationMessagePayload = immutable.wrap(pick(rawMessage, ['id', 'type', 'attributes.conversationID', 'attributes.conversationParticipantID', 'attributes.data']))
       .set('attributes.data.valueButtonList.selectedButtons', newSelectedButtons)
       .value();
-    const uuidActionPayload = immutable(newUuidAction)
+    const uuidActionPayload = immutable.wrap(newUuidAction)
       .set('attributes.actionType', CONVERSATION_MESSAGE_BUTTONLIST_BUTTON_CLICKED)
       .set('attributes.actionPage', match.url)
       .set('attributes.actionInfo.slug', id)

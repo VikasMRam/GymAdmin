@@ -214,7 +214,7 @@ export default class MediaGallery extends Component {
             src={this.shouldLoadMedia(index) ? media.src : ''}
             data-src={media.src}
             alt={media.alt}
-            innerRef={(c) => { this.mediaRefs[index] = c; }}
+            ref={(c) => { this.mediaRefs[index] = c; }}
             aspectRatio={aspectRatio}
           />
         ) : (
@@ -224,7 +224,7 @@ export default class MediaGallery extends Component {
             data-src={media.src}
             alt={media.alt}
             lazy={false}
-            innerRef={(c) => { this.mediaRefs[index] = c; }}
+            ref={(c) => { this.mediaRefs[index] = c; }}
             aspectRatio={aspectRatio}
           />
         );
@@ -235,7 +235,7 @@ export default class MediaGallery extends Component {
             autoPlay={index === currentSlide}
             controls
             controlsList="nodownload"
-            innerRef={(c) => { this.mediaRefs[index] = c; }}
+            ref={(c) => { this.mediaRefs[index] = c; }}
           >
             {media.src.map(src => (
               <source

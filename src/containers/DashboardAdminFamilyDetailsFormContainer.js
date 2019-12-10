@@ -70,7 +70,7 @@ export default class DashboardFamilyDetailsFormContainer extends Component {
         state,
       };
     }
-    let newBareClient = immutable(pick(newClient, ['id', 'type', 'attributes.clientInfo', 'relationships']));
+    let newBareClient = immutable.wrap(pick(newClient, ['id', 'type', 'attributes.clientInfo', 'relationships']));
     if (name) {
       newBareClient.set('attributes.clientInfo.name', name);
     }
@@ -81,7 +81,7 @@ export default class DashboardFamilyDetailsFormContainer extends Component {
       newBareClient.set('attributes.clientInfo.phoneNumber', phone);
     }
 
-    let newUuidAux = immutable(pick(newBareClient, ['relationships.uuidAux']));
+    let newUuidAux = immutable.wrap(pick(newBareClient, ['relationships.uuidAux']));
 
     if (residentName) {
       newUuidAux.set('attributes.uuidInfo.residentInfo.fullName', residentName);

@@ -144,8 +144,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
     }
     const clientPromise = () => refetchClient();
 
-    let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
-    let newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage', 'attributes.clientInfo']))
+    let newUuidAux = immutable.wrap(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
+    let newClient = immutable.wrap(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage', 'attributes.clientInfo']))
       .set('attributes.status', FAMILY_STATUS_ACTIVE)
       .set('attributes.stage', stage);
     if (moveInDate) {

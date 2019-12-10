@@ -101,12 +101,12 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
     const { result: uuidAuxResult } = rawAux;
     const { id: uuidAuxID } = uuidAuxResult;
 
-    const user = immutable(pick(result, ['id', 'type', 'attributes.name', 'attributes.phoneNumber']))
+    const user = immutable.wrap(pick(result, ['id', 'type', 'attributes.name', 'attributes.phoneNumber']))
       .set('attributes.name', values.name)
       // .set('attributes.email', values.email)
       .set('attributes.phoneNumber', values.phoneNumber)
       .value();
-    let uuidAux = immutable(pick(uuidAuxResult, ['id', 'type', 'attributes.uuid', 'attributes.uuidInfo']))
+    let uuidAux = immutable.wrap(pick(uuidAuxResult, ['id', 'type', 'attributes.uuid', 'attributes.uuidInfo']))
       .set('attributes.uuidInfo.housingInfo.lookingFor', values.lookingFor)
       .set('attributes.uuidInfo.residentInfo.fullName', values.residentName)
       .set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', values.monthlyBudget)

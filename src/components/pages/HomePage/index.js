@@ -9,7 +9,6 @@ import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import SlyEvent from 'sly/services/helpers/events';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
-import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { Image, Centered, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
 import Section from 'sly/components/molecules/Section';

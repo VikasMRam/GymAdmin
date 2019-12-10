@@ -206,12 +206,12 @@ export default class ReferralSearchContainer extends Component {
   createContactForProvider = ({ email, name }, partner) => {
     const { createContact } = this.props;
     const { id, type } = partner;
-    const contact = immutable(pick, newContact, ['id', 'type', 'attributes', 'relationships']);
+    const contact = immutable.wrap(pick(newContact, ['id', 'type', 'attributes', 'relationships']));
     contact.set('id', null);
     contact.set('type', 'Contact');
     contact.set('attributes.email', email);
     contact.set('attributes.name', name);
-    const slyEntity = immutable(pick, newSlyEntity, ['id', 'type', 'attributes']);
+    const slyEntity = immutable.wrap(pick(newSlyEntity, ['id', 'type', 'attributes']));
     slyEntity.set('id', id);
     slyEntity.set('type', 'SlyEntity');
     slyEntity.set('attributes.entityType', type);
@@ -224,16 +224,16 @@ export default class ReferralSearchContainer extends Component {
     const {
       createClient, parentRawClient, notifyInfo, notifyError,
     } = this.props;
-    const newBareClient = immutable(pick(parentRawClient, ['id', 'type', 'attributes.clientInfo', 'attributes.uuid', 'relationships']));
+    const newBareClient = immutable.wrap(pick(parentRawClient, ['id', 'type', 'attributes.clientInfo', 'attributes.uuid', 'relationships']));
     newBareClient.set('id', null);
     newBareClient.set('attributes.clientInfo.slyMessage', partner.slyMessage);
     newBareClient.set('attributes.clientInfo.referralSource', '');
-    const provider = immutable(pick, newProvider, ['id', 'type', 'attributes']);
+    const provider = immutable.wrap(pick(newProvider, ['id', 'type', 'attributes']));
     provider.set('id', partner.id);
     provider.set('type', 'Provider');
     provider.set('attributes.entityType', partner.type);
     newBareClient.set('relationships.provider', { data: provider.value() });
-    const parent = immutable(pick, newParentClient, ['id', 'type', 'attributes']);
+    const parent = immutable.wrap(pick(newParentClient, ['id', 'type', 'attributes']));
     parent.set('id', parentRawClient.id);
     parent.set('type', 'Client');
     newBareClient.set('relationships.parent', { data: parent.value() });
