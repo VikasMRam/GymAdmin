@@ -42,7 +42,7 @@ const PriceBar = ({
       <StyledBar width={width * 0.8} palette={palette} variation={variation}>
         <Label size="caption" title={title}>{children}</Label>
       </StyledBar>
-      here {formatMoney(price)}
+      {formatMoney(price)}
     </StyledBlock>
   );
 };

@@ -1226,7 +1226,6 @@ const NearMePage = ({
       </TemplateContent>
       <Footer />
     </>
-
   );
 };
 
