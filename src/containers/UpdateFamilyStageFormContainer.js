@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { object, func, arrayOf, string } from 'prop-types';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
@@ -145,8 +145,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
     }
     const clientPromise = () => refetchClient();
 
-    let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
-    let newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage', 'attributes.clientInfo']))
+    let newUuidAux = immutable.wrap(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
+    let newClient = immutable.wrap(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage', 'attributes.clientInfo']))
       .set('attributes.status', FAMILY_STATUS_ACTIVE)
       .set('attributes.stage', stage);
     if (moveInDate) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { arrayOf, object, func } from 'prop-types';
-import produce from 'immer';
+import * as immutable from 'object-path-immutable';
 
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import { prefetch, query } from 'sly/services/newApi';
@@ -86,10 +86,9 @@ export default class DashboardFavoritesPageContainer extends Component {
     const { updateUserSave, status, notifyInfo } = this.props;
     const { result: rawUserSaves } = status.userSaves;
     const rawUserSave = rawUserSaves.find(us => us.id === id);
+    const userSave = immutable.set(rawUserSave, 'attributes.status', USER_SAVE_DELETE_STATUS);
 
-    return updateUserSave({ id }, produce(rawUserSave, (draft) => {
-      draft.attributes.status = USER_SAVE_DELETE_STATUS;
-    }))
+    return updateUserSave({ id }, userSave)
       .then(() => status.userSaves.refetch())
       .then(() => notifyInfo('Community has been removed from favorites'));
   };
@@ -118,6 +117,7 @@ export default class DashboardFavoritesPageContainer extends Component {
 
       showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />);
     };
+
     const openNoteModification = (e) => {
       e.preventDefault();
 
@@ -143,6 +143,7 @@ export default class DashboardFavoritesPageContainer extends Component {
 
       showModal(<AddOrEditNoteForSavedCommunityContainer {...modalComponentProps} />, null, 'noPadding', false);
     };
+
     const onUnfavouriteClick = (e) => {
       e.preventDefault();
 

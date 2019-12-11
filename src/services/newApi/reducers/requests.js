@@ -1,4 +1,4 @@
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 
 const invalidate = (state, actionName, key) => (
   immutable.set(state, [actionName, key, 'invalid'], true)
@@ -18,9 +18,8 @@ export default function reducer(state = initialState, action) {
       return Object.keys(state[actionName]).reduce((acc, key) => {
         if (params(...JSON.parse(key))) {
           return invalidate(acc, actionName, key);
-        } else {
-          return acc;
         }
+        return acc;
       }, state);
     } else if (params && state[actionName][JSON.stringify(params)]) {
       return invalidate(state, actionName, JSON.stringify(params));
@@ -60,7 +59,6 @@ export default function reducer(state = initialState, action) {
     );
 
     return newState;
-
   } else if (metaType === 'response' && action.payload) {
     let newState = state;
 
@@ -87,7 +85,7 @@ export default function reducer(state = initialState, action) {
         newState = immutable.set(
           newState,
           [name, JSON.stringify(params), 'meta'],
-          meta
+          meta,
         );
       }
     }
@@ -127,11 +125,10 @@ export default function reducer(state = initialState, action) {
     );
 
     if (action.payload instanceof Error) {
-
       newState = immutable.set(
         newState,
         [name, JSON.stringify(params), 'error'],
-        action.payload.message
+        action.payload.message,
       );
 
       newState = immutable.del(
@@ -143,13 +140,11 @@ export default function reducer(state = initialState, action) {
         newState,
         [name, JSON.stringify(params), 'status'],
       );
-
     } else {
-
       newState = immutable.set(
         newState,
         [name, JSON.stringify(params), 'error'],
-        action.payload.body
+        action.payload.body,
       );
 
       newState = immutable.set(

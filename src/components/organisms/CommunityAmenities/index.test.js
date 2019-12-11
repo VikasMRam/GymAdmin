@@ -16,7 +16,8 @@ describe('CommunityAmenities', () => {
       community: noInfoCommunity,
     });
 
-    expect(wrapper.find('Paragraph').dive().dive().text()).toContain('No information about amenities currently available');
+    expect(wrapper.find('Paragraph').dive().dive().render()
+      .text()).toContain('No information about amenities currently available');
   });
 
   it('verify communityHighlights shown', () => {
@@ -29,7 +30,7 @@ describe('CommunityAmenities', () => {
 
     elements.slice(0, communityHighlights.length).forEach((hl, i) => {
       expect(hl.find('IconItem').dive().dive().find('Block')
-        .dive()
+        .render()
         .text()).toContain(communityHighlights[i]);
     });
   });
@@ -44,9 +45,7 @@ describe('CommunityAmenities', () => {
     const elements = wrapper.find('Wrapper').children();
 
     elements.slice(communityHighlights.length, personalSpace.length).forEach((hl, i) => {
-      expect(hl.find('IconItem').dive().dive().find('Block')
-        .dive()
-        .text()).toContain(personalSpace[i]);
+      expect(hl.find('IconItem').render().text()).toContain(personalSpace[i]);
     });
   });
 

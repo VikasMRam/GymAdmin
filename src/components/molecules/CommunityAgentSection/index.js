@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { func } from 'prop-types';
-import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
 import agentPropType from 'sly/propTypes/agent';
 import { getAgentUrl } from 'sly/services/helpers/url';
 import { Icon, Block, Image, Link } from 'sly/components/atoms';
+import { phoneFormatter } from 'sly/services/helpers/phone';
 
 const SubHeadingSection = styled.div`
   display: flex;
@@ -100,11 +100,7 @@ const CommunityAgentSection = ({
           slyPhone &&
           (
             <PhoneLink href={`tel:${slyPhone}`} onClick={onPhoneClick}>
-              <NumberFormat
-                value={slyPhone}
-                format="(###) ###-####"
-                displayType="text"
-              />
+              {phoneFormatter(slyPhone, true)}
             </PhoneLink>
           )
         }

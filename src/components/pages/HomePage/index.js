@@ -9,9 +9,8 @@ import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import SlyEvent from 'sly/services/helpers/events';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
-import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
-import { Image, Centered, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
+import { Image, Centered, Label, Heading, Hr, Link, Block, Button, Paragraph } from 'sly/components/atoms';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
@@ -148,7 +147,7 @@ const StyledLink = styled(Link)`
   display: block;
 `;
 
-const VideoSection = StyledSection.extend`
+const VideoSection = styled(StyledSection)`
   width: 100%;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -294,9 +293,9 @@ const mostSearchedCities = [
     title: '60+ communities',
   },
   {
-    to: '/assisted-living/florida/miami',
-    image: assetPath('images/cities/Miami.jpeg'),
-    subtitle: 'Miami, FL',
+    to: '/assisted-living/florida/sacramento',
+    image: assetPath('images/cities/Sacramento.jpeg'),
+    subtitle: 'Sacramento, CA',
     title: '150+ communities',
   },
 ];
@@ -460,6 +459,26 @@ const HomePage = ({
         </StyledSection>
         <Hr />
         <StyledSection title="Most Searched Cities">
+          <Paragraph>
+            Find the best assisted living communities, memory care facilities and more within 8 of the most searched
+            cities in the United States. From{' '}
+            <Link href="https://www.seniorly.com/assisted-living/california/los-angeles">
+              Los Angeles
+            </Link>
+            {' '}and{' '}
+            <Link href="https://www.seniorly.com/assisted-living/california/sacramento">
+              Sacramento
+            </Link>
+            {' '}to{' '}
+            <Link href="https://www.seniorly.com/assisted-living/texas/dallas">
+              Dallas
+            </Link>
+            {' '}and{' '}
+            <Link href="https://www.seniorly.com/assisted-living/florida/orlando">
+              Orlando
+            </Link>
+            , you will find photos, estimated cost per month, unique property highlights and more.
+          </Paragraph>
           <MSCColumnWrapper>
             {mostSearchedCitiesComponents}
           </MSCColumnWrapper>

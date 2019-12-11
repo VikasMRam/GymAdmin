@@ -108,7 +108,7 @@ export const Consumers = [
   {
     imageUrl: 'vectors/Payments.svg',
     heading: 'We offer you more options for paying your monthly rent',
-    content: `Once you select a community, chances are they will not accept a credit card to pay rent. We can help you with that. Our free billing system allows you to pay your rent and other select services with your credit card.`,
+    content: 'Once you select a community, chances are they will not accept a credit card to pay rent. We can help you with that. Our free billing system allows you to pay your rent and other select services with your credit card.',
   },
 ];
 

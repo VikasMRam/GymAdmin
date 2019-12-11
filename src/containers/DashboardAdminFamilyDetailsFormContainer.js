@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 import { createValidator, email, usPhone, dependentRequired, required } from 'sly/services/validation';
@@ -70,7 +70,7 @@ export default class DashboardFamilyDetailsFormContainer extends Component {
         state,
       };
     }
-    let newBareClient = immutable(pick(newClient, ['id', 'type', 'attributes.clientInfo', 'relationships']));
+    let newBareClient = immutable.wrap(pick(newClient, ['id', 'type', 'attributes.clientInfo', 'relationships']));
     if (name) {
       newBareClient.set('attributes.clientInfo.name', name);
     }
@@ -81,7 +81,7 @@ export default class DashboardFamilyDetailsFormContainer extends Component {
       newBareClient.set('attributes.clientInfo.phoneNumber', phone);
     }
 
-    let newUuidAux = immutable(pick(newBareClient, ['relationships.uuidAux']));
+    let newUuidAux = immutable.wrap(pick(newBareClient, ['relationships.uuidAux']));
 
     if (residentName) {
       newUuidAux.set('attributes.uuidInfo.residentInfo.fullName', residentName);

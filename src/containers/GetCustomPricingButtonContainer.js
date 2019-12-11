@@ -1,5 +1,6 @@
 import React from 'react';
 import { bool } from 'prop-types';
+
 import GetCustomPricingContainer from 'sly/containers/GetCustomPricingContainer';
 import Button from 'sly/components/atoms/Button';
 

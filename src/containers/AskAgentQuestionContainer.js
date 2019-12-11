@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
 import loadable from '@loadable/component';
-import withRouter from 'react-router/withRouter';
+import { withRouter } from 'react-router';
 
 import { assetPath } from 'sly/components/themes';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';

@@ -1,7 +1,7 @@
 import React from 'react';
+import { parse } from 'query-string';
 
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import { parse } from 'query-string';
 import { Datatable } from 'sly/services/datatable';
 import DashboardAgentContactsSectionContainer from 'sly/containers/dashboard/DashboardAgentContactsSectionContainer';
 
@@ -11,7 +11,7 @@ const DashboardAgentContactsPage = ({ location }) => {
   const sectionFilters = {
     'page-number': pageNumber,
     include: 'entities',
-    'filter[entity_type]': 'eq:Property'
+    'filter[entity_type]': 'eq:Property',
   };
   return (
     <DashboardPageTemplate activeMenuItem="My Contacts">

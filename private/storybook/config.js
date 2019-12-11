@@ -12,8 +12,8 @@ import utc from 'dayjs/plugin/utc';
 
 import configureStore from 'sly/store/configure';
 import theme from 'sly/components/themes/default';
-import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
-import setDatepickerStyles from 'sly/components/themes/datepickerStyles';
+import GlobalStyles from 'sly/components/themes/GlobalStyles';
+import DatepickerStyles from 'sly/components/themes/DatepickerStyles';
 
 const store = configureStore({});
 const req = require.context('sly/components', true, /.stories.js$/);
@@ -22,8 +22,6 @@ dayjs.extend(advancedFormat);
 dayjs.extend(utc);
 
 function configureStorybook() {
-  setGlobalStyles();
-  setDatepickerStyles();
   req.keys().forEach(filename => req(filename));
   Modal.setAppElement('#root');
 }
@@ -36,7 +34,11 @@ setOptions({
 addDecorator(story => (
   <Provider store={store}>
     <BrowserRouter>
-      <ThemeProvider theme={theme}>{story()}</ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <DatepickerStyles />
+        {story()}
+      </ThemeProvider>
     </BrowserRouter>
   </Provider>
 ));

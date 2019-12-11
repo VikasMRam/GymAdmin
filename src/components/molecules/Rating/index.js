@@ -1,6 +1,6 @@
 /* eslint-disable no-mixed-operators */
 import React, { Fragment } from 'react';
-import { number, string, oneOf } from 'prop-types';
+import { number, string, oneOf, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { palette, size } from 'sly/components/themes';
@@ -56,27 +56,24 @@ const MaskedStar = ({ value, ...props }) => {
   );
 };
 
-const Rating = ({ palette, value, size, ...props }) => {
-  return (
-    <>
-      <Wrapper {...props}>
-        <StyledStar size={size} viewBox="0 0 120 24">
-          {times(5, i => (
-            <Fragment key={`star${i}`}>
-              {value >= i + 1 && <StarPath palette={palette} transform={`translate(${i * 24}, 0)`} />}
-              {value < i + 1 && <StarFillPath palette={palette} transform={`translate(${i * 24}, 0)`} />}
-              {value > i &&
-                value < i + 1 && <MaskedStar palette={palette} value={value} transform={`translate(${i * 24}, 0)`} />}
-            </Fragment>
-          ))}
-        </StyledStar>
-      </Wrapper>
-    </>
-  );
-};
+const Rating = ({ palette, value, innerRef, size, ...props }) => (
+  <Wrapper {...props}>
+    <StyledStar ref={innerRef} size={size} viewBox="0 0 120 24">
+      {times(5, i => (
+        <Fragment key={`star${i}`}>
+          {value >= i + 1 && <StarPath palette={palette} transform={`translate(${i * 24}, 0)`} />}
+          {value < i + 1 && <StarFillPath palette={palette} transform={`translate(${i * 24}, 0)`} />}
+          {value > i &&
+            value < i + 1 && <MaskedStar palette={palette} value={value} transform={`translate(${i * 24}, 0)`} />}
+        </Fragment>
+      ))}
+    </StyledStar>
+  </Wrapper>
+);
 
 Rating.propTypes = {
   size: oneOf(['small', 'regular']),
+  innerRef: object,
   value: number.isRequired,
   palette: string,
 };

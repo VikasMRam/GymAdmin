@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { phoneFormatter } from 'sly/services/helpers/phone';
 import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
 import LindaIwamota from 'sly/../private/storybook/sample-data/agent-linda-iwamota.json';
 
@@ -18,8 +19,8 @@ describe('CommunityAgentSection', () => {
     expect(wrapper.contains(LindaIwamota.info.displayName)).toBe(true);
     expect(wrapper.contains(LindaIwamota.info.email)).toBe(true);
     expect(wrapper.find('Image').prop('src')).toEqual(LindaIwamota.info.profileImageUrl);
-    expect(wrapper.find('NumberFormat')).toHaveLength(1);
-    expect(wrapper.find('NumberFormat').prop('value')).toEqual(LindaIwamota.info.slyPhone);
+    expect(wrapper.find('PhoneLink')).toHaveLength(1);
+    expect(wrapper.find('PhoneLink').text()).toEqual(phoneFormatter(LindaIwamota.info.slyPhone, true));
   });
 
   it('renders chosenReview', () => {
@@ -30,8 +31,8 @@ describe('CommunityAgentSection', () => {
     expect(wrapper.contains(LindaIwamota.info.email)).toBe(true);
     expect(wrapper.contains('abc')).toBe(true);
     expect(wrapper.find('Image').prop('src')).toEqual(LindaIwamota.info.profileImageUrl);
-    expect(wrapper.find('NumberFormat')).toHaveLength(1);
-    expect(wrapper.find('NumberFormat').prop('value')).toEqual(LindaIwamota.info.slyPhone);
+    expect(wrapper.find('PhoneLink')).toHaveLength(1);
+    expect(wrapper.find('PhoneLink').text()).toEqual(phoneFormatter(LindaIwamota.info.slyPhone, true));
   });
 
   it('handles onPhoneClick', () => {

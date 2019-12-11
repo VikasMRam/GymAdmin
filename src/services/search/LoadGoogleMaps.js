@@ -8,7 +8,7 @@ export default class LoadGoogleMaps extends Component {
   hasLoadedMaps = false;
 
   loadMaps = () => {
-    if(this.hasLoadedMaps) {
+    if (this.hasLoadedMaps) {
       return;
     }
     this.hasLoadedMaps = true;
@@ -17,12 +17,12 @@ export default class LoadGoogleMaps extends Component {
     if (loadAutoComplete) {
       scriptjs(
         `https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&v=3.exp&libraries=geometry,drawing,places`,
-        () => window[this.callbackFunctionName] && window[this.callbackFunctionName]()
+        () => window[this.callbackFunctionName] && window[this.callbackFunctionName](),
       );
     }
   };
 
   render() {
-    return this.props.children(this.callbackFunctionName, this.loadMaps)
+    return this.props.children(this.callbackFunctionName, this.loadMaps);
   }
 }

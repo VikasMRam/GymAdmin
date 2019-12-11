@@ -30,7 +30,7 @@ const Wrapper = styled.nav`
 `;
 
 const BreadCrumb = ({ items, innerRef, size }) => (
-  <Wrapper innerRef={innerRef} size={size}>
+  <Wrapper ref={innerRef} size={size}>
     <ol itemScope itemType="http://schema.org/BreadcrumbList">
       {
         items.map((item, key) => {

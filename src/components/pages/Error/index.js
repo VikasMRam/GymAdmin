@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { number, object } from 'prop-types';
 import styled from 'styled-components';
+import { withRouter } from 'react-router';
 
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { size, palette } from 'sly/components/themes';
@@ -41,6 +42,7 @@ const getTextError = (errorCode) => {
   return text;
 };
 
+@withRouter
 export default class ErrorPage extends Component {
   static contextTypes = {
     router: object,
@@ -50,11 +52,11 @@ export default class ErrorPage extends Component {
     errorCode: number.isRequired,
   };
 
-  componentWillMount() {
-    const { errorCode } = this.props;
-    const { router } = this.context;
-    if (router.staticContext) {
-      router.staticContext.status = errorCode;
+  constructor(props) {
+    super(props);
+    const { errorCode, staticContext } = props;
+    if (staticContext) {
+      staticContext.status = errorCode;
     }
   }
 

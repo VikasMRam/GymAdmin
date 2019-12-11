@@ -45,7 +45,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
 
     const fetch = (props, config) => dispatcher(
       placeholders => api[apiCall].asAction(placeholders, config),
-      props
+      props,
     );
 
     @withPrefetchWait
@@ -90,6 +90,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       };
 
       componentDidMount = this.mayBeFetch;
+
       componentDidUpdate = this.mayBeFetch;
 
       // props fetch bound to dispatch

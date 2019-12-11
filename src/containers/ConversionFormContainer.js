@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func, bool } from 'prop-types';
 
-import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import { withUser } from 'sly/services/newApi';
 
 import {
@@ -14,7 +13,6 @@ import {
   usPhone,
 } from 'sly/services/validation';
 import ConversionForm from 'sly/components/organisms/ConversionForm';
-import SlyEvent from 'sly/services/helpers/events';
 
 const validate = createValidator({
   full_name: [required],
@@ -42,33 +40,15 @@ const ReduxForm = reduxForm({
 export default class ConversionFormContainer extends Component {
   static propTypes = {
     community: object,
-    gotoWhatNext: func.isRequired,
     user: object,
-    submitExpressConversion: func.isRequired,
     submitRegularConversion: func.isRequired,
-    express: bool.isRequired,
-    showModal: func,
-    hideModal: func,
-  };
-
-  static defaultProps = {
-    express: false,
-  };
-
-  openAdvisorHelp = () => {
-    const { showModal, hideModal } = this.props;
-    showModal(<AdvisorHelpPopup onButtonClick={hideModal} />);
   };
 
   render() {
-    const { openAdvisorHelp } = this;
     const {
-      submitExpressConversion,
       submitRegularConversion,
-      gotoWhatNext,
       user,
       community,
-      express,
       ...props
     } = this.props;
 
@@ -86,28 +66,14 @@ export default class ConversionFormContainer extends Component {
       const { agents } = community;
       [agent] = agents;
     }
-    const submitConversion = express
-      ? submitExpressConversion
-      : submitRegularConversion;
-
 
     return (
       <ReduxForm
         initialValues={initialValues}
-        onSubmit={submitConversion}
+        onSubmit={submitRegularConversion}
         agent={agent}
-        gotoWhatNext={gotoWhatNext}
         community={community}
         hasOnlyEmail={user && hasOnlyEmail(user)}
-        onAdvisorHelpClick={() => {
-          SlyEvent.getInstance().sendEvent({
-            category: 'advisor-learn-more',
-            action: 'click',
-            label: community.id,
-            value: '',
-          });
-          openAdvisorHelp();
-        }}
         {...props}
       />
     );

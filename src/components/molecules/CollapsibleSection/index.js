@@ -130,7 +130,7 @@ export default class CollapsibleSection extends Component {
             collapsed={collapsed}
             borderless={borderless}
             size={size}
-            innerRef={innerRef}
+            ref={innerRef}
             className={className}
           >
             <Header onClick={this.toggle} borderless={borderless}>

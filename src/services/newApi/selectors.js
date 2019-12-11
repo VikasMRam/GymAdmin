@@ -80,7 +80,7 @@ export function getRequestMeta(request) {
 }
 
 export function isRequestLoading(request) {
-  return request && request.isLoading ? true : false;
+  return !!(request && request.isLoading);
 }
 
 export function hasRequestStarted(request) {

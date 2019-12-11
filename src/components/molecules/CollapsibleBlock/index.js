@@ -22,7 +22,7 @@ export const blockCapHeight = (props) => {
   return size('collapsible', props.minHeight);
 };
 
-export const ReadMore = styled(Link)`
+export const ReadMore = styled(({ chevronOnLeft, moreLabelOn, ...rest }) => <Link {...rest} />)`
   display: flex;
   align-items: center;
   justify-content: ${ifProp({ moreLabelOn: 'center' }, 'center')};
@@ -121,7 +121,6 @@ export default class CollapsibleBlock extends Component {
                 onClick={this.toggle}
                 chevronOnLeft={chevronOnLeft}
                 moreLabelOn={moreLabelOn}
-                transparent
               >
                 <Block size="caption" palette="primary">
                   {collapsed ? collapsedLabel : notCollapsedLabel}

@@ -28,7 +28,7 @@ describe('CommunityFloorPlanListItem', () => {
   it('renders shared price', () => {
     const wrapper = wrap({ shareType: 'Shared', priceShared: 8234.34 });
     expect(wrapper.contains(defaultProp.price)).toBe(false);
-    expect(wrapper.find('StyledNumberFormat').prop('value')).toEqual(8234.34);
+    expect(wrapper.find('StyledNumberFormat').text()).toEqual('$8,234');
   });
 
   it('handles onItemClick', () => {

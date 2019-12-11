@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { func, object } from 'prop-types';
 import { reduxForm, reset } from 'redux-form';
 import { withRouter } from 'react-router';
-import produce from 'immer';
+import * as immutable from 'object-path-immutable';
 
 import { query, prefetch, withUser, withAuth } from 'sly/services/newApi';
 import { createValidator, required, usPhone, email } from 'sly/services/validation';
@@ -54,12 +54,25 @@ export default class TalkToAgentFormContainer extends Component {
       user,
     } = this.props;
 
-    const uuidAux = status.uuidAux.result;
+    const rawUuidAux = status.uuidAux.result;
     const { message, location, name } = data;
+
     let { phone } = data;
     if (user && user.phoneNumber) {
       ({ phoneNumber: phone } = user);
     }
+
+    const uuidInfo = rawUuidAux.attributes.uuidInfo || {};
+    const locationInfo = uuidInfo.locationInfo || {};
+
+    if (location) {
+      const { city, state, geo } = location;
+      locationInfo.city = city;
+      locationInfo.state = state;
+      locationInfo.geo = geo;
+    }
+
+    const uuidAux = immutable.set(rawUuidAux, 'attributes.uuidInfo.locationInfo', locationInfo);
 
     return Promise.all([
       createAction({
@@ -70,20 +83,8 @@ export default class TalkToAgentFormContainer extends Component {
           actionType: CONSULTATION_REQUESTED,
         },
       }),
-      updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
-        const uuidInfo = draft.attributes.uuidInfo || {};
-        const locationInfo = uuidInfo.locationInfo || {};
 
-        if (location) {
-          const { city, state, geo } = location;
-          locationInfo.city = city;
-          locationInfo.state = state;
-          locationInfo.geo = geo;
-        }
-
-        uuidInfo.locationInfo = locationInfo;
-        draft.attributes.uuidInfo = uuidInfo;
-      })),
+      updateUuidAux({ id: uuidAux.id }, uuidAux),
     ])
       .then(() => createOrUpdateUser({
         name,

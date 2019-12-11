@@ -102,7 +102,7 @@ export default class Masonry extends Component {
     const { width, rowSpans } = this.state;
 
     return (
-      <Parent innerRef={this.ref} width={width}>
+      <Parent ref={this.ref} width={width}>
         {this.props.children.map((child, i) => (
           <Child key={i} order={i + 1} span={rowSpans[i]} isLastItem={i === this.props.children.length - 1}>
             {child}

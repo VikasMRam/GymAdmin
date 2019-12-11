@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { object, func, string, shape } from 'prop-types';
-import produce from 'immer';
+import * as immutable from 'object-path-immutable';
 
 import { prefetch, query, withAuth } from 'sly/services/newApi';
 import { community as communityPropType } from 'sly/propTypes/community';
@@ -18,7 +18,7 @@ const getCommunitySlug = match => match.params.communitySlug;
   req({
     id: getCommunitySlug(match),
     include: 'similar-communities,questions,agents',
-  })
+  }),
 )
 
 @withAuth
@@ -50,7 +50,13 @@ export default class BookATourPageContainer extends Component {
       name, phone, medicaidCoverage,
     } = data;
 
-    const uuidAux = status.uuidAux.result;
+    const rawUuidAux = status.uuidAux.result;
+
+    const uuidAux = immutable.wrap(rawUuidAux);
+
+    if (medicaidCoverage) {
+      uuidAux.set('attributes.uuidInfo.financialInfo.medicaid', medicareToBool(medicaidCoverage));
+    }
 
     return Promise.all([
       createAction({
@@ -67,13 +73,7 @@ export default class BookATourPageContainer extends Component {
           actionPage: match.url,
         },
       }),
-      updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
-        const financialInfo = draft.attributes.uuidInfo.financialInfo || {};
-        if (medicaidCoverage) {
-          financialInfo.medicaid = medicareToBool(medicaidCoverage);
-        }
-        draft.attributes.uuidInfo.financialInfo = financialInfo;
-      })),
+      updateUuidAux({ id: rawUuidAux.id }, uuidAux.value()),
     ]).then(() => createOrUpdateUser({
       name,
       phone,

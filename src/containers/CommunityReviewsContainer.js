@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import withRouter from 'react-router/withRouter';
+import { withRouter } from 'react-router';
 
 import EntityReviews from 'sly/components/organisms/EntityReviews';
 import SlyEvent from 'sly/services/helpers/events';
