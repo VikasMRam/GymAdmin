@@ -28,7 +28,7 @@ describe('DiscoverHomeTile', () => {
       image, title, description, buttonText, onButtonClick,
     });
     expect(wrapper.find(StyledHeading)).toHaveLength(1);
-    expect(wrapper.find(StyledHeading).dive().dive().dive()
+    expect(wrapper.find(StyledHeading).dive().dive()
       .render()
       .text()).toBe(title);
   });

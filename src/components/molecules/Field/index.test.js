@@ -36,7 +36,7 @@ describe('Field', () => {
     const maxLength = 20;
     const wrapper = wrap({ showCharacterCount: true, maxLength });
     expect(wrapper.find('CharCount')).toHaveLength(1);
-    expect(wrapper.find('CharCount').dive().dive().render()
+    expect(wrapper.find('CharCount').dive().render()
       .text()).toBe(`0/${maxLength}`);
   });
 
@@ -50,7 +50,7 @@ describe('Field', () => {
     const value = 'test val';
     const wrapper = wrap({ showCharacterCount: true, value, maxLength });
     expect(wrapper.find('CharCount')).toHaveLength(1);
-    expect(wrapper.find('CharCount').dive().dive().render()
+    expect(wrapper.find('CharCount').dive().render()
       .text()).toBe(`${value.length}/${maxLength}`);
   });
 

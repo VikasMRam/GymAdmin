@@ -14,8 +14,7 @@ describe('ExitIntentQuestionForm', () => {
   it('should render ExitIntentQuestionForm', () => {
     const wrapper = wrap({});
 
-    expect(wrapper.find('StyledHeading').dive().dive().dive()
-      .dive()
+    expect(wrapper.find('StyledHeading').dive().dive()
       .render()
       .text()).toContain(title);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
@@ -28,8 +27,7 @@ describe('ExitIntentQuestionForm', () => {
   it('render error when error is passed', () => {
     const wrapper = wrap({ error });
 
-    expect(wrapper.find('StyledHeading').dive().dive().dive()
-      .dive()
+    expect(wrapper.find('StyledHeading').dive().dive()
       .render()
       .text()).toContain(title);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
