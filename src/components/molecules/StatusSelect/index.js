@@ -148,7 +148,7 @@ export default class StatusSelect extends Component {
     client.set('attributes.status', clientStatus);
 
     if (reason) {
-      client.set(['attributes.clientInfo', reasonKeys[clientStatus]], reason);
+      client.set(`attributes.clientInfo.${reasonKeys[clientStatus]}`, reason);
     }
 
     if (date) {
