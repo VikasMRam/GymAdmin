@@ -189,6 +189,7 @@ const CommunityTile = ({
             community={community}
             showFloorPlan={showFloorPlan}
             showDescription={showDescription}
+            headerIsLink={true}
           />
           {buildActionButtons(actionButtons)}
           {(note || addNote) && <Hr />}
