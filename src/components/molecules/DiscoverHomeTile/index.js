@@ -48,7 +48,7 @@ const DiscoverHomeTile = ({
   onButtonClick,
 }) => (
   <Wrapper>
-    <Image src={image} aspectRatio="3:2" />
+    <Image src={image} alt={title} aspectRatio="3:2" />
     <StyledBox snap="top">
       <StyledHeading>{title}</StyledHeading>
       <Block palette="slate">{description}</Block>
