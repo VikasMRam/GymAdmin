@@ -53,203 +53,203 @@ export const MostSearchedCities = [
 
 export const ALSeoCities = [
   {
-    title: 'Los Angeles Assisted Living',
+    title: 'Los Angeles',
     to: '/assisted-living/california/los-angeles',
   },
   {
-    title: 'San Francisco Assisted Living',
+    title: 'San Francisco',
     to: '/assisted-living/california/san-francisco',
   },
   {
-    title: 'New York Assisted Living',
+    title: 'New York',
     to: '/assisted-living/new-york/new-york',
   },
   {
-    title: 'San Diego Assisted Living',
+    title: 'San Diego',
     to: '/assisted-living/california/san-diego',
   },
   {
-    title: 'Phoenix Assisted Living',
+    title: 'Phoenix',
     to: '/assisted-living/arizona/phoenix',
   },
   {
-    title: 'Chicago Assisted Living',
+    title: 'Chicago',
     to: '/assisted-living/illinois/chicago',
   },
   {
-    title: 'Atlanta Assisted Living',
+    title: 'Atlanta',
     to: '/assisted-living/georgia/atlanta',
   },
   {
-    title: 'San Jose Assisted Living',
+    title: 'San Jose',
     to: '/assisted-living/california/san-jose',
   },
   {
-    title: 'Dallas Assisted Living',
+    title: 'Dallas',
     to: '/assisted-living/texas/dallas',
   },
   {
-    title: 'Houston Assisted Living',
+    title: 'Houston',
     to: '/assisted-living/texas/houston',
   },
   {
-    title: 'Sacramento Assisted Living',
+    title: 'Sacramento',
     to: '/assisted-living/california/sacramento',
   },
   {
-    title: 'Seattle Assisted Living',
+    title: 'Seattle',
     to: '/assisted-living/washington/seattle',
   },
   {
-    title: 'Washington Assisted Living',
+    title: 'Washington',
     to: '/assisted-living/district-of-columbia/washington',
   },
   {
-    title: 'Philadelphia Assisted Living',
+    title: 'Philadelphia',
     to: '/assisted-living/pennsylvania/philadelphia',
   },
   {
-    title: 'Charlotte Assisted Living',
+    title: 'Charlotte',
     to: '/assisted-living/north-carolina/charlotte',
   },
   {
-    title: 'Orlando Assisted Living',
+    title: 'Orlando',
     to: '/assisted-living/florida/orlando',
   },
   {
-    title: 'Oakland Assisted Living',
+    title: 'Oakland',
     to: '/assisted-living/california/oakland',
   },
   {
-    title: 'Denver Assisted Living',
+    title: 'Denver',
     to: '/assisted-living/colorado/denver',
   },
   {
-    title: 'Milwaukee Assisted Living',
+    title: 'Milwaukee',
     to: '/assisted-living/wisconsin/milwaukee',
   },
   {
-    title: 'Tampa Assisted Living',
+    title: 'Tampa',
     to: '/assisted-living/florida/tampa',
   },
   {
-    title: 'Miami Assisted Living',
+    title: 'Miami',
     to: '/assisted-living/florida/miami',
   },
   {
-    title: 'Boston Assisted Living',
+    title: 'Boston',
     to: '/assisted-living/massachusetts/boston',
   },
   {
-    title: 'Portland Assisted Living',
+    title: 'Portland',
     to: '/assisted-living/oregon/portland',
   },
   {
-    title: 'Tucson Assisted Living',
+    title: 'Tucson',
     to: '/assisted-living/arizona/tucson',
   },
   {
-    title: 'Austin Assisted Living',
+    title: 'Austin',
     to: '/assisted-living/texas/austin',
   },
   {
-    title: 'Pittsburgh Assisted Living',
+    title: 'Pittsburgh',
     to: '/assisted-living/pennsylvania/pittsburgh',
   },
   {
-    title: 'San Antonio Assisted Living',
+    title: 'San Antonio',
     to: '/assisted-living/texas/san-antonio',
   },
   {
-    title: 'Madison Assisted Living',
+    title: 'Madison',
     to: '/assisted-living/wisconsin/madison',
   },
   {
-    title: 'Detroit Assisted Living',
+    title: 'Detroit',
     to: '/assisted-living/michigan/detroit',
   },
   {
-    title: 'Irvine Assisted Living',
+    title: 'Irvine',
     to: '/assisted-living/california/irvine',
   },
   {
-    title: 'Scottsdale Assisted Living',
+    title: 'Scottsdale',
     to: '/assisted-living/arizona/scottsdale',
   },
   {
-    title: 'Raleigh Assisted Living',
+    title: 'Raleigh',
     to: '/assisted-living/north-carolina/raleigh',
   },
   {
-    title: 'Roseville Assisted Living',
+    title: 'Roseville',
     to: '/assisted-living/california/roseville',
   },
   {
-    title: 'Nashville Assisted Living',
+    title: 'Nashville',
     to: '/assisted-living/tennessee/nashville',
   },
   {
-    title: 'Ann Arbor Assisted Living',
+    title: 'Ann Arbor',
     to: '/assisted-living/michigan/ann-arbor',
   },
   {
-    title: 'San Mateo Assisted Living',
+    title: 'San Mateo',
     to: '/assisted-living/california/san-mateo',
   },
   {
-    title: 'Columbus Assisted Living',
+    title: 'Columbus',
     to: '/assisted-living/ohio/columbus',
   },
   {
-    title: 'Walnut Creek Assisted Living',
+    title: 'Walnut Creek',
     to: '/assisted-living/california/walnut-creek',
   },
   {
-    title: 'Mesa Assisted Living',
+    title: 'Mesa',
     to: '/assisted-living/arizona/mesa',
   },
   {
-    title: 'Kansas City Assisted Living',
+    title: 'Kansas City',
     to: '/assisted-living/kansas/kansas-city',
   },
   {
-    title: 'Fresno Assisted Living',
+    title: 'Fresno',
     to: '/assisted-living/california/fresno',
   },
   {
-    title: 'Santa Rosa Assisted Living',
+    title: 'Santa Rosa',
     to: '/assisted-living/california/santa-rosa',
   },
   {
-    title: 'Honolulu Assisted Living',
+    title: 'Honolulu',
     to: '/assisted-living/hawaii/honolulu',
   },
   {
-    title: 'Long Beach Assisted Living',
+    title: 'Long Beach',
     to: '/assisted-living/california/long-beach',
   },
   {
-    title: 'St. Louis Assisted Living',
+    title: 'St. Louis',
     to: '/assisted-living/missouri/st.-louis',
   },
   {
-    title: 'Sunnyvale Assisted Living',
+    title: 'Sunnyvale',
     to: '/assisted-living/california/sunnyvale',
   },
   {
-    title: 'Virginia Beach Assisted Living',
+    title: 'Virginia Beach',
     to: '/assisted-living/virginia/virginia-beach',
   },
   {
-    title: 'Jacksonville Assisted Living',
+    title: 'Jacksonville',
     to: '/assisted-living/florida/jacksonville',
   },
   {
-    title: 'San Rafael Assisted Living',
+    title: 'San Rafael',
     to: '/assisted-living/california/san-rafael',
   },
   {
-    title: 'Redwood City Assisted Living',
+    title: 'Redwood City',
     to: '/assisted-living/california/redwood-city',
   },
 ];
@@ -257,202 +257,202 @@ export const ALSeoCities = [
 export const ALSeoStates = [
   {
     to: '/assisted-living/california',
-    title: 'California Assisted Living',
+    title: 'California',
   },
   {
     to: '/assisted-living/florida',
-    title: 'Florida Assisted Living',
+    title: 'Florida',
   },
   {
     to: '/assisted-living/georgia',
-    title: 'Georgia Assisted Living',
+    title: 'Georgia',
   },
   {
     to: '/assisted-living/texas',
-    title: 'Texas Assisted Living',
+    title: 'Texas',
   },
   {
     to: '/assisted-living/new-york',
-    title: 'New York Assisted Living',
+    title: 'New York',
   },
   {
     to: '/assisted-living/north-carolina',
-    title: 'North Carolina Assisted Living',
+    title: 'North Carolina',
   },
   {
     to: '/assisted-living/new-jersey',
-    title: 'New Jersey Assisted Living',
+    title: 'New Jersey',
   },
   {
     to: '/assisted-living/washington ',
-    title: 'Washington Assisted Living',
+    title: 'Washington',
   },
   {
     to: '/assisted-living/pennsylvania',
-    title: 'Pennsylvania Assisted Living',
+    title: 'Pennsylvania',
   },
   {
     to: '/assisted-living/oregon',
-    title: 'Oregon Assisted Living',
+    title: 'Oregon',
   },
   {
     to: '/assisted-living/illinois',
-    title: 'Illinois Assisted Living',
+    title: 'Illinois',
   },
   {
     to: '/assisted-living/wisconsin',
-    title: 'Wisconsin Assisted Living',
+    title: 'Wisconsin',
   },
   {
     to: '/assisted-living/arizona',
-    title: 'Arizona Assisted Living',
+    title: 'Arizona',
   },
   {
     to: '/assisted-living/alabama',
-    title: 'Alabama Assisted Living',
+    title: 'Alabama',
   },
   {
     to: '/assisted-living/alaska',
-    title: 'Alaska Assisted Living',
+    title: 'Alaska',
   },
   {
     to: '/assisted-living/arkansas',
-    title: 'Arkansas Assisted Living',
+    title: 'Arkansas',
   },
   {
     to: '/assisted-living/colorado',
-    title: 'Colorado Assisted Living',
+    title: 'Colorado',
   },
   {
     to: '/assisted-living/connecticut',
-    title: 'Connecticut Assisted Living',
+    title: 'Connecticut',
   },
   {
     to: '/assisted-living/delaware',
-    title: 'Delaware Assisted Living',
+    title: 'Delaware',
   },
   {
     to: '/assisted-living/hawaii',
-    title: 'Hawaii Assisted Living',
+    title: 'Hawaii',
   },
   {
     to: '/assisted-living/idaho',
-    title: 'Idaho Assisted Living',
+    title: 'Idaho',
   },
   {
     to: '/assisted-living/indiana',
-    title: 'Indiana Assisted Living',
+    title: 'Indiana',
   },
   {
     to: '/assisted-living/iowa',
-    title: 'Iowa Assisted Living',
+    title: 'Iowa',
   },
   {
     to: '/assisted-living/kansas',
-    title: 'Kansas Assisted Living',
+    title: 'Kansas',
   },
   {
     to: '/assisted-living/kentucky',
-    title: 'Kentucky Assisted Living',
+    title: 'Kentucky',
   },
   {
     to: '/assisted-living/louisiana',
-    title: 'Louisiana Assisted Living',
+    title: 'Louisiana',
   },
   {
     to: '/assisted-living/maine',
-    title: 'Maine Assisted Living',
+    title: 'Maine',
   },
   {
     to: '/assisted-living/maryland',
-    title: 'Maryland Assisted Living',
+    title: 'Maryland',
   },
   {
     to: '/assisted-living/massachusetts',
-    title: 'Massachusetts Assisted Living',
+    title: 'Massachusetts',
   },
   {
     to: '/assisted-living/michigan',
-    title: 'Michigan Assisted Living',
+    title: 'Michigan',
   },
   {
     to: '/assisted-living/minnesota',
-    title: 'Minnesota Assisted Living',
+    title: 'Minnesota',
   },
   {
     to: '/assisted-living/mississippi',
-    title: 'Mississippi Assisted Living',
+    title: 'Mississippi',
   },
   {
     to: '/assisted-living/missouri',
-    title: 'Missouri Assisted Living',
+    title: 'Missouri',
   },
   {
     to: '/assisted-living/montana',
-    title: 'Montana Assisted Living',
+    title: 'Montana',
   },
   {
     to: '/assisted-living/nebraska',
-    title: 'Nebraska Assisted Living',
+    title: 'Nebraska',
   },
   {
     to: '/assisted-living/nevada',
-    title: 'Nevada Assisted Living',
+    title: 'Nevada',
   },
   {
     to: '/assisted-living/new-hampshire',
-    title: 'New Hampshire Assisted Living',
+    title: 'New Hampshire',
   },
   {
     to: '/assisted-living/new-mexico',
-    title: 'New Mexico Assisted Living',
+    title: 'New Mexico',
   },
   {
     to: '/assisted-living/north-dakota',
-    title: 'North Dakota Assisted Living',
+    title: 'North Dakota',
   },
   {
     to: '/assisted-living/ohio',
-    title: 'Ohio Assisted Living',
+    title: 'Ohio',
   },
   {
     to: '/assisted-living/oklahoma',
-    title: 'Oklahoma Assisted Living',
+    title: 'Oklahoma',
   },
   {
     to: '/assisted-living/rhode-island',
-    title: 'Rhode Island Assisted Living',
+    title: 'Rhode Island',
   },
   {
     to: '/assisted-living/south-carolina',
-    title: 'South Carolina Assisted Living',
+    title: 'South Carolina',
   },
   {
     to: '/assisted-living/south-dakota',
-    title: 'South Dakota Assisted Living',
+    title: 'South Dakota',
   },
   {
     to: '/assisted-living/tennessee',
-    title: 'Tennessee Assisted Living',
+    title: 'Tennessee',
   },
   {
     to: '/assisted-living/utah',
-    title: 'Utah Assisted Living',
+    title: 'Utah',
   },
   {
     to: '/assisted-living/vermont',
-    title: 'Vermont Assisted Living',
+    title: 'Vermont',
   },
   {
     to: '/assisted-living/virginia',
-    title: 'Virginia Assisted Living',
+    title: 'Virginia',
   },
   {
     to: '/assisted-living/west-virginia',
-    title: 'West Virginia Assisted Living',
+    title: 'West Virginia',
   },
   {
     to: '/assisted-living/wyoming',
-    title: 'Wyoming Assisted Living',
+    title: 'Wyoming',
   },
 ];

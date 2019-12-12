@@ -768,7 +768,7 @@ const NearMePage = ({
           <Paragraph>
             Seniorly promises to make your search for assisted living near you easy and stress-free. In 2019, the
             national average monthly cost has been $4,051 for an assisted living facility. Below, compare assisted
-            living communities near you and then let us connect you to your local senior living expert.
+            living communities near you and then let us connect you to your local senior living advisor.
             They can answer all your questions, share costs, arrange tours, and even negotiate rent. Our services are free.
           </Paragraph>
         </StyledArticle>

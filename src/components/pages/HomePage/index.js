@@ -156,10 +156,10 @@ const VideoSection = styled(StyledSection)`
 `;
 
 const CenteredTile = styled(({
-  title, to, image, children, ...props
+  title, to, alt, image, children, ...props
 }) => (
   <StyledLink key={title} to={to} {...props}>
-    <Image src={image} aspectRatio="3:2">
+    <Image src={image} alt={alt} aspectRatio="3:2">
       <Centered>
         {children}
       </Centered>
@@ -172,42 +172,48 @@ const CenteredTile = styled(({
 
 const firstRowDiscoverHomes = [
   {
-    title: 'Board and Care Home',
-    description: 'A residential personal care home',
-    image: assetPath('images/home/discover-home/care-home.jpeg'),
-    buttonText: 'See more',
-    searchParams: { size: 'small' },
-  },
-  {
     title: 'Assisted Living',
-    description: 'Specializing in all of your daily care needs',
+    description: 'Living that includes assistance with activities of daily living (ADLs)',
     image: assetPath('images/home/discover-home/assisted-living.jpeg'),
+    alt: 'assisted-living-senior-living-seniorly',
     buttonText: 'See more',
     searchParams: { toc: 'assisted-living' },
   },
+  {
+    title: 'Board and Care Home',
+    description: 'A residential personal care home that’s usually more affordable',
+    image: assetPath('images/home/discover-home/care-home.jpeg'),
+    alt: 'board-and-care-home-senior-living-seniorly',
+    buttonText: 'See more',
+    searchParams: { size: 'small' },
+  },
+
 ];
 
 const secondRowDiscoverHomes = [
   {
-    title: 'Boutique',
-    description: 'More services in an intimate home-like setting',
-    image: assetPath('images/home/discover-home/studios-tile.jpeg'),
-    buttonText: 'See more',
-    searchParams: { size: 'medium' },
-  },
-  {
-    title: 'Luxury',
+    title: 'Luxury Assisted Living',
     description: 'The ultimate in comfort, care and community',
     image: assetPath('images/home/discover-home/1-bedroom-tile.jpeg'),
+    alt: 'luxury-assisted-living-senior-living-seniorly',
     buttonText: 'See more',
     searchParams: { size: 'large', budget: 5000 },
   },
   {
-    title: 'Memory Care',
+    title: 'Memory Care Options',
     description: 'For those with Alzheimer’s, Dementia and more',
     image: assetPath('images/home/discover-home/shared-rooms-tile.jpeg'),
+    alt: 'memory-care-senior-living-seniorly',
     buttonText: 'See more',
     searchParams: { toc: 'memory-care' },
+  },
+  {
+    title: 'More Senior Living',
+    description: 'Compare community features, cost, and photos',
+    image: assetPath('images/home/discover-home/studios-tile.jpeg'),
+    alt: 'senior-living-seniorly',
+    buttonText: 'See more',
+    searchParams: {},
   },
 ];
 
@@ -215,21 +221,25 @@ const usefulInformationTiles = [
   {
     to: '/independent-living',
     image: assetPath('images/home/useful-info/independent-living.jpg'),
+    alt: 'independent-living-senior-living-seniorly',
     title: 'Independent Living',
   },
   {
     to: '/assisted-living',
     image: assetPath('images/home/useful-info/assisted-living.jpg'),
+    alt: 'assisted-living-senior-living-seniorly',
     title: 'Assisted Living',
   },
   {
     to: '/memory-care',
     image: assetPath('images/home/useful-info/memory-care.jpg'),
+    alt: 'memory-care-senior-living-seniorly',
     title: 'Memory Care',
   },
   {
     to: '/board-and-care-home',
     image: assetPath('images/home/useful-info/board-and-care.jpg'),
+    alt: 'board-and-care-home-senior-living-seniorly',
     title: 'Board & Care Home',
   },
   /* {
@@ -240,11 +250,13 @@ const usefulInformationTiles = [
   {
     to: '/continuing-care-retirement-community',
     image: assetPath('images/home/useful-info/ccrc.jpg'),
+    alt: 'ccrc-senior-living-seniorly',
     title: 'CCRC / Life Plan',
   },
   {
     to: '/resources',
     image: assetPath('images/home/useful-info/more-resources.jpg'),
+    alt: 'more-senior-living-resources-seniorly',
     title: 'More Resources',
   },
 ];
@@ -253,48 +265,56 @@ const mostSearchedCities = [
   {
     to: '/assisted-living/california/san-francisco',
     image: assetPath('images/cities/SanFrancisco.jpeg'),
+    alt: 'san-francisco-assisted-living-seniorly',
     subtitle: 'San Francisco, CA',
     title: '95+ communities',
   },
   {
     to: '/assisted-living/california/los-angeles',
     image: assetPath('images/cities/LosAngeles.jpeg'),
+    alt: 'los-angeles-assisted-living-seniorly',
     subtitle: 'Los Angeles, CA',
     title: '105+ communities',
   },
   {
     to: '/assisted-living/california/san-diego',
     image: assetPath('images/cities/SanDiego.jpeg'),
+    alt: 'san-diego-assisted-living-seniorly',
     subtitle: 'San Diego, CA',
     title: '75+ communities',
   },
   {
     to: '/assisted-living/texas/dallas',
     image: assetPath('images/cities/Dallas.jpeg'),
+    alt: 'dallas-assisted-living-seniorly',
     subtitle: 'Dallas, TX',
     title: '90+ communities',
   },
   {
     to: '/assisted-living/texas/houston',
     image: assetPath('images/cities/Houston.jpeg'),
+    alt: 'houston-assisted-living-seniorly',
     subtitle: 'Houston, TX',
     title: '72+ communities',
   },
   {
     to: '/assisted-living/arizona/phoenix',
     image: assetPath('images/cities/Pheonix.jpeg'),
+    alt: 'phoenix-assisted-living-seniorly',
     subtitle: 'Phoenix, AZ',
     title: '151+ communities',
   },
   {
     to: '/assisted-living/florida/orlando',
     image: assetPath('images/cities/Orlando.jpeg'),
+    alt: 'orlando-assisted-living-seniorly',
     subtitle: 'Orlando, FL',
     title: '60+ communities',
   },
   {
     to: '/assisted-living/florida/sacramento',
     image: assetPath('images/cities/Sacramento.jpeg'),
+    alt: 'sacramento-assisted-living-seniorly',
     subtitle: 'Sacramento, CA',
     title: '150+ communities',
   },
@@ -336,10 +356,10 @@ const HomePage = ({
         <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
         <SearchBoxWrapper>
           <StyledHeading level="hero" size="hero" palette="white">
-            Find a Home to Love
+            Find The Best Senior Living Near You
           </StyledHeading>
           <StyledLabel palette="white">
-            Your search for housing and care has never been easier
+            Search Assisted Living, Memory Care, Nursing Homes and More
           </StyledLabel>
           <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>
@@ -424,11 +444,13 @@ const HomePage = ({
   return (
     <>
       <Helmet>
+        <title>Assisted Living Cost & Reviews | Senior Living Advisors</title>
+        <meta name="description" content="Find the best assisted living and other senior living like nursing homes, memory care, respite care, CCRC, skilled nursing facilities, independent living and more." />
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
-        <VideoSection title="How Seniorly Can Help You Find A Home" subtitle="" id="watch-video">
+        <VideoSection title="How Seniorly Can Help You Find The Best Senior Living Options" subtitle="This short video will explain how Seniorly can help you find the best assisted living or any senior living community. Call us at (855) 866-4515." id="watch-video">
           <HowSlyWorksVideo
             isPlaying={ishowSlyWorksVideoPlaying}
             onThumbnailClick={toggleHowSlyWorksVideoPlaying}
@@ -437,7 +459,7 @@ const HomePage = ({
           />
         </VideoSection>
         <Hr />
-        <StyledSection title="Discover Homes Near You">
+        <StyledSection title="Discover The Best Senior Living Near You">
           <TwoColumnWrapper>
             {firstRowDiscoverHomesComponents}
           </TwoColumnWrapper>
@@ -446,19 +468,19 @@ const HomePage = ({
           </ThreeColumnWrapper>
         </StyledSection>
         <Hr />
-        <StyledSection title="Meet Families We’ve Helped">
+        <StyledSection title="Let Us Help You Find The Best Senior Living" subtitle="Here's what others have said">
           <ThreeColumnWrapper>
             {familiesWeHaveHelpedTilesComponents}
           </ThreeColumnWrapper>
         </StyledSection>
         <Hr />
-        <StyledSection title="Useful Information">
+        <StyledSection title="Useful Senior Living Resources" subtitle="Get expert planning information for families and caregivers">
           <UIColumnWrapper>
             {usefulInformationTilesComponents}
           </UIColumnWrapper>
         </StyledSection>
         <Hr />
-        <StyledSection title="Most Searched Cities">
+        <StyledSection title="Most Searched Cities for Senior Living">
           <Paragraph>
             Find the best assisted living communities, memory care facilities and more within 8 of the most searched
             cities in the United States. From{' '}
@@ -484,22 +506,7 @@ const HomePage = ({
           </MSCColumnWrapper>
         </StyledSection>
         <Hr />
-        <StyledSection>
-          <TwoColumnWrapper>
-            <CenteredTile image={assetPath('images/home/partner-with-us.jpeg')} to="/providers/crm" title="For Local Referral Agents">
-              <Heading palette="white">Partner With Us</Heading>
-              <StyledBlock palette="white" level="subtitle">For Local Referral Agents</StyledBlock>
-              <Button>Get Started</Button>
-            </CenteredTile>
-            <CenteredTile image={assetPath('images/home/list-a-property.jpeg')} to="/providers/housing" tile="For Senior Housing Providers">
-              <Heading palette="white">List a Property</Heading>
-              <StyledBlock palette="white" level="subtitle">For Senior Housing Providers</StyledBlock>
-              <Button>Get Started</Button>
-            </CenteredTile>
-          </TwoColumnWrapper>
-        </StyledSection>
-        <Hr />
-        <StyledSection title="Corporate Partners">
+        <StyledSection title="Corporate Senior Living Partners">
           <CWTColumnWrapper>
             <CWTImage src={assetPath('images/home/companies-we-trust/Brookdale_BW.png')} alt="Brookdale Senior Living Logo" />
             <CWTImage src={assetPath('images/home/companies-we-trust/SunriseSeniorLiving_BW.png')} alt="SunriseSenior Living Logo" />

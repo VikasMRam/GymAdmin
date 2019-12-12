@@ -8,7 +8,7 @@ import { size, palette, assetPath } from 'sly/components/themes';
 import { titleize } from 'sly/services/helpers/strings';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import { getHelmetForSearchPage } from 'sly/services/helpers/html_headers';
-import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
+import { getBreadCrumbsForLocation, getStateAbbr} from 'sly/services/helpers/url';
 import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
 import { Heading, Button, Hr, Box, Image } from 'sly/components/atoms';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
@@ -130,6 +130,7 @@ const CommunitySearchPage = ({
 }) => {
   const listSize = requestMeta['filtered-count'];
   const city = titleize(searchParams.city);
+  const state = getStateAbbr(searchParams.state);
   const tocLabel = getTocSeoLabel(searchParams.toc);
   let latitude = 0;
   let longitude = 0;
@@ -184,7 +185,7 @@ const CommunitySearchPage = ({
         <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
         {!isMapView && !isFetchingResults && (
           <>
-            <StyledHeading level="hero" size="title">{listSize} {tocLabel} near {city}</StyledHeading>
+            <StyledHeading level="hero" size="title">{listSize} {tocLabel} near {city}, {state}</StyledHeading>
             {(guideContent && (guideContent.autoDescription || guideContent.manualDescription)) && (
               <LegacyContent dangerouslySetInnerHTML={{ __html: guideContent.manualDescription || guideContent.autoDescription }} />
             )}

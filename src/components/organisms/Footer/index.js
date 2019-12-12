@@ -214,7 +214,7 @@ class Footer extends PureComponent {
           <GroupDiv>
             <GroupItem to="/">
               <SeniorlyWhiteIcon icon="logo" palette="white" size="xxLarge" />
-              <Block>Find a Home to Love</Block>
+              <Block>Find the Best Senior Living</Block>
             </GroupItem>
           </GroupDiv>
           {groupComponents}
