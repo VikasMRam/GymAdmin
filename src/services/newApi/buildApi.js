@@ -1,5 +1,6 @@
 import applyUrlWithPlaceholders from './applyUrlWithPlaceholders';
 import apiFetch from './apiFetch';
+
 import makeApiCallAction from 'sly/services/newApi/makeApiCallAction';
 
 const defaultConfigure = options => options;
@@ -25,7 +26,7 @@ export default function buildApi(endpoints, config = {}) {
     return apiFetch(
       baseUrl,
       applyUrlWithPlaceholders(path, placeholders),
-      configureOptions(augmentedOptions)
+      configureOptions(augmentedOptions),
     );
   };
 

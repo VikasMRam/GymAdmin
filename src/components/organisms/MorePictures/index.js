@@ -18,14 +18,14 @@ const Wrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     grid-gap: ${size('tabletLayout.gutter')};
     grid-template-columns: ${size('tabletLayout.col4')} ${size(
-  'tabletLayout.col4'
+  'tabletLayout.col4',
 )};
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     grid-gap: ${size('layout.gutter')};
     grid-template-columns: ${size('layout.col3')} ${size('layout.col3')} ${size(
-  'layout.col3'
+  'layout.col3',
 )} ${size('layout.col3')};
   }
 `;
@@ -52,7 +52,7 @@ MorePictures.propTypes = {
       id: string.isRequired,
       src: string.isRequired,
       alt: string.isRequired,
-    })
+    }),
   ),
   onPictureClick: func.isRequired,
 };

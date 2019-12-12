@@ -3,6 +3,7 @@ import { string, number, shape, arrayOf, func, object, bool } from 'prop-types';
 import styled from 'styled-components';
 import { Marker, InfoWindow } from 'react-google-maps';
 import debounce from 'lodash/debounce';
+import { withRouter } from 'react-router-dom';
 
 import { isServer } from 'sly/config';
 import { size, palette } from 'sly/components/themes';
@@ -12,7 +13,6 @@ import MapTile from 'sly/components/molecules/MapTile';
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import { getRadiusFromMapBounds } from 'sly/services/helpers/search';
 import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
-import withRouter from 'react-router/withRouter';
 
 const MapWrapper = styled.div`
   width: 100%;
@@ -69,7 +69,7 @@ class SearchMap extends Component {
         imageUrl: string.isRequired,
         latitude: number.isRequired,
         longitude: number.isRequired,
-      })
+      }),
     ),
     isLoading: bool,
     searchParams: object,
@@ -84,7 +84,7 @@ class SearchMap extends Component {
       !state.hasValidDefaultLocation && {
         defaultCenter: { lat: props.latitude, lng: props.longitude },
         hasValidDefaultLocation: props.latitude !== 0 && props.longitude !== 0,
-      }
+      },
     );
   };
 

@@ -59,7 +59,7 @@ jobs:
                 name: JS Test Suite
                 command: |
                   export JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml"
-                  npm test -- --ci --maxWorkers=12
+                  npm test -- --ci --maxWorkers=8
 
       # - persist_to_workspace:
       #     root: /home/circleci

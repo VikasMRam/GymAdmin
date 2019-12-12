@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { object, func, bool } from 'prop-types';
 import { SubmissionError } from 'redux-form';
-import produce from 'immer';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import * as immutable from 'object-path-immutable';
 
 import { size } from 'sly/components/themes';
 import { query } from 'sly/services/newApi';
@@ -26,7 +26,7 @@ const mapStateToProps = state => ({
 
 @connect(mapStateToProps)
 
-class AddOrEditNoteForSavedCommunityContainer extends Component {
+export default class AddOrEditNoteForSavedCommunityContainer extends Component {
   static propTypes = {
     user: object,
     updateUserSave: func,
@@ -47,9 +47,7 @@ class AddOrEditNoteForSavedCommunityContainer extends Component {
     const { id } = userSave;
 
     // todo new clear submit with dispatch clearSubmitErrors();
-    return updateUserSave({ id }, produce(rawUserSave, (draft) => {
-      draft.attributes.info.note = data.note;
-    }))
+    return updateUserSave({ id }, immutable.set(rawUserSave, 'attributes.info.note', data.note))
       .then(onComplete)
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
@@ -102,5 +100,3 @@ class AddOrEditNoteForSavedCommunityContainer extends Component {
     );
   }
 }
-
-export default AddOrEditNoteForSavedCommunityContainer;

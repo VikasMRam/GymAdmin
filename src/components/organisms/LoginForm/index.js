@@ -41,7 +41,7 @@ const Signup = styled.span`
   }
 `;
 
-const ForgotPassword = Signup.extend`
+const ForgotPassword = styled(Signup)`
   display: block;
   text-align: right;
 `;

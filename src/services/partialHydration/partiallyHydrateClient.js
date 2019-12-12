@@ -6,10 +6,9 @@ import 'react-hot-loader/patch';
 
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import Modal from 'react-modal';
 import { ThemeProvider } from 'styled-components';
-import Route from 'react-router/Route';
 
 import configureStore from 'sly/store/configure';
 import theme from 'sly/components/themes/default';

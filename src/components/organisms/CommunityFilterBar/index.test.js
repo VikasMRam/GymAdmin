@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 import CommunityFilterBar, { FilterButton, ClearAllButton } from '.';
 
 jest.mock('sly/services/search/withGenerateFilterLinkPath', () => (Component) => {
-  return (props) => <Component {...props} generateFilterLinkPath={() => 'path'} />;
+  return props => <Component {...props} generateFilterLinkPath={() => 'path'} />;
 });
 
 const wrap = (props = {}) => shallow(<CommunityFilterBar {...props} />).dive();
@@ -44,7 +44,7 @@ it('renders Filterbar button and clear all with two filters selected', () => {
   expect(wrapper.find(ClearAllButton)).toHaveLength(1);
 });
 
-    // it('renders InfoWindow when a Marker is clicked', () => {
+// it('renders InfoWindow when a Marker is clicked', () => {
 //   const wrapper = wrap(props);
 //   wrapper
 //     .find(Marker)

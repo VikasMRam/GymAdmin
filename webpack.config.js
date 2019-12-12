@@ -25,6 +25,7 @@ const {
   devServer,
   when,
   setDevTool,
+  optimization,
 } = require('webpack-blocks');
 
 // defaults to dev env, otherwise specify with env vars
@@ -37,7 +38,6 @@ const PORT = process.env.PORT || 8000;
 const DEV_PORT = process.env.DEV_PORT || +PORT + 1 || 8001;
 const PUBLIC_PATH = process.env.PUBLIC_PATH || (NODE_ENV === 'development' ? `${HOST}:${DEV_PORT}` : '/react-assets');
 const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
-const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
 const DOMAIN = process.env.DOMAIN || 'lvh.me';
 const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8').trim() : '';
 const SOURCE = process.env.SOURCE || 'src';
@@ -71,7 +71,6 @@ console.info(
       PORT,
       DEV_PORT,
       API_URL,
-      AUTH_URL,
       DOMAIN,
       GOOGLE_MAPS_API_KEY,
       SOURCE,
@@ -86,8 +85,8 @@ console.info(
       DISABLE_EXPERIMENTS,
     },
     null,
-    2
-  )
+    2,
+  ),
 );
 
 const sourcePath = path.join(process.cwd(), SOURCE);
@@ -153,7 +152,6 @@ const base = group([
     'process.env.HOST': HOST,
     'process.env.PORT': PORT,
     'process.env.API_URL': API_URL,
-    'process.env.AUTH_URL': AUTH_URL,
     'process.env.DOMAIN': DOMAIN,
     'process.env.GOOGLE_MAPS_API_KEY': GOOGLE_MAPS_API_KEY,
     'process.env.VERSION': VERSION,
@@ -301,11 +299,20 @@ const client = (target, entries) => {
 
     entryPoint(entries),
 
-    // when(false, [
+    when(isWeb, [
+      optimization({
+        // concatenateModules: false,
+        splitChunks: {
+          chunks: 'all',
+        },
+      }),
+    ]),
+
+    // when(false && isWeb, [
     //   addPlugins([
     //     new BundleAnalyzerPlugin({
-    //       openAnalyzer: true,
-    //       analyzerPort: 0,
+    //       analyzerMode: 'disabled',
+    //       generateStatsFile: 'true',
     //     }),
     //   ]),
     // ]),

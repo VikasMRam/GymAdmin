@@ -24,7 +24,7 @@ describe('NotificationController', () => {
   const message = 'test message';
 
   const wrap = (props = {}) =>
-    shallow(<NotificationController {...props}>{spy}</NotificationController>).dive().dive();
+    shallow(<NotificationController {...props}>{spy}</NotificationController>).dive().dive().dive();
 
   const getControllerStore = (messages) => {
     const key = 'NotificationController_123';
@@ -99,7 +99,7 @@ describe('NotificationController', () => {
   it('add multiple notifications and close one', () => {
     const store = initStore(
       {},
-      getControllerStore([getNotificationObj(message), getNotificationObj(message + message)])
+      getControllerStore([getNotificationObj(message), getNotificationObj(message + message)]),
     );
     const wrapper = wrap({ store });
 

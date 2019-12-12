@@ -1,9 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import { Image, Thumbnail } from 'sly/components/atoms';
 
-const wrap = (props = {}) => shallow(<Thumbnail {...props} />).dive();
+const wrap = (props = {}) => mount(<Thumbnail {...props} />);
 
 const src = '//d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';
 

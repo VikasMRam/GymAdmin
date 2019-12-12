@@ -19,7 +19,7 @@ export const validateAM = (additionalMetadata, { phone, email }) => {
 
 export const isReferralSent = (additionalMetadata) => {
   if (Array.isArray(additionalMetadata)) {
-    return additionalMetadata.indexOf('ReferralSent') > -1 ;
+    return additionalMetadata.indexOf('ReferralSent') > -1;
   }
   return false;
 };

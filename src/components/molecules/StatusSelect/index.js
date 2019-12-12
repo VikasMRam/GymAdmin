@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { func, object } from 'prop-types';
-import produce from 'immer';
+import * as immutable from 'object-path-immutable';
 
 import userPropType from 'sly/propTypes/user';
 import clientPropType from 'sly/propTypes/client';
@@ -143,15 +143,19 @@ export default class StatusSelect extends Component {
 
   submitUserStatus = (clientStatus, { reason, date }) => {
     const { updateClient, rawClient } = this.props;
-    return updateClient({ id: rawClient.id }, produce(rawClient, (draft) => {
-      draft.attributes.status = clientStatus;
-      if (reason) {
-        draft.attributes.clientInfo[reasonKeys[clientStatus]] = reason;
-      }
-      if (date) {
-        draft.attributes.clientInfo.resumeDate = date;
-      }
-    }));
+
+    const client = immutable.wrap(rawClient);
+    client.set('attributes.status', clientStatus);
+
+    if (reason) {
+      client.set(`attributes.clientInfo.${reasonKeys[clientStatus]}`, reason);
+    }
+
+    if (date) {
+      client.set('attributes.clientInfo.resumeDate', date);
+    }
+
+    return updateClient({ id: rawClient.id }, client.value());
   };
 
   render() {

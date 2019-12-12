@@ -6,13 +6,20 @@ import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricing
 import { Link } from 'sly/components/atoms';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const searchParams = { city: 'san-carlos',
+const searchParams = {
+  city: 'san-carlos',
   communitySlug: 'rhoda-goldman-plaza',
   state: 'california',
   toc: 'assisted-living',
 };
 
 const wrap = (props = {}) => shallow(<CommunitySummary {...props} searchParams={searchParams} />);
+
+const getCommunity = (state) => {
+  const community = { ...RhodaGoldmanPlaza };
+  community.address.state = state;
+  return community;
+}
 
 const verify = (wrapper) => {
   const {
@@ -21,7 +28,8 @@ const verify = (wrapper) => {
   const {
     line1, line2, city, state, zip,
   } = address;
-  const renderedAddress = wrapper.find('Heading').dive().dive().text();
+  const renderedAddress = wrapper.find('Heading').dive().render()
+    .text();
   const renderedWrapper = wrapper.find('Wrapper');
 
   expect(renderedAddress).toContain(line1);
@@ -29,8 +37,7 @@ const verify = (wrapper) => {
   expect(renderedAddress).toContain(city);
   expect(renderedAddress).toContain(state);
   expect(renderedAddress).toContain(zip);
-  expect(wrapper.find('StyledHeading').dive().dive().dive()
-    .text()).toContain(name);
+  expect(wrapper.find('StyledHeading').render().text()).toContain(name);
   expect(wrapper.find(CommunityPricingAndRating)).toHaveLength(1);
   expect(renderedWrapper.childAt(0).find(Link)).toHaveLength(1);
 };
@@ -98,13 +105,34 @@ describe('CommunitySummary', () => {
     expect(wrapper.find('StyledHeading').dive().find(Link)).toHaveLength(1);
   });
 
-  it('Should render the care types tag', () => {
+  it('Should render the care types tags for state Delaware', () => {
+    const community = getCommunity("DE");
     const wrapper = wrap({
-      community: RhodaGoldmanPlaza,
+      community,
     });
-    // console.log(wrapper.debug());
+    const styledTags = wrapper.find('StyledTag');
+
+    expect(styledTags.get(0).props.children).toBe('Assisted Living');
+    expect(styledTags.get(1).props.children).toBe('Long Term Care Facilities');
 
     verify(wrapper);
-    expect(wrapper.find('StyledTag')).toHaveLength(2);
+    expect(styledTags).toHaveLength(2);
+    wrapper.find('StyledTag')
   });
+
+  it('Should render the care types tags for state Pennsylvania', () => {
+    const community = getCommunity("PA");
+    const wrapper = wrap({
+      community,
+    });
+    const styledTags = wrapper.find('StyledTag');
+
+    expect(styledTags.get(0).props.children).toBe('Personal Care Home');
+    expect(styledTags.get(1).props.children).toBe('Memory Care');
+
+    verify(wrapper);
+    expect(styledTags).toHaveLength(2);
+    wrapper.find('StyledTag')
+  });
+
 });

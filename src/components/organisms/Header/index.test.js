@@ -24,6 +24,13 @@ const menuItems = [
 
 const wrap = (props = {}) => shallow(<Header headerItems={headerItems} menuItems={menuItems} {...props} />);
 
+const assignOnClick = (items, onClick) => {
+  items.forEach((item) => {
+    item.onClick = onClick;
+  });
+  return items;
+};
+
 it('renders children when passed in', () => {
   const wrapper = wrap({ children: 'test' });
   expect(wrapper.contains('test')).toBe(false);
@@ -60,15 +67,19 @@ it('toggles menu when clicked on Menu Icon', () => {
 
 it('closes menu when clicked on menu item', () => {
   const onMenuItemClick = sinon.spy();
+  const onClick = jest.fn();
+  const items = assignOnClick(menuItems, onClick);
   const props = {
     menuOpen: true,
     onMenuItemClick,
+    menuItems: items,
   };
   const wrapper = wrap(props);
   const menuItem = wrapper.find(HeaderMenuItem).first();
 
   menuItem.simulate('click');
   expect(onMenuItemClick.calledOnce);
+  expect(onClick.calledOnce);
 });
 
 it('closes menu when focus changes to element outside dropdown', () => {

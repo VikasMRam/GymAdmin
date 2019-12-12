@@ -109,7 +109,7 @@ describe('Ask Question Community', () => {
         .contains(questionText)
         .parent()
         .next()
-        .next()
+        .next(),
     ).click();
 
     const commentText = `my replay ${randHash()}`;

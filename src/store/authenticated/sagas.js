@@ -1,9 +1,10 @@
 import { call, put, race, takeEvery, take, select } from 'redux-saga/effects';
 
+import * as actions from './actions';
+
 import { isFSA } from 'sly/store/actions';
 import { createMemoizedRequestInfoSelector } from 'sly/services/newApi';
 
-import * as actions from './actions';
 
 const getMemoizedRequestInfo = createMemoizedRequestInfoSelector();
 const getUser = state => getMemoizedRequestInfo(state, { call: 'getUser', args: { id: 'me' } });

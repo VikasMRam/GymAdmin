@@ -1,27 +1,25 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 
-const wrap = (props = {}) => shallow(<PricingFormFooter {...props} />);
+const wrap = (props = {}) => mount(<PricingFormFooter {...props} />);
 
 describe('PricingFormFooter', () => {
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('StyledButton').dive().dive().dive()
-      .text()).toContain('Continue');
+    expect(wrapper.find('StyledButton').at(1).text()).toContain('Continue');
   });
 
   it('renders with isFinalStep', () => {
     const wrapper = wrap({ isFinalStep: true });
-    expect(wrapper.find('StyledButton').dive().dive().dive()
-      .text()).toContain('Submit');
+    expect(wrapper.find('StyledButton').at(1).text()).toContain('Submit');
   });
 
   it('onProgressClick is called', () => {
     const onProgressClick = jest.fn();
     const wrapper = wrap({ onProgressClick });
-    wrapper.find('StyledButton').simulate('click');
+    wrapper.find('StyledButton').at(1).simulate('click');
     expect(onProgressClick).toHaveBeenCalled();
   });
 

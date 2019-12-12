@@ -1,8 +1,8 @@
 import React from 'react';
 import { object, bool, func, string } from 'prop-types';
-import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
+
 import { size, palette } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { Link, Box, Heading, Hr, Icon, Tag } from 'sly/components/atoms';
@@ -13,6 +13,7 @@ import PlusBadge from 'sly/components/molecules/PlusBadge';
 import { tocPaths } from 'sly/services/helpers/url';
 import stateCareTypes from 'sly/constants/stateCareTypes';
 import careTypesMap from 'sly/constants/careTypesMap';
+import { phoneFormatter } from 'sly/services/helpers/phone';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
@@ -88,7 +89,7 @@ const getCareTypes = (state, careTypes, communitySize) => {
       extraCareTypes.forEach((extraCareType) => {
         const hasCareType = stateCareTypes[state].includes(extraCareType);
         const isResidentialCare = careType === ASSISTED_LIVING && residentialCareTypes.includes(extraCareType);
-        const isNotExists = !updatedCareTypes.find(data => data.careType === extraCareType);
+        const isNotExists = !updatedCareTypes.find(data => data.name === extraCareType);
 
         if (hasCareType && isNotExists) {
           if ((isResidentialCare && (rcStates.includes(state) || communitySize === SMALL_COMMUNITY)) || !isResidentialCare) {
@@ -136,7 +137,7 @@ const CommunitySummary = ({
   const careTypes = getCareTypes(state, typeCare, communitySize);
 
   return (
-    <Box innerRef={innerRef} className={className}>
+    <Box ref={innerRef} className={className}>
       <StyledHeading level="hero" size="title">
         {name}
         {isAdmin &&
@@ -175,11 +176,7 @@ const CommunitySummary = ({
         <div>
           For pricing and availability, call&nbsp;
           <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
-            <NumberFormat
-              value={conciergeNumber}
-              format="(###) ###-####"
-              displayType="text"
-            />
+            {phoneFormatter(conciergeNumber, true)}
           </Link>
           <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
           {isBrowser &&

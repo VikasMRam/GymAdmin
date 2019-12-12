@@ -39,7 +39,6 @@ export default class CommunitySearchPageContainer extends PureComponent {
   render() {
     const {
       searchParams,
-      serverState,
       communityList,
       geoGuides,
       location,
@@ -60,8 +59,9 @@ export default class CommunitySearchPageContainer extends PureComponent {
       return <Redirect to={replaceLastSegment(pathname, urlize(searchParams.city)) + search} />;
     }
 
-    if (serverState instanceof Error) {
-      const errorCode = (serverState.response && serverState.response.status) || 500;
+    if (status.communityList.error) {
+      const error = status.communityList.error.errors[0];
+      const errorCode = error.status || 500;
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 

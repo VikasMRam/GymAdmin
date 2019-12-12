@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import { shallow } from 'enzyme';
@@ -9,7 +13,6 @@ const mockStore = configureStore([thunkMiddleware]);
 const wrap = (props = {}, children) => shallow((
   <Role
     store={mockStore({ api: { requests: {} } })}
-    api={{}}
     {...props}
   >
     {children}

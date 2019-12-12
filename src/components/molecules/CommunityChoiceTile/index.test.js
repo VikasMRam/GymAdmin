@@ -30,7 +30,6 @@ describe('CommunityChoiceTile', () => {
   it('renders checkbox not checked', () => {
     const wrapper = wrap({ selectable: true });
     const checkbox = wrapper.childAt(1);
-    expect(checkbox.dive().type()).toBe(Checkbox);
     expect(wrapper.prop('selected')).toBe(false);
     expect(checkbox.prop('checked')).toBeFalsy();
   });
@@ -38,7 +37,6 @@ describe('CommunityChoiceTile', () => {
   it('renders checkbox checked', () => {
     const wrapper = wrap({ selected: true, selectable: true });
     const checkbox = wrapper.childAt(1);
-    expect(checkbox.dive().type()).toBe(Checkbox);
     expect(wrapper.prop('selected')).toBe(true);
     expect(checkbox.prop('checked')).toEqual(true);
   });

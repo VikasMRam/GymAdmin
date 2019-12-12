@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Heading, Block} from 'sly/components/atoms';
+import { Heading, Block } from 'sly/components/atoms';
 
 
 const TOSHTML = () => {
@@ -87,10 +87,10 @@ const TOSHTML = () => {
       Seniorly,
       P.O. Box 26804,
       San Francisco, California 94108.
-      <br/>
+      <br />
       Email Address:
       info@seniorly.com.
-      <br/>
+      <br />
       Telephone number:
       (415) 570-4370
     </p>
@@ -122,7 +122,6 @@ const TOSHTML = () => {
     <p><br /><br /></p>
 
   </Block>);
-
 };
 
 export default TOSHTML;

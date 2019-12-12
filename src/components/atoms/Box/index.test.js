@@ -1,21 +1,21 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import Box from 'sly/components/atoms/Box';
 
-const wrap = (props = {}) => shallow(<Box {...props} />);
+const wrap = (props = {}) => mount(<Box {...props} />);
 const palette = 'danger';
 
 describe('Box', () => {
   it('renders with default palette', () => {
     const wrapper = wrap();
     expect(wrapper.find('div')).toHaveLength(1);
-    expect(wrapper.instance().props.palette).toBe(Box.defaultProps.palette);
+    expect(wrapper.props().palette).toBe(Box.defaultProps.palette);
   });
 
   it('renders with correct palette', () => {
     const wrapper = wrap({ palette });
     expect(wrapper.find('div')).toHaveLength(1);
-    expect(wrapper.instance().props.palette).toBe(palette);
+    expect(wrapper.props().palette).toBe(palette);
   });
 });

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 
 import { query } from 'sly/services/newApi';
 import { createValidator, dependentRequired, usPhone, email, required } from 'sly/services/validation';
@@ -65,7 +65,7 @@ export default class AddFamilyFormContainer extends Component {
       .then((data) => {
         const matchingClients = normJsonApi(data);
         if (matchingClients.length) {
-          const currentClient = immutable(newClient.data.attributes)
+          const currentClient = immutable.wrap(newClient.data.attributes)
             .set('clientInfo.email', email)
             .set('clientInfo.phoneNumber', phone)
             .value();

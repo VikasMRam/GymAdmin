@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import withRouter from 'react-router/withRouter';
+import { withRouter } from 'react-router';
 import Helmet from 'react-helmet';
 
 import { host } from 'sly/config';

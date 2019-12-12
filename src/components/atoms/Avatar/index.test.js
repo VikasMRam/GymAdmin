@@ -1,9 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import Avatar from 'sly/components/atoms/Avatar';
 
-const wrap = (props = {}) => shallow(<Avatar {...props} />).dive();
+const wrap = (props = {}) => mount(<Avatar {...props} />);
 
 const name = 'Fonz';
 const fullname = 'Amal Francis';

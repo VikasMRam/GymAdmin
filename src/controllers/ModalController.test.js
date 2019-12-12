@@ -17,7 +17,7 @@ describe('ModalController', () => {
   const content = <span>test</span>;
 
   const wrap = (props = {}) =>
-    shallow(<ModalController {...props}>{spy}</ModalController>).dive().dive();
+    shallow(<ModalController {...props}>{spy}</ModalController>).dive().dive().dive();
 
   beforeEach(() => {
     spy.mockClear();

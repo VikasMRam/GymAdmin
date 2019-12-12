@@ -67,13 +67,15 @@ export default class Controller extends Component {
     href: string,
   };
 
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+
     this.flowName = DEFAULT_STEP_ORDER;
     let clickID = Math.random().toString().slice(2, 11);
 
     const {
       location, locationSearchParams,
-    } = this.props;
+    } = props;
     // get query params passed
     if (location && location.search) {
       const params = queryString.parse(location.search);

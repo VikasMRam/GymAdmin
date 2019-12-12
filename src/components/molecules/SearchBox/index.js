@@ -27,7 +27,7 @@ const ShadowedSearchTextBox = shadow(
   styled(Input)`
     ${searchTextBoxStyles};
   `,
-  'small'
+  'small',
 );
 
 const SearchTextBox = styled(Input)`
@@ -77,6 +77,7 @@ const SearchBox = ({
   onSelect,
   onSearchButtonClick,
   onTextboxFocus,
+  onLocationSearch,
   onBlur,
   placeholder,
   readOnly,
@@ -133,6 +134,7 @@ SearchBox.propTypes = {
   onChange: func.isRequired,
   onSelect: func.isRequired,
   onSearchButtonClick: func.isRequired,
+  onLocationSearch: func,
   onTextboxFocus: func,
   onBlur: func,
   placeholder: string,

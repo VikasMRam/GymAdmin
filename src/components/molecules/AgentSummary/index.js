@@ -1,7 +1,6 @@
 import React from 'react';
 import { func } from 'prop-types';
 import styled from 'styled-components';
-import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
 import { formatRating } from 'sly/services/helpers/rating';
@@ -9,6 +8,7 @@ import agentPropType from 'sly/propTypes/agent';
 import { Image, Icon, Block, Button, Span, Hr, Link } from 'sly/components/atoms';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import pad from 'sly/components/helpers/pad';
+import { phoneFormatter } from 'sly/services/helpers/phone';
 
 const Wrapper = styled.div`
   display: flex;
@@ -163,11 +163,7 @@ const AgentSummary = ({
               <Icon icon="phone" size="regular" palette="primary" />
               <Link href={`tel:${slyPhone}`} onClick={onPhoneClick}>
                 <Span size="subtitle" weight="medium" palette="primary">
-                  <NumberFormat
-                    value={slyPhone}
-                    format="(###) ###-####"
-                    displayType="text"
-                  />
+                  {phoneFormatter(slyPhone, true)}
                 </Span>
               </Link>
             </PhoneSection>

@@ -1,13 +1,13 @@
 import React from 'react';
 import { number, string, func } from 'prop-types';
 import styled from 'styled-components';
-import NumberFormat from 'react-number-format';
 
 import { formatRating } from 'sly/services/helpers/rating';
 import { size } from 'sly/components/themes';
 import Block from 'sly/components/atoms/Block/index';
 import Icon from 'sly/components/atoms/Icon/index';
 import Link from 'sly/components/atoms/Link';
+import { formatMoney } from 'sly/services/helpers/numbers';
 
 const Wrapper = styled.div`
   display: flex;
@@ -45,7 +45,7 @@ const CommunityPricingAndRating = ({ priceDescription, price, rating, goToReview
           <StyledCommunityPricingWrapper>
             <DescriptionBlock size="caption">{priceDescription}</DescriptionBlock>
             <Block size="title" weight="medium">
-              <NumberFormat value={price} displayType="text" thousandSeparator prefix="$" />
+              {formatMoney(price)}
               <MoSpan size="caption">/mo<sup>*</sup></MoSpan>
             </Block>
           </StyledCommunityPricingWrapper>

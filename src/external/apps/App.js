@@ -9,9 +9,7 @@ import theme from 'sly/components/themes/default';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import { WIZARD_PATH, SEARCH_PATH } from 'sly/external/constants/paths';
 import ErrorPage from 'sly/external/apps/ErrorPage';
-import addGlobalStyles from 'sly/external/apps/setGlobalStyles';
-
-addGlobalStyles();
+import ExternalGlobalStyles from 'sly/external/apps/ExternalGlobalStyles';
 
 const CareAssessmentControllerPage = loadable(() =>
   import(/* webpackChunkName: "chunkCareAssessmentControllerPage" */'sly/external/apps/wizards/careAssessment/Controller'));
@@ -51,6 +49,7 @@ export default class App extends Component {
           <meta name="robots" content="noindex" />
         </Helmet>
         <ThemeProvider theme={theme}>
+          <ExternalGlobalStyles />
           <Switch>
             {this.routes.map(route => <Route key={route.path} {...route} />)}
             <Route render={routeProps => <ErrorPage {...routeProps} errorCode={404} />} />

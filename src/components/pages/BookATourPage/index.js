@@ -131,15 +131,15 @@ const BookATourPage = ({
             <CommunityWizardAcknowledgementContainer
               similarCommunities={community.similarProperties}
               buttonTo={DASHBOARD_PATH}
-              heading='Tour Request Sent!'
-              subheading='Your Seniorly Partner Agent will check if this community is available at this time. They will get back to you shortly by phone or email.'
-              type='bat'
+              heading="Tour Request Sent!"
+              subheading="Your Seniorly Partner Agent will check if this community is available at this time. They will get back to you shortly by phone or email."
+              type="bat"
             />
           </Modal>
         )}
       </Route>
       <Route path={`${match.url}/help`}>
-        {(routeProps) => (
+        {routeProps => (
           <Modal isOpen={!!routeProps.match} onClose={() => redirectTo(match.url)} closeable>
             <AdvisorHelpPopup onButtonClick={() => redirectTo(match.url)} />
           </Modal>
