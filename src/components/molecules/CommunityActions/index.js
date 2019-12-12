@@ -4,11 +4,11 @@ import { bool } from 'prop-types';
 
 import GetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
 
-const CommunityActions = ({ isAlreadyPricingRequested }) => {
-  const GetPricingButton = styled(GetCustomPricingButtonContainer)`
+const GetPricingButton = styled(GetCustomPricingButtonContainer)`
     width: 100%;
   `;
 
+const CommunityActions = ({ isAlreadyPricingRequested }) => {
   return (
     <GetPricingButton
       hasAlreadyRequestedPricing={isAlreadyPricingRequested}
