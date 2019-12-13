@@ -31,13 +31,13 @@ const StyledDashboardAdminReferralCommunityTile = styled(DashboardAdminReferralC
 const CursorStyledDashboardAdminReferralCommunityTile = cursor(StyledDashboardAdminReferralCommunityTile);
 
 const DashboardCommunityReferralSearch = ({
-  communities, isAdminUser, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit, handleLocationSearch, showAgentList,
+  subtitle, communities, isAdminUser, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit, handleLocationSearch, showAgentList,
   preferredLocation, communitiesInterestedIdsMap,
 }) => {
   const title = FAMILIES_INTERESTED_COMMUNITY_TITLE;
   return (
     <Wrapper>
-      <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
+      <SendReferralTitleBlock size="subtitle">{subtitle}</SendReferralTitleBlock>
       <DashboardCommunityAgentSearchBox label="Find a community" preferredLocation={preferredLocation} handleSubmit={handleCommunitySearch} handleLocationSearch={handleLocationSearch} />
       {!communities &&
       <>
@@ -80,6 +80,7 @@ const DashboardCommunityReferralSearch = ({
 };
 
 DashboardCommunityReferralSearch.propTypes = {
+  subtitle: string,
   handleCommunitySearch: func.isRequired,
   handleLocationSearch: func.isRequired,
   setSelectedCommunity: func,

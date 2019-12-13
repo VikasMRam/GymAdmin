@@ -50,7 +50,7 @@ export default class DashboardCallCommunitiesContainer extends Component {
     const { voiceCommunities } = this.props;
     const { communities } = this.state;
     const finalCommunities = communities || voiceCommunities;
-
+    const subtitle = "Communities Viewed Recently";
     if (!finalCommunities) {
       return <div>Loading...</div>;
     }

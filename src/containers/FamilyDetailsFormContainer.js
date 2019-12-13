@@ -102,7 +102,7 @@ export default class FamilyDetailsFormContainer extends Component {
     if (referralSource) {
       newClient.set('attributes.clientInfo.referralSource', referralSource);
     }
-    const validMD = validateAM(additionalMetadata, { phone, email });
+    const validMD = validateAM(client, { phone, email });
     if (validMD) {
       newClient.set('attributes.clientInfo.additionalMetadata', validMD);
     }
