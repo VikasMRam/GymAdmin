@@ -19,7 +19,7 @@ const getCommunity = (state) => {
   const community = { ...RhodaGoldmanPlaza };
   community.address.state = state;
   return community;
-}
+};
 
 const verify = (wrapper) => {
   const {
@@ -106,22 +106,22 @@ describe('CommunitySummary', () => {
   });
 
   it('Should render the care types tags for state Delaware', () => {
-    const community = getCommunity("DE");
+    const community = getCommunity('DE');
     const wrapper = wrap({
       community,
     });
     const styledTags = wrapper.find('StyledTag');
 
     expect(styledTags.get(0).props.children).toBe('Assisted Living');
-    expect(styledTags.get(1).props.children).toBe('Long Term Care Facilities');
+    expect(styledTags.get(1).props.children).toBe('Memory Care');
 
     verify(wrapper);
     expect(styledTags).toHaveLength(2);
-    wrapper.find('StyledTag')
+    wrapper.find('StyledTag');
   });
 
   it('Should render the care types tags for state Pennsylvania', () => {
-    const community = getCommunity("PA");
+    const community = getCommunity('PA');
     const wrapper = wrap({
       community,
     });
@@ -132,7 +132,36 @@ describe('CommunitySummary', () => {
 
     verify(wrapper);
     expect(styledTags).toHaveLength(2);
-    wrapper.find('StyledTag')
+    wrapper.find('StyledTag');
   });
 
+  it('Should render the care types tags for state Georgia', () => {
+    const community = getCommunity('GA');
+    const wrapper = wrap({
+      community,
+    });
+    const styledTags = wrapper.find('StyledTag');
+
+    expect(styledTags.get(0).props.children).toBe('Personal Care Home');
+    expect(styledTags.get(1).props.children).toBe('Memory Care');
+
+    verify(wrapper);
+    expect(styledTags).toHaveLength(2);
+    wrapper.find('StyledTag');
+  });
+
+  it('Should render the care types tags for state Kentucky', () => {
+    const community = getCommunity('KY');
+    const wrapper = wrap({
+      community,
+    });
+    const styledTags = wrapper.find('StyledTag');
+
+    expect(styledTags.get(0).props.children).toBe('Personal Care Home');
+    expect(styledTags.get(1).props.children).toBe('Memory Care');
+
+    verify(wrapper);
+    expect(styledTags).toHaveLength(2);
+    wrapper.find('StyledTag');
+  });
 });

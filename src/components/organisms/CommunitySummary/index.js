@@ -3,6 +3,7 @@ import { object, bool, func, string } from 'prop-types';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
+import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES } from 'sly/constants/tags';
 import { size, palette } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { Link, Box, Heading, Hr, Icon, Tag } from 'sly/components/atoms';
@@ -11,8 +12,6 @@ import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricing
 import { isBrowser } from 'sly/config';
 import PlusBadge from 'sly/components/molecules/PlusBadge';
 import { tocPaths } from 'sly/services/helpers/url';
-import stateCareTypes from 'sly/constants/stateCareTypes';
-import careTypesMap from 'sly/constants/careTypesMap';
 import { phoneFormatter } from 'sly/services/helpers/phone';
 
 const StyledHeading = styled(Heading)`
@@ -67,38 +66,18 @@ const TooltipContent = styled(ReactTooltip)`
     }
   }
 `;
-const residentialCareTypes = [
-  'Residential Care',
-  'Residential Care Homes',
-  'Residential Homes for the Aged',
-  'Residential Care facilities',
-  'Residential Care Home',
-];
-const rcStates = ['ID', 'OR'];
-const ASSISTED_LIVING = 'Assisted Living';
-const SMALL_COMMUNITY = 'up to 20 Beds';
 
-const getCareTypes = (state, careTypes, communitySize) => {
+const getCareTypes = (state, careTypes) => {
   const updatedCareTypes = [];
 
   careTypes.forEach((careType) => {
     const tocBc = tocPaths([careType]);
-    const extraCareTypes = careTypesMap[careType];
 
-    if (extraCareTypes) {
-      extraCareTypes.forEach((extraCareType) => {
-        const hasCareType = stateCareTypes[state].includes(extraCareType);
-        const isResidentialCare = careType === ASSISTED_LIVING && residentialCareTypes.includes(extraCareType);
-        const isNotExists = !updatedCareTypes.find(data => data.name === extraCareType);
+    if (AVAILABLE_TAGS.includes(careType)) {
+      const isPersonalCareHome = PERSONAL_CARE_HOME_STATES.includes(state) && careType === ASSISTED_LIVING;
+      const tag = isPersonalCareHome ? PERSONAL_CARE_HOME : careType;
 
-        if (hasCareType && isNotExists) {
-          if ((isResidentialCare && (rcStates.includes(state) || communitySize === SMALL_COMMUNITY)) || !isResidentialCare) {
-            updatedCareTypes.push({ name: extraCareType, path: tocBc.path });
-          }
-        }
-      });
-    } else if (stateCareTypes[state].includes(careType)) {
-      updatedCareTypes.push({ name: careType, path: tocBc.path });
+      updatedCareTypes.push({ tag, path: tocBc.path });
     }
   });
 
@@ -160,10 +139,10 @@ const CommunitySummary = ({
               event={{
                 category: 'care-type-tags',
                 action: 'tag-click',
-                label: careType.name,
+                label: careType.tag,
               }}
             >
-              <StyledTag key={careType.name}>{careType.name}</StyledTag>
+              <StyledTag key={careType.tag}>{careType.tag}</StyledTag>
             </Link>),
         )
       }
