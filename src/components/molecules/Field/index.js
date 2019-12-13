@@ -20,9 +20,16 @@ import InputMessage from 'sly/components/molecules/InputMessage';
 import Autocomplete from 'sly/components/molecules/Autocomplete';
 import CheckboxInput from 'sly/components/molecules/CheckboxInput';
 import LocationSearch from 'sly/components/molecules/LocationSearch';
+import DatepickerStyles from 'sly/components/themes/DatepickerStyles';
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/components/atoms/Select'));
-const DatePicker = loadable(() => import(/* webpackChunkName: "chunkReactDatePicker" */'react-datepicker'));
+const DatePickerLoadable = loadable(() => import(/* webpackChunkName: "chunkReactDatePicker" */'react-datepicker'));
+const DatePicker = props => (
+  <>
+    <DatepickerStyles />
+    <DatePickerLoadable {...props} />
+  </>
+);
 
 const textTypeInputs = ['email', 'iconInput'];
 const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
