@@ -49,11 +49,10 @@ const ifAry = func => value => Array.isArray(value)
 const parseDateValue = ifAry(value => value && dayjs(value, 'YYYY-MM-DD').toDate());
 const stringifyDateValue = ifAry(value => value && dayjs(value).format('YYYY-MM-DD'));
 
-const Row = styled(mobileOnly(Box, css` 
+const Row = styled(mobileOnly(Box, css`
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.small')} ${palette('slate', 'filler')}80;
   flex-wrap: wrap;
   padding: ${size('spacing.regular')};
-  padding-bottom: 0;
   > :first-child {
     order: 1;
   }
@@ -78,12 +77,12 @@ const Row = styled(mobileOnly(Box, css`
 `;
 
 const CloseButton = styled(mobileOnly(ButtonLink, css`
-  margin: 0 ${size('spacing.regular')} ${size('spacing.regular')} 0; 
+  margin: 0 ${size('spacing.regular')} ${size('spacing.regular')} 0;
   order: 1;
-  display: flex; 
+  display: flex;
   align-items: center;
 `, css`
-  margin: 0 ${size('spacing.large')} 0 0; 
+  margin: 0 ${size('spacing.large')} 0 0;
   width: ${size('icon.regular')};
 `))`
   flex-grow: 0;
@@ -92,13 +91,13 @@ const CloseButton = styled(mobileOnly(ButtonLink, css`
 
 const Where = styled(mobileOnly('div', css`
   padding: 0 ${size('spacing.large')};
-  margin: 0 ${size('spacing.regular')} ${size('spacing.regular')} 0; 
+  margin: 0 ${size('spacing.regular')} 0 0;
   height: ${size('element.small')};
   line-height: ${size('element.small')};
   background: ${palette('grey.background')};
   border-radius: ${size('spacing.small')};
 `, css`
-  width: 70px; 
+  width: 70px;
   margin-right: ${size('spacing.regular')};
 `))`
   flex-grow: 0;
@@ -106,7 +105,7 @@ const Where = styled(mobileOnly('div', css`
 `;
 
 const SmallField = styled(Field)`
-  margin: 0 ${size('spacing.regular')} 0 0; 
+  margin: 0 ${size('spacing.regular')} 0 0;
 `;
 
 const WhereField = styled(mobileOnly(SmallField, css``, css`
