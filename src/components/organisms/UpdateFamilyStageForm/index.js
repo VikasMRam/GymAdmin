@@ -71,6 +71,7 @@ export default class UpdateFamilyStageForm extends Component {
     referralAgreement: string,
     referralAgreementType: string,
     currentRejectReason: string,
+    canUpdateStage: bool,
   };
 
   static defaultProps = {
@@ -95,7 +96,8 @@ export default class UpdateFamilyStageForm extends Component {
   render() {
     const {
       handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, chosenDetails, nextAllowedStages, lossReasons,
-      currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, roomTypes, rejectReasons, currentRejectReason, ...props
+      currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, roomTypes, rejectReasons, currentRejectReason,
+      canUpdateStage, ...props
     } = this.props;
 
     const reasonsOptions = rejectReasons.map(r => ({ value: r, label: r }));
@@ -147,7 +149,7 @@ export default class UpdateFamilyStageForm extends Component {
           type="choice"
           component={ReduxField}
           options={options}
-          disabled={isNext(FAMILY_STAGE_REJECTED)}
+          disabled={!canUpdateStage}
         />
         {stageGroupChanged && (!isPaused || (isPaused && stageChanged)) &&
           <Warning size="caption">
