@@ -11,7 +11,6 @@ import { assetPath } from 'sly/components/themes';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 import Router from 'sly/components/molecules/Router';
 import GlobalStyles from 'sly/components/themes/GlobalStyles';
-import DatepickerStyles from 'sly/components/themes/DatepickerStyles';
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -54,7 +53,6 @@ export default function AppTemplate({ children }) {
 
       <ThemeProvider theme={theme}>
         <GlobalStyles />
-        <DatepickerStyles />
         <Router>{children}</Router>
       </ThemeProvider>
       {!hideChatbox && <ChatBoxContainer />}
