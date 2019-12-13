@@ -17,7 +17,6 @@ describe('CommunityAgentSection', () => {
   it('renders CommunityAgentSection', () => {
     const wrapper = wrap();
     expect(wrapper.contains(LindaIwamota.info.displayName)).toBe(true);
-    expect(wrapper.contains(LindaIwamota.info.email)).toBe(true);
     expect(wrapper.find('Image').prop('src')).toEqual(LindaIwamota.info.profileImageUrl);
     expect(wrapper.find('PhoneLink')).toHaveLength(1);
     expect(wrapper.find('PhoneLink').text()).toEqual(phoneFormatter(LindaIwamota.info.slyPhone, true));
@@ -28,7 +27,6 @@ describe('CommunityAgentSection', () => {
     mAgent.info.chosenReview = 'abc';
     const wrapper = wrap({ agent: mAgent });
     expect(wrapper.contains(LindaIwamota.info.displayName)).toBe(true);
-    expect(wrapper.contains(LindaIwamota.info.email)).toBe(true);
     expect(wrapper.contains('abc')).toBe(true);
     expect(wrapper.find('Image').prop('src')).toEqual(LindaIwamota.info.profileImageUrl);
     expect(wrapper.find('PhoneLink')).toHaveLength(1);
@@ -43,17 +41,6 @@ describe('CommunityAgentSection', () => {
     expect(phoneLink).toHaveLength(1);
     phoneLink.simulate('click');
     expect(onPhoneClick).toHaveBeenCalledTimes(1);
-  });
-
-  it('handles onEmailClick', () => {
-    const { email } = LindaIwamota.info;
-    const onEmailClick = jest.fn();
-    const wrapper = wrap({ onEmailClick });
-    expect(onEmailClick).not.toHaveBeenCalled();
-    const emailLink = wrapper.find('Link').at(1);
-    expect(emailLink.prop('href')).toBe(`mailto:${email}`);
-    emailLink.simulate('click');
-    expect(onEmailClick).toHaveBeenCalledTimes(1);
   });
 
   it('handles onAdvisorHelpClick', () => {
