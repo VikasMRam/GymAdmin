@@ -291,11 +291,11 @@ const mostSearchedCities = [
     title: '90+ communities',
   },
   {
-    to: '/assisted-living/texas/houston',
-    image: assetPath('images/cities/Houston.jpeg'),
-    alt: 'houston-assisted-living-seniorly',
-    subtitle: 'Houston, TX',
-    title: '72+ communities',
+    to: '/assisted-living/florida/miami',
+    image: assetPath('images/cities/Miami.jpeg'),
+    alt: 'miami-assisted-living-seniorly',
+    subtitle: 'Miami, FL',
+    title: '150+ communities',
   },
   {
     to: '/assisted-living/arizona/phoenix',
