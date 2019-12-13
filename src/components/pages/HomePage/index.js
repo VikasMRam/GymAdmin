@@ -175,7 +175,7 @@ const firstRowDiscoverHomes = [
     title: 'Assisted Living',
     description: 'Living that includes assistance with activities of daily living (ADLs)',
     image: assetPath('images/home/discover-home/assisted-living.jpeg'),
-    alt: 'assisted-living-senior-living-seniorly',
+    alt: 'assisted living senior living seniorly',
     buttonText: 'See more',
     searchParams: { toc: 'assisted-living' },
   },
@@ -183,7 +183,7 @@ const firstRowDiscoverHomes = [
     title: 'Board and Care Home',
     description: 'A residential personal care home that’s usually more affordable',
     image: assetPath('images/home/discover-home/care-home.jpeg'),
-    alt: 'board-and-care-home-senior-living-seniorly',
+    alt: 'board and care home senior living seniorly',
     buttonText: 'See more',
     searchParams: { size: 'small' },
   },
@@ -195,7 +195,7 @@ const secondRowDiscoverHomes = [
     title: 'Luxury Assisted Living',
     description: 'The ultimate in comfort, care and community',
     image: assetPath('images/home/discover-home/1-bedroom-tile.jpeg'),
-    alt: 'luxury-assisted-living-senior-living-seniorly',
+    alt: 'luxury assisted living senior living seniorly',
     buttonText: 'See more',
     searchParams: { size: 'large', budget: 5000 },
   },
@@ -203,15 +203,15 @@ const secondRowDiscoverHomes = [
     title: 'Memory Care Options',
     description: 'For those with Alzheimer’s, Dementia and more',
     image: assetPath('images/home/discover-home/shared-rooms-tile.jpeg'),
-    alt: 'memory-care-senior-living-seniorly',
+    alt: 'memory care senior living seniorly',
     buttonText: 'See more',
     searchParams: { toc: 'memory-care' },
   },
   {
     title: 'More Senior Living',
-    description: 'Compare community features, cost, and photos',
+    description: 'Compare all retirement community features, cost, photos and reviews',
     image: assetPath('images/home/discover-home/studios-tile.jpeg'),
-    alt: 'senior-living-seniorly',
+    alt: 'senior living seniorly',
     buttonText: 'See more',
     searchParams: {},
   },
@@ -221,25 +221,25 @@ const usefulInformationTiles = [
   {
     to: '/independent-living',
     image: assetPath('images/home/useful-info/independent-living.jpg'),
-    alt: 'independent-living-senior-living-seniorly',
+    alt: 'independent living senior living seniorly',
     title: 'Independent Living',
   },
   {
     to: '/assisted-living',
     image: assetPath('images/home/useful-info/assisted-living.jpg'),
-    alt: 'assisted-living-senior-living-seniorly',
+    alt: 'assisted living senior living seniorly',
     title: 'Assisted Living',
   },
   {
     to: '/memory-care',
     image: assetPath('images/home/useful-info/memory-care.jpg'),
-    alt: 'memory-care-senior-living-seniorly',
+    alt: 'memory care senior living seniorly',
     title: 'Memory Care',
   },
   {
     to: '/board-and-care-home',
     image: assetPath('images/home/useful-info/board-and-care.jpg'),
-    alt: 'board-and-care-home-senior-living-seniorly',
+    alt: 'board and care home senior living seniorly',
     title: 'Board & Care Home',
   },
   /* {
@@ -250,13 +250,13 @@ const usefulInformationTiles = [
   {
     to: '/continuing-care-retirement-community',
     image: assetPath('images/home/useful-info/ccrc.jpg'),
-    alt: 'ccrc-senior-living-seniorly',
+    alt: 'ccrc senior living seniorly',
     title: 'CCRC / Life Plan',
   },
   {
     to: '/resources',
     image: assetPath('images/home/useful-info/more-resources.jpg'),
-    alt: 'more-senior-living-resources-seniorly',
+    alt: 'more senior living resources seniorly',
     title: 'More Resources',
   },
 ];
@@ -265,56 +265,56 @@ const mostSearchedCities = [
   {
     to: '/assisted-living/california/san-francisco',
     image: assetPath('images/cities/SanFrancisco.jpeg'),
-    alt: 'san-francisco-assisted-living-seniorly',
+    alt: 'san francisco assisted living seniorly',
     subtitle: 'San Francisco, CA',
     title: '95+ communities',
   },
   {
     to: '/assisted-living/california/los-angeles',
     image: assetPath('images/cities/LosAngeles.jpeg'),
-    alt: 'los-angeles-assisted-living-seniorly',
+    alt: 'los angeles assisted living seniorly',
     subtitle: 'Los Angeles, CA',
     title: '105+ communities',
   },
   {
     to: '/assisted-living/california/san-diego',
     image: assetPath('images/cities/SanDiego.jpeg'),
-    alt: 'san-diego-assisted-living-seniorly',
+    alt: 'san diego assisted living seniorly',
     subtitle: 'San Diego, CA',
     title: '75+ communities',
   },
   {
     to: '/assisted-living/texas/dallas',
     image: assetPath('images/cities/Dallas.jpeg'),
-    alt: 'dallas-assisted-living-seniorly',
+    alt: 'dallas assisted living seniorly',
     subtitle: 'Dallas, TX',
     title: '90+ communities',
   },
   {
-    to: '/assisted-living/texas/houston',
-    image: assetPath('images/cities/Houston.jpeg'),
-    alt: 'houston-assisted-living-seniorly',
-    subtitle: 'Houston, TX',
-    title: '72+ communities',
+    to: '/assisted-living/florida/miami',
+    image: assetPath('images/cities/Miami.jpeg'),
+    alt: 'miami assisted living seniorly',
+    subtitle: 'Miami, FL',
+    title: '150+ communities',
   },
   {
     to: '/assisted-living/arizona/phoenix',
     image: assetPath('images/cities/Pheonix.jpeg'),
-    alt: 'phoenix-assisted-living-seniorly',
+    alt: 'phoenix assisted living seniorly',
     subtitle: 'Phoenix, AZ',
     title: '151+ communities',
   },
   {
     to: '/assisted-living/florida/orlando',
     image: assetPath('images/cities/Orlando.jpeg'),
-    alt: 'orlando-assisted-living-seniorly',
+    alt: 'orlando assisted living seniorly',
     subtitle: 'Orlando, FL',
     title: '60+ communities',
   },
   {
     to: '/assisted-living/florida/sacramento',
     image: assetPath('images/cities/Sacramento.jpeg'),
-    alt: 'sacramento-assisted-living-seniorly',
+    alt: 'sacramento assisted living seniorly',
     subtitle: 'Sacramento, CA',
     title: '150+ communities',
   },
@@ -450,7 +450,11 @@ const HomePage = ({
       </Helmet>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
-        <VideoSection title="How Seniorly Can Help You Find The Best Senior Living Options" subtitle="This short video will explain how Seniorly can help you find the best assisted living or any senior living community. Call us at (855) 866-4515." id="watch-video">
+        <VideoSection title="How Seniorly Can Help You Find The Best Senior Living Options" id="watch-video">
+          <StyledBlock>
+            This short video will explain how Seniorly can help you find the best assisted living or any senior living community.{' '}
+            <Link href="tel:+18558664515">Call us at (855) 866-4515.</Link>
+          </StyledBlock>
           <HowSlyWorksVideo
             isPlaying={ishowSlyWorksVideoPlaying}
             onThumbnailClick={toggleHowSlyWorksVideoPlaying}
@@ -459,7 +463,7 @@ const HomePage = ({
           />
         </VideoSection>
         <Hr />
-        <StyledSection title="Discover The Best Senior Living Near You">
+        <StyledSection title="Discover The Best Senior Living Near You" subtitle=" Our search is simple, the results are comprehensive and all information is fully transparent">
           <TwoColumnWrapper>
             {firstRowDiscoverHomesComponents}
           </TwoColumnWrapper>
@@ -482,7 +486,7 @@ const HomePage = ({
         <Hr />
         <StyledSection title="Most Searched Cities for Senior Living">
           <Paragraph>
-            Find the best assisted living communities, memory care facilities and more within 8 of the most searched
+            Find the best assisted living facilities, memory care communities and more within 8 of the most searched
             cities in the United States. From{' '}
             <Link href="https://www.seniorly.com/assisted-living/california/los-angeles">
               Los Angeles
@@ -499,7 +503,7 @@ const HomePage = ({
             <Link href="https://www.seniorly.com/assisted-living/florida/orlando">
               Orlando
             </Link>
-            , you will find photos, estimated cost per month, unique property highlights and more.
+            , you will find photos, estimated cost per month, unique property highlights and more
           </Paragraph>
           <MSCColumnWrapper>
             {mostSearchedCitiesComponents}
@@ -520,8 +524,8 @@ const HomePage = ({
             <CWTImage src={assetPath('images/home/companies-we-trust/AssistedLivingLocators_BW.png')} alt="Assisted Living Locators Logo" />
           </CWTColumnWrapper>
         </StyledSection>
-        <SeoLinks title="Assisted living by Cities" links={ALSeoCities} />
-        <SeoLinks title="Assisted living by State" links={ALSeoStates} />
+        <SeoLinks title="Assisted Living by City" links={ALSeoCities} />
+        <SeoLinks title="Assisted Living by State" links={ALSeoStates} />
       </TemplateContent>
       <Footer />
     </>
