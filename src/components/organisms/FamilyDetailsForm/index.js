@@ -145,7 +145,8 @@ class FamilyDetailsForm extends Component {
     isAgentUser: bool,
     isWon: bool,
     client: clientPropType.isRequired,
-    onEditWonDetailsClick: func,
+    onEditStageDetailsClick: func,
+    onEditStatusDetailsClick: func,
   };
 
   handleLookingForChange = (event, value) => {
@@ -169,7 +170,7 @@ class FamilyDetailsForm extends Component {
     const {
       handleSubmit, submitting, invalid, accepted, initialValues, lookingFor, isAgentUser,
       gender, timeToMove, monthlyBudget, roomTypes, communityTypes, careLevels, canEditFamilyDetails, assignedTos,
-      client, onEditWonDetailsClick,
+      client, onEditStageDetailsClick, onEditStatusDetailsClick,
     } = this.props;
     const { stage, status } = client;
     let { preferredLocation } = this.props;
@@ -211,13 +212,13 @@ class FamilyDetailsForm extends Component {
                 {showStageSummary &&
                   <TwoColumnWrapper>
                     <StyledLabel>{stage} details</StyledLabel>
-                    <StyledFamilyMetaDataSummaryBox client={client} onEditClick={onEditWonDetailsClick} />
+                    <StyledFamilyMetaDataSummaryBox client={client} onEditClick={onEditStageDetailsClick} />
                   </TwoColumnWrapper>
                 }
                 {showStatusSummary &&
                   <TwoColumnWrapper>
                     <StyledLabel>{status} status details</StyledLabel>
-                    <StyledFamilyMetaDataSummaryBox mode="status" client={client} />
+                    <StyledFamilyMetaDataSummaryBox mode="status" client={client} onEditClick={onEditStatusDetailsClick} />
                   </TwoColumnWrapper>
                 }
                 <Field
