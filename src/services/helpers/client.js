@@ -1,6 +1,5 @@
 // Helpers for some front end validation of client forms
-export const validateAM = (client, { phone, email }) => {
-  const { additionalMetadata } = client;
+export const validateAM = (client, additionalMetadata,  { phone, email }) => {
   const a = new Set();
   if (Array.isArray(additionalMetadata)) {
     additionalMetadata.map(e => a.add(e));
@@ -19,7 +18,6 @@ export const validateAM = (client, { phone, email }) => {
   if (!email || email === '') {
     a.delete('EmailOnly');
   }
-
 
   return [...a];
 };
