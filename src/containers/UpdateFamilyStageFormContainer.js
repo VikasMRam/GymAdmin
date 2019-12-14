@@ -55,11 +55,11 @@ const mapStateToProps = (state, props) => ({
 @query('updateClient', 'updateClient')
 @query('createNote', 'createNote')
 @query('updateUuidAux', 'updateUuidAux')
+@withUser
 
 @connect(mapStateToProps, {
   invalidateClients: () => invalidateRequests('getClients'),
 })
-@withUser
 
 export default class UpdateFamilyStageFormContainer extends Component {
   static propTypes = {
