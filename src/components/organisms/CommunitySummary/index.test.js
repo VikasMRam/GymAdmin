@@ -172,7 +172,7 @@ describe('CommunitySummary', () => {
     wrapper.find('StyledTag');
   });
 
-  it.only('Should render CCRC', () => {
+  it('Should render CCRC', () => {
     const community = getCommunity('DE', CONTINUING_CARE_RETIREMENT_COMMUNITY);
     const wrapper = wrap({
       community,
