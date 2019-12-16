@@ -5,7 +5,7 @@ import { createValidator, required, usPhone, email } from 'sly/services/validati
 
 const validate = createValidator({
   name: [required],
-  email: [required, email],
+  email: [email],
   phone: [required, usPhone],
 });
 
