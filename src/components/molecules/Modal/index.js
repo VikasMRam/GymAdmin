@@ -27,24 +27,7 @@ const ModalGlobalStyles = createGlobalStyle`
   }
 `;
 
-const ModalBox = styled(ReactModal)`
-  outline: none;
-
-  > article {
-    transition: transform ${key('transitions.slow.inOut')};
-    transform: translate(-50%, 100%);
-  }
-  &[class*='after-open'] > article {
-    transform: translate(-50%, -50%);
-    ${switchProp('layout', {
-    sidebar: css`transform: translate(0%, 0%);`,
-    bottomDrawer: css`transform: translate(-50%, 0%);`,
-  })};
-  }
-  &[class*='before-close'] > article {
-    transform: translate(-50%, 100%);
-  }
-`;
+const ModalBox = ReactModal;
 
 const StyledReactModal = styled(({ className, ...props }) => (
   <ModalBox overlayClassName={className} closeTimeoutMS={250} {...props} />
@@ -201,7 +184,7 @@ const Modal = ({
       onClose={onClose}
       {...props}
     >
-      <ModalGlobalStyles />
+      {/*<ModalGlobalStyles />*/}
       {(closeable && closeButtonOutsideLayouts.includes(layout) && !bottomCloseButtonLayouts.includes(layout)) && (
         <Head layout={layout}>
           {iconClose('white')}

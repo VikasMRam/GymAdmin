@@ -325,7 +325,7 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          <GlobalStyles />
+          {/*<GlobalStyles />*/}
           <Router requiresAuth={[/^\/dashboard/]}>
             <Switch>
               <Route

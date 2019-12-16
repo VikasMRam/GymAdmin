@@ -49,7 +49,7 @@ export default class App extends Component {
           <meta name="robots" content="noindex" />
         </Helmet>
         <ThemeProvider theme={theme}>
-          <ExternalGlobalStyles />
+          {/*<ExternalGlobalStyles />*/}
           <Switch>
             {this.routes.map(route => <Route key={route.path} {...route} />)}
             <Route render={routeProps => <ErrorPage {...routeProps} errorCode={404} />} />

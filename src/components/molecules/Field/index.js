@@ -27,7 +27,7 @@ const DatePickerLoadable = loadable(() => import(/* webpackChunkName: "chunkReac
 const DatePicker = props => (
   <>
     <DatepickerStyles />
-    <DatePickerLoadable {...props} />
+    {/*<DatePickerLoadable {...props} />*/}
   </>
 );
 

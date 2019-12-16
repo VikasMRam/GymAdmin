@@ -52,7 +52,7 @@ export default function AppTemplate({ children }) {
       </Helmet>
 
       <ThemeProvider theme={theme}>
-        <GlobalStyles />
+        {/*<GlobalStyles />*/}
         <Router>{children}</Router>
       </ThemeProvider>
       {!hideChatbox && <ChatBoxContainer />}

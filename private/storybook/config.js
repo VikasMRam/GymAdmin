@@ -35,7 +35,7 @@ addDecorator(story => (
   <Provider store={store}>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <GlobalStyles />
+        {/*<GlobalStyles />*/}
         <DatepickerStyles />
         {story()}
       </ThemeProvider>

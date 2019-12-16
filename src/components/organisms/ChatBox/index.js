@@ -77,7 +77,7 @@ export default class ChatBox extends Component {
 
     return (
       <>
-        <ChatBoxGlobalStyle />
+        {/*<ChatBoxGlobalStyle />*/}
         <script
           defer
           type="text/javascript"
