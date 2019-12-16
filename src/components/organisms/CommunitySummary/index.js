@@ -3,7 +3,7 @@ import { object, bool, func, string } from 'prop-types';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
-import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES } from 'sly/constants/tags';
+import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES, CONTINUING_CARE_RETIREMENT_COMMUNITY, CCRC } from 'sly/constants/tags';
 import { size, palette } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { Link, Box, Heading, Hr, Icon, Tag } from 'sly/components/atoms';
@@ -75,7 +75,13 @@ const getCareTypes = (state, careTypes) => {
 
     if (AVAILABLE_TAGS.includes(careType)) {
       const isPersonalCareHome = PERSONAL_CARE_HOME_STATES.includes(state) && careType === ASSISTED_LIVING;
-      const tag = isPersonalCareHome ? PERSONAL_CARE_HOME : careType;
+      let tag = careType;
+
+      if (isPersonalCareHome) {
+        tag = PERSONAL_CARE_HOME;
+      } else if (careType === CONTINUING_CARE_RETIREMENT_COMMUNITY) {
+        tag = CCRC;
+      }
 
       updatedCareTypes.push({ tag, path: tocBc.path });
     }
