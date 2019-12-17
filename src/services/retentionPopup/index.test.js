@@ -310,4 +310,12 @@ describe('Retention popup', () => {
 
     expect(showModal).not.toHaveBeenCalled();
   });
+
+  it('should not add the listeners', () => {
+    const wrapper = wrap({ isModalOpen: true });
+
+    expect(wrapper.html()).toEqual('');
+    expect(typeof listeners.mouseout).toEqual('undefined');
+    expect(typeof listeners.visibilitychange).toEqual('undefined');
+  });
 });

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { func, object, string } from 'prop-types';
-import { matchPath, withRouter } from 'react-router';
+import { func, object, string, bool } from 'prop-types';
 
 import withUser from '../newApi/withUser';
 
@@ -30,6 +29,7 @@ export default class RetentionPopup extends Component {
     location: object,
     user: object,
     communityId: string,
+    isModalOpen: bool,
   };
 
   constructor(props) {
@@ -96,7 +96,7 @@ export default class RetentionPopup extends Component {
     ), 'eBook');
   };
 
-  isModalShown = () => localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN || this.props.user
+  isModalShown = () => this.props.isModalOpen || localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN || this.props.user
 
   onMouseoutHandler = (e) => {
     const currentTime = new Date().getTime();
