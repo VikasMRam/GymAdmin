@@ -58,7 +58,7 @@ export default class DateRange extends Component {
     const customInput = <Input size={size} />;
     return (
       <Wrapper>
-        {/*<DatepickerStyles />*/}
+        <DatepickerStyles />
 
         <DatePicker
           selected={startDate}

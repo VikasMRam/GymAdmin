@@ -8,6 +8,38 @@ import Notification from 'sly/components/molecules/Notification';
 
 const transitionName = 'slide';
 
+const StyledTransitionGroup = styled(TransitionGroup)`
+  z-index: ${key('zIndexes.notifications')};
+  position: fixed;
+  bottom: ${size('spacing.large')};
+  right: ${size('spacing.large')};
+  display: flex;
+  flex-direction: column;
+
+  .${transitionName}-enter {
+    transform: translate(100%);
+  }
+  .${transitionName}-enter-active {
+    transform: translate(0%);
+    transition: transform ${key('transitions.slow.inOut')};
+  }
+  .${transitionName}-exit {
+    transform: translate(0%);
+  }
+  .${transitionName}-exit-active {
+    transform: translate(100%);
+    transition: transform ${key('transitions.slow.inOut')};
+  }
+
+  > * {
+    align-self: flex-end;
+    margin-bottom: ${size('spacing.regular')};
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+`;
 
 const Notifications = ({ messages, dismiss }) => {
   const notificationComponents = messages.map(({
@@ -28,7 +60,11 @@ const Notifications = ({ messages, dismiss }) => {
     </CSSTransition>
   ));
 
-  return notificationComponents;
+  return (
+    <StyledTransitionGroup>
+      {notificationComponents}
+    </StyledTransitionGroup>
+  );
 };
 
 Notifications.propTypes = {

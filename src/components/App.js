@@ -34,6 +34,7 @@ import {
 } from 'sly/constants/dashboardAppPaths';
 import careTypes from 'sly/constants/careTypes';
 import PageEventsContainer from 'sly/containers/PageEventsContainer';
+import ChatBoxGlobalStyle from 'sly/components/organisms/ChatBox/ChatBoxGlobalStyle';
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/components/pages/Error'));
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage'));
@@ -325,7 +326,7 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          {/*<GlobalStyles />*/}
+          <GlobalStyles />
           <Router requiresAuth={[/^\/dashboard/]}>
             <Switch>
               <Route
@@ -345,8 +346,13 @@ export default class App extends Component {
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
             </Switch>
           </Router>
+          {!hideChatbox && (
+            <>
+              <ChatBoxGlobalStyle />
+              <ChatBoxContainer />
+            </>
+          )}
         </ThemeProvider>
-        {!hideChatbox && <ChatBoxContainer />}
       </>
     );
   }

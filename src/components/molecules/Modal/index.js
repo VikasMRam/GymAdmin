@@ -1,33 +1,36 @@
 import React from 'react';
 import { node, bool, func, oneOf } from 'prop-types';
-import styled, { css, createGlobalStyle } from 'styled-components';
+import styled, { css } from 'styled-components';
 import ReactModal from 'react-modal';
 import { ifProp, switchProp } from 'styled-tools';
 
 import { size, palette, key } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 import NewModal from 'sly/components/atoms/NewModal';
+import ModalGlobalStyles from './ModalGlobalStyles';
 
 const closeButtonOutsideLayouts = ['gallery', 'fullScreen'];
 const bottomCloseButtonLayouts = ['bottomDrawer'];
 const noPaddingLayouts = ['noPadding', 'wizard', 'bottomDrawer', 'eBook', 'noPaddingWithOverflow'];
 
-// https://www.drupal.org/project/drupal/issues/2707291#comment-12797758
-const ModalGlobalStyles = createGlobalStyle`
-  body.ReactModal__Body--open {
-    overflow: hidden;
-    width: 100%;
-  }
+const ModalBox = styled(ReactModal)`
+  outline: none;
 
-  // safari only fix
-  @media screen and (-webkit-min-device-pixel-ratio:0) {
-    ::i-block-chrome, body.ReactModal__Body--open {
-      position: fixed;
-    }
+  > article {
+    transition: transform ${key('transitions.slow.inOut')};
+    transform: translate(-50%, 100%);
+  }
+  &[class*='after-open'] > article {
+    transform: translate(-50%, -50%);
+    ${switchProp('layout', {
+    sidebar: css`transform: translate(0%, 0%);`,
+    bottomDrawer: css`transform: translate(-50%, 0%);`,
+  })};
+  }
+  &[class*='before-close'] > article {
+    transform: translate(-50%, 100%);
   }
 `;
-
-const ModalBox = ReactModal;
 
 const StyledReactModal = styled(({ className, ...props }) => (
   <ModalBox overlayClassName={className} closeTimeoutMS={250} {...props} />
@@ -184,7 +187,7 @@ const Modal = ({
       onClose={onClose}
       {...props}
     >
-      {/*<ModalGlobalStyles />*/}
+      <ModalGlobalStyles />
       {(closeable && closeButtonOutsideLayouts.includes(layout) && !bottomCloseButtonLayouts.includes(layout)) && (
         <Head layout={layout}>
           {iconClose('white')}

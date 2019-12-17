@@ -101,15 +101,64 @@ const lineHeight = ({ kind }) => {
   }
 };
 
+export const styles = css`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-weight: ${size('weight.medium')};
+  white-space: nowrap;
+  font-size: ${fontSize};
+  line-height: ${lineHeight};
+  border: ${size('border.regular')} solid ${borderColor};
+  cursor: ${ifProp('disabled', 'default', 'pointer')};
+  appearance: none;
+  border-radius: ${size('border.xxLarge')};
+  transition: background-color 250ms ease-out, color 250ms ease-out,
+    border-color 250ms ease-out;
+  background-color: ${backgroundColor};
+  color: ${foregroundColor};
+  user-select: none;
+  pointer-events: ${ifProp('disabled', 'none', 'auto')};
+  ${switchProp('kind', {
+    tab: css`
+      padding: ${size('spacing', 'regular')} ${size('spacing', 'large')};`,
+    label: css`
+      padding: 0 ${size('spacing', 'large')};
+      height: ${size('element', 'regular')};`,
+    regular: css`
+      // todo: non standard padding. remove afterwards if added to theme
+      padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')}) ${size('spacing.large')};`,
+    jumbo: css`
+      padding: ${size('spacing', 'large')} ${size('spacing', 'xxLarge')};`,
+  })};
+
+  &:hover {
+    border-color: ${p => borderColor({ ...p, selected: true })};
+    background-color: ${hoverBackgroundColor};
+    color: ${hoverForegroundColor};
+  }
+
+  &:active {
+    background-color: ${activeBackgroundColor};
+    color: ${activeForegroundColor};
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
 
 const StyledLink = styled(({
   disabled, ghost, transparent, foregroundPalette, palette, height, theme, ...props
 }) => (
   <Link noHoverColorChange {...props} />
 ))`
+  ${styles};
 `;
 
 const StyledButton = styled.button`
+  ${styles};
 `;
 
 const withSendEvent = ({ onClick, event, ...props }) => {
@@ -125,7 +174,7 @@ const withSendEvent = ({ onClick, event, ...props }) => {
 const Button = ({ type, kind, measureRef, ...props }) => {
   // rename type to kind to avoid collision with html button type
   if (props.to || props.href) {
-    return <StyledLink ref={measureRef} kind={kind} {...props} />;
+    return <StyledLink kind={kind} {...props} />;
   }
   return <StyledButton ref={measureRef} {...withSendEvent(props)} kind={kind} type={type} />;
 };

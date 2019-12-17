@@ -19,7 +19,21 @@ const CenteredHeading = styled(Heading)`
 const Section = ({
   title, subtitle, children, centerTitle, titleSize, headingMargin, ...props
 }) => (
-        <Heading size={titleSize}>{title}</Heading>
+  <section {...props}>
+    <HeadingWrapper headingMargin={headingMargin}>
+      {title && (
+        centerTitle ?
+          <CenteredHeading size={titleSize} >{title}</CenteredHeading> :
+          <Heading size={titleSize}>{title}</Heading>
+      )}
+      {subtitle &&
+        <Block>
+          {subtitle}
+        </Block>
+      }
+    </HeadingWrapper>
+    <article>{children}</article>
+  </section>
 );
 
 Section.propTypes = {
