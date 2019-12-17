@@ -299,14 +299,14 @@ const client = (target, entries) => {
 
     entryPoint(entries),
 
-    when(isWeb, [
-      optimization({
-        // concatenateModules: false,
-        splitChunks: {
-          chunks: 'all',
-        },
-      }),
-    ]),
+    // when(isWeb, [
+    //   optimization({
+    //     // concatenateModules: false,
+    //     splitChunks: {
+    //       chunks: 'all',
+    //     },
+    //   }),
+    // ]),
 
     // when(false && isWeb, [
     //   addPlugins([

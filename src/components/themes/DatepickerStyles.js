@@ -1,5 +1,3 @@
-import { createGlobalStyle } from 'styled-components';
-
 let css;
 try {
   // eslint-disable-next-line import/no-webpack-loader-syntax,import/no-unresolved
@@ -9,4 +7,4 @@ try {
   console.error(`datepicker CSS file not found: ${e.message} ${e.stack}`);
 }
 
-export default createGlobalStyle`${css}`;
+export default `${css}`;
