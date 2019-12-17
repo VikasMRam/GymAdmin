@@ -1,31 +1,19 @@
 import React from 'react';
 import { node, bool, func, oneOf } from 'prop-types';
-import styled, { css, createGlobalStyle } from 'styled-components';
+import styled, { css } from 'styled-components';
 import ReactModal from 'react-modal';
 import { ifProp, switchProp } from 'styled-tools';
+import Helmet from 'react-helmet';
 
 import { size, palette, key } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 import NewModal from 'sly/components/atoms/NewModal';
+import ModalGlobalStyles from 'sly/components/molecules/Modal/ModalGlobalStyles';
+
 
 const closeButtonOutsideLayouts = ['gallery', 'fullScreen'];
 const bottomCloseButtonLayouts = ['bottomDrawer'];
 const noPaddingLayouts = ['noPadding', 'wizard', 'bottomDrawer', 'eBook', 'noPaddingWithOverflow'];
-
-// https://www.drupal.org/project/drupal/issues/2707291#comment-12797758
-const ModalGlobalStyles = createGlobalStyle`
-  body.ReactModal__Body--open {
-    overflow: hidden;
-    width: 100%;
-  }
-
-  // safari only fix
-  @media screen and (-webkit-min-device-pixel-ratio:0) {
-    ::i-block-chrome, body.ReactModal__Body--open {
-      position: fixed;
-    }
-  }
-`;
 
 const ModalBox = styled(ReactModal)`
   outline: none;
@@ -201,7 +189,9 @@ const Modal = ({
       onClose={onClose}
       {...props}
     >
-      <ModalGlobalStyles />
+      <Helmet>
+        <style type="text/css">{ModalGlobalStyles}</style>
+      </Helmet>
       {(closeable && closeButtonOutsideLayouts.includes(layout) && !bottomCloseButtonLayouts.includes(layout)) && (
         <Head layout={layout}>
           {iconClose('white')}

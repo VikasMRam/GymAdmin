@@ -2,7 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
-import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
+import CommunityPricing from 'sly/components/molecules/CommunityPricing';
+import CommunityRating from 'sly/components/molecules/CommunityRating';
 import { Link } from 'sly/components/atoms';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 import { CONTINUING_CARE_RETIREMENT_COMMUNITY } from 'sly/constants/tags';
@@ -45,7 +46,8 @@ const verify = (wrapper) => {
   expect(renderedAddress).toContain(state);
   expect(renderedAddress).toContain(zip);
   expect(wrapper.find('StyledHeading').render().text()).toContain(name);
-  expect(wrapper.find(CommunityPricingAndRating)).toHaveLength(1);
+  expect(wrapper.find(CommunityPricing)).toHaveLength(1);
+  expect(wrapper.find(CommunityRating)).toHaveLength(1);
   expect(renderedWrapper.childAt(0).find(Link)).toHaveLength(1);
 };
 

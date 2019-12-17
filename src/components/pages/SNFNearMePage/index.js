@@ -97,7 +97,7 @@ const NearMePage = ({
             Find The Best Skilled Nursing Facility Near Me
           </StyledHeading>
           <StyledLabel palette="white">
-            Use our free search to find skilled nursing facility nearby
+            Use our free search to find skilled nursing facilities nearby
           </StyledLabel>
           <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>

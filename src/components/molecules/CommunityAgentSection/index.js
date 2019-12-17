@@ -66,10 +66,10 @@ const StyledIcon = styled(Icon)`
 `;
 
 const CommunityAgentSection = ({
-  agent, onPhoneClick, onEmailClick, onAdvisorHelpClick,
+  agent, onPhoneClick, onAdvisorHelpClick,
 }) => {
   const {
-    displayName, profileImageUrl, slyPhone, email, chosenReview,
+    displayName, profileImageUrl, slyPhone, chosenReview,
   } = agent.info;
   const reviewedBy = 'Resident\'s family member';
   const { id, address } = agent;
@@ -104,7 +104,6 @@ const CommunityAgentSection = ({
             </PhoneLink>
           )
         }
-        {email && <Link href={`mailto:${email}`} onClick={onEmailClick}>{email}</Link>}
       </AgentInfoSection>
       {chosenReview &&
         <AgentReviewSection>
@@ -122,7 +121,6 @@ const CommunityAgentSection = ({
 CommunityAgentSection.propTypes = {
   agent: agentPropType.isRequired,
   onPhoneClick: func,
-  onEmailClick: func,
   onAdvisorHelpClick: func,
 };
 

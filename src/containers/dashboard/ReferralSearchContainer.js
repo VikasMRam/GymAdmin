@@ -323,6 +323,7 @@ export default class ReferralSearchContainer extends Component {
                 />
                 <WizardStep
                   component={DashboardCommunityReferralSearch}
+                  subtitle="Send referral to community"
                   onSubmit={onSubmit}
                   name="DashboardCommunityReferralSearch"
                   communities={communities}
