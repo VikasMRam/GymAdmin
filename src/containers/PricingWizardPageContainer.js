@@ -86,6 +86,7 @@ export default class PricingWizardPageContainer extends Component {
     const {
       name = (user && user.name) || undefined,
       phone = (user && user.phoneNumber) || undefined,
+      email = (user && user.email) || undefined,
     } = data;
 
     return createAction({
@@ -94,6 +95,7 @@ export default class PricingWizardPageContainer extends Component {
         actionInfo: {
           phone,
           name,
+          email,
           contactType: PRICING_REQUEST,
           slug: community.id,
         },
@@ -103,6 +105,7 @@ export default class PricingWizardPageContainer extends Component {
     }).then(() => createOrUpdateUser({
       name,
       phone,
+      email,
     }, {
       ignoreAlreadyRegistered: true,
     }).then(() => {
