@@ -192,7 +192,6 @@ const Modal = ({
       <Helmet>
         <style type="text/css">{ModalGlobalStyles}</style>
       </Helmet>
-      <ModalGlobalStyles />
       {(closeable && closeButtonOutsideLayouts.includes(layout) && !bottomCloseButtonLayouts.includes(layout)) && (
         <Head layout={layout}>
           {iconClose('white')}
