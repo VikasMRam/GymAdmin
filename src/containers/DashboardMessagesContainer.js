@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { arrayOf, object, func, string } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
+import mobileOnly from 'sly/components/helpers/mobileOnly';
 import { withUser, query, prefetch } from 'sly/services/newApi';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import userPropType from 'sly/propTypes/user';
@@ -13,6 +14,8 @@ import { Heading, Box } from 'sly/components/atoms';
 import LatestMessage from 'sly/components/molecules/LatestMessage';
 import { getConversationName } from 'sly/services/helpers/conversation';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
+import Pagination from 'sly/components/molecules/Pagination';
+import { getDetailedPaginationData } from 'sly/services/helpers/pagination';
 
 const HeadingWrapper = styled.div`
   padding: ${size('spacing', 'xLarge')};
@@ -35,6 +38,21 @@ const MessagesWrapper = styled(Box)`
 const EmptyMessagesWrapper = styled.div`
   padding: ${size('spacing', 'large')};
   text-align: center;
+`;
+
+const CenteredPagination = styled(Pagination)`
+  padding: ${size('spacing.large')};
+  justify-content: center;
+`;
+
+const StyledPagination = styled(mobileOnly(CenteredPagination, css`
+  position: sticky;
+  bottom: 0;
+  background-color: ${palette('grey.background')};
+`))`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    border-bottom: ${size('border.regular')} solid ${palette('slate.stroke')};
+  }
 `;
 
 @withUser
@@ -104,6 +122,7 @@ export default class DashboardMessagesContainer extends Component {
     const { hasFinished: conversationsHasFinished, meta } = conversationsStatus;
     const isLoading = !conversationsHasFinished;
     const { id: userId } = user;
+    const pagination = getDetailedPaginationData(conversationsStatus, 'conversations');
 
     let messagesComponent = null;
     let hasMessages = false;
@@ -161,6 +180,15 @@ export default class DashboardMessagesContainer extends Component {
         <MessagesWrapper snap="top" hasMessages={hasMessages}>
           {messagesComponent}
         </MessagesWrapper>
+        {pagination.show && (
+          <StyledPagination
+            current={pagination.current}
+            total={pagination.total}
+            range={1}
+            basePath={datatable.basePath}
+            pageParam="page-number"
+          />
+        )}
       </>
     );
   }
