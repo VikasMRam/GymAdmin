@@ -25,7 +25,7 @@ const {
   devServer,
   when,
   setDevTool,
-  optimization,
+  // optimization,
 } = require('webpack-blocks');
 
 // defaults to dev env, otherwise specify with env vars

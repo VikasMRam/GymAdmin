@@ -8,8 +8,8 @@ import Helmet from 'react-helmet';
 import { size, palette, key } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 import NewModal from 'sly/components/atoms/NewModal';
+import ModalGlobalStyles from 'sly/components/molecules/Modal/ModalGlobalStyles';
 
-import ModalGlobalStyles from './ModalGlobalStyles';
 
 const closeButtonOutsideLayouts = ['gallery', 'fullScreen'];
 const bottomCloseButtonLayouts = ['bottomDrawer'];
