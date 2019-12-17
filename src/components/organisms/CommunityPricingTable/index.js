@@ -7,6 +7,10 @@ import { palette, size } from 'sly/components/themes';
 import { Block, Span, Icon, Paragraph } from 'sly/components/atoms';
 import { isServer } from 'sly/config';
 import { formatMoney } from 'sly/services/helpers/numbers';
+import { withHydration } from 'sly/services/partialHydration';
+import UnhydratedGetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
+
+const GetCustomPricingButtonContainer = withHydration(UnhydratedGetCustomPricingButtonContainer);
 
 const StyledNumberFormat = styled.span`
   font-weight: ${p => size(p.weight)};
@@ -112,17 +116,18 @@ const toolTipCode = size => (
   </>
 );
 
+const StyledGetPricingButton = styled(GetCustomPricingButtonContainer)`
+  width: 100%;
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
 const CommunityPricingTable = ({
-  pricesList, estimatedPriceList, price, GetPricingButton, name, size: communitySize, showToolTip,
+  pricesList, estimatedPriceList, price, isAlreadyPricingRequested, name, size: communitySize, showToolTip,
 }) => {
   const basePer = percentageOf(price, 20);
   const from = Math.round(price);
   const to = Math.round(price + basePer);
   const estimated = pricesList.length === 0;
-  const StyledGetPricingButton = styled(GetPricingButton)`
-    width: 100%;
-    margin-bottom: ${size('spacing.xLarge')};
-  `;
 
   return (
     <>
@@ -190,7 +195,12 @@ const CommunityPricingTable = ({
         </StyledBlockNp>
       }
       <Block>
-        <StyledGetPricingButton>Get Detailed Pricing</StyledGetPricingButton>
+        <StyledGetPricingButton
+          hasAlreadyRequestedPricing={isAlreadyPricingRequested}
+        >
+          Get Detailed Pricing
+        </StyledGetPricingButton>
+
         <Block>
           {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && communitySize === 'up to 20 Beds' &&
             <Paragraph>
@@ -238,6 +248,7 @@ CommunityPricingTable.propTypes = {
   onItemClick: func,
   price: number.isRequired,
   getPricing: func,
+  isAlreadyPricingRequested: bool,
   name: string.isRequired,
   size: string.isRequired,
   showToolTip: bool.isRequired,

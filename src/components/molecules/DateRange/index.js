@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { func, string, array } from 'prop-types';
 import loadable from '@loadable/component';
+import Helmet from 'react-helmet';
 
 import { size } from 'sly/components/themes';
 import { Input } from 'sly/components/atoms';
@@ -58,7 +59,9 @@ export default class DateRange extends Component {
     const customInput = <Input size={size} />;
     return (
       <Wrapper>
-        <DatepickerStyles />
+        <Helmet>
+          <style type="text/css">{DatepickerStyles}</style>
+        </Helmet>
 
         <DatePicker
           selected={startDate}

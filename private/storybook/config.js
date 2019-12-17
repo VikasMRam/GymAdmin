@@ -8,12 +8,12 @@ import { ThemeProvider } from 'styled-components';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import utc from 'dayjs/plugin/utc';
+import Helmet from 'react-helmet';
 
 
 import configureStore from 'sly/store/configure';
 import theme from 'sly/components/themes/default';
 import GlobalStyles from 'sly/components/themes/GlobalStyles';
-import DatepickerStyles from 'sly/components/themes/DatepickerStyles';
 
 const store = configureStore({});
 const req = require.context('sly/components', true, /.stories.js$/);
@@ -35,8 +35,9 @@ addDecorator(story => (
   <Provider store={store}>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <DatepickerStyles />
+        <Helmet>
+          <style type="text/css">{GlobalStyles}</style>
+        </Helmet>
         {story()}
       </ThemeProvider>
     </BrowserRouter>
