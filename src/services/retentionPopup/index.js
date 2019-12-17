@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { func, object, string, bool } from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import withUser from '../newApi/withUser';
 
@@ -8,6 +9,7 @@ import EbookFormContainer from 'sly/containers/EbookFormContainer';
 import ExitIntentQuestionFormContainer from 'sly/containers/ExitIntentQuestionFormContainer';
 import SimilarCommunitiesPopupContainer from 'sly/containers/SimilarCommunitiesPopupContainer';
 import withModal from 'sly/controllers/withModal';
+import { CUSTOMER_ROLE } from 'sly/constants/roles';
 
 const MOUSEOUT_TIME_DURATION = 20000;
 const FOCUS_TIME_DURATION = 10000;
@@ -19,8 +21,11 @@ const EXIT_INTENT = 'exit-intent';
 const STAY_INTENT = 'stay-intent';
 const IDLE = 'idle';
 
-@withModal
+const EXIT_INTENT_DISABLED_PAGES = [/^\/custom-pricing/, /^\/dashboard/, /^\/$/];
+
 @withUser
+@withModal
+@withRouter
 export default class RetentionPopup extends Component {
   static typeHydrationId = 'RetentionPopup';
   static propTypes = {
@@ -42,7 +47,7 @@ export default class RetentionPopup extends Component {
   }
 
   componentDidMount() {
-    if (this.props.user || isServer || this.isModalShown()) {
+    if ((this.props.user && !this.isCustomer()) || isServer || this.isModalShown()) {
       return;
     }
     this.renderTime = new Date().getTime();
@@ -54,8 +59,10 @@ export default class RetentionPopup extends Component {
     this.ifvisible.on('idle', this.onIdleHandler);
   }
 
+  isCustomer = () => this.props.user && this.props.user.roleID === CUSTOMER_ROLE;
+
   componentDidUpdate(prevProps) {
-    if (!prevProps.user && this.props.user) {
+    if (!prevProps.user && !this.isCustomer()) {
       this.removeAllEventListeners();
     }
   }
@@ -96,7 +103,14 @@ export default class RetentionPopup extends Component {
     ), 'eBook');
   };
 
-  isModalShown = () => this.props.isModalOpen || localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN || this.props.user
+  isModalShown = () => {
+    const { isModalOpen, location: { pathname } } = this.props;
+
+    return isModalOpen
+      || localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN
+      || (this.props.user && !this.isCustomer())
+      || EXIT_INTENT_DISABLED_PAGES.some(regex => regex.test(pathname));
+  }
 
   onMouseoutHandler = (e) => {
     const currentTime = new Date().getTime();
