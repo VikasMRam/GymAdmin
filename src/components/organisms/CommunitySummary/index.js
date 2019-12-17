@@ -1,13 +1,16 @@
 import React from 'react';
 import { object, bool, func, string } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
 import { size, palette } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { Link, Box, Heading, Hr, Icon, Tag } from 'sly/components/atoms';
+import pad from 'sly/components/helpers/pad';
+import mobileOnly from 'sly/components/helpers/mobileOnly';
+import { Link, Box, Heading, Hr, Icon, Tag, Block } from 'sly/components/atoms';
 import IconButton from 'sly/components/molecules/IconButton';
-import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
+import CommunityRating from 'sly/components/molecules/CommunityRating';
+import CommunityPricing from 'sly/components/molecules/CommunityPricing';
 import { isBrowser } from 'sly/config';
 import PlusBadge from 'sly/components/molecules/PlusBadge';
 import { tocPaths } from 'sly/services/helpers/url';
@@ -15,9 +18,8 @@ import stateCareTypes from 'sly/constants/stateCareTypes';
 import careTypesMap from 'sly/constants/careTypesMap';
 import { phoneFormatter } from 'sly/services/helpers/phone';
 
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.regular')};
-`;
+const StyledHeading = pad(Heading, 'regular');
+StyledHeading.displayName = 'StyledHeading';
 
 const StyledTag = styled(Tag)`
   margin-right: ${size('spacing.regular')};
@@ -67,6 +69,19 @@ const TooltipContent = styled(ReactTooltip)`
     }
   }
 `;
+
+const PricingRatingWrapper = mobileOnly(styled.div`
+  display: grid;
+`, css`
+  grid-template-rows: 1fr 1fr;
+  grid-gap: ${size('spacing.xLarge')};
+`, css`
+  grid-template-columns: min-content 1fr;
+  grid-gap: ${size('spacing.massive')};
+`);
+
+const PaddedPricingRatingWrapper = pad(PricingRatingWrapper, 'large');
+
 const residentialCareTypes = [
   'Residential Care',
   'Residential Care Homes',
@@ -105,6 +120,24 @@ const getCareTypes = (state, careTypes, communitySize) => {
   return updatedCareTypes;
 };
 
+const getPricingAndRating = (startingRate, reviewsValue, numReviews, goToReviews) => {
+  const Wrapper = startingRate > 0 ? PaddedPricingRatingWrapper : PricingRatingWrapper;
+  return (
+    <>
+      <Hr />
+      <Wrapper>
+        {startingRate > 0 && <CommunityPricing description="Estimated pricing starts at" price={startingRate} />}
+        {reviewsValue > 0 && <CommunityRating description="Average rating" numReviewsPalette="slate" rating={reviewsValue} numReviews={numReviews} goToReviews={goToReviews} />}
+      </Wrapper>
+      {startingRate > 0 &&
+        <Block size="caption" palette="grey">
+          * Pricing varies depening on senior living room type and care service needs.
+        </Block>
+      }
+    </>
+  );
+};
+
 const CommunitySummary = ({
   community, innerRef, isAdmin, onConciergeNumberClicked, className,
   onFavouriteClick, isFavorited, onShareClick, goToReviews, searchParams,
@@ -118,7 +151,7 @@ const CommunitySummary = ({
   const {
     communityPhone, plusCommunity, plusCategory, typeCare, communitySize,
   } = propInfo;
-  const { reviewsValue } = propRatings;
+  const { reviewsValue, numReviews } = propRatings;
   const formattedAddress = `${line1}, ${line2}, ${city},
     ${state}
     ${zip}`
@@ -194,8 +227,7 @@ const CommunitySummary = ({
           </StyledIconButton>
         </div>
       </Wrapper>
-      <Hr />
-      <CommunityPricingAndRating price={startingRate} rating={reviewsValue} goToReviews={goToReviews} />
+      {(startingRate || reviewsValue) > 0 && getPricingAndRating(startingRate, reviewsValue, numReviews, goToReviews)}
     </Box>
   );
 };

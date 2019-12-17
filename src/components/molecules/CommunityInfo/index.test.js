@@ -60,7 +60,7 @@ describe('CommunityInfo', () => {
     newRhodaGoldmanPlaza.propRatings.reviewsValue = 0;
     const wrapper = wrap({ community: newRhodaGoldmanPlaza });
 
-    expect(wrapper.find('TopWrapper').html()).toContain('Not Yet Rated');
+    expect(wrapper.find('TopWrapper').html()).toContain('Not yet rated');
   });
 
   it('renders without FloorPlans & LivingTypes', () => {
