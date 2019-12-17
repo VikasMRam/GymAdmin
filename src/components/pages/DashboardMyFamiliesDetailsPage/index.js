@@ -288,6 +288,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     setSelectedConversation: func,
     user: userPropType.isRequired,
     onAcceptClick: func,
+    onEditStatusDetailsClick: func,
+    isEditStatusDetailsMode: bool,
+    onStatusChange: func,
   };
 
   getTabPathsForUser = () => {
@@ -549,7 +552,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
       conversation, conversations, setSelectedConversation, hasConversationFinished, refetchConversations, refetchClient,
-      showModal, hideModal, onAcceptClick, clients,
+      showModal, hideModal, onAcceptClick, clients, onEditStatusDetailsClick, isEditStatusDetailsMode,
+      onStatusChange,
     } = this.props;
     const { organization } = user;
 
@@ -576,7 +580,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       gender, lookingFor, monthlyBudget, timeToMove, roomTypes, careLevels, communityTypes, assignedTos,
     } = meta;
     const {
-      id, clientInfo, stage, provider, organization: clientOrganization,
+      id, clientInfo, stage, status, provider, organization: clientOrganization,
     } = client;
     const { entityType, id: providerOrg } = provider;
     const { id: clientOrg } = clientOrganization;
@@ -627,7 +631,22 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       'filter[client]': client.id,
     };
 
-    const clientName = <ClientName client={client} rawClient={rawClient} refetchClient={refetchClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} user={user} />;
+    const clientName = (
+      <ClientName
+        client={client}
+        rawClient={rawClient}
+        refetchClient={refetchClient}
+        backLinkHref={backLinkHref}
+        showModal={showModal}
+        hideModal={hideModal}
+        notifyInfo={notifyInfo}
+        notifyError={notifyError}
+        user={user}
+        status={isEditStatusDetailsMode ? status : null}
+        onStatusChange={onStatusChange}
+        onCancel={onStatusChange}
+      />
+    );
 
     const duplicateWarningContent = (
       <span>
@@ -729,7 +748,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   roomTypes={roomTypes}
                   communityTypes={communityTypes}
                   assignedTos={assignedTos}
-                  onEditWonDetailsClick={this.handleUpdateClick}
+                  onEditStageDetailsClick={this.handleUpdateClick}
+                  onEditStatusDetailsClick={onEditStatusDetailsClick}
                 />
               </FamilyDetailsTab>
             )}

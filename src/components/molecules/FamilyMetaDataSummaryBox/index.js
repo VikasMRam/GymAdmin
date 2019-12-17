@@ -177,7 +177,10 @@ const FamilyMetaDataSummaryBox = ({ client: { stage, status, clientInfo: {
         }
       </WrapperElem>
       {onEditClick &&
-        <EditDetails onClick={onEditClick} palette="primary" weight="medium">Edit {stage} details</EditDetails>}
+        <EditDetails onClick={onEditClick} palette="primary" weight="medium">
+          Edit {mode === 'stage' ? stage : status} details
+        </EditDetails>
+      }
     </Box>
   );
 };

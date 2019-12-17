@@ -15,7 +15,7 @@ const ReduxForm = reduxForm({
 export default class ConfirmReasonFormContainer extends Component {
   static propTypes = {
     title: string.isRequired,
-    message: string.isRequired,
+    message: string,
     extraFieldProps: object,
     onCancel: func,
     onAgree: func,
