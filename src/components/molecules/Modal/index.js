@@ -3,10 +3,12 @@ import { node, bool, func, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import ReactModal from 'react-modal';
 import { ifProp, switchProp } from 'styled-tools';
+import Helmet from 'react-helmet';
 
 import { size, palette, key } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 import NewModal from 'sly/components/atoms/NewModal';
+
 import ModalGlobalStyles from './ModalGlobalStyles';
 
 const closeButtonOutsideLayouts = ['gallery', 'fullScreen'];
@@ -187,6 +189,9 @@ const Modal = ({
       onClose={onClose}
       {...props}
     >
+      <Helmet>
+        <style type="text/css">{ModalGlobalStyles}</style>
+      </Helmet>
       <ModalGlobalStyles />
       {(closeable && closeButtonOutsideLayouts.includes(layout) && !bottomCloseButtonLayouts.includes(layout)) && (
         <Head layout={layout}>

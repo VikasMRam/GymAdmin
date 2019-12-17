@@ -47,9 +47,9 @@ export default class App extends Component {
           <meta content="Seniorly Inc." property="author" />
           <meta content="English" property="language" />
           <meta name="robots" content="noindex" />
+          <style type="text/css">{ExternalGlobalStyles}</style>
         </Helmet>
         <ThemeProvider theme={theme}>
-          {/*<ExternalGlobalStyles />*/}
           <Switch>
             {this.routes.map(route => <Route key={route.path} {...route} />)}
             <Route render={routeProps => <ErrorPage {...routeProps} errorCode={404} />} />

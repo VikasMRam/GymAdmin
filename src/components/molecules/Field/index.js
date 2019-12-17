@@ -3,6 +3,7 @@ import { string, bool, oneOf, number, oneOfType, node, array, object, arrayOf } 
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
+import Helmet from 'react-helmet';
 
 import { size } from 'sly/components/themes';
 import { Label, Input, Icon, Block, Span } from 'sly/components/atoms';
@@ -26,7 +27,9 @@ const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'s
 const DatePickerLoadable = loadable(() => import(/* webpackChunkName: "chunkReactDatePicker" */'react-datepicker'));
 const DatePicker = props => (
   <>
-    <DatepickerStyles />
+    <Helmet>
+      <style type="text/css">{DatepickerStyles}</style>
+    </Helmet>
     <DatePickerLoadable {...props} />
   </>
 );

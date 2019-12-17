@@ -1,7 +1,4 @@
-// https://www.drupal.org/project/drupal/issues/2707291#comment-12797758
-import { createGlobalStyle } from 'styled-components';
-
-export default createGlobalStyle`
+export default `
   body.ReactModal__Body--open {
     overflow: hidden;
     width: 100%;

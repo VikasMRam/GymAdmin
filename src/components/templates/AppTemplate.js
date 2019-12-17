@@ -49,13 +49,14 @@ export default function AppTemplate({ children }) {
           type="image/x-icon"
           href={assetPath('favicon.ico')}
         />
+
+        <style type="text/css">{GlobalStyles}</style>
       </Helmet>
 
       <ThemeProvider theme={theme}>
-        {/*<GlobalStyles />*/}
         <Router>{children}</Router>
+        {!hideChatbox && <ChatBoxContainer />}
       </ThemeProvider>
-      {!hideChatbox && <ChatBoxContainer />}
     </>
   );
 }

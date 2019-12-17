@@ -1,12 +1,10 @@
-import { createGlobalStyle } from 'styled-components';
-
 import styles from './default';
 
 import { publicPath } from 'sly/config';
 
 const baseColor = styles.palette.slate.base;
 
-export default createGlobalStyle`
+export default `
   @font-face {
     font-display: fallback;
     font-family: 'Azo Sans';

@@ -1,8 +1,11 @@
 /* eslint-disable react/no-danger */
 import React, { Component } from 'react';
 import { bool } from 'prop-types';
+import Helmet from 'react-helmet';
 
 import { /* isBrowser, olarkSiteId, */ rokoApiKey } from 'sly/config';
+
+import ChatBoxGlobalStyle from './ChatBoxGlobalStyle';
 
 const loadOlark = () => {
   // /* eslint-disable */
@@ -58,6 +61,9 @@ export default class ChatBox extends Component {
 
     return (
       <>
+        <Helmet>
+          <style type="text/css">{ChatBoxGlobalStyle}</style>
+        </Helmet>
         <script
           defer
           type="text/javascript"
