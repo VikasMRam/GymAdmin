@@ -3,6 +3,7 @@ import { object, bool, func, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
+import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES, CONTINUING_CARE_RETIREMENT_COMMUNITY, CCRC } from 'sly/constants/tags';
 import { size, palette } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
 import pad from 'sly/components/helpers/pad';
@@ -14,8 +15,6 @@ import CommunityPricing from 'sly/components/molecules/CommunityPricing';
 import { isBrowser } from 'sly/config';
 import PlusBadge from 'sly/components/molecules/PlusBadge';
 import { tocPaths } from 'sly/services/helpers/url';
-import stateCareTypes from 'sly/constants/stateCareTypes';
-import careTypesMap from 'sly/constants/careTypesMap';
 import { phoneFormatter } from 'sly/services/helpers/phone';
 
 const StyledHeading = pad(Heading, 'regular');
@@ -70,6 +69,7 @@ const TooltipContent = styled(ReactTooltip)`
   }
 `;
 
+
 const PricingRatingWrapper = mobileOnly(styled.div`
   display: grid;
 `, css`
@@ -82,38 +82,23 @@ const PricingRatingWrapper = mobileOnly(styled.div`
 
 const PaddedPricingRatingWrapper = pad(PricingRatingWrapper, 'large');
 
-const residentialCareTypes = [
-  'Residential Care',
-  'Residential Care Homes',
-  'Residential Homes for the Aged',
-  'Residential Care facilities',
-  'Residential Care Home',
-];
-const rcStates = ['ID', 'OR'];
-const ASSISTED_LIVING = 'Assisted Living';
-const SMALL_COMMUNITY = 'up to 20 Beds';
-
-const getCareTypes = (state, careTypes, communitySize) => {
+const getCareTypes = (state, careTypes) => {
   const updatedCareTypes = [];
 
   careTypes.forEach((careType) => {
     const tocBc = tocPaths([careType]);
-    const extraCareTypes = careTypesMap[careType];
 
-    if (extraCareTypes) {
-      extraCareTypes.forEach((extraCareType) => {
-        const hasCareType = stateCareTypes[state].includes(extraCareType);
-        const isResidentialCare = careType === ASSISTED_LIVING && residentialCareTypes.includes(extraCareType);
-        const isNotExists = !updatedCareTypes.find(data => data.name === extraCareType);
+    if (AVAILABLE_TAGS.includes(careType)) {
+      const isPersonalCareHome = PERSONAL_CARE_HOME_STATES.includes(state) && careType === ASSISTED_LIVING;
+      let tag = careType;
 
-        if (hasCareType && isNotExists) {
-          if ((isResidentialCare && (rcStates.includes(state) || communitySize === SMALL_COMMUNITY)) || !isResidentialCare) {
-            updatedCareTypes.push({ name: extraCareType, path: tocBc.path });
-          }
-        }
-      });
-    } else if (stateCareTypes[state].includes(careType)) {
-      updatedCareTypes.push({ name: careType, path: tocBc.path });
+      if (isPersonalCareHome) {
+        tag = PERSONAL_CARE_HOME;
+      } else if (careType === CONTINUING_CARE_RETIREMENT_COMMUNITY) {
+        tag = CCRC;
+      }
+
+      updatedCareTypes.push({ tag, path: tocBc.path });
     }
   });
 
@@ -149,7 +134,7 @@ const CommunitySummary = ({
     line1, line2, city, state, zip,
   } = address;
   const {
-    communityPhone, plusCommunity, plusCategory, typeCare, communitySize,
+    communityPhone, plusCommunity, plusCategory, typeCare,
   } = propInfo;
   const { reviewsValue, numReviews } = propRatings;
   const formattedAddress = `${line1}, ${line2}, ${city},
@@ -167,7 +152,7 @@ const CommunitySummary = ({
   }
 
   const favIcon = isFavorited ? 'favourite-light' : 'favourite-empty';
-  const careTypes = getCareTypes(state, typeCare, communitySize);
+  const careTypes = getCareTypes(state, typeCare);
 
   return (
     <Box ref={innerRef} className={className}>
@@ -193,10 +178,10 @@ const CommunitySummary = ({
               event={{
                 category: 'care-type-tags',
                 action: 'tag-click',
-                label: careType.name,
+                label: careType.tag,
               }}
             >
-              <StyledTag key={careType.name}>{careType.name}</StyledTag>
+              <StyledTag key={careType.tag}>{careType.tag}</StyledTag>
             </Link>),
         )
       }
