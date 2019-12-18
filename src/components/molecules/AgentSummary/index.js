@@ -1,5 +1,5 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -104,7 +104,7 @@ const AskQuestionPhoneSection = styled.div`
   }
 `;
 const AgentSummary = ({
-  agent, onButtonClick, onPhoneClick,
+  agent, onButtonClick, onPhoneClick, buttonHref,
 }) => {
   const { info, aggregateRating } = agent;
   const {
@@ -157,7 +157,7 @@ const AgentSummary = ({
           </AgentsCitiesSection>
         }
         <AskQuestionPhoneSection>
-          <AskQuestionButton onClick={onButtonClick}>Ask a Question</AskQuestionButton>
+          <AskQuestionButton onClick={onButtonClick} href={buttonHref}>Ask a Question</AskQuestionButton>
           {slyPhone &&
             <PhoneSection>
               <Icon icon="phone" size="regular" palette="primary" />
@@ -177,6 +177,7 @@ const AgentSummary = ({
 AgentSummary.propTypes = {
   agent: agentPropType.isRequired,
   onButtonClick: func,
+  buttonHref: string,
   onPhoneClick: func,
 };
 
