@@ -171,7 +171,7 @@ const makeBanner = (profileContacted) => {
       }
       return acc;
     },
-    []
+    [],
   );
 
   if (!requests.length) {
@@ -183,7 +183,7 @@ const makeBanner = (profileContacted) => {
   }
 
   return `We have your ${requests.join(
-    ''
+    '',
   )} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
 };
 
@@ -240,7 +240,11 @@ export default class CommunityDetailPage extends Component {
 
     const typeOfCare = typeCares[0];
     const hasCCRC = typeCares.includes(
-      'Continuing Care Retirement Community(CCRC)'
+      'Continuing Care Retirement Community(CCRC)',
+    );
+
+    const hasSNF = typeCares.includes(
+      'Skilled Nursing Facility'
     );
 
     // TODO: mock as USA until country becomes available
@@ -378,7 +382,17 @@ export default class CommunityDetailPage extends Component {
                       </GetCustomPricingButtonContainer>
                     </>
                   )}
-                  {!hasCCRC && (
+                  {!hasCCRC && hasSNF && (
+                    <>
+                      <Paragraph>
+                        90% of Skilled Nursing Facilities in the United States are Medicare-certified. Some also accept Medicaid. To learn about pricing at {name}, click the button below.
+                      </Paragraph>
+                      <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested}>
+                        Get Pricing
+                      </GetCustomPricingButtonContainer>
+                    </>
+                  )}
+                  {!hasCCRC && !hasSNF && (
                     <CommunityPricingTable
                       name={name}
                       pricesList={pricesList}

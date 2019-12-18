@@ -6,15 +6,27 @@ import { ifProp } from 'styled-tools';
 
 import { size, palette, columnWidth } from 'sly/components/themes';
 import userPropType from 'sly/propTypes/user';
+import clientPropType from 'sly/propTypes/client';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import Role from 'sly/components/common/Role';
+import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import {
+  SOURCE_OPTIONS,
+  FAMILY_STAGE_WON,
+  FAMILY_STAGE_REJECTED,
+  FAMILY_STAGE_LOST,
+  FAMILY_STATUS_ON_PAUSE,
+  FAMILY_STATUS_LONG_TERM,
+} from 'sly/constants/familyDetails';
 import { Block, Button, Label } from 'sly/components/atoms';
+import FamilyMetaDataSummaryBox from 'sly/components/molecules/FamilyMetaDataSummaryBox';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
-import { SOURCE_OPTIONS } from 'sly/constants/familyDetails';
+
+const showSummaryStages = [FAMILY_STAGE_WON, FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST];
+const showSummaryStatuses = [FAMILY_STATUS_ON_PAUSE, FAMILY_STATUS_LONG_TERM];
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -90,6 +102,10 @@ const FormBottomSection = styled.div`
 
 const FormSectionHeading = pad(Block, 'large');
 
+const StyledFamilyMetaDataSummaryBox = pad(styled(FamilyMetaDataSummaryBox)`
+  flex: 1;
+`);
+
 // const contactPreferenceOptionsList = [{ value: 'sms', label: 'SMS' }, { value: 'email', label: 'Email' }, { value: 'phone', label: 'Phone' }];
 
 const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
@@ -105,6 +121,7 @@ const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
 //   { value: 'strawberry', label: 'Strawberry' },
 //   { value: 'vanilla', label: 'Vanilla' },
 // ];
+
 class FamilyDetailsForm extends Component {
   static propTypes = {
     handleSubmit: func.isRequired,
@@ -126,6 +143,9 @@ class FamilyDetailsForm extends Component {
     preferredLocation: string,
     assignedTos: arrayOf(userPropType).isRequired,
     isAgentUser: bool,
+    isWon: bool,
+    client: clientPropType.isRequired,
+    onEditWonDetailsClick: func,
   };
 
   handleLookingForChange = (event, value) => {
@@ -149,7 +169,9 @@ class FamilyDetailsForm extends Component {
     const {
       handleSubmit, submitting, invalid, accepted, initialValues, lookingFor, isAgentUser,
       gender, timeToMove, monthlyBudget, roomTypes, communityTypes, careLevels, canEditFamilyDetails, assignedTos,
+      client, onEditWonDetailsClick,
     } = this.props;
+    const { stage, status } = client;
     let { preferredLocation } = this.props;
     if (initialValues && !preferredLocation) {
       ({ preferredLocation } = initialValues);
@@ -171,6 +193,8 @@ class FamilyDetailsForm extends Component {
     const tagColumn = { typeInfo: { api: '/v0/platform/tags?filter[name]=' }, value: 'tag.name' };
     const medicaidOptions = [{ label: '', value: true }];
     const sourceOptions = SOURCE_OPTIONS.map(s => <option key={s} value={s}>{s}</option>);
+    const showStageSummary = showSummaryStages.includes(stage);
+    const showStatusSummary = showSummaryStatuses.includes(status);
 
     return (
       <div>
@@ -184,6 +208,18 @@ class FamilyDetailsForm extends Component {
             <Role is={PLATFORM_ADMIN_ROLE}>
               <FormSection>
                 <FormSectionHeading weight="medium">Metadata</FormSectionHeading>
+                {showStageSummary &&
+                  <TwoColumnWrapper>
+                    <StyledLabel>{stage} details</StyledLabel>
+                    <StyledFamilyMetaDataSummaryBox client={client} onEditClick={onEditWonDetailsClick} />
+                  </TwoColumnWrapper>
+                }
+                {showStatusSummary &&
+                  <TwoColumnWrapper>
+                    <StyledLabel>{status} status details</StyledLabel>
+                    <StyledFamilyMetaDataSummaryBox mode="status" client={client} />
+                  </TwoColumnWrapper>
+                }
                 <Field
                   name="assignedTo"
                   label="Assigned to"
@@ -196,14 +232,6 @@ class FamilyDetailsForm extends Component {
                   {assignedToOptions}
                 </Field>
                 <Field
-                  name="additionalMetadata"
-                  type="checkbox"
-                  label="Additional Attributes"
-                  component={ReduxField}
-                  options={additionalMDOptions}
-                  wideWidth
-                />
-                <Field
                   name="tags"
                   label="Tags"
                   type="autocomplete"
@@ -212,6 +240,14 @@ class FamilyDetailsForm extends Component {
                   wideWidth
                   column={tagColumn}
                   isMulti
+                />
+                <Field
+                  name="additionalMetadata"
+                  type="checkbox"
+                  label="Additional Attributes"
+                  component={ReduxField}
+                  options={additionalMDOptions}
+                  wideWidth
                 />
               </FormSection>
             </Role>

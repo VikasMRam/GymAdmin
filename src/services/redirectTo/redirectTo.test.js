@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
-import redirectTo from "./redirectTo";
+
+import redirectTo from './redirectTo';
 
 const history = { push: jest.fn(), replace: jest.fn() };
 const routes = [{ path: '/known/path', component: Fragment }];

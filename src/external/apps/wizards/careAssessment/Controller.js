@@ -28,27 +28,24 @@ const ReduxForm = reduxForm({
   initialValues: getStepInputFieldDefaultValues(),
 })(CareAssessmentComponent);
 
+const defaultProgressPath = new Set([1]);
+const defaultFormData = {};
+
 const mapStateToProps = (state, { controller, ...ownProps }) => {
   return {
-    progressPath: controller.progressPath || new Set([1]),
+    progressPath: controller.progressPath || defaultProgressPath,
     currentStep: controller.currentStep || ownProps.currentStep || 1,
     locationSearchParams: controller.locationSearchParams || ownProps.locationSearchParams,
     href: controller.href || '',
     searchResultCount: controller.searchResultCount,
     searching: controller.searching,
-    data: selectFormData(state, formName, {}),
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    dispatchResetForm: () => dispatch(reset(formName)),
+    data: selectFormData(state, formName, defaultFormData),
   };
 };
 
 @query('createAction', 'createUuidAction')
 @query('searchCommunities', 'getSearchResources')
-@connectController(mapStateToProps, mapDispatchToProps)
+@connectController(mapStateToProps, { resetForm: reset })
 
 export default class Controller extends Component {
   static propTypes = {
@@ -64,19 +61,21 @@ export default class Controller extends Component {
     location: shape({
       search: string,
     }),
-    dispatchResetForm: func.isRequired,
+    resetForm: func.isRequired,
     progressPath: object.isRequired,
     searching: bool,
     href: string,
   };
 
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+
     this.flowName = DEFAULT_STEP_ORDER;
     let clickID = Math.random().toString().slice(2, 11);
 
     const {
       location, locationSearchParams,
-    } = this.props;
+    } = props;
     // get query params passed
     if (location && location.search) {
       const params = queryString.parse(location.search);
@@ -127,7 +126,7 @@ export default class Controller extends Component {
 
   handleSeeMore = () => {
     const {
-      currentStep, createAction, data, dispatchResetForm, set,
+      currentStep, createAction, data, resetForm, set,
     } = this.props;
 
     const currentStepName = this.flow[currentStep - 1];
@@ -136,7 +135,7 @@ export default class Controller extends Component {
       if (window.parent && this.widgetType === 'popup') {
         window.parent.postMessage(JSON.stringify({ action: 'closePopup' }), '*');
       } else {
-        dispatchResetForm();
+        resetForm(formName);
         set({
           currentStep: null,
           progressPath: null,

@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
-import { withDone } from 'sly/components/common/fetchState';
 import { isServer } from 'sly/config';
-import { withApi } from 'sly/services/newApi';
+import api from 'sly/services/newApi/apiInstance';
 import { createMemoizedRequestInfoSelector } from 'sly/services/newApi/selectors';
+import withPrefetchWait from 'sly/services/newApi/withPrefetchWait';
 
 const defaultDispatcher = call => call();
 
@@ -19,6 +19,7 @@ function getDisplayName(WrappedComponent) {
 export default function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
   return (InnerComponent) => {
     const getMemoizedRequestInfo = createMemoizedRequestInfoSelector();
+
     const mapStateToProps = (state, props) => {
       const argumentsAbsorber = (...args) => args;
 
@@ -29,9 +30,12 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
         };
       }
 
+      const args = dispatcher(argumentsAbsorber, props);
+      const { placeholders = {} } = api[apiCall].method(...args);
+
       const requestInfo = getMemoizedRequestInfo(
         state,
-        { call: apiCall, args: dispatcher(argumentsAbsorber, props) },
+        { call: apiCall, args: placeholders },
       );
 
       return {
@@ -39,18 +43,13 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       };
     };
 
-    const mapDispatchToActions = (dispatch, { api }) => ({
-      fetch: props => dispatch(dispatcher(api[apiCall], props)),
-    });
+    const fetch = (props, config) => dispatcher(
+      placeholders => api[apiCall].asAction(placeholders, config),
+      props,
+    );
 
-    // FIXME: For now we have to continue using withDone (which uses componentWillUpdate)
-    // we have to re-engineer this to be able to use react 17, or to start using hooks in
-    // react 16.8 (methods renamed to UNSAFE_xxxx)
-    @withDone
-
-    @withApi
-
-    @connect(mapStateToProps, mapDispatchToActions)
+    @withPrefetchWait
+    @connect(mapStateToProps, { fetch })
 
     class Wrapper extends React.PureComponent {
       static displayName = `prefetch(${getDisplayName(InnerComponent)}, ${propName})`;
@@ -60,41 +59,48 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       static propTypes = {
         api: object,
         requestInfo: object,
+        fetch: func,
+        prefetchWait: func,
+        apiConfig: object,
         status: object,
       };
 
-      componentDidMount() {
-        this.props.done();
-      }
+      // necessary because we configure the request options
+      // in the server with the credentials taken from the
+      // ssr request
+      static defaultProps = {
+        apiConfig: {},
+      };
 
-      componentWillMount() {
-        const { requestInfo, done } = this.props;
-        const { hasStarted, isLoading } = requestInfo;
-        if (!isLoading && !hasStarted) {
-          this.fetch();
-        } else if (isServer) {
-          done();
+      constructor(props) {
+        super(props);
+
+        if (isServer) {
+          props.prefetchWait(this.mayBeFetch());
         }
       }
 
-      componentWillReceiveProps(nextProps) {
-        const { requestInfo, done } = nextProps;
+      mayBeFetch = () => {
+        const { requestInfo } = this.props;
         const { hasStarted, isLoading } = requestInfo;
         if (!isLoading && !hasStarted) {
-          this.fetch(nextProps);
-        } else if (isServer) {
-          done();
+          return this.fetch();
         }
-      }
+        return false;
+      };
+
+      componentDidMount = this.mayBeFetch;
+
+      componentDidUpdate = this.mayBeFetch;
 
       // props fetch bound to dispatch
-      fetch = (props = this.props) => {
-        const { fetch, done } = props;
-        return fetch(props).then(done, done);
+      fetch = () => {
+        const { fetch, apiConfig } = this.props;
+        return fetch(this.props, apiConfig);
       };
 
       render() {
-        const { requestInfo, status, done, fetch, ...props } = this.props;
+        const { requestInfo, status, ...props } = this.props;
         const { normalized, ...request } = requestInfo;
 
         const innerProps = {

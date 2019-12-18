@@ -1,8 +1,9 @@
 import { URL, parse as parseUrl } from 'url';
+
 import { stringify, parse } from 'query-string';
 
 const propToQueryParam = {
-  action: 'sly_action' ,
+  action: 'sly_action',
   label: 'sly_label',
   category: 'sly_category',
   value: 'sly_value',
@@ -33,7 +34,7 @@ export function extractEventFromQuery(search) {
       typeof label !== 'undefined' && { label },
       typeof category !== 'undefined' && { category },
       typeof value !== 'undefined' && { value: Number(value) || value },
-      typeof nonInteraction !== 'undefined' && { nonInteraction: nonInteraction === 'true' }
+      typeof nonInteraction !== 'undefined' && { nonInteraction: nonInteraction === 'true' },
     ),
     search: remainingSearch.length > 1 ? `?${remainingSearch}` : '',
   };
@@ -46,8 +47,8 @@ export function addEventToQueryString(search, event) {
 
 
   const serializedEvent = Object.keys(event).reduce((acc, key) => {
-    if(event[key] !== 'undefined') {
-      acc.push(`${propToQueryParam[key]}=${event[key]}`);
+    if (event[key] !== 'undefined') {
+      acc.push(`${propToQueryParam[key]}=${encodeURIComponent(event[key])}`);
     }
 
     return acc;
@@ -56,11 +57,11 @@ export function addEventToQueryString(search, event) {
   const maybeQuestion = search[0] === '?' ? '' : '?';
   const maybeAnd = search.length === 0 ? '' : '&';
 
-  return maybeQuestion+search+maybeAnd+serializedEvent;
+  return maybeQuestion + search + maybeAnd + serializedEvent;
 }
 
 export function addEventToUrl(urlString, event) {
-  if(!urlString) {
+  if (!urlString) {
     return urlString;
   }
 

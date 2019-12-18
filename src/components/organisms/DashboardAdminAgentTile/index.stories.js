@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 const notifyError = action('notifyError');
 const notifyInfo = action('notifyInfo');
 
-const wrap = (props={}) => (
+const wrap = (props = {}) => (
   <Wrapper>
     <DashboardAdminAgentTile
       agent={agent}

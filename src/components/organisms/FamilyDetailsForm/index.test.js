@@ -5,6 +5,7 @@ import { Field } from 'redux-form';
 import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
 import AmalFrancis from 'sly/../private/storybook/sample-data/user-amal-francis.json';
 import SushanthRamakrishna from 'sly/../private/storybook/sample-data/user-sushanth-ramakrishna.json';
+import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
 
 const timeToMove = [
   'Immediately',
@@ -73,6 +74,7 @@ const defaultProps = {
   careLevels,
   communityTypes,
   assignedTos,
+  client: PraneshKumar,
 };
 
 const wrap = (props = {}) => shallow(<FamilyDetailsForm {...defaultProps} {...props} />);

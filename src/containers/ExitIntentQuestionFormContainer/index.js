@@ -34,12 +34,13 @@ const ReduxForm = reduxForm({
   onSubmitSuccess: afterSubmit,
 })(ExitIntentQuestionForm);
 
-const mapDispatchToProps = dispatch => ({
-  clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
-});
+const mapDispatchToProps = {
+  clearSubmitErrors: () => clearSubmitErrors(formName),
+};
 
 @withRouter
 @withUser
+@withAuth
 @connect(null, mapDispatchToProps)
 @query('createAction', 'createUuidAction')
 
@@ -49,6 +50,7 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
     location: object,
     user: userPropType,
     showModal: func.isRequired,
+    createOrUpdateUser: func.isRequired,
   };
 
   componentDidMount() {
@@ -61,7 +63,7 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
 
   handleSubmit = (data) => {
     const {
-      createAction, location: { pathname }, showModal, user,
+      createAction, createOrUpdateUser, location: { pathname }, showModal, user,
     } = this.props;
 
     const {
@@ -82,7 +84,10 @@ export default class ExitIntentQuestionFormContainer extends PureComponent {
           email,
         },
       },
-    }).then(() => {
+    }).then(() => createOrUpdateUser({
+      name,
+      email,
+    })).then(() => {
       sendEvent('question-form-send', pathname);
       showModal(<Thankyou />);
     });

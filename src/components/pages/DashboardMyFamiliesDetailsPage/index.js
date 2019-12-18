@@ -66,7 +66,7 @@ const BackLinkWrapper = pad(styled.div`
 `, 'regular');
 
 const TextAlignCenterBlock = pad(textAlign(Block, 'center'), 'regular');
-const AlignCenterBackLinkWrapper = BackLinkWrapper.extend`
+const AlignCenterBackLinkWrapper = styled(BackLinkWrapper)`
   justify-content: center;
 `;
 
@@ -84,7 +84,7 @@ const SmallScreenBorderDiv = styled.div`
   ${p => p.padding && css`padding: ${size('spacing', p.padding)};`}
 `;
 
-const SmallScreenBorderPaddedFamilySummary = PaddedFamilySummary.extend`
+const SmallScreenBorderPaddedFamilySummary = styled(PaddedFamilySummary)`
   ${SmallScreenBorder}
 `;
 
@@ -216,7 +216,7 @@ const ClientName = ({ client, rawClient, backLinkHref, user, ...props }) => {
         <Icon icon="arrow-left" palette="primary" />
       </Link>
       <span>{name}</span>
-      {isReferralSent(additionalMetadata) && <StyledIconBadge badgePalette="secondary" palette="white" icon="checkmark-circle" text="R SENT" />}
+      {isReferralSent(client) && <StyledIconBadge badgePalette="secondary" palette="white" icon="checkmark-circle" text="R SENT" />}
       {(userIs(user, PLATFORM_ADMIN_ROLE) || (!isNew && !isProspects)) && <StyledStatusSelect client={client} rawClient={rawClient} user={user} {...props} />}
     </StyledClientNameBlock>
   );
@@ -489,7 +489,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           onSuccess={hideModal}
           client={client}
         />
-      ), null, 'noPadding', false
+      ), null, 'noPadding', false,
     );
   };
 
@@ -692,9 +692,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           }
           <TabWrapper snap="top">
             {currentTab === SUMMARY && (
-              <>
-                <SmallScreenBorderPaddedFamilySummary client={client} to={familyDetailsPath} noHeading />
-              </>
+              <SmallScreenBorderPaddedFamilySummary client={client} isAgentUser={isAgentUser} to={familyDetailsPath} noHeading />
             )}
 
             {currentTab === ACTIVITY && (
@@ -731,6 +729,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   roomTypes={roomTypes}
                   communityTypes={communityTypes}
                   assignedTos={assignedTos}
+                  onEditWonDetailsClick={this.handleUpdateClick}
                 />
               </FamilyDetailsTab>
             )}

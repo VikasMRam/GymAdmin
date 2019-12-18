@@ -1,6 +1,6 @@
 import React from 'react';
 import { node, bool, func, oneOf } from 'prop-types';
-import styled, { css, injectGlobal } from 'styled-components';
+import styled, { css, createGlobalStyle } from 'styled-components';
 import ReactModal from 'react-modal';
 import { ifProp, switchProp } from 'styled-tools';
 
@@ -13,7 +13,7 @@ const bottomCloseButtonLayouts = ['bottomDrawer'];
 const noPaddingLayouts = ['noPadding', 'wizard', 'bottomDrawer', 'eBook', 'noPaddingWithOverflow'];
 
 // https://www.drupal.org/project/drupal/issues/2707291#comment-12797758
-injectGlobal`
+const ModalGlobalStyles = createGlobalStyle`
   body.ReactModal__Body--open {
     overflow: hidden;
     width: 100%;
@@ -201,6 +201,7 @@ const Modal = ({
       onClose={onClose}
       {...props}
     >
+      <ModalGlobalStyles />
       {(closeable && closeButtonOutsideLayouts.includes(layout) && !bottomCloseButtonLayouts.includes(layout)) && (
         <Head layout={layout}>
           {iconClose('white')}

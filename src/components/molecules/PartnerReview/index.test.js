@@ -1,10 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import PartnerReview from 'sly/components/molecules/PartnerReview';
 import { Paragraph, Block } from 'sly/components/atoms';
 
-const wrap = (props = {}) => shallow(<PartnerReview {...props} />);
+const wrap = (props = {}) => mount(<PartnerReview {...props} />);
 
 const image = 'https://avatars.githubusercontent.com/u/113003';
 const review = 'test review';
@@ -19,11 +19,8 @@ describe('PartnerReview', () => {
       name,
       location,
     });
-    expect(wrapper.find('div').find(Paragraph).dive().dive()
-      .text()).toContain(review);
-    expect(wrapper.find('div').find(Block).at(0).dive()
-      .text()).toContain(name);
-    expect(wrapper.find('div').find(Block).at(1).dive()
-      .text()).toContain(location);
+    expect(wrapper.find('div').find(Paragraph).text()).toContain(review);
+    expect(wrapper.find('div').find(Block).at(0).text()).toContain(name);
+    expect(wrapper.find('div').find(Block).at(1).text()).toContain(location);
   });
 });

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
+import { Route } from 'react-router';
+
 import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import pad from 'sly/components/helpers/pad';
@@ -13,7 +15,6 @@ import Pagination from 'sly/components/molecules/Pagination';
 import Th from 'sly/components/molecules/Th';
 import ContactRowCard from 'sly/components/organisms/ContactRowCard';
 import Modal from 'sly/components/molecules/Modal';
-import { Route } from 'react-router';
 import AddOrEditContactFormContainer from 'sly/containers/AddOrEditContactFormContainer';
 
 const TABLE_HEADINGS = [{ text: 'Contact name' }, { text: 'Community' }, { text: 'Email' }, { text: 'Phone number' }];
@@ -46,8 +47,8 @@ const StyledPagination = styled(
     CenteredPagination,
     css`
       position: sticky;
-    `
-  )
+    `,
+  ),
 )`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     border-bottom: ${size('border.regular')} solid ${palette('slate.stroke')};
@@ -61,7 +62,7 @@ const FamiliesCountStatusBlock = pad(
     padding-left: ${size('spacing.large')};
     background-color: ${palette('white.base')};
   `,
-  'large'
+  'large',
 );
 
 const StyledFamiliesCountStatusBlock = styled(FamiliesCountStatusBlock)`
@@ -147,9 +148,9 @@ export default class DashboardAgentContactsSection extends Component {
       <>
         <TwoColumn>
           <Heading level="subtitle">Contacts</Heading>
-          {/*<IconButton icon="plus" hideTextInMobile to={`${match.url}/new`} onClick={this.handleAddContactClick}>*/}
-          {/*  Add contact*/}
-          {/*</IconButton>*/}
+          {/* <IconButton icon="plus" hideTextInMobile to={`${match.url}/new`} onClick={this.handleAddContactClick}> */}
+          {/*  Add contact */}
+          {/* </IconButton> */}
         </TwoColumn>
         <StyledTableHeaderButtons
           datatable={datatable}
@@ -212,7 +213,7 @@ export default class DashboardAgentContactsSection extends Component {
               }
 
               const closeModal = () => {
-                if(history.action === 'PUSH') {
+                if (history.action === 'PUSH') {
                   history.goBack();
                 } else {
                   redirectTo(match.url, true);

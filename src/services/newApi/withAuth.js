@@ -8,6 +8,7 @@ import set from 'lodash/set';
 
 import withUser from './withUser';
 
+import api from 'sly/services/newApi/apiInstance';
 import { ensureAuthenticated } from 'sly/store/actions';
 
 function getDisplayName(WrappedComponent) {
@@ -20,27 +21,43 @@ const mapStateToProps = state => ({
   authenticated: state.authenticated,
 });
 
-const mapDispatchToProps = dispatch => ({
-  ensureAuthenticated: (...args) => dispatch(ensureAuthenticated(...args)),
-  dispatch,
-});
+const userApiMethods = [
+  'registerUser',
+  'loginUser',
+  'logoutUser',
+  'recoverPassword',
+  'setPassword',
+  'updatePassword',
+  'thirdPartyLogin',
+].reduce((acc, method) => {
+  acc[method] = api[method].asAction;
+  return acc;
+}, {});
+
+const mapDispatchToProps = {
+  ensureAuthenticated,
+  ...userApiMethods,
+};
 
 export default function withAuth(InnerComponent) {
   @withUser
-
   @connect(mapStateToProps, mapDispatchToProps)
 
   class Wrapper extends PureComponent {
     static displayName = `withAuth(${getDisplayName(InnerComponent)})`;
 
     static propTypes = {
+      registerUser: func.isRequired,
+      loginUser: func.isRequired,
+      logoutUser: func.isRequired,
+      recoverPassword: func.isRequired,
+      setPassword: func.isRequired,
+      updatePassword: func.isRequired,
+      thirdPartyLogin: func.isRequired,
       authenticated: object.isRequired,
       ensureAuthenticated: func.isRequired,
-      api: object.isRequired,
-      dispatch: func.isRequired,
       status: object.isRequired,
       user: object,
-      uuidAux: object.isRequired,
       updateUser: func.isRequired,
     };
 
@@ -73,7 +90,6 @@ export default function withAuth(InnerComponent) {
         'attributes.email',
       ]);
 
-
       const willUpdate = Object.entries({
         'attributes.name': name,
         'attributes.phoneNumber': phone,
@@ -94,39 +110,41 @@ export default function withAuth(InnerComponent) {
     };
 
     registerUser = (options = {}) => {
-      const { dispatch, api, status } = this.props;
+      const { registerUser, status } = this.props;
       const { ignoreExisting, ...data } = options;
 
-      return dispatch(api.registerUser(data)).catch((e) => {
-        const alreadyExists = e.body
-          && e.body.errors
-          && Object.values(e.body.errors)
-            .some(e => e.includes('user already exists'));
-        if (ignoreExisting && alreadyExists) {
-          return Promise.resolve();
-        }
-        return Promise.reject(e);
-      }).then(status.user.refetch);
+      return registerUser(data)
+        .catch((e) => {
+          const alreadyExists = e.body
+            && e.body.errors
+            && Object.values(e.body.errors)
+              .some(e => e.includes('user already exists'));
+          if (ignoreExisting && alreadyExists) {
+            return Promise.resolve();
+          }
+          return Promise.reject(e);
+        })
+        .then(status.user.refetch);
     };
 
     loginUser = (data) => {
-      const { dispatch, api, status } = this.props;
-      return dispatch(api.loginUser(data)).then(status.user.refetch);
+      const { loginUser, status } = this.props;
+      return loginUser(data).then(status.user.refetch);
     };
 
     logoutUser = (data) => {
-      const { dispatch, api, status } = this.props;
-      return dispatch(api.logoutUser(data)).then(status.user.refetch);
+      const { logoutUser, status } = this.props;
+      return logoutUser(data).then(status.user.refetch);
     };
 
     recoverPassword = (data) => {
-      const { dispatch, api } = this.props;
-      return dispatch(api.recoverPassword(data));
+      const { recoverPassword } = this.props;
+      return recoverPassword(data);
     };
 
     setPassword = (data) => {
-      const { dispatch, api, status } = this.props;
-      return dispatch(api.setPassword(data)).then(status.user.refetch);
+      const { setPassword, status } = this.props;
+      return setPassword(data).then(status.user.refetch);
     };
 
     ensureAuthenticated = (...args) => {
@@ -135,13 +153,13 @@ export default function withAuth(InnerComponent) {
     };
 
     updatePassword = (data) => {
-      const { dispatch, api, status } = this.props;
-      return dispatch(api.updatePassword(data)).then(status.user.refetch);
+      const { updatePassword, status } = this.props;
+      return updatePassword(data).then(status.user.refetch);
     };
 
     thirdPartyLogin = (data) => {
-      const { dispatch, api, status } = this.props;
-      return dispatch(api.thirdPartyLogin(data)).then(status.user.refetch);
+      const { thirdPartyLogin, status } = this.props;
+      return thirdPartyLogin(data).then(status.user.refetch);
     };
 
     render = () => (

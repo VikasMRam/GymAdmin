@@ -8,12 +8,12 @@ import experiments from './experiments/reducer';
 import controller from './controller/reducer';
 import chatBox from './chatBox/reducer';
 
-import { reducer as bees } from 'sly/services/newApi';
+import { reducer as api } from 'sly/services/newApi';
 
 export default combineReducers({
   form,
   thunk,
-  bees,
+  api,
   modal,
   authenticated,
   experiments,

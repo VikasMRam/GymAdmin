@@ -15,7 +15,7 @@ export const getSearchUrl = (matchParams) => {
   return outUrl;
 };
 
-const tocPaths = (toc) => {
+export const tocPaths = (toc) => {
   if (toc && toc.length > 0) {
     switch (toc[0]) {
       case 'Assisted Living':
@@ -38,16 +38,26 @@ const tocPaths = (toc) => {
           path: '/board-and-care-home',
           label: 'Board and Care Home',
         };
+      case 'Continuing Care Retirement Community(CCRC)':
+        return {
+          path: '/continuing-care-retirement-community',
+          label: 'Continuing Care Retirement Community(CCRC)',
+        };
+      case 'Skilled Nursing Facility':
+        return {
+          path: '/skilled-nursing-facility',
+          label: 'Skilled Nursing Facility',
+        };
       default:
         return {
-          path: '/retirement-community',
-          label: 'Retirement Community',
+          path: '/nursing-homes',
+          label: 'Nursing Homes',
         };
     }
   } else {
     return {
-      path: '/retirement-community',
-      label: 'Retirement Community',
+      path: '/nursing-homes',
+      label: 'Nursing Homes',
     };
   }
 };
@@ -67,14 +77,14 @@ const tocGuidePaths = (toc) => {
         };
       default:
         return {
-          path: '/retirement-community-guide',
-          label: 'Retirement Community Guide',
+          path: '/nursing-homes-guide',
+          label: 'Nursing Homes Guide',
         };
     }
   } else {
     return {
-      path: '/retirement-community-guide',
-      label: 'Retirement Community Guide',
+      path: '/nursing-homes-guide',
+      label: 'Nursing Homes Guide',
     };
   }
 };
@@ -324,7 +334,7 @@ export const getBreadCrumbsForAgent = ({ name, state, city, id }) => {
   return baseBcs;
 };
 
-export const getBreadCrumbsForGuides = ({ toc, region, regionName}) => {
+export const getBreadCrumbsForGuides = ({ toc, region, regionName }) => {
   const tocBc = tocGuidePaths([titleize(toc)]);
   // TODO: use react router generated paths once router wiring is complete
   const baseBcs = [{
@@ -383,8 +393,10 @@ export const objectToURLQueryParams = (obj, options) => stringify(obj, options);
 export const parseURLQueryParams = obj => parse(obj);
 
 export const getStateAbbr = (state) => {
-  const st = titleize(state);
-  return stateAbbr[st];
+  if (state) {
+    const st = titleize(state);
+    return stateAbbr[st];
+  }
 };
 
 export const removeQueryParamFromURL = (key, sourceURL) => {

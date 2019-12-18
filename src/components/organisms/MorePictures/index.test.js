@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+
 import MorePictures from 'sly/components/organisms/MorePictures';
 import { Image } from 'sly/components/atoms';
 

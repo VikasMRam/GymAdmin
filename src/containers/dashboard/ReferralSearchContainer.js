@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { arrayOf, func, oneOf, object } from 'prop-types';
 
@@ -206,12 +206,12 @@ export default class ReferralSearchContainer extends Component {
   createContactForProvider = ({ email, name }, partner) => {
     const { createContact } = this.props;
     const { id, type } = partner;
-    const contact = immutable(pick, newContact, ['id', 'type', 'attributes', 'relationships']);
+    const contact = immutable.wrap(pick(newContact, ['id', 'type', 'attributes', 'relationships']));
     contact.set('id', null);
     contact.set('type', 'Contact');
     contact.set('attributes.email', email);
     contact.set('attributes.name', name);
-    const slyEntity = immutable(pick, newSlyEntity, ['id', 'type', 'attributes']);
+    const slyEntity = immutable.wrap(pick(newSlyEntity, ['id', 'type', 'attributes']));
     slyEntity.set('id', id);
     slyEntity.set('type', 'SlyEntity');
     slyEntity.set('attributes.entityType', type);
@@ -224,16 +224,16 @@ export default class ReferralSearchContainer extends Component {
     const {
       createClient, parentRawClient, notifyInfo, notifyError,
     } = this.props;
-    const newBareClient = immutable(pick(parentRawClient, ['id', 'type', 'attributes.clientInfo', 'attributes.uuid', 'relationships']));
+    const newBareClient = immutable.wrap(pick(parentRawClient, ['id', 'type', 'attributes.clientInfo', 'attributes.uuid', 'relationships']));
     newBareClient.set('id', null);
     newBareClient.set('attributes.clientInfo.slyMessage', partner.slyMessage);
     newBareClient.set('attributes.clientInfo.referralSource', '');
-    const provider = immutable(pick, newProvider, ['id', 'type', 'attributes']);
+    const provider = immutable.wrap(pick(newProvider, ['id', 'type', 'attributes']));
     provider.set('id', partner.id);
     provider.set('type', 'Provider');
     provider.set('attributes.entityType', partner.type);
     newBareClient.set('relationships.provider', { data: provider.value() });
-    const parent = immutable(pick, newParentClient, ['id', 'type', 'attributes']);
+    const parent = immutable.wrap(pick(newParentClient, ['id', 'type', 'attributes']));
     parent.set('id', parentRawClient.id);
     parent.set('type', 'Client');
     newBareClient.set('relationships.parent', { data: parent.value() });
@@ -252,7 +252,7 @@ export default class ReferralSearchContainer extends Component {
     const {
       referralMode, parentClient, user,
     } = this.props;
-    const { communitiesInterested, children: childrenClients, clientInfo, recommendedAgents, uuidAux } = parentClient;
+    const { communitiesInterested, children: childrenClients, clientInfo, recommendedAgents: allRecommendedAgents, uuidAux } = parentClient;
     const { slyCommunityMessage: communityMessage, slyAgentMessage: agentMessage } = clientInfo;
     const { uuidInfo } = uuidAux;
     const { locationInfo } = uuidInfo;
@@ -277,7 +277,8 @@ export default class ReferralSearchContainer extends Component {
       accumulator[client.provider.id] = client;
       return accumulator;
     }, {});
-    const recommendedAgentsIdsMap = recommendedAgents.reduce((accumulator, community) => {
+    const recommendedAgentsFiltered =  allRecommendedAgents.filter(e => !e.info.excludeFromMap);
+    const recommendedAgentsIdsMap = recommendedAgentsFiltered.reduce((accumulator, community) => {
       accumulator[community.id] = community;
       return accumulator;
     }, {});
@@ -322,12 +323,14 @@ export default class ReferralSearchContainer extends Component {
                 />
                 <WizardStep
                   component={DashboardCommunityReferralSearch}
+                  subtitle="Send referral to community"
                   onSubmit={onSubmit}
                   name="DashboardCommunityReferralSearch"
                   communities={communities}
                   isAdminUser={isAdminUser}
                   childrenClients={communityReferralClients}
                   childrenClientCommunityIdsMap={childrenClientCommunityIdsMap}
+                  communitiesInterestedIdsMap={communitiesInterestedIdsMap}
                   handleCommunitySearch={this.doCommunitySearch}
                   handleLocationSearch={this.handleLocationCommunitySearch}
                   preferredLocation={locationInfo}
@@ -336,9 +339,10 @@ export default class ReferralSearchContainer extends Component {
                 <WizardStep
                   component={DashboardCommunityReferralContactDetailsContainer}
                   onSubmit={onSubmit}
-                  onChangeCommunity={previous}
+                  onChangeCommunity={() => goto('DashboardCommunityReferralSearch')}
                   name="DashboardCommunityReferralContactDetailsContainer"
                   community={selectedCommunity}
+                  communitiesInterestedIdsMap={communitiesInterestedIdsMap}
                   initialValues={contactFormInitialValues}
                   isAdminUser={isAdminUser}
                 />
@@ -349,6 +353,7 @@ export default class ReferralSearchContainer extends Component {
       );
     }
     // Agent Referral Flow
+
     const selectedAgent = this.getSelectedAgent();
     const contact = (selectedAgent && selectedAgent.contacts &&  selectedAgent.contacts.length > 0) ? selectedAgent.contacts[0] : null;
     const contactFormInitialValues = { slyMessage: agentMessage };
@@ -370,7 +375,7 @@ export default class ReferralSearchContainer extends Component {
             <WizardSteps {...props}>
               <WizardStep
                 component={DashboardAgentReferrals}
-                recommendedAgents={recommendedAgents}
+                recommendedAgents={recommendedAgentsFiltered}
                 recommendedAgentsIdsMap={recommendedAgentsIdsMap}
                 onSendNewReferralClick={onSubmit}
                 name="DashboardAgentReferrals"
@@ -391,7 +396,7 @@ export default class ReferralSearchContainer extends Component {
               <WizardStep
                 component={DashboardAgentReferralContactDetailsContainer}
                 onSubmit={onSubmit}
-                onChangeAgent={previous}
+                onChangeAgent={() => goto('DashboardAgentReferralSearch')}
                 name="DashboardAgentReferralContactDetailsContainer"
                 agent={selectedAgent}
                 initialValues={contactFormInitialValues}

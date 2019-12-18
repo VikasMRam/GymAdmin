@@ -41,8 +41,8 @@ StyledMessage.displayName = 'StyledMessage';
 const PaddedHrWithText = pad(HrWithText, 'large');
 PaddedHrWithText.displayName = 'PaddedHrWithText';
 
-const today = dayjs().utc();
-const thisYear = dayjs().utc().format('YYYY');
+const today = dayjs();
+const thisYear = dayjs().format('YYYY');
 
 const getDateText = (date) => {
   date = dayjs(date);
@@ -80,7 +80,7 @@ const ConversationMessages = ({
       const hrProps = {
         text: dayName,
       };
-      if (isAfter(message.createdAt, lastMessageReadAt) && ((nextMessage &&
+      if (!addedNewMarker && isAfter(message.createdAt, lastMessageReadAt) && ((nextMessage &&
         isAfter(nextMessage.createdAt, lastMessageReadAt)) || messages.length === 1)) {
         hrProps.badgeText = 'New';
         hrProps.palette = 'warning';

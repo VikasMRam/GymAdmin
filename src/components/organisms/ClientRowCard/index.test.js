@@ -24,8 +24,7 @@ describe('ClientRowCard', () => {
     const nameCell = wrapper.find('NameCell');
 
     expect(nameCell).toHaveLength(1);
-    expect(nameCell.dive().dive().dive().dive()
-      .contains(name)).toBeTruthy();
+    expect(nameCell.render().text()).toContain(name);
     expect(wrapper.find('ResidentCell').contains(fullName)).toBeTruthy();
     expect(wrapper.find('Stage').prop('stage')).toBe(stage);
     expect(wrapper.find('NoteCell')).toHaveLength(1);
@@ -37,8 +36,7 @@ describe('ClientRowCard', () => {
     const wrapper = wrap();
     const nameCell = wrapper.find('NameCell');
 
-    expect(nameCell.dive().dive().dive().dive()
-      .find(Icon)).toHaveLength(0);
+    expect(nameCell.dive().dive().dive().dive().dive().find(Icon)).toHaveLength(0);
   });
 
   it('should render pause icon for inactive families', () => {
@@ -51,10 +49,8 @@ describe('ClientRowCard', () => {
     const nameCell = wrapper.find('NameCell');
 
     expect(nameCell).toHaveLength(1);
-    expect(nameCell.dive().dive().dive().dive()
-      .contains(name)).toBeTruthy();
-    expect(nameCell.dive().dive().dive().dive()
-      .find(Icon)).toHaveLength(1);
+    expect(nameCell.render().text()).toContain(name);
+    expect(nameCell.dive().dive().dive().dive().dive().find(Icon)).toHaveLength(1);
 
     expect(wrapper.find('DateAddedCell').contains(createdDate)).toBeTruthy();
   });

@@ -13,8 +13,7 @@ import utc from 'dayjs/plugin/utc';
 
 import { hideChatbox } from 'sly/config';
 import theme from 'sly/components/themes/default';
-import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
-import setDatepickerStyles from 'sly/components/themes/datepickerStyles';
+import GlobalStyles from 'sly/components/themes/GlobalStyles';
 import { assetPath } from 'sly/components/themes';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Router from 'sly/components/molecules/Router';
@@ -69,9 +68,6 @@ const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkNa
 const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
 const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/components/pages/DashboardAgentTasksPage'));
 const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/components/pages/DashboardAgentContactsPage'));
-
-setGlobalStyles();
-setDatepickerStyles();
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -243,6 +239,16 @@ const routes = [
     exact: true,
   },
   {
+    path: '/nursing-homes',
+    component: NearMePageContainer,
+    exact: true,
+  },
+  {
+    path: '/skilled-nursing-facility',
+    component: NearMePageContainer,
+    exact: true,
+  },
+  {
     path: `/:legalPage(${legalPages})`,
     component: LegalPolicyPage,
     exact: true,
@@ -265,12 +271,16 @@ const routes = [
 ];
 
 const routeComponents = routes.map(({ component: Component, ...route }) => (
-  <Route key={route.path} {...route} component={props => (
-    <>
-      <PageEventsContainer />
-      <Component {...props} />
-    </>
-  )} />
+  <Route
+    key={route.path}
+    {...route}
+    component={props => (
+      <>
+        <PageEventsContainer />
+        <Component {...props} />
+      </>
+  )}
+  />
 ));
 
 export default class App extends Component {
@@ -315,6 +325,7 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
+          <GlobalStyles />
           <Router requiresAuth={[/^\/dashboard/]}>
             <Switch>
               <Route

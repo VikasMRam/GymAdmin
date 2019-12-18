@@ -29,7 +29,7 @@ const StyledNameCell = ({
   return (
     <Td disabled={disabled} {...props}>
       <ClampedText size={size('weight.medium')}>
-        <Link to={generatePath(ADMIN_DASHBOARD_CALL_DETAILS_PATH, {id})} {...props}>
+        <Link to={generatePath(ADMIN_DASHBOARD_CALL_DETAILS_PATH, { id })} {...props}>
           See Details
         </Link>
       </ClampedText>
@@ -99,11 +99,11 @@ const VoiceRowCard = ({ voiceCall }) => {
   const {
     toNumber, fromNumber, status, assignedTo,
   } = voiceCall;
-  let name = null ;
+  let name = null;
   if (assignedTo) {
-    ({name} = assignedTo);
+    ({ name } = assignedTo);
   }
-   return (
+  return (
     <Wrapper>
       <NameCell call={voiceCall} />
       <DueDateCell>

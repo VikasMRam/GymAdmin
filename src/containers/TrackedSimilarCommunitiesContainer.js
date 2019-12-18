@@ -19,7 +19,7 @@ export default function TrackedSimilarCommunitiesContainer({ communities, commun
   );
 }
 
-//EO: this really shouldn't need hydrating. now it only requires it for the lazy image loading.
+// EO: this really shouldn't need hydrating. now it only requires it for the lazy image loading.
 TrackedSimilarCommunitiesContainer.typeHydrationId = 'TrackedSimilarCommunitiesContainer';
 TrackedSimilarCommunitiesContainer.propTypes = {
   communities: arrayOf(communityPropType).isRequired,

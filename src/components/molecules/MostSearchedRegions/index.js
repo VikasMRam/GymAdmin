@@ -30,7 +30,7 @@ export const ColumnWrapper = styled.div`
   }
 `;
 
-const Wrapper = ColumnWrapper.extend`
+const Wrapper = styled(ColumnWrapper)`
   grid-template-columns: auto;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {

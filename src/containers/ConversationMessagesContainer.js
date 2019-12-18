@@ -5,11 +5,11 @@ import build from 'redux-object';
 import styled from 'styled-components';
 import { generatePath, withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
 import { size, palette } from 'sly/components/themes';
-import { prefetch, withUser, query } from 'sly/services/newApi';
+import { prefetch, withUser, query, invalidateRequests } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
@@ -124,22 +124,18 @@ const mapStateToProps = (state, { conversation, user }) => ({
 }))
 
 @query('getConversationMessages', 'getConversationMessages')
-
 @query('createConversationMessage', 'createConversationMessage')
-
 @query('updateConversationParticipant', 'updateConversationParticipant')
-
 @query('updateConversationMessage', 'updateConversationMessage')
-
 @query('createAction', 'createUuidAction')
 
 @withWS
-
 @withUser
-
 @withRouter
 
-@connect(mapStateToProps)
+@connect(mapStateToProps, {
+  invalidateConversationMessages: () => invalidateRequests('getConversationMessages'),
+})
 
 export default class ConversationMessagesContainer extends Component {
   static propTypes = {
@@ -160,6 +156,7 @@ export default class ConversationMessagesContainer extends Component {
     onBackClick: func,
     createAction: func.isRequired,
     match: matchPropType,
+    invalidateConversationMessages: func.isRequired,
   };
 
   static defaultProps = {
@@ -208,12 +205,14 @@ export default class ConversationMessagesContainer extends Component {
   }
 
   componentWillUnmount() {
-    const { ws } = this.props;
+    const { ws, invalidateConversationMessages } = this.props;
 
     ws.off(NOTIFY_MESSAGE_NEW, this.onMessage);
     if (this.messagesRef.current) {
       this.messagesRef.current.removeEventListener('scroll', this.handleScroll);
     }
+    // this is required so that users who come back to this page after navigating will see new messages
+    invalidateConversationMessages();
   }
 
   // FIXME: query should not use redux
@@ -296,7 +295,7 @@ export default class ConversationMessagesContainer extends Component {
 
   updateLastReadMessageAt = () => {
     const {
-      updateConversationParticipant, viewingAsParticipant,
+      updateConversationParticipant, viewingAsParticipant, status,
     } = this.props;
     if (viewingAsParticipant) {
       const { id } = viewingAsParticipant;
@@ -308,6 +307,7 @@ export default class ConversationMessagesContainer extends Component {
       payload.attributes.stats.lastReadMessageAt = dayjs().utc().format();
 
       return updateConversationParticipant({ id }, payload)
+        .then(() => status.conversation.refetch())
         .catch((r) => {
           // TODO: Need to set a proper way to handle server side errors
           const { body } = r;
@@ -327,10 +327,10 @@ export default class ConversationMessagesContainer extends Component {
     const newSelectedButtons = [...selectedButtons, button.text];
 
     const rawMessage = result.find(rMessage => rMessage.id === message.id);
-    const conversationMessagePayload = immutable(pick(rawMessage, ['id', 'type', 'attributes.conversationID', 'attributes.conversationParticipantID', 'attributes.data']))
+    const conversationMessagePayload = immutable.wrap(pick(rawMessage, ['id', 'type', 'attributes.conversationID', 'attributes.conversationParticipantID', 'attributes.data']))
       .set('attributes.data.valueButtonList.selectedButtons', newSelectedButtons)
       .value();
-    const uuidActionPayload = immutable(newUuidAction)
+    const uuidActionPayload = immutable.wrap(newUuidAction)
       .set('attributes.actionType', CONVERSATION_MESSAGE_BUTTONLIST_BUTTON_CLICKED)
       .set('attributes.actionPage', match.url)
       .set('attributes.actionInfo.slug', id)

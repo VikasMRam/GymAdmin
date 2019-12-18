@@ -1,7 +1,6 @@
 import React from 'react';
 import { arrayOf, object, func, bool, shape } from 'prop-types';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 import SlyEvent from 'sly/services/helpers/events';
 import { size } from 'sly/components/themes';
@@ -9,7 +8,7 @@ import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import shadow from 'sly/components/helpers/shadow';
 import Masonry from 'sly/components/common/Masonry';
-import { Heading, Paragraph, Hr } from 'sly/components/atoms';
+import { Heading, Paragraph, Hr, Link } from 'sly/components/atoms';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import FormSection from 'sly/components/molecules/FormSection';

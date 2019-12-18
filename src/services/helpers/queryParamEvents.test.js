@@ -77,7 +77,7 @@ describe('Given the queryParamEvents helper functions', () => {
   describe('when serializing an event onto a path with search params', () => {
     it('should return the path with the event params appended to the existing params', () => {
       const event = { action: 'add', category: 'maths', label: 'simple' };
-event
+      event;
       const path = '/search/page?hello=world&please=true&maintain=order';
       const result = addEventToUrl(path, event);
 
@@ -110,6 +110,17 @@ event
   describe('when an event is added and then removed from the query string', () => {
     it('should result in the same query string as the original', () => {
       const event = { action: 'add', category: 'maths', label: 'simple' };
+      const search = '?hello=world&please=true&maintain=order';
+
+      const searchWithEvent = addEventToQueryString(search, event);
+
+      expect(extractEventFromQuery(searchWithEvent)).toEqual({ event, search });
+    });
+  });
+
+  describe('when an event that looks like a query string is added', () => {
+    it('should encode and decode the values', () => {
+      const event = { action: 'add', category: 'query=frozen&which=2', label: 'simple' };
       const search = '?hello=world&please=true&maintain=order';
 
       const searchWithEvent = addEventToQueryString(search, event);

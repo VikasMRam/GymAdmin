@@ -55,5 +55,5 @@ partiallyHydrateClient(
     Image,
   ],
   clientConfigs.find(x => x.bundle === 'community-details').path,
-  root
+  root,
 );

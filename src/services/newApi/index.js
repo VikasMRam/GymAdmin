@@ -18,7 +18,6 @@ export {
   hasRequestStarted,
   getRequestHeaders,
   getRequestMeta,
-  getRequestInfo,
   createMemoizedRequestInfoSelector,
 } from './selectors';
 
@@ -28,8 +27,12 @@ export query from './query';
 export prefetch from './prefetch';
 export middleware from './middleware';
 
-export withApi from './withApi';
 export withUser from './withUser';
 export withAuth from './withAuth';
+
+export renderToString from './renderToString';
+export withPrefetchWait from './withPrefetchWait';
+export makeApiCallAction from './makeApiCallAction';
+export apiInstance from './apiInstance';
 
 export { normalizeResponse } from './helpers';

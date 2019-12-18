@@ -31,7 +31,7 @@ const Map = compose(
     mapElement: <div style={{ height: '100%' }} />,
   }),
   withScriptjs,
-  withGoogleMap
+  withGoogleMap,
 )(
   ({
     defaultZoom,
@@ -44,6 +44,7 @@ const Map = compose(
     onMapMounted,
     onCenterChanged,
     onIdle,
+    onDragStart,
   }) => {
     mapOptions.zoomControl = zoomControl;
     mapOptions.fullscreenControl = fullscreenControl;
@@ -58,12 +59,13 @@ const Map = compose(
         onBoundsChanged={onBoundsChanged}
         onCenterChanged={onCenterChanged}
         onIdle={onIdle}
+        onDragStart={onDragStart}
         ref={onMapMounted}
       >
         {children}
       </GoogleMap>
     );
-  }
+  },
 );
 
 export default Map;

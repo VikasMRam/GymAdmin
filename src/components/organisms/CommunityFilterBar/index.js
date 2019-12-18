@@ -6,7 +6,8 @@ import { ifProp } from 'styled-tools';
 import { size, palette } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 import Button from 'sly/components/atoms/Button';
-import { budgets, sizes, getFiltersApplied, getEvtHandler, tocs } from 'sly/services/helpers/search';
+import { budgets, sizes, getFiltersApplied, tocs } from 'sly/services/helpers/search';
+import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
 
 const SectionWrapper = styled.div`
   display: flex;
@@ -26,7 +27,7 @@ export const ClearAllButton = styled(Button)`
   color: ${palette('primary', 'base')};
 `;
 
-const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
+const CommunityFilterBar = ({ searchParams, generateFilterLinkPath }) => {
   const { toc, size, budget } = searchParams;
   const matchingBudget = budget ? budgets.find(object => object.value === budget) : null;
   const budgetLabel = matchingBudget ? matchingBudget.label : null;
@@ -35,7 +36,7 @@ const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
   const actualToc = tocs.find(elem => (elem.value === toc));
   const filtersApplied = getFiltersApplied(searchParams);
 
-  const tocApplied = (toc && toc !== 'retirement-community');
+  const tocApplied = (toc && toc !== 'nursing-homes');
   return (
     <SectionWrapper hasFilters={tocApplied || size || budget}>
       {tocApplied && (
@@ -46,7 +47,7 @@ const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
           palette="slate"
           ghost
           transparent
-          onClick={getEvtHandler(['toc'], onParamsRemove)}
+          to={generateFilterLinkPath({ paramsToRemove: ['toc'] })}
         >
           {actualToc.label}
         </FilterButton>
@@ -59,7 +60,7 @@ const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
           palette="slate"
           ghost
           transparent
-          onClick={getEvtHandler(['size'], onParamsRemove)}
+          to={generateFilterLinkPath({ paramsToRemove: ['size'] })}
         >
           {sizeLabel}
         </FilterButton>
@@ -72,14 +73,14 @@ const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
           palette="slate"
           ghost
           transparent
-          onClick={getEvtHandler(['budget'], onParamsRemove)}
+          to={generateFilterLinkPath({ paramsToRemove: ['budget'] })}
         >
           {budgetLabel}
         </FilterButton>
       )}
       {filtersApplied.length > 0 && (
         <ClearAllButton
-          onClick={getEvtHandler(filtersApplied, onParamsRemove)}
+          to={generateFilterLinkPath({ paramsToRemove: filtersApplied })}
           transparent
         >
           Clear all filters
@@ -91,7 +92,7 @@ const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
 
 CommunityFilterBar.propTypes = {
   searchParams: object.isRequired,
-  onParamsRemove: func.isRequired,
+  generateFilterLinkPath: func.isRequired,
 };
 
-export default CommunityFilterBar;
+export default withGenerateFilterLinkPath(CommunityFilterBar);

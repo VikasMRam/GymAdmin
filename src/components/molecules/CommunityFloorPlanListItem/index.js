@@ -1,10 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { string, number, func, oneOf } from 'prop-types';
-import NumberFormat from 'react-number-format';
 
 import { size, palette, assetPath } from 'sly/components/themes';
 import { Image, Block, Box, Span } from 'sly/components/atoms';
+import { formatMoney } from 'sly/services/helpers/numbers';
 
 const bodyLineHeight = () => css`calc(${size('text.body')} * ${size('lineHeight.body')})`;
 
@@ -82,7 +82,7 @@ const priceTypeMap = {
   'Daily Rate': 'day',
 };
 
-const StyledNumberFormat = styled(NumberFormat)`
+const StyledNumberFormat = styled.span`
   font-weight: ${size('weight.medium')};
 `;
 
@@ -110,7 +110,7 @@ const CommunityFloorPlanListItem = ({
         <PriceSection>
           <PricingFromText palette="grey" size="caption">Pricing from</PricingFromText>
           <FullPriceSection>
-            <StyledNumberFormat value={priceToShow} displayType="text" thousandSeparator prefix="$" />
+            <StyledNumberFormat>{formatMoney(priceToShow)}</StyledNumberFormat>
             <Span>/{priceTypeMap[priceType]}*</Span>
           </FullPriceSection>
         </PriceSection>

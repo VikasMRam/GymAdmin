@@ -2,29 +2,29 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { object, func } from 'prop-types';
 
+import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 import EntityApprovalPage from 'sly/components/pages/EntityApprovalPage/index';
 import { titleize } from 'sly/services/helpers/strings';
 import { logError } from 'sly/services/helpers/logging';
 import withAuth from 'sly/services/newApi/withAuth';
-import withApi from 'sly/services/newApi/withApi';
+import api from 'sly/services/newApi/apiInstance';
 
-const getApiFor = (api, entity) => {
+const getApiFor = (entity) => {
   switch (entity) {
-    case 'content': return api.updateContent;
-    case 'rating': return api.updateRating;
+    case 'content': return api.updateContent.asAction;
+    case 'rating': return api.updateRating.asAction;
     default: return null;
   }
 };
 
-const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
+const mapDispatchToProps = {
   approveEntity: (entity, id) => ensureAuthenticated(
     `Sign up to approve ${entity}`,
-    getApiFor(api, entity)({ id }, { approve: true }),
+    getApiFor(entity)({ id }, { approve: true }),
   ),
-});
+};
 
 @withAuth
-@withApi
 @connect(null, mapDispatchToProps)
 
 export default class EntityApprovalContainer extends Component {

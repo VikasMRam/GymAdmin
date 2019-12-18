@@ -16,12 +16,14 @@ const EbookFormContainer = reduxForm({
 storiesOf('Organisms|EbookForm', module)
   .add('default', () => (
     <EbookFormContainer
-      handleSubmit={withPreventDefault(action('form submitted'))} />
+      handleSubmit={withPreventDefault(action('form submitted'))}
+    />
   )).add('within modal', () => (
     <Modal
       onClose={action('closed')}
       isOpen
-      layout="eBook">
+      layout="eBook"
+    >
       <EbookFormContainer handleSubmit={withPreventDefault(action('form submitted'))} />
     </Modal>
   ));

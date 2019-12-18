@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { object, func, arrayOf, string } from 'prop-types';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
+import isBoolean from 'lodash/isBoolean';
 
 import { query, getRelationship, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
@@ -21,6 +22,7 @@ import { NOTE_COMMENTABLE_TYPE_CLIENT, NOTE_CTYPE_ACTIVITY } from 'sly/constants
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { createValidator, required, float } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
+import { selectFormData } from 'sly/services/helpers/forms';
 import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
 import SlyEvent from 'sly/services/helpers/events';
 
@@ -43,25 +45,18 @@ const ReduxForm = reduxForm({
   validate,
 })(UpdateFamilyStageForm);
 
-const mapStateToProps = state => ({
-  formState: state.form && state.form.UpdateFamilyStageForm ? state.form.UpdateFamilyStageForm.values : null,
+const mapStateToProps = (state, props) => ({
+  uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
+  formState: selectFormData(state, 'UpdateFamilyStageForm'),
 });
 
 @query('updateClient', 'updateClient')
-
 @query('createNote', 'createNote')
-
 @query('updateUuidAux', 'updateUuidAux')
 
-@connect(mapStateToProps)
-
-@connect((state, props) => ({
-  uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
-}))
-
-@connect(null, (dispatch, { api }) => ({
-  invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
-}))
+@connect(mapStateToProps, {
+  invalidateClients: () => invalidateRequests('getClients'),
+})
 
 export default class UpdateFamilyStageFormContainer extends Component {
   static propTypes = {
@@ -123,7 +118,9 @@ export default class UpdateFamilyStageFormContainer extends Component {
       if (parsedDate.isValid()) {
         moveInDateFormatted = parsedDate.format('MM/DD/YYYY');
       }
-      let note = `${name} moved into ${communityName} on ${moveInDateFormatted} with a monthly rent of $${monthlyFees} and a referral fee of ${referralAgreement}% referral fee `;
+      let note = `${name} moved into ${communityName} on ${moveInDateFormatted} with a monthly rent of $${monthlyFees} and a referral fee of `;
+      note = referralAgreementType === 'flat-fee' ? `${note}$${referralAgreement} flat fee` : `${note}${referralAgreement}% referral fee`;
+
       const title = 'Stage Change';
       if (stage === FAMILY_STAGE_LOST) {
         let reason = lossReason;
@@ -149,8 +146,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
     }
     const clientPromise = () => refetchClient();
 
-    let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
-    let newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage', 'attributes.clientInfo']))
+    let newUuidAux = immutable.wrap(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
+    let newClient = immutable.wrap(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage', 'attributes.clientInfo']))
       .set('attributes.status', FAMILY_STATUS_ACTIVE)
       .set('attributes.stage', stage);
     if (moveInDate) {
@@ -265,7 +262,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const {
       client, formState, lossReasons, initialValues, ...props
     } = this.props;
-    const { clientInfo, stage, status } = client;
+    const { clientInfo, stage, status, uuidAux: { uuidInfo: { locationInfo } } } = client;
     const isPaused = status === FAMILY_STATUS_ON_PAUSE;
     const {
       name,
@@ -277,9 +274,19 @@ export default class UpdateFamilyStageFormContainer extends Component {
       monthlyFees: existingMonthlyFees,
       invoiceAmount: existingInvoiceAmount,
       invoiceNumber: existingInvoiceNumber,
-      invoicePaid: existingInvoicePaid,
       lossReason: existingLossReason,
+      otherText,
+      rejectReason,
     } = clientInfo;
+    let { invoicePaid: existingInvoicePaid } = clientInfo;
+    if (isBoolean(existingInvoicePaid)) {
+      existingInvoicePaid = existingInvoicePaid ? 'yes' : 'no';
+    }
+    let preferredLocation = '';
+    if (locationInfo && locationInfo.city) {
+      const { city, state } = locationInfo;
+      preferredLocation = [city, state].filter(v => v).join(', ');
+    }
     let nextGroup;
     let group;
     let nextStage;
@@ -299,6 +306,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
       this.nextStage = getStageDetails(nextStage);
       ({ group: nextGroup } = this.nextStage);
     }
+    const lostDescription = otherText;
+    const rejectDescription = otherText;
     const newInitialValues = {
       stage,
       chosenDetails: WAITLISTED,
@@ -312,6 +321,10 @@ export default class UpdateFamilyStageFormContainer extends Component {
       invoiceNumber: existingInvoiceNumber,
       invoicePaid: existingInvoicePaid,
       lossReason: existingLossReason,
+      preferredLocation,
+      lostDescription,
+      rejectDescription,
+      rejectReason,
       ...initialValues,
     };
 

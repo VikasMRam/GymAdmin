@@ -1,3 +1,4 @@
+global.fetch = require('isomorphic-fetch');
 
 global.requestAnimationFrame = /* istanbul ignore next */ (callback) => {
   setTimeout(callback, 0);
@@ -7,9 +8,6 @@ global.requestAnimationFrame = /* istanbul ignore next */ (callback) => {
 /* eslint-disable-next-line no-console */
 global.alert = (msg) => { console.log(msg); };
 global.scroll = jest.fn();
-global.HTMLElement.prototype.scrollIntoView = jest.fn();
-global.HTMLElement.prototype.scroll = jest.fn();
-
 /** * Mock Google Maps JavaScript API ** */
 // https://github.com/kenny-hibino/react-places-autocomplete/issues/189
 const google = {
@@ -38,4 +36,10 @@ const google = {
     },
   },
 };
-global.window.google = google;
+
+if (global.window) {
+  global.HTMLElement.prototype.scrollIntoView = jest.fn();
+  global.HTMLElement.prototype.scroll = jest.fn();
+
+  global.window.google = google;
+}

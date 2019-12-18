@@ -19,6 +19,7 @@ import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import Role from 'sly/components/common/Role';
 import pad from 'sly/components/helpers/pad';
 import { priceFormatter, priceParser } from 'sly/services/helpers/pricing';
+import { isBeforeNow, isAfterNow  } from 'sly/services/validation';
 import { Block, Span, Label } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
@@ -45,9 +46,8 @@ const ReferralAgreementWrapper = styled.div`
 const ClosedReasonField = styled(Field)`
   .react-select__menu-list {
     max-height: 200px;
-  } 
+  }
 `;
-
 
 export default class UpdateFamilyStageForm extends Component {
   static propTypes = {
@@ -120,6 +120,16 @@ export default class UpdateFamilyStageForm extends Component {
     const StageField = stageGroupChanged ? Field : PaddedField;
 
     const isNext = (...stages) => stages.includes(nextStage);
+    let moveInDateErrorMessage;
+    let moveInDateValidator;
+    if (chosenDetails === ESTIMATED_MOVE_IN) {
+      moveInDateErrorMessage = 'Looks like you are choosing an expected move-in date that has already passed. Try updating to the stage "Won" and completing the move-in details';
+      moveInDateValidator = isAfterNow;
+    }
+    if (isNext(FAMILY_STAGE_WON)) {
+      moveInDateErrorMessage = 'Looks like you are choosing a move-in date that has not occurred yet. Try updating to the stage "Family Chose My Referral"';
+      moveInDateValidator = isBeforeNow;
+    }
 
     return (
       <ThreeSectionFormTemplate
@@ -177,6 +187,8 @@ export default class UpdateFamilyStageForm extends Component {
             component={ReduxField}
             required
             dateFormat="MM/dd/yyyy"
+            validate={moveInDateValidator}
+            message={moveInDateErrorMessage}
           />
         }
         {isNext(FAMILY_STAGE_WON, FAMILY_STAGE_FAMILY_CHOSEN) &&

@@ -1,23 +1,37 @@
 import applyUrlWithPlaceholders from './applyUrlWithPlaceholders';
-import request from './request';
+import apiFetch from './apiFetch';
 
-const pendingPromises = {};
+import makeApiCallAction from 'sly/services/newApi/makeApiCallAction';
 
 const defaultConfigure = options => options;
-const defaultAfterResolve = result => Promise.resolve(result);
-const defaultAfterReject = result => Promise.reject(result);
 
 export default function buildApi(endpoints, config = {}) {
   const {
     baseUrl,
     configureOptions = defaultConfigure,
     configureHeaders = defaultConfigure,
-    afterResolve = defaultAfterResolve,
-    afterReject = defaultAfterReject,
   } = config;
 
+  // wrap config
+  const request = (path, placeholders, requestOptions) => {
+    const augmentedOptions = {
+      ...requestOptions,
+      headers: configureHeaders({
+        'Content-Type': 'application/vnd.api+json',
+        Accept: 'application/vnd.api+json',
+        ...requestOptions.headers,
+      }),
+    };
+
+    return apiFetch(
+      baseUrl,
+      applyUrlWithPlaceholders(path, placeholders),
+      configureOptions(augmentedOptions),
+    );
+  };
+
   return Object.keys(endpoints).reduce((acc, key) => {
-    const { path, required, method: normalizeArguments } = endpoints[key];
+    const { path, required, method } = endpoints[key];
 
     const requiredPlaceholders = required || [];
     const placeholderRegexp = /:([^\/$]+)/g;
@@ -27,73 +41,33 @@ export default function buildApi(endpoints, config = {}) {
       requiredPlaceholders.push(match[1]);
     }
 
-    acc[key] = (...args) => {
-      const normalizedArguments = normalizeArguments(...args);
-
-      const placeholders = normalizedArguments.placeholders || {};
-      const options = normalizedArguments.options || {};
-
-      const augmentedOptions = {
-        ...options,
-        headers: configureHeaders({
-          'Content-Type': 'application/vnd.api+json',
-          Accept: 'application/vnd.api+json',
-          ...options.headers,
-        }),
-      };
-
+    const normalizeArguments = (...args) => {
+      const { placeholders = {}, options = {} } = method(...args);
       const missingPlaceholders = requiredPlaceholders
         .filter(key => (
           !placeholders.hasOwnProperty(key) ||
           placeholders[key] == null
         ));
 
-      let promise;
 
       if (missingPlaceholders.length > 0) {
-        promise = Promise.reject({
-          body: {
-            errors: [
-              `The "${key}" API call cannot be performed. The following params were not specified: ${missingPlaceholders.join(', ')}`,
-            ],
-          },
-        });
-      } else {
-        const promiseId = JSON.stringify([key, args]);
-
-        if (pendingPromises[promiseId]) {
-          return pendingPromises[promiseId];
-        }
-
-        const req = request(
-          baseUrl,
-          applyUrlWithPlaceholders(path, placeholders),
-          configureOptions(augmentedOptions)
-        );
-
-        promise = req
-          .then(afterResolve)
-          .then((result) => {
-            delete pendingPromises[promiseId];
-            return result;
-          })
-          .catch((error) => {
-            delete pendingPromises[promiseId];
-            return Promise.reject(error);
-          })
-          .catch(afterReject);
-
-        pendingPromises[promiseId] = promise;
+        throw new Error(`The "${key}" API call cannot be performed. The following params were not specified: ${missingPlaceholders.join(', ')}`);
       }
 
-      promise.actionName = key;
-      promise.params = args;
+      return { placeholders, options };
+    };
 
-      return promise;
+    acc[key] = (...args) => {
+      const { placeholders, options } = normalizeArguments(...args);
+      return request(path, placeholders, options);
     };
 
     acc[key].actionName = key;
-    acc[key].method = normalizeArguments.method;
+    acc[key].method = method;
+    acc[key].asAction = (...args) => {
+      const { placeholders, options } = normalizeArguments(...args);
+      return makeApiCallAction(request, { placeholders, path, options, actionName: key });
+    };
 
     return acc;
   }, {});

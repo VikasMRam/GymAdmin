@@ -17,9 +17,9 @@ const mapStateToProps = (state, { controller, ...ownProps }) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  resetForm: () => dispatch(reset(ownProps.formName)),
-});
+const mapDispatchToProps = {
+  resetForm: reset,
+};
 
 @connectController(mapStateToProps, mapDispatchToProps)
 
@@ -66,8 +66,8 @@ export default class WizardController extends Component {
   };
 
   reset = () => {
-    const { resetForm, resetController } = this.props;
-    resetForm();
+    const { resetForm, formName, resetController } = this.props;
+    resetForm(formName);
     resetController();
   };
 

@@ -1,11 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { object, func } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
-import { withApi } from 'sly/services/newApi';
-
-const defaultDispatcher = (call, props, ...args) => call(...args);
+import { destroy, get } from 'sly/services/newApi/httpMethods';
+import api from 'sly/services/newApi/apiInstance';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -13,45 +10,26 @@ function getDisplayName(WrappedComponent) {
     || 'Component';
 }
 
-export default function query(propName, apiCall, dispatcher = defaultDispatcher) {
+export default function query(propName, apiCall) {
   return (InnerComponent) => {
-    const makeApiCall = call => (...args) => {
-      if (['get', 'destroy'].includes(call.method)) {
-        return call.call(...args);
-      }
-
-      const placeholders = args.length >= 2 ? args[0] : {};
-      const data = args.length >= 2 ? args[1] : args[0];
-      const options = args.length === 3 ? args[2] : {};
-
-      return call.call(placeholders, { data }, options);
-    };
-
-    const mapDispatchToActions = (dispatch, { api }) => {
-      const call = makeApiCall(api[apiCall]);
-
-      return {
-        fetch: (props, ...args) => dispatcher(call, props, ...args),
-      };
-    };
-
-    @withApi
-
-    @connect(undefined, mapDispatchToActions)
-
     class Wrapper extends React.Component {
       static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
+      static WrappedComponent = InnerComponent.WrappedComponent || InnerComponent;
 
-      static propTypes = {
-        api: object.isRequired,
-        fetch: func.isRequired,
-      };
-
-      static WrappedComponent = InnerComponent;
-
-      // props fetch bound to dispatch
+      // props fetch not bound to dispatch
+      // FIXME: dispatch posts and patches, dispatch invalidate for delete
       fetch = (...args) => {
-        return this.props.fetch(this.props, ...args);
+        const call = api[apiCall];
+
+        if ([destroy, get].includes(call.method)) {
+          return call(...args);
+        }
+
+        const placeholders = args.length >= 2 ? args[0] : {};
+        const data = args.length >= 2 ? args[1] : args[0];
+        const options = args.length === 3 ? args[2] : {};
+
+        return call(placeholders, { data }, options);
       };
 
       render() {
@@ -66,7 +44,9 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       }
     }
 
-    hoistNonReactStatic(Wrapper, InnerComponent);
+    // FIXME: hack because hoist... loses contextTypes
+    Wrapper.typeHydrationId = InnerComponent.typeHydrationId;
+    // hoistNonReactStatic(Wrapper, InnerComponent);
 
     return Wrapper;
   };

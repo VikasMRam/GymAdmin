@@ -13,16 +13,16 @@ const validate = createValidator({
 });
 
 const ReduxForm = reduxForm({
+  initialValues: { rememberme: [] },
   form: 'LoginForm',
   validate,
 })(LoginForm);
 
-const mapDispatchToProps = dispatch => ({
-  clearSubmitErrors: () => dispatch(clearSubmitErrors('LoginForm')),
-});
+const mapDispatchToProps = {
+  clearSubmitErrors: () => clearSubmitErrors('LoginForm'),
+};
 
 @withAuth
-
 @connect(null, mapDispatchToProps)
 
 export default class LoginFormContainer extends Component {
@@ -40,14 +40,15 @@ export default class LoginFormContainer extends Component {
     const payload = { email, password };
 
     clearSubmitErrors();
-    return loginUser(payload).then(onSubmitSuccess).catch((error) => {
-      // TODO: Need to set a proper way to handle server side errors
-      if (error.status === 400) {
-        return Promise.reject(new SubmissionError({ _error: 'Oops! That email / password combination is not valid.' }));
-      }
+    return loginUser(payload)
+      .then(onSubmitSuccess).catch((error) => {
+        // TODO: Need to set a proper way to handle server side errors
+        if (error.status === 400) {
+          return Promise.reject(new SubmissionError({ _error: 'Oops! That email / password combination is not valid.' }));
+        }
 
-      return Promise.reject(error);
-    });
+        return Promise.reject(error);
+      });
   };
 
   render() {

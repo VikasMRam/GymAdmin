@@ -4,6 +4,7 @@ import { createStore } from 'redux';
 
 import { Experiment } from './Experiment';
 import Variant from './Variant';
+
 import experimentsReducer from 'sly/store/experiments/reducer';
 
 const initialState = {

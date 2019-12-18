@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 
+import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, assetPath, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
@@ -113,10 +114,8 @@ const NearMePage = ({
   const listSize = requestMeta['filtered-count'];
   const { geo } = requestMeta;
   const city = geo && geo.city;
+  const state = geo && geo.state;
   const tocLabel = getTocSeoLabel('assisted-living');
-  const onAdTileClick = () => {};
-  const onParamsChange = () => {};
-  const onParamsRemove = () => {};
 
   const topRef = React.createRef();
   const alRef = React.createRef();
@@ -139,7 +138,6 @@ const NearMePage = ({
     alvsil: 'al-vs-il',
     next: 'next',
   };
-
 
   const SEOContentAL = () => {
     return (
@@ -195,7 +193,7 @@ const NearMePage = ({
                 href={`#${sectionIdMap.alvsnh}`}
                 onClick={e => handleAnchor(e, alvsnhRef)}
               >
-                Assisted Living vs. Nursing Homes
+                Assisted Living vs. Skilled Nursing
               </Link>
             </li>
             <li>
@@ -224,7 +222,7 @@ const NearMePage = ({
           <Paragraph>
             Assisted living near you can be defined as 24-hour non-medical care delivered in a residential setting.
             Previously  known as{' '}
-            <Link href="https://www.medicare.gov/nursinghomecompare/Resources/Nursing-Home-Alternatives.html" target="_blank" rel="noopener">
+            <Link href="https://www.seniorly.com/nursing-homes">
               nursing homes
             </Link>
             , the properties and amenities have improved immensely over the years
@@ -530,7 +528,7 @@ const NearMePage = ({
           </StyledHeading>
           <Paragraph innerRef={alvsnhRef} />
           <StyledHeading level="subtitle" size="subtitle" >
-            Assisted Living vs Nursing Homes
+            Assisted Living vs Skilled Nursing
           </StyledHeading>
           <Paragraph>
             Also commonly called Skilled Nursing, there is a definable difference between Assisted Living communities
@@ -751,35 +749,9 @@ const NearMePage = ({
     );
   };
 
-  const TopContent = () => {
-    return (
-      <>
-        <StyledHeading level="title"size="title">
-          {listSize} {tocLabel} near {city}
-        </StyledHeading>
-      </>);
-  };
-
-  const ListContent = () => {
-    return (
-      <>
-        <CommunitySearchList
-          communityList={communityList}
-          searchParams={searchParams}
-          requestMeta={requestMeta}
-          onParamsChange={onParamsChange}
-          onParamsRemove={onParamsRemove}
-          onAdTileClick={onAdTileClick}
-          isFetchingResults={isFetchingResults}
-          location={location}
-        />
-      </>
-    );
-  };
-
   const title = 'Find the Best Assisted Living Near You ';
   const description = 'Find the best assisted living near you with local senior living communities & providers. Browse assisted living nearby with prices, reviews & photos.';
-
+  const heading = state ? `${listSize} ${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${listSize} ${tocLabel} near ${city}`;
 
   return (
     <>
@@ -789,9 +761,26 @@ const NearMePage = ({
           <title>{title}</title>
           <meta name="description" content={description} />
         </Helmet>
-        {TopContent()}
+        <StyledHeading level="title" size="title">
+          {heading}
+        </StyledHeading>
+        <StyledArticle>
+          <Paragraph>
+            Seniorly promises to make your search for assisted living near you easy and stress-free. In 2019, the
+            national average monthly cost has been $4,051 for an assisted living facility. Below, compare assisted
+            living communities near you and then let us connect you to your local senior living advisor.
+            They can answer all your questions, share costs, arrange tours, and even negotiate rent. Our services are free.
+          </Paragraph>
+        </StyledArticle>
         {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
-        {!isFetchingResults && ListContent()}
+        {!isFetchingResults && (
+          <CommunitySearchList
+            communityList={communityList}
+            searchParams={searchParams}
+            requestMeta={requestMeta}
+            location={location}
+          />
+        )}
         {SEOContentAL()}
 
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by Cities" links={ALSeoCities} /></StyledArticle>

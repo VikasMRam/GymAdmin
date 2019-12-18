@@ -14,7 +14,7 @@ describe('CommunityPricingAndRating', () => {
 
   it('does renders price and fixed rating', () => {
     const wrapper = wrap();
-    expect(wrapper.find('NumberFormat').prop('value')).toEqual(4300);
+    expect(wrapper.find('StyledCommunityPricingWrapper Block').text()).toEqual('$4,300/mo*');
     expect(wrapper.contains('3.6')).toBe(true);
   });
 

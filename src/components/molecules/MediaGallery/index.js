@@ -212,7 +212,7 @@ export default class MediaGallery extends Component {
             src={this.shouldLoadMedia(index) ? media.src : ''}
             data-src={media.src}
             alt={media.alt}
-            innerRef={(c) => { this.mediaRefs[index] = c; }}
+            ref={(c) => { this.mediaRefs[index] = c; }}
             aspectRatio={aspectRatio}
           />
         ) : (
@@ -222,8 +222,8 @@ export default class MediaGallery extends Component {
             sizes={sizes}
             alt={media.alt}
             loading={this.shouldLoadMedia(index) ? 'eager' : 'lazy'}
-            innerRef={(c) => { this.mediaRefs[index] = c; }}
             // aspectRatio={aspectRatio}
+            ref={(c) => { this.mediaRefs[index] = c; }}
           />
         );
       case 'video':
@@ -233,7 +233,7 @@ export default class MediaGallery extends Component {
             autoPlay={index === currentSlide}
             controls
             controlsList="nodownload"
-            innerRef={(c) => { this.mediaRefs[index] = c; }}
+            ref={(c) => { this.mediaRefs[index] = c; }}
           >
             {media.src.map(src => (
               <source
@@ -251,8 +251,9 @@ export default class MediaGallery extends Component {
 
   render() {
     const {
-      currentSlide, videos, images, topRightSection, bottomLeftSection, bottomRightSection, showThumbnails, onSlideClick, onSlideChange,
+      currentSlide, videos, images, topRightSection, bottomLeftSection, bottomRightSection, showThumbnails, onSlideClick,
     } = this.props;
+    const { onSlideChange, ...rest } = this.props;
     const thumbnails = [];
     const formattedVideos = videos.map((video) => {
       thumbnails.push({
@@ -284,7 +285,7 @@ export default class MediaGallery extends Component {
 
     return (
       <>
-        <CarouselWrapper {...this.props}>
+        <CarouselWrapper {...rest}>
           {this.allMedia.length > 1 &&
             <PrevSlide
               className="media-carousel-control-prev"

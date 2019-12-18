@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func, arrayOf } from 'prop-types';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
@@ -34,7 +34,7 @@ const ReduxForm = reduxForm({
 
 @connect((state, props) => ({
   uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
-  formData: selectFormData(state, formName, {}),
+  formData: selectFormData(state, formName),
 }))
 
 export default class FamilyDetailsFormContainer extends Component {
@@ -89,7 +89,7 @@ export default class FamilyDetailsFormContainer extends Component {
         state,
       };
     }
-    let newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.clientInfo']));
+    let newClient = immutable.wrap(pick(rawClient, ['id', 'type', 'attributes.clientInfo']));
     if (name) {
       newClient.set('attributes.clientInfo.name', name);
     }
@@ -102,7 +102,7 @@ export default class FamilyDetailsFormContainer extends Component {
     if (referralSource) {
       newClient.set('attributes.clientInfo.referralSource', referralSource);
     }
-    const validMD = validateAM(additionalMetadata, { phone, email });
+    const validMD = validateAM(client, additionalMetadata, { phone, email });
     if (validMD) {
       newClient.set('attributes.clientInfo.additionalMetadata', validMD);
     }
@@ -126,7 +126,7 @@ export default class FamilyDetailsFormContainer extends Component {
       newClient.set('relationships.tags.data', tags.map(({ label }) => ({ type: 'Tag', attributes: { name: label } })));
     }
 
-    let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
+    let newUuidAux = immutable.wrap(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
     if (residentName) {
       newUuidAux.set('attributes.uuidInfo.residentInfo.fullName', residentName);
     }
@@ -188,8 +188,6 @@ export default class FamilyDetailsFormContainer extends Component {
 
   render() {
     const { client, formData, ...props } = this.props;
-
-
     const { clientInfo, uuidAux, tags: modelTags } = client;
     const tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
     const {
@@ -205,9 +203,9 @@ export default class FamilyDetailsFormContainer extends Component {
     const { typeCare, roomPreference, lookingFor, moveTimeline } = housingInfo;
     const { maxMonthlyBudget, medicaid } = financialInfo;
     let preferredLocation = '';
-    if (locationInfo) {
+    if (locationInfo && locationInfo.city) {
       const { city, state } = locationInfo;
-      preferredLocation = `${city}, ${state}`;
+      preferredLocation = [city, state].filter(v => v).join(', ');
     }
     let assignedTo;
     if (client.admin) {
@@ -216,6 +214,9 @@ export default class FamilyDetailsFormContainer extends Component {
     let medicaidValue = [];
     if (medicaid) {
       medicaidValue = [true];
+    }
+    if (formData) {
+      ({ preferredLocation } = formData);
     }
     const initialValues = {
       name,
@@ -241,12 +242,13 @@ export default class FamilyDetailsFormContainer extends Component {
       slyCommunityMessage,
       contactPreferences: ['sms', 'email'],
     };
-    ({ preferredLocation } = formData);
+
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}
         initialValues={initialValues}
         preferredLocation={preferredLocation}
+        client={client}
         {...props}
       />
     );

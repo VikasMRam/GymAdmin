@@ -23,17 +23,21 @@ class CheckboxInput extends Component {
     value: arrayOf(string),
     onChange: func,
     options: arrayOf(object),
-  }
+  };
+
   constructor(props) {
     super(props);
+
     const { value } = props;
     if (Array.isArray(value)) {
       this.state = { value };
     }
   }
+
   state = {
     value: [],
-  }
+  };
+
   handleCheckboxItemOnClick = (option) => {
     const { onChange } = this.props;
     const { value } = this.state;
@@ -45,12 +49,13 @@ class CheckboxInput extends Component {
     }
     this.setState({ value: newValue });
     return onChange ? onChange(newValue) : null;
-  }
+  };
+
   render() {
     let { options } = this.props;
     const { value } = this.state;
     if (!options) {
-      options = [{ value: true }];
+      options = [{ value: true, label: 'default' }];
     }
     return options.map((option) => {
       return (

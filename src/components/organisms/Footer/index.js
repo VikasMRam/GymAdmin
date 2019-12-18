@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 
 import config from 'sly/config';
@@ -181,6 +181,8 @@ const groups = {
     { name: 'Home Care', url: '/in-home-care', target: '_blank' },
     { name: 'Respite Care', url: '/respite-care', target: '_blank' },
     { name: 'CCRC', url: '/continuing-care-retirement-community', target: '_blank' },
+    { name: 'Nursing Homes', url: '/nursing-homes', target: '_blank' },
+    { name: 'Skilled Nursing Facilities', url: '/skilled-nursing-facility', target: '_blank' },
   ],
 };
 
@@ -188,52 +190,54 @@ const Version = styled.span`
   opacity: 0.5;
 `;
 
-const Footer = () => {
-  const currentYear = (new Date()).getFullYear();
-  const groupComponents = Object.keys(groups).map((group) => {
-    const groupItemComponents = groups[group].map((item) => {
+class Footer extends PureComponent {
+  render() {
+    const currentYear = (new Date()).getFullYear();
+    const groupComponents = Object.keys(groups).map((group) => {
+      const groupItemComponents = groups[group].map((item) => {
+        return (
+          <GroupItem key={item.name} to={item.url} target={item.target}>
+            {item.name}
+          </GroupItem>
+        );
+      });
       return (
-        <GroupItem key={item.name} to={item.url} target={item.target}>
-          {item.name}
-        </GroupItem>
+        <GroupDiv key={group}>
+          <GroupHeading>{group}</GroupHeading>
+          {groupItemComponents}
+        </GroupDiv>
       );
     });
     return (
-      <GroupDiv key={group}>
-        <GroupHeading>{group}</GroupHeading>
-        {groupItemComponents}
-      </GroupDiv>
+      <FooterWrapper>
+        <FooterTopWrapper>
+          <GroupDiv>
+            <GroupItem to="/">
+              <SeniorlyWhiteIcon icon="logo" palette="white" size="xxLarge" />
+              <Block>Find the Best Senior Living</Block>
+            </GroupItem>
+          </GroupDiv>
+          {groupComponents}
+        </FooterTopWrapper>
+        <StyledHR palette="grey" variation="dark" />
+        <FooterBottomWrapper>
+          <TradeMark>&copy; Seniorly {currentYear} <Version>{config.version}</Version></TradeMark>
+          <RightWrapper>
+            <Join>
+              Join Our Community
+            </Join>
+            <SocialIcons>
+              <Link href="https://www.facebook.com/seniorly/posts"><FooterIcon icon="facebook" size="large" palette="white" /></Link>
+              <Link href="https://twitter.com/Seniorly"><FooterIcon icon="twitter" size="large" palette="white" /></Link>
+              <Link href="https://www.linkedin.com/company/seniorly"><FooterIcon icon="linkedin" size="large" palette="white" /></Link>
+              <Link href="https://www.instagram.com/seniorlyinc"><FooterIcon icon="instagram" size="large" palette="white" /></Link>
+              <Link href="https://www.pinterest.com/seniorly"><FooterIcon icon="pinterest" size="large" palette="white" /></Link>
+            </SocialIcons>
+          </RightWrapper>
+        </FooterBottomWrapper>
+      </FooterWrapper>
     );
-  });
-  return (
-    <FooterWrapper>
-      <FooterTopWrapper>
-        <GroupDiv>
-          <GroupItem to="/">
-            <SeniorlyWhiteIcon icon="logo" palette="white" size="xxLarge" />
-            <Block>Find a Home to Love</Block>
-          </GroupItem>
-        </GroupDiv>
-        {groupComponents}
-      </FooterTopWrapper>
-      <StyledHR palette="grey" variation="dark" />
-      <FooterBottomWrapper>
-        <TradeMark>&copy; Seniorly {currentYear} <Version>{config.version}</Version></TradeMark>
-        <RightWrapper>
-          <Join>
-            Join Our Community
-          </Join>
-          <SocialIcons>
-            <Link href="https://www.facebook.com/seniorly/posts"><FooterIcon icon="facebook" size="large" palette="white" /></Link>
-            <Link href="https://twitter.com/Seniorly"><FooterIcon icon="twitter" size="large" palette="white" /></Link>
-            <Link href="https://www.linkedin.com/company/seniorly"><FooterIcon icon="linkedin" size="large" palette="white" /></Link>
-            <Link href="https://www.instagram.com/seniorlyinc"><FooterIcon icon="instagram" size="large" palette="white" /></Link>
-            <Link href="https://www.pinterest.com/seniorly"><FooterIcon icon="pinterest" size="large" palette="white" /></Link>
-          </SocialIcons>
-        </RightWrapper>
-      </FooterBottomWrapper>
-    </FooterWrapper>
-  );
-};
+  }
+}
 
 export default Footer;

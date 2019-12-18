@@ -14,8 +14,7 @@ describe('DateChoiceTile', () => {
     const month = 'JAN';
     const wrapper = wrap({ date });
     expect(wrapper.contains(dayName)).toBe(true);
-    expect(wrapper.find('StyledHeading').dive().dive().dive()
-      .text()).toContain(day);
+    expect(wrapper.find('StyledHeading').text()).toContain(day);
     expect(wrapper.contains(month)).toBe(true);
   });
 
@@ -28,8 +27,7 @@ describe('DateChoiceTile', () => {
       date, selected: true,
     });
     expect(wrapper.contains(dayName)).toBe(true);
-    expect(wrapper.find('StyledHeading').dive().dive().dive()
-      .text()).toContain(day);
+    expect(wrapper.find('StyledHeading').text()).toContain(day);
     expect(wrapper.contains(month)).toBe(true);
   });
 

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { shape, object, func } from 'prop-types';
 import { reduxForm, SubmissionError } from 'redux-form';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
 import DashboardProfileUserDetailsForm from 'sly/components/organisms/DashboardProfileUserDetailsForm';
-import { createValidator, required, email, usPhone } from 'sly/services/validation/index';
+import { createValidator, required, email, usPhone } from 'sly/services/validation';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
 import { withUser, query } from 'sly/services/newApi';
 
@@ -27,8 +27,7 @@ const validate = createValidator({
 });
 
 const ReduxForm = reduxForm({
-  form: 'DashboardProfileUserD' +
-  'etailsForm',
+  form: 'DashboardProfileUserDetailsForm',
   destroyOnUnmount: false,
   warn,
   validate,
@@ -102,12 +101,12 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
     const { result: uuidAuxResult } = rawAux;
     const { id: uuidAuxID } = uuidAuxResult;
 
-    const user = immutable(pick(result, ['id', 'type', 'attributes.name', 'attributes.phoneNumber']))
+    const user = immutable.wrap(pick(result, ['id', 'type', 'attributes.name', 'attributes.phoneNumber']))
       .set('attributes.name', values.name)
       // .set('attributes.email', values.email)
       .set('attributes.phoneNumber', values.phoneNumber)
       .value();
-    let uuidAux = immutable(pick(uuidAuxResult, ['id', 'type', 'attributes.uuid', 'attributes.uuidInfo']))
+    let uuidAux = immutable.wrap(pick(uuidAuxResult, ['id', 'type', 'attributes.uuid', 'attributes.uuidInfo']))
       .set('attributes.uuidInfo.housingInfo.lookingFor', values.lookingFor)
       .set('attributes.uuidInfo.residentInfo.fullName', values.residentName)
       .set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', values.monthlyBudget)

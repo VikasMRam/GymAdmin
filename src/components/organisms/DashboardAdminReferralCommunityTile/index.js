@@ -9,7 +9,7 @@ import { Heading, Block, Span, Button, Link } from 'sly/components/atoms';
 import Stage from 'sly/components/molecules/Stage';
 // import cursor from 'sly/components/helpers/cursor';
 import IconBadge from 'sly/components/molecules/IconBadge';
-import { buildAddressDisplay, getReferralSentTimeText, getHasContract, getIsCCRC } from 'sly/services/helpers/communityReferral';
+import { buildAddressDisplay, getReferralSentTimeText, getHasContract, getIsCCRC, getIsSNF } from 'sly/services/helpers/communityReferral';
 
 const getTitlePalette = variant => p => palette(p.titlePalette, variant);
 
@@ -128,6 +128,7 @@ const DashboardAdminReferralCommunityTile = ({
   const isFloatingSectionPresent = !!(referralSentAt || (actionText && actionClick));
   const hasContract = getHasContract(community);
   const hasCCRC = getIsCCRC(community);
+  const hasSNF = getIsSNF(community);
   const { url: communityUrl, propInfo = {} } = community;
   const { communityPhone } = propInfo;
   const shouldShowHasContract = hasContract && isAdminUser;
@@ -141,6 +142,7 @@ const DashboardAdminReferralCommunityTile = ({
             {shouldShowHasContract && <StyledIconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="HAS CONTRACT" />}
             {shouldShowNoContract && <StyledIconBadge badgePalette="danger" palette="white" icon="checkmark-circle" text="NO CONTRACT" />}
             {hasCCRC && <StyledIconBadge badgePalette="warning" palette="white" icon="checkmark-circle" text="CCRC" />}
+            {hasSNF && <StyledIconBadge badgePalette="warning" palette="white" icon="checkmark-circle" text="SNF" />}
             <CommunityName size="body" palette="primary">{community.name}</CommunityName>
           </HeaderSection>
           <CommunityAddressBlock palette="grey" variation="dark" size="caption">{buildAddressDisplay(community)}</CommunityAddressBlock>

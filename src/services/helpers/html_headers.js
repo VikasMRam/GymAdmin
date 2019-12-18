@@ -118,10 +118,10 @@ export const getHelmetForSearchPage = ({
   let actualToc = tocs.find(elem => (elem.value === toc));
   if (typeof actualToc === 'undefined') {
     actualToc = {
-      label: 'All Communities',
-      value: 'retirement-community',
-      segment: 'retirement-community',
-      seoLabel: 'Retirement Communities',
+      label: 'Nursing Homes',
+      value: 'nursing-homes',
+      segment: 'nursing-homes',
+      seoLabel: 'Nursing Homes',
     };
   }
 
@@ -132,8 +132,16 @@ export const getHelmetForSearchPage = ({
   const numResultsStr = (listSize && listSize < 15) ? `THE BEST ${listSize}` : 'THE BEST 15';
   const title = seoTitle || `${numResultsStr} ${actualToc.seoLabel} in ${locationStr} `;
 
-  const description = seoDescription || (city ? `Get pricing & read reviews for ${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, photos & talk to local ${titleize(city)} senior living experts.` :
+  let description = seoDescription || (city ? `Get pricing & read reviews for ${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, photos & talk to local ${titleize(city)} senior living experts.` :
     `${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, pricing, reviews & local senior care advice for ${locationStr} ${actualToc.label} communities`);
+
+  if (toc === 'nursing-homes') {
+    description = `Search nursing homes in ${locationStr} that range from assisted living facilities, memory care communities and other retirement living options. Compare cost, property highlights and more.`;
+  }
+
+  if (toc === 'skilled-nursing-facility') {
+    description = `Search skilled nursing facilities in ${locationStr}. Learn about medicare and medicaid options, property highlights and more.`;
+  }
 
   const ld = {};
   ld['@context'] = 'http://schema.org';
@@ -159,6 +167,11 @@ export const getHelmetForSearchPage = ({
     }
   }
 
+  let noindex = false;
+  if ((url.search && url.search.length > 0) || (listSize && listSize <= 2)) {
+    noindex = true;
+  }
+
 
   return (
     <Helmet>
@@ -171,7 +184,7 @@ export const getHelmetForSearchPage = ({
       <meta content={`${title} | Seniorly`} property="twitter:title" />
 
       {
-        url.search && url.search.length > 0 && <meta name="robots" content="noindex" />
+        noindex && <meta name="robots" content="noindex" />
       }
 
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
@@ -200,9 +213,9 @@ export const getHelmetForCommunityPage = (community, location) => {
   let toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
   if (typeof toc === 'undefined') {
     toc = {
-      label: 'Retirement',
-      value: 'retirement-community',
-      segment: 'retirement-community',
+      label: 'Nursing Homes',
+      value: 'nursing-homes',
+      segment: 'nursing-homes',
     };
   }
 

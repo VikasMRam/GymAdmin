@@ -11,6 +11,7 @@ import DashboardAdminCommunityAgentList from 'sly/components/organisms/Dashboard
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import pad from 'sly/components/helpers/pad';
 import cursor from 'sly/components/helpers/cursor';
+import { FAMILIES_INTERESTED_COMMUNITY_TITLE } from 'sly/constants/referrals';
 
 const Wrapper = styled.div`
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
@@ -30,12 +31,13 @@ const StyledDashboardAdminReferralCommunityTile = styled(DashboardAdminReferralC
 const CursorStyledDashboardAdminReferralCommunityTile = cursor(StyledDashboardAdminReferralCommunityTile);
 
 const DashboardCommunityReferralSearch = ({
-  communities, isAdminUser, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit, handleLocationSearch, showAgentList,
-  preferredLocation,
+  subtitle, communities, isAdminUser, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit, handleLocationSearch, showAgentList,
+  preferredLocation, communitiesInterestedIdsMap,
 }) => {
+  const title = FAMILIES_INTERESTED_COMMUNITY_TITLE;
   return (
     <Wrapper>
-      <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
+      <SendReferralTitleBlock size="subtitle">{subtitle}</SendReferralTitleBlock>
       <DashboardCommunityAgentSearchBox label="Find a community" preferredLocation={preferredLocation} handleSubmit={handleCommunitySearch} handleLocationSearch={handleLocationSearch} />
       {!communities &&
       <>
@@ -59,6 +61,9 @@ const DashboardCommunityReferralSearch = ({
               community,
               isAdminUser,
             };
+            if (communitiesInterestedIdsMap[community.id]) {
+              props.title = title;
+            }
             const client = childrenClientCommunityIdsMap[community.id];
             if (client) {
             return <StyledDashboardAdminReferralCommunityTile {...props} disabled referralSentAt={client.createdAt} />;
@@ -75,6 +80,7 @@ const DashboardCommunityReferralSearch = ({
 };
 
 DashboardCommunityReferralSearch.propTypes = {
+  subtitle: string,
   handleCommunitySearch: func.isRequired,
   handleLocationSearch: func.isRequired,
   setSelectedCommunity: func,
@@ -84,6 +90,7 @@ DashboardCommunityReferralSearch.propTypes = {
   communities: arrayOf(adminCommunityPropType),
   isAdminUser: bool,
   childrenClientCommunityIdsMap: object,
+  communitiesInterestedIdsMap: object,
   showAgentList: bool,
   preferredLocation: shape({
     city: string,

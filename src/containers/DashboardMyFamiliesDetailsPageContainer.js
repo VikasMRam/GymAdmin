@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { object, func, arrayOf } from 'prop-types';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 import { Redirect, generatePath } from 'react-router';
@@ -36,29 +36,21 @@ const mapStateToProps = (state, { conversations }) => ({
   id: match.params.id,
 }))
 
-@query('updateClient', 'updateClient')
-
-@query('createNote', 'createNote')
-
-@query('updateNote', 'updateNote')
-
-@query('getClients', 'getClients')
-
-@query('getNotes', 'getNotes')
-
-@connect(null, (dispatch, { api }) => ({
-  invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
-}))
-
 @prefetch('conversations', 'getConversations', (req, { match }) => req({
   'filter[client]': match.params.id,
 }))
 
-@connect(mapStateToProps)
-
+@query('updateClient', 'updateClient')
+@query('createNote', 'createNote')
+@query('updateNote', 'updateNote')
+@query('getClients', 'getClients')
+@query('getNotes', 'getNotes')
 @withBreakpoint
-
 @withUser
+
+@connect(mapStateToProps, {
+  invalidateClients: () => invalidateRequests('getClients'),
+})
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
@@ -176,7 +168,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { id } = note;
     const oldNote = rawNotes.find(n => n.id === id);
     const { note: newNoteBody } = data;
-    const payload = immutable(pick(oldNote, ['id', 'type', 'attributes.body']))
+    const payload = immutable.wrap(pick(oldNote, ['id', 'type', 'attributes.body']))
       .set('attributes.body', newNoteBody)
       .value();
 
@@ -217,7 +209,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { result: rawClient } = status.client;
     const { id } = client;
     const [contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
-    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.stage']))
+    const newClient = immutable.wrap(pick(rawClient, ['id', 'type', 'attributes.stage']))
       .set('attributes.stage', contactStatus)
       .value();
 

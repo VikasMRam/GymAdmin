@@ -2,54 +2,92 @@ import React from 'react';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 import hoistNonReactStatic from 'hoist-non-react-statics';
+import { func, string } from 'prop-types';
 
 import { randomHexNumber } from 'sly/services/helpers/utils';
 import { set, unset, reset } from 'sly/store/controller/actions';
 
-const convertMapDispatchToObject = mapDispatchToProps => (dispatch, props) => {
-  if (!mapDispatchToProps) {
-    return {};
-  }
-
-  return typeof mapDispatchToProps === 'function'
-    ? mapDispatchToProps(dispatch, props)
-    : Object.keys(mapDispatchToProps)
-      .reduce((cumul, key) => {
-        cumul[key] = (...args) => dispatch(mapDispatchToProps[key](...args));
-        return cumul;
-      }, {});
-};
+function getDisplayName(WrappedComponent) {
+  return WrappedComponent.displayName
+    || WrappedComponent.name
+    || 'Component';
+}
 
 // TODO: tests
 export function connectController(parentMapStateToProps, parentDispatchToProps) {
-  return function controllerCreator(WrappedComponent) {
-    const rand = randomHexNumber();
-    const Controller = props => <WrappedComponent {...props} />;
-    Controller.displayName = `WrappedController(${WrappedComponent.name || 'Controller'})`;
-    const controllerKey = `${WrappedComponent.name}_${rand}`;
+  if (typeof parentDispatchToProps === 'function' && parentDispatchToProps.length > 1) {
+    throw new Error('dispatchToProps should not use ownProps');
+  }
 
-    const mapDispatchToProps = (dispatch, ownProps) => ({
-      ...convertMapDispatchToObject(parentDispatchToProps)(dispatch, ownProps),
-      get: () => dispatch((dispatch, getState) => get(getState(), ['controller', ownProps.controllerKey || controllerKey])),
-      set: data => dispatch(set({ data, controller: ownProps.controllerKey || controllerKey })),
-      unset: key => dispatch(unset({ key, controller: ownProps.controllerKey || controllerKey })),
-      resetController: () => dispatch(reset({ controller: ownProps.controllerKey || controllerKey })),
-    });
+  return function controllerCreator(WrappedComponent) {
+    const generatedControllerKey = `${WrappedComponent.name}_${randomHexNumber()}`;
+
+    const mapDispatchToProps = { ...parentDispatchToProps, set, unset, reset };
 
     const mapStateToProps = (state, ownProps) => {
-      return parentMapStateToProps(state, {
+      const controllerKey = ownProps.controllerKey || generatedControllerKey;
+      const controller = get(state, ['controller', controllerKey]) || {};
+      const props = {
         ...ownProps,
-        controller: get(state, ['controller', ownProps.controllerKey || controllerKey]) || {},
-      });
+        controllerKey,
+        controller,
+      };
+      return {
+        ...props,
+        ...parentMapStateToProps(state, {
+          ...props,
+        }),
+      };
     };
 
-    const ConnectedController = connect(mapStateToProps, mapDispatchToProps)(Controller);
+    @connect(mapStateToProps, mapDispatchToProps)
+    class ConnectedController extends React.Component {
+      static displayName = `controller(${getDisplayName(WrappedComponent)})`;
+      static WrappedComponent = WrappedComponent.WrappedComponent || WrappedComponent;
+
+      static propTypes = {
+        set: func.isRequired,
+        controllerKey: string.isRequired,
+        unset: func.isRequired,
+        reset: func.isRequired,
+      };
+
+      set = (data) => {
+        const { set, controllerKey } = this.props;
+        return set({
+          data,
+          controller: controllerKey,
+        });
+      };
+
+      unset = (data) => {
+        const { unset, controllerKey } = this.props;
+        return unset({
+          data,
+          controller: controllerKey,
+        });
+      };
+
+      resetController = () => {
+        const { reset, controllerKey } = this.props;
+        return reset({
+          controller: controllerKey,
+        });
+      };
+
+      render() {
+        return (
+          <WrappedComponent
+            {...this.props}
+            set={this.set}
+            unset={this.unset}
+            resetController={this.resetController}
+          />
+        );
+      }
+    }
 
     hoistNonReactStatic(ConnectedController, WrappedComponent);
-
-    if (typeof ConnectedController.WrappedComponent === 'undefined') {
-      ConnectedController.WrappedComponent = WrappedComponent;
-    }
 
     return ConnectedController;
   };

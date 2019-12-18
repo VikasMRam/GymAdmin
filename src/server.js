@@ -12,7 +12,6 @@ import { ServerStyleSheet } from 'styled-components';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
-import { renderToString } from 'react-router-server';
 import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import pathToRegexp from 'path-to-regexp';
@@ -28,8 +27,7 @@ import { port, host, publicPath, isDev, domain, disableExperiments } from 'sly/c
 import { configure as configureStore } from 'sly/store';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
-import { createApi as createBeesApi } from 'sly/services/newApi';
-import ApiProvider, { makeApiCall } from 'sly/services/newApi/ApiProvider';
+import { ApiProvider, renderToString, apiInstance as api } from 'sly/services/newApi';
 import clientConfigs from 'sly/clientConfigs';
 
 const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
@@ -44,14 +42,13 @@ const getErrorContent = (err) => {
 };
 
 const renderHtml = ({
-  serverState, initialState, content, sheet, extractorWeb,
+  initialState, content, sheet, extractorWeb,
 }) => {
   const linkElements = extractorWeb && extractorWeb.getLinkElements();
   const styleElements = sheet && sheet.getStyleElement();
   const scriptElements = extractorWeb && extractorWeb.getScriptElements();
 
   const state = `
-    ${serverState ? `window.__SERVER_STATE__ = ${serialize(serverState)};` : ''}
     ${initialState ? `window.__INITIAL_STATE__ = ${serialize(initialState)};` : ''}
   `;
 
@@ -202,15 +199,14 @@ app.use(async (req, res, next) => {
       return cumul;
     }, {});
 
-  const beesApi = createBeesApi({
-    configureHeaders: headers => ({
-      ...headers,
+  const apiConfig = {
+    headers: {
       Cookie: cookies.join('; '),
       'User-Agent': req.headers['user-agent'],
       'X-is-sly-ssr': 'true',
       'X-forwarded-for': req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-    }),
-  });
+    },
+  };
 
   const store = configureStore({ experiments: userExperiments });
 
@@ -224,10 +220,11 @@ app.use(async (req, res, next) => {
     return null;
   };
 
+  // prefetch user data
   try {
     await Promise.all([
-      store.dispatch(makeApiCall(beesApi.getUser, [{ id: 'me' }])).catch(ignoreUnauthorized),
-      store.dispatch(makeApiCall(beesApi.getUuidAux, [{ id: 'me' }])),
+      store.dispatch(api.getUser.asAction({ id: 'me' }, apiConfig)).catch(ignoreUnauthorized),
+      store.dispatch(api.getUuidAux.asAction({ id: 'me' }, apiConfig)),
     ]);
   } catch (e) {
     e.message = `Error trying to prefetch user data: ${e.message}`;
@@ -237,14 +234,14 @@ app.use(async (req, res, next) => {
   }
 
   req.clientConfig.store = store;
-  req.clientConfig.api = beesApi;
+  req.clientConfig.apiConfig = apiConfig;
 
   next();
 });
 
 // render
 app.use(async (req, res, next) => {
-  const { store, api, bundle } = req.clientConfig;
+  const { store, apiConfig, bundle } = req.clientConfig;
 
   try {
     const extractorNode = new ChunkExtractor({ statsFile: statsNode, entrypoints: [bundle] });
@@ -259,7 +256,7 @@ app.use(async (req, res, next) => {
       <CacheProvider value={cache}>
         <Provider store={store}>
           <StaticRouter context={context} location={req.url}>
-            <ApiProvider api={api}>
+            <ApiProvider apiConfig={apiConfig}>
               <ClientApp />
             </ApiProvider>
           </StaticRouter>
@@ -267,16 +264,8 @@ app.use(async (req, res, next) => {
       </CacheProvider>
     )));
 
-    const { state: serverState, html: result } = await renderToString(app);
+    const result = await renderToString(app);
     const content = renderStylesToString(result);
-
-    if (serverState) {
-      Object.values(serverState).forEach((val) => {
-        if (val && val.stack) {
-          throw val;
-        }
-      });
-    }
 
     if (context.status) {
       res.status(context.status);
@@ -287,7 +276,6 @@ app.use(async (req, res, next) => {
     } else {
       const initialState = store.getState();
       res.send(renderHtml({
-        serverState,
         initialState,
         content,
         sheet,

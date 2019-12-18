@@ -22,7 +22,7 @@ export default class DashboardAdminCommunityAgentList extends Component {
       showAgents: sat,
     });
   };
-  //TODO : Notify Error and Info are not present
+  // TODO : Notify Error and Info are not present
   render() {
     const { communitiesWithAgents } = this.props;
     const { showAgents } = this.state;

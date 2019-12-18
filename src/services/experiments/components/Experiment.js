@@ -35,11 +35,12 @@ export class Experiment extends Component {
     disabled: false,
   };
 
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     // read query string: ?experimentEvaluations=Organisms_Concierge_Calendly:original_flow,Organisms_Footer_Calendly:original_flow
     this.experimentsOverrides = {};
     if (!isProd) {
-      const { location } = this.props;
+      const { location } = props;
       if (location) {
         const { search } = location;
         const qs = queryString.parse(search);
