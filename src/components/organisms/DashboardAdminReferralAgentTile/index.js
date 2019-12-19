@@ -107,28 +107,36 @@ function transformAgent(agent) {
   let slyScoreValue = null;
   let name = null;
   let leadCount = null;
+  let isOnVacation = false;
   let an = null;
   let email;
-  const { name: businessName, info, status } = agent;
-  if (info) {
-    const { slyScore, displayName, last5DayLeadCount, adminNotes } = info;
-    if (slyScore) {
-      slyScoreValue = slyScore;
-    }
-    if (displayName) {
-      name = displayName;
-    }
+  const { name: businessName, info={}, status } = agent;
 
-    if (last5DayLeadCount !== undefined && last5DayLeadCount !== null) {
-      leadCount = last5DayLeadCount;
-    }
-    if (adminNotes) {
-      an = adminNotes;
-    }
-    ({ cellPhone, workPhone, email } = info);
+  const { slyScore, displayName, last5DayLeadCount, adminNotes, vacationEnd } = info;
+  if (slyScore) {
+    slyScoreValue = slyScore;
   }
+  if (displayName) {
+    name = displayName;
+  }
+
+  if (last5DayLeadCount !== undefined && last5DayLeadCount !== null) {
+    leadCount = last5DayLeadCount;
+  }
+  if (adminNotes) {
+    an = adminNotes;
+  }
+  ({ cellPhone, workPhone, email } = info);
+
   if (name === null) {
     name = agent.name || 'Agent Lead';
+  }
+  try {
+    const n = new Date();
+    const eDate = Date.parse(vacationEnd);
+    isOnVacation = eDate > n;
+  } catch(e){
+    isOnVacation = false;
   }
 
   return {
@@ -141,6 +149,7 @@ function transformAgent(agent) {
     adminNotes: an,
     status,
     email,
+    isOnVacation,
   };
 }
 
@@ -161,7 +170,7 @@ const DashboardAdminReferralAgentTile = ({
   className, onClick, agent, isRecommended, bottomActionText, bottomActionOnClick, stage, referralSentAt, actionText, actionClick, path,
 }) => {
   const {
-    name, slyScore, businessName, workPhone, cellPhone, leadCount, adminNotes, status, email,
+    name, slyScore, businessName, workPhone, cellPhone, leadCount, adminNotes, status, email, isOnVacation,
   } = transformAgent(agent);
   const slyScoreText = `${slyScore} SLYSCORE`;
   return (
@@ -173,6 +182,7 @@ const DashboardAdminReferralAgentTile = ({
           <MobileSlyscoreSection>
             <SlyScoreBadge palette="grey" variation="stroke" borderRadius="small" >{slyScoreText}</SlyScoreBadge>
             {isRecommended && <IconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="RECOMMENDED" />}
+            {isOnVacation && <IconBadge badgePalette="red" palette="white" icon="checkmark-circle" text="ON VACATION" />}
           </MobileSlyscoreSection>
         </SmallScreenSection>
         <DetailsTable>
@@ -181,6 +191,7 @@ const DashboardAdminReferralAgentTile = ({
           </BigScreenSection>
           <BigScreenSection>
             {isRecommended && <IconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="RECOMMENDED" />}
+            {isOnVacation && <IconBadge badgePalette="red" palette="white" icon="checkmark-circle" text="ON VACATION" />}
           </BigScreenSection>
           {businessName && (
             <>
