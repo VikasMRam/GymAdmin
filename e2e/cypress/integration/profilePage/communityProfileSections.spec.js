@@ -38,6 +38,13 @@ describe('Community Profile Sections', () => {
     });
   });
 
+  context(`in iphone-6`, () => {
+    beforeEach(() => {
+      cy.viewport('iphone-6');
+    });
+
+  });
+
   responsive(() => {
     it('Should see details', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
@@ -170,17 +177,18 @@ describe('Community Profile Sections', () => {
     });
 
     it('should show and request care services', () => {
-      cy.route('POST', '**/uuid-actions').as('postUuidActions');
+      // cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
 
-      const careContent = cy.get('h3').contains(`Care Services at ${community.name}`).parent().next();
-      community.propInfo.careServices.forEach((service) => {
-        careContent.get('div').contains(service).should('exist');
+      cy.get('h3').contains(`Care Services at ${community.name}`).parent().within(() => {
+        cy.wrap(community.propInfo.careServices).each((service) => {
+          cy.get('> h3 + div > div > div > div > div + div').contains(service).should('exist');
+        });
+        waitForHydration(cy.get('> h3 + div ~ div button').contains('Ask About Care Services')).click();
       });
 
-      waitForHydration(careContent.get('button').contains('Ask About Care Services')).click();
 
       select('form[name="CommunityAskQuestionAgentForm"] input[name="full_name"]').type('Fonz de la Osa');
       select('form[name="CommunityAskQuestionAgentForm"] input[name="phone"]').type('9087654321');
