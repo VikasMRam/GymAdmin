@@ -7,9 +7,10 @@ import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 import isBoolean from 'lodash/isBoolean';
 
-import { query, getRelationship, invalidateRequests } from 'sly/services/newApi';
+import { query, getRelationship, invalidateRequests, withUser } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
+import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import {
   FAMILY_STATUS_ACTIVE,
   FAMILY_STATUS_ON_PAUSE,
@@ -23,6 +24,7 @@ import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { createValidator, required, float } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import { selectFormData } from 'sly/services/helpers/forms';
+import { userIs } from 'sly/services/helpers/role';
 import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
 import SlyEvent from 'sly/services/helpers/events';
 
@@ -53,6 +55,7 @@ const mapStateToProps = (state, props) => ({
 @query('updateClient', 'updateClient')
 @query('createNote', 'createNote')
 @query('updateUuidAux', 'updateUuidAux')
+@withUser
 
 @connect(mapStateToProps, {
   invalidateClients: () => invalidateRequests('getClients'),
@@ -260,7 +263,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
 
   render() {
     const {
-      client, formState, lossReasons, initialValues, ...props
+      client, formState, lossReasons, initialValues, user, ...props
     } = this.props;
     const { clientInfo, stage, status, uuidAux: { uuidInfo: { locationInfo } } } = client;
     const isPaused = status === FAMILY_STATUS_ON_PAUSE;
@@ -347,6 +350,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
         monthlyFees={monthlyFees}
         roomTypes={ROOM_TYPES}
         currentRejectReason={currentRejectReason}
+        canUpdateStage={nextStage !== FAMILY_STAGE_REJECTED || userIs(user, PLATFORM_ADMIN_ROLE)}
       />
     );
   }
