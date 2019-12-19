@@ -85,7 +85,10 @@ class Notifications extends Component {
     if (user && !prevProps.user && notPermitted) {
       Notification.requestPermission((permission) => {
         if (Notification.permission !== permission) {
-          Notification.permission = permission;
+          try {
+            Notification.permission = permission;
+            // eslint-disable-next-line
+          } catch (e) {}
         }
         resolve(permission);
       });
