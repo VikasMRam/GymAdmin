@@ -41,17 +41,17 @@ const StyledBox = styled(Box)`
 `;
 
 const IconInfoTile = ({
-  icon, iconPalette, heading, content, borderless,
+  icon, iconPalette, iconVariation, heading, content, borderless,
   noPadding, layout, iconBorder,
 }) => {
   return (
     <Wrapper layout={layout} borderless={borderless} noPadding={noPadding}>
       {iconBorder &&
         <StyledBox padding="regular" layout={layout}>
-          <StyledIcon icon={icon} palette={iconPalette} iconBorder={iconBorder} />
+          <StyledIcon icon={icon} palette={iconPalette} variation={iconVariation} iconBorder={iconBorder} />
         </StyledBox>
       }
-      {!iconBorder && <StyledIcon icon={icon} palette={iconPalette} iconBorder={iconBorder} />}
+      {!iconBorder && <StyledIcon icon={icon} palette={iconPalette} variation={iconVariation} iconBorder={iconBorder} />}
       <HeadingContentWrapper>
         <StyledBlock size={layout === 'iconTop' ? 'subtitle' : 'body'} weight={layout === 'iconTop' ? 'medium' : 'bold'}>{heading}</StyledBlock>
         <div>{content}</div>
@@ -63,6 +63,7 @@ const IconInfoTile = ({
 IconInfoTile.propTypes = {
   icon: string.isRequired,
   iconPalette: string,
+  iconVariation: string,
   iconBorder: bool,
   heading: string.isRequired,
   content: string.isRequired,

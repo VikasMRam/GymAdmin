@@ -31,7 +31,7 @@ const Wrapper = styled.div`
 
 const AdImage = styled.div`
   display: flex;
-  background:  ${palette('secondary', 'base')};
+  background:  ${palette('secondary', 'dark35')};
   height: ${size('tile', 'large', 'height')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {

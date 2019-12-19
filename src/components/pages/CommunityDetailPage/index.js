@@ -324,6 +324,7 @@ export default class CommunityDetailPage extends Component {
                           <IconItem
                             icon="check"
                             iconPalette="secondary"
+                            iconVariation="dark35"
                             borderless={false}
                           >
                             {item}
@@ -340,6 +341,7 @@ export default class CommunityDetailPage extends Component {
                           <IconItem
                             icon="check"
                             iconPalette="secondary"
+                            iconVariation="dark35"
                             borderless={false}
                           >
                             {item}
@@ -477,7 +479,7 @@ export default class CommunityDetailPage extends Component {
                   <EventsWrapper>
                     {sampleEvents.map(item => (
                       <IconItemWrapper key={item}>
-                        <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
+                        <IconItem icon="check" iconPalette="secondary" iconVariation="dark35" borderless={false}>{item}</IconItem>
                       </IconItemWrapper>))
                     }
                   </EventsWrapper>

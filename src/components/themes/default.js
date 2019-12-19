@@ -15,7 +15,7 @@ const theme = {};
 theme.palette = {
   slate    : makeColor('#2a333f', ['dark', 'base', 'filler', 'stroke']),
   primary  : makeColor('#186dc5', ['dark', 'base', 'filler', 'stroke', 'background']),
-  secondary: makeColor('#56c4c2', ['dark', 'base', 'filler', 'stroke', 'background']),
+  secondary: makeColor('#56c4c2', ['dark35', 'dark', 'base', 'filler', 'stroke', 'background']),
   white    : makeColor('#ffffff', ['base']),
   danger   : makeColor('#dc3133', ['dark', 'base', 'filler', 'stroke']),
   warning  : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke']),

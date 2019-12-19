@@ -47,7 +47,7 @@ const GatheredReviewRatings = ({ reviewRatings, onReviewLinkClicked }) => {
     return (
       <ReviewDiv key={review.name + i}>
         <StartNumDiv>
-          <Rating value={review.avgRating} palette="secondary" />
+          <Rating value={review.avgRating} palette="secondary" variation="dark35" />
           {' ('}{review.numReviews }{')'}
         </StartNumDiv>
         <ReviewProviderDiv>

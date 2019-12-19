@@ -106,9 +106,9 @@ class AgentsPage extends Component {
         <TemplateContent>
           <StyledSection>
             <ColumnWrapper>
-              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="loyalty" heading="100% free" content="Seniorly Partner Agents are commissioned by the community you choose only when you move-in. They are on your side to find and choose the right option." />
-              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="star" heading="Personalized Service" content="Navigating this process can be a challenge. Your agent will help you throughout to answer questions, weigh your options, accompany you on tours and help you get the best deal for your budget." />
-              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="location" heading="Local Insider Expertise" content="Your agent will know and share the unique details of communities and care options in your area." />
+              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="dark35" icon="loyalty" heading="100% free" content="Seniorly Partner Agents are commissioned by the community you choose only when you move-in. They are on your side to find and choose the right option." />
+              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="dark35" icon="star" heading="Personalized Service" content="Navigating this process can be a challenge. Your agent will help you throughout to answer questions, weigh your options, accompany you on tours and help you get the best deal for your budget." />
+              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="dark35" icon="location" heading="Local Insider Expertise" content="Your agent will know and share the unique details of communities and care options in your area." />
             </ColumnWrapper>
           </StyledSection>
           <Hr fullWidth />

@@ -112,7 +112,7 @@ const getPricingAndRating = (startingRate, reviewsValue, numReviews, goToReviews
       <Hr />
       <Wrapper>
         {startingRate > 0 && <CommunityPricing description="Estimated pricing starts at" price={startingRate} />}
-        {reviewsValue > 0 && <CommunityRating description="Average rating" numReviewsPalette="slate" rating={reviewsValue} numReviews={numReviews} goToReviews={goToReviews} />}
+        {reviewsValue > 0 && <CommunityRating description="Average rating" numReviewsPalette="slate" numReviewsVariation="base" rating={reviewsValue} numReviews={numReviews} goToReviews={goToReviews} />}
       </Wrapper>
       {startingRate > 0 &&
         <Block size="caption" palette="grey">

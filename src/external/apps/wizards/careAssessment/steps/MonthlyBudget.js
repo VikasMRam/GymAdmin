@@ -26,7 +26,7 @@ const StyledReduxField = styled(ReduxField)`
 `;
 
 const moneyValue = val =>
-  <MoneyValue weight="regular" palette="secondary">Up to {formatMoney(val)}</MoneyValue>;
+  <MoneyValue weight="regular" palette="secondary" variation="dark35">Up to {formatMoney(val)}</MoneyValue>;
 
 const MonthlyBudget = () => (
   <>
@@ -47,10 +47,10 @@ const MonthlyBudget = () => (
     />
     <Field
       name={STEP_INPUT_FIELD_NAMES.MonthlyBudget[1]}
-      label="I'm only using Medicaid to pay."
       type="checkbox"
       responsive
       component={StyledReduxField}
+      options={[{ value: true, label: "I'm only using Medicaid to pay." }]}
     />
   </>
 );
