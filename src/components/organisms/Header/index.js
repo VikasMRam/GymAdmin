@@ -127,6 +127,15 @@ const HeaderItem = styled(Link)`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
+    &:first-child {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: ${size('breakpoint.desktop')}) {
+     &:first-child {
+      display: block;
+    }
   }
 `;
 

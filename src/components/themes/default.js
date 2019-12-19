@@ -45,6 +45,7 @@ theme.sizes = {
     mobile           : '416px',
     tablet           : '768px',
     laptop           : '1080px',
+    desktop           : '1280px',
   },
 
   // only for tablet and wider
