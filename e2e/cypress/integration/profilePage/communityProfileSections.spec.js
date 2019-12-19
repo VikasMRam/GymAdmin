@@ -7,6 +7,23 @@ import { formatMoney } from 'sly/services/helpers/numbers';
 
 const randHash = () => Math.random().toString(36).substring(7);
 
+const waitForProfileView = (community) => {
+  cy.wait('@postUuidActions').then((xhr) => {
+    expect(xhr.requestBody).to.deep.equal({
+      data: {
+        type: 'UUIDAction',
+        attributes: {
+          actionType: 'profileViewed',
+          actionPage: `/assisted-living/california/san-francisco/${community.id}`,
+          actionInfo: {
+            slug: community.id,
+          },
+        },
+      },
+    });
+  });
+};
+
 export const buildEstimatedPriceList = (community) => {
   const {
     sharedSuiteRate,
@@ -42,20 +59,7 @@ describe('Community Profile Sections', () => {
     it('Should see details', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
 
-      cy.wait('@postUuidActions').then((xhr) => {
-        expect(xhr.requestBody).to.deep.equal({
-          data: {
-            type: 'UUIDAction',
-            attributes: {
-              actionType: 'profileViewed',
-              actionPage: `/assisted-living/california/san-francisco/${community.id}`,
-              actionInfo: {
-                slug: community.id,
-              },
-            },
-          },
-        });
-      });
+      waitForProfileView(community);
 
       cy.get('h1').contains(community.name).its('length').should('be', 1);
 
@@ -173,8 +177,9 @@ describe('Community Profile Sections', () => {
       cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-      cy.wait('@postUuidActions');
+      waitForProfileView(community);
 
+      cy.scrollTo('bottom');
       const careContent = cy.get('h3').contains(`Care Services at ${community.name}`).parent().next();
       community.propInfo.careServices.forEach((service) => {
         careContent.get('div').contains(service).should('exist');
@@ -214,7 +219,9 @@ describe('Community Profile Sections', () => {
       cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-      cy.wait('@postUuidActions');
+      waitForProfileView(community);
+
+      cy.scrollTo('bottom');
 
       const careContent = select('h3').contains(`Amenities at ${community.name}`).parent().next();
 
