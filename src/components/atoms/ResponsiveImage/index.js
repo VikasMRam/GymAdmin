@@ -1,6 +1,6 @@
 import React from 'react';
-import { string, bool, oneOf } from 'prop-types';
-import styled, { css } from 'styled-components';
+import { string, oneOf } from 'prop-types';
+import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import { getSrcset } from 'sly/services/images';

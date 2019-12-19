@@ -5,7 +5,7 @@ import SwipeableViews from 'react-swipeable-views';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
-import { Icon, Image, ResponsiveImage } from 'sly/components/atoms';
+import { Icon, ResponsiveImage } from 'sly/components/atoms';
 import ThumbnailScroller from 'sly/components/molecules/ThumbnailScroller';
 import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
 
@@ -117,6 +117,7 @@ export default class MediaGallery extends Component {
       thumb: string.isRequired,
       alt: string,
     })),
+    sizes: string,
     showThumbnails: bool,
     currentSlide: number,
     topRightSection: func,
