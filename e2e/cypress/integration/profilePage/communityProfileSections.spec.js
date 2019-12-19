@@ -38,13 +38,6 @@ describe('Community Profile Sections', () => {
     });
   });
 
-  context(`in iphone-6`, () => {
-    beforeEach(() => {
-      cy.viewport('iphone-6');
-    });
-
-  });
-
   responsive(() => {
     it('Should see details', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
