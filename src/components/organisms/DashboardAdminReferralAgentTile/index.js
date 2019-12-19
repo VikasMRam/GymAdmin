@@ -182,7 +182,7 @@ const DashboardAdminReferralAgentTile = ({
           <MobileSlyscoreSection>
             <SlyScoreBadge palette="grey" variation="stroke" borderRadius="small" >{slyScoreText}</SlyScoreBadge>
             {isRecommended && <IconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="RECOMMENDED" />}
-            {isOnVacation && <IconBadge badgePalette="red" palette="white" icon="checkmark-circle" text="ON VACATION" />}
+            {isOnVacation && <IconBadge badgePalette="purple" palette="white" icon="pause" text="ON VACATION" />}
           </MobileSlyscoreSection>
         </SmallScreenSection>
         <DetailsTable>
@@ -191,7 +191,7 @@ const DashboardAdminReferralAgentTile = ({
           </BigScreenSection>
           <BigScreenSection>
             {isRecommended && <IconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="RECOMMENDED" />}
-            {isOnVacation && <IconBadge badgePalette="red" palette="white" icon="checkmark-circle" text="ON VACATION" />}
+            {isOnVacation && <IconBadge badgePalette="purple" palette="white" icon="pause" text="ON VACATION" />}
           </BigScreenSection>
           {businessName && (
             <>
