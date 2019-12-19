@@ -73,10 +73,10 @@ describe('Community Profile Sections', () => {
         expect($div.text().replace(/[^\d]/g, '')).to.equal(number.toString());
       });
 
-      select('.CommunityPricingAndRating').should('contain', formatMoney(community.startingRate));
+      select('.CommunitySummary__PricingRatingWrapper').should('contain', formatMoney(community.startingRate));
 
       const rating = community.propRatings.reviewsValue.toFixed(1).replace(/\.0+$/, '');
-      select('.CommunityPricingAndRating').should('contain', rating);
+      select('.CommunitySummary__PricingRatingWrapper').should('contain', rating);
     });
 
     it('should be able to share', () => {

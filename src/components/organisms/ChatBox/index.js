@@ -1,27 +1,11 @@
 /* eslint-disable react/no-danger */
 import React, { Component } from 'react';
-import { createGlobalStyle } from 'styled-components';
 import { bool } from 'prop-types';
+import Helmet from 'react-helmet';
 
 import { /* isBrowser, olarkSiteId, */ rokoApiKey } from 'sly/config';
-import { getKey } from 'sly/components/themes';
 
-const ChatBoxGlobalStyle = createGlobalStyle`
-  body.ChatBox-page-with-sticky-footer #hbl-live-chat-wrapper .olark-launch-button {
-    bottom: ${getKey('sizes.chatBox.pageWithStickyFooterBottomMargin')}!important;
-  }
-  body.ChatBox-footer-reached #hbl-live-chat-wrapper .olark-launch-button {
-    bottom: ${getKey('sizes.chatBox.footerReachedBottomMargin')}!important;
-  }
-  .roko-instabot-widget-button  {
-    z-index: 10000!important;
-    margin-bottom: ${getKey('sizes.spacing.massive')}!important;
-  }
-  .olark-launch-button {
-    z-index: 10000!important;
-    margin-bottom: ${getKey('sizes.spacing.massive')}!important;
-  }
-`;
+import ChatBoxGlobalStyle from './ChatBoxGlobalStyle';
 
 const loadOlark = () => {
   // /* eslint-disable */
@@ -77,7 +61,9 @@ export default class ChatBox extends Component {
 
     return (
       <>
-        <ChatBoxGlobalStyle />
+        <Helmet>
+          <style type="text/css">{ChatBoxGlobalStyle}</style>
+        </Helmet>
         <script
           defer
           type="text/javascript"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shape } from 'prop-types';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
@@ -15,7 +15,7 @@ const store = mockStore({ api: {} });
 const router = {
   history: new BrowserRouter().history,
   route: {
-    location: {},
+    location: { pathname: 'assisted-living/california/san-francisco' },
     match: {},
   },
 };
@@ -23,16 +23,21 @@ const router = {
 const createContext = () => ({
   context: {
     router,
+    store,
   },
   childContextTypes: {
     router: shape({}),
+    store: shape({}),
   },
 });
 
-const wrap = (props = {}) => mount(
-  <Provider store={store}>
-    <RetentionPopup {...props} showModal={showModal} />
-  </Provider>, createContext(),
+const wrap = (props = {}, pathname = '/assisted-living/california/san-francisco') => mount(
+  <Provider store={store} >
+    <MemoryRouter initialEntries={[pathname]}>
+      <RetentionPopup {...props} showModal={showModal} store={store} />
+    </MemoryRouter>
+  </Provider>
+  , createContext(),
 );
 
 const setReferrer = (referrer) => {
@@ -309,5 +314,37 @@ describe('Retention popup', () => {
     listeners.visibilitychange();
 
     expect(showModal).not.toHaveBeenCalled();
+  });
+
+  it('should not add the listeners if modal is already opened', () => {
+    const wrapper = wrap({ isModalOpen: true });
+
+    expect(wrapper.html()).toEqual('');
+    expect(typeof listeners.mouseout).toEqual('undefined');
+    expect(typeof listeners.visibilitychange).toEqual('undefined');
+  });
+
+  it('should not add the listeners for home page', () => {
+    const wrapper = wrap({}, '/');
+
+    expect(wrapper.html()).toEqual('');
+    expect(typeof listeners.mouseout).toEqual('undefined');
+    expect(typeof listeners.visibilitychange).toEqual('undefined');
+  });
+
+  it('should not add the listeners for dashboard', () => {
+    const wrapper = wrap({}, '/dashboard/family/my-profile');
+
+    expect(wrapper.html()).toEqual('');
+    expect(typeof listeners.mouseout).toEqual('undefined');
+    expect(typeof listeners.visibilitychange).toEqual('undefined');
+  });
+
+  it('should not add the listeners for custom pricing wizard', () => {
+    const wrapper = wrap({}, '/custom-pricing/beverly-hills-carmel');
+
+    expect(wrapper.html()).toEqual('');
+    expect(typeof listeners.mouseout).toEqual('undefined');
+    expect(typeof listeners.visibilitychange).toEqual('undefined');
   });
 });

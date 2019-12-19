@@ -75,6 +75,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     clientsWithSameContacts: null,
     rawNotes: null,
     notes: null,
+    isEditStatusDetailsMode: false,
   }
 
   componentDidUpdate() {
@@ -269,6 +270,13 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     };
   }
 
+  toggleEditStatusDetailsMode = () => {
+    const { isEditStatusDetailsMode } = this.state;
+    this.setState({
+      isEditStatusDetailsMode: !isEditStatusDetailsMode,
+    });
+  };
+
   render() {
     const {
       onRejectSuccess, onAddNote, onEditNote,
@@ -282,7 +290,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       breakpoint,
     } = this.props;
 
-    const { selectedConversation, clientsWithSameContacts, notes } = this.state;
+    const { selectedConversation, clientsWithSameContacts, notes, isEditStatusDetailsMode } = this.state;
 
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && client && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
@@ -326,6 +334,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 conversation={selectedConversation}
                 setSelectedConversation={this.setSelectedConversation}
                 onAcceptClick={() => this.handleAcceptClick(show, hide, notifyError)}
+                onEditStatusDetailsClick={this.toggleEditStatusDetailsMode}
+                onStatusChange={this.toggleEditStatusDetailsMode}
+                isEditStatusDetailsMode={isEditStatusDetailsMode}
               />
             )}
           </ModalController>

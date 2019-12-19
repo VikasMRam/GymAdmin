@@ -18,7 +18,7 @@ describe('Marketplace Profile Page', () => {
       const medicaid = 'Yes';
 
       if (viewport === 'mobile' || viewport === 'tablet') {
-        cy.visit(`/assisted-living/california/san-francisco/${TEST_COMMUNITY}`);
+        cy.visit(`/assisted-living/california/san-francisco/${TEST_COMMUNITY}?experimentEvaluations=Community_DetailPage_Sidebar:Sidebar_Concierge_Form`);
 
         waitForHydration(cy.get('button').contains('Get Pricing')).click();
       } else {
@@ -52,7 +52,7 @@ describe('Marketplace Profile Page', () => {
       const medicaid = 'Yes';
 
       if (viewport === 'mobile' || viewport === 'tablet') {
-        cy.visit(`/assisted-living/california/san-francisco/${TEST_COMMUNITY}`);
+        cy.visit(`/assisted-living/california/san-francisco/${TEST_COMMUNITY}?experimentEvaluations=Community_DetailPage_Sidebar:Sidebar_Concierge_Form`);
 
         waitForHydration(cy.get('button').contains('Get Pricing')).click();
       } else {

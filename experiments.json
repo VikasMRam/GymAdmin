@@ -1,4 +1,3 @@
 {
-  "InplaceWizard_Step1": ["Step1A","Step1B"],
-  "User_Bounce_Popup": ["QuestionModal", "SimilarCommunities"]
+  "Community_DetailPage_Sidebar": ["Sidebar_Concierge_Form", "Sidebar_GetDetailed_PricingBox"]
 }

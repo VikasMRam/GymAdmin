@@ -25,7 +25,7 @@ const {
   devServer,
   when,
   setDevTool,
-  optimization,
+  // optimization,
 } = require('webpack-blocks');
 
 // defaults to dev env, otherwise specify with env vars
@@ -299,14 +299,14 @@ const client = (target, entries) => {
 
     entryPoint(entries),
 
-    when(isWeb, [
-      optimization({
-        // concatenateModules: false,
-        splitChunks: {
-          chunks: 'all',
-        },
-      }),
-    ]),
+    // when(isWeb, [
+    //   optimization({
+    //     // concatenateModules: false,
+    //     splitChunks: {
+    //       chunks: 'all',
+    //     },
+    //   }),
+    // ]),
 
     // when(false && isWeb, [
     //   addPlugins([
