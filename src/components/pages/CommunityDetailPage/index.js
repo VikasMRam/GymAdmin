@@ -16,6 +16,7 @@ import {
 } from 'sly/services/helpers/pricing';
 import pad from 'sly/components/helpers/pad';
 import { withHydration } from 'sly/services/partialHydration';
+import { Experiment, Variant } from 'sly/services/experiments';
 import { Button, Paragraph } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';
@@ -62,6 +63,7 @@ import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/containers/Tracked
 import UnhydratedPageViewActionContainer from 'sly/containers/PageViewActionContainer';
 import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
+import GetCommunityPricingAndAvailability from 'sly/components/organisms/GetCommunityPricingAndAvailability';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
@@ -322,6 +324,7 @@ export default class CommunityDetailPage extends Component {
                           <IconItem
                             icon="check"
                             iconPalette="secondary"
+                            iconVariation="dark35"
                             borderless={false}
                           >
                             {item}
@@ -338,6 +341,7 @@ export default class CommunityDetailPage extends Component {
                           <IconItem
                             icon="check"
                             iconPalette="secondary"
+                            iconVariation="dark35"
                             borderless={false}
                           >
                             {item}
@@ -475,7 +479,7 @@ export default class CommunityDetailPage extends Component {
                   <EventsWrapper>
                     {sampleEvents.map(item => (
                       <IconItemWrapper key={item}>
-                        <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
+                        <IconItem icon="check" iconPalette="secondary" iconVariation="dark35" borderless={false}>{item}</IconItem>
                       </IconItemWrapper>))
                     }
                   </EventsWrapper>
@@ -538,7 +542,14 @@ export default class CommunityDetailPage extends Component {
               </Body>
               <Column>
                 <StickToTop>
-                  <ConciergeContainer />
+                  <Experiment name="Community_DetailPage_Sidebar">
+                    <Variant name="Sidebar_Concierge_Form">
+                      <ConciergeContainer />
+                    </Variant>
+                    <Variant name="Sidebar_GetDetailed_PricingBox">
+                      <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
+                    </Variant>
+                  </Experiment>
                 </StickToTop>
               </Column>
             </TwoColumn>

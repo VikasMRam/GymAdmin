@@ -322,10 +322,10 @@ export default class App extends Component {
           <meta content="@seniorly" property="twitter:creator" />
 
           <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
+          <style type="text/css">{GlobalStyles}</style>
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          <GlobalStyles />
           <Router requiresAuth={[/^\/dashboard/]}>
             <Switch>
               <Route
@@ -345,8 +345,8 @@ export default class App extends Component {
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
             </Switch>
           </Router>
+          {!hideChatbox && <ChatBoxContainer />}
         </ThemeProvider>
-        {!hideChatbox && <ChatBoxContainer />}
       </>
     );
   }

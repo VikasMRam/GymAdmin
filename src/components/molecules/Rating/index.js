@@ -1,13 +1,16 @@
 /* eslint-disable no-mixed-operators */
 import React, { Fragment } from 'react';
-import { number, string, oneOf, object } from 'prop-types';
+import { number, oneOf, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { palette, size } from 'sly/components/themes';
+import { palette as palettePropType } from 'sly/propTypes/palette';
+import { variation as variationPropType } from 'sly/propTypes/variation';
 
 const times = (nr, fn) => Array.from(Array(nr).keys()).map((_, i) => fn(i));
 
 const iconSize = props => size('icon', props.size);
+const color = p => palette(p.palette, p.variation);
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,7 +23,7 @@ const StyledStar = styled.svg`
 `;
 
 const BaseStarPath = styled.path`
-  color: ${palette('base')};
+  color: ${color};
 `;
 
 const StarPath = props => (
@@ -33,7 +36,7 @@ const StarPath = props => (
 );
 
 const StarFillPath = styled(StarPath)`
-  color: ${palette('filler')};
+  color: ${color};
 `;
 
 const randHash = () =>
@@ -56,15 +59,15 @@ const MaskedStar = ({ value, ...props }) => {
   );
 };
 
-const Rating = ({ palette, value, innerRef, size, ...props }) => (
+const Rating = ({ palette, variation, fillVariation, value, innerRef, size, ...props }) => (
   <Wrapper {...props}>
     <StyledStar ref={innerRef} size={size} viewBox="0 0 120 24">
       {times(5, i => (
         <Fragment key={`star${i}`}>
-          {value >= i + 1 && <StarPath palette={palette} transform={`translate(${i * 24}, 0)`} />}
-          {value < i + 1 && <StarFillPath palette={palette} transform={`translate(${i * 24}, 0)`} />}
+          {value >= i + 1 && <StarPath palette={palette} variation={variation} transform={`translate(${i * 24}, 0)`} />}
+          {value < i + 1 && <StarFillPath palette={palette} variation={fillVariation} transform={`translate(${i * 24}, 0)`} />}
           {value > i &&
-            value < i + 1 && <MaskedStar palette={palette} value={value} transform={`translate(${i * 24}, 0)`} />}
+            value < i + 1 && <MaskedStar palette={palette} variation={variation} value={value} transform={`translate(${i * 24}, 0)`} />}
         </Fragment>
       ))}
     </StyledStar>
@@ -75,12 +78,16 @@ Rating.propTypes = {
   size: oneOf(['small', 'regular']),
   innerRef: object,
   value: number.isRequired,
-  palette: string,
+  palette: palettePropType,
+  variation: variationPropType,
+  fillVariation: variationPropType,
 };
 
 Rating.defaultProps = {
   size: 'regular',
   palette: 'primary',
+  variation: 'base',
+  fillVariation: 'filler',
 };
 
 export default Rating;

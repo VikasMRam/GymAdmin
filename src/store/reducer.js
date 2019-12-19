@@ -9,12 +9,14 @@ import controller from './controller/reducer';
 import chatBox from './chatBox/reducer';
 
 import { reducer as api } from 'sly/services/newApi';
+import notifications from 'sly/services/notifications/reducer';
 
 export default combineReducers({
   form,
   thunk,
   api,
   modal,
+  notifications,
   authenticated,
   experiments,
   controller,

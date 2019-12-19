@@ -135,7 +135,7 @@ export default class PopoverPortal extends Component {
         <Measure bounds onResize={this.onButtonResize}>
           {({ measureRef }) => (
             <StyledFilterButton
-              innerRef={measureRef}
+              ref={measureRef}
               onClick={this.toggle}
             >
               {button}
@@ -160,7 +160,7 @@ export default class PopoverPortal extends Component {
           </MobileHeader>
           <Measure bounds client onResize={this.onContentResize}>
             {({ measureRef }) => (
-              <Content innerRef={measureRef}>
+              <Content ref={measureRef}>
                 {children}
               </Content>
             )}

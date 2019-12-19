@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions/src/index';
+import { action } from '@storybook/addon-actions';
 
 import agent from 'sly/../private/storybook/sample-data/agent-linda-iwamota';
 import DashboardAgentReferrals from 'sly/components/organisms/DashboardAgentReferrals/index';

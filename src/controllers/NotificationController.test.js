@@ -3,35 +3,33 @@ import configureStore from 'redux-mock-store';
 import { shallow } from 'enzyme';
 import thunkMiddleware from 'redux-thunk';
 
-import { SET } from 'sly/store/controller/actions';
 import NotificationController from 'sly/controllers/NotificationController';
+import { ADD, REMOVE } from 'sly/services/notifications/actions';
 
-const mockGetMessageId = message => `notificationMessage_${message}`;
+const message = 'test message';
+
+const mockGetMessageId = () => `notificationMessage_${message}`;
+
 jest.mock('sly/services/helpers/utils', () => ({
   randomHexNumber: jest.fn().mockReturnValue(123),
 }));
-jest.mock('lodash', () => ({
-  uniqueId: m => mockGetMessageId(m),
+
+jest.mock('lodash/uniqueId', () => ({
+  __esModule: true,
+  default: m => mockGetMessageId(m),
 }));
 
 describe('NotificationController', () => {
   const mockStore = configureStore([thunkMiddleware]);
-  const initStore = (props = {}, controllerProps = {}) => mockStore({
-    controller: { ...controllerProps },
+  const initStore = (props = {}, messages = []) => mockStore({
+    notifications: { messages },
     ...props,
   });
   const spy = jest.fn();
-  const message = 'test message';
 
   const wrap = (props = {}) =>
-    shallow(<NotificationController {...props}>{spy}</NotificationController>).dive().dive().dive();
+    shallow(<NotificationController {...props}>{spy}</NotificationController>).dive().dive();
 
-  const getControllerStore = (messages) => {
-    const key = 'NotificationController_123';
-    const r = {};
-    r[key] = { messages };
-    return r;
-  };
   const getNotificationObj = (message, type = 'default') => ({
     id: mockGetMessageId(message),
     content: message,
@@ -48,9 +46,12 @@ describe('NotificationController', () => {
     });
   };
 
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
+
   beforeEach(() => {
     spy.mockClear();
-    jest.clearAllMocks();
   });
 
   it('add info notification', () => {
@@ -59,8 +60,8 @@ describe('NotificationController', () => {
 
     wrapper.instance().notifyInfo(message);
     const action = store.getActions().pop();
-    expect(action.type).toBe(SET);
-    compareNotificationObjects(action.payload.data.messages, [getNotificationObj(message)]);
+    expect(action.type).toBe(ADD);
+    expect(action.payload).toEqual(getNotificationObj(message));
   });
 
   it('add error notification', () => {
@@ -69,28 +70,31 @@ describe('NotificationController', () => {
 
     wrapper.instance().notifyError(message);
     const action = store.getActions().pop();
-    expect(action.type).toBe(SET);
-    compareNotificationObjects(action.payload.data.messages, [getNotificationObj(message, 'error')]);
+    expect(action.type).toBe(ADD);
+
+    expect(action.payload).toEqual(getNotificationObj(message, 'error'));
   });
 
   it('close notification', () => {
-    const store = initStore({}, getControllerStore([getNotificationObj(message)]));
-    const wrapper = wrap({ store });
+    const store = initStore({}, [getNotificationObj(message)]);
+    wrap({ store });
 
-    wrapper.instance().handleDismiss(mockGetMessageId(message));
+    expect(spy).toHaveBeenCalled();
+    const { dismiss } = spy.mock.calls[0][0];
+    dismiss(mockGetMessageId(message));
     const action = store.getActions().pop();
-    expect(action.type).toBe(SET);
-    compareNotificationObjects(action.payload.data.messages, []);
+    expect(action.type).toBe(REMOVE);
+    compareNotificationObjects(action.payload, []);
   });
 
   it('add multiple notifications', () => {
-    const store = initStore({}, getControllerStore([getNotificationObj(message)]));
+    const store = initStore({}, [getNotificationObj(message)]);
     const wrapper = wrap({ store });
 
     wrapper.instance().notifyInfo(message + message);
     const action = store.getActions().pop();
-    expect(action.type).toBe(SET);
-    compareNotificationObjects(action.payload.data.messages, [
+    expect(action.type).toBe(ADD);
+    compareNotificationObjects(action.payload, [
       getNotificationObj(message + message),
       getNotificationObj(message),
     ]);
@@ -99,13 +103,16 @@ describe('NotificationController', () => {
   it('add multiple notifications and close one', () => {
     const store = initStore(
       {},
-      getControllerStore([getNotificationObj(message), getNotificationObj(message + message)]),
+      [getNotificationObj(message), getNotificationObj(message + message)],
     );
-    const wrapper = wrap({ store });
+    wrap({ store });
 
-    wrapper.instance().handleDismiss(mockGetMessageId(message));
+    expect(spy).toHaveBeenCalled();
+    const { dismiss } = spy.mock.calls[0][0];
+
+    dismiss(mockGetMessageId(message));
     const action = store.getActions().pop();
-    expect(action.type).toBe(SET);
-    compareNotificationObjects(action.payload.data.messages, [getNotificationObj(message + message)]);
+    expect(action.type).toBe(REMOVE);
+    compareNotificationObjects(action.payload, [getNotificationObj(message + message)]);
   });
 });

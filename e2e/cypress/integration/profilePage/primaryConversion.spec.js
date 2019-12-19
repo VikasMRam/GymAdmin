@@ -22,7 +22,7 @@ describe('Primary Conversion', () => {
       cy.route('POST', '**/auth/register').as('register');
       cy.route('GET', '**/users/me').as('me');
 
-      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.visit(`/assisted-living/california/san-francisco/${community.id}?experimentEvaluations=Community_DetailPage_Sidebar:Sidebar_Concierge_Form`);
 
       const { email, phone } = randomUser();
 

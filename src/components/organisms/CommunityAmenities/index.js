@@ -38,7 +38,8 @@ const CommunityAmenities = ({ community }) => {
     <IconItem
       key={amenity}
       icon="check"
-      iconPalette="slate"
+      iconPalette="secondary"
+      iconVariation="dark35"
       borderless={false}
     >
       {amenity}

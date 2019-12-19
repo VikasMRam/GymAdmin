@@ -2,9 +2,11 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
-import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
+import CommunityPricing from 'sly/components/molecules/CommunityPricing';
+import CommunityRating from 'sly/components/molecules/CommunityRating';
 import { Link } from 'sly/components/atoms';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import { CONTINUING_CARE_RETIREMENT_COMMUNITY } from 'sly/constants/tags';
 
 const searchParams = {
   city: 'san-carlos',
@@ -15,11 +17,17 @@ const searchParams = {
 
 const wrap = (props = {}) => shallow(<CommunitySummary {...props} searchParams={searchParams} />);
 
-const getCommunity = (state) => {
+const getCommunity = (state, tag) => {
   const community = { ...RhodaGoldmanPlaza };
+
   community.address.state = state;
+
+  if (tag) {
+    community.propInfo.typeCare = [...community.propInfo.typeCare, tag];
+  }
+
   return community;
-}
+};
 
 const verify = (wrapper) => {
   const {
@@ -38,7 +46,8 @@ const verify = (wrapper) => {
   expect(renderedAddress).toContain(state);
   expect(renderedAddress).toContain(zip);
   expect(wrapper.find('StyledHeading').render().text()).toContain(name);
-  expect(wrapper.find(CommunityPricingAndRating)).toHaveLength(1);
+  expect(wrapper.find(CommunityPricing)).toHaveLength(1);
+  expect(wrapper.find(CommunityRating)).toHaveLength(1);
   expect(renderedWrapper.childAt(0).find(Link)).toHaveLength(1);
 };
 
@@ -106,22 +115,22 @@ describe('CommunitySummary', () => {
   });
 
   it('Should render the care types tags for state Delaware', () => {
-    const community = getCommunity("DE");
+    const community = getCommunity('DE');
     const wrapper = wrap({
       community,
     });
     const styledTags = wrapper.find('StyledTag');
 
     expect(styledTags.get(0).props.children).toBe('Assisted Living');
-    expect(styledTags.get(1).props.children).toBe('Long Term Care Facilities');
+    expect(styledTags.get(1).props.children).toBe('Memory Care');
 
     verify(wrapper);
     expect(styledTags).toHaveLength(2);
-    wrapper.find('StyledTag')
+    wrapper.find('StyledTag');
   });
 
   it('Should render the care types tags for state Pennsylvania', () => {
-    const community = getCommunity("PA");
+    const community = getCommunity('PA');
     const wrapper = wrap({
       community,
     });
@@ -132,7 +141,52 @@ describe('CommunitySummary', () => {
 
     verify(wrapper);
     expect(styledTags).toHaveLength(2);
-    wrapper.find('StyledTag')
+    wrapper.find('StyledTag');
   });
 
+  it('Should render the care types tags for state Georgia', () => {
+    const community = getCommunity('GA');
+    const wrapper = wrap({
+      community,
+    });
+    const styledTags = wrapper.find('StyledTag');
+
+    expect(styledTags.get(0).props.children).toBe('Personal Care Home');
+    expect(styledTags.get(1).props.children).toBe('Memory Care');
+
+    verify(wrapper);
+    expect(styledTags).toHaveLength(2);
+    wrapper.find('StyledTag');
+  });
+
+  it('Should render the care types tags for state Kentucky', () => {
+    const community = getCommunity('KY');
+    const wrapper = wrap({
+      community,
+    });
+    const styledTags = wrapper.find('StyledTag');
+
+    expect(styledTags.get(0).props.children).toBe('Personal Care Home');
+    expect(styledTags.get(1).props.children).toBe('Memory Care');
+
+    verify(wrapper);
+    expect(styledTags).toHaveLength(2);
+    wrapper.find('StyledTag');
+  });
+
+  it('Should render CCRC', () => {
+    const community = getCommunity('DE', CONTINUING_CARE_RETIREMENT_COMMUNITY);
+    const wrapper = wrap({
+      community,
+    });
+    const styledTags = wrapper.find('StyledTag');
+
+    expect(styledTags.get(0).props.children).toBe('Assisted Living');
+    expect(styledTags.get(1).props.children).toBe('Memory Care');
+    expect(styledTags.get(2).props.children).toBe('CCRC');
+
+    verify(wrapper);
+    expect(styledTags).toHaveLength(3);
+    wrapper.find('StyledTag');
+  });
 });

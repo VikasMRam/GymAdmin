@@ -61,6 +61,7 @@ const Html = ({
 
         {/* eslint-enable */}
 
+        {helmet.style.toComponent()}
       </body>
     </html>
   );

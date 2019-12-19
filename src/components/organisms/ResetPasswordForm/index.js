@@ -39,7 +39,7 @@ const Login = styled.span`
   flex: 1 1 0;
   display: flex;
   align-items: center;
-  color: ${palette('secondary', 'base')};
+  color: ${palette('secondary', 'dark35')};
 
   :hover {
     cursor: pointer;
