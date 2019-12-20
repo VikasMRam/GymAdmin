@@ -100,3 +100,16 @@ export const generateAskAgentQuestionContents = (name, city, type) => {
     question,
   };
 };
+
+export const isOnVacation = (agent) => {
+  const { name: businessName, info={}, status } = agent;
+  const { vacationStart, vacationEnd } = info;
+  try {
+    const now = new Date();
+    const eDate = Date.parse(vacationEnd); 
+    return eDate > now;
+  }catch (e){
+    return false
+  }
+
+};
