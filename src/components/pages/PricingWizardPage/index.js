@@ -234,7 +234,7 @@ export default class PricingWizardPage extends Component {
           {({
             data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
           }) => {
-            let formHeading = 'See your estimated pricing in your next step. We need your information to connect you to our partner agent. We do not share your information with anyone else.';
+            let formHeading = 'See your estimated pricing in your next step. We need your information to connect you to our partner agent.';
             let formSubheading = null;
             if (data.interest) {
               const contactFormHeadingObj = contactFormHeadingMap[data.interest];
