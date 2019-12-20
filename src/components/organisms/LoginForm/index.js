@@ -4,9 +4,9 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { Heading, Button, Block, Hr } from 'sly/components/atoms';
+import { Heading, Button, Block, Hr, Span } from 'sly/components/atoms';
 
 const Form = styled.form`
   width: 100%;
@@ -33,9 +33,7 @@ const StyledReduxField = styled(ReduxField)`
   align-items: baseline;
 `;
 
-const Signup = styled.span`
-  color: ${palette('secondary', 'base')};
-
+const Signup = styled(Span)`
   :hover {
     cursor: pointer;
   }
@@ -79,7 +77,7 @@ const LoginForm = ({
     </StyledButton>
     {error && <Block palette="danger">{error}</Block>}
     <StyledHr />
-    <Block>Don&apos;t have an account? <Signup onClick={onSignupClicked}>Create an account</Signup></Block>
+    <Block>Don&apos;t have an account? <Signup palette="primary" onClick={onSignupClicked}>Create an account</Signup></Block>
   </Form>
 );
 

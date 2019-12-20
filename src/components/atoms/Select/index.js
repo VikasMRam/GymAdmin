@@ -81,7 +81,7 @@ const Wrapper = styled.div`
   }
   
   .react-select__group-heading {
-    color: ${palette('secondary', 'base')};
+    color: ${palette('secondary', 'dark35')};
     font-weight: ${size('weight.bold')};
   }
   

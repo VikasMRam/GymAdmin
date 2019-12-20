@@ -167,7 +167,7 @@ export default class Controller extends Component {
             lookingFor,
             careNeeds: careNeeds.join(', '),
             monthlyBudget: monthlyBudget.toString(),
-            medicaidCoverage: (medicaidCoverage || false).toString(),
+            medicaidCoverage: ((medicaidCoverage && medicaidCoverage.length > 0) ? true : false || false).toString(),
             location,
             rentingOrBuying,
           },

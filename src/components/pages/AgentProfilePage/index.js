@@ -87,7 +87,6 @@ class AgentProfilePage extends Component {
   constructor(props) {
     super(props);
 
-    this.askAgentAQuestionRef = React.createRef();
     this.agentSummaryRef = React.createRef();
   }
 
@@ -120,11 +119,7 @@ class AgentProfilePage extends Component {
             <BreadCrumb size="caption" items={getBreadCrumbsForAgent({ name: displayName, state, city, id })} />
             <AgentSummary
               agent={agent}
-              onButtonClick={() => {
-                if (this.askAgentAQuestionRef.current.scrollIntoView) {
-                  this.askAgentAQuestionRef.current.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
+              buttonHref="#ask-agent-question"
             />
           </AgentSummaryWrapper>
 
@@ -157,7 +152,7 @@ class AgentProfilePage extends Component {
           }
 
           <StyledSection>
-            <AskQuestionToAgentWrapper innerRef={this.askAgentAQuestionRef}>
+            <AskQuestionToAgentWrapper id="ask-agent-question">
               <BannerNotificationController>
                 {({ notifyInfo }) => (
                   <AskQuestionToAgentFormContainer
