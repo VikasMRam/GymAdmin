@@ -4,6 +4,7 @@ import { bool, string, oneOf, object } from 'prop-types';
 import { ifProp, switchProp } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
+import { variation as variationPropType } from 'sly/propTypes/variation';
 import { size, palette } from 'sly/components/themes';
 import Link from 'sly/components/atoms/Link';
 import SlyEvent from 'sly/services/helpers/events';
@@ -42,14 +43,14 @@ const foregroundColor = ({
 };
 
 const borderColor = ({
-  ghost, secondary, borderPalette, disabled,
+  ghost, secondary, borderPalette, borderVariation, disabled,
 }) => {
   if (secondary) {
     return palette('slate', 'stroke');
   }
   if (ghost) {
     if (borderPalette) {
-      return disabled ? palette(borderPalette, 'filler') : palette(borderPalette, 'stroke');
+      return disabled ? palette(borderPalette, 'filler') : palette(borderPalette, borderVariation);
     }
     return 'currentcolor';
   }
@@ -187,6 +188,7 @@ Button.propTypes = {
   palette: palettePropType,
   foregroundPalette: palettePropType,
   borderPalette: palettePropType,
+  borderVariation: variationPropType,
   kind: oneOf(['jumbo', 'regular', 'tab', 'plain']),
   selected: bool,
   type: string,
@@ -200,6 +202,7 @@ Button.defaultProps = {
   kind: 'regular',
   type: 'button',
   foregroundPalette: 'white',
+  borderVariation: 'stroke',
 };
 
 export default Button;

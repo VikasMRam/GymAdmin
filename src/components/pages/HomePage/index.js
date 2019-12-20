@@ -424,7 +424,7 @@ const HomePage = ({
   ));
 
   const mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
-    <CenteredTile key={mostSearchedCity.title} size="small" {...mostSearchedCity}>
+    <CenteredTile key={mostSearchedCity.subtitle} size="small" {...mostSearchedCity}>
       <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
       <Block palette="white">{mostSearchedCity.title}</Block>
     </CenteredTile>
