@@ -112,7 +112,7 @@ function transformAgent(agent) {
   let email;
   const { name: businessName, info={}, status } = agent;
 
-  const { slyScore, displayName, last5DayLeadCount, adminNotes, vacationEnd } = info;
+  const { slyScore, displayName, last5DayLeadCount, adminNotes, vacationStart, vacationEnd } = info;
   if (slyScore) {
     slyScoreValue = slyScore;
   }
@@ -134,7 +134,8 @@ function transformAgent(agent) {
   try {
     const n = new Date();
     const eDate = Date.parse(vacationEnd);
-    isOnVacation = eDate > n;
+    const sDate = Date.parse(vacationStart);
+    isOnVacation = (sDate < n) && (eDate > n);
   } catch(e){
     isOnVacation = false;
   }
