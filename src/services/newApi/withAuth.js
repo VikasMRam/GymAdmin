@@ -115,10 +115,7 @@ export default function withAuth(InnerComponent) {
 
       return registerUser(data)
         .catch((e) => {
-          const alreadyExists = e.body
-            && e.body.errors
-            && Object.values(e.body.errors)
-              .some(e => e.includes('user already exists'));
+          const alreadyExists = e.status && e.status === 409;
           if (ignoreExisting && alreadyExists) {
             return Promise.resolve();
           }

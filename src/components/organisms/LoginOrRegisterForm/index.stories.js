@@ -3,19 +3,18 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import SignupForm from 'sly/components/organisms/SignupForm';
+import LoginOrRegisterForm from 'sly/components/organisms/LoginOrRegisterForm';
 import { withPreventDefault } from 'sly/services/helpers/forms';
 
-
-const SignupFormContainer = reduxForm({
-  form: 'SignupForm',
+const LoginOrRegisterFormContainer = reduxForm({
+  form: 'LoginOrRegisterForm',
   destroyOnUnmount: false,
-})(SignupForm);
+})(LoginOrRegisterForm);
 
-storiesOf('Organisms|SignupForm', module)
+storiesOf('Organisms|LoginOrRegisterForm', module)
   .add('default', () => (
-    <SignupFormContainer
+    <LoginOrRegisterFormContainer
       handleSubmit={withPreventDefault(action('form submitted'))}
-      onLoginClicked={withPreventDefault(action('login clicked'))}
+      onSignupClicked={withPreventDefault(action('sign up clicked'))}
     />
   ));

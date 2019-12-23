@@ -1,47 +1,47 @@
 import React, { Component } from 'react';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
-import { createValidator, required, email, minLength } from 'sly/services/validation';
-import LoginForm from 'sly/components/organisms/LoginForm';
+import { createValidator, required, minLength } from 'sly/services/validation';
 import { withAuth } from 'sly/services/newApi';
+import LoginWithPasswordForm from 'sly/components/organisms/LoginWithPasswordForm';
+
+const formName = 'LoginWithPasswordForm';
 
 const validate = createValidator({
-  email: [required, email],
   password: [required, minLength(8)],
 });
 
 const ReduxForm = reduxForm({
-  initialValues: { rememberme: [] },
-  form: 'LoginForm',
+  form: formName,
   validate,
-})(LoginForm);
+  destroyOnUnmount: false,
+})(LoginWithPasswordForm);
 
 const mapDispatchToProps = {
-  clearSubmitErrors: () => clearSubmitErrors('LoginForm'),
+  clearSubmitErrors: (name = formName) => clearSubmitErrors(name),
 };
 
 @withAuth
 @connect(null, mapDispatchToProps)
 
-export default class LoginFormContainer extends Component {
-  static displayName = 'LoginFormContainer';
-
+export default class LoginWithPasswordFormContainer extends Component {
   static propTypes = {
     loginUser: func.isRequired,
     clearSubmitErrors: func,
     onSubmitSuccess: func,
+    form: string,
   };
 
-  handleOnSubmit = (values) => {
-    const { loginUser, onSubmitSuccess, clearSubmitErrors } = this.props;
-    const { email, password } = values;
-    const payload = { email, password };
+  handleOnSubmit = ({ emailOrPhone, password }) => {
+    const { loginUser, onSubmitSuccess, clearSubmitErrors, form } = this.props;
+    const payload = { email: emailOrPhone, password };
 
-    clearSubmitErrors();
+    clearSubmitErrors(form);
     return loginUser(payload)
-      .then(onSubmitSuccess).catch((error) => {
+      .then(onSubmitSuccess)
+      .catch((error) => {
         // TODO: Need to set a proper way to handle server side errors
         if (error.status === 400) {
           return Promise.reject(new SubmissionError({ _error: 'Oops! That email / password combination is not valid.' }));
@@ -54,10 +54,9 @@ export default class LoginFormContainer extends Component {
   render() {
     return (
       <ReduxForm
-        onSubmit={this.handleOnSubmit}
         {...this.props}
+        onSubmit={this.handleOnSubmit}
       />
     );
   }
 }
-

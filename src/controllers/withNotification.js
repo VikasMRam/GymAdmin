@@ -10,10 +10,11 @@ function getDisplayName(WrappedComponent) {
 export default function withNotification(ChildComponent) {
   const WithNotification = props => (
     <NotificationController>
-      {({ notifyInfo, notifyError }) => (
+      {({ notifyInfo, notifyError, notifySuccess }) => (
         <ChildComponent
           notifyInfo={notifyInfo}
           notifyError={notifyError}
+          notifySuccess={notifySuccess}
           {...props}
         />
       )}

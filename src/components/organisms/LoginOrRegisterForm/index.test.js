@@ -2,16 +2,15 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import LoginForm from 'sly/components/organisms/LoginForm';
+import LoginOrRegisterForm from 'sly/components/organisms/LoginOrRegisterForm';
 import { Block } from 'sly/components/atoms/index';
-
 
 const error = 'Blah';
 
-const wrap = (props = {}) => shallow(<LoginForm {...props} />);
+const wrap = (props = {}) => shallow(<LoginOrRegisterForm {...props} />);
 
-describe('LoginForm', () => {
-  it('render LoginForm', () => {
+describe('LoginOrRegisterForm', () => {
+  it('renders', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
     expect(wrapper.find(Field)).toHaveLength(3);
