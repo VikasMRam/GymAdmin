@@ -37,7 +37,7 @@ const DuplicateFamilies = ({
     noTopSpacing={noTopSpacing}
   >
     <ClientsWrapper>
-      {clients.map(c => (
+      {clients.filter(c => c.id !== currentClient.id).map(c => (
         <Link key={c.id} target="_blank" to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: c.id })}>
           <FamilyEntry client={c}>
             {c.clientInfo.phoneNumber && currentClient.clientInfo.phoneNumber === c.clientInfo.phoneNumber &&

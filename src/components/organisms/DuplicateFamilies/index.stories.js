@@ -12,4 +12,4 @@ const DuplicateFamiliesContainer = reduxForm({
 })(DuplicateFamilies);
 
 storiesOf('Organisms|DuplicateFamilies', module)
-  .add('default', () => <DuplicateFamiliesContainer handleSubmit={withPreventDefault(action('onAddFamily'))} currentClient={clients[0]} clients={clients.slice(0, 2)} />);
+  .add('default', () => <DuplicateFamiliesContainer handleSubmit={withPreventDefault(action('onAddFamily'))} currentClient={clients[0]} clients={clients} />);
