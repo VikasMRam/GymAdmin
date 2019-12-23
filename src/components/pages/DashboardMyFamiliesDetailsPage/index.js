@@ -545,7 +545,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
   handleClickHereForMore = () => {
     const { showModal, client, clients } = this.props;
 
-    showModal(<DuplicateFamilies noTopSpacing currentClient={client} clients={clients.slice(1)} heading="Duplicate family entries" />, null, 'noPadding');
+    showModal(<DuplicateFamilies noTopSpacing currentClient={client} clients={clients} heading="Duplicate family entries" />, null, 'noPadding');
   };
 
   render() {

@@ -157,7 +157,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
       let moveInDateFormatted;
       const parsedDate = dayjs(moveInDate);
       if (parsedDate.isValid()) {
-        moveInDateFormatted = parsedDate.format('YYYY-MM-DDTHH:mm:ss[Z]');
+        // make time components as zero since user will enter only date
+        moveInDateFormatted = parsedDate.format('YYYY-MM-DDT00:00:00[Z]');
       } else {
         notifyError('Move-In date is invalid');
         return false;
