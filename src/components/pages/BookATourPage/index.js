@@ -74,6 +74,9 @@ const BookATourPage = ({
     }
     return null;
   };
+  const handleHelpHover = (type) => {
+    sendEvent('help-tooltip-hover', type);
+  };
 
   return (
     <FullScreenWizard>
@@ -101,6 +104,7 @@ const BookATourPage = ({
                   medicaidCoverage={medicaidCoverage}
                   onDateChange={(e, newValue) => sendEvent('date-changed', id, newValue.toString())}
                   onTimeChange={(e, newValue) => sendEvent('time-changed', id, newValue.toString())}
+                  onHelpHover={handleHelpHover}
                 />
                 <WizardStep
                   component={CommunityBookATourContactFormContainer}
