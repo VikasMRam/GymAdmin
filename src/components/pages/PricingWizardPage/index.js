@@ -197,6 +197,10 @@ export default class PricingWizardPage extends Component {
     return updateUuidAux(data).then(() => redirectTo(redirectLink));
   };
 
+  handleHelpHover = (type) => {
+    sendEvent('help-tooltip-hover', type);
+  }
+
   render() {
     const {
       community, user, uuidAux, userHas, match, redirectTo,
@@ -252,6 +256,7 @@ export default class PricingWizardPage extends Component {
                       communityName={name}
                       onRoomTypeChange={this.handleRoomTypeChange}
                       onCareTypeChange={this.handleCareTypeChange}
+                      onHelpHover={this.handleHelpHover}
                       uuidAux={uuidAux}
                     />
                     <WizardStep
