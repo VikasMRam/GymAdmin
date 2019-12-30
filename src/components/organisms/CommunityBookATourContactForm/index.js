@@ -29,7 +29,7 @@ const StyledContainer = styled.div`
 `;
 
 const CommunityBookATourContactForm = ({
-  error, user, heading, subheading, onAdvisorHelpClick, handleSubmit, displayContext
+  error, user, heading, subheading, onAdvisorHelpClick, handleSubmit, displayContext,
 }) => {
   return (
     <StyledContainer displayContext={displayContext}>
@@ -53,6 +53,15 @@ const CommunityBookATourContactForm = ({
             parse={phoneParser}
             format={phoneFormatter}
             placeholder="925-555-5555"
+            component={ReduxField}
+          />
+        }
+        {!(user && user.email) &&
+          <Field
+            name="email"
+            label="Email"
+            type="email"
+            placeholder="Email"
             component={ReduxField}
           />
         }

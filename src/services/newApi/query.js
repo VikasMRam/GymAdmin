@@ -44,7 +44,9 @@ export default function query(propName, apiCall) {
       }
     }
 
-    hoistNonReactStatic(Wrapper, InnerComponent);
+    // FIXME: hack because hoist... loses contextTypes
+    Wrapper.typeHydrationId = InnerComponent.typeHydrationId;
+    // hoistNonReactStatic(Wrapper, InnerComponent);
 
     return Wrapper;
   };

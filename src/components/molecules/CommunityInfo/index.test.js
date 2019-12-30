@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import NumberFormat from 'react-number-format';
 
 import { formatRating } from 'sly/services/helpers/rating';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
@@ -18,9 +17,8 @@ describe('CommunityInfo', () => {
         .find('IconTextWrapper')
         .at(0)
         .find('Info')
-        .dive()
-        .dive()
-        .text()
+        .render()
+        .text(),
     ).toContain(expectedAddress);
     RhodaGoldmanPlaza.webViewInfo.firstLineValue.split(',').forEach((livingType) => {
       expect(
@@ -28,9 +26,8 @@ describe('CommunityInfo', () => {
           .find('IconTextWrapper')
           .at(1)
           .find('Info')
-          .dive()
-          .dive()
-          .text()
+          .render()
+          .text(),
       ).toContain(livingType);
     });
     RhodaGoldmanPlaza.webViewInfo.secondLineValue.split(',').forEach((roomType) => {
@@ -39,12 +36,11 @@ describe('CommunityInfo', () => {
           .find('IconTextWrapper')
           .at(2)
           .find('Info')
-          .dive()
-          .dive()
-          .text()
+          .render()
+          .text(),
       ).toContain(roomType);
     });
-    expect(wrapper.find(NumberFormat).html()).toBe('$6,027/month');
+    expect(wrapper.find('Rate').text()).toBe('$6,027/month');
     expect(wrapper.find('TopWrapper').html()).toContain(formatRating(RhodaGoldmanPlaza.propRatings.reviewsValue));
   });
 
@@ -56,7 +52,7 @@ describe('CommunityInfo', () => {
   it('renders with estimated price', () => {
     const wrapper = wrap({ community: { ...RhodaGoldmanPlaza, estimated: true } });
 
-    expect(wrapper.find(NumberFormat).html()).toBe('Estimated $6,027/month');
+    expect(wrapper.find('Rate').text()).toBe('Estimated $6,027/month');
   });
 
   it('renders without reviews', () => {
@@ -64,7 +60,7 @@ describe('CommunityInfo', () => {
     newRhodaGoldmanPlaza.propRatings.reviewsValue = 0;
     const wrapper = wrap({ community: newRhodaGoldmanPlaza });
 
-    expect(wrapper.find('TopWrapper').html()).toContain('Not Yet Rated');
+    expect(wrapper.find('TopWrapper').html()).toContain('Not yet rated');
   });
 
   it('renders without FloorPlans & LivingTypes', () => {

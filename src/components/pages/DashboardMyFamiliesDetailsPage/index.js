@@ -66,7 +66,7 @@ const BackLinkWrapper = pad(styled.div`
 `, 'regular');
 
 const TextAlignCenterBlock = pad(textAlign(Block, 'center'), 'regular');
-const AlignCenterBackLinkWrapper = BackLinkWrapper.extend`
+const AlignCenterBackLinkWrapper = styled(BackLinkWrapper)`
   justify-content: center;
 `;
 
@@ -84,7 +84,7 @@ const SmallScreenBorderDiv = styled.div`
   ${p => p.padding && css`padding: ${size('spacing', p.padding)};`}
 `;
 
-const SmallScreenBorderPaddedFamilySummary = PaddedFamilySummary.extend`
+const SmallScreenBorderPaddedFamilySummary = styled(PaddedFamilySummary)`
   ${SmallScreenBorder}
 `;
 
@@ -216,7 +216,7 @@ const ClientName = ({ client, rawClient, backLinkHref, user, ...props }) => {
         <Icon icon="arrow-left" palette="primary" />
       </Link>
       <span>{name}</span>
-      {isReferralSent(additionalMetadata) && <StyledIconBadge badgePalette="secondary" palette="white" icon="checkmark-circle" text="R SENT" />}
+      {isReferralSent(client) && <StyledIconBadge badgePalette="secondary" badgeVariation="dark35" palette="white" icon="checkmark-circle" text="R SENT" />}
       {(userIs(user, PLATFORM_ADMIN_ROLE) || (!isNew && !isProspects)) && <StyledStatusSelect client={client} rawClient={rawClient} user={user} {...props} />}
     </StyledClientNameBlock>
   );
@@ -288,6 +288,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     setSelectedConversation: func,
     user: userPropType.isRequired,
     onAcceptClick: func,
+    onEditStatusDetailsClick: func,
+    isEditStatusDetailsMode: bool,
+    onStatusChange: func,
   };
 
   getTabPathsForUser = () => {
@@ -489,7 +492,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           onSuccess={hideModal}
           client={client}
         />
-      ), null, 'noPadding', false
+      ), null, 'noPadding', false,
     );
   };
 
@@ -542,14 +545,15 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
   handleClickHereForMore = () => {
     const { showModal, client, clients } = this.props;
 
-    showModal(<DuplicateFamilies noTopSpacing currentClient={client} clients={clients.slice(1)} heading="Duplicate family entries" />, null, 'noPadding');
+    showModal(<DuplicateFamilies noTopSpacing currentClient={client} clients={clients} heading="Duplicate family entries" />, null, 'noPadding');
   };
 
   render() {
     const {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
       conversation, conversations, setSelectedConversation, hasConversationFinished, refetchConversations, refetchClient,
-      showModal, hideModal, onAcceptClick, clients,
+      showModal, hideModal, onAcceptClick, clients, onEditStatusDetailsClick, isEditStatusDetailsMode,
+      onStatusChange,
     } = this.props;
     const { organization } = user;
 
@@ -576,7 +580,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       gender, lookingFor, monthlyBudget, timeToMove, roomTypes, careLevels, communityTypes, assignedTos,
     } = meta;
     const {
-      id, clientInfo, stage, provider, organization: clientOrganization,
+      id, clientInfo, stage, status, provider, organization: clientOrganization,
     } = client;
     const { entityType, id: providerOrg } = provider;
     const { id: clientOrg } = clientOrganization;
@@ -627,7 +631,22 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       'filter[client]': client.id,
     };
 
-    const clientName = <ClientName client={client} rawClient={rawClient} refetchClient={refetchClient} backLinkHref={backLinkHref} showModal={showModal} hideModal={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} user={user} />;
+    const clientName = (
+      <ClientName
+        client={client}
+        rawClient={rawClient}
+        refetchClient={refetchClient}
+        backLinkHref={backLinkHref}
+        showModal={showModal}
+        hideModal={hideModal}
+        notifyInfo={notifyInfo}
+        notifyError={notifyError}
+        user={user}
+        status={isEditStatusDetailsMode ? status : null}
+        onStatusChange={onStatusChange}
+        onCancel={onStatusChange}
+      />
+    );
 
     const duplicateWarningContent = (
       <span>
@@ -692,9 +711,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           }
           <TabWrapper snap="top">
             {currentTab === SUMMARY && (
-              <>
-                <SmallScreenBorderPaddedFamilySummary client={client} isAgentUser={isAgentUser} to={familyDetailsPath} noHeading />
-              </>
+              <SmallScreenBorderPaddedFamilySummary client={client} isAgentUser={isAgentUser} to={familyDetailsPath} noHeading />
             )}
 
             {currentTab === ACTIVITY && (
@@ -731,6 +748,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   roomTypes={roomTypes}
                   communityTypes={communityTypes}
                   assignedTos={assignedTos}
+                  onEditStageDetailsClick={this.handleUpdateClick}
+                  onEditStatusDetailsClick={onEditStatusDetailsClick}
                 />
               </FamilyDetailsTab>
             )}

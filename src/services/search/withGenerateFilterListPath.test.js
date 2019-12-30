@@ -20,7 +20,7 @@ function mountComponent(url) {
   const wrapper = mount(
     <StaticRouter location={url} context={{}}>
       <Route path={`/:toc(${careTypes.join('|')})/:state/:city`} component={DecoratedComponent} />
-    </StaticRouter>
+    </StaticRouter>,
   );
 
   return {
@@ -67,7 +67,7 @@ describe('Given the withGenerateFilterListPath higher-order component', () => {
         }),
       };
       expect(generatedPath).toBe(
-        addEventToUrl('/assisted-living/texas/houston?budget=10000&size=small&sort=price', expectedEvent)
+        addEventToUrl('/assisted-living/texas/houston?budget=10000&size=small&sort=price', expectedEvent),
       );
     });
     it('should set toc to retirement community if removed', () => {

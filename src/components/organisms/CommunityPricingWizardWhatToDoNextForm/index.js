@@ -1,13 +1,13 @@
 import React from 'react';
 import { string, func, number, array, bool } from 'prop-types';
 import styled from 'styled-components';
-import NumberFormat from 'react-number-format';
 import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
 import { Block, Box } from 'sly/components/atoms';
 import shadow from 'sly/components/helpers/shadow';
 import ReduxField from 'sly/components/organisms/ReduxField/index';
+import { formatMoney } from 'sly/services/helpers/numbers';
 
 const Wrapper = shadow(styled(Box)`
   margin: 0 auto;
@@ -35,7 +35,7 @@ const PriceSection = styled(Block)`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const Price = styled(NumberFormat)`
+const Price = styled.span`
   font-size: ${size('text.hero')};
 `;
 
@@ -52,7 +52,7 @@ const CommunityPricingWizardWhatToDoNextForm = ({
         <>
           <HeadingSection palette="grey" size="body">Your estimated pricing for {communityName}:</HeadingSection>
           <PriceSection weight="bold">
-            <Price value={estimatedPrice} displayType="text" thousandSeparator prefix="$" />
+            <Price>{formatMoney(estimatedPrice)}</Price>
             <span>/mo</span>
           </PriceSection>
         </>

@@ -33,19 +33,20 @@ export const styles = css`
   ${ifProp('size', css`
     font-size: ${getSize('text')};
   `)};
-  
+
   line-height: ${getSize('lineHeight')};
-  
+
   ${ifProp('weight', css`
     font-weight: ${p => size('weight', p.weight)};
   `)}
 `;
 
-export const Anchor = styled.a`
+// eslint-disable-next-line jsx-a11y/anchor-has-content
+export const Anchor = styled(({ noHoverColorChange, ...props }) => <a {...props} />)`
   ${styles};
 `;
 
-const StyledLink = styled(RRLink)`
+export const StyledLink = styled(({ noHoverColorChange, ...props }) => <RRLink {...props} />)`
   ${styles};
 `;
 

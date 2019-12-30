@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { string } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import { Heading, Block, Image } from 'sly/components/atoms';
+import { Heading, Block, Image, Link } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
   text-align: left;
@@ -26,6 +26,7 @@ const MeetOthersTile = ({
     <StyledImage src={image} aspectRatio="3:2" />
     <StyledHeading level="subtitle" size="subtitle">{title}</StyledHeading>
     <Block>{description}</Block>
+    <Link href="tel:+18558664515">Call us at (855) 866-4515.</Link>
   </Wrapper>
 );
 

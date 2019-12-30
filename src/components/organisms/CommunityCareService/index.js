@@ -19,10 +19,10 @@ const Wrapper = styled(CollapsibleBlock)`
 
 const preset = {
   present: {
-    icon: 'check', iconPalette: 'slate', iconVariation: 'base', textPalette: 'slate', textVariation: 'base',
+    icon: 'check', iconPalette: 'secondary', iconVariation: 'dark35', textPalette: 'slate', textVariation: 'base',
   },
   notPresent: {
-    icon: 'close', iconPalette: 'slate', iconVariation: 'filler', textPalette: 'slate', textVariation: 'filler',
+    icon: 'close', iconPalette: 'secondary', iconVariation: 'dark35', textPalette: 'slate', textVariation: 'filler',
   },
 };
 

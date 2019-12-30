@@ -10,8 +10,8 @@ function getDisplayName(WrappedComponent) {
 export default function withModal(ChildComponent) {
   const WithModal = props => (
     <ModalController>
-      {({ show, hide }) => (
-        <ChildComponent showModal={show} hideModal={hide} {...props} />
+      {({ show, hide, isModalOpen }) => (
+        <ChildComponent showModal={show} hideModal={hide} isModalOpen={isModalOpen} {...props} />
       )}
     </ModalController>
   );

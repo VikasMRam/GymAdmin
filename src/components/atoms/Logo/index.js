@@ -10,14 +10,16 @@ const LogoIcon = styled(Icon)`
   height: auto;
 `;
 
-const Logo = ({ palette }) => <LogoIcon icon="seniorlyLogo" palette={palette} size="xxLarge" />;
+const Logo = ({ palette, variation }) => <LogoIcon icon="seniorlyLogo" palette={palette} variation={variation} size="xxLarge" />;
 
 Logo.propTypes = {
   palette: string,
+  variation: string,
 };
 
 Logo.defaultProps = {
   palette: 'secondary',
+  variation: 'dark35',
 };
 
 export default Logo;

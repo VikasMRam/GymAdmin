@@ -74,6 +74,9 @@ const BookATourPage = ({
     }
     return null;
   };
+  const handleHelpHover = (type) => {
+    sendEvent('help-tooltip-hover', type);
+  };
 
   return (
     <FullScreenWizard>
@@ -101,6 +104,7 @@ const BookATourPage = ({
                   medicaidCoverage={medicaidCoverage}
                   onDateChange={(e, newValue) => sendEvent('date-changed', id, newValue.toString())}
                   onTimeChange={(e, newValue) => sendEvent('time-changed', id, newValue.toString())}
+                  onHelpHover={handleHelpHover}
                 />
                 <WizardStep
                   component={CommunityBookATourContactFormContainer}
@@ -131,15 +135,15 @@ const BookATourPage = ({
             <CommunityWizardAcknowledgementContainer
               similarCommunities={community.similarProperties}
               buttonTo={DASHBOARD_PATH}
-              heading='Tour Request Sent!'
-              subheading='Your Seniorly Partner Agent will check if this community is available at this time. They will get back to you shortly by phone or email.'
-              type='bat'
+              heading="Tour Request Sent!"
+              subheading="Your Seniorly Partner Agent will check if this community is available at this time. They will get back to you shortly by phone or email."
+              type="bat"
             />
           </Modal>
         )}
       </Route>
       <Route path={`${match.url}/help`}>
-        {(routeProps) => (
+        {routeProps => (
           <Modal isOpen={!!routeProps.match} onClose={() => redirectTo(match.url)} closeable>
             <AdvisorHelpPopup onButtonClick={() => redirectTo(match.url)} />
           </Modal>

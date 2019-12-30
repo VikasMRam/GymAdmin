@@ -28,7 +28,7 @@ const StyledField = styled(Field)`
 `;
 StyledField.displayName = 'StyledField';
 
-const StyledTimeField = StyledField.extend`
+const StyledTimeField = styled(StyledField)`
   > * {
     height: ${size('element.large')};
     font-size: ${size('text.caption')};
@@ -40,7 +40,7 @@ const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const MedicaidLabel = StyledBlock.extend`
+const MedicaidLabel = styled(StyledBlock)`
   display: flex;
   align-items: center;
 `;
@@ -50,7 +50,7 @@ const StyledHelpBubble = styled(HelpBubble)`
 `;
 
 const CommunityBookATourDateForm = ({
-  error, onDateChange, onTimeChange, handleSubmit, medicaidCoverage,
+  error, onDateChange, onTimeChange, onHelpHover, handleSubmit, medicaidCoverage,
 }) => {
   const from = dayjs();
   const to = dayjs().add(8, 'days');
@@ -80,10 +80,12 @@ const CommunityBookATourDateForm = ({
         <>
           <MedicaidLabel size="caption">
             Do you qualify for Medicaid?
-            <StyledHelpBubble>
-              Typically, Medicare and Medicaid cannot be used for monthly rent in long-term care communities.<br />
-              However, veteran&apos;s benefits and long term care insurance can help bridge the cost.
-            </StyledHelpBubble>
+            <div onMouseEnter={() => onHelpHover('medicaid')}>
+              <StyledHelpBubble>
+                Typically, Medicare and Medicaid cannot be used for monthly rent in long-term care communities.<br />
+                However, veteran&apos;s benefits and long term care insurance can help bridge the cost.
+              </StyledHelpBubble>
+            </div>
           </MedicaidLabel>
           <StyledTimeField
             options={MEDICAID_OPTIONS}
@@ -103,6 +105,7 @@ CommunityBookATourDateForm.propTypes = {
   medicaidCoverage: string,
   onDateChange: func,
   onTimeChange: func,
+  onHelpHover: func,
   handleSubmit: func,
 };
 

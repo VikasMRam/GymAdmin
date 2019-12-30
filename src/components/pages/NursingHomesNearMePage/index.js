@@ -81,7 +81,6 @@ const StyledTable = styled.table`
   border-collapse: collapse;
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   td, th {
-    white-space: nowrap;
     padding: ${size('spacing.regular')};
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   };
@@ -121,7 +120,7 @@ const NearMePage = ({
 
   const { geo } = requestMeta;
   const city = geo && geo.city;
-  const state = geo && geo.state && getStateAbbr(geo.state);
+  const state = geo && geo.state;
   const tocLabel = getTocSeoLabel('nursing-homes');
 
   const topRef = React.createRef();
@@ -1211,6 +1210,7 @@ const NearMePage = ({
 
   const title = 'Find the Best Nursing Home Near You ';
   const description = 'Search nursing homes near you that range from assisted living facilities, memory care communities and other senior living options. Compare cost, property highlights and more.';
+  const heading = state ? `${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${tocLabel} near ${city}`;
 
   return (
     <>
@@ -1223,7 +1223,7 @@ const NearMePage = ({
         {SEOContentNH()}
         <StyledArticle>
           <StyledHeading level="title" size="title">
-            {tocLabel} near {city}, {state}
+            {heading}
           </StyledHeading>
           {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
           {!isFetchingResults && (
@@ -1238,7 +1238,6 @@ const NearMePage = ({
       </TemplateContent>
       <Footer />
     </>
-
   );
 };
 

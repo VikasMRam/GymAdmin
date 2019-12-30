@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
-import produce from 'immer';
+import * as immutable from 'object-path-immutable';
 
 import { community as communityPropType } from 'sly/propTypes/community';
 import SlyEvent from 'sly/services/helpers/events';
@@ -49,34 +49,29 @@ export default class PricingWizardPageContainer extends Component {
       updateUuidAux,
     } = this.props;
 
-    const uuidAux = status.uuidAux.result;
+    const rawUuidAux = status.uuidAux.result;
+    const uuidAux = immutable.wrap(rawUuidAux);
 
-    return updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
-      if (data.roomType) {
-        const housingInfo = draft.attributes.uuidInfo.housingInfo || {};
-        housingInfo.roomPreference = data.roomType;
-        draft.attributes.uuidInfo.housingInfo = housingInfo;
-      }
+    if (data.roomType) {
+      uuidAux.set('attributes.uuidInfo.housingInfo.roomPreference', data.roomType);
+    }
 
-      if (data.careType) {
-        const careInfo = draft.attributes.uuidInfo.careInfo || {};
-        careInfo.adls = data.careType;
-        draft.attributes.uuidInfo.careInfo = careInfo;
-      }
+    if (data.careType) {
+      uuidAux.set('attributes.uuidInfo.careInfo.adls', data.careType);
+    }
 
-      if (data.interest) {
-        const residentInfo = draft.attributes.uuidInfo.residentInfo || {};
-        residentInfo.interest = data.interest;
-        draft.attributes.uuidInfo.residentInfo = residentInfo;
-      }
+    if (data.interest) {
+      uuidAux.set('attributes.uuidInfo.residentInfo.interest', data.interest);
+    }
 
-      if (data.medicaidCoverage || data.budget) {
-        const financialInfo = draft.attributes.uuidInfo.financialInfo || {};
-        if (data.medicaidCoverage) financialInfo.medicaid = medicareToBool(data.medicaidCoverage);
-        if (data.budget) financialInfo.maxMonthlyBudget = data.budget;
-        draft.attributes.uuidInfo.financialInfo = financialInfo;
-      }
-    }));
+    if (data.medicaidCoverage) {
+      uuidAux.set('attributes.uuidInfo.financialInfo.medicaid', medicareToBool(data.medicaidCoverage));
+    }
+    if (data.budget) {
+      uuidAux.set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', data.budget);
+    }
+
+    return updateUuidAux({ id: rawUuidAux.id }, uuidAux.value());
   };
 
   submitActionAndCreateUser = (data, currentStep) => {
@@ -91,6 +86,7 @@ export default class PricingWizardPageContainer extends Component {
     const {
       name = (user && user.name) || undefined,
       phone = (user && user.phoneNumber) || undefined,
+      email = (user && user.email) || undefined,
     } = data;
 
     return createAction({
@@ -99,6 +95,7 @@ export default class PricingWizardPageContainer extends Component {
         actionInfo: {
           phone,
           name,
+          email,
           contactType: PRICING_REQUEST,
           slug: community.id,
         },
@@ -108,6 +105,7 @@ export default class PricingWizardPageContainer extends Component {
     }).then(() => createOrUpdateUser({
       name,
       phone,
+      email,
     }, {
       ignoreAlreadyRegistered: true,
     }).then(() => {

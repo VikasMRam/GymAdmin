@@ -13,14 +13,14 @@ const ProgressWrapper = styled.div`
   background-color: ${palette('primary', 'stroke')};
 `;
 const ProgressBar = styled.div`
-  background-color: ${palette('secondary', 'base')};
+  background-color: ${palette('secondary', 'dark35')};
   height: ${size('spacing.regular')};
   width: ${progressBarWidth}%;
   transition: width ${key('transitions.slow.inOut')};
 `;
 const CurrentStep = styled.p`
   font-size: ${size('text.caption')};
-  color: ${ifProp('limitReached', palette('secondary', 'base'), 'initial')};
+  color: ${ifProp('limitReached', palette('secondary', 'dark35'), 'initial')};
 `;
 const StyledForm = styled.form`
   // should be more than height of BottomWrapper
@@ -57,7 +57,7 @@ const BottomWrapper = styled.div`
 const StyledHeading = styled(Heading)`
   font-weight: normal;
 `;
-const SearchingWrapper = Wrapper.extend`
+const SearchingWrapper = styled(Wrapper)`
   top: 50%;
   transform: translate(0%, -50%);
   position: absolute;

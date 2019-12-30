@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import NumberFormat from 'react-number-format';
 
 import { size, palette } from 'sly/components/themes';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import { Link, Paragraph, Heading } from 'sly/components/atoms';
+import { phoneFormatter } from 'sly/services/helpers/phone';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
@@ -113,11 +113,7 @@ const CommunityDetails = ({
           The information above has not been verified or approved by the owner or operator.
           For exact details, connect to a local senior living expert in {city} by calling&nbsp;
           <Link href={`tel:${phone}`}>
-            <NumberFormat
-              value={phone}
-              format="(###) ###-####"
-              displayType="text"
-            />
+            {phoneFormatter(phone, true)}
           </Link>
           . There is no cost for this service. We are compensated by the community you select.
         </Paragraph>
@@ -130,7 +126,7 @@ const CommunityDetails = ({
           A senior living expert is a professional who knows
           the {city}, {state} communities and specializes in helping you find the right fit for your
           unique budget, location, care, social and other needs. This is a free service. To learn more,&nbsp;
-          <Link href={`https://www.seniorly.com/agents?utm_content=agent-link&utm_medium=link&utm_source=summary&utm_campaign=cta`}>
+          <Link href="https://www.seniorly.com/agents?sly_category=summary&sly_action=cta_link&sly_label=agent_link" target="_blank">
             click here to visit our Seniorly Partner Agent page.
           </Link>
         </Paragraph>

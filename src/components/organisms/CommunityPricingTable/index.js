@@ -1,16 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, object, func, string, number, bool } from 'prop-types';
-import NumberFormat from 'react-number-format';
 import ReactTooltip from 'react-tooltip';
 
 import { palette, size } from 'sly/components/themes';
 import { Block, Span, Icon, Paragraph } from 'sly/components/atoms';
 import { isServer } from 'sly/config';
+import { formatMoney } from 'sly/services/helpers/numbers';
+import { withHydration } from 'sly/services/partialHydration';
+import UnhydratedGetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
 
-const StyledNumberFormat = styled(NumberFormat)`
+const GetCustomPricingButtonContainer = withHydration(UnhydratedGetCustomPricingButtonContainer);
+
+const StyledNumberFormat = styled.span`
   font-weight: ${p => size(p.weight)};
-  color: ${p => palette(p.color, 'base')};
+  color: ${p => palette(p.color, 'dark35')};
 `;
 
 const StyledTh = styled.th`
@@ -112,30 +116,31 @@ const toolTipCode = size => (
   </>
 );
 
+const StyledGetPricingButton = styled(GetCustomPricingButtonContainer)`
+  width: 100%;
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
 const CommunityPricingTable = ({
-  pricesList, estimatedPriceList, price, GetPricingButton, name, size: communitySize, showToolTip,
+  pricesList, estimatedPriceList, price, isAlreadyPricingRequested, name, size: communitySize, showToolTip,
 }) => {
   const basePer = percentageOf(price, 20);
   const from = Math.round(price);
   const to = Math.round(price + basePer);
   const estimated = pricesList.length === 0;
-  const StyledGetPricingButton = styled(GetPricingButton)`
-    width: 100%;
-    margin-bottom: ${size('spacing.xLarge')};
-  `;
 
   return (
     <>
       {estimated &&
         <StyledBlockNp size="title">
           <StyledBlockSp size="body" palette="slate">The estimated monthly pricing for {name} ranges from</StyledBlockSp>
-          <StyledNumberFormat weight="weight.medium" color="secondary" value={from} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary" value={to} displayType="text" thousandSeparator prefix="$" /><Span weight="medium" size="title" palette="secondary"> per month*</Span>
+          <StyledNumberFormat weight="weight.medium" color="secondary">{formatMoney(from)}</StyledNumberFormat> <Span weight="medium" size="title" palette="secondary" variation="dark35"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary" value={to} displayType="text" thousandSeparator prefix="$" /><Span weight="medium" size="title" palette="secondary" variation="dark35"> per month*</Span>
         </StyledBlockNp>
       }
       {!estimated &&
         <StyledBlockNp size="title">
           <StyledBlockSp size="body" palette="slate">The estimated pricing for {name} starts around</StyledBlockSp>
-          <StyledNumberFormat weight="weight.medium" color="secondary" value={price} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> per month*</Span>
+          <StyledNumberFormat weight="weight.medium" color="secondary">{formatMoney(price)}</StyledNumberFormat> <Span weight="medium" size="title" palette="secondary" variation="dark35"> per month*</Span>
         </StyledBlockNp>
       }
       {pricesList.length > 0 &&
@@ -153,7 +158,7 @@ const CommunityPricingTable = ({
               {pricesList.map((price) => {
               const { label, value } = price;
               return (
-                <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
+                <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate">{formatMoney(value)}</StyledNumberFormat></StyledTd></Tr>
               );
             })}
             </tbody>
@@ -182,7 +187,7 @@ const CommunityPricingTable = ({
               {estimatedPriceList.map((price) => {
               const { label, value } = price;
               return (
-                <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" /></StyledTd></Tr>
+                <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate">{formatMoney(value)}</StyledNumberFormat></StyledTd></Tr>
               );
             })}
             </tbody>
@@ -190,7 +195,12 @@ const CommunityPricingTable = ({
         </StyledBlockNp>
       }
       <Block>
-        <StyledGetPricingButton>Get Detailed Pricing</StyledGetPricingButton>
+        <StyledGetPricingButton
+          hasAlreadyRequestedPricing={isAlreadyPricingRequested}
+        >
+          Get Detailed Pricing
+        </StyledGetPricingButton>
+
         <Block>
           {(pricesList.length > 0 || (estimatedPriceList.length > 0 && !showToolTip)) && communitySize === 'up to 20 Beds' &&
             <Paragraph>
@@ -238,6 +248,7 @@ CommunityPricingTable.propTypes = {
   onItemClick: func,
   price: number.isRequired,
   getPricing: func,
+  isAlreadyPricingRequested: bool,
   name: string.isRequired,
   size: string.isRequired,
   showToolTip: bool.isRequired,

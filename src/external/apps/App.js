@@ -9,9 +9,7 @@ import theme from 'sly/components/themes/default';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import { WIZARD_PATH, SEARCH_PATH } from 'sly/external/constants/paths';
 import ErrorPage from 'sly/external/apps/ErrorPage';
-import addGlobalStyles from 'sly/external/apps/setGlobalStyles';
-
-addGlobalStyles();
+import ExternalGlobalStyles from 'sly/external/apps/ExternalGlobalStyles';
 
 const CareAssessmentControllerPage = loadable(() =>
   import(/* webpackChunkName: "chunkCareAssessmentControllerPage" */'sly/external/apps/wizards/careAssessment/Controller'));
@@ -49,6 +47,7 @@ export default class App extends Component {
           <meta content="Seniorly Inc." property="author" />
           <meta content="English" property="language" />
           <meta name="robots" content="noindex" />
+          <style type="text/css">{ExternalGlobalStyles}</style>
         </Helmet>
         <ThemeProvider theme={theme}>
           <Switch>

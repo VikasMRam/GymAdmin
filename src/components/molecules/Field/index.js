@@ -3,6 +3,7 @@ import { string, bool, oneOf, number, oneOfType, node, array, object, arrayOf } 
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
+import Helmet from 'react-helmet';
 
 import { size } from 'sly/components/themes';
 import { Label, Input, Icon, Block, Span } from 'sly/components/atoms';
@@ -20,9 +21,18 @@ import InputMessage from 'sly/components/molecules/InputMessage';
 import Autocomplete from 'sly/components/molecules/Autocomplete';
 import CheckboxInput from 'sly/components/molecules/CheckboxInput';
 import LocationSearch from 'sly/components/molecules/LocationSearch';
+import DatepickerStyles from 'sly/components/themes/DatepickerStyles';
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/components/atoms/Select'));
-const DatePicker = loadable(() => import(/* webpackChunkName: "chunkReactDatePicker" */'react-datepicker'));
+const DatePickerLoadable = loadable(() => import(/* webpackChunkName: "chunkReactDatePicker" */'react-datepicker'));
+const DatePicker = props => (
+  <>
+    <Helmet>
+      <style type="text/css">{DatepickerStyles}</style>
+    </Helmet>
+    <DatePickerLoadable {...props} />
+  </>
+);
 
 const textTypeInputs = ['email', 'iconInput'];
 const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;

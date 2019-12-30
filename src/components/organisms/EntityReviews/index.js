@@ -30,8 +30,8 @@ const EntityReviews = ({
     <article ref={communityReviewsRef}>
       {reviewsValue > 0 &&
       <ReviewValueSection>
-        <Icon icon="star" size="regular" palette="secondary" />
-        <Span size="subtitle" weight="medium"> {formatRating(reviewsValue)}</Span>
+        <Icon icon="star" size="regular" palette="secondary" variation="dark35" />
+        <Span size="subtitle" weight="medium" palette="secondary" variation="dark35"> {formatRating(reviewsValue)}</Span>
         <Span size="caption" palette="grey"> Average rating</Span>
       </ReviewValueSection>
       }

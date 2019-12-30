@@ -58,7 +58,7 @@ const CommunityAskQuestionAgentForm = ({
     <StyledButton type="submit" kind="jumbo" disabled={pristine || submitting}>
       Send
     </StyledButton>
-    {<TosAndPrivacy />}
+    <TosAndPrivacy />
   </form>
 
 );

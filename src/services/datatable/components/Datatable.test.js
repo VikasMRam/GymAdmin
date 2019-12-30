@@ -44,7 +44,7 @@ describe('Datatable', () => {
     const search = 'currentpath?filter[]=';
     expect(push).toHaveBeenCalledWith(search);
 
-    wrapper.setProps({ location: { search, ...location }});
+    wrapper.setProps({ location: { search, ...location } });
     expect(datatable.query).toEqual({});
   });
 
@@ -62,7 +62,7 @@ describe('Datatable', () => {
     const search = '?filter[foo]=bar:baz';
     expect(push).toHaveBeenCalledWith(`currentpath${search}`);
 
-    wrapper.setProps({ location: { ...location, search }});
+    wrapper.setProps({ location: { ...location, search } });
     wrapper.update();
 
     expect(datatable.query).toEqual({
@@ -82,12 +82,12 @@ describe('Datatable', () => {
     let search = '?filter[foo]=bar:baz';
     datatable.addFilter({ column: 'foo', operator: 'bar', value: 'baz' });
     expect(push).lastCalledWith(`currentpath${search}`);
-    wrapper.setProps({ location: { ...location, search }});
+    wrapper.setProps({ location: { ...location, search } });
 
     search += '&filter[foo]=xxx:yyy&exp=and';
     datatable.addFilter({ column: 'foo', operator: 'xxx', value: 'yyy' });
     expect(push).lastCalledWith(`currentpath${search}`);
-    wrapper.setProps({ location: { ...location, search }});
+    wrapper.setProps({ location: { ...location, search } });
 
     expect(datatable.query).toEqual({ 'filter[foo]': ['bar:baz', 'xxx:yyy'], exp: 'and' });
   });

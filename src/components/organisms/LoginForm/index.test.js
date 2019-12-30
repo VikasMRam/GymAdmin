@@ -25,7 +25,7 @@ describe('LoginForm', () => {
     const blocks = wrapper.find(Block);
 
     expect(blocks).toHaveLength(2);
-    expect(blocks.at(0).dive().text()).toBe(error);
+    expect(blocks.at(0).dive().render().text()).toBe(error);
   });
 
   it('handles onFormSubmit', () => {
@@ -39,7 +39,7 @@ describe('LoginForm', () => {
     const handleSubmit = jest.fn();
     const onSignupClicked = jest.fn();
     const wrapper = wrap({ handleSubmit, onSignupClicked });
-    wrapper.find('Signup').at(1).simulate('click');
+    wrapper.find('Signup').simulate('click');
     expect(onSignupClicked).toHaveBeenCalled();
   });
 });

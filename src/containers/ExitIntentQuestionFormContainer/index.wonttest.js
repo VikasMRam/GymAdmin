@@ -59,7 +59,7 @@ const wrap = (props = {}) => {
       showModal={showModal}
       hideModal={hideModal}
     />, context);
-}
+};
 
 // FIXME: this tests all fail but because the spies are
 // not restored, it looks like they pass

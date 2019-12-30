@@ -5,7 +5,7 @@ describe('Marketplace Home Page', () => {
 
     cy.visit('/');
 
-    cy.contains('Find a Home to Love');
+    cy.contains('Find The Best Senior Living Near You');
 
     cy.get('input[class*=SearchBox__SearchTextBox]')
       .type('San Francisco, CA, USA');

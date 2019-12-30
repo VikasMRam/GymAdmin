@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { func, object } from 'prop-types';
-import produce from 'immer';
+import { func, object, string } from 'prop-types';
+import * as immutable from 'object-path-immutable';
 
 import userPropType from 'sly/propTypes/user';
 import clientPropType from 'sly/propTypes/client';
@@ -57,14 +57,24 @@ export default class StatusSelect extends Component {
     hideModal: func,
     notifyInfo: func,
     user: userPropType,
+    status: string,
+    onStatusChange: func,
+    onCancel: func,
   };
 
   state = {
     status: this.props.client.status,
   };
 
+  componentDidUpdate({ status }) {
+    const { status: newStatus } = this.props;
+    if (newStatus && status !== newStatus) {
+      this.onChange({ value: newStatus });
+    }
+  }
+
   onChange = ({ value }) => {
-    const { notifyInfo, hideModal, refetchClient } = this.props;
+    const { notifyInfo, hideModal, refetchClient, onStatusChange } = this.props;
 
     this.setState({ status: value }, () => this.confirm(value)
       .then(data => this.submitUserStatus(value, data || {}))
@@ -78,7 +88,8 @@ export default class StatusSelect extends Component {
         notifyInfo(`Family successfully set to "${value}"`);
       })
       .then(hideModal)
-      .then(refetchClient));
+      .then(refetchClient)
+      .then(onStatusChange));
   };
 
   getDateProps = () => ({
@@ -98,9 +109,12 @@ export default class StatusSelect extends Component {
   };
 
   confirm = (toStatus) => {
-    const { showModal, hideModal, client } = this.props;
+    const { showModal, hideModal, client, onCancel: onCancelProp } = this.props;
 
-    const onCancel = () => this.setState({ status: client.status }, hideModal);
+    const onCancel = () => this.setState({ status: client.status }, () => {
+      hideModal();
+      onCancelProp();
+    });
     let pauseInitialValues = {};
     if (client.status === FAMILY_STATUS_ON_PAUSE) {
       pauseInitialValues = {
@@ -143,15 +157,19 @@ export default class StatusSelect extends Component {
 
   submitUserStatus = (clientStatus, { reason, date }) => {
     const { updateClient, rawClient } = this.props;
-    return updateClient({ id: rawClient.id }, produce(rawClient, (draft) => {
-      draft.attributes.status = clientStatus;
-      if (reason) {
-        draft.attributes.clientInfo[reasonKeys[clientStatus]] = reason;
-      }
-      if (date) {
-        draft.attributes.clientInfo.resumeDate = date;
-      }
-    }));
+
+    const client = immutable.wrap(rawClient);
+    client.set('attributes.status', clientStatus);
+
+    if (reason) {
+      client.set(`attributes.clientInfo.${reasonKeys[clientStatus]}`, reason);
+    }
+
+    if (date) {
+      client.set('attributes.clientInfo.resumeDate', date);
+    }
+
+    return updateClient({ id: rawClient.id }, client.value());
   };
 
   render() {

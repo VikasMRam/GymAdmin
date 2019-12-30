@@ -150,7 +150,7 @@ export const styles = css`
 `;
 
 const StyledLink = styled(({
-  disabled, transparent, foregroundPalette, palette, height, theme, ...props
+  disabled, ghost, transparent, foregroundPalette, palette, height, theme, ...props
 }) => (
   <Link noHoverColorChange {...props} />
 ))`
@@ -176,7 +176,7 @@ const Button = ({ type, kind, measureRef, ...props }) => {
   if (props.to || props.href) {
     return <StyledLink kind={kind} {...props} />;
   }
-  return <StyledButton innerRef={measureRef} {...withSendEvent(props)} kind={kind} type={type} />;
+  return <StyledButton ref={measureRef} {...withSendEvent(props)} kind={kind} type={type} />;
 };
 
 Button.propTypes = {

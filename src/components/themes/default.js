@@ -15,7 +15,7 @@ const theme = {};
 theme.palette = {
   slate    : makeColor('#2a333f', ['dark', 'base', 'filler', 'stroke']),
   primary  : makeColor('#186dc5', ['dark', 'base', 'filler', 'stroke', 'background']),
-  secondary: makeColor('#56c4c2', ['dark', 'base', 'filler', 'stroke', 'background']),
+  secondary: makeColor('#56c4c2', ['dark35', 'dark', 'base', 'filler', 'stroke', 'background']),
   white    : makeColor('#ffffff', ['base']),
   danger   : makeColor('#dc3133', ['dark', 'base', 'filler', 'stroke']),
   warning  : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke']),
@@ -45,6 +45,7 @@ theme.sizes = {
     mobile           : '416px',
     tablet           : '768px',
     laptop           : '1080px',
+    desktop           : '1280px',
   },
 
   // only for tablet and wider
@@ -348,11 +349,6 @@ theme.sizes = {
   thumbnail: {
     width : '8.0625rem',   // 129px
     height: '5.375rem',    // 86px
-  },
-
-  chatBox: {
-    footerReachedBottomMargin       : '3.75rem',   // 60px
-    pageWithStickyFooterBottomMargin: '6.25rem',   // 100px
   },
 
   dashboard: {

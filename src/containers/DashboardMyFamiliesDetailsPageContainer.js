@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { object, func, arrayOf } from 'prop-types';
-import immutable from 'object-path-immutable';
+import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 import { Redirect, generatePath } from 'react-router';
@@ -78,6 +78,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     clientsWithSameContacts: null,
     rawNotes: null,
     notes: null,
+    isEditStatusDetailsMode: false,
   }
 
   componentDidUpdate() {
@@ -168,7 +169,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { id } = note;
     const oldNote = rawNotes.find(n => n.id === id);
     const { note: newNoteBody } = data;
-    const payload = immutable(pick(oldNote, ['id', 'type', 'attributes.body']))
+    const payload = immutable.wrap(pick(oldNote, ['id', 'type', 'attributes.body']))
       .set('attributes.body', newNoteBody)
       .value();
 
@@ -209,7 +210,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { result: rawClient } = status.client;
     const { id } = client;
     const [contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
-    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.stage']))
+    const newClient = immutable.wrap(pick(rawClient, ['id', 'type', 'attributes.stage']))
       .set('attributes.stage', contactStatus)
       .value();
 
@@ -290,6 +291,13 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     };
   }
 
+  toggleEditStatusDetailsMode = () => {
+    const { isEditStatusDetailsMode } = this.state;
+    this.setState({
+      isEditStatusDetailsMode: !isEditStatusDetailsMode,
+    });
+  };
+
   render() {
     const {
       onRejectSuccess, onAddNote, onEditNote,
@@ -303,7 +311,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       breakpoint,
     } = this.props;
 
-    const { selectedConversation, conversationsList, clientsWithSameContacts, notes } = this.state;
+    const { selectedConversation, conversationsList, clientsWithSameContacts, notes, isEditStatusDetailsMode } = this.state;
 
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && client && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
@@ -349,6 +357,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 setSelectedConversation={this.setSelectedConversation}
                 hasConversationFinished={this.getHasConversationFinished() && conversationsList !== null}
                 onAcceptClick={() => this.handleAcceptClick(show, hide, notifyError)}
+                onEditStatusDetailsClick={this.toggleEditStatusDetailsMode}
+                onStatusChange={this.toggleEditStatusDetailsMode}
+                isEditStatusDetailsMode={isEditStatusDetailsMode}
               />
             )}
           </ModalController>

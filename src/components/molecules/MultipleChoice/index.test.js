@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Button } from 'sly/components/atoms';
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 
 const wrap = (props = {}) => shallow(<MultipleChoice {...props} />);
@@ -18,9 +17,9 @@ describe('MultipleChoice', () => {
     const first = wrapper.childAt(0);
     const second = wrapper.childAt(1);
     expect(first.dive().prop('children')).toEqual('First');
-    expect(first.dive().type()).toBe(Button);
+    expect(first.dive().render()[0].attribs.type).toBe('button');
     expect(second.dive().prop('children')).toEqual('Second');
-    expect(second.dive().type()).toBe(Button);
+    expect(second.dive().render()[0].attribs.type).toBe('button');
   });
 
   it('should send the right value onChange', () => {

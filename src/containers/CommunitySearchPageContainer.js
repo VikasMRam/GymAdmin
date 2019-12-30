@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { object, array, func } from 'prop-types';
 import { Redirect } from 'react-router-dom';
+
 import { stateNames, urlize, replaceLastSegment } from 'sly/services/helpers/url';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
@@ -8,7 +9,6 @@ import { getSearchParams } from 'sly/services/helpers/search';
 import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
 import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
-// import whyDidComponentUpdate from 'sly/services/helpers/whyDidComponentUpdate';
 
 @withProps(({ match, location }) => ({
   searchParams: getSearchParams(match, location),
@@ -39,7 +39,6 @@ export default class CommunitySearchPageContainer extends PureComponent {
   render() {
     const {
       searchParams,
-      serverState,
       communityList,
       geoGuides,
       location,
@@ -60,8 +59,9 @@ export default class CommunitySearchPageContainer extends PureComponent {
       return <Redirect to={replaceLastSegment(pathname, urlize(searchParams.city)) + search} />;
     }
 
-    if (serverState instanceof Error) {
-      const errorCode = (serverState.response && serverState.response.status) || 500;
+    if (status.communityList.error) {
+      const error = status.communityList.error.errors[0];
+      const errorCode = error.status || 500;
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 

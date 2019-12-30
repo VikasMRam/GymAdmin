@@ -30,7 +30,8 @@ class BannerNotificationController extends Component {
     set({
       messages: [messageObj, ...messages],
     });
-    this.timeoutRef = setTimeout(() => handleDismiss(id), TIMEOUT);
+
+    setTimeout(() => handleDismiss(id), TIMEOUT);
   };
 
   notifyInfo = (message) => {

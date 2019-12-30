@@ -191,7 +191,7 @@ const Version = styled.span`
 `;
 
 class Footer extends PureComponent {
-  render () {
+  render() {
     const currentYear = (new Date()).getFullYear();
     const groupComponents = Object.keys(groups).map((group) => {
       const groupItemComponents = groups[group].map((item) => {
@@ -214,7 +214,7 @@ class Footer extends PureComponent {
           <GroupDiv>
             <GroupItem to="/">
               <SeniorlyWhiteIcon icon="logo" palette="white" size="xxLarge" />
-              <Block>Find a Home to Love</Block>
+              <Block>Find the Best Senior Living</Block>
             </GroupItem>
           </GroupDiv>
           {groupComponents}

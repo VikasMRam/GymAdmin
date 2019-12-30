@@ -37,7 +37,7 @@ const StyledButton = styled(({ noPadding, padRight, ...props }) => <Button {...p
           margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
         }
       }
-    `
+    `,
   )};
 `;
 
@@ -65,9 +65,9 @@ const Text = styled.span`
 `;
 
 const IconButton = ({
-  icon, iconSize, transparent, fill, children, hideTextInMobile, iconPalette, ...props
+  icon, iconSize, transparent, fill, children, hideTextInMobile, iconPalette, right, ...props
 }) => {
-  const { right, palette } = props;
+  const { palette } = props;
   const iconElement = (
     <StyledIcon
       icon={icon}

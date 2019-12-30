@@ -97,7 +97,7 @@ const NearMePage = ({
             Find The Best Skilled Nursing Facility Near Me
           </StyledHeading>
           <StyledLabel palette="white">
-            Use our free search to find skilled nursing facility nearby
+            Use our free search to find skilled nursing facilities nearby
           </StyledLabel>
           <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>
@@ -112,7 +112,7 @@ const NearMePage = ({
 
   const { geo } = requestMeta;
   const city = geo && geo.city;
-  const state = geo && geo.state && getStateAbbr(geo.state);;
+  const state = geo && geo.state;
   const tocLabel = getTocSeoLabel('skilled-nursing-facility');
 
   const topRef = React.createRef();
@@ -621,6 +621,7 @@ const NearMePage = ({
 
   const title = 'Find the Best Skilled Nursing Facility Near You';
   const description = 'Search skilled nursing facilities near you. Compare cost, medicare and medicaid options, property highlights and more.';
+  const heading = state ? `${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${tocLabel} near ${city}`;
 
   return (
     <>
@@ -633,7 +634,7 @@ const NearMePage = ({
         {SEOContentSNF()}
         <StyledArticle>
           <StyledHeading level="title" size="title">
-            {tocLabel} near {city}, {state}
+            {heading}
           </StyledHeading>
           {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
           {!isFetchingResults && (

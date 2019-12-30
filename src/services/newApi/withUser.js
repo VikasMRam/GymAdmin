@@ -21,12 +21,12 @@ export default function withUser(InnerComponent) {
       // let this rescue this from props to bypass store for testing porpuses
       const userRequestInfo = props.userRequestInfo || getMemoizedUserRequestInfo(
         state,
-        { call: 'getUser', args: { id: 'me' } }
+        { call: 'getUser', args: { id: 'me' } },
       );
 
       const uuidAuxRequestInfo = props.uuidAuxRequestInfo || getMemoizedUuidAuxRequestInfo(
         state,
-        { call: 'getUuidAux', args: { id: 'me' } }
+        { call: 'getUuidAux', args: { id: 'me' } },
       );
 
       return {
@@ -115,7 +115,9 @@ export default function withUser(InnerComponent) {
     }
   }
 
-  hoistNonReactStatic(Wrapper, InnerComponent);
+  // FIXME: hack because hoist... loses contextTypes
+  Wrapper.typeHydrationId = InnerComponent.typeHydrationId;
+  // hoistNonReactStatic(Wrapper, InnerComponent);
 
   return Wrapper;
 }

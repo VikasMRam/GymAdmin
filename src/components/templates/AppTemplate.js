@@ -10,11 +10,7 @@ import theme from 'sly/components/themes/default';
 import { assetPath } from 'sly/components/themes';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 import Router from 'sly/components/molecules/Router';
-import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
-import setDatepickerStyles from 'sly/components/themes/datepickerStyles';
-
-setGlobalStyles();
-setDatepickerStyles();
+import GlobalStyles from 'sly/components/themes/GlobalStyles';
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -53,12 +49,14 @@ export default function AppTemplate({ children }) {
           type="image/x-icon"
           href={assetPath('favicon.ico')}
         />
+
+        <style type="text/css">{GlobalStyles}</style>
       </Helmet>
 
       <ThemeProvider theme={theme}>
         <Router>{children}</Router>
+        {!hideChatbox && <ChatBoxContainer />}
       </ThemeProvider>
-      {!hideChatbox && <ChatBoxContainer />}
     </>
   );
 }

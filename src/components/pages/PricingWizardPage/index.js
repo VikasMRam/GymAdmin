@@ -24,7 +24,7 @@ import {
   EXPLORE_AFFORDABLE_PRICING_OPTIONS,
 } from 'sly/constants/pricingForm';
 import { ABORT_WIZARD } from 'sly/constants/wizard';
-import { hasCCRC } from 'sly/services/helpers/community';
+import { hasCCRC, hasSNF } from 'sly/services/helpers/community';
 import { FAMILY_DASHBOARD_FAVORITES_PATH } from 'sly/constants/dashboardAppPaths';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
@@ -197,6 +197,10 @@ export default class PricingWizardPage extends Component {
     return updateUuidAux(data).then(() => redirectTo(redirectLink));
   };
 
+  handleHelpHover = (type) => {
+    sendEvent('help-tooltip-hover', type);
+  }
+
   render() {
     const {
       community, user, uuidAux, userHas, match, redirectTo,
@@ -234,7 +238,7 @@ export default class PricingWizardPage extends Component {
           {({
             data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
           }) => {
-            let formHeading = 'See your estimated pricing in your next step. We need your information to connect you to our partner agent. We do not share your information with anyone else.';
+            let formHeading = 'See your estimated pricing in your next step. We need your information to connect you to our partner agent.';
             let formSubheading = null;
             if (data.interest) {
               const contactFormHeadingObj = contactFormHeadingMap[data.interest];
@@ -252,6 +256,7 @@ export default class PricingWizardPage extends Component {
                       communityName={name}
                       onRoomTypeChange={this.handleRoomTypeChange}
                       onCareTypeChange={this.handleCareTypeChange}
+                      onHelpHover={this.handleHelpHover}
                       uuidAux={uuidAux}
                     />
                     <WizardStep
@@ -267,7 +272,7 @@ export default class PricingWizardPage extends Component {
                       name="WhatToDoNext"
                       communityName={name}
                       estimatedPrice={estimatedPrice}
-                      showEstimatePrice={!hasCCRC(community)}
+                      showEstimatePrice={!hasCCRC(community) && !hasSNF(community)}
                       listOptions={compiledWhatToDoNextOptions}
                       onInterestChange={(e, interest) => sendEvent('pricing-next-interest', id, interest)}
                       onSubmit={onSubmit}

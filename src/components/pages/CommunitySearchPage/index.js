@@ -2,12 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 import loadable from '@loadable/component';
+import { ifProp } from 'styled-tools';
 
 import { size, palette, assetPath } from 'sly/components/themes';
 import { titleize } from 'sly/services/helpers/strings';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import { getHelmetForSearchPage } from 'sly/services/helpers/html_headers';
-import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
+import { getBreadCrumbsForLocation, getStateAbbr} from 'sly/services/helpers/url';
 import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
 import { Heading, Button, Hr, Box, Image } from 'sly/components/atoms';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
@@ -16,7 +17,6 @@ import IconButton from 'sly/components/molecules/IconButton';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import pad from 'sly/components/helpers/pad';
-import { ifProp } from 'styled-tools';
 import ResponsiveSidebar from 'sly/components/molecules/ResponsiveSidebar';
 
 const SearchMap = loadable(() => import(/* webpackChunkName: "chunkSearchMap" */'sly/components/organisms/SearchMap'));
@@ -107,7 +107,7 @@ const ApplyFilterButton = styled(Button)`
   margin-top: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none !important;
+    display: none!important;
   }
 `;
 
@@ -130,6 +130,7 @@ const CommunitySearchPage = ({
 }) => {
   const listSize = requestMeta['filtered-count'];
   const city = titleize(searchParams.city);
+  const state = getStateAbbr(searchParams.state);
   const tocLabel = getTocSeoLabel(searchParams.toc);
   let latitude = 0;
   let longitude = 0;
@@ -161,12 +162,12 @@ const CommunitySearchPage = ({
                     View List
                   </IconButton>
                   ) : (
-                  <>
-                    <Image src={assetPath('images/map-placeholder.png')} />
-                    <IconButton icon="map" iconSize="regular" to={mapViewUrl} iconPalette="primary" ghost>
+                    <>
+                      <Image src={assetPath('images/map-placeholder.png')} />
+                      <IconButton icon="map" iconSize="regular" to={mapViewUrl} iconPalette="primary" ghost>
                       View Map
-                    </IconButton>
-                  </>
+                      </IconButton>
+                    </>
                 )}
               </ImageButtonWrapper>
               <StyledHr />
@@ -184,7 +185,7 @@ const CommunitySearchPage = ({
         <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
         {!isMapView && !isFetchingResults && (
           <>
-            <StyledHeading level="hero" size="title">{listSize} {tocLabel} near {city}</StyledHeading>
+            <StyledHeading level="hero" size="title">{listSize} {tocLabel} near {city}, {state}</StyledHeading>
             {(guideContent && (guideContent.autoDescription || guideContent.manualDescription)) && (
               <LegacyContent dangerouslySetInnerHTML={{ __html: guideContent.manualDescription || guideContent.autoDescription }} />
             )}
@@ -220,7 +221,7 @@ const CommunitySearchPage = ({
               location={location}
             />
             {hasGeoGuideContent && (
-              guideTypes.map((key) => (
+              guideTypes.map(key => (
                 guideContent[key] ? <LegacyContent dangerouslySetInnerHTML={{ __html: guideContent[key] }} key={key} /> : null
               ))
             )}

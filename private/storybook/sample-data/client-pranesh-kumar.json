@@ -5,9 +5,19 @@
     "email": "praneshkmr@gmail.com",
     "phoneNumber": "4155704370",
     "referralSource": "online",
-    "slyMessage": "this is a new client 2 which should have the same org as the user and first user in the org as admin"
+    "slyMessage": "this is a new client 2 which should have the same org as the user and first user in the org as admin",
+    "moveInDate": "2019-11-30T01:30:00Z",
+    "communityName": "hh edited",
+    "moveRoomType": "1 Bedroom",
+    "monthlyFees": 45,
+    "referralAgreement": 223,
+    "referralAgreementType": "percentage",
+    "moveInFee": 100.35000000000001,
+    "invoiceAmount": 54,
+    "invoiceNumber": "skdfnskjedt",
+    "invoicePaid": true
   },
-  "stage": "1st Contact Attempt",
+  "stage": "Won",
   "status": "Active",
   "uuidAux": {
     "id": "cb3464e0ce90d52a5f71c80ce581ec7f",

@@ -6,7 +6,6 @@ import userPropType from 'sly/propTypes/user';
 import { userIs } from 'sly/services/helpers/role';
 
 @withUser
-
 class Role extends Component {
   static propTypes = {
     user: userPropType,

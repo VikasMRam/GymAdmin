@@ -41,7 +41,7 @@ const MenuItem = styled(Link)`
   }
 `;
 
-const ActiveMenuItem = MenuItem.extend`
+const ActiveMenuItem = styled(MenuItem)`
   display: block;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -53,7 +53,7 @@ const ActiveMenuItem = MenuItem.extend`
   }
 `;
 
-const NotActiveMenuItem = MenuItem.extend`
+const NotActiveMenuItem = styled(MenuItem)`
   display: none;
 `;
 

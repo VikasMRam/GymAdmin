@@ -1,14 +1,13 @@
 import React, { Fragment, Component } from 'react';
 import { bool, string } from 'prop-types';
 import styled from 'styled-components';
-import NumberFormat from 'react-number-format';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size } from 'sly/components/themes';
-import { formatRating } from 'sly/services/helpers/rating';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { Link, Block, Icon, Heading, ClampedText, Span } from 'sly/components/atoms';
-import Rating from 'sly/components/molecules/Rating';
+import { Link, Block, Icon, Heading, ClampedText } from 'sly/components/atoms';
+import CommunityRating from 'sly/components/molecules/CommunityRating';
+import { formatMoney } from 'sly/services/helpers/numbers';
 
 const Wrapper = styled.div`
   overflow: hidden;
@@ -34,14 +33,6 @@ const TopWrapper = styled(Block)`
   display: flex;
   align-items: center;
   margin-bottom: ${size('spacing.regular')};
-`;
-
-const StyledRating = styled(Rating)`
-  margin-right: ${size('spacing.regular')};
-`;
-
-const SpanWithRightMargin = styled(Span)`
-  margin-right: ${size('spacing.regular')};
 `;
 
 const CommunityHeading = styled(Heading)`
@@ -140,28 +131,18 @@ export default class CommunityInfo extends Component {
         </Link>
       ) : headerContent;
 
+    const communityStartingRate = formatMoney(community.startingRate);
+
     return (
       <Wrapper className={className}>
         {header}
         <TopWrapper>
           {community.startingRate ? (
-            <Rate palette={palette || (inverted ? 'white' : 'primary')} weight="medium">
-              <NumberFormat
-                value={community.startingRate}
-                displayType="text"
-                prefix="$"
-                thousandSeparator
-                renderText={number => `${community.estimated ? 'Estimated ' : ''}${number}/month`}
-              />
+            <Rate palette={palette || (inverted ? 'white' : 'secondary')} variation={inverted ? 'base' : 'dark35'} weight="medium">
+              {`${community.estimated ? 'Estimated ' : ''}${communityStartingRate}/month`}
             </Rate>
           ) : null }
-          <SpanWithRightMargin palette={inverted ? 'white' : 'slate'} size={reviewsValue > 0 ? 'caption' : 'tiny'}>
-            {reviewsValue > 0 ? formatRating(reviewsValue) : 'Not Yet Rated'}
-          </SpanWithRightMargin>
-          {reviewsValue > 0 && <StyledRating value={reviewsValue} palette="warning" size="small" />}
-          <Span size="caption" palette={inverted ? 'white' : 'grey'}>
-            ({numReviews})
-          </Span>
+          <CommunityRating rating={reviewsValue} numReviews={numReviews} palette={inverted ? 'white' : 'secondary'} variation={inverted ? 'base' : 'dark35'} numReviewsPalette={inverted ? 'white' : 'slate'} size={reviewsValue > 0 ? 'caption' : 'tiny'} />
         </TopWrapper>
         {address && (
           <IconTextWrapper>

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { func, string, bool } from 'prop-types';
+
 import { size, palette } from 'sly/components/themes';
 import contactPropType from 'sly/propTypes/contact';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
@@ -19,7 +20,7 @@ const Wrapper = mobileOnly(
     padding: ${size('spacing.large')};
     background: ${palette('white', 'base')};
     border: ${size('spacing.nano')} solid ${palette('slate', 'stroke')};
-  `
+  `,
 );
 
 const StyledNameCell = ({ disabled, contact, to, ...props }) => (
@@ -42,7 +43,7 @@ const NameCell = mobileOnly(
   pad(StyledNameCell, 'regular'),
   css`
     order: 1;
-  `
+  `,
 );
 NameCell.displayName = 'NameCell';
 
@@ -68,9 +69,9 @@ const CommunityCell = pad(
     css`
       ${twoColumnCss};
       order: 2;
-    `
+    `,
   ),
-  'regular'
+  'regular',
 );
 CommunityCell.displayName = 'CommunityCell';
 
@@ -80,9 +81,9 @@ const EmailCell = pad(
     css`
       ${twoColumnCss};
       order: 3;
-    `
+    `,
   ),
-  'regular'
+  'regular',
 );
 EmailCell.displayName = 'EmailCell';
 
@@ -92,9 +93,9 @@ const PhoneCell = pad(
     css`
       ${twoColumnCss};
       order: 4;
-    `
+    `,
   ),
-  'regular'
+  'regular',
 );
 PhoneCell.displayName = 'PhoneCell';
 

@@ -171,7 +171,7 @@ export default class DashboardAgentTasksSection extends Component {
           client={client}
           refetchTasks={refetchTasks}
         />
-      ), null, 'noPadding', false
+      ), null, 'noPadding', false,
     );
   };
 
@@ -198,7 +198,7 @@ export default class DashboardAgentTasksSection extends Component {
           refetchTasks={refetchTasks}
           client={client}
         />
-      ), null, 'noPadding', false
+      ), null, 'noPadding', false,
     );
   };
 

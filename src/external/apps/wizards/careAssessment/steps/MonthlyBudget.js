@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
-import NumberFormat from 'react-number-format';
 
 import { palette } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import { STEP_INPUT_FIELD_NAMES } from 'sly/external/constants/steps';
 import { Heading } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
+import { formatMoney } from 'sly/services/helpers/numbers';
 
 const PaddedHeading = pad(Heading, 'xLarge');
 PaddedHeading.displayName = 'PaddedHeading';
@@ -26,7 +26,7 @@ const StyledReduxField = styled(ReduxField)`
 `;
 
 const moneyValue = val =>
-  <MoneyValue weight="regular" palette="secondary">Up to <NumberFormat value={val} displayType="text" thousandSeparator prefix="$" /></MoneyValue>;
+  <MoneyValue weight="regular" palette="secondary" variation="dark35">Up to {formatMoney(val)}</MoneyValue>;
 
 const MonthlyBudget = () => (
   <>
@@ -47,10 +47,10 @@ const MonthlyBudget = () => (
     />
     <Field
       name={STEP_INPUT_FIELD_NAMES.MonthlyBudget[1]}
-      label="I'm only using Medicaid to pay."
       type="checkbox"
       responsive
       component={StyledReduxField}
+      options={[{ value: true, label: "I'm only using Medicaid to pay." }]}
     />
   </>
 );

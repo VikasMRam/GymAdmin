@@ -16,6 +16,7 @@ import {
 } from 'sly/services/helpers/pricing';
 import pad from 'sly/components/helpers/pad';
 import { withHydration } from 'sly/services/partialHydration';
+import { Experiment, Variant } from 'sly/services/experiments';
 import { Button, Paragraph } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';
@@ -62,6 +63,7 @@ import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/containers/Tracked
 import UnhydratedPageViewActionContainer from 'sly/containers/PageViewActionContainer';
 import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
+import GetCommunityPricingAndAvailability from 'sly/components/organisms/GetCommunityPricingAndAvailability';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
@@ -171,7 +173,7 @@ const makeBanner = (profileContacted) => {
       }
       return acc;
     },
-    []
+    [],
   );
 
   if (!requests.length) {
@@ -183,7 +185,7 @@ const makeBanner = (profileContacted) => {
   }
 
   return `We have your ${requests.join(
-    ''
+    '',
   )} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
 };
 
@@ -240,7 +242,11 @@ export default class CommunityDetailPage extends Component {
 
     const typeOfCare = typeCares[0];
     const hasCCRC = typeCares.includes(
-      'Continuing Care Retirement Community(CCRC)'
+      'Continuing Care Retirement Community(CCRC)',
+    );
+
+    const hasSNF = typeCares.includes(
+      'Skilled Nursing Facility'
     );
 
     // TODO: mock as USA until country becomes available
@@ -318,6 +324,7 @@ export default class CommunityDetailPage extends Component {
                           <IconItem
                             icon="check"
                             iconPalette="secondary"
+                            iconVariation="dark35"
                             borderless={false}
                           >
                             {item}
@@ -334,6 +341,7 @@ export default class CommunityDetailPage extends Component {
                           <IconItem
                             icon="check"
                             iconPalette="secondary"
+                            iconVariation="dark35"
                             borderless={false}
                           >
                             {item}
@@ -378,7 +386,17 @@ export default class CommunityDetailPage extends Component {
                       </GetCustomPricingButtonContainer>
                     </>
                   )}
-                  {!hasCCRC && (
+                  {!hasCCRC && hasSNF && (
+                    <>
+                      <Paragraph>
+                        90% of Skilled Nursing Facilities in the United States are Medicare-certified. Some also accept Medicaid. To learn about pricing at {name}, click the button below.
+                      </Paragraph>
+                      <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested}>
+                        Get Pricing
+                      </GetCustomPricingButtonContainer>
+                    </>
+                  )}
+                  {!hasCCRC && !hasSNF && (
                     <CommunityPricingTable
                       name={name}
                       pricesList={pricesList}
@@ -461,7 +479,7 @@ export default class CommunityDetailPage extends Component {
                   <EventsWrapper>
                     {sampleEvents.map(item => (
                       <IconItemWrapper key={item}>
-                        <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
+                        <IconItem icon="check" iconPalette="secondary" iconVariation="dark35" borderless={false}>{item}</IconItem>
                       </IconItemWrapper>))
                     }
                   </EventsWrapper>
@@ -524,7 +542,14 @@ export default class CommunityDetailPage extends Component {
               </Body>
               <Column>
                 <StickToTop>
-                  <ConciergeContainer />
+                  <Experiment name="Community_DetailPage_Sidebar">
+                    <Variant name="Sidebar_Concierge_Form">
+                      <ConciergeContainer />
+                    </Variant>
+                    <Variant name="Sidebar_GetDetailed_PricingBox">
+                      <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
+                    </Variant>
+                  </Experiment>
                 </StickToTop>
               </Column>
             </TwoColumn>

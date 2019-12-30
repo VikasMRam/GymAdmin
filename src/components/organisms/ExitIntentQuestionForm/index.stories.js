@@ -16,12 +16,14 @@ const ExitIntentQuestionFormContainer = reduxForm({
 storiesOf('Organisms|ExitIntentQuestionForm', module)
   .add('default', () => (
     <ExitIntentQuestionFormContainer
-      handleSubmit={withPreventDefault(action('form submitted'))} />
+      handleSubmit={withPreventDefault(action('form submitted'))}
+    />
   )).add('within modal', () => (
     <Modal
       onClose={action('closed')}
       isOpen
-      layout="noPadding">
+      layout="noPadding"
+    >
       <ExitIntentQuestionFormContainer handleSubmit={withPreventDefault(action('form submitted'))} />
     </Modal>
   ));

@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { string, number, shape, oneOf, oneOfType } from 'prop-types';
-import NumberFormat from 'react-number-format';
 
 import { size, palette } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import { Block, Link } from 'sly/components/atoms';
+import { phoneFormatter } from 'sly/services/helpers/phone';
 
 const Label = pad(Block, 'regular');
 Label.displayName = 'Label';
@@ -24,11 +24,7 @@ const InteractiveDetail = ({
     <Value palette="primary">
       {detail.type === 'phone' &&
         <Link href={`tel:${detail.value}`}>
-          <NumberFormat
-            value={detail.value}
-            format="(###) ###-####"
-            displayType="text"
-          />
+          {phoneFormatter(detail.value, true)}
         </Link>
       }
       {detail.type === 'email' && <Link href={`mailto:${detail.value}`}>Click here to send Email</Link>}

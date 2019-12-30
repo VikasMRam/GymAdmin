@@ -1,4 +1,4 @@
-import serializeError from 'serialize-error';
+import { serializeError } from 'serialize-error';
 
 import { isBrowser } from 'sly/config';
 
