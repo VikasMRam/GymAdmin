@@ -264,6 +264,7 @@ export default class PricingWizardPage extends Component {
                       name="Contact"
                       onAdvisorHelpClick={openHelpModal}
                       user={user}
+                      community={community}
                       heading={formHeading}
                       subheading={formSubheading}
                     />
