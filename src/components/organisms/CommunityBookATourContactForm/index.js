@@ -56,7 +56,7 @@ const CommunityBookATourContactForm = ({
             component={ReduxField}
           />
         }
-        {(community && community.agents && community.agents.length === 0) && !(user && user.email) &&
+        {(community && community.partnerAgents && community.partnerAgents.length === 0) && !(user && user.email) &&
           <Field
             name="email"
             label="Email"
@@ -84,6 +84,7 @@ const CommunityBookATourContactForm = ({
 
 CommunityBookATourContactForm.propTypes = {
   user: object,
+  community: object,
   displayContext: string,
   error: string,
   onAdvisorHelpClick: func.isRequired,
