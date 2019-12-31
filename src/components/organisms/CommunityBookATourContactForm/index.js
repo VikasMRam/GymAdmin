@@ -29,7 +29,7 @@ const StyledContainer = styled.div`
 `;
 
 const CommunityBookATourContactForm = ({
-  error, user, heading, subheading, onAdvisorHelpClick, handleSubmit, displayContext,
+  error, user, community, heading, subheading, onAdvisorHelpClick, handleSubmit, displayContext,
 }) => {
   return (
     <StyledContainer displayContext={displayContext}>
@@ -56,7 +56,7 @@ const CommunityBookATourContactForm = ({
             component={ReduxField}
           />
         }
-        {!(user && user.email) &&
+        {(community && community.partnerAgents && community.partnerAgents.length === 0) && !(user && user.email) &&
           <Field
             name="email"
             label="Email"
@@ -84,6 +84,7 @@ const CommunityBookATourContactForm = ({
 
 CommunityBookATourContactForm.propTypes = {
   user: object,
+  community: object,
   displayContext: string,
   error: string,
   onAdvisorHelpClick: func.isRequired,

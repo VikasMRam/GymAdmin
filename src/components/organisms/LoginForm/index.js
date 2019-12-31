@@ -67,8 +67,8 @@ const LoginForm = ({
     <ForgotPassword onClick={onForgotPasswordClicked}>Forgot password?</ForgotPassword>
     <Field
       name="rememberme"
-      label="Remember me"
       type="checkbox"
+      options={[{ label: 'Remember me', value: true }]}
       responsive
       component={StyledReduxField}
     />
