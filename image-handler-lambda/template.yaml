@@ -1,0 +1,14 @@
+Globals:
+  Function:
+    Environment:
+      Variables:
+        BUCKET: testseniorly
+Resources:
+  Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      CodeUri: ImageHandlerFunction
+      Runtime: nodejs10.x
+      Timeout: 300
+      MemorySize: 128
