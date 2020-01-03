@@ -56,27 +56,6 @@ export default class AuthContainer extends Component {
     }
   }
 
-  gotoResetPassword = () => {
-    const {
-      authenticateCancel, showModal,
-    } = this.props;
-    const props = {
-      onSubmitSuccess: this.handleResetPasswordSuccess,
-      onLoginClicked: this.gotoLogin,
-    };
-
-    showModal(<ResetPasswordFormContainer {...props} />, authenticateCancel);
-  };
-
-  handleResetPasswordSuccess = (response) => {
-    const { notifyInfo } = this.props;
-
-    if (response && response.body) {
-      notifyInfo(response.body.message);
-      this.gotoLogin();
-    }
-  };
-
   render() {
     const { isOpen } = this.state;
     const { authenticateCancel, authenticateSuccess } = this.props;
@@ -108,10 +87,17 @@ export default class AuthContainer extends Component {
                 onDoThisLaterClick={authenticateSuccess}
               />
               <WizardStep
+                component={ResetPasswordFormContainer}
+                name="ResetPassword"
+                onLoginClicked={() => emailOrPhone ? goto('LoginWithPassword') : goto('LoginOrRegister')}
+                onSuccess={next}
+              />
+              <WizardStep
                 component={LoginWithPasswordFormContainer}
                 name="LoginWithPassword"
                 emailOrPhone={emailOrPhone}
                 onSubmitSuccess={authenticateSuccess}
+                onResetPasswordClick={() => goto('ResetPassword')}
               />
             </WizardSteps>
           )}

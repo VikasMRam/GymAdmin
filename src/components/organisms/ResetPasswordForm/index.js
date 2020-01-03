@@ -1,78 +1,54 @@
 import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
-import styled from 'styled-components';
-import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
+import pad from 'sly/components/helpers/pad';
+import textAlign from 'sly/components/helpers/textAlign';
+import cursor from 'sly/components/helpers/cursor';
+import fullWidth from 'sly/components/helpers/fullWidth';
+import { Heading, Button, Block, Span, Hr } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { Heading, Button, Block } from 'sly/components/atoms';
 
-const Form = styled.form`
-  width: 100%;
-`;
-Form.displayName = 'Form';
+const StyledHeading = pad(textAlign(Heading), 'regular');
 
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.regular')};
-`;
+const Description = pad(textAlign(Block));
 
-const Description = styled(Block)`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
+const FullWidthButton = fullWidth(Button);
 
-const StyledField = styled(Field)`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
+const LargePaddedFullWidthButton = pad(FullWidthButton, 'large');
 
-const BottomWrapper = styled.div`
-  display: flex;
-`;
+const LoginWithPassword = cursor(Span);
 
-const StyledButton = styled(Button)`
-  flex: 1 1 0;
-  margin-bottom: ${size('spacing.regular')};
-  margin-bottom: ${ifProp('error', size('spacing.large'), 'initial')};
-`;
+const FooterNote = textAlign(Block);
 
-const Login = styled.span`
-  flex: 1 1 0;
-  display: flex;
-  align-items: center;
-  color: ${palette('secondary', 'dark35')};
-
-  :hover {
-    cursor: pointer;
-  }
-`;
-Login.displayName = 'LoginLink';
+const getButton = (error, props) =>
+  error ? <LargePaddedFullWidthButton {...props} /> : <FullWidthButton {...props} />;
 
 const ResetPasswordForm = ({
-  handleSubmit, submitting, onLoginClicked, error,
+  handleSubmit, submitting, invalid, onLoginClicked, error,
 }) => (
-  <Form onSubmit={handleSubmit}>
-    <StyledHeading>Reset Password</StyledHeading>
-    <Description>Enter your email address below and we will send you instructions.</Description>
-    <StyledField
+  <form onSubmit={handleSubmit}>
+    <StyledHeading size="subtitle">Having trouble logging in?</StyledHeading>
+    <Description>Enter your email address and we&apos;ll email you a new password.</Description>
+    <Field
       name="email"
-      label="Email Address"
+      label="Email"
       type="email"
-      placeholder="Email Address"
       component={ReduxField}
     />
+    {getButton(error, { type: 'submit', disabled: submitting || invalid, children: 'Submit' })}
     {error && <Block palette="danger">{error}</Block>}
-    <BottomWrapper>
-      <Login onClick={onLoginClicked}>Back to Login</Login>
-      <StyledButton error={error} type="submit" kind="jumbo" disabled={submitting}>
-        Send Request Link
-      </StyledButton>
-    </BottomWrapper>
-  </Form>
+    <Hr />
+    <FooterNote size="caption">
+      Remember your password? <LoginWithPassword onClick={onLoginClicked} palette="primary" size="caption">Sign in.</LoginWithPassword>
+    </FooterNote>
+  </form>
 );
 
 ResetPasswordForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
+  invalid: bool,
   onLoginClicked: func,
   error: string,
 };

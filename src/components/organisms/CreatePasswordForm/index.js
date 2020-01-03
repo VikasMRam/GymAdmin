@@ -6,8 +6,8 @@ import pad from 'sly/components/helpers/pad';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import textAlign from 'sly/components/helpers/textAlign';
 import cursor from 'sly/components/helpers/cursor';
-import ReduxField from 'sly/components/organisms/ReduxField';
 import { Heading, Button, Block } from 'sly/components/atoms';
+import ReduxField from 'sly/components/organisms/ReduxField';
 
 const StyledHeading = textAlign(pad(Heading));
 

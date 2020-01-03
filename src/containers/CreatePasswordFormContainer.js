@@ -27,13 +27,13 @@ const ReduxForm = reduxForm({
 export default class CreatePasswordFormContainer extends Component {
   static propTypes = {
     setPassword: func,
-    notifySuccess: func,
+    notifyInfo: func.isRequired,
     onDoThisLaterClick: func,
     user: userPropType.isRequired,
   };
 
   handleSubmit = ({ password }) => {
-    const { setPassword, notifySuccess, user } = this.props;
+    const { setPassword, notifyInfo, user } = this.props;
     const { email } = user;
     const payload = { password, email };
 
@@ -47,7 +47,7 @@ export default class CreatePasswordFormContainer extends Component {
         }
       })
       .then(() => {
-        notifySuccess('Password created successfully');
+        notifyInfo('Password created successfully');
       });
   };
 
