@@ -34,9 +34,20 @@ theme.fonts = {
   quote  : 'Georgia, serif',
 };
 
+
+theme.defaultImageSources = [
+  320,
+  375,
+  416,  // our mobile
+  768,  // our tablet
+  1080, // our tablet
+  1200, // our max
+];
+
 theme.imageFormats = {
-  heroGallery: '(max-width: 1079px) 100vw, 768px',
-  fullscreenGallery: '(max-width: 1199px) 100vw, 1200px',
+  heroGallery: { sizes: '(max-width: 1079px) 100vw, 768px' },
+  fullscreenGallery: { sizes: '(max-width: 1199px) 100vw, 1200px' },
+  thumbGallery: { sizes: '129px', sources: [[129, 86], [258, 172]] },
 };
 
 theme.sizes = {

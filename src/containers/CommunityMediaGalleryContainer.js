@@ -107,6 +107,9 @@ export default class CommunityMediaGalleryContainer extends React.Component {
 
     const { isFullscreenActive, currentSlideIndex } = this.state;
 
+    console.log('community', community);
+    console.log('images', getImages(community));
+
     return (
       <CommunityMediaGallery
         communityName={community.name}

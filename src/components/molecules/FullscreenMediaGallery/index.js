@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
@@ -35,7 +35,7 @@ const CopyrightWrapper = styled.div`
 `;
 
 const FullscreenMediaGallery = ({
-  images, videos, currentSlide, isOpen, onClose, ariaHideApp, onSlideChange,
+  images, sizes, videos, currentSlide, isOpen, onClose, ariaHideApp, onSlideChange,
 }) => {
   const bottomLeftSection = (slide) => {
     if (slide.type === 'video') {
@@ -60,6 +60,7 @@ const FullscreenMediaGallery = ({
       <StyledMediaGallery
         currentSlide={currentSlide}
         images={images}
+        sizes={sizes}
         videos={videos}
         bottomLeftSection={bottomLeftSection}
         onSlideChange={onSlideChange}
@@ -78,6 +79,7 @@ FullscreenMediaGallery.propTypes = {
     alt: PropTypes.string.isRequired,
     thumb: PropTypes.string.isRequired,
   })),
+  sizes: string,
   videos: PropTypes.arrayOf(PropTypes.shape({
     src: PropTypes.arrayOf(PropTypes.shape({
       type: PropTypes.string.isRequired,

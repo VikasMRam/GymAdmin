@@ -1,6 +1,6 @@
 import { assetsUrl } from 'sly/config';
 
-export const getFormat = ({ width, height, crop = false }) => {
+export const getFormat = ({ width, height, crop = true }) => {
   if (!(width || height)) {
     throw new Error('Image Handler needs at least one dimension');
   }
@@ -20,24 +20,23 @@ export const getImagePath = (path, format) => {
   return `${assetsUrl}/uploads/${path}`;
 };
 
-const getFormatFromWidth = width => ({ width, height: Math.round(width / 1.5) });
+const getSrcsetForPath = (imagePath, sources) => sources.map((source) => {
+  let width;
+  let height;
+  if (Array.isArray(source)) {
+    [width, height] = source;
+  } else {
+    width = source;
+  }
 
-const getSrcsetForPath = imagePath => [
-  320,
-  375,
-  416,  // our mobile
-  768,  // our tablet
-  1080, // our tablet
-  1200, // our max
-].map((width) => {
-  const format = getFormatFromWidth(width);
+  const format = { width, height };
   return `${getImagePath(imagePath, format)} ${width}w`;
 }).join(', ');
 
 // only doing 3:2 for now
-export const getSrcset = imagePath => ({
-  src: getImagePath(imagePath, getFormatFromWidth(768)),
-  jpegSrcset: getSrcsetForPath(imagePath),
-  webpSrcset: getSrcsetForPath(imagePath.replace(/\.jpe?g/, '.webp')),
+export const getSrcset = (imagePath, config) => ({
+  src: getImagePath(imagePath, { width: 768 }),
+  jpegSrcset: getSrcsetForPath(imagePath, config.sources),
+  webpSrcset: getSrcsetForPath(imagePath.replace(/\.jpe?g/, '.webp'), config.sources),
 });
 

@@ -100,12 +100,12 @@ export default class CommunityMediaGallery extends Component {
         </BottomRightWrapper> : null
     );
 
-    const inlineMediaSizes = getKey('imageFormats.heroGallery');
-    const fullscreenMediaSizes = getKey('imageFormats.fullscreenGallery');
+    const inlineMediaSizes = getKey('imageFormats.heroGallery').sizes;
+    const fullscreenMediaSizes = getKey('imageFormats.fullscreenGallery').sizes;
     return (
       <>
         <MediaGallery
-          onSlideClick={i => onToggleFullscreenMode(Object.prototype.hasOwnProperty.call(this.sdGalleryImages[i], 'ofVideo'))}
+          onSlideClick={i => onToggleFullscreenMode(!!galleryItems[i].ofVideo)}
           communityName={communityName}
           images={galleryItems}
           topRightSection={topRightSection}
@@ -120,8 +120,8 @@ export default class CommunityMediaGallery extends Component {
           communityName={communityName}
           sizes={fullscreenMediaSizes}
           videos={this.formattedVideos}
-          images={this.hdGalleryImages}
-          onClose={() => onToggleFullscreenMode(Object.prototype.hasOwnProperty.call(this.sdGalleryImages[currentSlide], 'ofVideo'))}
+          images={galleryItems}
+          onClose={() => onToggleFullscreenMode(!!galleryItems[currentSlide].ofVideo)}
           ariaHideApp={ariaHideApp}
           onSlideChange={onSlideChange}
         />

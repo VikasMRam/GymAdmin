@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 
-import { size, palette } from 'sly/components/themes';
-import Image from 'sly/components/atoms/Image';
+import { size, palette, getKey } from 'sly/components/themes';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
-const StyledImg = styled(Image)`
+const StyledImg = styled(ResponsiveImage)`
   width: ${size('thumbnail.width')};
   height: ${size('thumbnail.height')};
 
@@ -17,7 +17,10 @@ const StyledImg = styled(Image)`
     `};
 `;
 
-const Thumbnail = props => <StyledImg {...props} />;
+const Thumbnail = (props) => {
+  const { sizes, sources } = getKey('imageFormats.thumbGallery');
+  return <StyledImg sizes={sizes} sources={sources} {...props} />;
+};
 
 Thumbnail.propTypes = {
   props: PropTypes.any,

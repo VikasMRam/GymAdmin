@@ -1,8 +1,8 @@
 import React from 'react';
-import { string, oneOf } from 'prop-types';
+import { string, array, oneOf } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
+import { size, getKey } from 'sly/components/themes';
 import { getSrcset } from 'sly/services/images';
 
 const paddingTop = ({ aspectRatio }) => size('picture.ratios', aspectRatio);
@@ -42,6 +42,7 @@ export default class ResponsiveImage extends React.Component {
     path: string.isRequired,
     alt: string,
     sizes: string,
+    sources: array,
     aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3', '1:1']),
   };
 
@@ -53,14 +54,17 @@ export default class ResponsiveImage extends React.Component {
 
   render() {
     const {
-      path, sizes, alt, loading, className: classNameProp, aspectRatio, ...props
+      path, sizes, sources, alt, loading, className: classNameProp, aspectRatio, ...props
     } = this.props;
 
-    const { jpegSrcset, webpSrcset, src } = getSrcset(path);
+    const { jpegSrcset, webpSrcset, src } = getSrcset(path, {
+      aspectRatio,
+      sources: sources || getKey('defaultImageSources'),
+    });
 
     const srcProp = loading === 'lazy' ? 'data-src' : 'src';
     const srcSetProp = loading === 'lazy' ? 'data-srcset' : 'srcSet';
-    const className = loading === 'lazy' ? `lazy ${classNameProp}` : classNameProp;
+    const className = loading === 'lazy' ? 'lazy' : '';
 
     const imageProps = {
       [srcProp]: src,
@@ -75,7 +79,7 @@ export default class ResponsiveImage extends React.Component {
     };
 
     return (
-      <ResponsiveWrapper aspectRatio={aspectRatio}>
+      <ResponsiveWrapper aspectRatio={aspectRatio} className={classNameProp}>
         <picture>
           <source type="image/webp" {...webpSourceProps} sizes={sizes} />
           <source type="image/jpeg" {...jpegSourceProps} sizes={sizes} />

@@ -198,13 +198,14 @@ export default class MediaGallery extends Component {
     // - it's one after current slide
     return (Math.abs(i - currentSlide) < 2) ||
       // if the current slide is last slide then also load first slide
-      // if the current slide is first slide then also load last slide
-      (currentSlide === 0 && i === numItems - 1) || (currentSlide === numItems - 1 && i === 0);
+      // ~if the current slide is first slide then also load last slide~ not because of reducing bytes
+      (currentSlide === numItems - 1 && i === 0);
   };
 
   generateSlideContent = (media, index) => {
     const { currentSlide, aspectRatio, sizes } = this.props;
 
+    console.log('media', media)
     switch (media.type) {
       case 'image':
         return media.ofVideo !== undefined ? (
@@ -254,18 +255,19 @@ export default class MediaGallery extends Component {
     const {
       currentSlide, videos, images, topRightSection, bottomLeftSection, bottomRightSection, showThumbnails, onSlideClick,
     } = this.props;
+    console.log('images MediaGallery', images);
     const { onSlideChange, ...rest } = this.props;
     const thumbnails = [];
     const formattedVideos = videos.map((video) => {
       thumbnails.push({
-        src: video.thumb,
+        path: video.thumb,
         alt: `${video.alt} thumbnail`,
       });
       return { ...video, type: 'video' };
     });
     const formattedImages = images.map((image) => {
       thumbnails.push({
-        src: image.thumb,
+        path: image.path,
         alt: `${image.alt} thumbnail`,
       });
       return { ...image, type: 'image' };
