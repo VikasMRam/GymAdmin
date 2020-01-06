@@ -10,6 +10,7 @@ describe('DuplicateFamilies', () => {
   it('renders', () => {
     const wrapper = wrap({ clients, currentClient: clients[0] });
 
-    expect(wrapper.find('FamilyEntry')).toHaveLength(clients.length);
+    // becasue clients will include currentClient too which won't be displayed as duplicate
+    expect(wrapper.find('FamilyEntry')).toHaveLength(clients.length - 1);
   });
 });

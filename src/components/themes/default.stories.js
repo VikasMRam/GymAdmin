@@ -58,7 +58,7 @@ const Color = styled.div`
   }
 `;
 
-const types = ['dark', 'base', 'filler', 'stroke', 'background'];
+const types = ['dark35', 'dark', 'base', 'filler', 'stroke', 'background'];
 
 const pickColors = colors => types.reduce((cumul, type) => {
   // eslint-disable-next-line no-param-reassign

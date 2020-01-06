@@ -40,7 +40,7 @@ const PartnerReview = ({
     </ImageWrapper>
     <div>
       <Paragraph>&quot;{review}&quot;</Paragraph>
-      <StyledHr palette="secondary" variation="base" />
+      <StyledHr palette="secondary" variation="dark35" />
       <Block weight="medium">{name}</Block>
       <Block palette="grey">{location}</Block>
     </div>

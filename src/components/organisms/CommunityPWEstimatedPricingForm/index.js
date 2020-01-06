@@ -53,13 +53,15 @@ const StyledHelpBubble = styled(HelpBubble)`
 `;
 
 const CommunityPWEstimatedPricingForm = ({
-  error, handleSubmit, communityName, onRoomTypeChange, onCareTypeChange, uuidAux,
+  error, handleSubmit, communityName, onRoomTypeChange, onCareTypeChange, onHelpHover, uuidAux,
 }) => (
   <form name="CommunityPWEstimatedPricingForm" onSubmit={handleSubmit}>
     <HeadingSection level="subtitle" size="subtitle">Get your Pricing and Availability for {communityName}</HeadingSection>
     <StyledBlock size="caption">
       What type of room are you looking for?
-      <StyledHelpBubble>All shown room types may not be available in this community.</StyledHelpBubble>
+      <div onMouseEnter={() => onHelpHover('room-type')}>
+        <StyledHelpBubble>All shown room types may not be available in this community.</StyledHelpBubble>
+      </div>
     </StyledBlock>
     <StyledField
       options={ROOMTYPE_OPTIONS}
@@ -71,10 +73,12 @@ const CommunityPWEstimatedPricingForm = ({
     />
     <StyledBlock size="caption">
       What care needs do you or your loved one have?
-      <StyledHelpBubble>
-        A Physician&apos;s report and an in-person assessment at the community will help determine your particular care<br />
-        needs and may vary from what is displayed below.
-      </StyledHelpBubble>
+      <div onMouseEnter={() => onHelpHover('care-needs')}>
+        <StyledHelpBubble>
+          A Physician&apos;s report and an in-person assessment at the community will help determine your particular care<br />
+          needs and may vary from what is displayed below.
+        </StyledHelpBubble>
+      </div>
     </StyledBlock>
     <CareTypesField
       options={CARETYPE_OPTIONS}
@@ -88,10 +92,12 @@ const CommunityPWEstimatedPricingForm = ({
       <>
         <StyledBlock size="caption">
           Do you qualify for Medicaid?
-          <StyledHelpBubble>
-            Typically, Medicare and Medicaid cannot be used for monthly rent in long-term care communities.<br />
-            However, veteran&apos;s benefits and long term care insurance can help bridge the cost.
-          </StyledHelpBubble>
+          <div onMouseEnter={() => onHelpHover('medicaid')}>
+            <StyledHelpBubble>
+              Typically, Medicare and Medicaid cannot be used for monthly rent in long-term care communities.<br />
+              However, veteran&apos;s benefits and long term care insurance can help bridge the cost.
+            </StyledHelpBubble>
+          </div>
         </StyledBlock>
         <StyledField
           options={MEDICAID_OPTIONS}
@@ -111,6 +117,7 @@ CommunityPWEstimatedPricingForm.propTypes = {
   communityName: string,
   onRoomTypeChange: func,
   onCareTypeChange: func,
+  onHelpHover: func,
   uuidAux: object,
 };
 

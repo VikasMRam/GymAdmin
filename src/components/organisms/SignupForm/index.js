@@ -6,7 +6,7 @@ import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { Heading, Button, Block, Hr } from 'sly/components/atoms';
+import { Heading, Button, Block, Hr, Span } from 'sly/components/atoms';
 
 const Form = styled.form`
   width: 100%;
@@ -34,9 +34,7 @@ const StyledHr = styled(Hr)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const Login = styled.span`
-  color: ${palette('secondary', 'base')};
-
+const Login = styled(Span)`
   :hover {
     cursor: pointer;
   }
@@ -68,7 +66,7 @@ const SignupForm = ({
     <StyledBlock error={error}>By continuing, you agree to Seniorly&apos;s Terms of Use and Privacy Policy.</StyledBlock>
     {error && <Block palette="danger">{error}</Block>}
     <StyledHr />
-    <Block>Already have a Seniorly account? <Login onClick={onLoginClicked}>Sign in</Login></Block>
+    <Block>Already have a Seniorly account? <Login palette="primary" onClick={onLoginClicked}>Sign in</Login></Block>
   </Form>
 );
 

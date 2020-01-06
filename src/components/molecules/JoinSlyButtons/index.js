@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 
 import { size, palette } from 'sly/components/themes';
-import { Button, Hr, Block, Icon, Heading } from 'sly/components/atoms';
+import { Button, Hr, Block, Icon, Heading, Span } from 'sly/components/atoms';
 
 const StyledButton = styled(Button)`
   width: 100%;
@@ -40,9 +40,7 @@ const StyledHeading = styled(Heading)`
 `;
 StyledHeading.displayName = 'StyledHeading';
 
-const Login = styled.span`
-  color: ${palette('secondary', 'base')};
-
+const Login = styled(Span)`
   :hover {
     cursor: pointer;
   }
@@ -71,7 +69,7 @@ const JoinSlyButtons = ({
     <StyledButton onClick={onEmailSignupClicked}>Sign up with Email</StyledButton>
     <Hr />
     <Block>
-      Already have a Seniorly account? <Login onClick={onLoginClicked}>Sign in</Login>
+      Already have a Seniorly account? <Login palette="primary" onClick={onLoginClicked}>Sign in</Login>
     </Block>
   </section>
 );

@@ -216,7 +216,7 @@ const ClientName = ({ client, rawClient, backLinkHref, user, ...props }) => {
         <Icon icon="arrow-left" palette="primary" />
       </Link>
       <span>{name}</span>
-      {isReferralSent(client) && <StyledIconBadge badgePalette="secondary" palette="white" icon="checkmark-circle" text="R SENT" />}
+      {isReferralSent(client) && <StyledIconBadge badgePalette="secondary" badgeVariation="dark35" palette="white" icon="checkmark-circle" text="R SENT" />}
       {(userIs(user, PLATFORM_ADMIN_ROLE) || (!isNew && !isProspects)) && <StyledStatusSelect client={client} rawClient={rawClient} user={user} {...props} />}
     </StyledClientNameBlock>
   );
@@ -545,7 +545,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
   handleClickHereForMore = () => {
     const { showModal, client, clients } = this.props;
 
-    showModal(<DuplicateFamilies noTopSpacing currentClient={client} clients={clients.slice(1)} heading="Duplicate family entries" />, null, 'noPadding');
+    showModal(<DuplicateFamilies noTopSpacing currentClient={client} clients={clients} heading="Duplicate family entries" />, null, 'noPadding');
   };
 
   render() {

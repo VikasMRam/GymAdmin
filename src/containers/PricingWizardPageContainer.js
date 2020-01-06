@@ -21,7 +21,7 @@ const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
 
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.communitySlug,
-  include: 'similar-communities',
+  include: 'similar-communities,agents',
 }))
 
 @withAuth

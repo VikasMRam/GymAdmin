@@ -35,10 +35,10 @@ const logoLabel = 'logo';
 const sendHeaderItemClickEvent = value => sendEvent(category, clickAction, headerItemLabel, value);
 
 const defaultHeaderItems = [
-  { name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
   { name: 'Senior Living Resources', to: '/resources', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
   { name: 'Assisted Living', to: '/assisted-living', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
   { name: 'Nursing Homes', to: '/nursing-homes', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+  { name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
 ];
 
 const smallScreenMenuItems = [
@@ -48,9 +48,6 @@ const smallScreenMenuItems = [
 const defaultMenuItems = (user) => {
   const menuItems = [
     {
-      name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),
-    },
-    {
       name: 'Senior Living Resources', to: '/resources', hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),
     },
     {
@@ -58,6 +55,9 @@ const defaultMenuItems = (user) => {
     },
     {
       name: 'Nursing Homes', to: '/nursing-homes', hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),
+    },
+    {
+      name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),
     },
     { name: 'Contact Us', to: '/contact', section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name) },
     { name: 'About Us', to: '/about', section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name) },

@@ -1,7 +1,10 @@
 import { CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION } from 'sly/constants/conversations';
 
 export const getConversationName = (conversation, user) => {
-  const { conversationParticipants } = conversation;
+  const { conversationParticipants, info } = conversation;
+  if (info.Name) {
+    return info.Name;
+  }
   const { id: userId } = user;
   const nameList = conversationParticipants
     .filter(conversationParticipant => conversationParticipant.participantID !== userId)
