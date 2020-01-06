@@ -14,10 +14,13 @@ const StyledHeading = pad(textAlign(Heading), 'regular');
 const Description = pad(textAlign(Block));
 
 const FullWidthButton = fullWidth(Button);
+FullWidthButton.displayName = 'FullWidthButton';
 
 const LargePaddedFullWidthButton = pad(FullWidthButton, 'large');
+LargePaddedFullWidthButton.displayName = 'LargePaddedFullWidthButton';
 
 const LoginWithPassword = cursor(Span);
+LoginWithPassword.displayName = 'LoginWithPassword';
 
 const FooterNote = textAlign(Block);
 
@@ -25,7 +28,7 @@ const getButton = (error, props) =>
   error ? <LargePaddedFullWidthButton {...props} /> : <FullWidthButton {...props} />;
 
 const ResetPasswordForm = ({
-  handleSubmit, submitting, invalid, onLoginClicked, error,
+  handleSubmit, submitting, invalid, onLoginClick, error,
 }) => (
   <form onSubmit={handleSubmit}>
     <StyledHeading size="subtitle">Having trouble logging in?</StyledHeading>
@@ -40,7 +43,7 @@ const ResetPasswordForm = ({
     {error && <Block palette="danger">{error}</Block>}
     <Hr />
     <FooterNote size="caption">
-      Remember your password? <LoginWithPassword onClick={onLoginClicked} palette="primary" size="caption">Sign in.</LoginWithPassword>
+      Remember your password? <LoginWithPassword onClick={onLoginClick} palette="primary" size="caption">Sign in.</LoginWithPassword>
     </FooterNote>
   </form>
 );
@@ -49,7 +52,7 @@ ResetPasswordForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
   invalid: bool,
-  onLoginClicked: func,
+  onLoginClick: func,
   error: string,
 };
 

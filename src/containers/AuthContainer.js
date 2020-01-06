@@ -89,7 +89,7 @@ export default class AuthContainer extends Component {
               <WizardStep
                 component={ResetPasswordFormContainer}
                 name="ResetPassword"
-                onLoginClicked={() => emailOrPhone ? goto('LoginWithPassword') : goto('LoginOrRegister')}
+                onLoginClick={() => emailOrPhone ? goto('LoginWithPassword') : goto('LoginOrRegister')}
                 onSuccess={next}
               />
               <WizardStep

@@ -1,44 +1,64 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Field } from 'redux-form';
 
 import LoginOrRegisterForm from 'sly/components/organisms/LoginOrRegisterForm';
-import { Block } from 'sly/components/atoms/index';
 
-const error = 'Blah';
+const handleSubmit = jest.fn();
+const defaultProps = {
+  handleSubmit,
+};
 
-const wrap = (props = {}) => shallow(<LoginOrRegisterForm {...props} />);
+const wrap = (props = {}) => shallow(<LoginOrRegisterForm {...defaultProps} {...props} />);
 
 describe('LoginOrRegisterForm', () => {
+  it('does not render children when passed in', () => {
+    const wrapper = wrap({ childred: 'test' });
+    expect(wrapper.contains('test')).toBe(false);
+  });
+
   it('renders', () => {
-    const handleSubmit = jest.fn();
-    const wrapper = wrap({ handleSubmit });
-    expect(wrapper.find(Field)).toHaveLength(3);
-    expect(wrapper.find('StyledButton')).toHaveLength(1);
-    expect(wrapper.find(Block)).toHaveLength(1);
+    const wrapper = wrap();
+
+    expect(wrapper.find('Field').filter({ name: 'emailOrPhone' })).toHaveLength(1);
+    expect(wrapper.find('FullWidthButton')).toHaveLength(1);
+    expect(wrapper.find('LargePaddedFullWidthButton')).toHaveLength(2);
+    expect(wrapper.find('LoginWithPassword')).toHaveLength(1);
   });
 
-  it('render error when error is passed', () => {
-    const handleSubmit = jest.fn();
-    const wrapper = wrap({ handleSubmit, error });
-    const blocks = wrapper.find(Block);
+  it('renders error', () => {
+    const error = 'error';
+    const wrapper = wrap({ error });
+    const errors = wrapper.find('Error');
 
-    expect(blocks).toHaveLength(2);
-    expect(blocks.at(0).dive().render().text()).toBe(error);
+    expect(wrapper.find('LargePaddedFullWidthButton')).toHaveLength(3);
+    expect(errors).toHaveLength(1);
+    expect(errors.at(0).dive().render().text()).toBe(error);
   });
 
-  it('handles onFormSubmit', () => {
+  it('renders socialLoginError', () => {
+    const socialLoginError = 'socialLoginError';
+    const wrapper = wrap({ socialLoginError });
+    const errors = wrapper.find('SocialLoginError');
+
+    expect(wrapper.find('FullWidthButton')).toHaveLength(1);
+    expect(wrapper.find('LargePaddedFullWidthButton')).toHaveLength(2);
+    expect(errors).toHaveLength(1);
+    expect(errors.at(0).dive().render().text()).toBe(socialLoginError);
+  });
+
+  it('handles submit', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
-    wrapper.find('Form').simulate('submit');
+
+    wrapper.find('form').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
 
-  it('handles onSignupClicked', () => {
-    const handleSubmit = jest.fn();
-    const onSignupClicked = jest.fn();
-    const wrapper = wrap({ handleSubmit, onSignupClicked });
-    wrapper.find('Signup').simulate('click');
-    expect(onSignupClicked).toHaveBeenCalled();
+  it('handles onFacebookSigninClick', () => {
+    const onFacebookSigninClick = jest.fn();
+    const wrapper = wrap({ onFacebookSigninClick });
+
+    wrapper.find('LargePaddedFullWidthButton').at(0).simulate('click');
+    expect(onFacebookSigninClick).toHaveBeenCalled();
   });
 });

@@ -16,18 +16,23 @@ import { Heading, Button, Block, Icon } from 'sly/components/atoms';
 const StyledHeading = textAlign(pad(Heading));
 
 const FullWidthButton = fullWidth(Button);
+FullWidthButton.displayName = 'FullWidthButton';
 
 const LargePaddedFullWidthButton = pad(FullWidthButton, 'large');
+LargePaddedFullWidthButton.displayName = 'LargePaddedFullWidthButton';
 
 const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.regular')};
 `;
 
 const SocialLoginError = pad(Block, 'large');
+SocialLoginError.displayName = 'SocialLoginError';
 
 const LoginWithPassword = cursor(textAlign(Block));
+LoginWithPassword.displayName = 'LoginWithPassword';
 
 const Error = pad(Block);
+Error.displayName = 'Error';
 
 const PaddedTosAndPrivacy = pad(textAlign(TosAndPrivacy), 'xxLarge');
 
@@ -65,7 +70,6 @@ LoginOrRegisterForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
   invalid: bool,
-  onSignupClick: func,
   error: string,
   socialLoginError: string,
   onFacebookSigninClick: func,

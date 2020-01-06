@@ -8,13 +8,15 @@ import { withPreventDefault } from 'sly/services/helpers/forms';
 
 const LoginOrRegisterFormContainer = reduxForm({
   form: 'LoginOrRegisterForm',
-  destroyOnUnmount: false,
 })(LoginOrRegisterForm);
 
 storiesOf('Organisms|LoginOrRegisterForm', module)
   .add('default', () => (
     <LoginOrRegisterFormContainer
       handleSubmit={withPreventDefault(action('form submitted'))}
-      onSignupClicked={withPreventDefault(action('sign up clicked'))}
+      onSignupClick={action('sign up clicked')}
+      onFacebookSigninClick={action('facebook login clicked')}
+      onGoogleSigninClick={action('google login clicked')}
+      onPartnerAgentLoginClick={action('partner agent login clicked')}
     />
   ));

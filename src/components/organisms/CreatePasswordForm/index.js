@@ -14,6 +14,8 @@ const StyledHeading = textAlign(pad(Heading));
 const FullWidthButton = fullWidth(Button);
 
 const LargePaddedFullWidthButton = pad(FullWidthButton, 'large');
+// todo: revisit to check of there is way to automatically set displayName
+LargePaddedFullWidthButton.displayName = 'LargePaddedFullWidthButton';
 
 const DoItLater = cursor(textAlign(Block));
 

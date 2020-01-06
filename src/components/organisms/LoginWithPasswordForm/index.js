@@ -13,10 +13,13 @@ import ReduxField from 'sly/components/organisms/ReduxField';
 const StyledHeading = textAlign(pad(Heading));
 
 const FullWidthButton = fullWidth(Button);
+FullWidthButton.displayName = 'FullWidthButton';
 
 const LargePaddedFullWidthButton = pad(FullWidthButton, 'large');
+LargePaddedFullWidthButton.displayName = 'LargePaddedFullWidthButton';
 
 const PaddedBlock = textAlign(pad(Block));
+PaddedBlock.displayName = 'PaddedBlock';
 
 const ResetPassword = cursor(Block);
 
@@ -49,7 +52,6 @@ LoginWithPasswordForm.propTypes = {
   submitting: bool,
   invalid: bool,
   error: string,
-  onDoThisLaterClick: func,
   emailOrPhone: string.isRequired,
   onLoginWithOtpClick: func,
   onResetPasswordClick: func,
