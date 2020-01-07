@@ -43,7 +43,7 @@ const foregroundColor = ({
 };
 
 const borderColor = ({
-  ghost, secondary, borderPalette, borderVariation, disabled,
+  ghost, secondary, borderPalette, borderVariation = 'stroke', disabled,
 }) => {
   if (secondary) {
     return palette('slate', 'stroke');
@@ -135,7 +135,6 @@ export const styles = css`
   })};
 
   &:hover {
-    border-color: ${p => borderColor({ ...p, selected: true })};
     background-color: ${hoverBackgroundColor};
     color: ${hoverForegroundColor};
   }

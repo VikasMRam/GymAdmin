@@ -24,7 +24,6 @@ const ChevronLink = styled(({ flip, ...props }) => (
     ghost
     palette="slate"
     borderPalette="slate"
-    borderVariation="stroke"
     kind="label"
     {...props}
   >
