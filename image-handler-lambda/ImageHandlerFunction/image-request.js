@@ -105,7 +105,7 @@ class ImageRequest {
     }
   }
 
-  async uploadEditedImage(buffer, headers) {
+  async uploadEditedImage(buffer, extraParams={}) {
     console.time('putting object');
     const key = this.parseDestImageKey(this.requestType);
 
@@ -115,8 +115,8 @@ class ImageRequest {
     const params = {
       Bucket: this.bucket,
       Key: key,
-      Metadata: headers,
       Body: buffer,
+      ...extraParams,
     };
 
     const request = s3.putObject(params).promise();
