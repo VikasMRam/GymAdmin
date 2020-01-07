@@ -24,9 +24,6 @@ SocialLoginError.displayName = 'SocialLoginError';
 const LoginWithPassword = cursor(textAlign(Block));
 LoginWithPassword.displayName = 'LoginWithPassword';
 
-const Error = pad(Block);
-Error.displayName = 'Error';
-
 const ResetPassword = cursor(Block);
 ResetPassword.displayName = 'ResetPassword';
 
@@ -47,7 +44,7 @@ const OtpLoginForm = ({
       component={ReduxField}
     />
     {getSubmitButton(error, { children: 'Log in', type: 'submit', disabled: submitting || invalid })}
-    {error && <Error palette="danger" size="caption">{error}</Error>}
+    {error && <Block palette="danger" size="caption">{error}</Block>}
   </form>
 );
 

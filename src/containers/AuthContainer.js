@@ -5,7 +5,9 @@ import { withRouter } from 'react-router';
 
 import { authenticateCancel, authenticateSuccess } from 'sly/store/authenticated/actions';
 import { withAuth } from 'sly/services/newApi';
+import withNotification from 'sly/controllers/withNotification';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
+import { email } from 'sly/services/validation';
 import LoginOrRegisterFormContainer from 'sly/containers/LoginOrRegisterFormContainer';
 import LoginWithPasswordFormContainer from 'sly/containers/LoginWithPasswordFormContainer';
 import ResetPasswordFormContainer from 'sly/containers/ResetPasswordFormContainer';
@@ -19,6 +21,7 @@ const mapStateToProps = state => ({
 
 @withRouter
 @withAuth
+@withNotification
 @connect(mapStateToProps, {
   authenticateCancel,
   authenticateSuccess,
@@ -34,6 +37,7 @@ export default class AuthContainer extends Component {
     hideModal: func,
     children: func,
     sendOtpCode: func.isRequired,
+    notifyError: func.isRequired,
   };
 
   state = { isOpen: false };
@@ -58,13 +62,23 @@ export default class AuthContainer extends Component {
     }
   };
 
-  gotoOtpLogin = (goto) => {
-    const { sendOtpCode } = this.props;
+  gotoOtpLogin = (goto, emailOrPhone) => {
+    const { sendOtpCode, notifyError } = this.props;
+    let payload = {};
+    if (email(emailOrPhone)) {
+      payload = {
+        email: emailOrPhone,
+      };
+    } else {
+      payload = {
+        phone_number: emailOrPhone,
+      };
+    }
 
-    return sendOtpCode()
+    return sendOtpCode(payload)
       .then(() => goto('OtpLogin'))
-      .catch((error) => {
-        // error
+      .catch(() => {
+        notifyError('Failed to send code. Please try again.');
       });
   };
 
@@ -116,7 +130,7 @@ export default class AuthContainer extends Component {
                 emailOrPhone={emailOrPhone}
                 onSubmitSuccess={authenticateSuccess}
                 onResetPasswordClick={() => goto('ResetPassword')}
-                onLoginWithOtpClick={() => this.gotoOtpLogin(goto)}
+                onLoginWithOtpClick={() => this.gotoOtpLogin(goto, emailOrPhone)}
               />
             </WizardSteps>
           )}

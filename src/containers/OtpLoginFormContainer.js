@@ -3,7 +3,7 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { func, string, object } from 'prop-types';
 import { connect } from 'react-redux';
 
-import { createValidator, required } from 'sly/services/validation';
+import { createValidator, required, email } from 'sly/services/validation';
 import { withAuth } from 'sly/services/newApi';
 import withNotification from 'sly/controllers/withNotification';
 import OtpLoginForm from 'sly/components/organisms/OtpLoginForm';
@@ -45,7 +45,12 @@ export default class OtpLoginFormContainer extends Component {
 
   handleOnSubmit = ({ emailOrPhone, code }) => {
     const { otpLoginUser, onSubmitSuccess, clearSubmitErrors, form } = this.props;
-    const payload = { email: emailOrPhone, otp: code };
+    const payload = { otp: code };
+    if (email(emailOrPhone)) {
+      payload.email = emailOrPhone;
+    } else {
+      payload.phone_number = emailOrPhone;
+    }
 
     clearSubmitErrors(form);
     return otpLoginUser(payload)
@@ -63,7 +68,16 @@ export default class OtpLoginFormContainer extends Component {
   resendCode = () => {
     const { formState, resendOtpCode, notifyError, notifyInfo } = this.props;
     const { emailOrPhone } = formState;
-    const payload = { email: emailOrPhone };
+    let payload = {};
+    if (email(emailOrPhone)) {
+      payload = {
+        email: emailOrPhone,
+      };
+    } else {
+      payload = {
+        phone_number: emailOrPhone,
+      };
+    }
 
     return resendOtpCode(payload)
       .then(() => {

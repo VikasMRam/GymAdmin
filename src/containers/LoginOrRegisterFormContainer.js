@@ -3,7 +3,7 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
-import { createValidator, required } from 'sly/services/validation';
+import { createValidator, required, email } from 'sly/services/validation';
 import { withAuth } from 'sly/services/newApi';
 import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/constants/loginProviders';
 import loadFB from 'sly/services/helpers/facebookSDK';
@@ -138,7 +138,16 @@ export default class LoginOrRegisterFormContainer extends Component {
 
   handleOnSubmit = ({ emailOrPhone }) => {
     const { registerUser, onSubmitSuccess, clearSubmitErrors, onUserAlreadyExists, form } = this.props;
-    const payload = { email: emailOrPhone };
+    let payload = {};
+    if (email(emailOrPhone)) {
+      payload = {
+        email: emailOrPhone,
+      };
+    } else {
+      payload = {
+        phone_number: emailOrPhone,
+      };
+    }
 
     clearSubmitErrors(form);
     return registerUser(payload)

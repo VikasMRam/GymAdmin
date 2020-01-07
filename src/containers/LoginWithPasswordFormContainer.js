@@ -3,7 +3,7 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
-import { createValidator, required, minLength } from 'sly/services/validation';
+import { createValidator, required, minLength, email } from 'sly/services/validation';
 import { withAuth } from 'sly/services/newApi';
 import LoginWithPasswordForm from 'sly/components/organisms/LoginWithPasswordForm';
 
@@ -36,7 +36,12 @@ export default class LoginWithPasswordFormContainer extends Component {
 
   handleOnSubmit = ({ emailOrPhone, password }) => {
     const { loginUser, onSubmitSuccess, clearSubmitErrors, form } = this.props;
-    const payload = { email: emailOrPhone, password };
+    const payload = { password };
+    if (email(emailOrPhone)) {
+      payload.email = emailOrPhone;
+    } else {
+      payload.phone_number = emailOrPhone;
+    }
 
     clearSubmitErrors(form);
     return loginUser(payload)

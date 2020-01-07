@@ -29,7 +29,7 @@ describe('OtpLoginForm', () => {
   it('renders error', () => {
     const error = 'error';
     const wrapper = wrap({ error });
-    const errors = wrapper.find('Error');
+    const errors = wrapper.find('Block');
 
     expect(wrapper.find('LargePaddedFullWidthButton')).toHaveLength(1);
     expect(errors).toHaveLength(1);
