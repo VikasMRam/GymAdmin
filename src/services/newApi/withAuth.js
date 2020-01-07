@@ -29,6 +29,9 @@ const userApiMethods = [
   'setPassword',
   'updatePassword',
   'thirdPartyLogin',
+  'resendOtpCode',
+  'otpLoginUser',
+  'sendOtpCode',
 ].reduce((acc, method) => {
   acc[method] = api[method].asAction;
   return acc;
@@ -59,6 +62,9 @@ export default function withAuth(InnerComponent) {
       status: object.isRequired,
       user: object,
       updateUser: func.isRequired,
+      resendOtpCode: func.isRequired,
+      otpLoginUser: func.isRequired,
+      sendOtpCode: func.isRequired,
     };
 
     static WrappedComponent = InnerComponent;
@@ -159,6 +165,21 @@ export default function withAuth(InnerComponent) {
       return thirdPartyLogin(data).then(status.user.refetch);
     };
 
+    resendOtpCode = (data) => {
+      const { resendOtpCode } = this.props;
+      return resendOtpCode(data);
+    };
+
+    otpLoginUser = (data) => {
+      const { otpLoginUser } = this.props;
+      return otpLoginUser(data);
+    };
+
+    sendOtpCode = (data) => {
+      const { sendOtpCode } = this.props;
+      return sendOtpCode(data);
+    };
+
     render = () => (
       <InnerComponent
         {...this.props}
@@ -172,6 +193,9 @@ export default function withAuth(InnerComponent) {
         recoverPassword={this.recoverPassword}
         thirdPartyLogin={this.thirdPartyLogin}
         ensureAuthenticated={this.ensureAuthenticated}
+        resendOtpCode={this.resendOtpCode}
+        otpLoginUser={this.otpLoginUser}
+        sendOtpCode={this.sendOtpCode}
       />
     );
   }

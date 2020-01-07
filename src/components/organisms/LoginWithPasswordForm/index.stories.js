@@ -17,5 +17,6 @@ storiesOf('Organisms|LoginWithPasswordForm', module)
       onDoThisLaterClick={action('onDoThisLaterClick clicked')}
       onLoginWithOtpClick={action('onLoginWithOtpClick clicked')}
       onResetPasswordClick={action('onResetPasswordClick clicked')}
+      emailOrPhone="test@test.com"
     />
   ));

@@ -10,6 +10,7 @@ import LoginOrRegisterFormContainer from 'sly/containers/LoginOrRegisterFormCont
 import LoginWithPasswordFormContainer from 'sly/containers/LoginWithPasswordFormContainer';
 import ResetPasswordFormContainer from 'sly/containers/ResetPasswordFormContainer';
 import CreatePasswordFormContainer from 'sly/containers/CreatePasswordFormContainer';
+import OtpLoginFormContainer from 'sly/containers/OtpLoginFormContainer';
 import Modal from 'sly/components/molecules/Modal';
 
 const mapStateToProps = state => ({
@@ -32,6 +33,7 @@ export default class AuthContainer extends Component {
     showModal: func,
     hideModal: func,
     children: func,
+    sendOtpCode: func.isRequired,
   };
 
   state = { isOpen: false };
@@ -44,7 +46,7 @@ export default class AuthContainer extends Component {
     this.shouldAuth();
   }
 
-  shouldAuth() {
+  shouldAuth = () => {
     const {
       authenticated,
     } = this.props;
@@ -54,7 +56,17 @@ export default class AuthContainer extends Component {
     } else if (this.state.isOpen && !authenticated.loggingIn) {
       this.setState({ isOpen: false });
     }
-  }
+  };
+
+  gotoOtpLogin = (goto) => {
+    const { sendOtpCode } = this.props;
+
+    return sendOtpCode()
+      .then(() => goto('OtpLogin'))
+      .catch((error) => {
+        // error
+      });
+  };
 
   render() {
     const { isOpen } = this.state;
@@ -90,7 +102,13 @@ export default class AuthContainer extends Component {
                 component={ResetPasswordFormContainer}
                 name="ResetPassword"
                 onLoginClick={() => emailOrPhone ? goto('LoginWithPassword') : goto('LoginOrRegister')}
-                onSuccess={next}
+                onSuccess={() => goto('LoginWithPassword')}
+              />
+              <WizardStep
+                component={OtpLoginFormContainer}
+                name="OtpLogin"
+                emailOrPhone={emailOrPhone}
+                onSubmitSuccess={authenticateSuccess}
               />
               <WizardStep
                 component={LoginWithPasswordFormContainer}
@@ -98,6 +116,7 @@ export default class AuthContainer extends Component {
                 emailOrPhone={emailOrPhone}
                 onSubmitSuccess={authenticateSuccess}
                 onResetPasswordClick={() => goto('ResetPassword')}
+                onLoginWithOtpClick={() => this.gotoOtpLogin(goto)}
               />
             </WizardSteps>
           )}
