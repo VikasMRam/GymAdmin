@@ -17,16 +17,16 @@ const ImageHandler = require('./image-handler.js');
 exports.handler = async (event) => {
   const imageRequest = new ImageRequest();
   const imageHandler = new ImageHandler();
+
   try {
     const request = await imageRequest.setup(event, process.env.BUCKET);
-    // console.log(request);
     const processedRequest = await imageHandler.process(request);
-
-    await imageRequest.uploadEditedImage(processedRequest);
+    const headers = getResponseHeaders(request.contentType);
+    await imageRequest.uploadEditedImage(processedRequest, headers);
 
     return response = {
       statusCode: 200,
-      headers: getResponseHeaders(request.contentType),
+      headers,
       body: processedRequest.toString('base64'),
       isBase64Encoded: true,
     };
