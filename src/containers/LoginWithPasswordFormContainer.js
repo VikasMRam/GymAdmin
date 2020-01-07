@@ -37,7 +37,7 @@ export default class LoginWithPasswordFormContainer extends Component {
   handleOnSubmit = ({ emailOrPhone, password }) => {
     const { loginUser, onSubmitSuccess, clearSubmitErrors, form } = this.props;
     const payload = { password };
-    if (email(emailOrPhone)) {
+    if (!email(emailOrPhone)) {
       payload.email = emailOrPhone;
     } else {
       payload.phone_number = emailOrPhone;

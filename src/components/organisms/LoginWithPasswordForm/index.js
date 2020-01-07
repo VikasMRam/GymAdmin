@@ -39,7 +39,7 @@ const LoginWithPasswordForm = ({
       placeholder="Password"
       component={ReduxField}
     />
-    {getButton(error, { type: 'submit', ghost: true, disabled: submitting || invalid, children: 'Log in' })}
+    {getButton(error, { type: 'submit', disabled: submitting || invalid, children: 'Log in' })}
     {error && <Block palette="danger" size="caption">{error}</Block>}
     <HrWithText text="or" />
     <PaddedBlock>Use a one time password for easy log in for your account<br />{emailOrPhone}</PaddedBlock>

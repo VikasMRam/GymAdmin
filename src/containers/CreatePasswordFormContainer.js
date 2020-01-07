@@ -29,11 +29,12 @@ export default class CreatePasswordFormContainer extends Component {
     setPassword: func,
     notifyInfo: func.isRequired,
     onDoThisLaterClick: func,
+    onSubmit: func,
     user: userPropType.isRequired,
   };
 
   handleSubmit = ({ password }) => {
-    const { setPassword, notifyInfo, user } = this.props;
+    const { setPassword, notifyInfo, user, onSubmit } = this.props;
     const { email } = user;
     const payload = { password, email };
 
@@ -46,6 +47,7 @@ export default class CreatePasswordFormContainer extends Component {
           throw new SubmissionError({ _error: errorMessage });
         }
       })
+      .then(onSubmit)
       .then(() => {
         notifyInfo('Password created successfully');
       });

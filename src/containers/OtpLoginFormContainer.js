@@ -46,7 +46,7 @@ export default class OtpLoginFormContainer extends Component {
   handleOnSubmit = ({ emailOrPhone, code }) => {
     const { otpLoginUser, onSubmitSuccess, clearSubmitErrors, form } = this.props;
     const payload = { otp: code };
-    if (email(emailOrPhone)) {
+    if (!email(emailOrPhone)) {
       payload.email = emailOrPhone;
     } else {
       payload.phone_number = emailOrPhone;
@@ -69,7 +69,7 @@ export default class OtpLoginFormContainer extends Component {
     const { formState, resendOtpCode, notifyError, notifyInfo } = this.props;
     const { emailOrPhone } = formState;
     let payload = {};
-    if (email(emailOrPhone)) {
+    if (!email(emailOrPhone)) {
       payload = {
         email: emailOrPhone,
       };

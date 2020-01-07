@@ -34,11 +34,11 @@ export default class ResetPasswordFormContainer extends Component {
     clearSubmitErrors: func,
     form: string,
     notifyInfo: func.isRequired,
-    onSuccess: func,
+    onSubmit: func,
   };
 
   handleSubmit = ({ email }) => {
-    const { recoverPassword, clearSubmitErrors, form, notifyInfo, onSuccess } = this.props;
+    const { recoverPassword, clearSubmitErrors, form, notifyInfo, onSubmit } = this.props;
     const payload = { email };
 
     clearSubmitErrors(form);
@@ -48,7 +48,7 @@ export default class ResetPasswordFormContainer extends Component {
         const errorMessage = Object.values(response.body.errors).join('. ');
         throw new SubmissionError({ _error: errorMessage });
       })
-      .then(onSuccess)
+      .then(onSubmit)
       .then(() => {
         notifyInfo(`A link to reset your password has been sent to ${email}.`);
       });

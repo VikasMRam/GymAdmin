@@ -65,7 +65,7 @@ export default class AuthContainer extends Component {
   gotoOtpLogin = (goto, emailOrPhone) => {
     const { sendOtpCode, notifyError } = this.props;
     let payload = {};
-    if (email(emailOrPhone)) {
+    if (!email(emailOrPhone)) {
       payload = {
         email: emailOrPhone,
       };
@@ -111,12 +111,13 @@ export default class AuthContainer extends Component {
                 component={CreatePasswordFormContainer}
                 name="CreatePassword"
                 onDoThisLaterClick={authenticateSuccess}
+                onSubmit={authenticateSuccess}
               />
               <WizardStep
                 component={ResetPasswordFormContainer}
                 name="ResetPassword"
                 onLoginClick={() => emailOrPhone ? goto('LoginWithPassword') : goto('LoginOrRegister')}
-                onSuccess={() => goto('LoginWithPassword')}
+                onSubmit={() => goto('LoginWithPassword')}
               />
               <WizardStep
                 component={OtpLoginFormContainer}

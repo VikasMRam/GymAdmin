@@ -34,7 +34,7 @@ export default class LoginOrRegisterFormContainer extends Component {
     thirdPartyLogin: func.isRequired,
     onSocialSigninSuccess: func,
     clearSubmitErrors: func,
-    onSubmitSuccess: func,
+    onSubmit: func,
     onUserAlreadyExists: func,
     onLoginWithPasswordClick: func,
     form: string,
@@ -137,9 +137,9 @@ export default class LoginOrRegisterFormContainer extends Component {
   };
 
   handleOnSubmit = ({ emailOrPhone }) => {
-    const { registerUser, onSubmitSuccess, clearSubmitErrors, onUserAlreadyExists, form } = this.props;
+    const { registerUser, onSubmit, clearSubmitErrors, onUserAlreadyExists, form } = this.props;
     let payload = {};
-    if (email(emailOrPhone)) {
+    if (!email(emailOrPhone)) {
       payload = {
         email: emailOrPhone,
       };
@@ -151,7 +151,7 @@ export default class LoginOrRegisterFormContainer extends Component {
 
     clearSubmitErrors(form);
     return registerUser(payload)
-      .then(onSubmitSuccess)
+      .then(onSubmit)
       .catch((error) => {
         if (error.status === 400) {
           return Promise.reject(new SubmissionError({ _error: 'Oops! That email/phone is not valid.' }));
