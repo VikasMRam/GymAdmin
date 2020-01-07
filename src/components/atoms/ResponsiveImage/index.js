@@ -57,8 +57,11 @@ export default class ResponsiveImage extends React.Component {
       path, sizes, sources, alt, loading, className: classNameProp, aspectRatio, ...props
     } = this.props;
 
+    // aspect ratio is a number in getSrcset
+    const aspectRatioString = getKey(`sizes.picture.ratios.${aspectRatio}`);
+    const aspectRatioValue = (parseFloat(aspectRatioString) / 100).toFixed(4);
     const { jpegSrcset, webpSrcset, src } = getSrcset(path, {
-      aspectRatio,
+      aspectRatio: aspectRatioValue,
       sources: sources || getKey('defaultImageSources'),
     });
 

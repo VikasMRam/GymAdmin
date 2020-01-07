@@ -205,7 +205,6 @@ export default class MediaGallery extends Component {
   generateSlideContent = (media, index) => {
     const { currentSlide, aspectRatio, sizes } = this.props;
 
-    console.log('media', media)
     switch (media.type) {
       case 'image':
         return media.ofVideo !== undefined ? (
@@ -255,7 +254,7 @@ export default class MediaGallery extends Component {
     const {
       currentSlide, videos, images, topRightSection, bottomLeftSection, bottomRightSection, showThumbnails, onSlideClick,
     } = this.props;
-    console.log('images MediaGallery', images);
+
     const { onSlideChange, ...rest } = this.props;
     const thumbnails = [];
     const formattedVideos = videos.map((video) => {

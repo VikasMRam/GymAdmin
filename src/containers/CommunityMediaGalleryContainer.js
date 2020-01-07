@@ -27,7 +27,6 @@ function getImages({ gallery = {}, mainImage, propInfo = {} }) {
     images = [{ src: defaultImageUrl }];
   }
 
-  console.log('find mainImage', mainImage, images)
   // If there is a mainImage put it in front
   const mainImageIndex = images.findIndex((image) => {
     return image.path && mainImage.indexOf(image.path) !== -1;
@@ -106,9 +105,6 @@ export default class CommunityMediaGalleryContainer extends React.Component {
     const { videoGallery = { videos: [] } } = community;
 
     const { isFullscreenActive, currentSlideIndex } = this.state;
-
-    console.log('community', community);
-    console.log('images', getImages(community));
 
     return (
       <CommunityMediaGallery

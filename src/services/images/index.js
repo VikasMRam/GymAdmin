@@ -1,9 +1,14 @@
 import { assetsUrl } from 'sly/config';
 
-export const getFormat = ({ width, height, crop = true }) => {
+export const getFormat = ({ width, height, aspectRatio, crop = true }) => {
   if (!(width || height)) {
     throw new Error('Image Handler needs at least one dimension');
   }
+
+  if (!height && aspectRatio) {
+    height = Math.ceil(width * aspectRatio);
+  }
+
   const cropString = !crop && width && height
     ? 'a'
     : '';
@@ -20,7 +25,7 @@ export const getImagePath = (path, format) => {
   return `${assetsUrl}/uploads/${path}`;
 };
 
-const getSrcsetForPath = (imagePath, sources) => sources.map((source) => {
+const getSrcsetForPath = (imagePath, { sources, aspectRatio }) => sources.map((source) => {
   let width;
   let height;
   if (Array.isArray(source)) {
@@ -29,14 +34,14 @@ const getSrcsetForPath = (imagePath, sources) => sources.map((source) => {
     width = source;
   }
 
-  const format = { width, height };
+  const format = { width, height, aspectRatio };
   return `${getImagePath(imagePath, format)} ${width}w`;
 }).join(', ');
 
 // only doing 3:2 for now
 export const getSrcset = (imagePath, config) => ({
-  src: getImagePath(imagePath, { width: 768 }),
-  jpegSrcset: getSrcsetForPath(imagePath, config.sources),
-  webpSrcset: getSrcsetForPath(imagePath.replace(/\.jpe?g/, '.webp'), config.sources),
+  src: getImagePath(imagePath, { width: 768, aspectRatio: config.aspectRatio }),
+  jpegSrcset: getSrcsetForPath(imagePath, config),
+  webpSrcset: getSrcsetForPath(imagePath.replace(/\.jpe?g/, '.webp'), config),
 });
 

@@ -48,6 +48,7 @@ const FullscreenMediaGallery = ({
     );
   };
 
+  console.log('images', images)
   return (
     <Modal
       isOpen={isOpen}

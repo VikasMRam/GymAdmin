@@ -44,8 +44,15 @@ theme.defaultImageSources = [
   1200, // our max
 ];
 
+const addImageSource = (source) => {
+  const srcs = [...theme.defaultImageSources];
+  let index = srcs.findIndex(x => x > source);
+  if (index === -1) index = srcs.length;
+  return srcs.splice(index, 0, source);
+};
+
 theme.imageFormats = {
-  heroGallery: { sizes: '(max-width: 1079px) 100vw, 768px' },
+  heroGallery: { sizes: '(max-width: 1079px) 100vw, 680px', sources: addImageSource(680) },
   fullscreenGallery: { sizes: '(max-width: 1199px) 100vw, 1200px' },
   thumbGallery: { sizes: '129px', sources: [[129, 86], [258, 172]] },
 };
@@ -282,6 +289,7 @@ theme.sizes = {
     },
   },
 
+  // TODO: this section should be moved to imageFormats
   picture: {
     tiny: {
       width: '9.375rem',   // 150px
@@ -309,7 +317,7 @@ theme.sizes = {
     },
     ratios: {
       '16:9': '56.25%',
-      golden: '61.803398875%',
+      golden: '61.80%',
       '3:2':  '66.66%',
       '4:3' : '75%',
       '1:1' : '100%',

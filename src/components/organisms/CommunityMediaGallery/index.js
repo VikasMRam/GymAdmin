@@ -46,7 +46,6 @@ export default class CommunityMediaGallery extends Component {
       communityName, city, state, images, videos, websiteUrl, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
     } = this.props;
 
-    console.log('videos', videos);
     const videoThumbs = videos.map((vid, i) => {
       // Important: create new object instance having src & alt as we will be modifying same object below
       return {
