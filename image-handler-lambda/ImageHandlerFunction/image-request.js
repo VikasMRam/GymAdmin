@@ -131,6 +131,8 @@ class ImageRequest {
       });
     } finally {
       console.timeEnd('putting object');
+      const { Body, ...extra } = params;
+      console.log('with params:', JSON.stringify(extra, null, 2));
     }
   }
 
