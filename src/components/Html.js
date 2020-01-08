@@ -23,6 +23,8 @@ const Html = ({
           Google Platform Library
         */}
         <meta name="google-signin-client_id" content={googleAppId} />
+        <link rel="preconnect" href="https://event.seniorly.com" />
+        <link rel="preconnect" href="https://apis.google.com" />
         <link rel="preconnect" href={assetsUrl} />
         <link rel="preload" href={`${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2`} as="font" crossOrigin="anonymous" />
         <link rel="preload" href={`${publicPath}/fonts/azo/azosans-regular-webfont.woff2`} as="font" crossOrigin="anonymous" />
