@@ -134,7 +134,7 @@ const CareTypeGuidePage = ({
             </Paragraph>
           </Wrapper>
         }
-        <StyledArticle><SeoLinks title="Find Assisted Living Near You by Cities" links={ALSeoCities} /></StyledArticle>
+        <StyledArticle><SeoLinks title="Find Assisted Living Near You by City" links={ALSeoCities} /></StyledArticle>
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>
       </TemplateContent>
       <Footer />
