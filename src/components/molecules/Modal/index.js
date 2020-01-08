@@ -135,6 +135,8 @@ const absoluteHeadStyles = css`
 
 const Head = styled.div`
   padding: ${size('spacing.large')};
+  padding-bottom: 0;
+  text-align: right;
 
   ${switchProp('layout', {
     fullScreen: fixedHeadStyles,

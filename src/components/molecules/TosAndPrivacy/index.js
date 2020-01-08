@@ -1,20 +1,21 @@
 import React from 'react';
-import { bool } from 'prop-types';
+import { bool, string } from 'prop-types';
 
 import { Block, Link } from 'sly/components/atoms';
 
-const getTosLink = isNewTab => <Link size="tiny" href="/tos" target={isNewTab ? '_blank' : null}>Terms of Use</Link>;
+const getTosLink = isNewTab => <Link weight="medium" size="tiny" href="/tos" target={isNewTab ? '_blank' : null}>Terms of Use</Link>;
 
-const getPrivacyLink = isNewTab => <Link size="tiny" href="/privacy" target={isNewTab ? '_blank' : null}>Privacy Policy</Link>;
+const getPrivacyLink = isNewTab => <Link weight="medium" size="tiny" href="/privacy" target={isNewTab ? '_blank' : null}>Privacy Policy</Link>;
 
-const TosAndPrivacy = ({ openLinkInNewTab }) => (
-  <Block palette="slate" size="tiny">
-    By continuing, you agree to Seniorly&apos;s {getTosLink(openLinkInNewTab)} and {getPrivacyLink(openLinkInNewTab)}.
+const TosAndPrivacy = ({ openLinkInNewTab, className }) => (
+  <Block palette="slate" size="tiny" className={className}>
+    By continuing, you agree to Seniorly&apos;s {getTosLink(openLinkInNewTab)} and {getPrivacyLink(openLinkInNewTab)}
   </Block>
 );
 
 TosAndPrivacy.propTypes = {
   openLinkInNewTab: bool,
+  className: string,
 };
 
 export default TosAndPrivacy;

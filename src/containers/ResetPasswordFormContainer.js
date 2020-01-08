@@ -1,49 +1,65 @@
 import React, { Component } from 'react';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { connect } from 'react-redux';
-import { func, bool } from 'prop-types';
+import { func, string } from 'prop-types';
 
 import { createValidator, required, email } from 'sly/services/validation';
-import ResetPasswordForm from 'sly/components/organisms/ResetPasswordForm';
 import { withAuth } from 'sly/services/newApi';
+import withNotification from 'sly/controllers/withNotification';
+import ResetPasswordForm from 'sly/components/organisms/ResetPasswordForm';
 
 const validate = createValidator({
   email: [required, email],
 });
 
+const formName = 'ResetPasswordForm';
+
 const ReduxForm = reduxForm({
-  form: 'ResetPasswordForm',
+  form: formName,
   validate,
+  destroyOnUnmount: false,
 })(ResetPasswordForm);
 
 const mapDispatchToProps = {
-  clearSubmitErrors: () => clearSubmitErrors('ResetPasswordForm'),
+  clearSubmitErrors: (name = formName) => clearSubmitErrors(name),
 };
 
 @withAuth
-
+@withNotification
 @connect(null, mapDispatchToProps)
 
 export default class ResetPasswordFormContainer extends Component {
   static propTypes = {
     recoverPassword: func,
     clearSubmitErrors: func,
-    submitFailed: bool,
-    onSubmitSuccess: func,
+    form: string,
+    notifyInfo: func.isRequired,
+    onSubmit: func,
   };
 
-  handleSubmit = (data) => {
-    const { recoverPassword, clearSubmitErrors, onSubmitSuccess } = this.props;
-    clearSubmitErrors();
+  handleSubmit = ({ email }) => {
+    const { recoverPassword, clearSubmitErrors, form, notifyInfo, onSubmit } = this.props;
+    const payload = { email };
 
-    return recoverPassword(data).then(onSubmitSuccess).catch((response) => {
-      // TODO: Need to set a proper way to handle server side errors
-      const errorMessage = Object.values(response.body.errors).join('. ');
-      throw new SubmissionError({ _error: errorMessage });
-    });
+    clearSubmitErrors(form);
+    return recoverPassword(payload)
+      .catch((response) => {
+        // TODO: Need to set a proper way to handle server side errors
+        const errorMessage = Object.values(response.body.errors).join('. ');
+        throw new SubmissionError({ _error: errorMessage });
+      })
+      .then(onSubmit)
+      .then(() => {
+        notifyInfo(`A link to reset your password has been sent to ${email}.`);
+      });
   };
 
   render() {
-    return <ReduxForm onSubmit={this.handleSubmit} {...this.props} />;
+    return (
+      <ReduxForm
+        {...this.props}
+        onSubmit={this.handleSubmit}
+      />
+    );
   }
 }

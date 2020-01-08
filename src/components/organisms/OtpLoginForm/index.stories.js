@@ -3,19 +3,18 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import SignupForm from 'sly/components/organisms/SignupForm';
+import OtpLoginForm from 'sly/components/organisms/OtpLoginForm';
 import { withPreventDefault } from 'sly/services/helpers/forms';
 
+const OtpLoginFormContainer = reduxForm({
+  form: 'OtpLoginForm',
+})(OtpLoginForm);
 
-const SignupFormContainer = reduxForm({
-  form: 'SignupForm',
-  destroyOnUnmount: false,
-})(SignupForm);
-
-storiesOf('Organisms|SignupForm', module)
+storiesOf('Organisms|OtpLoginForm', module)
   .add('default', () => (
-    <SignupFormContainer
+    <OtpLoginFormContainer
       handleSubmit={withPreventDefault(action('form submitted'))}
-      onLoginClicked={withPreventDefault(action('login clicked'))}
+      onResendCodeClick={action('onResendCodeClick clicked')}
+      emailOrPhone="test@test.com"
     />
   ));

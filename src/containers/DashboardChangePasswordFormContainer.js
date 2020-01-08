@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm, SubmissionError, reset } from 'redux-form';
-import { object, func } from 'prop-types';
+import { func } from 'prop-types';
 
 import DashboardChangePasswordForm from 'sly/components/organisms/DashboardChangePasswordForm';
 import { createValidator, required, minLength, match } from 'sly/services/validation';
@@ -26,7 +26,7 @@ const ReduxForm = reduxForm({
 
 @withAuth
 
-class DashboardChangePasswordFormContainer extends Component {
+export default class DashboardChangePasswordFormContainer extends Component {
   static propTypes = {
     updatePassword: func,
     notifySuccess: func,
@@ -60,5 +60,3 @@ class DashboardChangePasswordFormContainer extends Component {
     );
   }
 }
-
-export default DashboardChangePasswordFormContainer;

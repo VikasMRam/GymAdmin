@@ -1,5 +1,5 @@
 import React from 'react';
-import { node, func, oneOfType } from 'prop-types';
+import { node, func, object, oneOfType } from 'prop-types';
 
 const WizardStep = ({ component, ...props }) => {
   const WizardStepForm = component;
@@ -11,7 +11,7 @@ const WizardStep = ({ component, ...props }) => {
 };
 
 WizardStep.propTypes = {
-  component: oneOfType([node, func]).isRequired,
+  component: oneOfType([node, func, object]).isRequired,
 };
 
 WizardStep.defaultProps = {

@@ -1,10 +1,10 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import Button from 'sly/components/atoms/Button';
 import SlyEvent from 'sly/services/helpers/events';
 
-const wrap = (props = {}) => mount(<Button {...props} />);
+const wrap = (props = {}) => shallow(<Button {...props} />);
 
 describe('Button', () => {
   const originalSendEvent = SlyEvent.getInstance().sendEvent;
@@ -29,22 +29,22 @@ describe('Button', () => {
 
   it('renders props when passed in', () => {
     const wrapper = wrap({ type: 'submit' });
-    expect(wrapper.find('button[type="submit"]')).toHaveLength(1);
+    expect(wrapper.dive().find('button[type="submit"]')).toHaveLength(1);
   });
 
   it('renders button by default', () => {
     const wrapper = wrap();
-    expect(wrapper.find('button')).toHaveLength(1);
+    expect(wrapper.dive().find('button')).toHaveLength(1);
   });
 
   it('renders Link when href is passed in', () => {
     const wrapper = wrap({ href: 'test' });
-    expect(wrapper.find('Link')).toHaveLength(1);
+    expect(wrapper.find('StyledLink')).toHaveLength(1);
   });
 
   it('renders Link when to is passed in', () => {
     const wrapper = wrap({ to: 'test' });
-    expect(wrapper.find('Link')).toHaveLength(1);
+    expect(wrapper.find('StyledLink')).toHaveLength(1);
   });
 
   it('sends event on click when one is provided', () => {
@@ -52,7 +52,7 @@ describe('Button', () => {
     const event = { action: 'clicky-clicky', category: 'red' };
 
     const wrapper = wrap({ onClick, event });
-    wrapper.find('button').simulate('click');
+    wrapper.dive().find('button').simulate('click');
 
     expect(SlyEvent.getInstance().sendEvent).toHaveBeenCalledWith(event);
     expect(onClick).toHaveBeenCalled();
@@ -62,7 +62,7 @@ describe('Button', () => {
     const onClick = jest.fn();
 
     const wrapper = wrap({ onClick });
-    wrapper.find('button').simulate('click');
+    wrapper.dive().find('button').simulate('click');
 
     expect(SlyEvent.getInstance().sendEvent).not.toHaveBeenCalled();
     expect(onClick).toHaveBeenCalled();
