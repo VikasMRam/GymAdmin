@@ -89,7 +89,7 @@ export default class Link extends Component {
     }
     const target = props.href && props.href.match(/https?:\/\//)
       ? { target: '_blank', rel: 'noopener' }
-      : { };
+      : {};
     return <Anchor {...target} {...props} href={addEventToUrl(props.href, props.event)} />;
   }
 }

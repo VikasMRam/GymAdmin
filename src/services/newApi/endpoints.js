@@ -32,6 +32,9 @@ export default {
   updatePassword: { method: post, path: '/platform/auth/password/update' },
   recoverPassword: { method: post, path: '/platform/auth/recover' },
   resetPassword: { method: post, path: '/platform/auth/recover/end' },
+  otpLoginUser: { method: post, path: '/platform/auth/otp/login' },
+  resendOtpCode: { method: post, path: '/platform/auth/otp/retry' },
+  sendOtpCode: { method: post, path: '/platform/auth/otp/start' },
 
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
   getCommunities: { method: get, path: '/marketplace/communities' },

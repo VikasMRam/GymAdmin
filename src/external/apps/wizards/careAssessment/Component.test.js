@@ -102,7 +102,7 @@ describe('Component', () => {
         .dive()
         .dive()
         .dive()
-        .render()
+        .dive()
         .text(),
     ).toBe(buttonTextFinal);
     expect(button.prop('href')).toBe(href);

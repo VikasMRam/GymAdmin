@@ -32,8 +32,8 @@ const participantProfiles = [
 
 const dateHrs = [
   'Tuesday, May 1st, 2018',
-  'Wednesday, May 1st',
-  'Monday, April 1st',
+  'Wednesday, May 1st, 2019',
+  'Monday, April 1st, 2019',
 ];
 
 const defaultProps = {

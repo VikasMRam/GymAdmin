@@ -1,16 +1,18 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ResetPasswordForm from 'sly/components/organisms/ResetPasswordForm';
+import OtpLoginForm from 'sly/components/organisms/OtpLoginForm';
 
+const emailOrPhone = 'test@test.com';
 const handleSubmit = jest.fn();
 const defaultProps = {
   handleSubmit,
+  emailOrPhone,
 };
 
-const wrap = (props = {}) => shallow(<ResetPasswordForm {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<OtpLoginForm {...defaultProps} {...props} />);
 
-describe('ResetPasswordForm', () => {
+describe('OtpLoginForm', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ childred: 'test' });
     expect(wrapper.contains('test')).toBe(false);
@@ -19,19 +21,19 @@ describe('ResetPasswordForm', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('Field').filter({ name: 'email' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ name: 'code' })).toHaveLength(1);
     expect(wrapper.find('FullWidthButton')).toHaveLength(1);
-    expect(wrapper.find('LoginWithPassword')).toHaveLength(1);
+    expect(wrapper.find('StyledHeading').contains(emailOrPhone)).toBeTruthy();
   });
 
   it('renders error', () => {
     const error = 'error';
     const wrapper = wrap({ error });
+    const errors = wrapper.find('Block');
 
-    expect(wrapper.find('Field').filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find('LargePaddedFullWidthButton')).toHaveLength(1);
-    expect(wrapper.find('Block')).toHaveLength(1);
-    expect(wrapper.find('LoginWithPassword')).toHaveLength(1);
+    expect(errors).toHaveLength(1);
+    expect(errors.at(0).dive().render().text()).toBe(error);
   });
 
   it('handles submit', () => {
@@ -40,13 +42,5 @@ describe('ResetPasswordForm', () => {
 
     wrapper.find('form').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
-  });
-
-  it('handles onLoginClick', () => {
-    const onLoginClick = jest.fn();
-    const wrapper = wrap({ onLoginClick });
-
-    wrapper.find('LoginWithPassword').simulate('click');
-    expect(onLoginClick).toHaveBeenCalled();
   });
 });
