@@ -13,6 +13,7 @@ import LoginWithPasswordFormContainer from 'sly/containers/LoginWithPasswordForm
 import ResetPasswordFormContainer from 'sly/containers/ResetPasswordFormContainer';
 import CreatePasswordFormContainer from 'sly/containers/CreatePasswordFormContainer';
 import OtpLoginFormContainer from 'sly/containers/OtpLoginFormContainer';
+import PartnerAgentLoginFormContainer from 'sly/containers/PartnerAgentLoginFormContainer';
 import Modal from 'sly/components/molecules/Modal';
 
 const mapStateToProps = state => ({
@@ -105,12 +106,19 @@ export default class AuthContainer extends Component {
                 name="LoginOrRegister"
                 onUserAlreadyExists={() => goto('LoginWithPassword')}
                 onSocialSigninSuccess={authenticateSuccess}
-                onPartnerAgentLoginClick={() => goto('LoginWithPassword')}
+                onPartnerAgentLoginClick={() => goto('PartherAgentLogin')}
               />
               <WizardStep
                 component={CreatePasswordFormContainer}
                 name="CreatePassword"
                 onDoThisLaterClick={authenticateSuccess}
+                onSubmit={authenticateSuccess}
+              />
+              <WizardStep
+                component={PartnerAgentLoginFormContainer}
+                name="PartherAgentLogin"
+                onRegisterClick={() => goto('LoginOrRegister')}
+                onResetPasswordClick={next}
                 onSubmit={authenticateSuccess}
               />
               <WizardStep
@@ -123,7 +131,7 @@ export default class AuthContainer extends Component {
                 component={OtpLoginFormContainer}
                 name="OtpLogin"
                 emailOrPhone={emailOrPhone}
-                onSubmitSuccess={authenticateSuccess}
+                onSubmit={authenticateSuccess}
               />
               <WizardStep
                 component={LoginWithPasswordFormContainer}

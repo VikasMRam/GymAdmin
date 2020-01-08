@@ -38,13 +38,13 @@ export default class OtpLoginFormContainer extends Component {
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
     clearSubmitErrors: func,
-    onSubmitSuccess: func,
+    onSubmit: func,
     form: string,
     formState: object,
   };
 
   handleOnSubmit = ({ emailOrPhone, code }) => {
-    const { otpLoginUser, onSubmitSuccess, clearSubmitErrors, form } = this.props;
+    const { otpLoginUser, onSubmit, clearSubmitErrors, form } = this.props;
     const payload = { otp: code };
     if (!email(emailOrPhone)) {
       payload.email = emailOrPhone;
@@ -54,7 +54,7 @@ export default class OtpLoginFormContainer extends Component {
 
     clearSubmitErrors(form);
     return otpLoginUser(payload)
-      .then(onSubmitSuccess)
+      .then(onSubmit)
       .catch((error) => {
         // TODO: Need to set a proper way to handle server side errors
         if (error.status === 400) {
