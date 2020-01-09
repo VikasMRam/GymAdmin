@@ -116,7 +116,7 @@ const getPricingAndRating = (startingRate, reviewsValue, numReviews, goToReviews
       </Wrapper>
       {startingRate > 0 &&
         <Block size="caption" palette="grey">
-          * Pricing varies depening on senior living room type and care service needs.
+          * Pricing varies depending on senior living room type and care service needs.
         </Block>
       }
     </>
