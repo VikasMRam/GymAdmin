@@ -77,7 +77,7 @@ class SearchBoxContainer extends Component {
         const [city, state] = result.formatted_address.split(',');
         result.city = city;
         result.state = state;
-        this.setState({ location: result });
+        this.setState({ location: result, address: result.formatted_address });
         this.handleOnLocationSearch(result);
       })
       .catch(error => console.error('Error', error));
