@@ -204,7 +204,7 @@ const ClickHere = textDecoration(cursor(Span));
 
 const ClientName = ({ client, rawClient, backLinkHref, user, ...props }) => {
   const { clientInfo, stage } = client;
-  const { name, additionalMetadata } = clientInfo;
+  const { name } = clientInfo;
   const { isNew, isProspects } = getStageDetails(stage);
 
   return (
@@ -281,10 +281,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     refetchNotes: func.isRequired,
     goToFamilyDetails: func,
     goToMessagesTab: func,
-    refetchConversations: func,
-    hasConversationFinished: bool,
     conversation: conversationPropType,
-    conversations: arrayOf(conversationPropType),
     setSelectedConversation: func,
     user: userPropType.isRequired,
     onAcceptClick: func,
@@ -551,9 +548,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
   render() {
     const {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
-      conversation, conversations, setSelectedConversation, hasConversationFinished, refetchConversations, refetchClient,
-      showModal, hideModal, onAcceptClick, clients, onEditStatusDetailsClick, isEditStatusDetailsMode,
-      onStatusChange,
+      conversation, setSelectedConversation, refetchClient,
+      showModal, hideModal, onAcceptClick, clients, onEditStatusDetailsClick, isEditStatusDetailsMode, onStatusChange,
     } = this.props;
     const { organization } = user;
 
@@ -801,13 +797,19 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               <SmallScreenBorderDiv>
                 {!conversation &&
                   <DashboardMessagesContainerWrapper>
-                    <DashboardMessagesContainer
-                      isLoading={!hasConversationFinished}
-                      heading="Conversations"
-                      conversations={conversations}
-                      onConversationClick={setSelectedConversation}
-                      refetchConversations={refetchConversations}
-                    />
+                    <Datatable
+                      id="conversations"
+                      filters={{}}
+                    >
+                      {datatable => (
+                        <DashboardMessagesContainer
+                          datatable={datatable}
+                          onConversationClick={setSelectedConversation}
+                          heading="Conversations"
+                          clientId={id}
+                        />
+                      )}
+                    </Datatable>
                   </DashboardMessagesContainerWrapper>
                 }
                 {conversation &&

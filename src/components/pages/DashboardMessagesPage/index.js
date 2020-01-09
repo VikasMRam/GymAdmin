@@ -1,29 +1,24 @@
 import React from 'react';
-import { arrayOf, func, bool } from 'prop-types';
+import { func, object } from 'prop-types';
 
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import conversationPropType from 'sly/propTypes/conversation/conversation';
 import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
 
-const DashboardMessagesPage = ({ isLoading, conversations, onConversationClick, refetchConversations }) => {
+const DashboardMessagesPage = ({ datatable, onConversationClick }) => {
   return (
     <DashboardPageTemplate activeMenuItem="Messages">
       <DashboardMessagesContainer
-        isLoading={isLoading}
+        datatable={datatable}
         heading="Conversations"
-        conversations={conversations}
         onConversationClick={onConversationClick}
-        refetchConversations={refetchConversations}
       />
     </DashboardPageTemplate>
   );
 };
 
 DashboardMessagesPage.propTypes = {
-  isLoading: bool,
-  conversations: arrayOf(conversationPropType),
+  datatable: object,
   onConversationClick: func,
-  refetchConversations: func,
 };
 
 export default DashboardMessagesPage;
