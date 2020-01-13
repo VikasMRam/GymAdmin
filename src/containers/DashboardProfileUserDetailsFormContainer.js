@@ -8,17 +8,8 @@ import DashboardProfileUserDetailsForm from 'sly/components/organisms/DashboardP
 import { createValidator, required, email, usPhone } from 'sly/services/validation';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
 import { withUser, query } from 'sly/services/newApi';
-
-const emailWarning = 'Enter your email so your agent can help you by answering your questions and sending recommended communities.';
-const messageObj = {
-  email: {
-    required: emailWarning,
-  },
-};
-
-const warn = createValidator({
-  email: [required],
-}, messageObj);
+import { userIs } from 'sly/services/helpers/role';
+import { CUSTOMER_ROLE } from 'sly/constants/roles';
 
 const validate = createValidator({
   name: [required],
@@ -29,7 +20,6 @@ const validate = createValidator({
 const ReduxForm = reduxForm({
   form: 'DashboardProfileUserDetailsForm',
   destroyOnUnmount: false,
-  warn,
   validate,
 })(DashboardProfileUserDetailsForm);
 
@@ -139,10 +129,24 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
   render() {
     const { user, uuidAux, ...props } = this.props;
     const initialValues = convertUserToProfileFormValues(user, uuidAux);
+    let emailWarning = null;
+    if (userIs(user, CUSTOMER_ROLE)) {
+      emailWarning = 'Enter your email so your agent can help you by answering your questions and sending recommended communities.';
+    }
+    const messageObj = {
+      email: {
+        required: emailWarning,
+      },
+    };
+    const warn = createValidator({
+      email: [required],
+    }, messageObj);
     return (
       <ReduxForm
         initialValues={initialValues}
         onSubmit={this.handleSubmit}
+        user={user}
+        warn={warn}
         {...props}
       />
     );

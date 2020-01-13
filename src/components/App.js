@@ -31,6 +31,7 @@ import {
   FAMILY_DASHBOARD_MESSAGES_PATH,
   ADMIN_DASHBOARD_CALLS_PATH,
   ADMIN_DASHBOARD_CALL_DETAILS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
+  AGENT_DASHBOARD_ACCOUNT_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import careTypes from 'sly/constants/careTypes';
 import PageEventsContainer from 'sly/containers/PageEventsContainer';
@@ -160,6 +161,11 @@ const routes = [
   {
     path: ADMIN_DASHBOARD_CALL_DETAILS_PATH,
     component: DashboardCallDetailsPageContainer,
+  },
+  {
+    path: AGENT_DASHBOARD_ACCOUNT_PATH,
+    component: DashboardMyProfilePageContainer,
+    exact: true,
   },
   {
     path: `/:toc(${careTypes.join('|')})/:state/:city`,

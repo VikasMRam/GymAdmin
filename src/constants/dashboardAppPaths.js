@@ -38,6 +38,8 @@ export const FAMILY_DASHBOARD_MESSAGES_PATH = `${FAMILY_DASHBOARD_PATH}/messages
 export const AGENT_DASHBOARD_MESSAGES_PATH = `${AGENT_DASHBOARD_PATH}/messages`;
 export const AGENT_DASHBOARD_MESSAGE_DETAILS_PATH = `${AGENT_DASHBOARD_PATH}/messages/:id`;
 export const FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH = `${FAMILY_DASHBOARD_PATH}/messages/:id`;
+export const AGENT_DASHBOARD_ACCOUNT_PATH = `${AGENT_DASHBOARD_PATH}/my-account`;
+export const AGENT_DASHBOARD_PROFILE_PATH = `${AGENT_DASHBOARD_PATH}/my-profile`;
 
 export const SUMMARY = 'summary';
 export const ACTIVITY = 'activity';
