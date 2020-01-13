@@ -761,6 +761,7 @@ const NearMePage = ({
           <title>{title}</title>
           <meta name="description" content={description} />
         </Helmet>
+        {SEOContentAL()}
         <StyledHeading level="title" size="title">
           {heading}
         </StyledHeading>
@@ -781,9 +782,8 @@ const NearMePage = ({
             location={location}
           />
         )}
-        {SEOContentAL()}
 
-        <StyledArticle><SeoLinks title="Find Assisted Living Near You by Cities" links={ALSeoCities} /></StyledArticle>
+        <StyledArticle><SeoLinks title="Find Assisted Living Near You by City" links={ALSeoCities} /></StyledArticle>
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>
       </TemplateContent>
       <Footer />

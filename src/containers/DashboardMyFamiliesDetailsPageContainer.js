@@ -36,10 +36,6 @@ const mapStateToProps = (state, { conversations }) => ({
   id: match.params.id,
 }))
 
-@prefetch('conversations', 'getConversations', (req, { match }) => req({
-  'filter[client]': match.params.id,
-}))
-
 @query('updateClient', 'updateClient')
 @query('createNote', 'createNote')
 @query('updateNote', 'updateNote')
@@ -50,6 +46,7 @@ const mapStateToProps = (state, { conversations }) => ({
 
 @connect(mapStateToProps, {
   invalidateClients: () => invalidateRequests('getClients'),
+  invalidateConversations: () => invalidateRequests('getConversations'),
 })
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
@@ -57,7 +54,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     user: userPropType.isRequired,
     client: clientPropType,
     clients: arrayOf(clientPropType),
-    conversations: arrayOf(conversationPropType),
     selectedConversation: conversationPropType,
     match: object,
     status: object,
@@ -70,6 +66,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     getNotes: func.isRequired,
     notes: arrayOf(notePropType),
     invalidateClients: func,
+    invalidateConversations: func,
   };
 
   state = {
@@ -205,8 +202,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   handleAcceptClick = (showModal, hideModal, notifyError) => {
-    const { client, status, updateClient, conversations } = this.props;
-    const [conversation] = conversations;
+    const { client, status, updateClient, invalidateConversations } = this.props;
     const { result: rawClient } = status.client;
     const { id } = client;
     const [contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
@@ -226,8 +222,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
           <AcceptAndContactFamilyContainer
             client={client}
             onCancel={hideModal}
-            refetchConversations={status.conversations.refetch}
-            conversation={conversation}
+            refetchConversations={invalidateConversations}
           />), null, 'noPadding', false);
         status.client.refetch();
       })
@@ -238,15 +233,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
         console.error(errorMessage);
         notifyError('Failed to update stage. Please try again.');
       });
-  };
-
-  getHasConversationFinished = () => {
-    const { status } = this.props;
-    const { hasFinished: userHasFinished } = status.user;
-    const { hasFinished: conversationsHasFinished } = status.conversations;
-    const { hasFinished: clientHasFinished } = status.client;
-
-    return userHasFinished && conversationsHasFinished && clientHasFinished;
   };
 
   goToFamilyDetails = () => {
@@ -276,18 +262,11 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     this.getNotes();
   }
 
-  refetchConversations = () => {
-    const { status } = this.props;
-    status.conversations.refetch();
-  }
-
   static getDerivedStateFromProps(props, state) {
-    const { conversations } = props;
     const selectedConversation = state.selectedConversation || props.selectedConversation;
     return {
       ...state,
       selectedConversation,
-      conversationsList: conversations,
     };
   }
 
@@ -311,7 +290,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       breakpoint,
     } = this.props;
 
-    const { selectedConversation, conversationsList, clientsWithSameContacts, notes, isEditStatusDetailsMode } = this.state;
+    const { selectedConversation, clientsWithSameContacts, notes, isEditStatusDetailsMode } = this.state;
 
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && client && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
@@ -353,9 +332,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 refetchConversations={this.refetchConversations}
                 user={user}
                 conversation={selectedConversation}
-                conversations={conversationsList || []}
                 setSelectedConversation={this.setSelectedConversation}
-                hasConversationFinished={this.getHasConversationFinished() && conversationsList !== null}
                 onAcceptClick={() => this.handleAcceptClick(show, hide, notifyError)}
                 onEditStatusDetailsClick={this.toggleEditStatusDetailsMode}
                 onStatusChange={this.toggleEditStatusDetailsMode}

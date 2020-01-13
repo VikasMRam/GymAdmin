@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
-import { arrayOf, object } from 'prop-types';
+import { object } from 'prop-types';
+import { parse } from 'query-string';
 import { generatePath } from 'react-router';
 
-import { prefetch } from 'sly/services/newApi';
-import conversationPropType from 'sly/propTypes/conversation/conversation';
 import DashboardMessagesPage from 'sly/components/pages/DashboardMessagesPage';
-import RefreshRedirect from 'sly/components/common/RefreshRedirect';
-import userPropType from 'sly/propTypes/user';
 import { AGENT_DASHBOARD_MESSAGE_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
-
-@prefetch('conversations', 'getConversations', req => req())
+import { Datatable } from 'sly/services/datatable';
 
 export default class DashboardMessagesPageContainer extends Component {
   static propTypes = {
-    conversations: arrayOf(conversationPropType),
-    status: object,
+    location: object,
     history: object,
-    user: userPropType,
   };
 
   onConversationClick = (conversation) => {
@@ -25,27 +19,26 @@ export default class DashboardMessagesPageContainer extends Component {
     history.push(to);
   }
 
-  refetchConversations = () => {
-    const { status } = this.props;
-    status.conversations.refetch();
-  }
-
   render() {
-    const { conversations, status } = this.props;
-    const { conversations: conversationsStatus } = status;
-    const {
-      hasFinished, error: conversationsError,
-    } = conversationsStatus;
-    if (conversationsError) {
-      return <RefreshRedirect to="/" />;
-    }
+    const { location } = this.props;
+
+    const { 'page-number': pageNumber, ...filters } = parse(location.search);
+    const sectionFilters = {
+      'page-number': pageNumber,
+    };
     return (
-      <DashboardMessagesPage
-        isLoading={!hasFinished}
-        conversations={conversations}
-        onConversationClick={this.onConversationClick}
-        refetchConversations={this.refetchConversations}
-      />
+      <Datatable
+        id="conversations"
+        sectionFilters={sectionFilters}
+        filters={filters}
+      >
+        {datatable => (
+          <DashboardMessagesPage
+            datatable={datatable}
+            onConversationClick={this.onConversationClick}
+          />
+        )}
+      </Datatable>
     );
   }
 }

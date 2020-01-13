@@ -79,7 +79,7 @@ describe('Community Profile Sections', () => {
       select('.CommunitySummary__PricingRatingWrapper').should('contain', rating);
     });
 
-    it('should be able to share', () => {
+    it.skip('should be able to share', () => {
       cy.route('POST', '**/user-shares').as('postUserShares');
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);

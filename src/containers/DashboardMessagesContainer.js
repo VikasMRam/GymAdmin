@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { arrayOf, object, func, bool, string } from 'prop-types';
-import styled from 'styled-components';
+import { arrayOf, object, func, string } from 'prop-types';
+import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
-import { withUser, query } from 'sly/services/newApi';
+import mobileOnly from 'sly/components/helpers/mobileOnly';
+import { withUser, query, prefetch } from 'sly/services/newApi';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import userPropType from 'sly/propTypes/user';
 import withWS from 'sly/services/ws/withWS';
@@ -12,6 +13,9 @@ import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 import { Heading, Box } from 'sly/components/atoms';
 import LatestMessage from 'sly/components/molecules/LatestMessage';
 import { getConversationName } from 'sly/services/helpers/conversation';
+import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
+import Pagination from 'sly/components/molecules/Pagination';
+import { getDetailedPaginationData } from 'sly/services/helpers/pagination';
 
 const HeadingWrapper = styled.div`
   padding: ${size('spacing', 'xLarge')};
@@ -36,34 +40,42 @@ const EmptyMessagesWrapper = styled.div`
   text-align: center;
 `;
 
+const CenteredPagination = styled(Pagination)`
+  padding: ${size('spacing.large')};
+  justify-content: center;
+`;
+
+const StyledPagination = styled(mobileOnly(CenteredPagination, css`
+  position: sticky;
+  bottom: 0;
+  background-color: ${palette('grey.background')};
+`))`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    border-bottom: ${size('border.regular')} solid ${palette('slate.stroke')};
+  }
+`;
+
 @withUser
 @withWS
 @query('getConversationMessages', 'getConversationMessages')
-
+@prefetch('conversations', 'getConversations', (req, { clientId, datatable }) => {
+  const payload = datatable.query;
+  if (clientId) {
+    payload['filter[client]'] = clientId;
+  }
+  return req(payload);
+})
 export default class DashboardMessagesContainer extends Component {
   static propTypes = {
-    isLoading: bool,
     heading: string,
     conversations: arrayOf(conversationPropType),
     onConversationClick: func,
-    refetchConversations: func,
-
     getConversationMessages: func,
     ws: object,
     user: userPropType,
+    status: object,
+    datatable: object,
   };
-
-  state = {
-    conversations: null,
-  };
-
-  static getDerivedStateFromProps(props, state) {
-    const conversations = props.conversations || state.conversations;
-    return {
-      ...state,
-      conversations,
-    };
-  }
 
   componentDidMount() {
     const { ws } = this.props;
@@ -76,7 +88,8 @@ export default class DashboardMessagesContainer extends Component {
   }
 
   onMessage = (message) => {
-    const { getConversationMessages, refetchConversations } = this.props;
+    const { getConversationMessages } = this.props;
+    const { refetchConversations } = this;
     if (message.payload.conversationId) {
       refetchConversations();
       getConversationMessages({ 'filter[conversationID]': message.payload.conversationId, sort: '-created_at' });
@@ -86,10 +99,30 @@ export default class DashboardMessagesContainer extends Component {
     return true;
   };
 
+  refetchConversations = () => {
+    const { status } = this.props;
+    status.conversations.refetch();
+  }
+
+  removeDuplicate = (entities) => {
+    const result = [];
+    const map = {};
+    entities.forEach((entity) => {
+      if (!map[entity.id]) {
+        map[entity.id] = true;
+        result.push(entity);
+      }
+    });
+    return result;
+  }
+
   render() {
-    const { isLoading, heading, user, onConversationClick } = this.props;
-    const { conversations } = this.state;
+    const { heading, user, onConversationClick, datatable, status, conversations } = this.props;
+    const { conversations: conversationsStatus } = status;
+    const { hasFinished: conversationsHasFinished, meta } = conversationsStatus;
+    const isLoading = !conversationsHasFinished;
     const { id: userId } = user;
+    const pagination = getDetailedPaginationData(conversationsStatus, 'conversations');
 
     let messagesComponent = null;
     let hasMessages = false;
@@ -99,7 +132,7 @@ export default class DashboardMessagesContainer extends Component {
       messagesComponent = <EmptyMessagesWrapper>No messages</EmptyMessagesWrapper>;
     } else {
       hasMessages = true;
-      const messages = conversations
+      const messages = this.removeDuplicate(conversations)
         .map((conversation) => {
           const { conversationParticipants, latestMessage } = conversation;
           const name = getConversationName(conversation, user);
@@ -123,10 +156,9 @@ export default class DashboardMessagesContainer extends Component {
             conversation,
           };
         });
-
       messagesComponent = messages.map(message => (
         <LatestMessage
-          key={message.name}
+          key={message.conversation.id}
           name={message.name}
           message={message.message}
           hasUnread={message.hasUnread}
@@ -134,14 +166,29 @@ export default class DashboardMessagesContainer extends Component {
         />
       ));
     }
+    const modelConfig = { name: 'Conversation', defaultSearchField: 'name' };
     return (
       <>
         <HeadingWrapper>
           <Heading size="subtitle">{heading}</Heading>
         </HeadingWrapper>
+        <TableHeaderButtons
+          datatable={datatable}
+          modelConfig={modelConfig}
+          meta={meta || {}}
+        />
         <MessagesWrapper snap="top" hasMessages={hasMessages}>
           {messagesComponent}
         </MessagesWrapper>
+        {pagination.show && (
+          <StyledPagination
+            current={pagination.current}
+            total={pagination.total}
+            range={1}
+            basePath={datatable.basePath}
+            pageParam="page-number"
+          />
+        )}
       </>
     );
   }
