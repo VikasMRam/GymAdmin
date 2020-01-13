@@ -2,8 +2,8 @@ import { CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION } from 'sly/constants/conver
 
 export const getConversationName = (conversation, user) => {
   const { conversationParticipants, info } = conversation;
-  if (info.Name) {
-    return info.Name;
+  if (info.name) {
+    return info.name;
   }
   const { id: userId } = user;
   const nameList = conversationParticipants
