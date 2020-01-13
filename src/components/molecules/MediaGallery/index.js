@@ -34,7 +34,7 @@ const imageStyles = css`
 const StyledImg = styled(ResponsiveImage)`
   ${imageStyles};
 `;
-const StyledVideoThumbnail = styled(VideoThumbnail)`
+const StyledVideoSlide = styled(VideoThumbnail)`
   ${imageStyles};
 `;
 const StyledVideo = styled.video`
@@ -206,27 +206,24 @@ export default class MediaGallery extends Component {
     const { currentSlide, aspectRatio, sizes } = this.props;
 
     switch (media.type) {
-      case 'image':
-        return media.ofVideo !== undefined ? (
-          <StyledVideoThumbnail
-            key="media-gallery-slide"
-            src={this.shouldLoadMedia(index) ? media.src : ''}
-            data-src={media.src}
-            alt={media.alt}
-            ref={(c) => { this.mediaRefs[index] = c; }}
-            aspectRatio={aspectRatio}
-          />
-        ) : (
-          <StyledImg
+      case 'image': {
+        const SlideComponent = typeof media.ofVideo !== 'undefined'
+          ? StyledVideoSlide
+          : StyledImg;
+        return (
+          <SlideComponent
             key="media-gallery-slide"
             path={media.path}
             sizes={sizes}
             alt={media.alt}
             loading={this.shouldLoadMedia(index) ? 'eager' : 'lazy'}
             // aspectRatio={aspectRatio}
-            ref={(c) => { this.mediaRefs[index] = c; }}
+            ref={(c) => {
+              this.mediaRefs[index] = c;
+            }}
           />
         );
+      }
       case 'video':
         return (
           <StyledVideo
@@ -257,21 +254,25 @@ export default class MediaGallery extends Component {
 
     const { onSlideChange, ...rest } = this.props;
     const thumbnails = [];
-    const formattedVideos = videos.map((video) => {
-      thumbnails.push({
-        path: video.thumb,
-        alt: `${video.alt} thumbnail`,
-      });
-      return { ...video, type: 'video' };
-    });
+    // const formattedVideos = videos.map((video) => {
+    //   thumbnails.push({
+    //     path: video.thumb,
+    //     alt: `${video.alt} thumbnail`,
+    //   });
+    //   return { ...video, type: 'video' };
+    // });
     const formattedImages = images.map((image) => {
       thumbnails.push({
         path: image.path,
         alt: `${image.alt} thumbnail`,
       });
+
+      if (typeof image.ofVideo !== 'undefined' && videos[image.ofVideo]) {
+        return { ...videos[image.ofVideo], type: 'video' };
+      }
       return { ...image, type: 'image' };
     });
-    this.allMedia = formattedVideos.concat(formattedImages);
+    this.allMedia = formattedImages;// formattedVideos.concat(formattedImages);
     /* load only media before and after current slide. Also keep track of media that was loaded once so that it won't
       be inserted and removed from dom when user switch slides */
     this.setLoadedImages(currentSlide);

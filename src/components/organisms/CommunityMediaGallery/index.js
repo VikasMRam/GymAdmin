@@ -24,7 +24,7 @@ export default class CommunityMediaGallery extends Component {
     videos: arrayOf(shape({
       url: string.isRequired,
       name: string.isRequired,
-      thumbUrl: string.isRequired,
+      thumbPath: string.isRequired,
     })),
     city: string,
     state: string,
@@ -46,45 +46,39 @@ export default class CommunityMediaGallery extends Component {
       communityName, city, state, images, videos, websiteUrl, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
     } = this.props;
 
-    const videoThumbs = videos.map((vid, i) => {
-      // Important: create new object instance having src & alt as we will be modifying same object below
-      return {
-        ...vid, src: vid.thumbUrl, thumb: vid.thumbUrl,
-        ofVideo: i,
-        alt: `${communityName}, ${city}, ${state} ${i + 1}`,
-      };
-    });
-
-    const galleryItems = images.map((image, i) => ({
+    const galleryImages = images.map((image, i) => ({
       ...image,
       alt: `${communityName}, ${city}, ${state} ${i + 1}`,
     }));
-    // this.sdGalleryImages = videos.map((vid, i) => {
-    //   // Important: create new object instance having src & alt as we will be modifying same object below
-    //   return {
-    //     ...vid, src: vid.thumbUrl, thumb: vid.thumbUrl, ofVideo: i, alt: `${communityName}, ${city}, ${state} ${i + 1}`,
-    //   };
-    // });
-    // this.sdGalleryImages = this.sdGalleryImages.concat(images.map((img, i) => {
-    //   return { ...img, src: img.sd, alt: `${communityName}, ${city}, ${state} ${this.sdGalleryImages.length + i + 1}` };
-    // }));
-    // this.formattedVideos = videos.map((vid) => {
-    //   const src = [];
-    //   if (vid.url) {
-    //     src.push({
-    //       url: vid.url,
-    //       type: 'mp4',
-    //     });
-    //   }
-    //   if (vid.webmUrl) {
-    //     src.push({
-    //       url: vid.webmUrl,
-    //       type: 'webm',
-    //     });
-    //   }
-    //
-    //   return { ...vid, src, thumb: vid.thumbUrl };
-    // });
+
+    const formattedVideos = [];
+    const galleryVideos = [];
+
+    videos.forEach((vid, i) => {
+      const src = [];
+      if (vid.url) {
+        src.push({
+          url: vid.url,
+          type: 'mp4',
+        });
+      }
+      if (vid.webmUrl) {
+        src.push({
+          url: vid.webmUrl,
+          type: 'webm',
+        });
+      }
+
+      formattedVideos.push({ ...vid, src, thumb: vid.thumbUrl });
+
+      // Important: create new object instance having src & alt as we will be modifying same object below
+      galleryVideos.push({
+        ...vid, path: vid.thumbPath, ofVideo: i, alt: `${communityName}, ${city}, ${state} ${i + 1}`,
+      });
+    });
+
+    const galleryItems = galleryVideos.concat(galleryImages);
+
     const topRightSection = () => (
       <Button secondary ghost transparent={false} onClick={() => onToggleFullscreenMode(false, true)}>View Photos</Button>
     );
@@ -118,7 +112,7 @@ export default class CommunityMediaGallery extends Component {
           isOpen={isFullscreenMode}
           communityName={communityName}
           sizes={fullscreenMediaSizes}
-          videos={this.formattedVideos}
+          videos={formattedVideos}
           images={galleryItems}
           onClose={() => onToggleFullscreenMode(!!galleryItems[currentSlide].ofVideo)}
           ariaHideApp={ariaHideApp}

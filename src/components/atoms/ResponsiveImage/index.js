@@ -39,7 +39,10 @@ export default class ResponsiveImage extends React.Component {
   static propTypes = {
     className: string,
     loading: oneOf(['lazy', 'auto', 'eager']),
+    // provided to signify the s3 path in our bucket without /uploads, optional but src has to be provided
     path: string.isRequired,
+    // provided to signify absolute route to asset or relative to env domain, optional but path has to be provided
+    src: string,
     alt: string,
     sizes: string,
     sources: array,
@@ -54,38 +57,54 @@ export default class ResponsiveImage extends React.Component {
 
   render() {
     const {
-      path, sizes, sources, alt, loading, className: classNameProp, aspectRatio, ...props
+      src, path, sizes, sources, alt, loading, className: classNameProp, aspectRatio, ...props
     } = this.props;
 
-    // aspect ratio is a number in getSrcset
-    const aspectRatioString = getKey(`sizes.picture.ratios.${aspectRatio}`);
-    const aspectRatioValue = (parseFloat(aspectRatioString) / 100).toFixed(4);
-    const { jpegSrcset, webpSrcset, src } = getSrcset(path, {
-      aspectRatio: aspectRatioValue,
-      sources: sources || getKey('defaultImageSources'),
-    });
+    // at least ONE of path (bucket s3 path without /uploads) or src (absolute; e.g. static in public) should be provided
+    const isS3Path = path && !src;
 
     const srcProp = loading === 'lazy' ? 'data-src' : 'src';
-    const srcSetProp = loading === 'lazy' ? 'data-srcset' : 'srcSet';
     const className = loading === 'lazy' ? 'lazy' : '';
 
     const imageProps = {
       [srcProp]: src,
     };
 
-    const jpegSourceProps = {
-      [srcSetProp]: jpegSrcset,
-    };
+    let sourceSets = null;
+    if (isS3Path) {
+      // aspect ratio is a number in getSrcset
+      const aspectRatioString = getKey(`sizes.picture.ratios.${aspectRatio}`);
+      const aspectRatioValue = (parseFloat(aspectRatioString) / 100).toFixed(4);
+      const { jpegSrcset, webpSrcset, src } = getSrcset(path, {
+        aspectRatio: aspectRatioValue,
+        sources: sources || getKey('defaultImageSources'),
+      });
 
-    const webpSourceProps = {
-      [srcSetProp]: webpSrcset,
-    };
+      // override imageProps src, as it's undefined
+      imageProps[srcProp] = src;
+
+      const srcSetProp = loading === 'lazy' ? 'data-srcset' : 'srcSet';
+
+      const jpegSourceProps = {
+        [srcSetProp]: jpegSrcset,
+      };
+
+      const webpSourceProps = {
+        [srcSetProp]: webpSrcset,
+      };
+
+      sourceSets = (
+        <>
+          <source type="image/webp" {...webpSourceProps} sizes={sizes} />
+          <source type="image/jpeg" {...jpegSourceProps} sizes={sizes} />
+        </>
+      );
+    }
 
     return (
       <ResponsiveWrapper aspectRatio={aspectRatio} className={classNameProp}>
         <picture>
-          <source type="image/webp" {...webpSourceProps} sizes={sizes} />
-          <source type="image/jpeg" {...jpegSourceProps} sizes={sizes} />
+          {sourceSets}
           <img
             alt={alt || getAlt(path)}
             className={className}
