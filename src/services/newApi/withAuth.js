@@ -171,8 +171,8 @@ export default function withAuth(InnerComponent) {
     };
 
     otpLoginUser = (data) => {
-      const { otpLoginUser } = this.props;
-      return otpLoginUser(data);
+      const { otpLoginUser, status } = this.props;
+      return otpLoginUser(data).then(status.user.refetch);
     };
 
     sendOtpCode = (data) => {
