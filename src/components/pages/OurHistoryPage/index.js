@@ -5,12 +5,12 @@ import Helmet from 'react-helmet';
 
 import { size, assetPath, palette } from 'sly/components/themes';
 import { Heading, Block, Image, Icon, Hr } from 'sly/components/atoms';
-import Modal from 'sly/components/molecules/Modal';
+// import Modal from 'sly/components/molecules/Modal';
 import ProfileTile from 'sly/components/molecules/ProfileTile';
 import PressTile from 'sly/components/molecules/PressTile';
 import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
 import Footer from 'sly/components/organisms/Footer';
-import { TeamMembersData as profiles } from 'sly/services/helpers/our_team';
+// import { TeamMembersData as profiles } from 'sly/services/helpers/our_team';
 import { PressTileContents as press } from 'sly/services/helpers/press';
 
 const ourHistoryUri = member => member
@@ -145,13 +145,13 @@ const OurHistoryPage = ({ match, history }) => {
     </>
   );
 
-  const teamMemberTiles = profiles.map(p => (
-    <StyledProfileTile
-      key={p.heading}
-      to={ourHistoryUri(p.slug)}
-      profile={p}
-    />
-  ));
+  // const teamMemberTiles = profiles.map(p => (
+  //   <StyledProfileTile
+  //     key={p.heading}
+  //     to={ourHistoryUri(p.slug)}
+  //     profile={p}
+  //   />
+  // ));
 
   const pressTiles = press.map((item) => {
     const props = { ...item };
@@ -163,7 +163,7 @@ const OurHistoryPage = ({ match, history }) => {
     );
   });
 
-  const member = profiles.filter(p => p.slug === match.params.member).pop();
+  // const member = profiles.filter(p => p.slug === match.params.member).pop();
 
   return (
     <OverlappingSectionsTemplate
@@ -175,26 +175,9 @@ const OurHistoryPage = ({ match, history }) => {
       footer={<Footer />}
     >
       <ContentWrapper>
-        <StyledHr />
-        <Heading>Meet Our Team</Heading>
-        <StyledBlock>We are doing this for our parents and grandparents, and we are committed to making life better for them however we can.</StyledBlock>
-        <TeamMemberTiles>{teamMemberTiles}</TeamMemberTiles>
-
-        <StyledHr />
-
+        <StyledHr/>
         <StyledHeading>Seniorly in the Press</StyledHeading>
         <PressTilesWrapper>{pressTiles}</PressTilesWrapper>
-
-        {member &&
-          <Modal
-            layout="single"
-            closeable
-            isOpen={!!member}
-            onClose={() => push(ourHistoryUri())}
-          >
-            <ProfileTile layout="modal" profile={member} to={ourHistoryUri()} />
-          </Modal>
-        }
       </ContentWrapper>
     </OverlappingSectionsTemplate>
   );
