@@ -56,6 +56,10 @@ export default class PricingWizardPageContainer extends Component {
       uuidAux.set('attributes.uuidInfo.housingInfo.roomPreference', data.roomType);
     }
 
+    if (data.moveTimeline) {
+      uuidAux.set('attributes.uuidInfo.housingInfo.moveTimeline', data.moveTimeline);
+    }
+
     if (data.careType) {
       uuidAux.set('attributes.uuidInfo.careInfo.adls', data.careType);
     }

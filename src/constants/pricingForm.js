@@ -27,6 +27,14 @@ export const ROOMTYPE_OPTIONS = [
   // { label: "I'm not sure", value: 'i-am-not-sure' },
 ];
 
+export const MOVETIMELINE_OPTIONS = [
+  { label: 'Immediately', value: 'immediately' },
+  { label: '1 - 3 Months', value: '1-3-months' },
+  { label: '3 - 6 Months', value: '3-6-months' },
+  { label: 'Still Researching', value: 'researching' },
+  // { label: "I'm not sure", value: 'i-am-not-sure' },
+];
+
 export const CARETYPE_OPTIONS = [
   { label: 'None', value: 'none' },
   { label: 'Memory Care', value: 'memory-care' },

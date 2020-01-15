@@ -112,6 +112,11 @@ export default class PricingWizardPage extends Component {
     this.calculatePrice(roomTypes, careTypes);
     sendEvent('roomType-changed', id, newRoomTypes.toString());
   };
+  handleMoveTimelineChange = (e, moveTimeline) => {
+    const { community } = this.props;
+    const { id } = community;
+    sendEvent('moveTimeline-changed', id, moveTimeline.toString());
+  };
 
   handleCareTypeChange = (e, newCareTypes) => {
     const { community } = this.props;
@@ -255,6 +260,7 @@ export default class PricingWizardPage extends Component {
                       name="EstimatedPricing"
                       communityName={name}
                       onRoomTypeChange={this.handleRoomTypeChange}
+                      onMoveTimelineChange={this.handleMoveTimelineChange}
                       onCareTypeChange={this.handleCareTypeChange}
                       onHelpHover={this.handleHelpHover}
                       uuidAux={uuidAux}
