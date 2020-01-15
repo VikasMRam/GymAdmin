@@ -61,7 +61,7 @@ export default class ResponsiveImage extends React.Component {
     } = this.props;
 
     // at least ONE of path (bucket s3 path without /uploads) or src (absolute; e.g. static in public) should be provided
-    const isS3Path = path && !src;
+    const isS3Path = !!path;
 
     const srcProp = loading === 'lazy' ? 'data-src' : 'src';
     const className = loading === 'lazy' ? 'lazy' : '';

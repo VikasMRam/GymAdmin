@@ -55,6 +55,7 @@ theme.imageFormats = {
   heroGallery: { sizes: '(max-width: 1079px) 100vw, 680px', sources: addImageSource(680) },
   fullscreenGallery: { sizes: '(max-width: 1199px) 100vw, 1200px' },
   thumbGallery: { sizes: '129px', sources: [[129, 86], [258, 172]] },
+  searchResults: { sizes: '(max-width: 767px) calc(100vw - 1.5rem), 270px', sources: addImageSource(270) },
 };
 
 theme.sizes = {

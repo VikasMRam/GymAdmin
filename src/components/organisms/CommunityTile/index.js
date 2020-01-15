@@ -17,6 +17,7 @@ import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import IconButton from 'sly/components/molecules/IconButton';
 import PlusBadge from 'sly/components/molecules/PlusBadge';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const communityDefaultImages = {
   'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
@@ -47,7 +48,7 @@ const StyledMediaGallery = styled(MediaGallery)`
   }
 `;
 
-const StyledImage = styled(borderRadius(Image))`
+const StyledImage = styled(borderRadius(ResponsiveImage))`
   img {
     border-radius: ${size('spacing.small')};
   }
@@ -123,7 +124,7 @@ const CommunityTile = ({
   canFavourite, lazyLoadImage,
 }) => {
   const {
-    name, gallery = {}, mainImage, communitySize, plusCategory,
+    name, gallery = {}, mainImage, communitySize, plusCategory, imagePath,
   } = community;
   let { imageUrl } = community;
   imageUrl = imageUrl || mainImage;
@@ -150,6 +151,7 @@ const CommunityTile = ({
     null;
 
   const CommunityInfoComponent = actionButtons.length ? PaddedCommunityInfo : CommunityInfo;
+  const mediaSizes = getKey('imageFormats.searchResults').sizes;
 
   return (
     <MainWrapper className={className} plusCategory={plusCategory}>
@@ -159,6 +161,7 @@ const CommunityTile = ({
           <StyledMediaGallery
             communityName={name}
             images={galleryImages}
+            sizes={mediaSizes}
             topRightSection={topRightSection}
             onSlideChange={onSlideChange}
             currentSlide={currentSlide}
@@ -170,7 +173,9 @@ const CommunityTile = ({
             <ImageWrapper>
               <StyledImage
                 layout={layout}
+                path={imagePath}
                 src={imageUrl}
+                sizes={mediaSizes}
                 aspectRatio={layout === 'column' ? '3:2' : '16:9'}
                 lazy={lazyLoadImage}
               />
