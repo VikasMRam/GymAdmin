@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, node } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import { Image } from 'sly/components/atoms';
-import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
+import { assetPath, size } from 'sly/components/themes';
+import { ResponsiveImage } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -33,7 +32,7 @@ const ImageOverlayContentTile = ({
   image, children, className,
 }) => (
   <Wrapper className={className}>
-    <StyledImage path={image} />
+    <StyledImage path={image} aspectRatio="16:9" />
     <ContentWrapper>
       {children}
     </ContentWrapper>
