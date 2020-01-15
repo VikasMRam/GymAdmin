@@ -11,6 +11,7 @@ import HowItWorksInfoTile from 'sly/components/molecules/HowItWorksInfoTile';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import { FAQ } from 'sly/services/helpers/howItWorks';
 import FAQTile from 'sly/components/molecules/FAQTile';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 // Copied from BasePageTemplate
 const FixedWidthContainer = styled.div`
@@ -41,7 +42,7 @@ const HeroWrapper = styled.div`
   }
 `;
 
-const HeroBackgroundImage = styled(Image)`
+const HeroBackgroundImage = styled(ResponsiveImage)`
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -113,11 +114,11 @@ const Tab = styled(Link)`
   }
 `;
 
-const Header = ({ heroImageUrl, heading, subheading }) => (
+const Header = ({ heroImagePath, heading, subheading }) => (
   <>
     <HeaderContainer />
     <HeroWrapper>
-      <HeroBackgroundImage src={assetPath(heroImageUrl)} alt="A Home To Love" />
+      <HeroBackgroundImage path={heroImagePath} alt="A Home To Love" />
       <HeroTextWrapper>
         <FixedWidthContainer>
           <HeroHeading level="hero" size="hero" palette="white">
@@ -136,7 +137,7 @@ const Header = ({ heroImageUrl, heading, subheading }) => (
 );
 
 Header.propTypes = {
-  heroImageUrl: string,
+  heroImagePath: string,
   heading: string,
   subheading: string,
 };
@@ -206,14 +207,14 @@ const Bottom = () => {
 const HowItWorksDetailPage = ({
   heading,
   subheading,
-  heroImageUrl,
+  heroImagePath,
   tabs,
   contents,
   cards,
   activeType,
 }) => {
   const header = (
-    <Header heroImageUrl={heroImageUrl} heading={heading} subheading={subheading}>
+    <Header heroImagePath={heroImagePath} heading={heading} subheading={subheading}>
       {Object.entries(tabs)
         .map(([key, tab]) => {
           return (
@@ -251,7 +252,7 @@ const HowItWorksDetailPage = ({
 HowItWorksDetailPage.propTypes = {
   heading: string,
   subheading: string,
-  heroImageUrl: string,
+  heroImagePath: string,
   contents: arrayOf(object),
   cards: arrayOf(object),
   tabs: object,

@@ -51,7 +51,7 @@ export default class ResponsiveImage extends React.Component {
 
   static defaultProps = {
     className: '',
-    loading: 'lazy',
+    loading: 'eager',
     aspectRatio: '3:2',
   };
 

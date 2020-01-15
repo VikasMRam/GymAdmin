@@ -4,6 +4,7 @@ import { string, func, shape } from 'prop-types';
 
 import { size, assetPath, palette, key } from 'sly/components/themes';
 import { Image, Button, Link } from 'sly/components/atoms';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const Wrapper = styled(Link)`
   display: block;
@@ -35,7 +36,7 @@ const Wrapper = styled(Link)`
   }
 `;
 
-export const ImageWrapper = styled(Image)`
+export const StyledImage = styled(ResponsiveImage)`
   width: ${size('element.xHuge')};
   height: ${size('element.xHuge')};
   margin-top: -${size('element.xxLarge')};
@@ -62,7 +63,7 @@ const DiscoverTile = ({ content, ...props }) => {
 
   return (
     <Wrapper {...props}>
-      <ImageWrapper src={assetPath(badgeImageUrl)} />
+      <StyledImage path={badgeImageUrl} />
       <HeadingWrapper>{badgeName}</HeadingWrapper>
       <SubheadingWrapper>{badgeText}</SubheadingWrapper>
       <Button>Learn More</Button>
