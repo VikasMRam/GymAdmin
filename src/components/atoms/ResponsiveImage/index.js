@@ -1,17 +1,21 @@
 import React from 'react';
 import { string, array, oneOf } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { size, getKey } from 'sly/components/themes';
 import { getSrcset } from 'sly/services/images';
+import { ifProp } from 'styled-tools';
 
 const paddingTop = ({ aspectRatio }) => size('picture.ratios', aspectRatio);
 
 const ResponsiveWrapper = styled.div`
   position: relative;
-  height: 0;
   width: 100%;
-  padding-top: ${paddingTop};
+
+  ${ifProp('aspectRatio', css`
+    height: 0;
+    padding-top: ${paddingTop};
+  `)};
 
   img {
     user-select: none;
@@ -43,10 +47,11 @@ export default class ResponsiveImage extends React.Component {
     path: string.isRequired,
     // provided to signify absolute route to asset or relative to env domain, optional but path has to be provided
     src: string,
+    placeholder: string,
     alt: string,
     sizes: string,
     sources: array,
-    aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3', '1:1']),
+    aspectRatio: oneOf([false, '16:9', 'golden', '3:2', '4:3', '1:1']),
   };
 
   static defaultProps = {
@@ -57,7 +62,7 @@ export default class ResponsiveImage extends React.Component {
 
   render() {
     const {
-      src, path, sizes, sources, alt, loading, className: classNameProp, aspectRatio, ...props
+      src, path, placeholder, sizes, sources, alt, loading, className: classNameProp, aspectRatio, ...props
     } = this.props;
 
     // at least ONE of path (bucket s3 path without /uploads) or src (absolute; e.g. static in public) should be provided
@@ -67,6 +72,7 @@ export default class ResponsiveImage extends React.Component {
     const className = loading === 'lazy' ? 'lazy' : '';
 
     const imageProps = {
+      src: src || placeholder,
       [srcProp]: src,
     };
 
@@ -106,6 +112,7 @@ export default class ResponsiveImage extends React.Component {
         <picture>
           {sourceSets}
           <img
+            loading={loading}
             alt={alt || getAlt(path)}
             className={className}
             {...imageProps}
