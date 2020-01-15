@@ -4,6 +4,7 @@ import { string, node } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import { Image } from 'sly/components/atoms';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -11,7 +12,7 @@ const Wrapper = styled.div`
   position: relative;
   background: black;
 `;
-export const StyledImage = styled(Image)`
+export const StyledImage = styled(ResponsiveImage)`
   border-radius: ${size('spacing.tiny')};
   width: 100%;
   height: 100%;
@@ -32,7 +33,7 @@ const ImageOverlayContentTile = ({
   image, children, className,
 }) => (
   <Wrapper className={className}>
-    <StyledImage src={image} />
+    <StyledImage path={image} />
     <ContentWrapper>
       {children}
     </ContentWrapper>

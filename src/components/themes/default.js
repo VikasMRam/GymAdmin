@@ -48,7 +48,8 @@ const addImageSource = (source) => {
   const srcs = [...theme.defaultImageSources];
   let index = srcs.findIndex(x => x > source);
   if (index === -1) index = srcs.length;
-  return srcs.splice(index, 0, source);
+  srcs.splice(index, 0, source);
+  return srcs;
 };
 
 theme.imageFormats = {
@@ -56,6 +57,7 @@ theme.imageFormats = {
   fullscreenGallery: { sizes: '(max-width: 1199px) 100vw, 1200px' },
   thumbGallery: { sizes: '129px', sources: [[129, 86], [258, 172]] },
   searchResults: { sizes: '(max-width: 767px) calc(100vw - 1.5rem), 270px', sources: addImageSource(270) },
+  howItWorks: { sizes: '(max-width: 549px) calc(100vw - 2rem), calc(550px - 2rem)', sources: addImageSource(550) },
 };
 
 theme.sizes = {

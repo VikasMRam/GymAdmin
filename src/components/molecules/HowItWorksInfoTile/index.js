@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { string, bool } from 'prop-types';
 
 
-import { size, assetPath } from 'sly/components/themes';
+import { size, assetPath, getKey } from 'sly/components/themes';
 import { Heading, Block, Icon, Image } from 'sly/components/atoms';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,7 +37,7 @@ const ImageWrapper = styled.div`
   }
 `;
 
-const StyledImage = styled(Image)`
+const StyledImage = styled(ResponsiveImage)`
   display: block;
   width: 100%;
 `;
@@ -64,10 +65,11 @@ const HowItWorksInfoTile = ({
   content,
   invert,
 }) => {
+  const { sizes, sources } = getKey('imageFormats.howItWorks');
   return (
     <Wrapper>
       <ImageWrapper invert={invert}>
-        <StyledImage src={assetPath(imageUrl)} />
+        <StyledImage sizes={sizes} sources={sources} path={imageUrl} />
       </ImageWrapper>
       <InfoContentWrapper invert={invert}>
         <HeadingWrapper>{heading}</HeadingWrapper>

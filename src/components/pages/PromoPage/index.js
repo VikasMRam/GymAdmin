@@ -14,6 +14,7 @@ import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import CareAssessmentController from 'sly/external/apps/wizards/careAssessment/Controller';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -26,7 +27,7 @@ const HeroWrapper = styled.div`
     width:50%;
   }
 `;
-const StyledImage = styled(Image)`
+const StyledImage = styled(ResponsiveImage)`
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -178,7 +179,7 @@ const firstRowDiscoverHomes = [
   {
     title: 'Care Homes',
     description: 'Communities combining comfort and care',
-    image: assetPath('images/home/discover-home/care-home.jpeg'),
+    image: 'react-assets/home/discover-home/care-home.jpeg',
     buttonText: 'See more',
     size: 'xLarge',
     searchParams: { size: 'small' },
@@ -186,7 +187,7 @@ const firstRowDiscoverHomes = [
   {
     title: 'Assisted Living',
     description: 'Specializing in all of your daily care needs',
-    image: assetPath('images/home/discover-home/assisted-living.jpeg'),
+    image: 'react-assets/home/discover-home/assisted-living.jpeg',
     buttonText: 'See more',
     size: 'xLarge',
     searchParams: { toc: 'assisted-living' },
@@ -197,21 +198,21 @@ const secondRowDiscoverHomes = [
   {
     title: 'Boutique',
     description: 'More services in an intimate home-like setting',
-    image: assetPath('images/home/discover-home/studios-tile.jpeg'),
+    image: 'react-assets/home/discover-home/studios-tile.jpeg',
     buttonText: 'See more',
     searchParams: { size: 'medium' },
   },
   {
     title: 'Luxury',
     description: 'The ultimate in comfort, care and community',
-    image: assetPath('images/home/discover-home/1-bedroom-tile.jpeg'),
+    image: 'react-assets/home/discover-home/1-bedroom-tile.jpeg',
     buttonText: 'See more',
     searchParams: { size: 'large', budget: 5000 },
   },
   {
     title: 'Memory Care',
     description: 'For those with Alzheimer’s, Dementia and more',
-    image: assetPath('images/home/discover-home/shared-rooms-tile.jpeg'),
+    image: 'react-assets/home/discover-home/shared-rooms-tile.jpeg',
     buttonText: 'See more',
     searchParams: { toc: 'memory-care' },
   },
@@ -220,37 +221,37 @@ const secondRowDiscoverHomes = [
 const usefulInformationTiles = [
   {
     to: '/independent-living',
-    image: assetPath('images/home/useful-info/independent-living.jpg'),
+    image: 'react-assets/home/useful-info/independent-living.jpg',
     title: 'Independent Living',
   },
   {
     to: '/assisted-living',
-    image: assetPath('images/home/useful-info/assisted-living.jpg'),
+    image: 'react-assets/home/useful-info/assisted-living.jpg',
     title: 'Assisted Living',
   },
   {
     to: '/memory-care',
-    image: assetPath('images/home/useful-info/memory-care.jpg'),
+    image: 'react-assets/home/useful-info/memory-care.jpg',
     title: 'Memory Care',
   },
   {
     to: '/board-and-care-home',
-    image: assetPath('images/home/useful-info/board-and-care.jpg'),
+    image: 'react-assets/home/useful-info/board-and-care.jpg',
     title: 'Board & Care Home',
   },
   /* {
     to: '#',
-    image: assetPath('images/home/useful-info/skilled-nursing.jpeg'),
+    image: 'react-assets/home/useful-info/skilled-nursing.jpeg',
     title: 'Skilled Nursing',
   }, */
   {
     to: '/continuing-care-retirement-community',
-    image: assetPath('images/home/useful-info/ccrc.jpg'),
+    image: 'react-assets/home/useful-info/ccrc.jpg',
     title: 'CCRC / Life Plan',
   },
   {
     to: '/resources',
-    image: assetPath('images/home/useful-info/more-resources.jpg'),
+    image: 'react-assets/home/useful-info/more-resources.jpg',
     title: 'More Resources',
   },
 ];
@@ -258,49 +259,49 @@ const usefulInformationTiles = [
 const mostSearchedCities = [
   {
     to: '/assisted-living/california/san-francisco',
-    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    image: 'react-assets/cities/SanFrancisco.jpeg',
     subtitle: 'San Francisco, CA',
     title: '95+ communities',
   },
   {
     to: '/assisted-living/california/los-angeles',
-    image: assetPath('images/cities/LosAngeles.jpeg'),
+    image: 'react-assets/cities/LosAngeles.jpeg',
     subtitle: 'Los Angeles, CA',
     title: '105+ communities',
   },
   {
     to: '/assisted-living/california/san-diego',
-    image: assetPath('images/cities/SanDiego.jpeg'),
+    image: 'react-assets/cities/SanDiego.jpeg',
     subtitle: 'San Diego, CA',
     title: '75+ communities',
   },
   {
     to: '/assisted-living/texas/dallas',
-    image: assetPath('images/cities/Dallas.jpeg'),
+    image: 'react-assets/cities/Dallas.jpeg',
     subtitle: 'Dallas, TX',
     title: '90+ communities',
   },
   {
     to: '/assisted-living/texas/houston',
-    image: assetPath('images/cities/Houston.jpeg'),
+    image: 'react-assets/cities/Houston.jpeg',
     subtitle: 'Houston, TX',
     title: '72+ communities',
   },
   {
     to: '/assisted-living/arizona/phoenix',
-    image: assetPath('images/cities/Pheonix.jpeg'),
+    image: 'react-assets/cities/Pheonix.jpeg',
     subtitle: 'Phoenix, AZ',
     title: '151+ communities',
   },
   {
     to: '/assisted-living/florida/orlando',
-    image: assetPath('images/cities/Orlando.jpeg'),
+    image: 'react-assets/cities/Orlando.jpeg',
     subtitle: 'Orlando, FL',
     title: '60+ communities',
   },
   {
     to: '/assisted-living/florida/miami',
-    image: assetPath('images/cities/Miami.jpeg'),
+    image: 'react-assets/cities/Miami.jpeg',
     subtitle: 'Miami, FL',
     title: '150+ communities',
   },
@@ -308,17 +309,17 @@ const mostSearchedCities = [
 
 const familiesWeHaveHelpedTiles = [
   {
-    image: assetPath('images/home/meet-others/Sharon.jpg'),
+    image: 'react-assets/home/meet-others/Sharon.jpg',
     title: 'Sharon T.',
     description: '"I felt like Seniorly was a lifesaver! I was daunted at the prospect of going through so many possibilities to find the right fit for my mom in such a short time, while taking care of so many other things that need attending as we deal with the aftermath of her stroke."',
   },
   {
-    image: assetPath('images/home/meet-others/Kathy.jpg'),
+    image: 'react-assets/home/meet-others/Kathy.jpg',
     title: 'Aileen H.',
     description: '"I was very frustrated that every time I wanted to see the price of a facility that I had to give my phone number and I would get bombarded with calls. Your site was the only one that allowed me to search on my own time and it listed more info than other sites."',
   },
   {
-    image: assetPath('images/home/meet-others/Henry.jpg'),
+    image: 'react-assets/home/meet-others/Henry.jpg',
     title: 'Henry W.',
     description: '"We were lucky enough to find a great place for my father-in-law. Seniorly is a really helpful website, very helpful and informative. Thank you so much for what you do."',
   },
@@ -350,7 +351,7 @@ const PromoPage = ({
           </SearchBoxWrapper>
         </HeroWrapper>
         <HeroWrapper>
-          <StyledImage src={assetPath('images/promo/motherdaughter.jpg')} alt="A Home To Love" />
+          <StyledImage path="react-assets/promo/motherdaughter.jpg" alt="A Home To Love" />
         </HeroWrapper>
       </HeroTwoColumnWrapper>
     </>
@@ -446,12 +447,12 @@ const PromoPage = ({
         <StyledHr />
         <StyledSection>
           <TwoColumnWrapper>
-            <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/partner-with-us.jpeg')}>
+            <ImageOverlayContentTile size="xLarge" image={'react-assets/home/partner-with-us.jpeg'}>
               <Heading palette="white">Partner With Us</Heading>
               <StyledBlock palette="white" level="subtitle">For Local Referral Agents</StyledBlock>
               <Button to="/providers/crm">Get Started</Button>
             </ImageOverlayContentTile>
-            <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/list-a-property.jpeg')}>
+            <ImageOverlayContentTile size="xLarge" image={'react-assets/home/list-a-property.jpeg'}>
               <Heading palette="white">List a Property</Heading>
               <StyledBlock palette="white" level="subtitle">For Senior Housing Providers</StyledBlock>
               <Button to="/providers/housing">Get Started</Button>
@@ -461,17 +462,17 @@ const PromoPage = ({
         <StyledHr />
         <StyledSection title="Corporate Partners">
           <CWTColumnWrapper>
-            <CWTImage src={assetPath('images/home/companies-we-trust/Brookdale_BW.png')} alt="Brookdale Senior Living Logo" />
-            <CWTImage src={assetPath('images/home/companies-we-trust/SunriseSeniorLiving_BW.png')} alt="SunriseSenior Living Logo" />
-            <CWTImage src={assetPath('images/home/companies-we-trust/HolidayRetirement_BW.png')} alt="Holidat Retirement" />
-            <CWTImage src={assetPath('images/home/companies-we-trust/PacificaSeniorLiving_BW.png')} alt="Pacifica Senior Living Logo" />
+            <CWTImage src={'react-assets/home/companies-we-trust/Brookdale_BW.png'} alt="Brookdale Senior Living Logo" />
+            <CWTImage src={'react-assets/home/companies-we-trust/SunriseSeniorLiving_BW.png'} alt="SunriseSenior Living Logo" />
+            <CWTImage src={'react-assets/home/companies-we-trust/HolidayRetirement_BW.png'} alt="Holidat Retirement" />
+            <CWTImage src={'react-assets/home/companies-we-trust/PacificaSeniorLiving_BW.png'} alt="Pacifica Senior Living Logo" />
           </CWTColumnWrapper>
           <CWTColumnWrapper>
-            <CWTImage src={assetPath('images/home/companies-we-trust/HomeCareAssistance_BW.png')} alt="Home Care Assistance Logo" />
-            <CWTImage src={assetPath('images/home/companies-we-trust/FCA_BW.png')} alt="Family Caregiver Alliance Logo" />
-            <CWTImage src={assetPath('images/home/companies-we-trust/AssistedLivingLocators_BW.png')} alt="Assisted Living Locators Logo" />
-            <CWTImage src={assetPath('images/home/companies-we-trust/SeniorCareAuthority_BW.png')} alt="SeniorCareAuthority Logo" />
-            <CWTImage src={assetPath('images/home/companies-we-trust/OasisSeniorAdvisors_BW.png')} alt="Oasis Senior Advisors Logo" />
+            <CWTImage src={'react-assets/home/companies-we-trust/HomeCareAssistance_BW.png'} alt="Home Care Assistance Logo" />
+            <CWTImage src={'react-assets/home/companies-we-trust/FCA_BW.png'} alt="Family Caregiver Alliance Logo" />
+            <CWTImage src={'react-assets/home/companies-we-trust/AssistedLivingLocators_BW.png'} alt="Assisted Living Locators Logo" />
+            <CWTImage src={'react-assets/home/companies-we-trust/SeniorCareAuthority_BW.png'} alt="SeniorCareAuthority Logo" />
+            <CWTImage src={'react-assets/home/companies-we-trust/OasisSeniorAdvisors_BW.png'} alt="Oasis Senior Advisors Logo" />
           </CWTColumnWrapper>
         </StyledSection>
         { isWizardActive &&

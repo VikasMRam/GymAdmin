@@ -2,7 +2,7 @@ import React from 'react';
 import { string, array, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { size, getKey } from 'sly/components/themes';
+import { size, getKey, assetPath } from 'sly/components/themes';
 import { getSrcset } from 'sly/services/images';
 import { ifProp } from 'styled-tools';
 
@@ -62,7 +62,7 @@ export default class ResponsiveImage extends React.Component {
 
   render() {
     const {
-      src, path, placeholder, sizes, sources, alt, loading, className: classNameProp, aspectRatio, ...props
+      src, path, placeholder, sizes, sources, alt, loading, className: classNameProp, aspectRatio, children, ...props
     } = this.props;
 
     // at least ONE of path (bucket s3 path without /uploads) or src (absolute; e.g. static in public) should be provided
@@ -71,9 +71,10 @@ export default class ResponsiveImage extends React.Component {
     const srcProp = loading === 'lazy' ? 'data-src' : 'src';
     const className = loading === 'lazy' ? 'lazy' : '';
 
+    const imgSrc = src || placeholder || assetPath('images/img-placeholder.png');
     const imageProps = {
-      src: src || placeholder,
-      [srcProp]: src,
+      src: imgSrc,
+      [srcProp]: imgSrc,
     };
 
     let sourceSets = null;
@@ -119,6 +120,7 @@ export default class ResponsiveImage extends React.Component {
             {...props}
           />
         </picture>
+        {children}
       </ResponsiveWrapper>
     );
   }

@@ -16,7 +16,7 @@ const HowSlyWorksVideo = ({
 }) => (
   <div className={className}>
     {!isPlaying &&
-      <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.jpg')} onClick={onThumbnailClick} />
+      <VideoThumbnail path={'react-assets/how-sly-works-video-thumbnail.jpg'} onClick={onThumbnailClick} />
     }
     {isPlaying &&
       <StyledVideo
