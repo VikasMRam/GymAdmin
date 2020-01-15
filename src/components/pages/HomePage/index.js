@@ -4,20 +4,19 @@ import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
 import { host } from 'sly/config';
-import { size, palette, gridColumns } from 'sly/components/themes';
+import { size, palette, gridColumns, assetPath } from 'sly/components/themes';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import SlyEvent from 'sly/services/helpers/events';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
-import {  Centered, Label, Heading, Hr, Link, Block, Paragraph } from 'sly/components/atoms';
+import {  Centered, Label, Heading, Hr, Link, Block, Paragraph, Image, ResponsiveImage } from 'sly/components/atoms';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import Footer from 'sly/components/organisms/Footer';
 import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
-import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -124,7 +123,7 @@ const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const CWTImage = styled(ResponsiveImage)`
+const CWTImage = styled(Image)`
   margin-bottom: ${size('spacing.regular')};
   height: ${size('picture.tiny.height')};
 `;
@@ -513,16 +512,16 @@ const HomePage = ({
         <Hr />
         <StyledSection title="Corporate Senior Living Partners">
           <CWTColumnWrapper>
-            <CWTImage path="react-assets/home/companies-we-trust/Brookdale_BW.png" alt="Brookdale Senior Living Logo" />
-            <CWTImage path="react-assets/home/companies-we-trust/SunriseSeniorLiving_BW.png" alt="SunriseSenior Living Logo" />
-            <CWTImage path="react-assets/home/companies-we-trust/HolidayRetirement_BW.png" alt="Holidat Retirement" />
-            <CWTImage path="react-assets/home/companies-we-trust/PacificaSeniorLiving_BW.png" alt="Pacifica Senior Living Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/Brookdale_BW.png')} alt="Brookdale Senior Living Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/SunriseSeniorLiving_BW.png')} alt="SunriseSenior Living Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/HolidayRetirement_BW.png')} alt="Holidat Retirement" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/PacificaSeniorLiving_BW.png')} alt="Pacifica Senior Living Logo" />
           </CWTColumnWrapper>
           <CWTColumnWrapper>
-            <CWTImage path="react-assets/home/companies-we-trust/HomeCareAssistance_BW.png" alt="Home Care Assistance Logo" />
-            <CWTImage path="react-assets/home/companies-we-trust/FCA_BW.png" alt="Family Caregiver Alliance Logo" />
-            <CWTImage path="react-assets/home/companies-we-trust/SeniorCareAuthority_BW.png" alt="SeniorCareAuthority Logo" />
-            <CWTImage path="react-assets/home/companies-we-trust/AssistedLivingLocators_BW.png" alt="Assisted Living Locators Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/HomeCareAssistance_BW.png')} alt="Home Care Assistance Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/FCA_BW.png')} alt="Family Caregiver Alliance Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/SeniorCareAuthority_BW.png')} alt="SeniorCareAuthority Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/AssistedLivingLocators_BW.png')} alt="Assisted Living Locators Logo" />
           </CWTColumnWrapper>
         </StyledSection>
         <SeoLinks title="Assisted Living by City" links={ALSeoCities} />
