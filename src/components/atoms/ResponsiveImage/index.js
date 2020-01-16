@@ -53,13 +53,12 @@ export default class ResponsiveImage extends React.Component {
     alt: string,
     sizes: string,
     sources: array,
-    aspectRatio: oneOf([false, '16:9', 'golden', '3:2', '4:3', '1:1']),
+    aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3', '1:1']),
   };
 
   static defaultProps = {
     className: '',
     loading: 'eager',
-    aspectRatio: '3:2',
   };
 
   state = {
