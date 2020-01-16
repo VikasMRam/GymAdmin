@@ -48,6 +48,8 @@ export default class ResponsiveImage extends React.Component {
     // provided to signify absolute route to asset or relative to env domain, optional but path has to be provided
     src: string,
     placeholder: string,
+    // use height to force a height for all sources like in a hero banner
+    height: string,
     alt: string,
     sizes: string,
     sources: array,

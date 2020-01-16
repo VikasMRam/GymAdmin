@@ -12,6 +12,7 @@ import Pagination from 'sly/components/molecules/Pagination';
 import Heading from 'sly/components/atoms/Heading';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import CommunityTile from 'sly/components/organisms/CommunityTile';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;
@@ -59,19 +60,19 @@ const ShadowCommunityTile = shadowOnHover(styled(CommunityTile)`
 const mostSearchedCities = [
   {
     to: '/assisted-living/california/san-francisco',
-    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    image: 'react-assets/cities/SanFrancisco.jpeg',
     subtitle: 'San Francisco, CA',
     title: '95+ communities',
   },
   {
     to: '/assisted-living/california/los-angeles',
-    image: assetPath('images/cities/LosAngeles.jpeg'),
+    image: 'react-assets/cities/LosAngeles.jpeg',
     subtitle: 'Los Angeles, CA',
     title: '105+ communities',
   },
   {
     to: '/assisted-living/california/san-diego',
-    image: assetPath('images/cities/SanDiego.jpeg'),
+    image: 'react-assets/cities/SanDiego.jpeg',
     subtitle: 'San Diego, CA',
     title: '75+ communities',
   },
@@ -80,17 +81,17 @@ const mostSearchedCities = [
 const usefulInformationTiles = [
   {
     to: '/independent-living',
-    image: assetPath('images/home/useful-info/independent-living.jpg'),
+    image: 'react-assets/home/useful-info/independent-living.jpg',
     title: 'Independent Living',
   },
   {
     to: '/assisted-living',
-    image: assetPath('images/home/useful-info/assisted-living.jpg'),
+    image: 'react-assets/home/useful-info/assisted-living.jpg',
     title: 'Assisted Living',
   },
   {
     to: '/memory-care',
-    image: assetPath('images/home/useful-info/memory-care.jpg'),
+    image: 'react-assets/home/useful-info/memory-care.jpg',
     title: 'Memory Care',
   },
 ];
@@ -102,21 +103,21 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
   if (communityList.length < 1) {
     mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
       <Link key={mostSearchedCity.title} to={mostSearchedCity.to}>
-        <Image src={mostSearchedCity.image} aspectRatio="4:3">
+        <ResponsiveImage path={mostSearchedCity.image} aspectRatio="4:3">
           <Centered>
             <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
             <Block palette="white">{mostSearchedCity.title}</Block>
           </Centered>
-        </Image>
+        </ResponsiveImage>
       </Link>
     ));
     usefulInformationTilesComponents = usefulInformationTiles.map(usefulInformation => (
       <Link key={usefulInformation.title} to={usefulInformation.to}>
-        <Image src={usefulInformation.image} aspectRatio="4:3">
+        <ResponsiveImage path={usefulInformation.image} aspectRatio="4:3">
           <Centered>
             <Heading size="subtitle" palette="white">{usefulInformation.title}</Heading>
           </Centered>
-        </Image>
+        </ResponsiveImage>
       </Link>
     ));
   }
