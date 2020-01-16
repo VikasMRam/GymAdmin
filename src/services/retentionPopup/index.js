@@ -2,30 +2,29 @@ import React, { Component } from 'react';
 import { func, object, string, bool } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import withUser from '../newApi/withUser';
-
 import { host, isServer, isBrowser } from 'sly/config';
+import { withUser } from 'sly/services/newApi';
+import { CUSTOMER_ROLE } from 'sly/constants/roles';
+import {
+  RETENTION_POPUP_IDLE_TIMEOUT,
+  RETENTION_POPUP_EBOOK_TIMEOUT,
+  RETENTION_POPUP_IDLE,
+  RETENTION_POPUP_MODAL_SHOWN,
+  RETENTION_POPUP_DISABLED_PAGES,
+  RETENTION_POPUP_MOUSEOUT_TIMEOUT,
+  RETENTION_POPUP_EXIT_INTENT,
+  RETENTION_POPUP_STAY_INTENT,
+  RETENTION_POPUP_FOCUS_TIMEOUT,
+} from 'sly/constants/retentionPopup';
+import withModal from 'sly/controllers/withModal';
 import EbookFormContainer from 'sly/containers/EbookFormContainer';
 import ExitIntentQuestionFormContainer from 'sly/containers/ExitIntentQuestionFormContainer';
 import SimilarCommunitiesPopupContainer from 'sly/containers/SimilarCommunitiesPopupContainer';
-import withModal from 'sly/controllers/withModal';
-import { CUSTOMER_ROLE } from 'sly/constants/roles';
-
-const MOUSEOUT_TIME_DURATION = 20000;
-const FOCUS_TIME_DURATION = 10000;
-const EBOOK_TIME_DURATION = 120000;
-const IDLE_TIME_DURATION = 10;
-
-const MODAL_SHOWN = 'modal-shown';
-const EXIT_INTENT = 'exit-intent';
-const STAY_INTENT = 'stay-intent';
-const IDLE = 'idle';
-
-const EXIT_INTENT_DISABLED_PAGES = [/^\/custom-pricing/, /^\/dashboard/, /^\/$/];
 
 @withUser
 @withModal
 @withRouter
+
 export default class RetentionPopup extends Component {
   static typeHydrationId = 'RetentionPopup';
   static propTypes = {
@@ -42,7 +41,7 @@ export default class RetentionPopup extends Component {
 
     if (isBrowser) {
       this.ifvisible = require('ifvisible.js');
-      this.ifvisible.setIdleDuration(IDLE_TIME_DURATION);
+      this.ifvisible.setIdleDuration(RETENTION_POPUP_IDLE_TIMEOUT);
     }
   }
 
@@ -75,14 +74,14 @@ export default class RetentionPopup extends Component {
     const currentTime = new Date().getTime();
     const activeTime = Math.abs(currentTime - this.renderTime);
 
-    return activeTime >= EBOOK_TIME_DURATION;
+    return activeTime >= RETENTION_POPUP_EBOOK_TIMEOUT;
   };
 
   onIdleHandler = () => {
     const idleInfo = this.ifvisible.getIdleInfo();
 
     if (this.isEbookAvailable() && idleInfo.isIdle) {
-      this.showEbookModal(IDLE);
+      this.showEbookModal(RETENTION_POPUP_IDLE);
     } else if (idleInfo.isIdle) {
       this.ifvisible.wakeup();
     }
@@ -107,9 +106,9 @@ export default class RetentionPopup extends Component {
     const { isModalOpen, location: { pathname } } = this.props;
 
     return isModalOpen
-      || localStorage.getItem(MODAL_SHOWN) === MODAL_SHOWN
+      || localStorage.getItem(RETENTION_POPUP_MODAL_SHOWN) === RETENTION_POPUP_MODAL_SHOWN
       || (this.props.user && !this.isCustomer())
-      || EXIT_INTENT_DISABLED_PAGES.some(regex => regex.test(pathname));
+      || RETENTION_POPUP_DISABLED_PAGES.some(regex => regex.test(pathname));
   }
 
   onMouseoutHandler = (e) => {
@@ -134,9 +133,9 @@ export default class RetentionPopup extends Component {
     // user switching active program
     const from = e.relatedTarget || e.toElement;
 
-    if (!from && activeTime >= MOUSEOUT_TIME_DURATION) {
+    if (!from && activeTime >= RETENTION_POPUP_MOUSEOUT_TIMEOUT) {
       if (this.isEbookAvailable()) {
-        this.showEbookModal(EXIT_INTENT);
+        this.showEbookModal(RETENTION_POPUP_EXIT_INTENT);
       } else {
         this.showExitIntent();
       }
@@ -146,13 +145,13 @@ export default class RetentionPopup extends Component {
   addPopstateListener = () => {
     const { history } = window;
     const externalReferrer = document.referrer.indexOf(host) !== 0;
-    const notRefreshing = !history.state || history.state.intent !== STAY_INTENT;
+    const notRefreshing = !history.state || history.state.intent !== RETENTION_POPUP_STAY_INTENT;
 
     if (externalReferrer && notRefreshing) {
       window.addEventListener('popstate', this.onPopstateHandler);
 
-      history.replaceState({ intent: EXIT_INTENT }, '');
-      history.pushState({ intent: STAY_INTENT }, '');
+      history.replaceState({ intent: RETENTION_POPUP_EXIT_INTENT }, '');
+      history.pushState({ intent: RETENTION_POPUP_STAY_INTENT }, '');
     }
   };
 
@@ -164,9 +163,9 @@ export default class RetentionPopup extends Component {
     const currentTime = new Date().getTime();
     const inactiveTime = Math.abs(currentTime - this.lastBlur);
 
-    if (inactiveTime >= FOCUS_TIME_DURATION) {
+    if (inactiveTime >= RETENTION_POPUP_FOCUS_TIMEOUT) {
       if (this.isEbookAvailable()) {
-        this.showEbookModal(EXIT_INTENT);
+        this.showEbookModal(RETENTION_POPUP_EXIT_INTENT);
       } else {
         this.showExitIntent();
       }
@@ -181,7 +180,7 @@ export default class RetentionPopup extends Component {
   }
 
   onPopstateHandler = (event) => {
-    if (event.state && event.state.intent === EXIT_INTENT) {
+    if (event.state && event.state.intent === RETENTION_POPUP_EXIT_INTENT) {
       this.showExitIntent();
     }
   };
@@ -207,7 +206,7 @@ export default class RetentionPopup extends Component {
     this.props.showModal(modalContent, null, layout);
 
     this.removeAllEventListeners();
-    localStorage.setItem(MODAL_SHOWN, MODAL_SHOWN);
+    localStorage.setItem(RETENTION_POPUP_MODAL_SHOWN, RETENTION_POPUP_MODAL_SHOWN);
   }
 
   removeAllEventListeners = () => {
