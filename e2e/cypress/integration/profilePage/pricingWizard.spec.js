@@ -13,7 +13,7 @@ describe('Marketplace Profile Page', () => {
     it('tests Pricing Wizard for Assisited Living Community in Mobile - Talk to Advisor Flow', () => {
       const { name, phone } = randomUser();
 
-      const typeOfRoom = 'Suite';
+      const moveTimeline = 'Immediately';
       const typeOfCare = 'Medication Management';
       const medicaid = 'Yes';
 
@@ -34,7 +34,7 @@ describe('Marketplace Profile Page', () => {
       // cy.url().should('include', `/custom-pricing/${communitySlug}`);
 
       const data = {
-        communitySlug: TEST_COMMUNITY, name, phone, typeOfRoom, typeOfCare, medicaid,
+        communitySlug: TEST_COMMUNITY, name, phone, moveTimeline, typeOfCare, medicaid,
       };
 
       doCustomPricingTalkToAdvisorFlow(cy, data);
@@ -47,7 +47,7 @@ describe('Marketplace Profile Page', () => {
     it('tests Pricing Wizard for Assisited Living Community in Mobile - Affordable Options Flow', () => {
       const { name, phone } = randomUser();
 
-      const typeOfRoom = 'Suite';
+      const moveTimeline = 'Immediately';
       const typeOfCare = 'Medication Management';
       const medicaid = 'Yes';
 
@@ -68,7 +68,7 @@ describe('Marketplace Profile Page', () => {
       // cy.url().should('include', `/custom-pricing/${communitySlug}`);
 
       const data = {
-        communitySlug: TEST_COMMUNITY, name, phone, typeOfRoom, typeOfCare, medicaid,
+        communitySlug: TEST_COMMUNITY, name, phone, moveTimeline, typeOfCare, medicaid,
       };
 
       doCustomPricingExploreAffordableOptionsFlow(cy, data);
