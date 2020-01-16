@@ -171,7 +171,6 @@ const base = group([
       poll: 1000,
       ignored: ['node_modules'],
     },
-    hot: true,
   }),
 
   match(['*.js', '!*node_modules*'], [babel()]),
