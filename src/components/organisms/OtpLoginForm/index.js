@@ -38,7 +38,7 @@ const OtpLoginForm = ({
     <Field
       name="code"
       label="Code"
-      labelRight={<ResetPassword palette="primary" size="caption" onClick={onResendCodeClick}>Resed code</ResetPassword>}
+      labelRight={<ResetPassword palette="primary" size="caption" onClick={onResendCodeClick}>Resend code</ResetPassword>}
       type="text"
       placeholder="6-digit code"
       component={ReduxField}
