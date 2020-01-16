@@ -62,6 +62,16 @@ export default class ResponsiveImage extends React.Component {
     aspectRatio: '3:2',
   };
 
+  state = {
+    failed: false,
+  };
+
+  failedLoadImageHandler = () => {
+    this.setState({
+      failed: true,
+    });
+  };
+
   render() {
     const {
       src, path, placeholder, sizes, sources, height, alt, loading, className: classNameProp, aspectRatio, children, ...props
@@ -90,14 +100,19 @@ export default class ResponsiveImage extends React.Component {
     const srcProp = loading === 'lazy' ? 'data-src' : 'src';
     const className = loading === 'lazy' ? 'lazy' : '';
 
-    const imgSrc = src || placeholder || assetPath('images/img-placeholder.png');
+    const actualPlaceholder = placeholder || assetPath('images/img-placeholder.png');
+    const imgSrc = this.state.failed
+      ? actualPlaceholder
+      : src || actualPlaceholder;
+
+    console.log('failed', this.state.failed, imgSrc);
     const imageProps = {
       src: imgSrc,
       [srcProp]: imgSrc,
     };
 
     let sourceSets = null;
-    if (isS3Path) {
+    if (!this.state.failed && isS3Path) {
       // aspect ratio is a number in getSrcset
       const aspectRatioString = getKey(`sizes.picture.ratios.${aspectRatio}`);
       const aspectRatioValue = (parseFloat(aspectRatioString) / 100).toFixed(4);
@@ -135,6 +150,7 @@ export default class ResponsiveImage extends React.Component {
             loading={loading}
             alt={alt || getAlt(path)}
             className={className}
+            onError={this.failedLoadImageHandler}
             {...imageProps}
             {...props}
           />
