@@ -353,7 +353,7 @@ const HomePage = ({
     <>
       <HeaderContainer />
       <HeroWrapper>
-        <StyledImage path="react-assets/home/cover4.jpg" alt="A Home To Love" aspectRatio={false} height={640} />
+        <StyledImage path="react-assets/home/cover4.jpg" alt="A Home To Love" height={640} />
         <SearchBoxWrapper>
           <StyledHeading level="hero" size="hero" palette="white">
             Find The Best Senior Living Near You

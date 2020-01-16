@@ -89,7 +89,7 @@ const CareTypeRegionGuidePage = ({
     <>
       <HeaderContainer />
       <HeroWrapper>
-        <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
+        CareTypeRegionGuidePageContainer
         <SearchBoxWrapper>
           <StyledHeading level="hero" size="hero" palette="white">
             Assisted Living Guide For {geoGuide.city}, {stateNames[geoGuide.state]}
