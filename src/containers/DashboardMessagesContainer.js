@@ -166,7 +166,7 @@ export default class DashboardMessagesContainer extends Component {
         />
       ));
     }
-    const modelConfig = { name: 'Conversation', defaultSearchField: 'name' };
+    const modelConfig = { name: 'Conversation', defaultSearchField: 'user-name' };
     return (
       <>
         <HeadingWrapper>
