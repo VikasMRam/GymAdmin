@@ -5,7 +5,7 @@ export const RETENTION_POPUP_IDLE_TIMEOUT = 10;
 
 export const RETENTION_POPUP_MODAL_SHOWN = 'modal-shown';
 export const RETENTION_POPUP_EXIT_INTENT = 'exit-intent';
-export const RETENTION_POPUP_STAY_INTENT = 'stay-intent';
+export const RETENTION_POPUP_FOCUS = 'stay-intent';
 export const RETENTION_POPUP_IDLE = 'idle';
 
 export const RETENTION_POPUP_DISABLED_PAGES = [/^\/custom-pricing/, /^\/dashboard/, /^\/$/];

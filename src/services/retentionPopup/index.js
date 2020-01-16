@@ -13,7 +13,7 @@ import {
   RETENTION_POPUP_DISABLED_PAGES,
   RETENTION_POPUP_MOUSEOUT_TIMEOUT,
   RETENTION_POPUP_EXIT_INTENT,
-  RETENTION_POPUP_STAY_INTENT,
+  RETENTION_POPUP_FOCUS,
   RETENTION_POPUP_FOCUS_TIMEOUT,
 } from 'sly/constants/retentionPopup';
 import withModal from 'sly/controllers/withModal';
@@ -145,13 +145,13 @@ export default class RetentionPopup extends Component {
   addPopstateListener = () => {
     const { history } = window;
     const externalReferrer = document.referrer.indexOf(host) !== 0;
-    const notRefreshing = !history.state || history.state.intent !== RETENTION_POPUP_STAY_INTENT;
+    const notRefreshing = !history.state || history.state.intent !== RETENTION_POPUP_FOCUS;
 
     if (externalReferrer && notRefreshing) {
       window.addEventListener('popstate', this.onPopstateHandler);
 
       history.replaceState({ intent: RETENTION_POPUP_EXIT_INTENT }, '');
-      history.pushState({ intent: RETENTION_POPUP_STAY_INTENT }, '');
+      history.pushState({ intent: RETENTION_POPUP_FOCUS }, '');
     }
   };
 
