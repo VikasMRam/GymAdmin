@@ -10,6 +10,7 @@ import {
   AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_TASKS_PATH,
   AGENT_DASHBOARD_ACCOUNT_PATH,
+  AGENT_DASHBOARD_PROFILE_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import SlyEvent from 'sly/services/helpers/events';
 import AuthContainer from 'sly/containers/AuthContainer';
@@ -94,6 +95,9 @@ const agentMenuItems = [
   },
   {
     name: 'My Account', to: AGENT_DASHBOARD_ACCOUNT_PATH, section: 1, icon: 'settings', onClick: ({ name }) => sendHeaderItemClickEvent(name),
+  },
+  {
+    name: 'My Profile', to: AGENT_DASHBOARD_PROFILE_PATH, section: 1, icon: 'user', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
 ];
 

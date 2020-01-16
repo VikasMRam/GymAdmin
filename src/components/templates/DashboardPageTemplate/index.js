@@ -10,11 +10,13 @@ import {
   FAMILY_DASHBOARD_PROFILE_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH,
   AGENT_DASHBOARD_ACCOUNT_PATH,
+  AGENT_DASHBOARD_PROFILE_PATH,
   AGENT_DASHBOARD_MESSAGES_PATH,
   ADMIN_DASHBOARD_CALLS_PATH,
-  AGENT_DASHBOARD_TASKS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
+  AGENT_DASHBOARD_TASKS_PATH,
+  AGENT_DASHBOARD_CONTACTS_PATH,
 } from 'sly/constants/dashboardAppPaths';
-import { CUSTOMER_ROLE, AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { CUSTOMER_ROLE, AGENT_ND_ROLE, AGENT_ADMIN_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import ModalContainer from 'sly/containers/ModalContainer';
 import DashboardMenu from 'sly/components/molecules/DashboardMenu';
@@ -35,6 +37,7 @@ const menuItems = [
   { label: 'My Profile', icon: 'settings', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_PROFILE_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick },
   { label: 'My Families', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), role: AGENT_ND_ROLE, onClick: onMenuItemClick },
   { label: 'My Account', icon: 'settings', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_ACCOUNT_PATH, role: AGENT_ND_ROLE, onClick: onMenuItemClick },
+  { label: 'My Profile', icon: 'settings', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_PROFILE_PATH, role: AGENT_ADMIN_ROLE, onClick: onMenuItemClick },
   { label: 'My Contacts', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_CONTACTS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
   // { label: 'Messages_', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_MESSAGES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick },
   { label: 'Messages', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_MESSAGES_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },

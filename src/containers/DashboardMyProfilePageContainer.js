@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { object } from 'prop-types';
 
 import DashboardMyProfilePage from 'sly/components/pages/DashboardMyProfilePage';
+import DashboardMyAccountPage from 'sly/components/pages/DashboardMyAccountPage';
 import { withUser } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 import { AGENT_DASHBOARD_ACCOUNT_PATH } from 'sly/constants/dashboardAppPaths';
+import { userIs } from 'sly/services/helpers/role';
+import { AGENT_ADMIN_ROLE } from 'sly/constants/roles';
 
 const incompleteInfoWarning = 'Please enter the incomplete fields below to complete your account.';
 
@@ -28,9 +31,10 @@ export default class DashboardMyProfilePageContainer extends Component {
     if (showIncompleteWarning) {
       warningMessage = incompleteInfoWarning;
     }
-    return (
-      <DashboardMyProfilePage user={user} title={title} warningMessage={warningMessage} />
-    );
+    if (userIs(user, AGENT_ADMIN_ROLE)) {
+      return <DashboardMyAccountPage user={user} title={title} warningMessage={warningMessage} />;
+    }
+    return <DashboardMyProfilePage user={user} title={title} warningMessage={warningMessage} />;
   }
 }
 
