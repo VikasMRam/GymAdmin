@@ -16,6 +16,7 @@ import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
 import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
 import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 import FAQSection from 'sly/components/organisms/FAQSection';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -30,7 +31,7 @@ const HeroWrapper = styled.div`
   }
 `;
 
-const HeroBackgroundImage = styled(Image)`
+const HeroBackgroundImage = styled(ResponsiveImage)`
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -92,7 +93,7 @@ class AgentsPage extends Component {
       <>
         <HeaderContainer />
         <HeroWrapper innerRef={this.heroRef}>
-          <HeroBackgroundImage src={assetPath('images/agents/agent-hero.png')} alt="A Home To Love" />
+          <HeroBackgroundImage path="react-assets/agents/agent-hero.png" height="480" alt="A Home To Love" />
           <HeroTextWrapper>
             <FindLocalAgent onLocationSearch={onLocationSearch} />
           </HeroTextWrapper>

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, node } from 'prop-types';
 
-import { assetPath, size } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import { ResponsiveImage } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   position: relative;
   background: black;
 `;
+
 export const StyledImage = styled(ResponsiveImage)`
   border-radius: ${size('spacing.tiny')};
   width: 100%;
@@ -18,6 +19,7 @@ export const StyledImage = styled(ResponsiveImage)`
   opacity: .75;
   object-fit: cover;
 `;
+
 export const ContentWrapper = styled.div`
   position: absolute;
   top: 50%;

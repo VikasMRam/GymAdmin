@@ -12,7 +12,6 @@ const StyledLink = styled(Link)`
 
 const StyledImageOverlayContentTile = styled(ImageOverlayContentTile)`
   border-radius: 4px;
-  height: ${size('element.huge')};
 `;
 
 // TODO: to move this to a common place for reusability
