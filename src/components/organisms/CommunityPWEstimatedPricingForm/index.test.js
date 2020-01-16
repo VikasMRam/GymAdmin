@@ -29,14 +29,14 @@ describe('CommunityPWEstimatedPricingForm', () => {
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
   });
 
-  it('onRoomTypeChange gets called', () => {
-    const onRoomTypeChange = jest.fn();
-    const wrapper = wrap({ onRoomTypeChange });
+  it('onMoveTimeline gets called', () => {
+    const onMoveTimelineChange = jest.fn();
+    const wrapper = wrap({ onMoveTimelineChange });
     const roomTypeField = wrapper.find('StyledField');
 
     expect(roomTypeField).toHaveLength(2);
     roomTypeField.at(0).simulate('change');
-    expect(onRoomTypeChange).toHaveBeenCalled();
+    expect(onMoveTimelineChange).toHaveBeenCalled();
   });
 
   it('onCareTypeChange gets called', () => {

@@ -542,14 +542,7 @@ export default class CommunityDetailPage extends Component {
               </Body>
               <Column>
                 <StickToTop>
-                  <Experiment name="Community_DetailPage_Sidebar">
-                    <Variant name="Sidebar_Concierge_Form">
-                      <ConciergeContainer />
-                    </Variant>
-                    <Variant name="Sidebar_GetDetailed_PricingBox">
-                      <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
-                    </Variant>
-                  </Experiment>
+                  <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
                 </StickToTop>
               </Column>
             </TwoColumn>

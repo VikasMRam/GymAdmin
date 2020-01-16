@@ -2,7 +2,7 @@ import { select } from './tests';
 
 const submitTillContactStep = (data) => {
   const {
-    name, phone, typeOfRoom, typeOfCare, medicaid,
+    name, phone, moveTimeline, typeOfCare, medicaid,
   } = data;
 
   cy.server();
@@ -12,7 +12,7 @@ const submitTillContactStep = (data) => {
 
   cy.contains('Get your Pricing and Availability');
 
-  cy.get('div[class*=BoxChoiceTile__StyledBox]').contains(typeOfRoom).click();
+  cy.get('div[class*=BoxChoiceTile__StyledBox]').contains(moveTimeline).click();
 
   cy.get('div[class*=BoxChoiceTile__StyledBox]').contains(typeOfCare).click();
 
