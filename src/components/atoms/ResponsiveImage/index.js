@@ -62,8 +62,25 @@ export default class ResponsiveImage extends React.Component {
 
   render() {
     const {
-      src, path, placeholder, sizes, sources, alt, loading, className: classNameProp, aspectRatio, children, ...props
+      src, path, placeholder, sizes, sources, height, alt, loading, className: classNameProp, aspectRatio, children, ...props
     } = this.props;
+
+    let sourcesAry;
+    if (!sources) {
+      sourcesAry = getKey('defaultImageSources');
+    } else {
+      sourcesAry = sources;
+    }
+    if (height) {
+      sourcesAry = sourcesAry.map((source) => {
+        if (Array.isArray(source)) {
+          source[1] = height;
+        } else {
+          source = [source, height];
+        }
+        return source;
+      });
+    }
 
     // at least ONE of path (bucket s3 path without /uploads) or src (absolute; e.g. static in public) should be provided
     const isS3Path = !!path;
@@ -84,7 +101,7 @@ export default class ResponsiveImage extends React.Component {
       const aspectRatioValue = (parseFloat(aspectRatioString) / 100).toFixed(4);
       const { jpegSrcset, webpSrcset, src } = getSrcset(path, {
         aspectRatio: aspectRatioValue,
-        sources: sources || getKey('defaultImageSources'),
+        sources: sourcesAry,
       });
 
       // override imageProps src, as it's undefined

@@ -346,14 +346,14 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 });
 
 const HomePage = ({
-  showModal, hideModal, onLocationSearch, setActiveDiscoverHome, queryParams, setQueryParams, pathName, ishowSlyWorksVideoPlaying,
-  toggleHowSlyWorksVideoPlaying, history,
+  showModal, hideModal, onLocationSearch, setActiveDiscoverHome, ishowSlyWorksVideoPlaying,
+  toggleHowSlyWorksVideoPlaying,
 }) => {
   const HeaderContent = (
     <>
       <HeaderContainer />
       <HeroWrapper>
-        <StyledImage path="react-assets/home/cover4.jpg" alt="A Home To Love" />
+        <StyledImage path="react-assets/home/cover4.jpg" alt="A Home To Love" aspectRatio={false} height={640} />
         <SearchBoxWrapper>
           <StyledHeading level="hero" size="hero" palette="white">
             Find The Best Senior Living Near You
