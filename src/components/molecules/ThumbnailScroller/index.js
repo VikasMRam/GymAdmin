@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { getKey, size } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import { Thumbnail } from 'sly/components/atoms';
 
 const Wrapper = styled.ul`

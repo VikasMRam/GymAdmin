@@ -18,7 +18,7 @@ describe('Image Handler service', () => {
   });
 
   it('should get a format with two dimensions', () => {
-    expect(getFormat({ width: 100, height: 100 })).toEqual('a100x100');
+    expect(getFormat({ width: 100, height: 100 })).toEqual('100x100');
     expect(getFormat({ width: 100, height: 100, crop: false })).toEqual('a100x100');
     expect(getFormat({ width: 100, height: 100, crop: true })).toEqual('100x100');
   });
@@ -28,6 +28,6 @@ describe('Image Handler service', () => {
   });
 
   it('should get the uploads path', () => {
-    expect(getImagePath('image/path.ext', { width: 300, height: 300 })).toEqual('http://localhost/assets/images/a300x300/image/path.ext');
+    expect(getImagePath('image/path.ext', { width: 300, height: 300 })).toEqual('http://localhost/assets/images/300x300/image/path.ext');
   });
 });

@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { string, bool } from 'prop-types';
 
 
-import { size, assetPath, getKey } from 'sly/components/themes';
-import { Heading, Block, Icon, Image } from 'sly/components/atoms';
+import { size, getKey } from 'sly/components/themes';
+import { Heading, Block, Icon } from 'sly/components/atoms';
 import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const Wrapper = styled.div`

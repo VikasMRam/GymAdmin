@@ -1,10 +1,10 @@
 import React from 'react';
 import { string, array, oneOf, any } from 'prop-types';
 import styled, { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size, getKey, assetPath } from 'sly/components/themes';
 import { getSrcset } from 'sly/services/images';
-import { ifProp } from 'styled-tools';
 
 const paddingTop = ({ aspectRatio }) => size('picture.ratios', aspectRatio);
 

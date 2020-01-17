@@ -203,7 +203,7 @@ export default class MediaGallery extends Component {
   };
 
   generateSlideContent = (media, index) => {
-    const { currentSlide, aspectRatio, sizes } = this.props;
+    const { currentSlide, sizes } = this.props;
 
     switch (media.type) {
       case 'image': {
@@ -218,7 +218,6 @@ export default class MediaGallery extends Component {
             sizes={sizes}
             alt={media.alt}
             loading={this.shouldLoadMedia(index) ? 'eager' : 'lazy'}
-            // aspectRatio={aspectRatio}
             ref={(c) => {
               this.mediaRefs[index] = c;
             }}

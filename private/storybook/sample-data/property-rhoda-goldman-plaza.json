@@ -288,186 +288,63 @@
     "images": [
       {
         "id": "ddb49929f3915891cb67da8ad0ea663e",
-        "hd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_hd.jpg",
         "name": "RGP-June-2014.jpg",
-        "path": "dbede7dcc263e098e3705e818b5ff463/RGP-June-2014.jpg",
-        "processed": 2,
-        "sd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_sd.jpg",
-        "thumb":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_thumb.jpg",
-        "url":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014.jpg",
-        "gallery": null
+        "path": "dbede7dcc263e098e3705e818b5ff463/RGP-June-2014.jpg"
       },
       {
         "id": "7c580d1d286425f89fb2f6c5ab0b0cc0",
-        "hd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20_hd.jpg",
         "name": "building pics jan 2014-20.jpg",
-        "path":
-          "dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20.jpg",
-        "processed": 2,
-        "sd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20_sd.jpg",
-        "thumb":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20_thumb.jpg",
-        "url":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20.jpg",
-        "gallery": null
+        "path": "dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20.jpg"
       },
       {
         "id": "3d9e64e069d3663c15975da4d8ca26e9",
-        "hd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/library%20lounge_hd.jpg",
         "name": "library lounge.jpg",
-        "path": "9e98a8d1b8d59941d725a30737861441/library%20lounge.jpg",
-        "processed": 2,
-        "sd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/library%20lounge_sd.jpg",
-        "thumb":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/library%20lounge_thumb.jpg",
-        "url":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/library%20lounge.jpg",
-        "gallery": null
+        "path": "9e98a8d1b8d59941d725a30737861441/library%20lounge.jpg"
       },
       {
         "id": "150be9bb1e1f913ec41513371d8f7c42",
-        "hd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/lobby_hd.jpg",
         "name": "lobby.jpg",
-        "path": "9e98a8d1b8d59941d725a30737861441/lobby.jpg",
-        "processed": 2,
-        "sd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/lobby_sd.jpg",
-        "thumb":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/lobby_thumb.jpg",
-        "url":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/lobby.jpg",
-        "gallery": null
+        "path": "9e98a8d1b8d59941d725a30737861441/lobby.jpg"
       },
       {
         "id": "c493987e7802d43deeae8f2ed9add01a",
-        "hd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4_hd.jpg",
         "name": "front of RGP building-4.jpg",
-        "path":
-          "9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4.jpg",
-        "processed": 2,
-        "sd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4_sd.jpg",
-        "thumb":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4_thumb.jpg",
-        "url":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4.jpg",
-        "gallery": null
+        "path": "9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4.jpg"
       },
       {
         "id": "937deb3f62eb131533742644942b8326",
-        "hd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/3rd%20floor%20terrace_hd.jpg",
         "name": "3rd floor terrace.jpg",
-        "path": "9e98a8d1b8d59941d725a30737861441/3rd%20floor%20terrace.jpg",
-        "processed": 2,
-        "sd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/3rd%20floor%20terrace_sd.jpg",
-        "thumb":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/3rd%20floor%20terrace_thumb.jpg",
-        "url":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/3rd%20floor%20terrace.jpg",
-        "gallery": null
+        "path": "9e98a8d1b8d59941d725a30737861441/3rd%20floor%20terrace.jpg"
       },
       {
         "id": "3c699269c0ad5aa75c6a9f9d6648bb1e",
-        "hd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/art%20class%204_hd.jpg",
         "name": "art class 4.jpg",
-        "path": "9e98a8d1b8d59941d725a30737861441/art%20class%204.jpg",
-        "processed": 2,
-        "sd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/art%20class%204_sd.jpg",
-        "thumb":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/art%20class%204_thumb.jpg",
-        "url":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/art%20class%204.jpg",
-        "gallery": null
+        "path": "9e98a8d1b8d59941d725a30737861441/art%20class%204.jpg"
       },
       {
         "id": "92da4333049c4d6ccec8d7662a3934f2",
-        "hd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/exercise%20class%202_hd.jpg",
         "name": "exercise class 2.jpg",
-        "path": "9e98a8d1b8d59941d725a30737861441/exercise%20class%202.jpg",
-        "processed": 2,
-        "sd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/exercise%20class%202_sd.jpg",
-        "thumb":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/exercise%20class%202_thumb.jpg",
-        "url":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/exercise%20class%202.jpg",
-        "gallery": null
+        "path": "9e98a8d1b8d59941d725a30737861441/exercise%20class%202.jpg"
       },
       {
         "id": "b3865885185f4673196ba407c878d165",
-        "hd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_hd.jpg",
         "name": "RGP-June-2014_hd2.jpg",
-        "path": "a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2.jpg",
-        "processed": 2,
-        "sd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_sd.jpg",
-        "thumb":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_thumb.jpg",
-        "url":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2.jpg",
-        "gallery": null
+        "path": "a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2.jpg"
       },
       {
         "id": "15ff69c320cecba709e11eecd49da166",
-        "hd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%20and%20tablet_hd.jpg",
         "name": "len and tablet.jpg",
-        "path": "9e98a8d1b8d59941d725a30737861441/len%20and%20tablet.jpg",
-        "processed": 2,
-        "sd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%20and%20tablet_sd.jpg",
-        "thumb":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%20and%20tablet_thumb.jpg",
-        "url":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%20and%20tablet.jpg",
-        "gallery": null
+        "path": "9e98a8d1b8d59941d725a30737861441/len%20and%20tablet.jpg"
       },
       {
         "id": "8cfa9d337d817e35320950e4f7f1e9f9",
-        "hd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602_hd.jpg",
         "name": "RhodaGoldmanDSC_0602.jpg",
-        "path": "808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602.jpg",
-        "processed": 2,
-        "sd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602_sd.jpg",
-        "thumb":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602_thumb.jpg",
-        "url":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602.jpg",
-        "gallery": null
+        "path": "808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602.jpg"
       },
       {
         "id": "efce94280a1b9c3d4562b33188242c58",
-        "hd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1_hd.jpg",
         "name": "Rhoda_Goldman_Plaza_header-1.jpg",
-        "path":
-          "f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1.jpg",
-        "processed": 2,
-        "sd":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1_sd.jpg",
-        "thumb":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1_thumb.jpg",
-        "url":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1.jpg",
-        "gallery": null
+        "path": "f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1.jpg"
       }
     ]
   },
@@ -786,8 +663,8 @@
         "path":
           "f3c47f7a-7eea-4777-af86-d57c95310efc/AgeSong_LagunaGroveCare_Lowres_04_29_2015.mp4",
         "processed": 2,
-        "thumbUrl":
-          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9391fed0-9486-44f5-9da2-56ff33434bb1/BuenaVistaManorHouse_nojoke1.1_thump.png",
+        "thumbPath":
+          "9391fed0-9486-44f5-9da2-56ff33434bb1/BuenaVistaManorHouse_nojoke1.1_thump.png",
         "url":
           "https://d1qiigpe5txw4q.cloudfront.net/uploads/9391fed0-9486-44f5-9da2-56ff33434bb1/BuenaVistaManorHouse_nojoke1.1.mp4",
         "webmUrl":

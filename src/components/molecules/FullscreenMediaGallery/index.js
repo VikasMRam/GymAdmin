@@ -75,9 +75,8 @@ FullscreenMediaGallery.propTypes = {
   isOpen: PropTypes.bool,
   currentSlide: PropTypes.number,
   images: PropTypes.arrayOf(PropTypes.shape({
-    src: PropTypes.string.isRequired,
     alt: PropTypes.string.isRequired,
-    thumb: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
   })),
   sizes: string,
   videos: PropTypes.arrayOf(PropTypes.shape({
@@ -86,7 +85,7 @@ FullscreenMediaGallery.propTypes = {
       url: PropTypes.string.isRequired,
     })),
     name: PropTypes.string.isRequired,
-    thumb: PropTypes.string.isRequired,
+    thumbPath: PropTypes.string.isRequired,
   })),
   onClose: PropTypes.func.isRequired,
   ariaHideApp: PropTypes.bool,

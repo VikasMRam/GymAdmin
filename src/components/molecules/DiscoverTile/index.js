@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, func, shape } from 'prop-types';
 
-import { size, assetPath, palette, key } from 'sly/components/themes';
-import { Image, Button, Link } from 'sly/components/atoms';
+import { size, palette, key } from 'sly/components/themes';
+import { Button, Link } from 'sly/components/atoms';
 import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const Wrapper = styled(Link)`

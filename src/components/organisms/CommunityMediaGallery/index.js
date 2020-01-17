@@ -71,7 +71,6 @@ export default class CommunityMediaGallery extends Component {
 
       formattedVideos.push({ ...vid, src, thumb: vid.thumbUrl });
 
-      console.log('vid', vid);
       // Important: create new object instance having src & alt as we will be modifying same object below
       galleryVideos.push({
         ...vid, path: vid.thumbPath, ofVideo: i, alt: `${communityName}, ${city}, ${state} ${i + 1}`,
