@@ -43,7 +43,6 @@ const CommunitySearchPageContainer = loadable(() => import(/* webpackChunkName: 
 const StateSearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkStateSearch" */ 'sly/containers/StateSearchPageContainer'));
 const HomePageContainer = loadable(() => import(/* webpackChunkName: "chunkHomePage" */ 'sly/containers/HomePageContainer'));
 const NearMePageContainer = loadable(() => import(/* webpackChunkName: "chunkNearMe" */ 'sly/containers/NearMePageContainer'));
-const PromoPageContainer = loadable(() => import(/* webpackChunkName: "chunkPromo" */ 'sly/containers/PromoPageContainer'));
 const AgentsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgents" */ 'sly/containers/AgentsPageContainer'));
 const PasswordResetPageContainer = loadable(() => import(/* webpackChunkName: "chunkPasswordReset" */ 'sly/containers/PasswordResetPageContainer'));
 const HowItWorksDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkHowItWorks" */ 'sly/containers/HowItWorksDetailPageContainer'));
@@ -78,11 +77,6 @@ const howItWorksTypes = [
   'consumers',
   'providers',
   'agents',
-].join('|');
-
-const promoTypes = [
-  'promo',
-  'rebate',
 ].join('|');
 
 const legalPages = [
@@ -226,11 +220,6 @@ const routes = [
   {
     path: '/about/:member?',
     component: OurHistoryPage,
-    exact: true,
-  },
-  {
-    path: `/:promo(${promoTypes})`,
-    component: PromoPageContainer,
     exact: true,
   },
   {
