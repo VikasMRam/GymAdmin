@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { any, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
+import textAlign from 'sly/components/helpers/textAlign';
+import IconButton from 'sly/components/molecules/IconButton';
 
 const Overlay = styled.div`
   display: flex;
@@ -22,7 +24,7 @@ const Modal = styled.div`
   margin: auto;
   border-radius: 6px;
   background-color: #fff;
-  
+
   width: calc(100% - ${size('spacing.xxLarge')});
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
     width: ${size('layout.col4')};
@@ -31,6 +33,23 @@ const Modal = styled.div`
     width: ${size('layout.col6')};
   }
 `;
+
+const Head = textAlign(styled.div`
+  padding: ${size('spacing.large')};
+  padding-bottom: ${size('spacing.regular')};
+`, 'right');
+
+export const headerWithClose = (
+  <Head>
+    <IconButton
+      icon="close"
+      iconSize="regular"
+      palette="slate"
+      transparent
+      // onClick={onClose}
+    />
+  </Head>
+);
 
 // TODO: @fonz todo a proper modal from this hack; animate entry and leave;
 // FIXME: we had to uqickly introduce this because the modals were impeding agents
