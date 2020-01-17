@@ -3,7 +3,6 @@ import { func, object, string } from 'prop-types';
 import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 
-import { assetPath } from 'sly/components/themes';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import SlyEvent from 'sly/services/helpers/events';
 import withModal from 'sly/controllers/withModal';
@@ -52,7 +51,6 @@ export default class AskAgentQuestionContainer extends Component {
   openAskAgentQuestionModal = () => {
     const { type, community, showModal, hideModal, notifyInfo } = this.props;
 
-    const agentImageUrl = assetPath('images/agent-xLarge.png');
     const { heading, description, placeholder, question } = generateAskAgentQuestionContents(
       community.name,
       community.address.city,
@@ -69,7 +67,6 @@ export default class AskAgentQuestionContainer extends Component {
       community,
       heading,
       description,
-      agentImageUrl,
       placeholder,
       question,
     };

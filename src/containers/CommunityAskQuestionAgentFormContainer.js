@@ -51,7 +51,6 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
     match: shape({ url: string }),
     heading: string,
     description: string,
-    agentImageUrl: string,
     placeholder: string,
     user: userPropType,
     question: string,
@@ -93,7 +92,7 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
 
   render() {
     const {
-      heading, description, agentImageUrl, placeholder, user, question,
+      heading, description, placeholder, user, question,
     } = this.props;
 
     let initialValues = {
@@ -115,7 +114,6 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
         placeholder={placeholder}
         heading={heading}
         description={description}
-        agentImageUrl={agentImageUrl}
       />
     );
   }
