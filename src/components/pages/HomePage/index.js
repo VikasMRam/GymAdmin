@@ -10,7 +10,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
-import {  Centered, Label, Heading, Hr, Link, Block, Paragraph, Image, ResponsiveImage } from 'sly/components/atoms';
+import {  Centered, Label, Heading, Hr, Link, Block, Paragraph, ResponsiveImage } from 'sly/components/atoms';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
@@ -123,7 +123,7 @@ const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const CWTImage = styled(Image)`
+const CWTImage = styled(ResponsiveImage)`
   margin-bottom: ${size('spacing.regular')};
   height: ${size('picture.tiny.height')};
 `;

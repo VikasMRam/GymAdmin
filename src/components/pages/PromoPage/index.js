@@ -5,7 +5,7 @@ import { bool, func } from 'prop-types';
 import { size, assetPath, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
-import { Image, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
+import { Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import Modal from 'sly/components/molecules/Modal';
 import Section from 'sly/components/molecules/Section';
@@ -153,7 +153,7 @@ const MSCColumnWrapper = styled(ColumnWrapper)`
 const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
-const CWTImage = styled(Image)`
+const CWTImage = styled(ResponsiveImage)`
   margin-bottom: ${size('spacing.regular')};
   height: ${size('picture.tiny.height')};
 `;
@@ -352,7 +352,7 @@ const PromoPage = ({
           </SearchBoxWrapper>
         </HeroWrapper>
         <HeroWrapper>
-          <StyledImage path="react-assets/promo/motherdaughter.jpg" alt="A Home To Love" />
+          <StyledImage path="react-assets/promo/motherdaughter.jpg" alt="A Home To Love" height={640} />
         </HeroWrapper>
       </HeroTwoColumnWrapper>
     </>

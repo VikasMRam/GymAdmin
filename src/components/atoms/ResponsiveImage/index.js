@@ -9,23 +9,28 @@ import { ifProp } from 'styled-tools';
 const paddingTop = ({ aspectRatio }) => size('picture.ratios', aspectRatio);
 
 const ResponsiveWrapper = styled.div`
-  position: relative;
+  display: inline-block;
 
   ${ifProp('aspectRatio', css`
+    display: block;
+    position: relative;
     width: 100%;
     height: 0;
     padding-top: ${paddingTop};
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
   `)}
 
   img {
     user-select: none;
     border: none;
     object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
   }
 `;
 
