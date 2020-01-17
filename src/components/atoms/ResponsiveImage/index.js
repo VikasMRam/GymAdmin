@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, array, oneOf } from 'prop-types';
+import { string, array, oneOf, any } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { size, getKey, assetPath } from 'sly/components/themes';
@@ -10,12 +10,12 @@ const paddingTop = ({ aspectRatio }) => size('picture.ratios', aspectRatio);
 
 const ResponsiveWrapper = styled.div`
   position: relative;
-  width: 100%;
 
   ${ifProp('aspectRatio', css`
+    width: 100%;
     height: 0;
     padding-top: ${paddingTop};
-  `)};
+  `)}
 
   img {
     user-select: none;
@@ -53,6 +53,7 @@ export default class ResponsiveImage extends React.Component {
     alt: string,
     sizes: string,
     sources: array,
+    children: any,
     aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3', '1:1']),
   };
 
@@ -76,23 +77,6 @@ export default class ResponsiveImage extends React.Component {
       src, path, placeholder, sizes, sources, height, alt, loading, className: classNameProp, aspectRatio, children, ...props
     } = this.props;
 
-    let sourcesAry;
-    if (!sources) {
-      sourcesAry = getKey('defaultImageSources');
-    } else {
-      sourcesAry = sources;
-    }
-    if (height) {
-      sourcesAry = sourcesAry.map((source) => {
-        if (Array.isArray(source)) {
-          source[1] = height;
-        } else {
-          source = [source, height];
-        }
-        return source;
-      });
-    }
-
     // at least ONE of path (bucket s3 path without /uploads) or src (absolute; e.g. static in public) should be provided
     const isS3Path = !!path;
 
@@ -104,7 +88,6 @@ export default class ResponsiveImage extends React.Component {
       ? actualPlaceholder
       : src || actualPlaceholder;
 
-    console.log('failed', this.state.failed, imgSrc);
     const imageProps = {
       src: imgSrc,
       [srcProp]: imgSrc,
@@ -112,6 +95,23 @@ export default class ResponsiveImage extends React.Component {
 
     let sourceSets = null;
     if (!this.state.failed && isS3Path) {
+      let sourcesAry;
+      if (!sources) {
+        sourcesAry = getKey('defaultImageSources');
+      } else {
+        sourcesAry = sources;
+      }
+      if (height) {
+        sourcesAry = sourcesAry.map((source) => {
+          if (Array.isArray(source)) {
+            source[1] = height;
+          } else {
+            source = [source, height];
+          }
+          return source;
+        });
+      }
+
       // aspect ratio is a number in getSrcset
       const aspectRatioString = getKey(`sizes.picture.ratios.${aspectRatio}`);
       const aspectRatioValue = (parseFloat(aspectRatioString) / 100).toFixed(4);

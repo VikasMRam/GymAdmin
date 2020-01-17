@@ -214,6 +214,7 @@ export default class MediaGallery extends Component {
           <SlideComponent
             key="media-gallery-slide"
             path={media.path}
+            aspectRatio="3:2"
             sizes={sizes}
             alt={media.alt}
             loading={this.shouldLoadMedia(index) ? 'eager' : 'lazy'}

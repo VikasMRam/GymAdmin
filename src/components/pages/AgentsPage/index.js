@@ -35,6 +35,7 @@ const HeroBackgroundImage = styled(ResponsiveImage)`
   object-fit: cover;
   width: 100%;
   height: 100%;
+  opacity: 0.8;
   z-index: 0;
   display: block;
 `;
@@ -93,7 +94,7 @@ class AgentsPage extends Component {
       <>
         <HeaderContainer />
         <HeroWrapper innerRef={this.heroRef}>
-          <HeroBackgroundImage path="react-assets/agents/agent-hero.png" height="480" alt="A Home To Love" />
+          <HeroBackgroundImage path="react-assets/agents/agent-hero.png" height={480} alt="A Home To Love" />
           <HeroTextWrapper>
             <FindLocalAgent onLocationSearch={onLocationSearch} />
           </HeroTextWrapper>

@@ -12,6 +12,7 @@ import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSec
 import Footer from 'sly/components/organisms/Footer';
 // import { TeamMembersData as profiles } from 'sly/services/helpers/our_team';
 import { PressTileContents as press } from 'sly/services/helpers/press';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const ourHistoryUri = member => member
   ? `/about/${member}`
@@ -44,7 +45,7 @@ const DescriptionText = styled.div`
   }
 `;
 
-const BabyArthurImage = styled(Image)`
+const BabyArthurImage = styled(ResponsiveImage)`
   width: ${size('layout.col3')};
   height: ${size('layout.col3')};
   object-fit: cover;
@@ -134,7 +135,7 @@ const OurHistoryPage = ({ match, history }) => {
 
       </Helmet>
       <BabyArthurImage
-        src={assetPath('images/how-it-works/baby-arthur.png')}
+        path="react-assets/how-it-works/baby-arthur.png"
         alt="Baby Arthur"
       />
       <DescriptionText>
@@ -154,11 +155,9 @@ const OurHistoryPage = ({ match, history }) => {
   // ));
 
   const pressTiles = press.map((item) => {
-    const props = { ...item };
-    props.imageUrl = assetPath(item.imageUrl);
     return (
       <PressTileWrapper key={item.imageUrl} >
-        <PressTile {...props} />
+        <PressTile {...item} />
       </PressTileWrapper>
     );
   });
