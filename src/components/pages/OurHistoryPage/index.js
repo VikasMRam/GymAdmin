@@ -45,12 +45,11 @@ const DescriptionText = styled.div`
   }
 `;
 
-const BabyArthurImage = styled(ResponsiveImage)`
+const BabyArthurImage = styled.div`
+  overflow: hidden;
   width: ${size('layout.col3')};
   height: ${size('layout.col3')};
-  object-fit: cover;
   border-radius: calc(${size('layout.col3')} / 2);
-
   float: right;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -132,12 +131,10 @@ const OurHistoryPage = ({ match, history }) => {
       <Helmet>
         <title>Over 30,000 Senior Living Options Near You</title>
         <meta name="description" content="Seniorly provides pricing, availability, photos, amenities and more for assisted living, memory care, Alzheimer's care, home care, board and care homes, residential care homes, independent living and other senior living care types." />
-
       </Helmet>
-      <BabyArthurImage
-        path="react-assets/how-it-works/baby-arthur.png"
-        alt="Baby Arthur"
-      />
+      <BabyArthurImage>
+        <ResponsiveImage path="react-assets/how-it-works/baby-arthur.png" alt="Baby Arthur" aspectRatio="1:1" />
+      </BabyArthurImage>
       <DescriptionText>
         Our CEO, Arthur Bretschneider, is a third-generation senior living operator.  He learned from his father, who learned from his father, how to create a personalized living experience that is respectful of someone’s history, attentive to their care needs, and focused on building community.  A lot has changed for senior housing since his grandfather was a pioneer in 1950s. The senior living industry has grown rapidly giving consumers the ability to move into new homes that match their unique wants and needs to enable them to thrive. Despite this positive new reality, finding the right senior living options is a process that is often difficult, confusing, and frustrating. So, Arthur took on the challenge to solve this problem.
         <br /><br />
@@ -166,7 +163,7 @@ const OurHistoryPage = ({ match, history }) => {
 
   return (
     <OverlappingSectionsTemplate
-      imagePath="images/our-history/hero.jpg"
+      imagePath="react-assets/our-history/hero.jpg"
       title="Our Company"
       subtitle="Helping Families and Individuals find the right Senior living options"
       intro={intro}
@@ -174,7 +171,7 @@ const OurHistoryPage = ({ match, history }) => {
       footer={<Footer />}
     >
       <ContentWrapper>
-        <StyledHr/>
+        <StyledHr />
         <StyledHeading>Seniorly in the Press</StyledHeading>
         <PressTilesWrapper>{pressTiles}</PressTilesWrapper>
       </ContentWrapper>
