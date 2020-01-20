@@ -8,7 +8,7 @@ import shadow from 'sly/components/helpers/shadow';
 import Icon from 'sly/components/atoms/Icon';
 import pad from 'sly/components/helpers/pad';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
-import communityProptype from 'sly/propTypes/community';
+import { community as communityProptype } from 'sly/propTypes/community';
 
 const Wrapper = styled(shadow(Box))`
   margin: 0 auto ${size('spacing.xLarge')} auto;

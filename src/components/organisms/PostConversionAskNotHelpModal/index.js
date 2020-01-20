@@ -8,7 +8,6 @@ import Button from 'sly/components/atoms/Button';
 import IconItem from 'sly/components/molecules/IconItem';
 import { palette, size } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
-import { community as communityPropType } from 'sly/propTypes/community';
 
 const PaddedHeading = pad(Heading);
 
@@ -26,28 +25,35 @@ const IconItems = pad(styled.div`
 
 const StyledButton = styled(Button)`
   width: 100%;
+  margin-bottom: ${size('spacing.regular')};
 `;
 
-const PostConversionSureNotHelpModal = ({ community, onDismiss }) => {
+const RejectButton = styled(StyledButton)`
+  border-color: ${palette('slate.stroke')};
+  margin-bottom: 0;
+`;
+
+const PostConversionAskNotHelpModal = ({ onDismiss, onAccept }) => {
   return (
     <Modal onClose={onDismiss}>
       <HeaderWithClose onClose={onDismiss} />
       <Content>
-        <PaddedHeading level="subtitle">Here is the direct contact for {community.name}</PaddedHeading>
+        <PaddedHeading level="subtitle">Are you sure you don’t want help?</PaddedHeading>
         <IconItems>
-          <IconItem iconSize="caption" icon="email">{community.email}</IconItem>
-          <IconItem iconSize="caption" icon="phone">{community.phoneNumber}</IconItem>
+          <IconItem iconSize="caption" icon="check">Working with our experts is 100% free</IconItem>
+          <IconItem iconSize="caption" icon="check">Get pricing, availability and community insights</IconItem>
+          <IconItem iconSize="caption" icon="check">They will schedule tours and negotiate fees</IconItem>
         </IconItems>
-        <StyledButton onClick={onDismiss}>Click Here to Browse Similar Communities</StyledButton>
+        <StyledButton onClick={onAccept}>Wait, yes, I want free expert help!</StyledButton>
+        <RejectButton ghost palette="danger" onClick={onDismiss}>I don’t want expert help</RejectButton>
       </Content>
     </Modal>
   );
 };
 
-PostConversionSureNotHelpModal.propTypes = {
+PostConversionAskNotHelpModal.propTypes = {
   onAccept: func.isRequired,
   onDismiss: func.isRequired,
-  community: communityPropType,
 };
 
-export default PostConversionSureNotHelpModal;
+export default PostConversionAskNotHelpModal;
