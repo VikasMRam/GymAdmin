@@ -39,32 +39,37 @@ const Head = textAlign(styled.div`
   padding-bottom: ${size('spacing.regular')};
 `, 'right');
 
-export const headerWithClose = (
+export const HeaderWithClose = ({ onClose }) => (
   <Head>
     <IconButton
       icon="close"
       iconSize="regular"
       palette="slate"
+      onClick={onClose}
       transparent
-      // onClick={onClose}
     />
   </Head>
 );
+
+HeaderWithClose.propTypes = {
+  onClose: func,
+};
 
 // TODO: @fonz todo a proper modal from this hack; animate entry and leave;
 // FIXME: we had to uqickly introduce this because the modals were impeding agents
 // to update the Stages
 
 export default function NewModal({ children, onClose, ...props }) {
+  const overlayRef = React.createRef();
   const onClick = (e) => {
-    if (e.target.className.match(/^modal-overlay/)) {
-      return onClose(e);
+    if (e.target === overlayRef.current) {
+      onClose(e);
     }
     return null;
   };
 
   return (
-    <Overlay className="modal-overlay" onClick={onClick}>
+    <Overlay ref={overlayRef} onClick={onClick}>
       <Modal {...props}>
         {children}
       </Modal>
