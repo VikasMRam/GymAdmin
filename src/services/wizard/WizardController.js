@@ -3,7 +3,6 @@ import { arrayOf, any, func, object, bool, string, number } from 'prop-types';
 import { isValid, isSubmitting, reset, SubmissionError } from 'redux-form';
 
 import { connectController } from 'sly/controllers';
-import { ABORT_WIZARD } from 'sly/constants/wizard';
 import { selectFormData } from 'sly/services/helpers/forms';
 
 const mapStateToProps = (state, { controller, ...ownProps }) => {
@@ -77,6 +76,9 @@ export default class WizardController extends Component {
   };
 
   goto = (nextStep) => {
+    if (nextStep === null) {
+      return;
+    }
     const { set, steps, progressPath } = this.props;
     const nextStepIndex = steps.indexOf(nextStep);
     // Checking if we had already visited the step
@@ -154,9 +156,6 @@ export default class WizardController extends Component {
         doSubmit,
       };
       const returnVal = onStepChange(args);
-      if (returnVal === ABORT_WIZARD) {
-        return null;
-      }
       return Promise.resolve(returnVal)
         .then(() => {
           if (!wasGotoCalled) {

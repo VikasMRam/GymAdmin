@@ -159,8 +159,7 @@ export default class PricingWizardPage extends Component {
     }
 
     if (currentStep === 'WhatToDoNext' && interest === 'talk-advisor') {
-      doSubmit({ redirectLink: `${match.url}/thank-you` });
-      return ABORT_WIZARD;
+      return doSubmit({ redirectLink: `${match.url}/thank-you` }).then(() => goto(null));
     }
 
     return updateUuidAux(data);
