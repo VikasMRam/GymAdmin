@@ -34,14 +34,14 @@ const StyledIconButton = styled(IconButton)`
 `;
 
 const BannerNotification = ({
-  children, palette, className, padding, hasBorderRadius, onCloseClick, iconPalette,
+  children, palette, className, padding, hasBorderRadius, onCloseClick, iconPalette, childrenPalette,
 }) => {
   const close = onCloseClick ? (
     <StyledIconButton icon="close" iconSize="caption" palette={iconPalette} transparent />
   ) : null;
   const props = {
     type: palette,
-    palette: 'white',
+    palette: childrenPalette,
     className,
     padding,
     onCloseClick,
@@ -64,7 +64,8 @@ BannerNotification.propTypes = {
   children: node.isRequired,
   className: string,
   palette: palettePropType.isRequired,
-  iconPalette: palettePropType,
+  iconPalette: palettePropType.isRequired,
+  childrenPalette: palettePropType.isRequired,
   padding: spacingPropType,
   hasBorderRadius: bool,
   onCloseClick: func,
@@ -73,6 +74,7 @@ BannerNotification.propTypes = {
 BannerNotification.defaultProps = {
   palette: 'green',
   iconPalette: 'slate',
+  childrenPalette: 'white',
   padding: 'large',
 };
 

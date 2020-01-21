@@ -115,7 +115,7 @@ class AgentProfilePage extends Component {
         </TemplateHeader>
 
         <TemplateContent>
-          <AgentSummaryWrapper innerRef={this.agentSummaryRef}>
+          <AgentSummaryWrapper ref={this.agentSummaryRef}>
             <BreadCrumb size="caption" items={getBreadCrumbsForAgent({ name: displayName, state, city, id })} />
             <AgentSummary
               agent={agent}
@@ -156,7 +156,7 @@ class AgentProfilePage extends Component {
               <BannerNotificationController>
                 {({ notifyInfo }) => (
                   <AskQuestionToAgentFormContainer
-                    agent={agent}
+                    id={id}
                     heading={`Ask ${firstName} a question`}
                     firstName={firstName}
                     postSubmit={() => {
