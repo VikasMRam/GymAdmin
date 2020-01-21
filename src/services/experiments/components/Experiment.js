@@ -70,7 +70,7 @@ export class Experiment extends Component {
     const { disabled, name } = this.props;
     if (!disabled) {
       const event = {
-        action, category: name, label: 'experiments', value: this.selectedVariant, nonInteraction: true,
+        action, category: name, label: this.selectedVariant, value: 1, nonInteraction: true,
       };
       SlyEvent.getInstance().sendEvent(event);
     }
