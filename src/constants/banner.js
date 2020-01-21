@@ -1,0 +1,1 @@
+export const BANNER_COMMUNITY_PROFILE_HOW_IT_WORKS_SHOWN = 'bannerCommunityProfileHowItWorksShown';

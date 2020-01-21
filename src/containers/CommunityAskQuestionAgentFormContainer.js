@@ -81,7 +81,7 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
       },
     }).then(() => {
       const event = {
-        action: 'ask-question', category: 'BAT', label: id,
+        action: 'ask-question', category: 'Community', label: id,
       };
       SlyEvent.getInstance().sendEvent(event);
       toggleAskAgentQuestionModal();

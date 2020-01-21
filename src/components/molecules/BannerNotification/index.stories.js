@@ -46,4 +46,5 @@ const children = (
 storiesOf('Molecules|BannerNotification', module)
   .add('default', () => <BannerNotification>Hello world</BannerNotification>)
   .add('with palette', () => <BannerNotification palette="slate">Hello world</BannerNotification>)
+  .add('with palette & childrenPalette', () => <BannerNotification palette="warning" childrenPalette="slate">Hello world</BannerNotification>)
   .add('with padding, hasBorderRadius and palette', () => <BannerNotification hasBorderRadius palette="warning" padding="small" onCloseClick={action('onCloseClick')}>{children}</BannerNotification>);
