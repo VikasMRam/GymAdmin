@@ -11,10 +11,13 @@ import ListItem from 'sly/components/molecules/ListItem';
 import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
 
 const PaddedHowSlyWorksVideo = pad(HowSlyWorksVideoContainer);
+PaddedHowSlyWorksVideo.displayName = 'PaddedHowSlyWorksVideo';
 
 const StyledButton = fullWidth(Button);
+StyledButton.displayName = 'StyledButton';
 
 const PaddedHeading = pad(Heading, 'large');
+PaddedHeading.displayName = 'PaddedHeading';
 
 const Points = pad(styled.div``);
 
