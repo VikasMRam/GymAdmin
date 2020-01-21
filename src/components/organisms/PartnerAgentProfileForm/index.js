@@ -43,7 +43,7 @@ const AGENT_STATUS_OPTIONS = [
 const agentRegionOptions = AGENT_REGION_OPTIONS.map(i => <option key={i} value={i}>{i}</option>);
 const agentStatusOptions = AGENT_STATUS_OPTIONS.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
 
-const PartnerAgentAccountForm = ({ buttonText, error, handleSubmit, pristine, submitting, invalid,hasNoBodyPadding }) => (
+const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, submitting, invalid,hasNoBodyPadding }) => (
   <StyledForm onSubmit={handleSubmit}>
     <HeadingBoxSection heading="Area Served" hasNoBodyPadding={hasNoBodyPadding}>
       <Field
@@ -153,4 +153,4 @@ const PartnerAgentAccountForm = ({ buttonText, error, handleSubmit, pristine, su
   </StyledForm>
 );
 
-export default PartnerAgentAccountForm;
+export default PartnerAgentProfileForm;

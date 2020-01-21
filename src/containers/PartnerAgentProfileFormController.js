@@ -4,12 +4,10 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
-import PartnerAgentAccountForm from 'sly/components/organisms/PartnerAgentAccountForm';
+import PartnerAgentProfileForm from 'sly/components/organisms/PartnerAgentProfileForm';
 import { createValidator, required, email, usPhone } from 'sly/services/validation';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
 import { withUser, query, prefetch } from 'sly/services/newApi';
-import { userIs } from 'sly/services/helpers/role';
-import { CUSTOMER_ROLE } from 'sly/constants/roles';
 
 const validate = createValidator({
   name: [required],
@@ -18,15 +16,15 @@ const validate = createValidator({
 });
 
 const ReduxForm = reduxForm({
-  form: 'PartnerAgentAccountForm',
+  form: 'PartnerAgentProfileForm',
   destroyOnUnmount: false,
   validate,
-})(PartnerAgentAccountForm);
+})(PartnerAgentProfileForm);
 
 @withUser
 @query('updateAgent', 'updateAgent')
 @prefetch('agent', 'getAgent', req => req({ id: 'me' }))
-export default class PartnerAgentAccountFormController extends Component {
+export default class PartnerAgentProfileFormController extends Component {
   static propTypes = {
     user: userPropType,
     status: shape({
