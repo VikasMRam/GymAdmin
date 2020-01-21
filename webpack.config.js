@@ -167,6 +167,10 @@ const base = group([
     writeToDisk(filePath) {
       return /dist\/(node\/|server)/.test(filePath) || /loadable-stats/.test(filePath);
     },
+    watchOptions: {
+      poll: 1000,
+      ignored: ['node_modules'],
+    },
   }),
 
   match(['*.js', '!*node_modules*'], [babel()]),
