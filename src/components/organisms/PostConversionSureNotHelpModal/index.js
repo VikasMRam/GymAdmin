@@ -29,14 +29,19 @@ const StyledButton = styled(Button)`
 `;
 
 const PostConversionSureNotHelpModal = ({ community, onDismiss }) => {
+  const { propInfo: { ownerEmail, communityPhone } } = community;
+  const hasContactData = ownerEmail || communityPhone;
   return (
     <Modal onClose={onDismiss}>
       <HeaderWithClose onClose={onDismiss} />
       <Content>
-        <PaddedHeading level="subtitle">Here is the direct contact for {community.name}</PaddedHeading>
+        <PaddedHeading level="subtitle">
+          {hasContactData && <>Here is the direct contact for {community.name}</>}
+          {!hasContactData && <>Unfortunately we don't have direct contact information for {community.name}</>}
+        </PaddedHeading>
         <IconItems>
-          <IconItem iconSize="caption" icon="email">{community.email}</IconItem>
-          <IconItem iconSize="caption" icon="phone">{community.phoneNumber}</IconItem>
+          {ownerEmail && <IconItem iconSize="caption" icon="email">{ownerEmail}</IconItem>}
+          {communityPhone && <IconItem iconSize="caption" icon="phone">{communityPhone}</IconItem>}
         </IconItems>
         <StyledButton onClick={onDismiss}>Click Here to Browse Similar Communities</StyledButton>
       </Content>

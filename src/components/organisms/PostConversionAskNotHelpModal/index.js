@@ -33,10 +33,10 @@ const RejectButton = styled(StyledButton)`
   margin-bottom: 0;
 `;
 
-const PostConversionAskNotHelpModal = ({ onDismiss, onAccept }) => {
+const PostConversionAskNotHelpModal = ({ onReject, onClose }) => {
   return (
-    <Modal onClose={onDismiss}>
-      <HeaderWithClose onClose={onDismiss} />
+    <Modal onClose={onClose}>
+      <HeaderWithClose onClose={onClose} />
       <Content>
         <PaddedHeading level="subtitle">Are you sure you don’t want help?</PaddedHeading>
         <IconItems>
@@ -44,16 +44,16 @@ const PostConversionAskNotHelpModal = ({ onDismiss, onAccept }) => {
           <IconItem iconSize="caption" icon="check">Get pricing, availability and community insights</IconItem>
           <IconItem iconSize="caption" icon="check">They will schedule tours and negotiate fees</IconItem>
         </IconItems>
-        <StyledButton onClick={onAccept}>Wait, yes, I want free expert help!</StyledButton>
-        <RejectButton ghost palette="danger" onClick={onDismiss}>I don’t want expert help</RejectButton>
+        <StyledButton onClick={onClose}>Wait, yes, I want free expert help!</StyledButton>
+        <RejectButton ghost palette="danger" onClick={onReject}>I don’t want expert help</RejectButton>
       </Content>
     </Modal>
   );
 };
 
 PostConversionAskNotHelpModal.propTypes = {
-  onAccept: func.isRequired,
-  onDismiss: func.isRequired,
+  onReject: func.isRequired,
+  onClose: func.isRequired,
 };
 
 export default PostConversionAskNotHelpModal;

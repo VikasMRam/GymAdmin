@@ -44,6 +44,7 @@ export default class WizardController extends Component {
 
   constructor(props) {
     super(props);
+
     const { formName } = props;
 
     this.formOptions = {

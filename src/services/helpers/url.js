@@ -374,7 +374,7 @@ export const getCitySearchUrl = ({ propInfo, address }) => {
 
 export const getCitySearchWithSizeUrl = ({ propInfo, address }) => {
   const sizeParam = communitySizeSearchParamMap[propInfo.communitySize];
-  return `${getCitySearchUrl({ propInfo, address })}&size=${sizeParam}`;
+  return `${getCitySearchUrl({ propInfo, address })}?size=${sizeParam}`;
 };
 
 export const getOrigin = () => {

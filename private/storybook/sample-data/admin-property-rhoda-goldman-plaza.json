@@ -253,6 +253,7 @@
     "licenseNumber": "385600125",
     "ownerName": "Scott Street Senior Housing",
     "ownerYears": "2000",
+    "ownerEmail": "rhoda@example.com",
     "languages": ["English"],
     "languagesOther": "Mandarin",
     "communitySpace": ["Dining Room", "Restaurant Style Dining"],
