@@ -6,11 +6,11 @@ import { size } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import { Button, Heading } from 'sly/components/atoms';
-import Modal, { headerWithClose } from 'sly/components/atoms/NewModal';
+import Modal, { HeaderWithClose } from 'sly/components/atoms/NewModal';
 import ListItem from 'sly/components/molecules/ListItem';
-import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
 
-const PaddedHowSlyWorksVideo = pad(HowSlyWorksVideo);
+const PaddedHowSlyWorksVideo = pad(HowSlyWorksVideoContainer);
 
 const StyledButton = fullWidth(Button);
 
@@ -23,12 +23,12 @@ const Body = styled.div`
   padding-top: 0;
 `;
 
-export default function HowItWorksPopup({ onMatchClick }) {
+export default function HowItWorksPopup({ onMatchClick, onClose }) {
   return (
-    <Modal>
-      {headerWithClose}
+    <Modal onClose={onClose}>
+      <HeaderWithClose onClose={onClose} />
       <Body>
-        <PaddedHowSlyWorksVideo />
+        <PaddedHowSlyWorksVideo eventLabel="howItWorksPopup" />
         <PaddedHeading size="subtitle">Get help from one of our local experts now</PaddedHeading>
         <Points>
           <ListItem icon="tick" iconPalette="green">100% free</ListItem>
@@ -43,4 +43,5 @@ export default function HowItWorksPopup({ onMatchClick }) {
 
 HowItWorksPopup.propTypes = {
   onMatchClick: func,
+  onClose: func,
 };

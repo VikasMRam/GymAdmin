@@ -63,7 +63,7 @@ import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import GetCommunityPricingAndAvailability from 'sly/components/organisms/GetCommunityPricingAndAvailability';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
-import UnhydratedHowItWorksBannerNotificationContainer from 'sly/containers/HowItWorksBannerNotificationContainer';
+import UnhydratedAskAgentQuestionHowItWorksBannerNotificationContainer from 'sly/containers/AskAgentQuestionHowItWorksBannerNotificationContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -82,7 +82,7 @@ const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuest
 const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { alwaysHydrate: true });
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
-const HowItWorksBannerNotificationContainer = withHydration(UnhydratedHowItWorksBannerNotificationContainer);
+const AskAgentQuestionHowItWorksBannerNotificationContainer = withHydration(UnhydratedAskAgentQuestionHowItWorksBannerNotificationContainer);
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -288,7 +288,7 @@ export default class CommunityDetailPage extends Component {
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
         <PageEventsContainer />
 
-        <HowItWorksBannerNotificationContainer />
+        <AskAgentQuestionHowItWorksBannerNotificationContainer />
 
         <Header noBottomMargin={!!bannerNotification} />
         {bannerNotification && (

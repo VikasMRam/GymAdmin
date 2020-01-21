@@ -25,6 +25,8 @@ const CommunityAskQuestionAgentFormContainer = loadable(() =>
 @withNotification
 
 export default class AskAgentQuestionContainer extends Component {
+  static typeHydrationId = 'AskAgentQuestionContainer';
+
   static propTypes = {
     type: string.isRequired,
     community: object.isRequired,
