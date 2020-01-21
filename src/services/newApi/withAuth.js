@@ -80,12 +80,14 @@ export default function withAuth(InnerComponent) {
           name,
           email,
           phone_number: phone,
-        }).catch((error) => {
-          if (!(error.status === 400 && ignoreAlreadyRegistered)) {
-            return Promise.reject(error);
-          }
-          return Promise.resolve();
-        });
+        })
+          .catch((e) => {
+            const alreadyExists = e.status && e.status === 409;
+            if (ignoreAlreadyRegistered && alreadyExists) {
+              return Promise.resolve();
+            }
+            return Promise.reject(e);
+          });
       }
 
       const userData = pick(status.user.result, [

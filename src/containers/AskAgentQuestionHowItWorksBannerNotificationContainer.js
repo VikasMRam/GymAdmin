@@ -11,4 +11,4 @@ export default function AskAgentQuestionHowItWorksBannerNotificationContainer(pr
   );
 }
 
-AskAgentQuestionHowItWorksBannerNotificationContainer.typeHydrationId = 'AskAgentQuestionButtonContainer';
+AskAgentQuestionHowItWorksBannerNotificationContainer.typeHydrationId = 'AskAgentQuestionHowItWorksBannerNotificationContainer';
