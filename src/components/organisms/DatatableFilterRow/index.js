@@ -104,22 +104,21 @@ const Where = styled(mobileOnly('div', css`
   flex-shrink: 0;
 `;
 
-const SmallField = styled(Field)`
-  margin: 0 ${size('spacing.regular')} 0 0;
-`;
-
-const WhereField = styled(mobileOnly(SmallField, css``, css`
+const WhereField = styled(mobileOnly(Field, css``, css`
   width: 70px;
 `))`
+  margin: 0 ${size('spacing.regular')} 0 0;
   flex-grow: 0;
   flex-shrink: 0;
 `;
 
-const GrowField = mobileOnly(SmallField, css`
+const GrowField = styled(mobileOnly(Field, css`
   flex-grow: 1;
 `, css`
   min-width: 140px;
-`);
+`))`
+  margin: 0 ${size('spacing.regular')} 0 0;
+`;
 
 const SplitFlex = styled.div`
   width: 100%;
