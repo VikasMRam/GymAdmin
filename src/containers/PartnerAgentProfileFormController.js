@@ -59,6 +59,7 @@ export default class PartnerAgentProfileFormController extends Component {
       .set('attributes.info.vacationEnd', values.vacation[1])
       .set('attributes.status', parseInt(values.status, 10))
       .set('attributes.info.adminNotes', values.adminNotes)
+      .set('attributes.slyScore', parseFloat(values.slyScore))
       .value();
     console.log(agent);
     const agentPromise = () => updateAgent({ id }, agent);
@@ -79,12 +80,14 @@ export default class PartnerAgentProfileFormController extends Component {
     const { hasFinished: agentHasFinished } = status.agent;
     if (agentHasFinished) {
       console.log(agent);
-      const { info, status } = agent;
+      const { info, status, slyScore } = agent;
       const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;
       const { adminRegion, vacationStart, vacationEnd, adminNotes } = info;
       const { zipcodesServed } = serviceArea;
       const vacation = [new Date(vacationStart), new Date(vacationEnd)];
-      const initialValues = { bio, parentCompany, displayName, cv, imageCaption, chosenReview, adminRegion, zipcodesServed, vacation, status, adminNotes };
+      const initialValues = { bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation,
+        adminRegion, zipcodesServed,
+        status, adminNotes, slyScore };
       return (
         <ReduxForm
           initialValues={initialValues}

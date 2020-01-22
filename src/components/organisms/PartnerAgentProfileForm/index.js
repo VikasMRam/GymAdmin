@@ -142,6 +142,14 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
         component={ReduxField}
         wideWidth
       />
+      <Field
+        name="slyScore"
+        label="Slyscore"
+        type="number"
+        placeholder=""
+        component={ReduxField}
+        wideWidth
+      />
     </HeadingBoxSection>
     {error && <Block palette="danger">{error}</Block>}
     {buttonText &&
