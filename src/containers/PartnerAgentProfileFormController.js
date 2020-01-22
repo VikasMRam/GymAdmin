@@ -46,7 +46,7 @@ export default class PartnerAgentProfileFormController extends Component {
     const { result } = rawAgent;
     const { id } = result;
 
-    const agent = immutable.wrap(pick(result, ['id', 'type', 'attributes.status', 'attributes.info', 'attributes.adminInfo', 'attributes.info.serviceArea']))
+    let agent = immutable.wrap(pick(result, ['id', 'type', 'attributes.status', 'attributes.info', 'attributes.info.serviceArea']))
       .set('attributes.info.bio', values.bio)
       .set('attributes.info.parentCompany', values.parentCompany)
       .set('attributes.info.displayName', values.displayName)
@@ -55,12 +55,16 @@ export default class PartnerAgentProfileFormController extends Component {
       .set('attributes.info.chosenReview', values.chosenReview)
       .set('attributes.info.adminRegion', values.adminRegion)
       .set('attributes.info.serviceArea.zipcodesServed', values.zipcodesServed)
-      .set('attributes.info.vacationStart', values.vacation[0])
-      .set('attributes.info.vacationEnd', values.vacation[1])
       .set('attributes.status', parseInt(values.status, 10))
       .set('attributes.info.adminNotes', values.adminNotes)
-      .set('attributes.slyScore', parseFloat(values.slyScore))
-      .value();
+      .set('attributes.slyScore', parseFloat(values.slyScore));
+
+    if (values.vacation && values.vacation[0].getTime() !== 0 && values.vacation[1].getTime() !== 0) {
+      agent = agent.set('attributes.info.vacationStart', values.vacation[0])
+        .set('attributes.info.vacationEnd', values.vacation[1]);
+    }
+    agent = agent.value();
+
     console.log(agent);
     const agentPromise = () => updateAgent({ id }, agent);
 
