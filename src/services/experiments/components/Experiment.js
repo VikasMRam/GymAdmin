@@ -62,6 +62,16 @@ export class Experiment extends Component {
     this.sendExperimentEvent('view_experiment');
   }
 
+  componentDidUpdate({ disabled }) {
+    const { disabled: newDisabled } = this.props;
+
+    // if an experiment is disabled or enabled by updating prop then
+    // also send view_experiment event
+    if (newDisabled !== disabled) {
+      this.sendExperimentEvent('view_experiment');
+    }
+  }
+
   componentWillUnmount() {
     this.sendExperimentEvent('complete_experiment');
   }
