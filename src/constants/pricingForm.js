@@ -38,7 +38,6 @@ export const CARETYPE_OPTIONS = [
   { label: 'None', value: 'none' },
   { label: 'Memory care', value: 'memory-care' },
   // { label: 'Palliative Care', value: 'palliative-care' },
-  // { label: 'Medication Management', value: 'medication-management' },
   // { label: 'Physical Therapy', value: 'physical-therapy' },
   // { label: 'Parkinsons Care', value: 'parkinsons-care' },
   // { label: 'Diabetes Care', value: 'diabetes-care' },

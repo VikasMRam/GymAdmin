@@ -14,7 +14,7 @@ describe('Marketplace Profile Page', () => {
       const { name, phone, email } = randomUser();
       // const typeOfRoom = 'Suite';
       const moveTimeline = 'Immediately';
-      const typeOfCare = 'Medication Management';
+      const typeOfCare = 'Medication management';
       const medicaid = 'Yes';
 
       cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
@@ -36,7 +36,7 @@ describe('Marketplace Profile Page', () => {
       const communitySlug = TEST_COMMUNITY;
       const { name, phone, email } = randomUser();
       const moveTimeline = 'Immediately';
-      const typeOfCare = 'Medication Management';
+      const typeOfCare = 'Medication management';
       const medicaid = 'Yes';
 
       cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
