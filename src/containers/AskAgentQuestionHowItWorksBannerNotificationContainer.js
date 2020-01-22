@@ -5,7 +5,7 @@ import AskAgentQuestionContainer from 'sly/containers/AskAgentQuestionContainer'
 
 export default function AskAgentQuestionHowItWorksBannerNotificationContainer(props) {
   return (
-    <AskAgentQuestionContainer type="how-it-works">
+    <AskAgentQuestionContainer type="how-it-works-banner-notification">
       {askAgent => <HowItWorksBannerNotificationContainer {...props} askAgent={askAgent} />}
     </AskAgentQuestionContainer>
   );

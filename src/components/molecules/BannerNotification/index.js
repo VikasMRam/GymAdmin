@@ -19,7 +19,7 @@ const styles = css`
   text-align: center;
   padding: ${padding};
   display: flex;
-  justify-content: ${ifProp('onCloseClick', 'space-between', 'center')};
+  justify-content: ${ifProp('hasCloseButton', 'initial', 'center')};
   align-items: center;
 `;
 
@@ -30,21 +30,23 @@ const Wrapper = styled(Block)`
 const BorderRadiusWrapper = borderRadius(Wrapper);
 
 const StyledIconButton = styled(IconButton)`
-  margin-left: ${size('spacing.large')};
+  padding-left: ${size('spacing.large')};
+  // always pull the close button to right
+  margin-left: auto;
 `;
 
 const BannerNotification = ({
   children, palette, className, padding, hasBorderRadius, onCloseClick, iconPalette, childrenPalette,
 }) => {
   const close = onCloseClick ? (
-    <StyledIconButton icon="close" iconSize="caption" palette={iconPalette} transparent />
+    <StyledIconButton icon="close" iconSize="caption" palette={iconPalette} transparent onClick={onCloseClick} />
   ) : null;
   const props = {
     type: palette,
     palette: childrenPalette,
     className,
     padding,
-    onCloseClick,
+    hasCloseButton: !!onCloseClick,
   };
 
   return hasBorderRadius ? (

@@ -50,7 +50,7 @@ export default class AskAgentQuestionContainer extends Component {
     const event = {
       action,
       category,
-      label: type === 'how-it-works' ? 'agent' : id,
+      label: type === 'how-it-works-banner-notification' ? 'agent' : id,
     };
 
     SlyEvent.getInstance().sendEvent(event);
@@ -67,7 +67,7 @@ export default class AskAgentQuestionContainer extends Component {
       this.handleToggleAskAgentQuestionModal(true);
     };
 
-    if (type === 'how-it-works') {
+    if (type === 'how-it-works-banner-notification') {
       const postSubmit = () => {
         notifyInfo('Question sent successfully');
         toggleAskAgentQuestionModal();
