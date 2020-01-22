@@ -19,7 +19,7 @@ const styles = css`
   text-align: center;
   padding: ${padding};
   display: flex;
-  justify-content: ${ifProp('onCloseClick', 'initial', 'center')};
+  justify-content: ${ifProp('hasCloseButton', 'initial', 'center')};
   align-items: center;
 `;
 
@@ -46,7 +46,7 @@ const BannerNotification = ({
     palette: childrenPalette,
     className,
     padding,
-    onCloseClick,
+    hasCloseButton: !!onCloseClick,
   };
 
   return hasBorderRadius ? (
