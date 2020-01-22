@@ -33,6 +33,7 @@ import {
   ADMIN_DASHBOARD_CALLS_PATH,
   ADMIN_DASHBOARD_CALL_DETAILS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
   AGENT_DASHBOARD_ACCOUNT_PATH,
+  ADMIN_DASHBOARD_AGENTS_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import careTypes from 'sly/constants/careTypes';
 import PageEventsContainer from 'sly/containers/PageEventsContainer';
@@ -71,6 +72,7 @@ const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkNa
 const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
 const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/components/pages/DashboardAgentTasksPage'));
 const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/components/pages/DashboardAgentContactsPage'));
+const DashboardAgentsIndexPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndexPage" */ 'sly/containers/DashboardAgentsIndexPageContainer'));
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -172,6 +174,11 @@ const routes = [
   {
     path: AGENT_DASHBOARD_PROFILE_PATH,
     component: DashboardMyProfilePageContainer,
+    exact: true,
+  },
+  {
+    path: ADMIN_DASHBOARD_AGENTS_PATH,
+    component: DashboardAgentsIndexPage,
     exact: true,
   },
   {

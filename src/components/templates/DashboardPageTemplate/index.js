@@ -15,6 +15,7 @@ import {
   ADMIN_DASHBOARD_CALLS_PATH,
   AGENT_DASHBOARD_TASKS_PATH,
   AGENT_DASHBOARD_CONTACTS_PATH,
+  ADMIN_DASHBOARD_AGENTS_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import { CUSTOMER_ROLE, AGENT_ND_ROLE, AGENT_ADMIN_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import HeaderContainer from 'sly/containers/HeaderContainer';
@@ -44,6 +45,7 @@ const menuItems = [
   { label: 'Messages', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_MESSAGES_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
   { label: 'Tasks', icon: 'checkbox-fill', iconSize: 'regular', palette: 'slate', variation: 'filler', href: generatePath(AGENT_DASHBOARD_TASKS_PATH), role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
   { label: 'Calls', icon: 'phone', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
+  { label: 'Agents', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_AGENTS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
 ];
 
 const Header = styled.div`
