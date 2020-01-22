@@ -16,7 +16,6 @@ import {
 } from 'sly/services/helpers/pricing';
 import pad from 'sly/components/helpers/pad';
 import { withHydration } from 'sly/services/partialHydration';
-import { Experiment, Variant } from 'sly/services/experiments';
 import { Button, Paragraph } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';
@@ -39,7 +38,6 @@ import UnhydratedLazyCommunityMap from 'sly/containers/LazyCommunityMapContainer
 import UnhydratedCommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
-import UnhydratedConciergeContainer from 'sly/containers/ConciergeContainer';
 import UnhydratedOfferNotification from 'sly/components/molecules/OfferNotification';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
@@ -65,6 +63,7 @@ import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import GetCommunityPricingAndAvailability from 'sly/components/organisms/GetCommunityPricingAndAvailability';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
+import UnhydratedAskAgentQuestionHowItWorksBannerNotificationContainer from 'sly/containers/AskAgentQuestionHowItWorksBannerNotificationContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -81,9 +80,9 @@ const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContai
 const CommunityAddReviewButtonContainer = withHydration(UnhydratedCommunityAddReviewButtonContainer);
 const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuestionAnswersContainer);
 const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { alwaysHydrate: true });
-const ConciergeContainer = withHydration(UnhydratedConciergeContainer);
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
+const AskAgentQuestionHowItWorksBannerNotificationContainer = withHydration(UnhydratedAskAgentQuestionHowItWorksBannerNotificationContainer);
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -288,6 +287,8 @@ export default class CommunityDetailPage extends Component {
         {getHelmetForCommunityPage(community, location)}
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
         <PageEventsContainer />
+
+        <AskAgentQuestionHowItWorksBannerNotificationContainer />
 
         <Header noBottomMargin={!!bannerNotification} />
         {bannerNotification && (

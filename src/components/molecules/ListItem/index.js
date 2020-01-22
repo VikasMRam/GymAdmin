@@ -1,8 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
+import { palette as palettePropType } from 'sly/propTypes/palette';
 import { Icon } from 'sly/components/atoms';
 
 const ListItemWrapper = styled.li`
@@ -15,11 +16,11 @@ const ListItemIconDiv = styled.div`
 `;
 
 const ListItem = ({
-  children,
+  children, icon, iconPalette,
 }) => (
   <ListItemWrapper>
     <ListItemIconDiv>
-      <Icon icon="star" />
+      <Icon icon={icon} palette={iconPalette} />
     </ListItemIconDiv>
     {children}
   </ListItemWrapper>
@@ -27,6 +28,12 @@ const ListItem = ({
 
 ListItem.propTypes = {
   children: PropTypes.node,
+  icon: string.isRequired,
+  iconPalette: palettePropType,
+};
+
+ListItem.defaultProps = {
+  icon: 'star',
 };
 
 export default ListItem;
