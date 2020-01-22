@@ -25,8 +25,11 @@ const backgroundColor = ({
 };
 
 const foregroundColor = ({
-  ghost, transparent, selected, secondary, disabled,
+  ghost, transparent, selected, secondary, disabled, foregroundPalette,
 }) => {
+  if (foregroundPalette) {
+    return palette(foregroundPalette, 'base');
+  }
   if (ghost) {
     if (secondary) {
       return disabled ? palette('grey', 'filler') : palette('grey', 'base');
@@ -200,7 +203,6 @@ Button.defaultProps = {
   palette: 'primary',
   kind: 'regular',
   type: 'button',
-  foregroundPalette: 'white',
   borderVariation: 'stroke',
 };
 
