@@ -76,10 +76,12 @@ export default class AskAgentQuestionContainer extends Component {
         message: `I want to know about the senior living options in ${community.address.city}. Please give me a call or text with pricing and availability information`,
       };
       const modalComponentProps = {
-        heading: 'How can your local senior living expert help?',
+        heading: "Let's Begin Your Senior Living Search",
         initialValues,
         id: community.id,
         category: 'community',
+        hasEmail: false,
+        showMessageFieldFirst: true,
         postSubmit,
       };
 

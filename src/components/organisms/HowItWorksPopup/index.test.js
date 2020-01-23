@@ -16,7 +16,7 @@ describe('HowItWorksPopup', () => {
 
     expect(wrapper.find('PaddedHowSlyWorksVideo')).toHaveLength(1);
     expect(wrapper.find('PaddedHeading')).toHaveLength(1);
-    expect(wrapper.find('ListItem')).toHaveLength(3);
+    expect(wrapper.find('ListItem')).toHaveLength(4);
     expect(wrapper.find('StyledButton')).toHaveLength(1);
   });
 
