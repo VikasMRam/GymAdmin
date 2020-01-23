@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { func, string, bool } from 'prop-types';
+import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
 import taskPropType from 'sly/propTypes/agent';
@@ -11,6 +12,7 @@ import { Link, ClampedText } from 'sly/components/atoms';
 import { Td, Tr } from 'sly/components/atoms/Table';
 import { buildAddressDisplay } from 'sly/services/helpers/communityReferral';
 import { AGENT_STATUS_NAME_MAP } from 'sly/constants/agents';
+import { ADMIN_DASHBOARD_AGENT_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
 
 const Wrapper = mobileOnly(borderRadius(pad(Tr, 'large'), 'small'), css`
   display: flex;
@@ -78,11 +80,12 @@ const StatusCell = pad(mobileOnly(StyledTd, css`
 StatusCell.displayName = 'StatusCell';
 
 const AgentRowCard = ({ agent, onAgentClick }) => {
-  const { info, status } = agent;
+  const { id, info, status } = agent;
   const { displayName } = info;
+  const agentDetailsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id });
   return (
     <Wrapper>
-      <NameCell agent={agent} onClick={() => onAgentClick(agent)} />
+      <NameCell agent={agent} to={agentDetailsPath} onClick={() => onAgentClick(agent)} />
       <DisplayNameCell>
         <span>Display Name</span>
         <span>{displayName}</span>

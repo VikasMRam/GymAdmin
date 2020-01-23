@@ -8,6 +8,8 @@ import PartnerAgentProfileForm from 'sly/components/organisms/PartnerAgentProfil
 import { createValidator, required, email, usPhone } from 'sly/services/validation';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
 import { withUser, query, prefetch } from 'sly/services/newApi';
+import { userIs } from 'sly/services/helpers/role';
+import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 
 const validate = createValidator({
   name: [required],
@@ -17,13 +19,18 @@ const validate = createValidator({
 
 const ReduxForm = reduxForm({
   form: 'PartnerAgentProfileForm',
-  destroyOnUnmount: false,
   validate,
 })(PartnerAgentProfileForm);
 
 @withUser
 @query('updateAgent', 'updateAgent')
-@prefetch('agent', 'getAgent', req => req({ id: 'me' }))
+@prefetch('agent', 'getAgent', (req, { agentId }) => {
+  let slug = 'me';
+  if (agentId) {
+    slug = agentId;
+  }
+  return req({ id: slug });
+})
 export default class PartnerAgentProfileFormController extends Component {
   static propTypes = {
     user: userPropType,
@@ -57,7 +64,7 @@ export default class PartnerAgentProfileFormController extends Component {
       .set('attributes.info.serviceArea.zipcodesServed', values.zipcodesServed)
       .set('attributes.status', parseInt(values.status, 10))
       .set('attributes.info.adminNotes', values.adminNotes)
-      .set('attributes.slyScore', parseFloat(values.slyScore));
+      .set('attributes.info.slyScore', parseFloat(values.slyScore));
 
     if (values.vacation && values.vacation[0].getTime() !== 0 && values.vacation[1].getTime() !== 0) {
       agent = agent.set('attributes.info.vacationStart', values.vacation[0])
@@ -84,20 +91,25 @@ export default class PartnerAgentProfileFormController extends Component {
     const { hasFinished: agentHasFinished } = status.agent;
     if (agentHasFinished) {
       console.log(agent);
-      const { info, status, slyScore } = agent;
+      const { info, status } = agent;
       const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;
-      const { adminRegion, vacationStart, vacationEnd, adminNotes } = info;
-      const { zipcodesServed } = serviceArea;
+      const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore } = info;
+      let zipcodesServed = null;
+      if (serviceArea) {
+        ({ zipcodesServed } = serviceArea);
+      }
       const vacation = [new Date(vacationStart), new Date(vacationEnd)];
       const initialValues = { bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation,
         adminRegion, zipcodesServed,
         status, adminNotes, slyScore };
+      const isSlyAdmin = userIs(user, PLATFORM_ADMIN_ROLE);
       return (
         <ReduxForm
           initialValues={initialValues}
           onSubmit={this.handleSubmit}
           user={user}
           buttonText="Save"
+          isSlyAdmin={isSlyAdmin}
           {...props}
         />
       );

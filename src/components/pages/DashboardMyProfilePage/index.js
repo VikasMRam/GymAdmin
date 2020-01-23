@@ -9,7 +9,7 @@ import pad from 'sly/components/helpers/pad';
 
 const PaddedBannerNotification = pad(BannerNotification);
 
-const DashboardMyProfilePage = ({ title, warningMessage }) => {
+const DashboardMyProfilePage = ({ title, warningMessage, agentId }) => {
   return (
     <DashboardPageTemplate activeMenuItem={title}>
       <BannerNotificationController>
@@ -17,7 +17,7 @@ const DashboardMyProfilePage = ({ title, warningMessage }) => {
           <>
             {messages.map(message => <PaddedBannerNotification key={message.id}>{message.content}</PaddedBannerNotification>)}
             {warningMessage && <PaddedBannerNotification palette="warning">{warningMessage}</PaddedBannerNotification>}
-            <PartnerAgentProfileFormController title={title} notifySuccess={notifySuccess} />
+            <PartnerAgentProfileFormController title={title} agentId={agentId} notifySuccess={notifySuccess} />
           </>
         )}
       </BannerNotificationController>
@@ -28,6 +28,7 @@ const DashboardMyProfilePage = ({ title, warningMessage }) => {
 DashboardMyProfilePage.propTypes = {
   title: string.isRequired,
   warningMessage: string,
+  agentId: string,
 };
 
 export default DashboardMyProfilePage;

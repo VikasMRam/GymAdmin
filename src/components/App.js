@@ -34,6 +34,7 @@ import {
   ADMIN_DASHBOARD_CALL_DETAILS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
   AGENT_DASHBOARD_ACCOUNT_PATH,
   ADMIN_DASHBOARD_AGENTS_PATH,
+  ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import careTypes from 'sly/constants/careTypes';
 import PageEventsContainer from 'sly/containers/PageEventsContainer';
@@ -179,6 +180,11 @@ const routes = [
   {
     path: ADMIN_DASHBOARD_AGENTS_PATH,
     component: DashboardAgentsIndexPage,
+    exact: true,
+  },
+  {
+    path: ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
+    component: DashboardMyProfilePageContainer,
     exact: true,
   },
   {

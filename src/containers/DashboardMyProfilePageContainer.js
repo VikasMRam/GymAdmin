@@ -10,13 +10,17 @@ export default class DashboardMyProfilePageContainer extends Component {
   static propTypes = {
     user: userPropType,
     location: object,
+    match: object,
   };
 
   render() {
-    const { user } = this.props;
-
+    const { user, match } = this.props;
+    let agentId = null;
+    if (match.params.id) {
+      agentId = match.params.id;
+    }
     return (
-      <DashboardMyProfilePage user={user} title="My Profile" />
+      <DashboardMyProfilePage user={user} title="My Profile" agentId={agentId} />
     );
   }
 }

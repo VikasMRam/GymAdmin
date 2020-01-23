@@ -5,7 +5,7 @@ import { arrayOf, object, string, bool, func } from 'prop-types';
 import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import pad from 'sly/components/helpers/pad';
-// import SlyEvent from 'sly/services/helpers/events';
+import SlyEvent from 'sly/services/helpers/events';
 import agentPropType from 'sly/propTypes/agent';
 import textAlign from 'sly/components/helpers/textAlign';
 import { Box, Table, THead, TBody, Tr, Td, Block } from 'sly/components/atoms';
@@ -102,32 +102,15 @@ export default class DashboardAgentsIndexSection extends Component {
     searchTextBoxValue: string,
   };
 
-  // handleAgentClick = (agent) => {
-  //   const { showModal, hideModal, notifyInfo, notifyError, meta, rawAgent, refetchAgents, client } = this.props;
-  //   const { priorities, statuses } = meta;
-  //   const event = {
-  //     category: 'AgentDashboardAgents',
-  //     action: 'click',
-  //     label: 'viewAgent',
-  //   };
-  //   SlyEvent.getInstance().sendEvent(event);
-  //   showModal(
-  //     (
-  //       <AddOrEditAgentFormContainer
-  //         priorities={priorities}
-  //         statuses={statuses}
-  //         onCancel={hideModal}
-  //         notifyInfo={notifyInfo}
-  //         notifyError={notifyError}
-  //         onSuccess={hideModal}
-  //         agent={agent}
-  //         rawAgent={rawAgent}
-  //         refetchAgents={refetchAgents}
-  //         client={client}
-  //       />
-  //     ), null, 'noPadding', false,
-  //   );
-  // };
+  handleAgentClick = (agent) => {
+    const event = {
+      category: 'AdminDashboardAgents',
+      action: 'click',
+      label: 'viewAgent',
+      value: agent.id,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+  };
 
   render() {
     const {
@@ -138,7 +121,7 @@ export default class DashboardAgentsIndexSection extends Component {
     const SectionComponent = noBorder ? StyledSection : Section;
     const StatusBlock = noBorder ? StyledFamiliesCountStatusBlock : FamiliesCountStatusBlock;
     const modelConfig = { name: 'Agent', defaultSearchField: 'name' };
-    console.log(agents);
+
     return (
       <>
         <TableHeaderButtonComponent

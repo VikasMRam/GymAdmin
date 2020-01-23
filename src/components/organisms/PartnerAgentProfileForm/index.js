@@ -24,8 +24,12 @@ const Warning = pad(styled(Block)`
 Warning.displayName = 'Warning';
 
 const FormScrollSection = styled.div`
-  max-height: calc(100vh - 240px);
+  max-height: calc(100vh - 160px);
   overflow-y: auto;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    max-height: calc(100vh - 230px);
+  }
 `;
 
 const FormSection = styled.div`
@@ -69,7 +73,7 @@ const AGENT_STATUS_OPTIONS = [
 const agentRegionOptions = AGENT_REGION_OPTIONS.map(i => <option key={i} value={i}>{i}</option>);
 const agentStatusOptions = AGENT_STATUS_OPTIONS.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
 
-const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, submitting, invalid,hasNoBodyPadding }) => (
+const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, submitting, invalid, isSlyAdmin }) => (
   <Form onSubmit={handleSubmit}>
     <FormScrollSection>
       <FormSection>
@@ -152,35 +156,37 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
           wideWidth
         />
       </FormSection>
-      <FormSection>
-        <FormSectionHeading weight="medium">Admin</FormSectionHeading>
-        <Field
-          name="status"
-          label="Status"
-          type="select"
-          component={ReduxField}
-          wideWidth
-        >
-          <option value="" disabled>Select an option</option>
-          {agentStatusOptions}
-        </Field>
-        <Field
-          name="adminNotes"
-          label="Admin Notes"
-          type="textarea"
-          placeholder=""
-          component={ReduxField}
-          wideWidth
-        />
-        <Field
-          name="slyScore"
-          label="Slyscore"
-          type="number"
-          placeholder=""
-          component={ReduxField}
-          wideWidth
-        />
-      </FormSection>
+      {isSlyAdmin && (
+        <FormSection>
+          <FormSectionHeading weight="medium">Admin</FormSectionHeading>
+          <Field
+            name="status"
+            label="Status"
+            type="select"
+            component={ReduxField}
+            wideWidth
+          >
+            <option value="" disabled>Select an option</option>
+            {agentStatusOptions}
+          </Field>
+          <Field
+            name="adminNotes"
+            label="Admin Notes"
+            type="textarea"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
+            name="slyScore"
+            label="Slyscore"
+            type="number"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+        </FormSection>
+      )}
     </FormScrollSection>
     {error && <Block palette="danger">{error}</Block>}
     {buttonText &&
