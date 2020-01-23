@@ -1,20 +1,29 @@
-export const operatorNames = {
-  eq: 'equal',
-  ne: 'not equal',
-  gt: 'greater than',
-  lt: 'less than',
-  ge: 'greater than equal',
-  le: 'less than equal',
-  in: 'in',
-  nin: 'not in',
-  bef: 'before',
-  aft: 'after',
-  is: 'is',
-  bet: 'between',
-  em: 'empty',
-  nem: 'not empty',
+export const defaultOperatorNames = {
+  eq: 'is exactly',
+  ne: 'is not',
+  gt: 'is greater than',
+  lt: 'is less than',
+  ge: 'is greater than or equal',
+  le: 'is less than or equal',
+  in: 'is any of',
+  nin: 'is none of',
+  em: 'is empty',
+  nem: 'is not empty',
   cs: 'contains',
-  ncs: 'not contains',
+  ncs: 'does not contain',
+  bet: 'is between',
+  true: 'is true',
+  false: 'is false',
+};
+
+export const operatorNamesForDate = {
+  ...defaultOperatorNames,
+  lt: 'is before',
+  gt: 'is after',
+  eq: 'is exactly',
+};
+
+export const logicalOperatorNames = {
   and: 'And',
   or: 'Or',
 };
@@ -22,7 +31,6 @@ export const operatorNames = {
 export const listValueOperators = [
   'in',
   'nin',
-  'bet',
 ];
 
 export const noValueOperators = ['em', 'nem'];

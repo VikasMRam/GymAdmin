@@ -11,8 +11,9 @@ import Field from 'sly/components/molecules/Field';
 import {
   noValueOperators,
   listValueOperators,
-  operatorNames,
-  getAutocompleteValues,
+  logicalOperatorNames,
+  defaultOperatorNames,
+  getAutocompleteValues, operatorNamesForDate,
 } from 'sly/services/datatable/helpers';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import { size, palette } from 'sly/components/themes';
@@ -21,17 +22,11 @@ const AUTOCOMPLETE = 'MultiSelectDynamicList';
 const SELECT = 'MultiSelectStaticList';
 const DATE_TIME = 'DateTime';
 
-const getValuesFor = (filter, name, value) => {
-  switch (name) {
-    case 'column': return {};
-    case 'operator': return {
-      column: filter.column,
-      value: noValueOperators.includes(value)
-        ? undefined
-        : filter.value,
-    };
-    default: return filter;
+const getOperatorNameFor = (type, operator) => {
+  if (type.name === DATE_TIME) {
+    return operatorNamesForDate[operator];
   }
+  return defaultOperatorNames[operator];
 };
 
 const valueAndOptionsForSelect = (value, list) => {
@@ -149,20 +144,17 @@ export default class DatatableFilterRow extends Component {
     }, {}),
   };
 
+  // cleanup any select change to normalize different apis
   onSelectChange = (option, { name }) => {
     let value = null;
     if (Array.isArray(option)) {
+      // react-select
       value = option.map(({ value }) => value);
     } else if (option && typeof option === 'object') {
+      // redux-form field
       ({ value } = option);
     }
     this.onValueChange(name, value);
-  };
-
-  onValueChange = (name, value) => {
-    const { filter, onFilterChange } = this.props;
-    const values = getValuesFor(filter, name, value);
-    onFilterChange(filter, { ...values, [name]: value });
   };
 
   getColumns = () => {
@@ -173,17 +165,49 @@ export default class DatatableFilterRow extends Component {
     }));
   };
 
-  getOperatorsFor = column => this.state.columns[column]
-    .type.allowedExpressions
-    .map(op => ({
-      label: operatorNames[op],
-      value: op,
-    }));
 
+  // operator fields
+  getOperatorsFor = (column) => {
+    const columnType = this.state.columns[column].type;
+    return columnType.allowedExpressions
+      .map(op => ({
+        label: getOperatorNameFor(columnType, op),
+        value: op,
+      }));
+  };
+
+  // value fields
   getValueForAutocomplete = (value = [], column) => {
     const { autocompleteFilters } = this.props;
     const fromFilters = autocompleteFilters[column.paramKey] || [];
     return getAutocompleteValues(column)(fromFilters.filter(({ id }) => value.includes(id)));
+  };
+
+  getValuesFor = (filter, name, value) => {
+    // for any filter attribute change, add extra attributes if needed
+    // like default operator for a column change
+    switch (name) {
+      case 'column': {
+        const columnType = this.state.columns[value].type;
+        return {
+          operator: columnType.allowedExpressions[0],
+        };
+      }
+      case 'operator': return {
+        column: filter.column,
+        value: noValueOperators.includes(value)
+          ? undefined
+          : filter.value,
+      };
+      default: return filter;
+    }
+  };
+
+  // any of the inputs for the filters have changed (column, operator, value...)
+  onValueChange = (name, value) => {
+    const { filter, onFilterChange } = this.props;
+    const values = this.getValuesFor(filter, name, value);
+    onFilterChange(filter, { ...values, [name]: value });
   };
 
   getValuePropsFor = ({ column, value, operator }) => {
@@ -249,7 +273,7 @@ export default class DatatableFilterRow extends Component {
         )}
 
         {index !== 0 && index !== 1 && (
-          <Where>{operatorNames[logicalOperator]}</Where>
+          <Where>{logicalOperatorNames[logicalOperator]}</Where>
         )}
 
         <GrowField
