@@ -8,6 +8,7 @@ import PartnerAgentProfileForm from 'sly/components/organisms/PartnerAgentProfil
 import { createValidator, required, email, usPhone } from 'sly/services/validation';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
 import { withUser, query, prefetch } from 'sly/services/newApi';
+import { adminAgentPropType } from 'sly/propTypes/agent';
 import { userIs } from 'sly/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 
@@ -31,9 +32,10 @@ const ReduxForm = reduxForm({
   }
   return req({ id: slug });
 })
-export default class PartnerAgentProfileFormController extends Component {
+export default class PartnerAgentProfileFormContainer extends Component {
   static propTypes = {
     user: userPropType,
+    agent: adminAgentPropType.isRequired,
     status: shape({
       user: object,
       uuidAux: object,
@@ -48,8 +50,6 @@ export default class PartnerAgentProfileFormController extends Component {
       status, updateAgent, notifySuccess,
     } = this.props;
     const { agent: rawAgent } = status;
-    console.log(rawAgent);
-    console.log(values);
     const { result } = rawAgent;
     const { id } = result;
 
@@ -72,7 +72,6 @@ export default class PartnerAgentProfileFormController extends Component {
     }
     agent = agent.value();
 
-    console.log(agent);
     const agentPromise = () => updateAgent({ id }, agent);
 
     return agentPromise().then(notifySuccess('Details Updated Successfully'))
@@ -90,7 +89,6 @@ export default class PartnerAgentProfileFormController extends Component {
     const { user, agent, status, uuidAux, ...props } = this.props;
     const { hasFinished: agentHasFinished } = status.agent;
     if (agentHasFinished) {
-      console.log(agent);
       const { info, status } = agent;
       const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;
       const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore } = info;
@@ -99,9 +97,7 @@ export default class PartnerAgentProfileFormController extends Component {
         ({ zipcodesServed } = serviceArea);
       }
       const vacation = [new Date(vacationStart), new Date(vacationEnd)];
-      const initialValues = { bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation,
-        adminRegion, zipcodesServed,
-        status, adminNotes, slyScore };
+      const initialValues = { bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation, adminRegion, zipcodesServed, status, adminNotes, slyScore };
       const isSlyAdmin = userIs(user, PLATFORM_ADMIN_ROLE);
       return (
         <ReduxForm

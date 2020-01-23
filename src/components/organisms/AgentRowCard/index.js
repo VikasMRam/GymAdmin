@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { func, string, bool } from 'prop-types';
+import { func, string } from 'prop-types';
 import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
@@ -23,10 +23,10 @@ const Wrapper = mobileOnly(borderRadius(pad(Tr, 'large'), 'small'), css`
 `);
 
 const StyledNameCell = ({
-  disabled, agent, to, ...props
+  agent, to, ...props
 }) => (
-  <Td disabled={disabled} {...props}>
-    <ClampedText size={size('weight.medium')}>
+  <Td {...props}>
+    <ClampedText>
       <Link to={to} {...props}>
         {agent.name}
       </Link>
@@ -35,7 +35,6 @@ const StyledNameCell = ({
 );
 
 StyledNameCell.propTypes = {
-  disabled: bool,
   agent: taskPropType,
   to: string,
 };

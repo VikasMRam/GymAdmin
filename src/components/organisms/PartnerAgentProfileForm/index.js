@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
+import { func, string, bool } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
@@ -198,5 +199,16 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
     }
   </Form>
 );
+
+PartnerAgentProfileForm.propTypes = {
+  handleSubmit: func.isRequired,
+  buttonText: string,
+  error: string,
+  pristine: bool,
+  submitting: bool,
+  invalid: bool,
+  isSlyAdmin: bool,
+};
+
 
 export default PartnerAgentProfileForm;

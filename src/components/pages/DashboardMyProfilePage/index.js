@@ -2,7 +2,7 @@ import React from 'react';
 import { string } from 'prop-types';
 
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import PartnerAgentProfileFormController from 'sly/containers/PartnerAgentProfileFormController';
+import PartnerAgentProfileFormContainer from 'sly/containers/PartnerAgentProfileFormContainer';
 import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import pad from 'sly/components/helpers/pad';
@@ -17,7 +17,7 @@ const DashboardMyProfilePage = ({ title, warningMessage, agentId }) => {
           <>
             {messages.map(message => <PaddedBannerNotification key={message.id}>{message.content}</PaddedBannerNotification>)}
             {warningMessage && <PaddedBannerNotification palette="warning">{warningMessage}</PaddedBannerNotification>}
-            <PartnerAgentProfileFormController title={title} agentId={agentId} notifySuccess={notifySuccess} />
+            <PartnerAgentProfileFormContainer title={title} agentId={agentId} notifySuccess={notifySuccess} />
           </>
         )}
       </BannerNotificationController>
