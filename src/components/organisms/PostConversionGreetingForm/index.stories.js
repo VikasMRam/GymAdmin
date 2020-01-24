@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-import PostConversionGreeting from 'sly/components/organisms/PostConversionGreeting';
+import PostConversionGreeting from 'sly/components/organisms/PostConversionGreetingForm';
 
 const onReject = action('onReject');
 
