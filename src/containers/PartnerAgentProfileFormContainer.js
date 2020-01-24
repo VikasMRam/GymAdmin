@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { shape, object, func } from 'prop-types';
+import { shape, object, func, bool } from 'prop-types';
 import { reduxForm, SubmissionError } from 'redux-form';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
@@ -7,7 +7,7 @@ import pick from 'lodash/pick';
 import PartnerAgentProfileForm from 'sly/components/organisms/PartnerAgentProfileForm';
 import { createValidator, required, email, usPhone } from 'sly/services/validation';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
-import { withUser, query, prefetch } from 'sly/services/newApi';
+import { withUser, query } from 'sly/services/newApi';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import { userIs } from 'sly/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
@@ -25,24 +25,17 @@ const ReduxForm = reduxForm({
 
 @withUser
 @query('updateAgent', 'updateAgent')
-@prefetch('agent', 'getAgent', (req, { agentId }) => {
-  let slug = 'me';
-  if (agentId) {
-    slug = agentId;
-  }
-  return req({ id: slug });
-})
 export default class PartnerAgentProfileFormContainer extends Component {
   static propTypes = {
     user: userPropType,
     agent: adminAgentPropType.isRequired,
     status: shape({
-      user: object,
       uuidAux: object,
     }),
     uuidAux: uuidAuxProps,
     updateAgent: func,
     notifySuccess: func,
+    isLoading: bool,
   };
 
   handleSubmit = (values) => {
@@ -86,9 +79,11 @@ export default class PartnerAgentProfileFormContainer extends Component {
       });
   };
   render() {
-    const { user, agent, status, uuidAux, ...props } = this.props;
-    const { hasFinished: agentHasFinished } = status.agent;
-    if (agentHasFinished) {
+    const { user, agent, isLoading, ...props } = this.props;
+    if (!isLoading) {
+      if (!agent) {
+        return <div>Parnet Agent Record Not Found...</div>;
+      }
       const { info, status } = agent;
       const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;
       const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore } = info;
@@ -103,7 +98,6 @@ export default class PartnerAgentProfileFormContainer extends Component {
         <ReduxForm
           initialValues={initialValues}
           onSubmit={this.handleSubmit}
-          user={user}
           buttonText="Save"
           isSlyAdmin={isSlyAdmin}
           {...props}

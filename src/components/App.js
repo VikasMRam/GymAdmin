@@ -63,7 +63,8 @@ const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: 
 const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/containers/DashboardHomePageContainer'));
 const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/containers/DashboardFavoritesPageContainer'));
 const DashboardMyAccountPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyAccount" */ 'sly/containers/DashboardMyAccountPageContainer'));
-const DashboardMyProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardMyProfilePageContainer'));
+const DashboardAgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardAgentProfilePageContainer'));
+const DashboardAgentDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardAgentDetailPageContainer'));
 
 const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer'));
 const DashboardAgentFamilyOverviewPage = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/components/pages/DashboardAgentFamilyOverviewPage'));
@@ -174,7 +175,7 @@ const routes = [
   },
   {
     path: AGENT_DASHBOARD_PROFILE_PATH,
-    component: DashboardMyProfilePageContainer,
+    component: DashboardAgentProfilePageContainer,
     exact: true,
   },
   {
@@ -184,7 +185,7 @@ const routes = [
   },
   {
     path: ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
-    component: DashboardMyProfilePageContainer,
+    component: DashboardAgentDetailPageContainer,
     exact: true,
   },
   {
