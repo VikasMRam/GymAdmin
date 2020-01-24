@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { arrayOf, object } from 'prop-types';
+import { arrayOf, object, func } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { prefetch, withUser } from 'sly/services/newApi';
 import agentPropType from 'sly/propTypes/agent';
 import DashboardAgentsIndexSection from 'sly/components/organisms/DashboardAgentsIndexSection';
-import ModalController from 'sly/controllers/ModalController';
-import NotificationController from 'sly/controllers/NotificationController';
+import withNotification from 'sly/controllers/withNotification';
 
 const getPaginationData = ({ result, meta }) => {
   if (!result) return {};
@@ -34,6 +33,7 @@ const getPaginationData = ({ result, meta }) => {
 
 @withRouter
 @withUser
+@withNotification
 @prefetch('agents', 'getAgents', (req, { datatable }) => {
   return req(datatable.query);
 })
@@ -46,6 +46,8 @@ export default class DashboardAgentsIndexSectionContainer extends Component {
     datatable: object,
     match: object,
     location: object,
+    notifyError: func,
+    notifyInfo: func,
   };
 
   refetchAgents = () => {
@@ -54,37 +56,21 @@ export default class DashboardAgentsIndexSectionContainer extends Component {
   };
 
   render() {
-    const { agents, status, match, location, datatable, ...props } = this.props;
-    const { error, meta, hasFinished, result: rawAgents } = status.agents;
+    const { agents, status, match, location, datatable, notifyInfo, notifyError, ...props } = this.props;
+    const { error, hasFinished } = status.agents;
 
     if (error) {
       throw new Error(JSON.stringify(error));
     }
 
     return (
-      <NotificationController>
-        {({ notifyInfo, notifyError }) => (
-          <ModalController>
-            {({ show, hide }) => (
-              <DashboardAgentsIndexSection
-                {...props}
-                isPageLoading={!hasFinished || !datatable.hasFinished}
-                datatable={datatable}
-                agents={agents}
-                rawAgents={rawAgents}
-                pagination={getPaginationData(status.agents)}
-                // onSearchTextKeyUp={this.handleSearchTextKeyUp}
-                showModal={show}
-                hideModal={hide}
-                meta={meta || {}}
-                notifyError={notifyError}
-                notifyInfo={notifyInfo}
-                refetchAgents={this.refetchAgents}
-              />
-            )}
-          </ModalController>
-        )}
-      </NotificationController>
+      <DashboardAgentsIndexSection
+        {...props}
+        isPageLoading={!hasFinished || !datatable.hasFinished}
+        datatable={datatable}
+        agents={agents}
+        pagination={getPaginationData(status.agents)}
+      />
     );
   }
 }

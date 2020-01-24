@@ -13,6 +13,11 @@ const defaultValues = {
 const wrap = (props = {}) => shallow(<AgentRowCard {...defaultValues} {...props} />);
 
 describe('AgentRowCard', () => {
+  it('does not render children when passed in', () => {
+    const wrapper = wrap({ childred: 'test' });
+    expect(wrapper.contains('test')).toBe(false);
+  });
+
   it('renders', () => {
     const wrapper = wrap();
 

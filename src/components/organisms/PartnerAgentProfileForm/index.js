@@ -14,7 +14,6 @@ StyledButton.displayName = 'StyledButton';
 const Form = styled.form`
   background-color: ${palette('white.base')};
 `;
-Form.displayName = 'Form';
 
 const Warning = pad(styled(Block)`
   background-color: ${palette('warning.filler')};

@@ -11,6 +11,7 @@ import { withUser, query } from 'sly/services/newApi';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import { userIs } from 'sly/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import withNotification from 'sly/controllers/withNotification';
 
 const validate = createValidator({
   name: [required],
@@ -24,29 +25,29 @@ const ReduxForm = reduxForm({
 })(PartnerAgentProfileForm);
 
 @withUser
+@withNotification
 @query('updateAgent', 'updateAgent')
 export default class PartnerAgentProfileFormContainer extends Component {
   static propTypes = {
     user: userPropType,
     agent: adminAgentPropType.isRequired,
+    rawAgent: object,
     status: shape({
       uuidAux: object,
     }),
     uuidAux: uuidAuxProps,
     updateAgent: func,
-    notifySuccess: func,
+    notifyInfo: func,
     isLoading: bool,
   };
 
   handleSubmit = (values) => {
     const {
-      status, updateAgent, notifySuccess,
+      rawAgent, updateAgent, notifyInfo,
     } = this.props;
-    const { agent: rawAgent } = status;
-    const { result } = rawAgent;
-    const { id } = result;
+    const { id } = rawAgent;
 
-    let agent = immutable.wrap(pick(result, ['id', 'type', 'attributes.status', 'attributes.info', 'attributes.info.serviceArea']))
+    let agent = immutable.wrap(pick(rawAgent, ['id', 'type', 'attributes.status', 'attributes.info', 'attributes.info.serviceArea']))
       .set('attributes.info.bio', values.bio)
       .set('attributes.info.parentCompany', values.parentCompany)
       .set('attributes.info.displayName', values.displayName)
@@ -67,7 +68,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
 
     const agentPromise = () => updateAgent({ id }, agent);
 
-    return agentPromise().then(notifySuccess('Details Updated Successfully'))
+    return agentPromise().then(notifyInfo('Details Updated Successfully'))
       .catch((error) => {
         console.error(error);
         const { status, body } = error;

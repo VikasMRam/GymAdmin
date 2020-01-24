@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
-import { arrayOf, object, string, bool, func } from 'prop-types';
+import { arrayOf, object, bool } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
@@ -83,23 +83,10 @@ export default class DashboardAgentsIndexSection extends Component {
   static propTypes = {
     datatable: object,
     agents: arrayOf(agentPropType),
-    rawAgent: arrayOf(object),
     pagination: object,
-    paginationString: string,
-    activeTab: string,
-    showPagination: bool,
-    searchTextValue: string,
-    onSearchTextKeyUp: func,
     isPageLoading: bool,
-    showModal: func,
-    hideModal: func,
     meta: object,
-    notifyInfo: func,
-    notifyError: func,
-    refetchAgents: func,
     noBorder: bool,
-    contextPath: string,
-    searchTextBoxValue: string,
   };
 
   handleAgentClick = (agent) => {

@@ -32,14 +32,16 @@ export default class DashboardAgentProfilePageContainer extends Component {
 
   render() {
     const { user, agents, status } = this.props;
-    const { hasFinished: agentsHasFinished } = status.agents;
+    const { hasFinished: agentsHasFinished, result } = status.agents;
     const { hasFinished: userHasFinished } = status.user;
     const isLoading = !(userHasFinished && agentsHasFinished);
     let agent = null;
+    let rawAgent = null;
     if (agentsHasFinished) {
       ([agent] = agents);
+      ([rawAgent] = result);
     }
-    return <DashboardAgentProfilePage user={user} agent={agent} isLoading={isLoading} title="My Profile" />;
+    return <DashboardAgentProfilePage user={user} agent={agent} rawAgent={rawAgent} isLoading={isLoading} title="My Profile" />;
   }
 }
 
