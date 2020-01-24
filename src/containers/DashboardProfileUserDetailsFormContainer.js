@@ -130,7 +130,8 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
     const { user, uuidAux, ...props } = this.props;
     const initialValues = convertUserToProfileFormValues(user, uuidAux);
     let emailWarning = null;
-    if (userIs(user, CUSTOMER_ROLE)) {
+    const hasCustomerRole = userIs(user, CUSTOMER_ROLE);
+    if (hasCustomerRole) {
       emailWarning = 'Enter your email so your agent can help you by answering your questions and sending recommended communities.';
     }
     const messageObj = {
@@ -145,6 +146,7 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
       <ReduxForm
         initialValues={initialValues}
         onSubmit={this.handleSubmit}
+        hasCustomerRole={hasCustomerRole}
         user={user}
         warn={warn}
         {...props}

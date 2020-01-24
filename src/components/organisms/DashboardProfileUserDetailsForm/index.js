@@ -12,8 +12,6 @@ import textAlign from 'sly/components/helpers/textAlign';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import pad from 'sly/components/helpers/pad';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
-import { userIs } from 'sly/services/helpers/role';
-import { CUSTOMER_ROLE } from 'sly/constants/roles';
 
 // TODO: Copied from FamilyDetailsForm. Need to make it generic field
 const TwoColumnWrapper = styled.div`
@@ -57,7 +55,7 @@ class DashboardProfileUserDetailsForm extends Component {
     }
   };
   render() {
-    const { initialValues, status, user, title } = this.props;
+    const { initialValues, status, hasCustomerRole, title } = this.props;
     const { meta } = status.uuidAux;
     const {
       lookingFor, monthlyBudget, timeToMove,
@@ -102,7 +100,7 @@ class DashboardProfileUserDetailsForm extends Component {
           component={ReduxField}
           wideWidth
         />
-        {userIs(user, CUSTOMER_ROLE) &&
+        {hasCustomerRole &&
         <>
           <Hr />
           <Field
@@ -169,7 +167,7 @@ DashboardProfileUserDetailsForm.propTypes = {
   handleSubmit: func.isRequired,
   pristine: bool,
   submitting: bool,
-  user: object,
+  hasCustomerRole: bool,
   error: string,
   change: func,
   onLocationChange: func,
