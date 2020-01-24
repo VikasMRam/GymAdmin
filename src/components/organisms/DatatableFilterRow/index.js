@@ -30,10 +30,14 @@ const getOperatorNameFor = (type, operator) => {
 };
 
 const valueAndOptionsForSelect = (value, list) => {
-  const options = list.map(value => ({ label: value, value }));
+  const options = Array.isArray(list)
+    ? list.map(value => ({ label: value, value }))
+    : Object.entries(list).map(([value, label]) => ({ label, value }));
+  const isSearchable = options.length > 10;
   return {
     value: value && options.filter(({ value: ov }) => value.includes(ov)),
     options,
+    isSearchable,
   };
 };
 
