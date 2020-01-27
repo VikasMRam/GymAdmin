@@ -95,8 +95,11 @@ export default class ResponsiveImage extends React.Component {
 
     const imageProps = {
       src: imgSrc,
-      [srcProp]: imgSrc,
     };
+
+    if (!this.state.failed) {
+      imageProps[srcProp] = imgSrc;
+    }
 
     let sourceSets = null;
     if (!this.state.failed && isS3Path) {

@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { object, arrayOf, func } from 'prop-types';
+import { object, arrayOf } from 'prop-types';
 import queryString from 'query-string';
 
-import { size, gridColumns, assetPath } from 'sly/components/themes';
+import { size, gridColumns } from 'sly/components/themes';
 import { getPaginationData } from 'sly/services/helpers/pagination';
 import pad from 'sly/components/helpers/pad';
 import { shadowOnHover } from 'sly/components/helpers/shadow';
-import { Image, Centered, Link, Block } from 'sly/components/atoms';
+import { Centered, Link, Block } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
 import Heading from 'sly/components/atoms/Heading';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
@@ -51,6 +51,7 @@ const MSCColumnWrapper = styled.div`
   }
 `;
 
+const PaginationText = pad('div');
 const PaddedPagination = pad(Pagination, 'small');
 
 const ShadowCommunityTile = shadowOnHover(styled(CommunityTile)`
@@ -181,7 +182,9 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
           </MSCColumnWrapper>
         </>
       }
-      {`Showing ${start} to ${end} of ${count}`}
+      <PaginationText>
+        {`Showing ${start} to ${end} of ${count}`}
+      </PaginationText>
       {communityList.length > 0 &&
         <PaddedPagination basePath={basePath} pageParam="page-number" current={current} total={total} />
       }

@@ -150,6 +150,7 @@ const CommunityTile = ({
 
   const CommunityInfoComponent = actionButtons.length ? PaddedCommunityInfo : CommunityInfo;
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
+  const loading = lazyLoadImage ? 'lazy' : 'auto';
 
   return (
     <MainWrapper className={className} plusCategory={plusCategory}>
@@ -176,7 +177,7 @@ const CommunityTile = ({
                 placeholder={placeholder}
                 sizes={mediaSizes}
                 aspectRatio={layout === 'column' ? '3:2' : '16:9'}
-                lazy={lazyLoadImage}
+                loading={loading}
               />
               {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
             </ImageWrapper>
