@@ -40,12 +40,15 @@ export default class AskAgentQuestionContainer extends Component {
     children: func,
   };
 
-  handleToggleAskAgentQuestionModal = (isAskAgentQuestionModalVisible) => {
+  handleToggleAskAgentQuestionModal = (isAskAgentQuestionModalVisible, subType) => {
     const { community: { id }, type } = this.props;
     const action = isAskAgentQuestionModalVisible ? 'close-modal' : 'open-modal';
     let category = 'AskAgentQuestion';
     if (type) {
       category += `-${type}`;
+    }
+    if (subType) {
+      category += `-${subType}`;
     }
     const event = {
       action,
@@ -56,25 +59,28 @@ export default class AskAgentQuestionContainer extends Component {
     SlyEvent.getInstance().sendEvent(event);
   };
 
-  openAskAgentQuestionModal = () => {
+  openAskAgentQuestionModal = (subType) => {
     const { type, community, showModal, hideModal, notifyInfo } = this.props;
     const agentImageUrl = assetPath('images/agent-xLarge.png');
     const toggleAskAgentQuestionModal = () => {
-      this.handleToggleAskAgentQuestionModal(true);
+      this.handleToggleAskAgentQuestionModal(true, subType);
       hideModal();
     };
     const onClose = () => {
-      this.handleToggleAskAgentQuestionModal(true);
+      this.handleToggleAskAgentQuestionModal(true, subType);
     };
 
-    if (type === 'how-it-works-banner-notification') {
+    if (type === 'how-it-works-banner-notification' || type === 'side-column-get-help-now') {
       const postSubmit = () => {
         notifyInfo('Question sent successfully');
         toggleAskAgentQuestionModal();
       };
-      const initialValues = {
-        message: `I want to know about the senior living options in ${community.address.city}. Please give me a call or text with pricing and availability information`,
-      };
+      let initialValues = {};
+      if (type === 'how-it-works-banner-notification') {
+        initialValues = {
+          message: `I want to know about the senior living options in ${community.address.city}. Please give me a call or text with pricing and availability information`,
+        };
+      }
       const modalComponentProps = {
         heading: "Let's Begin Your Senior Living Search",
         initialValues,
@@ -106,7 +112,7 @@ export default class AskAgentQuestionContainer extends Component {
       showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />, onClose);
     }
 
-    this.handleToggleAskAgentQuestionModal(false);
+    this.handleToggleAskAgentQuestionModal(false, subType);
   };
 
   render() {

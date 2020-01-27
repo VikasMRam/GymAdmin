@@ -58,7 +58,7 @@ export const MEDICAID_OPTIONS = [
 export const WHAT_TO_NEXT_OPTIONS = [
   // { value: 'schedule-tour', label: 'Schedule a tour' },
   { value: 'talk-advisor', label: 'Talk to an advisor', type: 'submit' },
-  { value: 'explore-affordable-options', label: 'Explore more affordable options', type: 'submit' },
+  { value: 'explore-affordable-options', label: 'Explore more options', type: 'submit' },
 ];
 
 export const EXPLORE_AFFORDABLE_PRICING_OPTIONS = [

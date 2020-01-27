@@ -12,8 +12,6 @@ const CommunityPWEstimatedPricingFormContainer = reduxForm({
 })(CommunityPricingWizardWhatToDoNextForm);
 
 const defaultProps = {
-  communityName: 'Rhoda Goldman Plaza',
-  estimatedPrice: 3600,
   onSubmit: action('onSubmit'),
   onInterestChange: action('onInterestChange'),
   listOptions: WHAT_TO_NEXT_OPTIONS,
