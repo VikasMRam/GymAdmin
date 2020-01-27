@@ -50,11 +50,25 @@ const defaultProps = {
   status,
 };
 
-const wrap = (props = {}) => shallow(<DashboardProfileUserDetailsForm handleSubmit={handleSubmit} {...defaultProps} {...props} />);
+const title = 'My Profile';
+const wrap = (props = {}) => shallow(<DashboardProfileUserDetailsForm handleSubmit={handleSubmit} title={title} {...defaultProps} {...props} />);
 
 describe('DashboardProfileUserDetailsForm', () => {
   it('render DashboardProfileUserDetailsForm', () => {
     const wrapper = wrap({ });
+    expect(wrapper.find('FormSection')).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'phoneNumber' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'lookingFor' })).toHaveLength(0);
+    expect(wrapper.find(Field).filter({ name: 'residentName' })).toHaveLength(0);
+    expect(wrapper.find(Field).filter({ name: 'timeToMove' })).toHaveLength(0);
+    expect(wrapper.find('StyledSearchBoxContainer')).toHaveLength(0);
+    expect(wrapper.find(Field).filter({ name: 'openToNearbyAreas' })).toHaveLength(0);
+  });
+
+  it('render DashboardProfileUserDetailsForm for Customer Role', () => {
+    const wrapper = wrap({ hasCustomerRole: true });
     expect(wrapper.find('FormSection')).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
@@ -65,6 +79,7 @@ describe('DashboardProfileUserDetailsForm', () => {
     expect(wrapper.find('StyledSearchBoxContainer')).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'openToNearbyAreas' })).toHaveLength(1);
   });
+
 
   // TODO: Check whether this form needs to handle form level errors
   // it('render error when error is passed', () => {

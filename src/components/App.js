@@ -21,7 +21,8 @@ import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 import {
   DASHBOARD_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
-  FAMILY_DASHBOARD_PROFILE_PATH,
+  FAMILY_DASHBOARD_ACCOUNT_PATH,
+  AGENT_DASHBOARD_PROFILE_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH,
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   AGENT_DASHBOARD_MESSAGES_PATH,
@@ -31,6 +32,9 @@ import {
   FAMILY_DASHBOARD_MESSAGES_PATH,
   ADMIN_DASHBOARD_CALLS_PATH,
   ADMIN_DASHBOARD_CALL_DETAILS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
+  AGENT_DASHBOARD_ACCOUNT_PATH,
+  ADMIN_DASHBOARD_AGENTS_PATH,
+  ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import careTypes from 'sly/constants/careTypes';
 import PageEventsContainer from 'sly/containers/PageEventsContainer';
@@ -58,7 +62,9 @@ const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: 
 // Dashboard
 const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/containers/DashboardHomePageContainer'));
 const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/containers/DashboardFavoritesPageContainer'));
-const DashboardMyProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardMyProfilePageContainer'));
+const DashboardMyAccountPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyAccount" */ 'sly/containers/DashboardMyAccountPageContainer'));
+const DashboardAgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardAgentProfilePageContainer'));
+const DashboardAgentDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardAgentDetailPageContainer'));
 
 const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer'));
 const DashboardAgentFamilyOverviewPage = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/components/pages/DashboardAgentFamilyOverviewPage'));
@@ -68,6 +74,7 @@ const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkNa
 const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
 const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/components/pages/DashboardAgentTasksPage'));
 const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/components/pages/DashboardAgentContactsPage'));
+const DashboardAgentsIndexPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndexPage" */ 'sly/containers/DashboardAgentsIndexPageContainer'));
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -109,8 +116,8 @@ const routes = [
     exact: true,
   },
   {
-    path: FAMILY_DASHBOARD_PROFILE_PATH,
-    component: DashboardMyProfilePageContainer,
+    path: FAMILY_DASHBOARD_ACCOUNT_PATH,
+    component: DashboardMyAccountPageContainer,
     exact: true,
   },
   {
@@ -160,6 +167,26 @@ const routes = [
   {
     path: ADMIN_DASHBOARD_CALL_DETAILS_PATH,
     component: DashboardCallDetailsPageContainer,
+  },
+  {
+    path: AGENT_DASHBOARD_ACCOUNT_PATH,
+    component: DashboardMyAccountPageContainer,
+    exact: true,
+  },
+  {
+    path: AGENT_DASHBOARD_PROFILE_PATH,
+    component: DashboardAgentProfilePageContainer,
+    exact: true,
+  },
+  {
+    path: ADMIN_DASHBOARD_AGENTS_PATH,
+    component: DashboardAgentsIndexPage,
+    exact: true,
+  },
+  {
+    path: ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
+    component: DashboardAgentDetailPageContainer,
+    exact: true,
   },
   {
     path: `/:toc(${careTypes.join('|')})/:state/:city`,

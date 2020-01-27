@@ -14,7 +14,7 @@ describe('Marketplace Profile Page', () => {
       const { name, phone } = randomUser();
 
       const moveTimeline = 'Immediately';
-      const typeOfCare = 'Medication Management';
+      const typeOfCare = 'Medication management';
       const medicaid = 'Yes';
 
       if (viewport === 'mobile' || viewport === 'tablet') {
@@ -48,7 +48,7 @@ describe('Marketplace Profile Page', () => {
       const { name, phone } = randomUser();
 
       const moveTimeline = 'Immediately';
-      const typeOfCare = 'Medication Management';
+      const typeOfCare = 'Medication management';
       const medicaid = 'Yes';
 
       if (viewport === 'mobile' || viewport === 'tablet') {

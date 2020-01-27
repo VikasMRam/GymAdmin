@@ -15,13 +15,13 @@ const SimilarCommunities = ({ communities, onCommunityClick, communityStyle, get
   const { layout = 'column', imageSize = 'regular', showDescription = false } = communityStyle;
 
   return (
-    <section>
+    <>
       {communities.map((community, index) => (
         <PaddedLink key={community.id} to={community.url} onClick={onCommunityClick} event={getEvent(community, index)}>
           <CommunityTile community={community} layout={layout} imageSize={imageSize} noGallery showDescription={showDescription} showSeeMoreButtonOnHover />
         </PaddedLink>
       ))}
-    </section>
+    </>
   );
 };
 

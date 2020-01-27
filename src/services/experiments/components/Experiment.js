@@ -62,6 +62,16 @@ export class Experiment extends Component {
     this.sendExperimentEvent('view_experiment');
   }
 
+  componentDidUpdate({ disabled }) {
+    const { disabled: newDisabled } = this.props;
+
+    // if an experiment is disabled or enabled by updating prop then
+    // also send view_experiment event
+    if (newDisabled !== disabled) {
+      this.sendExperimentEvent('view_experiment');
+    }
+  }
+
   componentWillUnmount() {
     this.sendExperimentEvent('complete_experiment');
   }
@@ -70,7 +80,7 @@ export class Experiment extends Component {
     const { disabled, name } = this.props;
     if (!disabled) {
       const event = {
-        action, category: name, label: 'experiments', value: this.selectedVariant, nonInteraction: true,
+        action, category: name, label: this.selectedVariant, value: 1, nonInteraction: true,
       };
       SlyEvent.getInstance().sendEvent(event);
     }
