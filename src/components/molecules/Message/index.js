@@ -1,5 +1,5 @@
 import React from 'react';
-import { bool, string, func } from 'prop-types';
+import { bool, string, func, object } from 'prop-types';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
@@ -17,6 +17,7 @@ import {
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import { Box, Block, Avatar, Button } from 'sly/components/atoms';
+import HelpBubble from 'sly/components/molecules/HelpBubble';
 
 const StyledBox = styled(Box)`
   ${ifProp('dark', css`background: ${palette('grey', 'background')}`, '')};
@@ -43,6 +44,14 @@ const ButtonsWrapper = styled.div`
   grid-gap: ${size('spacing.regular')};
 `;
 
+const TimestampAndStatusWrapper = styled.div`
+  display: flex;
+`;
+
+const HelpBubbleWrapper = styled.div`
+  margin-left: auto;
+`;
+
 const onClickTypeButtons = [CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUTOMATED_RESPONSE];
 
 const textMessageTypes = [CONVERSATION_MESSAGE_DATA_TYPE_TEXT, CONVERSATION_MESSAGE_DATA_TYPE_HTML, CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUTOMATED_RESPONSE];
@@ -58,9 +67,11 @@ const isHtmlMessage = message => message.data.type === CONVERSATION_MESSAGE_DATA
 const getValue = message => message.data[`value${message.data.type}`];
 
 const Message = ({
-  message, participant, viewingAsConversationParticipant, dark, className, onButtonClick,
+  message, participant, participantsById, viewingAsConversationParticipant, dark, className, onButtonClick,
 }) => {
   let dateString = '';
+  const sentToArray = [];
+  let sentToString = '';
   const parsedDate = dayjs(message.createdAt);
   if (!parsedDate.isValid()) {
     dateString = 'Failed to parse date';
@@ -71,7 +82,41 @@ const Message = ({
   if (participant) {
     ({ participantInfo: user } = participant);
   }
-
+  const { info } = message;
+  if (info) {
+    if (info.sendgridEmailStatuses) {
+      for (let i = 0; i < info.sendgridEmailStatuses.length; i++) {
+        const status = info.sendgridEmailStatuses[i];
+        if (status.receivingParticipantSlug) {
+          const { receivingParticipantSlug, emailStatus } = status;
+          const participant = participantsById[receivingParticipantSlug];
+          if (participant) {
+            const { participantInfo } = participant;
+            const { name } = participantInfo;
+            sentToArray.push({ name, status: emailStatus, type: 'Email' });
+          }
+        }
+      }
+    }
+    if (info.twilioSMSStatuses) {
+      for (let i = 0; i < info.twilioSMSStatuses.length; i++) {
+        const status = info.twilioSMSStatuses[i];
+        if (status.receivingParticipantSlug) {
+          const { receivingParticipantSlug, smsStatus } = status;
+          const participant = participantsById[receivingParticipantSlug];
+          if (participant) {
+            const { participantInfo } = participant;
+            const { name } = participantInfo;
+            sentToArray.push({ name, status: smsStatus, type: 'SMS' });
+          }
+        }
+      }
+    }
+  }
+  for (let i = 0; i < sentToArray.length; i++) {
+    const element = sentToArray[i];
+    sentToString += `${element.type} ${element.status} to ${element.name}. `;
+  }
   return (
     <Wrapper className={className}>
       {user && <StyledAvatar size="small" user={user} />}
@@ -79,8 +124,15 @@ const Message = ({
         <StyledBox padding="large" dark={dark}>
           {!isHtmlMessage(message) && <PaddedBlock size="caption">{getValue(message)}</PaddedBlock>}
           {isHtmlMessage(message) && <PaddedBlock size="caption" dangerouslySetInnerHTML={{ __html: getValue(message) }} />}
-          {user && <Block size="tiny" palette="grey" variant="dark">{dateString}</Block>}
-          {!user && <TextAlignRightBlock size="tiny" palette="grey" variant="dark">{dateString}</TextAlignRightBlock>}
+          <TimestampAndStatusWrapper>
+            {user && <Block size="tiny" palette="grey" variant="dark">{dateString}</Block>}
+            {!user && <TextAlignRightBlock size="tiny" palette="grey" variant="dark">{dateString}</TextAlignRightBlock>}
+            {sentToString !== '' && (
+              <HelpBubbleWrapper>
+                <HelpBubble>{sentToString}</HelpBubble>
+              </HelpBubbleWrapper>
+            )}
+          </TimestampAndStatusWrapper>
         </StyledBox>
       )}
       {message.data.type === CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST &&
@@ -106,6 +158,7 @@ const Message = ({
 Message.propTypes = {
   message: messagePropType.isRequired,
   participant: participantPropType,
+  participantsById: object,
   viewingAsConversationParticipant: bool,
   dark: bool,
   className: string,

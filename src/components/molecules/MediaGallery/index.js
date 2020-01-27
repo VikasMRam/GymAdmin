@@ -249,10 +249,9 @@ export default class MediaGallery extends Component {
 
   render() {
     const {
-      currentSlide, videos, images, topRightSection, bottomLeftSection, bottomRightSection, showThumbnails, onSlideClick,
+      currentSlide, videos, images, topRightSection, bottomLeftSection, bottomRightSection, showThumbnails,
     } = this.props;
-
-    const { onSlideChange, ...rest } = this.props;
+    const { onSlideChange, onSlideClick, ...rest } = this.props;
     const thumbnails = [];
     // const formattedVideos = videos.map((video) => {
     //   thumbnails.push({
@@ -278,8 +277,8 @@ export default class MediaGallery extends Component {
     this.setLoadedImages(currentSlide);
     const slideViews = this.allMedia.map((media, i) => (
       <StyledSlide
-        key={media.id}
-        hasOnSlideClick={onSlideClick}
+        key={media.id || media.alt}
+        hasOnSlideClick={!!onSlideClick}
         onClick={() => onSlideClick && onSlideClick(i)}
       >
         {this.generateSlideContent(media, i)}

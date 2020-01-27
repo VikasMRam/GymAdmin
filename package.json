@@ -178,7 +178,7 @@
     "serialize-javascript": "^2.1.1",
     "sinon": "^7.5.0",
     "smoothscroll-polyfill": "^0.4.4",
-    "styled-components": "beta",
+    "styled-components": "^5.0.0",
     "styled-theme": "^0.3.3",
     "styled-tools": "^1.7.1",
     "uglify-es": "^3.3.9",

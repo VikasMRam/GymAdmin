@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 
-import DashboardMyProfilePage from 'sly/components/pages/DashboardMyProfilePage';
+import DashboardMyAccountPage from 'sly/components/pages/DashboardMyAccountPage';
 import { withUser } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 
 const incompleteInfoWarning = 'Please enter the incomplete fields below to complete your account.';
 
 @withUser
-
-export default class DashboardMyProfilePageContainer extends Component {
+export default class DashboardMyAccountPageContainer extends Component {
   static propTypes = {
     user: userPropType,
   };
@@ -21,9 +20,7 @@ export default class DashboardMyProfilePageContainer extends Component {
     if (showIncompleteWarning) {
       warningMessage = incompleteInfoWarning;
     }
-    return (
-      <DashboardMyProfilePage user={user} warningMessage={warningMessage} />
-    );
+    return <DashboardMyAccountPage user={user} title="My Account" warningMessage={warningMessage} />;
   }
 }
 

@@ -7,7 +7,6 @@ import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import { Heading, Block } from 'sly/components/atoms';
-import Link from 'sly/components/atoms/Link';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 
 const SubheadingWrapper = styled.div`
@@ -29,14 +28,14 @@ const StyledContainer = styled.div`
 `;
 
 const CommunityBookATourContactForm = ({
-  error, user, community, heading, subheading, onAdvisorHelpClick, handleSubmit, displayContext,
+  error, user, community, heading, handleSubmit, displayContext,
 }) => {
   return (
     <StyledContainer displayContext={displayContext}>
       <form onSubmit={handleSubmit}>
         <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
         <SubheadingWrapper>
-          <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can a Seniorly Partner Agent help?</Link></SubHeading>
+          <SubHeading size="body">Your details will remain confidential</SubHeading>
         </SubheadingWrapper>
         {!(user && user.name) && <Field
           name="name"
@@ -87,10 +86,8 @@ CommunityBookATourContactForm.propTypes = {
   community: object,
   displayContext: string,
   error: string,
-  onAdvisorHelpClick: func.isRequired,
   handleSubmit: func,
   heading: string.isRequired,
-  subheading: string,
 };
 
 export default CommunityBookATourContactForm;

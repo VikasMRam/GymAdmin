@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { reduxForm, reset } from 'redux-form';
-import { func } from 'prop-types';
+import { func, string, oneOf } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { query, withAuth, withUser } from 'sly/services/newApi';
 import { AGENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
+import { capitalize } from  'sly/services/helpers/utils';
 import matchPropType from 'sly/propTypes/match';
-import agentPropType from 'sly/propTypes/agent';
 import userPropType from 'sly/propTypes/user';
 import TalkToAgentForm from 'sly/components/organisms/TalkToAgentForm';
 import { createValidator, required, usPhone, email } from 'sly/services/validation';
@@ -36,21 +36,25 @@ const ReduxForm = reduxForm({
 
 export default class AskQuestionToAgentFormContainer extends Component {
   static propTypes = {
-    agent: agentPropType,
+    id: string.isRequired,
     user: userPropType,
     createOrUpdateUser: func.isRequired,
     postSubmit: func,
     match: matchPropType.isRequired,
     createAction: func.isRequired,
+    category: oneOf(['agent', 'community']),
+  };
+
+  static defaultProps = {
+    category: 'agent',
   };
 
   handleSubmit = (data) => {
     const {
-      agent, postSubmit, createAction, createOrUpdateUser, match,
-      user,
+      id, postSubmit, createAction, createOrUpdateUser, match,
+      user, category,
     } = this.props;
 
-    const { id } = agent;
     const { message } = data;
     let { phone, email, name } = data;
     if (user) {
@@ -73,27 +77,29 @@ export default class AskQuestionToAgentFormContainer extends Component {
         actionInfo: {
           slug: id,
           question: message,
-          entityType: 'Agent',
+          entityType: capitalize(category),
           name,
           email,
           phone,
         },
       },
-    }).then(() => createOrUpdateUser({
-      name,
-      email,
-      phone,
-    })).then(() => {
-      const event = {
-        action: 'ask_question', category: 'agent', label: id,
-      };
+    })
+      .then(() => createOrUpdateUser({
+        name,
+        email,
+        phone,
+      }, { ignoreAlreadyRegistered: true }))
+      .then(() => {
+        const event = {
+          action: 'ask_question', category, label: id,
+        };
 
-      SlyEvent.getInstance().sendEvent(event);
+        SlyEvent.getInstance().sendEvent(event);
 
-      if (postSubmit) {
-        postSubmit();
-      }
-    });
+        if (postSubmit) {
+          postSubmit();
+        }
+      });
   };
 
   render() {

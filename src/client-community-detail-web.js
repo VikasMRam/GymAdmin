@@ -24,6 +24,8 @@ import CommunityMorePicturesContainer from 'sly/containers/CommunityMorePictures
 import LazyCommunityMapContainer from 'sly/containers/LazyCommunityMapContainer';
 import PageViewActionContainer from 'sly/containers/PageViewActionContainer';
 import PageEventsContainer from 'sly/containers/PageEventsContainer';
+import AskAgentQuestionHowItWorksBannerNotificationContainer from 'sly/containers/AskAgentQuestionHowItWorksBannerNotificationContainer';
+import CommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
 import RetentionPopup from 'sly/services/retentionPopup';
 import Image from 'sly/components/atoms/Image';
 
@@ -44,6 +46,7 @@ partiallyHydrateClient(
     HowSlyWorksVideoContainer,
     CommunityAgentSectionContainer,
     AskAgentQuestionButtonContainer,
+    AskAgentQuestionHowItWorksBannerNotificationContainer,
     CommunityReviewsContainer,
     CommunityAddReviewButtonContainer,
     CommunityQuestionAnswersContainer,
@@ -51,6 +54,7 @@ partiallyHydrateClient(
     ConciergeContainer,
     CommunityMorePicturesContainer,
     LazyCommunityMapContainer,
+    CommunityDetailsPageColumnContainer,
     RetentionPopup,
     Image,
   ],

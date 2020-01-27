@@ -4,7 +4,6 @@ export const randomHexNumber = () => {
   return Math.floor(Math.random() * 16777215).toString(16);
 };
 
-
 export const copyToClipboard = (text) => {
   if (isBrowser) {
     if (navigator && navigator.clipboard) {
@@ -15,4 +14,9 @@ export const copyToClipboard = (text) => {
       alert(`Copy ${text} to clipboard unsupported!`);
     }
   }
+};
+
+export const capitalize = (s) => {
+  if (typeof s !== 'string') return '';
+  return s.charAt(0).toUpperCase() + s.slice(1);
 };

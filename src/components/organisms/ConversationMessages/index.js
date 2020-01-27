@@ -115,7 +115,7 @@ const ConversationMessages = ({
       props.participant = participant;
     }
 
-    messageComponents.push(<StyledMessage key={message.id} {...props} />);
+    messageComponents.push(<StyledMessage key={message.id} participantsById={participantsById} {...props} />);
     prevMessage = message;
   }
 
