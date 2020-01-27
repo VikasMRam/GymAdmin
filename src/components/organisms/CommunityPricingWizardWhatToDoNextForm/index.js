@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, func, number, array, bool } from 'prop-types';
+import { string, func, array } from 'prop-types';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
 
@@ -7,7 +7,6 @@ import { size } from 'sly/components/themes';
 import { Block, Box } from 'sly/components/atoms';
 import shadow from 'sly/components/helpers/shadow';
 import ReduxField from 'sly/components/organisms/ReduxField/index';
-import { formatMoney } from 'sly/services/helpers/numbers';
 
 const Wrapper = shadow(styled(Box)`
   margin: 0 auto;
@@ -31,33 +30,17 @@ const HeadingSection = styled(Block)`
   margin-bottom: ${size('spacing.small')};
 `;
 
-const PriceSection = styled(Block)`
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const Price = styled.span`
-  font-size: ${size('text.hero')};
-`;
-
 const WhatToDoNextText = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const CommunityPricingWizardWhatToDoNextForm = ({
-  handleSubmit, communityName, estimatedPrice, showEstimatePrice, listOptions, onInterestChange,
+  handleSubmit, listOptions, onInterestChange, type,
 }) => (
   <Wrapper>
     <WrapperForm onSubmit={handleSubmit}>
-      {showEstimatePrice &&
-        <>
-          <HeadingSection palette="grey" size="body">Your estimated pricing for {communityName}:</HeadingSection>
-          <PriceSection weight="bold">
-            <Price>{formatMoney(estimatedPrice)}</Price>
-            <span>/mo</span>
-          </PriceSection>
-        </>
-      }
-      <WhatToDoNextText palette="grey">Here is what you can do next:</WhatToDoNextText>
+      <HeadingSection palette="grey" size="body">Your {type} is on the way.</HeadingSection>
+      <WhatToDoNextText palette="grey">Is there anything else we can help you with?</WhatToDoNextText>
       <Field
         name="interest"
         type="buttonlist"
@@ -74,13 +57,15 @@ const CommunityPricingWizardWhatToDoNextForm = ({
 );
 
 CommunityPricingWizardWhatToDoNextForm.propTypes = {
-  communityName: string.isRequired,
-  estimatedPrice: number.isRequired,
-  showEstimatePrice: bool,
   listOptions: array.isRequired,
   handleSubmit: func.isRequired,
   onSubmit: func.isRequired,
   onInterestChange: func,
+  type: string,
+};
+
+CommunityPricingWizardWhatToDoNextForm.defaultProps = {
+  type: 'pricing',
 };
 
 export default CommunityPricingWizardWhatToDoNextForm;

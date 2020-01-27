@@ -1,4 +1,5 @@
 {
   "Community_DetailPage_How_It_Works_Banner_Notification": ["With_Banner", "Without_Banner"],
-  "Pricing_Wizard_Post_Conversion": ["Pricing_Wizard_Traditional", "Pricing_Wizard_Post_Conversion"]
+  "Pricing_Wizard_Post_Conversion": ["Pricing_Wizard_Traditional", "Pricing_Wizard_Post_Conversion"],
+  "Community_DetailPage_GDP": ["Get_Pricing_And_Availability", "Get_Help_Now"]
 }

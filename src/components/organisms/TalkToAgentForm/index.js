@@ -55,7 +55,7 @@ export default class TalkToAgentForm extends Component {
         rows="3"
         name="message"
         label={`What can ${firstName} help you with?`}
-        placeholder="Please type here whatever you need help with regarding your senior living search. Then click send and we will reply shortly."
+        placeholder="Please type here whatever you need help with regarding your senior living search. Then click send and we will reply shortly. WE DO NOT HAVE INFO ABOUT JOB OPENINGS."
         component={ReduxField}
         required
       />
@@ -63,7 +63,7 @@ export default class TalkToAgentForm extends Component {
 
     return (
       <section>
-        <StyledBlock size="title" weight="medium">{heading}</StyledBlock>
+        <StyledBlock size="subtitle">{heading}</StyledBlock>
         <form onSubmit={handleSubmit}>
           {showMessageFieldFirst && messageField}
           {hasLocation &&

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { object, func } from 'prop-types';
+import { object, func, string } from 'prop-types';
 import Helmet from 'react-helmet';
 import { Route } from 'react-router';
 import { Redirect } from 'react-router-dom';
@@ -10,7 +10,6 @@ import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { Experiment, Variant } from 'sly/services/experiments';
-import SlyEvent from 'sly/services/helpers/events';
 import {
   FullScreenWizard,
   makeBody,
@@ -61,14 +60,6 @@ const StyledCommunityInfo = styled(CommunityInfo)`
   padding-top: ${size('spacing.xxxLarge')};
 `;
 
-const eventCategory = 'PricingWizard';
-const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
-  category: eventCategory,
-  action,
-  label,
-  value,
-});
-
 const contactFormHeadingMap = {
   'schedule-tour': { heading: 'Schedule a Tour', subheading: 'We will help you schedule tours and, if you request, we can provide a Partner Agent to accompany you. This is a free service. ' },
   'talk-advisor': { heading: 'Talk to an Advisor', subheading: 'Call us at (855) 866-4515 to talk to us. We offer complete support with an Partner Agent near you.  This is a no-obligation free service. ' },
@@ -90,6 +81,12 @@ export default class PricingWizardPage extends Component {
     match: object,
     submitActionAndCreateUser: func,
     updateUuidAux: func,
+    type: string,
+    sendEvent: func,
+  };
+
+  static defaultProps = {
+    type: 'pricing',
   };
 
   state = { estimatedPrice: 0 };
@@ -106,7 +103,7 @@ export default class PricingWizardPage extends Component {
   }
 
   handleRoomTypeChange = (e, newRoomTypes) => {
-    const { community } = this.props;
+    const { community, sendEvent } = this.props;
     const { id } = community;
     this.roomTypes = newRoomTypes;
     const { roomTypes = [], careTypes = [] } = this;
@@ -114,13 +111,13 @@ export default class PricingWizardPage extends Component {
     sendEvent('roomType-changed', id, newRoomTypes.toString());
   };
   handleMoveTimelineChange = (e, moveTimeline) => {
-    const { community } = this.props;
+    const { community, sendEvent } = this.props;
     const { id } = community;
     sendEvent('moveTimeline-changed', id, moveTimeline.toString());
   };
 
   handleCareTypeChange = (e, newCareTypes) => {
-    const { community } = this.props;
+    const { community, sendEvent } = this.props;
     const { id } = community;
     this.careTypes = newCareTypes;
     const { roomTypes = [], careTypes = [] } = this;
@@ -129,7 +126,7 @@ export default class PricingWizardPage extends Component {
   };
 
   handleBudgetChange = (e, budget) => {
-    const { community } = this.props;
+    const { community, sendEvent } = this.props;
     const { id } = community;
     this.budget = budget;
     sendEvent('budget-selected', id, budget.toString());
@@ -139,7 +136,7 @@ export default class PricingWizardPage extends Component {
   handleStepChange = ({
     currentStep, data, goto, doSubmit,
   }) => {
-    const { community, userHas, submitActionAndCreateUser, updateUuidAux, match } = this.props;
+    const { community, userHas, submitActionAndCreateUser, updateUuidAux, match, sendEvent } = this.props;
     const { id } = community;
     const { interest } = data;
 
@@ -169,7 +166,7 @@ export default class PricingWizardPage extends Component {
   handleStepChangePostConversionExperiment = ({
     currentStep, data, goto,
   }) => {
-    const { community, userHas, submitActionAndCreateUser, updateUuidAux } = this.props;
+    const { community, userHas, submitActionAndCreateUser, updateUuidAux, sendEvent } = this.props;
     const { id } = community;
 
     sendEvent('step-completed', id, currentStep);
@@ -188,7 +185,7 @@ export default class PricingWizardPage extends Component {
   };
 
   handleComplete = (data, { redirectLink }) => {
-    const { redirectTo, community, updateUuidAux } = this.props;
+    const { redirectTo, community, updateUuidAux, sendEvent } = this.props;
 
     sendEvent('pricing-requested', community.id);
 
@@ -196,7 +193,7 @@ export default class PricingWizardPage extends Component {
   };
 
   handleCompletePostConversion = (data, { interest, redirectLink }) => {
-    const { redirectTo, community, updateUuidAux } = this.props;
+    const { redirectTo, community, updateUuidAux, sendEvent } = this.props;
 
     if (interest) {
       sendEvent('pricing-referal-rejected', community.id);
@@ -238,12 +235,13 @@ export default class PricingWizardPage extends Component {
   };
 
   handleHelpHover = (type) => {
+    const { sendEvent } = this.props;
     sendEvent('help-tooltip-hover', type);
   }
 
   render() {
     const {
-      community, user, uuidAux, userHas, match, redirectTo,
+      community, user, uuidAux, userHas, match, redirectTo, type, sendEvent,
     } = this.props;
 
     if (!community) {
@@ -280,7 +278,7 @@ export default class PricingWizardPage extends Component {
               {({
                   data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
               }) => {
-                let formHeading = 'See your estimated pricing in your next step. We need your information to connect you to our partner agent.';
+                let formHeading = `Thank you! Our local senior living expert will be contacting you shortly with ${type}. What is the best way to reach you?`;
                 let formSubheading = null;
                 if (data.interest) {
                   const contactFormHeadingObj = contactFormHeadingMap[data.interest];
@@ -301,6 +299,7 @@ export default class PricingWizardPage extends Component {
                           onCareTypeChange={this.handleCareTypeChange}
                           onHelpHover={this.handleHelpHover}
                           uuidAux={uuidAux}
+                          type={type}
                         />
                         <WizardStep
                           component={CommunityBookATourContactFormContainer}
@@ -320,6 +319,7 @@ export default class PricingWizardPage extends Component {
                           listOptions={compiledWhatToDoNextOptions}
                           onInterestChange={(e, interest) => sendEvent('pricing-next-interest', id, interest)}
                           onSubmit={onSubmit}
+                          type={type}
                         />
                         <WizardStep
                           component={CommunityPricingWizardExploreAffordableOptionsFormContainer}

@@ -61,9 +61,9 @@ import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/containers/Tracked
 import UnhydratedPageViewActionContainer from 'sly/containers/PageViewActionContainer';
 import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
-import GetCommunityPricingAndAvailability from 'sly/components/organisms/GetCommunityPricingAndAvailability';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
 import UnhydratedAskAgentQuestionHowItWorksBannerNotificationContainer from 'sly/containers/AskAgentQuestionHowItWorksBannerNotificationContainer';
+import UnhydratedCommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -83,6 +83,7 @@ const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { a
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 const AskAgentQuestionHowItWorksBannerNotificationContainer = withHydration(UnhydratedAskAgentQuestionHowItWorksBannerNotificationContainer);
+const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -543,7 +544,7 @@ export default class CommunityDetailPage extends Component {
               </Body>
               <Column>
                 <StickToTop>
-                  <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
+                  <CommunityDetailsPageColumnContainer community={community} />
                 </StickToTop>
               </Column>
             </TwoColumn>

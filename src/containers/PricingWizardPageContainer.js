@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 import * as immutable from 'object-path-immutable';
+import { parse } from 'query-string';
 
 import { community as communityPropType } from 'sly/propTypes/community';
 import SlyEvent from 'sly/services/helpers/events';
@@ -11,13 +12,6 @@ import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/services/newApi/constant
 import { withRedirectTo } from 'sly/services/redirectTo';
 
 const eventCategory = 'PricingWizard';
-
-const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
-  category: eventCategory,
-  action,
-  label,
-  value,
-});
 
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.communitySlug,
@@ -41,7 +35,23 @@ export default class PricingWizardPageContainer extends Component {
     createOrUpdateUser: func.isRequired,
     redirectTo: func.isRequired,
     match: object.isRequired,
+    location: object.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+
+    const { location } = this.props;
+    const { type } = parse(location.search);
+    this.type = type || 'pricing';
+  }
+
+  sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
+    category: `${eventCategory}-${this.type}`,
+    action,
+    label,
+    value,
+  });
 
   updateUuidAux = (data) => {
     const {
@@ -113,7 +123,7 @@ export default class PricingWizardPageContainer extends Component {
     }, {
       ignoreAlreadyRegistered: true,
     }).then(() => {
-      sendEvent('pricing-contact-submitted', community.id, currentStep);
+      this.sendEvent('pricing-contact-submitted', community.id, currentStep);
     }));
   };
 
@@ -143,6 +153,8 @@ export default class PricingWizardPageContainer extends Component {
         submitActionAndCreateUser={this.submitActionAndCreateUser}
         redirectTo={redirectTo}
         match={match}
+        type={this.type}
+        sendEvent={this.sendEvent}
       />
     );
   }

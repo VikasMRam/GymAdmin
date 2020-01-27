@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, func, object } from 'prop-types';
+import { string, func, object, oneOf } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -54,11 +54,12 @@ const StyledHelpBubble = styled(HelpBubble)`
 
 const CommunityPWEstimatedPricingForm = ({
   error, handleSubmit, communityName, onMoveTimelineChange, onRoomTypeChange, onCareTypeChange, onHelpHover, uuidAux,
+  type,
 }) => (
   <form name="CommunityPWEstimatedPricingForm" onSubmit={handleSubmit}>
-    <HeadingSection level="subtitle" size="subtitle">Get your Pricing and Availability for {communityName}</HeadingSection>
+    <HeadingSection level="subtitle" size="subtitle">Our senior living expert for {communityName} will provide you with {type}. Please help by answering these three questions:</HeadingSection>
     <StyledBlock size="caption">
-      What is your timeline to find a senior housing option?
+      What is your timeline to move in?
       {/*<div onMouseEnter={() => onHelpHover('room-type')}>*/}
         {/*<StyledHelpBubble>All shown room types may not be available in this community.</StyledHelpBubble>*/}
       {/*</div>*/}
@@ -126,6 +127,11 @@ CommunityPWEstimatedPricingForm.propTypes = {
   onCareTypeChange: func,
   onHelpHover: func,
   uuidAux: object,
+  type: oneOf(['pricing', 'availability']),
+};
+
+CommunityPWEstimatedPricingForm.defaultProps = {
+  type: 'pricing',
 };
 
 export default CommunityPWEstimatedPricingForm;
