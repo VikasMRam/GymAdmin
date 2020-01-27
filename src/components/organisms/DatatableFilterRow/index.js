@@ -52,6 +52,7 @@ const Row = styled(mobileOnly(Box, css`
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.small')} ${palette('slate', 'filler')}80;
   flex-wrap: wrap;
   padding: ${size('spacing.regular')};
+  padding-bottom: 0;
   > :first-child {
     order: 1;
   }
@@ -60,6 +61,9 @@ const Row = styled(mobileOnly(Box, css`
   }
   > :nth-child(n+4) {
     order: 2;
+  }
+  > [class*=Field], > [class*=Where] {
+    margin-bottom: ${size('spacing.regular')};
   }
 `, css`
   border: 0;
@@ -103,9 +107,8 @@ const Where = styled(mobileOnly('div', css`
   flex-shrink: 0;
 `;
 
-const WhereField = styled(mobileOnly(Field, css``, css`
+const WhereField = styled(Field)`
   width: 70px;
-`))`
   margin: 0 ${size('spacing.regular')} 0 0;
   flex-grow: 0;
   flex-shrink: 0;
