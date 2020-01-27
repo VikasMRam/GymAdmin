@@ -13,7 +13,6 @@ import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import pad from 'sly/components/helpers/pad';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
-
 // TODO: Copied from FamilyDetailsForm. Need to make it generic field
 const TwoColumnWrapper = styled.div`
   display: flex;
@@ -56,7 +55,7 @@ class DashboardProfileUserDetailsForm extends Component {
     }
   };
   render() {
-    const { initialValues, status } = this.props;
+    const { initialValues, status, hasCustomerRole, title } = this.props;
     const { meta } = status.uuidAux;
     const {
       lookingFor, monthlyBudget, timeToMove,
@@ -74,7 +73,7 @@ class DashboardProfileUserDetailsForm extends Component {
       ({ searchingCity } = initialValues);
     }
     return (
-      <FormSection heading="My Profile" buttonText="Save Changes" {...this.props}>
+      <FormSection heading={title} buttonText="Save Changes" {...this.props}>
         <Field
           name="name"
           label="Contact Name"
@@ -101,61 +100,64 @@ class DashboardProfileUserDetailsForm extends Component {
           component={ReduxField}
           wideWidth
         />
-        <Hr />
-        <Field
-          name="lookingFor"
-          label="Looking For"
-          type="select"
-          placeholder="Select an option"
-          component={ReduxField}
-          options={lookingForOptions}
-          wideWidth
-        >
-          {lookingForOptions}
-        </Field>
-        <Field
-          name="residentName"
-          label="Resident Name"
-          type="text"
-          placeholder="Resident Name"
-          component={ReduxField}
-          wideWidth
-        />
-        <Field
-          name="monthlyBudget"
-          label="Monthly Budget"
-          type="select"
-          placeholder="Select an option"
-          component={ReduxField}
-          wideWidth
-        >
-          {monthlyBudgetOptions}
-        </Field>
-        <Field
-          name="timeToMove"
-          label="Time to move"
-          type="select"
-          placeholder="Select an option"
-          component={ReduxField}
-          wideWidth
-        >
-          {timeToMoveOptions}
-        </Field>
-        <PaddedTwoColumnWrapper verticalCenter>
-          <StyledLabel>Searching in</StyledLabel>
-          <StyledSearchBoxContainer
-            onLocationSearch={this.handleLocationChange}
-            onTextChange={this.handleChange}
-            address={searchingCity}
+        {hasCustomerRole &&
+        <>
+          <Hr />
+          <Field
+            name="lookingFor"
+            label="Looking For"
+            type="select"
+            placeholder="Select an option"
+            component={ReduxField}
+            options={lookingForOptions}
+            wideWidth
+          >
+            {lookingForOptions}
+          </Field>
+          <Field
+            name="residentName"
+            label="Resident Name"
+            type="text"
+            placeholder="Resident Name"
+            component={ReduxField}
+            wideWidth
           />
-        </PaddedTwoColumnWrapper>
-        <Field
-          name="openToNearbyAreas"
-          label="Open to nearby area"
-          type="checkbox"
-          component={ReduxField}
-          wideWidth
-        />
+          <Field
+            name="monthlyBudget"
+            label="Monthly Budget"
+            type="select"
+            placeholder="Select an option"
+            component={ReduxField}
+            wideWidth
+          >
+            {monthlyBudgetOptions}
+          </Field>
+          <Field
+            name="timeToMove"
+            label="Time to move"
+            type="select"
+            placeholder="Select an option"
+            component={ReduxField}
+            wideWidth
+          >
+            {timeToMoveOptions}
+          </Field>
+          <PaddedTwoColumnWrapper verticalCenter>
+            <StyledLabel>Searching in</StyledLabel>
+            <StyledSearchBoxContainer
+              onLocationSearch={this.handleLocationChange}
+              onTextChange={this.handleChange}
+              address={searchingCity}
+            />
+          </PaddedTwoColumnWrapper>
+          <Field
+            name="openToNearbyAreas"
+            options={[{ label: 'Open to nearby area', value: true }]}
+            type="checkbox"
+            component={ReduxField}
+            wideWidth
+          />
+        </>}
       </FormSection>
     );
   }
@@ -165,12 +167,13 @@ DashboardProfileUserDetailsForm.propTypes = {
   handleSubmit: func.isRequired,
   pristine: bool,
   submitting: bool,
-  user: object,
+  hasCustomerRole: bool,
   error: string,
   change: func,
   onLocationChange: func,
   initialValues: object,
   status: object,
+  title: string.isRequired,
 };
 
 export default DashboardProfileUserDetailsForm;
