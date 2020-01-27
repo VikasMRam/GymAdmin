@@ -4,15 +4,16 @@ import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
-import { size, assetPath, palette } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Image, Label, Heading, Paragraph } from 'sly/components/atoms';
+import { Label, Heading, Paragraph } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import Link from 'sly/components/atoms/Link';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -23,7 +24,7 @@ const HeroWrapper = styled.div`
     height: calc(0.5 * ${size('header.home.heroImage.height')});
   }
 `;
-const StyledImage = styled(Image)`
+const StyledImage = styled(ResponsiveImage)`
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -99,7 +100,7 @@ const NearMePage = ({
     <>
       <HeaderContainer />
       <HeroWrapper>
-        <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
+        <StyledImage path="react-assets/home/cover4.jpg" alt="A Home To Love" height={320} />
         <SearchBoxWrapper>
           <StyledHeading level="hero" size="hero" palette="white">
             Find The Best Nursing Homes Near You

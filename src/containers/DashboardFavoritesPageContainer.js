@@ -4,7 +4,6 @@ import * as immutable from 'object-path-immutable';
 
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import { prefetch, query } from 'sly/services/newApi';
-import { assetPath } from 'sly/components/themes';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import SlyEvent from 'sly/services/helpers/events';
@@ -15,8 +14,6 @@ import withNotification from 'sly/controllers/withNotification';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import AddOrEditNoteForSavedCommunityContainer from 'sly/containers/AddOrEditNoteForSavedCommunityContainer';
 import DashboardFavoritesPage from 'sly/components/pages/DashboardFavoritesPage';
-
-const agentImageUrl = assetPath('images/agent-xLarge.png');
 
 @query('updateUserSave', 'updateUserSave')
 
@@ -110,7 +107,6 @@ export default class DashboardFavoritesPageContainer extends Component {
         notifyInfo,
         community,
         heading,
-        agentImageUrl,
         placeholder,
         question,
       };

@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import { string } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import { Heading, Block, Image, Link } from 'sly/components/atoms';
+import { Heading, Block, Link } from 'sly/components/atoms';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const Wrapper = styled.div`
   text-align: left;
 `;
 
-export const StyledImage = styled(Image)`
+export const StyledImage = styled(ResponsiveImage)`
   overflow: hidden;
   border-radius: ${size('spacing.small')};
   margin-bottom: ${size('spacing.xLarge')};
@@ -23,7 +24,7 @@ const MeetOthersTile = ({
   image, title, description,
 }) => (
   <Wrapper>
-    <StyledImage src={image} aspectRatio="3:2" />
+    <StyledImage path={image} aspectRatio="3:2" />
     <StyledHeading level="subtitle" size="subtitle">{title}</StyledHeading>
     <Block>{description}</Block>
     <Link href="tel:+18558664515">Call us at (855) 866-4515.</Link>

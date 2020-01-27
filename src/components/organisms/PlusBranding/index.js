@@ -2,16 +2,9 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import { size, palette, assetPath } from 'sly/components/themes';
-import { Heading, Image as UnhydratedImage, Icon, Paragraph } from 'sly/components/atoms';
+import { Heading, ResponsiveImage, Icon, Paragraph } from 'sly/components/atoms';
 import IconItem from 'sly/components/molecules/IconItem';
 import PlusBadge from 'sly/components/molecules/PlusBadge';
-import { withHydration } from 'sly/services/partialHydration';
-
-const InlineWrapper = styled.div`
-  display: inline;
-`;
-
-const Image = withHydration(UnhydratedImage, { alwaysHydrate: true, Wrapper: InlineWrapper });
 
 const TextWrapper = styled.div`
   display: block;
@@ -53,28 +46,24 @@ const ImageWrapper = styled.div`
   height:100%;
   z-index: 0;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    left:-webkit-calc(${size('plus.left.tablet')} - 50vw);
-    left:-moz-calc(${size('plus.left.tablet')} - 50vw);
     left:calc(${size('plus.left.tablet')} - 50vw);
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    left:-webkit-calc(${size('plus.left.laptop')} - 50vw);
-    left:-moz-calc(${size('plus.left.laptop')} - 50vw);
     left:calc(${size('plus.left.laptop')} - 50vw);
   }
   display:inline-block;
-  &:before {
-    content:'';
-    position:absolute;
+  &:after {
+    content: '';
+    position: absolute;
     left:0;
-    top:0;
-    width:100vw; 
-    height:100%;
-    background: linear-gradient(to right,rgba(213, 240, 240,1) 25%, rgba(213, 240, 240,0));
+    top: 0;
+    width: 100vw;
+    height: 100%;
+    background: linear-gradient(to right, #d5f0f0ff 25%, #d5f0f000);
   }
 
 `;
-const StyledImage = styled(Image)`
+const StyledImage = styled(ResponsiveImage)`
   max-width: 100%;
   height:100%;
   object-fit: cover;
@@ -87,7 +76,7 @@ const StyledImage = styled(Image)`
 
 const SeniorlyIcon = styled(Icon)`
   margin-bottom: ${size('spacing.small')};
-  display: inline-block
+  display: inline-block;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     > svg {
       margin: 0 auto;
@@ -109,7 +98,7 @@ export default class PlusBranding extends Component {
       <FullWidthSection>
         <PlusWrapper>
           <ImageWrapper>
-            <StyledImage src={assetPath('images/plus/plusbg.jpg')} alt="Seniorly Plus Home" />
+            <StyledImage path="react-assets/plus/plusbg.jpg" alt="Seniorly Plus Home" height={510} />
           </ImageWrapper>
           <TextWrapper>
             <StyledHeading>

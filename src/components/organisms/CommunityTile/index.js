@@ -17,6 +17,7 @@ import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import IconButton from 'sly/components/molecules/IconButton';
 import PlusBadge from 'sly/components/molecules/PlusBadge';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const communityDefaultImages = {
   'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
@@ -47,7 +48,7 @@ const StyledMediaGallery = styled(MediaGallery)`
   }
 `;
 
-const StyledImage = styled(borderRadius(Image))`
+const StyledImage = styled(borderRadius(ResponsiveImage))`
   img {
     border-radius: ${size('spacing.small')};
   }
@@ -123,33 +124,33 @@ const CommunityTile = ({
   canFavourite, lazyLoadImage,
 }) => {
   const {
-    name, gallery = {}, mainImage, communitySize, plusCategory,
+    name, gallery = {}, communitySize, plusCategory,
   } = community;
-  let { imageUrl } = community;
-  imageUrl = imageUrl || mainImage;
   const { images = [] } = gallery;
   const galleryImages = images.map((img, i) => ({ ...img, src: img.sd, alt: `${name} ${i + 1}` }));
   const icon = isFavourite ? 'favourite-dark' : 'favourite-empty';
   const iconPalette = isFavourite ? 'secondary' : 'white';
   const onIconClick = isFavourite ? onUnfavouriteClick : onFavouriteClick;
-  const hasImages = galleryImages.length > 0 || imageUrl;
+  const hasImages = galleryImages.length > 0;
   // one image only, don't show gallery
   if (galleryImages.length < 2) {
     noGallery = true;
   }
-  if (!imageUrl || imageUrl.indexOf('maps.googleapis.com/maps/api/streetview') > -1) {
-    /* default image */
-    let key = 'up to 20 Beds';
-    if (communitySize) {
-      key = communitySize;
-    }
-    imageUrl = communityDefaultImages[key];
+  const placeholder = communityDefaultImages[communitySize || 'up to 20 Beds'];
+  let imagePath;
+  let imageSrc;
+  if (!hasImages) {
+    imageSrc = placeholder;
+  } else {
+    imagePath = galleryImages[0].path;
   }
-  const topRightSection = canFavourite ?
-    () => <IconButton transparent icon={icon} iconSize="regular" palette={iconPalette} onClick={onIconClick} /> :
-    null;
+  const topRightSection = canFavourite
+    ? () => <IconButton transparent icon={icon} iconSize="regular" palette={iconPalette} onClick={onIconClick} />
+    : null;
 
   const CommunityInfoComponent = actionButtons.length ? PaddedCommunityInfo : CommunityInfo;
+  const mediaSizes = getKey('imageFormats.searchResults').sizes;
+  const loading = lazyLoadImage ? 'lazy' : 'auto';
 
   return (
     <MainWrapper className={className} plusCategory={plusCategory}>
@@ -159,6 +160,7 @@ const CommunityTile = ({
           <StyledMediaGallery
             communityName={name}
             images={galleryImages}
+            sizes={mediaSizes}
             topRightSection={topRightSection}
             onSlideChange={onSlideChange}
             currentSlide={currentSlide}
@@ -170,9 +172,12 @@ const CommunityTile = ({
             <ImageWrapper>
               <StyledImage
                 layout={layout}
-                src={imageUrl}
+                path={imagePath}
+                src={imageSrc}
+                placeholder={placeholder}
+                sizes={mediaSizes}
                 aspectRatio={layout === 'column' ? '3:2' : '16:9'}
-                lazy={lazyLoadImage}
+                loading={loading}
               />
               {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
             </ImageWrapper>

@@ -75,33 +75,33 @@ export const consumerCards = [
 
 export const Consumers = [
   {
-    imageUrl: 'images/how-it-works/screenshot.jpg',
+    imageUrl: 'react-assets/how-it-works/screenshot.jpg',
     heading: 'Use our powerful search platform',
     content: `We have built a best-in-class search platform that has been proven to provide the most useful results.
       Enter the city or zip code of where you are looking for housing and let the search platform do the rest.
       You will have access to all details without having to provide any personal information.`,
   },
   {
-    imageUrl: 'images/how-it-works/iphone-login.jpg',
+    imageUrl: 'react-assets/how-it-works/iphone-login.jpg',
     heading: 'Create your free, secure and personal account',
     content: `Signing in will further customize your experience by saving your previous searches and preferences.
       Oh, and we take privacy seriously. We will never share your contact information without your express consent.`,
   },
   {
-    imageUrl: 'images/how-it-works/filters.jpg',
+    imageUrl: 'react-assets/how-it-works/filters.jpg',
     heading: 'Customize your search criteria',
     content: `Use our search filters for price, care needs, room type and more to create the most personalized
       experience and results. We know from experience how vital it is for this process to be customized to your needs.`,
   },
   {
-    imageUrl: 'images/how-it-works/compare.jpg',
+    imageUrl: 'react-assets/how-it-works/compare.jpg',
     heading: 'Compare and choose the homes you’ll love',
     content: `Our results pages are built to empower you with all the information you seek to compare communities.
       If something is missing or you need more information, we are a mouse click, email (ask@seniorly.com) or phone call
       away (855-866-4515).`,
   },
   {
-    imageUrl: 'images/how-it-works/screenshot.jpg',
+    imageUrl: 'react-assets/how-it-works/screenshot.jpg',
     heading: 'Get Support and Answers from our Seniorly Partner Agents',
     content: 'Nobody should have to go it alone, trying to navigate all of the choices and challenges.  Our Seniorly Partner Agents are local experts who know all of the communities in your desired city, can personally take you on tours and serve as your advocate for all your unanswered questions.',
   },
@@ -145,37 +145,37 @@ export const FAQ = [
 export const howItWorksContents = {
   consumers: {
     badgeName: 'Families',
-    badgeImageUrl: 'images/how-it-works/discover-1.png',
+    badgeImageUrl: 'react-assets/how-it-works/discover-1.png',
     badgeText: 'Connect with customers that are qualified and motivated',
     heading: 'Find a Home to Love',
     subheading: `Follow the simple steps below to search, compare, and connect
         with the senior living community that matches your needs.`,
     contents: Consumers,
     cards: consumerCards,
-    heroImageUrl: 'images/how-it-works/hiw-consumers-1.jpg',
+    heroImageUrl: 'react-assets/how-it-works/hiw-consumers-1.jpg',
     tabText: 'For Families',
     url: '/how-it-works/consumers',
   },
   providers: {
     badgeName: 'Communities',
-    badgeImageUrl: 'images/how-it-works/discover-2.png',
+    badgeImageUrl: 'react-assets/how-it-works/discover-2.png',
     badgeText: 'Connect with customers that are qualified and motivated',
     heading: 'List Your Community',
     subheading: `Follow the simple steps below to search, compare, and connect
         with the senior living community that matches your needs.`,
     contents: Consumers,
-    heroImageUrl: 'images/how-it-works/hero.png',
+    heroImageUrl: 'react-assets/how-it-works/hero.png',
     tabText: 'For Communities',
     url: '/how-it-works/providers',
   },
   agents: {
     badgeName: 'Agents',
-    badgeImageUrl: 'images/how-it-works/discover-3.png',
+    badgeImageUrl: 'react-assets/how-it-works/discover-3.png',
     badgeText: 'Connect with families that want local experts to help with their search',
     heading: 'For Agents',
     subheading: 'Foo !== Bar',
     contents: Consumers,
-    heroImageUrl: 'images/how-it-works/hero.png',
+    heroImageUrl: 'react-assets/how-it-works/hero.png',
     tabText: 'For Agents',
     url: '/how-it-works/for-agents',
   },

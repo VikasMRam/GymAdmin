@@ -36,6 +36,7 @@ const GA_ENV = process.env.GA_ENV || 'development';
 const HOST = process.env.HOST || 'http://www.lvh.me';
 const PORT = process.env.PORT || 8000;
 const DEV_PORT = process.env.DEV_PORT || +PORT + 1 || 8001;
+const ASSETS_URL = process.env.ASSETS_URL || 'https://d354o3y6yz93dt.cloudfront.net';
 const PUBLIC_PATH = process.env.PUBLIC_PATH || (NODE_ENV === 'development' ? `${HOST}:${DEV_PORT}` : '/react-assets');
 const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
 const DOMAIN = process.env.DOMAIN || 'lvh.me';
@@ -66,6 +67,7 @@ console.info(
       NODE_ENV,
       SLY_ENV,
       GA_ENV,
+      ASSETS_URL,
       PUBLIC_PATH,
       HOST,
       PORT,
@@ -148,6 +150,7 @@ const base = group([
     'process.env.NODE_ENV': NODE_ENV,
     'process.env.SLY_ENV': SLY_ENV,
     'process.env.GA_ENV': GA_ENV,
+    'process.env.ASSETS_URL': ASSETS_URL,
     'process.env.PUBLIC_PATH': PUBLIC_PATH,
     'process.env.HOST': HOST,
     'process.env.PORT': PORT,

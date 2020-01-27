@@ -24,10 +24,7 @@ class ThumbnailScroller extends React.Component {
   static propTypes = {
     palette: PropTypes.string,
     selected: PropTypes.number,
-    thumbnails: PropTypes.arrayOf(PropTypes.shape({
-      src: PropTypes.string.isRequired,
-      alt: PropTypes.string.isRequired,
-    })),
+    thumbnails: PropTypes.array,
     onClick: PropTypes.func,
   };
 
@@ -60,11 +57,11 @@ class ThumbnailScroller extends React.Component {
     return (
       <Wrapper innerRef={(r) => { this.wrapperRef = r; }}>
         {this.props.thumbnails.map((thumbnail, i) => (
-          <li key={thumbnail.src} ref={(r) => { this.thumbnailRefs[i] = r; }}>
+          <li key={thumbnail.path} ref={(r) => { this.thumbnailRefs[i] = r; }}>
             <Thumbnail
               palette={this.props.palette}
               selected={i === this.props.selected}
-              src={thumbnail.src}
+              path={thumbnail.path}
               alt={thumbnail.alt}
               onClick={() => { if (this.props.onClick) this.props.onClick(i); }}
             />

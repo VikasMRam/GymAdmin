@@ -21,12 +21,15 @@ exports.handler = async (event) => {
   try {
     const request = await imageRequest.setup(event, process.env.BUCKET);
     const processedRequest = await imageHandler.process(request);
-    const headers = getResponseHeaders(request.contentType);
-    await imageRequest.uploadEditedImage(processedRequest, headers);
+    const cacheControl = 'public, max-age=31536000';
+    await imageRequest.uploadEditedImage(processedRequest, {
+      CacheControl: cacheControl,
+      ContentType: request.contentType,
+    });
 
     return response = {
       statusCode: 200,
-      headers,
+      headers: getResponseHeaders(request.contentType, cacheControl),
       body: processedRequest.toString('base64'),
       isBase64Encoded: true,
     };
@@ -47,17 +50,19 @@ exports.handler = async (event) => {
  * or error condition.
  * @param {boolean} isErr - has an error been thrown?
  */
-const getResponseHeaders = (contentType) => {
+const getResponseHeaders = (contentType, cacheControl) => {
   const corsEnabled = (process.env.CORS_ENABLED === 'Yes');
   const headers = {
     'Access-Control-Allow-Methods': 'GET',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, Cache-Control',
     'Access-Control-Allow-Credentials': true,
     'Content-Type': contentType,
-    'Cache-Control': 'public, max-age=31536000',
   };
   if (corsEnabled) {
     headers['Access-Control-Allow-Origin'] = process.env.CORS_ORIGIN;
+  }
+  if (cacheControl) {
+    headers['Cache-Control'] = cacheControl;
   }
   return headers;
 };

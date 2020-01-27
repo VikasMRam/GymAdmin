@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
-import { googleTagManagerId, isProd, googleAppId, version, publicPath } from 'sly/config';
+import { googleTagManagerId, isProd, googleAppId, version, publicPath, assetsUrl } from 'sly/config';
 
 const Html = ({
   linkElements, styleElements, scriptElements, state, content,
@@ -23,6 +23,9 @@ const Html = ({
           Google Platform Library
         */}
         <meta name="google-signin-client_id" content={googleAppId} />
+        <link rel="preconnect" href="https://event.seniorly.com" />
+        <link rel="preconnect" href="https://apis.google.com" />
+        <link rel="preconnect" href={assetsUrl} />
         <link rel="preload" href={`${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2`} as="font" crossOrigin="anonymous" />
         <link rel="preload" href={`${publicPath}/fonts/azo/azosans-regular-webfont.woff2`} as="font" crossOrigin="anonymous" />
         <link rel="preload" href={`${publicPath}/fonts/azo/azosans-light-webfont.woff2`} as="font" crossOrigin="anonymous" />

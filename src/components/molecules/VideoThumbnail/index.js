@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { string, func } from 'prop-types';
 
-import { Icon, Image, Block } from 'sly/components/atoms';
+import { Icon, ResponsiveImage, Block } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
   position: relative;
@@ -23,7 +23,7 @@ const CenterContent = styled.div`
   cursor: pointer;
 `;
 
-const StyledImage = styled(Image)`
+const StyledImage = styled(ResponsiveImage)`
   width: 100%;
   object-fit: cover;
   height: inherit;
@@ -33,7 +33,8 @@ const StyledImage = styled(Image)`
 // eslint-disable-next-line react/prefer-stateless-function
 export default class VideoThumbnail extends Component {
   static propTypes = {
-    src: string.isRequired,
+    path: string,
+    src: string,
     onClick: func,
     aspectRatio: string,
   };
@@ -43,7 +44,7 @@ export default class VideoThumbnail extends Component {
   };
 
   render() {
-    const { src, onClick, aspectRatio } = this.props;
+    const { src, path, onClick, aspectRatio } = this.props;
 
     return (
       <Wrapper>
@@ -57,7 +58,7 @@ export default class VideoThumbnail extends Component {
             Watch Video
           </Block>
         </CenterContent>
-        <StyledImage src={src} aspectRatio={aspectRatio} lazy={false} />
+        <StyledImage src={src} path={path} aspectRatio={aspectRatio} loading="lazy" />
       </Wrapper>
     );
   }

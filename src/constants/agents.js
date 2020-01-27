@@ -1,39 +1,37 @@
-import { assetPath } from 'sly/components/themes';
-
 export const mostSearchedRegions = [
   {
     to: '/agents/pacific-west',
-    image: assetPath('images/agents/regions/pacific-west.jpg'),
+    image: 'react-assets/agents/regions/pacific-west.jpg',
     title: 'Pacific West',
   },
   {
     to: '/agents/northeast',
-    image: assetPath('images/agents/regions/northeast.jpg'),
+    image: 'react-assets/agents/regions/northeast.jpg',
     title: 'Northeast',
   },
   {
     to: '/agents/south',
-    image: assetPath('images/agents/regions/south.jpg'),
+    image: 'react-assets/agents/regions/south.jpg',
     title: 'South',
   },
   {
     to: '/agents/midwest',
-    image: assetPath('images/agents/regions/midwest.jpg'),
+    image: 'react-assets/agents/regions/midwest.jpg',
     title: 'Midwest',
   },
   {
     to: '/agents/southeast',
-    image: assetPath('images/agents/regions/southeast.jpg'),
+    image: 'react-assets/agents/regions/southeast.jpg',
     title: 'Southeast',
   },
   {
     to: '/agents/southwest',
-    image: assetPath('images/agents/regions/southwest.jpg'),
+    image: 'react-assets/agents/regions/southwest.jpg',
     title: 'Southwest',
   },
   {
     to: '/agents/mountain-west',
-    image: assetPath('images/agents/regions/mountain-west.jpg'),
+    image: 'react-assets/agents/regions/mountain-west.jpg',
     title: 'Mountain West',
   },
 ];

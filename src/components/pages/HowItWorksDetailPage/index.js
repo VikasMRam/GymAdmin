@@ -11,6 +11,7 @@ import HowItWorksInfoTile from 'sly/components/molecules/HowItWorksInfoTile';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import { FAQ } from 'sly/services/helpers/howItWorks';
 import FAQTile from 'sly/components/molecules/FAQTile';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 // Copied from BasePageTemplate
 const FixedWidthContainer = styled.div`
@@ -41,7 +42,7 @@ const HeroWrapper = styled.div`
   }
 `;
 
-const HeroBackgroundImage = styled(Image)`
+const HeroBackgroundImage = styled(ResponsiveImage)`
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -117,7 +118,7 @@ const Header = ({ heroImageUrl, heading, subheading }) => (
   <>
     <HeaderContainer />
     <HeroWrapper>
-      <HeroBackgroundImage src={assetPath(heroImageUrl)} alt="A Home To Love" />
+      <HeroBackgroundImage path={heroImageUrl} loading="eager" alt="A Home To Love" aspectRatio={false} />
       <HeroTextWrapper>
         <FixedWidthContainer>
           <HeroHeading level="hero" size="hero" palette="white">

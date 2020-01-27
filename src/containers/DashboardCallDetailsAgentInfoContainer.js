@@ -17,7 +17,6 @@ export default class DashboardCallDetailsAgentInfoContainer extends Component {
   render() {
     const { communities, callNumber } = this.props;
 
-    console.log('Seeing Communities inside agent info',communities);
     const meta = { lookingFor: [], gender: [], timeToMove:[], monthlyBudget:[] };
     const possibleAgents = [];
 

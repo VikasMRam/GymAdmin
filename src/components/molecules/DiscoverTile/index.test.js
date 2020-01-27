@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { assetPath } from 'sly/components/themes';
-import DiscoverTile, { ImageWrapper } from 'sly/components/molecules/DiscoverTile';
+import DiscoverTile, { StyledImage } from 'sly/components/molecules/DiscoverTile';
 
 const content = {
   badgeName: 'Families',
@@ -22,6 +21,6 @@ describe('DiscoverTile', () => {
     const wrapper = wrap();
     expect(wrapper.contains(content.badgeName)).toEqual(true);
     expect(wrapper.contains(content.badgeText)).toEqual(true);
-    expect(wrapper.find(ImageWrapper).prop('src')).toEqual(assetPath(content.badgeImageUrl));
+    expect(wrapper.find(StyledImage).prop('path')).toEqual(content.badgeImageUrl);
   });
 });

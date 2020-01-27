@@ -34,6 +34,32 @@ theme.fonts = {
   quote  : 'Georgia, serif',
 };
 
+
+theme.defaultImageSources = [
+  320,
+  375,
+  416,  // our mobile
+  768,  // our tablet
+  1080, // our tablet
+  1200, // our max
+];
+
+const addImageSource = (source) => {
+  const srcs = [...theme.defaultImageSources];
+  let index = srcs.findIndex(x => x > source);
+  if (index === -1) index = srcs.length;
+  srcs.splice(index, 0, source);
+  return srcs;
+};
+
+theme.imageFormats = {
+  heroGallery: { sizes: '(max-width: 1079px) 100vw, 680px', sources: addImageSource(680) },
+  fullscreenGallery: { sizes: '(max-width: 1199px) 100vw, 1200px' },
+  thumbGallery: { sizes: '129px', sources: [[129, 86], [258, 172]] },
+  searchResults: { sizes: '(max-width: 767px) calc(100vw - 1.5rem), 270px', sources: addImageSource(270) },
+  howItWorks: { sizes: '(max-width: 549px) calc(100vw - 2rem), calc(550px - 2rem)', sources: addImageSource(550) },
+};
+
 theme.sizes = {
   // pixel measurements
   // use mobile only in special cases
@@ -47,6 +73,11 @@ theme.sizes = {
     laptop           : '1080px',
     desktop           : '1280px',
   },
+
+  // images: {
+  //   hero: { width: 1080, height: 512 },
+  //   column: { width: }
+  // },
 
   // only for tablet and wider
   layout: {
@@ -261,6 +292,7 @@ theme.sizes = {
     },
   },
 
+  // TODO: this section should be moved to imageFormats
   picture: {
     tiny: {
       width: '9.375rem',   // 150px
@@ -288,7 +320,7 @@ theme.sizes = {
     },
     ratios: {
       '16:9': '56.25%',
-      golden: '61.803398875%',
+      golden: '61.80%',
       '3:2':  '66.66%',
       '4:3' : '75%',
       '1:1' : '100%',

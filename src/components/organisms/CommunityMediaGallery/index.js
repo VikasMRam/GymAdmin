@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import { string, arrayOf, shape, bool, number, func } from 'prop-types';
+import { string, object, arrayOf, shape, bool, number, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
+import { size, palette, getKey } from 'sly/components/themes';
 import { Button, Link } from 'sly/components/atoms';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import FullscreenMediaGallery from 'sly/components/molecules/FullscreenMediaGallery';
@@ -17,15 +17,14 @@ export default class CommunityMediaGallery extends Component {
   static propTypes = {
     communityName: string.isRequired,
     images: arrayOf(shape({
-      sd: string.isRequired,
-      hd: string.isRequired,
-      thumb: string.isRequired,
-      url: string.isRequired,
+      src: string,
+      path: string,
+      formats: object,
     })),
     videos: arrayOf(shape({
       url: string.isRequired,
       name: string.isRequired,
-      thumbUrl: string.isRequired,
+      thumbPath: string.isRequired,
     })),
     city: string,
     state: string,
@@ -44,23 +43,18 @@ export default class CommunityMediaGallery extends Component {
 
   render() {
     const {
-      communityName, city, state, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
+      communityName, city, state, images, videos, websiteUrl, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
     } = this.props;
-    let { websiteUrl } = this.props;
-    const { images } = this.props;
-    this.sdGalleryImages = videos.map((vid, i) => {
-      // Important: create new object instance having src & alt as we will be modifying same object below
-      return {
-        ...vid, src: vid.thumbUrl, thumb: vid.thumbUrl, ofVideo: i, alt: `${communityName}, ${city}, ${state} ${i + 1}`,
-      };
-    });
-    this.sdGalleryImages = this.sdGalleryImages.concat(images.map((img, i) => {
-      return { ...img, src: img.sd, alt: `${communityName}, ${city}, ${state} ${this.sdGalleryImages.length + i + 1}` };
+
+    const galleryImages = images.map((image, i) => ({
+      ...image,
+      alt: `${communityName}, ${city}, ${state} ${i + 1}`,
     }));
-    this.hdGalleryImages = images.map((img, i) => {
-      return { ...img, src: img.hd, alt: `${communityName}, ${city}, ${state}  ${i + 1}` };
-    });
-    this.formattedVideos = videos.map((vid) => {
+
+    const formattedVideos = [];
+    const galleryVideos = [];
+
+    videos.forEach((vid, i) => {
       const src = [];
       if (vid.url) {
         src.push({
@@ -75,15 +69,23 @@ export default class CommunityMediaGallery extends Component {
         });
       }
 
-      return { ...vid, src, thumb: vid.thumbUrl };
+      formattedVideos.push({ ...vid, src, thumb: vid.thumbUrl });
+
+      // Important: create new object instance having src & alt as we will be modifying same object below
+      galleryVideos.push({
+        ...vid, path: galleryImages[0]?.path, ofVideo: i, alt: `${communityName}, ${city}, ${state} ${i + 1}`,
+      });
     });
+
+    const galleryItems = galleryVideos.concat(galleryImages);
+
     const topRightSection = () => (
       <Button secondary ghost transparent={false} onClick={() => onToggleFullscreenMode(false, true)}>View Photos</Button>
     );
 
-    if (websiteUrl && !websiteUrl.includes('//')) {
-      websiteUrl = `//${websiteUrl}`;
-    }
+    // if (websiteUrl && !websiteUrl.includes('//')) {
+    //   websiteUrl = `//${websiteUrl}`;
+    // }
     const bottomRightSection = () => (
       websiteUrl ?
         <BottomRightWrapper>
@@ -91,13 +93,16 @@ export default class CommunityMediaGallery extends Component {
         </BottomRightWrapper> : null
     );
 
+    const inlineMediaSizes = getKey('imageFormats.heroGallery').sizes;
+    const fullscreenMediaSizes = getKey('imageFormats.fullscreenGallery').sizes;
     return (
       <>
         <MediaGallery
-          onSlideClick={i => onToggleFullscreenMode(Object.prototype.hasOwnProperty.call(this.sdGalleryImages[i], 'ofVideo'))}
+          onSlideClick={i => onToggleFullscreenMode(!!galleryItems[i].ofVideo)}
           communityName={communityName}
-          images={this.sdGalleryImages}
+          images={galleryItems}
           topRightSection={topRightSection}
+          sizes={inlineMediaSizes}
           bottomRightSection={bottomRightSection}
           currentSlide={currentSlide}
           onSlideChange={onSlideChange}
@@ -106,9 +111,10 @@ export default class CommunityMediaGallery extends Component {
           currentSlide={currentSlide}
           isOpen={isFullscreenMode}
           communityName={communityName}
-          videos={this.formattedVideos}
-          images={this.hdGalleryImages}
-          onClose={() => onToggleFullscreenMode(Object.prototype.hasOwnProperty.call(this.sdGalleryImages[currentSlide], 'ofVideo'))}
+          sizes={fullscreenMediaSizes}
+          videos={formattedVideos}
+          images={galleryItems}
+          onClose={() => onToggleFullscreenMode(!!galleryItems[currentSlide].ofVideo)}
           ariaHideApp={ariaHideApp}
           onSlideChange={onSlideChange}
         />

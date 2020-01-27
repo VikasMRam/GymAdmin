@@ -57,7 +57,7 @@ const LegalPolicyPage = ({ match }) => {
       </Helmet>
 
       <OverlappingSectionsTemplate
-        imagePath="images/our-history/hero.jpg"
+        imagePath="react-assets/our-history/hero.jpg"
         title={title}
         subtitle="Helping Families and Individuals find the right Senior living options"
         description={description}

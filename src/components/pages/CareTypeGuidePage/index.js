@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import { array, func, object } from 'prop-types';
 
 import { host } from 'sly/config';
-import { size, assetPath, palette } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import { getBreadCrumbsForGuides } from 'sly/services/helpers/url';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Image, Label, Heading, Paragraph, Link } from 'sly/components/atoms';
+import { ResponsiveImage, Label, Heading, Paragraph, Link } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
@@ -25,7 +25,7 @@ const HeroWrapper = styled.div`
     height: calc(0.5 * ${size('header.home.heroImage.height')});
   }
 `;
-const StyledImage = styled(Image)`
+const StyledImage = styled(ResponsiveImage)`
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -90,7 +90,7 @@ const CareTypeGuidePage = ({
     <>
       <HeaderContainer />
       <HeroWrapper>
-        <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
+        <StyledImage path="react-assets/home/cover4.jpg" alt="A Home To Love" height={320} />
         <SearchBoxWrapper>
           <StyledHeading level="hero" size="hero" palette="white">
             Assisted Living City Guides

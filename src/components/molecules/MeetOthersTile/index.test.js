@@ -20,7 +20,7 @@ describe('MeetOthersTile', () => {
     const img = wrapper.find(StyledImage);
 
     expect(img).toHaveLength(1);
-    expect(img.prop('src')).toBe(image);
+    expect(img.prop('path')).toBe(image);
   });
 
   it('renders title', () => {

@@ -58,6 +58,7 @@ HeaderWithClose.propTypes = {
 // TODO: @fonz todo a proper modal from this hack; animate entry and leave;
 // FIXME: we had to uqickly introduce this because the modals were impeding agents
 // to update the Stages
+// FIXME: more than one modal are currently possible, we have to mimic the mechanism used in react-modal
 
 export default function NewModal({ children, onClose, ...props }) {
   const overlayRef = React.createRef();

@@ -61,7 +61,6 @@ export default class AskAgentQuestionContainer extends Component {
 
   openAskAgentQuestionModal = (subType) => {
     const { type, community, showModal, hideModal, notifyInfo } = this.props;
-    const agentImageUrl = assetPath('images/agent-xLarge.png');
     const toggleAskAgentQuestionModal = () => {
       this.handleToggleAskAgentQuestionModal(true, subType);
       hideModal();
@@ -104,7 +103,6 @@ export default class AskAgentQuestionContainer extends Component {
         community,
         heading,
         description,
-        agentImageUrl,
         placeholder,
         question,
       };
