@@ -104,7 +104,7 @@ const SearchBox = ({
                   {...getInputProps({ onBlur, placeholder })}
                   disabled={false}
                   layout={layout}
-                  onFocus={(e) => { loadMaps(); onTextboxFocus(e); }}
+                  onFocus={(e) => { loadMaps(); onTextboxFocus && onTextboxFocus(e); }}
                   readOnly={readOnly}
                   type="search"
                   size="large"
