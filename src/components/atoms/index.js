@@ -17,7 +17,6 @@ export Span from './Span';
 export Tag from './Tag';
 export * from './Table';
 export Thumbnail from './Thumbnail';
-export TileImage from './TileImage';
 export Map from './Map';
 export ClampedText from './ClampedText';
 export BoxChoiceTile from './BoxChoiceTile';
