@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import { getSearchParams } from 'sly/services/helpers/search';
+import { DASHBOARD_PATH } from 'sly/constants/dashboardAppPaths';
 import { createValidator, required } from 'sly/services/validation';
+import { withRedirectTo } from 'sly/services/redirectTo';
+import { withAuth } from 'sly/services/newApi';
 import PasswordResetPage from 'sly/components/pages/PasswordResetPage';
-import api from 'sly/services/newApi/apiInstance';
 
 const validate = createValidator({
   password: [required],
@@ -16,49 +19,60 @@ const ReduxForm = reduxForm({
   validate,
 })(PasswordResetPage);
 
-
-const mapStateToProps = (state, { history, match, location }) => ({
-  history,
+const mapStateToProps = (state, { match, location }) => ({
   searchParams: getSearchParams(match, location),
 });
 
 const mapDispatchToProps = {
-  resetPassword: api.resetPassword.asAction,
   clearSubmitErrors: () => clearSubmitErrors('PasswordResetForm'),
 };
 
+@withRedirectTo
+@withAuth
 @connect(mapStateToProps, mapDispatchToProps)
 
 export default class PasswordResetPageContainer extends Component {
   static propTypes = {
-    history: object,
-    resetPassword: func,
     clearSubmitErrors: func,
     searchParams: object,
+    redirectTo: func.isRequired,
+    resetPassword: func.isRequired,
   };
 
-  handleOnSubmit = (values) => {
+  handleOnSubmit = ({ password }) => {
     const {
-      resetPassword, clearSubmitErrors, searchParams, history,
+      resetPassword, clearSubmitErrors, searchParams: { token }, redirectTo,
     } = this.props;
-    const { password } = values;
-    const { token } = searchParams;
     const payload = { token, password };
 
     clearSubmitErrors();
-    return resetPassword(payload).then(() => {
-      history.push('/dashboard');
-    }).catch(({ body }) => {
-      // TODO: Need to set a proper way to handle server side errors
-      const errorMessage = Object.values(body.errors).join('. ');
-      throw new SubmissionError({ _error: errorMessage });
-    });
+    return resetPassword(payload)
+      .then(() => {
+        redirectTo(DASHBOARD_PATH);
+      }).catch(({ body }) => {
+        // TODO: Need to set a proper way to handle server side errors
+        const errorMessage = Object.values(body.errors).join('. ');
+        throw new SubmissionError({ _error: errorMessage });
+      });
+  };
+
+  handleOnClose = () => {
+    const { redirectTo } = this.props;
+
+    redirectTo('/');
   };
 
   render() {
+    const { searchParams: { token } } = this.props;
+
+    if (!token) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <ReduxForm
-        onSubmit={values => this.handleOnSubmit(values)}
+        onSubmit={this.handleOnSubmit}
+        onClose={this.handleOnClose}
         {...this.props}
       />
     );
