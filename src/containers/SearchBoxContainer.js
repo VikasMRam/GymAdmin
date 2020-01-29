@@ -118,7 +118,7 @@ class SearchBoxContainer extends Component {
         onChange={this.handleChange}
         onSelect={this.handleSelect}
         onSearchButtonClick={this.handleSearch}
-        onTextboxFocus={clearLocationOnBlur && this.handleTextboxFocus}
+        onTextboxFocus={clearLocationOnBlur ? this.handleTextboxFocus : null}
         {...props}
       />
     );
