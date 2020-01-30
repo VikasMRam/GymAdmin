@@ -56,8 +56,6 @@ export default class AskQuestionToAgentFormContainer extends Component {
       user, category, type
     } = this.props;
 
-    console.log(this.props);
-
     const { message } = data;
     let { phone, email, name } = data;
     if (user) {
