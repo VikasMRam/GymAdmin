@@ -2,7 +2,13 @@ import React, { PureComponent } from 'react';
 import { func, object, string } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { CUSTOMER_ROLE, PROVIDER_OD_ROLE, AGENT_ND_ROLE, AGENT_ADMIN_ROLE } from 'sly/constants/roles';
+import {
+  CUSTOMER_ROLE,
+  PROVIDER_OD_ROLE,
+  AGENT_ND_ROLE,
+  AGENT_ADMIN_ROLE,
+  PLATFORM_ADMIN_ROLE,
+} from 'sly/constants/roles';
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
@@ -10,7 +16,7 @@ import {
   AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_TASKS_PATH,
   AGENT_DASHBOARD_ACCOUNT_PATH,
-  AGENT_DASHBOARD_PROFILE_PATH,
+  AGENT_DASHBOARD_PROFILE_PATH, ADMIN_DASHBOARD_COMMUNITIES_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import SlyEvent from 'sly/services/helpers/events';
 import AuthContainer from 'sly/containers/AuthContainer';
@@ -101,21 +107,25 @@ const agentMenuItems = [
   },
 ];
 
+const adminMenuItems = [
+  {
+    name: 'Communities', to: generatePath(ADMIN_DASHBOARD_COMMUNITIES_PATH), section: 1, icon: 'house', onClick: ({ name }) => sendHeaderItemClickEvent(name),
+  },
+];
+
 const loggedInMenuItems = (user) => {
+  /* eslint-disable no-bitwise */
   let roleBasedItems = [];
   if (user) {
     const { roleID } = user;
-    /* eslint-disable-next-line no-bitwise */
     if (roleID & CUSTOMER_ROLE) {
       roleBasedItems = customerMenuItems;
     }
-    /* eslint-disable-next-line no-bitwise */
     if (roleID & AGENT_ND_ROLE) {
       roleBasedItems = agentMenuItems;
     }
-    /* eslint-disable-next-line no-bitwise */
-    if (roleID & AGENT_ADMIN_ROLE) {
-      roleBasedItems = agentMenuItems;
+    if (roleID & PLATFORM_ADMIN_ROLE) {
+      roleBasedItems = [...adminMenuItems, ...agentMenuItems];
     }
     roleBasedItems = [...roleBasedItems, { name: 'Log Out', section: 3, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
   } else {

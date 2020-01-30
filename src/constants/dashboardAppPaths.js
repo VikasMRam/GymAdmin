@@ -2,6 +2,7 @@ export const DASHBOARD_PATH = '/dashboard';
 
 const FAMILY_DASHBOARD_PATH = `${DASHBOARD_PATH}/family`;
 const AGENT_DASHBOARD_PATH = `${DASHBOARD_PATH}/agent`;
+const ADMIN_DASHBOARD_PATH = `${DASHBOARD_PATH}/admin`
 
 export const NEWFAMILIES = 'new';
 export const PROSPECTING = 'prospecting';
@@ -53,3 +54,5 @@ export const ADMIN_DASHBOARD_CALLS_PATH = `${AGENT_DASHBOARD_PATH}/calls`;
 export const ADMIN_DASHBOARD_CALL_DETAILS_PATH = `${ADMIN_DASHBOARD_CALLS_PATH}/:id/:tab?`;
 export const ADMIN_DASHBOARD_AGENTS_PATH = `${AGENT_DASHBOARD_PATH}/agents`;
 export const ADMIN_DASHBOARD_AGENT_DETAILS_PATH = `${ADMIN_DASHBOARD_AGENTS_PATH}/:id`;
+
+export const ADMIN_DASHBOARD_COMMUNITIES_PATH = `${ADMIN_DASHBOARD_PATH}/communities/:id?`;

@@ -15,9 +15,15 @@ import {
   ADMIN_DASHBOARD_CALLS_PATH,
   AGENT_DASHBOARD_TASKS_PATH,
   AGENT_DASHBOARD_CONTACTS_PATH,
-  ADMIN_DASHBOARD_AGENTS_PATH,
+  ADMIN_DASHBOARD_AGENTS_PATH, ADMIN_DASHBOARD_COMMUNITIES_PATH,
 } from 'sly/constants/dashboardAppPaths';
-import { CUSTOMER_ROLE, AGENT_ND_ROLE, AGENT_ADMIN_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import {
+  CUSTOMER_ROLE,
+  AGENT_ND_ROLE,
+  AGENT_ADMIN_ROLE,
+  PLATFORM_ADMIN_ROLE,
+  PROVIDER_OD_ROLE,
+} from 'sly/constants/roles';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import ModalContainer from 'sly/containers/ModalContainer';
 import DashboardMenu from 'sly/components/molecules/DashboardMenu';
@@ -33,6 +39,7 @@ const onMenuItemClick = (menuItem) => {
   SlyEvent.getInstance().sendEvent(event);
 };
 
+/* eslint-disable no-bitwise */
 const menuItems = [
   { label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick },
   { label: 'My Account', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_ACCOUNT_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick },
@@ -45,7 +52,9 @@ const menuItems = [
   { label: 'Tasks', icon: 'checkbox-fill', iconSize: 'regular', palette: 'slate', variation: 'filler', href: generatePath(AGENT_DASHBOARD_TASKS_PATH), role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
   { label: 'Calls', icon: 'phone', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
   { label: 'Agents', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_AGENTS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
+  { label: 'Communities', icon: 'house', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_COMMUNITIES_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
 ];
+/* eslint-enable no-bitwise */
 
 const Header = styled.div`
   background-color: ${palette('white.base')};
