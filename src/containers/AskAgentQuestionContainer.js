@@ -88,6 +88,7 @@ export default class AskAgentQuestionContainer extends Component {
         hasEmail: false,
         showMessageFieldFirst: true,
         postSubmit,
+        type,
       };
 
       showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
