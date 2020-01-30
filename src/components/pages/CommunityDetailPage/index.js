@@ -491,7 +491,7 @@ export default class CommunityDetailPage extends Component {
                   )}
                 <StyledHeadingBoxSection heading={`Amenities at ${name}`}>
                   <CommunityAmenities community={community} />
-                  <StyledAskAgentButton type="services">Ask About Amenities</StyledAskAgentButton>
+                  <StyledAskAgentButton type="amenities">Ask About Amenities</StyledAskAgentButton>
                 </StyledHeadingBoxSection>
                 {sortedEstimatedPrice.length > 0 && (
                   <StyledHeadingBoxSection heading={`Compare Costs to Nearby ${typeOfCare} Communities`}>
