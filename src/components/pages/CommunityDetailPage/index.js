@@ -16,7 +16,7 @@ import {
 } from 'sly/services/helpers/pricing';
 import pad from 'sly/components/helpers/pad';
 import { withHydration } from 'sly/services/partialHydration';
-import { Button, Paragraph } from 'sly/components/atoms';
+import { Button, Paragraph, Hr, Block, Link } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';
 import {
@@ -42,6 +42,7 @@ import UnhydratedOfferNotification from 'sly/components/molecules/OfferNotificat
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
 import IconItem from 'sly/components/molecules/IconItem';
+import IconButton from 'sly/components/molecules/IconButton';
 import UnhydratedGetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
 import UnhydratedHowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
@@ -154,6 +155,38 @@ const StyledAskAgentButton = styled(AskAgentQuestionButtonContainer)`
 const StickToTop = styled.div`
   position: sticky;
   top: 24px;
+`;
+
+const StyledIconButton = styled(IconButton)`
+  font-weight: bold;
+  margin-bottom: ${size('spacing.large')};
+`;
+
+const StyledHr = styled(Hr)`
+  margin-top: ${size('spacing.regular')};;
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
+const TextBlock = styled(Block)`
+  font-weight: bold;
+  margin-bottom: ${size('spacing.large')};
+  text-align: center;
+`;
+
+const CTAWrapper = styled.div`
+  text-align: center;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: auto auto;
+`;
+
+const CTAButton = styled(AskAgentQuestionButtonContainer)`
+`;
+
+const CTABlock = styled(Block)`
+  display: inline-block;
+  padding-left: ${size('spacing.regular')};
+  line-height: ${size('element.regular')};
 `;
 
 const Header = makeHeader();
@@ -538,6 +571,33 @@ export default class CommunityDetailPage extends Component {
                         Communities In {address.city}
                       </Button>
                     </BackToSearch>
+                  </StyledHeadingBoxSection>
+                )}
+                {rgsAux.rgsInfo && rgsAux.rgsInfo.resourceLinks && rgsAux.rgsInfo.resourceLinks.length > 0 && (
+                  <StyledHeadingBoxSection
+                    heading={`Helpful ${typeOfCare} Resources`}
+                  >
+                    {rgsAux.rgsInfo.resourceLinks.map(item => (
+                      <StyledIconButton to={item.to}
+                                        icon="chevron"
+                                        right
+                                        fullWidth
+                                        ghost
+                                        transparent
+                                        borderPalette="slate"
+                                        rotate={-1}
+                      >{item.title}
+                      </StyledIconButton>)
+                    )}
+
+                    <StyledHr />
+                    <TextBlock size="body">Didn't find what you are looking for? Our Senior Living Experts can help.</TextBlock>
+                    <CTAWrapper>
+                      <CTAButton type="resources">Ask a Question</CTAButton>
+                      <CTABlock>or call our team at <Link href="tel:+18558664515">(855) 866-4515</Link></CTABlock>
+                    </CTAWrapper>
+
+
                   </StyledHeadingBoxSection>
                 )}
                 <CommunityStickyFooter isAlreadyPricingRequested={isAlreadyPricingRequested} />

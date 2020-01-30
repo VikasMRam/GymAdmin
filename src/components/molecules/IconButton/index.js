@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, bool, node } from 'prop-types';
+import { string, bool, node, number } from 'prop-types';
 import styled, { css, keyframes } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -14,6 +14,10 @@ const fadeIn = keyframes`
 `;
 
 const StyledButton = styled(({ noPadding, padRight, ...props }) => <Button {...props} />)`
+  ${ifProp('fullWidth', css`
+    width: 100%;
+    justify-content: left;
+    position: relative;`)}
   ${ifProp('noPadding', css`padding: 0;`)}
   ${ifProp(
     'collapsed',
@@ -41,7 +45,7 @@ const StyledButton = styled(({ noPadding, padRight, ...props }) => <Button {...p
   )};
 `;
 
-const StyledIcon = styled(({ padRight, ...props }) => <Icon {...props} />)`
+const StyledIcon = styled(({ padRight, fullWidth, ...props }) => <Icon {...props} />)`
   margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
   margin-top: -1px;
   margin-bottom: -1px;
@@ -50,6 +54,10 @@ const StyledIcon = styled(({ padRight, ...props }) => <Icon {...props} />)`
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
     }
+  `)}
+  ${ifProp('fullWidth', css`
+    position: absolute;
+    right: 0;
   `)}
 `;
 
@@ -65,7 +73,7 @@ const Text = styled.span`
 `;
 
 const IconButton = ({
-  icon, iconSize, transparent, fill, children, hideTextInMobile, iconPalette, right, ...props
+  icon, iconSize, transparent, fill, children, hideTextInMobile, iconPalette, right, fullWidth, rotate, ...props
 }) => {
   const { palette } = props;
   const iconElement = (
@@ -73,9 +81,11 @@ const IconButton = ({
       icon={icon}
       size={iconSize}
       palette={transparent ? palette : iconPalette}
-      padRight={!!children && !right}
+      padRight={(!!children && !right) || fullWidth}
       className="icon"
       hideTextInMobile={hideTextInMobile}
+      fullWidth={fullWidth}
+      rotate={rotate}
     />
   );
 
@@ -84,6 +94,7 @@ const IconButton = ({
       transparent={transparent}
       padRight={!!children && !right}
       noPadding={transparent && !children}
+      fullWidth={fullWidth}
       {...props}
     >
       {right || iconElement}
@@ -98,12 +109,15 @@ IconButton.propTypes = {
   icon: string.isRequired,
   iconSize: string,
   palette: palettePropType,
+  borderPalette: palettePropType,
   iconPalette: palettePropType,
   transparent: bool,
   collapsed: bool,
   right: bool,
   children: node,
   hideTextInMobile: bool,
+  fullWidth: bool,
+  rotate: number,
 };
 
 IconButton.defaultProps = {
