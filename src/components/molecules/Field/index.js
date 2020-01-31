@@ -313,6 +313,7 @@ Field.propTypes = {
     'hidden',
     'date',
     'locationSearch',
+    'daterange',
   ]),
   placeholder: string,
   labelRight: node,
