@@ -16,9 +16,7 @@ import CommunityRowCard from 'sly/components/organisms/CommunityRowCard';
 
 const TABLE_HEADINGS = [
   { text: 'Name' },
-  { text: 'Display Name' },
   { text: 'Address' },
-  { text: 'Status' },
 ];
 
 const Section = styled.section`

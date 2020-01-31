@@ -48,11 +48,11 @@ const menuItems = [
   { label: 'My Profile', icon: 'settings', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_PROFILE_PATH, role: AGENT_ADMIN_ROLE, onClick: onMenuItemClick },
   { label: 'My Contacts', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_CONTACTS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
   // { label: 'Messages_', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_MESSAGES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick },
+  { label: 'Communities', icon: 'house', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_COMMUNITIES_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
   { label: 'Messages', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_MESSAGES_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
   { label: 'Tasks', icon: 'checkbox-fill', iconSize: 'regular', palette: 'slate', variation: 'filler', href: generatePath(AGENT_DASHBOARD_TASKS_PATH), role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
   { label: 'Calls', icon: 'phone', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
   { label: 'Agents', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_AGENTS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
-  { label: 'Communities', icon: 'house', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_COMMUNITIES_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
 ];
 /* eslint-enable no-bitwise */
 

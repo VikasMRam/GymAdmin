@@ -34,7 +34,9 @@ import {
   ADMIN_DASHBOARD_CALL_DETAILS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
   AGENT_DASHBOARD_ACCOUNT_PATH,
   ADMIN_DASHBOARD_AGENTS_PATH,
-  ADMIN_DASHBOARD_AGENT_DETAILS_PATH, ADMIN_DASHBOARD_COMMUNITIES_PATH,
+  ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
+  ADMIN_DASHBOARD_COMMUNITIES_PATH,
+  ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import careTypes from 'sly/constants/careTypes';
 import PageEventsContainer from 'sly/containers/PageEventsContainer';
@@ -73,8 +75,9 @@ const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkNa
 const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
 const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/components/pages/DashboardAgentTasksPage'));
 const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/components/pages/DashboardAgentContactsPage'));
-const DashboardAgentsIndexPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndexPage" */ 'sly/containers/DashboardAgentsIndexPageContainer'));
-const DashboardCommunitiesIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunitiesIndexPage" */ 'sly/containers/DashboardCommunitiesIndexPageContainer'));
+const DashboardAgentsIndexPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndex" */ 'sly/containers/DashboardAgentsIndexPageContainer'));
+const DashboardCommunitiesIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunitiesIndex" */ 'sly/containers/DashboardCommunitiesIndexPageContainer'));
+const DashboardCommunitiesDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunitiesDetail" */ 'sly/containers/DashboardCommunitiesDetailsPageContainer'));
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -184,9 +187,12 @@ const routes = [
     exact: true,
   },
   {
+    path: ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH,
+    component: DashboardCommunitiesDetailPageContainer,
+  },
+  {
     path: ADMIN_DASHBOARD_COMMUNITIES_PATH,
     component: DashboardCommunitiesIndexPageContainer,
-    exact: true,
   },
   {
     path: `/:toc(${careTypes.join('|')})/:state/:city`,

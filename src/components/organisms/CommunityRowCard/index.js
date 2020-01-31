@@ -11,8 +11,7 @@ import borderRadius from 'sly/components/helpers/borderRadius';
 import { Link, ClampedText } from 'sly/components/atoms';
 import { Td, Tr } from 'sly/components/atoms/Table';
 import { buildAddressDisplay } from 'sly/services/helpers/communityReferral';
-// import { AGENT_STATUS_NAME_MAP } from 'sly/constants/communities';
-import { COMMUNITY_DASHBOARD_AGENT_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
+import { ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH } from 'sly/constants/dashboardAppPaths';
 
 const Wrapper = mobileOnly(borderRadius(pad(Tr, 'large'), 'small'), css`
   display: flex;
@@ -57,40 +56,21 @@ const StyledTd = styled(Td)`
   }
 `;
 
-const DisplayNameCell = pad(mobileOnly(StyledTd, css`
-  ${twoColumnCss};
-  order: 2;
-`), 'regular');
-
 const AddressCell = pad(mobileOnly(StyledTd, css`
   ${twoColumnCss};
   order: 3;
 `), 'regular');
 
-const StatusCell = pad(mobileOnly(StyledTd, css`
-  ${twoColumnCss};
-  order: 4;
-`), 'regular');
-
 const CommunityRowCard = ({ community, onCommunityClick }) => {
-  const { id, propInfo, status } = community;
-  const { displayName } = propInfo;
-  const communityDetailsPath = generatePath(COMMUNITY_DASHBOARD_AGENT_DETAILS_PATH, { id });
+  const { id } = community;
+  const communityDetailsPath = generatePath(ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH, { id });
   return (
     <Wrapper>
       <NameCell community={community} to={communityDetailsPath} onClick={() => onCommunityClick(community)} />
-      <DisplayNameCell>
-        <span>Display Name</span>
-        <span>{displayName}</span>
-      </DisplayNameCell>
       <AddressCell>
         <span>Address</span>
         <span>{buildAddressDisplay(community)}</span>
       </AddressCell>
-      <StatusCell>
-        <span>Status</span>
-        <span>xxxx</span>
-      </StatusCell>
     </Wrapper>
   );
 };
