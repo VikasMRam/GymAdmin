@@ -34,7 +34,7 @@ export default class DashboardCommunitiesIndexSectionContainer extends Component
 
   render() {
     const { communities, status, match, location, datatable, notifyInfo, notifyError, ...props } = this.props;
-    const { error, hasFinished } = status.communities;
+    const { error, meta, hasFinished } = status.communities;
 
     if (error) {
       throw new Error(JSON.stringify(error));
@@ -46,6 +46,7 @@ export default class DashboardCommunitiesIndexSectionContainer extends Component
         isPageLoading={!hasFinished || !datatable.hasFinished}
         datatable={datatable}
         communities={communities}
+        meta={meta || {}}
         pagination={getDetailedPaginationData(status.communities, 'communities')}
       />
     );

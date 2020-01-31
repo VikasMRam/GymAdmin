@@ -109,7 +109,6 @@ export default class DashboardCommunitiesIndexSection extends Component {
     const StatusBlock = noBorder ? StyledFamiliesCountStatusBlock : FamiliesCountStatusBlock;
     const modelConfig = { name: 'Community', defaultSearchField: 'name' };
 
-    console.log(datatable);
     return (
       <>
         <TableHeaderButtonComponent
