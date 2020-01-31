@@ -57,7 +57,9 @@ const CommunityPWEstimatedPricingForm = ({
   type,
 }) => (
   <form name="CommunityPWEstimatedPricingForm" onSubmit={handleSubmit}>
-    <HeadingSection level="subtitle" size="subtitle">Our senior living expert for {communityName} will provide you with {type}. Please help by answering these three questions:</HeadingSection>
+    <HeadingSection level="subtitle" size="subtitle">
+      Our Local Senior Living Expert will provide you {type} for {communityName}. Please help by answering these three questions:
+    </HeadingSection>
     <StyledBlock size="caption">
       What is your timeline to move in?
       {/*<div onMouseEnter={() => onHelpHover('room-type')}>*/}

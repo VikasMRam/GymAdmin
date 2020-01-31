@@ -43,7 +43,7 @@ export default class GetHelpNowContainer extends Component {
     } else if (what === 'other') {
       askAgent('other');
     } else if (what === 'how-do-i-pay-for-senior-living') {
-      redirectTo('/resources/articles/how-to-pay-for-senior-housing');
+      redirectTo(`/resources/articles/how-to-pay-for-senior-housing?utm_campaign=get_help_now&utm_source=${communitySlug}`);
     }
   };
 
