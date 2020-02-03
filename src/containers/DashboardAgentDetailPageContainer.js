@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { object, shape } from 'prop-types';
 
-import DashboardAgentProfilePage from 'sly/components/pages/DashboardAgentProfilePage';
+import DashboardAgentDetailPage from 'sly/components/pages/DashboardAgentDetailPage';
 import { withUser, prefetch } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 import { adminAgentPropType } from 'sly/propTypes/agent';
-
+import { AGENT_DETAILS } from 'sly/constants/dashboardAppPaths';
 @withUser
 @prefetch('agent', 'getAgent', (req, { match }) => {
   const agentId = match.params.id;
@@ -19,14 +19,17 @@ export default class DashboardAgentDetailPageContainer extends Component {
       user: object,
       agents: object,
     }),
+    location: object,
+    match: object,
   };
 
   render() {
-    const { user, agent, status } = this.props;
+    const { user, agent, status, location, match } = this.props;
     const { hasFinished: agentHasFinished, result: rawAgent  } = status.agent;
     const { hasFinished: userHasFinished } = status.user;
     const isLoading = !(userHasFinished && agentHasFinished);
-    return <DashboardAgentProfilePage user={user} agent={agent} rawAgent={rawAgent} isLoading={isLoading} title="My Profile" />;
+    const currentTab = match.params.tab || AGENT_DETAILS;
+    return <DashboardAgentDetailPage user={user} agent={agent} rawAgent={rawAgent} isLoading={isLoading} currentTab={currentTab} location={location} />;
   }
 }
 

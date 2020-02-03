@@ -92,7 +92,10 @@ export default class PartnerAgentProfileFormContainer extends Component {
       if (serviceArea) {
         ({ zipcodesServed } = serviceArea);
       }
-      const vacation = [new Date(vacationStart), new Date(vacationEnd)];
+      let vacation = null;
+      if (vacationStart && vacationEnd) {
+        vacation = [new Date(vacationStart), new Date(vacationEnd)];
+      }
       const initialValues = { bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation, adminRegion, zipcodesServed, status, adminNotes, slyScore };
       const isSlyAdmin = userIs(user, PLATFORM_ADMIN_ROLE);
       return (

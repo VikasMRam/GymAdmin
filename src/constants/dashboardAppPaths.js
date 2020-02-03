@@ -48,8 +48,10 @@ export const COMMUNITIES = 'communities';
 export const PARTNER_AGENTS = 'partner-agents';
 export const TASKS = 'tasks';
 export const MESSAGES = 'messages';
+export const AGENT_DETAILS = 'agent-details';
+export const CONTACTS = 'contacts';
 
 export const ADMIN_DASHBOARD_CALLS_PATH = `${AGENT_DASHBOARD_PATH}/calls`;
 export const ADMIN_DASHBOARD_CALL_DETAILS_PATH = `${ADMIN_DASHBOARD_CALLS_PATH}/:id/:tab?`;
 export const ADMIN_DASHBOARD_AGENTS_PATH = `${AGENT_DASHBOARD_PATH}/agents`;
-export const ADMIN_DASHBOARD_AGENT_DETAILS_PATH = `${ADMIN_DASHBOARD_AGENTS_PATH}/:id`;
+export const ADMIN_DASHBOARD_AGENT_DETAILS_PATH = `${ADMIN_DASHBOARD_AGENTS_PATH}/:id/:tab?`;
