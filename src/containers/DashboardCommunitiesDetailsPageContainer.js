@@ -8,7 +8,7 @@ import conversationPropType from 'sly/propTypes/conversation/conversation';
 import communityPropType from 'sly/propTypes/community';
 import notePropType from 'sly/propTypes/note';
 import {
-  AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
+  ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH,
   SUMMARY,
   MESSAGES, ACTIVITY,
 } from 'sly/constants/dashboardAppPaths';
@@ -60,13 +60,6 @@ export default class DashboardCommunitiesDetailsPageContainer extends Component 
       .then(data => this.setState({ notes: data }));
   };
 
-  goToMessagesTab = () => {
-    const { history, community } = this.props;
-    const { id } = community;
-    const path = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: MESSAGES });
-    history.push(path);
-  };
-
   render() {
     const {
       onRejectSuccess, onAddNote, onEditNote,
@@ -84,7 +77,7 @@ export default class DashboardCommunitiesDetailsPageContainer extends Component 
 
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && community && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
-      const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, {
+      const activityPath = generatePath(ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH, {
         id: community.id,
         tab: ACTIVITY,
       });

@@ -50,3 +50,5 @@ export const community = shape({
   webViewInfo,
   propRatings,
 });
+
+export default community;
