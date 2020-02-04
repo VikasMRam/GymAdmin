@@ -112,6 +112,7 @@ export default class DashboardAgentContactsSection extends Component {
     match: object,
     history: object,
     redirectTo: func.isRequired,
+    noBorder: bool,
   };
 
   handleAddContactClick = () => {
@@ -122,7 +123,7 @@ export default class DashboardAgentContactsSection extends Component {
     });
   };
 
-  handleContactClick = (contact) => {
+  handleContactClick = () => {
     SlyEvent.getInstance().sendEvent({
       category: 'AgentDashboardContacts',
       action: 'click',
@@ -203,6 +204,7 @@ export default class DashboardAgentContactsSection extends Component {
               {pagination.text}
             </StyledFamiliesCountStatusBlock>
         )}
+        {/* For this to work, the route must not have exact true in App.js */}
         {!isPageLoading && (
           <Route path={`${match.url}/edit/:contactId`}>
             {({ match: routeMatch }) => {

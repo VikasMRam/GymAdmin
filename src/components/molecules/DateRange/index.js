@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 export default class DateRange extends Component {
   static propTypes = {
     onChange: func.isRequired,
-    size: string.isRequired,
+    size: string,
     value: array,
   };
 

@@ -20,6 +20,34 @@ storiesOf('Molecules|IconButton', module)
       Hello
     </IconButton>
   ))
+  .add('with icon on right full width', () => (
+    <IconButton icon="share" right fullWidth>
+      Hello
+    </IconButton>
+  ))
+  .add('with icon on right full width ghost', () => (
+    <IconButton
+      icon="share"
+      right
+      fullWidth
+      ghost
+      transparent
+    >
+      Hello
+    </IconButton>
+  ))
+  .add('with icon on right full width border color', () => (
+    <IconButton
+      icon="share"
+      right
+      fullWidth
+      ghost
+      transparent
+      borderPalette="slate"
+    >
+      Hello
+    </IconButton>
+  ))
   .add('without text', () => <IconButton icon="share" />)
   .add('collapsed', () => (
     <IconButton icon="share" collapsed>

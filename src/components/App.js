@@ -180,7 +180,6 @@ const routes = [
   {
     path: ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
     component: DashboardAgentDetailPageContainer,
-    exact: true,
   },
   {
     path: `/:toc(${careTypes.join('|')})/:state/:city`,

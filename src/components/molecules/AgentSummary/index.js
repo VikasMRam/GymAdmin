@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, string } from 'prop-types';
+import { func, string, bool } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -104,7 +104,7 @@ const AskQuestionPhoneSection = styled.div`
   }
 `;
 const AgentSummary = ({
-  agent, onButtonClick, onPhoneClick, buttonHref,
+  agent, onButtonClick, onPhoneClick, buttonHref, showAskQuestionButton,
 }) => {
   const { info, aggregateRating } = agent;
   const {
@@ -156,19 +156,21 @@ const AgentSummary = ({
             <CollapsibleBlock>{citiesServed.join(', ')}</CollapsibleBlock>
           </AgentsCitiesSection>
         }
-        <AskQuestionPhoneSection>
-          <AskQuestionButton onClick={onButtonClick} href={buttonHref}>Ask a Question</AskQuestionButton>
-          {slyPhone &&
-            <PhoneSection>
-              <Icon icon="phone" size="regular" palette="primary" />
-              <Link href={`tel:${slyPhone}`} onClick={onPhoneClick}>
-                <Span size="subtitle" weight="medium" palette="primary">
-                  {phoneFormatter(slyPhone, true)}
-                </Span>
-              </Link>
-            </PhoneSection>
-          }
-        </AskQuestionPhoneSection>
+        {showAskQuestionButton &&
+          <AskQuestionPhoneSection>
+            <AskQuestionButton onClick={onButtonClick} href={buttonHref}>Ask a Question</AskQuestionButton>
+            {slyPhone &&
+              <PhoneSection>
+                <Icon icon="phone" size="regular" palette="primary" />
+                <Link href={`tel:${slyPhone}`} onClick={onPhoneClick}>
+                  <Span size="subtitle" weight="medium" palette="primary">
+                    {phoneFormatter(slyPhone, true)}
+                  </Span>
+                </Link>
+              </PhoneSection>
+            }
+          </AskQuestionPhoneSection>
+        }
       </TextSection>
     </Wrapper>
   );
@@ -179,10 +181,12 @@ AgentSummary.propTypes = {
   onButtonClick: func,
   buttonHref: string,
   onPhoneClick: func,
+  showAskQuestionButton: bool,
 };
 
 AgentSummary.defaultProps = {
   citiesServed: [],
+  showAskQuestionButton: true,
 };
 
 export default AgentSummary;
