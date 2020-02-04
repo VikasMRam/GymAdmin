@@ -9,7 +9,7 @@ import { createMemoizedRequestInfoSelector } from 'sly/services/newApi';
 const getMemoizedRequestInfo = createMemoizedRequestInfoSelector();
 const getUser = state => getMemoizedRequestInfo(state, { call: 'getUser', args: { id: 'me' } });
 
-export function* authenticate(reason) {
+export function* authenticate(reason, options) {
   // check if there is an user
   const user = yield select(getUser);
   if (user.status === 200) {
@@ -20,15 +20,15 @@ export function* authenticate(reason) {
   }
 
   // otherwise start the login process
-  yield put(actions.authenticate(reason));
+  yield put(actions.authenticate(reason, options));
   return yield race({
     authenticated: take(actions.AUTHENTICATE_SUCCESS),
     cancel: take(actions.AUTHENTICATE_CANCEL),
   });
 }
 
-export function* ensureAuthenticated(api, { reason, action }, { thunk }) {
-  const { authenticated, cancel } = yield call(authenticate, reason);
+export function* ensureAuthenticated(api, { reason, action, options }, { thunk }) {
+  const { authenticated, cancel } = yield call(authenticate, reason, options);
   if (authenticated) {
     try {
       let result;

@@ -86,7 +86,7 @@ export default function withAuth(InnerComponent) {
           .catch((e) => {
             const alreadyExists = e.status && e.status === 409;
             if (ignoreAlreadyRegistered && alreadyExists) {
-              return Promise.resolve();
+              return Promise.resolve({ alreadyExists });
             }
             return Promise.reject(e);
           });

@@ -17,4 +17,11 @@ storiesOf('Organisms|OtpLoginForm', module)
       onResendCodeClick={action('onResendCodeClick clicked')}
       emailOrPhone="test@test.com"
     />
+  ))
+  .add('with phone', () => (
+    <OtpLoginFormContainer
+      handleSubmit={withPreventDefault(action('form submitted'))}
+      onResendCodeClick={action('onResendCodeClick clicked')}
+      emailOrPhone="12345678901"
+    />
   ));

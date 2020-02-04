@@ -2,6 +2,8 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
+import { email } from 'sly/services/validation';
+import { phoneFormatter } from 'sly/services/helpers/phone';
 import pad from 'sly/components/helpers/pad';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -34,7 +36,7 @@ const OtpLoginForm = ({
   handleSubmit, submitting, invalid, error, emailOrPhone, onResendCodeClick,
 }) => (
   <form onSubmit={handleSubmit}>
-    <StyledHeading size="subtitle">Enter the code sent to {emailOrPhone}</StyledHeading>
+    <StyledHeading size="subtitle">Enter the code sent to {!email(emailOrPhone) ? emailOrPhone : phoneFormatter(emailOrPhone, true)}</StyledHeading>
     <Field
       name="code"
       label="Code"

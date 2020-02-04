@@ -35,8 +35,8 @@ export default class CreatePasswordFormContainer extends Component {
 
   handleSubmit = ({ password }) => {
     const { setPassword, notifyInfo, user, onSubmit } = this.props;
-    const { email } = user;
-    const payload = { password, email };
+    const { email, phoneNumber } = user;
+    const payload = { password, email, phone_number: phoneNumber };
 
     return setPassword(payload)
       .catch((error) => {
