@@ -40,6 +40,7 @@ import {
 import DashboardCommunitySummary from 'sly/components/organisms/DashboardCommunitySummary';
 import Heading from 'sly/components/atoms/Heading';
 import DashboardCommunityNameAndStatus from 'sly/components/organisms/DashboardCommunityNameAndStatus';
+import DashboardCommunityProfile from 'sly/components/organisms/DashboardCommunityProfile';
 
 const BackLinkWrapper = pad(styled.div`
   display: flex;
@@ -102,15 +103,16 @@ export default class DashboardCommunitiesDetailsPage extends Component {
 
     const pathFor = tab => generatePath(ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH, { id, tab });
 
-    return Object.entries(tabs).map(([label, tab]) => {
-      const TabComponent = tab === SUMMARY ? MobileTab : Tab;
-      const path = tab === SUMMARY ? pathFor() : pathFor(tab);
-      return (
-        <TabComponent id={tab} key={tab} to={path} onClick={clickEventHandler('fdetails-tab', label)}>
-          {label}
-        </TabComponent>
-      );
-    });
+    return Object.entries(tabs)
+      .map(([label, tab]) => {
+        const TabComponent = tab === SUMMARY ? MobileTab : Tab;
+        const path = tab === SUMMARY ? pathFor() : pathFor(tab);
+        return (
+          <TabComponent id={tab} key={tab} to={path} onClick={clickEventHandler('fdetails-tab', label)}>
+            {label}
+          </TabComponent>
+        );
+      });
   };
 
   render() {
@@ -172,7 +174,7 @@ export default class DashboardCommunitiesDetailsPage extends Component {
           </Tabs>
 
           {currentTab === PROFILE && (
-            <>Profile section</>
+            <DashboardCommunityProfile community={community} />
           )}
         </Right>
 
