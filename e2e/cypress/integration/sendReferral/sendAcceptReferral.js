@@ -32,24 +32,24 @@ describe('Sending Referral to Agent', () => {
 
 
 
-//     it('Creating Lead - Lead Conversion on Get Pricing flow', () => {
-//         const communitySlug = TEST_COMMUNITY
-//         cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
-//         waitForHydration(cy.get('button[kind*="jumbo"]').contains('Get Pricing')).click();
+    it('Creating Lead - Lead Conversion on Get Pricing flow', () => {
+        const communitySlug = TEST_COMMUNITY
+        cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
+        waitForHydration(cy.get('button[kind*="jumbo"]').contains('Get Pricing')).click();
 
-//         waitForHydration(cy.get('div').contains('1 - 3 months')).click();
-//         waitForHydration(cy.get('div').contains('Medication management')).click();
-//         waitForHydration(cy.get('div').contains(/^No$/)).click();
+        waitForHydration(cy.get('div').contains('1 - 3 months')).click();
+        waitForHydration(cy.get('div').contains('Medication management')).click();
+        waitForHydration(cy.get('div').contains(/^No$/)).click();
 
-//         waitForHydration(cy.get('button[kind*="jumbo"]').contains('Continue')).click();
+        waitForHydration(cy.get('button[kind*="jumbo"]').contains('Continue')).click();
 
-//         waitForHydration(cy.get('form input[name="name"]')).type('Julene Test Lead');
-//         waitForHydration(cy.get('form input[name="phone"]')).type('4155432123');
+        waitForHydration(cy.get('form input[name="name"]')).type('Julene Test Lead');
+        waitForHydration(cy.get('form input[name="phone"]')).type('4155432123');
 
-//         waitForHydration(cy.get('button[kind*="jumbo"]').contains('Continue')).click();
-//         cy.wait(1000);
+        waitForHydration(cy.get('button[kind*="jumbo"]').contains('Continue')).click();
+        cy.wait(1000);
 
-//     });
+    });
 
 //     it('Logging in to Admin Account', () => {
 //         cy.visit('/dashboard/agent/my-families/new');
