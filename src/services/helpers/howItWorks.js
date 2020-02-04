@@ -75,38 +75,38 @@ export const consumerCards = [
 
 export const Consumers = [
   {
-    imageUrl: 'react-assets/how-it-works/screenshot.jpg',
+    imagePath: 'react-assets/how-it-works/screenshot.jpg',
     heading: 'Use our powerful search platform',
     content: `We have built a best-in-class search platform that has been proven to provide the most useful results.
       Enter the city or zip code of where you are looking for housing and let the search platform do the rest.
       You will have access to all details without having to provide any personal information.`,
   },
   {
-    imageUrl: 'react-assets/how-it-works/iphone-login.jpg',
+    imagePath: 'react-assets/how-it-works/iphone-login.jpg',
     heading: 'Create your free, secure and personal account',
     content: `Signing in will further customize your experience by saving your previous searches and preferences.
       Oh, and we take privacy seriously. We will never share your contact information without your express consent.`,
   },
   {
-    imageUrl: 'react-assets/how-it-works/filters.jpg',
+    imagePath: 'react-assets/how-it-works/filters.jpg',
     heading: 'Customize your search criteria',
     content: `Use our search filters for price, care needs, room type and more to create the most personalized
       experience and results. We know from experience how vital it is for this process to be customized to your needs.`,
   },
   {
-    imageUrl: 'react-assets/how-it-works/compare.jpg',
+    imagePath: 'react-assets/how-it-works/compare.jpg',
     heading: 'Compare and choose the homes you’ll love',
     content: `Our results pages are built to empower you with all the information you seek to compare communities.
       If something is missing or you need more information, we are a mouse click, email (ask@seniorly.com) or phone call
       away (855-866-4515).`,
   },
   {
-    imageUrl: 'react-assets/how-it-works/screenshot.jpg',
+    imagePath: 'react-assets/how-it-works/screenshot.jpg',
     heading: 'Get Support and Answers from our Seniorly Partner Agents',
     content: 'Nobody should have to go it alone, trying to navigate all of the choices and challenges.  Our Seniorly Partner Agents are local experts who know all of the communities in your desired city, can personally take you on tours and serve as your advocate for all your unanswered questions.',
   },
   {
-    imageUrl: 'vectors/Payments.svg',
+    assetImagePath: 'vectors/Payments.svg',
     heading: 'We offer you more options for paying your monthly rent',
     content: 'Once you select a community, chances are they will not accept a credit card to pay rent. We can help you with that. Our free billing system allows you to pay your rent and other select services with your credit card.',
   },
