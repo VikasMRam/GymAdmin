@@ -77,7 +77,7 @@ export const agentsFAQs = [
   },
   {
     title: 'What is the difference between a Seniorly Partner Agent and senior living advisor?',
-    description: 'There are a few names that professionals go by who can help you choose an assisted living facility. You may see "senior living" followed by an agent, adviser or expert, or even "eldercare adviser". We refer to our professionals as Seniorly Partner Agents.'
+    description: 'There are a few names that professionals go by who can help you choose an assisted living facility. You may see "senior living" followed by an agent, adviser or expert, or even "eldercare adviser". We refer to our professionals as Seniorly Partner Agents.',
   },
   {
     title: 'Should I use a Seniorly Partner Agent even if I already know the community I’d like to visit?',
