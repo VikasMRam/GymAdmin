@@ -7,10 +7,13 @@ import { selectFormData } from 'sly/services/helpers/forms';
 
 const mapStateToProps = (state, { controller, ...ownProps }) => {
   isValid(ownProps.formName)(state);
+  const steps = controller.steps || [];
+  const initialStepIndex = steps.findIndex(s => s === ownProps.initialStep);
+
   return {
-    steps: controller.steps || [],
+    steps,
     progressPath: controller.progressPath || [0],
-    currentStepIndex: controller.currentStepIndex || 0,
+    currentStepIndex: controller.currentStepIndex || (initialStepIndex > -1 ? initialStepIndex : 0),
     data: selectFormData(state, ownProps.formName, {}),
     submitEnabled: isValid(ownProps.formName)(state) && !isSubmitting(ownProps.formName)(state),
   };

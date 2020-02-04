@@ -101,9 +101,11 @@ export default class WSProvider extends Component {
 
   doDestroyWSConnection = () => {
     clearTimeout(this.timeoutID);
-    this.ws.removeEventListener('close', this.onWSClose);
-    this.ws.close(1000, 'bye');
-    this.ws = null;
+    if (this.ws) {
+      this.ws.removeEventListener('close', this.onWSClose);
+      this.ws.close(1000, 'bye');
+      this.ws = null;
+    }
     _instantiated_ = false;
   };
 

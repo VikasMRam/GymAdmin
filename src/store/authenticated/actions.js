@@ -4,11 +4,14 @@ export const ensureAuthenticated = (reason, action) => {
   // default reason
   if (action === undefined) {
     action = reason;
-    reason = 'Join Seniorly';
   }
+  const payload = typeof reason === 'object'
+    ? { options: reason, action }
+    : { reason, action, options: {} };
+
   return {
     type: ENSURE_AUTHENTICATED,
-    payload: { action, reason },
+    payload,
     meta: {
       thunk: 'ensureAuthenticated',
     },
@@ -66,9 +69,9 @@ export const ensureAuthenticatedFailure = (error, thunk) => ({
 // AUTHENTICATE FLOW
 
 export const AUTHENTICATE = 'AUTHENTICATE';
-export const authenticate = reason => ({
+export const authenticate = (reason, options) => ({
   type: AUTHENTICATE,
-  payload: { reason },
+  payload: { reason, options },
 });
 
 export const AUTHENTICATE_CANCEL = 'AUTHENTICATE_CANCEL';
