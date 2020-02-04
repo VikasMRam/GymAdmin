@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { size } from 'sly/components/themes';
 import { Block, Label } from 'sly/components/atoms';
 import Box from 'sly/components/atoms/Box';
+import { formatAddress } from 'sly/services/helpers/community';
 
 const ColumWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
@@ -26,11 +27,36 @@ export default class DashboardCommunitySummary extends React.Component {
 
   render() {
     const { community } = this.props;
+    const { propInfo: info } = community;
+
+    const address = formatAddress(community);
+    const email = info.ownerEmail || info.websiteEmail;
+    // contact email address and capacity information
     return (
       <Box>
         <ColumWrapper>
           <Label palette="grey">Community name</Label>
           <Block size="caption">{community.name}</Block>
+        </ColumWrapper>
+        <ColumWrapper>
+          <Label palette="grey">Address</Label>
+          <Block size="caption">{address}</Block>
+        </ColumWrapper>
+        <ColumWrapper>
+          <Label palette="grey">License Number</Label>
+          <Block size="caption">{info.licenseNumber}</Block>
+        </ColumWrapper>
+        <ColumWrapper>
+          <Label palette="grey">Front Desk Number</Label>
+          <Block size="caption">{info.communityPhone}</Block>
+        </ColumWrapper>
+        <ColumWrapper>
+          <Label palette="grey">Email</Label>
+          <Block size="caption">{email}</Block>
+        </ColumWrapper>
+        <ColumWrapper>
+          <Label palette="grey">Capacity</Label>
+          <Block size="caption">{info.communitySize}</Block>
         </ColumWrapper>
       </Box>
     );

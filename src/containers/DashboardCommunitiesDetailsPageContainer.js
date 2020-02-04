@@ -6,11 +6,10 @@ import { prefetch, withUser } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import communityPropType from 'sly/propTypes/community';
-import notePropType from 'sly/propTypes/note';
 import {
   ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH,
   SUMMARY,
-  MESSAGES, ACTIVITY,
+  PROFILE,
 } from 'sly/constants/dashboardAppPaths';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
@@ -79,7 +78,7 @@ export default class DashboardCommunitiesDetailsPageContainer extends Component 
     if (breakpoint && community && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
       const activityPath = generatePath(ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH, {
         id: community.id,
-        tab: ACTIVITY,
+        tab: PROFILE,
       });
       return <Redirect to={activityPath} />;
     }

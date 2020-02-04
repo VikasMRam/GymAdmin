@@ -10,7 +10,7 @@ import {
   PARTNER_AGENTS,
   MESSAGES,
   TASKS,
-  PROFILE, AGENT_DASHBOARD_FAMILIES_PATH,
+  PROFILE,
 } from 'sly/constants/dashboardAppPaths';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import communityPropType, { meta as communityMetaPropType } from 'sly/propTypes/community';
@@ -25,15 +25,21 @@ import SlyEvent from 'sly/services/helpers/events';
 import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
 import Role from 'sly/components/common/Role';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import { Box, Block, Icon, Link } from 'sly/components/atoms';
+import { Block } from 'sly/components/atoms';
 import Tabs from 'sly/components/molecules/Tabs';
 import BackLink from 'sly/components/molecules/BackLink';
 import Tab from 'sly/components/molecules/Tab';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
-import { SummarySection, Section, BodyWrapper, Navigation } from 'sly/components/templates/DashboardWithSummaryTemplate';
+import {
+  Top,
+  Right,
+  Left,
+  SummarySection,
+  DashboardWithSummaryPageTemplate,
+} from 'sly/components/templates/DashboardWithSummaryTemplate';
 import DashboardCommunitySummary from 'sly/components/organisms/DashboardCommunitySummary';
-
-const PaddedBackLink = pad(BackLink, 'regular');
+import Heading from 'sly/components/atoms/Heading';
+import DashboardCommunityNameAndStatus from 'sly/components/organisms/DashboardCommunityNameAndStatus';
 
 const BackLinkWrapper = pad(styled.div`
   display: flex;
@@ -51,7 +57,7 @@ const MobileTab = styled(Tab)`
   }
 `;
 
-const SmallScreenBannerNotification = displayOnlyIn(BannerNotification, ['mobile', 'tablet']);
+const DifferentOrgNotification = displayOnlyIn(BannerNotification, ['mobile', 'tablet']);
 
 export default class DashboardCommunitiesDetailsPage extends Component {
   static propTypes = {
@@ -81,53 +87,30 @@ export default class DashboardCommunitiesDetailsPage extends Component {
   };
 
   getTabPathsForUser = () => {
-    const { community } = this.props;
-    const { id } = community;
-    const summaryPath = generatePath(ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH, { id, tab: SUMMARY });
-    const profilePath = generatePath(ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH, { id, tab: PROFILE });
-    // ...
-
-    return {
-      summaryPath,
-      profilePath,
-    };
   };
 
   getTabsForUser = () => {
-    const { user } = this.props;
+    const { user, community } = this.props;
     const { roleID } = user;
-    const {
-      summaryPath,
-      agentsPath,
-      tasksPath,
-      messagesPath,
-    } = this.getTabPathsForUser();
+    const { id } = community;
 
-    const summaryTab = (
-      <MobileTab id={SUMMARY} key={SUMMARY} to={summaryPath} onClick={clickEventHandler('fdetails-tab', 'Summary')}>
-        Summary
-      </MobileTab>
-    );
-
-    const genTab = ({ id, to, label }) => {
-      return (
-        <Tab id={id} key={id} to={to} onClick={clickEventHandler('fdetails-tab', label)}>
-          {label}
-        </Tab>
-      );
+    const tabs = {
+      'Summary': SUMMARY,
+      'Profile': PROFILE,
+      // ...
     };
-    const adminTabList = [
-      { id: PARTNER_AGENTS, to: agentsPath, label: 'Agents' },
-      { id: TASKS, to: tasksPath, label: 'Tasks' },
-      { id: MESSAGES, to: messagesPath, label: 'Messages' },
-    ];
-    // TODO: CHANGE TO HAS ROLE INSTEAD OF IS ROLE...
-    let tabs = [summaryTab];
-    /* eslint-disable no-bitwise */
-    if (roleID & PLATFORM_ADMIN_ROLE) {
-      tabs = tabs.concat(adminTabList.map(e => genTab(e)));
-    }
-    return tabs;
+
+    const pathFor = tab => generatePath(ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH, { id, tab });
+
+    return Object.entries(tabs).map(([label, tab]) => {
+      const TabComponent = tab === SUMMARY ? MobileTab : Tab;
+      const path = tab === SUMMARY ? pathFor() : pathFor(tab);
+      return (
+        <TabComponent id={tab} key={tab} to={path} onClick={clickEventHandler('fdetails-tab', label)}>
+          {label}
+        </TabComponent>
+      );
+    });
   };
 
   render() {
@@ -148,7 +131,11 @@ export default class DashboardCommunitiesDetailsPage extends Component {
     };
 
     const backLinkHref = generatePath(ADMIN_DASHBOARD_COMMUNITIES_PATH);
-    const backlink = <PaddedBackLink linkText="Back to Communities" to={backLinkHref} event={backlinkEvent} />;
+    const backlink = (
+      <BackLink to={backLinkHref} event={backlinkEvent}>
+        Back to Communities
+      </BackLink>
+    );
 
     if (!community) {
       return (
@@ -164,29 +151,35 @@ export default class DashboardCommunitiesDetailsPage extends Component {
     const isOfDifferentOrg = userOrgId !== communityOrgId;
 
     return (
-      <DashboardPageTemplate activeMenuItem="Communities">
-        <BodyWrapper>
-          <Navigation>
-            {backlink}
-          </Navigation>
+      <DashboardWithSummaryPageTemplate activeMenuItem="Communities">
+        <Top>
+          {backlink}
+
+          {isOfDifferentOrg && (
+            <DifferentOrgNotification palette="primary">
+              This Family belongs to a different organization named <i>{community.organization.name}</i>
+            </DifferentOrgNotification>
+          )}
+        </Top>
+
+        <Left>
+          <DashboardCommunityNameAndStatus community={community} />
+        </Left>
+
+        <Right>
           <Tabs activeTab={currentTab}>
             {this.getTabsForUser()}
           </Tabs>
-          {isOfDifferentOrg &&
-            <SmallScreenBannerNotification palette="primary">
-              This Family belongs to a different organization named <i>{community.organization.name}</i>
-            </SmallScreenBannerNotification>
-          }
-          <SummarySection className={currentTab === SUMMARY ? 'selected' : ''}>
-            <DashboardCommunitySummary community={community} />
-          </SummarySection>
-          <Section>
-            {currentTab === PROFILE && (
-              <>Tab section</>
-            )}
-          </Section>
-        </BodyWrapper>
-      </DashboardPageTemplate>
+
+          {currentTab === PROFILE && (
+            <>Profile section</>
+          )}
+        </Right>
+
+        <SummarySection className={currentTab === SUMMARY ? 'selected' : ''}>
+          <DashboardCommunitySummary community={community} />
+        </SummarySection>
+      </DashboardWithSummaryPageTemplate>
     );
   }
 }

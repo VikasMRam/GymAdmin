@@ -58,38 +58,28 @@ const menuItems = [
 
 const Header = styled.div`
   background-color: ${palette('white.base')};
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-column: 1 / 3;
-    grid-row: 1 / 2;
-  }
+  grid-area: header;
 `;
 
-const Column = styled.aside`
+const Sidebar = styled.aside`
   background-color: ${palette('white.base')};
   display:none;
+  grid-area: sidebar;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
     width: ${size('element.xxHuge')};
     display: inherit;
-    grid-column: 1 / 2;
-    grid-row: 2 / 2;
   }
 `;
 
 const Body = styled.main`
-  overflow: ${ifProp('bodyHasOverflow', 'auto', 'initial')};
   height: 100%;
   background-color: ${palette('grey.background')};
+  grid-area: body;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: ${size('spacing.xLarge')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-column: 2 / 2;
-    grid-row: 2 / 2;
   }
 `;
 
@@ -118,11 +108,14 @@ const DashboardPage = styled.div`
     grid-template-columns: ${size('element.xxHuge')} auto;
     grid-gap: 0;
     grid-template-rows: max-content auto;
+    grid-template-areas:
+      "header header"
+      "sidebar body";
   }
 `;
 
 const DashboardPageTemplate = ({
-  children, activeMenuItem, className, bodyHasOverflow,
+  children, activeMenuItem, className,
 }) => {
   const mi = menuItems.map((mi) => {
     if (mi.label === activeMenuItem) {
@@ -136,10 +129,10 @@ const DashboardPageTemplate = ({
   });
 
   return (
-    <DashboardPage className={className}>
+    <DashboardPage>
       <Header><HeaderContainer /></Header>
-      <Column><DashboardMenu menuItems={mi} /></Column>
-      <Body bodyHasOverflow={bodyHasOverflow}>{children}</Body>
+      <Sidebar><DashboardMenu menuItems={mi} /></Sidebar>
+      <Body className={className}>{children}</Body>
       <ModalContainer />
     </DashboardPage>
   );
@@ -149,7 +142,6 @@ DashboardPageTemplate.propTypes = {
   children: node,
   activeMenuItem: string.isRequired,
   className: string,
-  bodyHasOverflow: bool,
 };
 
 export default DashboardPageTemplate;

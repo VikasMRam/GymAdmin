@@ -34,7 +34,6 @@ theme.fonts = {
   quote  : 'Georgia, serif',
 };
 
-
 theme.defaultImageSources = [
   320,
   375,
