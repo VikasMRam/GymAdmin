@@ -9,6 +9,8 @@ const defaultProps = {
   handleSubmit,
   emailOrPhone,
 };
+const phone = '2345678901';
+const phoneFormatted = '(234) 567-8901';
 
 const wrap = (props = {}) => shallow(<OtpLoginForm {...defaultProps} {...props} />);
 
@@ -24,6 +26,16 @@ describe('OtpLoginForm', () => {
     expect(wrapper.find('Field').filter({ name: 'code' })).toHaveLength(1);
     expect(wrapper.find('FullWidthButton')).toHaveLength(1);
     expect(wrapper.find('StyledHeading').contains(emailOrPhone)).toBeTruthy();
+  });
+
+  it('renders with phone', () => {
+    const wrapper = wrap({
+      emailOrPhone: phone,
+    });
+
+    expect(wrapper.find('Field').filter({ name: 'code' })).toHaveLength(1);
+    expect(wrapper.find('FullWidthButton')).toHaveLength(1);
+    expect(wrapper.find('StyledHeading').contains(phoneFormatted)).toBeTruthy();
   });
 
   it('renders error', () => {

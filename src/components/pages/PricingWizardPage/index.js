@@ -189,7 +189,7 @@ export default class PricingWizardPage extends Component {
 
     sendEvent('pricing-requested', community.id);
 
-    return updateUuidAux(data).then(() => redirectTo(redirectLink));
+    return updateUuidAux(data).then(() => redirectLink && redirectTo(redirectLink));
   };
 
   handleCompletePostConversion = (data, { interest, redirectLink }) => {

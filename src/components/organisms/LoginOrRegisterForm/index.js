@@ -41,10 +41,10 @@ const getSubmitButton = (error, props = {}) =>
 
 const LoginOrRegisterForm = ({
   handleSubmit, submitting, invalid, error, onFacebookSigninClick, onGoogleSigninClick,
-  socialLoginError, onPartnerAgentLoginClick,
+  socialLoginError, onPartnerAgentLoginClick, heading,
 }) => (
   <form onSubmit={handleSubmit}>
-    <StyledHeading size="subtitle">Sign up or log in</StyledHeading>
+    <StyledHeading size="subtitle">{heading}</StyledHeading>
     <Field
       name="emailOrPhone"
       type="text"
@@ -75,6 +75,11 @@ LoginOrRegisterForm.propTypes = {
   onFacebookSigninClick: func,
   onGoogleSigninClick: func,
   onPartnerAgentLoginClick: func,
+  heading: string,
+};
+
+LoginOrRegisterForm.defaultProps = {
+  heading: 'Sign up or log in',
 };
 
 export default LoginOrRegisterForm;
