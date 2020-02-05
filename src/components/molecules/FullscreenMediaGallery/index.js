@@ -20,11 +20,6 @@ export const StyledMediaGallery = styled(MediaGallery)`
       margin-right: calc(-${size('spacing.huge')} + -${size('spacing.regular')});
     }
   }
-
-  height: ${size('carousel.mobile')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    height: ${size('carousel.tablet')};
-  }
 `;
 
 const CopyrightWrapper = styled.div`
