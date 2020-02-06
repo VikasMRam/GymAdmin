@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { object, arrayOf, func, string } from 'prop-types';
 import { generatePath } from 'react-router';
+import { branch } from 'recompose';
 
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import userPropType from 'sly/propTypes/user';
@@ -11,17 +12,20 @@ import CommunityPricingWizardLanding from 'sly/components/organisms/CommunityPri
 
 @withUser
 
-@prefetch('conversations', 'getConversations', (req, { user: { id } }) =>
-  req({
-    participant_id: id,
-    participant_type: CONVERSATION_PARTICIPANT_TYPE_USER,
-  })
+@branch(
+  props => props.user,
+  prefetch('conversations', 'getConversations', (req, { user: { id } }) =>
+    req({
+      participant_id: id,
+      participant_type: CONVERSATION_PARTICIPANT_TYPE_USER,
+    }),
+  ),
 )
 
 export default class CommunityPricingWizardLandingContainer extends Component {
   static propTypes = {
     conversations: arrayOf(conversationPropType),
-    user: userPropType.isRequired,
+    user: userPropType,
     status: object,
     onBeginClick: func,
     buttonText: string,
@@ -30,7 +34,7 @@ export default class CommunityPricingWizardLandingContainer extends Component {
   handleBeginClick = () => {
     const { conversations, onBeginClick } = this.props;
     let redirectLink = FAMILY_DASHBOARD_ACCOUNT_PATH;
-    if (conversations.length) {
+    if (conversations && conversations.length) {
       redirectLink = generatePath(FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH, { id: conversations[0].id });
     }
 
@@ -39,8 +43,14 @@ export default class CommunityPricingWizardLandingContainer extends Component {
 
   getHasFinished = () => {
     const { status } = this.props;
-    const { hasFinished: converstionsHasFinished } = status.conversations;
-    const { hasFinished: userHasFinished } = status.user;
+    let converstionsHasFinished = true;
+    let userHasFinished = true;
+    if (status.conversations) {
+      ({ hasFinished: converstionsHasFinished } = status.conversations);
+    }
+    if (status.user) {
+      ({ hasFinished: userHasFinished } = status.user);
+    }
 
     return converstionsHasFinished && userHasFinished;
   };
