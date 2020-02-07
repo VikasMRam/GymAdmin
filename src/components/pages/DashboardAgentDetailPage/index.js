@@ -251,7 +251,7 @@ export default class DashboardAgentDetailPage extends Component {
     const backLinkHref = generatePath(ADMIN_DASHBOARD_AGENTS_PATH);
     const backlink = <PaddedBackLink linkText="Back to Agents List" to={backLinkHref} onClick={clickEventHandler('agentDetails', 'Back to Agents List')} />;
 
-    const { id } = agent;
+    const { name } = agent;
 
     const agentName = (
       <AgentName
@@ -309,7 +309,7 @@ export default class DashboardAgentDetailPage extends Component {
                   filters={filters}
                 >
                   {datatable => (
-                    <DashboardAgentContactsSectionContainer datatable={datatable} entityId={id} entityType="PartnerAgent" />
+                    <DashboardAgentContactsSectionContainer datatable={datatable} agentName={name} />
                   )}
                 </Datatable>
               </LargePaddingWrapper>
