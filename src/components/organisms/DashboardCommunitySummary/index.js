@@ -5,7 +5,6 @@ import pad from 'sly/components/helpers/pad';
 import styled from 'styled-components';
 import { size } from 'sly/components/themes';
 import { Block, Label } from 'sly/components/atoms';
-import Box from 'sly/components/atoms/Box';
 import { formatAddress } from 'sly/services/helpers/community';
 
 const ColumWrapper = pad(styled.div`
@@ -16,6 +15,7 @@ const ColumWrapper = pad(styled.div`
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: block;
     grid-column-gap: ${size('layout.gutter')};
   }
 `, 'large');
@@ -33,7 +33,7 @@ export default class DashboardCommunitySummary extends React.Component {
     const email = info.ownerEmail || info.websiteEmail;
     // contact email address and capacity information
     return (
-      <Box>
+      <>
         <ColumWrapper>
           <Label palette="grey">Community name</Label>
           <Block size="caption">{community.name}</Block>
@@ -58,7 +58,7 @@ export default class DashboardCommunitySummary extends React.Component {
           <Label palette="grey">Capacity</Label>
           <Block size="caption">{info.communitySize}</Block>
         </ColumWrapper>
-      </Box>
+      </>
     );
   }
 }

@@ -1,22 +1,35 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { size, columnWidth } from 'sly/components/themes';
+import { size, palette, columnWidth } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
+import Box, { topSnap, bottomSnap } from 'sly/components/atoms/Box';
+import { ifProp } from 'styled-tools';
 
 export const Top = styled.div`
   grid-area: top;
   padding: ${size('spacing.xLarge')} 0;
 `;
 
-export const Left = styled.div`
+export const Left = styled(Box)`
+  background: ${palette('white.base')};
   grid-area: left;
+
+  ${bottomSnap};
 `;
 
 export const Right = styled.div`
   grid-area: right;
 `;
 
+export const Section = styled(Box)`
+  background: ${palette('white.base')};
+
+  ${topSnap};
+`;
+
 export const SummarySection = styled.div`
+  // the rest are to fix the
+  // unusual behaviour of the summary section in laptop
   display: none;
   grid-area: summary;
 
@@ -28,6 +41,7 @@ export const SummarySection = styled.div`
 
   @media (min-width: ${size('breakpoint.laptop')}) {
     display: block;
+    ${topSnap};
   }
 `;
 
