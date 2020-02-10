@@ -126,8 +126,9 @@ export default class Input extends Component {
   };
 
   onChange = (event) => {
-    const { onChange } = this.props;
+    const { onChange, format } = this.props;
 
+    console.log('format', format);
     const element = event.target;
     const { selectionStart, selectionEnd } = element;
     window.requestAnimationFrame(() => {
