@@ -23,7 +23,6 @@ import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import SlyEvent from 'sly/services/helpers/events';
 import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
-import Role from 'sly/components/common/Role';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import { Block } from 'sly/components/atoms';
 import Tabs from 'sly/components/molecules/Tabs';
@@ -39,10 +38,9 @@ import {
   DashboardWithSummaryPageTemplate,
 } from 'sly/components/templates/DashboardWithSummaryTemplate';
 import DashboardCommunitySummary from 'sly/components/organisms/DashboardCommunitySummary';
-import Heading from 'sly/components/atoms/Heading';
 import DashboardCommunityNameAndStatus from 'sly/components/organisms/DashboardCommunityNameAndStatus';
-import DashboardCommunityProfile from 'sly/components/organisms/DashboardCommunityProfile';
 import { topSnap } from 'sly/components/atoms/Box';
+import DashboardCommunityDetailsFormContainer from 'sly/containers/DashboardCommunityDetailsFormContainer';
 
 const BackLinkWrapper = pad(styled.div`
   display: flex;
@@ -184,7 +182,7 @@ export default class DashboardCommunitiesDetailsPage extends Component {
 
           {currentTab === PROFILE && (
             <Section>
-              <DashboardCommunityProfile community={community} />
+              <DashboardCommunityDetailsFormContainer community={community} />
             </Section>
           )}
         </Right>
