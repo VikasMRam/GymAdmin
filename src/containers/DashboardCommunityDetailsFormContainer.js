@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
+import pick from 'lodash/pick';
 
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
 import clientPropType from 'sly/propTypes/client';
@@ -43,17 +44,19 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
   };
 
   handleSubmit = (data) => {
+    console.log('submit data', data);
   };
 
   render() {
     const { community, user, ...props } = this.props;
 
     const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
+    const initialValues = pick(community, ['name', 'propInfo']);
 
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}
-        initialValues={community}
+        initialValues={initialValues}
         user={user}
         canEdit={canEdit}
         {...props}
