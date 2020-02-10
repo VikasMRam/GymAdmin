@@ -65,8 +65,9 @@ const renderHtml = ({
 
 const experiments = require('sly/../experiments.json');
 
-const createSetCookie = (res, cookies) => (key, value, maxAge = 27000000) => {
-  res.cookie(key, value, { domain, maxAge });
+const A_MONTH = 30 * 24 * 3600 * 1000;
+const createSetCookie = (res, cookies) => (key, value) => {
+  res.cookie(key, value, { domain, maxAge: A_MONTH });
   cookies.push(`${key}=${value}`);
 };
 
@@ -145,7 +146,7 @@ app.use((req, res, next) => {
   const slySID = req.cookies.sly_sid || makeSid();
 
   if (!req.cookies.sly_sid) {
-    setCookie('sly_sid', slySID, 3600);
+    setCookie('sly_sid', slySID);
   }
 
   if (!req.cookies.referrer && req.headers.referer) {
