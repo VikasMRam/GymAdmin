@@ -89,13 +89,13 @@ const CareTypeRegionGuidePage = ({
     <>
       <HeaderContainer />
       <HeroWrapper>
-        CareTypeRegionGuidePageContainer
+        <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love"  height={320} />
         <SearchBoxWrapper>
           <StyledHeading level="hero" size="hero" palette="white">
-            Assisted Living Guide For {geoGuide.city}, {stateNames[geoGuide.state]}
+            {searchParams.tocg ==='assisted-living-guide' ? 'Assisted Living' : 'Memory Care'} Guide For {geoGuide.city}, {stateNames[geoGuide.state]}
           </StyledHeading>
           <StyledLabel palette="white">
-            Find the best assisted living near you.
+            Find the best {searchParams.tocg ==='assisted-living-guide' ? 'assisted living' : 'memory care'} near you.
           </StyledLabel>
           <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>
