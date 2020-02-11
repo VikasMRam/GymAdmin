@@ -8,10 +8,7 @@ export const phoneFormatter = (value, parens = false, ...args) => {
     value = value.toString(10);
   }
 
-  let onlyNums = value.replace(/[^\d]/g, '');
-  // if (onlyNums.length === 11) {
-  //   onlyNums = onlyNums.slice(1);
-  // }
+  const onlyNums = value.replace(/[^\d]/g, '');
   if (onlyNums.length <= 3) {
     return onlyNums;
   }

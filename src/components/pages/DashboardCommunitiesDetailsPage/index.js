@@ -23,7 +23,6 @@ import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import SlyEvent from 'sly/services/helpers/events';
 import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
-import Role from 'sly/components/common/Role';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import { Block } from 'sly/components/atoms';
 import Tabs from 'sly/components/molecules/Tabs';
@@ -34,13 +33,14 @@ import {
   Top,
   Right,
   Left,
+  Section,
   SummarySection,
   DashboardWithSummaryPageTemplate,
 } from 'sly/components/templates/DashboardWithSummaryTemplate';
 import DashboardCommunitySummary from 'sly/components/organisms/DashboardCommunitySummary';
-import Heading from 'sly/components/atoms/Heading';
 import DashboardCommunityNameAndStatus from 'sly/components/organisms/DashboardCommunityNameAndStatus';
-import DashboardCommunityProfile from 'sly/components/organisms/DashboardCommunityProfile';
+import { topSnap } from 'sly/components/atoms/Box';
+import DashboardCommunityDetailsFormContainer from 'sly/containers/DashboardCommunityDetailsFormContainer';
 
 const BackLinkWrapper = pad(styled.div`
   display: flex;
@@ -50,6 +50,14 @@ const BackLinkWrapper = pad(styled.div`
 const TextAlignCenterBlock = pad(textAlign(Block, 'center'), 'regular');
 const AlignCenterBackLinkWrapper = styled(BackLinkWrapper)`
   justify-content: center;
+`;
+
+// FIXME: redundant code to remove styling from tabs, won't be necessary if tabs are styled property according to the
+// definitive designs using DashboardWithSummaryTemplate
+const StyledTabs = styled(Tabs)`
+  @media (max-width: calc(${size('breakpoint.laptop')} - 1px)) {
+    ${topSnap};
+  }
 `;
 
 const MobileTab = styled(Tab)`
@@ -156,30 +164,33 @@ export default class DashboardCommunitiesDetailsPage extends Component {
       <DashboardWithSummaryPageTemplate activeMenuItem="Communities">
         <Top>
           {backlink}
+        </Top>
 
+        <Left>
           {isOfDifferentOrg && (
             <DifferentOrgNotification palette="primary">
               This Family belongs to a different organization named <i>{community.organization.name}</i>
             </DifferentOrgNotification>
           )}
-        </Top>
-
-        <Left>
           <DashboardCommunityNameAndStatus community={community} />
         </Left>
 
         <Right>
-          <Tabs activeTab={currentTab}>
+          <StyledTabs activeTab={currentTab}>
             {this.getTabsForUser()}
-          </Tabs>
+          </StyledTabs>
 
           {currentTab === PROFILE && (
-            <DashboardCommunityProfile community={community} />
+            <Section>
+              <DashboardCommunityDetailsFormContainer community={community} />
+            </Section>
           )}
         </Right>
 
         <SummarySection className={currentTab === SUMMARY ? 'selected' : ''}>
-          <DashboardCommunitySummary community={community} />
+          <Section>
+            <DashboardCommunitySummary community={community} />
+          </Section>
         </SummarySection>
       </DashboardWithSummaryPageTemplate>
     );

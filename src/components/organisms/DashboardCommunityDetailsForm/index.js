@@ -6,6 +6,9 @@ import { size, palette, columnWidth } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import { Block, Button } from 'sly/components/atoms';
+import { Field } from 'redux-form';
+import ReduxField from 'sly/components/organisms/ReduxField';
+import { phoneFormatter, phoneParser } from 'sly/services/helpers/phone';
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -44,14 +47,9 @@ const FormSection = styled.div`
     padding-bottom: 0;
   }
 `;
-const FormBottomSection = styled.div`
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')};
-  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')} ${palette('grey', 'filler')};
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: ${size('spacing.xLarge')};
-  }
+const FormBottomSection = styled.div`
+  margin-top: ${size('spacing.xLarge')};
 `;
 
 const FormSectionHeading = pad(Block, 'large');
@@ -61,15 +59,15 @@ const FormSectionHeading = pad(Block, 'large');
 
 export default class DashboardCommunityDetailsForm extends Component {
   static propTypes = {
-    accepted: bool,
     invalid: bool,
+    canEdit: bool,
     submitting: bool,
     handleSubmit: func.isRequired,
   };
 
   render() {
     const {
-      handleSubmit, accepted, invalid, submitting,
+      handleSubmit, invalid, submitting, canEdit,
     } = this.props;
 
     return (
@@ -77,9 +75,27 @@ export default class DashboardCommunityDetailsForm extends Component {
         <FormScrollSection>
           <FormSection>
             <FormSectionHeading weight="medium">Metadata</FormSectionHeading>
+            <Field
+              name="name"
+              label="Contact name"
+              type="text"
+              readOnly={!canEdit}
+              component={ReduxField}
+              wideWidth
+            />
+            <Field
+              name="propInfo.communityPhone"
+              label="Front desk phone number"
+              type="text"
+              placeholder="925-555-5555"
+              parse={phoneParser}
+              format={phone => phoneFormatter(phone)}
+              component={ReduxField}
+              wideWidth
+            />
           </FormSection>
         </FormScrollSection>
-        {accepted &&
+        {canEdit &&
           <FormBottomSection>
             <StyledButton type="submit" disabled={invalid || submitting}>
               Save changes
