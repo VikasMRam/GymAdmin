@@ -24,3 +24,4 @@ export Logo from './Logo';
 export Badge from './Badge';
 export StickyFooter from './StickyFooter';
 export RichTextArea from './RichTextArea';
+export NewModal from './NewModal';

@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
+import ReactDom from 'react-dom';
 import styled from 'styled-components';
-import { any, func } from 'prop-types';
+import { ifProp, prop } from 'styled-tools';
+import { any, func, bool } from 'prop-types';
 
-import { size } from 'sly/components/themes';
+import { isBrowser } from 'sly/config';
+import { size, palette, key } from 'sly/components/themes';
 import textAlign from 'sly/components/helpers/textAlign';
 import IconButton from 'sly/components/molecules/IconButton';
 
 const Overlay = styled.div`
-  display: flex;
+  display: ${ifProp('isOpen', 'flex', 'none')};
   align-items: center;
   justify-content: center;
   position: fixed;
@@ -15,15 +18,16 @@ const Overlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #2A333Fe5;
+  background-color: ${palette('slate', 'base')}e5;
   overflow: auto;
-  z-index: 15000;
+  z-index: calc(${key('zIndexes.modal.overlay')} - ${prop('instanceNumber')});
 `;
 
 const Modal = styled.div`
   margin: auto;
   border-radius: 6px;
-  background-color: #fff;
+  background-color: ${palette('white', 'base')};
+  display: ${ifProp('isOpen', 'block', 'none')};
 
   width: calc(100% - ${size('spacing.xxLarge')});
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
@@ -55,30 +59,72 @@ HeaderWithClose.propTypes = {
   onClose: func,
 };
 
+const PORTAL_ELEMENT_CLASS = 'modal-portal';
+let instanceNumber = 0;
+
 // TODO: @fonz todo a proper modal from this hack; animate entry and leave;
 // FIXME: we had to uqickly introduce this because the modals were impeding agents
 // to update the Stages
 // FIXME: more than one modal are currently possible, we have to mimic the mechanism used in react-modal
 
-export default function NewModal({ children, onClose, ...props }) {
-  const overlayRef = React.createRef();
-  const onClick = (e) => {
-    if (e.target === overlayRef.current) {
+export default class NewModal extends Component {
+  overlayRef = React.createRef();
+
+  componentDidMount() {
+    this.insertEl();
+    instanceNumber++;
+  }
+
+  componentWillUnmount() {
+    document.body.removeChild(this.el);
+    this.el = null;
+    instanceNumber--;
+  }
+
+  insertEl = () => {
+    if (!this.el) {
+      this.el = document.createElement('div');
+      this.el.setAttribute('class', PORTAL_ELEMENT_CLASS);
+      document.body.appendChild(this.el);
+    }
+  };
+
+  onClick = (e) => {
+    const { onClose } = this.props;
+
+    if (e.target === this.overlayRef.current) {
       onClose(e);
     }
     return null;
   };
 
-  return (
-    <Overlay ref={overlayRef} onClick={onClick}>
-      <Modal {...props}>
-        {children}
-      </Modal>
-    </Overlay>
-  );
+  render() {
+    const { children, isOpen, ...props } = this.props;
+
+    if (!isBrowser) {
+      return null;
+    }
+    this.insertEl();
+
+    return ReactDom.createPortal(
+      (
+        <Overlay ref={this.overlayRef} onClick={this.onClick} isOpen={isOpen} instanceNumber={instanceNumber}>
+          <Modal isOpen={isOpen} {...props}>
+            {children}
+          </Modal>
+        </Overlay>
+      ),
+      this.el,
+    );
+  }
 }
 
 NewModal.propTypes = {
   children: any,
   onClose: func,
+  isOpen: bool,
+};
+
+NewModal.defaultProps = {
+  isOpen: true,
 };

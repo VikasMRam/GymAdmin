@@ -8,23 +8,29 @@ import {
 } from 'sly/services/helpers/search';
 import SearchBox from 'sly/components/molecules/SearchBox';
 import SlyEvent from 'sly/services/helpers/events';
+import { query } from 'sly/services/newApi';
 import { withRedirectTo } from 'sly/services/redirectTo';
+import { normJsonApi } from 'sly/services/helpers/jsonApi';
+import { generateSearchUrl } from 'sly/services/helpers/url';
 
-class SearchBoxContainer extends Component {
+@withRedirectTo
+@query('getAddresses', 'getAddresses')
+
+export default class SearchBoxContainer extends Component {
   static propTypes = {
     layout: string,
     address: string,
-    location: shape({
+    locationInfo: shape({
       geo: shape({
         latitude: string.isRequired,
         longitude: string.isRequired,
       }),
     }),
-
     clearLocationOnBlur: bool,
     onTextChange: func,
     onLocationSearch: func,
     redirectTo: func.isRequired,
+    getAddresses: func.isRequired,
   };
 
   static defaultProps = {
@@ -34,7 +40,8 @@ class SearchBoxContainer extends Component {
   state = {
     address: '',
     location: null,
-  }
+    isTextboxInFocus: false,
+  };
 
   constructor(props) {
     super(props);
@@ -42,9 +49,9 @@ class SearchBoxContainer extends Component {
       const { address } = this.props;
       this.state.address = address;
     }
-    if (this.props.location) {
-      const { location } = this.props;
-      this.state.location = location;
+    if (this.props.locationInfo) {
+      const { locationInfo } = this.props;
+      this.state.location = locationInfo;
     }
   }
 
@@ -84,16 +91,25 @@ class SearchBoxContainer extends Component {
   };
 
   handleSearch = () => {
-    const { location, address } = this.state;
+    const { locationInfo, address } = this.state;
     if (address) {
       this.handleSelect(address);
-    } else if (location) {
-      this.handleOnLocationSearch(location);
+    } else if (locationInfo) {
+      this.handleOnLocationSearch(locationInfo);
     }
   };
 
   handleTextboxFocus = () => {
-    this.setState({ location: null });
+    this.setState({
+      locationInfo: null,
+      isTextboxInFocus: true,
+    });
+  };
+
+  handleTextboxBlur = () => {
+    this.setState({
+      isTextboxInFocus: false,
+    });
   };
 
   handleOnLocationSearch = (result) => {
@@ -107,9 +123,32 @@ class SearchBoxContainer extends Component {
     }
   };
 
+  handleCurrentLocationClick = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.searchForLatLong);
+    }
+  };
+
+  searchForLatLong = ({ coords }) => {
+    const { redirectTo, getAddresses } = this.props;
+
+    if (coords.latitude && coords.longitude) {
+      const query = {
+        'filter[geo]': `${coords.latitude},${coords.longitude}`,
+      };
+      getAddresses(query)
+        .then((resp) => {
+          const addresses = normJsonApi(resp);
+          const path = `${generateSearchUrl(['Assisted Living'], addresses[0])}?latitude=${coords.latitude}&longitude=${coords.longitude}`;
+
+          redirectTo(path);
+        });
+    }
+  };
+
   render() {
     const { layout, clearLocationOnBlur, ...props } = this.props;
-    const { address } = this.state;
+    const { address, isTextboxInFocus } = this.state;
 
     return (
       <SearchBox
@@ -119,10 +158,11 @@ class SearchBoxContainer extends Component {
         onSelect={this.handleSelect}
         onSearchButtonClick={this.handleSearch}
         onTextboxFocus={clearLocationOnBlur ? this.handleTextboxFocus : null}
+        onTextboxBlur={this.handleTextboxBlur}
+        isTextboxInFocus={isTextboxInFocus}
+        onCurrentLocationClick={this.handleCurrentLocationClick}
         {...props}
       />
     );
   }
 }
-
-export default withRedirectTo(SearchBoxContainer);
