@@ -8,7 +8,8 @@ import textAlign from 'sly/components/helpers/textAlign';
 import { Block, Button } from 'sly/components/atoms';
 import { Field } from 'redux-form';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { phoneFormatter, phoneParser } from 'sly/services/helpers/phone';
+import { AVAILABLE_TAGS } from 'sly/constants/tags';
+
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -77,7 +78,7 @@ export default class DashboardCommunityDetailsForm extends Component {
             <FormSectionHeading weight="medium">Metadata</FormSectionHeading>
             <Field
               name="name"
-              label="Contact name"
+              label="Community name"
               type="text"
               readOnly={!canEdit}
               component={ReduxField}
@@ -87,11 +88,37 @@ export default class DashboardCommunityDetailsForm extends Component {
               name="propInfo.communityPhone"
               label="Front desk phone number"
               type="phone"
+              readOnly={!canEdit}
               placeholder="(925) 555-5555"
               parens
               component={ReduxField}
               wideWidth
             />
+            <Field
+              name="propInfo.ownerName"
+              label="Owner name"
+              type="text"
+              readOnly={!canEdit}
+              placeholder="John Doe"
+              component={ReduxField}
+              wideWidth
+            />
+            <Field
+              name="propInfo.ownerEmail"
+              label="Owner email"
+              type="email"
+              readOnly={!canEdit}
+              placeholder="john@community.com"
+              component={ReduxField}
+              wideWidth
+            />
+            {/*<Field*/}
+            {/*  name="propInfo.typeCare"*/}
+            {/*  label="Care type"*/}
+            {/*  type="choice"*/}
+            {/*  isMulti*/}
+            {/*  options={AVAILABLE_TAGS.map(value => ({ label: value, value }))}*/}
+            {/*/>*/}
           </FormSection>
         </FormScrollSection>
         {canEdit &&
