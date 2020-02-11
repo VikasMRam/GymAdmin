@@ -16,6 +16,7 @@ import Slider from 'sly/components/molecules/Slider';
 import DateChoice from 'sly/components/molecules/DateChoice';
 import DateRange from 'sly/components/molecules/DateRange';
 import BoxChoice from 'sly/components/molecules/BoxChoice';
+import PhoneInput from 'sly/components/molecules/PhoneInput';
 import IconInput from 'sly/components/molecules/IconInput';
 import InputMessage from 'sly/components/molecules/InputMessage';
 import Autocomplete from 'sly/components/molecules/Autocomplete';
@@ -61,6 +62,8 @@ const getInputComponent = (type) => {
       return DatePicker;
     case 'select':
       return Input;
+    case 'phone':
+      return PhoneInput;
     case 'choice':
       return Select;
     case 'autocomplete':

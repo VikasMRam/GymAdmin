@@ -30,6 +30,7 @@ const StyledContainer = styled.div`
 const CommunityBookATourContactForm = ({
   error, user, community, heading, handleSubmit, displayContext,
 }) => {
+  const format = number => phoneFormatter(number, true);
   return (
     <StyledContainer displayContext={displayContext}>
       <form onSubmit={handleSubmit}>
@@ -48,10 +49,8 @@ const CommunityBookATourContactForm = ({
           <Field
             name="phone"
             label="Phone"
-            type="text"
-            parse={phoneParser}
-            format={phoneFormatter}
-            placeholder="925-555-5555"
+            type="phone"
+            parens
             component={ReduxField}
           />
         }

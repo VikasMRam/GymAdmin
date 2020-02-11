@@ -101,7 +101,6 @@ export default class Input extends Component {
   static propTypes = {
     type: oneOf(['search', 'textarea', 'select', 'text', 'checkbox', 'radio', 'password', 'number', 'hidden', 'date', 'locationSearch']),
     size: oneOf(['small', 'regular', 'button', 'large', 'xLarge']),
-    onChange: func,
     onFocus: func,
     invalid: bool,
     readOnly: bool,
@@ -125,26 +124,12 @@ export default class Input extends Component {
     }
   };
 
-  onChange = (event) => {
-    const { onChange, format } = this.props;
-
-    console.log('format', format);
-    const element = event.target;
-    const { selectionStart, selectionEnd } = element;
-    window.requestAnimationFrame(() => {
-      element.selectionStart = selectionStart;
-      element.selectionEnd = selectionEnd;
-    });
-
-    return onChange(event);
-  };
-
   render() {
     if (this.props.type === 'textarea') {
       return <StyledTextarea {...this.props} />;
     } else if (this.props.type === 'select') {
       return <StyledSelect {...this.props} />;
     }
-    return <StyledInput {...this.props} onChange={this.onChange} onFocus={this.onFocus} autoComplete="new-password" />;
+    return <StyledInput {...this.props} onFocus={this.onFocus} autoComplete="new-password" />;
   }
 }

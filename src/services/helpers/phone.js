@@ -1,9 +1,10 @@
 export const phoneParser = str => str.replace(/[^\d]/g, '');
-export const phoneFormatter = (value, parens = false) => {
+export const phoneFormatter = (value, parens = false, ...args) => {
   if (!value) {
     return value;
   }
 
+  console.log('parens', parens, args)
   if (typeof value === 'number') {
     value = value.toString(10);
   }
