@@ -189,7 +189,7 @@ export default class PricingWizardPage extends Component {
 
     sendEvent('pricing-requested', community.id);
 
-    return updateUuidAux(data).then(() => redirectTo(redirectLink));
+    return updateUuidAux(data).then(() => redirectLink && redirectTo(redirectLink));
   };
 
   handleCompletePostConversion = (data, { interest, redirectLink }) => {
@@ -278,7 +278,7 @@ export default class PricingWizardPage extends Component {
               {({
                   data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
               }) => {
-                let formHeading = `Thank you! Our local senior living expert will be contacting you shortly with ${type}. What is the best way to reach you?`;
+                let formHeading = `Thank you! Our Local Senior Living Expert will be contacting you shortly with ${type}. What is the best way to reach you?`;
                 let formSubheading = null;
                 if (data.interest) {
                   const contactFormHeadingObj = contactFormHeadingMap[data.interest];
@@ -361,7 +361,7 @@ export default class PricingWizardPage extends Component {
               {({
                   data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
               }) => {
-                let formHeading = 'See your estimated pricing in your next step. We need your information to connect you to our partner agent.';
+                let formHeading = `Thank you! Our Local Senior Living Expert will be contacting you shortly with ${type}. What is the best way to reach you?`;
                 let formSubheading = null;
                 if (data.interest) {
                   const contactFormHeadingObj = contactFormHeadingMap[data.interest];
@@ -382,6 +382,7 @@ export default class PricingWizardPage extends Component {
                           onCareTypeChange={this.handleCareTypeChange}
                           onHelpHover={this.handleHelpHover}
                           uuidAux={uuidAux}
+                          type={type}
                         />
                         <WizardStep
                           component={CommunityBookATourContactFormContainer}

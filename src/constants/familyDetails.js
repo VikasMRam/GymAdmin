@@ -50,6 +50,7 @@ export const SOURCE_OPTIONS = [
   'Voicemail',
   'Bot',
   'LiveChat',
+  'Online',
   'Other',
 ];
 

@@ -184,7 +184,6 @@ const routes = [
   {
     path: ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
     component: DashboardAgentDetailPageContainer,
-    exact: true,
   },
   {
     path: ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH,

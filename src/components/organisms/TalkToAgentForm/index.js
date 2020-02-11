@@ -10,11 +10,11 @@ import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import fullWidth from 'sly/components/helpers/fullWidth';
-import { Button, Block } from 'sly/components/atoms';
+import { Button, Block, Heading } from 'sly/components/atoms';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
-const StyledBlock = textAlign(pad(Block));
+const StyledHeading = textAlign(pad(Heading));
 
 const CenteredTosAndPrivacy = textAlign(TosAndPrivacy);
 
@@ -55,7 +55,7 @@ export default class TalkToAgentForm extends Component {
         rows="3"
         name="message"
         label={`What can ${firstName} help you with?`}
-        placeholder="Please type here whatever you need help with regarding your senior living search. Then click send and we will reply shortly. WE DO NOT HAVE INFO ABOUT JOB OPENINGS."
+        placeholder="Please type here whatever question you have about senior living. Then click send and we will reply shortly. WE DO NOT HAVE INFO ABOUT JOB OPENINGS."
         component={ReduxField}
         required
       />
@@ -63,7 +63,7 @@ export default class TalkToAgentForm extends Component {
 
     return (
       <section>
-        <StyledBlock size="subtitle">{heading}</StyledBlock>
+        <StyledHeading size="subtitle">{heading}</StyledHeading>
         <form onSubmit={handleSubmit}>
           {showMessageFieldFirst && messageField}
           {hasLocation &&

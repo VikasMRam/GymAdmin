@@ -576,7 +576,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       gender, lookingFor, monthlyBudget, timeToMove, roomTypes, careLevels, communityTypes, assignedTos,
     } = meta;
     const {
-      id, clientInfo, stage, status, provider, organization: clientOrganization,
+      id, clientInfo, stage, status, provider, organization: clientOrganization, parentSlug,
     } = client;
     const { entityType, id: providerOrg } = provider;
     const { id: clientOrg } = clientOrganization;
@@ -649,6 +649,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         There are families with same contact info.&nbsp;<ClickHere palette="white" onClick={this.handleClickHereForMore}>Click here to check.</ClickHere>
       </span>
     );
+    let plink = <span/> ;
+    if ( parentSlug != "" ) {
+      plink = <Link palette="white" target="_blank" to={`/dashboard/agent/my-families/${parentSlug}`}
+                    onClick={clickEventHandler('fdetails', `Nav to Parent`)}>You are looking at {client.organization.name}'s family. Go to the parent record.</Link>;
+    }
+
     const topSection = (
       <>
         {clients && clients.length > 1 && (
@@ -658,7 +664,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         )}
         {isOfDifferentOrg &&
           <BigScreenPaddedBannerNotification hasBorderRadius palette="primary">
-            This Family belongs to a different organization named <i>{client.organization.name}</i>
+            <strong>{plink}</strong>
           </BigScreenPaddedBannerNotification>
         }
       </>
@@ -702,7 +708,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           }
           {isOfDifferentOrg &&
             <SmallScreenBannerNotification palette="primary">
-              This Family belongs to a different organization named <i>{client.organization.name}</i>
+              <strong>{plink}</strong>
             </SmallScreenBannerNotification>
           }
           <TabWrapper snap="top">

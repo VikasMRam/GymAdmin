@@ -36,16 +36,23 @@ const getPaginationData = ({ result, meta }) => {
 
 @withRedirectTo
 
-@prefetch('contacts', 'getContacts', (req, { datatable }) => req(datatable.query))
+@prefetch('contacts', 'getContacts', (req, { datatable, agentName }) => {
+  if (agentName) {
+    const qs = datatable.query;
+    qs['filter[agent]'] = agentName;
+    return req(qs);
+  }
+  return req(datatable.query);
+})
 
-export default class DashboardAgentTasksSectionContainer extends Component {
+export default class DashboardAgentContactsSectionContainer extends Component {
   static propTypes = {
     contacts: arrayOf(contactPropType),
     status: object,
     datatable: object,
     match: object.isRequired,
     location: object.isRequired,
-    redirectTo: func.isRequired
+    redirectTo: func.isRequired,
   };
 
   render() {

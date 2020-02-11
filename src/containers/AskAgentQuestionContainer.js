@@ -47,7 +47,8 @@ export default class AskAgentQuestionContainer extends Component {
     if (type) {
       category += `-${type}`;
     }
-    if (subType) {
+
+    if (subType && typeof subType === 'string') {
       category += `-${subType}`;
     }
     const event = {
@@ -88,8 +89,8 @@ export default class AskAgentQuestionContainer extends Component {
         hasEmail: false,
         showMessageFieldFirst: true,
         postSubmit,
+        type,
       };
-
       showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
     } else {
       const { heading, description, placeholder, question } = generateAskAgentQuestionContents(
@@ -105,6 +106,7 @@ export default class AskAgentQuestionContainer extends Component {
         description,
         placeholder,
         question,
+        type,
       };
 
       showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />, onClose);

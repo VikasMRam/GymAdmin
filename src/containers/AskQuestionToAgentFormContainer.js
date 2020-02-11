@@ -43,6 +43,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
     match: matchPropType.isRequired,
     createAction: func.isRequired,
     category: oneOf(['agent', 'community']),
+    type: string
   };
 
   static defaultProps = {
@@ -52,7 +53,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
   handleSubmit = (data) => {
     const {
       id, postSubmit, createAction, createOrUpdateUser, match,
-      user, category,
+      user, category, type
     } = this.props;
 
     const { message } = data;
@@ -90,8 +91,9 @@ export default class AskQuestionToAgentFormContainer extends Component {
         phone,
       }, { ignoreAlreadyRegistered: true }))
       .then(() => {
+        const c = `${category}-${type}`;
         const event = {
-          action: 'ask_question', category, label: id,
+          action: 'ask_question', category: c, label: id,
         };
 
         SlyEvent.getInstance().sendEvent(event);

@@ -32,7 +32,10 @@ export const getIsSNF = (community) => {
 
 export const buildAddressDisplay = (community) => {
   const { address } = community;
-  return `${address.line1}, ${address.city}, ${address.zip}, ${address.state}`;
+  if (address) {
+    return `${address.line1}, ${address.city}, ${address.zip}, ${address.state}`;
+  }
+  return '';
 };
 
 export const getReferralSentTimeText = date => dayjs(date).format('M/D/YY, h:mmA');

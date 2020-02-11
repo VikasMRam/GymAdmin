@@ -159,6 +159,7 @@ class AgentProfilePage extends Component {
                     id={id}
                     heading={`Ask ${firstName} a question`}
                     firstName={firstName}
+                    type="agent-profile-page"
                     postSubmit={() => {
                       notifyInfo(`We have received your request and our Seniorly Partner Agent, ${displayName} will get back to you soon.`);
                       if (this.agentSummaryRef.current.scrollIntoView) {

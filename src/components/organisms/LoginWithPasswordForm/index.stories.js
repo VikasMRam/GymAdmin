@@ -19,4 +19,13 @@ storiesOf('Organisms|LoginWithPasswordForm', module)
       onResetPasswordClick={action('onResetPasswordClick clicked')}
       emailOrPhone="test@test.com"
     />
+  ))
+  .add('with phone', () => (
+    <LoginWithPasswordFormContainer
+      handleSubmit={withPreventDefault(action('form submitted'))}
+      onDoThisLaterClick={action('onDoThisLaterClick clicked')}
+      onLoginWithOtpClick={action('onLoginWithOtpClick clicked')}
+      onResetPasswordClick={action('onResetPasswordClick clicked')}
+      emailOrPhone="12345678901"
+    />
   ));

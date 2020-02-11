@@ -56,14 +56,15 @@ export const LISTINGS = 'listings';
 export const PHOTOS = 'photos';
 export const AMENITIES = 'amenities';
 export const SERVICES = 'services';
-export const CONTACTS = 'contacts';
 export const CONTRACT = 'contract';
 export const CLIENTS = 'clients';
+export const AGENT_DETAILS = 'agent-details';
+export const CONTACTS = 'contacts';
 
 export const ADMIN_DASHBOARD_CALLS_PATH = `${AGENT_DASHBOARD_PATH}/calls`;
 export const ADMIN_DASHBOARD_CALL_DETAILS_PATH = `${ADMIN_DASHBOARD_CALLS_PATH}/:id/:tab?`;
 export const ADMIN_DASHBOARD_AGENTS_PATH = `${AGENT_DASHBOARD_PATH}/agents`;
-export const ADMIN_DASHBOARD_AGENT_DETAILS_PATH = `${ADMIN_DASHBOARD_AGENTS_PATH}/:id`;
+export const ADMIN_DASHBOARD_AGENT_DETAILS_PATH = `${ADMIN_DASHBOARD_AGENTS_PATH}/:id/:tab?`;
 
 export const ADMIN_DASHBOARD_COMMUNITIES_PATH = `${ADMIN_DASHBOARD_PATH}/communities`;
 export const ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH = `${ADMIN_DASHBOARD_PATH}/communities/:id/:tab?`;

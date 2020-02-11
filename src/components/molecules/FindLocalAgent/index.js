@@ -36,7 +36,7 @@ const FindLocalAgent = ({ onLocationSearch }) => (
   <Wrapper>
     <ContentWrapper>
       <TitleHeading level="hero" size="hero">Find your local senior living agent</TitleHeading>
-      <StyledBlock>Seniorly agents are local experts who can find homes that fit your care needs and budget</StyledBlock>
+      <StyledBlock>Our local experts can help you find the perfect living arrangement. Work with one of our senior living agents to find the perfect home for mom or dad</StyledBlock>
     </ContentWrapper>
     <StyledSearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
   </Wrapper>

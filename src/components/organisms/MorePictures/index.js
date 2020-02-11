@@ -3,7 +3,7 @@ import { arrayOf, shape, string, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import { Image } from 'sly/components/atoms';
+import { ResponsiveImage } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
@@ -34,10 +34,10 @@ export default function MorePictures({ images = [], onPictureClick }) {
   return (
     <Wrapper>
       {images.map((image, i) => (
-        <Image
+        <ResponsiveImage
           key={image.id}
           onClick={() => onPictureClick(image, i)}
-          src={image.src}
+          path={image.path}
           aspectRatio="4:3"
           alt={image.alt}
         />
@@ -50,7 +50,7 @@ MorePictures.propTypes = {
   images: arrayOf(
     shape({
       id: string.isRequired,
-      src: string.isRequired,
+      path: string.isRequired,
       alt: string.isRequired,
     }),
   ),

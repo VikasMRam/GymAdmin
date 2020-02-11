@@ -190,11 +190,11 @@ export default class HeaderContainer extends PureComponent {
     }
     let loginItem = lhItems.find(item => item.name === 'Sign in');
     if (loginItem) {
-      loginItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(() => {}); };
+      loginItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(); };
     }
     loginItem = menuItems.find(item => item.name === 'Sign in');
     if (loginItem) {
-      loginItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(() => {}); };
+      loginItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(); };
     }
     const mySlyMenuItem = lhItems.find(item => item.name === 'My Seniorly');
     if (mySlyMenuItem) {

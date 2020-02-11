@@ -36,6 +36,7 @@ export default class PricingWizardPageContainer extends Component {
     redirectTo: func.isRequired,
     match: object.isRequired,
     location: object.isRequired,
+    ensureAuthenticated: func.isRequired,
   };
 
   constructor(props) {
@@ -95,6 +96,7 @@ export default class PricingWizardPageContainer extends Component {
       createOrUpdateUser,
       match,
       createAction,
+      ensureAuthenticated,
     } = this.props;
 
     const {
@@ -122,7 +124,10 @@ export default class PricingWizardPageContainer extends Component {
       email,
     }, {
       ignoreAlreadyRegistered: true,
-    }).then(() => {
+    }).then(({ alreadyExists }) => {
+      if (alreadyExists) {
+        ensureAuthenticated({ emailOrPhone: email || phone });
+      }
       this.sendEvent('pricing-contact-submitted', community.id, currentStep);
     }));
   };
