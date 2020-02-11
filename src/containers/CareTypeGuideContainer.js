@@ -37,7 +37,6 @@ export default class CareTypeGuidePageContainer extends PureComponent {
       guideList,
       searchParams,
     } = this.props;
-    console.log(searchParams);
 
     return (
       <CareTypeGuidePage
