@@ -86,10 +86,9 @@ export default class DashboardCommunityDetailsForm extends Component {
             <Field
               name="propInfo.communityPhone"
               label="Front desk phone number"
-              type="text"
-              placeholder="925-555-5555"
-              parse={phoneParser}
-              format={phone => phoneFormatter(phone)}
+              type="phone"
+              placeholder="(925) 555-5555"
+              parens
               component={ReduxField}
               wideWidth
             />

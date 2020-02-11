@@ -306,6 +306,7 @@ Field.propTypes = {
     'dateChoice',
     'slider',
     'text',
+    'phone',
     'email',
     'password',
     'checkbox',

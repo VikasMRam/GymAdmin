@@ -10,12 +10,11 @@ import {
   PLATFORM_ADMIN_ROLE,
 } from 'sly/constants/roles';
 import {
+  DASHBOARD_ACCOUNT_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
-  FAMILY_DASHBOARD_ACCOUNT_PATH,
   AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_TASKS_PATH,
-  AGENT_DASHBOARD_ACCOUNT_PATH,
   AGENT_DASHBOARD_PROFILE_PATH, ADMIN_DASHBOARD_COMMUNITIES_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import SlyEvent from 'sly/services/helpers/events';
@@ -84,9 +83,6 @@ const customerMenuItems = [
   {
     name: 'Favorites', to: FAMILY_DASHBOARD_FAVORITES_PATH, section: 1, icon: 'favourite-light', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
-  {
-    name: 'My Account', to: FAMILY_DASHBOARD_ACCOUNT_PATH, section: 1, icon: 'user', onClick: ({ name }) => sendHeaderItemClickEvent(name),
-  },
 ];
 
 const agentMenuItems = [
@@ -100,10 +96,13 @@ const agentMenuItems = [
     name: 'Tasks', to: generatePath(AGENT_DASHBOARD_TASKS_PATH), section: 1, icon: 'checkbox-fill', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
   {
-    name: 'My Account', to: AGENT_DASHBOARD_ACCOUNT_PATH, section: 1, icon: 'user', onClick: ({ name }) => sendHeaderItemClickEvent(name),
-  },
-  {
     name: 'My Profile', to: AGENT_DASHBOARD_PROFILE_PATH, section: 1, icon: 'settings', onClick: ({ name }) => sendHeaderItemClickEvent(name),
+  },
+];
+
+const customerAndAgentMenuItems = [
+  {
+    name: 'My Account', to: DASHBOARD_ACCOUNT_PATH, section: 1, icon: 'user', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
 ];
 
@@ -124,14 +123,19 @@ const loggedInMenuItems = (user) => {
     if (roleID & AGENT_ND_ROLE) {
       roleBasedItems = agentMenuItems;
     }
+    if (roleID & (CUSTOMER_ROLE | AGENT_ND_ROLE)) {
+      roleBasedItems = [...roleBasedItems, ...customerAndAgentMenuItems];
+    }
     if (roleID & PLATFORM_ADMIN_ROLE) {
       roleBasedItems = [...adminMenuItems, ...agentMenuItems];
     }
-    roleBasedItems = [...roleBasedItems, { name: 'Log Out', section: 3, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
-  } else {
-    roleBasedItems = [...roleBasedItems, { name: 'Sign in', section: 3, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
   }
-  return roleBasedItems;
+
+  const loginButtonText = user
+    ? 'Log Out'
+    : 'Sign in';
+
+  return [...roleBasedItems, { name: loginButtonText, section: 3, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
 };
 
 const loginHeaderItems = user => user

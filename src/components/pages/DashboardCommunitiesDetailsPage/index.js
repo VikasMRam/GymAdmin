@@ -124,7 +124,7 @@ export default class DashboardCommunitiesDetailsPage extends Component {
   };
 
   render() {
-    const { community, currentTab, communityIsLoading, user } = this.props;
+    const { community, currentTab, communityIsLoading, user, notifyInfo, notifyError } = this.props;
 
     if (communityIsLoading) {
       return (
@@ -182,7 +182,11 @@ export default class DashboardCommunitiesDetailsPage extends Component {
 
           {currentTab === PROFILE && (
             <Section>
-              <DashboardCommunityDetailsFormContainer community={community} />
+              <DashboardCommunityDetailsFormContainer
+                notifyInfo={notifyInfo}
+                notifyError={notifyError}
+                community={community}
+              />
             </Section>
           )}
         </Right>

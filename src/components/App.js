@@ -20,8 +20,8 @@ import Router from 'sly/components/molecules/Router';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 import {
   DASHBOARD_PATH,
+  DASHBOARD_ACCOUNT_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
-  FAMILY_DASHBOARD_ACCOUNT_PATH,
   AGENT_DASHBOARD_PROFILE_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH,
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
@@ -32,7 +32,6 @@ import {
   FAMILY_DASHBOARD_MESSAGES_PATH,
   ADMIN_DASHBOARD_CALLS_PATH,
   ADMIN_DASHBOARD_CALL_DETAILS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
-  AGENT_DASHBOARD_ACCOUNT_PATH,
   ADMIN_DASHBOARD_AGENTS_PATH,
   ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
   ADMIN_DASHBOARD_COMMUNITIES_PATH,
@@ -114,11 +113,6 @@ const routes = [
     exact: true,
   },
   {
-    path: FAMILY_DASHBOARD_ACCOUNT_PATH,
-    component: DashboardMyAccountPageContainer,
-    exact: true,
-  },
-  {
     path: AGENT_DASHBOARD_FAMILIES_PATH,
     component: DashboardAgentFamilyOverviewPage,
     exact: true,
@@ -167,7 +161,7 @@ const routes = [
     component: DashboardCallDetailsPageContainer,
   },
   {
-    path: AGENT_DASHBOARD_ACCOUNT_PATH,
+    path: DASHBOARD_ACCOUNT_PATH,
     component: DashboardMyAccountPageContainer,
     exact: true,
   },

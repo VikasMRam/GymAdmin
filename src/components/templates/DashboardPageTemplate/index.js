@@ -6,10 +6,9 @@ import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
 import {
+  DASHBOARD_ACCOUNT_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
-  FAMILY_DASHBOARD_ACCOUNT_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH,
-  AGENT_DASHBOARD_ACCOUNT_PATH,
   AGENT_DASHBOARD_PROFILE_PATH,
   AGENT_DASHBOARD_MESSAGES_PATH,
   ADMIN_DASHBOARD_CALLS_PATH,
@@ -42,9 +41,8 @@ const onMenuItemClick = (menuItem) => {
 /* eslint-disable no-bitwise */
 const menuItems = [
   { label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick },
-  { label: 'My Account', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_ACCOUNT_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick },
   { label: 'My Families', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), role: AGENT_ND_ROLE, onClick: onMenuItemClick },
-  { label: 'My Account', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_ACCOUNT_PATH, role: AGENT_ND_ROLE, onClick: onMenuItemClick },
+  { label: 'My Account', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: DASHBOARD_ACCOUNT_PATH, role: CUSTOMER_ROLE | AGENT_ND_ROLE, onClick: onMenuItemClick },
   { label: 'My Profile', icon: 'settings', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_PROFILE_PATH, role: AGENT_ADMIN_ROLE, onClick: onMenuItemClick },
   { label: 'My Contacts', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_CONTACTS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
   // { label: 'Messages_', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_MESSAGES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick },
