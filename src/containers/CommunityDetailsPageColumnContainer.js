@@ -8,16 +8,7 @@ import AskAgentQuestionContainer from 'sly/containers/AskAgentQuestionContainer'
 
 export default function CommunityDetailsPageColumnContainer({ community }) {
   return (
-    <Experiment name="Community_DetailPage_GDP" defaultVariant="Get_Pricing_And_Availability">
-      <Variant name="Get_Help_Now">
-        <AskAgentQuestionContainer type="side-column-get-help-now">
-          {askAgent => <GetHelpNowContainer communitySlug={community.id} askAgent={askAgent} />}
-        </AskAgentQuestionContainer>
-      </Variant>
-      <Variant name="Get_Pricing_And_Availability">
-        <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
-      </Variant>
-    </Experiment>
+    <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
   );
 }
 
