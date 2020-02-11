@@ -4,7 +4,6 @@ export const phoneFormatter = (value, parens = false, ...args) => {
     return value;
   }
 
-  console.log('parens', parens, args)
   if (typeof value === 'number') {
     value = value.toString(10);
   }

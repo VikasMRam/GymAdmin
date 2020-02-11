@@ -1,28 +1,29 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Input from 'sly/components/atoms/Input';
+import PhoneInput from 'sly/components/molecules/PhoneInput/index';
 
-const wrap = (props = {}) => mount(<Input {...props} />);
+const wrap = (props = {}) => mount(<PhoneInput {...props} />);
 
-describe('Input', () => {
-  it('renders props when passed in', () => {
-    const wrapper = wrap({ type: 'text' });
+const lastCall = ({ mock }) => mock.calls[mock.calls.length - 1];
+
+describe('PhoneInput', () => {
+  it('renders input by default', () => {
+    const wrapper = wrap();
     expect(wrapper.find('input[type="text"]')).toHaveLength(1);
   });
 
-  it('renders input by default', () => {
-    const wrapper = wrap();
-    expect(wrapper.find('input')).toHaveLength(1);
-  });
+  it('accepts a phone and formats it', () => {
+    const onChange = jest.fn();
+    const wrapper = wrap({
+      name: 'phone',
+      value: '12345',
+      onChange,
+    });
+    const input = wrapper.find('input[name="phone"]');
+    expect(input.prop('value')).toEqual('123-45');
 
-  it('renders select when type is select', () => {
-    const wrapper = wrap({ type: 'select' });
-    expect(wrapper.find('select')).toHaveLength(1);
-  });
-
-  it('renders textarea when type is textarea', () => {
-    const wrapper = wrap({ type: 'textarea' });
-    expect(wrapper.find('textarea')).toHaveLength(1);
+    input.simulate('change', { target: { value: '123-456-7890' } });
+    expect(lastCall(onChange)[0].target.value).toEqual('1234567890');
   });
 });

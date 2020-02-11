@@ -13,11 +13,8 @@ export default class PhoneInput extends Component {
   };
 
   static defaultProps = {
+    value: '',
     parens: false,
-  };
-
-  state = {
-    unformattedValue: phoneParser(this.props.value),
   };
 
   ref = React.createRef();
@@ -35,35 +32,30 @@ export default class PhoneInput extends Component {
     let afterNumbers = phoneParser(event.target.value.slice(0, selectionStart)).length;
     let newPosition = 0;
 
-    console.log('afterNumbers', newPhone, selectionStart, afterNumbers);
-    for (let i = 0; i < newPhone.length; i++) {
-      if (newPhone[i].match(/\d/)) {
-        afterNumbers--;
-      }
-      newPosition++;
-      if (afterNumbers <= 0) {
-        break;
+    if (afterNumbers > 0) {
+      for (let i = 0; i < newPhone.length; i++) {
+        if (newPhone[i].match(/\d/)) {
+          afterNumbers--;
+        }
+        newPosition++;
+        if (afterNumbers <= 0) {
+          break;
+        }
       }
     }
-    console.log('newPosition', newPosition);
+
     window.requestAnimationFrame(() => {
       event.target.selectionStart = newPosition;
       event.target.selectionEnd = newPosition;
     });
 
     event.persist();
-    this.setState(
-      { unformattedValue: newValue },
-      () => {
-        event.target.value = newValue;
-        onChange(event);
-      },
-    );
+    event.target.value = newValue;
+    onChange(event);
   };
 
   render() {
-    const { unformattedValue } = this.state;
-    const value = this.format(unformattedValue);
+    const value = this.format(this.props.value);
     return <Input {...this.props} value={value} onChange={this.onChange} type="text" />;
   }
 }
