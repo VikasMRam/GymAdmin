@@ -86,7 +86,6 @@ const CareTypeGuidePage = ({
   guideList,
   searchParams,
 }) => {
-  console.log(searchParams);
   const HeaderContent = (
     <>
       <HeaderContainer />
