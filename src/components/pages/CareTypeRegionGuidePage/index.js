@@ -112,7 +112,10 @@ const CareTypeRegionGuidePage = ({
 
   const HelmetContent = () => {
     const { title, url } = geoGuide;
-    const description = `Learn everything about ${geoGuide.city}, ${geoGuide.state} ${geoGuide.caretype} facilities. Understand cost, compare retirement living communities and options, and find ${geoGuide.city} resources for senior residents.`;
+    const description = searchParams.tocg === 'assisted-living-guide' ?
+      `Learn everything about ${geoGuide.city}, ${geoGuide.state} ${geoGuide.caretype} facilities. Understand cost, compare retirement living communities and options, and find ${geoGuide.city} resources for senior residents.` :
+      `Learn everything about ${geoGuide.city}, ${geoGuide.state} ${geoGuide.caretype} facilities. Understand cost, compare retirement living communities and options, and find ${geoGuide.city} resources for senior residents with Alzheimer’s disease or other dementia related diagnoses.`;
+
     const canonicalUrl = `${host}${url}`;
 
     return (
