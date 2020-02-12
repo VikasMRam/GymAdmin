@@ -46,6 +46,7 @@ handleSumbit = (values) => {
   const { status, updateCommunity } = this.props; 
   const { id, type } = status.community.result;
   return updateCommunity({ id }, {
+    // do we need to put id and type here???
     id,
     type,
     attributes: values, 
