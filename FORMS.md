@@ -42,9 +42,11 @@ And in `handleSumbit` we can just:
 
 ```javascript
 handleSumbit = (values) => {
-  const { community, updateCommunity } = this.props; 
-  return updateCommunity({
-    id: community.id,
+  const { status, updateCommunity } = this.props; 
+  const { id, type } = status.community.result;
+  return updateCommunity({ id }, {
+    id,
+    type,
     attributes: values, 
   })
 }
