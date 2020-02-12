@@ -51,7 +51,17 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
     const { community, status, user, ...props } = this.props;
 
     const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
-    const initialValues = pick(status.community.result.attributes, ['name', 'propInfo']);
+    const initialValues = pick(
+      status.community.result.attributes,
+      [
+        'name',
+        'propInfo.communityPhone',
+        'propInfo.ownerName',
+        'propInfo.ownerEmail',
+        'propInfo.typeCare',
+        'propInfo.respiteAllowed',
+      ],
+    );
 
     return (
       <ReduxForm

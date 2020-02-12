@@ -27,7 +27,6 @@ Warning.displayName = 'Warning';
 
 const FormScrollSection = styled.div`
   max-height: calc(100vh - 240px);
-  overflow-y: auto;
 `;
 
 const IntroInfo = textAlign(styled(Block)`
@@ -112,13 +111,34 @@ export default class DashboardCommunityDetailsForm extends Component {
               component={ReduxField}
               wideWidth
             />
-            {/*<Field*/}
-            {/*  name="propInfo.typeCare"*/}
-            {/*  label="Care type"*/}
-            {/*  type="choice"*/}
-            {/*  isMulti*/}
-            {/*  options={AVAILABLE_TAGS.map(value => ({ label: value, value }))}*/}
-            {/*/>*/}
+            <Field
+              name="propInfo.typeCare"
+              label="Care type"
+              type="choice"
+              readOnly={!canEdit}
+              isMulti
+              options={AVAILABLE_TAGS.map(value => ({ label: value, value }))}
+              component={ReduxField}
+              wideWidth
+            />
+          </FormSection>
+          <FormSection>
+            <FormSectionHeading weight="medium">Respite care</FormSectionHeading>
+            <Field
+              name="propInfo.respiteAllowed.checked"
+              type="checkbox"
+              readOnly={!canEdit}
+              options={[{ value: true, label: 'Respite care allowed' }]}
+              component={ReduxField}
+            />
+            <Field
+              name="propInfo.respiteAllowed.minlength"
+              label="Minimum stay length"
+              type="number"
+              readOnly={!canEdit}
+              component={ReduxField}
+              wideWidth
+            />
           </FormSection>
         </FormScrollSection>
         {canEdit &&

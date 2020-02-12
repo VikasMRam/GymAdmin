@@ -29,11 +29,11 @@ const Wrapper = styled.div`
       `)}
     `)};
   }
-  
+
   .react-select__value-container {
     overflow: visible;
   }
-  
+
   hr {
     padding: 0;
     margin: 0;
@@ -42,7 +42,7 @@ const Wrapper = styled.div`
   ${StyledOption} {
     min-height: ${p => size('element', p.size)};
   }
-  
+
   .react-select__control {
     border-color: ${palette('slate.stroke')};
     box-shadow: none;
@@ -53,45 +53,45 @@ const Wrapper = styled.div`
       border-bottom-right-radius: 0;
     }
   }
-  
+
   .react-select__menu-list {
     padding-top: 0px;
     padding-bottom: 0px;
   }
-  
+
   .react-select__indicator {
     padding: 0 ${size('spacing.small')};
-  }  
-  
+  }
+
   .react-select__indicator-separator {
     display: none;
-  }  
-  
+  }
+
   .react-select__option, .react-select__single-value {
     margin-left: 0;
     display: flex;
     align-items: center;
-    padding-left: ${size('icon.large')}; 
+    padding-left: ${size('icon.large')};
     background: transparent;
-    
+
     &--is-selected  {
       color: ${palette('primary.base')};
       font-weight: ${size('weight.medium')};
     }
   }
-  
+
   .react-select__group-heading {
     color: ${palette('secondary', 'dark35')};
     font-weight: ${size('weight.bold')};
   }
-  
+
   .react-select__menu {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     top: 100%;
     margin-top: 0px;
     min-width: max-content;
-  } 
+  }
 `;
 
 const StyledIcon = styled(Icon)`
@@ -212,10 +212,25 @@ const Select = ({
   const SelectComponent = async
     ? AsyncSelect
     : SyncSelect;
-  const reducer = (accumulator, currentValue) => accumulator.push(currentValue.options ? currentValue.options : currentValue) && accumulator;
-  const values = options.reduce(reducer, []);
-  const flattenedValues = values.reduce((a, b) => a.concat(b), []);
-  value = flattenedValues.find(v => v.value === value) || value;
+
+  const flattenedOptions = options.reduce((acc, opt) => {
+    if (opt.options) {
+      acc.push(...opt.options);
+    } else {
+      acc.push(opt);
+    }
+    return acc;
+  }, []);
+
+  // the only occasion that we build the values from outside is when we are using
+  // autocomplete, which doesn't have a given array of options
+  if (flattenedOptions.length) {
+    if (props.isMulti) {
+      value = flattenedOptions.filter(o => value.includes(o.value));
+    } else {
+      value = flattenedOptions.find((o => value === o.value));
+    }
+  }
 
   const textSize = getTextSize(size);
 
@@ -247,6 +262,7 @@ Select.propTypes = {
   components: object,
   loadOptions: func,
   isSearchable: bool,
+  isMulti: bool,
   disabled: bool,
 };
 

@@ -35,3 +35,7 @@ To debug or develop the tests
 $ # good idea is to do it for only one viewport as it has faster turn around
 $ CYPRESS_viewport=laptop npx cypress open
 ```
+
+### About forms
+
+[Forms README](./FORMS.md)
