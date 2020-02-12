@@ -576,7 +576,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       gender, lookingFor, monthlyBudget, timeToMove, roomTypes, careLevels, communityTypes, assignedTos,
     } = meta;
     const {
-      id, clientInfo, stage, status, provider, organization: clientOrganization, parentSlug,
+      id, clientInfo, stage, status, provider, organization: clientOrganization, parentSlug, uuidAux,
     } = client;
     const { entityType, id: providerOrg } = provider;
     const { id: clientOrg } = clientOrganization;
@@ -594,6 +594,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       showUpdateAddNoteButtons = true;
       canEditFamilyDetails = true;
     }
+    const { uuidInfo: { residentInfo: { interest } } } = uuidAux || { uuidInfo: { residentInfo: {interest: "" }}};
+    const explicitOptOut = interest === "do-not-refer";
     // Sticky footer is for smaller width devices
     const stickyFooterOptions = this.getStickyFooterOptions(showUpdateAddNoteButtons, showAcceptRejectButtons);
 
@@ -649,6 +651,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         There are families with same contact info.&nbsp;<ClickHere palette="white" onClick={this.handleClickHereForMore}>Click here to check.</ClickHere>
       </span>
     );
+    const doNotReferWarningContent = (
+      <span>
+        This family explicitly opted out of being connected with an agent!
+      </span>
+    );
     let plink = <span/> ;
     if ( parentSlug != "" ) {
       plink = <Link palette="white" target="_blank" to={`/dashboard/agent/my-families/${parentSlug}`}
@@ -660,6 +667,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         {clients && clients.length > 1 && (
           <BigScreenPaddedBannerNotification hasBorderRadius palette="warning">
             {duplicateWarningContent}
+          </BigScreenPaddedBannerNotification>
+        )}
+        {explicitOptOut && (
+          <BigScreenPaddedBannerNotification hasBorderRadius palette="warning">
+            {doNotReferWarningContent}
           </BigScreenPaddedBannerNotification>
         )}
         {isOfDifferentOrg &&
@@ -705,6 +717,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             <SmallScreenBannerNotification palette="warning">
               {duplicateWarningContent}
             </SmallScreenBannerNotification>
+          }
+          {explicitOptOut &&
+          <SmallScreenBannerNotification palette="warning">
+            {doNotReferWarningContent}
+          </SmallScreenBannerNotification>
           }
           {isOfDifferentOrg &&
             <SmallScreenBannerNotification palette="primary">
