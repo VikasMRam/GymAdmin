@@ -87,6 +87,7 @@
     "@storybook/addon-options": "5.2.8",
     "@storybook/addons": "5.2.8",
     "@storybook/react": "^5.2.8",
+    "@tinymce/tinymce-react": "^3.4.0",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-module-resolver": "^4.0.0",
