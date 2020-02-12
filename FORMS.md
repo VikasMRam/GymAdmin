@@ -35,6 +35,7 @@ Then the fields can be named just like this:
 <Field
   name="propInfo.communityPhone"
   label="Front desk phone number"
+  ...
 />
 ```
 
