@@ -120,7 +120,7 @@ export default class PricingWizardPageContainer extends Component {
       },
     }).then(() => createOrUpdateUser({
       name,
-      regPhone,
+      phone: regPhone,
       email,
     }, {
       ignoreAlreadyRegistered: true,
