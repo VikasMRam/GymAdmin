@@ -669,7 +669,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             {duplicateWarningContent}
           </BigScreenPaddedBannerNotification>
         )}
-        {explicitOptOut && (
+        {userIs(user, PLATFORM_ADMIN_ROLE) && explicitOptOut && (
           <BigScreenPaddedBannerNotification hasBorderRadius palette="warning">
             {doNotReferWarningContent}
           </BigScreenPaddedBannerNotification>
@@ -718,7 +718,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               {duplicateWarningContent}
             </SmallScreenBannerNotification>
           }
-          {explicitOptOut &&
+          {userIs(user, PLATFORM_ADMIN_ROLE) && explicitOptOut &&
           <SmallScreenBannerNotification palette="warning">
             {doNotReferWarningContent}
           </SmallScreenBannerNotification>
