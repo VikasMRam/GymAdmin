@@ -111,7 +111,7 @@ const CareTypeGuidePage = ({
   const canonicalUrl = `${host}/${searchParams.tocg}`;
   const intro = searchParams.tocg === 'assisted-living-guide' ?
     'This page includes all the assisted living city guides currently available. Each city guide provides comprehensive details on assisted living in that city. From understanding cost, comparing with other care types, to details specific to senior residents living in the city, these retirement living guides are your go-to resource for learning everything about assisted living in the United States.' :
-    'This page includes all the memory care city guides currently available. Each city guide provides comprehensive details on memory care in that city. From understanding cost, comparing with other care types, to details specific to senior residents living in the city, these retirement living guides are your go-to resource for learning everything about memory care in the United States.';
+    'This page includes all the memory care city guides currently available. Each city guide provides comprehensive details on memory care in that city. From understanding cost, comparing with other care types, to details specific to senior residents living in the city, these senior living guides are your go-to resource for learning everything about memory care in the United States for those with Alzheimer\'s disease or other dementia related diagnosis.';
   return (
     <>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
