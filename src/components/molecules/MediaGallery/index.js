@@ -213,6 +213,7 @@ export default class MediaGallery extends Component {
         return (
           <SlideComponent
             key="media-gallery-slide"
+            src={media.src}
             path={media.path}
             aspectRatio="3:2"
             sizes={sizes}
