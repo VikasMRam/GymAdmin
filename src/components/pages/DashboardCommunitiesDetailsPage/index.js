@@ -11,6 +11,7 @@ import {
   MESSAGES,
   TASKS,
   PROFILE,
+  CARE_SERVICES,
 } from 'sly/constants/dashboardAppPaths';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import communityPropType, { meta as communityMetaPropType } from 'sly/propTypes/community';
@@ -41,6 +42,7 @@ import DashboardCommunitySummary from 'sly/components/organisms/DashboardCommuni
 import DashboardCommunityNameAndStatus from 'sly/components/organisms/DashboardCommunityNameAndStatus';
 import { topSnap } from 'sly/components/atoms/Box';
 import DashboardCommunityDetailsFormContainer from 'sly/containers/DashboardCommunityDetailsFormContainer';
+import DashboardCommunityCareServicesFormContainer from 'sly/containers/DashboardCommunityCareServicesFormContainer';
 
 const BackLinkWrapper = pad(styled.div`
   display: flex;
@@ -104,8 +106,9 @@ export default class DashboardCommunitiesDetailsPage extends Component {
     const { id } = community;
 
     const tabs = {
-      'Summary': SUMMARY,
-      'Profile': PROFILE,
+      Summary: SUMMARY,
+      Profile: PROFILE,
+      'Care Services': CARE_SERVICES,
       // ...
     };
 
@@ -183,6 +186,15 @@ export default class DashboardCommunitiesDetailsPage extends Component {
           {currentTab === PROFILE && (
             <Section>
               <DashboardCommunityDetailsFormContainer
+                notifyInfo={notifyInfo}
+                notifyError={notifyError}
+                community={community}
+              />
+            </Section>
+          )}
+          {currentTab === CARE_SERVICES && (
+            <Section>
+              <DashboardCommunityCareServicesFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
