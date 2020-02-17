@@ -33,7 +33,7 @@ export const tocPaths = (toc) => {
           path: '/memory-care',
           label: 'Memory Care',
         };
-      case 'Board And Care Home':
+      case 'Board and Care Home':
         return {
           path: '/board-and-care-home',
           label: 'Board and Care Home',

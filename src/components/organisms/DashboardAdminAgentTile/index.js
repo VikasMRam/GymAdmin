@@ -52,7 +52,7 @@ const agentPropsMap = {
   parentCompany: 'Parent Company',
   cellPhone: 'Cell Phone',
   workPhone: 'Work Phone',
-  last5DayLeadCount: 'Past 5 Day Count',
+  last24hrLeadCount: 'Past 1 Day Count',
 };
 
 export default class DashboardAdminAgentTile extends Component {
