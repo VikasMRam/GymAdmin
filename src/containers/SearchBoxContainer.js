@@ -135,6 +135,8 @@ export default class SearchBoxContainer extends Component {
       },
       (error) => {
         if (error.code === error.PERMISSION_DENIED) {
+          localStorage.removeItem(LOCATION_CURRENT_LATITUDE);
+          localStorage.removeItem(LOCATION_CURRENT_LONGITUDE);
           alert('There is no location support on this device or it is disabled. Please check your settings.');
         }
       });
@@ -149,6 +151,8 @@ export default class SearchBoxContainer extends Component {
       } else {
         navigator.geolocation.getCurrentPosition(this.searchForLatLong);
       }
+    } else {
+      alert('There is no location support on this device or it is disabled. Please check your settings.');
     }
   };
 
