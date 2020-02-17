@@ -6,12 +6,13 @@ import {
   filterLinkPath,
   getSearchParamFromPlacesResponse,
 } from 'sly/services/helpers/search';
-import SearchBox from 'sly/components/molecules/SearchBox';
+import { LOCATION_CURRENT_LATITUDE, LOCATION_CURRENT_LONGITUDE } from 'sly/constants/location';
 import SlyEvent from 'sly/services/helpers/events';
 import { query } from 'sly/services/newApi';
 import { withRedirectTo } from 'sly/services/redirectTo';
 import { normJsonApi } from 'sly/services/helpers/jsonApi';
 import { generateSearchUrl } from 'sly/services/helpers/url';
+import SearchBox from 'sly/components/molecules/SearchBox';
 
 @withRedirectTo
 @query('getAddresses', 'getAddresses')
@@ -125,7 +126,29 @@ export default class SearchBoxContainer extends Component {
 
   handleCurrentLocationClick = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.searchForLatLong);
+      const savedLatitude = localStorage.getItem(LOCATION_CURRENT_LATITUDE);
+      const savedLongitude = localStorage.getItem(LOCATION_CURRENT_LONGITUDE);
+
+      navigator.geolocation.watchPosition(({ coords }) => {
+        localStorage.setItem(LOCATION_CURRENT_LATITUDE, coords.latitude);
+        localStorage.setItem(LOCATION_CURRENT_LONGITUDE, coords.longitude);
+      },
+      (error) => {
+        if (error.code === error.PERMISSION_DENIED) {
+          alert('There is no location support on this device or it is disabled. Please check your settings.');
+        }
+      });
+
+      if (savedLatitude && savedLongitude) {
+        this.searchForLatLong({
+          coords: {
+            latitude: savedLatitude,
+            longitude: savedLongitude,
+          },
+        });
+      } else {
+        navigator.geolocation.getCurrentPosition(this.searchForLatLong);
+      }
     }
   };
 
