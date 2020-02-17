@@ -75,7 +75,7 @@ POST /v0/marketplace/community/1/relationships/images
     "type": "Image",
     "attributes": {
       "path": "83080026d3337c666cc71dead8bc9c4c/Mission_Villa.jpg",
-       ^ the path is the key with no first segment (temp|uploads) from the key
+       ^ the path is not the key, also no first segment (temp|uploads), not url encoded 
       "description: "",
       // "order": 2,
        ^ if the image should by default be added at the end
