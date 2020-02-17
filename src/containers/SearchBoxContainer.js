@@ -166,9 +166,11 @@ export default class SearchBoxContainer extends Component {
       getAddresses(query)
         .then((resp) => {
           const addresses = normJsonApi(resp);
-          const path = `${generateSearchUrl(['Assisted Living'], addresses[0])}?latitude=${coords.latitude}&longitude=${coords.longitude}`;
+          if (addresses.length) {
+            const path = `${generateSearchUrl(['Assisted Living'], addresses[0])}?latitude=${coords.latitude}&longitude=${coords.longitude}`;
 
-          redirectTo(path);
+            redirectTo(path);
+          }
         });
     }
   };
