@@ -2,7 +2,7 @@ export const DASHBOARD_PATH = '/dashboard';
 
 const FAMILY_DASHBOARD_PATH = `${DASHBOARD_PATH}/family`;
 const AGENT_DASHBOARD_PATH = `${DASHBOARD_PATH}/agent`;
-const ADMIN_DASHBOARD_PATH = `${DASHBOARD_PATH}/admin`
+const ADMIN_DASHBOARD_PATH = `${DASHBOARD_PATH}/admin`;
 
 export const NEWFAMILIES = 'new';
 export const PROSPECTING = 'prospecting';

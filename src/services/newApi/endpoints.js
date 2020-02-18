@@ -38,6 +38,7 @@ export default {
 
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
   getCommunities: { method: get, path: '/marketplace/communities' },
+  updateCommunity: { method: patch, path: '/marketplace/communities/:id' },
 
   getAgent: { method: get, path: '/marketplace/agents/:id' },
   getAgents: { method: get, path: '/marketplace/agents' },
