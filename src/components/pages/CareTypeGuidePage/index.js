@@ -93,7 +93,7 @@ const CareTypeGuidePage = ({
         <StyledImage path="react-assets/home/cover4.jpg" alt="A Home To Love" height={320} />
         <SearchBoxWrapper>
           <StyledHeading level="hero" size="hero" palette="white">
-            Assisted Living City Guides
+            {searchParams.tocg === 'assisted-living-guide' ? 'Assisted Living' : 'Memory Care'}  City Guides
           </StyledHeading>
           <StyledLabel palette="white">
             Find the best assisted living near you.
@@ -104,9 +104,14 @@ const CareTypeGuidePage = ({
     </>
   );
 
-  const title = ' Assisted Living City Guides ';
-  const description = ' Learn everything about assisted living facilities in the United States. Understand cost, compare retirement living communities and options, and find city specific resources for senior residents.';
-  const canonicalUrl = `${host}/assisted-living-guide`;
+  const title = searchParams.tocg === 'assisted-living-guide' ? 'Assisted Living City Guides ' : 'Memory Care Guides ';
+  const description = searchParams.tocg === 'assisted-living-guide' ?
+    'Learn everything about assisted living facilities in the United States. Understand cost, compare retirement living communities and options, and find city specific resources for senior residents.':
+    'Learn everything about memory care facilities in the United States. From Alzheimer’s disease to dementia care, use these guides to understand cost, compare retirement living communities and options, and find city specific resources for senior residents.';
+  const canonicalUrl = `${host}/${searchParams.tocg}`;
+  const intro = searchParams.tocg === 'assisted-living-guide' ?
+    'This page includes all the assisted living city guides currently available. Each city guide provides comprehensive details on assisted living in that city. From understanding cost, comparing with other care types, to details specific to senior residents living in the city, these retirement living guides are your go-to resource for learning everything about assisted living in the United States.' :
+    'This page includes all the memory care city guides currently available. Each city guide provides comprehensive details on memory care in that city. From understanding cost, comparing with other care types, to details specific to senior residents living in the city, these senior living guides are your go-to resource for learning everything about memory care in the United States for those with Alzheimer\'s disease or other dementia related diagnosis.';
   return (
     <>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
@@ -120,7 +125,7 @@ const CareTypeGuidePage = ({
         {guideList &&
           <Wrapper>
             <Paragraph>
-              This page includes all the assisted living city guides currently available. Each city guide provides comprehensive details on assisted living in that city. From understanding cost, comparing with other care types, to details specific to senior residents living in the city, these retirement living guides are your go-to resource for learning everything about assisted living in the United States.
+              {intro}
             </Paragraph>
             <StyledHeading level="title" size="title">
               List of Guides
@@ -134,8 +139,12 @@ const CareTypeGuidePage = ({
             </Paragraph>
           </Wrapper>
         }
-        <StyledArticle><SeoLinks title="Find Assisted Living Near You by City" links={ALSeoCities} /></StyledArticle>
-        <StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>
+        {
+          searchParams.tocg === 'assisted-living-guide' && (<StyledArticle><SeoLinks title="Find Assisted Living Near You by City" links={ALSeoCities} /></StyledArticle>)
+        }
+        {
+          searchParams.tocg === 'assisted-living-guide' && (<StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>)
+        }
       </TemplateContent>
       <Footer />
     </>

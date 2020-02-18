@@ -68,6 +68,12 @@ storiesOf('Molecules|Field', module)
   .add('type textarea with showCharacterCount', () => (
     <Field showCharacterCount name="field" label="Label" type="textarea" />
   ))
+  .add('type richtextarea', () => (
+    <Field name="field" label="Label" type="richtextarea" />
+  ))
+  .add('type richtextarea disabled', () => (
+    <Field name="field" label="Label" type="richtextarea" disabled />
+  ))
   .add('type select', () => (
     <Field name="field" label="Label" type="select" >
       <option>Name 1</option>

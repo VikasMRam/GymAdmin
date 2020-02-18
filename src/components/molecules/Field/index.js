@@ -25,6 +25,7 @@ import LocationSearch from 'sly/components/molecules/LocationSearch';
 import DatepickerStyles from 'sly/components/themes/DatepickerStyles';
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/components/atoms/Select'));
+const RichTextArea = loadable(() => import(/* webpackChunkName: "chunkAtomRichTextArea" */'sly/components/atoms/RichTextArea'));
 const DatePickerLoadable = loadable(() => import(/* webpackChunkName: "chunkReactDatePicker" */'react-datepicker'));
 const DatePicker = props => (
   <>
@@ -72,6 +73,8 @@ const getInputComponent = (type) => {
       return CheckboxInput;
     case 'locationSearch':
       return LocationSearch;
+    case 'richtextarea':
+      return RichTextArea;
     default:
       return Input;
   }
@@ -318,6 +321,7 @@ Field.propTypes = {
     'date',
     'locationSearch',
     'daterange',
+    'richtextarea',
   ]),
   placeholder: string,
   labelRight: node,
