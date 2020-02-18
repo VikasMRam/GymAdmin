@@ -38,4 +38,4 @@ $ CYPRESS_viewport=laptop npx cypress open
 
 ### About forms
 
-[Forms README](./FORMS.md)
+[Forms README](docs/FORMS.md)
