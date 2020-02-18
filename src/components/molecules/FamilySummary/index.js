@@ -8,7 +8,7 @@ import { size } from 'sly/components/themes';
 import clientPropType from 'sly/propTypes/client';
 import { Box, Heading, Label, Block, Link, Hr } from 'sly/components/atoms';
 import Role from 'sly/components/common/Role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
+import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
@@ -117,12 +117,14 @@ const FamilySummary = ({
           <Block size="caption">{client.clientInfo.slyMessage}</Block>
         </SlyIntro>
       }
+      <Role is={PLATFORM_ADMIN_ROLE | AGENT_ND_ROLE}>
       {client.clientInfo && client.clientInfo.slyAgentMessage &&
         <SlyIntro minHeight="tiny">
           <Label palette="grey">Message</Label>
           <Block size="caption">{client.clientInfo.slyAgentMessage}</Block>
         </SlyIntro>
         }
+      </Role>
       <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
       {client.clientInfo && client.clientInfo.slyCommunityMessage &&
         <SlyIntro minHeight="tiny">
