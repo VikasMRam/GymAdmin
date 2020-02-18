@@ -57,7 +57,7 @@ export const DashboardWithSummaryPageTemplate = styled(DashboardPageTemplate)`
     display: grid;
     column-gap: ${size('spacing.xLarge')};
     grid-template-columns: ${columnWidth(3, size('layout.gutter'))} auto;
-    grid-template-rows: min-content min-content auto;
+    grid-template-rows: max-content max-content auto;
     grid-template-areas:
       "top top"
       "left right"

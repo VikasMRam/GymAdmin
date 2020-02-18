@@ -11,7 +11,7 @@ import {
   MESSAGES,
   TASKS,
   PROFILE,
-  CARE_SERVICES,
+  CARE_SERVICES, PRICING,
 } from 'sly/constants/dashboardAppPaths';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import communityPropType, { meta as communityMetaPropType } from 'sly/propTypes/community';
@@ -43,6 +43,7 @@ import DashboardCommunityNameAndStatus from 'sly/components/organisms/DashboardC
 import { topSnap } from 'sly/components/atoms/Box';
 import DashboardCommunityDetailsFormContainer from 'sly/containers/DashboardCommunityDetailsFormContainer';
 import DashboardCommunityCareServicesFormContainer from 'sly/containers/DashboardCommunityCareServicesFormContainer';
+import DashboardCommunityPricingFormContainer from 'sly/containers/DashboardCommunityPricingFormContainer';
 
 const BackLinkWrapper = pad(styled.div`
   display: flex;
@@ -57,6 +58,7 @@ const AlignCenterBackLinkWrapper = styled(BackLinkWrapper)`
 // FIXME: redundant code to remove styling from tabs, won't be necessary if tabs are styled property according to the
 // definitive designs using DashboardWithSummaryTemplate
 const StyledTabs = styled(Tabs)`
+  border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
   @media (max-width: calc(${size('breakpoint.laptop')} - 1px)) {
     ${topSnap};
   }
@@ -109,6 +111,7 @@ export default class DashboardCommunitiesDetailsPage extends Component {
       Summary: SUMMARY,
       Profile: PROFILE,
       'Care Services': CARE_SERVICES,
+      Pricing: PRICING,
       // ...
     };
 
@@ -153,7 +156,7 @@ export default class DashboardCommunitiesDetailsPage extends Component {
     if (!community) {
       return (
         <DashboardPageTemplate activeMenuItem="Communities">
-          <TextAlignCenterBlock weight="medium" size="subtitle">Family not found!</TextAlignCenterBlock>
+          <TextAlignCenterBlock weight="medium" size="subtitle">Community not found!</TextAlignCenterBlock>
           <AlignCenterBackLinkWrapper>{backlink}</AlignCenterBackLinkWrapper>
         </DashboardPageTemplate>
       );
@@ -195,6 +198,15 @@ export default class DashboardCommunitiesDetailsPage extends Component {
           {currentTab === CARE_SERVICES && (
             <Section>
               <DashboardCommunityCareServicesFormContainer
+                notifyInfo={notifyInfo}
+                notifyError={notifyError}
+                community={community}
+              />
+            </Section>
+          )}
+          {currentTab === PRICING && (
+            <Section>
+              <DashboardCommunityPricingFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}

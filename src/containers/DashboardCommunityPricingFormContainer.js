@@ -8,16 +8,16 @@ import * as immutable from 'object-path-immutable';
 import clientPropType from 'sly/propTypes/client';
 import userProptype from 'sly/propTypes/user';
 import { query, prefetch } from 'sly/services/newApi';
-import DashboardCommunityCareServicesForm from 'sly/components/organisms/DashboardCommunityCareServicesForm';
 import withUser from 'sly/services/newApi/withUser';
 import { userIs } from 'sly/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import DashboardCommunityPricingForm from 'sly/components/organisms/DashboardCommunityPricingForm';
 
 const formName = 'DashboardCommunityCareServicesForm';
 
 const ReduxForm = reduxForm({
   form: formName,
-})(DashboardCommunityCareServicesForm);
+})(DashboardCommunityPricingForm);
 
 @query('updateCommunity', 'updateCommunity')
 @withUser
@@ -26,7 +26,7 @@ const ReduxForm = reduxForm({
   id: match.params.id,
 }))
 
-export default class DashboardCommunityCareServicesFormContainer extends Component {
+export default class DashboardCommunityPricingFormContainer extends Component {
   static propTypes = {
     updateCommunity: func.isRequired,
     notifyInfo: func.isRequired,
@@ -54,8 +54,11 @@ export default class DashboardCommunityCareServicesFormContainer extends Compone
     const initialValues = pick(
       status.community.result.attributes,
       [
-        'propInfo.careServices',
-        'propInfo.nonCareServices',
+        'propInfo.sharedSuiteRate',
+        'propInfo.privateSuiteRate',
+        'propInfo.studioApartmentRate',
+        'propInfo.oneBedroomApartmentRate',
+        'propInfo.twoBedroomApartmentRate',
       ],
     );
     return (
