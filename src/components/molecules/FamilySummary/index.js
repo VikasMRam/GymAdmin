@@ -7,6 +7,8 @@ import cursor from 'sly/components/helpers/cursor';
 import { size } from 'sly/components/themes';
 import clientPropType from 'sly/propTypes/client';
 import { Box, Heading, Label, Block, Link, Hr } from 'sly/components/atoms';
+import Role from 'sly/components/common/Role';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
@@ -117,16 +119,18 @@ const FamilySummary = ({
       }
       {client.clientInfo && client.clientInfo.slyAgentMessage &&
         <SlyIntro minHeight="tiny">
-          <Label palette="grey">Message for Agents</Label>
+          <Label palette="grey">Message</Label>
           <Block size="caption">{client.clientInfo.slyAgentMessage}</Block>
         </SlyIntro>
         }
+      <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
       {client.clientInfo && client.clientInfo.slyCommunityMessage &&
         <SlyIntro minHeight="tiny">
-          <Label palette="grey">Message for Community</Label>
+          <Label palette="grey">Message</Label>
           <Block size="caption">{client.clientInfo.slyCommunityMessage}</Block>
         </SlyIntro>
       }
+      </Role>
     </OuterColumWrapper>
     {(client.admin || client.organization) &&
       <Hr />
