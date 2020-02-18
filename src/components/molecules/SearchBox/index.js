@@ -117,12 +117,13 @@ const SearchBox = ({
                   type="search"
                   size="large"
                 />
-                {((isTextboxInFocus && onCurrentLocationClick) || suggestions.length > 0) && (
+                {(isTextboxInFocus && (onCurrentLocationClick || suggestions.length > 0)) && (
                   <SearchSuggestionsWrapper layout={layout}>
                     {/* user mouseDown instead of onClick as the onClick which is triggered after mouse button is release will trigger blur of textbox
                         that will by the time hide the suggestions dropdown
                     */}
-                    <SearchSuggestion onMouseDown={onCurrentLocationClick}><StyledIcon icon="map" /> Current Location</SearchSuggestion>
+                    {onCurrentLocationClick &&
+                      <SearchSuggestion onMouseDown={onCurrentLocationClick}><StyledIcon icon="map" /> Current Location</SearchSuggestion>}
                     {suggestions.map(suggestion => (
                       <SearchSuggestion {...getSuggestionItemProps(suggestion)} active={suggestion.active}>
                         {suggestion.description}

@@ -361,7 +361,7 @@ const HomePage = ({
           <StyledLabel palette="white">
             Search Assisted Living, Memory Care, Nursing Homes and More
           </StyledLabel>
-          <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
+          <SearchBoxContainer hasCurrentLocation layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>
         <ImageCreditDiv>
           <ImageCreditLabel palette="white">

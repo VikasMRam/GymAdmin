@@ -32,6 +32,7 @@ export default class SearchBoxContainer extends Component {
     onLocationSearch: func,
     redirectTo: func.isRequired,
     getAddresses: func.isRequired,
+    hasCurrentLocation: bool,
   };
 
   static defaultProps = {
@@ -101,10 +102,15 @@ export default class SearchBoxContainer extends Component {
   };
 
   handleTextboxFocus = () => {
-    this.setState({
-      locationInfo: null,
+    const { clearLocationOnBlur } = this.props;
+    const newState = {
       isTextboxInFocus: true,
-    });
+    };
+    if (clearLocationOnBlur) {
+      newState.locationInfo = null;
+    }
+
+    this.setState(newState);
   };
 
   handleTextboxBlur = () => {
@@ -176,7 +182,7 @@ export default class SearchBoxContainer extends Component {
   };
 
   render() {
-    const { layout, clearLocationOnBlur, ...props } = this.props;
+    const { layout, hasCurrentLocation, ...props } = this.props;
     const { address, isTextboxInFocus } = this.state;
 
     return (
@@ -186,10 +192,10 @@ export default class SearchBoxContainer extends Component {
         onChange={this.handleChange}
         onSelect={this.handleSelect}
         onSearchButtonClick={this.handleSearch}
-        onTextboxFocus={clearLocationOnBlur ? this.handleTextboxFocus : null}
+        onTextboxFocus={this.handleTextboxFocus}
         onTextboxBlur={this.handleTextboxBlur}
         isTextboxInFocus={isTextboxInFocus}
-        onCurrentLocationClick={this.handleCurrentLocationClick}
+        onCurrentLocationClick={hasCurrentLocation ? this.handleCurrentLocationClick : null}
         {...props}
       />
     );
