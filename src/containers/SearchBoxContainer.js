@@ -11,7 +11,6 @@ import SlyEvent from 'sly/services/helpers/events';
 import { query } from 'sly/services/newApi';
 import { withRedirectTo } from 'sly/services/redirectTo';
 import { normJsonApi } from 'sly/services/helpers/jsonApi';
-import { generateSearchUrl } from 'sly/services/helpers/url';
 import SearchBox from 'sly/components/molecules/SearchBox';
 
 @withRedirectTo
@@ -32,7 +31,7 @@ export default class SearchBoxContainer extends Component {
     onLocationSearch: func,
     redirectTo: func.isRequired,
     getAddresses: func.isRequired,
-    hasCurrentLocation: bool,
+    onCurrentLocation: func,
   };
 
   static defaultProps = {
@@ -131,6 +130,10 @@ export default class SearchBoxContainer extends Component {
   };
 
   handleCurrentLocationClick = () => {
+    SlyEvent.getInstance().sendEvent({
+      action: 'select', category: 'googleSearchOption', label: 'currentLocation',
+    });
+
     if (navigator.geolocation) {
       const savedLatitude = localStorage.getItem(LOCATION_CURRENT_LATITUDE);
       const savedLongitude = localStorage.getItem(LOCATION_CURRENT_LONGITUDE);
@@ -141,6 +144,9 @@ export default class SearchBoxContainer extends Component {
       },
       (error) => {
         if (error.code === error.PERMISSION_DENIED) {
+          SlyEvent.getInstance().sendEvent({
+            action: 'revoke-permission', category: 'googleSearchOption', label: 'currentLocation',
+          });
           localStorage.removeItem(LOCATION_CURRENT_LATITUDE);
           localStorage.removeItem(LOCATION_CURRENT_LONGITUDE);
           alert('There is no location support on this device or it is disabled. Please check your settings.');
@@ -158,12 +164,15 @@ export default class SearchBoxContainer extends Component {
         navigator.geolocation.getCurrentPosition(this.searchForLatLong);
       }
     } else {
+      SlyEvent.getInstance().sendEvent({
+        action: 'no-support', category: 'googleSearchOption', label: 'currentLocation',
+      });
       alert('There is no location support on this device or it is disabled. Please check your settings.');
     }
   };
 
   searchForLatLong = ({ coords }) => {
-    const { redirectTo, getAddresses } = this.props;
+    const { getAddresses, onCurrentLocation } = this.props;
 
     if (coords.latitude && coords.longitude) {
       const query = {
@@ -172,17 +181,15 @@ export default class SearchBoxContainer extends Component {
       getAddresses(query)
         .then((resp) => {
           const addresses = normJsonApi(resp);
-          if (addresses.length) {
-            const path = `${generateSearchUrl(['Assisted Living'], addresses[0])}?latitude=${coords.latitude}&longitude=${coords.longitude}`;
-
-            redirectTo(path);
+          if (onCurrentLocation) {
+            onCurrentLocation(addresses, coords);
           }
         });
     }
   };
 
   render() {
-    const { layout, hasCurrentLocation, ...props } = this.props;
+    const { layout, onCurrentLocation, ...props } = this.props;
     const { address, isTextboxInFocus } = this.state;
 
     return (
@@ -195,7 +202,7 @@ export default class SearchBoxContainer extends Component {
         onTextboxFocus={this.handleTextboxFocus}
         onTextboxBlur={this.handleTextboxBlur}
         isTextboxInFocus={isTextboxInFocus}
-        onCurrentLocationClick={hasCurrentLocation ? this.handleCurrentLocationClick : null}
+        onCurrentLocationClick={onCurrentLocation ? this.handleCurrentLocationClick : null}
         {...props}
       />
     );

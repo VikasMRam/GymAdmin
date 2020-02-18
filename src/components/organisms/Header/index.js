@@ -172,6 +172,7 @@ const OnlyInTablet = styled.div`
 
 const Header = ({
   menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, onMenuItemClick, onHeaderBlur, className, smallScreenMenuItems, onLogoClick,
+  onCurrentLocation,
 }) => {
   const headerItemComponents = headerItems.map(item => item.isButton ? (
     <Button onClick={() => item.onClick(item)} key={item.name}>
@@ -244,7 +245,7 @@ const Header = ({
           <Link palette="secondary" variation="dark35" to="/"><Icon icon="logo" size="large" /></Link>
         </OnlyInMobile>
       </SeniorlyIconMenu>
-      <StyledSearchBoxContainer hasCurrentLocation menuOpen={menuOpen} hasShadow layout="header" onLocationSearch={onLocationSearch} />
+      <StyledSearchBoxContainer onCurrentLocation={onCurrentLocation} menuOpen={menuOpen} hasShadow layout="header" onLocationSearch={onLocationSearch} />
       <HeaderItems>
         {headerItemComponents}
       </HeaderItems>
@@ -268,6 +269,7 @@ Header.propTypes = {
   onMenuIconClick: func,
   onMenuItemClick: func,
   onLocationSearch: func,
+  onCurrentLocation: func,
   onHeaderBlur: func,
   onLogoClick: func,
   headerItems: arrayOf(shape({
