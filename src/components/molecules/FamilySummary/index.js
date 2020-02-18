@@ -117,21 +117,23 @@ const FamilySummary = ({
           <Block size="caption">{client.clientInfo.slyMessage}</Block>
         </SlyIntro>
       }
-      <Role is={PLATFORM_ADMIN_ROLE | AGENT_ND_ROLE}>
-      {client.clientInfo && client.clientInfo.slyAgentMessage &&
-        <SlyIntro minHeight="tiny">
-          <Label palette="grey">Message</Label>
-          <Block size="caption">{client.clientInfo.slyAgentMessage}</Block>
-        </SlyIntro>
-        }
+      /* eslint-disable-next-line no-bitwise */
+      <Role is={PLATFORM_ADMIN_ROLE|AGENT_ND_ROLE}>
+        {client.clientInfo && client.clientInfo.slyAgentMessage &&
+          <SlyIntro minHeight="tiny">
+            <Label palette="grey">Message</Label>
+            <Block size="caption">{client.clientInfo.slyAgentMessage}</Block>
+          </SlyIntro>
+          }
       </Role>
-      <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
-      {client.clientInfo && client.clientInfo.slyCommunityMessage &&
-        <SlyIntro minHeight="tiny">
-          <Label palette="grey">Message</Label>
-          <Block size="caption">{client.clientInfo.slyCommunityMessage}</Block>
-        </SlyIntro>
-      }
+      /* eslint-disable-next-line no-bitwise */
+      <Role is={PLATFORM_ADMIN_ROLE|PROVIDER_OD_ROLE}>
+        {client.clientInfo && client.clientInfo.slyCommunityMessage &&
+          <SlyIntro minHeight="tiny">
+            <Label palette="grey">Message</Label>
+            <Block size="caption">{client.clientInfo.slyCommunityMessage}</Block>
+          </SlyIntro>
+        }
       </Role>
     </OuterColumWrapper>
     {(client.admin || client.organization) &&
