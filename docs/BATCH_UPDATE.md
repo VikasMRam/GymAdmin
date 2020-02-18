@@ -68,7 +68,7 @@ Actual key at that point being for example: `temp/83080026d3337c666cc71dead8bc9c
 Then we add the image resource
 
 ```http request
-POST /v0/marketplace/community/1/relationships/images
+POST /v0/marketplace/images
 
 {
   "data": {
@@ -81,6 +81,14 @@ POST /v0/marketplace/community/1/relationships/images
        ^ if the image should by default be added at the end
     }
   }
+  "relationships": {
+    "Gallery": {
+      "data": {
+        "id": 1,
+        "type": "Galery",
+      }
+    }
+  }
 }
 ```
 
@@ -89,34 +97,7 @@ Api should be able to manage the relationship;
 ### Remove
 
 ```http request
-DELETE /v0/marketplace/community/1/relationships/images
-
-{
-  "data": [{ 
-    "type": "Image",
-    "id": 2
-  }]
-}
-```
-
-or
-
-```http request
-DELETE /v0/marketplace/community/1/relationships/images/2
-```
-
-or sort and delete at the same time
-
-
-```http request
-PATCH /v0/marketplace/community/1/images
-
-{
-  "data": [
-    // image id 2 deleted by omission  
-    { "type": "Image", "id": 3, "attributes": { "order": 0 } }
-  ]
-}
+DELETE /v0/marketplace/images/2
 ```
 
 ### Edit one image
@@ -124,7 +105,7 @@ PATCH /v0/marketplace/community/1/images
 In this example we just add a description
 
 ```http request
-PATCH /v0/marketplace/community/1/relationships/images/2
+PATCH /v0/marketplace/images/2
 
 {
   "data": {
@@ -140,12 +121,14 @@ PATCH /v0/marketplace/community/1/relationships/images/2
 ### Sort
 
 ```http request
-PATCH /v0/marketplace/community/1/images
+PATCH /v0/marketplace/gallery/1
 
 {
-  "data": [
-    { "type": "Image", "id": 2, "attributes": { "order": 0 } },
-    { "type": "Image", "id": 3, "attributes": { "order": 1 } }
-  ]
+  "relationships": {
+    "images": [
+      { "type": "Image", "id": 2, "attributes": { "order": 0 } },
+      { "type": "Image", "id": 3, "attributes": { "order": 1 } }
+    ]
+  }
 }
 ```
