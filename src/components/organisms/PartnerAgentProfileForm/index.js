@@ -126,7 +126,7 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
         <Field
           name="cv"
           label="Rich Text Bio"
-          type="textarea"
+          type="richtextarea"
           placeholder=""
           component={ReduxField}
           wideWidth

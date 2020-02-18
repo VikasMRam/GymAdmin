@@ -54,7 +54,7 @@ const CommunityBookATourContactForm = ({
             component={ReduxField}
           />
         }
-        {(community && community.partnerAgents && community.partnerAgents.length === 0) && !(user && user.email) &&
+        {!(user && user.email) &&
           <Field
             name="email"
             label="Email"

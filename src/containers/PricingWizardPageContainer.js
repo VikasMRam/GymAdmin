@@ -104,7 +104,7 @@ export default class PricingWizardPageContainer extends Component {
       phone = (user && user.phoneNumber) || undefined,
       email = (user && user.email) || undefined,
     } = data;
-
+    const regPhone = phone.replace(/\D/g,'');
     return createAction({
       type: 'UUIDAction',
       attributes: {
@@ -120,13 +120,13 @@ export default class PricingWizardPageContainer extends Component {
       },
     }).then(() => createOrUpdateUser({
       name,
-      phone,
+      phone: regPhone,
       email,
     }, {
       ignoreAlreadyRegistered: true,
     }).then(({ alreadyExists }) => {
       if (alreadyExists) {
-        ensureAuthenticated({ emailOrPhone: email || phone });
+        ensureAuthenticated({ emailOrPhone: email || regPhone });
       }
       this.sendEvent('pricing-contact-submitted', community.id, currentStep);
     }));

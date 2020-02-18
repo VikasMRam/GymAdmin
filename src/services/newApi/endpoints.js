@@ -88,4 +88,6 @@ export default {
 
   getDatatable: { method: get, path: '/meta-data/datatables/:id' },
   sendEbook: { method: post, path: '/platform/send-ebook' },
+
+  getAddresses: { method: get, path: '/platform/addresses' },
 };

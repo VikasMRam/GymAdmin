@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import { object, func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
+import { withRedirectTo } from 'sly/services/redirectTo';
+import { generateSearchUrl } from 'sly/services/helpers/url';
 import SlyEvent from 'sly/services/helpers/events';
-import HomePage from 'sly/components/pages/HomePage';
 import { getSearchParamFromPlacesResponse, filterLinkPath, getSearchParams } from 'sly/services/helpers/search';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import ModalController from 'sly/controllers/ModalController';
+import HomePage from 'sly/components/pages/HomePage';
+
+@withRedirectTo
 
 class HomePageContainer extends Component {
   static propTypes = {
@@ -15,6 +19,7 @@ class HomePageContainer extends Component {
     pathName: string,
     searchParams: object,
     setQueryParams: func,
+    redirectTo: func.isRequired,
   };
 
   state = {
@@ -70,8 +75,17 @@ class HomePageContainer extends Component {
     history.push(path);
   };
 
+  handleCurrentLocation = (addresses, { latitude, longitude }) => {
+    const { redirectTo } = this.props;
+
+    if (addresses.length) {
+      const path = `${generateSearchUrl(['Assisted Living'], addresses[0])}?latitude=${latitude}&longitude=${longitude}`;
+
+      redirectTo(path);
+    }
+  };
+
   render() {
-    const { setActiveDiscoverHome, handleOnLocationSearch, handleToggleHowSlyWorksVideoPlaying } = this;
     const { howSlyWorksVideoPlaying } = this.state;
     const { searchParams, setQueryParams, pathName, history } = this.props;
     const { modal, currentStep } = searchParams;
@@ -82,9 +96,9 @@ class HomePageContainer extends Component {
           hide,
         }) => (
           <HomePage
-            setActiveDiscoverHome={setActiveDiscoverHome}
-            onLocationSearch={handleOnLocationSearch}
-            toggleHowSlyWorksVideoPlaying={handleToggleHowSlyWorksVideoPlaying}
+            setActiveDiscoverHome={this.setActiveDiscoverHome}
+            onLocationSearch={this.handleOnLocationSearch}
+            toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
             queryParams={{ modal, currentStep }}
             setQueryParams={setQueryParams}
             pathName={pathName}
@@ -92,6 +106,7 @@ class HomePageContainer extends Component {
             showModal={show}
             hideModal={hide}
             history={history}
+            onCurrentLocation={this.handleCurrentLocation}
           />
         )}
       </ModalController>

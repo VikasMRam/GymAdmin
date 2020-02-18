@@ -37,6 +37,7 @@ const config = {
     loadAutoComplete: !process.env.OFFLINE_MODE,
     disableExperiments: process.env.DISABLE_EXPERIMENTS,
     enableExperimentsDebugger: process.env.ENABLE_EXPERIMENT_DEBUGGER,
+    tinyMCEApiKey: 'zalf4x4cr6354ko1klhtu90vmtbee1qw9r4j1qy1dpm3xabb',
   },
 
   test: {
