@@ -14,7 +14,6 @@ import {
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardCommunitiesDetailsPage from 'sly/components/pages/DashboardCommunitiesDetailsPage';
-import { normJsonApi } from 'sly/services/helpers/jsonApi';
 import withBreakpoint from 'sly/components/helpers/breakpoint';
 
 @withUser
@@ -28,35 +27,10 @@ export default class DashboardCommunitiesDetailsPageContainer extends Component 
     user: userPropType.isRequired,
     community: communityPropType,
     communities: arrayOf(communityPropType),
-    selectedConversation: conversationPropType,
     match: object,
     status: object,
     history: object,
     breakpoint: object,
-    updateCommunity: func.isRequired,
-    createNote: func.isRequired,
-    updateNote: func.isRequired,
-    getCommunities: func.isRequired,
-    getNotes: func.isRequired,
-    invalidateCommunities: func,
-    invalidateConversations: func,
-  };
-
-  state = {
-    selectedConversation: null,
-    communitiesWithSameContacts: null,
-    isEditStatusDetailsMode: false,
-  };
-
-  getNotes = () => {
-    const { community, getNotes } = this.props;
-    const params = {
-      'filter[commentable_id]': community.id,
-    };
-    return getNotes(params)
-      .then((data) => { this.setState({ rawNotes: data.body.data }); return data; })
-      .then(resp => normJsonApi(resp))
-      .then(data => this.setState({ notes: data }));
   };
 
   render() {
@@ -72,8 +46,6 @@ export default class DashboardCommunitiesDetailsPageContainer extends Component 
       breakpoint,
     } = this.props;
 
-    const { selectedConversation, communitiesWithSameContacts, notes, isEditStatusDetailsMode } = this.state;
-
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && community && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
       const activityPath = generatePath(ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH, {
@@ -83,7 +55,6 @@ export default class DashboardCommunitiesDetailsPageContainer extends Component 
       return <Redirect to={activityPath} />;
     }
 
-    const { result: rawCommunity, meta, refetch: refetchCommunity } = status.community;
     const { hasFinished: communityHasFinished } = status.community;
     // since it's using conditional prefetch, in initial stage communities key won't be there
     return (
@@ -94,31 +65,22 @@ export default class DashboardCommunitiesDetailsPageContainer extends Component 
               <DashboardCommunitiesDetailsPage
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
-                communities={communitiesWithSameContacts || []}
                 community={community}
-                rawCommunity={rawCommunity}
                 currentTab={match.params.tab || SUMMARY}
                 showModal={show}
                 hideModal={hide}
-                meta={meta}
                 onRejectSuccess={() => onRejectSuccess(hide)}
-                refetchCommunity={refetchCommunity}
-                refetchNotes={this.getNotes}
                 onAddNote={onAddNote}
                 onEditNote={onEditNote}
-                notes={notes || []}
-                noteIsLoading={!notes}
                 communityIsLoading={!communityHasFinished}
                 goToFamilyDetails={this.goToFamilyDetails}
                 goToMessagesTab={this.goToMessagesTab}
                 refetchConversations={this.refetchConversations}
                 user={user}
-                conversation={selectedConversation}
                 setSelectedConversation={this.setSelectedConversation}
                 onAcceptClick={() => this.handleAcceptClick(show, hide, notifyError)}
                 onEditStatusDetailsClick={this.toggleEditStatusDetailsMode}
                 onStatusChange={this.toggleEditStatusDetailsMode}
-                isEditStatusDetailsMode={isEditStatusDetailsMode}
               />
             )}
           </ModalController>

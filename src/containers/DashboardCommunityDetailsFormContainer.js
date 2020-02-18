@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
 import pick from 'lodash/pick';
+import defaultsDeep from 'lodash/defaults';
 
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
 import clientPropType from 'sly/propTypes/client';
@@ -40,11 +41,17 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
     notifyError: func.isRequired,
     user: userProptype,
     community: clientPropType.isRequired,
+    match: object.isRequired,
     status: object,
   };
 
-  handleSubmit = (data) => {
-    console.log('submit data', data);
+  handleSubmit = (values) => {
+    const { match, updateCommunity } = this.props;
+    const { id } = match.params;
+
+    return updateCommunity({ id }, {
+      attributes: values,
+    });
   };
 
   render() {

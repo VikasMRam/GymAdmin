@@ -14,7 +14,7 @@ import {
   CARE_SERVICES, PRICING,
 } from 'sly/constants/dashboardAppPaths';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
-import communityPropType, { meta as communityMetaPropType } from 'sly/propTypes/community';
+import communityPropType from 'sly/propTypes/community';
 import notePropType from 'sly/propTypes/note';
 import userPropType from 'sly/propTypes/user';
 import { size, palette } from 'sly/components/themes';
@@ -75,28 +75,13 @@ const DifferentOrgNotification = displayOnlyIn(BannerNotification, ['mobile', 't
 export default class DashboardCommunitiesDetailsPage extends Component {
   static propTypes = {
     community: communityPropType,
-    communities: arrayOf(communityPropType),
     currentTab: string,
     showModal: func,
     hideModal: func,
-    rawClient: object,
     notifyError: func,
     notifyInfo: func,
-    meta: communityMetaPropType,
-    onRejectSuccess: func,
-    onAddNote: func,
-    onEditNote: func,
-    notes: arrayOf(notePropType),
-    noteIsLoading: bool,
     communityIsLoading: bool,
-    refetchClient: func.isRequired,
-    refetchNotes: func.isRequired,
-    setSelectedConversation: func,
     user: userPropType.isRequired,
-    onAcceptClick: func,
-    onEditStatusDetailsClick: func,
-    isEditStatusDetailsMode: bool,
-    onStatusChange: func,
   };
 
   getTabPathsForUser = () => {

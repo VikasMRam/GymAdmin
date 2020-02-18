@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, bool } from 'prop-types';
+import { func, bool, object } from 'prop-types';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
 
@@ -10,6 +10,10 @@ import { Block, Button } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import FormSection from 'sly/components/molecules/FormSection';
 
+const trueFalseOptions = [
+  { label: 'Yes', value: true },
+  { label: 'No', value: false },
+]
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -35,6 +39,7 @@ const FormBottomSection = styled.div`
 
 export default class DashboardCommunityPricingForm extends Component {
   static propTypes = {
+    currentValues: object,
     invalid: bool,
     canEdit: bool,
     submitting: bool,
@@ -43,8 +48,9 @@ export default class DashboardCommunityPricingForm extends Component {
 
   render() {
     const {
-      handleSubmit, invalid, submitting, canEdit,
+      handleSubmit, invalid, submitting, canEdit, currentValues,
     } = this.props;
+
 
     return (
       <Form onSubmit={handleSubmit}>
@@ -96,7 +102,49 @@ export default class DashboardCommunityPricingForm extends Component {
               wideWidth
             />
           </FormSection>
+
+          <FormSection heading="Additional Care Costs">
+            <Field
+              name="propInfo.careCostsIncluded"
+              type="boolean"
+              label="Care costs included"
+              readOnly={!canEdit}
+              component={ReduxField}
+              wideWidth
+            />
+            {!currentValues?.propInfo?.careCostsIncluded && (
+              <>
+                <Field
+                  name="propInfo.alCareRate"
+                  label="Assisted living"
+                  type="text"
+                  options={trueFalseOptions}
+                  readOnly={!canEdit}
+                  component={ReduxField}
+                  wideWidth
+                />
+                <Field
+                  name="propInfo.mcCareRate"
+                  label="Memory care"
+                  type="text"
+                  options={trueFalseOptions}
+                  readOnly={!canEdit}
+                  component={ReduxField}
+                  wideWidth
+                />
+              </>
+            )}
+            <Field
+              name="propInfo.utilitiesIncluded"
+              type="boolean"
+              label="Utitilies included"
+              readOnly={!canEdit}
+              component={ReduxField}
+              wideWidth
+            />
+          </FormSection>
         </FormScrollSection>
+
         {canEdit &&
           <FormBottomSection>
             <StyledButton type="submit" disabled={invalid || submitting}>
