@@ -347,7 +347,7 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 
 const HomePage = ({
   showModal, hideModal, onLocationSearch, setActiveDiscoverHome, ishowSlyWorksVideoPlaying,
-  toggleHowSlyWorksVideoPlaying,
+  toggleHowSlyWorksVideoPlaying, onCurrentLocation,
 }) => {
   const HeaderContent = (
     <>
@@ -361,7 +361,7 @@ const HomePage = ({
           <StyledLabel palette="white">
             Search Assisted Living, Memory Care, Nursing Homes and More
           </StyledLabel>
-          <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
+          <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>
         <ImageCreditDiv>
           <ImageCreditLabel palette="white">
@@ -543,6 +543,7 @@ HomePage.propTypes = {
   showModal: func,
   hideModal: func,
   history: object,
+  onCurrentLocation: func,
 };
 
 export default HomePage;

@@ -424,3 +424,8 @@ export const getLastSegment = (url) => {
   const [last] = url.match(/([^\/]+)\/?$/gm);
   return last;
 };
+
+export const generateSearchUrl = (toc, address) => {
+  const tocBc = tocPaths(toc);
+  return `${tocBc.path}/${urlize(stateNames[address.state])}/${urlize(address.city)}`;
+};
