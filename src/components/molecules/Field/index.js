@@ -167,9 +167,9 @@ const InputWrapper = styled.div`
     `};
   }
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    ${({ wideWidth, widthColumn }) => wideWidth && css`
+    ${({ wideWidth, widthSpacing }) => wideWidth && css`
       margin-right: ${size('spacing.large')};
-      flex: 0 0 ${size(widthColumn)};
+      flex: 0 0 ${size(widthSpacing)};
     `}
   }
 `;
@@ -217,7 +217,7 @@ const Field = ({
   hideErrors,
   labelRight,
   wideWidth,
-  widthColumn,
+  widthSpacing,
   hideValue,
   showCharacterCount,
   options,
@@ -261,7 +261,7 @@ const Field = ({
           }
         </LabelWrapper>
       }
-      {renderInputFirst || (wideWidth ? <InputWrapper wideWidth={wideWidth} widthColumn={widthColumn} type={type} options={options}><InputComponent {...inputProps} /></InputWrapper> : <InputComponent {...inputProps} />)}
+      {renderInputFirst || (wideWidth ? <InputWrapper wideWidth={wideWidth} widthSpacing={widthSpacing} type={type} options={options}><InputComponent {...inputProps} /></InputWrapper> : <InputComponent {...inputProps} />)}
       {invalid && !hideErrors && message && (
         <StyledInputMessage name={`${name}Error`} icon="close" palette="danger" message={message} wideWidth={wideWidth} renderInputFirst={renderInputFirst} />
       )}
@@ -326,14 +326,14 @@ Field.propTypes = {
   placeholder: string,
   labelRight: node,
   wideWidth: bool,
-  widthColumn: string,
+  widthSpacing: string,
   hideValue: bool,
   options: arrayOf(object),
 };
 
 Field.defaultProps = {
   type: 'text',
-  widthColumn: 'tabletLayout.col3',
+  widthSpacing: 'tabletLayout.col3',
 };
 
 export default Field;
