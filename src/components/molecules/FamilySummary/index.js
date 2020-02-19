@@ -130,8 +130,8 @@ const FamilySummary = ({
        /* eslint-disable-next-line no-bitwise */
       <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
         <SlyIntro minHeight="tiny">
-            <Label palette="grey">Message</Label>
-            <Block size="caption">{client.clientInfo.slyCommunityMessage}</Block>
+          <Label palette="grey">Message</Label>
+          <Block size="caption">{client.clientInfo.slyCommunityMessage}</Block>
         </SlyIntro>
       </Role>
       }
