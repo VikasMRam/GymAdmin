@@ -1,5 +1,4 @@
 import React from 'react';
-import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { destroy, get } from 'sly/services/newApi/httpMethods';
 import api from 'sly/services/newApi/apiInstance';
@@ -11,6 +10,7 @@ function getDisplayName(WrappedComponent) {
 }
 
 export default function query(propName, apiCall) {
+  if (typeof apiCall === 'undefined') apiCall = propName;
   return (InnerComponent) => {
     class Wrapper extends React.Component {
       static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
