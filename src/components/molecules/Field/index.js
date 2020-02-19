@@ -170,7 +170,7 @@ const InputWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${({ wideWidth }) => wideWidth && css`
       margin-right: ${size('spacing.large')};
-      flex: 0 0 ${size('tabletLayout.col3')};
+      flex: 1 0 ${size('tabletLayout.col3')};
     `}
   }
 `;

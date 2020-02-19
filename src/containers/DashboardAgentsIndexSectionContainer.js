@@ -35,7 +35,9 @@ const getPaginationData = ({ result, meta }) => {
 @withUser
 @withNotification
 @prefetch('agents', 'getAgents', (req, { datatable }) => {
-  return req(datatable.query);
+  const payload = datatable.query;
+  payload['page-size'] = 15;
+  return req(payload);
 })
 
 export default class DashboardAgentsIndexSectionContainer extends Component {

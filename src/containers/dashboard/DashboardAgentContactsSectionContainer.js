@@ -36,10 +36,10 @@ const getPaginationData = ({ result, meta }) => {
 
 @withRedirectTo
 
-@prefetch('contacts', 'getContacts', (req, { datatable, agentName }) => {
-  if (agentName) {
+@prefetch('contacts', 'getContacts', (req, { datatable, agentId }) => {
+  if (agentId) {
     const qs = datatable.query;
-    qs['filter[agent]'] = agentName;
+    qs['filter[agent-id]'] = agentId;
     return req(qs);
   }
   return req(datatable.query);
