@@ -119,21 +119,21 @@ const FamilySummary = ({
       }
       {client.clientInfo && client.clientInfo.slyAgentMessage &&
        /* eslint-disable-next-line no-bitwise */
-       <Role is={PLATFORM_ADMIN_ROLE | AGENT_ND_ROLE}>
+      <Role is={PLATFORM_ADMIN_ROLE | AGENT_ND_ROLE}>
         <SlyIntro minHeight="tiny">
           <Label palette="grey">Message</Label>
           <Block size="caption">{client.clientInfo.slyAgentMessage}</Block>
         </SlyIntro>
-       </Role>
+      </Role>
        }
       {client.clientInfo && client.clientInfo.slyCommunityMessage &&
        /* eslint-disable-next-line no-bitwise */
-       <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
-          <SlyIntro minHeight="tiny">
+      <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
+        <SlyIntro minHeight="tiny">
             <Label palette="grey">Message</Label>
             <Block size="caption">{client.clientInfo.slyCommunityMessage}</Block>
-          </SlyIntro>
-       </Role>
+        </SlyIntro>
+      </Role>
       }
     </OuterColumWrapper>
     {(client.admin || client.organization) &&
