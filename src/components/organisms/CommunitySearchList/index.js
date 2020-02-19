@@ -12,7 +12,7 @@ import Pagination from 'sly/components/molecules/Pagination';
 import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import CommunityTile from 'sly/components/organisms/CommunityTile';
-import AskAgentAdTile from 'sly/components/organisms/AskAgentAdTile';
+import AskAgentAdTileContainer from 'sly/containers/AskAgentAdTileContainer';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;
@@ -58,7 +58,7 @@ const ShadowCommunityTile = shadowOnHover(styled(CommunityTile)`
   position: relative;
 `);
 
-const PaddedAskAgentAdTile = pad(AskAgentAdTile);
+const PaddedAskAgentAdTileContainer = pad(AskAgentAdTileContainer);
 
 const mostSearchedCities = [
   {
@@ -172,7 +172,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
               lazyLoadImage={index !== 0}
             />
           </CommunityTileWrapper>
-          {((communityList.length < 4 && index === communityList.length - 1) || (communityList.length > 4 && index === 3)) && <PaddedAskAgentAdTile title="ad title here" />}
+          {((communityList.length < 4 && index === communityList.length - 1) || (communityList.length > 4 && index === 3)) && <PaddedAskAgentAdTileContainer />}
         </>
       ))}
       {communityList.length < 1 &&
