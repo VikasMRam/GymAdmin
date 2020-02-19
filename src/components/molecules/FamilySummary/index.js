@@ -118,7 +118,7 @@ const FamilySummary = ({
         </SlyIntro>
       }
       {/* eslint-disable-next-line no-bitwise */}
-      <Role is={PLATFORM_ADMIN_ROLE|AGENT_ND_ROLE}>
+      <Role is={PLATFORM_ADMIN_ROLE | AGENT_ND_ROLE}>
         {client.clientInfo && client.clientInfo.slyAgentMessage &&
           <SlyIntro minHeight="tiny">
             <Label palette="grey">Message</Label>
@@ -127,7 +127,7 @@ const FamilySummary = ({
           }
       </Role>
       {/* eslint-disable-next-line no-bitwise */}
-      <Role is={PLATFORM_ADMIN_ROLE|PROVIDER_OD_ROLE}>
+      <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
         {client.clientInfo && client.clientInfo.slyCommunityMessage &&
           <SlyIntro minHeight="tiny">
             <Label palette="grey">Message</Label>
