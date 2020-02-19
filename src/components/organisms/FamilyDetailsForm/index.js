@@ -11,7 +11,7 @@ import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import Role from 'sly/components/common/Role';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
 import {
   SOURCE_OPTIONS,
   FAMILY_STAGE_WON,
@@ -329,6 +329,7 @@ class FamilyDetailsForm extends Component {
                   />
                 </>
               }
+              <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
               <Field
                 name="slyCommunityMessage"
                 label="Summary for Community"
@@ -337,6 +338,7 @@ class FamilyDetailsForm extends Component {
                 component={ReduxField}
                 wideWidth
               />
+              </Role>
               <Field
                 name="slyMessage"
                 label="Seniorly Introduction"
