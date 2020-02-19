@@ -130,6 +130,7 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
           placeholder=""
           component={ReduxField}
           wideWidth
+          widthColumn="tabletLayout.col5"
         />
         <Field
           name="imageCaption"
