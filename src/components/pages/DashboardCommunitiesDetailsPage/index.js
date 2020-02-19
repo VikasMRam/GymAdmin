@@ -11,7 +11,7 @@ import {
   MESSAGES,
   TASKS,
   PROFILE,
-  CARE_SERVICES, PRICING, AMENITIES,
+  CARE_SERVICES, PRICING, AMENITIES, SERVICES,
 } from 'sly/constants/dashboardAppPaths';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import communityPropType from 'sly/propTypes/community';
@@ -43,6 +43,7 @@ import DashboardCommunityNameAndStatus from 'sly/components/organisms/DashboardC
 import { topSnap } from 'sly/components/atoms/Box';
 import DashboardCommunityDetailsFormContainer from 'sly/containers/DashboardCommunityDetailsFormContainer';
 import DashboardCommunityCareServicesFormContainer from 'sly/containers/DashboardCommunityCareServicesFormContainer';
+import DashboardCommunityServicesFormContainer from 'sly/containers/DashboardCommunityServicesFormContainer';
 import DashboardCommunityPricingFormContainer from 'sly/containers/DashboardCommunityPricingFormContainer';
 import DashboardCommunityAmenitiesFormContainer from 'sly/containers/DashboardCommunityAmenitiesFormContainer';
 
@@ -99,6 +100,7 @@ export default class DashboardCommunitiesDetailsPage extends Component {
       'Care Services': CARE_SERVICES,
       Pricing: PRICING,
       Amenities: AMENITIES,
+      Services: SERVICES,
       // ...
     };
 
@@ -203,6 +205,15 @@ export default class DashboardCommunitiesDetailsPage extends Component {
           {currentTab === AMENITIES && (
             <Section>
               <DashboardCommunityAmenitiesFormContainer
+                notifyInfo={notifyInfo}
+                notifyError={notifyError}
+                community={community}
+              />
+            </Section>
+          )}
+          {currentTab === SERVICES && (
+            <Section>
+              <DashboardCommunityServicesFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}

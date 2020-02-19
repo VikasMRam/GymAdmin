@@ -5,18 +5,13 @@ import { Field as RFField } from 'redux-form';
 
 import { size, palette, columnWidth } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import { Block, Button } from 'sly/components/atoms';
+import { Button } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import communityPropType from 'sly/propTypes/community';
 
-const familyOvernightOptions = [
-  { value: 'Family Overnight Stay Rooms', label: 'Family overnight stay rooms' },
-];
-
-const communitySpaceOptions = [
-  { value: 'Library', label: 'Library' },
-  { value: 'Garden', label: 'Garden' },
+const nonCareServicesOptions = [
+  { value: 'Community Operated Transportation', label: 'Community operated transportation' },
+  { value: 'Scheduled Daily Activities', label: 'Scheduled daily activities' },
 ];
 
 const Field = ({ canEdit, ...props }) => <RFField component={ReduxField} readOnly={!canEdit} wideWidth {...props} />;
@@ -31,19 +26,11 @@ const FormScrollSection = styled.div`
   // max-height: calc(100vh - 240px);
 `;
 
-const IntroInfo = textAlign(styled(Block)`
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    margin-right: ${size('tabletLayout.gutter')};
-    flex: 0 0 ${columnWidth(3, size('layout.gutter'))};
-  }
-`, 'left');
-IntroInfo.displayName = 'IntroInfo';
-
 const FormBottomSection = styled.div`
   margin-top: ${size('spacing.xLarge')};
 `;
 
-export default class DashboardCommunityAmenitiesForm extends Component {
+export default class DashboardCommunityServicesForm extends Component {
   static propTypes = {
     currentValues: object,
     community: communityPropType,
@@ -55,39 +42,23 @@ export default class DashboardCommunityAmenitiesForm extends Component {
 
   render() {
     const {
-      handleSubmit, invalid, submitting, canEdit, community,
+      handleSubmit, invalid, submitting, canEdit,
     } = this.props;
-
-    const isCommunityLarge = parseInt(community.propInfo.capacity || '0', 10) > 50;
 
     return (
       <Form onSubmit={handleSubmit}>
         <FormScrollSection>
           <Field
-            name="propInfo.profileServices"
+            name="propInfo.nonCareServices"
             type="checkbox"
-            options={[{ value: 'Pet Friendly', label: 'Pet friendly' }]}
-          />
-
-          {isCommunityLarge && (
-            <Field
-              name="propInfo.communitySpace"
-              type="checkbox"
-              options={familyOvernightOptions}
-            />
-          )}
-
-          <Field
-            name="propInfo.communitySpace"
-            type="checkbox"
-            options={communitySpaceOptions}
+            options={nonCareServicesOptions}
           />
 
           <Field
-            name="propInfo.communitySpaceOther"
+            name="propInfo.nonCareServicesOther"
             label="Other"
             type="textarea"
-            placeholder="More useful information about the community amenities"
+            placeholder="More useful information about the community services"
           />
         </FormScrollSection>
 
