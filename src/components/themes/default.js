@@ -248,6 +248,16 @@ theme.sizes = {
         mobileHeight: '30rem', // 480px
       },
     },
+    hub: {
+      heroSearchBox: {
+        width: '30rem',   // 480px
+        mobileWidth: '20rem',
+      },
+      heroImage: {
+        height: '30rem',   // 640px
+        mobileHeight: '40rem', // 480px
+      },
+    },
     agents: {
       heroImage: {
         height: '30rem', // 480px

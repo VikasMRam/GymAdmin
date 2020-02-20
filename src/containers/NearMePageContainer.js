@@ -3,7 +3,7 @@ import { object, number, array, bool, func } from 'prop-types';
 import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 import ErrorPage from 'sly/components/pages/Error';
-import NearMePage from 'sly/components/pages/NearMePage';
+import NearMePage from 'sly/components/pages/AssistedLivingNearMePage';
 import NursingHomesNearMePage from 'sly/components/pages/NursingHomesNearMePage';
 import SNFNearMePage from 'sly/components/pages/SNFNearMePage';
 import { parseURLQueryParams } from 'sly/services/helpers/url';
