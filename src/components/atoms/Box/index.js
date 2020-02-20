@@ -14,7 +14,10 @@ const fontSize = ({ size: sizeProp }) => size('text', sizeProp);
 
 const borderColour = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 
+const backgroundColour = ({ backgroundPalette, backgroundVariation }) => backgroundPalette ? palette(backgroundPalette, backgroundVariation) : 'transparent';
+
 const Box = styled.div`
+  background: ${backgroundColour};
   border: ${size('border.regular')} solid ${borderColour};
   border-radius: ${ifProp('noBorderRadius', 0, size('spacing.small'))};
   padding: ${ifProp('noPadding', 0, padding)};
@@ -37,6 +40,8 @@ const Box = styled.div`
 Box.propTypes = {
   palette: palettePropType,
   variation: variationPropType,
+  backgroundPalette: palettePropType,
+  backgroundVariation: variationPropType,
   padding: spacingPropType,
   snap: oneOf(['none', 'top', 'bottom']),
   noBorderRadius: bool,
