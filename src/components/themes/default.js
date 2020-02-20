@@ -250,8 +250,7 @@ theme.sizes = {
     },
     hub: {
       heroSearchBox: {
-        width: '30rem',   // 480px
-        mobileWidth: '20rem',
+        width: '20rem',   // 360px
       },
       heroImage: {
         height: '30rem',   // 640px

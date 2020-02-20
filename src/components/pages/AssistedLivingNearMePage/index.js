@@ -19,7 +19,7 @@ import Link from 'sly/components/atoms/Link';
 const HeroWrapper = styled.div`
   position: relative;
   height: ${size('header.hub.heroImage.mobileHeight')};
-  background-color: ${palette('secondary', 'dark')};
+  background-color: ${palette('secondary', 'dark35')};
   display: flex;
   flex-direction: column;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -31,6 +31,26 @@ const HeroWrapper = styled.div`
 const ImageWrapper = styled.div`
   flex: 1 0 0%;
   text-align:right;
+  &:after {
+    content: '';
+    position: absolute;
+    left:0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, #387F7Eff 50%, #387F7E00);
+  }
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    &:after {
+      content: '';
+      position: absolute;
+      left:0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, #49A7A5ff 50%, #49A7A500);
+    }
+  }
 `;
 
 const StyledImage = styled(ResponsiveImage)`
@@ -39,25 +59,23 @@ const StyledImage = styled(ResponsiveImage)`
   width: 100%;
   height: 100%;
 `;
-const SearchBoxWrapper = styled.div`
-  flex: 1 0 0%;
-  max-width: ${size('header.hub.heroSearchBox.mobileWidth')};
-  margin:  ${size('spacing.xxLarge')};;
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    max-width: ${size('header.home.heroSearchBox.width')};
-    text-align: left;
-    align-items: left;
-    justify-content: left;
-    margin: auto ${size('spacing.massive')};
-  }
+const CTAWrapper = styled.div`
+  flex: 1 0 0%;
+  margin: auto 0;
+`;
+const SearchBoxWrapper = styled.div`
+  max-width: ${size('header.hub.heroSearchBox.width')};
+  margin: 0 auto;
+  transform: rotate(0);
+  text-align: left;
+  align-items: left;
+  justify-content: left;
 `;
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
 `;
 const StyledLabel = styled(Label)`
-  text-align: center;
-  font-size: ${size('text.subtitle')};
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -87,15 +105,17 @@ const NearMePage = ({
         <ImageWrapper>
           <StyledImage path="react-assets/hub/assisted-living-cover.jpg" alt="Assisted Living Near You" height={320} />
         </ImageWrapper>
-        <SearchBoxWrapper>
-          <StyledHeading level="hero" size="hero" palette="white">
-            What is Assisted Living Near You?
-          </StyledHeading>
-          <StyledLabel palette="white">
-            Use our free search to find assisted living nearby
-          </StyledLabel>
-          <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
-        </SearchBoxWrapper>
+        <CTAWrapper>
+          <SearchBoxWrapper>
+            <StyledHeading level="hero" size="hero" palette="white">
+              What is Assisted Living Near You?
+            </StyledHeading>
+            <StyledLabel palette="white">
+              Use our free search to find assisted living nearby
+            </StyledLabel>
+            <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
+          </SearchBoxWrapper>
+        </CTAWrapper>
       </HeroWrapper>
     </>
   );
