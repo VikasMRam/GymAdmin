@@ -35,7 +35,7 @@ export default class SearchResultsAdTileContainer extends Component {
   handleAskExpertQuestionClick = () => {
     SlyEvent.getInstance().sendEvent({
       action: 'click-ask-our-experts-question-button',
-      category: 'AskAgentAdTile',
+      category: 'SearchResultsAdTile',
     });
     this.setState({
       isModalOpen: true,
@@ -45,14 +45,14 @@ export default class SearchResultsAdTileContainer extends Component {
   handleGetInstantOfferClick = () => {
     SlyEvent.getInstance().sendEvent({
       action: 'click-get-instant-offer-button',
-      category: 'AskAgentAdTile',
+      category: 'SearchResultsAdTile',
     });
   };
 
   handleClose = () => {
     SlyEvent.getInstance().sendEvent({
       action: 'close-ask-agent-question-modal',
-      category: 'AskAgentAdTile',
+      category: 'SearchResultsAdTile',
     });
     this.setState({
       isModalOpen: false,
