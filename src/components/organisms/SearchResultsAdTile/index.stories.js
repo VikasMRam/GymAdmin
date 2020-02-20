@@ -17,33 +17,32 @@ storiesOf('Organisms|SearchResultsAdTile', module)
   .add('default', () => (
     <SearchResultsAdTile
       title="This the title of an ad tile. It can span up to 2 lines if needed."
-      description="Our Local Senior Living Experts can help you with X"
       buttonText="Ask Our Experts A Question"
       onButtonClick={action('onButtonClick')}
       image={assetPath('images/agents.png')}
-    />
+    >
+      Our Local Senior Living Experts can help you with X
+    </SearchResultsAdTile>
   ))
   .add('row layout', () => (
     <SearchResultsAdTile
       title="This the title of an ad tile. It can span up to 2 lines if needed."
-      description="Our Local Senior Living Experts can help you with X"
       buttonText="Ask Our Experts A Question"
       onButtonClick={action('onButtonClick')}
       image={assetPath('images/agents.png')}
       layout="row"
-    />
+    >
+      Our Local Senior Living Experts can help you with X
+    </SearchResultsAdTile>
   ))
   .add('with illustration', () => (
     <SearchResultsAdTile
       title="Selling a home to pay the cost of senior living?"
-      description={(
-        <>
-          Our partner <StyledImage src={assetPath('images/zillow.png')} /> will make you an Instant Offer.
-        </>
-      )}
       buttonText="Get Instant Offer"
       buttonPosition="right"
       onButtonClick={action('onButtonClick')}
       image={assetPath('vectors/house-sold.svg')}
-    />
+    >
+      Our partner <StyledImage src={assetPath('images/zillow.png')} /> will make you an Instant Offer.
+    </SearchResultsAdTile>
   ));

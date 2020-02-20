@@ -39,14 +39,14 @@ const PaddedBlock = pad(Block);
 PaddedBlock.displayName = 'PaddedBlock';
 
 const SearchResultsAdTile = ({
-  image, title, description, onButtonClick, buttonText, buttonPosition, buttonProps, layout, className,
+  image, title, children, onButtonClick, buttonText, buttonPosition, buttonProps, layout, className,
 }) => (
   <Box className={className} backgroundPalette="primary" backgroundVariation="stroke">
     <Wrapper layout={layout}>
       <StyledResponsiveImage src={image} />
       <div>
         <PaddedBlock weight="medium" size="subtitle">{title}</PaddedBlock>
-        {description && <PaddedBlock>{description}</PaddedBlock>}
+        {children && <PaddedBlock>{children}</PaddedBlock>}
         <StyledButton layout={layout} onClick={onButtonClick} buttonPosition={buttonPosition} {...buttonProps}>{buttonText}</StyledButton>
       </div>
     </Wrapper>
@@ -59,7 +59,7 @@ SearchResultsAdTile.propTypes = {
   buttonPosition: oneOf(['left', 'right']).isRequired,
   buttonProps: object,
   title: string.isRequired,
-  description: node,
+  children: node,
   className: string,
   image: string.isRequired,
   layout: oneOf(['row', 'column']).isRequired,
