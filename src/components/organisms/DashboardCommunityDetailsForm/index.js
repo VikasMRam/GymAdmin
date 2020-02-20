@@ -126,7 +126,7 @@ export default class DashboardCommunityDetailsForm extends Component {
             <FormSectionHeading weight="medium">Respite care</FormSectionHeading>
             <Field
               name="propInfo.respiteAllowed.checked"
-              type="checkbox"
+              type="boolean"
               readOnly={!canEdit}
               options={[{ value: true, label: 'Respite care allowed' }]}
               component={ReduxField}
@@ -138,6 +138,7 @@ export default class DashboardCommunityDetailsForm extends Component {
               readOnly={!canEdit}
               component={ReduxField}
               wideWidth
+              parse={value => !value ? null : Number(value)}
             />
           </FormSection>
         </FormScrollSection>

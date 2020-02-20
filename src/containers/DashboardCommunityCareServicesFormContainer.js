@@ -56,6 +56,7 @@ export default class DashboardCommunityCareServicesFormContainer extends Compone
       [
         'propInfo.careServices',
         'propInfo.nonCareServices',
+        'propInfo.profileServices',
       ],
     );
     return (

@@ -88,8 +88,17 @@ const nonCareRelatedServices = [
   'Community Operated Transportation',
 ];
 
+const profileServices = [
+  'Small Dogs',
+  'Medium Dogs',
+  'All Dogs',
+  'Cats',
+  'Birds',
+];
+
 const careServicesOptions = careServices.map(i => ({ value: i, label: i }));
 const nonCareRelatedServicesOptions = nonCareRelatedServices.map(i => ({ value: i, label: i }));
+const profileServicesOptions = profileServices.map(i => ({ value: i, label: i }));
 
 export default class DashboardCommunityCareServicesForm extends Component {
   static propTypes = {
@@ -122,6 +131,14 @@ export default class DashboardCommunityCareServicesForm extends Component {
               type="checkbox"
               component={ReduxField}
               options={nonCareRelatedServicesOptions}
+              wideWidth
+            />
+            <Field
+              name="propInfo.profileServices"
+              label="Profile Services"
+              type="checkbox"
+              component={ReduxField}
+              options={profileServicesOptions}
               wideWidth
             />
           </FormSection>
