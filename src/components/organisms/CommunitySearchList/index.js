@@ -7,12 +7,12 @@ import { size, gridColumns } from 'sly/components/themes';
 import { getPaginationData } from 'sly/services/helpers/pagination';
 import pad from 'sly/components/helpers/pad';
 import { shadowOnHover } from 'sly/components/helpers/shadow';
-import { Centered, Link, Block } from 'sly/components/atoms';
+import { Centered, Link, Block, Heading } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
-import Heading from 'sly/components/atoms/Heading';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import CommunityTile from 'sly/components/organisms/CommunityTile';
-import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
+import SearchResultsAdTileContainer from 'sly/containers/SearchResultsAdTileContainer';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;
@@ -57,6 +57,8 @@ const PaddedPagination = pad(Pagination, 'small');
 const ShadowCommunityTile = shadowOnHover(styled(CommunityTile)`
   position: relative;
 `);
+
+const PaddedSearchResultsAdTileContainer = pad(SearchResultsAdTileContainer);
 
 const mostSearchedCities = [
   {
@@ -149,26 +151,30 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
         <CommunityFilterBar searchParams={searchParams} />
       </CommunityFilterBarWrapper>
       {communityList.map((similarProperty, index) => (
-        <CommunityTileWrapper key={similarProperty.id}>
-          <StyledLink
-            to={similarProperty.url}
-            event={{
-              category: 'SearchPage',
-              action: 'communityClick',
-              label: index,
-              value: similarProperty.id,
-            }}
-          />
-          <ShadowCommunityTile
-            community={similarProperty}
-            layout="column"
-            imageSize="regular"
-            noGallery
-            showDescription
-            showSeeMoreButtonOnHover
-            lazyLoadImage={index !== 0}
-          />
-        </CommunityTileWrapper>
+        <>
+          <CommunityTileWrapper key={similarProperty.id}>
+            <StyledLink
+              to={similarProperty.url}
+              event={{
+                category: 'SearchPage',
+                action: 'communityClick',
+                label: index,
+                value: similarProperty.id,
+              }}
+            />
+            <ShadowCommunityTile
+              community={similarProperty}
+              layout="column"
+              imageSize="regular"
+              noGallery
+              showDescription
+              showSeeMoreButtonOnHover
+              lazyLoadImage={index !== 0}
+            />
+          </CommunityTileWrapper>
+          {((communityList.length < 4 && index === communityList.length - 1) || (communityList.length > 4 && index === 3)) &&
+            <PaddedSearchResultsAdTileContainer type={searchParams.city === 'san-francisco' ? 'getOffer' : 'askAgent'} />}
+        </>
       ))}
       {communityList.length < 1 &&
         <>

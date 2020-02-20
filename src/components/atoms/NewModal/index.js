@@ -39,6 +39,11 @@ const Head = textAlign(styled.div`
   padding-bottom: ${size('spacing.regular')};
 `, 'right');
 
+export const PaddedHeaderWithCloseBody = styled.div`
+  padding: ${size('spacing.xxLarge')};
+  padding-top: 0;
+`;
+
 export const HeaderWithClose = ({ onClose }) => (
   <Head>
     <IconButton

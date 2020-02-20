@@ -10,7 +10,7 @@ import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import fullWidth from 'sly/components/helpers/fullWidth';
-import { Button, Block, Heading } from 'sly/components/atoms';
+import { Button, Block, Heading, ResponsiveImage } from 'sly/components/atoms';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
@@ -21,6 +21,16 @@ const CenteredTosAndPrivacy = textAlign(TosAndPrivacy);
 const StyledButton = styled(fullWidth(Button))`
   margin-bottom: ${ifProp('hasMarginBottom', size('spacing.large'), 0)};
 `;
+
+const ImageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledResponsiveImage = pad(textAlign(styled(ResponsiveImage)`
+  max-width: calc(${size('layout.col2')} + ${size('layout.gutter')});
+`));
 
 export default class TalkToAgentForm extends Component {
   static propTypes = {
@@ -33,20 +43,23 @@ export default class TalkToAgentForm extends Component {
     heading: string.isRequired,
     user: userPropType,
     hasLocation: bool,
+    image: string,
     hasEmail: bool,
     firstName: string.isRequired,
     showMessageFieldFirst: bool,
+    buttonKind: string,
   };
 
   static defaultProps = {
     heading: 'Talk to a local Seniorly Agent',
     firstName: 'we',
+    buttonKind: 'jumbo',
   };
 
   render() {
     const {
       invalid, submitting, handleSubmit, error, heading, user, hasLocation, hasEmail,
-      firstName, showMessageFieldFirst,
+      firstName, showMessageFieldFirst, image, buttonKind,
     } = this.props;
     const showTos = !user;
     const messageField = (
@@ -63,6 +76,7 @@ export default class TalkToAgentForm extends Component {
 
     return (
       <section>
+        {image && <ImageWrapper><StyledResponsiveImage src={image} /></ImageWrapper>}
         <StyledHeading size="subtitle">{heading}</StyledHeading>
         <form onSubmit={handleSubmit}>
           {showMessageFieldFirst && messageField}
@@ -106,7 +120,7 @@ export default class TalkToAgentForm extends Component {
             />
           }
           {!showMessageFieldFirst && messageField}
-          <StyledButton hasMarginBottom={error || showTos} type="submit" kind="jumbo" disabled={invalid || submitting}>
+          <StyledButton hasMarginBottom={error || showTos} type="submit" kind={buttonKind} disabled={invalid || submitting}>
             Send
           </StyledButton>
           {showTos && <CenteredTosAndPrivacy />}
