@@ -96,7 +96,7 @@ export default class SearchResultsAdTileContainer extends Component {
             }}
             {...this.props}
           >
-            Our partner <StyledResponsiveImage src={assetPath('images/zillow.png')} /> will make you an Instant Offer.
+            Our partner <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> will make you an Instant Offer.
           </SearchResultsAdTile>
         }
         {isModalOpen &&
