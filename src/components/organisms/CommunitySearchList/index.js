@@ -13,6 +13,8 @@ import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import CommunityTile from 'sly/components/organisms/CommunityTile';
 import SearchResultsAdTileContainer from 'sly/containers/SearchResultsAdTileContainer';
+import { titleize } from 'sly/services/helpers/strings';
+import { getTocSeoLabel } from 'sly/services/helpers/search';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;
@@ -130,7 +132,8 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
   const present = (requestMeta['page-number'] * requestMeta['page-size']);
   const start = present + 1;
   const end = (present + requestMeta['page-size']  > count ? count : present + requestMeta['page-size']);
-
+  const city = titleize(searchParams.city);
+  const tocLabel = getTocSeoLabel(searchParams.toc);
   // pagination pathname
   let params = {};
   if (location.search) {
@@ -172,8 +175,8 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
               lazyLoadImage={index !== 0}
             />
           </CommunityTileWrapper>
-          {((communityList.length < 4 && index === communityList.length - 1) || (communityList.length > 4 && index === 3)) &&
-            <PaddedSearchResultsAdTileContainer type={searchParams.city === 'san-francisco' ? 'getOffer' : 'askAgent'} />}
+          {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
+            <PaddedSearchResultsAdTileContainer type='askAgent' city={city} tocLabel={tocLabel}/>}
         </>
       ))}
       {communityList.length < 1 &&

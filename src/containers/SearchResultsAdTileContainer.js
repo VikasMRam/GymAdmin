@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, oneOf } from 'prop-types';
+import { func, oneOf, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/components/themes';
@@ -22,6 +22,8 @@ export default class SearchResultsAdTileContainer extends Component {
   static propTypes = {
     notifyInfo: func.isRequired,
     type: oneOf(['askAgent', 'getOffer']).isRequired,
+    city: string,
+    tocLabel: string,
   };
 
   static defaultProps = {
@@ -67,20 +69,20 @@ export default class SearchResultsAdTileContainer extends Component {
   };
 
   render() {
-    const { type } = this.props;
+    const { type, city, tocLabel } = this.props;
     const { isModalOpen } = this.state;
-
+    const agentAdTitle= `Get Help Finding ${tocLabel} Communities in ${city}`;
     return (
       <>
         {type === 'askAgent' &&
           <SearchResultsAdTile
-            title="Get Help Finding Assisted Living Communities in San Francisco"
+            title={agentAdTitle}
             buttonText="Ask Our Experts A Question"
             image={assetPath('images/agents.png')}
             onButtonClick={this.handleAskExpertQuestionClick}
             {...this.props}
           >
-            Our Local Senior Living Experts can help you with X
+            Our Local Senior Living Experts can help you now.
           </SearchResultsAdTile>
         }
         {type === 'getOffer' &&
@@ -101,7 +103,7 @@ export default class SearchResultsAdTileContainer extends Component {
         }
         {isModalOpen &&
           <Modal onClose={this.handleClose}>
-            <HeaderWithClose />
+            <HeaderWithClose onClose={this.handleClose}/>
             <PaddedHeaderWithCloseBody>
               <TalkToAgentFormContainer
                 heading="Our Local Senior Living Experts can help you with your search."
