@@ -28,7 +28,7 @@ const FormBottomSection = styled.div`
   margin-top: ${size('spacing.xLarge')};
 `;
 
-export default class DashboardCommunityServicesForm extends Component {
+export default class DashboardCommunityContactsForm extends Component {
   static propTypes = {
     currentValues: object,
     community: communityPropType,
@@ -40,26 +40,48 @@ export default class DashboardCommunityServicesForm extends Component {
 
   render() {
     const {
-      handleSubmit, invalid, submitting, canEdit,
+      handleSubmit, invalid, submitting, canEdit, currentValues,
     } = this.props;
 
-    const Field = props => <RFField component={ReduxField} readOnly={!canEdit} wideWidth {...props} />;
+
+    const Field = ({ ...props }) => <RFField component={ReduxField} readOnly={!canEdit} wideWidth {...props} />;
+    const contractInfo = currentValues?.rgsInfo?.contract_info || {};
+    const valueLabel = contractInfo.contractType === 'Percentage'
+      ? 'Value between 0.0 - 1.0'
+      : 'Value in dollars';
 
     return (
       <Form onSubmit={handleSubmit}>
         <FormScrollSection>
           <Field
-            name="propInfo.nonCareServices"
-            type="checkbox"
-            options={nonCareServicesOptions}
+            name="rgsInfo.contract_info.hasContract"
+            label="Has contract"
+            type="boolean"
           />
-
-          <Field
-            name="propInfo.nonCareServicesOther"
-            label="Other"
-            type="textarea"
-            placeholder="More useful information about the community services"
-          />
+          {contractInfo?.hasContract && (
+            <>
+              <Field
+                label="Type of contract"
+                name="rgsInfo.contract_info.contractType"
+                type="choice"
+                options={[
+                  { value: 'Flat Rate', label: 'Flat rate' },
+                  { value: 'Percentage', label: 'Percentage' },
+                ]}
+              />
+              <Field
+                label={valueLabel}
+                name="rgsInfo.contract_info.value"
+                type="number"
+                inputmode="numeric"
+              />
+              <Field
+                label="Notes"
+                name="rgsInfo.contract_info.notes"
+                type="textarea"
+              />
+            </>
+          )}
         </FormScrollSection>
 
         {canEdit && (

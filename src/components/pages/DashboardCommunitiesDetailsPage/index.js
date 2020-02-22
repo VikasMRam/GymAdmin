@@ -11,7 +11,7 @@ import {
   MESSAGES,
   TASKS,
   PROFILE,
-  CARE_SERVICES, PRICING, AMENITIES, SERVICES, CONTRACT,
+  CARE_SERVICES, PRICING, AMENITIES, SERVICES, CONTRACT, CONTACTS,
 } from 'sly/constants/dashboardAppPaths';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import communityPropType from 'sly/propTypes/community';
@@ -102,6 +102,7 @@ export default class DashboardCommunitiesDetailsPage extends Component {
       Pricing: PRICING,
       Amenities: AMENITIES,
       Services: SERVICES,
+      Contacts: CONTACTS,
       Contract: CONTRACT,
       // ...
     };
@@ -216,6 +217,15 @@ export default class DashboardCommunitiesDetailsPage extends Component {
           {currentTab === SERVICES && (
             <Section>
               <DashboardCommunityServicesFormContainer
+                notifyInfo={notifyInfo}
+                notifyError={notifyError}
+                community={community}
+              />
+            </Section>
+          )}
+          {currentTab === CONTACTS && (
+            <Section>
+              <DashboardCommunityContractFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}

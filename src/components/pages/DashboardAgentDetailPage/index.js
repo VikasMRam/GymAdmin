@@ -264,6 +264,7 @@ export default class DashboardAgentDetailPage extends Component {
     const sectionFilters = {
       'page-number': pageNumber,
       include: 'entities',
+      //'filter[agent-id]': `eq:${id}`,
     };
 
     return (
@@ -303,15 +304,11 @@ export default class DashboardAgentDetailPage extends Component {
 
             {currentTab === CONTACTS && (
               <LargePaddingWrapper>
-                <Datatable
+                <DashboardAgentContactsSectionContainer
                   id="contacts"
                   sectionFilters={sectionFilters}
                   filters={filters}
-                >
-                  {datatable => (
-                    <DashboardAgentContactsSectionContainer datatable={datatable} agentId={id} />
-                  )}
-                </Datatable>
+                />
               </LargePaddingWrapper>
             )}
           </TabWrapper>
