@@ -43,6 +43,6 @@ storiesOf('Organisms|SearchResultsAdTile', module)
       onButtonClick={action('onButtonClick')}
       image={assetPath('vectors/house-sold.svg')}
     >
-      Our partner <StyledImage src={assetPath('images/zillow.png')} /> will make you an Instant Offer.
+      Our partner <StyledImage src={assetPath('vectors/zillow.svg')} /> will make you an Instant Offer.
     </SearchResultsAdTile>
   ));
