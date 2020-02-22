@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 import IconItem from 'sly/components/molecules/IconItem';
 import ListItem from 'sly/components/molecules/ListItem';
+import IconButton from 'sly/components/molecules/IconButton';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette } from 'sly/components/themes';
@@ -134,6 +135,33 @@ const StyledArticle = styled.article`
   }
 `;
 
+const NextStepsWrapper = styled.div`
+  margin-bottom: ${size('spacing.xLarge')};
+  border: ${size('border.regular')} solid ${palette('primary', 'base')};
+  border-radius: ${size('spacing.small')};
+`;
+
+const NextHeader = styled.div`
+  background-color: ${palette('primary', 'base')};
+  color: ${palette('white', 'base')};
+  padding: ${size('spacing.large')};
+`;
+
+const NextParagraph = styled(Paragraph)`
+    color: ${palette('white', 'base')};
+`;
+
+const NextHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.large')};
+  color: ${palette('white', 'base')};
+`;
+
+const StyledIconButton = styled(IconButton)`
+  font-weight: bold;
+  color: ${palette('primary', 'base')};
+  border-radius: 0;
+`;
+
 const StickToTop = styled.div`
   background-color: ${palette('white', 'base')};
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
@@ -165,6 +193,7 @@ const StyledTable = styled.table`
   border-collapse: collapse;
   width: 100%;
   border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
+  margin-bottom: ${size('spacing.large')};
   thead {
     background-color: ${palette('slate', 'stroke')};
     padding: ${size('spacing.regular')} ${size('spacing.large')};
@@ -179,6 +208,15 @@ const StyledTable = styled.table`
     font-weight: normal;
 
   };
+`;
+
+const PhoneCTAWrapper = styled.div`
+  background-color: ${palette('primary', 'base')};
+  color: ${palette('white', 'base')};
+  padding: ${size('spacing.massive')} ${size('spacing.large')};
+  margin: ${size('spacing.xLarge')} auto;
+  width: 100%;
+  text-align: center;
 `;
 
 const TwoColumn = makeTwoColumn('div');
@@ -323,9 +361,9 @@ const NearMePage = ({
   const SEOContentAL = () => {
     return (
       <>
-        <Paragraph innerRef={topRef} />
+        <Paragraph ref={topRef} />
         <StyledArticle>
-          <Paragraph innerRef={alRef} />
+          <Paragraph ref={alRef} />
           <StyledHeading level="title" size="title" >
             What is Assisted Living?
           </StyledHeading>
@@ -430,7 +468,7 @@ const NearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Paragraph innerRef={costRef} />
+          <Paragraph ref={costRef} />
           <StyledHeading level="title" size="title">
             What Does Assisted Living Cost Near You?
           </StyledHeading>
@@ -525,7 +563,7 @@ const NearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Paragraph innerRef={staffRef} />
+          <Paragraph ref={staffRef} />
           <StyledHeading level="title" size="title" >
             What Type Of Medical Staff Is Present?
           </StyledHeading>
@@ -554,7 +592,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={licenseRef} />
+          <Paragraph ref={licenseRef} />
           <StyledHeading level="title" size="title">
             Licensing and Inspection Requirements
           </StyledHeading>
@@ -582,7 +620,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={socialRef} />
+          <Paragraph ref={socialRef} />
           <StyledHeading level="title" size="title">
             Exploring The Social and Community Aspects
           </StyledHeading>
@@ -623,7 +661,7 @@ const NearMePage = ({
           <StyledHeading level="title" size="title">
             How Assisted Living Varies from Other Care Options
           </StyledHeading>
-          <Paragraph innerRef={alvsnhRef} />
+          <Paragraph ref={alvsnhRef} />
           <StyledHeading level="subtitle" size="subtitle" >
             Assisted Living vs Skilled Nursing Facility (SNF)
           </StyledHeading>
@@ -715,7 +753,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={alvsilRef} />
+          <Paragraph ref={alvsilRef} />
           <StyledHeading level="subtitle" size="subtitle" >
             Assisted Living vs. Independent Living
           </StyledHeading>
@@ -806,38 +844,59 @@ const NearMePage = ({
             Back to top
           </Link>
         </StyledArticle>
+
+        <Paragraph ref={nextRef} />
         <StyledArticle>
-          <Paragraph innerRef={nextRef} />
-          <StyledHeading level="title"size="title">
-            Next Steps
-          </StyledHeading>
-          <Paragraph>
-            Think Assisted Living might right for your loved one? Explore one of the three topics below to help narrow down your search:
-          </Paragraph>
-          <ul>
-            <li>
-              <Link href="https://www.seniorly.com/assisted-living/articles/evaluating-assisted-living-communities">
-                Evaluating Assisted Living Communities
-              </Link>
-            </li>
-            <li>
-              <Link href="https://www.seniorly.com/assisted-living/articles/understanding-the-cost-of-assisted-living">
-                Understanding the Cost of Assisted Living
-              </Link>
-            </li>
-            <li>
-              <Link href="https://www.seniorly.com/assisted-living/articles/seniorly-assisted-living-faqs">
-                Frequently Asked Questions About Assisted Living
-              </Link>
-            </li>
-          </ul>
+          <NextStepsWrapper>
+            <NextHeader>
+              <NextHeading level="title" size="title">
+                Next Steps
+              </NextHeading>
+              <NextParagraph>
+                Think Assisted Living might right for your loved one? Explore one of the three topics below to help narrow down your search:
+              </NextParagraph>
+            </NextHeader>
+            <StyledIconButton  href="https://www.seniorly.com/assisted-living/articles/evaluating-assisted-living-communities"
+                              icon="chevron"
+                              right
+                              fullWidth
+                              ghost
+                              transparent
+                              borderPalette="slate"
+                              rotate={-1}
+            >Evaluating Assisted Living Communities
+            </StyledIconButton>
+            <StyledIconButton  href="https://www.seniorly.com/assisted-living/articles/understanding-the-cost-of-assisted-living"
+                               icon="chevron"
+                               right
+                               fullWidth
+                               ghost
+                               transparent
+                               borderPalette="slate"
+                               rotate={-1}
+            >Understanding the Cost of Assisted Living
+            </StyledIconButton>
+            <StyledIconButton  href="https://www.seniorly.com/assisted-living/articles/seniorly-assisted-living-faqs"
+                               icon="chevron"
+                               right
+                               fullWidth
+                               ghost
+                               transparent
+                               borderPalette="slate"
+                               rotate={-1}
+            >Frequently Asked Questions About Assisted Living
+            </StyledIconButton>
+
+          </NextStepsWrapper>
           <Paragraph>
             Seniorly is here to help you at no cost to find the perfect community. Our powerful website will search
             through thousands of communities across the country that you can connect to directly. Email{' '}
             <Link href="mailto:ask@seniorly.com">
               ask@seniorly.com
             </Link>
-            {' '}or call us at (855) 866-4515 for further assistance. We are compensated by the community you eventually select.
+            {' '}or call us at{' '}
+            <Link href="tel:+18558664515">(855) 866-4515</Link>
+            {' '}for further assistance. We are compensated by the community you eventually select.
           </Paragraph>
           <Link
             href={`#${sectionIdMap.top}`}
@@ -895,6 +954,18 @@ const NearMePage = ({
           </TwoColumn>
         </Wrapper>
       </HubPageTemplate>
+      <PhoneCTAWrapper>
+        <StyledHeading level="subtitle" size="title" palette="white">
+          Seniorly is here to help you at no cost
+        </StyledHeading>
+        <StyledHeading level="subtitle" size="title" palette="white">
+          Call us at{' '}
+          <Link href="tel:+18558664515" palette="white">(855) 866-4515</Link>
+        </StyledHeading>
+        <StyledLabel palette="white">
+          Our Local Senior Living Experts are standing by ...
+        </StyledLabel>
+      </PhoneCTAWrapper>
       <TemplateContent>
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by City" links={ALSeoCities} /></StyledArticle>
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>
