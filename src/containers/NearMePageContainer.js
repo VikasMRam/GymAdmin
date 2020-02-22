@@ -6,7 +6,7 @@ import ErrorPage from 'sly/components/pages/Error';
 import NearMePage from 'sly/components/pages/AssistedLivingNearMePage';
 import NursingHomesNearMePage from 'sly/components/pages/NursingHomesNearMePage';
 import SNFNearMePage from 'sly/components/pages/SNFNearMePage';
-import { parseURLQueryParams } from 'sly/services/helpers/url';
+import { parseURLQueryParams, generateCityPathSearchUrl } from 'sly/services/helpers/url';
 import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
 
@@ -40,6 +40,7 @@ export default class NearMePageContainer extends Component {
     isFetchingResults: bool,
     location: object.isRequired,
     status: object,
+    redirectTo: func.isRequired,
   };
 
   handleOnLocationSearch = (result) => {
@@ -51,9 +52,20 @@ export default class NearMePageContainer extends Component {
     const { history, location } = this.props;
     const searchParams = getSearchParamFromPlacesResponse(result);
     const toc = location.pathname.slice(1);
-    searchParams.toc = toc
+    searchParams.toc = toc;
     const { path } = filterLinkPath(searchParams, {});
     history.push(path);
+  };
+
+  handleCurrentLocation = (addresses, { latitude, longitude }) => {
+    const { redirectTo, location } = this.props;
+
+    const toc = location.pathname.slice(1);
+    if (addresses.length) {
+      const path = `/${toc}/${generateCityPathSearchUrl(addresses[0])}?latitude=${latitude}&longitude=${longitude}`;
+
+      redirectTo(path);
+    }
   };
 
   render() {
@@ -108,6 +120,7 @@ export default class NearMePageContainer extends Component {
         isFetchingResults={!status.communityList.hasFinished}
         handleAnchor={handleClick}
         location={location}
+        onCurrentLocation={this.handleCurrentLocation}
       />
     );
   }

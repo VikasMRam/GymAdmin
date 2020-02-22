@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import { palette as palettePropType } from 'sly/propTypes/palette';
+import { variation as variationPropType } from 'sly/propTypes/variation';
 import { Icon } from 'sly/components/atoms';
 
 const ListItemWrapper = styled.li`
@@ -16,11 +17,11 @@ const ListItemIconDiv = styled.div`
 `;
 
 const ListItem = ({
-  children, icon, iconPalette,
+  children, icon, iconPalette, iconVariation
 }) => (
   <ListItemWrapper>
     <ListItemIconDiv>
-      <Icon icon={icon} palette={iconPalette} />
+      <Icon icon={icon} palette={iconPalette} variation={iconVariation} />
     </ListItemIconDiv>
     {children}
   </ListItemWrapper>
@@ -30,6 +31,7 @@ ListItem.propTypes = {
   children: PropTypes.node,
   icon: string.isRequired,
   iconPalette: palettePropType,
+  iconVariation: variationPropType,
 };
 
 ListItem.defaultProps = {
