@@ -7,12 +7,14 @@ import { size, gridColumns } from 'sly/components/themes';
 import { getPaginationData } from 'sly/services/helpers/pagination';
 import pad from 'sly/components/helpers/pad';
 import { shadowOnHover } from 'sly/components/helpers/shadow';
-import { Centered, Link, Block } from 'sly/components/atoms';
+import { Centered, Link, Block, Heading } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
-import Heading from 'sly/components/atoms/Heading';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import CommunityTile from 'sly/components/organisms/CommunityTile';
-import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
+import SearchResultsAdTileContainer from 'sly/containers/SearchResultsAdTileContainer';
+import { titleize } from 'sly/services/helpers/strings';
+import { getTocSeoLabel } from 'sly/services/helpers/search';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;
@@ -57,6 +59,8 @@ const PaddedPagination = pad(Pagination, 'small');
 const ShadowCommunityTile = shadowOnHover(styled(CommunityTile)`
   position: relative;
 `);
+
+const PaddedSearchResultsAdTileContainer = pad(SearchResultsAdTileContainer);
 
 const mostSearchedCities = [
   {
@@ -128,7 +132,8 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
   const present = (requestMeta['page-number'] * requestMeta['page-size']);
   const start = present + 1;
   const end = (present + requestMeta['page-size']  > count ? count : present + requestMeta['page-size']);
-
+  const city = titleize(searchParams.city);
+  const tocLabel = getTocSeoLabel(searchParams.toc);
   // pagination pathname
   let params = {};
   if (location.search) {
@@ -149,26 +154,30 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
         <CommunityFilterBar searchParams={searchParams} />
       </CommunityFilterBarWrapper>
       {communityList.map((similarProperty, index) => (
-        <CommunityTileWrapper key={similarProperty.id}>
-          <StyledLink
-            to={similarProperty.url}
-            event={{
-              category: 'SearchPage',
-              action: 'communityClick',
-              label: index,
-              value: similarProperty.id,
-            }}
-          />
-          <ShadowCommunityTile
-            community={similarProperty}
-            layout="column"
-            imageSize="regular"
-            noGallery
-            showDescription
-            showSeeMoreButtonOnHover
-            lazyLoadImage={index !== 0}
-          />
-        </CommunityTileWrapper>
+        <>
+          <CommunityTileWrapper key={similarProperty.id}>
+            <StyledLink
+              to={similarProperty.url}
+              event={{
+                category: 'SearchPage',
+                action: 'communityClick',
+                label: index,
+                value: similarProperty.id,
+              }}
+            />
+            <ShadowCommunityTile
+              community={similarProperty}
+              layout="column"
+              imageSize="regular"
+              noGallery
+              showDescription
+              showSeeMoreButtonOnHover
+              lazyLoadImage={index !== 0}
+            />
+          </CommunityTileWrapper>
+          {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
+            <PaddedSearchResultsAdTileContainer type='askAgent' city={city} tocLabel={tocLabel}/>}
+        </>
       ))}
       {communityList.length < 1 &&
         <>
