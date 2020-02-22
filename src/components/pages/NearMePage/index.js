@@ -142,7 +142,7 @@ const NearMePage = ({
   const SEOContentAL = () => {
     return (
       <>
-        <Paragraph innerRef={topRef} />
+        <Paragraph ref={topRef} />
         <StyledHeading level="title"size="title">
           Table of Contents
         </StyledHeading>
@@ -215,7 +215,7 @@ const NearMePage = ({
           </ul>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={alRef} />
+          <Paragraph ref={alRef} />
           <StyledHeading level="title" size="title" >
             What is Assisted Living?
           </StyledHeading>
@@ -314,7 +314,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={staffRef} />
+          <Paragraph ref={staffRef} />
           <StyledHeading level="title" size="title" >
             What Type Of Medical Staff Is Present?
           </StyledHeading>
@@ -385,7 +385,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={licenseRef} />
+          <Paragraph ref={licenseRef} />
           <StyledHeading level="title" size="title">
             Licensing and Inspection Requirements
           </StyledHeading>
@@ -405,7 +405,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={socialRef} />
+          <Paragraph ref={socialRef} />
           <StyledHeading level="title"size="title">
             Exploring The Social and Community Aspects
           </StyledHeading>
@@ -442,7 +442,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={costRef} />
+          <Paragraph ref={costRef} />
           <StyledHeading level="title"size="title">
             What Does Assisted Living Cost Near You?
           </StyledHeading>
@@ -526,7 +526,7 @@ const NearMePage = ({
           <StyledHeading level="title"size="title">
             How Assisted Living Varies from Other Care Options
           </StyledHeading>
-          <Paragraph innerRef={alvsnhRef} />
+          <Paragraph ref={alvsnhRef} />
           <StyledHeading level="subtitle" size="subtitle" >
             Assisted Living vs Skilled Nursing
           </StyledHeading>
@@ -614,7 +614,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={alvsilRef} />
+          <Paragraph ref={alvsilRef} />
           <StyledHeading level="subtitle" size="subtitle" >
             Assisted Living vs. Independent Living
           </StyledHeading>
@@ -706,8 +706,8 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={nextRef} />
-          <StyledHeading level="title"size="title">
+          <Paragraph ref={nextRef} />
+          <StyledHeading level="title" size="title">
             Next Steps
           </StyledHeading>
           <Paragraph>
