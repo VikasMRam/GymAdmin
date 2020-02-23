@@ -132,7 +132,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
   const present = (requestMeta['page-number'] * requestMeta['page-size']);
   const start = present + 1;
   const end = (present + requestMeta['page-size']  > count ? count : present + requestMeta['page-size']);
-  const city = titleize(searchParams.city || searchParams.state);
+  const city = titleize(searchParams.city || searchParams.state || "your area");
   const tocLabel = getTocSeoLabel(searchParams.toc);
   // pagination pathname
   let params = {};
