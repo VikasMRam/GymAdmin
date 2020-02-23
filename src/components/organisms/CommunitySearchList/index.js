@@ -132,7 +132,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
   const present = (requestMeta['page-number'] * requestMeta['page-size']);
   const start = present + 1;
   const end = (present + requestMeta['page-size']  > count ? count : present + requestMeta['page-size']);
-  const city = titleize(searchParams.city);
+  const city = titleize(searchParams.city || searchParams.state);
   const tocLabel = getTocSeoLabel(searchParams.toc);
   // pagination pathname
   let params = {};
@@ -176,7 +176,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
             />
           </CommunityTileWrapper>
           {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
-            <PaddedSearchResultsAdTileContainer type='askAgent' city={city} tocLabel={tocLabel}/>}
+            <PaddedSearchResultsAdTileContainer type="askAgent" city={city} tocLabel={tocLabel} />}
         </>
       ))}
       {communityList.length < 1 &&

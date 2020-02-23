@@ -71,7 +71,7 @@ export default class SearchResultsAdTileContainer extends Component {
   render() {
     const { type, city, tocLabel } = this.props;
     const { isModalOpen } = this.state;
-    const agentAdTitle= `Get Help Finding ${tocLabel} Communities in ${city}`;
+    const agentAdTitle = `Get Help Finding ${tocLabel} Communities in ${city}`;
     return (
       <>
         {type === 'askAgent' &&
@@ -103,7 +103,7 @@ export default class SearchResultsAdTileContainer extends Component {
         }
         {isModalOpen &&
           <Modal onClose={this.handleClose}>
-            <HeaderWithClose onClose={this.handleClose}/>
+            <HeaderWithClose onClose={this.handleClose} />
             <PaddedHeaderWithCloseBody>
               <TalkToAgentFormContainer
                 heading="Our Local Senior Living Experts can help you with your search."
