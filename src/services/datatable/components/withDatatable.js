@@ -2,6 +2,7 @@ import React from 'react';
 import { object } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import { withRouter } from 'react-router-dom';
+import { parse } from 'query-string';
 
 import Datatable from 'sly/services/datatable/components/Datatable';
 
@@ -19,16 +20,22 @@ export default function withDatatable(id) {
       static WrappedComponent = InnerComponent;
       static propTypes = {
         sectionFilters: object.isRequired,
-        filters: object.isRequired,
+        location: object,
       };
 
       render() {
-        const { sectionFilters, filters } = this.props;
+        const { location, sectionFilters } = this.props;
+
+        const { 'page-number': pageNumber, ...filters } = parse(location.search);
+        const combinedSectionFilters = {
+          'page-number': pageNumber,
+          ...sectionFilters,
+        };
 
         return (
           <Datatable
             id={id}
-            sectionFilters={sectionFilters}
+            sectionFilters={combinedSectionFilters}
             filters={filters}
           >
             {datatable => <InnerComponent datatable={datatable} {...this.props} />}

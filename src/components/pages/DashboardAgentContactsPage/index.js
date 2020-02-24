@@ -1,30 +1,19 @@
 import React from 'react';
-import { parse } from 'query-string';
 
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import { Datatable } from 'sly/services/datatable';
-import DashboardAgentContactsSectionContainer from 'sly/containers/dashboard/DashboardAgentContactsSectionContainer';
+import DashboardContactsSectionContainer from 'sly/containers/dashboard/DashboardContactsSectionContainer';
 
-const DashboardAgentContactsPage = ({ location }) => {
-  const { 'page-number': pageNumber, ...filters } = parse(location.search);
-
+const DashboardAgentContactsPage = () => {
   const sectionFilters = {
-    'page-number': pageNumber,
     include: 'entities',
     'filter[entity_type]': 'eq:Property',
   };
   return (
     <DashboardPageTemplate activeMenuItem="My Contacts">
-      <Datatable
+      <DashboardContactsSectionContainer
         id="contacts"
         sectionFilters={sectionFilters}
-        filters={filters}
-      >
-        {datatable => (
-          <DashboardAgentContactsSectionContainer datatable={datatable} />
-        )}
-      </Datatable>
-
+      />
     </DashboardPageTemplate>);
 };
 

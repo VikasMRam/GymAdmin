@@ -38,7 +38,7 @@ const getPaginationData = ({ result, meta }) => {
 @withRedirectTo
 @prefetch('contacts', 'getContacts', (req, { datatable }) => req(datatable.query))
 
-export default class DashboardAgentContactsSectionContainer extends Component {
+export default class DashboardContactsSectionContainer extends Component {
   static propTypes = {
     contacts: arrayOf(contactPropType),
     status: object,

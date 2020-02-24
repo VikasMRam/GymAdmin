@@ -47,7 +47,7 @@ import DashboardCommunityServicesFormContainer from 'sly/containers/DashboardCom
 import DashboardCommunityPricingFormContainer from 'sly/containers/DashboardCommunityPricingFormContainer';
 import DashboardCommunityAmenitiesFormContainer from 'sly/containers/DashboardCommunityAmenitiesFormContainer';
 import DashboardCommunityContractFormContainer from 'sly/containers/DashboardCommunityContractFormContainer';
-import DashboardAgentContactsSectionContainer from 'sly/containers/dashboard/DashboardAgentContactsSectionContainer';
+import DashboardContactsSectionContainer from 'sly/containers/dashboard/DashboardContactsSectionContainer';
 import { parse } from 'query-string';
 
 const BackLinkWrapper = pad(styled.div`
@@ -160,11 +160,9 @@ export default class DashboardCommunitiesDetailsPage extends Component {
     const { id: userOrgId } = user.organization;
     const isOfDifferentOrg = userOrgId !== communityOrgId;
 
-    const { 'page-number': pageNumber, ...filters } = parse(location.search);
     const sectionFilters = {
-      'page-number': pageNumber,
       include: 'entities',
-      //'filter[agent-id]': `eq:${id}`,
+      'filter[community-id]': community.id,
     };
 
     return (
@@ -234,10 +232,9 @@ export default class DashboardCommunitiesDetailsPage extends Component {
           )}
           {currentTab === CONTACTS && (
             <Section>
-              <DashboardAgentContactsSectionContainer
+              <DashboardContactsSectionContainer
                 id="contacts"
                 sectionFilters={sectionFilters}
-                filters={filters}
               />
             </Section>
           )}

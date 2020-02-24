@@ -27,7 +27,7 @@ import Tab from 'sly/components/molecules/Tab';
 import AgentSummary from 'sly/components/molecules/AgentSummary';
 import BackLink from 'sly/components/molecules/BackLink';
 import PartnerAgentProfileFormContainer from 'sly/containers/PartnerAgentProfileFormContainer';
-import DashboardAgentContactsSectionContainer from 'sly/containers/dashboard/DashboardAgentContactsSectionContainer';
+import DashboardContactsSectionContainer from 'sly/containers/dashboard/DashboardContactsSectionContainer';
 import { Datatable } from 'sly/services/datatable';
 
 const LargePaddingWrapper = styled.div`
@@ -178,7 +178,6 @@ export default class DashboardAgentDetailPage extends Component {
     rawAgent: object,
     isLoading: bool,
     currentTab: string,
-    location: object,
   };
 
   getTabPathsForUser = () => {
@@ -228,7 +227,7 @@ export default class DashboardAgentDetailPage extends Component {
   };
 
   render() {
-    const { agent, rawAgent, user, currentTab, isLoading: agentIsLoading, location } = this.props;
+    const { agent, rawAgent, user, currentTab, isLoading: agentIsLoading } = this.props;
     if (agentIsLoading) {
       return (
         <StyledDashboardTwoColumnTemplate activeMenuItem="Agents">
@@ -260,11 +259,9 @@ export default class DashboardAgentDetailPage extends Component {
       />
     );
 
-    const { 'page-number': pageNumber, ...filters } = parse(location.search);
-    const sectionFilters = {
-      'page-number': pageNumber,
+    const contactsSectionFilters = {
       include: 'entities',
-      'filter[agent-id]': `eq:${id}`,
+      'filter[agent-id]': id,
     };
 
     return (
@@ -304,10 +301,9 @@ export default class DashboardAgentDetailPage extends Component {
 
             {currentTab === CONTACTS && (
               <LargePaddingWrapper>
-                <DashboardAgentContactsSectionContainer
+                <DashboardContactsSectionContainer
                   id="contacts"
-                  sectionFilters={sectionFilters}
-                  filters={filters}
+                  sectionFilters={contactsSectionFilters}
                 />
               </LargePaddingWrapper>
             )}
