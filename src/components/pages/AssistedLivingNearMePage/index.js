@@ -187,6 +187,14 @@ const ListWrapper = styled.div`
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.small')};
   margin-bottom: ${size('spacing.large')};
+  display: grid;
+  grid-template-columns: 100%;
+  grid-row-gap: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    grid-template-columns: 50% 50%;
+    grid-column-gap: ${size('layout.gutter')};
+  }
 `;
 
 const StyledTable = styled.table`
