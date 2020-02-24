@@ -64,11 +64,10 @@ export default class DashboardCommunityAmenitiesForm extends Component {
       <Form onSubmit={handleSubmit}>
         <FormScrollSection>
           <Field
-            name="propInfo.profileServices"
-            type="checkbox"
-            options={[{ value: 'Pet Friendly', label: 'Pet friendly' }]}
+            name="propInfo.isPetFriendly"
+            type="boolean"
+            options={[{ value: true, label: 'Pet friendly' }]}
           />
-
           {isCommunityLarge && (
             <Field
               name="propInfo.communitySpace"

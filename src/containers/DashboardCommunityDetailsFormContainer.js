@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
 import pick from 'lodash/pick';
-import defaultsDeep from 'lodash/defaults';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
 import clientPropType from 'sly/propTypes/client';
 import userProptype from 'sly/propTypes/user';
-import { query, prefetch } from 'sly/services/newApi';
+import { query, prefetch, getRelationship } from 'sly/services/newApi';
 import DashboardCommunityDetailsForm from 'sly/components/organisms/DashboardCommunityDetailsForm';
-import { withRouter } from 'react-router';
 import withUser from 'sly/services/newApi/withUser';
 import { userIs } from 'sly/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
@@ -33,6 +33,9 @@ const ReduxForm = reduxForm({
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.id,
 }))
+@connect((state, { status }) => ({
+  address: getRelationship(state, status.community.result, 'address'),
+}))
 
 export default class DashboardCommunityDetailsFormContainer extends Component {
   static propTypes = {
@@ -43,33 +46,42 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
     community: clientPropType.isRequired,
     match: object.isRequired,
     status: object,
+    address: object,
   };
 
   handleSubmit = (values) => {
     const { match, updateCommunity } = this.props;
     const { id } = match.params;
 
+    const { attributes, relationships } = values;
+    const { address } = relationships;
     return updateCommunity({ id }, {
-      attributes: values,
+      attributes,
+      relationships: {
+        address: { data: address },
+      },
     });
   };
 
   render() {
-    const { community, status, user, ...props } = this.props;
+    const { community, status, user, address, ...props } = this.props;
 
     const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
     const initialValues = pick(
-      status.community.result.attributes,
+      status.community.result,
       [
-        'name',
-        'propInfo.communityPhone',
-        'propInfo.ownerName',
-        'propInfo.ownerEmail',
-        'propInfo.typeCare',
-        'propInfo.respiteAllowed',
+        'attributes.name',
+        'attributes.propInfo.communityPhone',
+        'attributes.propInfo.licenseNumber',
+        'attributes.propInfo.ownerName',
+        'attributes.propInfo.ownerEmail',
+        'attributes.propInfo.typeCare',
+        'attributes.propInfo.respiteAllowed',
       ],
     );
-
+    initialValues.relationships = {
+      address,
+    };
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}

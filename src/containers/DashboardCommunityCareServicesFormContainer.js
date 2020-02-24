@@ -55,7 +55,6 @@ export default class DashboardCommunityCareServicesFormContainer extends Compone
       status.community.result.attributes,
       [
         'propInfo.careServices',
-        'propInfo.nonCareServices',
       ],
     );
     return (
