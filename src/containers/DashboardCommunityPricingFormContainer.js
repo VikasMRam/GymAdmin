@@ -64,14 +64,17 @@ export default class DashboardCommunityPricingFormContainer extends Component {
         'propInfo.studioApartmentRate',
         'propInfo.oneBedroomApartmentRate',
         'propInfo.twoBedroomApartmentRate',
-        'propInfo.careCostsIncluded',
+        'propInfo.alCareRate',
+        'propInfo.mcCareRate',
+        'propInfo.isCareCostIncluded',
+        'propInfo.isUtilitiesIncluded',
       ],
     );
 
     // passes by ref
     defaultsDeep(initialValues, {
       propInfo: {
-        careCostsIncluded: false,
+        isCareCostIncluded: false,
       },
     });
 

@@ -105,14 +105,14 @@ export default class DashboardCommunityPricingForm extends Component {
 
           <FormSection heading="Additional Care Costs">
             <Field
-              name="propInfo.careCostsIncluded"
+              name="propInfo.isCareCostIncluded"
               type="boolean"
               label="Care costs included"
               readOnly={!canEdit}
               component={ReduxField}
               wideWidth
             />
-            {!currentValues?.propInfo?.careCostsIncluded && (
+            {!currentValues?.propInfo?.isCareCostIncluded && (
               <>
                 <Field
                   name="propInfo.alCareRate"
@@ -135,7 +135,7 @@ export default class DashboardCommunityPricingForm extends Component {
               </>
             )}
             <Field
-              name="propInfo.utilitiesIncluded"
+              name="propInfo.isUtilitiesIncluded"
               type="boolean"
               label="Utitilies included"
               readOnly={!canEdit}
