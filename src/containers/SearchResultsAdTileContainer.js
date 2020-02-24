@@ -34,6 +34,13 @@ export default class SearchResultsAdTileContainer extends Component {
     isModalOpen: false,
   };
 
+  componentDidMount() {
+    SlyEvent.getInstance().sendEvent({
+      action: 'view',
+      category: 'SearchResultsAdTile',
+    });
+  }
+
   handleAskExpertQuestionClick = () => {
     SlyEvent.getInstance().sendEvent({
       action: 'click-ask-our-experts-question-button',
