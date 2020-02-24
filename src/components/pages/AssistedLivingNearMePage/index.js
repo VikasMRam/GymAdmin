@@ -2,13 +2,14 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
-import IconItem from 'sly/components/molecules/IconItem';
 import ListItem from 'sly/components/molecules/ListItem';
-import IconButton from 'sly/components/molecules/IconButton';
+import HubHeader from 'sly/components/molecules/HubHeader';
+import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
+import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
+import NextSteps from 'sly/components/molecules/NextSteps';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
-import HeaderContainer from 'sly/containers/HeaderContainer';
 import {
   HubPageTemplate,
   makeBody,
@@ -21,107 +22,12 @@ import {
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 
-const HeroWrapper = styled.div`
-  position: relative;
-  height: ${size('header.hub.heroImage.mobileHeight')};
-  background-color: ${palette('secondary', 'dark35')};
-  display: flex;
-  flex-direction: column;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    height: ${size('header.hub.heroImage.height')};
-    flex-direction: row-reverse;
-  }
-`;
-
-const ImageWrapper = styled.div`
-  flex: 1 0 0%;
-  text-align:right;
-  &:after {
-    content: '';
-    position: absolute;
-    left:0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, #387F7Eff 50%, #387F7E00);
-  }
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    &:after {
-      content: '';
-      position: absolute;
-      left:0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to right, #49A7A5ff 50%, #49A7A500);
-    }
-  }
-`;
-
-const StyledImage = styled(ResponsiveImage)`
-  object-fit: cover;
-  vertical-align:top;
-  width: 100%;
-  height: 100%;
-`;
-
-const CTAWrapper = styled.div`
-  flex: 1 0 0%;
-  margin: auto 0;
-`;
-const SearchBoxWrapper = styled.div`
-  max-width: ${size('header.hub.heroSearchBox.width')};
-  margin: 0 auto;
-  transform: rotate(0);
-  text-align: left;
-  align-items: left;
-  justify-content: left;
-`;
-const AuditWrapper = styled.div`
-   background-color: ${palette('grey', 'stroke')};
-   padding: ${size('spacing.large')};
-   margin-bottom: ${size('spacing.large')};
-`;
-const AuditTextWrapper = styled.div`
-  margin: auto;
-  width: 100%;
-  padding: 0 ${size('spacing.large')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: 0;
-    width: ${size('layout.col9')};
-
-    > section {
-      width: ${size('tabletLayout.col8')};
-      margin: auto;
-    }
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col12')};
-
-    > section {
-      width: auto;
-      margin: auto;
-    }
-  }
-`;
-const StyledIconItem = styled(IconItem)`
-  width: 100%;
-  line-height: ${size('lineHeight.body')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      width: ${size('layout.col8')};
-  }
-`;
 const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.large')};
-`;
-const StyledLabel = styled(Label)`
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -133,33 +39,6 @@ const StyledArticle = styled.article`
       margin-bottom: ${size('spacing.regular')};
     }
   }
-`;
-
-const NextStepsWrapper = styled.div`
-  margin-bottom: ${size('spacing.xLarge')};
-  border: ${size('border.regular')} solid ${palette('primary', 'base')};
-  border-radius: ${size('spacing.small')};
-`;
-
-const NextHeader = styled.div`
-  background-color: ${palette('primary', 'base')};
-  color: ${palette('white', 'base')};
-  padding: ${size('spacing.large')};
-`;
-
-const NextParagraph = styled(Paragraph)`
-    color: ${palette('white', 'base')};
-`;
-
-const NextHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.large')};
-  color: ${palette('white', 'base')};
-`;
-
-const StyledIconButton = styled(IconButton)`
-  font-weight: bold;
-  color: ${palette('primary', 'base')};
-  border-radius: 0;
 `;
 
 const StickToTop = styled.div`
@@ -226,15 +105,6 @@ const StyledTable = styled.table`
   };
 `;
 
-const PhoneCTAWrapper = styled.div`
-  background-color: ${palette('primary', 'base')};
-  color: ${palette('white', 'base')};
-  padding: ${size('spacing.massive')} ${size('spacing.large')};
-  margin: ${size('spacing.xLarge')} auto;
-  width: 100%;
-  text-align: center;
-`;
-
 const MapLinkWrapper = styled.div`
   display: none;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -270,24 +140,6 @@ const ADLIconItem = styled.div`
   }
 `;
 
-const AgentWrapper = styled.div`
-  padding: ${size('spacing.large')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const AgentItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-  flex-direction: row;
-  }
-`;
-
-const AgentAvatarWrapper = styled.div`
-  margin-right: ${size('spacing.large')};
-`;
 
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
@@ -304,41 +156,6 @@ const NearMePage = ({
   location,
   onCurrentLocation,
 }) => {
-  const HeaderContent = (
-    <>
-      <HeaderContainer />
-      <HeroWrapper>
-        <ImageWrapper>
-          <StyledImage path="react-assets/hub/assisted-living-cover.jpg" alt="Assisted Living Near You" height={320} />
-        </ImageWrapper>
-        <CTAWrapper>
-          <SearchBoxWrapper>
-            <StyledHeading level="hero" size="hero" palette="white">
-              What is Assisted Living Near You?
-            </StyledHeading>
-            <StyledLabel palette="white">
-              Use our free search to find assisted living nearby
-            </StyledLabel>
-            <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
-          </SearchBoxWrapper>
-        </CTAWrapper>
-      </HeroWrapper>
-      <AuditWrapper>
-        <AuditTextWrapper>
-          <StyledIconItem
-            icon="verified"
-            iconPalette="secondary"
-            iconVariation="dark35"
-            borderless={true}
-          >
-            This assisted living article has been reviewed and approved by{' '}
-            <Link to="https://www.seniorly.com/resources/author/jim+mc+cabe" >Jim McCabe, PhD, MSW, MPH, President - Eldercare Resources</Link>
-          </StyledIconItem>
-        </AuditTextWrapper>
-      </AuditWrapper>
-    </>
-  );
-
   const listSize = requestMeta['filtered-count'];
   const { geo } = requestMeta;
   const city = geo && geo.city;
@@ -419,6 +236,12 @@ const NearMePage = ({
     {title: "West Virginia", to: "https://aspe.hhs.gov/system/files/pdf/110641/15alcom-WV.pdf"},
     {title: "Wisconsin", to: "https://aspe.hhs.gov/system/files/pdf/110646/15alcom-WI.pdf"},
     {title: "Wyoming", to: "https://aspe.hhs.gov/system/files/pdf/110651/15alcom-WY.pdf"}
+  ];
+
+  const ALNextSteps = [
+    {title: "Evaluating Assisted Living Communities", to:"https://www.seniorly.com/assisted-living/articles/evaluating-assisted-living-communities"},
+    {title: "Understanding the Cost of Assisted Living", to:"https://www.seniorly.com/assisted-living/articles/understanding-the-cost-of-assisted-living"},
+    {title: "Frequently Asked Questions About Assisted Living", to:"https://www.seniorly.com/assisted-living/articles/seniorly-assisted-living-faqs"},
   ];
 
 
@@ -716,59 +539,7 @@ const NearMePage = ({
           <StyledHeading level="title" size="title" >
             What Is A Local Senior Living Expert?
           </StyledHeading>
-          <Paragraph>
-            As you search for assisted living near you, you will be comforted to know there are senior care professionals
-            living and working in your city. These experts know all the senior living communities, their staff turnover,
-            their unique selling points, and best of all they can often negotiate fees on your behalf at your favorite options.
-          </Paragraph>
-          <AgentWrapper>
-            <AgentItem>
-              <AgentAvatarWrapper>
-                <Image src={assetPath('images/hub/agents/Sarah.png')} />
-              </AgentAvatarWrapper>
-              <Wrapper>
-                <StyledHeading level="subtitle" size="subtitle" >Sarah Odover - Los Angeles, CA</StyledHeading>
-                <Paragraph>Sarah Ordover has over 4 years of experience helping families find independent living,
-                  assisted living, and memory care options. She has helped over 100 families so far in the Los Angeles area.{' '}
-                  <Link href="https://www.seniorly.com/agents/pacific-west/beverley-hills/assisted-living-locators-los-angeles-ca-sarah-ordover-">Click Here to Learn more about Sarah.</Link>
-                </Paragraph>
-              </Wrapper>
-            </AgentItem>
-            <Hr />
-            <AgentItem>
-              <AgentAvatarWrapper>
-                <Image src={assetPath('images/hub/agents/Heather.png')} />
-              </AgentAvatarWrapper>
-              <Wrapper>
-                <StyledHeading level="subtitle" size="subtitle" >Heather Cartright - Sarasota, FL</StyledHeading>
-                <Paragraph>Heather Cartright has over a year of experience helping families find independent living,
-                  assisted living, and memory care options. As a former assisted living facility administrator,
-                  she brings a unique skillset for senior living placement.{' '}
-                  <Link href="https://www.seniorly.com/agents/south/ellenton-fl/my-care-finders-fl-heather-cartright-">Click Here to Learn more about Heather.</Link>
-                </Paragraph>
-              </Wrapper>
-            </AgentItem>
-            <Hr />
-            <AgentItem>
-              <AgentAvatarWrapper>
-                <Image src={assetPath('images/hub/agents/Carol-Katz.png')} />
-              </AgentAvatarWrapper>
-              <Wrapper>
-                <StyledHeading level="subtitle" size="subtitle" >Carol Katz - New Jersey</StyledHeading>
-                <Paragraph> Carol Katz has over 10 years of experience helping families find independent living,
-                  assisted living, and memory care options. With her unique volunteer experience, she brings
-                  a special skillset for senior living placement.{' '}
-                  <Link href="https://www.seniorly.com/agents/northeast/manalapan/adult-care-advisors-carol-katz-">Click Here to Learn more about Carol.</Link>
-                </Paragraph>
-              </Wrapper>
-            </AgentItem>
-
-          </AgentWrapper>
-          <Paragraph>
-            Working with Seniorly means we will connect you to the local senior living expert in your preferred city.
-            They will support you for as much or as little as you need through every step of the process.
-            There is never any cost for our services. We are compensated by the community eventually selected.
-          </Paragraph>
+          <WhatIsPartnerAgent/>
         </StyledArticle>
 
         <StyledArticle>
@@ -1050,57 +821,10 @@ const NearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <NextStepsWrapper>
-            <NextHeader>
-              <NextHeading level="title" size="title" _ref={nextRef} >
-                Next Steps
-              </NextHeading>
-              <NextParagraph>
-                Think Assisted Living might right for your loved one? Explore one of the three topics below to help narrow down your search:
-              </NextParagraph>
-            </NextHeader>
-            <StyledIconButton  href="https://www.seniorly.com/assisted-living/articles/evaluating-assisted-living-communities"
-                              icon="chevron"
-                              right
-                              fullWidth
-                              ghost
-                              transparent
-                              borderPalette="slate"
-                              rotate={-1}
-            >Evaluating Assisted Living Communities
-            </StyledIconButton>
-            <StyledIconButton  href="https://www.seniorly.com/assisted-living/articles/understanding-the-cost-of-assisted-living"
-                               icon="chevron"
-                               right
-                               fullWidth
-                               ghost
-                               transparent
-                               borderPalette="slate"
-                               rotate={-1}
-            >Understanding the Cost of Assisted Living
-            </StyledIconButton>
-            <StyledIconButton  href="https://www.seniorly.com/assisted-living/articles/seniorly-assisted-living-faqs"
-                               icon="chevron"
-                               right
-                               fullWidth
-                               ghost
-                               transparent
-                               borderPalette="slate"
-                               rotate={-1}
-            >Frequently Asked Questions About Assisted Living
-            </StyledIconButton>
-
-          </NextStepsWrapper>
-          <Paragraph>
-            Seniorly is here to help you at no cost to find the perfect community. Our powerful website will search
-            through thousands of communities across the country that you can connect to directly. Email{' '}
-            <Link href="mailto:ask@seniorly.com">
-              ask@seniorly.com
-            </Link>
-            {' '}or call us at{' '}
-            <Link href="tel:+18558664515">(855) 866-4515</Link>
-            {' '}for further assistance. We are compensated by the community you eventually select.
-          </Paragraph>
+          <NextSteps nextRef={nextRef}
+                     label="Think Assisted Living might be right for your loved one? Explore one of the three topics below to help narrow down your search:"
+                     links={ALNextSteps} />
+          
           <Link
             href={`#${sectionIdMap.al}`}
             onClick={e => handleAnchor(e, alRef)}
@@ -1122,7 +846,12 @@ const NearMePage = ({
         <title>{title}</title>
         <meta name="description" content={description} />
       </Helmet>
-      {HeaderContent}
+      <HubHeader imagePath="react-assets/hub/assisted-living-cover.jpg"
+         toc="assisted living"
+         heading="What is Assisted Living Near You?"
+         label="Use our free search to find assisted living nearby"
+         onCurrentLocation={onCurrentLocation}
+         onLocationSearch={onLocationSearch} />
       <HubPageTemplate>
         <Wrapper>
           <TwoColumn>
@@ -1157,18 +886,7 @@ const NearMePage = ({
           </TwoColumn>
         </Wrapper>
       </HubPageTemplate>
-      <PhoneCTAWrapper>
-        <StyledHeading level="subtitle" size="title" palette="white">
-          Seniorly is here to help you at no cost
-        </StyledHeading>
-        <StyledHeading level="subtitle" size="title" palette="white">
-          Call us at{' '}
-          <Link href="tel:+18558664515" palette="white">(855) 866-4515</Link>
-        </StyledHeading>
-        <StyledLabel palette="white">
-          Our Local Senior Living Experts are standing by
-        </StyledLabel>
-      </PhoneCTAWrapper>
+      <PhoneCTAFooter/>
       <TemplateContent>
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by City" links={ALSeoCities} /></StyledArticle>
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>
