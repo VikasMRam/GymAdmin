@@ -35,9 +35,11 @@ export default class SearchResultsAdTileContainer extends Component {
   };
 
   componentDidMount() {
+    const { type, city, tocLabel } = this.props;
     SlyEvent.getInstance().sendEvent({
       action: 'view',
-      category: 'SearchResultsAdTile',
+      category: `SearchResultsAdTile-${type}`,
+      label: `${tocLabel}-${city}`,
     });
   }
 
@@ -78,18 +80,18 @@ export default class SearchResultsAdTileContainer extends Component {
   render() {
     const { type, city, tocLabel } = this.props;
     const { isModalOpen } = this.state;
-    const agentAdTitle = `Get Help Finding ${tocLabel} Communities in ${city}`;
+    const agentAdTitle = `Find the Best ${tocLabel} Communities in ${city}`;
     return (
       <>
         {type === 'askAgent' &&
           <SearchResultsAdTile
             title={agentAdTitle}
-            buttonText="Ask Our Experts A Question"
+            buttonText="Ask a Question"
             image={assetPath('images/agents.png')}
             onButtonClick={this.handleAskExpertQuestionClick}
             {...this.props}
           >
-            Our Local Senior Living Experts can help you now.
+            Our Local Senior Living Experts Can Help.
           </SearchResultsAdTile>
         }
         {type === 'getOffer' &&
