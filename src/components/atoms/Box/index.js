@@ -26,7 +26,10 @@ export const bottomSnap = css`
   border-bottom-right-radius: 0;
 `;
 
+const backgroundColour = ({ backgroundPalette, backgroundVariation }) => backgroundPalette ? palette(backgroundPalette, backgroundVariation) : 'transparent';
+
 const Box = styled.div`
+  background: ${backgroundColour};
   border: ${size('border.regular')} solid ${borderColour};
   border-radius: ${ifProp('noBorderRadius', 0, size('spacing.small'))};
   padding: ${ifProp('noPadding', 0, padding)};
@@ -42,6 +45,8 @@ const Box = styled.div`
 Box.propTypes = {
   palette: palettePropType,
   variation: variationPropType,
+  backgroundPalette: palettePropType,
+  backgroundVariation: variationPropType,
   padding: spacingPropType,
   snap: oneOf(['none', 'top', 'bottom', 'vertical']),
   noBorderRadius: bool,
