@@ -197,6 +197,14 @@ const ListWrapper = styled.div`
   }
 `;
 
+const TypesWrapper = styled.div`
+  padding: ${size('spacing.xLarge')} ${size('spacing.large')};
+  line-height: ${size('lineHeight.body')};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  border-radius: ${size('spacing.small')};
+  margin-bottom: ${size('spacing.large')};
+`;
+
 const StyledTable = styled.table`
   border-collapse: collapse;
   width: 100%;
@@ -631,7 +639,7 @@ const NearMePage = ({
           <Paragraph>
             In general, assisted living communities fall under 3 pricing levels:
           </Paragraph>
-          <ListWrapper>
+          <TypesWrapper>
             <ListItem icon="favourite-dark" iconPalette="secondary" iconVariation="dark35">
               <Paragraph>
                 <strong>
@@ -660,7 +668,7 @@ const NearMePage = ({
                 endless activities, etc.
               </Paragraph>
             </ListItem>
-          </ListWrapper>
+          </TypesWrapper>
           {/*<Paragraph>*/}
             {/*<StyledImage path="react-assets/hub/belmont-village.jpg" alt="Assisted Living Belmont Village" height={320} />*/}
           {/*</Paragraph>*/}
