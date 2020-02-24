@@ -48,7 +48,6 @@ import DashboardCommunityPricingFormContainer from 'sly/containers/DashboardComm
 import DashboardCommunityAmenitiesFormContainer from 'sly/containers/DashboardCommunityAmenitiesFormContainer';
 import DashboardCommunityContractFormContainer from 'sly/containers/DashboardCommunityContractFormContainer';
 import DashboardContactsSectionContainer from 'sly/containers/dashboard/DashboardContactsSectionContainer';
-import { parse } from 'query-string';
 
 const BackLinkWrapper = pad(styled.div`
   display: flex;
@@ -87,9 +86,6 @@ export default class DashboardCommunitiesDetailsPage extends Component {
     notifyInfo: func,
     communityIsLoading: bool,
     user: userPropType.isRequired,
-  };
-
-  getTabPathsForUser = () => {
   };
 
   getTabsForUser = () => {
