@@ -27,22 +27,8 @@ export default class CheckboxInput extends Component {
     label: string,
   };
 
-  constructor(props) {
-    super(props);
-
-    const { value } = props;
-    if (Array.isArray(value)) {
-      this.state = { value };
-    }
-  }
-
-  state = {
-    value: this.props.value,
-  };
-
   handleCheckboxItemOnClick = (option) => {
-    const { onChange, type } = this.props;
-    const { value } = this.state;
+    const { onChange, type, value } = this.props;
     let newValue;
     if (type === 'boolean') {
       newValue = !value;
@@ -54,15 +40,12 @@ export default class CheckboxInput extends Component {
         newValue.splice(newValue.indexOf(option.value), 1);
       }
     }
-    this.setState({ value: newValue }, () => {
-      onChange(newValue);
-    });
+    return onChange(newValue);
   };
 
   render() {
-    const { type, label } = this.props;
+    const { type, label, value } = this.props;
     let { options } = this.props;
-    const { value } = this.state;
     if (!options && type === 'boolean') {
       options = [{ value: true, label }];
     }
