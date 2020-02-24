@@ -1,0 +1,22 @@
+<svg viewBox="0 0 36 40" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <path d="M18,26 L42,26 C42,32.627417 36.627417,38 30,38 L26.5,38 L27.6893661,42.7574644 C27.8233148,43.2932593 27.4975541,43.8361938 26.9617592,43.9701425 C26.8824386,43.9899727 26.8009854,44 26.7192236,44 L11,44 C10.4477153,44 10,43.5522847 10,43 L10,36 L10,36 C7.33333333,33.3333333 6,30 6,26 L6,5 C6,4.44771525 6.44771525,4 7,4 L17,4 C17.5522847,4 18,4.44771525 18,5 L18,20 L18,20 L40,20 C41.1045695,20 42,20.8954305 42,22 L42,24 L18,24 L18,26 Z" id="path-5"></path>
+  </defs>
+  <g id="Hub-5" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="Tablet5" transform="translate(-664.000000, -2244.000000)">
+      <g id="Group-35" transform="translate(44.000000, 2024.000000)">
+        <g id="Group-152" transform="translate(343.000000, 0.000000)">
+          <g id="icon-/-toilet" transform="translate(271.000000, 216.000000)">
+            <mask id="mask-25" fill="white">
+              <use xlink:href="#path-5"></use>
+            </mask>
+            <use id="Path5" fill="#2A333F" fill-rule="evenodd" xlink:href="#path-5"></use>
+            <g id="color-/-teal-/-base" mask="url(#mask-25)" fill="currentColor" fill-rule="nonzero">
+              <rect id="Rectangle" x="0" y="0" width="48" height="48"></rect>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

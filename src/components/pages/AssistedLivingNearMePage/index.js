@@ -329,7 +329,6 @@ const NearMePage = ({
   const state = geo && geo.state;
   const tocLabel = getTocSeoLabel('assisted-living');
 
-  const topRef = React.createRef();
   const alRef = React.createRef();
   const staffRef = React.createRef();
   const licenseRef = React.createRef();
@@ -340,7 +339,6 @@ const NearMePage = ({
   const nextRef = React.createRef();
 
   const sectionIdMap = {
-    top: 'top',
     al: 'what-is-assisted-living',
     staff: 'medical-staff',
     license: 'license',
@@ -472,10 +470,8 @@ const NearMePage = ({
   const SEOContentAL = () => {
     return (
       <>
-        <Paragraph ref={topRef} />
         <StyledArticle>
-          <Paragraph ref={alRef} />
-          <StyledHeading level="title" size="title" >
+          <StyledHeading level="title" size="title" _ref={alRef} >
             What is Assisted Living?
           </StyledHeading>
           <Paragraph>
@@ -524,27 +520,27 @@ const NearMePage = ({
           <ADLWrapper>
             <ADLIconItem>
               Personal Hygiene
-              <Icon icon="verified" palette="secondary" variation="dark35" />
+              <Icon icon="bath" palette="secondary" variation="dark35" />
             </ADLIconItem>
             <ADLIconItem>
               Feeding
-              <Icon icon="verified" palette="secondary" variation="dark35" />
+              <Icon icon="food" palette="secondary" variation="dark35" />
             </ADLIconItem>
             <ADLIconItem>
               Continence Management
-              <Icon icon="verified" palette="secondary" variation="dark35" />
+              <Icon icon="washroom" palette="secondary" variation="dark35" />
             </ADLIconItem>
             <ADLIconItem>
               Ambulating
-              <Icon icon="verified" palette="secondary" variation="dark35" />
+              <Icon icon="accessibility" palette="secondary" variation="dark35" />
             </ADLIconItem>
             <ADLIconItem>
               Dressing
-              <Icon icon="verified" palette="secondary" variation="dark35" />
+              <Icon icon="shirt" palette="secondary" variation="dark35" />
             </ADLIconItem>
             <ADLIconItem>
               Toileting
-              <Icon icon="verified" palette="secondary" variation="dark35" />
+              <Icon icon="toilet" palette="secondary" variation="dark35" />
             </ADLIconItem>
           </ADLWrapper>
           <Paragraph>
@@ -576,8 +572,8 @@ const NearMePage = ({
             will be on site, or just a short stroll (or wheelchair ride) away.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.al}`}
+            onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
           </Link>
@@ -597,21 +593,23 @@ const NearMePage = ({
             <StyledArticle><SeoLinks title="Please Click on Your State Below" links={alTable} /></StyledArticle>
           </TableWrapper>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.al}`}
+            onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
 
         <StyledArticle>
-          <Paragraph ref={costRef} />
-          <StyledHeading level="title" size="title">
+          <StyledHeading level="title" size="title" _ref={costRef} >
             What Does Assisted Living Cost Near You?
           </StyledHeading>
           <Paragraph>
-            As of 2019, the national median rate of Assisted Living per month for a 1-bedroom apartment is $4051.
-            However, there are a few factors that go into this cost.  For example, your location, as well as the personal care services needed.
+            As of 2019, according to{' '}
+            <Link href="https://www.genworth.com/aging-and-you/finances/cost-of-care.html">
+              Genworth
+            </Link>
+            {' '}, the national median rate of assisted living facility per month for a 1-bedroom apartment is $4,051. However, there are a few factors that go into this cost. For example, your location, as well as the personal care services needed.
           </Paragraph>
           <Paragraph>
             That comes to about $48,612 a year. That may sound like a big number, but once you add up all current
@@ -619,11 +617,11 @@ const NearMePage = ({
           </Paragraph>
           <Paragraph>
             There are also many ways to find that perfect balance of price, services, and comfort.
-            With a wide range of community, from the basic to the luxurious, choosing an Assisted Living community near you
-            that fits your budget without skimping on care and amenities is possible.
+            There are a wide range of communities, from the basic to the luxurious.
+            It is possible to choose an assisted living facility near you that fits your budget without skimping on care and amenities.
           </Paragraph>
           <Paragraph>
-            In general Assisted Living communities fall under 3 pricing levels:
+            In general, assisted living communities fall under 3 pricing levels:
           </Paragraph>
           <ListWrapper>
             <ListItem icon="favourite-dark" iconPalette="secondary" iconVariation="dark35">
@@ -655,9 +653,9 @@ const NearMePage = ({
               </Paragraph>
             </ListItem>
           </ListWrapper>
-          <Paragraph>
-            <StyledImage path="react-assets/hub/belmont-village.jpg" alt="Assisted Living Belmont Village" height={320} />
-          </Paragraph>
+          {/*<Paragraph>*/}
+            {/*<StyledImage path="react-assets/hub/belmont-village.jpg" alt="Assisted Living Belmont Village" height={320} />*/}
+          {/*</Paragraph>*/}
           <Paragraph>
             Do keep in mind that all levels of care should be safe, secure, friendly, and 100% certified.
             No bargain is worth risking the wellbeing of your loved one.
@@ -692,8 +690,8 @@ const NearMePage = ({
             </Link>
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.al}`}
+            onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
           </Link>
@@ -710,7 +708,7 @@ const NearMePage = ({
           <AgentWrapper>
             <AgentItem>
               <AgentAvatarWrapper>
-                <Image src={assetPath('images/agent-xLarge.png')} />
+                <Image src={assetPath('images/hub/agents/Sarah.png')} />
               </AgentAvatarWrapper>
               <Wrapper>
                 <StyledHeading level="subtitle" size="subtitle" >Sarah Odover - Los Angeles, CA</StyledHeading>
@@ -723,7 +721,7 @@ const NearMePage = ({
             <Hr />
             <AgentItem>
               <AgentAvatarWrapper>
-                <Image src={assetPath('images/agent-xLarge.png')} />
+                <Image src={assetPath('images/hub/agents/Heather.png')} />
               </AgentAvatarWrapper>
               <Wrapper>
                 <StyledHeading level="subtitle" size="subtitle" >Heather Cartright - Sarasota, FL</StyledHeading>
@@ -737,7 +735,7 @@ const NearMePage = ({
             <Hr />
             <AgentItem>
               <AgentAvatarWrapper>
-                <Image src={assetPath('images/agent-xLarge.png')} />
+                <Image src={assetPath('images/hub/agents/Carol-Katz.png')} />
               </AgentAvatarWrapper>
               <Wrapper>
                 <StyledHeading level="subtitle" size="subtitle" >Carol Katz - New Jersey</StyledHeading>
@@ -751,22 +749,21 @@ const NearMePage = ({
 
           </AgentWrapper>
           <Paragraph>
-            When you connect with Seniorly we will connect you to the local senior living expert in your preferred city.
-            They will support you for as much or as little as you need through every step of the process. There is never any cost
-            for our services. We are compensated by the community eventually selected.
+            Working with Seniorly means we will connect you to the local senior living expert in your preferred city.
+            They will support you for as much or as little as you need through every step of the process.
+            There is never any cost for our services. We are compensated by the community eventually selected.
           </Paragraph>
         </StyledArticle>
 
         <StyledArticle>
-          <Paragraph ref={staffRef} />
-          <StyledHeading level="title" size="title" >
+          <StyledHeading level="title" size="title" _ref={staffRef} >
             What Type Of Medical Staff Is Present?
           </StyledHeading>
           <Paragraph>
-            Every assisted living near you is different. They are each dedicated to different levels of care and
-            services. Assisted Living communities will offer regular activities, on-site non-medical health care,
-            comfortable living spaces, and prepared meals. Some communities that focus on higher acuity care may have
-            licensed nurses on staff.  Others focus on dementia or{' '}
+            Every assisted living facility near you is different. They are each dedicated to different levels of care and
+            services. Assisted living communities will offer regular activities, on-site non-medical health care,
+            comfortable living spaces, and prepared meals. Some communities that focus on higher acuity care may
+            have licensed nurses on staff. Others focus on dementia or{' '}
             <Link href="https://www.seniorly.com/memory-care">
               memory care
             </Link>
@@ -776,19 +773,18 @@ const NearMePage = ({
           <Paragraph>
             Seniors should expect their own private residences with most communities offering studios or one-bedroom
             apartments. Couples also can live together, and some communities, especially the smaller ones, do offer
-            shared rooms for more economic value. And no need to leave a pet behind as many communities allow dogs,cats
+            shared rooms for more economic value. And no need to leave a pet behind as many communities allow dogs, cats
             and fish to come along with their faithful owners.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.al}`}
+            onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph ref={licenseRef} />
-          <StyledHeading level="title" size="title">
+          <StyledHeading level="title" size="title" _ref={licenseRef} >
             Licensing and Inspection Requirements
           </StyledHeading>
           <Paragraph>
@@ -802,21 +798,20 @@ const NearMePage = ({
           <Paragraph>
             Always ensure the senior living community you choose is completely certified with a reliable, upbeat
             staff of managers, nurses, caregivers, and other personnel. When asking questions, there should be no hesitation
-            to prove total compliance of regulations.
+            to prove total compliance of regulations.{' '}
             <Link href="https://www.seniorly.com/resources/articles/questions-to-ask-on-your-community-tour">
               Click on this link for a list of over 70 questions you might want to ask the community.
             </Link>
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.al}`}
+            onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph ref={socialRef} />
-          <StyledHeading level="title" size="title">
+          <StyledHeading level="title" size="title" _ref={socialRef} >
             Exploring The Social and Community Aspects
           </StyledHeading>
           <Paragraph>
@@ -829,7 +824,7 @@ const NearMePage = ({
             <Link href="https://greatergood.berkeley.edu/article/item/how_social_connections_keep_seniors_healthy" target="_blank" rel="noopener">
               maintaining social connections
             </Link>
-            {' '}are essential to keeping senior minds sharp and healthy.
+            {' '}is essential to keeping senior minds sharp and healthy.
             It also helps to stave off depression and other mental problems, which can be a serious issue for older adults.
           </Paragraph>
           <Paragraph>
@@ -845,8 +840,8 @@ const NearMePage = ({
             spend time together assured of their safety and happiness.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.al}`}
+            onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
           </Link>
@@ -856,8 +851,7 @@ const NearMePage = ({
           <StyledHeading level="title" size="title">
             How Assisted Living Varies from Other Care Options
           </StyledHeading>
-          <Paragraph ref={alvsnhRef} />
-          <StyledHeading level="subtitle" size="subtitle" >
+          <StyledHeading level="subtitle" size="subtitle" _ref={alvsnhRef} >
             Assisted Living vs Skilled Nursing Facility (SNF)
           </StyledHeading>
           <Paragraph>
@@ -868,9 +862,9 @@ const NearMePage = ({
           <Paragraph>
             According to the CDC, over{' '}
             <Link href="https://www.cdc.gov/nchs/fastats/alzheimers.htm" target="_blank" rel="noopener">
-              50% of Nursing Home residents
+              50% of Skilled Nursing Facility residents
             </Link>
-            {' '}have either Alzheimer’s disease or other forms of dementia.  Most residents also spend the majority of their time sedentary.
+            {' '}have either Alzheimer’s disease or other forms of dementia. Most residents also spend the majority of their time sedentary.
           </Paragraph>
           <Paragraph>
             In contrast, most Assisted Living residents maintain active lifestyles needing only basic daily services
@@ -884,7 +878,7 @@ const NearMePage = ({
                 <tr>
                   <th />
                   <th>
-                    Nursing Home
+                    Skilled Nursing Facility
                   </th>
                   <th>
                     Assisted Living
@@ -941,15 +935,14 @@ const NearMePage = ({
             and require relatively minimal assistance, Assisted Living may be just the right balance.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.al}`}
+            onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph ref={alvsilRef} />
-          <StyledHeading level="subtitle" size="subtitle" >
+          <StyledHeading level="subtitle" size="subtitle" _ref={alvsilRef} >
             Assisted Living vs. Independent Living
           </StyledHeading>
           <Paragraph>
@@ -1033,18 +1026,17 @@ const NearMePage = ({
             might be the ticket.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.al}`}
+            onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
 
-        <Paragraph ref={nextRef} />
         <StyledArticle>
           <NextStepsWrapper>
             <NextHeader>
-              <NextHeading level="title" size="title">
+              <NextHeading level="title" size="title" _ref={nextRef} >
                 Next Steps
               </NextHeading>
               <NextParagraph>
@@ -1094,8 +1086,8 @@ const NearMePage = ({
             {' '}for further assistance. We are compensated by the community you eventually select.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.al}`}
+            onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
           </Link>
@@ -1158,7 +1150,7 @@ const NearMePage = ({
           <Link href="tel:+18558664515" palette="white">(855) 866-4515</Link>
         </StyledHeading>
         <StyledLabel palette="white">
-          Our Local Senior Living Experts are standing by ...
+          Our Local Senior Living Experts are standing by
         </StyledLabel>
       </PhoneCTAWrapper>
       <TemplateContent>

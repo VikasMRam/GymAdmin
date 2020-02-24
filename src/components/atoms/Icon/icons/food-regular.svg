@@ -1,0 +1,22 @@
+<svg viewBox="0 0 36 40" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <path d="M22,18 L18,18 L18,4 L14,4 L14,18 L10,18 L10,4 L6,4 L6,18 C6,22.24 9.32,25.68 13.5,25.94 L13.5,44 L18.5,44 L18.5,25.94 C22.68,25.68 26,22.24 26,18 L26,4 L22,4 L22,18 Z M32,12 L32,28 L37,28 L37,44 L42,44 L42,4 C36.48,4 32,8.48 32,12 Z" id="path-3"></path>
+  </defs>
+  <g id="Hub-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="Tablet3" transform="translate(-664.000000, -2052.000000)">
+      <g id="Group-33" transform="translate(44.000000, 2024.000000)">
+        <g id="Group-123" transform="translate(343.000000, 0.000000)">
+          <g id="icon-/-food" transform="translate(271.000000, 24.000000)">
+            <mask id="mask-23" fill="white">
+              <use xlink:href="#path-3"></use>
+            </mask>
+            <use id="Shape3" fill="#186DC5" fill-rule="nonzero" xlink:href="#path-3"></use>
+            <g id="color-/-teal-/-base" mask="url(#mask-23)" fill="currentColor" fill-rule="nonzero">
+              <rect id="Rectangle" x="0" y="0" width="48" height="48"></rect>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
