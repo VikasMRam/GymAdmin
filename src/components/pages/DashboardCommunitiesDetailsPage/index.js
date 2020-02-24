@@ -47,6 +47,8 @@ import DashboardCommunityServicesFormContainer from 'sly/containers/DashboardCom
 import DashboardCommunityPricingFormContainer from 'sly/containers/DashboardCommunityPricingFormContainer';
 import DashboardCommunityAmenitiesFormContainer from 'sly/containers/DashboardCommunityAmenitiesFormContainer';
 import DashboardCommunityContractFormContainer from 'sly/containers/DashboardCommunityContractFormContainer';
+import DashboardAgentContactsSectionContainer from 'sly/containers/dashboard/DashboardAgentContactsSectionContainer';
+import { parse } from 'query-string';
 
 const BackLinkWrapper = pad(styled.div`
   display: flex;
@@ -158,6 +160,13 @@ export default class DashboardCommunitiesDetailsPage extends Component {
     const { id: userOrgId } = user.organization;
     const isOfDifferentOrg = userOrgId !== communityOrgId;
 
+    const { 'page-number': pageNumber, ...filters } = parse(location.search);
+    const sectionFilters = {
+      'page-number': pageNumber,
+      include: 'entities',
+      //'filter[agent-id]': `eq:${id}`,
+    };
+
     return (
       <DashboardWithSummaryPageTemplate activeMenuItem="Communities">
         <Top>
@@ -225,10 +234,10 @@ export default class DashboardCommunitiesDetailsPage extends Component {
           )}
           {currentTab === CONTACTS && (
             <Section>
-              <DashboardCommunityContractFormContainer
-                notifyInfo={notifyInfo}
-                notifyError={notifyError}
-                community={community}
+              <DashboardAgentContactsSectionContainer
+                id="contacts"
+                sectionFilters={sectionFilters}
+                filters={filters}
               />
             </Section>
           )}

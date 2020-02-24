@@ -264,7 +264,7 @@ export default class DashboardAgentDetailPage extends Component {
     const sectionFilters = {
       'page-number': pageNumber,
       include: 'entities',
-      //'filter[agent-id]': `eq:${id}`,
+      'filter[agent-id]': `eq:${id}`,
     };
 
     return (
