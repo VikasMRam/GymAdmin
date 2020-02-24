@@ -26,7 +26,7 @@ const Warning = pad(styled(Block)`
 Warning.displayName = 'Warning';
 
 const FormScrollSection = styled.div`
-  max-height: calc(100vh - 240px);
+  // max-height: calc(100vh - 240px);
 `;
 
 const IntroInfo = textAlign(styled(Block)`
@@ -76,7 +76,7 @@ export default class DashboardCommunityDetailsForm extends Component {
           <FormSection>
             <FormSectionHeading weight="medium">Metadata</FormSectionHeading>
             <Field
-              name="name"
+              name="attributes.name"
               label="Community name"
               type="text"
               readOnly={!canEdit}
@@ -84,7 +84,7 @@ export default class DashboardCommunityDetailsForm extends Component {
               wideWidth
             />
             <Field
-              name="propInfo.communityPhone"
+              name="attributes.propInfo.communityPhone"
               label="Front desk phone number"
               type="phone"
               readOnly={!canEdit}
@@ -94,7 +94,7 @@ export default class DashboardCommunityDetailsForm extends Component {
               wideWidth
             />
             <Field
-              name="propInfo.ownerName"
+              name="attributes.propInfo.ownerName"
               label="Owner name"
               type="text"
               readOnly={!canEdit}
@@ -103,7 +103,7 @@ export default class DashboardCommunityDetailsForm extends Component {
               wideWidth
             />
             <Field
-              name="propInfo.ownerEmail"
+              name="attributes.propInfo.ownerEmail"
               label="Owner email"
               type="email"
               readOnly={!canEdit}
@@ -112,7 +112,7 @@ export default class DashboardCommunityDetailsForm extends Component {
               wideWidth
             />
             <Field
-              name="propInfo.typeCare"
+              name="attributes.propInfo.typeCare"
               label="Care type"
               type="choice"
               readOnly={!canEdit}
@@ -125,20 +125,74 @@ export default class DashboardCommunityDetailsForm extends Component {
           <FormSection>
             <FormSectionHeading weight="medium">Respite care</FormSectionHeading>
             <Field
-              name="propInfo.respiteAllowed.checked"
+              name="attributes.propInfo.respiteAllowed.checked"
               type="boolean"
               readOnly={!canEdit}
               options={[{ value: true, label: 'Respite care allowed' }]}
               component={ReduxField}
             />
             <Field
-              name="propInfo.respiteAllowed.minlength"
+              name="attributes.propInfo.respiteAllowed.minlength"
               label="Minimum stay length"
               type="number"
               readOnly={!canEdit}
               component={ReduxField}
               wideWidth
               parse={value => !value ? null : Number(value)}
+            />
+          </FormSection>
+          <FormSection>
+            <FormSectionHeading weight="medium">License Number</FormSectionHeading>
+            <Field
+              name="attributes.propInfo.licenseNumber"
+              label="License Number"
+              type="text"
+              readOnly={!canEdit}
+              component={ReduxField}
+              wideWidth
+            />
+          </FormSection>
+          <FormSection>
+            <FormSectionHeading weight="medium">Address</FormSectionHeading>
+            <Field
+              name="relationships.address.attributes.line1"
+              label="Line 1"
+              type="text"
+              readOnly={!canEdit}
+              component={ReduxField}
+              wideWidth
+            />
+            <Field
+              name="relationships.address.attributes.line2"
+              label="Line 2"
+              type="text"
+              readOnly={!canEdit}
+              component={ReduxField}
+              wideWidth
+            />
+            <Field
+              name="relationships.address.attributes.city"
+              label="City"
+              type="text"
+              readOnly={!canEdit}
+              component={ReduxField}
+              wideWidth
+            />
+            <Field
+              name="relationships.address.attributes.state"
+              label="State"
+              type="text"
+              readOnly={!canEdit}
+              component={ReduxField}
+              wideWidth
+            />
+            <Field
+              name="relationships.address.attributes.zip"
+              label="Zipcode"
+              type="text"
+              readOnly={!canEdit}
+              component={ReduxField}
+              wideWidth
             />
           </FormSection>
         </FormScrollSection>

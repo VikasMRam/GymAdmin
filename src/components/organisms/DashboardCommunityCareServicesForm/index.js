@@ -43,35 +43,19 @@ const FormBottomSection = styled.div`
   margin-top: ${size('spacing.xLarge')};
 `;
 
-const careServices = [
+const assistedLivingCareServices = [
   'Activities of Daily Living Assistance',
-  'Assistance with Bathing',
-  'Assistance with Dressing',
-  'Meal Preparation and Service',
-  'Coordination with Health Care Providers',
-  'Medication Management',
-  'Transportation to Doctors Appointments',
-  'Transportation Arrangement',
-  '24-Hour Call System',
-  '24-Hour Supervision',
-  'Mental Wellness Program',
-  'Rehabilitation Program',
-  'Physical Therapy',
-  'Respite Program',
-  'Preventative Health Screenings',
-  'Diabetes Diet',
-  'Diabetes Care',
-  'Parkinsons Care',
+  'Assistance with Transfers',
   'Special Dietary Restrictions',
-  'Mild Cognitive Impairment',
-  'Hospice Waiver',
+];
+
+const memoryCareCareServices = [
   'Dementia Waiver',
-  '24-Hour Nursing',
-  '12-16 Hour Nursing',
-  'Administer Insulin Injections',
-  'Care with Behavioral Issues',
-  'Accept Incoming Residents on Hospice',
-  'Same Day Assessments',
+  'Specialized Memory Care Programming',
+];
+
+const otherCareServices = [
+  'Hospice Waiver',
 ];
 
 const nonCareRelatedServices = [
@@ -88,19 +72,11 @@ const nonCareRelatedServices = [
   'Community Operated Transportation',
 ];
 
-const profileServices = [
-  'Small Dogs',
-  'Medium Dogs',
-  'All Dogs',
-  'Cats',
-  'Birds',
-];
+const assistedLivingCareServicesOptions = assistedLivingCareServices.map(i => ({ value: i, label: i }));
+const memoryCareCareServicesOptions = memoryCareCareServices.map(i => ({ value: i, label: i }));
+const otherCareServicesOptions = otherCareServices.map(i => ({ value: i, label: i }));
 
-const careServicesOptions = careServices.map(i => ({ value: i, label: i }));
-const nonCareRelatedServicesOptions = nonCareRelatedServices.map(i => ({ value: i, label: i }));
-const profileServicesOptions = profileServices.map(i => ({ value: i, label: i }));
-
-export default class DashboardCommunityCareServicesForm extends Component {
+export default class DashboardCommunityassistedLivingCareServicesForm extends Component {
   static propTypes = {
     invalid: bool,
     canEdit: bool,
@@ -119,26 +95,26 @@ export default class DashboardCommunityCareServicesForm extends Component {
           <FormSection>
             <Field
               name="propInfo.careServices"
-              label="Care Services Provided"
+              label="Assisted Living"
               type="checkbox"
               component={ReduxField}
-              options={careServicesOptions}
+              options={assistedLivingCareServicesOptions}
               wideWidth
             />
             <Field
-              name="propInfo.nonCareServices"
-              label="Non-Care Related Services Provided"
+              name="propInfo.careServices"
+              label="Memory Care"
               type="checkbox"
               component={ReduxField}
-              options={nonCareRelatedServicesOptions}
+              options={memoryCareCareServicesOptions}
               wideWidth
             />
             <Field
-              name="propInfo.profileServices"
-              label="Profile Services"
+              name="propInfo.careServices"
+              label="Other"
               type="checkbox"
               component={ReduxField}
-              options={profileServicesOptions}
+              options={otherCareServicesOptions}
               wideWidth
             />
           </FormSection>
