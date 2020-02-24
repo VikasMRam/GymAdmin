@@ -11,7 +11,7 @@ import {
   MESSAGES,
   TASKS,
   PROFILE,
-  CARE_SERVICES, PRICING, AMENITIES, SERVICES, CONTRACT,
+  CARE_SERVICES, PRICING, AMENITIES, SERVICES, CONTRACT, CONTACTS,
 } from 'sly/constants/dashboardAppPaths';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import communityPropType from 'sly/propTypes/community';
@@ -47,6 +47,8 @@ import DashboardCommunityServicesFormContainer from 'sly/containers/DashboardCom
 import DashboardCommunityPricingFormContainer from 'sly/containers/DashboardCommunityPricingFormContainer';
 import DashboardCommunityAmenitiesFormContainer from 'sly/containers/DashboardCommunityAmenitiesFormContainer';
 import DashboardCommunityContractFormContainer from 'sly/containers/DashboardCommunityContractFormContainer';
+import DashboardContactsSectionContainer from 'sly/containers/dashboard/DashboardContactsSectionContainer';
+import { parse } from 'query-string';
 
 const BackLinkWrapper = pad(styled.div`
   display: flex;
@@ -102,6 +104,7 @@ export default class DashboardCommunitiesDetailsPage extends Component {
       Pricing: PRICING,
       Amenities: AMENITIES,
       Services: SERVICES,
+      Contacts: CONTACTS,
       Contract: CONTRACT,
       // ...
     };
@@ -156,6 +159,11 @@ export default class DashboardCommunitiesDetailsPage extends Component {
     const { id: communityOrgId } = community.organization;
     const { id: userOrgId } = user.organization;
     const isOfDifferentOrg = userOrgId !== communityOrgId;
+
+    const sectionFilters = {
+      include: 'entities',
+      'filter[community-id]': community.id,
+    };
 
     return (
       <DashboardWithSummaryPageTemplate activeMenuItem="Communities">
@@ -219,6 +227,14 @@ export default class DashboardCommunitiesDetailsPage extends Component {
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
+              />
+            </Section>
+          )}
+          {currentTab === CONTACTS && (
+            <Section>
+              <DashboardContactsSectionContainer
+                id="contacts"
+                sectionFilters={sectionFilters}
               />
             </Section>
           )}

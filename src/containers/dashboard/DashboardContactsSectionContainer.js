@@ -6,6 +6,7 @@ import { prefetch, withUser } from 'sly/services/newApi';
 import contactPropType from 'sly/propTypes/contact';
 import DashboardAgentContactsSection from 'sly/components/organisms/DashboardAgentContactsSection';
 import { withRedirectTo } from 'sly/services/redirectTo';
+import { withDatatable } from 'sly/services/datatable';
 
 const getPaginationData = ({ result, meta }) => {
   if (!result) return {};
@@ -30,22 +31,14 @@ const getPaginationData = ({ result, meta }) => {
     show,
   });
 };
+
+@withDatatable('contacts')
 @withRouter
-
 @withUser
-
 @withRedirectTo
+@prefetch('contacts', 'getContacts', (req, { datatable }) => req(datatable.query))
 
-@prefetch('contacts', 'getContacts', (req, { datatable, agentId }) => {
-  if (agentId) {
-    const qs = datatable.query;
-    qs['filter[agent-id]'] = agentId;
-    return req(qs);
-  }
-  return req(datatable.query);
-})
-
-export default class DashboardAgentContactsSectionContainer extends Component {
+export default class DashboardContactsSectionContainer extends Component {
   static propTypes = {
     contacts: arrayOf(contactPropType),
     status: object,
