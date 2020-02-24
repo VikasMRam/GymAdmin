@@ -95,7 +95,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const {
       stage, note, moveInDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription,
       preferredLocation, referralAgreementType, invoiceAmount, invoiceNumber, invoicePaid, roomType,
-      rejectDescription, rejectReason,
+      rejectDescription, rejectReason, chosenDetails,
     } = data;
     let notePromise = () => Promise.resolve();
     let uuidAuxPromise = () => Promise.resolve();
@@ -198,6 +198,9 @@ export default class UpdateFamilyStageFormContainer extends Component {
     if (rejectReason) {
       newClient.set('attributes.clientInfo.rejectReason', rejectReason);
     }
+    if (chosenDetails) {
+      newClient.set('attributes.clientInfo.chosenDetails', chosenDetails);
+    }
     newClient.set('attributes.clientInfo.referralAgreementType', referralAgreementType);
     if (referralAgreementType === 'percentage') {
       const moveInFee = referralAgreement * monthlyFees * 0.01;
@@ -282,6 +285,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       otherText,
       rejectReason,
     } = clientInfo;
+    let { chosenDetails } = clientInfo;
     let { invoicePaid: existingInvoicePaid } = clientInfo;
     if (isBoolean(existingInvoicePaid)) {
       existingInvoicePaid = existingInvoicePaid ? 'yes' : 'no';
@@ -294,7 +298,6 @@ export default class UpdateFamilyStageFormContainer extends Component {
     let nextGroup;
     let group;
     let nextStage;
-    let chosenDetails;
     let currentLossReason;
     let referralAgreementType;
     let referralAgreement;
@@ -314,7 +317,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const rejectDescription = otherText;
     const newInitialValues = {
       stage,
-      chosenDetails: WAITLISTED,
+      chosenDetails: chosenDetails || WAITLISTED,
       moveInDate: existingMoveInDate ? new Date(existingMoveInDate) : null,
       communityName: existingCommunityName,
       roomType: existingMoveRoomType,
