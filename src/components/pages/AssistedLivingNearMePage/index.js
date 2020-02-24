@@ -7,7 +7,7 @@ import ListItem from 'sly/components/molecules/ListItem';
 import IconButton from 'sly/components/molecules/IconButton';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
-import { size, palette } from 'sly/components/themes';
+import { size, palette, assetPath } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import {
   HubPageTemplate,
@@ -19,7 +19,7 @@ import {
   makeWrapper,
 } from 'sly/components/templates/HubPageTemplate';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon } from 'sly/components/atoms';
+import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
@@ -219,6 +219,60 @@ const PhoneCTAWrapper = styled.div`
   text-align: center;
 `;
 
+const MapLinkWrapper = styled.div`
+  display: none;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display:block;
+  }
+`;
+
+const TableWrapper = styled.div`
+  display: block;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: none;
+  }
+`;
+
+const ADLWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  border-radius: ${size('spacing.small')};
+  margin-bottom: ${size('spacing.large')};
+`;
+
+const ADLIconItem = styled.div`
+  width: 100%;
+  flex: 0 100%;
+  display: flex;
+  padding: ${size('spacing.large')};
+  justify-content: space-between;
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: 50%;
+    flex: 0 50%;
+  }
+`;
+
+const AgentWrapper = styled.div`
+  padding: ${size('spacing.large')};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  border-radius: ${size('spacing.small')};
+  margin-bottom: ${size('spacing.large')};
+`;
+
+const AgentItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+  flex-direction: row;
+  }
+`;
+
+const AgentAvatarWrapper = styled.div`
+  margin-right: ${size('spacing.large')};
+`;
+
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
 const Column = makeColumn('aside');
@@ -296,6 +350,63 @@ const NearMePage = ({
     alvsil: 'al-vs-il',
     next: 'next',
   };
+
+  const mapHtml = "<iframe src=\"https://createaclickablemap.com/map.php?&id=88362&maplocation=false&online=true\" width=\"680\" height=\"525\" style=\"border: none;\"></iframe>\n" +
+    "<script>if (window.addEventListener){ window.addEventListener(\"message\", function(event) { if(event.data.length >= 22) { if( event.data.substr(0, 22) == \"__MM-LOCATION.REDIRECT\") location = event.data.substr(22); } }, false); } else if (window.attachEvent){ window.attachEvent(\"message\", function(event) { if( event.data.length >= 22) { if ( event.data.substr(0, 22) == \"__MM-LOCATION.REDIRECT\") location = event.data.substr(22); } }, false); } </script>\n"
+  const alTable = [
+    {title: "Alabama", to: "https://aspe.hhs.gov/system/files/pdf/110396/15alcom-AL.pdf"},
+    {title: "Alaska", to: "https://aspe.hhs.gov/system/files/pdf/110401/15alcom-AK.pdf"},
+    {title: "Arizona", to: "https://aspe.hhs.gov/system/files/pdf/110406/15alcom-AZ.pdf"},
+    {title: "Arkansas", to: "https://aspe.hhs.gov/system/files/pdf/110531/15alcom-AR.pdf"},
+    {title: "California", to: "https://aspe.hhs.gov/system/files/pdf/110416/15alcom-CA.pdf"},
+    {title: "Colorado", to: "https://aspe.hhs.gov/system/files/pdf/110421/15alcom-CO.pdf"},
+    {title: "Connecticut", to: "https://aspe.hhs.gov/system/files/pdf/110426/15alcom-CT.pdf"},
+    {title: "Delaware", to: "https://aspe.hhs.gov/system/files/pdf/110431/15alcom-DE.pdf"},
+    {title: "District of Columbia", to: "https://aspe.hhs.gov/system/files/pdf/110436/15alcom-DC.pdf"},
+    {title: "Florida", to: "https://aspe.hhs.gov/system/files/pdf/110441/15alcom-FL.pdf"},
+    {title: "Georgia", to: "https://aspe.hhs.gov/system/files/pdf/110446/15alcom-GA.pdf"},
+    {title: "Hawaii", to: "https://aspe.hhs.gov/system/files/pdf/110451/15alcom-HI.pdf"},
+    {title: "Idaho", to: "https://aspe.hhs.gov/system/files/pdf/110456/15alcom-ID.pdf"},
+    {title: "Illinois", to: "https://aspe.hhs.gov/system/files/pdf/110461/15alcom-IL.pdf"},
+    {title: "Indiana", to: "https://aspe.hhs.gov/system/files/pdf/110466/15alcom-IN.pdf"},
+    {title: "Iowa", to: "https://aspe.hhs.gov/system/files/pdf/110471/15alcom-IA.pdf"},
+    {title: "Kansas", to: "https://aspe.hhs.gov/system/files/pdf/110476/15alcom-KS.pdf"},
+    {title: "Kentucky", to: "https://aspe.hhs.gov/system/files/pdf/110481/15alcom-KY.pdf"},
+    {title: "Louisiana", to: "https://aspe.hhs.gov/system/files/pdf/110486/15alcom-LA.pdf"},
+    {title: "Maine", to: "https://aspe.hhs.gov/system/files/pdf/110491/15alcom-ME.pdf"},
+    {title: "Massachusetts", to: "https://aspe.hhs.gov/system/files/pdf/110501/15alcom-MA.pdf"},
+    {title: "Michigan", to: "https://aspe.hhs.gov/system/files/pdf/110506/15alcom-MI.pdf"},
+    {title: "Minnesota", to: "https://aspe.hhs.gov/system/files/pdf/110511/15alcom-MN.pdf"},
+    {title: "Mississippi", to: "https://aspe.hhs.gov/system/files/pdf/110516/15alcom-MS.pdf"},
+    {title: "Missouri", to: "https://aspe.hhs.gov/system/files/pdf/110521/15alcom-MO.pdf"},
+    {title: "Montana", to: "https://aspe.hhs.gov/system/files/pdf/110526/15alcom-MT.pdf"},
+    {title: "Nebraska", to: "https://aspe.hhs.gov/system/files/pdf/110536/15alcom-NE.pdf"},
+    {title: "Nevada", to: "https://aspe.hhs.gov/system/files/pdf/110541/15alcom-NV.pdf"},
+    {title: "New Hampshire", to: "https://aspe.hhs.gov/system/files/pdf/110546/15alcom-NH.pdf"},
+    {title: "New Jersey", to: "https://aspe.hhs.gov/system/files/pdf/110551/15alcom-NJ.pdf"},
+    {title: "New Mexico", to: "https://aspe.hhs.gov/system/files/pdf/110556/15alcom-NM.pdf"},
+    {title: "New York", to: "https://aspe.hhs.gov/system/files/pdf/110561/15alcom-NY.pdf"},
+    {title: "North Carolina", to: "https://aspe.hhs.gov/system/files/pdf/110566/15alcom-NC.pdf"},
+    {title: "North Dakota", to: "https://aspe.hhs.gov/system/files/pdf/110571/15alcom-ND.pdf"},
+    {title: "Ohio", to: "https://aspe.hhs.gov/system/files/pdf/110576/15alcom-OH.pdf"},
+    {title: "Oklahoma", to: "https://aspe.hhs.gov/system/files/pdf/110581/15alcom-OK.pdf"},
+    {title: "Oregon", to: "https://aspe.hhs.gov/system/files/pdf/110586/15alcom-OR.pdf"},
+    {title: "Oregon", to: "https://aspe.hhs.gov/system/files/pdf/110586/15alcom-OR.pdf"},
+    {title: "Pennsylvania", to: "https://aspe.hhs.gov/system/files/pdf/110591/15alcom-PA.pdf"},
+    {title: "Rhode Island", to: "https://aspe.hhs.gov/system/files/pdf/110596/15alcom-RI.pdf"},
+    {title: "South Carolina", to: "https://aspe.hhs.gov/system/files/pdf/110601/15alcom-SC.pdf"},
+    {title: "South Dakota", to: "https://aspe.hhs.gov/system/files/pdf/110606/15alcom-SD.pdf"},
+    {title: "Tennessee", to: "https://aspe.hhs.gov/system/files/pdf/110611/15alcom-TN.pdf"},
+    {title: "Texas", to: "https://aspe.hhs.gov/system/files/pdf/110616/15alcom-TX.pdf"},
+    {title: "Utah", to: "https://aspe.hhs.gov/system/files/pdf/110621/15alcom-UT.pdf"},
+    {title: "Vermont", to: "https://aspe.hhs.gov/system/files/pdf/110626/15alcom-VT.pdf"},
+    {title: "Virginia", to: "https://aspe.hhs.gov/system/files/pdf/110631/15alcom-VA.pdf"},
+    {title: "Washington", to: "https://aspe.hhs.gov/system/files/pdf/110636/15alcom-WA.pdf"},
+    {title: "West Virginia", to: "https://aspe.hhs.gov/system/files/pdf/110641/15alcom-WV.pdf"},
+    {title: "Wisconsin", to: "https://aspe.hhs.gov/system/files/pdf/110646/15alcom-WI.pdf"},
+    {title: "Wyoming", to: "https://aspe.hhs.gov/system/files/pdf/110651/15alcom-WY.pdf"}
+  ];
+
 
   const TableOfContents = () => {
     return (
@@ -410,9 +521,32 @@ const NearMePage = ({
               activities of daily living (ADLs).
             </Link>
           </Paragraph>
-          <Paragraph>
-            INSERT ADL CHART
-          </Paragraph>
+          <ADLWrapper>
+            <ADLIconItem>
+              Personal Hygiene
+              <Icon icon="verified" palette="secondary" variation="dark35" />
+            </ADLIconItem>
+            <ADLIconItem>
+              Feeding
+              <Icon icon="verified" palette="secondary" variation="dark35" />
+            </ADLIconItem>
+            <ADLIconItem>
+              Continence Management
+              <Icon icon="verified" palette="secondary" variation="dark35" />
+            </ADLIconItem>
+            <ADLIconItem>
+              Ambulating
+              <Icon icon="verified" palette="secondary" variation="dark35" />
+            </ADLIconItem>
+            <ADLIconItem>
+              Dressing
+              <Icon icon="verified" palette="secondary" variation="dark35" />
+            </ADLIconItem>
+            <ADLIconItem>
+              Toileting
+              <Icon icon="verified" palette="secondary" variation="dark35" />
+            </ADLIconItem>
+          </ADLWrapper>
           <Paragraph>
             Your loved one will still maintain the all-important feelings of freedom, minus the challenges that can
             exist with mobility, transportation, cooking, social activities, cleaning, medical care, and more.
@@ -458,7 +592,10 @@ const NearMePage = ({
             Remember, these might be what you are thinking of when you search for “nursing home.”  Again, states licensing
             no longer uses “nursing home” to describe this kind of senior living community.
           </Paragraph>
-          INSERT CHART HERE
+          <MapLinkWrapper dangerouslySetInnerHTML={{ __html: mapHtml }} key="map" />
+          <TableWrapper>
+            <StyledArticle><SeoLinks title="Please Click on Your State Below" links={alTable} /></StyledArticle>
+          </TableWrapper>
           <Link
             href={`#${sectionIdMap.top}`}
             onClick={e => handleAnchor(e, topRef)}
@@ -560,6 +697,64 @@ const NearMePage = ({
           >
             Back to top
           </Link>
+        </StyledArticle>
+        <StyledArticle>
+          <StyledHeading level="title" size="title" >
+            What Is A Local Senior Living Expert?
+          </StyledHeading>
+          <Paragraph>
+            As you search for assisted living near you, you will be comforted to know there are senior care professionals
+            living and working in your city. These experts know all the senior living communities, their staff turnover,
+            their unique selling points, and best of all they can often negotiate fees on your behalf at your favorite options.
+          </Paragraph>
+          <AgentWrapper>
+            <AgentItem>
+              <AgentAvatarWrapper>
+                <Image src={assetPath('images/agent-xLarge.png')} />
+              </AgentAvatarWrapper>
+              <Wrapper>
+                <StyledHeading level="subtitle" size="subtitle" >Sarah Odover - Los Angeles, CA</StyledHeading>
+                <Paragraph>Sarah Ordover has over 4 years of experience helping families find independent living,
+                  assisted living, and memory care options. She has helped over 100 families so far in the Los Angeles area.{' '}
+                  <Link href="https://www.seniorly.com/agents/pacific-west/beverley-hills/assisted-living-locators-los-angeles-ca-sarah-ordover-">Click Here to Learn more about Sarah.</Link>
+                </Paragraph>
+              </Wrapper>
+            </AgentItem>
+            <Hr />
+            <AgentItem>
+              <AgentAvatarWrapper>
+                <Image src={assetPath('images/agent-xLarge.png')} />
+              </AgentAvatarWrapper>
+              <Wrapper>
+                <StyledHeading level="subtitle" size="subtitle" >Heather Cartright - Sarasota, FL</StyledHeading>
+                <Paragraph>Heather Cartright has over a year of experience helping families find independent living,
+                  assisted living, and memory care options. As a former assisted living facility administrator,
+                  she brings a unique skillset for senior living placement.{' '}
+                  <Link href="https://www.seniorly.com/agents/south/ellenton-fl/my-care-finders-fl-heather-cartright-">Click Here to Learn more about Heather.</Link>
+                </Paragraph>
+              </Wrapper>
+            </AgentItem>
+            <Hr />
+            <AgentItem>
+              <AgentAvatarWrapper>
+                <Image src={assetPath('images/agent-xLarge.png')} />
+              </AgentAvatarWrapper>
+              <Wrapper>
+                <StyledHeading level="subtitle" size="subtitle" >Carol Katz - New Jersey</StyledHeading>
+                <Paragraph> Carol Katz has over 10 years of experience helping families find independent living,
+                  assisted living, and memory care options. With her unique volunteer experience, she brings
+                  a special skillset for senior living placement.{' '}
+                  <Link href="https://www.seniorly.com/agents/northeast/manalapan/adult-care-advisors-carol-katz-">Click Here to Learn more about Carol.</Link>
+                </Paragraph>
+              </Wrapper>
+            </AgentItem>
+
+          </AgentWrapper>
+          <Paragraph>
+            When you connect with Seniorly we will connect you to the local senior living expert in your preferred city.
+            They will support you for as much or as little as you need through every step of the process. There is never any cost
+            for our services. We are compensated by the community eventually selected.
+          </Paragraph>
         </StyledArticle>
 
         <StyledArticle>
