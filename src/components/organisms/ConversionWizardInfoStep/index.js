@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string, func, arrayOf } from 'prop-types';
+import { string, func, arrayOf, shape } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
@@ -10,7 +10,6 @@ import ListItem from 'sly/components/molecules/ListItem';
 
 const ButtonWrapper = styled.div`
   display: grid;
-  grid-template-rows: 1fr 1fr;
   grid-gap: ${size('spacing.large')};
 `;
 ButtonWrapper.displayName = 'ButtonWrapper';
@@ -25,7 +24,7 @@ PaddedBlock.displayName = 'PaddedBlock';
 
 const PointsWrapper = pad(styled.div``);
 
-const ConversionWizardInfoStep = ({ heading, description, button1Text, button2Text, onButton1Click, onButton2Click, points }) => (
+const ConversionWizardInfoStep = ({ heading, description, buttons, points }) => (
   <ShadowBox>
     <PaddedHeading size="subtitle" weight="medium">{heading}</PaddedHeading>
     <PaddedBlock weight="medium">{description}</PaddedBlock>
@@ -33,8 +32,7 @@ const ConversionWizardInfoStep = ({ heading, description, button1Text, button2Te
       {points.map(p => <ListItem iconPalette="secondary" iconVariation="dark" icon="checkmark-circle" key={p}>{p}</ListItem>)}
     </PointsWrapper>
     <ButtonWrapper>
-      <Button onClick={onButton1Click} ghost>{button1Text}</Button>
-      <Button onClick={onButton2Click} ghost>{button2Text}</Button>
+      {buttons.map(b => <Button onClick={b.onClick} ghost key={b.text}>{b.text}</Button>)}
     </ButtonWrapper>
   </ShadowBox>
 );
@@ -42,10 +40,10 @@ const ConversionWizardInfoStep = ({ heading, description, button1Text, button2Te
 ConversionWizardInfoStep.propTypes = {
   heading: string.isRequired,
   description: string.isRequired,
-  button1Text: string.isRequired,
-  button2Text: string.isRequired,
-  onButton1Click: func,
-  onButton2Click: func,
+  buttons: arrayOf(shape({
+    text: string.isRequired,
+    onClick: func,
+  })).isRequired,
   points: arrayOf(string).isRequired,
 };
 
