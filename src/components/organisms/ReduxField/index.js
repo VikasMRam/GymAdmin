@@ -3,11 +3,14 @@ import { shape, string, bool, func } from 'prop-types';
 
 import Field from 'sly/components/molecules/Field';
 
-const getReactSelectValue = (value) => {
+const getReactSelectValue = (value, { value: oldValue }) => {
   if (Array.isArray(value)) {
     return value.map(({ value }) => value);
   }
-  return value.value;
+  if (value === null && Array.isArray(oldValue)) {
+    return [];
+  }
+  return value?.value;
 };
 
 const ReduxField = ({
@@ -29,7 +32,7 @@ const ReduxField = ({
   }
 
   if (fieldProps.type === 'choice') {
-    fieldProps.onChange = (value, ...props) => input.onChange(getReactSelectValue(value), ...props);
+    fieldProps.onChange = (value, ...props) => input.onChange(getReactSelectValue(value, input), ...props);
     fieldProps.onBlur = _ => _;
   }
 
