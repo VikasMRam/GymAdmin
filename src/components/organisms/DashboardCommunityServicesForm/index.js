@@ -28,6 +28,8 @@ const FormBottomSection = styled.div`
   margin-top: ${size('spacing.xLarge')};
 `;
 
+const Field = ({ canEdit, ...props }) => <RFField component={ReduxField} readOnly={!canEdit} wideWidth {...props} />;
+
 export default class DashboardCommunityServicesForm extends Component {
   static propTypes = {
     currentValues: object,
@@ -43,8 +45,6 @@ export default class DashboardCommunityServicesForm extends Component {
       handleSubmit, invalid, submitting, canEdit,
     } = this.props;
 
-    const Field = props => <RFField component={ReduxField} readOnly={!canEdit} wideWidth {...props} />;
-
     return (
       <Form onSubmit={handleSubmit}>
         <FormScrollSection>
@@ -52,6 +52,7 @@ export default class DashboardCommunityServicesForm extends Component {
             name="propInfo.nonCareServices"
             type="checkbox"
             options={nonCareServicesOptions}
+            canEdit={canEdit}
           />
 
           <Field
@@ -59,6 +60,7 @@ export default class DashboardCommunityServicesForm extends Component {
             label="Other"
             type="textarea"
             placeholder="More useful information about the community services"
+            canEdit={canEdit}
           />
         </FormScrollSection>
 

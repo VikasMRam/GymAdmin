@@ -69,6 +69,7 @@ export default class DashboardCommunityAmenitiesForm extends Component {
               name="propInfo.communitySpace"
               type="checkbox"
               options={familyOvernightOptions}
+              canEdit={canEdit}
             />
           )}
 
@@ -76,6 +77,7 @@ export default class DashboardCommunityAmenitiesForm extends Component {
             name="propInfo.communitySpace"
             type="checkbox"
             options={communitySpaceOptions}
+            canEdit={canEdit}
           />
 
           <Field
@@ -83,7 +85,7 @@ export default class DashboardCommunityAmenitiesForm extends Component {
             label="Other"
             type="textarea"
             placeholder="More useful information about the community amenities"
-            canEdit
+            canEdit={canEdit}
           />
         </FormScrollSection>
 

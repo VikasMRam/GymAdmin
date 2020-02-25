@@ -28,6 +28,8 @@ const FormBottomSection = styled.div`
   margin-top: ${size('spacing.xLarge')};
 `;
 
+const Field = ({ canEdit, ...props }) => <RFField component={ReduxField} readOnly={!canEdit} wideWidth {...props} />;
+
 export default class DashboardCommunityContractForm extends Component {
   static propTypes = {
     currentValues: object,
@@ -43,8 +45,6 @@ export default class DashboardCommunityContractForm extends Component {
       handleSubmit, invalid, submitting, canEdit, currentValues,
     } = this.props;
 
-
-    const Field = ({ ...props }) => <RFField component={ReduxField} readOnly={!canEdit} wideWidth {...props} />;
     const contractInfo = currentValues?.rgsInfo?.contract_info || {};
     const valueLabel = contractInfo.contractType === 'Percentage'
       ? 'Value between 0.0 - 1.0'
@@ -57,6 +57,7 @@ export default class DashboardCommunityContractForm extends Component {
             name="rgsInfo.contract_info.hasContract"
             label="Has contract"
             type="boolean"
+            canEdit={canEdit}
           />
           {contractInfo?.hasContract && (
             <>
@@ -68,17 +69,20 @@ export default class DashboardCommunityContractForm extends Component {
                   { value: 'Flat Rate', label: 'Flat rate' },
                   { value: 'Percentage', label: 'Percentage' },
                 ]}
+                canEdit={canEdit}
               />
               <Field
                 label={valueLabel}
                 name="rgsInfo.contract_info.value"
                 type="number"
                 inputmode="numeric"
+                canEdit={canEdit}
               />
               <Field
                 label="Notes"
                 name="rgsInfo.contract_info.notes"
                 type="textarea"
+                canEdit={canEdit}
               />
             </>
           )}
