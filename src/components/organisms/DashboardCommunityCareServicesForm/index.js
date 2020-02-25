@@ -58,25 +58,11 @@ const otherCareServices = [
   'Hospice Waiver',
 ];
 
-const nonCareRelatedServices = [
-  'Concierge Services',
-  'Move-In Coordination',
-  'Housekeeping & Linen Services',
-  'Scheduled Transportation (non-medical related)',
-  'Fitness Programs',
-  'Continuing Learning Programs',
-  'Resident-Run Activities',
-  'Community-Sponsored Activities',
-  'Family Education and Support Services',
-  'Planned Day Trips',
-  'Community Operated Transportation',
-];
-
 const assistedLivingCareServicesOptions = assistedLivingCareServices.map(i => ({ value: i, label: i }));
 const memoryCareCareServicesOptions = memoryCareCareServices.map(i => ({ value: i, label: i }));
 const otherCareServicesOptions = otherCareServices.map(i => ({ value: i, label: i }));
 
-export default class DashboardCommunityassistedLivingCareServicesForm extends Component {
+export default class DashboardCommunityCareServicesForm extends Component {
   static propTypes = {
     invalid: bool,
     canEdit: bool,

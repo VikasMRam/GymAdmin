@@ -3,7 +3,6 @@ import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
 import pick from 'lodash/pick';
 import { withRouter } from 'react-router';
-import * as immutable from 'object-path-immutable';
 
 import clientPropType from 'sly/propTypes/client';
 import userProptype from 'sly/propTypes/user';

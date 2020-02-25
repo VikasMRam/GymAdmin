@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { reduxForm } from 'redux-form';
+import { reduxForm, formValueSelector } from 'redux-form';
 import { object, func } from 'prop-types';
 import pick from 'lodash/pick';
 import { withRouter } from 'react-router';
@@ -27,7 +27,9 @@ const ReduxForm = reduxForm({
   validate,
 })(DashboardCommunityDetailsForm);
 
+const formValue = formValueSelector(formName);
 const mapStateToProps = (state, { status }) => ({
+  respiteAllowed: formValue(state, 'attributes.propInfo.respiteAllowed'),
   address: getRelationship(state, status.community.result, 'address'),
 });
 
@@ -49,6 +51,7 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
     match: object.isRequired,
     status: object,
     address: object,
+    respiteAllowed: object,
     invalidateCommunity: func,
   };
 
@@ -67,7 +70,7 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
   };
 
   render() {
-    const { community, status, user, address, ...props } = this.props;
+    const { community, status, user, address, respiteAllowed, ...props } = this.props;
 
     const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
     const initialValues = pick(
@@ -85,12 +88,14 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
     initialValues.relationships = {
       address,
     };
+
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}
         initialValues={initialValues}
         user={user}
         canEdit={canEdit}
+        respiteAllowed={respiteAllowed}
         {...props}
       />
     );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, bool } from 'prop-types';
+import { func, bool, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette, columnWidth } from 'sly/components/themes';
@@ -64,12 +64,13 @@ export default class DashboardCommunityDetailsForm extends Component {
     invalid: bool,
     canEdit: bool,
     submitting: bool,
+    respiteAllowed: object,
     handleSubmit: func.isRequired,
   };
 
   render() {
     const {
-      handleSubmit, invalid, submitting, canEdit,
+      handleSubmit, invalid, submitting, canEdit, respiteAllowed,
     } = this.props;
 
     return (
@@ -133,15 +134,17 @@ export default class DashboardCommunityDetailsForm extends Component {
               options={[{ value: true, label: 'Respite care allowed' }]}
               component={ReduxField}
             />
-            <Field
-              name="attributes.propInfo.respiteAllowed.minlength"
-              label="Minimum stay length"
-              type="number"
-              readOnly={!canEdit}
-              component={ReduxField}
-              wideWidth
-              parse={value => !value ? null : Number(value)}
-            />
+            {respiteAllowed?.checked &&
+              <Field
+                name="attributes.propInfo.respiteAllowed.minlength"
+                label="Minimum stay length"
+                type="number"
+                readOnly={!canEdit}
+                component={ReduxField}
+                wideWidth
+                parse={value => !value ? null : Number(value)}
+              />
+            }
           </FormSection>
           <FormSection>
             <FormSectionHeading weight="medium">License Number</FormSectionHeading>
