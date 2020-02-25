@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
 import clientPropType from 'sly/propTypes/client';
 import userProptype from 'sly/propTypes/user';
-import { query, prefetch, getRelationship, invalidateRequests } from 'sly/services/newApi';
+import { query, prefetch, getRelationship } from 'sly/services/newApi';
 import DashboardCommunityDetailsForm from 'sly/components/organisms/DashboardCommunityDetailsForm';
 import withUser from 'sly/services/newApi/withUser';
 import { userIs } from 'sly/services/helpers/role';
@@ -37,9 +37,7 @@ const mapStateToProps = (state, { status }) => ({
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.id,
 }))
-@connect(mapStateToProps, {
-  invalidateCommunity: ({ id }) => invalidateRequests('getCommunity', { id }),
-})
+@connect(mapStateToProps)
 
 export default class DashboardCommunityDetailsFormContainer extends Component {
   static propTypes = {
@@ -55,7 +53,7 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
   };
 
   handleSubmit = (values) => {
-    const { match, updateCommunity, invalidateCommunity } = this.props;
+    const { match, updateCommunity } = this.props;
     const { id } = match.params;
 
     const { attributes, relationships } = values;
@@ -65,7 +63,7 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
       relationships: {
         address: { data: address },
       },
-    }).then(() => invalidateCommunity({ id }));
+    });
   };
 
   render() {
