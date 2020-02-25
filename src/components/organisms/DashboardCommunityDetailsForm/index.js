@@ -54,6 +54,8 @@ const FormBottomSection = styled.div`
 
 const FormSectionHeading = pad(Block, 'large');
 
+const states = ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VT', 'WA', 'WI', 'WV', 'WY'];
+const statesOptions = states.map(s => <option key={s} value={s}>{s}</option>);
 
 // const contactPreferenceOptionsList = [{ value: 'sms', label: 'SMS' }, { value: 'email', label: 'Email' }, { value: 'phone', label: 'Phone' }];
 
@@ -181,11 +183,13 @@ export default class DashboardCommunityDetailsForm extends Component {
             <Field
               name="relationships.address.attributes.state"
               label="State"
-              type="text"
-              readOnly={!canEdit}
+              type="select"
               component={ReduxField}
               wideWidth
-            />
+            >
+              <option>Select an option</option>
+              {statesOptions}
+            </Field>
             <Field
               name="relationships.address.attributes.zip"
               label="Zipcode"

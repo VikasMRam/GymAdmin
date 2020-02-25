@@ -55,7 +55,6 @@ export default class DashboardCommunityAmenitiesFormContainer extends Component 
     const initialValues = pick(
       status.community.result.attributes,
       [
-        'propInfo.isPetFriendly',
         'propInfo.communitySpace',
         'propInfo.communitySpaceOther',
       ],
