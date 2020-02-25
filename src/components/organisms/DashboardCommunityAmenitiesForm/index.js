@@ -3,7 +3,7 @@ import { func, bool, object } from 'prop-types';
 import styled from 'styled-components';
 import { Field as RFField } from 'redux-form';
 
-import { size, palette, columnWidth } from 'sly/components/themes';
+import { size, columnWidth } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import { Block, Button } from 'sly/components/atoms';
@@ -15,8 +15,9 @@ const familyOvernightOptions = [
 ];
 
 const communitySpaceOptions = [
-  { value: 'Library', label: 'Library' },
+  { value: 'Small Library', label: 'Library' },
   { value: 'Garden', label: 'Garden' },
+  { value: 'Pet Friendly', label: 'Pet Friendly' },
 ];
 
 const Field = ({ canEdit, ...props }) => <RFField component={ReduxField} readOnly={!canEdit} wideWidth {...props} />;
@@ -63,11 +64,6 @@ export default class DashboardCommunityAmenitiesForm extends Component {
     return (
       <Form onSubmit={handleSubmit}>
         <FormScrollSection>
-          <Field
-            name="propInfo.isPetFriendly"
-            type="boolean"
-            options={[{ value: true, label: 'Pet friendly' }]}
-          />
           {isCommunityLarge && (
             <Field
               name="propInfo.communitySpace"
@@ -87,6 +83,7 @@ export default class DashboardCommunityAmenitiesForm extends Component {
             label="Other"
             type="textarea"
             placeholder="More useful information about the community amenities"
+            canEdit
           />
         </FormScrollSection>
 

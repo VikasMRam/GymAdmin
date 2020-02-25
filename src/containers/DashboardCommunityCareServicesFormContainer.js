@@ -48,6 +48,8 @@ export default class DashboardCommunityCareServicesFormContainer extends Compone
 
   render() {
     const { community, status, user, ...props } = this.props;
+    const { propInfo } = community;
+    const { typeCare } = propInfo;
     // console.log(status);
     // console.log(JSON.stringify(community));
     const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
@@ -63,6 +65,7 @@ export default class DashboardCommunityCareServicesFormContainer extends Compone
         initialValues={initialValues}
         user={user}
         canEdit={canEdit}
+        typeCare={typeCare}
         {...props}
       />
     );

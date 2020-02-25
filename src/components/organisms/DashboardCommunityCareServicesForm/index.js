@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, bool } from 'prop-types';
+import { func, bool, string, arrayOf } from 'prop-types';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
 
@@ -82,33 +82,38 @@ export default class DashboardCommunityassistedLivingCareServicesForm extends Co
     canEdit: bool,
     submitting: bool,
     handleSubmit: func.isRequired,
+    typeCare: arrayOf(string),
   };
 
   render() {
     const {
-      handleSubmit, invalid, submitting, canEdit,
+      handleSubmit, invalid, submitting, canEdit, typeCare,
     } = this.props;
 
     return (
       <Form onSubmit={handleSubmit}>
         <FormScrollSection>
           <FormSection>
-            <Field
-              name="propInfo.careServices"
-              label="Assisted Living"
-              type="checkbox"
-              component={ReduxField}
-              options={assistedLivingCareServicesOptions}
-              wideWidth
-            />
-            <Field
-              name="propInfo.careServices"
-              label="Memory Care"
-              type="checkbox"
-              component={ReduxField}
-              options={memoryCareCareServicesOptions}
-              wideWidth
-            />
+            {typeCare.indexOf('Assisted Living') !== -1 &&
+              <Field
+                name="propInfo.careServices"
+                label="Assisted Living"
+                type="checkbox"
+                component={ReduxField}
+                options={assistedLivingCareServicesOptions}
+                wideWidth
+              />
+            }
+            {typeCare.indexOf('Memory Care') !== -1 &&
+              <Field
+                name="propInfo.careServices"
+                label="Memory Care"
+                type="checkbox"
+                component={ReduxField}
+                options={memoryCareCareServicesOptions}
+                wideWidth
+              />
+            }
             <Field
               name="propInfo.careServices"
               label="Other"
