@@ -1,20 +1,6 @@
 import build from 'redux-object';
-import { createSelector } from 'reselect';
 
-const getRequests = ({ api }) => api.requests;
 const getEntities = ({ api }) => api.entities;
-
-function getRawRequest(requests, apiCall, args) {
-  if (!requests) {
-    return null;
-  }
-
-  if (!requests[apiCall]) {
-    return null;
-  }
-
-  return requests[apiCall][args];
-}
 
 export function getEntity(entities, handle, isNormalized) {
   if (!handle) {
@@ -31,8 +17,6 @@ export function getEntity(entities, handle, isNormalized) {
 
   return isNormalized ? build(entities, handle.type, handle.id, { eager: true }) : entities[handle.type][handle.id];
 }
-
-// TODO: memoize fully from scratch as it's applied externally
 
 export function getRelationship(state, entity, relationshipName) {
   if (!entity) {
@@ -97,8 +81,6 @@ export function hasRequestStarted(request) {
 
 // MEMOIZATION
 
-const getCall = (_, { call }) => call;
-const getArgs = (_, { args }) => JSON.stringify(args);
 export const twoSetsAreEqual = (a, b) => {
   if (Array.isArray(a) && Array.isArray(b)) {
     return !a.some((x, i) => x !== b[i]);
@@ -109,27 +91,28 @@ export const twoSetsAreEqual = (a, b) => {
 
 // state, apiCall, args
 export function createMemoizedRequestInfoSelector() {
-  const requestSelector = createSelector(getRequests, getCall, getArgs, getRawRequest);
-  let lastRequest = null;
+  let lastRequestInfo = null;
   let lastResult = null;
 
   return function (state, params = {}) {
-    const request = requestSelector(state, params);
+    const { call } = params;
+    const args = JSON.stringify(params.args);
+    const request = state.api.requests[call]?.[args];
+    const result = getRequestResult(state.api.entities, request);
 
-    if (request === null || !twoSetsAreEqual(request, lastRequest)) {
+    if (result === null || lastResult === null || !twoSetsAreEqual(result, lastResult)) {
       const error = request && request.error ? request.error : false;
       const hasStarted = hasRequestStarted(request);
       const isLoading = isRequestLoading(request);
-      const entities = getEntities(state);
 
-      lastRequest = request;
-      lastResult = {
+      lastResult = result;
+      lastRequestInfo = {
         hasStarted,
         isLoading,
         hasFinished: hasStarted && !isLoading,
         hasFailed: !!error,
-        result: getRequestResult(entities, request),
-        normalized: getRequestResult(entities, request, true),
+        result,
+        normalized: getRequestResult(state.api.entities, request, true),
         headers: getRequestHeaders(request),
         meta: getRequestMeta(request),
         status: request && request.status,
@@ -137,6 +120,6 @@ export function createMemoizedRequestInfoSelector() {
       };
     }
 
-    return lastResult;
+    return lastRequestInfo;
   };
 }
