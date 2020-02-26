@@ -3,7 +3,8 @@ import { object, number, array, bool, func } from 'prop-types';
 import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 import ErrorPage from 'sly/components/pages/Error';
-import NearMePage from 'sly/components/pages/AssistedLivingNearMePage';
+import AssistedLivingNearMePage from 'sly/components/pages/AssistedLivingNearMePage';
+import MemoryCareNearMePage from 'sly/components/pages/MemoryCareNearMePage';
 import NursingHomesNearMePage from 'sly/components/pages/NursingHomesNearMePage';
 import SNFNearMePage from 'sly/components/pages/SNFNearMePage';
 import { parseURLQueryParams, generateCityPathSearchUrl } from 'sly/services/helpers/url';
@@ -111,8 +112,21 @@ export default class NearMePageContainer extends Component {
         />
       );
     }
+    if (toc === 'memory-care') {
+      return (
+        <MemoryCareNearMePage
+          onLocationSearch={this.handleOnLocationSearch}
+          requestMeta={status.communityList.meta || {}}
+          searchParams={searchParams}
+          communityList={communityList}
+          isFetchingResults={!status.communityList.hasFinished}
+          handleAnchor={handleClick}
+          location={location}
+        />
+      );
+    }
     return (
-      <NearMePage
+      <AssistedLivingNearMePage
         onLocationSearch={this.handleOnLocationSearch}
         requestMeta={status.communityList.meta || {}}
         searchParams={searchParams}

@@ -264,6 +264,11 @@ const routes = [
     exact: true,
   },
   {
+    path: '/memory-care',
+    component: NearMePageContainer,
+    exact: true,
+  },
+  {
     path: `/:legalPage(${legalPages})`,
     component: LegalPolicyPage,
     exact: true,

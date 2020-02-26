@@ -244,6 +244,35 @@ const NearMePage = ({
     {title: "Frequently Asked Questions About Assisted Living", to:"https://www.seniorly.com/assisted-living/articles/seniorly-assisted-living-faqs"},
   ];
 
+  const agents = [
+    {
+      title: "Sarah Odover - Los Angeles, CA",
+      to: "https://www.seniorly.com/agents/pacific-west/beverley-hills/assisted-living-locators-los-angeles-ca-sarah-ordover-",
+      asset: "images/hub/agents/Sarah.png",
+      caption: "Sarah Ordover has over 4 years of experience helping families find independent living, \n" +
+        "assisted living, and memory care options. She has helped over 100 families so far in the Los Angeles area.",
+      first: "Sarah"
+    },
+    {
+      title: "Heather Cartright - Sarasota, FL",
+      to: "https://www.seniorly.com/agents/south/ellenton-fl/my-care-finders-fl-heather-cartright-",
+      asset: "images/hub/agents/Heather.png",
+      caption: "Heather Cartright has over a year of experience helping families find independent living, \n" +
+      "assisted living, and memory care options. As a former assisted living facility administrator, \n" +
+      "she brings a unique skillset for senior living placement.",
+      first: "Heather"
+    },
+    {
+      title: "Carol Katz - New Jersey",
+      to: "https://www.seniorly.com/agents/northeast/manalapan/adult-care-advisors-carol-katz-",
+      asset: "images/hub/agents/Carol-Katz.png",
+      caption: "Carol Katz has over 10 years of experience helping families find independent living, \n" +
+      "assisted living, and memory care options. With her unique volunteer experience, she brings \n" +
+      "a special skillset for senior living placement.",
+      first: "Carol"
+    },
+  ];
+
 
   const TableOfContents = () => {
     return (
@@ -507,7 +536,7 @@ const NearMePage = ({
             look into the many financial aid options available.
           </Paragraph>
           <Paragraph>
-            <Link href="hhttps://www.seniorly.com/resources/articles/long-term-care-insurance-for-respite-care">
+            <Link href="https://www.seniorly.com/resources/articles/long-term-care-insurance-for-respite-care">
               Long Term Care Insurance
             </Link>
             {' '}- is an insurance product that helps pay for the costs associated with long-term care. Long-term care
@@ -539,7 +568,7 @@ const NearMePage = ({
           <StyledHeading level="title" size="title" >
             What Is A Local Senior Living Expert?
           </StyledHeading>
-          <WhatIsPartnerAgent/>
+          <WhatIsPartnerAgent toc="assisted living" agents={agents}/>
         </StyledArticle>
 
         <StyledArticle>
@@ -824,7 +853,7 @@ const NearMePage = ({
           <NextSteps nextRef={nextRef}
                      label="Think Assisted Living might be right for your loved one? Explore one of the three topics below to help narrow down your search:"
                      links={ALNextSteps} />
-          
+
           <Link
             href={`#${sectionIdMap.al}`}
             onClick={e => handleAnchor(e, alRef)}
