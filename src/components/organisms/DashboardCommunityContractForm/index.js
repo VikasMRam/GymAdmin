@@ -45,7 +45,7 @@ export default class DashboardCommunityContractForm extends Component {
       handleSubmit, invalid, submitting, canEdit, currentValues,
     } = this.props;
 
-    const contractInfo = currentValues?.rgsInfo?.contract_info || {};
+    const contractInfo = currentValues?.relationships?.rgsAux?.attributes?.rgsInfo?.contract_info || {};
     const valueLabel = contractInfo.contractType === 'Percentage'
       ? 'Value between 0.0 - 1.0'
       : 'Value in dollars';
@@ -54,7 +54,7 @@ export default class DashboardCommunityContractForm extends Component {
       <Form onSubmit={handleSubmit}>
         <FormScrollSection>
           <Field
-            name="rgsInfo.contract_info.hasContract"
+            name="relationships.rgsAux.attributes.rgsInfo.contract_info.hasContract"
             label="Has contract"
             type="boolean"
             canEdit={canEdit}
@@ -63,7 +63,7 @@ export default class DashboardCommunityContractForm extends Component {
             <>
               <Field
                 label="Type of contract"
-                name="rgsInfo.contract_info.contractType"
+                name="relationships.rgsAux.attributes.rgsInfo.contract_info.contractType"
                 type="choice"
                 options={[
                   { value: 'Flat Rate', label: 'Flat rate' },
@@ -73,14 +73,15 @@ export default class DashboardCommunityContractForm extends Component {
               />
               <Field
                 label={valueLabel}
-                name="rgsInfo.contract_info.value"
+                name="relationships.rgsAux.attributes.rgsInfo.contract_info.value"
                 type="number"
                 inputmode="numeric"
                 canEdit={canEdit}
+                parse={value => !value ? null : Number(value)}
               />
               <Field
                 label="Notes"
-                name="rgsInfo.contract_info.notes"
+                name="relationships.rgsAux.attributes.rgsInfo.contract_info.note"
                 type="textarea"
                 canEdit={canEdit}
               />
