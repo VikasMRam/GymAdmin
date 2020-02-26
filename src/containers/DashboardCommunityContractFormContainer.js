@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func, shape } from 'prop-types';
 import pick from 'lodash/pick';
-import defaultsDeep from 'lodash/defaultsDeep';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { branch } from 'recompose';
 
 import clientPropType from 'sly/propTypes/client';
 import userProptype from 'sly/propTypes/user';
@@ -13,7 +12,6 @@ import withUser from 'sly/services/newApi/withUser';
 import { userIs } from 'sly/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import DashboardCommunityContractForm from 'sly/components/organisms/DashboardCommunityContractForm';
-import { connect } from 'react-redux';
 import { rgsAuxAttributes } from 'sly/propTypes/community';
 
 const formName = 'DashboardCommunityContractForm';
@@ -23,7 +21,6 @@ const ReduxForm = reduxForm({
 })(DashboardCommunityContractForm);
 
 @query('updateCommunity')
-@query('updateRgsAux')
 @withUser
 @withRouter
 @prefetch('community', 'getCommunity', (req, { match }) => req({
@@ -37,7 +34,7 @@ const ReduxForm = reduxForm({
 
 export default class DashboardCommunityContractFormContainer extends Component {
   static propTypes = {
-    updateRgsAux: func.isRequired,
+    updateCommunity: func.isRequired,
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
     user: userProptype,
@@ -51,11 +48,15 @@ export default class DashboardCommunityContractFormContainer extends Component {
   };
 
   handleSubmit = (values) => {
-    const { match, updateRgsAux } = this.props;
-    const { id } = match.params;
-
-    return updateRgsAux({ id }, {
-      attributes: values,
+    const { community, updateCommunity } = this.props;
+    const { id } = community;
+    const { relationships } = values;
+    const { rgsAux } = relationships;
+    return updateCommunity({ id }, {
+      attributes: community,
+      relationships: {
+        rgsAux: { data: rgsAux },
+      },
     });
   };
 
@@ -65,22 +66,12 @@ export default class DashboardCommunityContractFormContainer extends Component {
     const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
 
     const initialValues = pick(
-      rgsAux.attributes,
-      [
-        'rgsInfo.contract_info',
-      ],
+      status.community.result,
+      [],
     );
-
-    // passes by ref
-    defaultsDeep(initialValues, {
-      rgsInfo: {
-        contract_info: {
-          hasContract: false,
-          contractType: 'Percentage',
-          notes: '',
-        },
-      },
-    });
+    initialValues.relationships = {
+      rgsAux,
+    };
 
     return (
       <ReduxForm

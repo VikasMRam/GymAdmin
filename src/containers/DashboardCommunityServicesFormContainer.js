@@ -56,6 +56,7 @@ export default class DashboardCommunityAmenitiesFormContainer extends Component 
       status.community.result.attributes,
       [
         'propInfo.nonCareServices',
+        'propInfo.nonCareServicesOther',
       ],
     );
 
