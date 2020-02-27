@@ -284,12 +284,7 @@ const SeniorLivingNearMePage = ({
           >
             Senior Living: Skilled Nursing Facility
           </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.slccrc}`}
-            onClick={e => handleAnchor(e, slccrcRef)}
-          >
-            Senior Living: CCRC
-          </StyledLink>
+
           <StyledLink
             href={`#${sectionIdMap.next}`}
             onClick={e => handleAnchor(e, nextRef)}
@@ -307,7 +302,7 @@ const SeniorLivingNearMePage = ({
     )
   };
 
-  const SEOContentMC = () => {
+  const SEOContent = () => {
     return (
       <>
         <StyledArticle>
@@ -741,7 +736,7 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={slccrcRef} >
+          <StyledHeading level="title" size="title" _ref={slnhRef} >
             Senior Living: Nursing Home
           </StyledHeading>
           <Paragraph>
@@ -889,7 +884,6 @@ const SeniorLivingNearMePage = ({
           </Link>
         </StyledArticle>
 
-
         <StyledArticle>
           <NextSteps nextRef={nextRef}
                      label="Think a senior living community might be right for you or your loved one? Learn more about each type below to help narrow down your search:"
@@ -931,7 +925,7 @@ const SeniorLivingNearMePage = ({
               </StickToTop>
             </Column>
             <Body>
-            {SEOContentMC()}
+            {SEOContent()}
             <StyledHeading level="title" size="title" _ref={nearRef}>
               {heading}
             </StyledHeading>
