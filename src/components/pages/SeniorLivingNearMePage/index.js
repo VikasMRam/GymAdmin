@@ -140,15 +140,7 @@ const SeniorLivingNearMePage = ({
   const slRef = React.createRef();
   const costRef = React.createRef();
   const chooseRef = React.createRef();
-  const slilRef = React.createRef();
-  const slalRef = React.createRef();
-  const slmcRef = React.createRef();
-  const slrcRef = React.createRef();
-  const slnhRef = React.createRef();
-  const slsnfRef = React.createRef();
-  const slccrcRef = React.createRef();
-  const slbncRef = React.createRef();
-  const slhcRef = React.createRef();
+  const typesRef = React.createRef();
   const nextRef = React.createRef();
   const nearRef = React.createRef();
 
@@ -156,15 +148,7 @@ const SeniorLivingNearMePage = ({
     sl: 'what-is-senior-living',
     cost: 'cost',
     choose: 'choosing-senior-living',
-    slil: 'independent-living',
-    slal: 'assisted-living',
-    slmc: 'memory-care',
-    slbnc: 'board-and-care-home',
-    slhc: 'in-home-care',
-    slccrc: 'ccrc',
-    slnh: 'nursing-home',
-    slrc: 'respite-care',
-    slsnf: 'skilled-nursing-facility',
+    typesil: 'types-of-senior-living',
     next: 'next-steps',
     near: 'senior-living-near-you',
   };
@@ -231,59 +215,12 @@ const SeniorLivingNearMePage = ({
             The Benefits in Choosing a Senior Living Community
           </StyledLink>
           <StyledLink
-            href={`#${sectionIdMap.slil}`}
-            onClick={e => handleAnchor(e, slilRef)}
+            href={`#${sectionIdMap.sltypes}`}
+            onClick={e => handleAnchor(e, sltypesRef)}
           >
-            Senior Living: Independent Living
+            Different Types of Senior Living
           </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.slal}`}
-            onClick={e => handleAnchor(e, slalRef)}
-          >
-            Senior Living: Assisted Living
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.slmc}`}
-            onClick={e => handleAnchor(e, slmcRef)}
-          >
-            Senior Living: Memory Care
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.slbnc}`}
-            onClick={e => handleAnchor(e, slbncRef)}
-          >
-            Senior Living: Board and Care Home
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.slhc}`}
-            onClick={e => handleAnchor(e, slhcRef)}
-          >
-            Senior Living: In-Home Care
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.slrc}`}
-            onClick={e => handleAnchor(e, slrcRef)}
-          >
-            Senior Living: Respite Care
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.slccrc}`}
-            onClick={e => handleAnchor(e, slccrcRef)}
-          >
-            Senior Living: CCRC
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.slnh}`}
-            onClick={e => handleAnchor(e, slnhRef)}
-          >
-            Senior Living: Nursing Home
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.slsnf}`}
-            onClick={e => handleAnchor(e, slsnfRef)}
-          >
-            Senior Living: Skilled Nursing Facility
-          </StyledLink>
+
 
           <StyledLink
             href={`#${sectionIdMap.next}`}
@@ -485,7 +422,7 @@ const SeniorLivingNearMePage = ({
 
         <StyledArticle>
 
-          <StyledHeading level="title" size="title" _ref={slilRef}>
+          <StyledHeading level="title" size="title" _ref={typesRef}>
             Senior Living: Independent Living
           </StyledHeading>
           <Paragraph>
@@ -508,7 +445,7 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={slalRef} >
+          <StyledHeading level="title" size="title">
             Senior Living: Assisted Living
           </StyledHeading>
 
@@ -601,7 +538,7 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={slmcRef} >
+          <StyledHeading level="title" size="title">
             Senior Living: Memory Care
           </StyledHeading>
           <Paragraph>
@@ -632,7 +569,7 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={slbncRef} >
+          <StyledHeading level="title" size="title">
             Senior Living: Board and Care Home
           </StyledHeading>
           <Paragraph>
@@ -664,7 +601,7 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={slhcRef} >
+          <StyledHeading level="title" size="title">
             Senior Living: In-Home Care
           </StyledHeading>
           <Paragraph>
@@ -688,7 +625,7 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={slrcRef} >
+          <StyledHeading level="title" size="title">
             Senior Living: Respite Care
           </StyledHeading>
           <Paragraph>
@@ -714,7 +651,7 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={slccrcRef} >
+          <StyledHeading level="title" size="title">
             Senior Living: CCRC
           </StyledHeading>
           <Paragraph>
@@ -736,7 +673,7 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={slnhRef} >
+          <StyledHeading level="title" size="title">
             Senior Living: Nursing Home
           </StyledHeading>
           <Paragraph>
@@ -759,7 +696,7 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={slsnfRef} >
+          <StyledHeading level="title" size="title">
             Senior Living: Skilled Nursing Facility
           </StyledHeading>
           <Paragraph>
@@ -931,7 +868,10 @@ const SeniorLivingNearMePage = ({
             </StyledHeading>
             <StyledArticle>
               <Paragraph>
-                There are a lot of different factors that go into finding the right senior living community for you or your loved one. Take time to meet with everyone who is involved in the decision and list the desired lifestyle amenities and location. Figure out your price range and investigate potential ways of financing senior living. It’s also important to talk with your doctor to determine the level of care needed.
+                There are a lot of different factors that go into finding the right senior living community for you or
+                your loved one. Take time to meet with everyone who is involved in the decision and list the desired
+                lifestyle amenities and location. Figure out your price range and investigate potential ways of
+                financing senior living. It’s also important to talk with your doctor to determine the level of care needed.
 
               </Paragraph>
             </StyledArticle>

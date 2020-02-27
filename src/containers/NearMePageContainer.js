@@ -6,8 +6,10 @@ import ErrorPage from 'sly/components/pages/Error';
 import AssistedLivingNearMePage from 'sly/components/pages/AssistedLivingNearMePage';
 import MemoryCareNearMePage from 'sly/components/pages/MemoryCareNearMePage';
 import SeniorLivingNearMePage from 'sly/components/pages/SeniorLivingNearMePage';
+import BNCNearMePage from 'sly/components/pages/BNCNearMePage';
 import NursingHomesNearMePage from 'sly/components/pages/NursingHomesNearMePage';
 import SNFNearMePage from 'sly/components/pages/SNFNearMePage';
+import IndependentLivingNearMePage from 'sly/components/pages/IndependentLivingNearMePage';
 import { parseURLQueryParams, generateCityPathSearchUrl } from 'sly/services/helpers/url';
 import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
@@ -143,9 +145,37 @@ export default class NearMePageContainer extends Component {
         />
       );
     }
+    if (hub === 'independent-living') {
+      return (
+        <IndependentLivingNearMePage
+          onLocationSearch={this.handleOnLocationSearch}
+          requestMeta={status.communityList.meta || {}}
+          searchParams={searchParams}
+          communityList={communityList}
+          isFetchingResults={!status.communityList.hasFinished}
+          handleAnchor={handleClick}
+          location={location}
+        />
+      );
+    }
     if (hub === 'senior-living') {
       return (
         <SeniorLivingNearMePage
+          onLocationSearch={this.handleOnLocationSearch}
+          requestMeta={status.communityList.meta || {}}
+          searchParams={searchParams}
+          communityList={communityList}
+          isFetchingResults={!status.communityList.hasFinished}
+          handleAnchor={handleClick}
+          location={location}
+        />
+      );
+    }
+
+
+    if (hub === 'board-and-care-home') {
+      return (
+        <BNCNearMePage
           onLocationSearch={this.handleOnLocationSearch}
           requestMeta={status.communityList.meta || {}}
           searchParams={searchParams}

@@ -25,7 +25,6 @@ import Footer from 'sly/components/organisms/Footer';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 
 const StyledHeading = styled(Heading)`
@@ -93,26 +92,6 @@ const StyledTable = styled.table`
   };
 `;
 
-const ADLWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const ADLIconItem = styled.div`
-  width: 100%;
-  flex: 0 100%;
-  display: flex;
-  padding: ${size('spacing.large')};
-  justify-content: space-between;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: 50%;
-    flex: 0 50%;
-  }
-`;
 
 
 const TwoColumn = makeTwoColumn('div');
@@ -120,7 +99,7 @@ const Body = makeBody('div');
 const Column = makeColumn('aside');
 const Wrapper = makeWrapper('div');
 
-const MemoryCareNearMePage = ({
+const IndependentLivingNearMePage = ({
   onLocationSearch,
   searchParams,
   requestMeta,
@@ -134,56 +113,63 @@ const MemoryCareNearMePage = ({
   const { geo } = requestMeta;
   const city = geo && geo.city;
   const state = geo && geo.state;
-  const tocLabel = getTocSeoLabel('memory-care');
+  const tocLabel = getTocSeoLabel('independent-living');
 
 
-  const mcRef = React.createRef();
-  const careRef = React.createRef();
-  const staffRef = React.createRef();
+  const ilRef = React.createRef();
   const costRef = React.createRef();
-  const mcvsalRef = React.createRef();
+  const typesRef = React.createRef();
+  const alternativeRef = React.createRef();
+  const servicesRef = React.createRef();
+  const ilvsalRef = React.createRef();
   const chooseRef = React.createRef();
   const nextRef = React.createRef();
   const nearRef = React.createRef();
 
   const sectionIdMap = {
-    mc: 'what-is-memory-care',
-    care: 'memory-care-services',
-    staff: 'medical-care-and-staffing',
+    il: 'what-is-independent-living',
     cost: 'cost',
-    mcvsal: 'mc-vs-al',
+    types:'types',
+    alternative:' alternative',
+    services: 'services',
+    ilvsal: 'il-vs-al',
     choose: 'choosing-memory-care',
     next: 'next-steps',
     near: 'memory-care-near-you',
   };
 
   const nextSteps = [
-    {title: "Evaluating Memory Care Communities", to:"https://www.seniorly.com/memory-care/articles/evaluating-memory-care-communities"},
-    {title: "Understanding the Cost of Memory Care", to:"https://www.seniorly.com/memory-care/articles/understanding-the-cost-of-memory-care"},
-    {title: "Frequently Asked Questions About Memory Care", to:"https://www.seniorly.com/memory-care/articles/seniorly-memory-care-faqs"},
+    {title: "Evaluating Independent Living Communities", to:"https://www.seniorly.com/independent-living/articles/evaluating-independent-living-communities"},
+    {title: "Understanding the Cost of Independent Living", to:"https://www.seniorly.com/independent-living/articles/understanding-the-cost-of-independent-living"},
+    {title: "Frequently Asked Questions About Independent Living", to:"https://www.seniorly.com/independent-living/articles/seniorly-independent-living-faqs"},
   ];
 
   const agents = [
     {
-      title: "Heather Williams-Shelly - Orange County, CA",
-      to: "https://www.seniorly.com/agents/pacific-west/santa-ana-ca/about-senior-living-ca-heather-williams-shelly-",
-      asset: "images/hub/agents/HeatherOC.png",
-      caption: "Heather Williams-Shelly has over 11 years of experience helping families find independent living, assisted living, and memory care options. She understands the challenges families face when making the decision to transition a loved one to a new home, and is dedicated to provide a compassionate service.",
+      title: "Sarah Odover - Los Angeles, CA",
+      to: "https://www.seniorly.com/agents/pacific-west/beverley-hills/assisted-living-locators-los-angeles-ca-sarah-ordover-",
+      asset: "images/hub/agents/Sarah.png",
+      caption: "Sarah Ordover has over 4 years of experience helping families find independent living, \n" +
+      "assisted living, and memory care options. She has helped over 100 families so far in the Los Angeles area.",
+      first: "Sarah"
+    },
+    {
+      title: "Heather Cartright - Sarasota, FL",
+      to: "https://www.seniorly.com/agents/south/ellenton-fl/my-care-finders-fl-heather-cartright-",
+      asset: "images/hub/agents/Heather.png",
+      caption: "Heather Cartright has over a year of experience helping families find independent living, \n" +
+      "assisted living, and memory care options. As a former assisted living facility administrator, \n" +
+      "she brings a unique skillset for senior living placement.",
       first: "Heather"
     },
     {
-      title: "Mark & Karen Wolff - Sacramento, CA",
-      to: "https://www.seniorly.com/agents/pacific-west/rocklin-ca/senior-care-authority-sacramento-ca-mark-and-karyn-wolff-",
-      asset: "images/hub/agents/Mark-Karen.png",
-      caption: "HMark Wolff has over 3 years of experience helping families finding independent living, assisted living, and memory care options. He is dedicated to guiding families throughout the senior living process.",
-      first: "Mark and Karen"
-    },
-    {
-      title: "Kim Bertolino - Long Island, NY",
-      to: "https://www.seniorly.com/agents/northeast/mastic-beach-ny/oasis-senior-advisors-long-island-ny-kim-bertolino-",
-      asset: "images/hub/agents/Kim.png",
-      caption: "Kim Bertolino has over a year of experience helping families find independent living, assisted living, and memory care options. She is a certified senior advisor, and is dedicated to guiding families throughout the senior living process.",
-      first: "Kim"
+      title: "Carol Katz - New Jersey",
+      to: "https://www.seniorly.com/agents/northeast/manalapan/adult-care-advisors-carol-katz-",
+      asset: "images/hub/agents/Carol-Katz.png",
+      caption: "Carol Katz has over 10 years of experience helping families find independent living, \n" +
+      "assisted living, and memory care options. With her unique volunteer experience, she brings \n" +
+      "a special skillset for senior living placement.",
+      first: "Carol"
     },
   ];
 
@@ -195,40 +181,46 @@ const MemoryCareNearMePage = ({
         </StyledHeading>
         <Paragraph>
           <StyledLink
-            href={`#${sectionIdMap.mc}`}
-            onClick={e => handleAnchor(e, mcRef)}
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
           >
-            What is Memory Care?
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.care}`}
-            onClick={e => handleAnchor(e, careRef)}
-          >
-            Memory Care Services
+            What Is Independent Living?
           </StyledLink>
           <StyledLink
             href={`#${sectionIdMap.cost}`}
             onClick={e => handleAnchor(e, costRef)}
           >
-            How To Pay for Memory Care
+            The Cost of Independent Living
           </StyledLink>
           <StyledLink
-            href={`#${sectionIdMap.staff}`}
-            onClick={e => handleAnchor(e, staffRef)}
+            href={`#${sectionIdMap.types}`}
+            onClick={e => handleAnchor(e, typesRef)}
           >
-            Medical Care and Staffing
+            Types of Independent Living
           </StyledLink>
           <StyledLink
-            href={`#${sectionIdMap.mcvsal}`}
-            onClick={e => handleAnchor(e, mcvsalRef)}
+            href={`#${sectionIdMap.alternative}`}
+            onClick={e => handleAnchor(e, alternativeRef)}
           >
-            Memory Care vs. Assisted Living
+            Independent Living Alternatives
+          </StyledLink>
+          <StyledLink
+            href={`#${sectionIdMap.services}`}
+            onClick={e => handleAnchor(e, servicesRef)}
+          >
+            Services Provided in Independent Living
+          </StyledLink>
+          <StyledLink
+            href={`#${sectionIdMap.ilvsal}`}
+            onClick={e => handleAnchor(e, ilvsalRef)}
+          >
+            Independent Living vs. Assisted Living
           </StyledLink>
           <StyledLink
             href={`#${sectionIdMap.choose}`}
             onClick={e => handleAnchor(e, chooseRef)}
           >
-            Choosing a Memory Care Facility
+            How to Choose the Right Independent Living Community
           </StyledLink>
 
           <StyledLink
@@ -248,333 +240,186 @@ const MemoryCareNearMePage = ({
     )
   };
 
-  const SEOContentMC = () => {
+  const SEOContent = () => {
     return (
       <>
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={mcRef} >
-            What is Memory Care?
+          <StyledHeading level="title" size="title" _ref={ilRef} >
+            What Is Independent Living?
           </StyledHeading>
           <Paragraph>
-            Memory Care is a senior living community built to care for seniors who have{' '}
-            <Link href="https://www.alz.org/alzheimer_s_dementia">
-              Alzheimer's disease or other forms of dementia.
+            <Link href="http://blog.aarp.org/2012/01/30/taking-a-closer-look-at-independent-living/">
+            Independent Living communities
             </Link>
-            {' '}Many{' '}
+            {' '}are designed for seniors who don't require personal care assistance. Senior residents at this
+            senior living community want to streamline their lives and live with people of their own generation.
+          </Paragraph>
+          <Paragraph>
+            Baby boomers in Independent Living typically are active and healthy. They have no need for assistance with{' '}
+            <Link href="https://www.seniorly.com/resources/articles/what-are-the-activities-of-daily-living-adls">
+              their activities of daily living (ADLs).
+            </Link>
+            {' '}Also, they select this type of community because they want to avoid the hassle of maintenance and
+            upkeep of their current home.
+          </Paragraph>
+          <Paragraph>
+            To make life easy and enjoyable for residents, Independent Living communities provide plenty of amenities.
+            These may include dining facilities, landscaping and maintenance, housekeeping services, social activities
+            and clubs, and exercise facilities.
+          </Paragraph>
+          <Paragraph>
+            On-site amenities and delivery services via the mobile economy make this an ideal choice for active adults.
+            They can enjoy having services such as pet care, auto repair, or meal delivery available on demand.
+          </Paragraph>
+          <Paragraph>
+            When you choose an Independent Living community you will have a few housing options.
+            There can be a private studio or a spacious two-bedroom apartment. Residences may be available for either
+            purchase or rent, depending on the community.
+          </Paragraph>
+
+
+          <Link
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
+          >
+            Back to top
+          </Link>
+        </StyledArticle>
+        <StyledArticle>
+          <StyledHeading level="title" size="title" _ref={costRef}>
+            The Cost of Independent Living
+          </StyledHeading>
+          <Paragraph>
+            The cost of an Independent Living community near you varies greatly.
+            This depends on the type of community, the location, and the amenities offered.
+          </Paragraph>
+          <Paragraph>
+            In some Independent Living communities, residents may have the option to buy their homes rather than
+            renting. This is most common in active adult communities or age-restricted communities.
+            In some rental communities, a buy-in fee is required to join the community.
+          </Paragraph>
+          <Paragraph>
+            Costs can range as low as $1,000 in Independent Living communities designated for low-income
+            residents. On the other end of the spectrum, there are high-end Independent Living packed with
+            luxurious amenities. They can feature condos running as high as $1 million or apartments with
+            $100,000 buy-ins.
+          </Paragraph>
+          <Paragraph>
+            On average, you can expect to spend somewhere between $1,500 and $6,000. This is for the combination of
+            rent/mortgage plus amenities or association fees. Some services, such as housekeeping,
+            transportation or dining, may incur extra fees.
+          </Paragraph>
+          <Paragraph>
+            Independent Living fees are typically not covered by any type of insurance, including Medicare or
+            long-term care insurance. However, if Independent Living residents require{' '}
+            <Link href="https://www.seniorly.com/in-home-care">
+              Home Care
+            </Link>
+            {' '}for medical reasons,
+            some of those costs may be covered by insurance.
+          </Paragraph>
+
+          <Link
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
+          >
+            Back to top
+          </Link>
+        </StyledArticle>
+
+        <StyledArticle>
+          <StyledHeading level="title" size="title" _ref={typesRef} >
+            Types of Independent Living
+          </StyledHeading>
+
+          <Paragraph>
+            All Independent Living communities offer a variety of services and amenities.
+            There are some differences between the types of communities available for you to choose between.
+          </Paragraph>
+          <StyledHeading level="subtitle" size="subtitle">
+            Active Adult Communities
+          </StyledHeading>
+          <Paragraph>
+            Active adult communities are aimed at people who are aged 55 and older.
+            They're targeted to appeal to baby boomers. This senior living option may consist of single-family homes,
+            multi-family homes, townhomes, condos, or a mixture of different housing types.
+          </Paragraph>
+          <Paragraph>
+            Active adult communities can be quite large. Many have golf courses, clubhouses and common areas,
+            pools, and other recreational amenities to appeal to the active adult lifestyle.
+          </Paragraph>
+          <Paragraph>
+            Active adult communities aren't set up to provide health care services. If you need medical care,
+            you might want to explore{' '}
             <Link href="https://www.seniorly.com/assisted-living">
-              assisted living communities have special wings
+              assisted living
             </Link>
-            {' '}designed to help residents with memory issues.
+            {' '}or even a skilled nursing facility.
           </Paragraph>
           <Paragraph>
-            Senior residents living in memory care benefit from a structured environment that provides
-            plenty of routines to help them feel secure and comfortable. The caregiver-to-resident
-            staffing ratio of 1:6 is much higher in memory care than in assisted living.
-            Assisted living usually has 1 staff member for every 15 residents.
+            Some independent living communities offer transportation options, such as shuttles to nearby shopping and
+            entertainment. Residents typically pay a monthly fee that covers the amenities and all outdoor maintenance.
           </Paragraph>
-          <Paragraph>
-            If your loved one is having problems with forgetfulness and concentration, you may be
-            wondering what to expect next. Seniors who have been diagnosed with Alzheimer's disease
-            will experience a decline in their memory and other brain functions. This is true for
-            seniors with any dementia related illness. Their decline will be slow, but the stages are
-            predictable.
-          </Paragraph>
-          <Paragraph>
-            The Reisberg Scale can help you understand where your loved one may be in this process
-            so you can determine{' '}
-            <Link href="https://www.seniorly.com/memory-care/articles/when-should-a-person-with-alzheimer-s-stop-living-alone">
-              what type of care they may need.
-            </Link>
-          </Paragraph>
-
-          <StyledTable>
-            <thead>
-            <tr>
-              <th>
-                Stage
-              </th>
-              <th>
-                Symptoms
-              </th>
-              <th>
-                Duration
-              </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>
-                No Decline
-              </td>
-              <td>
-                No memory loss. No dementia.
-              </td>
-              <td>
-                ---
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Very Mild
-              </td>
-              <td>
-                Normal forgetfulness linked to aging.
-              </td>
-              <td>
-                ---
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Mild
-              </td>
-              <td>
-                Increased forgetfulness. Diminished work performance. Difficulty finding words.
-              </td>
-              <td>
-                7 years
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Moderate
-              </td>
-              <td>
-                Difficulty concentrating. Difficulty managing finances. Difficulty with complex tasks. Denial about symptoms. Difficulty in social situations.
-              </td>
-              <td>
-                2 years
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Moderately Severe
-              </td>
-              <td>
-                Significant memory deficiencies, including memory loss about current details like address or date.
-              </td>
-              <td>
-                2 years
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Moderately Severe
-              </td>
-              <td>
-                Significant memory deficiencies, including memory loss about current details like address or date.
-              </td>
-              <td>
-                2 years
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Severe
-              </td>
-              <td>
-                Assistance needed for daily tasks. Memory loss of recent events. Difficulty counting. Incontinence. Personality changes. Repetition of simple behaviors. Agitation.
-              </td>
-              <td>
-                2.5 years
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Very Severe
-              </td>
-              <td>
-                Loss of ability to speak. Assistance needed for all daily tasks, including eating.
-              </td>
-              <td>
-                2.5 years
-              </td>
-            </tr>
-            </tbody>
-          </StyledTable>
-
-          <Paragraph>
-            Seniors who need memory care often require more attention in their care program than is
-            typically available in an assisted living facility.  Also, they require extra measures
-            to keep them physically safe.
-          </Paragraph>
-          <Paragraph>
-            The well-trained staff in a memory care facility focus on slowing the progression of
-            Alzheimer's disease or other dementia related illnesses.  They do this through games and
-            exercises designed to stimulate the brain. They're also available around the clock to care
-            for the unique needs of Alzheimer's and dementia residents, something that home caregivers
-            often can't manage.
-          </Paragraph>
-          <Paragraph>
-            Memory care is often provided in a dedicated wing or section of an assisted living facility.
-            This makes it easy for residents to transition if needed. Memory care facilities go out of
-            their way to provide additional security.  This is because Alzheimer's residents are prone
-            to wandering.
-          </Paragraph>
-          <Paragraph>
-            If you are ready to search for Memory Care near you, just enter your city or zip code in the
-            search box below:
-          </Paragraph>
-          <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
-
-          <Link
-            href={`#${sectionIdMap.mc}`}
-            onClick={e => handleAnchor(e, mcRef)}
-          >
-            Back to top
-          </Link>
-        </StyledArticle>
-        <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={careRef}>
-            Memory Care Services
+          <StyledHeading level="subtitle" size="subtitle">
+            CCRC (Continuing Care Retirement Communities)
           </StyledHeading>
           <Paragraph>
-            Memory care facilities are often specially designed to help those with Alzheimer's and all
-            types of dementia feel comfortable and at home. The level of services provided often
-            overlap with what is offered in an assisted living community.
+            <Link href="https://www.seniorly.com/continuing-care-retirement-community">
+              CCRC (Continuing Care Retirement Communities)
+            </Link>
+            {' '}makes it easy for seniors to age in place. This senior living community provides a continuum of care as
+            the needs change. There are high entrance fees, but they are providing a guarantee all your care needs will be met.
           </Paragraph>
           <Paragraph>
-            Senior residents in memory care typically receive the following types of services:
-          </Paragraph>
-          <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              All meals, either in their rooms or in a shared dining hall
-            </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Housekeeping services to keep their living space clean and safe
-            </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Social activities designed to stimulate their minds and keep them connected
-            </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Transportation to doctor's offices and other appointments
-            </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Comfortable rooms, which may be private or shared
-            </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              All laundry services, including fresh linens
-            </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Exercise programs and physical therapy when needed
-            </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Cognitive therapy
-            </ListItem>
-          </ListWrapper>
-          <Paragraph>
-            In addition, memory care residents receive whatever help they need with{' '}
-            <Link href="https://www.seniorly.com/resources/articles/what-are-the-activities-of-daily-living-adls">activities of daily living (ADL)</Link>
-            {' '},including:
-          </Paragraph>
-
-          <ADLWrapper>
-            <ADLIconItem>
-              Personal Hygiene
-              <Icon icon="bath" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Feeding
-              <Icon icon="food" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Continence Management
-              <Icon icon="washroom" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Ambulating
-              <Icon icon="accessibility" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Dressing
-              <Icon icon="shirt" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Toileting
-              <Icon icon="toilet" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-          </ADLWrapper>
-
-          <Paragraph>
-            Memory care facilities provide 24/7 supervised care for their senior residents.
-            This means they are not the same as an adult day care center, or a memory care cafe.
-
-          </Paragraph>
-          <Paragraph>
-            To prevent senior residents from wandering away, exits at these facilities are locked and
-            alarmed. This provides confidence so that everyone knows if one of the residents wanders and
-            tries to leave. In addition, the staff at a memory care facility are specially trained to
-            handle the unique needs of Alzheimer's disease and dementia residents.
-
-          </Paragraph>
-
-          <Link
-            href={`#${sectionIdMap.mc}`}
-            onClick={e => handleAnchor(e, mcRef)}
-          >
-            Back to top
+            Often, today's baby boomers start in Independent Living. Then they move to{' '}
+            <Link href="https://www.seniorly.com/assisted-living">
+              assisted living
+            </Link>
+            {' '}or{' '}<Link href="https://www.seniorly.com/memory-care">
+            memory care
           </Link>
-        </StyledArticle>
-
-        <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={costRef} >
-            How To Pay for Memory Care
+            {' '}if needed. Finally, they move to a{' '}
+            <Link href="https://www.seniorly.com/skilled-nursing-facility">
+              skilled nursing facility
+            </Link>{' '}or hospice, if required.
+          </Paragraph>
+          <Paragraph>
+            This happens within the same community.  The change from one level of care to the next is far
+            less jarring to the seniors in a CCRC.
+          </Paragraph>
+          <StyledHeading level="subtitle" size="subtitle">
+          Senior Apartments
+        </StyledHeading>
+          <Paragraph>
+            Senior apartments are designed to cater to the physical and emotional needs of seniors.
+            They generally have minimal stairs and feature safety equipment such as handrails in bathrooms.
+          </Paragraph>
+          <Paragraph>
+            Because senior apartments are located in age-restricted buildings, they often foster a real sense of community.
+            They can take the form of standard single-family apartments or condos.  Individual apartments can be arranged in suites.
+            Senior residents get private bedrooms and bathrooms, but they share a common living space and kitchen.
+          </Paragraph>
+          <StyledHeading level="subtitle" size="subtitle">
+            Age-Restricted Communities
           </StyledHeading>
+          <Paragraph>
+            Age-restricted communities, which are restricted to those aged 55 and over, are governed under the{' '}
+            <Link href="https://www.justice.gov/crt/fair-housing-act-1">
+              Fair Housing Act.
+            </Link>
+            {' '}According to the rules under this act, 80 percent of age-restricted units must house someone over 55.
+            No minors are allowed to live in the community.
 
-          <Paragraph>
-            Memory Care is typically covered by private pay.
-            Long term care insurance will supplement private pay.
-            You can learn more about paying for memory care by reading our comprehensive article, “
-            <Link href="https://www.seniorly.com/resources/articles/understanding-the-cost-of-memory-care">
-              Understanding the Cost of Memory Care.
-            </Link>
-            ”
           </Paragraph>
           <Paragraph>
-            In some cases, you will find qualified memory care in a
-            <Link href="https://www.seniorly.com/skilled-nursing-facility">skilled nursing facility (SNF)
-            </Link>
-            .  This will afford the senior resident some government assistance, such as Medicare.
-            Medicaid can cover SNF if you’re low income.
+            Age-restricted communities often feature a country club-style setting. You might find a golf course,
+            tennis courts, clubhouse, and swimming pools, as well as other high-end amenities.
+
           </Paragraph>
-          <Paragraph>
-            Each state has their own licensing regulations.
-            Therefore, the cost varies state by state for the memory care services provided
-            and the government assistance available.
-          </Paragraph>
-          <Paragraph>
-            It’s important to note that a SNF is not a nursing home, even though they share a
-            similar name.  We do not use the word “
-            <Link href="https://www.seniorly.com/nursing-homes">
-              nursing home
-            </Link>
-            ” any longer. Senior living is far more advanced than the term nursing home suggests.
-          </Paragraph>
-          <Paragraph>
-            [<strong>PRO TIP:</strong>{' '}
-            <Link href="https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living">Veteran’s Benefits
-            </Link>
-            {' '}are often available for assistance with care needs.]
-          </Paragraph>
-          <Paragraph>
-            One great option for affordable memory care is a Board and Care Home (BCH).
-            They do not all specialize in memory care.  Please do your research.
-            Or let one of our local senior living experts tell you about all the memory care options
-            in your desired location.
-          </Paragraph>
-          <Paragraph>
-            [<strong>FREE RESOURCE:</strong>{' '}“
-            <Link href ="https://www.seniorly.com/resources/articles/board-and-care-homes-the-x-factor-for-dementia-care">
-              The X Factor of Dementia Care
-            </Link>
-            ” by{' '}
-            <Link href="https://www.seniorly.com/agents/pacific-west/rocklin/senior-care-authority-sacramento-ca-mark-and-karyn-wolff-">
-              Mark Wolff
-            </Link>.]
-          </Paragraph>
+
           <Link
-            href={`#${sectionIdMap.mc}`}
-            onClick={e => handleAnchor(e, mcRef)}
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
           >
             Back to top
           </Link>
@@ -585,331 +430,405 @@ const MemoryCareNearMePage = ({
           </StyledHeading>
           <WhatIsPartnerAgent toc="memory care" agents={agents}/>
         </StyledArticle>
+
         <StyledArticle>
 
-          <StyledHeading level="title" size="title" _ref={staffRef}>
-            Medical Care and Staffing
+          <StyledHeading level="title" size="title" _ref={alternativeRef}>
+            Independent Living Alternatives
           </StyledHeading>
           <Paragraph>
-            Most memory care facilities are staffed with registered nurses, licensed vocational nurses, and
-            certified nurse assistants. The objective is to have enough qualified staff to care for residents'
-            needs and maintain resident safety. It's optimal if staff have been at the facility for a long
-            time and work consistent shifts.  Residents with Alzheimer's disease or dementia respond best to
-            familiar faces.
+            The most common types of Independent Living that baby boomers move into are active adult communities,
+            CCRCs, and age-restricted communities. There are a few more innovative options also available.
+          </Paragraph>
+          <StyledHeading level="subtitle" size="subtitle">
+            Senior Co-Housing
+          </StyledHeading>
+          <Paragraph>
+            In{' '}
+            <Link href="https://www.seniorly.com/resources/articles/what-is-cohousing">
+              senior co-housing
+            </Link>{' '}, residents enjoy both private and common living space. Generally, a senior cohousing
+            community features 20 to 40 homes centered around a central lawn or outdoor area. While everyone has
+            personal living space, the entire community enjoys living space, dining space, a large kitchen,
+            and shared laundry facilities.  Sometimes, co-housing senior communities cater to residents who
+            share the same hobbies or interests.
           </Paragraph>
           <Paragraph>
-            Typically, medical and non-medical staff in a memory care facility receive specialized training.
-            Best practices in Alzheimer's and dementia care include training in the progressive symptoms of dementia.
-            Also, staff are trained to understand what seniors are trying to communicate through behavior when verbal
-            communication abilities start to lag.
+            PRO TIP: Learn more about this age targeted option further here:{' '}
+            <Link href="https://www.cohousing.org/directory/wpbdp_category/seek/">
+              Cohousing Associate of the United States.
+          </Link>
+
+          </Paragraph>
+          <StyledHeading level="subtitle" size="subtitle">
+            Cruise Ship Life
+          </StyledHeading>
+          <Paragraph>
+            There aren't any dedicated retirement cruises available.  Increasing numbers of baby boomers have
+            crunched the numbers and realized that they can enjoy life on a cruise ship.
+            Their costs are about the same as they would spend on a retirement community on land.
+
           </Paragraph>
           <Paragraph>
-            Part of the care for your loved one at a memory care community will include a written plan.
-            The facility's medical director leads the development of this plan. Also involved is the attending
-            physician and other medical staff.  Family members also get to contribute to it.
+            This alternative lifestyle is ideal for couples (who can avoid the higher charges that singles pay on cruises).
+            The numbers work best if you stick with the same cruise line to build up loyalty points. However, cruising
+            retirees can't count on regular health care if they need it. Also, spending a life at sea can eat
+            into time spent with grandchildren and friends.
+          </Paragraph>
+
+          <StyledHeading level="subtitle" size="subtitle">
+            The Village Movement
+          </StyledHeading>
+          <Paragraph>
+            The Village Movement is a rapidly growing alternative to retirement communities.
+            They are designed to let older adults stay in their own homes as they age. The "village" in question isn't
+            an actual village, but a membership organization located within a given neighborhood.
+
           </Paragraph>
           <Paragraph>
-            The written plan for your loved one should reflect their personal preferences and long-term interest.
-            It should provide as much freedom of choice as is possible and safe.
+            The members pay annual dues to gain access to a network of discounted services.
+            These include home health care, grocery delivery, and home maintenance services.
+            In addition, the village often sponsors local social activities that draw the small
+            communities together. Several hundred villages exist in various towns across the United States.
           </Paragraph>
-          <Paragraph>
-            Among the issues covered in the written plan for any resident's medical care are typically:
-          </Paragraph>
-          <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              A customized approach to expression of unmet needs
-            </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Minimal use of psychotropic medications
-            </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-          Flexible care based on the resident's personal sleeping and waking patterns
-            </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-          Provision of care for optimal physical functioning
-            </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-          Activities that promote quality of life and enjoyment
-            </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-          Meeting of all nutrition and hydration needs
-            </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-          Minimizing of any distress
-            </ListItem>
-          </ListWrapper>
+
+
           <Link
-            href={`#${sectionIdMap.mc}`}
-            onClick={e => handleAnchor(e, mcRef)}
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
 
 
-        <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={mcvsalRef} >
-            How Does Memory Care Differ From Assisted Living?
-          </StyledHeading>
-
-          <Paragraph>
-            It’s helpful to understand the difference between memory care and an assisted living community.
-            This also applies if you're trying to decide which type of senior care would be most appropriate.
-            Many assisted living communities incorporate memory care units into their property.
-            However, there are some significant differences between them.
-          </Paragraph>
-          <Paragraph>
-            Both assisted living and memory care offer solutions for seniors who are no longer able to fully care
-            for themselves. Both provide meals in a secure setting.  Both offer assistance with the activities of
-            daily living (ADL), such as grooming, bathing, and medication management. However, memory care units
-            are designed for those with memory problems such as Alzheimer's disease or dementia.
-          </Paragraph>
-          <Paragraph>
-            Take a look at this chart. It outlines some of the basics in the care provided in an assisted living
-            community compared to that available in memory care.
-          </Paragraph>
-          <StyledTable>
-            <thead>
-            <tr>
-              <th>
-                Services
-              </th>
-              <th>
-                Assisted Living
-              </th>
-              <th>
-                Memory Care
-              </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>
-                Alzheimer's/Dementia Care
-              </td>
-              <td>
-                Sometimes
-              </td>
-              <td>
-                Yes
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Diabetes Management
-              </td>
-              <td>
-                Sometimes
-              </td>
-              <td>
-                Sometimes
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Housekeeping
-              </td>
-              <td>
-                Yes
-              </td>
-              <td>
-                Yes
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Incontinence Care
-              </td>
-              <td>
-                Sometimes
-              </td>
-              <td>
-                Yes
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Meals Provided Per Day
-              </td>
-              <td>
-                Yes
-              </td>
-              <td>
-                Yes
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Medication Management
-              </td>
-              <td>
-                Yes
-              </td>
-              <td>
-                Yes
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Mobility Assistance
-              </td>
-              <td>
-                Sometimes
-              </td>
-              <td>
-                Yes
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Personal Care
-              </td>
-              <td>
-                Yes
-              </td>
-              <td>
-                Yes
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Personal Laundry
-              </td>
-              <td>
-                Yes
-              </td>
-              <td>
-                Yes
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Transportation
-              </td>
-              <td>
-                Yes
-              </td>
-              <td>
-                Yes
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Wheelchairs Accepted
-              </td>
-              <td>
-                Sometimes
-              </td>
-              <td>
-                Yes
-              </td>
-            </tr>
-            </tbody>
-          </StyledTable>
-          <Paragraph>
-            Memory care facilities are often designed to minimize wandering. For example, many memory care
-            facilities are centered around a circular hallway that's easy to navigate and that allows residents
-            to stroll without ever becoming truly lost.
-          </Paragraph>
-          <Paragraph>
-            Memory care units provide a little extra security because of the tendency of those with Alzheimer's and
-            dementia to wander. This often includes a landscaped yet secure outdoor area so residents can enjoy the
-            sunshine and spend time outdoors while remaining safe.
-          </Paragraph>
-          <Paragraph>
-            Safety is paramount in other ways in memory care facilities. Toxic items, such as laundry detergent or
-            shampoo, are kept locked up to prevent accidents. In some cases, residents wear bracelets keyed to sound
-            an alarm if they open a door to leave the facility. As another safety precaution, memory care rooms or
-            suites don't include kitchens.
-          </Paragraph>
-          <Paragraph>
-            A memory care facility is built to create a relaxing environment. This is because senior residents with
-            dementia are prone to stress and confusion. Facilities often feature lots of natural light and bright colors,
-            and there are places for residents to gather among familiar faces. Some facilities feature{' '}
-            <Link href="https://www.seniorly.com/memory-care/articles/sensory-care-in-memory-care-communities">
-              sensory care
-            </Link>{' '}and
-            other innovative approaches to help residents stay as communicative as possible.
-          </Paragraph>
-          <Paragraph>
-            To encourage residents with Alzheimer's to eat, dining rooms often feature fish tanks, since studies show
-            that watching fish swim stimulates the appetite. In addition, meals are designed to be appetizing to the
-            eye as well as to the palate. Extra care is taken to offer dishes that each senior resident will enjoy.
-          </Paragraph>
-
-
-          <Link
-            href={`#${sectionIdMap.mc}`}
-            onClick={e => handleAnchor(e, mcRef)}
-          >
-            Back to top
-          </Link>
-        </StyledArticle>
 
         <StyledArticle>
           <StyledHeading level="title" size="title" _ref={chooseRef} >
-            Choosing a Memory Care Facility
+            How to Choose the Right Independent Living Community
           </StyledHeading>
+
           <Paragraph>
-            When you're looking for a memory care facility for your loved one, you probably have a lot of questions.
-            Sure, some of them will be about the costs of memory care — and we deal with that in our next article here.
-            But that's not the only consideration as you're looking for just the right place.
-          </Paragraph>
-          <Paragraph>
-            You should feel very free to ask any question that comes to mind as you try to find the best care for your
-            loved ones. Top-flight memory care facilities abound all over the country, and they never shy away from
-            answering questions. To get you started, here are 10 questions you can ask prospective memory care facilities.
+            If you're considering an Independent Living community near you start by determining which type of community
+            is the best choice.  Options include an active adult community, co-housing, a CCRC, or other choices.
+            Research the communities available in your chosen location, comparing their costs and amenities.
+            Paying a visit is also highly recommended.
           </Paragraph>
 
+          <Paragraph>
+            If you're considering an Independent Living community near you start by determining which type of community
+            is the best choice.  Options include an active adult community, co-housing, a CCRC, or other choices.
+            Research the communities available in your chosen location, comparing their costs and amenities.
+            Paying a visit is also highly recommended.
+          </Paragraph>
+          <Paragraph>
+            When you visit an Independent Living community, you'll be able to see which housing units are available.
+            You can also check to see if the amenities and services are as advertised. Get a sense of whether the
+            community is a good fit for you or your loved one.
+          </Paragraph>
+          <Paragraph>
+            While visiting, you should feel free to ask any questions that occur to you. Remember, you're making a
+            big decision with this move. You have the right to know all the information about the community you might
+            choose as your own.
+          </Paragraph>
+          <Paragraph>
+            Here are some suggestions of questions you might want to ask during your visit, just to get you started.
+          </Paragraph>
           <ol>
             <li>
-              What services and level of care does your memory care community offer? Are all of these services included in the basic monthly rate, or are some of them extra?
+              What social and recreational activities are offered? How many residents actually participate in the activities you're interested in?
             </li>
             <li>
-              What personal assistance do residents receive? How often do they receive it?
+              What options are available if you need regular medical or personal care in your home? Are you allowed to bring in an in-home caregiver? Under what circumstances would you be asked to move to an Assisted Living community?
             </li>
             <li>
-              How many meals are provided each day? What do you do if a resident doesn't want to eat? What personalization is available in meal plans? Can you accommodate special diets (gluten-free, kosher, etc.)?
+              What's included in the monthly fee? Is the monthly fee increased every year? If not, when is it increased? What happens if a resident has difficulty paying the monthly fee?
             </li>
             <li>
-              What special care do you provide for residents who wander? For residents who become physically aggressive? For residents who have mobility issues?
+              What assistance will the Independent Living community provide to help you move and get settled there?
             </li>
             <li>
-              Is it possible to take a resident out of the facility for a day trip or a weekend? What are your visitation rules?
+              What's the security like at the community? What emergency services are available?
             </li>
             <li>
-              What happens if a resident requires a more intensive level of care than you provide?
+              Are any meals provided? If the answer is yes, how many meals are provided, and which ones? Are they included in the monthly fee? Are any accommodations available if you need to follow a restricted diet (gluten-free, vegetarian, kosher, etc.)?
             </li>
             <li>
-              Are rooms private? Shared?
+              Are visitors allowed? What about overnight visitors? Are children allowed to visit? Is there a curfew for visitors (or for any other activities)?
             </li>
             <li>
-              What housekeeping, maintenance, and laundry/linen services do you provide? How often do you provide them?
+              Does the community allow residents to have pets? Are there restrictions on the size or type of pets? Is it possible to make arrangements for pet care if you need to travel away from the community for any reason?
             </li>
             <li>
-              Do you offer exercise programs or equipment? What about physical therapy?
+              What transportation is available at the community? Does the community provide any kind of shuttles or private transportation for medical appointments, errands, or entertainment?
             </li>
             <li>
-              What is the staff-to-resident ratio during the day? Does that change at night?
+              Do residents of the Independent Living community get involved with the surrounding community? What's the relationship between the Independent Living community and the surrounding neighborhood like?
             </li>
           </ol>
+
+          <Paragraph>
+            <strong> FREE TOOL: </strong>{' '}
+            <Link href="https://www.seniorly.com/resources/articles/questions-to-ask-on-your-community-tour">
+              74 Questions to Ask When Touring
+            </Link>
+          </Paragraph>
+
+
           <Link
-            href={`#${sectionIdMap.mc}`}
-            onClick={e => handleAnchor(e, mcRef)}
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
 
+        <StyledArticle>
+          <StyledHeading level="subtitle" size="subtitle" _ref={ilvsalRef} >
+            Independent Living vs. Assisted Living
+          </StyledHeading>
+          <Paragraph>
+            An independent living community is not the right choice for older adults who need help with the
+            Activities of Daily Living (ADLs). This includes assistance with dressing, bathing and meal preparation.
+            The right senior living community option is called
+            <Link href="https://www.seniorly.com/assisted-living">
+              Assisted Living.
+            </Link>{' '}Take a look at the basic differences between these two types of senior care.
+          </Paragraph>
+          <StyledArticle>
+            <StyledTable>
+              <thead>
+              <tr>
+                <th />
+                <th>
+                  Independent Living
+                </th>
+                <th>
+                  Assisted Living
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>
+                  Private Apartments
+                </td>
+                <td>
+                  Yes
+                </td>
+                <td>
+                  Sometimes
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Shared Rooms
+                </td>
+                <td>
+                  No
+                </td>
+                <td>
+                  Usually
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Transportation Provided
+                </td>
+                <td>
+                  Sometimes
+                </td>
+                <td>
+                  Usually
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Medication Management Services
+                </td>
+                <td>
+                  No
+                </td>
+                <td>
+                  Yes
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  3 Meals a Day Provided
+                </td>
+                <td>
+                  Sometimes
+                </td>
+                <td>
+                  Yes
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Housekeeping Services Provided
+                </td>
+                <td>
+                  Sometimes
+                </td>
+                <td>
+                  Yes
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Assistance With Activities of Daily Living
+                </td>
+                <td>
+                  No
+                </td>
+                <td>
+                  Yes
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Assistance With Activities of Daily Living
+                </td>
+                <td>
+                  No
+                </td>
+                <td>
+                  Yes
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Social Activities
+                </td>
+                <td>
+                  Yes
+                </td>
+                <td>
+                  Yes
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Exercise Facilities and Programs
+                </td>
+                <td>
+                  Yes
+                </td>
+                <td>
+                  Usually
+                </td>
+              </tr>
+              </tbody>
+            </StyledTable>
+          </StyledArticle>
+
+          <Link
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
+          >
+            Back to top
+          </Link>
+        </StyledArticle>
+
+      <StyledArticle>
+        <StyledHeading level="title" size="title" _ref={servicesRef} >
+          Services Provided in Independent Living
+        </StyledHeading>
+
+        <Paragraph>
+          The services and amenities available vary from one Independent Living community to another.
+          Still, many communities offer some combination of these amenities:
+        </Paragraph>
+
+        <ListWrapper>
+          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            Gyms and exercise facilities
+          </ListItem>
+          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            Swimming pools and hot tubs
+          </ListItem>
+          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            Beauty salons and barber shops
+          </ListItem>
+          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            Dining facilities with chef-prepared meals
+          </ListItem>
+          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            A full social activity schedule
+          </ListItem>
+          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            Transportation near the community
+          </ListItem>
+          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            Housekeeping, linen and/or laundry services
+          </ListItem>
+          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            24/7 security
+          </ListItem>
+          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            Religious services
+          </ListItem>
+        </ListWrapper>
+
+
+        <StyledHeading level="subtitle" size="subtitle">
+          Medical Care in Independent Living Communities
+        </StyledHeading>
+        <Paragraph>
+          You probably noticed that the above list of independent living amenities and services doesn't
+          include medical care. Most active adults who choose an Independent Living community don't
+          have significant medical needs when they move into the community.
+        </Paragraph>
+        <Paragraph>
+          Sometimes,{' '}
+          <Link href="https://www.sfchronicle.com/senior-living/article/Meet-Generation-B-Entrepreneurial-educated-and-13942528.php">
+            baby boomers
+          </Link>
+          {' '}in an Independent Living community don't want to leave their homes to enter
+          assisted living or a skilled nursing facility. Even when their need for care becomes more urgent, they
+          don’t want to move.
+        </Paragraph>
+        <Paragraph>
+          One solution for aging citizens who do need some regular medical or personal care is Home Care services.
+          With Home Care, trained caregivers provide the services needed right in the senior's own home.
+        </Paragraph>
+        <Paragraph>
+          At Seniorly, we have access to top{' '}
+          <Link href="https://www.seniorly.com/in-home-care">
+            Home Care
+          </Link>
+          {' '}services and are happy to connect you, if needed.
+          For more information on Home Care,{' '}
+          <Link href="https://www.seniorly.com/in-home-care">
+            click here.
+          </Link>
+        </Paragraph>
+        <Paragraph>
+          It’s important to remember many people mistakenly use the term “
+          <Link href="https://www.seniorly.com/nursing-homes">
+            nursing home
+          </Link>” when searching for any
+          kind of senior living.  That is a catch-all phrase for all senior living housing options.
+          However, independent living is the farther removed from what a searcher might be thinking of when looking for a nursing home.
+        </Paragraph>
+
+        <Link
+          href={`#${sectionIdMap.il}`}
+          onClick={e => handleAnchor(e, ilRef)}
+        >
+          Back to top
+        </Link>
+      </StyledArticle>
 
         <StyledArticle>
           <NextSteps nextRef={nextRef}
-                     label="Think Memory Care might be right for your loved one? Explore one of the three topics below to help narrow down your search:"
+                     label="By asking these questions, you can determine whether an Independent Living community is the right choice. We are providing additional resources below to help you through the decision making process. Explore one of the three topics below to help narrow down your search:"
                      links={nextSteps} />
 
           <Link
-            href={`#${sectionIdMap.mc}`}
-            onClick={e => handleAnchor(e, mcRef)}
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
           >
             Back to top
           </Link>
@@ -918,8 +837,8 @@ const MemoryCareNearMePage = ({
     );
   };
 
-  const title = 'Find the Best Memory Care Near You ';
-  const description = 'Find the best memory care near you with local senior living communities & providers. Browse memory care nearby with prices, reviews & photos.';
+  const title = 'Find the Best Independent Living Near You ';
+  const description = 'What is independent living? Learn about the types of independent living communities for seniors, costs of independent living and how to choose the right place.';
   const heading = state ? `${listSize} ${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${listSize} ${tocLabel} near ${city}`;
 
   return (
@@ -928,10 +847,10 @@ const MemoryCareNearMePage = ({
         <title>{title}</title>
         <meta name="description" content={description} />
       </Helmet>
-      <HubHeader imagePath="react-assets/hub/memory-care-cover.jpg"
-         toc="memory care"
-         heading="What is Memory Care Near You?"
-         label="Use our free search to find memory care nearby"
+      <HubHeader imagePath="react-assets/hub/independent-living-cover.jpg"
+         toc="independent living"
+         heading="What is Independent Living Near You?"
+         label="Use our free search to find independent living nearby"
          onCurrentLocation={onCurrentLocation}
          onLocationSearch={onLocationSearch} />
       <HubPageTemplate>
@@ -943,17 +862,10 @@ const MemoryCareNearMePage = ({
               </StickToTop>
             </Column>
             <Body>
-            {SEOContentMC()}
+            {SEOContent()}
             <StyledHeading level="title" size="title" _ref={nearRef}>
               {heading}
             </StyledHeading>
-            <StyledArticle>
-              <Paragraph>
-                Seniorly promises to make your search for memory care near you easy and stress-free. Below, compare memory care
-                communities near you and then let us connect you to your local senior living advisor.
-                They can answer all your questions, share costs, arrange tours, and even negotiate rent. Our services are free.
-              </Paragraph>
-            </StyledArticle>
             {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
             {!isFetchingResults && (
               <CommunitySearchList
@@ -968,17 +880,13 @@ const MemoryCareNearMePage = ({
         </Wrapper>
       </HubPageTemplate>
       <PhoneCTAFooter/>
-      {/*<TemplateContent>*/}
-        {/*<StyledArticle><SeoLinks title="Find Assisted Living Near You by City" links={ALSeoCities} /></StyledArticle>*/}
-        {/*<StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>*/}
-      {/*</TemplateContent>*/}
       <Footer />
     </>
 
   );
 };
 
-MemoryCareNearMePage.propTypes = {
+IndependentLivingNearMePage.propTypes = {
   onLocationSearch: func,
   communityList: array.isRequired,
   requestMeta: object.isRequired,
@@ -989,4 +897,4 @@ MemoryCareNearMePage.propTypes = {
   onCurrentLocation: func,
 };
 
-export default MemoryCareNearMePage;
+export default IndependentLivingNearMePage;
