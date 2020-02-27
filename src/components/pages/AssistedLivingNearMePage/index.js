@@ -43,7 +43,7 @@ const StyledArticle = styled.article`
 
 const StickToTop = styled.div`
   background-color: ${palette('white', 'base')};
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')};
+  padding: ${size('spacing.xLarge')} ${size('spacing.large')} ${size('spacing.regular')} ${size('spacing.large')};
   line-height: ${size('lineHeight.body')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.small')};
@@ -138,6 +138,12 @@ const ADLIconItem = styled.div`
     width: 50%;
     flex: 0 50%;
   }
+`;
+const StyledImage = styled(ResponsiveImage)`
+  object-fit: cover;
+  vertical-align:top;
+  width: 100%;
+  height: 100%;
 `;
 
 
@@ -521,9 +527,10 @@ const NearMePage = ({
               </Paragraph>
             </ListItem>
           </TypesWrapper>
-          {/*<Paragraph>*/}
-            {/*<StyledImage path="react-assets/hub/belmont-village.jpg" alt="Assisted Living Belmont Village" height={320} />*/}
-          {/*</Paragraph>*/}
+          <Paragraph>
+            <StyledImage path="2ce70da72868d9bab90770f0ade9a383/CityView_photos_01_Seniorly.jpg" alt="CityView Senior Living, Los Angeles, CA" height={640} />
+            CityView Senior Living, Los Angeles, CA
+          </Paragraph>
           <Paragraph>
             Do keep in mind that all levels of care should be safe, secure, friendly, and 100% certified.
             No bargain is worth risking the wellbeing of your loved one.

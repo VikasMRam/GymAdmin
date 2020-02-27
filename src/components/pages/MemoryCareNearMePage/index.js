@@ -44,7 +44,7 @@ const StyledArticle = styled.article`
 
 const StickToTop = styled.div`
   background-color: ${palette('white', 'base')};
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')};
+  padding: ${size('spacing.xLarge')} ${size('spacing.large')} ${size('spacing.regular')} ${size('spacing.large')};
   line-height: ${size('lineHeight.body')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.small')};
