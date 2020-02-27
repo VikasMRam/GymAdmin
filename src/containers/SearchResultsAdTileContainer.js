@@ -88,7 +88,7 @@ export default class SearchResultsAdTileContainer extends Component {
             title={agentAdTitle}
             buttonText="Ask a Question"
             image={assetPath('images/agents.png')}
-            onButtonClick={this.handleAskExpertQuestionClick}
+            buttonProps={{ onClick: this.handleAskExpertQuestionClick }}
             {...this.props}
           >
             Our Local Senior Living Experts Can Help.
@@ -99,11 +99,11 @@ export default class SearchResultsAdTileContainer extends Component {
             title="Selling a home to pay the cost of senior living?"
             buttonText="Get Instant Offer"
             buttonPosition="right"
-            onButtonClick={this.handleGetInstantOfferClick}
             image={assetPath('vectors/house-sold.svg')}
             buttonProps={{
               target: '_blank',
               href: 'https://zillow.com',
+              onClick: this.handleGetInstantOfferClick,
             }}
             {...this.props}
           >
