@@ -7,6 +7,7 @@ import HubHeader from 'sly/components/molecules/HubHeader';
 import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
+import ADLChart from 'sly/components/molecules/ADLChart';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -91,26 +92,10 @@ const StyledTable = styled.table`
     font-weight: normal;
 
   };
-`;
-
-const ADLWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const ADLIconItem = styled.div`
-  width: 100%;
-  flex: 0 100%;
-  display: flex;
-  padding: ${size('spacing.large')};
-  justify-content: space-between;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  table-layout: fixed;
+  font-size: ${size('text.tiny')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: 50%;
-    flex: 0 50%;
+    font-size: ${size('text.body')};
   }
 `;
 
@@ -175,7 +160,7 @@ const MemoryCareNearMePage = ({
       title: "Mark & Karen Wolff - Sacramento, CA",
       to: "https://www.seniorly.com/agents/pacific-west/rocklin-ca/senior-care-authority-sacramento-ca-mark-and-karyn-wolff-",
       asset: "images/hub/agents/Mark-Karen.png",
-      caption: "HMark Wolff has over 3 years of experience helping families finding independent living, assisted living, and memory care options. He is dedicated to guiding families throughout the senior living process.",
+      caption: "Mark Wolff has over 3 years of experience helping families finding senior living options from independent living, assisted living, board and care homes and memory care. He is dedicated to guiding families throughout the senior living process.",
       first: "Mark and Karen"
     },
     {
@@ -468,32 +453,7 @@ const MemoryCareNearMePage = ({
             {' '},including:
           </Paragraph>
 
-          <ADLWrapper>
-            <ADLIconItem>
-              Personal Hygiene
-              <Icon icon="bath" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Feeding
-              <Icon icon="food" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Continence Management
-              <Icon icon="washroom" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Ambulating
-              <Icon icon="accessibility" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Dressing
-              <Icon icon="shirt" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Toileting
-              <Icon icon="toilet" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-          </ADLWrapper>
+          <ADLChart />
 
           <Paragraph>
             Memory care facilities provide 24/7 supervised care for their senior residents.
@@ -904,6 +864,7 @@ const MemoryCareNearMePage = ({
 
         <StyledArticle>
           <NextSteps nextRef={nextRef}
+                     toc="memory care"
                      label="Think Memory Care might be right for your loved one? Explore one of the three topics below to help narrow down your search:"
                      links={nextSteps} />
 

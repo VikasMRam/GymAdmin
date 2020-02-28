@@ -7,6 +7,7 @@ import HubHeader from 'sly/components/molecules/HubHeader';
 import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
+import ADLChart from 'sly/components/molecules/ADLChart';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -25,7 +26,6 @@ import Footer from 'sly/components/organisms/Footer';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 
 const StyledHeading = styled(Heading)`
@@ -40,6 +40,13 @@ const StyledArticle = styled.article`
       margin-bottom: ${size('spacing.regular')};
     }
   }
+`;
+
+const StyledImage = styled(ResponsiveImage)`
+  object-fit: cover;
+  vertical-align:top;
+  width: 100%;
+  height: 100%;
 `;
 
 const StickToTop = styled.div`
@@ -91,27 +98,12 @@ const StyledTable = styled.table`
     font-weight: normal;
 
   };
-`;
-
-const ADLWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const ADLIconItem = styled.div`
-  width: 100%;
-  flex: 0 100%;
-  display: flex;
-  padding: ${size('spacing.large')};
-  justify-content: space-between;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  table-layout: fixed;
+  font-size: ${size('text.tiny')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: 50%;
-    flex: 0 50%;
+    font-size: ${size('text.body')};
   }
+  
 `;
 
 
@@ -177,7 +169,7 @@ const SeniorLivingNearMePage = ({
       title: "Mark & Karen Wolff - Sacramento, CA",
       to: "https://www.seniorly.com/agents/pacific-west/rocklin-ca/senior-care-authority-sacramento-ca-mark-and-karyn-wolff-",
       asset: "images/hub/agents/Mark-Karen.png",
-      caption: "HMark Wolff has over 3 years of experience helping families finding independent living, assisted living, and memory care options. He is dedicated to guiding families throughout the senior living process.",
+      caption: "Mark Wolff has over 3 years of experience helping families finding senior living options from independent living, assisted living, board and care homes and memory care. He is dedicated to guiding families throughout the senior living process.",
       first: "Mark and Karen"
     },
     {
@@ -212,7 +204,7 @@ const SeniorLivingNearMePage = ({
             href={`#${sectionIdMap.choose}`}
             onClick={e => handleAnchor(e, chooseRef)}
           >
-            The Benefits in Choosing a Senior Living Community
+            The Benefits of Choosing a Senior Living Community
           </StyledLink>
           <StyledLink
             href={`#${sectionIdMap.sltypes}`}
@@ -358,10 +350,10 @@ const SeniorLivingNearMePage = ({
             </tbody>
           </StyledTable>
           <Paragraph>
-            When assessing the cost of a senior living community, remember that the price can include room and board,
-            maintenance and landscaping, meals, personal care services (if applicable), and life enrichment programs.
-            Often, seniors find that the cost of senior living is lower than trying to pay for each of these elements,
-            plus transportation, property taxes, etc when maintaining a separate home.
+            When assessing the cost of a senior living community, remember that the price can include room and
+            board (meals), maintenance and landscaping, personal care services (if applicable), and life
+            enrichment programs. Often, seniors find that the cost of senior living is lower than trying
+            to pay for each of these elements, plus transportation, property taxes, etc when maintaining a private home.
           </Paragraph>
           <Link
             href={`#${sectionIdMap.sl}`}
@@ -373,7 +365,7 @@ const SeniorLivingNearMePage = ({
 
         <StyledArticle>
           <StyledHeading level="title" size="title" _ref={chooseRef} >
-            The Benefits in Choosing a Senior Living Community
+            The Benefits of Choosing a Senior Living Community
           </StyledHeading>
 
           <Paragraph>
@@ -429,11 +421,11 @@ const SeniorLivingNearMePage = ({
             <Link href="https://www.seniorly.com/independent-living">
               Independent living communities
             </Link>
-            {' '}offer a maintenance-free lifestyle for senior adults who don't require assistance with ADLs
+            {' '}offer a maintenance-free lifestyle for senior adults who don't require assistance with their activities of daily living (ADLs)
             or medical care, but who want to streamline their lives and live in a community of peers. Senior adults
             who choose independent living are typically active and healthy, often over age 55.
             They want to avoid the hassle of home upkeep. Depending on the independent living property,
-            residents either purchase or rent a private apartment that can range from a studio apartment to a
+            senior residents either purchase or rent a private apartment that can range from a studio apartment to a
             two-bedroom cottage.
           </Paragraph>
           <Link
@@ -443,6 +435,16 @@ const SeniorLivingNearMePage = ({
             Back to top
           </Link>
         </StyledArticle>
+        <StyledArticle>
+          <Paragraph>
+            <StyledImage path="f7a8de31f6f1609ce51448bf89f99d27/SunriseLaJolla_photos_03_Seniorly.jpg" alt="Sunrise of La Jolla, CA" height={640} />
+            Photo:
+            <Link href="https://www.seniorly.com/assisted-living/california/san-diego/sunrise-of-la-jolla">
+              Sunrise of La Jolla, CA
+            </Link>
+          </Paragraph>
+        </StyledArticle>
+
 
         <StyledArticle>
           <StyledHeading level="title" size="title">
@@ -461,36 +463,11 @@ const SeniorLivingNearMePage = ({
             </Link>
             {' '}, including:
           </Paragraph>
-          <ADLWrapper>
-            <ADLIconItem>
-              Personal Hygiene
-              <Icon icon="bath" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Feeding
-              <Icon icon="food" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Continence Management
-              <Icon icon="washroom" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Ambulating
-              <Icon icon="accessibility" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Dressing
-              <Icon icon="shirt" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Toileting
-              <Icon icon="toilet" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-          </ADLWrapper>
+          <ADLChart />
           <Paragraph>
             In assisted living communities, residents maintain a sense of freedom with the assurance that staff is
-            always on-hand to help when needed. They also enjoy daily opportunities to socialize with unique
-            services and amenities.  They also form new friendships within the community.
+            always on-hand to help when needed. They enjoy daily opportunities to socialize with unique services
+            and amenities. Also, they form new friendships within the community.
           </Paragraph>
           <Paragraph>
             In general, lifestyle amenities include:
@@ -528,7 +505,7 @@ const SeniorLivingNearMePage = ({
           <StyledHeading level="subtitle" size="subtitle" >
             What Is A Local Senior Living Expert?
           </StyledHeading>
-          <WhatIsPartnerAgent toc="memory care" agents={agents}/>
+          <WhatIsPartnerAgent toc="senior living" agents={agents}/>
           <Link
             href={`#${sectionIdMap.sl}`}
             onClick={e => handleAnchor(e, slRef)}
@@ -555,8 +532,8 @@ const SeniorLivingNearMePage = ({
             residents enjoy plenty of personal contact.
           </Paragraph>
           <Paragraph>
-            A local senior living expert in the city of your choice can share the details about all the memory care
-            communities. They can set up tours and often help negotiate fees on your behalf.
+            A local senior living expert in the city of your choice can share the details about all the
+            memory care communities. They can set up tours and often help negotiate fees on your behalf.
             To connect to one of our approved senior living advisors, email us now at ask@seniorly.com or call (855) 866-4515.
           </Paragraph>
 
@@ -577,19 +554,19 @@ const SeniorLivingNearMePage = ({
             <Link href="https://www.seniorly.com/memory-care">
               board and care home
             </Link>
-            {' '}, also known as a residential care home, is a community for senior adults located within a residential
-            neighborhood. These intimate homes are similar to assisted living communities but on a much smaller scale.
+            , also known as a residential care home, is a community for senior adults located within a residential
+            neighborhood. These intimate properties are similar to assisted living communities, but on a much smaller scale.
           </Paragraph>
           <Paragraph>
-            Seniors typically choose board and care homes when they want to live somewhere that has a more close-knit,
-            home-like feeling, rather than a large community. Staff can help with a wide variety of personal services and
-            the owner or manager often lives there with the residents, (though there's no requirement for staff to be
-            available to residents 24/7).
+            Seniors typically choose a board and care home when they want to live somewhere that has a more close-knit,
+            home-like feeling, rather than a large community. Staff can help with a wide variety of personal
+            services and the owner or manager often lives there with the residents. Note, there is no requirement for
+            staff to be available to residents 24/7.
           </Paragraph>
           <Paragraph>
-            Many board and care homes do not have websites, so it’s very useful to connect to a local senior living expert
-            who knows all of the residential care homes available within the city you are searching. To connect to one of
-            our approved senior living advisors, email us now at ask@seniorly.com or call (855) 866-4515.
+            Many board and care homes do not have websites, so it’s very useful to connect to a local senior living
+            expert who knows all of the residential care homes available within the city you are searching.
+            To connect to one of our approved senior living advisors, email us now at ask@seniorly.com or call (855) 866-4515.
           </Paragraph>
 
           <Link
@@ -609,11 +586,12 @@ const SeniorLivingNearMePage = ({
             <Link href="https://www.seniorly.com/in-home-care">
               in-home care
             </Link>
-            {' '} , professionally trained caregivers work to keep seniors as independent as possible while
-            providing the personal, non-medical care they need to stay in their homes. Caregivers typically help
-            aging citizens with ADLs such as bathing and dressing, meal preparation, and medication management.
-            Depending on the senior’s needs, the caregiver may visit daily, once a week or live in-home to provide
-            full-time assistance and companionship.
+            , professionally trained caregivers work to keep seniors as independent as possible while providing the
+            personal, non-medical care they need to stay in their homes. Caregivers typically help aging citizens
+            with ADLs such as bathing and dressing, meal preparation, and medication management. Depending on the
+            senior’s needs, the caregiver may visit daily, once a week or live in-home to provide full-time
+            assistance and companionship.
+
           </Paragraph>
 
           <Link
@@ -682,10 +660,10 @@ const SeniorLivingNearMePage = ({
               nursing home
             </Link>
             ” is a catch-all phrase for senior living facilities that most typically means an assisted living community.
-            Don’t be misled by the word “nursing”, since most people who live in a nursing home don’t need skilled nursing.
-            Rather, they require non-medical assistance with activities of daily living (ADLs). However, other types of
-            senior living might use the title “nursing home” so always confirm beforehand what types of care and services
-            they offer.
+            Don’t be misled by the word “nursing,” since most people who live in a nursing home don’t need skilled
+            nursing. Rather, they require non-medical assistance with their activities of daily living (ADLs).
+            However, other types of senior living might use the title “nursing home” so always confirm beforehand
+            what types of care and services they offer.
           </Paragraph>
           <Link
             href={`#${sectionIdMap.sl}`}
@@ -704,11 +682,11 @@ const SeniorLivingNearMePage = ({
             <Link href="https://www.seniorly.com/skilled-nursing-facility">
               Skilled nursing facilities
             </Link>
-            (SNF) are different from other types of senior living communities since they provide 24/7 healthcare
+            (SNF) is different from other types of senior living communities. These properties provide 24/7 healthcare
             services that can only be safely and effectively performed by professionals or technical personnel.
-            They are intended for more short-term stays while the resident recovers from a medical procedure.
-            Unlike other forms of senior housing, which are often private pay, skilled nursing facilities are
-            generally covered by{' '}
+            They are intended for short-term stays while the senior resident recovers from a medical procedure.
+            Unlike other forms of senior housing, which are often private pay, skilled nursing facilities
+            are generally covered by{' '}
             <Link href="https://www.medicaid.gov/medicaid/ltss/institutional/nursing/index.html">
               Medicaid
             </Link>
@@ -736,6 +714,9 @@ const SeniorLivingNearMePage = ({
                   Assisted Living
                 </th>
                 <th>
+                  Memory Care
+                </th>
+                <th>
                   Skilled Nursing Facility (SNF)
                 </th>
               </tr>
@@ -744,6 +725,9 @@ const SeniorLivingNearMePage = ({
               <tr>
                 <td>
                   Room & Board
+                </td>
+                <td>
+                  Yes
                 </td>
                 <td>
                   Yes
@@ -768,10 +752,16 @@ const SeniorLivingNearMePage = ({
                 <td>
                   Yes
                 </td>
+                <td>
+                  Yes
+                </td>
               </tr>
               <tr>
                 <td>
                   Medical Care
+                </td>
+                <td>
+                  No
                 </td>
                 <td>
                   No
@@ -794,15 +784,21 @@ const SeniorLivingNearMePage = ({
                   Yes
                 </td>
                 <td>
+                  Yes
+                </td>
+                <td>
                   No
                 </td>
               </tr>
               <tr>
                 <td>
-                  Covered by Medicaid/Medicare
+                  Covered by Medicaid / Medicare
                 </td>
                 <td>
                   No
+                </td>
+                <td>
+                  Conditional
                 </td>
                 <td>
                   Conditional
@@ -823,6 +819,7 @@ const SeniorLivingNearMePage = ({
 
         <StyledArticle>
           <NextSteps nextRef={nextRef}
+                     toc="senior living"
                      label="Think a senior living community might be right for you or your loved one? Learn more about each type below to help narrow down your search:"
                      links={nextSteps} />
 

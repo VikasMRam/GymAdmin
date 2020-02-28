@@ -8,6 +8,8 @@ import IconButton from 'sly/components/molecules/IconButton';
 
 const StyledIconButton = styled(IconButton)`
   font-weight: bold;
+  font-size: ${size('text.body')};
+  padding: ${size('spacing.large')}
   color: ${palette('primary', 'base')};
   border-radius: 0;
 `;
@@ -36,6 +38,7 @@ const NextHeading = styled(Heading)`
 const NextSteps = ({
     label,
     links,
+    toc,
     nextRef
     }) => {
   return (
@@ -63,7 +66,7 @@ const NextSteps = ({
         }
       </NextStepsWrapper>
       <Paragraph>
-        Seniorly is here to help you at no cost to find the perfect community. Our powerful website will search
+        Seniorly is here to help you at no cost to find the perfect {toc} community. Our powerful website will search
         through thousands of communities across the country that you can connect to directly. Email{' '}
         <Link href="mailto:ask@seniorly.com">
           ask@seniorly.com
@@ -81,6 +84,7 @@ NextSteps.propTypes = {
   label: string.required,
   links: arrayOf(object).isRequired,
   nextRef: object.required,
+  toc: string.required,
 };
 
 export default NextSteps;

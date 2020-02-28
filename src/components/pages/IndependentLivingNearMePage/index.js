@@ -90,6 +90,12 @@ const StyledTable = styled.table`
     font-weight: normal;
 
   };
+  
+  table-layout: fixed;
+  font-size: ${size('text.tiny')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    font-size: ${size('text.body')};
+  }
 `;
 
 
@@ -428,7 +434,7 @@ const IndependentLivingNearMePage = ({
           <StyledHeading level="title" size="title" >
             What Is A Local Senior Living Expert?
           </StyledHeading>
-          <WhatIsPartnerAgent toc="memory care" agents={agents}/>
+          <WhatIsPartnerAgent toc="independent living" agents={agents}/>
         </StyledArticle>
 
         <StyledArticle>
@@ -823,6 +829,7 @@ const IndependentLivingNearMePage = ({
 
         <StyledArticle>
           <NextSteps nextRef={nextRef}
+                     toc="independent living"
                      label="By asking these questions, you can determine whether an Independent Living community is the right choice. We are providing additional resources below to help you through the decision making process. Explore one of the three topics below to help narrow down your search:"
                      links={nextSteps} />
 

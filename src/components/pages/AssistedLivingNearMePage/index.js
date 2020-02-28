@@ -7,6 +7,7 @@ import HubHeader from 'sly/components/molecules/HubHeader';
 import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
+import ADLChart from 'sly/components/molecules/ADLChart';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -100,9 +101,14 @@ const StyledTable = styled.table`
   td, th {
     padding: ${size('spacing.regular')} ${size('spacing.large')};
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-    font-weight: normal;
-
+    font-weight: normal;  
   };
+  
+  table-layout: fixed;
+  font-size: ${size('text.tiny')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    font-size: ${size('text.body')};
+  }
 `;
 
 const MapLinkWrapper = styled.div`
@@ -119,26 +125,6 @@ const TableWrapper = styled.div`
   }
 `;
 
-const ADLWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const ADLIconItem = styled.div`
-  width: 100%;
-  flex: 0 100%;
-  display: flex;
-  padding: ${size('spacing.large')};
-  justify-content: space-between;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: 50%;
-    flex: 0 50%;
-  }
-`;
 const StyledImage = styled(ResponsiveImage)`
   object-fit: cover;
   vertical-align:top;
@@ -391,32 +377,7 @@ const NearMePage = ({
               activities of daily living (ADLs).
             </Link>
           </Paragraph>
-          <ADLWrapper>
-            <ADLIconItem>
-              Personal Hygiene
-              <Icon icon="bath" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Feeding
-              <Icon icon="food" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Continence Management
-              <Icon icon="washroom" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Ambulating
-              <Icon icon="accessibility" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Dressing
-              <Icon icon="shirt" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-            <ADLIconItem>
-              Toileting
-              <Icon icon="toilet" palette="secondary" variation="dark35" />
-            </ADLIconItem>
-          </ADLWrapper>
+          <ADLChart />
           <Paragraph>
             Your loved one will still maintain the all-important feelings of freedom, minus the challenges that can
             exist with mobility, transportation, cooking, social activities, cleaning, medical care, and more.
@@ -483,7 +444,7 @@ const NearMePage = ({
             <Link href="https://www.genworth.com/aging-and-you/finances/cost-of-care.html">
               Genworth
             </Link>
-            {' '}, the national median rate of assisted living facility per month for a 1-bedroom apartment is $4,051. However, there are a few factors that go into this cost. For example, your location, as well as the personal care services needed.
+            {' '}, the national median rate of assisted living facility per month for a 1-bedroom apartment is $4,051 per month. However, there are a few factors that go into this cost. For example, your location, as well as the personal care services needed.
           </Paragraph>
           <Paragraph>
             That comes to about $48,612 a year. That may sound like a big number, but once you add up all current
@@ -529,35 +490,51 @@ const NearMePage = ({
           </TypesWrapper>
           <Paragraph>
             <StyledImage path="2ce70da72868d9bab90770f0ade9a383/CityView_photos_01_Seniorly.jpg" alt="CityView Senior Living, Los Angeles, CA" height={640} />
-            CityView Senior Living, Los Angeles, CA
+            Photo:
+            <Link href="https://www.seniorly.com/assisted-living/california/los-angeles/cityview">
+              CityView Senior Living, Los Angeles, CA
+            </Link>
           </Paragraph>
           <Paragraph>
             Do keep in mind that all levels of care should be safe, secure, friendly, and 100% certified.
             No bargain is worth risking the wellbeing of your loved one.
           </Paragraph>
-          <StyledHeading level="subtitle" size="subtitle">
+          <StyledHeading level="title" size="title">
             Financial Assistance for Assisted Living
           </StyledHeading>
           <Paragraph>
             If you’re still unsure if Assisted Living can realistically fit into your budget,
             look into the many financial aid options available.
           </Paragraph>
-          <Paragraph>
-            <Link href="https://www.seniorly.com/resources/articles/long-term-care-insurance-for-respite-care">
-              Long Term Care Insurance
-            </Link>
-            {' '}- is an insurance product that helps pay for the costs associated with long-term care. Long-term care
-            insurance covers care generally not covered by health insurance, Medicare, or Medicaid.
-          </Paragraph>
-          <Paragraph>
-            Government services like Medicare, Medicaid, or{' '}
-            <Link href="https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living">
-              Veterans Assistance
-            </Link>
-            {' '}can be valuable tools in making
-            Assisted Living affordable. Many communities also offer special payment plans, programs, and other
-            strategies to help your loved one live in their ideal community.
-          </Paragraph>
+          <ul>
+            <li>
+              <Paragraph>
+                <Link href="https://www.seniorly.com/resources/articles/long-term-care-insurance-for-respite-care">
+                  Long Term Care Insurance
+                </Link>
+                {' '}- is an insurance product that helps pay for the costs associated with long-term care. Long-term care
+                insurance covers care generally not covered by health insurance, Medicare, or Medicaid.
+              </Paragraph>
+            </li>
+            <li>
+              <Paragraph>
+                Government services like Medicare, Medicaid, or{' '}
+                <Link href="https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living">
+                  Veterans Assistance
+                </Link>
+                {' '}can be valuable tools in making
+                Assisted Living affordable. Many communities also offer special payment plans, programs, and other
+                strategies to help your loved one live in their ideal community.
+              </Paragraph>
+            </li>
+
+            <li>
+              <Paragraph>
+                Many communities also offer special payment plans, programs, and other strategies to help your loved one live in their ideal community.
+              </Paragraph>
+            </li>
+          </ul>
+
           <Paragraph>
             You can learn more about the different costs that go into assisted living. Read our resource on{' '}
             <Link href="https://www.seniorly.com/assisted-living/articles/understanding-the-cost-of-assisted-living">
@@ -753,9 +730,10 @@ const NearMePage = ({
             </StyledTable>
           </StyledArticle>
           <Paragraph>
-            If your loved one needs significant daily care, or suffers from noticeable effects of Alzheimer’s disease or
-            dementia, a Skilled Nursing Home may be the better choice. However, if they desire a more independent lifestyle
-            and require relatively minimal assistance, Assisted Living may be just the right balance.
+            If your loved one needs significant daily care, or suffers from noticeable effects of Alzheimer’s disease
+            or dementia, a skilled nursing facility may be the better choice. However, if they desire a
+            more independent lifestyle and require relatively minimal assistance, Assisted Living may be
+            just the right balance.
           </Paragraph>
           <Link
             href={`#${sectionIdMap.al}`}
@@ -858,6 +836,7 @@ const NearMePage = ({
 
         <StyledArticle>
           <NextSteps nextRef={nextRef}
+                     toc="assisted living"
                      label="Think Assisted Living might be right for your loved one? Explore one of the three topics below to help narrow down your search:"
                      links={ALNextSteps} />
 

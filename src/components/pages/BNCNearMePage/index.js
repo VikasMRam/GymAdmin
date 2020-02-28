@@ -91,26 +91,11 @@ const StyledTable = styled.table`
     font-weight: normal;
 
   };
-`;
-
-const ADLWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const ADLIconItem = styled.div`
-  width: 100%;
-  flex: 0 100%;
-  display: flex;
-  padding: ${size('spacing.large')};
-  justify-content: space-between;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  
+  table-layout: fixed;
+  font-size: ${size('text.tiny')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: 50%;
-    flex: 0 50%;
+    font-size: ${size('text.body')};
   }
 `;
 
@@ -173,7 +158,7 @@ const MemoryCareNearMePage = ({
       title: "Mark & Karen Wolff - Sacramento, CA",
       to: "https://www.seniorly.com/agents/pacific-west/rocklin-ca/senior-care-authority-sacramento-ca-mark-and-karyn-wolff-",
       asset: "images/hub/agents/Mark-Karen.png",
-      caption: "HMark Wolff has over 3 years of experience helping families finding independent living, assisted living, and memory care options. He is dedicated to guiding families throughout the senior living process.",
+      caption: "Mark Wolff has over 3 years of experience helping families finding senior living options from independent living, assisted living, board and care homes and memory care. He is dedicated to guiding families throughout the senior living process.",
       first: "Mark and Karen"
     },
     {
@@ -369,7 +354,7 @@ const MemoryCareNearMePage = ({
           <StyledHeading level="title" size="title" >
             What Is A Local Senior Living Expert?
           </StyledHeading>
-          <WhatIsPartnerAgent toc="memory care" agents={agents}/>
+          <WhatIsPartnerAgent toc="board and care homes" agents={agents}/>
         </StyledArticle>
 
         <StyledArticle>
@@ -1007,6 +992,7 @@ const MemoryCareNearMePage = ({
 
         <StyledArticle>
           <NextSteps nextRef={nextRef}
+                     toc="board and care homes"
                      label="By asking these questions, and others like them, you can determine whether this senior living option is the right choice for you or your loved one. We are providing additional resources below to help you through the decision-making process. Explore one of the three topics below to help narrow down your search:"
                      links={nextSteps} />
 
