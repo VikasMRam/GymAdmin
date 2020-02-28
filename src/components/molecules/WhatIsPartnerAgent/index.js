@@ -51,7 +51,7 @@ const WhatIsPartnerAgent = ({ toc, agents }) => {
                 <Wrapper>
                   <StyledHeading level="subtitle" size="subtitle" >{p.title}</StyledHeading>
                   <Paragraph>
-                    {p.caption}
+                    {p.caption}{' '}
                     <Link href={p.to}>Click Here to Learn more about {p.first}.</Link>
                   </Paragraph>
                 </Wrapper>
