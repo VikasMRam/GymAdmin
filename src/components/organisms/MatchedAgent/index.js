@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string } from 'prop-types';
+import { string, func } from 'prop-types';
 
 import { size, assetPath } from 'sly/components/themes';
 import agentPropType from 'sly/propTypes/agent';
@@ -23,7 +23,7 @@ const ShadowBox = shadow(textAlign(Box));
 const PaddedHeading = pad(Heading);
 PaddedHeading.displayName = 'PaddedHeading';
 
-const MatchedAgent = ({ heading, agent }) => (
+const MatchedAgent = ({ heading, agent, onLearnMoreClick }) => (
   <ShadowBox>
     <PaddedHeading size="subtitle" weight="medium">{heading}</PaddedHeading>
     <AgentInfoWrapper>
@@ -39,6 +39,7 @@ const MatchedAgent = ({ heading, agent }) => (
       imagePosition="right"
       buttonText="Learn more about selling my home"
       image={assetPath('vectors/house-sold.svg')}
+      buttonProps={{ onClick: onLearnMoreClick }}
     >
       Our partner <StyledImage src={assetPath('vectors/zillow.svg')} /> will make you an Instant Offer.
     </SearchResultsAdTile>
@@ -48,6 +49,7 @@ const MatchedAgent = ({ heading, agent }) => (
 MatchedAgent.propTypes = {
   heading: string.isRequired,
   agent: agentPropType.isRequired,
+  onLearnMoreClick: func,
 };
 
 export default MatchedAgent;

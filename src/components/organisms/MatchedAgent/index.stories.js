@@ -10,5 +10,6 @@ storiesOf('Organisms|MatchedAgent', module)
     <MatchedAgent
       heading="Sarah will call you shortly to assist you with pricing for Portola Gardens"
       agent={LindaIwamota}
+      onLearnMoreClick={action('onLearnMoreClick')}
     />
   ));

@@ -23,10 +23,10 @@ describe('SearchResultsAdTile', () => {
   });
 
   it('onButtonClick is called', () => {
-    const onButtonClick = jest.fn();
-    const wrapper = wrap({ onButtonClick });
+    const buttonProps = { onClick: jest.fn() };
+    const wrapper = wrap({ buttonProps });
 
     wrapper.find('StyledButton').simulate('click');
-    expect(onButtonClick).toHaveBeenCalled();
+    expect(buttonProps.onClick).toHaveBeenCalled();
   });
 });
