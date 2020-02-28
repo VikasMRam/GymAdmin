@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import SearchResultsAdTile from 'sly/components/organisms/SearchResultsAdTile';
+import AdTile from 'sly/components/organisms/AdTile';
 
 const defaultProps = {
   title: 'title',
@@ -10,9 +10,9 @@ const defaultProps = {
   image: '/images/image.png',
 };
 
-const wrap = (props = {}) => shallow(<SearchResultsAdTile {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<AdTile {...defaultProps} {...props} />);
 
-describe('SearchResultsAdTile', () => {
+describe('AdTile', () => {
   it('renders', () => {
     const wrapper = wrap();
 

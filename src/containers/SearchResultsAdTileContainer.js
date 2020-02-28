@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { size, assetPath } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
 import withNotification from 'sly/controllers/withNotification';
-import SearchResultsAdTile from 'sly/components/organisms/SearchResultsAdTile';
+import AdTile from 'sly/components/organisms/AdTile';
 import { ResponsiveImage } from 'sly/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
 import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
@@ -84,7 +84,7 @@ export default class SearchResultsAdTileContainer extends Component {
     return (
       <>
         {type === 'askAgent' &&
-          <SearchResultsAdTile
+          <AdTile
             title={agentAdTitle}
             buttonText="Ask a Question"
             image={assetPath('images/agents.png')}
@@ -92,10 +92,10 @@ export default class SearchResultsAdTileContainer extends Component {
             {...this.props}
           >
             Our Local Senior Living Experts Can Help.
-          </SearchResultsAdTile>
+          </AdTile>
         }
         {type === 'getOffer' &&
-          <SearchResultsAdTile
+          <AdTile
             title="Selling a home to pay the cost of senior living?"
             buttonText="Get Instant Offer"
             buttonPosition="right"
@@ -108,7 +108,7 @@ export default class SearchResultsAdTileContainer extends Component {
             {...this.props}
           >
             Our partner <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> will make you an Instant Offer.
-          </SearchResultsAdTile>
+          </AdTile>
         }
         {isModalOpen &&
           <Modal onClose={this.handleClose}>

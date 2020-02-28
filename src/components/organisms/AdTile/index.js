@@ -60,7 +60,7 @@ const ContentWrapper = styled.div`
 const PaddedBlock = pad(Block);
 PaddedBlock.displayName = 'PaddedBlock';
 
-const SearchResultsAdTile = ({
+const AdTile = ({
   image, imagePosition, title, children, buttonText, buttonPosition, buttonProps, layout, className,
 }) => (
   <Box className={className} backgroundPalette="primary" backgroundVariation="stroke">
@@ -77,7 +77,7 @@ const SearchResultsAdTile = ({
   </Box>
 );
 
-SearchResultsAdTile.propTypes = {
+AdTile.propTypes = {
   buttonText: string.isRequired,
   buttonPosition: oneOf(['left', 'right']).isRequired,
   buttonProps: object,
@@ -89,11 +89,11 @@ SearchResultsAdTile.propTypes = {
   imagePosition: oneOf(['left', 'right']).isRequired,
 };
 
-SearchResultsAdTile.defaultProps = {
+AdTile.defaultProps = {
   buttonPosition: 'left',
   buttonProps: {},
   layout: 'column',
   imagePosition: 'left',
 };
 
-export default SearchResultsAdTile;
+export default AdTile;

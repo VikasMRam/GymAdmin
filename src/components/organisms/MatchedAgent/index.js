@@ -8,7 +8,7 @@ import pad from 'sly/components/helpers/pad';
 import shadow from 'sly/components/helpers/shadow';
 import textAlign from 'sly/components/helpers/textAlign';
 import { Heading, Box, Avatar, Block, Link, Image } from 'sly/components/atoms';
-import SearchResultsAdTile from 'sly/components/organisms/SearchResultsAdTile';
+import AdTile from 'sly/components/organisms/AdTile';
 
 const StyledImage = styled(Image)`
   vertical-align: middle;
@@ -33,7 +33,7 @@ const MatchedAgent = ({ heading, agent, onLearnMoreClick }) => (
       <Link to={`mailto:${agent.info.email}`}>{agent.info.email}</Link><br />
       <Link to={`tel:${agent.info.workPhone}`}>{agent.info.workPhone}</Link>
     </AgentInfoWrapper>
-    <SearchResultsAdTile
+    <AdTile
       title="Selling a home to pay the cost of senior living? "
       layout="row"
       imagePosition="right"
@@ -42,7 +42,7 @@ const MatchedAgent = ({ heading, agent, onLearnMoreClick }) => (
       buttonProps={{ onClick: onLearnMoreClick }}
     >
       Our partner <StyledImage src={assetPath('vectors/zillow.svg')} /> will make you an Instant Offer.
-    </SearchResultsAdTile>
+    </AdTile>
   </ShadowBox>
 );
 

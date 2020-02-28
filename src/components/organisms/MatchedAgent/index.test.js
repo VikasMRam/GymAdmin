@@ -19,6 +19,6 @@ describe('MatchedAgent', () => {
     expect(wrapper.find('Block').at(0).contains(defaultProps.agent.name)).toBeTruthy();
     expect(wrapper.find('Link').at(0).contains(defaultProps.agent.info.email)).toBeTruthy();
     expect(wrapper.find('Link').at(1).contains(defaultProps.agent.info.workPhone)).toBeTruthy();
-    expect(wrapper.find('SearchResultsAdTile')).toHaveLength(1);
+    expect(wrapper.find('AdTile')).toHaveLength(1);
   });
 });
