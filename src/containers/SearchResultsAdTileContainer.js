@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { size, assetPath } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
 import withNotification from 'sly/controllers/withNotification';
-import SearchResultsAdTile from 'sly/components/organisms/SearchResultsAdTile';
+import AdTile from 'sly/components/organisms/AdTile';
 import { ResponsiveImage } from 'sly/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
 import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
@@ -33,6 +33,15 @@ export default class SearchResultsAdTileContainer extends Component {
   state = {
     isModalOpen: false,
   };
+
+  componentDidMount() {
+    const { type, city, tocLabel } = this.props;
+    SlyEvent.getInstance().sendEvent({
+      action: 'view',
+      category: `SearchResultsAdTile-${type}`,
+      label: `${tocLabel}-${city}`,
+    });
+  }
 
   handleAskExpertQuestionClick = () => {
     SlyEvent.getInstance().sendEvent({
@@ -71,35 +80,35 @@ export default class SearchResultsAdTileContainer extends Component {
   render() {
     const { type, city, tocLabel } = this.props;
     const { isModalOpen } = this.state;
-    const agentAdTitle = `Get Help Finding ${tocLabel} Communities in ${city}`;
+    const agentAdTitle = `Find the Best ${tocLabel} Communities in ${city}`;
     return (
       <>
         {type === 'askAgent' &&
-          <SearchResultsAdTile
+          <AdTile
             title={agentAdTitle}
-            buttonText="Ask Our Experts A Question"
+            buttonText="Ask a Question"
             image={assetPath('images/agents.png')}
-            onButtonClick={this.handleAskExpertQuestionClick}
+            buttonProps={{ onClick: this.handleAskExpertQuestionClick }}
             {...this.props}
           >
-            Our Local Senior Living Experts can help you now.
-          </SearchResultsAdTile>
+            Our Local Senior Living Experts Can Help.
+          </AdTile>
         }
         {type === 'getOffer' &&
-          <SearchResultsAdTile
+          <AdTile
             title="Selling a home to pay the cost of senior living?"
             buttonText="Get Instant Offer"
             buttonPosition="right"
-            onButtonClick={this.handleGetInstantOfferClick}
             image={assetPath('vectors/house-sold.svg')}
             buttonProps={{
               target: '_blank',
               href: 'https://zillow.com',
+              onClick: this.handleGetInstantOfferClick,
             }}
             {...this.props}
           >
             Our partner <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> will make you an Instant Offer.
-          </SearchResultsAdTile>
+          </AdTile>
         }
         {isModalOpen &&
           <Modal onClose={this.handleClose}>

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 
-import SearchResultsAdTile from 'sly/components/organisms/SearchResultsAdTile';
+import AdTile from 'sly/components/organisms/AdTile';
 import { size, assetPath } from 'sly/components/themes';
 import { Image } from 'sly/components/atoms';
 
@@ -13,36 +13,49 @@ const StyledImage = styled(Image)`
   margin-right: ${size('spacing.regular')};
 `;
 
-storiesOf('Organisms|SearchResultsAdTile', module)
+storiesOf('Organisms|AdTile', module)
   .add('default', () => (
-    <SearchResultsAdTile
+    <AdTile
       title="This the title of an ad tile. It can span up to 2 lines if needed."
       buttonText="Ask Our Experts A Question"
-      onButtonClick={action('onButtonClick')}
+      buttonProps={{ onClick: action('onButtonClick') }}
       image={assetPath('images/agents.png')}
     >
       Our Local Senior Living Experts can help you with X
-    </SearchResultsAdTile>
+    </AdTile>
   ))
   .add('row layout', () => (
-    <SearchResultsAdTile
+    <AdTile
       title="This the title of an ad tile. It can span up to 2 lines if needed."
       buttonText="Ask Our Experts A Question"
-      onButtonClick={action('onButtonClick')}
+      buttonProps={{ onClick: action('onButtonClick') }}
       image={assetPath('images/agents.png')}
       layout="row"
     >
       Our Local Senior Living Experts can help you with X
-    </SearchResultsAdTile>
+    </AdTile>
   ))
   .add('with illustration', () => (
-    <SearchResultsAdTile
+    <AdTile
       title="Selling a home to pay the cost of senior living?"
       buttonText="Get Instant Offer"
       buttonPosition="right"
-      onButtonClick={action('onButtonClick')}
+      buttonProps={{ onClick: action('onButtonClick') }}
       image={assetPath('vectors/house-sold.svg')}
     >
       Our partner <StyledImage src={assetPath('vectors/zillow.svg')} /> will make you an Instant Offer.
-    </SearchResultsAdTile>
+    </AdTile>
+  ))
+  .add('with imagePosition', () => (
+    <AdTile
+      title="Selling a home to pay the cost of senior living?"
+      buttonText="Learn more about selling my home"
+      buttonPosition="right"
+      imagePosition="right"
+      layout="row"
+      buttonProps={{ onClick: action('onButtonClick') }}
+      image={assetPath('vectors/house-sold.svg')}
+    >
+      Our partner <StyledImage src={assetPath('vectors/zillow.svg')} /> will make you an Instant Offer.
+    </AdTile>
   ));

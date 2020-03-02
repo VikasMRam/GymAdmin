@@ -5,12 +5,12 @@ import styled from 'styled-components';
 import { size } from 'sly/components/themes';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { variation as variationPropType } from 'sly/propTypes/variation';
+import pad from 'sly/components/helpers/pad';
 import { Icon } from 'sly/components/atoms';
 
-const ListItemWrapper = styled.li`
+const ListItemWrapper = pad(styled.li`
   display: flex;
-  margin-bottom: ${size('spacing.regular')};
-`;
+`, 'regular');
 
 const ListItemIconDiv = styled.div`
   padding-right: ${size('spacing.regular')}

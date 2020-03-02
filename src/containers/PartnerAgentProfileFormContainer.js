@@ -58,6 +58,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
       .set('attributes.info.serviceArea.zipcodesServed', values.zipcodesServed)
       .set('attributes.status', parseInt(values.status, 10))
       .set('attributes.info.adminNotes', values.adminNotes)
+      .set('attributes.info.isPro', values.isPro.length > 0)
       .set('attributes.info.slyScore', parseFloat(values.slyScore));
 
     if (values.vacation && values.vacation[0].getTime() !== 0 && values.vacation[1].getTime() !== 0) {
@@ -87,7 +88,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
       }
       const { info, status } = agent;
       const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;
-      const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore } = info;
+      const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore, isPro } = info;
       let zipcodesServed = null;
       if (serviceArea) {
         ({ zipcodesServed } = serviceArea);
@@ -96,7 +97,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
       if (vacationStart && vacationEnd) {
         vacation = [new Date(vacationStart), new Date(vacationEnd)];
       }
-      const initialValues = { bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation, adminRegion, zipcodesServed, status, adminNotes, slyScore };
+      const initialValues = { bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation, adminRegion, zipcodesServed, status, adminNotes, slyScore, isPro: [isPro] };
       const isSlyAdmin = userIs(user, PLATFORM_ADMIN_ROLE);
       return (
         <ReduxForm

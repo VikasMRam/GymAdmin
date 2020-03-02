@@ -186,6 +186,15 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
             component={ReduxField}
             wideWidth
           />
+          <Field
+            name="isPro"
+            label="Is Pro"
+            type="checkbox"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+            options={[{ label: '', value: true }]}
+          />
         </FormSection>
       )}
     </FormScrollSection>
