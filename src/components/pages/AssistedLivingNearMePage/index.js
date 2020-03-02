@@ -490,7 +490,7 @@ const NearMePage = ({
           </TypesWrapper>
           <Paragraph>
             <StyledImage path="2ce70da72868d9bab90770f0ade9a383/CityView_photos_01_Seniorly.jpg" alt="CityView Senior Living, Los Angeles, CA" height={640} />
-            Photo:
+            Photo:{' '}
             <Link href="https://www.seniorly.com/assisted-living/california/los-angeles/cityview">
               CityView Senior Living, Los Angeles, CA
             </Link>

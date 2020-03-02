@@ -438,7 +438,7 @@ const SeniorLivingNearMePage = ({
         <StyledArticle>
           <Paragraph>
             <StyledImage path="f7a8de31f6f1609ce51448bf89f99d27/SunriseLaJolla_photos_03_Seniorly.jpg" alt="Sunrise of La Jolla, CA" height={640} />
-            Photo:
+            Photo:{' '}
             <Link href="https://www.seniorly.com/assisted-living/california/san-diego/sunrise-of-la-jolla">
               Sunrise of La Jolla, CA
             </Link>

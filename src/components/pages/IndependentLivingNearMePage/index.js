@@ -239,7 +239,7 @@ const IndependentLivingNearMePage = ({
             href={`#${sectionIdMap.near}`}
             onClick={e => handleAnchor(e, nearRef)}
           >
-            Browse Memory Care Near You
+            Browse Independent Living Near You
           </StyledLink>
         </Paragraph>
       </>
@@ -257,13 +257,13 @@ const IndependentLivingNearMePage = ({
             <Link href="http://blog.aarp.org/2012/01/30/taking-a-closer-look-at-independent-living/">
             Independent Living communities
             </Link>
-            {' '}are designed for seniors who don't require personal care assistance. Senior residents at this
-            senior living community want to streamline their lives and live with people of their own generation.
+            {' '}are designed for seniors who don't require personal care assistance. Senior residents at this kind
+            of senior living community want to streamline their lives and live with people of their own generation.
           </Paragraph>
           <Paragraph>
-            Baby boomers in Independent Living typically are active and healthy. They have no need for assistance with{' '}
+            Baby boomers in Independent Living typically are active and healthy. They have no need for assistance with their{' '}
             <Link href="https://www.seniorly.com/resources/articles/what-are-the-activities-of-daily-living-adls">
-              their activities of daily living (ADLs).
+              activities of daily living (ADLs).
             </Link>
             {' '}Also, they select this type of community because they want to avoid the hassle of maintenance and
             upkeep of their current home.
@@ -306,8 +306,8 @@ const IndependentLivingNearMePage = ({
           </Paragraph>
           <Paragraph>
             Costs can range as low as $1,000 in Independent Living communities designated for low-income
-            residents. On the other end of the spectrum, there are high-end Independent Living packed with
-            luxurious amenities. They can feature condos running as high as $1 million or apartments with
+            residents. On the other end of the spectrum, there are high-end Independent Living communities packed with luxurious amenities.
+            They can feature condos running as high as $1 million or apartments with
             $100,000 buy-ins.
           </Paragraph>
           <Paragraph>
@@ -334,6 +334,15 @@ const IndependentLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
+          <Paragraph>
+            <StyledImage path="fa209740c6c30907d669ff08a8e4876b/Madison_Meadow_06_photo_Seniorly.jpg" alt="Madison Meadows, Phoenix, AZ" height={640} />
+            Photo:{' '}
+            <Link href="https://www.seniorly.com/independent-living/arizona/phoenix/phoenix-senior-living-at-madison-meadows">
+              Madison Meadows, Phoenix, AZ
+            </Link>
+          </Paragraph>
+        </StyledArticle>
+        <StyledArticle>
           <StyledHeading level="title" size="title" _ref={typesRef} >
             Types of Independent Living
           </StyledHeading>
@@ -355,12 +364,17 @@ const IndependentLivingNearMePage = ({
             pools, and other recreational amenities to appeal to the active adult lifestyle.
           </Paragraph>
           <Paragraph>
-            Active adult communities aren't set up to provide health care services. If you need medical care,
+            Active adult communities aren't set up to provide health care services.
+            If you need medical care, you might want to explore a{' '}
+            <Link href="https://www.seniorly.com/skilled-nursing-facility">
+              skilled nursing facility
+            </Link>. If you only need personal care, then an{' '}
+            If you need medical care,
             you might want to explore{' '}
             <Link href="https://www.seniorly.com/assisted-living">
-              assisted living
+              assisted living facility
             </Link>
-            {' '}or even a skilled nursing facility.
+            {' '}is the better choice.
           </Paragraph>
           <Paragraph>
             Some independent living communities offer transportation options, such as shuttles to nearby shopping and
@@ -507,19 +521,237 @@ const IndependentLivingNearMePage = ({
           </Link>
         </StyledArticle>
 
+        <StyledArticle>
+          <StyledHeading level="title" size="title" _ref={servicesRef} >
+            Services Provided in Independent Living
+          </StyledHeading>
 
+          <Paragraph>
+            The services and amenities available vary from one Independent Living community to another.
+            Still, many communities offer some combination of these amenities:
+          </Paragraph>
+
+          <ListWrapper>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Gyms and exercise facilities
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Swimming pools and hot tubs
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Beauty salons and barber shops
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Dining facilities with chef-prepared meals
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              A full social activity schedule
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Transportation near the community
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Housekeeping, linen and/or laundry services
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              24/7 security
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Religious services
+            </ListItem>
+          </ListWrapper>
+
+
+          <StyledHeading level="subtitle" size="subtitle">
+            Medical Care in Independent Living Communities
+          </StyledHeading>
+          <Paragraph>
+            You probably noticed that the above list of independent living amenities and services doesn't
+            include medical care. Most active adults who choose an Independent Living community don't
+            have significant medical needs when they move into the community.
+          </Paragraph>
+          <Paragraph>
+            Sometimes,{' '}
+            <Link href="https://www.sfchronicle.com/senior-living/article/Meet-Generation-B-Entrepreneurial-educated-and-13942528.php">
+              baby boomers
+            </Link>
+            {' '}in an Independent Living community don't want to leave their homes to enter
+            assisted living or a skilled nursing facility. Even when their need for care becomes more urgent, they
+            don’t want to move.
+          </Paragraph>
+          <Paragraph>
+            One solution for aging citizens who do need some regular medical or personal care is Home Care services.
+            With Home Care, trained caregivers provide the services needed right in the senior's own home.
+          </Paragraph>
+          <Paragraph>
+            At Seniorly, we have access to top{' '}
+            <Link href="https://www.seniorly.com/in-home-care">
+              Home Care
+            </Link>
+            {' '}services and are happy to connect you, if needed.
+            For more information on Home Care,{' '}
+            <Link href="https://www.seniorly.com/in-home-care">
+              click here.
+            </Link>
+          </Paragraph>
+          <Paragraph>
+            It’s important to remember many people mistakenly use the term “
+            <Link href="https://www.seniorly.com/nursing-homes">
+              nursing home
+            </Link>” when searching for any
+            kind of senior living.  That is a catch-all phrase for all senior living housing options.
+            However, independent living is the farthest removed from what a searcher might be thinking of when looking for a nursing home.
+          </Paragraph>
+
+          <Link
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
+          >
+            Back to top
+          </Link>
+        </StyledArticle>
+
+        <StyledArticle>
+            <StyledHeading level="title" size="title" _ref={ilvsalRef} >
+              Independent Living vs. Assisted Living
+            </StyledHeading>
+            <Paragraph>
+              An independent living community is not the right choice for older adults who need help with the
+              Activities of Daily Living (ADLs). This includes assistance with dressing, bathing and meal preparation.
+              The right senior living community option is called{' '}
+              <Link href="https://www.seniorly.com/assisted-living">
+                Assisted Living.
+              </Link>{' '}Take a look at the basic differences between these two types of senior living.
+            </Paragraph>
+            <StyledArticle>
+              <StyledTable>
+                <thead>
+                <tr>
+                  <th />
+                  <th>
+                    Independent Living
+                  </th>
+                  <th>
+                    Assisted Living
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>
+                    Private Apartments
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                  <td>
+                    Sometimes
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Shared Rooms
+                  </td>
+                  <td>
+                    No
+                  </td>
+                  <td>
+                    Usually
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Transportation Provided
+                  </td>
+                  <td>
+                    Sometimes
+                  </td>
+                  <td>
+                    Usually
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Medication Management Services
+                  </td>
+                  <td>
+                    No
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    3 Meals a Day Provided
+                  </td>
+                  <td>
+                    Sometimes
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Housekeeping Services Provided
+                  </td>
+                  <td>
+                    Sometimes
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Assistance With Activities of Daily Living
+                  </td>
+                  <td>
+                    No
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Social Activities
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Exercise Facilities and Programs
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                  <td>
+                    Usually
+                  </td>
+                </tr>
+                </tbody>
+              </StyledTable>
+            </StyledArticle>
+
+            <Link
+              href={`#${sectionIdMap.il}`}
+              onClick={e => handleAnchor(e, ilRef)}
+            >
+              Back to top
+            </Link>
+          </StyledArticle>
 
         <StyledArticle>
           <StyledHeading level="title" size="title" _ref={chooseRef} >
             How to Choose the Right Independent Living Community
           </StyledHeading>
-
-          <Paragraph>
-            If you're considering an Independent Living community near you start by determining which type of community
-            is the best choice.  Options include an active adult community, co-housing, a CCRC, or other choices.
-            Research the communities available in your chosen location, comparing their costs and amenities.
-            Paying a visit is also highly recommended.
-          </Paragraph>
 
           <Paragraph>
             If you're considering an Independent Living community near you start by determining which type of community
@@ -589,248 +821,11 @@ const IndependentLivingNearMePage = ({
           </Link>
         </StyledArticle>
 
-        <StyledArticle>
-          <StyledHeading level="subtitle" size="subtitle" _ref={ilvsalRef} >
-            Independent Living vs. Assisted Living
-          </StyledHeading>
-          <Paragraph>
-            An independent living community is not the right choice for older adults who need help with the
-            Activities of Daily Living (ADLs). This includes assistance with dressing, bathing and meal preparation.
-            The right senior living community option is called
-            <Link href="https://www.seniorly.com/assisted-living">
-              Assisted Living.
-            </Link>{' '}Take a look at the basic differences between these two types of senior care.
-          </Paragraph>
-          <StyledArticle>
-            <StyledTable>
-              <thead>
-              <tr>
-                <th />
-                <th>
-                  Independent Living
-                </th>
-                <th>
-                  Assisted Living
-                </th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>
-                  Private Apartments
-                </td>
-                <td>
-                  Yes
-                </td>
-                <td>
-                  Sometimes
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Shared Rooms
-                </td>
-                <td>
-                  No
-                </td>
-                <td>
-                  Usually
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Transportation Provided
-                </td>
-                <td>
-                  Sometimes
-                </td>
-                <td>
-                  Usually
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Medication Management Services
-                </td>
-                <td>
-                  No
-                </td>
-                <td>
-                  Yes
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  3 Meals a Day Provided
-                </td>
-                <td>
-                  Sometimes
-                </td>
-                <td>
-                  Yes
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Housekeeping Services Provided
-                </td>
-                <td>
-                  Sometimes
-                </td>
-                <td>
-                  Yes
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Assistance With Activities of Daily Living
-                </td>
-                <td>
-                  No
-                </td>
-                <td>
-                  Yes
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Assistance With Activities of Daily Living
-                </td>
-                <td>
-                  No
-                </td>
-                <td>
-                  Yes
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Social Activities
-                </td>
-                <td>
-                  Yes
-                </td>
-                <td>
-                  Yes
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Exercise Facilities and Programs
-                </td>
-                <td>
-                  Yes
-                </td>
-                <td>
-                  Usually
-                </td>
-              </tr>
-              </tbody>
-            </StyledTable>
-          </StyledArticle>
-
-          <Link
-            href={`#${sectionIdMap.il}`}
-            onClick={e => handleAnchor(e, ilRef)}
-          >
-            Back to top
-          </Link>
-        </StyledArticle>
-
-      <StyledArticle>
-        <StyledHeading level="title" size="title" _ref={servicesRef} >
-          Services Provided in Independent Living
-        </StyledHeading>
-
-        <Paragraph>
-          The services and amenities available vary from one Independent Living community to another.
-          Still, many communities offer some combination of these amenities:
-        </Paragraph>
-
-        <ListWrapper>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-            Gyms and exercise facilities
-          </ListItem>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-            Swimming pools and hot tubs
-          </ListItem>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-            Beauty salons and barber shops
-          </ListItem>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-            Dining facilities with chef-prepared meals
-          </ListItem>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-            A full social activity schedule
-          </ListItem>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-            Transportation near the community
-          </ListItem>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-            Housekeeping, linen and/or laundry services
-          </ListItem>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-            24/7 security
-          </ListItem>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-            Religious services
-          </ListItem>
-        </ListWrapper>
-
-
-        <StyledHeading level="subtitle" size="subtitle">
-          Medical Care in Independent Living Communities
-        </StyledHeading>
-        <Paragraph>
-          You probably noticed that the above list of independent living amenities and services doesn't
-          include medical care. Most active adults who choose an Independent Living community don't
-          have significant medical needs when they move into the community.
-        </Paragraph>
-        <Paragraph>
-          Sometimes,{' '}
-          <Link href="https://www.sfchronicle.com/senior-living/article/Meet-Generation-B-Entrepreneurial-educated-and-13942528.php">
-            baby boomers
-          </Link>
-          {' '}in an Independent Living community don't want to leave their homes to enter
-          assisted living or a skilled nursing facility. Even when their need for care becomes more urgent, they
-          don’t want to move.
-        </Paragraph>
-        <Paragraph>
-          One solution for aging citizens who do need some regular medical or personal care is Home Care services.
-          With Home Care, trained caregivers provide the services needed right in the senior's own home.
-        </Paragraph>
-        <Paragraph>
-          At Seniorly, we have access to top{' '}
-          <Link href="https://www.seniorly.com/in-home-care">
-            Home Care
-          </Link>
-          {' '}services and are happy to connect you, if needed.
-          For more information on Home Care,{' '}
-          <Link href="https://www.seniorly.com/in-home-care">
-            click here.
-          </Link>
-        </Paragraph>
-        <Paragraph>
-          It’s important to remember many people mistakenly use the term “
-          <Link href="https://www.seniorly.com/nursing-homes">
-            nursing home
-          </Link>” when searching for any
-          kind of senior living.  That is a catch-all phrase for all senior living housing options.
-          However, independent living is the farther removed from what a searcher might be thinking of when looking for a nursing home.
-        </Paragraph>
-
-        <Link
-          href={`#${sectionIdMap.il}`}
-          onClick={e => handleAnchor(e, ilRef)}
-        >
-          Back to top
-        </Link>
-      </StyledArticle>
 
         <StyledArticle>
           <NextSteps nextRef={nextRef}
                      toc="independent living"
-                     label="By asking these questions, you can determine whether an Independent Living community is the right choice. We are providing additional resources below to help you through the decision making process. Explore one of the three topics below to help narrow down your search:"
+                     label="By asking these questions, you can determine whether an Independent Living community is the right choice. We are providing additional Independent Living resources below to help you through the decision making process. Explore one of the three topics below to help narrow down your search:"
                      links={nextSteps} />
 
           <Link

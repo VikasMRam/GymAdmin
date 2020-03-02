@@ -247,9 +247,9 @@ const MemoryCareNearMePage = ({
             </Link>
             {' '}Many{' '}
             <Link href="https://www.seniorly.com/assisted-living">
-              assisted living communities have special wings
+              assisted living communities
             </Link>
-            {' '}designed to help residents with memory issues.
+            {' '}have special wings designed to help residents with memory issues.
           </Paragraph>
           <Paragraph>
             Senior residents living in memory care benefit from a structured environment that provides
@@ -271,6 +271,10 @@ const MemoryCareNearMePage = ({
               what type of care they may need.
             </Link>
           </Paragraph>
+
+          <StyledHeading level="subtitle" size="subtitle">
+            The Reisberg Scale
+          </StyledHeading>
 
           <StyledTable>
             <thead>
@@ -396,6 +400,14 @@ const MemoryCareNearMePage = ({
             their way to provide additional security.  This is because Alzheimer's residents are prone
             to wandering.
           </Paragraph>
+          https://d354o3y6yz93dt.cloudfront.net/images/768x512/
+          <Paragraph>
+            <StyledImage path="f09c42afc55ba7129b6784185690da30/Courtyard_Terrace_logo-17.jpg" alt="Courtyard Terrace Sacramento, CA" height={640} />
+            Photo:{' '}
+            <Link href="https://www.seniorly.com/memory-care/california/sacramento/courtyard-terrace">
+              Courtyard Terrace Memory Care, Sacramento, CA
+            </Link>
+          </Paragraph>
           <Paragraph>
             If you are ready to search for Memory Care near you, just enter your city or zip code in the
             search box below:
@@ -491,7 +503,7 @@ const MemoryCareNearMePage = ({
             ”
           </Paragraph>
           <Paragraph>
-            In some cases, you will find qualified memory care in a
+            In some cases, you will find qualified memory care in a{' '}
             <Link href="https://www.seniorly.com/skilled-nursing-facility">skilled nursing facility (SNF)
             </Link>
             .  This will afford the senior resident some government assistance, such as Medicare.
@@ -517,9 +529,15 @@ const MemoryCareNearMePage = ({
             {' '}are often available for assistance with care needs.]
           </Paragraph>
           <Paragraph>
-            One great option for affordable memory care is a Board and Care Home (BCH).
-            They do not all specialize in memory care.  Please do your research.
-            Or let one of our local senior living experts tell you about all the memory care options
+            One great option for affordable memory care is a{' '}
+            <Link href="https://www.seniorly.com/board-and-care-home">
+              Board and Care Home
+            </Link>{' '}(BCH).
+            They do not all specialize in memory care. Please do your research.
+            Or let one of our {' '}
+            <Link href="https://www.seniorly.com/agents">
+              local senior living experts
+            </Link>{' '}tell you about all the memory care options
             in your desired location.
           </Paragraph>
           <Paragraph>
@@ -563,6 +581,9 @@ const MemoryCareNearMePage = ({
             Also, staff are trained to understand what seniors are trying to communicate through behavior when verbal
             communication abilities start to lag.
           </Paragraph>
+          <StyledHeading level="subtitle" size="subtitle" >
+            The Memory Care Written Plan
+          </StyledHeading>
           <Paragraph>
             Part of the care for your loved one at a memory care community will include a written plan.
             The facility's medical director leads the development of this plan. Also involved is the attending

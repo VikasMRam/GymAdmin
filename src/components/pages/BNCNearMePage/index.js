@@ -190,16 +190,16 @@ const MemoryCareNearMePage = ({
             What Services are Provided at a Board and Care Home?
           </StyledLink>
           <StyledLink
+          href={`#${sectionIdMap.cost}`}
+          onClick={e => handleAnchor(e, costRef)}
+        >
+          How Much Does a Board and Care Home Cost?
+        </StyledLink>
+          <StyledLink
             href={`#${sectionIdMap.other}`}
             onClick={e => handleAnchor(e, otherRef)}
           >
             Board and Care Homes vs. Other Types of Senior Living
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.cost}`}
-            onClick={e => handleAnchor(e, costRef)}
-          >
-            How Much Does a Board and Care Home Cost?
           </StyledLink>
           <StyledLink
             href={`#${sectionIdMap.touring}`}
@@ -234,8 +234,8 @@ const MemoryCareNearMePage = ({
           </StyledHeading>
           <Paragraph>
             A board and care home is a residential care community for senior adults located within a residential
-            neighborhood. These small assisted living homes typically are small and intimate, caring for about
-            six seniors at a time.
+            neighborhood. These assisted living properties typically are small and intimate, caring for about
+            six senior residents at a time.
           </Paragraph>
           <Paragraph>
             <Link href="https://www.seniorly.com/assisted-living/articles/understanding-board-and-care-homes">
@@ -317,6 +317,13 @@ const MemoryCareNearMePage = ({
             are also included, although incontinence supplies may not be.
           </Paragraph>
           <Paragraph>
+            <StyledImage path="0e0e2b4a4d447123c44d88bea236cab9/Ayres_Westwood_logo-5.jpg" alt="Ayres Residential Care Homes, Westwood, CA" height={640} />
+            Photo:{' '}
+            <Link href="https://www.seniorly.com/assisted-living/california/los-angeles/ayres-residential-care-homes-westwood">
+              Ayres Residential Care Homes, Westwood, CA
+            </Link>
+          </Paragraph>
+          <Paragraph>
             If you are ready to search for a Board and Care Home near you, just enter your city or zip code in the search box below:
           </Paragraph>
           <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
@@ -329,7 +336,32 @@ const MemoryCareNearMePage = ({
           </Link>
         </StyledArticle>
 
+
         <StyledArticle>
+          <StyledHeading level="title" size="title" _ref={costRef}>
+            How Much Does a Board and Care Home Cost?
+          </StyledHeading>
+          <Paragraph>
+            The monthly fees for a board and care home can run anywhere from $1,500 to $6,000. This depends largely on
+            where you live. While areas with a higher cost of living are likely to see higher fees, in general,
+            most costs run between $3,500 and $4,500 per month.
+          </Paragraph>
+          <Paragraph>
+            You can reduce those costs a bit by sharing a bedroom with a roommate. As you explore what is the price of
+            a board and care home note that additional senior care services, such as dementia care or incontinence
+            supplies, can raise the rates.
+          </Paragraph>
+
+          <Link
+            href={`#${sectionIdMap.bnc}`}
+            onClick={e => handleAnchor(e, bncRef)}
+          >
+            Back to top
+          </Link>
+        </StyledArticle>
+
+
+      <StyledArticle>
           <StyledHeading level="title" size="title">
             Is There Medical Care at a Board and Care Home?
           </StyledHeading>
@@ -368,7 +400,7 @@ const MemoryCareNearMePage = ({
           <ul>
             <li>What's the most appropriate living arrangement for you or your loved one?</li>
             <li>Should you opt for assisted living or an independent living community rather than a board and care home?</li>
-            <li>When is it time to consider a skilled nursing facility, or nursing home?</li>
+            <li>When is it time to consider a skilled nursing facility or nursing home?</li>
           </ul>
           <Paragraph>
             Take a look at some of the differences to understand which option is right for you.
@@ -529,7 +561,7 @@ const MemoryCareNearMePage = ({
             <Link href="https://www.seniorly.com/assisted-living">
               assisted living communities
             </Link>
-            {' '}. The most significant difference between these senior living options is the size of the community.
+            . The most significant difference between these senior living options is the size of the community.
             Board and care homes are much smaller than most assisted living facilities, so they appeal to seniors who
             prefer a cozier, more homelike environment that's more relaxed and less structured.
           </Paragraph>
@@ -702,7 +734,10 @@ const MemoryCareNearMePage = ({
               independent living communities
             </Link>
             {' '}foster a sense of independence in their senior residents, most seniors in independent living don't
-            require any help with the activities of daily living (ADLs). Seniors often live in their own apartments in
+            require any help with the{' '}
+            <Link href="https://www.seniorly.com/resources/articles/what-are-the-activities-of-daily-living-adls">
+              activities of daily living (ADLs)
+            </Link>. Seniors often live in their own apartments in
             independent living communities, while in board and care homes, they have a private or shared bedroom within
             a traditional single-family home. Many independent living communities also offer a wide range of activities,
             unlike board and care homes.  One example is a{' '}
@@ -894,29 +929,6 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={costRef}>
-            How Much Does a Board and Care Home Cost?
-          </StyledHeading>
-          <Paragraph>
-            The monthly fees for a board and care home can run anywhere from $1,500 to $6,000. This depends largely on
-            where you live. While areas with a higher cost of living are likely to see higher fees, in general,
-            most costs run between $3,500 and $4,500 per month.
-          </Paragraph>
-          <Paragraph>
-            You can reduce those costs a bit by sharing a bedroom with a roommate. As you explore what is the price of
-            a board and care home note that additional senior care services, such as dementia care or incontinence
-            supplies, can raise the rates.
-          </Paragraph>
-
-          <Link
-            href={`#${sectionIdMap.bnc}`}
-            onClick={e => handleAnchor(e, bncRef)}
-          >
-            Back to top
-          </Link>
-        </StyledArticle>
-
-        <StyledArticle>
           <StyledHeading level="title" size="title" _ref={touringRef}>
             What Questions to Ask When Touring a Board and Care Home
           </StyledHeading>
@@ -927,8 +939,7 @@ const MemoryCareNearMePage = ({
             questions so you get all the information you need.
           </Paragraph>
           <Paragraph>
-            Here's a starter list of question to ask at board and care homes to help you make a wise decision for
-            yourself or your loved one:
+            Here's a starter list of questions to ask at board and care homes to help you make a wise decision for yourself or your loved one:
           </Paragraph>
           <ul>
             <li>
@@ -1007,8 +1018,8 @@ const MemoryCareNearMePage = ({
     );
   };
 
-  const title = 'Find the Best Board and Care Homes Near You ';
-  const description = 'Find the best memory care near you with local senior living communities & providers. Browse memory care nearby with prices, reviews & photos.';
+  const title = 'What is a Board and Care Home Near You';
+  const description = 'Learn all about board and care homes, including medical services provided, costs and more. Board and care homes are a great alternative for senior living.';
   const heading = state ? `${listSize} ${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${listSize} ${tocLabel} near ${city}`;
 
   return (
@@ -1018,7 +1029,7 @@ const MemoryCareNearMePage = ({
         <meta name="description" content={description} />
       </Helmet>
       <HubHeader imagePath="react-assets/hub/board-and-care-home-cover.jpg"
-         toc="memory care"
+         toc="board and care home"
          heading="What is Board and Care Homes Near You?"
          label="Use our free search to find board and care homes nearby"
          onCurrentLocation={onCurrentLocation}
