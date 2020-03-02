@@ -86,7 +86,6 @@ export default class AskAgentQuestionContainer extends Component {
         initialValues,
         id: community.id,
         category: 'community',
-        hasEmail: false,
         showMessageFieldFirst: true,
         postSubmit,
         type,

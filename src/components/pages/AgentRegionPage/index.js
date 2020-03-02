@@ -7,16 +7,16 @@ import { getHelmetForAgentsRegionPage } from 'sly/services/helpers/html_headers'
 import agentPropType from 'sly/propTypes/agent';
 import { size, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
+import { CONSULTATION_REQUESTED } from 'sly/services/newApi/constants';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import AgentTile from 'sly/components/molecules/AgentTile';
 import Section from 'sly/components/molecules/Section';
 import Footer from 'sly/components/organisms/Footer';
 import { Heading, Block, Link, Hr } from 'sly/components/atoms';
-import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
+import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
 import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
 import MostSearchedRegions from 'sly/components/molecules/MostSearchedRegions';
 import { mostSearchedRegions } from 'sly/constants/agents';
-import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 
 const PageHeadingSection = styled.div`
   text-align: center;
@@ -87,6 +87,7 @@ export default class AgentRegionPage extends Component {
     onLocationSearch: func.isRequired,
     isRegionPage: bool,
     location: object.isRequired,
+    onConsulationRequested: func.isRequired,
   };
 
   constructor(props) {
@@ -98,7 +99,7 @@ export default class AgentRegionPage extends Component {
   render() {
     const {
       title, locationName, agentsList, onLocationSearch,
-      isRegionPage, location,
+      isRegionPage, location, onConsulationRequested,
     } = this.props;
 
     if (!agentsList) {
@@ -139,19 +140,17 @@ export default class AgentRegionPage extends Component {
           }
           <StyledHr fullWidth />
           <FormSection>
-            <BannerNotificationController>
-              {({ notifyInfo }) => (
-                <TalkToAgentFormContainer
-                  postSubmit={() => {
-                    notifyInfo('We have received your request and we will get back to you soon.');
+            <AskQuestionToAgentFormContainer
+              hasLocation
+              actionType={CONSULTATION_REQUESTED}
+              postSubmit={() => {
+                onConsulationRequested();
 
-                    if (this.title.scrollIntoView) {
-                      this.title.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                />
-              )}
-            </BannerNotificationController>
+                if (this.title.scrollIntoView) {
+                  this.title.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            />
           </FormSection>
           <StyledHr fullWidth />
           <FindLocalAgentWrapper innerRef={this.findLocalAgentRef}>

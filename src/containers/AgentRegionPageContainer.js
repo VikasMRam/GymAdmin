@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
-import { arrayOf, object } from 'prop-types';
+import { arrayOf, object, func } from 'prop-types';
 
 import agentPropType from 'sly/propTypes/agent';
-import AgentRegionPage from 'sly/components/pages/AgentRegionPage';
 import { titleize } from 'sly/services/helpers/strings';
 import { getAgentUrl } from 'sly/services/helpers/url';
+import withNotification from 'sly/controllers/withNotification';
 import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/agents';
 import { getAgentParams } from 'sly/services/helpers/search';
 import prefetch from 'sly/services/newApi/prefetch';
+import AgentRegionPage from 'sly/components/pages/AgentRegionPage';
 
 @prefetch('agentsList', 'getAgents', (req, { match, location }) => req(getAgentParams(match, location)))
+@withNotification
 
 export default class AgentRegionPageContainer extends Component {
   static propTypes = {
     match: object,
     agentsList: arrayOf(agentPropType),
     history: object,
+    notifyInfo: func.isRequired,
   };
 
   handleLocationSearch = (result) => {
@@ -29,6 +32,12 @@ export default class AgentRegionPageContainer extends Component {
     const searchParams = getSearchParamFromPlacesResponse(result);
     const { path } = filterLinkPath(searchParams);
     history.push(path);
+  };
+
+  handleConsulationRequested = () => {
+    const { notifyInfo } = this.props;
+
+    notifyInfo('We have received your request and we will get back to you soon.');
   };
 
   render() {
@@ -69,6 +78,7 @@ export default class AgentRegionPageContainer extends Component {
         locationName={locationName}
         isRegionPage={!citySlug}
         location={location}
+        onConsulationRequested={this.handleConsulationRequested}
       />
     );
   }

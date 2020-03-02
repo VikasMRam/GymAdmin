@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { func, object } from 'prop-types';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Image, Hr } from 'sly/components/atoms';
+import { Hr } from 'sly/components/atoms';
 import { getHelmetForAgentsPage } from 'sly/services/helpers/html_headers';
 import { agentsFAQs, mostSearchedRegions } from 'sly/constants/agents';
+import { CONSULTATION_REQUESTED } from 'sly/services/newApi/constants';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import Section from 'sly/components/molecules/Section';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import MostSearchedRegions, { ColumnWrapper } from 'sly/components/molecules/MostSearchedRegions';
 import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
-import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
-import BannerNotificationController from 'sly/controllers/BannerNotificationController';
+import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
 import FAQSection from 'sly/components/organisms/FAQSection';
 import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
@@ -78,6 +78,7 @@ class AgentsPage extends Component {
   static propTypes = {
     onLocationSearch: func,
     location: object.isRequired,
+    onConsulationRequested: func.isRequired,
   };
 
   constructor(props) {
@@ -89,11 +90,12 @@ class AgentsPage extends Component {
     const {
       onLocationSearch,
       location,
+      onConsulationRequested,
     } = this.props;
     const headerContent = (
       <>
         <HeaderContainer />
-        <HeroWrapper innerRef={this.heroRef}>
+        <HeroWrapper ref={this.heroRef}>
           <HeroBackgroundImage path="react-assets/agents/agent-hero.png" height={480} alt="A Home To Love" />
           <HeroTextWrapper>
             <FindLocalAgent onLocationSearch={onLocationSearch} />
@@ -119,18 +121,16 @@ class AgentsPage extends Component {
           </StyledSection>
           <Hr fullWidth />
           <FormSection>
-            <BannerNotificationController>
-              {({ notifyInfo }) => (
-                <TalkToAgentFormContainer
-                  postSubmit={() => {
-                    notifyInfo('We have received your request and we will get back to you soon.');
-                    if (this.heroRef.current.scrollIntoView) {
-                      this.heroRef.current.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                />
-              )}
-            </BannerNotificationController>
+            <AskQuestionToAgentFormContainer
+              hasLocation
+              actionType={CONSULTATION_REQUESTED}
+              postSubmit={() => {
+                onConsulationRequested();
+                if (this.heroRef.current.scrollIntoView) {
+                  this.heroRef.current.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            />
           </FormSection>
           <Hr fullWidth />
           <StyledSection>

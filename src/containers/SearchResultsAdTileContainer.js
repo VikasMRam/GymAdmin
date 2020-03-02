@@ -4,11 +4,12 @@ import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
+import { CONSULTATION_REQUESTED } from 'sly/services/newApi/constants';
 import withNotification from 'sly/controllers/withNotification';
 import AdTile from 'sly/components/organisms/AdTile';
 import { ResponsiveImage } from 'sly/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
-import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
+import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
   vertical-align: middle;
@@ -114,12 +115,12 @@ export default class SearchResultsAdTileContainer extends Component {
           <Modal onClose={this.handleClose}>
             <HeaderWithClose onClose={this.handleClose} />
             <PaddedHeaderWithCloseBody>
-              <TalkToAgentFormContainer
+              <AskQuestionToAgentFormContainer
                 heading="Our Local Senior Living Experts can help you with your search."
                 image={assetPath('images/agents.png')}
                 buttonKind="regular"
-                hasLocation={false}
                 postSubmit={this.handleComplete}
+                actionType={CONSULTATION_REQUESTED}
                 showMessageFieldFirst
               />
             </PaddedHeaderWithCloseBody>
