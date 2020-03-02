@@ -3,10 +3,14 @@ import { object, number, array, bool, func } from 'prop-types';
 import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 import ErrorPage from 'sly/components/pages/Error';
-import NearMePage from 'sly/components/pages/NearMePage';
+import AssistedLivingNearMePage from 'sly/components/pages/AssistedLivingNearMePage';
+import MemoryCareNearMePage from 'sly/components/pages/MemoryCareNearMePage';
+import SeniorLivingNearMePage from 'sly/components/pages/SeniorLivingNearMePage';
+import BNCNearMePage from 'sly/components/pages/BNCNearMePage';
 import NursingHomesNearMePage from 'sly/components/pages/NursingHomesNearMePage';
 import SNFNearMePage from 'sly/components/pages/SNFNearMePage';
-import { parseURLQueryParams } from 'sly/services/helpers/url';
+import IndependentLivingNearMePage from 'sly/components/pages/IndependentLivingNearMePage';
+import { parseURLQueryParams, generateCityPathSearchUrl } from 'sly/services/helpers/url';
 import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
 
@@ -19,11 +23,29 @@ const handleClick = (e, sectionRef) => {
   }
 };
 
-@withProps(({ location }) => {
+@withProps(({ match, location }) => {
   const qs = parseURLQueryParams(location.search);
-  const toc = location.pathname.slice(1);
+  const { params } = match;
+  const { hub } = params;
+  const sp = {};
+
+  sp.nearme = 'true';
+  sp.toc = hub;
+
+  if (hub === 'senior-living') {
+    sp.toc = 'nursing-homes'
+  }
+
+  if (hub === 'respite-care') {
+    sp.toc = 'assisted-living'
+  }
+
+  if (qs && qs['page-number']) {
+    sp['page-number'] = qs['page-number']
+  }
+
   return {
-    searchParams: { toc, nearme: 'true', 'page-number': qs['page-number'] },
+    searchParams: sp,
   };
 })
 
@@ -40,6 +62,7 @@ export default class NearMePageContainer extends Component {
     isFetchingResults: bool,
     location: object.isRequired,
     status: object,
+    redirectTo: func.isRequired,
   };
 
   handleOnLocationSearch = (result) => {
@@ -48,12 +71,21 @@ export default class NearMePageContainer extends Component {
     };
     SlyEvent.getInstance().sendEvent(event);
 
-    const { history, location } = this.props;
-    const searchParams = getSearchParamFromPlacesResponse(result);
-    const toc = location.pathname.slice(1);
-    searchParams.toc = toc
-    const { path } = filterLinkPath(searchParams, {});
+    const { history } = this.props;
+    const params = getSearchParamFromPlacesResponse(result);
+    params.toc = searchParams.toc;
+    const { path } = filterLinkPath(params, {});
     history.push(path);
+  };
+
+  handleCurrentLocation = (addresses, { latitude, longitude }) => {
+    const { redirectTo } = this.props;
+
+    if (addresses.length) {
+      const path = `/${searchParams.toc}/${generateCityPathSearchUrl(addresses[0])}?latitude=${latitude}&longitude=${longitude}`;
+
+      redirectTo(path);
+    }
   };
 
   render() {
@@ -63,6 +95,7 @@ export default class NearMePageContainer extends Component {
       status,
       location,
       history,
+      match,
     } = this.props;
 
     if (status.communityList.error) {
@@ -70,10 +103,10 @@ export default class NearMePageContainer extends Component {
       const errorCode = error.status || 500;
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
+    const { params } = match;
+    const { hub } = params;
 
-    const { toc } = searchParams;
-
-    if (toc === 'nursing-homes') {
+    if (hub === 'nursing-homes') {
       return (
         <NursingHomesNearMePage
           onLocationSearch={this.handleOnLocationSearch}
@@ -86,7 +119,7 @@ export default class NearMePageContainer extends Component {
         />
       );
     }
-    if (toc === 'skilled-nursing-facility') {
+    if (hub === 'skilled-nursing-facility') {
       return (
         <SNFNearMePage
           onLocationSearch={this.handleOnLocationSearch}
@@ -99,8 +132,62 @@ export default class NearMePageContainer extends Component {
         />
       );
     }
+    if (hub === 'memory-care') {
+      return (
+        <MemoryCareNearMePage
+          onLocationSearch={this.handleOnLocationSearch}
+          requestMeta={status.communityList.meta || {}}
+          searchParams={searchParams}
+          communityList={communityList}
+          isFetchingResults={!status.communityList.hasFinished}
+          handleAnchor={handleClick}
+          location={location}
+        />
+      );
+    }
+    if (hub === 'independent-living') {
+      return (
+        <IndependentLivingNearMePage
+          onLocationSearch={this.handleOnLocationSearch}
+          requestMeta={status.communityList.meta || {}}
+          searchParams={searchParams}
+          communityList={communityList}
+          isFetchingResults={!status.communityList.hasFinished}
+          handleAnchor={handleClick}
+          location={location}
+        />
+      );
+    }
+    if (hub === 'senior-living') {
+      return (
+        <SeniorLivingNearMePage
+          onLocationSearch={this.handleOnLocationSearch}
+          requestMeta={status.communityList.meta || {}}
+          searchParams={searchParams}
+          communityList={communityList}
+          isFetchingResults={!status.communityList.hasFinished}
+          handleAnchor={handleClick}
+          location={location}
+        />
+      );
+    }
+
+
+    if (hub === 'board-and-care-home') {
+      return (
+        <BNCNearMePage
+          onLocationSearch={this.handleOnLocationSearch}
+          requestMeta={status.communityList.meta || {}}
+          searchParams={searchParams}
+          communityList={communityList}
+          isFetchingResults={!status.communityList.hasFinished}
+          handleAnchor={handleClick}
+          location={location}
+        />
+      );
+    }
     return (
-      <NearMePage
+      <AssistedLivingNearMePage
         onLocationSearch={this.handleOnLocationSearch}
         requestMeta={status.communityList.meta || {}}
         searchParams={searchParams}
@@ -108,6 +195,7 @@ export default class NearMePageContainer extends Component {
         isFetchingResults={!status.communityList.hasFinished}
         handleAnchor={handleClick}
         location={location}
+        onCurrentLocation={this.handleCurrentLocation}
       />
     );
   }

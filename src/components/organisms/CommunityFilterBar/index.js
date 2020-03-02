@@ -35,7 +35,6 @@ const CommunityFilterBar = ({ searchParams, generateFilterLinkPath }) => {
   const sizeLabel = matchingSize ? matchingSize.label : null;
   const actualToc = tocs.find(elem => (elem.value === toc));
   const filtersApplied = getFiltersApplied(searchParams);
-
   const tocApplied = (toc && toc !== 'nursing-homes');
   return (
     <SectionWrapper hasFilters={tocApplied || size || budget}>

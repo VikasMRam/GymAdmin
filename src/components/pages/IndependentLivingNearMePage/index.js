@@ -1,0 +1,907 @@
+import React from 'react';
+import Helmet from 'react-helmet';
+import styled from 'styled-components';
+import { array, bool, func, object } from 'prop-types';
+import ListItem from 'sly/components/molecules/ListItem';
+import HubHeader from 'sly/components/molecules/HubHeader';
+import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
+import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
+import NextSteps from 'sly/components/molecules/NextSteps';
+
+import { getStateAbbr } from 'sly/services/helpers/url';
+import { size, palette, assetPath } from 'sly/components/themes';
+import {
+  HubPageTemplate,
+  makeBody,
+  makeColumn,
+  makeFooter,
+  makeHeader,
+  makeTwoColumn,
+  makeWrapper,
+} from 'sly/components/templates/HubPageTemplate';
+import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
+import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image } from 'sly/components/atoms';
+import Footer from 'sly/components/organisms/Footer';
+import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
+import { getTocSeoLabel } from 'sly/services/helpers/search';
+import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
+
+
+const StyledHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.large')};
+`;
+
+const StyledArticle = styled.article`
+  margin-bottom: ${size('spacing.xLarge')};
+  &:last-of-type {
+    margin-bottom: 0;
+    p {
+      margin-bottom: ${size('spacing.regular')};
+    }
+  }
+`;
+
+const StickToTop = styled.div`
+  background-color: ${palette('white', 'base')};
+  padding: ${size('spacing.xLarge')} ${size('spacing.large')} ${size('spacing.regular')} ${size('spacing.large')};
+  line-height: ${size('lineHeight.body')};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  border-radius: ${size('spacing.small')};
+  margin-bottom: ${size('spacing.large')};
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    position: sticky;
+    top: 24px;
+    margin-top: calc(2 * -${size('spacing.huge')});
+  }
+`;
+
+const StyledLink = styled(Link)`
+  margin-bottom: ${size('spacing.large')};
+  display: block;
+`;
+
+const ListWrapper = styled.div`
+  padding: ${size('spacing.xLarge')} ${size('spacing.large')};
+  line-height: ${size('lineHeight.body')};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  border-radius: ${size('spacing.small')};
+  margin-bottom: ${size('spacing.large')};
+  display: grid;
+  grid-template-columns: 100%;
+  grid-row-gap: ${size('spacing.large')};
+`;
+
+const StyledTable = styled.table`
+  border-collapse: collapse;
+  width: 100%;
+  border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
+  margin-bottom: ${size('spacing.large')};
+  thead {
+    background-color: ${palette('slate', 'stroke')};
+    padding: ${size('spacing.regular')} ${size('spacing.large')};
+    color: ${palette('grey', 'base')};
+  };
+  tr {
+    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  };
+  td, th {
+    padding: ${size('spacing.regular')} ${size('spacing.large')};
+    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+    font-weight: normal;
+
+  };
+  
+  table-layout: fixed;
+  font-size: ${size('text.tiny')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    font-size: ${size('text.body')};
+  }
+`;
+
+const StyledImage = styled(ResponsiveImage)`
+  object-fit: cover;
+  vertical-align:top;
+  width: 100%;
+  height: 100%;
+`;
+
+const TwoColumn = makeTwoColumn('div');
+const Body = makeBody('div');
+const Column = makeColumn('aside');
+const Wrapper = makeWrapper('div');
+
+const IndependentLivingNearMePage = ({
+  onLocationSearch,
+  searchParams,
+  requestMeta,
+  communityList,
+  isFetchingResults,
+  handleAnchor,
+  location,
+  onCurrentLocation,
+}) => {
+  const listSize = requestMeta['filtered-count'];
+  const { geo } = requestMeta;
+  const city = geo && geo.city;
+  const state = geo && geo.state;
+  const tocLabel = getTocSeoLabel('independent-living');
+
+
+  const ilRef = React.createRef();
+  const costRef = React.createRef();
+  const typesRef = React.createRef();
+  const alternativeRef = React.createRef();
+  const servicesRef = React.createRef();
+  const ilvsalRef = React.createRef();
+  const chooseRef = React.createRef();
+  const nextRef = React.createRef();
+  const nearRef = React.createRef();
+
+  const sectionIdMap = {
+    il: 'what-is-independent-living',
+    cost: 'cost',
+    types:'types',
+    alternative:' alternative',
+    services: 'services',
+    ilvsal: 'il-vs-al',
+    choose: 'choosing-memory-care',
+    next: 'next-steps',
+    near: 'memory-care-near-you',
+  };
+
+  const nextSteps = [
+    {title: "Evaluating Independent Living Communities", to:"https://www.seniorly.com/independent-living/articles/evaluating-independent-living-communities"},
+    {title: "Understanding the Cost of Independent Living", to:"https://www.seniorly.com/independent-living/articles/understanding-the-cost-of-independent-living"},
+    {title: "Frequently Asked Questions About Independent Living", to:"https://www.seniorly.com/independent-living/articles/seniorly-independent-living-faqs"},
+  ];
+
+  const agents = [
+    {
+      title: "Sarah Odover - Los Angeles, CA",
+      to: "https://www.seniorly.com/agents/pacific-west/beverley-hills/assisted-living-locators-los-angeles-ca-sarah-ordover-",
+      asset: "images/hub/agents/Sarah.png",
+      caption: "Sarah Ordover has over 4 years of experience helping families find independent living, \n" +
+      "assisted living, and memory care options. She has helped over 100 families so far in the Los Angeles area.",
+      first: "Sarah"
+    },
+    {
+      title: "Heather Cartright - Sarasota, FL",
+      to: "https://www.seniorly.com/agents/south/ellenton-fl/my-care-finders-fl-heather-cartright-",
+      asset: "images/hub/agents/Heather.png",
+      caption: "Heather Cartright has over a year of experience helping families find independent living, \n" +
+      "assisted living, and memory care options. As a former assisted living facility administrator, \n" +
+      "she brings a unique skillset for senior living placement.",
+      first: "Heather"
+    },
+    {
+      title: "Carol Katz - New Jersey",
+      to: "https://www.seniorly.com/agents/northeast/manalapan/adult-care-advisors-carol-katz-",
+      asset: "images/hub/agents/Carol-Katz.png",
+      caption: "Carol Katz has over 10 years of experience helping families find independent living, \n" +
+      "assisted living, and memory care options. With her unique volunteer experience, she brings \n" +
+      "a special skillset for senior living placement.",
+      first: "Carol"
+    },
+  ];
+
+  const TableOfContents = () => {
+    return (
+      <>
+        <StyledHeading level="subtitle" size="subtitle">
+          Table of Contents
+        </StyledHeading>
+        <Paragraph>
+          <StyledLink
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
+          >
+            What Is Independent Living?
+          </StyledLink>
+          <StyledLink
+            href={`#${sectionIdMap.cost}`}
+            onClick={e => handleAnchor(e, costRef)}
+          >
+            The Cost of Independent Living
+          </StyledLink>
+          <StyledLink
+            href={`#${sectionIdMap.types}`}
+            onClick={e => handleAnchor(e, typesRef)}
+          >
+            Types of Independent Living
+          </StyledLink>
+          <StyledLink
+            href={`#${sectionIdMap.alternative}`}
+            onClick={e => handleAnchor(e, alternativeRef)}
+          >
+            Independent Living Alternatives
+          </StyledLink>
+          <StyledLink
+            href={`#${sectionIdMap.services}`}
+            onClick={e => handleAnchor(e, servicesRef)}
+          >
+            Services Provided in Independent Living
+          </StyledLink>
+          <StyledLink
+            href={`#${sectionIdMap.ilvsal}`}
+            onClick={e => handleAnchor(e, ilvsalRef)}
+          >
+            Independent Living vs. Assisted Living
+          </StyledLink>
+          <StyledLink
+            href={`#${sectionIdMap.choose}`}
+            onClick={e => handleAnchor(e, chooseRef)}
+          >
+            How to Choose the Right Independent Living Community
+          </StyledLink>
+
+          <StyledLink
+            href={`#${sectionIdMap.next}`}
+            onClick={e => handleAnchor(e, nextRef)}
+          >
+            Next Steps
+          </StyledLink>
+          <StyledLink
+            href={`#${sectionIdMap.near}`}
+            onClick={e => handleAnchor(e, nearRef)}
+          >
+            Browse Independent Living Near You
+          </StyledLink>
+        </Paragraph>
+      </>
+    )
+  };
+
+  const SEOContent = () => {
+    return (
+      <>
+        <StyledArticle>
+          <StyledHeading level="title" size="title" _ref={ilRef} >
+            What Is Independent Living?
+          </StyledHeading>
+          <Paragraph>
+            <Link href="http://blog.aarp.org/2012/01/30/taking-a-closer-look-at-independent-living/">
+            Independent Living communities
+            </Link>
+            {' '}are designed for seniors who don't require personal care assistance. Senior residents at this kind
+            of senior living community want to streamline their lives and live with people of their own generation.
+          </Paragraph>
+          <Paragraph>
+            Baby boomers in Independent Living typically are active and healthy. They have no need for assistance with their{' '}
+            <Link href="https://www.seniorly.com/resources/articles/what-are-the-activities-of-daily-living-adls">
+              activities of daily living (ADLs).
+            </Link>
+            {' '}Also, they select this type of community because they want to avoid the hassle of maintenance and
+            upkeep of their current home.
+          </Paragraph>
+          <Paragraph>
+            To make life easy and enjoyable for residents, Independent Living communities provide plenty of amenities.
+            These may include dining facilities, landscaping and maintenance, housekeeping services, social activities
+            and clubs, and exercise facilities.
+          </Paragraph>
+          <Paragraph>
+            On-site amenities and delivery services via the mobile economy make this an ideal choice for active adults.
+            They can enjoy having services such as pet care, auto repair, or meal delivery available on demand.
+          </Paragraph>
+          <Paragraph>
+            When you choose an Independent Living community you will have a few housing options.
+            There can be a private studio or a spacious two-bedroom apartment. Residences may be available for either
+            purchase or rent, depending on the community.
+          </Paragraph>
+
+
+          <Link
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
+          >
+            Back to top
+          </Link>
+        </StyledArticle>
+        <StyledArticle>
+          <StyledHeading level="title" size="title" _ref={costRef}>
+            The Cost of Independent Living
+          </StyledHeading>
+          <Paragraph>
+            The cost of an Independent Living community near you varies greatly.
+            This depends on the type of community, the location, and the amenities offered.
+          </Paragraph>
+          <Paragraph>
+            In some Independent Living communities, residents may have the option to buy their homes rather than
+            renting. This is most common in active adult communities or age-restricted communities.
+            In some rental communities, a buy-in fee is required to join the community.
+          </Paragraph>
+          <Paragraph>
+            Costs can range as low as $1,000 in Independent Living communities designated for low-income
+            residents. On the other end of the spectrum, there are high-end Independent Living communities packed with luxurious amenities.
+            They can feature condos running as high as $1 million or apartments with
+            $100,000 buy-ins.
+          </Paragraph>
+          <Paragraph>
+            On average, you can expect to spend somewhere between $1,500 and $6,000. This is for the combination of
+            rent/mortgage plus amenities or association fees. Some services, such as housekeeping,
+            transportation or dining, may incur extra fees.
+          </Paragraph>
+          <Paragraph>
+            Independent Living fees are typically not covered by any type of insurance, including Medicare or
+            long-term care insurance. However, if Independent Living residents require{' '}
+            <Link href="https://www.seniorly.com/in-home-care">
+              Home Care
+            </Link>
+            {' '}for medical reasons,
+            some of those costs may be covered by insurance.
+          </Paragraph>
+
+          <Link
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
+          >
+            Back to top
+          </Link>
+        </StyledArticle>
+
+        <StyledArticle>
+          <Paragraph>
+            <StyledImage path="fa209740c6c30907d669ff08a8e4876b/Madison_Meadow_06_photo_Seniorly.jpg" alt="Madison Meadows, Phoenix, AZ" height={640} />
+            Photo:{' '}
+            <Link href="https://www.seniorly.com/independent-living/arizona/phoenix/phoenix-senior-living-at-madison-meadows">
+              Madison Meadows, Phoenix, AZ
+            </Link>
+          </Paragraph>
+        </StyledArticle>
+        <StyledArticle>
+          <StyledHeading level="title" size="title" _ref={typesRef} >
+            Types of Independent Living
+          </StyledHeading>
+
+          <Paragraph>
+            All Independent Living communities offer a variety of services and amenities.
+            There are some differences between the types of communities available for you to choose between.
+          </Paragraph>
+          <StyledHeading level="subtitle" size="subtitle">
+            Active Adult Communities
+          </StyledHeading>
+          <Paragraph>
+            Active adult communities are aimed at people who are aged 55 and older.
+            They're targeted to appeal to baby boomers. This senior living option may consist of single-family homes,
+            multi-family homes, townhomes, condos, or a mixture of different housing types.
+          </Paragraph>
+          <Paragraph>
+            Active adult communities can be quite large. Many have golf courses, clubhouses and common areas,
+            pools, and other recreational amenities to appeal to the active adult lifestyle.
+          </Paragraph>
+          <Paragraph>
+            Active adult communities aren't set up to provide health care services.
+            If you need medical care, you might want to explore a{' '}
+            <Link href="https://www.seniorly.com/skilled-nursing-facility">
+              skilled nursing facility
+            </Link>. If you only need personal care, then an{' '}
+            If you need medical care,
+            you might want to explore{' '}
+            <Link href="https://www.seniorly.com/assisted-living">
+              assisted living facility
+            </Link>
+            {' '}is the better choice.
+          </Paragraph>
+          <Paragraph>
+            Some independent living communities offer transportation options, such as shuttles to nearby shopping and
+            entertainment. Residents typically pay a monthly fee that covers the amenities and all outdoor maintenance.
+          </Paragraph>
+          <StyledHeading level="subtitle" size="subtitle">
+            CCRC (Continuing Care Retirement Communities)
+          </StyledHeading>
+          <Paragraph>
+            <Link href="https://www.seniorly.com/continuing-care-retirement-community">
+              CCRC (Continuing Care Retirement Communities)
+            </Link>
+            {' '}makes it easy for seniors to age in place. This senior living community provides a continuum of care as
+            the needs change. There are high entrance fees, but they are providing a guarantee all your care needs will be met.
+          </Paragraph>
+          <Paragraph>
+            Often, today's baby boomers start in Independent Living. Then they move to{' '}
+            <Link href="https://www.seniorly.com/assisted-living">
+              assisted living
+            </Link>
+            {' '}or{' '}<Link href="https://www.seniorly.com/memory-care">
+            memory care
+          </Link>
+            {' '}if needed. Finally, they move to a{' '}
+            <Link href="https://www.seniorly.com/skilled-nursing-facility">
+              skilled nursing facility
+            </Link>{' '}or hospice, if required.
+          </Paragraph>
+          <Paragraph>
+            This happens within the same community.  The change from one level of care to the next is far
+            less jarring to the seniors in a CCRC.
+          </Paragraph>
+          <StyledHeading level="subtitle" size="subtitle">
+          Senior Apartments
+        </StyledHeading>
+          <Paragraph>
+            Senior apartments are designed to cater to the physical and emotional needs of seniors.
+            They generally have minimal stairs and feature safety equipment such as handrails in bathrooms.
+          </Paragraph>
+          <Paragraph>
+            Because senior apartments are located in age-restricted buildings, they often foster a real sense of community.
+            They can take the form of standard single-family apartments or condos.  Individual apartments can be arranged in suites.
+            Senior residents get private bedrooms and bathrooms, but they share a common living space and kitchen.
+          </Paragraph>
+          <StyledHeading level="subtitle" size="subtitle">
+            Age-Restricted Communities
+          </StyledHeading>
+          <Paragraph>
+            Age-restricted communities, which are restricted to those aged 55 and over, are governed under the{' '}
+            <Link href="https://www.justice.gov/crt/fair-housing-act-1">
+              Fair Housing Act.
+            </Link>
+            {' '}According to the rules under this act, 80 percent of age-restricted units must house someone over 55.
+            No minors are allowed to live in the community.
+
+          </Paragraph>
+          <Paragraph>
+            Age-restricted communities often feature a country club-style setting. You might find a golf course,
+            tennis courts, clubhouse, and swimming pools, as well as other high-end amenities.
+
+          </Paragraph>
+
+          <Link
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
+          >
+            Back to top
+          </Link>
+        </StyledArticle>
+        <StyledArticle>
+          <StyledHeading level="title" size="title" >
+            What Is A Local Senior Living Expert?
+          </StyledHeading>
+          <WhatIsPartnerAgent toc="independent living" agents={agents}/>
+        </StyledArticle>
+
+        <StyledArticle>
+
+          <StyledHeading level="title" size="title" _ref={alternativeRef}>
+            Independent Living Alternatives
+          </StyledHeading>
+          <Paragraph>
+            The most common types of Independent Living that baby boomers move into are active adult communities,
+            CCRCs, and age-restricted communities. There are a few more innovative options also available.
+          </Paragraph>
+          <StyledHeading level="subtitle" size="subtitle">
+            Senior Co-Housing
+          </StyledHeading>
+          <Paragraph>
+            In{' '}
+            <Link href="https://www.seniorly.com/resources/articles/what-is-cohousing">
+              senior co-housing
+            </Link>{' '}, residents enjoy both private and common living space. Generally, a senior cohousing
+            community features 20 to 40 homes centered around a central lawn or outdoor area. While everyone has
+            personal living space, the entire community enjoys living space, dining space, a large kitchen,
+            and shared laundry facilities.  Sometimes, co-housing senior communities cater to residents who
+            share the same hobbies or interests.
+          </Paragraph>
+          <Paragraph>
+            PRO TIP: Learn more about this age targeted option further here:{' '}
+            <Link href="https://www.cohousing.org/directory/wpbdp_category/seek/">
+              Cohousing Associate of the United States.
+          </Link>
+
+          </Paragraph>
+          <StyledHeading level="subtitle" size="subtitle">
+            Cruise Ship Life
+          </StyledHeading>
+          <Paragraph>
+            There aren't any dedicated retirement cruises available.  Increasing numbers of baby boomers have
+            crunched the numbers and realized that they can enjoy life on a cruise ship.
+            Their costs are about the same as they would spend on a retirement community on land.
+
+          </Paragraph>
+          <Paragraph>
+            This alternative lifestyle is ideal for couples (who can avoid the higher charges that singles pay on cruises).
+            The numbers work best if you stick with the same cruise line to build up loyalty points. However, cruising
+            retirees can't count on regular health care if they need it. Also, spending a life at sea can eat
+            into time spent with grandchildren and friends.
+          </Paragraph>
+
+          <StyledHeading level="subtitle" size="subtitle">
+            The Village Movement
+          </StyledHeading>
+          <Paragraph>
+            The Village Movement is a rapidly growing alternative to retirement communities.
+            They are designed to let older adults stay in their own homes as they age. The "village" in question isn't
+            an actual village, but a membership organization located within a given neighborhood.
+
+          </Paragraph>
+          <Paragraph>
+            The members pay annual dues to gain access to a network of discounted services.
+            These include home health care, grocery delivery, and home maintenance services.
+            In addition, the village often sponsors local social activities that draw the small
+            communities together. Several hundred villages exist in various towns across the United States.
+          </Paragraph>
+
+
+          <Link
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
+          >
+            Back to top
+          </Link>
+        </StyledArticle>
+
+        <StyledArticle>
+          <StyledHeading level="title" size="title" _ref={servicesRef} >
+            Services Provided in Independent Living
+          </StyledHeading>
+
+          <Paragraph>
+            The services and amenities available vary from one Independent Living community to another.
+            Still, many communities offer some combination of these amenities:
+          </Paragraph>
+
+          <ListWrapper>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Gyms and exercise facilities
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Swimming pools and hot tubs
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Beauty salons and barber shops
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Dining facilities with chef-prepared meals
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              A full social activity schedule
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Transportation near the community
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Housekeeping, linen and/or laundry services
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              24/7 security
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Religious services
+            </ListItem>
+          </ListWrapper>
+
+
+          <StyledHeading level="subtitle" size="subtitle">
+            Medical Care in Independent Living Communities
+          </StyledHeading>
+          <Paragraph>
+            You probably noticed that the above list of independent living amenities and services doesn't
+            include medical care. Most active adults who choose an Independent Living community don't
+            have significant medical needs when they move into the community.
+          </Paragraph>
+          <Paragraph>
+            Sometimes,{' '}
+            <Link href="https://www.sfchronicle.com/senior-living/article/Meet-Generation-B-Entrepreneurial-educated-and-13942528.php">
+              baby boomers
+            </Link>
+            {' '}in an Independent Living community don't want to leave their homes to enter
+            assisted living or a skilled nursing facility. Even when their need for care becomes more urgent, they
+            don’t want to move.
+          </Paragraph>
+          <Paragraph>
+            One solution for aging citizens who do need some regular medical or personal care is Home Care services.
+            With Home Care, trained caregivers provide the services needed right in the senior's own home.
+          </Paragraph>
+          <Paragraph>
+            At Seniorly, we have access to top{' '}
+            <Link href="https://www.seniorly.com/in-home-care">
+              Home Care
+            </Link>
+            {' '}services and are happy to connect you, if needed.
+            For more information on Home Care,{' '}
+            <Link href="https://www.seniorly.com/in-home-care">
+              click here.
+            </Link>
+          </Paragraph>
+          <Paragraph>
+            It’s important to remember many people mistakenly use the term “
+            <Link href="https://www.seniorly.com/nursing-homes">
+              nursing home
+            </Link>” when searching for any
+            kind of senior living.  That is a catch-all phrase for all senior living housing options.
+            However, independent living is the farthest removed from what a searcher might be thinking of when looking for a nursing home.
+          </Paragraph>
+
+          <Link
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
+          >
+            Back to top
+          </Link>
+        </StyledArticle>
+
+        <StyledArticle>
+            <StyledHeading level="title" size="title" _ref={ilvsalRef} >
+              Independent Living vs. Assisted Living
+            </StyledHeading>
+            <Paragraph>
+              An independent living community is not the right choice for older adults who need help with the
+              Activities of Daily Living (ADLs). This includes assistance with dressing, bathing and meal preparation.
+              The right senior living community option is called{' '}
+              <Link href="https://www.seniorly.com/assisted-living">
+                Assisted Living.
+              </Link>{' '}Take a look at the basic differences between these two types of senior living.
+            </Paragraph>
+            <StyledArticle>
+              <StyledTable>
+                <thead>
+                <tr>
+                  <th />
+                  <th>
+                    Independent Living
+                  </th>
+                  <th>
+                    Assisted Living
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>
+                    Private Apartments
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                  <td>
+                    Sometimes
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Shared Rooms
+                  </td>
+                  <td>
+                    No
+                  </td>
+                  <td>
+                    Usually
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Transportation Provided
+                  </td>
+                  <td>
+                    Sometimes
+                  </td>
+                  <td>
+                    Usually
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Medication Management Services
+                  </td>
+                  <td>
+                    No
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    3 Meals a Day Provided
+                  </td>
+                  <td>
+                    Sometimes
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Housekeeping Services Provided
+                  </td>
+                  <td>
+                    Sometimes
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Assistance With Activities of Daily Living
+                  </td>
+                  <td>
+                    No
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Social Activities
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Exercise Facilities and Programs
+                  </td>
+                  <td>
+                    Yes
+                  </td>
+                  <td>
+                    Usually
+                  </td>
+                </tr>
+                </tbody>
+              </StyledTable>
+            </StyledArticle>
+
+            <Link
+              href={`#${sectionIdMap.il}`}
+              onClick={e => handleAnchor(e, ilRef)}
+            >
+              Back to top
+            </Link>
+          </StyledArticle>
+
+        <StyledArticle>
+          <StyledHeading level="title" size="title" _ref={chooseRef} >
+            How to Choose the Right Independent Living Community
+          </StyledHeading>
+
+          <Paragraph>
+            If you're considering an Independent Living community near you start by determining which type of community
+            is the best choice.  Options include an active adult community, co-housing, a CCRC, or other choices.
+            Research the communities available in your chosen location, comparing their costs and amenities.
+            Paying a visit is also highly recommended.
+          </Paragraph>
+          <Paragraph>
+            When you visit an Independent Living community, you'll be able to see which housing units are available.
+            You can also check to see if the amenities and services are as advertised. Get a sense of whether the
+            community is a good fit for you or your loved one.
+          </Paragraph>
+          <Paragraph>
+            While visiting, you should feel free to ask any questions that occur to you. Remember, you're making a
+            big decision with this move. You have the right to know all the information about the community you might
+            choose as your own.
+          </Paragraph>
+          <Paragraph>
+            Here are some suggestions of questions you might want to ask during your visit, just to get you started.
+          </Paragraph>
+          <ol>
+            <li>
+              What social and recreational activities are offered? How many residents actually participate in the activities you're interested in?
+            </li>
+            <li>
+              What options are available if you need regular medical or personal care in your home? Are you allowed to bring in an in-home caregiver? Under what circumstances would you be asked to move to an Assisted Living community?
+            </li>
+            <li>
+              What's included in the monthly fee? Is the monthly fee increased every year? If not, when is it increased? What happens if a resident has difficulty paying the monthly fee?
+            </li>
+            <li>
+              What assistance will the Independent Living community provide to help you move and get settled there?
+            </li>
+            <li>
+              What's the security like at the community? What emergency services are available?
+            </li>
+            <li>
+              Are any meals provided? If the answer is yes, how many meals are provided, and which ones? Are they included in the monthly fee? Are any accommodations available if you need to follow a restricted diet (gluten-free, vegetarian, kosher, etc.)?
+            </li>
+            <li>
+              Are visitors allowed? What about overnight visitors? Are children allowed to visit? Is there a curfew for visitors (or for any other activities)?
+            </li>
+            <li>
+              Does the community allow residents to have pets? Are there restrictions on the size or type of pets? Is it possible to make arrangements for pet care if you need to travel away from the community for any reason?
+            </li>
+            <li>
+              What transportation is available at the community? Does the community provide any kind of shuttles or private transportation for medical appointments, errands, or entertainment?
+            </li>
+            <li>
+              Do residents of the Independent Living community get involved with the surrounding community? What's the relationship between the Independent Living community and the surrounding neighborhood like?
+            </li>
+          </ol>
+
+          <Paragraph>
+            <strong> FREE TOOL: </strong>{' '}
+            <Link href="https://www.seniorly.com/resources/articles/questions-to-ask-on-your-community-tour">
+              74 Questions to Ask When Touring
+            </Link>
+          </Paragraph>
+
+
+          <Link
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
+          >
+            Back to top
+          </Link>
+        </StyledArticle>
+
+
+        <StyledArticle>
+          <NextSteps nextRef={nextRef}
+                     toc="independent living"
+                     label="By asking these questions, you can determine whether an Independent Living community is the right choice. We are providing additional Independent Living resources below to help you through the decision making process. Explore one of the three topics below to help narrow down your search:"
+                     links={nextSteps} />
+
+          <Link
+            href={`#${sectionIdMap.il}`}
+            onClick={e => handleAnchor(e, ilRef)}
+          >
+            Back to top
+          </Link>
+        </StyledArticle>
+      </>
+    );
+  };
+
+  const title = 'Find the Best Independent Living Near You ';
+  const description = 'What is independent living? Learn about the types of independent living communities for seniors, costs of independent living and how to choose the right place.';
+  const heading = state ? `${listSize} ${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${listSize} ${tocLabel} near ${city}`;
+
+  return (
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+      </Helmet>
+      <HubHeader imagePath="react-assets/hub/independent-living-cover.jpg"
+         toc="independent living"
+         heading="What is Independent Living Near You?"
+         label="Use our free search to find independent living nearby"
+         onCurrentLocation={onCurrentLocation}
+         onLocationSearch={onLocationSearch} />
+      <HubPageTemplate>
+        <Wrapper>
+          <TwoColumn>
+            <Column>
+              <StickToTop>
+                {TableOfContents()}
+              </StickToTop>
+            </Column>
+            <Body>
+            {SEOContent()}
+            <StyledHeading level="title" size="title" _ref={nearRef}>
+              {heading}
+            </StyledHeading>
+            {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
+            {!isFetchingResults && (
+              <CommunitySearchList
+                communityList={communityList}
+                searchParams={searchParams}
+                requestMeta={requestMeta}
+                location={location}
+              />
+            )}
+            </Body>
+          </TwoColumn>
+        </Wrapper>
+      </HubPageTemplate>
+      <PhoneCTAFooter/>
+      <Footer />
+    </>
+
+  );
+};
+
+IndependentLivingNearMePage.propTypes = {
+  onLocationSearch: func,
+  communityList: array.isRequired,
+  requestMeta: object.isRequired,
+  searchParams: object,
+  isFetchingResults: bool,
+  handleAnchor: func,
+  location: object.isRequired,
+  onCurrentLocation: func,
+};
+
+export default IndependentLivingNearMePage;

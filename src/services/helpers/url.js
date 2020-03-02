@@ -429,3 +429,7 @@ export const generateSearchUrl = (toc, address) => {
   const tocBc = tocPaths(toc);
   return `${tocBc.path}/${urlize(stateNames[address.state])}/${urlize(address.city)}`;
 };
+
+export const generateCityPathSearchUrl = (address) => {
+  return `${urlize(stateNames[address.state])}/${urlize(address.city)}`;
+};
