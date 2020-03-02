@@ -99,6 +99,13 @@ const StyledTable = styled.table`
   }
 `;
 
+const StyledImage = styled(ResponsiveImage)`
+  object-fit: cover;
+  vertical-align:top;
+  width: 100%;
+  height: 100%;
+`;
+
 
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
@@ -400,7 +407,6 @@ const MemoryCareNearMePage = ({
             their way to provide additional security.  This is because Alzheimer's residents are prone
             to wandering.
           </Paragraph>
-          https://d354o3y6yz93dt.cloudfront.net/images/768x512/
           <Paragraph>
             <StyledImage path="f09c42afc55ba7129b6784185690da30/Courtyard_Terrace_logo-17.jpg" alt="Courtyard Terrace Sacramento, CA" height={640} />
             Photo:{' '}

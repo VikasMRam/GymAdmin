@@ -99,6 +99,12 @@ const StyledTable = styled.table`
   }
 `;
 
+const StyledImage = styled(ResponsiveImage)`
+  object-fit: cover;
+  vertical-align:top;
+  width: 100%;
+  height: 100%;
+`;
 
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
