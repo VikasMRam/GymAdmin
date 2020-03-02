@@ -38,7 +38,7 @@ const WhatIsPartnerAgent = ({ toc, agents }) => (
     </Paragraph>
     <AgentWrapper>
       {
-        agents.map((p, i) =>
+        agents.map((p, i) => (
           <>
             <AgentItem>
               <AgentAvatarWrapper>
@@ -53,7 +53,7 @@ const WhatIsPartnerAgent = ({ toc, agents }) => (
               </div>
             </AgentItem>
             {(i !== (agents.length - 1)) && <Hr />}
-          </>
+          </>)
         )
       }
     </AgentWrapper>
