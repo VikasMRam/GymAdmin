@@ -5,7 +5,7 @@ Like for example when you add At the current time there is not a clear way in JS
 The greatest challenge is the size of the requests, we have to 
 ## Removing galleries
 
-Our tables `galleries` and `video_galleries` don't hold any data, so the polymorphic relationship should be done at `Video` and `Image` levels:
+~Our tables `galleries` and `video_galleries` don't hold any data, so the polymorphic relationship should be done at `Video` and `Image` levels~:
 
 ```sql
 CREATE TABLE public.images (
@@ -26,7 +26,7 @@ CREATE TABLE public.images (
 CREATE INDEX index_images_on_owner_id_and_owner_type ON public.images USING btree (owner_id, owner_type);
 ```
 
-^ Same for videos
+^ this does not stand anymore, let's follow current schema where images belong to gallery and gallery to gallery-able polymorphic relationshiop
 
 ## Data schema
 
@@ -57,9 +57,9 @@ Adding an image, this is a double step, first we have to acquire a temporary sig
 GET /v0/uploads/s3-signed-url?file=[url-encoded-filename]
 
 {
-  "key": "[folder]/[filename]",
+  "path": "[folder]/[filename]",
   "signedUrl": "http://bucket.s3.aws......",
-   ^ signed url for private key /temp/[folder]/[image]
+   ^ signed url for private key /uploads(or temp)/[folder]/[image]
 }
 ```
 
