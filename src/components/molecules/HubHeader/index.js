@@ -111,57 +111,54 @@ const StyledLabel = styled(Label)`
 `;
 
 const HubHeader = ({
-                     imagePath,
-                     toc,
-                     heading,
-                     label,
-                     onCurrentLocation,
-                     onLocationSearch,
-                  }) => {
-  return (
-    <>
-      <HeaderContainer />
-      <HeroWrapper>
-        <ImageWrapper>
-          <StyledImage path={imagePath} alt={heading} height={320} />
-        </ImageWrapper>
-        <CTAWrapper>
-          <SearchBoxWrapper>
-            <StyledHeading level="hero" size="hero" palette="white">
-              {heading}
-            </StyledHeading>
-            <StyledLabel palette="white">
-              {label}
-            </StyledLabel>
-            <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
-          </SearchBoxWrapper>
-        </CTAWrapper>
-      </HeroWrapper>
-      <AuditWrapper>
-        <AuditTextWrapper>
-          <StyledIconItem
-            icon="verified"
-            iconPalette="secondary"
-            iconVariation="dark35"
-            borderless={true}
-          >
-            This {toc} article has been reviewed and approved by{' '}
-            <Link to="https://www.seniorly.com/resources/author/jim+mc+cabe" >Jim McCabe, PhD, MSW, MPH, President - Eldercare Resources</Link>
-          </StyledIconItem>
-        </AuditTextWrapper>
-      </AuditWrapper>
-    </>
-  )
-
-};
+  imagePath,
+  toc,
+  heading,
+  label,
+  onCurrentLocation,
+  onLocationSearch,
+}) => (
+  <>
+    <HeaderContainer />
+    <HeroWrapper>
+      <ImageWrapper>
+        <StyledImage path={imagePath} alt={heading} height={320} />
+      </ImageWrapper>
+      <CTAWrapper>
+        <SearchBoxWrapper>
+          <StyledHeading level="hero" size="hero" palette="white">
+            {heading}
+          </StyledHeading>
+          <StyledLabel palette="white">
+            {label}
+          </StyledLabel>
+          <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
+        </SearchBoxWrapper>
+      </CTAWrapper>
+    </HeroWrapper>
+    <AuditWrapper>
+      <AuditTextWrapper>
+        <StyledIconItem
+          icon="verified"
+          iconPalette="secondary"
+          iconVariation="dark35"
+          borderless
+        >
+          This {toc} article has been reviewed and approved by{' '}
+          <Link to="https://www.seniorly.com/resources/author/jim+mc+cabe" >Jim McCabe, PhD, MSW, MPH, President - Eldercare Resources</Link>
+        </StyledIconItem>
+      </AuditTextWrapper>
+    </AuditWrapper>
+  </>
+);
 
 HubHeader.propTypes = {
-  imagePath: string.required,
-  toc: string.required,
-  heading: string.required,
-  label: string.required,
-  onLocationSearch: func.required,
-  onCurrentLocation: func.required,
+  imagePath: string.isRequired,
+  toc: string.isRequired,
+  heading: string.isRequired,
+  label: string.isRequired,
+  onLocationSearch: func.isRequired,
+  onCurrentLocation: func.isRequired,
 };
 
 export default HubHeader;

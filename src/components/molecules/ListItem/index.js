@@ -17,7 +17,7 @@ const ListItemIconDiv = styled.div`
 `;
 
 const ListItem = ({
-  children, icon, iconPalette, iconVariation
+  children, icon, iconPalette, iconVariation,
 }) => (
   <ListItemWrapper>
     <ListItemIconDiv>

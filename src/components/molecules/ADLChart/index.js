@@ -29,39 +29,37 @@ const ADLIconItem = styled.div`
   }
 `;
 
-const ADLChart = () => {
-  return (
-    <>
-      <StyledHeading level="subtitle" size="subtitle">
-        Activities of Daily Living (ADLs)
-      </StyledHeading>
-      <ADLWrapper>
-        <ADLIconItem>
-          Personal Hygiene
-          <Icon icon="bath" palette="secondary" variation="dark35" />
-        </ADLIconItem>
-        <ADLIconItem>
-          Feeding
-          <Icon icon="food" palette="secondary" variation="dark35" />
-        </ADLIconItem>
-        <ADLIconItem>
-          Continence Management
-          <Icon icon="washroom" palette="secondary" variation="dark35" />
-        </ADLIconItem>
-        <ADLIconItem>
-          Ambulating
-          <Icon icon="accessibility" palette="secondary" variation="dark35" />
-        </ADLIconItem>
-        <ADLIconItem>
-          Dressing
-          <Icon icon="shirt" palette="secondary" variation="dark35" />
-        </ADLIconItem>
-        <ADLIconItem>
-          Toileting
-          <Icon icon="toilet" palette="secondary" variation="dark35" />
-        </ADLIconItem>
-      </ADLWrapper>
-    </>
-  )
-};
+const ADLChart = () => (
+  <>
+    <StyledHeading level="subtitle" size="subtitle">
+      Activities of Daily Living (ADLs)
+    </StyledHeading>
+    <ADLWrapper>
+      <ADLIconItem>
+        Personal Hygiene
+        <Icon icon="bath" palette="secondary" variation="dark35" />
+      </ADLIconItem>
+      <ADLIconItem>
+        Feeding
+        <Icon icon="food" palette="secondary" variation="dark35" />
+      </ADLIconItem>
+      <ADLIconItem>
+        Continence Management
+        <Icon icon="washroom" palette="secondary" variation="dark35" />
+      </ADLIconItem>
+      <ADLIconItem>
+        Ambulating
+        <Icon icon="accessibility" palette="secondary" variation="dark35" />
+      </ADLIconItem>
+      <ADLIconItem>
+        Dressing
+        <Icon icon="shirt" palette="secondary" variation="dark35" />
+      </ADLIconItem>
+      <ADLIconItem>
+        Toileting
+        <Icon icon="toilet" palette="secondary" variation="dark35" />
+      </ADLIconItem>
+    </ADLWrapper>
+  </>
+);
 export default ADLChart;
