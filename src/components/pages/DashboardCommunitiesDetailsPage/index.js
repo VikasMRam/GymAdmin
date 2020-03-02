@@ -11,7 +11,7 @@ import {
   MESSAGES,
   TASKS,
   PROFILE,
-  CARE_SERVICES, PRICING, AMENITIES, SERVICES, CONTRACT, CONTACTS,
+  CARE_SERVICES, PRICING, AMENITIES, SERVICES, CONTRACT, CONTACTS, PHOTOS,
 } from 'sly/constants/dashboardAppPaths';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import communityPropType from 'sly/propTypes/community';
@@ -45,6 +45,7 @@ import DashboardCommunityDetailsFormContainer from 'sly/containers/DashboardComm
 import DashboardCommunityCareServicesFormContainer from 'sly/containers/DashboardCommunityCareServicesFormContainer';
 import DashboardCommunityServicesFormContainer from 'sly/containers/DashboardCommunityServicesFormContainer';
 import DashboardCommunityPricingFormContainer from 'sly/containers/DashboardCommunityPricingFormContainer';
+import DashboardCommunityPhotosFormContainer from 'sly/containers/DashboardCommunityPhotosFormContainer';
 import DashboardCommunityAmenitiesFormContainer from 'sly/containers/DashboardCommunityAmenitiesFormContainer';
 import DashboardCommunityContractFormContainer from 'sly/containers/DashboardCommunityContractFormContainer';
 import DashboardContactsSectionContainer from 'sly/containers/dashboard/DashboardContactsSectionContainer';
@@ -98,6 +99,7 @@ export default class DashboardCommunitiesDetailsPage extends Component {
       Profile: PROFILE,
       'Care Services': CARE_SERVICES,
       Pricing: PRICING,
+      Photos: PHOTOS,
       Amenities: AMENITIES,
       Services: SERVICES,
       Contacts: CONTACTS,
@@ -202,6 +204,15 @@ export default class DashboardCommunitiesDetailsPage extends Component {
           {currentTab === PRICING && (
             <Section>
               <DashboardCommunityPricingFormContainer
+                notifyInfo={notifyInfo}
+                notifyError={notifyError}
+                community={community}
+              />
+            </Section>
+          )}
+          {currentTab === PHOTOS && (
+            <Section>
+              <DashboardCommunityPhotosFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
