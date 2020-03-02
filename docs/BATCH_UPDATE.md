@@ -28,6 +28,8 @@ CREATE INDEX index_images_on_owner_id_and_owner_type ON public.images USING btre
 
 ^ this does not stand anymore, let's follow current schema where images belong to gallery and gallery to gallery-able polymorphic relationshiop
 
+The only thing that we have to change in the model is calling the db `sequence` column in the db `order` of `sortOrder` in the api.
+
 ## Data schema
 
 ```
@@ -118,17 +120,37 @@ PATCH /v0/marketplace/images/2
 }
 ```
 
-### Sort
+### Sort using resource endpoint
+
+A series of http requests
 
 ```http request
-PATCH /v0/marketplace/gallery/1
+PATCH /v0/marketplace/images/1
 
 {
-  "relationships": {
-    "images": [
-      { "type": "Image", "id": 2, "attributes": { "order": 0 } },
-      { "type": "Image", "id": 3, "attributes": { "order": 1 } }
-    ]
+  "data": {
+    "type": "Image",
+    "id": 1,
+    "attributes": {
+      "order": 0
+    }
   }
 }
 ```
+
+
+```http request
+PATCH /v0/marketplace/images/2
+
+{
+  "data": {
+    "type": "Image",
+    "id": 2,
+    "attributes": {
+      "order": 1
+    }
+  }
+}
+```
+
+... etc
