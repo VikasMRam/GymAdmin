@@ -26,7 +26,7 @@ export default class AgentsPageContainer extends Component {
     history.push(path);
   };
 
-  handleConsulationRequested = () => {
+  handleConsultationRequested = () => {
     const { notifyInfo } = this.props;
 
     notifyInfo('We have received your request and we will get back to you soon.');
@@ -40,7 +40,7 @@ export default class AgentsPageContainer extends Component {
       <AgentsPage
         onLocationSearch={this.handleLocationSearch}
         location={location}
-        onConsulationRequested={this.handleConsulationRequested}
+        onConsultationRequested={this.handleConsultationRequested}
       />
     );
   }

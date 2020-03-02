@@ -34,7 +34,7 @@ export default class AgentRegionPageContainer extends Component {
     history.push(path);
   };
 
-  handleConsulationRequested = () => {
+  handleConsultationRequested = () => {
     const { notifyInfo } = this.props;
 
     notifyInfo('We have received your request and we will get back to you soon.');
@@ -78,7 +78,7 @@ export default class AgentRegionPageContainer extends Component {
         locationName={locationName}
         isRegionPage={!citySlug}
         location={location}
-        onConsulationRequested={this.handleConsulationRequested}
+        onConsultationRequested={this.handleConsultationRequested}
       />
     );
   }

@@ -81,7 +81,7 @@ class AgentProfilePage extends Component {
       info: object.isRequired,
     }).isRequired,
     location: object.isRequired,
-    onConsulationRequested: func.isRequired,
+    onConsultationRequested: func.isRequired,
   };
 
   constructor(props) {
@@ -94,7 +94,7 @@ class AgentProfilePage extends Component {
     const {
       agent,
       location,
-      onConsulationRequested,
+      onConsultationRequested,
     } = this.props;
     if (!agent) {
       return null;
@@ -161,7 +161,7 @@ class AgentProfilePage extends Component {
                 firstName={firstName}
                 type="agent-profile-page"
                 postSubmit={() => {
-                  onConsulationRequested();
+                  onConsultationRequested();
                   if (this.agentSummaryRef.current.scrollIntoView) {
                     this.agentSummaryRef.current.scrollIntoView({ behavior: 'smooth' });
                   }

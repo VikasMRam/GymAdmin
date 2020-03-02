@@ -78,7 +78,7 @@ class AgentsPage extends Component {
   static propTypes = {
     onLocationSearch: func,
     location: object.isRequired,
-    onConsulationRequested: func.isRequired,
+    onConsultationRequested: func.isRequired,
   };
 
   constructor(props) {
@@ -90,7 +90,7 @@ class AgentsPage extends Component {
     const {
       onLocationSearch,
       location,
-      onConsulationRequested,
+      onConsultationRequested,
     } = this.props;
     const headerContent = (
       <>
@@ -125,7 +125,7 @@ class AgentsPage extends Component {
               hasLocation
               actionType={CONSULTATION_REQUESTED}
               postSubmit={() => {
-                onConsulationRequested();
+                onConsultationRequested();
                 if (this.heroRef.current.scrollIntoView) {
                   this.heroRef.current.scrollIntoView({ behavior: 'smooth' });
                 }

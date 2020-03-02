@@ -87,7 +87,7 @@ export default class AgentRegionPage extends Component {
     onLocationSearch: func.isRequired,
     isRegionPage: bool,
     location: object.isRequired,
-    onConsulationRequested: func.isRequired,
+    onConsultationRequested: func.isRequired,
   };
 
   constructor(props) {
@@ -99,7 +99,7 @@ export default class AgentRegionPage extends Component {
   render() {
     const {
       title, locationName, agentsList, onLocationSearch,
-      isRegionPage, location, onConsulationRequested,
+      isRegionPage, location, onConsultationRequested,
     } = this.props;
 
     if (!agentsList) {
@@ -144,7 +144,7 @@ export default class AgentRegionPage extends Component {
               hasLocation
               actionType={CONSULTATION_REQUESTED}
               postSubmit={() => {
-                onConsulationRequested();
+                onConsultationRequested();
 
                 if (this.title.scrollIntoView) {
                   this.title.scrollIntoView({ behavior: 'smooth' });

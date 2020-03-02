@@ -18,7 +18,7 @@ export default class AgentProfilePageContainer extends Component {
     notifyInfo: func.isRequired,
   };
 
-  handleConsulationRequested = () => {
+  handleConsultationRequested = () => {
     const { notifyInfo, agent: { info: { displayName } } } = this.props;
 
     notifyInfo(`We have received your request and our Seniorly Partner Agent, ${displayName} will get back to you soon.`);
@@ -32,7 +32,7 @@ export default class AgentProfilePageContainer extends Component {
       return null;
     }
 
-    return <AgentProfilePage agent={agent} location={location} onConsulationRequested={this.handleConsulationRequested} />;
+    return <AgentProfilePage agent={agent} location={location} onConsultationRequested={this.handleConsultationRequested} />;
   }
 }
 
