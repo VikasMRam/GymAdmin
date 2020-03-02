@@ -51,21 +51,20 @@ const NextSteps = ({
           {label}
         </NextParagraph>
       </NextHeader>
-      {
-        links.map(p => (
-          <StyledIconButton  href={p.to}
-            icon="chevron"
-            right
-            fullWidth
-            ghost
-            transparent
-            borderPalette="slate"
-            rotate={-1}
-          >
-            {p.title}
-          </StyledIconButton>)
-        )
-      }
+      {links.map(p => (
+        <StyledIconButton
+          href={p.to}
+          icon="chevron"
+          right
+          fullWidth
+          ghost
+          transparent
+          borderPalette="slate"
+          rotate={-1}
+        >
+          {p.title}
+        </StyledIconButton>
+      ))}
     </NextStepsWrapper>
     <Paragraph>
       Seniorly is here to help you at no cost to find the perfect {toc} community. Our powerful website will search

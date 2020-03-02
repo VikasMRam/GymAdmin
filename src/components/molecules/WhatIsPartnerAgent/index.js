@@ -37,25 +37,23 @@ const WhatIsPartnerAgent = ({ toc, agents }) => (
       their unique selling points, and best of all they can often negotiate fees on your behalf at your favorite options.
     </Paragraph>
     <AgentWrapper>
-      {
-        agents.map((p, i) => (
-          <>
-            <AgentItem>
-              <AgentAvatarWrapper>
-                <Image src={assetPath(p.asset)} />
-              </AgentAvatarWrapper>
-              <div>
-                <StyledHeading level="subtitle" size="subtitle" >{p.title}</StyledHeading>
-                <Paragraph>
-                  {p.caption}{' '}
-                  <Link href={p.to}>Click Here to Learn more about {p.first}.</Link>
-                </Paragraph>
-              </div>
-            </AgentItem>
-            {(i !== (agents.length - 1)) && <Hr />}
-          </>)
-        )
-      }
+      {agents.map((p, i) => (
+        <>
+          <AgentItem>
+            <AgentAvatarWrapper>
+              <Image src={assetPath(p.asset)} />
+            </AgentAvatarWrapper>
+            <div>
+              <StyledHeading level="subtitle" size="subtitle" >{p.title}</StyledHeading>
+              <Paragraph>
+                {p.caption}{' '}
+                <Link href={p.to}>Click Here to Learn more about {p.first}.</Link>
+              </Paragraph>
+            </div>
+          </AgentItem>
+          {(i !== (agents.length - 1)) && <Hr />}
+        </>
+      ))}
     </AgentWrapper>
     <Paragraph>
       Working with Seniorly means we will connect you to the local senior living expert in your preferred city.
