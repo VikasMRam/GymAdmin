@@ -105,6 +105,18 @@ const StyledImage = styled(ResponsiveImage)`
   height: 100%;
 `;
 
+const StyledBox = styled(Box)`
+  margin-bottom: ${size('spacing.regular')}
+`;
+const TipWrapper = styled.div`
+  display: inline-block;
+`;
+
+const TipIconDiv = styled.div`
+  display: inline-block;
+  padding-right: ${size('spacing.regular')};
+`;
+
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
 const Column = makeColumn('aside');
@@ -478,13 +490,19 @@ const IndependentLivingNearMePage = ({
             and shared laundry facilities.  Sometimes, co-housing senior communities cater to residents who
             share the same hobbies or interests.
           </Paragraph>
-          <Paragraph>
-            PRO TIP: Learn more about this age targeted option further here:{' '}
-            <Link href="https://www.cohousing.org/directory/wpbdp_category/seek/">
-              Cohousing Associate of the United States.
-          </Link>
+          <StyledBox backgroundPalette="secondary" backgroundVariation="stroke">
+            <TipWrapper>
+              <TipIconDiv>
+                <Icon icon="flag" palette="secondary" variation="dark35" />
+              </TipIconDiv>
+              PRO TIP: Learn more about this age targeted option further here:{' '}
+              <Link href="https://www.cohousing.org/directory/wpbdp_category/seek/">
+                Cohousing Associate of the United States.
+              </Link>
+              {' '}are often available for assistance with care needs.
+            </TipWrapper>
+          </StyledBox>
 
-          </Paragraph>
           <StyledHeading level="subtitle" size="subtitle">
             Cruise Ship Life
           </StyledHeading>

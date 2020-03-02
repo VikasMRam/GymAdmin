@@ -21,7 +21,7 @@ import {
   makeWrapper,
 } from 'sly/components/templates/HubPageTemplate';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image } from 'sly/components/atoms';
+import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
@@ -104,6 +104,17 @@ const StyledImage = styled(ResponsiveImage)`
   vertical-align:top;
   width: 100%;
   height: 100%;
+`;
+const StyledBox = styled(Box)`
+  margin-bottom: ${size('spacing.regular')}
+`;
+const TipWrapper = styled.div`
+  display: inline-block;
+`;
+
+const TipIconDiv = styled.div`
+  display: inline-block;
+  padding-right: ${size('spacing.regular')};
 `;
 
 
@@ -528,12 +539,18 @@ const MemoryCareNearMePage = ({
             </Link>
             ” any longer. Senior living is far more advanced than the term nursing home suggests.
           </Paragraph>
-          <Paragraph>
-            [<strong>PRO TIP:</strong>{' '}
-            <Link href="https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living">Veteran’s Benefits
-            </Link>
-            {' '}are often available for assistance with care needs.]
-          </Paragraph>
+          <StyledBox backgroundPalette="secondary" backgroundVariation="stroke">
+            <TipWrapper>
+              <TipIconDiv>
+                <Icon icon="flag" palette="secondary" variation="dark35" />
+              </TipIconDiv>
+              PRO TIP:{' '}
+              <Link href="https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living">
+                Veteran’s Benefits
+              </Link>
+              {' '}are often available for assistance with care needs.
+            </TipWrapper>
+          </StyledBox>
           <Paragraph>
             One great option for affordable memory care is a{' '}
             <Link href="https://www.seniorly.com/board-and-care-home">
@@ -546,16 +563,21 @@ const MemoryCareNearMePage = ({
             </Link>{' '}tell you about all the memory care options
             in your desired location.
           </Paragraph>
-          <Paragraph>
-            [<strong>FREE RESOURCE:</strong>{' '}“
-            <Link href ="https://www.seniorly.com/resources/articles/board-and-care-homes-the-x-factor-for-dementia-care">
-              The X Factor of Dementia Care
-            </Link>
-            ” by{' '}
-            <Link href="https://www.seniorly.com/agents/pacific-west/rocklin/senior-care-authority-sacramento-ca-mark-and-karyn-wolff-">
-              Mark Wolff
-            </Link>.]
-          </Paragraph>
+          <StyledBox backgroundPalette="secondary" backgroundVariation="stroke">
+            <TipWrapper>
+              <TipIconDiv>
+                <Icon icon="flag" palette="secondary" variation="dark35" />
+              </TipIconDiv>
+              FREE RESOURCE: “
+              <Link href="https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living">
+                The X Factor of Dementia Care
+              </Link>
+              ” by{' '}
+              <Link href="https://www.seniorly.com/agents/pacific-west/rocklin/senior-care-authority-sacramento-ca-mark-and-karyn-wolff-">
+                Mark Wolff
+              </Link>.
+            </TipWrapper>
+          </StyledBox>
           <Link
             href={`#${sectionIdMap.mc}`}
             onClick={e => handleAnchor(e, mcRef)}

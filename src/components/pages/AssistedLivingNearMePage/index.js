@@ -133,6 +133,7 @@ const StyledImage = styled(ResponsiveImage)`
 `;
 
 
+
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
 const Column = makeColumn('aside');
