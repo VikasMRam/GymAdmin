@@ -80,7 +80,7 @@ export default class NearMePageContainer extends Component {
   };
 
   handleCurrentLocation = (addresses, { latitude, longitude }) => {
-    const { searchParams, redirectTo } = this.props;
+    const { searchParams, history } = this.props;
 
     const event = {
       action: 'submit', category: `nearMeHeroSearch_${searchParams.toc}`, label: 'currentLocation',
@@ -89,8 +89,7 @@ export default class NearMePageContainer extends Component {
 
     if (addresses.length) {
       const path = `/${searchParams.toc}/${generateCityPathSearchUrl(addresses[0])}?latitude=${latitude}&longitude=${longitude}`;
-
-      redirectTo(path);
+      history.push(path);
     }
   };
 
