@@ -25,7 +25,7 @@ const IconWrapper = styled.div`
 
 const Tip = ({
   icon, iconSize, iconPalette, iconVariation, size, children,
-  textPalette, textVariation, iconRightMarginSpacing,
+  textPalette, textVariation,
 }) => (
   <Wrapper>
     <IconWrapper>
