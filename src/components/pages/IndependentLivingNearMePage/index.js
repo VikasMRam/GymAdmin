@@ -20,7 +20,7 @@ import {
   makeWrapper,
 } from 'sly/components/templates/HubPageTemplate';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image } from 'sly/components/atoms';
+import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
