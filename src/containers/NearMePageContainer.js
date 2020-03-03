@@ -66,8 +66,9 @@ export default class NearMePageContainer extends Component {
   };
 
   handleOnLocationSearch = (result) => {
+    const { searchParams } = this.props;
     const event = {
-      action: 'submit', category: 'nearMeHeroSearch', label: result.formatted_address,
+      action: 'submit', category: `nearMeHeroSearch_${searchParams.toc}`, label: result.formatted_address,
     };
     SlyEvent.getInstance().sendEvent(event);
 
@@ -79,7 +80,12 @@ export default class NearMePageContainer extends Component {
   };
 
   handleCurrentLocation = (addresses, { latitude, longitude }) => {
-    const { redirectTo } = this.props;
+    const { searchParams, redirectTo } = this.props;
+
+    const event = {
+      action: 'submit', category: `nearMeHeroSearch_${searchParams.toc}`, label: 'currentLocation',
+    };
+    SlyEvent.getInstance().sendEvent(event);
 
     if (addresses.length) {
       const path = `/${searchParams.toc}/${generateCityPathSearchUrl(addresses[0])}?latitude=${latitude}&longitude=${longitude}`;
