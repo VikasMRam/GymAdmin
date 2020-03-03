@@ -44,7 +44,6 @@ Tip.propTypes = {
   children: node,
   textPalette: palettePropType,
   textVariation: variationPropType,
-  iconRightMarginSpacing: string,
 };
 
 Tip.defaultProps = {
@@ -53,7 +52,6 @@ Tip.defaultProps = {
   iconVariation: 'dark35',
   textPalette: 'slate',
   textVariation: 'base',
-  iconRightMarginSpacing: 'small',
 };
 
 export default Tip;
