@@ -15,10 +15,12 @@ import {
   HubPageTemplate,
   makeBody,
   makeColumn,
-  makeFooter,
-  makeHeader,
   makeTwoColumn,
   makeWrapper,
+  makeStickToTop,
+  makeArticle,
+  makeTable,
+  makeTwoColumnListWrapper,
 } from 'sly/components/templates/HubPageTemplate';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image } from 'sly/components/atoms';
@@ -28,53 +30,9 @@ import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const StyledArticle = styled.article`
-  margin-bottom: ${size('spacing.xLarge')};
-  &:last-of-type {
-    margin-bottom: 0;
-    p {
-      margin-bottom: ${size('spacing.regular')};
-    }
-  }
-`;
-
-const StickToTop = styled.div`
-  background-color: ${palette('white', 'base')};
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')} ${size('spacing.regular')} ${size('spacing.large')};
-  line-height: ${size('lineHeight.body')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    position: sticky;
-    top: 24px;
-    margin-top: calc(2 * -${size('spacing.huge')});
-  }
-`;
-
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};
   display: block;
-`;
-
-const ListWrapper = styled.div`
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')};
-  line-height: ${size('lineHeight.body')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-  display: grid;
-  grid-template-columns: 100%;
-  grid-row-gap: ${size('spacing.large')};
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-template-columns: 50% 50%;
-    grid-column-gap: ${size('layout.gutter')};
-  }
 `;
 
 const TypesWrapper = styled.div`
@@ -83,32 +41,6 @@ const TypesWrapper = styled.div`
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.small')};
   margin-bottom: ${size('spacing.large')};
-`;
-
-const StyledTable = styled.table`
-  border-collapse: collapse;
-  width: 100%;
-  border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
-  margin-bottom: ${size('spacing.large')};
-  thead {
-    background-color: ${palette('slate', 'stroke')};
-    padding: ${size('spacing.regular')} ${size('spacing.large')};
-    color: ${palette('grey', 'base')};
-  };
-  tr {
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  };
-  td, th {
-    padding: ${size('spacing.regular')} ${size('spacing.large')};
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-    font-weight: normal;  
-  };
-  
-  table-layout: fixed;
-  font-size: ${size('text.tiny')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    font-size: ${size('text.body')};
-  }
 `;
 
 const MapLinkWrapper = styled.div`
@@ -132,12 +64,14 @@ const StyledImage = styled(ResponsiveImage)`
   height: 100%;
 `;
 
-
-
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
 const Column = makeColumn('aside');
 const Wrapper = makeWrapper('div');
+const StickToTop = makeStickToTop('div');
+const StyledArticle = makeArticle('article');
+const StyledTable = makeTable('table');
+const ListWrapper = makeTwoColumnListWrapper('div');
 
 const NearMePage = ({
   onLocationSearch,
@@ -270,9 +204,9 @@ const NearMePage = ({
   const TableOfContents = () => {
     return (
       <>
-        <StyledHeading level="subtitle" size="subtitle">
+        <Heading level="subtitle" size="subtitle">
           Table of Contents
-        </StyledHeading>
+        </Heading>
         <Paragraph>
           <StyledLink
             href={`#${sectionIdMap.al}`}
@@ -332,9 +266,9 @@ const NearMePage = ({
     return (
       <>
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={alRef} >
+          <Heading level="title" size="title" _ref={alRef} >
             What is Assisted Living?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Assisted living near you can be defined as 24-hour non-medical care delivered in a residential setting.
             Previously  known as{' '}
@@ -415,9 +349,9 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <StyledHeading level="title" size="title" >
+          <Heading level="title" size="title" >
             What is Assisted Living Near You Called?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Assisted living communities are not regulated at the federal level. Therefore, each state has their own
             licensing requirements.  Below, Seniorly has compiled the names each state gives to the term “assisted living.”
@@ -437,9 +371,9 @@ const NearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={costRef} >
+          <Heading level="title" size="title" _ref={costRef} >
             What Does Assisted Living Cost Near You?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             As of 2019, according to{' '}
             <Link href="https://www.genworth.com/aging-and-you/finances/cost-of-care.html">
@@ -500,9 +434,9 @@ const NearMePage = ({
             Do keep in mind that all levels of care should be safe, secure, friendly, and 100% certified.
             No bargain is worth risking the wellbeing of your loved one.
           </Paragraph>
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title">
             Financial Assistance for Assisted Living
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             If you’re still unsure if Assisted Living can realistically fit into your budget,
             look into the many financial aid options available.
@@ -550,16 +484,16 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <StyledHeading level="title" size="title" >
+          <Heading level="title" size="title" >
             What Is A Local Senior Living Expert?
-          </StyledHeading>
+          </Heading>
           <WhatIsPartnerAgent toc="assisted living" agents={agents}/>
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={staffRef} >
+          <Heading level="title" size="title" _ref={staffRef} >
             What Type Of Medical Staff Is Present?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Every assisted living facility near you is different. They are each dedicated to different levels of care and
             services. Assisted living communities will offer regular activities, on-site non-medical health care,
@@ -585,9 +519,9 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={licenseRef} >
+          <Heading level="title" size="title" _ref={licenseRef} >
             Licensing and Inspection Requirements
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Each state has its own licensing agency responsible for inspecting and certifying each Assisted Living
             community. Here is a full list of regulating agencies by state, as well as a{' '}
@@ -612,9 +546,9 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={socialRef} >
+          <Heading level="title" size="title" _ref={socialRef} >
             Exploring The Social and Community Aspects
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Many assume that making the step away from their “old life” and into Assisted Living means the end of a
             social life and autonomy. This is far from the truth. Any Assisted Living community near you worth considering
@@ -649,12 +583,12 @@ const NearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title">
             How Assisted Living Varies from Other Care Options
-          </StyledHeading>
-          <StyledHeading level="subtitle" size="subtitle" _ref={alvsnhRef} >
+          </Heading>
+          <Heading level="subtitle" size="subtitle" _ref={alvsnhRef} >
             Assisted Living vs Skilled Nursing Facility (SNF)
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Often, families search for “nursing home.” This term doesn’t really exist, but it is commonly defined as
             a Skilled Nursing Facility. There is a significant difference between Assisted Living communities and
@@ -744,9 +678,9 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <StyledHeading level="subtitle" size="subtitle" _ref={alvsilRef} >
+          <Heading level="subtitle" size="subtitle" _ref={alvsilRef} >
             Assisted Living vs. Independent Living
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Seniors choosing to live in Independent Living vs. Assisted Living typically require very
             little, if any, daily assistance. Unlike Assisted Living, residents of these communities
@@ -878,9 +812,9 @@ const NearMePage = ({
             </Column>
             <Body>
             {SEOContentAL()}
-            <StyledHeading level="title" size="title">
+            <Heading level="title" size="title">
               {heading}
-            </StyledHeading>
+            </Heading>
             <StyledArticle>
               <Paragraph>
                 Seniorly promises to make your search for assisted living near you easy and stress-free. In 2019, the
@@ -889,7 +823,7 @@ const NearMePage = ({
                 They can answer all your questions, share costs, arrange tours, and even negotiate rent. Our services are free.
               </Paragraph>
             </StyledArticle>
-            {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
+            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
             {!isFetchingResults && (
               <CommunitySearchList
                 communityList={communityList}

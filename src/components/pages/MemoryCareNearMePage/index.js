@@ -8,6 +8,7 @@ import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
 import ADLChart from 'sly/components/molecules/ADLChart';
+import Tip from 'sly/components/molecules/Tip';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -15,88 +16,24 @@ import {
   HubPageTemplate,
   makeBody,
   makeColumn,
-  makeFooter,
-  makeHeader,
   makeTwoColumn,
   makeWrapper,
+  makeStickToTop,
+  makeArticle,
+  makeTable,
+  makeOneColumnListWrapper,
 } from 'sly/components/templates/HubPageTemplate';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
-import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const StyledArticle = styled.article`
-  margin-bottom: ${size('spacing.xLarge')};
-  &:last-of-type {
-    margin-bottom: 0;
-    p {
-      margin-bottom: ${size('spacing.regular')};
-    }
-  }
-`;
-
-const StickToTop = styled.div`
-  background-color: ${palette('white', 'base')};
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')} ${size('spacing.regular')} ${size('spacing.large')};
-  line-height: ${size('lineHeight.body')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    position: sticky;
-    top: 24px;
-    margin-top: calc(2 * -${size('spacing.huge')});
-  }
-`;
-
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};
   display: block;
-`;
-
-const ListWrapper = styled.div`
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')};
-  line-height: ${size('lineHeight.body')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-  display: grid;
-  grid-template-columns: 100%;
-  grid-row-gap: ${size('spacing.large')};
-`;
-
-const StyledTable = styled.table`
-  border-collapse: collapse;
-  width: 100%;
-  border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
-  margin-bottom: ${size('spacing.large')};
-  thead {
-    background-color: ${palette('slate', 'stroke')};
-    padding: ${size('spacing.regular')} ${size('spacing.large')};
-    color: ${palette('grey', 'base')};
-  };
-  tr {
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  };
-  td, th {
-    padding: ${size('spacing.regular')} ${size('spacing.large')};
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-    font-weight: normal;
-
-  };
-  table-layout: fixed;
-  font-size: ${size('text.tiny')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    font-size: ${size('text.body')};
-  }
 `;
 
 const StyledImage = styled(ResponsiveImage)`
@@ -105,23 +42,16 @@ const StyledImage = styled(ResponsiveImage)`
   width: 100%;
   height: 100%;
 `;
-const StyledBox = styled(Box)`
-  margin-bottom: ${size('spacing.regular')}
-`;
-const TipWrapper = styled.div`
-  display: inline-block;
-`;
-
-const TipIconDiv = styled.div`
-  display: inline-block;
-  padding-right: ${size('spacing.regular')};
-`;
 
 
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
 const Column = makeColumn('aside');
 const Wrapper = makeWrapper('div');
+const StickToTop = makeStickToTop('div');
+const StyledArticle = makeArticle('article');
+const StyledTable = makeTable('table');
+const ListWrapper = makeOneColumnListWrapper('div');
 
 const MemoryCareNearMePage = ({
   onLocationSearch,
@@ -193,9 +123,9 @@ const MemoryCareNearMePage = ({
   const TableOfContents = () => {
     return (
       <>
-        <StyledHeading level="subtitle" size="subtitle">
+        <Heading level="subtitle" size="subtitle">
           Table of Contents
-        </StyledHeading>
+        </Heading>
         <Paragraph>
           <StyledLink
             href={`#${sectionIdMap.mc}`}
@@ -255,9 +185,9 @@ const MemoryCareNearMePage = ({
     return (
       <>
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={mcRef} >
+          <Heading level="title" size="title" _ref={mcRef} >
             What is Memory Care?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Memory Care is a senior living community built to care for seniors who have{' '}
             <Link href="https://www.alz.org/alzheimer_s_dementia">
@@ -290,9 +220,9 @@ const MemoryCareNearMePage = ({
             </Link>
           </Paragraph>
 
-          <StyledHeading level="subtitle" size="subtitle">
+          <Heading level="subtitle" size="subtitle">
             The Reisberg Scale
-          </StyledHeading>
+          </Heading>
 
           <StyledTable>
             <thead>
@@ -439,9 +369,9 @@ const MemoryCareNearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={careRef}>
+          <Heading level="title" size="title" _ref={careRef}>
             Memory Care Services
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Memory care facilities are often specially designed to help those with Alzheimer's and all
             types of dementia feel comfortable and at home. The level of services provided often
@@ -506,9 +436,9 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={costRef} >
+          <Heading level="title" size="title" _ref={costRef} >
             How To Pay for Memory Care
-          </StyledHeading>
+          </Heading>
 
           <Paragraph>
             Memory Care is typically covered by private pay.
@@ -539,18 +469,13 @@ const MemoryCareNearMePage = ({
             </Link>
             ” any longer. Senior living is far more advanced than the term nursing home suggests.
           </Paragraph>
-          <StyledBox backgroundPalette="secondary" backgroundVariation="stroke">
-            <TipWrapper>
-              <TipIconDiv>
-                <Icon icon="flag" palette="secondary" variation="dark35" />
-              </TipIconDiv>
-              PRO TIP:{' '}
-              <Link href="https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living">
-                Veteran’s Benefits
-              </Link>
-              {' '}are often available for assistance with care needs.
-            </TipWrapper>
-          </StyledBox>
+          <Tip>
+            PRO TIP:{' '}
+            <Link href="https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living">
+              Veteran’s Benefits
+            </Link>
+            {' '}are often available for assistance with care needs.
+          </Tip>
           <Paragraph>
             One great option for affordable memory care is a{' '}
             <Link href="https://www.seniorly.com/board-and-care-home">
@@ -563,21 +488,16 @@ const MemoryCareNearMePage = ({
             </Link>{' '}tell you about all the memory care options
             in your desired location.
           </Paragraph>
-          <StyledBox backgroundPalette="secondary" backgroundVariation="stroke">
-            <TipWrapper>
-              <TipIconDiv>
-                <Icon icon="flag" palette="secondary" variation="dark35" />
-              </TipIconDiv>
-              FREE RESOURCE: “
-              <Link href="https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living">
-                The X Factor of Dementia Care
-              </Link>
-              ” by{' '}
-              <Link href="https://www.seniorly.com/agents/pacific-west/rocklin/senior-care-authority-sacramento-ca-mark-and-karyn-wolff-">
-                Mark Wolff
-              </Link>.
-            </TipWrapper>
-          </StyledBox>
+          <Tip>
+            FREE RESOURCE: “
+            <Link href="https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living">
+              The X Factor of Dementia Care
+            </Link>
+            ” by{' '}
+            <Link href="https://www.seniorly.com/agents/pacific-west/rocklin/senior-care-authority-sacramento-ca-mark-and-karyn-wolff-">
+              Mark Wolff
+            </Link>.
+          </Tip>
           <Link
             href={`#${sectionIdMap.mc}`}
             onClick={e => handleAnchor(e, mcRef)}
@@ -586,16 +506,16 @@ const MemoryCareNearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <StyledHeading level="title" size="title" >
+          <Heading level="title" size="title" >
             What Is A Local Senior Living Expert?
-          </StyledHeading>
+          </Heading>
           <WhatIsPartnerAgent toc="memory care" agents={agents}/>
         </StyledArticle>
         <StyledArticle>
 
-          <StyledHeading level="title" size="title" _ref={staffRef}>
+          <Heading level="title" size="title" _ref={staffRef}>
             Medical Care and Staffing
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Most memory care facilities are staffed with registered nurses, licensed vocational nurses, and
             certified nurse assistants. The objective is to have enough qualified staff to care for residents'
@@ -609,9 +529,9 @@ const MemoryCareNearMePage = ({
             Also, staff are trained to understand what seniors are trying to communicate through behavior when verbal
             communication abilities start to lag.
           </Paragraph>
-          <StyledHeading level="subtitle" size="subtitle" >
+          <Heading level="subtitle" size="subtitle" >
             The Memory Care Written Plan
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Part of the care for your loved one at a memory care community will include a written plan.
             The facility's medical director leads the development of this plan. Also involved is the attending
@@ -657,9 +577,9 @@ const MemoryCareNearMePage = ({
 
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={mcvsalRef} >
+          <Heading level="title" size="title" _ref={mcvsalRef} >
             How Does Memory Care Differ From Assisted Living?
-          </StyledHeading>
+          </Heading>
 
           <Paragraph>
             It’s helpful to understand the difference between memory care and an assisted living community.
@@ -856,9 +776,9 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={chooseRef} >
+          <Heading level="title" size="title" _ref={chooseRef} >
             Choosing a Memory Care Facility
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             When you're looking for a memory care facility for your loved one, you probably have a lot of questions.
             Sure, some of them will be about the costs of memory care — and we deal with that in our next article here.
@@ -954,9 +874,9 @@ const MemoryCareNearMePage = ({
             </Column>
             <Body>
             {SEOContentMC()}
-            <StyledHeading level="title" size="title" _ref={nearRef}>
+            <Heading level="title" size="title" _ref={nearRef}>
               {heading}
-            </StyledHeading>
+            </Heading>
             <StyledArticle>
               <Paragraph>
                 Seniorly promises to make your search for memory care near you easy and stress-free. Below, compare memory care
@@ -964,7 +884,7 @@ const MemoryCareNearMePage = ({
                 They can answer all your questions, share costs, arrange tours, and even negotiate rent. Our services are free.
               </Paragraph>
             </StyledArticle>
-            {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
+            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
             {!isFetchingResults && (
               <CommunitySearchList
                 communityList={communityList}
@@ -978,10 +898,6 @@ const MemoryCareNearMePage = ({
         </Wrapper>
       </HubPageTemplate>
       <PhoneCTAFooter/>
-      {/*<TemplateContent>*/}
-        {/*<StyledArticle><SeoLinks title="Find Assisted Living Near You by City" links={ALSeoCities} /></StyledArticle>*/}
-        {/*<StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>*/}
-      {/*</TemplateContent>*/}
       <Footer />
     </>
 

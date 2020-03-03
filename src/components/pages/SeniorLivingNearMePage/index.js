@@ -15,31 +15,22 @@ import {
   HubPageTemplate,
   makeBody,
   makeColumn,
-  makeFooter,
-  makeHeader,
   makeTwoColumn,
   makeWrapper,
+  makeStickToTop,
+  makeArticle,
+  makeTable,
+  makeOneColumnListWrapper,
 } from 'sly/components/templates/HubPageTemplate';
-import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
-import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 
 
-const StyledHeading = styled(Heading)`
+const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};
-`;
-
-const StyledArticle = styled.article`
-  margin-bottom: ${size('spacing.xLarge')};
-  &:last-of-type {
-    margin-bottom: 0;
-    p {
-      margin-bottom: ${size('spacing.regular')};
-    }
-  }
+  display: block;
 `;
 
 const StyledImage = styled(ResponsiveImage)`
@@ -49,68 +40,15 @@ const StyledImage = styled(ResponsiveImage)`
   height: 100%;
 `;
 
-const StickToTop = styled.div`
-  background-color: ${palette('white', 'base')};
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')} ${size('spacing.regular')} ${size('spacing.large')};
-  line-height: ${size('lineHeight.body')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    position: sticky;
-    top: 24px;
-    margin-top: calc(2 * -${size('spacing.huge')});
-  }
-`;
-
-const StyledLink = styled(Link)`
-  margin-bottom: ${size('spacing.large')};
-  display: block;
-`;
-
-const ListWrapper = styled.div`
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')};
-  line-height: ${size('lineHeight.body')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-  display: grid;
-  grid-template-columns: 100%;
-  grid-row-gap: ${size('spacing.large')};
-`;
-
-const StyledTable = styled.table`
-  border-collapse: collapse;
-  width: 100%;
-  border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
-  margin-bottom: ${size('spacing.large')};
-  thead {
-    background-color: ${palette('slate', 'stroke')};
-    padding: ${size('spacing.regular')} ${size('spacing.large')};
-    color: ${palette('grey', 'base')};
-  };
-  tr {
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  };
-  td, th {
-    padding: ${size('spacing.regular')} ${size('spacing.large')};
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-    font-weight: normal;
-
-  };
-  table-layout: fixed;
-  font-size: ${size('text.tiny')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    font-size: ${size('text.body')};
-  }
-  
-`;
-
 
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
 const Column = makeColumn('aside');
 const Wrapper = makeWrapper('div');
+const StickToTop = makeStickToTop('div');
+const StyledArticle = makeArticle('article');
+const StyledTable = makeTable('table');
+const ListWrapper = makeOneColumnListWrapper('div');
 
 const SeniorLivingNearMePage = ({
   onLocationSearch,
@@ -184,9 +122,9 @@ const SeniorLivingNearMePage = ({
   const TableOfContents = () => {
     return (
       <>
-        <StyledHeading level="subtitle" size="subtitle">
+        <Heading level="subtitle" size="subtitle">
           Table of Contents
-        </StyledHeading>
+        </Heading>
         <Paragraph>
           <StyledLink
             href={`#${sectionIdMap.sl}`}
@@ -235,9 +173,9 @@ const SeniorLivingNearMePage = ({
     return (
       <>
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={slRef} >
+          <Heading level="title" size="title" _ref={slRef} >
             What is Senior Living?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Senior living is an umbrella term for communities designed to meet the care and lifestyle needs of older
             adults who cannot or choose not to live independently. Senior living properties are usually age-restricted,
@@ -262,9 +200,9 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={costRef}>
+          <Heading level="title" size="title" _ref={costRef}>
             How Much Does Senior Living Cost?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Senior living costs range based on a variety of factors, including location, care type, length of stay,
             property amenities, community type, etc. Some senior living facilities focus on offering a resort-like
@@ -364,9 +302,9 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={chooseRef} >
+          <Heading level="title" size="title" _ref={chooseRef} >
             The Benefits of Choosing a Senior Living Community
-          </StyledHeading>
+          </Heading>
 
           <Paragraph>
             Research shows that{' '}
@@ -414,9 +352,9 @@ const SeniorLivingNearMePage = ({
 
         <StyledArticle>
 
-          <StyledHeading level="title" size="title" _ref={typesRef}>
+          <Heading level="title" size="title" _ref={typesRef}>
             Senior Living: Independent Living
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             <Link href="https://www.seniorly.com/independent-living">
               Independent living communities
@@ -447,9 +385,9 @@ const SeniorLivingNearMePage = ({
 
 
         <StyledArticle>
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title">
             Senior Living: Assisted Living
-          </StyledHeading>
+          </Heading>
 
           <Paragraph>
             <Link href="https://www.seniorly.com/assisted-living">
@@ -502,9 +440,9 @@ const SeniorLivingNearMePage = ({
             can share costs, availability, features and so much more at no cost to you. To connect to one of our
             approved senior living advisors, email us now at ask@seniorly.com or call (855) 866-4515.
           </Paragraph>
-          <StyledHeading level="subtitle" size="subtitle" >
+          <Heading level="subtitle" size="subtitle" >
             What Is A Local Senior Living Expert?
-          </StyledHeading>
+          </Heading>
           <WhatIsPartnerAgent toc="senior living" agents={agents}/>
           <Link
             href={`#${sectionIdMap.sl}`}
@@ -515,9 +453,9 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title">
             Senior Living: Memory Care
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             <Link href="https://www.seniorly.com/memory-care">
               Memory care
@@ -546,9 +484,9 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title">
             Senior Living: Board and Care Home
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             A{' '}
             <Link href="https://www.seniorly.com/memory-care">
@@ -578,9 +516,9 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title">
             Senior Living: In-Home Care
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             With{' '}
             <Link href="https://www.seniorly.com/in-home-care">
@@ -603,9 +541,9 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title">
             Senior Living: Respite Care
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             <Link href="https://www.seniorly.com/respite-care">
               Respite care
@@ -629,9 +567,9 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title">
             Senior Living: CCRC
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             A{' '}
             <Link href="https://www.seniorly.com/respite-care">
@@ -651,9 +589,9 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title">
             Senior Living: Nursing Home
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             The term “
             <Link href="https://www.seniorly.com/nursing-homes">
@@ -674,9 +612,9 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title">
             Senior Living: Skilled Nursing Facility
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             The term “
             <Link href="https://www.seniorly.com/skilled-nursing-facility">
@@ -860,9 +798,9 @@ const SeniorLivingNearMePage = ({
             </Column>
             <Body>
             {SEOContent()}
-            <StyledHeading level="title" size="title" _ref={nearRef}>
+            <Heading level="title" size="title" _ref={nearRef}>
               {heading}
-            </StyledHeading>
+            </Heading>
             <StyledArticle>
               <Paragraph>
                 There are a lot of different factors that go into finding the right senior living community for you or
@@ -872,7 +810,7 @@ const SeniorLivingNearMePage = ({
 
               </Paragraph>
             </StyledArticle>
-            {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
+            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
             {!isFetchingResults && (
               <CommunitySearchList
                 communityList={communityList}
@@ -886,10 +824,6 @@ const SeniorLivingNearMePage = ({
         </Wrapper>
       </HubPageTemplate>
       <PhoneCTAFooter/>
-      {/*<TemplateContent>*/}
-        {/*<StyledArticle><SeoLinks title="Find Assisted Living Near You by City" links={ALSeoCities} /></StyledArticle>*/}
-        {/*<StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>*/}
-      {/*</TemplateContent>*/}
       <Footer />
     </>
 

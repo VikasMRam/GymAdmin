@@ -7,6 +7,8 @@ import HubHeader from 'sly/components/molecules/HubHeader';
 import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
+import Tip from 'sly/components/molecules/Tip';
+
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -14,12 +16,13 @@ import {
   HubPageTemplate,
   makeBody,
   makeColumn,
-  makeFooter,
-  makeHeader,
   makeTwoColumn,
   makeWrapper,
+  makeStickToTop,
+  makeArticle,
+  makeTable,
+  makeOneColumnListWrapper,
 } from 'sly/components/templates/HubPageTemplate';
-import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
@@ -27,75 +30,9 @@ import { getTocSeoLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 
 
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const StyledArticle = styled.article`
-  margin-bottom: ${size('spacing.xLarge')};
-  &:last-of-type {
-    margin-bottom: 0;
-    p {
-      margin-bottom: ${size('spacing.regular')};
-    }
-  }
-`;
-
-const StickToTop = styled.div`
-  background-color: ${palette('white', 'base')};
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')} ${size('spacing.regular')} ${size('spacing.large')};
-  line-height: ${size('lineHeight.body')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    position: sticky;
-    top: 24px;
-    margin-top: calc(2 * -${size('spacing.huge')});
-  }
-`;
-
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};
   display: block;
-`;
-
-const ListWrapper = styled.div`
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')};
-  line-height: ${size('lineHeight.body')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-  display: grid;
-  grid-template-columns: 100%;
-  grid-row-gap: ${size('spacing.large')};
-`;
-
-const StyledTable = styled.table`
-  border-collapse: collapse;
-  width: 100%;
-  border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
-  margin-bottom: ${size('spacing.large')};
-  thead {
-    background-color: ${palette('slate', 'stroke')};
-    padding: ${size('spacing.regular')} ${size('spacing.large')};
-    color: ${palette('grey', 'base')};
-  };
-  tr {
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  };
-  td, th {
-    padding: ${size('spacing.regular')} ${size('spacing.large')};
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-    font-weight: normal;
-
-  };
-  
-  table-layout: fixed;
-  font-size: ${size('text.tiny')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    font-size: ${size('text.body')};
-  }
 `;
 
 const StyledImage = styled(ResponsiveImage)`
@@ -105,22 +42,15 @@ const StyledImage = styled(ResponsiveImage)`
   height: 100%;
 `;
 
-const StyledBox = styled(Box)`
-  margin-bottom: ${size('spacing.regular')}
-`;
-const TipWrapper = styled.div`
-  display: inline-block;
-`;
-
-const TipIconDiv = styled.div`
-  display: inline-block;
-  padding-right: ${size('spacing.regular')};
-`;
 
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
 const Column = makeColumn('aside');
 const Wrapper = makeWrapper('div');
+const StickToTop = makeStickToTop('div');
+const StyledArticle = makeArticle('article');
+const StyledTable = makeTable('table');
+const ListWrapper = makeOneColumnListWrapper('div');
 
 const IndependentLivingNearMePage = ({
   onLocationSearch,
@@ -199,9 +129,9 @@ const IndependentLivingNearMePage = ({
   const TableOfContents = () => {
     return (
       <>
-        <StyledHeading level="subtitle" size="subtitle">
+        <Heading level="subtitle" size="subtitle">
           Table of Contents
-        </StyledHeading>
+        </Heading>
         <Paragraph>
           <StyledLink
             href={`#${sectionIdMap.il}`}
@@ -267,9 +197,9 @@ const IndependentLivingNearMePage = ({
     return (
       <>
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={ilRef} >
+          <Heading level="title" size="title" _ref={ilRef} >
             What Is Independent Living?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             <Link href="http://blog.aarp.org/2012/01/30/taking-a-closer-look-at-independent-living/">
             Independent Living communities
@@ -309,9 +239,9 @@ const IndependentLivingNearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={costRef}>
+          <Heading level="title" size="title" _ref={costRef}>
             The Cost of Independent Living
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             The cost of an Independent Living community near you varies greatly.
             This depends on the type of community, the location, and the amenities offered.
@@ -360,17 +290,17 @@ const IndependentLivingNearMePage = ({
           </Paragraph>
         </StyledArticle>
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={typesRef} >
+          <Heading level="title" size="title" _ref={typesRef} >
             Types of Independent Living
-          </StyledHeading>
+          </Heading>
 
           <Paragraph>
             All Independent Living communities offer a variety of services and amenities.
             There are some differences between the types of communities available for you to choose between.
           </Paragraph>
-          <StyledHeading level="subtitle" size="subtitle">
+          <Heading level="subtitle" size="subtitle">
             Active Adult Communities
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Active adult communities are aimed at people who are aged 55 and older.
             They're targeted to appeal to baby boomers. This senior living option may consist of single-family homes,
@@ -397,9 +327,9 @@ const IndependentLivingNearMePage = ({
             Some independent living communities offer transportation options, such as shuttles to nearby shopping and
             entertainment. Residents typically pay a monthly fee that covers the amenities and all outdoor maintenance.
           </Paragraph>
-          <StyledHeading level="subtitle" size="subtitle">
+          <Heading level="subtitle" size="subtitle">
             CCRC (Continuing Care Retirement Communities)
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             <Link href="https://www.seniorly.com/continuing-care-retirement-community">
               CCRC (Continuing Care Retirement Communities)
@@ -424,9 +354,9 @@ const IndependentLivingNearMePage = ({
             This happens within the same community.  The change from one level of care to the next is far
             less jarring to the seniors in a CCRC.
           </Paragraph>
-          <StyledHeading level="subtitle" size="subtitle">
+          <Heading level="subtitle" size="subtitle">
           Senior Apartments
-        </StyledHeading>
+        </Heading>
           <Paragraph>
             Senior apartments are designed to cater to the physical and emotional needs of seniors.
             They generally have minimal stairs and feature safety equipment such as handrails in bathrooms.
@@ -436,9 +366,9 @@ const IndependentLivingNearMePage = ({
             They can take the form of standard single-family apartments or condos.  Individual apartments can be arranged in suites.
             Senior residents get private bedrooms and bathrooms, but they share a common living space and kitchen.
           </Paragraph>
-          <StyledHeading level="subtitle" size="subtitle">
+          <Heading level="subtitle" size="subtitle">
             Age-Restricted Communities
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Age-restricted communities, which are restricted to those aged 55 and over, are governed under the{' '}
             <Link href="https://www.justice.gov/crt/fair-housing-act-1">
@@ -462,24 +392,24 @@ const IndependentLivingNearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <StyledHeading level="title" size="title" >
+          <Heading level="title" size="title" >
             What Is A Local Senior Living Expert?
-          </StyledHeading>
+          </Heading>
           <WhatIsPartnerAgent toc="independent living" agents={agents}/>
         </StyledArticle>
 
         <StyledArticle>
 
-          <StyledHeading level="title" size="title" _ref={alternativeRef}>
+          <Heading level="title" size="title" _ref={alternativeRef}>
             Independent Living Alternatives
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             The most common types of Independent Living that baby boomers move into are active adult communities,
             CCRCs, and age-restricted communities. There are a few more innovative options also available.
           </Paragraph>
-          <StyledHeading level="subtitle" size="subtitle">
+          <Heading level="subtitle" size="subtitle">
             Senior Co-Housing
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             In{' '}
             <Link href="https://www.seniorly.com/resources/articles/what-is-cohousing">
@@ -490,22 +420,17 @@ const IndependentLivingNearMePage = ({
             and shared laundry facilities.  Sometimes, co-housing senior communities cater to residents who
             share the same hobbies or interests.
           </Paragraph>
-          <StyledBox backgroundPalette="secondary" backgroundVariation="stroke">
-            <TipWrapper>
-              <TipIconDiv>
-                <Icon icon="flag" palette="secondary" variation="dark35" />
-              </TipIconDiv>
-              PRO TIP: Learn more about this age targeted option further here:{' '}
-              <Link href="https://www.cohousing.org/directory/wpbdp_category/seek/">
-                Cohousing Associate of the United States.
-              </Link>
-              {' '}are often available for assistance with care needs.
-            </TipWrapper>
-          </StyledBox>
+          <Tip>
+            PRO TIP: Learn more about this age targeted option further here:{' '}
+            <Link href="https://www.cohousing.org/directory/wpbdp_category/seek/">
+              Cohousing Associate of the United States.
+            </Link>
+            {' '}are often available for assistance with care needs.
+          </Tip>
 
-          <StyledHeading level="subtitle" size="subtitle">
+          <Heading level="subtitle" size="subtitle">
             Cruise Ship Life
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             There aren't any dedicated retirement cruises available.  Increasing numbers of baby boomers have
             crunched the numbers and realized that they can enjoy life on a cruise ship.
@@ -519,9 +444,9 @@ const IndependentLivingNearMePage = ({
             into time spent with grandchildren and friends.
           </Paragraph>
 
-          <StyledHeading level="subtitle" size="subtitle">
+          <Heading level="subtitle" size="subtitle">
             The Village Movement
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             The Village Movement is a rapidly growing alternative to retirement communities.
             They are designed to let older adults stay in their own homes as they age. The "village" in question isn't
@@ -545,9 +470,9 @@ const IndependentLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={servicesRef} >
+          <Heading level="title" size="title" _ref={servicesRef} >
             Services Provided in Independent Living
-          </StyledHeading>
+          </Heading>
 
           <Paragraph>
             The services and amenities available vary from one Independent Living community to another.
@@ -585,9 +510,9 @@ const IndependentLivingNearMePage = ({
           </ListWrapper>
 
 
-          <StyledHeading level="subtitle" size="subtitle">
+          <Heading level="subtitle" size="subtitle">
             Medical Care in Independent Living Communities
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             You probably noticed that the above list of independent living amenities and services doesn't
             include medical care. Most active adults who choose an Independent Living community don't
@@ -635,9 +560,9 @@ const IndependentLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-            <StyledHeading level="title" size="title" _ref={ilvsalRef} >
+            <Heading level="title" size="title" _ref={ilvsalRef} >
               Independent Living vs. Assisted Living
-            </StyledHeading>
+            </Heading>
             <Paragraph>
               An independent living community is not the right choice for older adults who need help with the
               Activities of Daily Living (ADLs). This includes assistance with dressing, bathing and meal preparation.
@@ -772,9 +697,9 @@ const IndependentLivingNearMePage = ({
           </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={chooseRef} >
+          <Heading level="title" size="title" _ref={chooseRef} >
             How to Choose the Right Independent Living Community
-          </StyledHeading>
+          </Heading>
 
           <Paragraph>
             If you're considering an Independent Living community near you start by determining which type of community
@@ -888,10 +813,10 @@ const IndependentLivingNearMePage = ({
             </Column>
             <Body>
             {SEOContent()}
-            <StyledHeading level="title" size="title" _ref={nearRef}>
+            <Heading level="title" size="title" _ref={nearRef}>
               {heading}
-            </StyledHeading>
-            {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
+            </Heading>
+            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
             {!isFetchingResults && (
               <CommunitySearchList
                 communityList={communityList}

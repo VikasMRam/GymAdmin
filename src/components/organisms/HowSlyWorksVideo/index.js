@@ -25,8 +25,8 @@ const HowSlyWorksVideo = ({
         onPause={onPause}
         onPlay={onPlay}
       >
-        <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
-        <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
+        <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/hiw_captions.mp4" type="video/mp4" />
+        <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/hiw_captions.webm" type="video/webm" />
       </StyledVideo>
     }
   </div>
