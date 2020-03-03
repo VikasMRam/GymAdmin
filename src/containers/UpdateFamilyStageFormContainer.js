@@ -119,7 +119,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       let moveInDateFormatted = moveInDate;
       const parsedDate = dayjs(moveInDate);
       if (parsedDate.isValid()) {
-        moveInDateFormatted = parsedDate.format('MM/DD/YYYY');
+        moveInDateFormatted = parsedDate.utc().format('MM/DD/YYYY');
       }
       let note = `${name} moved into ${communityName} on ${moveInDateFormatted} with a monthly rent of $${monthlyFees} and a referral fee of `;
       note = referralAgreementType === 'flat-fee' ? `${note}$${referralAgreement} flat fee` : `${note}${referralAgreement}% referral fee`;
@@ -157,8 +157,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       let moveInDateFormatted;
       const parsedDate = dayjs(moveInDate);
       if (parsedDate.isValid()) {
-        // make time components as zero since user will enter only date
-        moveInDateFormatted = parsedDate.format('YYYY-MM-DDT00:00:00[Z]');
+        moveInDateFormatted = parsedDate.utc().format();
       } else {
         notifyError('Move-In date is invalid');
         return false;
@@ -315,10 +314,16 @@ export default class UpdateFamilyStageFormContainer extends Component {
     }
     const lostDescription = otherText;
     const rejectDescription = otherText;
+    let existingMoveInDateFormatted;
+    if (existingMoveInDate) {
+      existingMoveInDateFormatted = new Date(existingMoveInDate);
+      existingMoveInDateFormatted = Date.UTC(existingMoveInDateFormatted.getUTCFullYear(), existingMoveInDateFormatted.getUTCMonth(), existingMoveInDateFormatted.getUTCDate(),
+        existingMoveInDateFormatted.getUTCHours(), existingMoveInDateFormatted.getUTCMinutes(), existingMoveInDateFormatted.getUTCSeconds());
+    }
     const newInitialValues = {
       stage,
       chosenDetails: chosenDetails || WAITLISTED,
-      moveInDate: existingMoveInDate ? new Date(existingMoveInDate) : null,
+      moveInDate: existingMoveInDateFormatted,
       communityName: existingCommunityName,
       roomType: existingMoveRoomType,
       referralAgreement: existingReferralAgreement ? existingReferralAgreement.toString() : null,
