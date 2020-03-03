@@ -41,6 +41,10 @@ export default {
   updateCommunity: { method: patch, path: '/marketplace/communities/:id' },
   updateRgsAux: { method: patch, path: '/marketplace/rgsAux/:id' },
 
+  createImage: { method: post, path: '/platform/images' },
+  updateImage: { method: patch, path: '/platform/images/:id' },
+  deleteImage: { method: destroy, path: '/platform/images/:id' },
+
   getAgent: { method: get, path: '/marketplace/agents/:id' },
   getAgents: { method: get, path: '/marketplace/agents' },
   updateAgent: { method: put, path: '/marketplace/agents/:id' },

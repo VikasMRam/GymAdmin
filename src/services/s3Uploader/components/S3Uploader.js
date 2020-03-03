@@ -68,6 +68,10 @@ export default class ReactS3Uploader extends React.Component {
     onError(message) {
       console.log(`Upload error: ${message}`);
     },
+    getSignedUrl(file, callback) {
+      return fetch(`/v0/platform/uploads/s3-signed-url?file=${encodeURIComponent(file.name)}`)
+        .then(callback);
+    },
     server: '',
     signingUrlMethod: 'GET',
     scrubFilename(filename) {

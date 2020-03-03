@@ -1,42 +1,54 @@
 import React from 'react';
 import styled from 'styled-components';
+import { sortableElement, sortableHandle } from 'react-sortable-hoc';
 
 import S3Uploader from './S3Uploader';
 
 import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 import { imagePropType } from 'sly/propTypes/gallery';
-import { bool } from 'prop-types';
-import { sortableElement, sortableHandle } from 'react-sortable-hoc';
+import Icon from 'sly/components/atoms/Icon';
+import { size, palette } from 'sly/components/themes';
+import Field from 'sly/components/molecules/Field';
+import { func } from 'prop-types';
+import IconButton from 'sly/components/molecules/IconButton';
 
-// eslint-disable-next-line no-bitwise
-const genKey = () => (Math.random() * 0xFFFFFF << 0).toString(16);
-
-const BaseWrapper = styled.div`
+const Wrapper = sortableElement(styled.div`
   display: flex;
+  align-items: center;
+  margin-bottom: ${size('spacing.regular')};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  border-radius: ${size('border.xLarge')};
+`);
 
-  > * {
-    flex-grow: 1;
-  }
+const DragHandle = sortableHandle(styled(Icon)`
+  flex-grow: 0;
+  margin: 0 ${size('spacing.large')};
+`);
+
+const Info = styled.div`
+  flex-grow: 1;
 `;
-
-const SortableWrapper = sortableElement(BaseWrapper);
-
-const DragHandle = sortableHandle(() => <span>::</span>);
-
-const Info = styled.div``;
 
 const Thumbnail = styled.div`
   flex-grow: 0;
-  flex-basis: 100px;
+  width: 100px;
+`;
+
+const RemoveButton = styled(IconButton)`
+  width: ${size('element.regular')};
+  height: ${size('element.regular')};
+  margin: 0 ${size('spacing.large')};
 `;
 
 export default class MediaItem extends React.Component {
   static propTypes = {
     image: imagePropType,
-    sortable: bool,
+    deleteImage: func,
+    saveImage: func,
   };
 
   state = {
+    path: '',
     loadFailed: false,
   };
 
@@ -44,16 +56,23 @@ export default class MediaItem extends React.Component {
     this.setState({ loadFailed: true });
   };
 
+  onSignedUrl = ({ path }) => {
+    console.log('path', path);
+    this.setState({ path });
+  };
+
   render() {
-    const { image, sortable, ...props } = this.props;
+    const { image, deleteImage, saveImage, ...props } = this.props;
     const { loadFailed } = this.state;
-    const Wrapper = sortable ? SortableWrapper : BaseWrapper;
     return (
       <Wrapper {...props}>
-        {sortable && <DragHandle />}
+        <DragHandle icon="menu" />
         <Info>
-          {(loadFailed || !image.attributes.path) &&
-            <S3Uploader />
+          {image.attributes.path &&
+            image.attributes.name
+          }
+          {!image.attributes.path &&
+            <S3Uploader onSignedUrl={this.onSignedUrl} />
           }
         </Info>
         <Thumbnail>
@@ -63,6 +82,7 @@ export default class MediaItem extends React.Component {
             path={image.attributes.path}
           />
         </Thumbnail>
+        <RemoveButton icon="trash" onClick={() => deleteImage(image)} />
       </Wrapper>
     );
   }

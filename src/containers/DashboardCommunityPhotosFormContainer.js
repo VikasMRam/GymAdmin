@@ -14,8 +14,6 @@ import { userIs } from 'sly/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import DashboardCommunityPhotosForm from 'sly/components/organisms/DashboardCommunityPhotosForm';
 
-const formName = 'DashboardCommunityPhotosForm';
-
 const arrayMove = (array, from, to) => {
   array = array.slice();
   const startIndex = to < 0 ? array.length + to : to;
@@ -24,11 +22,8 @@ const arrayMove = (array, from, to) => {
   return array;
 };
 
-const ReduxForm = reduxForm({
-  form: formName,
-})(DashboardCommunityPhotosForm);
-
-@query('updateCommunity', 'updateCommunity')
+@query('updateImage', 'updateImage')
+@query('deleteImage', 'deleteImage')
 @withUser
 @withRouter
 @prefetch('community', 'getCommunity', (req, { match }) => req({
@@ -40,13 +35,13 @@ const ReduxForm = reduxForm({
   return {
     gallery,
     images,
-    currentValues: state.form[formName]?.values,
   };
 })
 
 export default class DashboardCommunityPhotosFormContainer extends Component {
   static propTypes = {
-    updateCommunity: func.isRequired,
+    updateImage: func.isRequired,
+    deleteImage: func.isRequired,
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
     gallery: galleryPropType,
@@ -60,9 +55,9 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
   static getDerivedStateFromProps = (props, state) => {
     const { images } = props;
 
-    // we don't resort the images while
+    // we don't resort the images while uploading
     if (!state?.touched) {
-      console.warn('resorting')
+      console.log('resorting!');
       return {
         images: [...images].sort((a, b) => {
           const aSort = a.sort || a.sequence;
@@ -79,27 +74,85 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
     images: [],
   };
 
-  onSortEnd = ({ oldIndex, newIndex }) => {
-    console.log('sorting', oldIndex, newIndex);
+  addImage = () => {
     const { images } = this.state;
+    const newImage = {
+      attributes: {
+        sortOrder: images.length,
+      },
+    };
+    this.setState({
+      touched: true,
+      images: [
+        ...images,
+        newImage,
+      ],
+    });
+  };
+
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    const { images } = this.state;
+
     this.setState({
       touched: true,
       images: arrayMove(images, oldIndex, newIndex),
-    });
-    // then update images
+    }, this.handleSubmitSort);
   };
 
-  handleSubmitSort = (values) => {
-    const { match, updateCommunity } = this.props;
-    const { id } = match.params;
+  handleSubmitSort = () => {
+    const { updateImage } = this.props;
+    const { images } = this.state;
 
-    return updateCommunity({ id }, {
-      attributes: values,
+    const promises = images.reduce((acc, { id, attributes }, i) => {
+      if (id && attributes.sortOrder !== i) {
+        acc.push(updateImage({ id }, {
+          attributes: {
+            sortOrder: i,
+          },
+        }));
+      }
+      return acc;
+    }, []);
+
+    return Promise.all(promises)
+      .then(() => this.setState({
+        touched: false,
+      }))
+      .catch(e => {
+        console.error(e);
+      });
+  };
+
+  saveImage = (image) => {
+    const { createImage } = this.props;
+
+  };
+
+  spliceImageFromState = (image) => {
+    const { images } = this.state;
+    const index = images.indexOf(image);
+    const newImages = [...images];
+    newImages.splice(index, 1);
+    this.setState({
+      images: newImages,
     });
   };
+
+  deleteImage = (image) => {
+    console.log('delete image', image)
+    const { deleteImage } = this.props;
+    if (image.id && image.attributes.path) {
+      deleteImage({ id: image.id }).then(() => {
+        this.spliceImageFromState(image);
+      });
+    } else {
+      this.spliceImageFromState(image);
+    }
+  };
+
 
   render() {
-    const { gallery, user, status, currentValues, images: discardImagesProp, ...props } = this.props;
+    const { gallery, user, status, currentValues, images: discardImagesProp, deleteImage: discardDeleteImage, ...props } = this.props;
     const { images } = this.state;
 
     const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
@@ -113,8 +166,9 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
     defaultsDeep(initialValues, {});
 
     return (
-      <ReduxForm
-        onSubmit={this.handleSubmitSort}
+      <DashboardCommunityPhotosForm
+        addImage={this.addImage}
+        deleteImage={this.deleteImage}
         initialValues={initialValues}
         currentValues={currentValues}
         user={user}
