@@ -156,7 +156,7 @@ class AgentProfilePage extends Component {
             <AskQuestionToAgentWrapper id="ask-agent-question">
               <AskQuestionToAgentFormContainer
                 hasEmail
-                id={id}
+                entityId={id}
                 heading={`Ask ${firstName} a question`}
                 firstName={firstName}
                 type="agent-profile-page"

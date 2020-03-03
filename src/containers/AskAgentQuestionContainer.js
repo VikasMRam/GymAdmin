@@ -84,7 +84,7 @@ export default class AskAgentQuestionContainer extends Component {
       const modalComponentProps = {
         heading: "Let's Begin Your Senior Living Search",
         initialValues,
-        id: community.id,
+        entityId: community.id,
         category: 'community',
         showMessageFieldFirst: true,
         postSubmit,

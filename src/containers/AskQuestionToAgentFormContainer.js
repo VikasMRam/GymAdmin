@@ -40,7 +40,7 @@ const ReduxForm = reduxForm({
 
 export default class AskQuestionToAgentFormContainer extends Component {
   static propTypes = {
-    id: string,
+    entityId: string,
     user: userPropType,
     createOrUpdateUser: func.isRequired,
     postSubmit: func,
@@ -60,7 +60,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
 
   handleSubmit = (data) => {
     const {
-      id, postSubmit, createAction, createOrUpdateUser, updateUuidAux, match,
+      entityId, postSubmit, createAction, createOrUpdateUser, updateUuidAux, match,
       user, category, type, status, actionType,
     } = this.props;
 
@@ -90,7 +90,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
       updateUuidAuxReq = () => updateUuidAux({ id: uuidAux.id }, uuidAux);
     }
     let actionInfo = {
-      slug: id,
+      slug: entityId,
       question: message,
       entityType: capitalize(category),
       name,
@@ -124,7 +124,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
       .then(() => {
         const c = `${category}${type ? `-${type}` : ''}`;
         const event = {
-          action: 'ask_question', category: c, label: id || match.url,
+          action: 'ask_question', category: c, label: entityId || match.url,
         };
 
         SlyEvent.getInstance().sendEvent(event);
