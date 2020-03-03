@@ -14,89 +14,22 @@ import {
   HubPageTemplate,
   makeBody,
   makeColumn,
-  makeFooter,
-  makeHeader,
   makeTwoColumn,
   makeWrapper,
+  makeStickToTop,
+  makeArticle,
+  makeTable,
+  makeOneColumnListWrapper,
 } from 'sly/components/templates/HubPageTemplate';
-import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
-import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
-
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const StyledArticle = styled.article`
-  margin-bottom: ${size('spacing.xLarge')};
-  &:last-of-type {
-    margin-bottom: 0;
-    p {
-      margin-bottom: ${size('spacing.regular')};
-    }
-  }
-`;
-
-const StickToTop = styled.div`
-  background-color: ${palette('white', 'base')};
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')} ${size('spacing.regular')} ${size('spacing.large')};
-  line-height: ${size('lineHeight.body')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    position: sticky;
-    top: 24px;
-    margin-top: calc(2 * -${size('spacing.huge')});
-  }
-`;
-
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};
   display: block;
-`;
-
-const ListWrapper = styled.div`
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')};
-  line-height: ${size('lineHeight.body')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  margin-bottom: ${size('spacing.large')};
-  display: grid;
-  grid-template-columns: 100%;
-  grid-row-gap: ${size('spacing.large')};
-`;
-
-const StyledTable = styled.table`
-  border-collapse: collapse;
-  width: 100%;
-  border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
-  margin-bottom: ${size('spacing.large')};
-  thead {
-    background-color: ${palette('slate', 'stroke')};
-    padding: ${size('spacing.regular')} ${size('spacing.large')};
-    color: ${palette('grey', 'base')};
-  };
-  tr {
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  };
-  td, th {
-    padding: ${size('spacing.regular')} ${size('spacing.large')};
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-    font-weight: normal;
-
-  };
-  
-  table-layout: fixed;
-  font-size: ${size('text.tiny')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    font-size: ${size('text.body')};
-  }
 `;
 
 const StyledImage = styled(ResponsiveImage)`
@@ -106,10 +39,15 @@ const StyledImage = styled(ResponsiveImage)`
   height: 100%;
 `;
 
+
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
 const Column = makeColumn('aside');
 const Wrapper = makeWrapper('div');
+const StickToTop = makeStickToTop('div');
+const StyledArticle = makeArticle('article');
+const StyledTable = makeTable('table');
+const ListWrapper = makeOneColumnListWrapper('div');
 
 const MemoryCareNearMePage = ({
   onLocationSearch,
@@ -179,9 +117,9 @@ const MemoryCareNearMePage = ({
   const TableOfContents = () => {
     return (
       <>
-        <StyledHeading level="subtitle" size="subtitle">
+        <Heading level="subtitle" size="subtitle">
           Table of Contents
-        </StyledHeading>
+        </Heading>
         <Paragraph>
           <StyledLink
             href={`#${sectionIdMap.bnc}`}
@@ -235,9 +173,9 @@ const MemoryCareNearMePage = ({
     return (
       <>
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={bncRef} >
+          <Heading level="title" size="title" _ref={bncRef} >
             What is a Board and Care Home Near You?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             A board and care home is a residential care community for senior adults located within a residential
             neighborhood. These assisted living properties typically are small and intimate, caring for about
@@ -276,9 +214,9 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={servicesRef}>
+          <Heading level="title" size="title" _ref={servicesRef}>
             What Services are Provided at a Board and Care Home?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             The services provided at a board and care home near you are similar to those provided at an assisted
             living community, but in a home setting. Staff in a residential care home help with a wide variety of
@@ -344,9 +282,9 @@ const MemoryCareNearMePage = ({
 
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={costRef}>
+          <Heading level="title" size="title" _ref={costRef}>
             How Much Does a Board and Care Home Cost?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             The monthly fees for a board and care home can run anywhere from $1,500 to $6,000. This depends largely on
             where you live. While areas with a higher cost of living are likely to see higher fees, in general,
@@ -368,9 +306,9 @@ const MemoryCareNearMePage = ({
 
 
       <StyledArticle>
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title">
             Is There Medical Care at a Board and Care Home?
-          </StyledHeading>
+          </Heading>
 
           <Paragraph>
             <Link href="https://www.seniorly.com/assisted-living/articles/understanding-board-and-care-homes">
@@ -389,17 +327,17 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" >
+          <Heading level="title" size="title" >
             What Is A Local Senior Living Expert?
-          </StyledHeading>
+          </Heading>
           <WhatIsPartnerAgent toc="board and care homes" agents={agents}/>
         </StyledArticle>
 
         <StyledArticle>
 
-          <StyledHeading level="title" size="title" _ref={otherRef}>
+          <Heading level="title" size="title" _ref={otherRef}>
             Board and Care Homes vs. Other Types of Senior Housing
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Seniors have many choices when looking at senior living options.
           </Paragraph>
@@ -421,9 +359,9 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={otherRef} >
+          <Heading level="title" size="title" _ref={otherRef} >
             Board and Care Homes vs. Assisted Living
-          </StyledHeading>
+          </Heading>
           <StyledTable>
             <thead>
               <tr>
@@ -591,9 +529,9 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title">
             Board and Care Homes vs. Independent Living Communities
-          </StyledHeading>
+          </Heading>
 
           <StyledTable>
             <thead>
@@ -761,9 +699,9 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title">
             Board and Care Homes vs. Skilled Nursing Facility
-          </StyledHeading>
+          </Heading>
 
           <StyledTable>
             <thead>
@@ -935,9 +873,9 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <StyledHeading level="title" size="title" _ref={touringRef}>
+          <Heading level="title" size="title" _ref={touringRef}>
             What Questions to Ask When Touring a Board and Care Home
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             If you're looking for the right board and care home near you, or even if you're just considering it as
             a possible senior living option, you probably have a lot of questions. We want to help you answer them.
@@ -1050,10 +988,10 @@ const MemoryCareNearMePage = ({
             </Column>
             <Body>
             {SEOContent()}
-            <StyledHeading level="title" size="title" _ref={nearRef}>
+            <Heading level="title" size="title" _ref={nearRef}>
               {heading}
-            </StyledHeading>
-            {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
+            </Heading>
+            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
             {!isFetchingResults && (
               <CommunitySearchList
                 communityList={communityList}

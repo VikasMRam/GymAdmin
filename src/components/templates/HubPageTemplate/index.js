@@ -3,15 +3,9 @@ import { string } from 'prop-types';
 import styled from 'styled-components';
 import classes from 'classnames';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { withHydration } from 'sly/services/partialHydration';
-import BaseHeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader } from 'sly/components/templates/BasePageTemplate';
-import FooterOrganism from 'sly/components/organisms/Footer';
-import BaseModalContainer from 'sly/containers/ModalContainer';
-
-const HeaderContainer = withHydration(BaseHeaderContainer);
-const ModalContainer = withHydration(BaseModalContainer, { alwaysHydrate: true });
 
 export const HubPageTemplate = styled.main`
   .overlayWrapper {
@@ -86,25 +80,85 @@ export const HubPageTemplate = styled.main`
       grid-column: 2 / 2;
     }
   }
+  
+  .overlayStickToTop {
+    background-color: ${palette('white', 'base')};
+    padding: ${size('spacing.xLarge')} ${size('spacing.large')} ${size('spacing.regular')} ${size('spacing.large')};
+    line-height: ${size('lineHeight.body')};
+    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+    border-radius: ${size('spacing.small')};
+    margin-bottom: ${size('spacing.large')};
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      position: sticky;
+      top: 24px;
+      margin-top: calc(2 * -${size('spacing.huge')});
+    }
+  }
+  
+  .overlayArticle {
+    margin-bottom: ${size('spacing.xLarge')};
+    &:last-of-type {
+      margin-bottom: 0;
+      p {
+        margin-bottom: ${size('spacing.regular')};
+      }
+    }
+  }
+  
+  .overlayTable {
+    border-collapse: collapse;
+    width: 100%;
+    border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
+    margin-bottom: ${size('spacing.large')};
+    thead {
+      background-color: ${palette('slate', 'stroke')};
+      padding: ${size('spacing.regular')} ${size('spacing.large')};
+      color: ${palette('grey', 'base')};
+    };
+    tr {
+      border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+    };
+    td, th {
+      padding: ${size('spacing.regular')} ${size('spacing.large')};
+      border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+      font-weight: normal;
+  
+    };
+    table-layout: fixed;
+    font-size: ${size('text.tiny')};
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      font-size: ${size('text.body')};
+    }
+  }
+  
+  .overlayOneColumnListWrapper {
+    padding: ${size('spacing.xLarge')} ${size('spacing.large')};
+    line-height: ${size('lineHeight.body')};
+    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+    border-radius: ${size('spacing.small')};
+    margin-bottom: ${size('spacing.large')};
+    display: grid;
+    grid-template-columns: 100%;
+    grid-row-gap: ${size('spacing.large')};
+  }
+  
+  .overlayTwoColumnListWrapper {
+    padding: ${size('spacing.xLarge')} ${size('spacing.large')};
+    line-height: ${size('lineHeight.body')};
+    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+    border-radius: ${size('spacing.small')};
+    margin-bottom: ${size('spacing.large')};
+    display: grid;
+    grid-template-columns: 100%;
+    grid-row-gap: ${size('spacing.large')};
+  
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      grid-template-columns: 50% 50%;
+      grid-column-gap: ${size('layout.gutter')};
+    }
+  }
 `;
 
-export const makeHeader = () => {
-  function Header({ className, ...props }) {
-    return (
-      <TemplateHeader
-        className={classes('overlayHeader', className)}
-        {...props}
-      >
-        <HeaderContainer />
-      </TemplateHeader>
-    );
-  }
-  Header.propTypes = {
-    className: string,
-  };
-
-  return Header;
-};
 
 export const makeWrapper = (Component) => {
   function Wrapper({ className, ...props }) {
@@ -170,21 +224,82 @@ export const makeBody = (Component) => {
   return Body;
 };
 
-export const makeFooter = () => {
-  function Footer({ className, ...props }) {
+export const makeStickToTop = (Component) => {
+  function StickToTop({ className, ...props }) {
     return (
-      <>
-        <FooterOrganism
-          className={classes('overlayFooter', className)}
-          {...props}
-        />
-        <ModalContainer />
-      </>
+      <Component
+        className={classes('overlayStickToTop', className)}
+        {...props}
+      />
     );
   }
-  Footer.propTypes = {
+  StickToTop.propTypes = {
     className: string,
   };
 
-  return Footer;
+  return StickToTop;
+};
+
+export const makeArticle = (Component) => {
+  function Article({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayArticle', className)}
+        {...props}
+      />
+    );
+  }
+  Article.propTypes = {
+    className: string,
+  };
+
+  return Article;
+};
+
+export const makeTable = (Component) => {
+  function Table({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayTable', className)}
+        {...props}
+      />
+    );
+  }
+  Table.propTypes = {
+    className: string,
+  };
+
+  return Table;
+};
+
+export const makeOneColumnListWrapper = (Component) => {
+  function OneColumnListWrapper({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayOneColumnListWrapper', className)}
+        {...props}
+      />
+    );
+  }
+  OneColumnListWrapper.propTypes = {
+    className: string,
+  };
+
+  return OneColumnListWrapper;
+};
+
+export const makeTwoColumnListWrapper = (Component) => {
+  function TwoColumnListWrapper({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayTwoColumnListWrapper', className)}
+        {...props}
+      />
+    );
+  }
+  TwoColumnListWrapper.propTypes = {
+    className: string,
+  };
+
+  return TwoColumnListWrapper;
 };
