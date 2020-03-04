@@ -68,7 +68,7 @@ export default class TalkToAgentForm extends Component {
         rows="3"
         name="message"
         label={`What can ${firstName} help you with?`}
-        placeholder="Please type here whatever question you have about senior living. Then click send and we will reply shortly. WE DO NOT HAVE INFO ABOUT JOB OPENINGS."
+        placeholder="Type your question here. NO JOB INQUIRIES"
         component={ReduxField}
         required
       />
