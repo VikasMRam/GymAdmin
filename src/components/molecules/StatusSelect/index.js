@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { func, object, string } from 'prop-types';
 import * as immutable from 'object-path-immutable';
+import pick from 'lodash/pick';
 
 import userPropType from 'sly/propTypes/user';
 import clientPropType from 'sly/propTypes/client';
@@ -156,9 +157,10 @@ export default class StatusSelect extends Component {
   };
 
   submitUserStatus = (clientStatus, { reason, date }) => {
-    const { updateClient, rawClient } = this.props;
+    const { updateClient, rawClient, client: clientObj } = this.props;
+    const { tags } = clientObj;
 
-    const client = immutable.wrap(rawClient);
+    const client = immutable.wrap(pick(rawClient, ['id', 'type', 'attributes.clientInfo', 'relationships']));
     client.set('attributes.status', clientStatus);
 
     if (reason) {
@@ -167,6 +169,9 @@ export default class StatusSelect extends Component {
 
     if (date) {
       client.set('attributes.clientInfo.resumeDate', date);
+    }
+    if (tags) {
+      client.set('relationships.tags.data', tags.map(({ id, name }) => ({ type: 'Tag', id, attributes: { name } })));
     }
 
     return updateClient({ id: rawClient.id }, client.value());
