@@ -10,6 +10,7 @@ import AdTile from 'sly/components/organisms/AdTile';
 import { ResponsiveImage } from 'sly/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
 import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
+import ExperimentalAdTileContainer from 'sly/containers/ExperimentalAdTileContainer';
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
   vertical-align: middle;
@@ -41,6 +42,7 @@ export default class SearchResultsAdTileContainer extends Component {
       action: 'view',
       category: `SearchResultsAdTile-${type}`,
       label: `${tocLabel}-${city}`,
+      nonInteraction: true,
     });
   }
 
@@ -79,21 +81,12 @@ export default class SearchResultsAdTileContainer extends Component {
   };
 
   render() {
-    const { type, city, tocLabel } = this.props;
+    const { type } = this.props;
     const { isModalOpen } = this.state;
-    const agentAdTitle = `Find the Best ${tocLabel} Communities in ${city}`;
     return (
       <>
         {type === 'askAgent' &&
-          <AdTile
-            title={agentAdTitle}
-            buttonText="Ask a Question"
-            image={assetPath('images/agents.png')}
-            buttonProps={{ onClick: this.handleAskExpertQuestionClick }}
-            {...this.props}
-          >
-            Our Local Senior Living Experts Can Help.
-          </AdTile>
+          <ExperimentalAdTileContainer {...this.props} handleClick={this.handleAskExpertQuestionClick}/>
         }
         {type === 'getOffer' &&
           <AdTile
