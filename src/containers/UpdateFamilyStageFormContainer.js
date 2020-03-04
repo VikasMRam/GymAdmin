@@ -18,6 +18,7 @@ import {
   FAMILY_STAGE_LOST,
   FAMILY_STAGE_REJECTED,
   ROOM_TYPES, WAITLISTED,
+  PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
 } from 'sly/constants/familyDetails';
 import { NOTE_COMMENTABLE_TYPE_CLIENT, NOTE_CTYPE_ACTIVITY } from 'sly/constants/notes';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
@@ -119,7 +120,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       let moveInDateFormatted = moveInDate;
       const parsedDate = dayjs(moveInDate);
       if (parsedDate.isValid()) {
-        moveInDateFormatted = parsedDate.format('MM/DD/YYYY');
+        moveInDateFormatted = parsedDate.utc().format('MM/DD/YYYY');
       }
       let note = `${name} moved into ${communityName} on ${moveInDateFormatted} with a monthly rent of $${monthlyFees} and a referral fee of `;
       note = referralAgreementType === 'flat-fee' ? `${note}$${referralAgreement} flat fee` : `${note}${referralAgreement}% referral fee`;
@@ -129,8 +130,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
         let reason = lossReason;
         if (lostDescription) {
           reason = lostDescription;
-        } else if (preferredLocation) {
-          reason = `${lossReason}. Preferred in: ${preferredLocation}`;
+        } else if (PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(lossReason) && preferredLocation) {
+          reason = `${lossReason}. Preferred in: ${preferredLocation.formatted_address}`;
         }
         note = `Stage changed from ${previousStage} to ${stage}. Closed Reason: ${reason}`;
       }
@@ -157,8 +158,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       let moveInDateFormatted;
       const parsedDate = dayjs(moveInDate);
       if (parsedDate.isValid()) {
-        // make time components as zero since user will enter only date
-        moveInDateFormatted = parsedDate.format('YYYY-MM-DDT00:00:00[Z]');
+        moveInDateFormatted = parsedDate.utc().format();
       } else {
         notifyError('Move-In date is invalid');
         return false;
@@ -210,11 +210,19 @@ export default class UpdateFamilyStageFormContainer extends Component {
     }
     const shouldUpdateUuidAux = !!preferredLocation;
     if (preferredLocation) {
-      const [city, state] = preferredLocation.split(',');
-      const locationInfo = {
-        city,
-        state,
+      let locationInfo = {
+        city: preferredLocation.city,
+        state: preferredLocation.state,
       };
+      if (preferredLocation.geo) {
+        locationInfo = {
+          ...locationInfo,
+          geo: {
+            latitude: preferredLocation.geo.Latitude,
+            longitude: preferredLocation.geo.Longitude,
+          },
+        };
+      }
       newUuidAux.set('attributes.uuidInfo.locationInfo', locationInfo);
     }
     if (shouldUpdateUuidAux) {
@@ -290,11 +298,6 @@ export default class UpdateFamilyStageFormContainer extends Component {
     if (isBoolean(existingInvoicePaid)) {
       existingInvoicePaid = existingInvoicePaid ? 'yes' : 'no';
     }
-    let preferredLocation = '';
-    if (locationInfo && locationInfo.city) {
-      const { city, state } = locationInfo;
-      preferredLocation = [city, state].filter(v => v).join(', ');
-    }
     let nextGroup;
     let group;
     let nextStage;
@@ -313,12 +316,24 @@ export default class UpdateFamilyStageFormContainer extends Component {
       this.nextStage = getStageDetails(nextStage);
       ({ group: nextGroup } = this.nextStage);
     }
+    let preferredLocation = null;
+    if (((stage === FAMILY_STAGE_LOST && PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(existingLossReason)) ||
+      (stage === FAMILY_STAGE_REJECTED && PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(rejectReason))) && locationInfo && locationInfo.city) {
+      const { city, state } = locationInfo;
+      preferredLocation = [city, state].filter(v => v).join(', ');
+    }
     const lostDescription = otherText;
     const rejectDescription = otherText;
+    let existingMoveInDateFormatted;
+    if (existingMoveInDate) {
+      existingMoveInDateFormatted = new Date(existingMoveInDate);
+      existingMoveInDateFormatted = Date.UTC(existingMoveInDateFormatted.getUTCFullYear(), existingMoveInDateFormatted.getUTCMonth(), existingMoveInDateFormatted.getUTCDate(),
+        existingMoveInDateFormatted.getUTCHours(), existingMoveInDateFormatted.getUTCMinutes(), existingMoveInDateFormatted.getUTCSeconds());
+    }
     const newInitialValues = {
       stage,
       chosenDetails: chosenDetails || WAITLISTED,
-      moveInDate: existingMoveInDate ? new Date(existingMoveInDate) : null,
+      moveInDate: existingMoveInDateFormatted,
       communityName: existingCommunityName,
       roomType: existingMoveRoomType,
       referralAgreement: existingReferralAgreement ? existingReferralAgreement.toString() : null,

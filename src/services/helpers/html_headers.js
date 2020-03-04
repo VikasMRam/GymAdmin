@@ -5,6 +5,7 @@ import { host } from 'sly/config';
 import { tocs } from 'sly/services/helpers/search';
 import { titleize } from 'sly/services/helpers/strings';
 import { getStateAbbr } from 'sly/services/helpers/url';
+import { getImagePath } from 'sly/services/images';
 
 
 const stringifyReplacer = (k, v) => {
@@ -53,7 +54,7 @@ const getSDForCommunity = ({
 
   let imageUrl = null;
   if (gallery.images && gallery.images.length > 0) {
-    imageUrl = gallery.images[0].url;
+    imageUrl = getImagePath(encodeURI(gallery.images[0].path.replace(/\.jpe?g$/i, '.jpg')));
     const imageObj = {};
     imageObj['@type'] = 'ImageObject';
     imageObj.name = `Front Image for ${name}`;
@@ -199,7 +200,7 @@ export const getHelmetForSearchPage = ({
 
 export const getHelmetForCommunityPage = (community, location) => {
   const {
-    name, mainImage, address, propInfo, propRatings, rates, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions,
+    name, mainImage, address, propInfo, propRatings, rates, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions, communityPhone,
   } = community;
   const { search } = location;
   const {
@@ -272,7 +273,7 @@ export const getHelmetForCommunityPage = (community, location) => {
           latitude,
           longitude,
         },
-        // telephone: communityPhone, // We use slyPhone as communityProfile, so no need to set
+        telephone: communityPhone,
         aggregateRating: {
           '@type': 'AggregateRating',
           ratingValue: reviewsValue,
