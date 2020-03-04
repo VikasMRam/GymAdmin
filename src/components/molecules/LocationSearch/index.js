@@ -3,7 +3,7 @@ import { func, string } from 'prop-types';
 
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
-class LocationSearch extends Component {
+export default class LocationSearch extends Component {
   static propTypes={
     onChange: func,
     address: string,
@@ -35,5 +35,3 @@ class LocationSearch extends Component {
     );
   }
 }
-
-export default LocationSearch;

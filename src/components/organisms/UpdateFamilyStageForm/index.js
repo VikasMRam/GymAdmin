@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, string, arrayOf, bool } from 'prop-types';
+import { func, string, arrayOf, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -23,7 +23,6 @@ import { isBeforeNow, isAfterNow  } from 'sly/services/validation';
 import { Block, Span, Label } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 const Warning = pad(styled(Block)`
   background-color: ${palette('warning.filler')};
@@ -72,6 +71,7 @@ export default class UpdateFamilyStageForm extends Component {
     referralAgreementType: string,
     currentRejectReason: string,
     canUpdateStage: bool,
+    initialValues: object,
   };
 
   static defaultProps = {
@@ -80,24 +80,11 @@ export default class UpdateFamilyStageForm extends Component {
     rejectReasons: [],
   };
 
-  handleChange = () => {
-    const { change } = this.props;
-    change('preferredLocation', '');
-  };
-
-  handleLocationChange = (value) => {
-    const { change, onLocationChange } = this.props;
-    change('preferredLocation', value.formatted_address);
-    if (onLocationChange) {
-      onLocationChange(value);
-    }
-  };
-
   render() {
     const {
       handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, chosenDetails, nextAllowedStages, lossReasons,
       currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, roomTypes, rejectReasons, currentRejectReason,
-      canUpdateStage, ...props
+      canUpdateStage, initialValues: { preferredLocation }, ...props
     } = this.props;
 
     const reasonsOptions = rejectReasons.map(r => ({ value: r, label: r }));
@@ -180,7 +167,7 @@ export default class UpdateFamilyStageForm extends Component {
             />
           </>
         }
-        {(isNext(FAMILY_STAGE_WON) || chosenDetails === ESTIMATED_MOVE_IN) &&
+        {(isNext(FAMILY_STAGE_WON) || (isNext(FAMILY_STAGE_FAMILY_CHOSEN) && chosenDetails === ESTIMATED_MOVE_IN)) &&
           <Field
             name="moveInDate"
             label="Move-In date"
@@ -329,21 +316,16 @@ export default class UpdateFamilyStageForm extends Component {
             required
           />
         }
-        {isNext(FAMILY_STAGE_LOST, FAMILY_STAGE_REJECTED) &&
-          (PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) ||
-          PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentRejectReason)) &&
-          <div>
-            <Field
-              name="preferredLocation"
-              type="hidden"
-              component={ReduxField}
-            />
-            <Label><span>Preferred location<Span palette="danger">*</Span></span></Label>
-            <SearchBoxContainer
-              onLocationSearch={this.handleLocationChange}
-              onTextChange={this.handleChange}
-            />
-          </div>
+        {((isNext(FAMILY_STAGE_LOST) && PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason)) ||
+          (isNext(FAMILY_STAGE_REJECTED) && PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentRejectReason))) &&
+          <Field
+            name="preferredLocation"
+            type="locationSearch"
+            label="Preferred location"
+            address={preferredLocation}
+            component={ReduxField}
+            required
+          />
         }
       </ThreeSectionFormTemplate>
     );
