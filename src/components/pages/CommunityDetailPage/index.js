@@ -482,6 +482,33 @@ export default class CommunityDetailPage extends Component {
                     <StyledAskAgentButton type="services">Ask a Question</StyledAskAgentButton>
                   </StyledHeadingBoxSection>
                 )}
+                {rgsAux.rgsInfo && rgsAux.rgsInfo.resourceLinks && rgsAux.rgsInfo.resourceLinks.length > 0 && (
+                  <StyledHeadingBoxSection
+                    heading={`Helpful ${typeOfCare} Resources`}
+                  >
+                    {rgsAux.rgsInfo.resourceLinks.map(item => (
+                      <StyledIconButton to={item.to}
+                                        icon="chevron"
+                                        right
+                                        fullWidth
+                                        ghost
+                                        transparent
+                                        borderPalette="slate"
+                                        rotate={-1}
+                      >{item.title}
+                      </StyledIconButton>)
+                    )}
+
+                    <StyledHr />
+                    <TextBlock size="body">Didn't find what you are looking for? Our Senior Living Experts can help.</TextBlock>
+                    <CTAWrapper>
+                      <CTAButton type="resources">Ask a Question</CTAButton>
+                      <CTABlock>or call our team at <Link href="tel:+18558664515">(855) 866-4515</Link></CTABlock>
+                    </CTAWrapper>
+
+
+                  </StyledHeadingBoxSection>
+                )}
                 {careServices &&
                   careServices.length > 0 && (
                     <StyledHeadingBoxSection heading={`Care Services at ${name}`}>
@@ -573,33 +600,7 @@ export default class CommunityDetailPage extends Component {
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
-                {rgsAux.rgsInfo && rgsAux.rgsInfo.resourceLinks && rgsAux.rgsInfo.resourceLinks.length > 0 && (
-                  <StyledHeadingBoxSection
-                    heading={`Helpful ${typeOfCare} Resources`}
-                  >
-                    {rgsAux.rgsInfo.resourceLinks.map(item => (
-                      <StyledIconButton to={item.to}
-                                        icon="chevron"
-                                        right
-                                        fullWidth
-                                        ghost
-                                        transparent
-                                        borderPalette="slate"
-                                        rotate={-1}
-                      >{item.title}
-                      </StyledIconButton>)
-                    )}
 
-                    <StyledHr />
-                    <TextBlock size="body">Didn't find what you are looking for? Our Senior Living Experts can help.</TextBlock>
-                    <CTAWrapper>
-                      <CTAButton type="resources">Ask a Question</CTAButton>
-                      <CTABlock>or call our team at <Link href="tel:+18558664515">(855) 866-4515</Link></CTABlock>
-                    </CTAWrapper>
-
-
-                  </StyledHeadingBoxSection>
-                )}
                 <CommunityStickyFooter isAlreadyPricingRequested={isAlreadyPricingRequested} />
               </Body>
               <Column>
@@ -631,17 +632,6 @@ export default class CommunityDetailPage extends Component {
                 />
               </Wrapper>
             )}
-          {(address.state === 'NY' ||
-            address.state === 'FL' ||
-            address.state === 'TX') && (
-            <Wrapper>
-              {rgsAux && rgsAux.localDetails !== '' ? (
-                <Section title="Local Details" titleSize="subtitle">
-                  <CommunityLocalDetails localDetails={rgsAux.localDetails} />
-                </Section>
-              ) : null}
-            </Wrapper>
-          )}
         </CommunityDetailPageTemplate>
         <Footer />
       </>
