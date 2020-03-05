@@ -23,7 +23,7 @@ PaddedCommunityRating.displayName = 'PaddedCommunityRating';
 const getButton = (startingRate, props = {}) => startingRate > 0 ? <PaddedButton {...props} /> : <StyledButton {...props} />;
 
 const onClickEvent = (id) => {
-  return { action:'click-gcp-button', category:'PricingWizard-Sidebar' , label:id }
+  return { action:'click-gcp-button-sidebar', category:'PricingWizard' , label:id }
 };
 
 const GetCommunityPricingAndAvailability = ({ community: { id, startingRate, propRatings: { reviewsValue, numReviews } }, buttonTo }) => (

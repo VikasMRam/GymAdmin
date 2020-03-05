@@ -410,7 +410,7 @@ export default class CommunityDetailPage extends Component {
                         fee and a monthly component. Connect directly with{' '}
                         {name} to find out your pricing.
                       </Paragraph>
-                      <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested}>
+                      <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested} locTrack="ccrc-pricing-table">
                       Get Detailed Pricing
                       </GetCustomPricingButtonContainer>
                     </>
@@ -420,7 +420,7 @@ export default class CommunityDetailPage extends Component {
                       <Paragraph>
                         90% of Skilled Nursing Facilities in the United States are Medicare-certified. Some also accept Medicaid. To learn about pricing at {name}, click the button below.
                       </Paragraph>
-                      <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested}>
+                      <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested} locTrack="snf-pricing-table">
                         Get Pricing
                       </GetCustomPricingButtonContainer>
                     </>
@@ -434,6 +434,7 @@ export default class CommunityDetailPage extends Component {
                       GetPricingButton={props => (
                         <GetCustomPricingButtonContainer
                           hasAlreadyRequestedPricing={isAlreadyPricingRequested}
+                          locTrack="pricing-table"
                           {...props}
                         />
                       )}
@@ -595,7 +596,7 @@ export default class CommunityDetailPage extends Component {
                   </StyledHeadingBoxSection>
                 )}
 
-                <CommunityStickyFooter isAlreadyPricingRequested={isAlreadyPricingRequested} />
+                <CommunityStickyFooter isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack="sticky-footer"/>
               </Body>
               <Column>
                 <StickToTop>

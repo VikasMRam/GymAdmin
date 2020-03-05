@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { bool } from 'prop-types';
+import { bool, string } from 'prop-types';
 
 import GetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
 
@@ -8,10 +8,11 @@ const GetPricingButton = styled(GetCustomPricingButtonContainer)`
     width: 100%;
   `;
 
-const CommunityActions = ({ isAlreadyPricingRequested }) => {
+const CommunityActions = ({ isAlreadyPricingRequested, locTrack }) => {
   return (
     <GetPricingButton
       hasAlreadyRequestedPricing={isAlreadyPricingRequested}
+      locTrack={locTrack}
       ghost={isAlreadyPricingRequested}
       kind="jumbo"
     >
@@ -22,6 +23,7 @@ const CommunityActions = ({ isAlreadyPricingRequested }) => {
 
 CommunityActions.propTypes = {
   isAlreadyPricingRequested: bool,
+  locTrack: string,
 };
 
 export default CommunityActions;
