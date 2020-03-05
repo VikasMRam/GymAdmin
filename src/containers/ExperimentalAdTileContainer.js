@@ -43,7 +43,7 @@ export default class ExperimentalAdTileContainer extends Component {
         <Variant name="Custom_Options">
           <AdTile
             title={agentAdTitleVerB}
-            buttonText="Ask a Question"
+            buttonText="Get Pricing Now"
             image={assetPath('images/agents.png')}
             buttonProps={{ onClick: handleClick }}
             {...this.props}
