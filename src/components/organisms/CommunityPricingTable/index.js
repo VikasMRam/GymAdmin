@@ -197,6 +197,7 @@ const CommunityPricingTable = ({
       <Block>
         <StyledGetPricingButton
           hasAlreadyRequestedPricing={isAlreadyPricingRequested}
+          locTrack="pricing-table"
         >
           Get Detailed Pricing
         </StyledGetPricingButton>
