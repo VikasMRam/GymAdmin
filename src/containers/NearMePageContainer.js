@@ -9,6 +9,7 @@ import SeniorLivingNearMePage from 'sly/components/pages/SeniorLivingNearMePage'
 import BNCNearMePage from 'sly/components/pages/BNCNearMePage';
 import NursingHomesNearMePage from 'sly/components/pages/NursingHomesNearMePage';
 import SNFNearMePage from 'sly/components/pages/SNFNearMePage';
+import CCRCNearMePage from 'sly/components/pages/CCRCNearMePage';
 import IndependentLivingNearMePage from 'sly/components/pages/IndependentLivingNearMePage';
 import { parseURLQueryParams, generateCityPathSearchUrl } from 'sly/services/helpers/url';
 import { prefetch } from 'sly/services/newApi';
@@ -176,11 +177,22 @@ export default class NearMePageContainer extends Component {
         />
       );
     }
-
-
     if (hub === 'board-and-care-home') {
       return (
         <BNCNearMePage
+          onLocationSearch={this.handleOnLocationSearch}
+          requestMeta={status.communityList.meta || {}}
+          searchParams={searchParams}
+          communityList={communityList}
+          isFetchingResults={!status.communityList.hasFinished}
+          handleAnchor={handleClick}
+          location={location}
+        />
+      );
+    }
+    if (hub === 'continuing-care-retirement-community') {
+      return (
+        <CCRCNearMePage
           onLocationSearch={this.handleOnLocationSearch}
           requestMeta={status.communityList.meta || {}}
           searchParams={searchParams}
