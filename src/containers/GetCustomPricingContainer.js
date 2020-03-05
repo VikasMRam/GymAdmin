@@ -1,5 +1,5 @@
 import React from 'react';
-import { bool, func } from 'prop-types';
+import { bool, func, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import SlyEvent from 'sly/services/helpers/events';
@@ -35,7 +35,7 @@ GetCustomPricingContainer.propTypes = {
   hasAlreadyRequestedPricing: bool,
   redirectTo: func.isRequired,
   children: func.isRequired,
-  locTrack: string.isRequired,
+  locTrack: string,
 };
 
 export default withRedirectTo(withRouter(GetCustomPricingContainer));
