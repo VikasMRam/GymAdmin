@@ -37,7 +37,6 @@ import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
 import UnhydratedLazyCommunityMap from 'sly/containers/LazyCommunityMapContainer';
 import UnhydratedCommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
 import UnhydratedOfferNotification from 'sly/components/molecules/OfferNotification';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
@@ -63,7 +62,6 @@ import UnhydratedPageViewActionContainer from 'sly/containers/PageViewActionCont
 import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
-import UnhydratedAskAgentQuestionHowItWorksBannerNotificationContainer from 'sly/containers/AskAgentQuestionHowItWorksBannerNotificationContainer';
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
@@ -83,7 +81,6 @@ const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuest
 const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { alwaysHydrate: true });
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
-const AskAgentQuestionHowItWorksBannerNotificationContainer = withHydration(UnhydratedAskAgentQuestionHowItWorksBannerNotificationContainer);
 const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
 
 const BackToSearch = styled.div`
@@ -321,9 +318,6 @@ export default class CommunityDetailPage extends Component {
         {getHelmetForCommunityPage(community, location)}
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
         <PageEventsContainer />
-
-        <AskAgentQuestionHowItWorksBannerNotificationContainer />
-
         <Header noBottomMargin={!!bannerNotification} />
         {bannerNotification && (
           <StyledBannerNotification>
