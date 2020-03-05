@@ -11,8 +11,6 @@ const validate = createValidator({
 
 const initialValues = {
   name: '',
-  email: '',
-  phone: '',
 };
 
 export default reduxForm({

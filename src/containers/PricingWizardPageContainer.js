@@ -8,6 +8,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
 import { medicareToBool } from 'sly/services/helpers/userDetails';
 import { prefetch, query, withAuth } from 'sly/services/newApi';
+import withWS from 'sly/services/ws/withWS';
 import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/services/newApi/constants';
 import { withRedirectTo } from 'sly/services/redirectTo';
 
@@ -18,6 +19,7 @@ const eventCategory = 'PricingWizard';
   include: 'similar-communities,agents',
 }))
 
+@withWS
 @withAuth
 @query('updateUuidAux', 'updateUuidAux')
 @query('createAction', 'createUuidAction')
@@ -37,6 +39,7 @@ export default class PricingWizardPageContainer extends Component {
     match: object.isRequired,
     location: object.isRequired,
     ensureAuthenticated: func.isRequired,
+    ws: object,
   };
 
   constructor(props) {
@@ -45,6 +48,12 @@ export default class PricingWizardPageContainer extends Component {
     const { location } = this.props;
     const { type } = parse(location.search);
     this.type = type || 'pricing';
+  }
+
+  componentWillUnmount() {
+    const { ws } = this.props;
+
+    ws.doDestroyWSConnection();
   }
 
   sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
@@ -97,6 +106,7 @@ export default class PricingWizardPageContainer extends Component {
       match,
       createAction,
       ensureAuthenticated,
+      ws,
     } = this.props;
 
     const {
@@ -104,7 +114,7 @@ export default class PricingWizardPageContainer extends Component {
       phone = (user && user.phoneNumber) || undefined,
       email = (user && user.email) || undefined,
     } = data;
-    const regPhone = phone.replace(/\D/g,'');
+    const regPhone = phone.replace(/\D/g, '');
     return createAction({
       type: 'UUIDAction',
       attributes: {
@@ -127,6 +137,7 @@ export default class PricingWizardPageContainer extends Component {
     }).then(({ alreadyExists }) => {
       if (alreadyExists) {
         ensureAuthenticated({ emailOrPhone: email || regPhone });
+        ws.setup(true);
       }
       this.sendEvent('pricing-contact-submitted', community.id, currentStep);
     }));
