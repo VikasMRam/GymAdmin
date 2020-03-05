@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { node, oneOfType, exact } from 'prop-types';
+import { node } from 'prop-types';
 
 import WSContext from 'sly/services/ws/WSContext';
 import Pubsub from 'sly/services/ws/Pubsub';
@@ -27,9 +27,9 @@ export default class WSProvider extends Component {
     this.pubsub = new Pubsub();
   }
 
-  setup() {
+  setup(enableGuestConnections) {
     // we import user just to be able to bail when we are not logged in
-    if (!this.props.user) return;
+    if (!enableGuestConnections && !this.props.user) return;
 
     const wsUrl = apiUrl.replace(/^http/, 'ws');
     const wsUri = `${wsUrl}/platform/notifications`;
@@ -123,7 +123,7 @@ export default class WSProvider extends Component {
   render() {
     const { children } = this.props;
     return (
-      <WSContext.Provider value={this.pubsub}>
+      <WSContext.Provider value={this}>
         {children}
       </WSContext.Provider>
     );

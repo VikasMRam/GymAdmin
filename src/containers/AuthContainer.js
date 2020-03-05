@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 
 import { authenticateCancel, authenticateSuccess } from 'sly/store/authenticated/actions';
 import { withAuth } from 'sly/services/newApi';
+import SlyEvent from 'sly/services/helpers/events';
 import withNotification from 'sly/controllers/withNotification';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { email } from 'sly/services/validation';
@@ -82,14 +83,24 @@ export default class AuthContainer extends Component {
       });
   };
 
+  handleAuthenticationCancel = () => {
+    const { authenticateCancel } = this.props;
+
+    SlyEvent.getInstance().sendEvent({
+      category: 'Auth',
+      action: 'cancel',
+    });
+    authenticateCancel();
+  };
+
   render() {
     const { isOpen } = this.state;
-    const { authenticateCancel, authenticateSuccess, authenticated } = this.props;
+    const { authenticateSuccess, authenticated } = this.props;
 
     return (
       <Modal
         isOpen={isOpen}
-        onClose={authenticateCancel}
+        onClose={this.handleAuthenticationCancel}
         closeable
       >
         <WizardController

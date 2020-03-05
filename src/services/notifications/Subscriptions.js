@@ -22,8 +22,10 @@ const StyledLink = styled(Link)`
 class Notifications extends Component {
   static propTypes = {
     ws: shape({
-      on: func.isRequired,
-      off: func.isRequired,
+      pubsub: shape({
+        on: func.isRequired,
+        off: func.isRequired,
+      }),
     }).isRequired,
     notifyInfo: func.isRequired,
     children: node.isRequired,
@@ -34,7 +36,7 @@ class Notifications extends Component {
     const { ws } = this.props;
     Object.keys(subscriptionList).forEach((key) => {
       // no capture showing a notification is indeed the last resort
-      ws.on(key, this.onMessage);
+      ws.pubsub.on(key, this.onMessage);
     });
     this.requestPermission();
   }
@@ -46,7 +48,7 @@ class Notifications extends Component {
   componentWillUnmount() {
     const { ws } = this.props;
     Object.keys(subscriptionList).forEach((key) => {
-      ws.off(key, this.onMessage);
+      ws.pubsub.off(key, this.onMessage);
     });
   }
 
