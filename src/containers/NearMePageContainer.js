@@ -11,6 +11,8 @@ import NursingHomesNearMePage from 'sly/components/pages/NursingHomesNearMePage'
 import SNFNearMePage from 'sly/components/pages/SNFNearMePage';
 import CCRCNearMePage from 'sly/components/pages/CCRCNearMePage';
 import IndependentLivingNearMePage from 'sly/components/pages/IndependentLivingNearMePage';
+import HomeCareNearMePage from 'sly/components/pages/HomeCareNearMePage';
+import RespiteCareNearMePage from 'sly/components/pages/RespiteCareNearMePage';
 import { parseURLQueryParams, generateCityPathSearchUrl } from 'sly/services/helpers/url';
 import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
@@ -200,6 +202,20 @@ export default class NearMePageContainer extends Component {
           isFetchingResults={!status.communityList.hasFinished}
           handleAnchor={handleClick}
           location={location}
+        />
+      );
+    }
+    if (hub === 'in-home-care') {
+      return (
+        <HomeCareNearMePage
+          handleAnchor={handleClick}
+        />
+      );
+    }
+    if (hub === 'respite-care') {
+      return (
+        <RespiteCareNearMePage
+          handleAnchor={handleClick}
         />
       );
     }

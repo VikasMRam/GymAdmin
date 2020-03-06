@@ -66,16 +66,20 @@ const NextSteps = ({
         </StyledIconButton>
       ))}
     </NextStepsWrapper>
-    <Paragraph>
-      Seniorly is here to help you at no cost to find the perfect {toc} community. Our powerful website will search
-      through thousands of communities across the country that you can connect to directly. Email{' '}
-      <Link href="mailto:ask@seniorly.com">
-        ask@seniorly.com
-      </Link>
-      {' '}or call us at{' '}
-      <Link href="tel:+18558664515">(855) 866-4515</Link>
-      {' '}for further assistance. We are compensated by the community you eventually select.
-    </Paragraph>
+    {
+      toc !== 'home care' &&
+      <Paragraph>
+        Seniorly is here to help you at no cost to find the perfect {toc} community. Our powerful website will search
+        through thousands of communities across the country that you can connect to directly. Email{' '}
+        <Link href="mailto:ask@seniorly.com">
+          ask@seniorly.com
+        </Link>
+        {' '}or call us at{' '}
+        <Link href="tel:+18558664515">(855) 866-4515</Link>
+        {' '}for further assistance. We are compensated by the community you eventually select.
+      </Paragraph>
+    }
+
   </>
 );
 
