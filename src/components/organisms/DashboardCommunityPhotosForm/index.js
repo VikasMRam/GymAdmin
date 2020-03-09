@@ -93,14 +93,6 @@ export default class DashboardCommunityPhotosForm extends Component {
             ))}
           </FormSectionSortable>
         </FormScrollSection>
-
-        {canEdit &&
-          <FormBottomSection>
-            <StyledButton type="submit" disabled={invalid || submitting}>
-              Save changes
-            </StyledButton>
-          </FormBottomSection>
-        }
       </div>
     );
   }

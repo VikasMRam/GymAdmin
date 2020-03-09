@@ -8,7 +8,6 @@ import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 import { imagePropType } from 'sly/propTypes/gallery';
 import Icon from 'sly/components/atoms/Icon';
 import { size, palette } from 'sly/components/themes';
-import Field from 'sly/components/molecules/Field';
 import { func } from 'prop-types';
 import IconButton from 'sly/components/molecules/IconButton';
 
@@ -75,7 +74,6 @@ export default class MediaItem extends React.Component {
 
   render() {
     const { image, deleteImage, saveImage, ...props } = this.props;
-    console.log('image', image)
     return (
       <Wrapper {...props}>
         <DragHandle icon="menu" />

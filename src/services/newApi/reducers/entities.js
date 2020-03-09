@@ -1,8 +1,43 @@
 import * as immutable from 'object-path-immutable';
+import { PURGE_FROM_RELATIONSHIPS } from 'sly/services/newApi/actions';
 
 const initialState = {};
 
+function entityWithout(relationship, relationshipName, entity) {
+  const backRelationship = relationship.relationships[relationshipName];
+  if (!backRelationship) {
+    return relationship;
+  }
+
+  const oldData = backRelationship.data;
+  let data;
+  if (Array.isArray(oldData)) {
+    data = oldData.filter(e => e.id !== entity.id);
+  } else if (oldData.id === entity.id) {
+    data = null;
+  }
+
+  return immutable.set(relationship, ['relationships', relationshipName, 'data'], data);
+}
+
+function purgeFromRelationships(state, { name, entity }) {
+  const relationships = [];
+  Object.keys(entity.relationships).forEach((key) => {
+    const relationship = entity.relationships[key].data;
+    relationships.push(...(Array.isArray(relationship) ? relationship : [relationship]));
+  });
+  return relationships.reduce((state, relationship) => immutable.set(
+    state,
+    [relationship.type, relationship.id],
+    entityWithout(relationship, name, entity),
+  ), state);
+}
+
 export default function reducer(state = initialState, action) {
+  if (action.type === PURGE_FROM_RELATIONSHIPS) {
+    return purgeFromRelationships(state, action.payload.relationship);
+  }
+
   if (!action.meta || !action.meta.api) {
     return state;
   }

@@ -13,6 +13,7 @@ import withUser from 'sly/services/newApi/withUser';
 import { userIs } from 'sly/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import DashboardCommunityPhotosForm from 'sly/components/organisms/DashboardCommunityPhotosForm';
+import { purgeFromRelationships, invalidateRequests } from 'sly/services/newApi/actions';
 
 const arrayMove = (array, from, to) => {
   array = array.slice();
@@ -37,13 +38,15 @@ const arrayMove = (array, from, to) => {
     gallery,
     images,
   };
-})
+}, { purgeFromRelationships, invalidateRequests })
 
 export default class DashboardCommunityPhotosFormContainer extends Component {
   static propTypes = {
     createImage: func.isRequired,
     updateImage: func.isRequired,
     deleteImage: func.isRequired,
+    purgeFromRelationships: func.isRequired,
+    invalidateRequests: func.isRequired,
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
     gallery: galleryPropType,
@@ -70,11 +73,10 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
         }
       }
 
-      console.log('resorting!');
       return {
         images: dest.sort((a, b) => {
-          const aSort = a.sortOrder || a.sequence || 0;
-          const bSort = b.sortOrder || b.sequence || 0;
+          const aSort = a.attributes.sortOrder;
+          const bSort = b.attributes.sortOrder;
 
           return aSort - bSort;
         }),
@@ -141,10 +143,11 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
   };
 
   saveImage = (image) => {
-    const { createImage } = this.props;
-    createImage(image).then(() => {
-      this.spliceImageFromState(image);
-    });
+    const { createImage, invalidateRequests, match } = this.props;
+    return createImage(image)
+      .then(() =>
+        invalidateRequests('getCommunity', { id: match.params.id }),
+      );
   };
 
   spliceImageFromState = (image) => {
@@ -158,12 +161,21 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
   };
 
   deleteImage = (image) => {
-    console.log('delete image', image)
-    const { deleteImage } = this.props;
-    if (image.id && image.attributes.path) {
-      deleteImage({ id: image.id }).then(() => {
-        this.spliceImageFromState(image);
-      });
+    const { gallery } = this.props;
+    const { deleteImage, purgeFromRelationships } = this.props;
+    if (image.id && image.type) {
+      const entity = {
+        ...image,
+        relationships: {
+          gallery: {
+            data: gallery,
+          },
+        },
+      };
+      deleteImage(image).then(() => purgeFromRelationships({
+        name: 'images',
+        entity,
+      }));
     } else {
       this.spliceImageFromState(image);
     }

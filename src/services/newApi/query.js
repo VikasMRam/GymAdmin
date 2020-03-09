@@ -27,8 +27,12 @@ export default function query(propName, apiCall) {
       fetch = (...args) => {
         const call = api[apiCall];
 
-        if ([destroy, get].includes(call.method)) {
+        if (get === call.method) {
           return call(...args);
+        }
+
+        if (destroy === call.method) {
+          return this.props.dispatch(call.asAction(...args));
         }
 
         const placeholders = args.length >= 2 ? args[0] : {};
