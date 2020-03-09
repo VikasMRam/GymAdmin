@@ -143,11 +143,10 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
   };
 
   saveImage = (image) => {
-    const { createImage, invalidateRequests, match } = this.props;
-    return createImage(image)
-      .then(() =>
-        invalidateRequests('getCommunity', { id: match.params.id }),
-      );
+    const { createImage } = this.props;
+    createImage(image).then(() => {
+      this.spliceImageFromState(image);
+    });
   };
 
   spliceImageFromState = (image) => {
