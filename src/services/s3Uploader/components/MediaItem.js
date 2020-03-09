@@ -54,7 +54,6 @@ export default class MediaItem extends React.Component {
   };
 
   state = {
-    path: '',
     loadFailed: false,
   };
 
@@ -62,14 +61,20 @@ export default class MediaItem extends React.Component {
     this.setState({ loadFailed: true });
   };
 
-  onSignedUrl = ({ path }) => {
-    console.log('path', path);
-    this.setState({ path });
+  onFinish = (result, file) => {
+    const { image, saveImage } = this.props;
+    saveImage({
+      ...image,
+      attributes: {
+        ...image.attributes,
+        name: file.name,
+        path: result.path,
+      },
+    });
   };
 
   render() {
     const { image, deleteImage, saveImage, ...props } = this.props;
-    const { loadFailed } = this.state;
     console.log('image', image)
     return (
       <Wrapper {...props}>
@@ -82,7 +87,8 @@ export default class MediaItem extends React.Component {
             <S3Uploader
               uploadRequestHeaders={{}}
               getSignedUrl={getSignedUrl}
-              onSignedUrl={this.onSignedUrl}
+              onError={this.onError}
+              onFinish={this.onFinish}
             />
           }
         </Info>

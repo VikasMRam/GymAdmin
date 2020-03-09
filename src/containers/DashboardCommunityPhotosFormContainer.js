@@ -89,8 +89,12 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
   };
 
   addImage = () => {
+    const { status } = this.props;
     const { images } = this.state;
     const newImage = {
+      relationships: {
+        gallery: status.community.result.relationships.gallery,
+      },
       attributes: {
         sortOrder: images.length,
       },
