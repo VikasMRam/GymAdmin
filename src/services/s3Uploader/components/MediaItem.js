@@ -12,6 +12,12 @@ import Field from 'sly/components/molecules/Field';
 import { func } from 'prop-types';
 import IconButton from 'sly/components/molecules/IconButton';
 
+const getSignedUrl = (file, callback) => {
+  return fetch(`/v0/platform/uploads/s3-signed-url?file=${encodeURIComponent(file.name)}`)
+    .then(result => result.json())
+    .then(callback);
+};
+
 const Wrapper = sortableElement(styled.div`
   display: flex;
   align-items: center;
@@ -64,6 +70,7 @@ export default class MediaItem extends React.Component {
   render() {
     const { image, deleteImage, saveImage, ...props } = this.props;
     const { loadFailed } = this.state;
+    console.log('image', image)
     return (
       <Wrapper {...props}>
         <DragHandle icon="menu" />
@@ -72,15 +79,21 @@ export default class MediaItem extends React.Component {
             image.attributes.name
           }
           {!image.attributes.path &&
-            <S3Uploader onSignedUrl={this.onSignedUrl} />
+            <S3Uploader
+              uploadRequestHeaders={{}}
+              getSignedUrl={getSignedUrl}
+              onSignedUrl={this.onSignedUrl}
+            />
           }
         </Info>
         <Thumbnail>
-          <ResponsiveImage
-            onLoadFailed={this.onLoadFailed}
-            aspectRatio="16:9"
-            path={image.attributes.path}
-          />
+          {image.attributes.path &&
+            <ResponsiveImage
+              onLoadFailed={this.onLoadFailed}
+              aspectRatio="16:9"
+              path={image.attributes.path}
+            />
+          }
         </Thumbnail>
         <RemoveButton icon="trash" onClick={() => deleteImage(image)} />
       </Wrapper>

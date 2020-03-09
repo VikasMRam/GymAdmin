@@ -23,6 +23,7 @@ const arrayMove = (array, from, to) => {
 };
 
 @query('updateImage', 'updateImage')
+@query('createImage', 'createImage')
 @query('deleteImage', 'deleteImage')
 @withUser
 @withRouter
@@ -40,6 +41,7 @@ const arrayMove = (array, from, to) => {
 
 export default class DashboardCommunityPhotosFormContainer extends Component {
   static propTypes = {
+    createImage: func.isRequired,
     updateImage: func.isRequired,
     deleteImage: func.isRequired,
     notifyInfo: func.isRequired,
@@ -53,15 +55,27 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
   };
 
   static getDerivedStateFromProps = (props, state) => {
-    const { images } = props;
-
-    // we don't resort the images while uploading
     if (!state?.touched) {
+      const { images: a = [] } = props;
+      const { images: b = [] } = state || {};
+      const dest = [];
+      // we don't resort the images while uploading
+      for (let i = 0; i < a.length; i++) {
+        dest.push(a[i]);
+      }
+
+      for (let i = 0; i < b.length; i++) {
+        if (!b[i].id) {
+          dest.push(b[i]);
+        }
+      }
+
       console.log('resorting!');
       return {
-        images: [...images].sort((a, b) => {
-          const aSort = a.sort || a.sequence;
-          const bSort = b.sort || b.sequence;
+        images: dest.sort((a, b) => {
+          const aSort = a.sortOrder || a.sequence || 0;
+          const bSort = b.sortOrder || b.sequence || 0;
+
           return aSort - bSort;
         }),
       };
@@ -82,7 +96,6 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
       },
     };
     this.setState({
-      touched: true,
       images: [
         ...images,
         newImage,
@@ -125,7 +138,9 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
 
   saveImage = (image) => {
     const { createImage } = this.props;
-
+    createImage(image).then(() => {
+      this.spliceImageFromState(image);
+    });
   };
 
   spliceImageFromState = (image) => {
@@ -168,6 +183,7 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
     return (
       <DashboardCommunityPhotosForm
         addImage={this.addImage}
+        saveImage={this.saveImage}
         deleteImage={this.deleteImage}
         initialValues={initialValues}
         currentValues={currentValues}
