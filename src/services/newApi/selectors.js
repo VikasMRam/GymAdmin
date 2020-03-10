@@ -97,7 +97,7 @@ export function createMemoizedRequestInfoSelector() {
   return function (state, params = {}) {
     const { call } = params;
     const args = JSON.stringify(params.args);
-    const request = state.api.requests[call]?.[args];
+    const request = state.api.requests?.[call]?.[args];
     const result = getRequestResult(state.api.entities, request);
 
     if (result === null || lastResult === null || !twoSetsAreEqual(result, lastResult)) {

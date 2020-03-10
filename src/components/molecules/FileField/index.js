@@ -33,7 +33,6 @@ const Wrapper = styled.div`
 
 const FileField = React.forwardRef(({ label: textLabel, fileName, name, percent, ...props }, ref) => {
   const id = `file-upload-${name}`;
-  console.log('percent', percent);
   return (
     <Wrapper percent={percent}>
       <input

@@ -30,7 +30,7 @@ describe('Progress', () => {
     });
 
     wrapper.find('Bubble').forEach((b, i) => {
-      if (i === 1) {
+      if (i <= 1) {
         expect(b.prop('checked')).toBeTruthy();
       } else {
         expect(b.prop('checked')).toBeFalsy();

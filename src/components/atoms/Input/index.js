@@ -1,6 +1,6 @@
 /* eslint-disable react/sort-comp */
 import React, { Component } from 'react';
-import { bool, oneOf, func, object } from 'prop-types';
+import { bool, oneOf, func } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
