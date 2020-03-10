@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { arrayOf, object, func } from 'prop-types';
+import { arrayOf, object, func, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { prefetch, withUser } from 'sly/services/newApi';
@@ -46,10 +46,13 @@ export default class DashboardContactsSectionContainer extends Component {
     match: object.isRequired,
     location: object.isRequired,
     redirectTo: func.isRequired,
+    entityType: string.isRequired,
+    entityId: string,
+    entityName: string,
   };
 
   render() {
-    const { contacts, status, redirectTo, match, location, datatable, ...props } = this.props;
+    const { contacts, status, redirectTo, match, location, datatable,  entityId, entityType, entityName, ...props } = this.props;
 
     const { error, meta, hasFinished, result: contactsRaw } = status.contacts;
 
@@ -70,6 +73,9 @@ export default class DashboardContactsSectionContainer extends Component {
         refetchContacts={this.props.status.contacts.refetch}
         match={match}
         redirectTo={redirectTo}
+        entityId={entityId}
+        entityType={entityType}
+        entityName={entityName}
       />
     );
   }

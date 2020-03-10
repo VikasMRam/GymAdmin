@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { func, string, bool } from 'prop-types';
+import { func, string, bool, object } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import contactPropType from 'sly/propTypes/contact';
@@ -99,15 +99,13 @@ const PhoneCell = pad(
 );
 PhoneCell.displayName = 'PhoneCell';
 
-const ContactRowCard = ({ contact, editContactUrl, onContactClick }) => {
-  const relatedCommunity = contact.entities[0];
-
+const ContactRowCard = ({ contact, entity, editContactUrl, onContactClick }) => {
   return (
     <Wrapper>
       <NameCell contact={contact} to={editContactUrl} onClick={() => onContactClick(contact)} />
       <CommunityCell>
         <span>Community</span>
-        {relatedCommunity && <Link to={getAppPathForEntity(relatedCommunity)}>{relatedCommunity.label}</Link>}
+        {entity && <Link to={getAppPathForEntity(entity)}>{entity.label}</Link>}
       </CommunityCell>
       <EmailCell>
         <span>Email</span>
@@ -125,6 +123,7 @@ ContactRowCard.propTypes = {
   contact: contactPropType.isRequired,
   editContactUrl: string.isRequired,
   onContactClick: func.isRequired,
+  entity: object.isRequired,
 };
 
 export default ContactRowCard;
