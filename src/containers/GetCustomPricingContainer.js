@@ -1,5 +1,5 @@
 import React from 'react';
-import { bool, func } from 'prop-types';
+import { bool, func, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import SlyEvent from 'sly/services/helpers/events';
@@ -11,6 +11,7 @@ function GetCustomPricingContainer({
   hasAlreadyRequestedPricing,
   redirectTo,
   children,
+  locTrack,
 }) {
   if (hasAlreadyRequestedPricing) {
     return (
@@ -21,7 +22,7 @@ function GetCustomPricingContainer({
   }
   const onGotoCustomPricing = () => {
     SlyEvent.getInstance().sendEvent({
-      action: 'click-gcp-button',
+      action: `click-gcp-button-${locTrack}`,
       category: 'PricingWizard',
       label: communitySlug,
     });
@@ -34,6 +35,7 @@ GetCustomPricingContainer.propTypes = {
   hasAlreadyRequestedPricing: bool,
   redirectTo: func.isRequired,
   children: func.isRequired,
+  locTrack: string,
 };
 
 export default withRedirectTo(withRouter(GetCustomPricingContainer));

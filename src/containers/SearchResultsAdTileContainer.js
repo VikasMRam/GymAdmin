@@ -4,11 +4,13 @@ import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
+import { CONSULTATION_REQUESTED } from 'sly/services/newApi/constants';
 import withNotification from 'sly/controllers/withNotification';
-import SearchResultsAdTile from 'sly/components/organisms/SearchResultsAdTile';
+import AdTile from 'sly/components/organisms/AdTile';
 import { ResponsiveImage } from 'sly/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
-import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
+import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
+import ExperimentalAdTileContainer from 'sly/containers/ExperimentalAdTileContainer';
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
   vertical-align: middle;
@@ -33,6 +35,16 @@ export default class SearchResultsAdTileContainer extends Component {
   state = {
     isModalOpen: false,
   };
+
+  componentDidMount() {
+    const { type, city, tocLabel } = this.props;
+    SlyEvent.getInstance().sendEvent({
+      action: 'view',
+      category: `SearchResultsAdTile-${type}`,
+      label: `${tocLabel}-${city}`,
+      nonInteraction: true,
+    });
+  }
 
   handleAskExpertQuestionClick = () => {
     SlyEvent.getInstance().sendEvent({
@@ -69,48 +81,39 @@ export default class SearchResultsAdTileContainer extends Component {
   };
 
   render() {
-    const { type, city, tocLabel } = this.props;
+    const { type } = this.props;
     const { isModalOpen } = this.state;
-    const agentAdTitle = `Get Help Finding ${tocLabel} Communities in ${city}`;
     return (
       <>
         {type === 'askAgent' &&
-          <SearchResultsAdTile
-            title={agentAdTitle}
-            buttonText="Ask Our Experts A Question"
-            image={assetPath('images/agents.png')}
-            onButtonClick={this.handleAskExpertQuestionClick}
-            {...this.props}
-          >
-            Our Local Senior Living Experts can help you now.
-          </SearchResultsAdTile>
+          <ExperimentalAdTileContainer {...this.props} handleClick={this.handleAskExpertQuestionClick}/>
         }
         {type === 'getOffer' &&
-          <SearchResultsAdTile
+          <AdTile
             title="Selling a home to pay the cost of senior living?"
             buttonText="Get Instant Offer"
             buttonPosition="right"
-            onButtonClick={this.handleGetInstantOfferClick}
             image={assetPath('vectors/house-sold.svg')}
             buttonProps={{
               target: '_blank',
               href: 'https://zillow.com',
+              onClick: this.handleGetInstantOfferClick,
             }}
             {...this.props}
           >
             Our partner <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> will make you an Instant Offer.
-          </SearchResultsAdTile>
+          </AdTile>
         }
         {isModalOpen &&
           <Modal onClose={this.handleClose}>
             <HeaderWithClose onClose={this.handleClose} />
             <PaddedHeaderWithCloseBody>
-              <TalkToAgentFormContainer
+              <AskQuestionToAgentFormContainer
                 heading="Our Local Senior Living Experts can help you with your search."
                 image={assetPath('images/agents.png')}
                 buttonKind="regular"
-                hasLocation={false}
                 postSubmit={this.handleComplete}
+                actionType={CONSULTATION_REQUESTED}
                 showMessageFieldFirst
               />
             </PaddedHeaderWithCloseBody>

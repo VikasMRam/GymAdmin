@@ -189,7 +189,7 @@ export default class ConversationMessagesContainer extends Component {
   componentDidMount() {
     const { ws } = this.props;
 
-    ws.on(NOTIFY_MESSAGE_NEW, this.onMessage, { capture: true });
+    ws.pubsub.on(NOTIFY_MESSAGE_NEW, this.onMessage, { capture: true });
     this.setHandlers();
   }
 
@@ -218,7 +218,7 @@ export default class ConversationMessagesContainer extends Component {
   componentWillUnmount() {
     const { ws, invalidateConversationMessages } = this.props;
 
-    ws.off(NOTIFY_MESSAGE_NEW, this.onMessage);
+    ws.pubsub.off(NOTIFY_MESSAGE_NEW, this.onMessage);
     if (this.messagesRef.current) {
       this.messagesRef.current.removeEventListener('scroll', this.handleScroll);
     }

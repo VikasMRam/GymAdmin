@@ -38,6 +38,7 @@ import {
   ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import careTypes from 'sly/constants/careTypes';
+import hubTypes from 'sly/constants/hubTypes';
 import PageEventsContainer from 'sly/containers/PageEventsContainer';
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/components/pages/Error'));
@@ -255,17 +256,7 @@ const routes = [
     exact: true,
   },
   {
-    path: '/assisted-living',
-    component: NearMePageContainer,
-    exact: true,
-  },
-  {
-    path: '/nursing-homes',
-    component: NearMePageContainer,
-    exact: true,
-  },
-  {
-    path: '/skilled-nursing-facility',
+    path: `/:hub(${hubTypes.join('|')})`,
     component: NearMePageContainer,
     exact: true,
   },

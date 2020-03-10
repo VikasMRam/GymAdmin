@@ -1,6 +1,7 @@
 import { stringify } from 'query-string';
+import { titleize } from 'sly/services/helpers/strings';
 
-import { urlize, objectToURLQueryParams, parseURLQueryParams } from './url';
+import { urlize, getStateAbbr, objectToURLQueryParams, parseURLQueryParams } from './url';
 
 export const getRadiusFromMapBounds = (bounds) => {
   const center = bounds.getCenter();
@@ -284,4 +285,22 @@ export const getTocSeoLabel = (toc) => {
     return 'nursing homes';
   }
   return actualToc.seoLabel;
+};
+
+export const getTocLabel = (toc) => {
+  const actualToc = tocs.find(elem => (elem.value === toc));
+  if (typeof actualToc === 'undefined') {
+    return 'Nursing Homes';
+  }
+  return actualToc.label;
+};
+
+export const getLocationLabel = (searchParams) => {
+  const { city, state }  = searchParams;
+  if (city && state) {
+    return `${titleize(city)}, ${getStateAbbr(state)}`;
+  } else if (state){
+    return titleize(`${state}`);
+  }
+  return "Your Area"
 };

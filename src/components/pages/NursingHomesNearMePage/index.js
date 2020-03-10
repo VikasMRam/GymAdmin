@@ -2,90 +2,44 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
+import ListItem from 'sly/components/molecules/ListItem';
+import HubHeader from 'sly/components/molecules/HubHeader';
+import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
+import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
+import ADLChart from 'sly/components/molecules/ADLChart';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette } from 'sly/components/themes';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Label, Heading, Paragraph } from 'sly/components/atoms';
+import {
+  HubPageTemplate,
+  makeBody,
+  makeColumn,
+  makeTwoColumn,
+  makeWrapper,
+  makeStickToTop,
+  makeArticle,
+  makeTable,
+  makeOneColumnListWrapper,
+} from 'sly/components/templates/HubPageTemplate';
+import { Label, Heading, Paragraph, Link, ResponsiveImage } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
-import Link from 'sly/components/atoms/Link';
-import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
-const HeroWrapper = styled.div`
-  position: relative;
-  background-color: ${palette('slate', 'stroke')};
-  height: ${size('header.home.heroImage.mobileHeight')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    height: calc(0.5 * ${size('header.home.heroImage.height')});
-  }
-`;
-const StyledImage = styled(ResponsiveImage)`
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  opacity: 0.8;
-  z-index: 0;
+const StyledLink = styled(Link)`
+  margin-bottom: ${size('spacing.large')};
   display: block;
 `;
-const SearchBoxWrapper = styled.div`
-  margin: auto;
-  width: 90%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  align-items: center;
-  justify-content: center;
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('header.home.heroSearchBox.width')};
-  }
-`;
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.regular')};
-`;
-const StyledLabel = styled(Label)`
-  text-align: center;
-  font-size: ${size('text.subtitle')};
-  margin-bottom: ${size('spacing.large')};
-`;
-const ImageCreditDiv = styled.div`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin-bottom: ${size('spacing.large')};
-  margin-right: ${size('spacing.large')};
-`;
 
-const ImageCreditLabel = styled.label`
-  font-size: ${size('text', 'tiny')};
-  color: ${palette('white', 'base')};
-`;
-
-const StyledArticle = styled.article`
-  margin-bottom: ${size('spacing.xLarge')};
-  &:last-of-type {
-    margin-bottom: 0;
-    p {
-      margin-bottom: ${size('spacing.regular')};
-    }
-  }
-`;
-
-const StyledTable = styled.table`
-  border-collapse: collapse;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  td, th {
-    padding: ${size('spacing.regular')};
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  };
-`;
+const TwoColumn = makeTwoColumn('div');
+const Body = makeBody('div');
+const Column = makeColumn('aside');
+const Wrapper = makeWrapper('div');
+const StickToTop = makeStickToTop('div');
+const StyledArticle = makeArticle('article');
+const StyledTable = makeTable('table');
+const ListWrapper = makeOneColumnListWrapper('div');
 
 const NearMePage = ({
   onLocationSearch,
@@ -95,36 +49,13 @@ const NearMePage = ({
   isFetchingResults,
   handleAnchor,
   location,
+  onCurrentLocation,
 }) => {
-  const HeaderContent = (
-    <>
-      <HeaderContainer />
-      <HeroWrapper>
-        <StyledImage path="react-assets/home/cover4.jpg" alt="A Home To Love" height={320} />
-        <SearchBoxWrapper>
-          <StyledHeading level="hero" size="hero" palette="white">
-            Find The Best Nursing Homes Near You
-          </StyledHeading>
-          <StyledLabel palette="white">
-            Use our free search to find nursing homes nearby
-          </StyledLabel>
-          <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
-        </SearchBoxWrapper>
-        <ImageCreditDiv>
-          <ImageCreditLabel palette="white">
-            Sagebrook Senior Living San Francisco
-          </ImageCreditLabel>
-        </ImageCreditDiv>
-      </HeroWrapper>
-    </>
-  );
-
   const { geo } = requestMeta;
   const city = geo && geo.city;
   const state = geo && geo.state;
   const tocLabel = getTocSeoLabel('nursing-homes');
 
-  const topRef = React.createRef();
   const nhRef = React.createRef();
   const servicesRef = React.createRef();
   const payingRef = React.createRef();
@@ -137,7 +68,6 @@ const NearMePage = ({
   const hospiceRef = React.createRef();
 
   const sectionIdMap = {
-    top: 'top',
     nh: 'what-is-nursing-home',
     services: 'services',
     paying: 'paying',
@@ -150,108 +80,114 @@ const NearMePage = ({
     hospice: 'hospice',
   };
 
+  const agents = [
+    {
+      title: "Sarah Odover - Los Angeles, CA",
+      to: "https://www.seniorly.com/agents/pacific-west/beverley-hills/assisted-living-locators-los-angeles-ca-sarah-ordover-",
+      asset: "images/hub/agents/Sarah.png",
+      caption: "Sarah Ordover has over 4 years of experience helping families find independent living, \n" +
+      "assisted living, and memory care options. She has helped over 100 families so far in the Los Angeles area.",
+      first: "Sarah"
+    },
+    {
+      title: "Heather Cartright - Sarasota, FL",
+      to: "https://www.seniorly.com/agents/south/ellenton-fl/my-care-finders-fl-heather-cartright-",
+      asset: "images/hub/agents/Heather.png",
+      caption: "Heather Cartright has over a year of experience helping families find independent living, \n" +
+      "assisted living, and memory care options. As a former assisted living facility administrator, \n" +
+      "she brings a unique skillset for senior living placement.",
+      first: "Heather"
+    },
+    {
+      title: "Carol Katz - New Jersey",
+      to: "https://www.seniorly.com/agents/northeast/manalapan/adult-care-advisors-carol-katz-",
+      asset: "images/hub/agents/Carol-Katz.png",
+      caption: "Carol Katz has over 10 years of experience helping families find independent living, \n" +
+      "assisted living, and memory care options. With her unique volunteer experience, she brings \n" +
+      "a special skillset for senior living placement.",
+      first: "Carol"
+    },
+  ];
+
+  const TableOfContents = () => (
+    <>
+      <Heading level="subtitle" size="subtitle">
+        Table of Contents
+      </Heading>
+      <Paragraph>
+        <StyledLink
+          href={`#${sectionIdMap.nh}`}
+          onClick={e => handleAnchor(e, nhRef)}
+        >
+          How to Find the Best Nursing Home Near Me
+        </StyledLink>
+        <StyledLink
+          href={`#${sectionIdMap.services}`}
+          onClick={e => handleAnchor(e, servicesRef)}
+        >
+          What Services are Offered by Nursing Homes Near Me?
+        </StyledLink>
+        <StyledLink
+          href={`#${sectionIdMap.paying}`}
+          onClick={e => handleAnchor(e, payingRef)}
+        >
+          Paying for a Nursing Home
+        </StyledLink>
+        <StyledLink
+          href={`#${sectionIdMap.how}`}
+          onClick={e => handleAnchor(e, howRef)}
+        >
+          Choosing a Nursing Home
+        </StyledLink>
+        <StyledLink
+          href={`#${sectionIdMap.snf}`}
+          onClick={e => handleAnchor(e, snfRef)}
+        >
+          What Type of Care is Offered at a Skilled Nursing Facility?
+        </StyledLink>
+        <StyledLink
+          href={`#${sectionIdMap.il}`}
+          onClick={e => handleAnchor(e, ilRef)}
+        >
+          Independent Living
+        </StyledLink>
+        <StyledLink
+          href={`#${sectionIdMap.al}`}
+          onClick={e => handleAnchor(e, alRef)}
+        >
+          Assisted Living
+        </StyledLink>
+        <StyledLink
+          href={`#${sectionIdMap.mc}`}
+          onClick={e => handleAnchor(e, mcRef)}
+        >
+          Memory Care
+        </StyledLink>
+        <StyledLink
+          href={`#${sectionIdMap.bnc}`}
+          onClick={e => handleAnchor(e, bncRef)}
+        >
+          Board and Care Home
+        </StyledLink>
+        <StyledLink
+          href={`#${sectionIdMap.hospice}`}
+          onClick={e => handleAnchor(e, hospiceRef)}
+        >
+          Hospice
+        </StyledLink>
+      </Paragraph>
+    </>
+  );
+
   const SEOContentNH = () => {
     return (
       <>
-        <Paragraph innerRef={topRef} />
-        <StyledHeading level="title" size="title">
-          Table of Contents
-        </StyledHeading>
         <StyledArticle>
-          <ul>
-            <li>
-              <Link
-                href={`#${sectionIdMap.nh}`}
-                onClick={e => handleAnchor(e, nhRef)}
-              >
-                How to Find the Best Nursing Home Near Me
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.services}`}
-                onClick={e => handleAnchor(e, servicesRef)}
-              >
-                What Services are Offered by Nursing Homes Near Me?
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.paying}`}
-                onClick={e => handleAnchor(e, payingRef)}
-              >
-                Paying for a Nursing Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.how}`}
-                onClick={e => handleAnchor(e, howRef)}
-              >
-                Choosing a Nursing Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.snf}`}
-                onClick={e => handleAnchor(e, snfRef)}
-              >
-                What Type of Care is Offered at a Skilled Nursing Facility?
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.il}`}
-                onClick={e => handleAnchor(e, ilRef)}
-              >
-                Independent Living
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.al}`}
-                onClick={e => handleAnchor(e, alRef)}
-              >
-                Assisted Living
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.mc}`}
-                onClick={e => handleAnchor(e, mcRef)}
-              >
-                Memory Care
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.bnc}`}
-                onClick={e => handleAnchor(e, bncRef)}
-              >
-                Board and Care Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.hospice}`}
-                onClick={e => handleAnchor(e, hospiceRef)}
-              >
-                Hospice
-              </Link>
-            </li>
-          </ul>
-        </StyledArticle>
-        <StyledArticle>
-          <Paragraph innerRef={nhRef} />
-          <StyledHeading level="title" size="title" >
+          <Heading level="title" size="title" _ref={nhRef}>
             How to Find the Best Nursing Home Near Me
-          </StyledHeading>
+          </Heading>
           <Paragraph>
-            If you’ve been searching for the best{' '}
-            <Link href="https://medlineplus.gov/nursinghomes.html" target="_blank" rel="noopener">
-              nursing home
-            </Link>
-            {' '}near you, there’s a good chance you’ve been mistakenly
+            If you’ve been searching for the best nursing home near you, there’s a good chance you’ve been mistakenly
             searching for the wrong type of care. Most people simply type in the phrase “nursing home”
             when they’re looking for any kind of{' '}
             <Link href="https://www.nia.nih.gov/health/residential-facilities-assisted-living-and-nursing-homes" target="_blank" rel="noopener">
@@ -276,56 +212,42 @@ const NearMePage = ({
           </Paragraph>
           <Link
             href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={servicesRef} />
-          <StyledHeading level="title" size="title" >
+          <Heading level="title" size="title" _ref={servicesRef} >
             What Services are Offered by Nursing Homes Near Me?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Some of the services generally available at any care type that falls under ‘nursing home’ include:
           </Paragraph>
-          <ul>
-            <li>
-              <Paragraph>
-                Medication monitoring and administration
-              </Paragraph>
-            </li>
-            <li>
-              <Paragraph>
-                24-hour emergency care
-              </Paragraph>
-            </li>
-            <li>
-              <Paragraph>
-                Room
-              </Paragraph>
-            </li>
-            <li>
-              <Paragraph>
-                Recreational and social activities
-              </Paragraph>
-            </li>
-            <li>
-              <Paragraph>
-                Assistance with ADLs such as toilet assistance, bathing, and dressing
-              </Paragraph>
-            </li>
-            <li>
-              <Paragraph>
-                Three meals a day
-              </Paragraph>
-            </li>
-            <li>
-              <Paragraph>
-                Rehabilitation services
-              </Paragraph>
-            </li>
-          </ul>
+          <ListWrapper>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Medication monitoring and administration
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              24-hour emergency care
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Room
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Recreational and social activities
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Assistance with ADLs such as toilet assistance, bathing, and dressing
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Three meals a day
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Rehabilitation services
+            </ListItem>
+          </ListWrapper>
+
           <Paragraph>
             Do your own nursing home comparison, and you’ll quickly find that you might have really meant something else,
             like the care type called{' '}
@@ -335,17 +257,16 @@ const NearMePage = ({
 
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.nh}`}
+            onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={payingRef} />
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title" _ref={payingRef}>
             Paying for a Nursing Home
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             So, you’ve found a senior living property that you believe is a great nursing home near you.
             How much does it cost?  What are the payment options?  It’s possible to pay for so-called nursing homes in
@@ -394,17 +315,16 @@ const NearMePage = ({
             </li>
           </ul>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.nh}`}
+            onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={howRef} />
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title" _ref={howRef}>
             Choosing a Nursing Home: Your Nursing Home Comparison Checklist
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             As you’re looking for nursing homes near you, and you determine the actual care type you really need (ie.{' '}
             <Link href="https://www.seniorly.com/assisted-living">
@@ -519,18 +439,18 @@ const NearMePage = ({
               ask@seniorly.com.
             </Link>
           </Paragraph>
+          <WhatIsPartnerAgent toc="nursing homes" agents={agents}/>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.nh}`}
+            onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={snfRef} />
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title" _ref={snfRef} >
             What Type of Care is Offered at a Skilled Nursing Facility?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             A{' '}
             <Link href="https://www.seniorly.com/skilled-nursing-faility">skilled nursing facility (SNF)
@@ -552,22 +472,21 @@ const NearMePage = ({
           </Paragraph>
 
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.nh}`}
+            onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title">
             Features of Other Senior Living Options
-          </StyledHeading>
+          </Heading>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={ilRef} />
-          <StyledHeading level="subtitle" size="subtitle" >
+          <Heading level="subtitle" size="subtitle" _ref={ilRef}>
             Independent Living
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             While a nursing home offers residential care for seniors requiring full-time medical care and monitoring,
             an{' '}
@@ -680,17 +599,16 @@ const NearMePage = ({
             </StyledTable>
           </StyledArticle>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.nh}`}
+            onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={alRef} />
-          <StyledHeading level="subtitle" size="subtitle" >
+          <Heading level="subtitle" size="subtitle" _ref={alRef}>
             Assisted Living
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Many individuals search for a ‘nursing home near me’ when they’re really searching for an{' '}
             <Link href="https://www.seniorly.com/assisted-living">
@@ -798,19 +716,19 @@ const NearMePage = ({
               </tbody>
             </StyledTable>
           </StyledArticle>
+          <ADLChart/>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.nh}`}
+            onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
 
         <StyledArticle>
-          <Paragraph innerRef={mcRef} />
-          <StyledHeading level="subtitle" size="subtitle" >
+          <Heading level="subtitle" size="subtitle" _ref={mcRef} >
             Memory Care
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Memory Care is a senior living community that is purpose built and staff trained for senior
             residents with Alzheimer’s disease and many other dementia related illnesses.Some{' '}
@@ -916,18 +834,17 @@ const NearMePage = ({
             </StyledTable>
           </StyledArticle>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.nh}`}
+            onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
 
         <StyledArticle>
-          <Paragraph innerRef={bncRef} />
-          <StyledHeading level="subtitle" size="subtitle" >
+          <Heading level="subtitle" size="subtitle" _ref={bncRef} >
             Board and Care Home
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             <Link href="https://www.seniorly.com/board-and-care-home">
               A board and care home,
@@ -1037,18 +954,17 @@ const NearMePage = ({
             </StyledTable>
           </StyledArticle>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.nh}`}
+            onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
 
         <StyledArticle>
-          <Paragraph innerRef={hospiceRef} />
-          <StyledHeading level="subtitle" size="subtitle" >
+          <Heading level="subtitle" size="subtitle" _ref={hospiceRef}>
             Hospice
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Although some nursing homes will offer hospice care, most seniors arrive after a hospital stay or when they
             require more care than is available in an assisted living community. While individuals may have some limiting
@@ -1158,8 +1074,8 @@ const NearMePage = ({
             </StyledTable>
           </StyledArticle>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${sectionIdMap.nh}`}
+            onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
           </Link>
@@ -1213,30 +1129,46 @@ const NearMePage = ({
   const description = 'Search nursing homes near you that range from assisted living facilities, memory care communities and other senior living options. Compare cost, property highlights and more.';
   const heading = state ? `${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${tocLabel} near ${city}`;
 
+
   return (
     <>
-      <TemplateHeader>{HeaderContent}</TemplateHeader>
-      <TemplateContent>
-        <Helmet>
-          <title>{title}</title>
-          <meta name="description" content={description} />
-        </Helmet>
-        {SEOContentNH()}
-        <StyledArticle>
-          <StyledHeading level="title" size="title">
-            {heading}
-          </StyledHeading>
-          {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
-          {!isFetchingResults && (
-            <CommunitySearchList
-              communityList={communityList}
-              searchParams={searchParams}
-              requestMeta={requestMeta}
-              location={location}
-            />
-          )}
-        </StyledArticle>
-      </TemplateContent>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+      </Helmet>
+      <HubHeader imagePath="react-assets/hub/assisted-living-cover.jpg"
+                 toc="nursing homes"
+                 heading="What is Nursing Home Near You?"
+                 label="Use our free search to find nursing homes nearby"
+                 onCurrentLocation={onCurrentLocation}
+                 onLocationSearch={onLocationSearch} />
+      <HubPageTemplate>
+        <Wrapper>
+          <TwoColumn>
+            <Column>
+              <StickToTop>
+                {TableOfContents()}
+              </StickToTop>
+            </Column>
+            <Body>
+            {SEOContentNH()}
+            <Heading level="title" size="title">
+              {heading}
+            </Heading>
+            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
+            {!isFetchingResults && (
+              <CommunitySearchList
+                communityList={communityList}
+                searchParams={searchParams}
+                requestMeta={requestMeta}
+                location={location}
+              />
+            )}
+            </Body>
+          </TwoColumn>
+        </Wrapper>
+      </HubPageTemplate>
+      <PhoneCTAFooter/>
       <Footer />
     </>
   );
