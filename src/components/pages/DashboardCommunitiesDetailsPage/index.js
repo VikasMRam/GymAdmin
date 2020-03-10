@@ -49,6 +49,7 @@ import DashboardCommunityPhotosFormContainer from 'sly/containers/DashboardCommu
 import DashboardCommunityAmenitiesFormContainer from 'sly/containers/DashboardCommunityAmenitiesFormContainer';
 import DashboardCommunityContractFormContainer from 'sly/containers/DashboardCommunityContractFormContainer';
 import DashboardContactsSectionContainer from 'sly/containers/dashboard/DashboardContactsSectionContainer';
+import { PROPERTY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 
 const BackLinkWrapper = pad(styled.div`
   display: flex;
@@ -242,6 +243,9 @@ export default class DashboardCommunitiesDetailsPage extends Component {
               <DashboardContactsSectionContainer
                 id="contacts"
                 sectionFilters={sectionFilters}
+                entityType={PROPERTY_ENTITY_TYPE}
+                entityId={community.id}
+                entityName={community.name}
               />
             </Section>
           )}
