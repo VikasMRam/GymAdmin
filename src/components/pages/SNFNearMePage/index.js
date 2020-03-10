@@ -2,6 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
 
 import { size, assetPath, palette } from 'sly/components/themes';
 
@@ -66,17 +67,56 @@ const NearMePage = ({
   const faqRef = React.createRef();
   const moreRef = React.createRef();
 
-  const sectionIdMap = {
-    snf: 'what-is-skilled-nursing-facility',
-    cost: 'cost',
-    services: 'services',
-    other: 'other',
-    next: 'next',
-    medicare: 'medicare',
-    payment: 'payment',
-    faqs: 'frequently-asked-question',
-    more: 'more',
-  };
+  const tocList = [
+    {
+      title: "What is a Skilled Nursing Facility?",
+      id: "what-is-skilled-nursing-facility",
+      ref: snfRef
+    },
+    {
+      title: "What is The Cost of a Skilled Nursing Facility?",
+      id: "cost",
+      ref: costRef
+    },
+    {
+      title: "What Services are Provided in a Skilled Nursing Facility?",
+      id: "services",
+      ref: servicesRef
+    },
+    {
+      title: "Skilled Nursing Facility vs Other Care Types",
+      id: "other",
+      ref: otherRef
+    },
+    {
+      title: "How to Choose a Skilled Nursing Facility Near Me",
+      id: "next",
+      ref: nextRef
+    },
+    {
+      title: "Does Medicare Pay for Hospice in a Skilled Nursing Facility?",
+      id: "medicare",
+      ref: medicareRef
+    },
+    {
+      title: "Other Payment Options",
+      id: "payment",
+      ref: paymentRef
+    },
+    {
+      title: "Skilled Nursing Facility FAQs",
+      id: "frequently-asked-question",
+      ref: faqRef
+
+    },
+    {
+      title: "More Information",
+      id: "more",
+      ref: moreRef
+
+    },
+
+  ];
 
   const faqs = [
     {
@@ -100,75 +140,26 @@ const NearMePage = ({
       answer: "Yes, the VA will pay for a stay in a skilled nursing facility for qualified Veterans."},
   ];
 
-  const TableOfContents = () => (
-    <>
-      <Heading level="title"size="title">
+  const TableOfContents = () => {
+    return (
+      <>
+      <Heading level="subtitle" size="subtitle">
         Table of Contents
       </Heading>
       <Paragraph>
-        <StyledLink
-          href={`#${sectionIdMap.snf}`}
-          onClick={e => handleAnchor(e, snfRef)}
-        >
-          What is a Skilled Nursing Facility?
-        </StyledLink>
-        <StyledLink
-          href={`#${sectionIdMap.cost}`}
-          onClick={e => handleAnchor(e, costRef)}
-        >
-          What is The Cost of a Skilled Nursing Facility?
-        </StyledLink>
+        {tocList.map(p => (
+          <StyledLink
+            href={`#${p.id}`}
+            onClick={e => handleAnchor(e, p.ref)}
+          >
+            {p.title}
+          </StyledLink>
+        ))}
 
-        <StyledLink
-          href={`#${sectionIdMap.services}`}
-          onClick={e => handleAnchor(e, servicesRef)}
-        >
-          What Services are Provided in a Skilled Nursing Facility?
-        </StyledLink>
-
-        <StyledLink
-          href={`#${sectionIdMap.other}`}
-          onClick={e => handleAnchor(e, otherRef)}
-        >
-          Skilled Nursing Facility vs Other Care Types
-        </StyledLink>
-
-        <StyledLink
-          href={`#${sectionIdMap.next}`}
-          onClick={e => handleAnchor(e, nextRef)}
-        >
-          How to Choose a Skilled Nursing Facility Near Me
-        </StyledLink>
-
-        <StyledLink
-          href={`#${sectionIdMap.medicare}`}
-          onClick={e => handleAnchor(e, medicareRef)}
-        >
-          Does Medicare Pay for Hospice in a Skilled Nursing Facility?
-        </StyledLink>
-
-        <StyledLink
-          href={`#${sectionIdMap.payment}`}
-          onClick={e => handleAnchor(e, paymentRef)}
-        >
-          Other Payment Options
-        </StyledLink>
-        <StyledLink
-          href={`#${sectionIdMap.faqs}`}
-          onClick={e => handleAnchor(e, faqRef)}
-        >
-          Skilled Nursing Facility FAQs
-        </StyledLink>
-
-        <StyledLink
-          href={`#${sectionIdMap.more}`}
-          onClick={e => handleAnchor(e, moreRef)}
-        >
-          More Information
-        </StyledLink>
       </Paragraph>
-    </>
-  );
+      </>
+    )
+  };
 
   const SEOContentSNF = () => {
     return (
@@ -603,6 +594,9 @@ const NearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/skilled-nursing-facility", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/skilled-nursing-facility")}
       </Helmet>
 
       <HubHeader imagePath="react-assets/hub/memory-care-cover.jpg"

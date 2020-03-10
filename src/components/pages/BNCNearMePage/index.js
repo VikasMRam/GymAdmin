@@ -7,6 +7,7 @@ import HubHeader from 'sly/components/molecules/HubHeader';
 import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -86,6 +87,53 @@ const MemoryCareNearMePage = ({
     near: 'memory-care-near-you',
   };
 
+
+  const tocList = [
+    {
+      title: "What is a Board and Care Home Near You?",
+      id: "what-is-board-and-care",
+      ref: bncRef
+    },
+    {
+      title: "What Services are Provided at a Board and Care Home?",
+      id: "services",
+      ref: servicesRef
+    },
+    {
+      title: "How Much Does a Board and Care Home Cost?",
+      id: "cost",
+      ref: costRef
+    },
+    {
+      title: "Board and Care Homes vs. Other Types of Senior Living",
+      id: "other",
+      ref: otherRef
+    },
+    {
+      title:" What Questions to Ask When Touring",
+      id: "touring-questions",
+      ref: touringRef
+    },
+    {
+      title: "Board and Care Home FAQs",
+      id: "frequently-asked-question",
+      ref: faqRef
+
+    },
+    {
+      title: "Next Steps",
+      id: "next",
+      ref: nextRef
+
+    },
+    {
+      title: "Browse Board and Care Homes Near You",
+      id: "board-and-care-near-you",
+      ref: nearRef
+    },
+
+  ];
+
   const nextSteps = [
     {title: "Evaluating a Board and Care Home", to:"https://www.seniorly.com/resources/articles/evaluating-a-board-and-care-home"},
     {title: "Understanding the Cost of a Board and Care Home", to:"https://www.seniorly.com/resources/articles/understanding-the-cost-of-a-board-and-care-home"},
@@ -142,61 +190,20 @@ const MemoryCareNearMePage = ({
   const TableOfContents = () => {
     return (
       <>
-        <Heading level="subtitle" size="subtitle">
-          Table of Contents
-        </Heading>
-        <Paragraph>
+      <Heading level="subtitle" size="subtitle">
+        Table of Contents
+      </Heading>
+      <Paragraph>
+        {tocList.map(p => (
           <StyledLink
-            href={`#${sectionIdMap.bnc}`}
-            onClick={e => handleAnchor(e, bncRef)}
+            href={`#${p.id}`}
+            onClick={e => handleAnchor(e, p.ref)}
           >
-            What is a Board and Care Home Near You?
+            {p.title}
           </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.services}`}
-            onClick={e => handleAnchor(e, servicesRef)}
-          >
-            What Services are Provided at a Board and Care Home?
-          </StyledLink>
-          <StyledLink
-          href={`#${sectionIdMap.cost}`}
-          onClick={e => handleAnchor(e, costRef)}
-        >
-          How Much Does a Board and Care Home Cost?
-        </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.other}`}
-            onClick={e => handleAnchor(e, otherRef)}
-          >
-            Board and Care Homes vs. Other Types of Senior Living
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.touring}`}
-            onClick={e => handleAnchor(e, touringRef)}
-          >
-            What Questions to Ask When Touring
-          </StyledLink>
+        ))}
 
-          <StyledLink
-            href={`#${sectionIdMap.faqs}`}
-            onClick={e => handleAnchor(e, faqRef)}
-          >
-            Board and Care Home FAQs
-          </StyledLink>
-
-          <StyledLink
-            href={`#${sectionIdMap.next}`}
-            onClick={e => handleAnchor(e, nextRef)}
-          >
-            Next Steps
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.near}`}
-            onClick={e => handleAnchor(e, nearRef)}
-          >
-            Browse Board and Care Homes Near You
-          </StyledLink>
-        </Paragraph>
+      </Paragraph>
       </>
     )
   };
@@ -1026,6 +1033,9 @@ const MemoryCareNearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/board-and-care-home", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/board-and-care-home")}
       </Helmet>
       <HubHeader imagePath="react-assets/hub/board-and-care-home-cover.jpg"
          toc="board and care home"

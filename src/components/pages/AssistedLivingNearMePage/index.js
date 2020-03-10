@@ -8,7 +8,7 @@ import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
 import ADLChart from 'sly/components/molecules/ADLChart';
-import { faqPage } from 'sly/services/helpers/html_headers';
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -100,17 +100,56 @@ const NearMePage = ({
   const faqRef = React.createRef();
   const nextRef = React.createRef();
 
-  const sectionIdMap = {
-    al: 'what-is-assisted-living',
-    staff: 'medical-staff',
-    license: 'license',
-    social: 'social',
-    cost: 'cost',
-    alvsnh: 'al-vs-nh',
-    alvsil: 'al-vs-il',
-    faqs: 'frequently-asked-question',
-    next: 'next',
-  };
+  const tocList = [
+    {
+      title: "What is Assisted Living?",
+      id: "what-is-assisted-living",
+      ref: alRef
+    },
+    {
+      title: "What Does Assisted Living Cost Near You?",
+      id: "cost",
+      ref: costRef
+    },
+    {
+      title: "What Type of Medical Staff is Present?",
+      id: "medical-staff",
+      ref: staffRef
+    },
+    {
+      title: "Licensing and Inspection",
+      id: "license",
+      ref: licenseRef
+    },
+    {
+      title: "The Social and Community Aspects",
+      id: "social",
+      ref: socialRef
+    },
+    {
+      title: "Assisted Living vs. Skilled Nursing",
+      id: "al-vs-nh",
+      ref: alvsnhRef
+    },
+    {
+      title: "Assisted Living vs. Independent Living",
+      id: "al-vs-il",
+      ref: alvsilRef
+    },
+    {
+      title: "Assisted Living FAQs",
+      id: "frequently-asked-question",
+      ref: faqRef
+
+    },
+    {
+      title: "Next Steps",
+      id: "next",
+      ref: nextRef
+
+    },
+
+  ];
 
   const mapHtml = "<iframe src=\"https://createaclickablemap.com/map.php?&id=88362&maplocation=false&online=true\" width=\"680\" height=\"525\" style=\"border: none;\"></iframe>\n" +
     "<script>if (window.addEventListener){ window.addEventListener(\"message\", function(event) { if(event.data.length >= 22) { if( event.data.substr(0, 22) == \"__MM-LOCATION.REDIRECT\") location = event.data.substr(22); } }, false); } else if (window.attachEvent){ window.attachEvent(\"message\", function(event) { if( event.data.length >= 22) { if ( event.data.substr(0, 22) == \"__MM-LOCATION.REDIRECT\") location = event.data.substr(22); } }, false); } </script>\n"
@@ -227,71 +266,23 @@ const NearMePage = ({
     },
   ];
 
-
   const TableOfContents = () => {
     return (
       <>
-        <Heading level="subtitle" size="subtitle">
-          Table of Contents
-        </Heading>
-        <Paragraph>
+      <Heading level="subtitle" size="subtitle">
+        Table of Contents
+      </Heading>
+      <Paragraph>
+        {tocList.map(p => (
           <StyledLink
-            href={`#${sectionIdMap.al}`}
-            onClick={e => handleAnchor(e, alRef)}
+            href={`#${p.id}`}
+            onClick={e => handleAnchor(e, p.ref)}
           >
-            What is Assisted Living?
+            {p.title}
           </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.cost}`}
-            onClick={e => handleAnchor(e, costRef)}
-          >
-            What Does Assisted Living Cost Near You?
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.staff}`}
-            onClick={e => handleAnchor(e, staffRef)}
-          >
-            What Type of Medical Staff is Present?
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.license}`}
-            onClick={e => handleAnchor(e, licenseRef)}
-          >
-            Licensing and Inspection
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.social}`}
-            onClick={e => handleAnchor(e, socialRef)}
-          >
-            The Social and Community Aspects
-          </StyledLink>
+        ))}
 
-          <StyledLink
-            href={`#${sectionIdMap.alvsnh}`}
-            onClick={e => handleAnchor(e, alvsnhRef)}
-          >
-            Assisted Living vs. Skilled Nursing
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.alvsil}`}
-            onClick={e => handleAnchor(e, alvsilRef)}
-          >
-            Assisted Living vs. Independent Living
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.faqs}`}
-            onClick={e => handleAnchor(e, faqRef)}
-          >
-            Assisted Living FAQs
-          </StyledLink>
-
-          <StyledLink
-            href={`#${sectionIdMap.next}`}
-            onClick={e => handleAnchor(e, nextRef)}
-          >
-            Next Steps
-          </StyledLink>
-        </Paragraph>
+      </Paragraph>
       </>
     )
   };
@@ -854,6 +845,9 @@ const NearMePage = ({
         <title>{title}</title>
         <meta name="description" content={description} />
         {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/assisted-living", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/assisted-living")}
+
       </Helmet>
       <HubHeader imagePath="react-assets/hub/assisted-living-cover.jpg"
          toc="assisted living"

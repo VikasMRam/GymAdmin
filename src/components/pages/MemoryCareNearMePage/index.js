@@ -9,6 +9,7 @@ import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
 import ADLChart from 'sly/components/molecules/ADLChart';
 import Tip from 'sly/components/molecules/Tip';
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -79,17 +80,56 @@ const MemoryCareNearMePage = ({
   const faqRef = React.createRef();
   const nearRef = React.createRef();
 
-  const sectionIdMap = {
-    mc: 'what-is-memory-care',
-    care: 'memory-care-services',
-    staff: 'medical-care-and-staffing',
-    cost: 'cost',
-    mcvsal: 'mc-vs-al',
-    choose: 'choosing-memory-care',
-    faqs: 'frequently-asked-question',
-    next: 'next-steps',
-    near: 'memory-care-near-you',
-  };
+  const tocList = [
+    {
+      title: "What is Memory Care?",
+      id: "what-is-memory-care",
+      ref: mcRef
+    },
+    {
+      title: "Memory Care Services",
+      id: "memory-care-services",
+      ref: careRef
+    },
+    {
+      title: "How To Pay for Memory Care",
+      id: "cost",
+      ref: costRef
+    },
+    {
+      title: "Medical Care and Staffing",
+      id: "medical-care-and-staffing",
+      ref: staffRef
+    },
+    {
+      title: "Memory Care vs. Assisted Living",
+      id: "mc-vs-al",
+      ref: mcvsalRef
+    },
+    {
+      title: "Choosing a Memory Care Facility",
+      id: "choosing-memory-care",
+      ref: chooseRef
+    },
+    {
+      title: "Memory Care FAQs",
+      id: "frequently-asked-question",
+      ref: faqRef
+
+    },
+    {
+      title: "Next Steps",
+      id: "next",
+      ref: nextRef
+
+    },
+    {
+      title: "Browse Memory Care Near You",
+      id: "near",
+      ref: nearRef
+    },
+
+  ];
 
   const nextSteps = [
     {title: "Evaluating Memory Care Communities", to:"https://www.seniorly.com/memory-care/articles/evaluating-memory-care-communities"},
@@ -121,7 +161,6 @@ const MemoryCareNearMePage = ({
     },
   ];
 
-
   const faqs = [
     {
       question: "Is memory care considered skilled nursing?",
@@ -145,70 +184,23 @@ const MemoryCareNearMePage = ({
     },
   ];
 
-
   const TableOfContents = () => {
     return (
       <>
-        <Heading level="subtitle" size="subtitle">
-          Table of Contents
-        </Heading>
-        <Paragraph>
+      <Heading level="subtitle" size="subtitle">
+        Table of Contents
+      </Heading>
+      <Paragraph>
+        {tocList.map(p => (
           <StyledLink
-            href={`#${sectionIdMap.mc}`}
-            onClick={e => handleAnchor(e, mcRef)}
+            href={`#${p.id}`}
+            onClick={e => handleAnchor(e, p.ref)}
           >
-            What is Memory Care?
+            {p.title}
           </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.care}`}
-            onClick={e => handleAnchor(e, careRef)}
-          >
-            Memory Care Services
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.cost}`}
-            onClick={e => handleAnchor(e, costRef)}
-          >
-            How To Pay for Memory Care
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.staff}`}
-            onClick={e => handleAnchor(e, staffRef)}
-          >
-            Medical Care and Staffing
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.mcvsal}`}
-            onClick={e => handleAnchor(e, mcvsalRef)}
-          >
-            Memory Care vs. Assisted Living
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.choose}`}
-            onClick={e => handleAnchor(e, chooseRef)}
-          >
-            Choosing a Memory Care Facility
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.faqs}`}
-            onClick={e => handleAnchor(e, faqRef)}
-          >
-            Memory Care FAQs
-          </StyledLink>
+        ))}
 
-          <StyledLink
-            href={`#${sectionIdMap.next}`}
-            onClick={e => handleAnchor(e, nextRef)}
-          >
-            Next Steps
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.near}`}
-            onClick={e => handleAnchor(e, nearRef)}
-          >
-            Browse Memory Care Near You
-          </StyledLink>
-        </Paragraph>
+      </Paragraph>
       </>
     )
   };
@@ -394,7 +386,7 @@ const MemoryCareNearMePage = ({
           <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
 
           <Link
-            href={`#${sectionIdMap.mc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, mcRef)}
           >
             Back to top
@@ -460,7 +452,7 @@ const MemoryCareNearMePage = ({
           </Paragraph>
 
           <Link
-            href={`#${sectionIdMap.mc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, mcRef)}
           >
             Back to top
@@ -531,7 +523,7 @@ const MemoryCareNearMePage = ({
             </Link>.
           </Tip>
           <Link
-            href={`#${sectionIdMap.mc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, mcRef)}
           >
             Back to top
@@ -600,7 +592,7 @@ const MemoryCareNearMePage = ({
             </ListItem>
           </ListWrapper>
           <Link
-            href={`#${sectionIdMap.mc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, mcRef)}
           >
             Back to top
@@ -800,7 +792,7 @@ const MemoryCareNearMePage = ({
 
 
           <Link
-            href={`#${sectionIdMap.mc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, mcRef)}
           >
             Back to top
@@ -855,7 +847,7 @@ const MemoryCareNearMePage = ({
             </li>
           </ol>
           <Link
-            href={`#${sectionIdMap.mc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, mcRef)}
           >
             Back to top
@@ -893,7 +885,7 @@ const MemoryCareNearMePage = ({
                      links={nextSteps} />
 
           <Link
-            href={`#${sectionIdMap.mc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, mcRef)}
           >
             Back to top
@@ -912,6 +904,9 @@ const MemoryCareNearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/memory-care", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/memory-care")}
       </Helmet>
       <HubHeader imagePath="react-assets/hub/memory-care-cover.jpg"
          toc="memory care"

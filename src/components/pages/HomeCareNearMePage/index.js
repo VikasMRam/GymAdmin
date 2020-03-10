@@ -5,6 +5,7 @@ import { func } from 'prop-types';
 import HubHeader from 'sly/components/molecules/HubHeader';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -50,19 +51,6 @@ const HomeCareNearMePage = ({
   const faqRef = React.createRef();
   const nextRef = React.createRef();
 
-  const sectionIdMap = {
-    hc: 'what-is-home-care',
-    why: 'why-choose-home-care',
-    services: 'what-services',
-    cost: 'cost',
-    choose: 'choosing-home-care',
-    hcvsal: 'hc-vs-al',
-    specialized: 'specialized-home-care',
-    company: 'choosing-home-care-company',
-    faqs: 'frequently-asked-question',
-    next: 'next-steps',
-  };
-
   const nextSteps = [
     {title: "Evaluating Home Care Companies", to:"https://www.seniorly.com/in-home-care/articles/evaluating-home-care-companies"},
     {title: "Understanding the Cost of Home Care", to:"Understanding the Cost of Home Care"},
@@ -92,6 +80,60 @@ const HomeCareNearMePage = ({
     },
   ];
 
+  const tocList = [
+    {
+      title:"What is Home Care?",
+      id:"what-is-home-care",
+      ref: hcRef
+    },
+    {
+      title:"Why Choose Home Care?",
+      id:"why-choose-home-care",
+      ref: whyRef
+    },
+    {
+      title:"What Services Are Provided by Home Care?",
+      id:"what-services",
+      ref: servicesRef
+    },
+    {
+      title:"How Much Does Home Care Cost?",
+      id:"cost",
+      ref: costRef
+    },
+    {
+      title:"How to Decide If Home Care Is the Right Choice",
+      id:"choosing-home-care",
+      ref: chooseRef
+    },
+    {
+      title:"Home Care vs. Assisted Living",
+      id:"hc-vs-al",
+      ref: hcvsalRef
+    },
+    {
+      title:"Specialized Home Care Options",
+      id:"specialized-home-care",
+      ref: specializedRef
+    },
+    {
+      title:"Choosing the Right Home Care Company",
+      id:"choosing-home-care-company",
+      ref: companyRef
+    },
+    {
+      title:"Home Care FAQs",
+      id:"frequently-asked-question",
+      ref: faqRef
+    },
+    {
+      title:"Next Steps",
+      id:"next",
+      ref: nextRef
+    }
+
+  ];
+
   const TableOfContents = () => {
     return (
       <>
@@ -99,67 +141,14 @@ const HomeCareNearMePage = ({
           Table of Contents
         </Heading>
         <Paragraph>
-          <StyledLink
-            href={`#${sectionIdMap.hc}`}
-            onClick={e => handleAnchor(e, hcRef)}
-          >
-            What is Home Care?
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.why}`}
-            onClick={e => handleAnchor(e, whyRef)}
-          >
-            Why Choose Home Care?
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.services}`}
-            onClick={e => handleAnchor(e, servicesRef)}
-          >
-            What Services Are Provided by Home Care?
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.cost}`}
-            onClick={e => handleAnchor(e, costRef)}
-          >
-            How Much Does Home Care Cost?
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.choose}`}
-            onClick={e => handleAnchor(e, chooseRef)}
-          >
-            How to Decide If Home Care Is the Right Choice
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.hcvsal}`}
-            onClick={e => handleAnchor(e, hcvsalRef)}
-          >
-            Home Care vs. Assisted Living
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.specialized}`}
-            onClick={e => handleAnchor(e, specializedRef)}
-          >
-            Specialized Home Care Options
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.company}`}
-            onClick={e => handleAnchor(e, companyRef)}
-          >
-            Choosing the Right Home Care Company
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.faqs}`}
-            onClick={e => handleAnchor(e, faqRef)}
-          >
-            Home Care FAQs
-          </StyledLink>
-
-          <StyledLink
-            href={`#${sectionIdMap.next}`}
-            onClick={e => handleAnchor(e, nextRef)}
-          >
-            Next Steps
-          </StyledLink>
+          {tocList.map(p => (
+            <StyledLink
+              href={`#${p.id}`}
+              onClick={e => handleAnchor(e, p.ref)}
+            >
+              {p.title}
+            </StyledLink>
+          ))}
 
         </Paragraph>
       </>
@@ -209,7 +198,7 @@ const HomeCareNearMePage = ({
           </Paragraph>
 
           <Link
-            href={`#${sectionIdMap.hc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, hcRef)}
           >
             Back to top
@@ -253,7 +242,7 @@ const HomeCareNearMePage = ({
 
 
           <Link
-            href={`#${sectionIdMap.hc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, hcRef)}
           >
             Back to top
@@ -303,7 +292,7 @@ const HomeCareNearMePage = ({
           </Paragraph>
 
           <Link
-            href={`#${sectionIdMap.hc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, hcRef)}
           >
             Back to top
@@ -367,7 +356,7 @@ const HomeCareNearMePage = ({
           </Paragraph>
 
           <Link
-            href={`#${sectionIdMap.hc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, hcRef)}
           >
             Back to top
@@ -523,7 +512,7 @@ const HomeCareNearMePage = ({
 
 
           <Link
-            href={`#${sectionIdMap.hc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, hcRef)}
           >
             Back to top
@@ -549,7 +538,7 @@ const HomeCareNearMePage = ({
           </Paragraph>
 
           <Link
-            href={`#${sectionIdMap.hc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, hcRef)}
           >
             Back to top
@@ -609,7 +598,7 @@ const HomeCareNearMePage = ({
 
 
           <Link
-            href={`#${sectionIdMap.hc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, hcRef)}
           >
             Back to top
@@ -695,7 +684,7 @@ const HomeCareNearMePage = ({
                      links={nextSteps} />
 
           <Link
-            href={`#${sectionIdMap.hc}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, hcRef)}
           >
             Back to top
@@ -713,6 +702,9 @@ const HomeCareNearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/in-home-care", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/in-home-care")}
       </Helmet>
       <HubHeader imagePath="react-assets/hub/home-care-cover.jpg"
          toc="home care"

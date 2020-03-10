@@ -8,6 +8,7 @@ import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
 import ADLChart from 'sly/components/molecules/ADLChart';
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -85,6 +86,47 @@ const SeniorLivingNearMePage = ({
     near: 'senior-living-near-you',
   };
 
+  const tocList = [
+    {
+      title: "What is Senior Living?",
+      id: "what-is-senior-living",
+      ref: slRef
+    },
+    {
+      title: "How Much Does Senior Living Cost?",
+      id: "cost",
+      ref: costRef
+    },
+    {
+      title: "The Benefits of Choosing a Senior Living Community",
+      id: "choosing-senior-living",
+      ref: chooseRef
+    },
+    {
+      title: "Different Types of Senior Living",
+      id: "types-of-senior-living",
+      ref: typesRef
+    },
+    {
+      title: "Senior Living FAQs",
+      id: "frequently-asked-question",
+      ref: faqRef
+
+    },
+    {
+      title: "Next Steps",
+      id: "next-steps",
+      ref: nextRef
+
+    },
+    {
+      title: "How to Find the Best Senior Living Near Me",
+      id: "senior-living-near-you",
+      ref: nearRef
+
+    },
+  ];
+
   const nextSteps = [
     {title: "Independent Living", to:"https://www.seniorly.com/independent-living"},
     {title: "Assisted Living", to:"https://www.seniorly.com/assisted-living"},
@@ -146,56 +188,20 @@ const SeniorLivingNearMePage = ({
   const TableOfContents = () => {
     return (
       <>
-        <Heading level="subtitle" size="subtitle">
-          Table of Contents
-        </Heading>
-        <Paragraph>
+      <Heading level="subtitle" size="subtitle">
+        Table of Contents
+      </Heading>
+      <Paragraph>
+        {tocList.map(p => (
           <StyledLink
-            href={`#${sectionIdMap.sl}`}
-            onClick={e => handleAnchor(e, slRef)}
+            href={`#${p.id}`}
+            onClick={e => handleAnchor(e, p.ref)}
           >
-            What is Senior Living?
+            {p.title}
           </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.cost}`}
-            onClick={e => handleAnchor(e, costRef)}
-          >
-            How Much Does Senior Living Cost?
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.choose}`}
-            onClick={e => handleAnchor(e, chooseRef)}
-          >
-            The Benefits of Choosing a Senior Living Community
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.sltypes}`}
-            onClick={e => handleAnchor(e, sltypesRef)}
-          >
-            Different Types of Senior Living
-          </StyledLink>
+        ))}
 
-          <StyledLink
-            href={`#${sectionIdMap.faqs}`}
-            onClick={e => handleAnchor(e, faqRef)}
-          >
-            Senior Living FAQs
-          </StyledLink>
-
-
-          <StyledLink
-            href={`#${sectionIdMap.next}`}
-            onClick={e => handleAnchor(e, nextRef)}
-          >
-            Next Steps
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.near}`}
-            onClick={e => handleAnchor(e, nearRef)}
-          >
-            How to Find the Best Senior Living Near Me
-          </StyledLink>
-        </Paragraph>
+      </Paragraph>
       </>
     )
   };
@@ -832,6 +838,9 @@ const SeniorLivingNearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/senior-living", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/senior-living")}
       </Helmet>
       <HubHeader imagePath="react-assets/hub/memory-care-cover.jpg"
          toc="senior living"

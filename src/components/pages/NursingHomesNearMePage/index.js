@@ -7,6 +7,8 @@ import HubHeader from 'sly/components/molecules/HubHeader';
 import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import ADLChart from 'sly/components/molecules/ADLChart';
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
+
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette } from 'sly/components/themes';
@@ -30,7 +32,6 @@ const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};
   display: block;
 `;
-
 
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
@@ -69,19 +70,63 @@ const NearMePage = ({
   const faqRef = React.createRef();
 
 
-  const sectionIdMap = {
-    nh: 'what-is-nursing-home',
-    services: 'services',
-    paying: 'paying',
-    how: 'how',
-    snf: 'skilled-nursing-facility',
-    il: 'independent-living',
-    al: 'assisted-living',
-    mc: 'memory-care',
-    bnc: 'board-and-care-home',
-    hospice: 'hospice',
-    faqs: 'frequently-asked-question',
-  };
+  const tocList = [
+    {
+      title: "How to Find the Best Nursing Home Near Me",
+      id: "what-is-nursing-home",
+      ref: nhRef
+    },
+    {
+      title: "What Services are Offered by Nursing Homes Near Me?",
+      id: "services",
+      ref: servicesRef
+    },
+    {
+      title: "Paying for a Nursing Home",
+      id: "paying",
+      ref: payingRef
+    },
+    {
+      title: "Choosing a Nursing Home",
+      id: "how",
+      ref: howRef
+    },
+    {
+      title: "What Type of Care is Offered at a Skilled Nursing Facility?",
+      id: "skilled-nursing-facility",
+      ref: snfRef
+    },
+    {
+      title: "Independent Living",
+      id: "independent-living",
+      ref: ilRef
+    },
+    {
+      title: "Assisted Living",
+      id: "assisted-living",
+      ref: alRef
+    },
+    {
+      title: "Memory Care",
+      id: "memory-care",
+      ref: mcRef
+    },
+    {
+      title: "Board and Care Home",
+      id: "board-and-care-home",
+      ref: bncRef
+    },
+    {
+      title: "Hospice",
+      id: "hospice",
+      ref: hospiceRef
+    },
+    {
+      title: "Nursing Home FAQs",
+      id: "frequently-asked-question",
+      ref: faqRef
+    }
+  ];
 
   const agents = [
     {
@@ -135,81 +180,26 @@ const NearMePage = ({
     },
   ];
 
-  const TableOfContents = () => (
-    <>
+  const TableOfContents = () => {
+    return (
+      <>
       <Heading level="subtitle" size="subtitle">
         Table of Contents
       </Heading>
       <Paragraph>
-        <StyledLink
-          href={`#${sectionIdMap.nh}`}
-          onClick={e => handleAnchor(e, nhRef)}
-        >
-          How to Find the Best Nursing Home Near Me
-        </StyledLink>
-        <StyledLink
-          href={`#${sectionIdMap.services}`}
-          onClick={e => handleAnchor(e, servicesRef)}
-        >
-          What Services are Offered by Nursing Homes Near Me?
-        </StyledLink>
-        <StyledLink
-          href={`#${sectionIdMap.paying}`}
-          onClick={e => handleAnchor(e, payingRef)}
-        >
-          Paying for a Nursing Home
-        </StyledLink>
-        <StyledLink
-          href={`#${sectionIdMap.how}`}
-          onClick={e => handleAnchor(e, howRef)}
-        >
-          Choosing a Nursing Home
-        </StyledLink>
-        <StyledLink
-          href={`#${sectionIdMap.snf}`}
-          onClick={e => handleAnchor(e, snfRef)}
-        >
-          What Type of Care is Offered at a Skilled Nursing Facility?
-        </StyledLink>
-        <StyledLink
-          href={`#${sectionIdMap.il}`}
-          onClick={e => handleAnchor(e, ilRef)}
-        >
-          Independent Living
-        </StyledLink>
-        <StyledLink
-          href={`#${sectionIdMap.al}`}
-          onClick={e => handleAnchor(e, alRef)}
-        >
-          Assisted Living
-        </StyledLink>
-        <StyledLink
-          href={`#${sectionIdMap.mc}`}
-          onClick={e => handleAnchor(e, mcRef)}
-        >
-          Memory Care
-        </StyledLink>
-        <StyledLink
-          href={`#${sectionIdMap.bnc}`}
-          onClick={e => handleAnchor(e, bncRef)}
-        >
-          Board and Care Home
-        </StyledLink>
-        <StyledLink
-          href={`#${sectionIdMap.hospice}`}
-          onClick={e => handleAnchor(e, hospiceRef)}
-        >
-          Hospice
-        </StyledLink>
-        <StyledLink
-          href={`#${sectionIdMap.faqs}`}
-          onClick={e => handleAnchor(e, faqRef)}
-        >
-          Nursing Home FAQs
-        </StyledLink>
+        {tocList.map(p => (
+          <StyledLink
+            href={`#${p.id}`}
+            onClick={e => handleAnchor(e, p.ref)}
+          >
+            {p.title}
+          </StyledLink>
+        ))}
+
       </Paragraph>
-    </>
-  );
+      </>
+    )
+  };
 
   const SEOContentNH = () => {
     return (
@@ -289,7 +279,7 @@ const NearMePage = ({
 
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.nh}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
@@ -347,7 +337,7 @@ const NearMePage = ({
             </li>
           </ul>
           <Link
-            href={`#${sectionIdMap.nh}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
@@ -473,7 +463,7 @@ const NearMePage = ({
           </Paragraph>
           <WhatIsPartnerAgent toc="nursing homes" agents={agents}/>
           <Link
-            href={`#${sectionIdMap.nh}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
@@ -504,7 +494,7 @@ const NearMePage = ({
           </Paragraph>
 
           <Link
-            href={`#${sectionIdMap.nh}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
@@ -631,7 +621,7 @@ const NearMePage = ({
             </StyledTable>
           </StyledArticle>
           <Link
-            href={`#${sectionIdMap.nh}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
@@ -750,7 +740,7 @@ const NearMePage = ({
           </StyledArticle>
           <ADLChart/>
           <Link
-            href={`#${sectionIdMap.nh}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
@@ -866,7 +856,7 @@ const NearMePage = ({
             </StyledTable>
           </StyledArticle>
           <Link
-            href={`#${sectionIdMap.nh}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
@@ -986,7 +976,7 @@ const NearMePage = ({
             </StyledTable>
           </StyledArticle>
           <Link
-            href={`#${sectionIdMap.nh}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
@@ -1106,7 +1096,7 @@ const NearMePage = ({
             </StyledTable>
           </StyledArticle>
           <Link
-            href={`#${sectionIdMap.nh}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
@@ -1186,6 +1176,9 @@ const NearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/nursing-home", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/nursing-home")}
       </Helmet>
       <HubHeader imagePath="react-assets/hub/assisted-living-cover.jpg"
                  toc="nursing homes"
