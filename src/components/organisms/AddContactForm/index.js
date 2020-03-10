@@ -5,9 +5,13 @@ import { Field } from 'redux-form';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
 import { phoneFormatter, phoneParser } from 'sly/services/helpers/phone';
+import { ENTITY_LABEL_MAP } from 'sly/constants/entityTypes';
 
 const AddContactForm = ({ handleSubmit, onCancel, heading, initialValues, ...props }) => {
-  const isEditMode = initialValues.created_at;
+  const isEditMode = initialValues.createdAt;
+  const { entity } = initialValues;
+  const { type } = entity;
+  const typeLabel = ENTITY_LABEL_MAP[type];
 
   return (
     <ThreeSectionFormTemplate
@@ -30,7 +34,7 @@ const AddContactForm = ({ handleSubmit, onCancel, heading, initialValues, ...pro
         required
         component={ReduxField}
       />
-      <Field name="community.name" label="Community" type="text" component={ReduxField} disabled />
+      <Field name="entity.name" label={typeLabel} type="text" component={ReduxField} disabled />
     </ThreeSectionFormTemplate>
   );
 };
