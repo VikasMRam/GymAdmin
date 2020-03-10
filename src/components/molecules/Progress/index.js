@@ -10,7 +10,7 @@ import { Block } from 'sly/components/atoms';
 const Bubble = styled.div`
   height: ${size('icon.tiny')};
   width: ${size('icon.tiny')};
-  background-color: ${ifProp('checked', palette('slate', 'base'), palette('white', 'base'))};
+  background-color: ${ifProp(['checked', 'filled'], palette('slate', 'base'), palette('white', 'base'))};
   border: ${size('border.large')} solid ${ifProp('checked', palette('slate', 'base'), palette('grey', 'filler'))};
   border-radius: 50%;
   display: inline-block;
@@ -25,7 +25,7 @@ const Bubble = styled.div`
         height: ${size('border.large')};
         margin-top: calc(${size('icon.tiny')}/4);
         margin-left: calc(${size('icon.tiny')} - ${size('border.large')});
-        background-color: ${palette('grey', 'filler')};
+        background-color: ${ifProp('pathHighlighted', palette('slate', 'base'), palette('grey', 'filler'))};
       }
     `,
   )}
@@ -39,16 +39,31 @@ const Wrapper = styled.section`
 const CenteredBlock = textAlign(Block);
 CenteredBlock.displayName = 'CenteredBlock';
 
-const Progress = ({ steps, currentStep }) => (
-  <Wrapper>
-    {steps.map((s, i) => (
-      <div key={s}>
-        <CenteredBlock weight="bold" size="tiny" palette={currentStep === s ? 'slate' : 'grey'} variation={currentStep === s ? 'base' : 'filler'}>{s}</CenteredBlock>
-        <Bubble hasPath={i !== steps.length - 1} checked={currentStep === s} />
-      </div>
-    ))}
-  </Wrapper>
-);
+const Progress = ({ steps, currentStep }) => {
+  const currentStepIndex = steps.indexOf(currentStep);
+  return (
+    <Wrapper>
+      {steps.map((s, i) => (
+        <div key={s}>
+          <CenteredBlock
+            weight="bold"
+            size="tiny"
+            palette={i <= currentStepIndex ? 'slate' : 'grey'}
+            variation={i <= currentStepIndex ? 'base' : 'filler'}
+          >
+            {s}
+          </CenteredBlock>
+          <Bubble
+            hasPath={i !== steps.length - 1}
+            pathHighlighted={i < currentStepIndex}
+            filled={(i === 0 && currentStepIndex === 0) || i < currentStepIndex}
+            checked={i <= currentStepIndex}
+          />
+        </div>
+      ))}
+    </Wrapper>
+  );
+};
 
 Progress.propTypes = {
   steps: arrayOf(string).isRequired,
