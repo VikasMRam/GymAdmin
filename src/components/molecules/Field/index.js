@@ -239,7 +239,7 @@ const Field = ({
     ...props,
   };
   const InputComponent = getInputComponent(type);
-  const renderInputFirst = (type === 'checkbox' && !options) || type === 'radio';
+  const renderInputFirst = (type === 'checkbox' && !options) || type === 'radio' || type === 'file';
   const valueLength = inputProps.value ? inputProps.value.length : 0;
   if (type === 'date') {
     inputProps.selected = inputProps.value;
@@ -312,6 +312,7 @@ Field.propTypes = {
     'dateChoice',
     'slider',
     'text',
+    'file',
     'phone',
     'email',
     'password',

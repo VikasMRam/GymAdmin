@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { string, func, oneOfType, boolean, arrayOf, object } from 'prop-types';
+import { string, func, oneOfType, bool, arrayOf, object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import Checkbox from 'sly/components/molecules/Checkbox';
@@ -20,11 +20,16 @@ const CheckboxLabel = cursor(Span);
 
 export default class CheckboxInput extends Component {
   static propTypes = {
-    value: oneOfType([boolean, arrayOf(string)]),
+    value: oneOfType([bool, arrayOf(string)]),
     onChange: func,
     options: arrayOf(object),
     type: string,
     label: string,
+  };
+
+  static defaultProps = {
+    options: [],
+    value: [],
   };
 
   handleCheckboxItemOnClick = (option) => {

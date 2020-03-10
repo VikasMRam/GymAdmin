@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import { configure, addDecorator } from '@storybook/react';
-import { setOptions } from '@storybook/addon-options';
+import { withOptions } from '@storybook/addon-options';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -26,7 +26,7 @@ function configureStorybook() {
   Modal.setAppElement('#root');
 }
 
-setOptions({
+withOptions({
   hierarchySeparator: /\/|\./,
   hierarchyRootSeparator: /\|/,
 });

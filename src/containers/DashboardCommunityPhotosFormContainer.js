@@ -14,6 +14,7 @@ import { userIs } from 'sly/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import DashboardCommunityPhotosForm from 'sly/components/organisms/DashboardCommunityPhotosForm';
 import { purgeFromRelationships, invalidateRequests } from 'sly/services/newApi/actions';
+import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
 
 const arrayMove = (array, from, to) => {
   array = array.slice();
@@ -47,6 +48,8 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
     deleteImage: func.isRequired,
     purgeFromRelationships: func.isRequired,
     invalidateRequests: func.isRequired,
+    showModal: func.isRequired,
+    hideModal: func.isRequired,
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
     gallery: galleryPropType,
@@ -160,24 +163,38 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
   };
 
   deleteImage = (image) => {
-    const { gallery } = this.props;
-    const { deleteImage, purgeFromRelationships } = this.props;
-    if (image.id && image.type) {
-      const entity = {
-        ...image,
-        relationships: {
-          gallery: {
-            data: gallery,
+    const { showModal, hideModal } = this.props;
+
+    const doDelete = () => {
+      const { gallery, deleteImage, purgeFromRelationships } = this.props;
+      if (image.id && image.type) {
+        const entity = {
+          ...image,
+          relationships: {
+            gallery: {
+              data: gallery,
+            },
           },
-        },
-      };
-      deleteImage(image).then(() => purgeFromRelationships({
-        name: 'images',
-        entity,
-      }));
-    } else {
-      this.spliceImageFromState(image);
-    }
+        };
+        return deleteImage(image)
+          .then(() => purgeFromRelationships({
+            name: 'images',
+            entity,
+          }))
+          .then(hideModal)
+          .then(this.handleSubmitSort);
+      }
+      return this.spliceImageFromState(image);
+    };
+
+    return showModal((
+      <ConfirmationDialog
+        heading={`Remove ${image.attributes.name}`}
+        description={`Are you sure that you want to remove ${image.attributes.name}? This cannot be undone.`}
+        onConfirmClick={doDelete}
+        onCancelClick={hideModal}
+      />
+    ), hideModal);
   };
 
 

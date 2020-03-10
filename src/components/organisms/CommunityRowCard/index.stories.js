@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 import agent from 'sly/../private/storybook/sample-data/agent-linda-iwamota.json';
 import AgentRowCard from 'sly/components/organisms/AgentRowCard';
 
-storiesOf('Organisms|AgentRowCard', module)
+storiesOf('Organisms|CommunityRowCard', module)
   .add('default', () => (
     <AgentRowCard
       agent={agent}

@@ -122,7 +122,16 @@ export default class DashboardCommunitiesDetailsPage extends Component {
   };
 
   render() {
-    const { community, currentTab, communityIsLoading, user, notifyInfo, notifyError } = this.props;
+    const {
+      community,
+      currentTab,
+      communityIsLoading,
+      user,
+      notifyInfo,
+      notifyError,
+      showModal,
+      hideModal,
+    } = this.props;
 
     if (communityIsLoading) {
       return (
@@ -213,6 +222,8 @@ export default class DashboardCommunitiesDetailsPage extends Component {
           {currentTab === PHOTOS && (
             <Section>
               <DashboardCommunityPhotosFormContainer
+                showModal={showModal}
+                hideModal={hideModal}
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import S3Upload from 'react-s3-uploader/s3upload';
 import objectAssign from 'object-assign';
 
+import FileField from 'sly/components/molecules/FileField';
+
 /* eslint-disable */
 
 // http://stackoverflow.com/a/24608023/194065
@@ -53,7 +55,6 @@ export default class ReactS3Uploader extends React.Component {
 
   static defaultProps = {
     preprocess(file, next) {
-      console.log(`Pre-process: ${file.name}`);
       next(file);
     },
     onSignedUrl(signingServerResponse) {
@@ -77,18 +78,35 @@ export default class ReactS3Uploader extends React.Component {
     autoUpload: true,
   };
 
-  constructor(props) {
-    super(props);
-  }
+  ref = this.props.inputRef || React.createRef();
+
+  state = {
+    fileName: null,
+    percent: 0,
+  };
+
+  preprocess = (file, next) => {
+    const { preprocess } = this.props;
+    this.setState({
+      fileName: file.name,
+    }, () => preprocess(file, next))
+  };
+
+  progress = (percent, message, file) => {
+    const { onProgress } = this.props;
+    this.setState({
+      percent,
+    }, () => onProgress(percent, message, file));
+  };
 
   uploadFile = () => {
     this.myUploader = new S3Upload({
-      fileElement: ReactDOM.findDOMNode(this),
+      fileElement: this.ref.current,
       signingUrl: this.props.signingUrl,
       getSignedUrl: this.props.getSignedUrl,
-      preprocess: this.props.preprocess,
+      preprocess: this.preprocess,
       onSignedUrl: this.props.onSignedUrl,
-      onProgress: this.props.onProgress,
+      onProgress: this.progress,
       onFinishS3Put: this.props.onFinish,
       onError: this.props.onError,
       signingUrlMethod: this.props.signingUrlMethod,
@@ -111,16 +129,12 @@ export default class ReactS3Uploader extends React.Component {
     clearInputFile(ReactDOM.findDOMNode(this));
   };
 
-  render = () => {
-    return React.createElement('input', this.getInputProps());
-  };
-
   getInputProps = () => {
     // declare ref beforehand and filter out
     // `inputRef` by `ReactS3Uploader.propTypes`
     const additional = {
       type: 'file',
-      ref: this.props.inputRef,
+      ref: this.ref,
     };
 
     if (this.props.autoUpload) {
@@ -139,6 +153,11 @@ export default class ReactS3Uploader extends React.Component {
     });
 
     return inputProps;
+  };
+
+  render = () => {
+    const { fileName, percent } = this.state;
+    return <FileField fileName={fileName} percent={percent} {...this.getInputProps()} />;
   };
 }
 
