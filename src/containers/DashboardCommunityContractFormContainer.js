@@ -48,7 +48,7 @@ export default class DashboardCommunityContractFormContainer extends Component {
   };
 
   handleSubmit = (values) => {
-    const { community, updateCommunity } = this.props;
+    const { community, updateCommunity, notifyError, notifyInfo } = this.props;
     const { id } = community;
     const { relationships } = values;
     const { rgsAux } = relationships;
@@ -57,7 +57,9 @@ export default class DashboardCommunityContractFormContainer extends Component {
       relationships: {
         rgsAux: { data: rgsAux },
       },
-    });
+    })
+      .then(() => notifyInfo(`Details for ${community.name} saved correctly`))
+      .catch(() => notifyError(`Details for ${community.name} could not be saved`));
   };
 
   render() {

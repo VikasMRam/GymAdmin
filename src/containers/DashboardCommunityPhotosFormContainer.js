@@ -18,9 +18,8 @@ import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
 
 const arrayMove = (array, from, to) => {
   array = array.slice();
-  const startIndex = to < 0 ? array.length + to : to;
   const item = array.splice(from, 1)[0];
-  array.splice(startIndex, 0, item);
+  array.splice(to, 0, item);
   return array;
 };
 
@@ -94,6 +93,8 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
   };
 
   addImage = () => {
+    // this adds a image template with the relationship and sortOrder
+    // the rest of the attributes of the image are added in MediaItem
     const { status } = this.props;
     const { images } = this.state;
     const newImage = {
@@ -122,7 +123,7 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
   };
 
   handleSubmitSort = () => {
-    const { updateImage } = this.props;
+    const { updateImage, notifyError } = this.props;
     const { images } = this.state;
 
     const promises = images.reduce((acc, { id, attributes }, i) => {
@@ -141,15 +142,17 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
         touched: false,
       }))
       .catch(e => {
-        console.error(e);
+        notifyError(`Could not sort images: ${e.message}`);
       });
   };
 
   saveImage = (image) => {
-    const { createImage } = this.props;
+    const { createImage, notifyError, notifyInfo } = this.props;
     createImage(image).then(() => {
       this.spliceImageFromState(image);
-    });
+    })
+      .then(() => notifyInfo(`Image ${image.attributes.name} saved correctly`))
+      .catch(() => notifyError(`Image ${image.attributes.name} could not be saved`));
   };
 
   spliceImageFromState = (image) => {
@@ -163,7 +166,7 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
   };
 
   deleteImage = (image) => {
-    const { showModal, hideModal } = this.props;
+    const { showModal, hideModal, notifyInfo, notifyError } = this.props;
 
     const doDelete = () => {
       const { gallery, deleteImage, purgeFromRelationships } = this.props;
@@ -182,7 +185,13 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
             entity,
           }))
           .then(hideModal)
-          .then(this.handleSubmitSort);
+          .then(this.handleSubmitSort)
+          .then(() => {
+            notifyInfo(`Image ${image.attributes.name} removed correctly`);
+          })
+          .catch(() => {
+            notifyError(`Image ${image.attributes.name} could not be removed`);
+          });
       }
       return this.spliceImageFromState(image);
     };

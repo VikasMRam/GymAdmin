@@ -36,13 +36,15 @@ export default class DashboardCommunityCareServicesFormContainer extends Compone
   };
 
   handleSubmit = (values) => {
-    const { status, updateCommunity } = this.props;
+    const { status, updateCommunity, notifyError, notifyInfo } = this.props;
     const rawCommunity = status.community.result;
-    const { id } = rawCommunity;
+    const { id, attributes } = rawCommunity;
 
     return updateCommunity({ id }, {
       attributes: values,
-    });
+    })
+      .then(() => notifyInfo(`Details for ${attributes.name} saved correctly`))
+      .catch(() => notifyError(`Details for ${attributes.name} could not be saved`));
   };
 
   render() {

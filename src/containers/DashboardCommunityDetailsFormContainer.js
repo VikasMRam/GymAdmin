@@ -56,17 +56,20 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
   };
 
   handleSubmit = (values) => {
-    const { match, updateCommunity } = this.props;
+    const { match, updateCommunity, notifyError, notifyInfo } = this.props;
     const { id } = match.params;
 
     const { attributes, relationships } = values;
     const { address } = relationships;
+
     return updateCommunity({ id }, {
       attributes,
       relationships: {
         address: { data: address },
       },
-    });
+    })
+      .then(() => notifyInfo(`Details for ${attributes.name} saved correctly`))
+      .catch(() => notifyError(`Details for ${attributes.name} could not be saved`));
   };
 
   render() {

@@ -45,10 +45,6 @@ const FormScrollSection = styled.div`
   // max-height: calc(100vh - 240px);
 `;
 
-const FormBottomSection = styled.div`
-  margin-top: ${size('spacing.xLarge')};
-`;
-
 export default class DashboardCommunityPhotosForm extends Component {
   static propTypes = {
     currentValues: object,

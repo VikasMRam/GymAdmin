@@ -26,7 +26,7 @@ const ReduxForm = reduxForm({
   id: match.params.id,
 }))
 
-export default class DashboardCommunityAmenitiesFormContainer extends Component {
+export default class DashboardCommunityServicesFormContainer extends Component {
   static propTypes = {
     updateCommunity: func.isRequired,
     notifyInfo: func.isRequired,
@@ -39,12 +39,14 @@ export default class DashboardCommunityAmenitiesFormContainer extends Component 
   };
 
   handleSubmit = (values) => {
-    const { match, updateCommunity } = this.props;
+    const { match, updateCommunity, community, notifyInfo, notifyError } = this.props;
     const { id } = match.params;
 
     return updateCommunity({ id }, {
       attributes: values,
-    });
+    })
+      .then(() => notifyInfo(`Details for ${community.name} saved correctly`))
+      .catch(() => notifyError(`Details for ${community.name} could not be saved`));
   };
 
   render() {
