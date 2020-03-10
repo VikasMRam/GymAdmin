@@ -71,6 +71,7 @@ const SeniorLivingNearMePage = ({
   const costRef = React.createRef();
   const chooseRef = React.createRef();
   const typesRef = React.createRef();
+  const faqRef = React.createRef();
   const nextRef = React.createRef();
   const nearRef = React.createRef();
 
@@ -79,6 +80,7 @@ const SeniorLivingNearMePage = ({
     cost: 'cost',
     choose: 'choosing-senior-living',
     typesil: 'types-of-senior-living',
+    faqs: 'frequently-asked-question',
     next: 'next-steps',
     near: 'senior-living-near-you',
   };
@@ -119,6 +121,28 @@ const SeniorLivingNearMePage = ({
     },
   ];
 
+  const faqs = [
+    {
+      question: "How much does senior living cost?",
+      answer: "In 2019, the cost of senior living ranged from $4,051 for assisted living to $7,513 for a semi-private room at a skilled nursing facility. Other kinds of senior living options include independent living, memory care and even short-term respite care stays. Prices vary from based on care needs, room type, and geographic location."
+    },
+    {
+      question: "What is independent senior living?",
+      answer: "Independent senior living is for adults aged 55 and older who want to downsize, remove the burden of home maintenance, and instead live a leisurely life with like minded peers. Usually, there is no medical care available unless the property includes skilled nursing."},
+    {
+      question: "Does Medicare cover senior living?",
+      answer: "Medicare and Medicaid can be options for a stay in a skilled nursing facility.  That is the only senior living option that you can be assured will work those government programs. Once you start exploring independent living or assisted living, private pay becomes the way to pay.  If you’re a Veteran or the spouse of a Veteran, don’t forget to explore all of the Veteran’s Benefits available for senior living."
+    },
+    {
+      question: "How to pay for senior assisted living?",
+      answer: "Paying for senior assisted living is usually handled through private pay.  There are circumstances when a community might have a Medicare or Medicaid option, but this is few and far between. Long-term care insurance is a great investment early in life to help cover assisted living costs later in life. Finally, Veteran’s can often get assistance from the government if they are qualified."
+    },
+    {
+      question: "What is a senior living advisor?",
+      answer: "Senior living referral agents, sometimes also called elder care referral agents or senior placement agents (we call them Seniorly Partner Agents), can be a company with several employees or just one senior living expert. In either case, they have a wealth of valuable information about all the various senior housing options, care services, and types of senior living available to you and your loved ones in the local area you are searching."
+    },
+  ];
+
   const TableOfContents = () => {
     return (
       <>
@@ -149,6 +173,13 @@ const SeniorLivingNearMePage = ({
             onClick={e => handleAnchor(e, sltypesRef)}
           >
             Different Types of Senior Living
+          </StyledLink>
+
+          <StyledLink
+            href={`#${sectionIdMap.faqs}`}
+            onClick={e => handleAnchor(e, faqRef)}
+          >
+            Senior Living FAQs
           </StyledLink>
 
 
@@ -753,6 +784,26 @@ const SeniorLivingNearMePage = ({
           >
             Back to top
           </Link>
+        </StyledArticle>
+
+        <StyledArticle>
+          <Heading level="title" size="title" _ref={faqRef} >
+            Senior Living FAQs
+          </Heading>
+          <Paragraph>
+            Below you will find a sampling of the 5 most frequently asked questions we get regarding senior living.
+          </Paragraph>
+          {faqs.map(p => (
+            <>
+            <Heading level="subtitle" size="subtitle">
+              {p.question}
+            </Heading>
+            <Paragraph>
+              {p.answer}
+            </Paragraph>
+            </>
+
+          ))}
         </StyledArticle>
 
         <StyledArticle>

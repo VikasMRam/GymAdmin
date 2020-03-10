@@ -8,6 +8,7 @@ import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
 import ADLChart from 'sly/components/molecules/ADLChart';
+import { faqPage } from 'sly/services/helpers/html_headers';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -96,6 +97,7 @@ const NearMePage = ({
   const costRef = React.createRef();
   const alvsnhRef = React.createRef();
   const alvsilRef = React.createRef();
+  const faqRef = React.createRef();
   const nextRef = React.createRef();
 
   const sectionIdMap = {
@@ -106,6 +108,7 @@ const NearMePage = ({
     cost: 'cost',
     alvsnh: 'al-vs-nh',
     alvsil: 'al-vs-il',
+    faqs: 'frequently-asked-question',
     next: 'next',
   };
 
@@ -200,6 +203,30 @@ const NearMePage = ({
     },
   ];
 
+  const faqs = [
+    {
+      question: "How much does assisted living cost?",
+      answer: "On average in the U.S., in 2019 assisted living cost $4,051 per month, though this price can vary greatly depending on location, amenities, daily activities, on-site medical care and more. The average number can reach as high as $6,960 in New York state., and as low as $2,881 in Missouri."
+    },
+    {
+      question: "How to pay for assisted living?",
+      answer: "Most communities are private pay. They will accept long-term care insurance, but you must check with your insurance policy first.  Also, many financial aid options exist, including Medicare, Medicaid, VA benefits, payment plans, low income services, etc.\n" +
+      "Talk to the community as they often have additional options to help your loved one afford to live in the community of their dreams."
+    },
+    {
+      question: "What is the difference between assisted living and a nursing home?",
+      answer: "Also called skilled nursing, a nursing home is a better option for seniors who need considerable, 24/7 daily care, or memory issues. Assisted living communities are best for those who are largely self-sufficient, active, and are looking to simplify their lifestyle, with a little extra help."
+    },
+    {
+      question: "What services are offered in assisted living?",
+      answer: "Though every community is different, services that are commonly offered at assisted living include transportation services, basic medical care, medication monitoring, day trips, structure exercise classes, religious services, and more."
+    },
+    {
+      question: "Are pets allowed in assisted living facilities?",
+      answer: "In many assisted living communities, residents are welcome to bring their pet with them. Check with each community to discuss their particular pet policies."
+    },
+  ];
+
 
   const TableOfContents = () => {
     return (
@@ -251,6 +278,13 @@ const NearMePage = ({
           >
             Assisted Living vs. Independent Living
           </StyledLink>
+          <StyledLink
+            href={`#${sectionIdMap.faqs}`}
+            onClick={e => handleAnchor(e, faqRef)}
+          >
+            Assisted Living FAQs
+          </StyledLink>
+
           <StyledLink
             href={`#${sectionIdMap.next}`}
             onClick={e => handleAnchor(e, nextRef)}
@@ -768,6 +802,30 @@ const NearMePage = ({
             Back to top
           </Link>
         </StyledArticle>
+        <StyledArticle>
+          <Heading level="title" size="title" _ref={faqRef} >
+            Assisted Living FAQs
+          </Heading>
+          <Paragraph>
+            Below you will find a sampling of the 5 most frequently asked questions we get regarding assisted living.
+            For a comprehensive list of assisted living frequently asked questions, click through to our{' '}
+            <Link href="https://www.seniorly.com/resources/articles/seniorly-assisted-living-faqs">
+              Assisted Living FAQ section
+            </Link>.
+          </Paragraph>
+          {faqs.map(p => (
+            <>
+            <Heading level="subtitle" size="subtitle">
+              {p.question}
+            </Heading>
+            <Paragraph>
+              {p.answer}
+            </Paragraph>
+            </>
+
+          ))}
+        </StyledArticle>
+
 
         <StyledArticle>
           <NextSteps nextRef={nextRef}
@@ -795,6 +853,7 @@ const NearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
       </Helmet>
       <HubHeader imagePath="react-assets/hub/assisted-living-cover.jpg"
          toc="assisted living"
@@ -815,14 +874,6 @@ const NearMePage = ({
             <Heading level="title" size="title">
               {heading}
             </Heading>
-            <StyledArticle>
-              <Paragraph>
-                Seniorly promises to make your search for assisted living near you easy and stress-free. In 2019, the
-                national average monthly cost has been $4,051 for an assisted living facility. Below, compare assisted
-                living communities near you and then let us connect you to your local senior living advisor.
-                They can answer all your questions, share costs, arrange tours, and even negotiate rent. Our services are free.
-              </Paragraph>
-            </StyledArticle>
             {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
             {!isFetchingResults && (
               <CommunitySearchList

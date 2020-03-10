@@ -47,6 +47,7 @@ const HomeCareNearMePage = ({
   const hcvsalRef = React.createRef();
   const specializedRef = React.createRef();
   const companyRef = React.createRef();
+  const faqRef = React.createRef();
   const nextRef = React.createRef();
 
   const sectionIdMap = {
@@ -58,6 +59,7 @@ const HomeCareNearMePage = ({
     hcvsal: 'hc-vs-al',
     specialized: 'specialized-home-care',
     company: 'choosing-home-care-company',
+    faqs: 'frequently-asked-question',
     next: 'next-steps',
   };
 
@@ -65,6 +67,29 @@ const HomeCareNearMePage = ({
     {title: "Evaluating Home Care Companies", to:"https://www.seniorly.com/in-home-care/articles/evaluating-home-care-companies"},
     {title: "Understanding the Cost of Home Care", to:"Understanding the Cost of Home Care"},
     {title: "Frequently Asked Questions About Home Care", to:"Frequently Asked Questions About Home Care"},
+  ];
+
+  const faqs = [
+    {
+      question: "Does Medicare cover home health care?",
+      answer: "Seniors who need medical care may find that Medicare, Medicaid or private health insurance will cover some of the expenses of home care. Make sure to discuss all financial arrangements, including insurance coverage, with the home care agencies you're considering before you make your final choice."
+    },
+    {
+      question: "What is hospice care at home?",
+      answer: "Hospice care at home is about maintaining comfort during the end of life process.  Often, morphine is administered on request to help with pain management.  You need a doctor’s prescription to get hospice care at home covered by Medicare or other private health insurance.  Always check with your insurance to know what is allowed."
+    },
+    {
+      question: "How much does home health care cost?",
+      answer: "Expect to pay $20 to $40 an hour for home health care.  However, several variables go into the answer to this question. Much depends on what services your loved one needs and on how many hours per day an in-home caregiver is present. If your loved one just needs help with the activities of daily living (ADLs), such as dressing and bathing, you can expect costs at the lower end of that scale. If they require round-the-clock assistance due to memory care needs or recovery from surgery, costs will be higher. Finally, if your loved one lives in a city, the costs are likely to be higher than if they're located in a rural area."
+    },
+    {
+      question: "Does the VA pay for nursing home care?",
+      answer: "Yes, the VA will pay for nursing home care as part of the Veteran’s Benefits available to qualifying Veterans. To find out about qualifications, review the Veteran’s Benefits for Senior Living."
+    },
+    {
+      question: "What does home health care do?",
+      answer: "All in-home caregivers help with the activities of daily living (ADLs), such as bathing, dressing, and grooming. In most cases, they also handle meal preparation. Sometimes caregivers also provide transportation, driving the seniors under their care to medical appointments, errands, and entertainment as needed. Another key area in which caregivers help is medication management. Many seniors need reminders to take their medications on schedule. In-home caregivers can help with this, pre-measuring medications and preparing them for those times when they're not on duty."
+    },
   ];
 
   const TableOfContents = () => {
@@ -121,6 +146,12 @@ const HomeCareNearMePage = ({
             onClick={e => handleAnchor(e, companyRef)}
           >
             Choosing the Right Home Care Company
+          </StyledLink>
+          <StyledLink
+            href={`#${sectionIdMap.faqs}`}
+            onClick={e => handleAnchor(e, faqRef)}
+          >
+            Home Care FAQs
           </StyledLink>
 
           <StyledLink
@@ -631,6 +662,30 @@ const HomeCareNearMePage = ({
             Home Care agency before you make your final choice.
           </Paragraph>
         </StyledArticle>
+
+
+      <StyledArticle>
+        <Heading level="title" size="title" _ref={faqRef} >
+          Home Care FAQs
+        </Heading>
+        <Paragraph>
+          Below you will find a sampling of the 5 most frequently asked questions we get regarding home care.  For a comprehensive list of home care frequently asked questions, click through to our{' '}
+          <Link href="https://www.seniorly.com/in-home-care/articles/seniorly-home-care-faqs">
+            Home Care FAQ section
+          </Link>.
+        </Paragraph>
+        {faqs.map(p => (
+          <>
+          <Heading level="subtitle" size="subtitle">
+            {p.question}
+          </Heading>
+          <Paragraph>
+            {p.answer}
+          </Paragraph>
+          </>
+
+        ))}
+      </StyledArticle>
 
 
         <StyledArticle>

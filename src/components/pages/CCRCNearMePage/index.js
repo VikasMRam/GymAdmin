@@ -67,6 +67,7 @@ const CCRCNearMePage = ({
   const ccrcvsalRef = React.createRef();
   const ccrcvshcRef = React.createRef();
   const chooseRef = React.createRef();
+  const faqRef = React.createRef();
   const nextRef = React.createRef();
   const nearRef = React.createRef();
 
@@ -78,6 +79,7 @@ const CCRCNearMePage = ({
     ccrcvsal: 'ccrc-vs-al',
     ccrcvshc: 'ccrc-vs-hc',
     choose: 'choosing-ccrc',
+    faqs: 'frequently-asked-question',
     next: 'next-steps',
     near: 'ccrc-near-you',
   };
@@ -109,6 +111,31 @@ const CCRCNearMePage = ({
       asset: "images/hub/agents/Kim.png",
       caption: "Kim Bertolino has over a year of experience helping families find independent living, assisted living, and memory care options. She is a certified senior advisor, and is dedicated to guiding families throughout the senior living process.",
       first: "Kim"
+    },
+  ];
+
+  const faqs = [
+    {
+      question: "What is a continuing care retirement community?",
+      answer: "Many people mistakenly believe that a continuing care retirement community (CCRC) is interchangeable with an assisted living community or a nursing home. However, CCRCs actually get their name from the concept that they offer residents a continuum of care over time. These communities provide a full range of health care, housing, and residential services to meet the needs of residents as they change over time. CCRCs usually include three main stages of care, including independent living, assisted living, and skilled nursing care. While residents may only need limited services when they enter the community, they have the option of receiving a higher level of care if needed."
+    },
+    {
+      question: "How do you choose a continuing care retirement community?",
+      answer: "The earlier you begin considering a CCRC the better. These communities are designed for seniors who are healthy and active enough to live independent, full lives. Most CCRCs offer premium recreational activities and amenities tailored to the desires of active seniors. Since these communities make it possible to move seamlessly from one kind of care to the next, it’s a flexible, comprehensive type of senior care that is a perfect option for seniors who want to enjoy their golden years without worrying about big moves or home and grounds maintenance in the future."
+    },
+    {
+      question: "What is included in continuing care retirement communities?",
+      answer: "A continuing care retirement community is designed to offer multiple levels of senior care as its needed, so CCRCs offer a wide range of services. Services range from assisted living and independent living to memory care and skilled nursing. Services and amenities vary from community to community, and certain services may require you to pay additional fees. Some of the services and amenities often included at CCRCs include dining services, housekeeping, utilities, local transportation, a fitness center, laundry services, educational opportunities, and so much more."
+    },
+    {
+      question: "What is the cost of living at a CCRC?",
+      answer: "According to the AARP, CCRCs are the most expensive long-term-care options available and they require both significant entrance fees and monthly charges. Entrance fees may range between $100,000 and $1 million, and this upfront sum prepays for your care and also gives the community the money it needs to operate.\n"+
+        "Monthly charges for living in a CCRC range between $3,000 and $5,000, although these fees vary based upon the services and amenities you have, your health when entering the community, and the type of housing you choose.\n"+
+        "Before choosing a CCRC, it’s always important to learn about the community’s entrance fees, monthly charges, and what’s covered in the fees you pay, since it’s possible for fees to increase as needs change. Learn more about the cost of living in a CCRC and the types of contracts you have to choose from before making your decision."
+    },
+    {
+      question: "Are Pets Allowed in a CCRC?",
+      answer: "Pets can be very therapeutic for seniors, and many CCRCs are happy to welcome them into the community. However, some communities may have restrictions on pet size, breed, and type, so ask about their policy if you want to bring your pet along with you. You may be required to pay additional deposits or fees, as well."
     },
   ];
 
@@ -773,6 +800,28 @@ const CCRCNearMePage = ({
       Back to top
     </Link>
   </StyledArticle>
+    <StyledArticle>
+      <Heading level="title" size="title" _ref={faqRef} >
+        CCRC FAQs
+      </Heading>
+      <Paragraph>
+        Below you will find a sampling of the 5 most frequently asked questions we get regarding CCRC’s.  For a comprehensive list of CCRC frequently asked questions, click through to our{' '}
+        <Link href="https://www.seniorly.com/continuing-care-retirement-community/articles/seniorly-continuing-care-retirement-community-ccrc-faqs">
+          CCRC FAQ section
+        </Link>.
+      </Paragraph>
+      {faqs.map(p => (
+        <>
+        <Heading level="subtitle" size="subtitle">
+          {p.question}
+        </Heading>
+        <Paragraph>
+          {p.answer}
+        </Paragraph>
+        </>
+
+      ))}
+    </StyledArticle>
   <StyledArticle>
     <NextSteps nextRef={nextRef}
                toc="CCRC"

@@ -76,6 +76,7 @@ const IndependentLivingNearMePage = ({
   const servicesRef = React.createRef();
   const ilvsalRef = React.createRef();
   const chooseRef = React.createRef();
+  const faqRef = React.createRef();
   const nextRef = React.createRef();
   const nearRef = React.createRef();
 
@@ -87,6 +88,7 @@ const IndependentLivingNearMePage = ({
     services: 'services',
     ilvsal: 'il-vs-al',
     choose: 'choosing-memory-care',
+    faqs: 'frequently-asked-question',
     next: 'next-steps',
     near: 'memory-care-near-you',
   };
@@ -124,6 +126,27 @@ const IndependentLivingNearMePage = ({
       "a special skillset for senior living placement.",
       first: "Carol"
     },
+  ];
+
+  const faqs = [
+    {
+      question: "How much is independent living?",
+      answer: "The cost of independent living is as varied as the types of communities available.  To begin, most independent living communities do require some kind of upfront fee to become a resident. If you're joining a CCRC, the fee can be sizable ($500,000 and up), because you're joining a system that involves medical services. In other types of independent living communities, the fee may be the equivalent of a security deposit on a new apartment. The fee is often larger or smaller depending on the types of amenities and services the independent living community offers and on the type of residential unit you're choosing. If you're buying a condo or other home within an independent living community, of course you'll be subject to the down payment and other closing fees involved with any real estate transaction, and a membership fee may also be required."
+    },
+    {
+      question: "What’s the difference between independent living and assisted living?",
+      answer: "Residents in an independent living community do receive some help that makes life a little easier, but these are generally confined to areas like maintenance, yard care and maybe housekeeping. Residents in assisted living facilities typically receive some assistance with the activities of daily living (ADLs), including medication management and often including meal preparation. Assisted living residents, however, usually don't need significant skilled medical care on a daily basis."
+    },
+    {
+      question: "How many independent living facilities are there in the U.S.?",
+      answer: "There are thousands of independent living facilities in the U.S. They range from large campuses to smaller, home-like settings. You can search Seniorly.com for the independent living communities near you."
+    },
+    {
+      question: "How old do you have to be for independent living?",
+      answer: "Most independent living communities have a minimum age requirement of 55.  These are known as age-restricted communities. As detailed above, there are many other types of independent living and their age requirements vary, but never go below 55."},
+    {
+      question: "Are pets allowed in an independent living community?",
+      answer: "Most independent living communities welcome pets, understanding how therapeutic they can be for older adults. Because some communities have restrictions on the type, breed, or size of pets allowed, make sure you ask about the policy if you want to bring a pet with you. Also ask about any deposits or fees required."},
   ];
 
   const TableOfContents = () => {
@@ -174,6 +197,13 @@ const IndependentLivingNearMePage = ({
             onClick={e => handleAnchor(e, chooseRef)}
           >
             How to Choose the Right Independent Living Community
+          </StyledLink>
+
+          <StyledLink
+            href={`#${sectionIdMap.faqs}`}
+            onClick={e => handleAnchor(e, faqRef)}
+          >
+            Independent Living FAQs
           </StyledLink>
 
           <StyledLink
@@ -767,6 +797,29 @@ const IndependentLivingNearMePage = ({
           >
             Back to top
           </Link>
+        </StyledArticle>
+
+        <StyledArticle>
+          <Heading level="title" size="title" _ref={faqRef} >
+            Independent Living FAQs
+          </Heading>
+          <Paragraph>
+            Below you will find a sampling of the 5 most frequently asked questions we get regarding independent living.  For a comprehensive list of independent living frequently asked questions, click through to our{' '}
+            <Link href="https://www.seniorly.com/independent-living/articles/seniorly-independent-living-faqs">
+              Independent Living FAQ section
+            </Link>.
+          </Paragraph>
+          {faqs.map(p => (
+            <>
+            <Heading level="subtitle" size="subtitle">
+              {p.question}
+            </Heading>
+            <Paragraph>
+              {p.answer}
+            </Paragraph>
+            </>
+
+          ))}
         </StyledArticle>
 
 

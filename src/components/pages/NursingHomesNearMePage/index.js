@@ -66,6 +66,8 @@ const NearMePage = ({
   const mcRef = React.createRef();
   const bncRef = React.createRef();
   const hospiceRef = React.createRef();
+  const faqRef = React.createRef();
+
 
   const sectionIdMap = {
     nh: 'what-is-nursing-home',
@@ -78,6 +80,7 @@ const NearMePage = ({
     mc: 'memory-care',
     bnc: 'board-and-care-home',
     hospice: 'hospice',
+    faqs: 'frequently-asked-question',
   };
 
   const agents = [
@@ -106,6 +109,29 @@ const NearMePage = ({
       "assisted living, and memory care options. With her unique volunteer experience, she brings \n" +
       "a special skillset for senior living placement.",
       first: "Carol"
+    },
+  ];
+  const faqs = [
+    {
+      question: "Does Medicare pay for a nursing home?",
+      answer: "Yes, Medicare can be used to pay for a stay at a nursing home. However, seniors must qualify and this is where it can get complicated.  Medicare will only pay if a senior resident requires skilled nursing care and has been referred by a physician after discharge from a hospital, and only 100 days of skilled nursing care are offered per year.  For more on how to pay for a nursing home, scroll back up on this page to the payment section."
+    },
+    {
+      question: "How much does a nursing home cost?",
+      answer: "The monthly average cost in 2019 for a nursing home was $7,513 for a semi-private room and $8,517 for a private room.  This is according to the Genworth Cost of Care Survey.  Remember, this is a monthly average calculated from across the entire U.S.  Therefore, you can expect the cost to fluctuate depending on where you live and the exact care needs being managed."
+    },
+    {
+      question: "What is the difference between assisted living and nursing home?",
+      answer: "Often, families search for “nursing home.” This term doesn’t really exist, but it is commonly defined as a Skilled Nursing Facility. There is a significant difference between Assisted Living communities and Skilled Nursing Facilities.\n" +
+      "According to the CDC, over 50% of Skilled Nursing Facility residents have either Alzheimer’s disease or other forms of dementia. Most residents also spend the majority of their time sedentary.\n" +
+      "In contrast, most Assisted Living residents maintain active lifestyles needing only basic daily services such as bathing, mobility assistance, on-site medical care, etc. Allowing seniors to lead active, independent lives while also aiming to make daily life simpler and safer is the primary goal of Assisted Living communities."
+    },
+    {
+      question: "Does the VA pay for nursing home care?",
+      answer: "Yes, the VA will pay for nursing home care for qualified Veterans."},
+    {
+      question: "What qualifies a person for a nursing home?",
+      answer: "To qualify for a nursing home, first you have to identify what your care needs are. Since “nursing home” can be defined as many different types of senior care, you need to understand which care offers what kind of care.  For example, a skilled nursing facility offers the most comprehensive round the clock medical care. In contrast, an assisted living facility does not provide medical care, but instead offers professional assistance with the activities of daily living (ADLs)."
     },
   ];
 
@@ -174,6 +200,12 @@ const NearMePage = ({
           onClick={e => handleAnchor(e, hospiceRef)}
         >
           Hospice
+        </StyledLink>
+        <StyledLink
+          href={`#${sectionIdMap.faqs}`}
+          onClick={e => handleAnchor(e, faqRef)}
+        >
+          Nursing Home FAQs
         </StyledLink>
       </Paragraph>
     </>
@@ -1120,6 +1152,25 @@ const NearMePage = ({
               </Link>
             </li>
           </ul>
+        </StyledArticle>
+        <StyledArticle>
+          <Heading level="title" size="title" _ref={faqRef} >
+            Nursing Home FAQs
+          </Heading>
+          <Paragraph>
+            Below you will find a sampling of the 5 most frequently asked questions we get regarding nursing homes.
+          </Paragraph>
+          {faqs.map(p => (
+            <>
+            <Heading level="subtitle" size="subtitle">
+              {p.question}
+            </Heading>
+            <Paragraph>
+              {p.answer}
+            </Paragraph>
+            </>
+
+          ))}
         </StyledArticle>
       </>
     );

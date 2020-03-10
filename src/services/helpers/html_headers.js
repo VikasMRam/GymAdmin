@@ -408,3 +408,26 @@ export const getHelmetForAgentsRegionPage = ({ locationName }) => {
     </Helmet>
   );
 };
+
+export const faqPage = ( faqs ) => {
+  const ld = {};
+  ld['@context'] = 'http://schema.org';
+  ld['@type'] = 'FAQPage';
+  const ldFAQs = [];
+  if (faqs.length > 0) {
+    faqs.map(e => ldFAQs.push(questionLD(e)));
+  }
+  ld.mainEntity = ldFAQs;
+  return (<script key={`helmet_faq-page`} type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>);
+};
+
+const questionLD = ( faq ) => {
+  const question = {};
+  question['@type'] = 'Question';
+  question.name = faq.question;
+  const answer = {};
+  answer['@type'] = 'Answer';
+  answer.text = faq.answer;
+  question.acceptedAnswer = answer;
+  return question;
+}

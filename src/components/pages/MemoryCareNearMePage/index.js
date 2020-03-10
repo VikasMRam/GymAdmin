@@ -76,6 +76,7 @@ const MemoryCareNearMePage = ({
   const mcvsalRef = React.createRef();
   const chooseRef = React.createRef();
   const nextRef = React.createRef();
+  const faqRef = React.createRef();
   const nearRef = React.createRef();
 
   const sectionIdMap = {
@@ -85,6 +86,7 @@ const MemoryCareNearMePage = ({
     cost: 'cost',
     mcvsal: 'mc-vs-al',
     choose: 'choosing-memory-care',
+    faqs: 'frequently-asked-question',
     next: 'next-steps',
     near: 'memory-care-near-you',
   };
@@ -118,6 +120,31 @@ const MemoryCareNearMePage = ({
       first: "Kim"
     },
   ];
+
+
+  const faqs = [
+    {
+      question: "Is memory care considered skilled nursing?",
+      answer: "No, memory care is not considered skilled nursing.  Memory care is similar to assisted living, but it provides 24/7 care from staff members specially trained to handle the special needs of those with Alzheimer's disease and dementia. Nursing homes, also known as skilled nursing communities, care for seniors who have significant medical needs and need round-the-clock care. Assisted living communities are an ideal choice for seniors who are still active and fairly self-sufficient, but who need a little help with daily personal tasks, housekeeping, and medication management."
+    },
+    {
+      question: "How much is a memory care facility?",
+      answer: "The cost of a memory care facility will usually begin around $5,000/mth. Some memory care communities charge one flat fee that covers all services. Other communities separate the fees for medical care and housing. The differences may matter to your loved one's health insurance or long-term care policy. In addition, there may be tax consequences. Seek professional advice from a health care advocate or your tax accountant if these issues might matter."
+    },
+    {
+      question: "Does Medicare pay for long term memory care?",
+      answer: "Many memory care communities accept Medicare, Medicaid, and Veterans Administration benefits to help pay both medical and non-medical costs. Other resources may be available in some states for low-income residents. Long-term care insurance, if your loved one has it, will also cover many costs. Talk to the business manager at the memory care communities to see what other options they have available, including payment plans to spread out the costs."
+    },
+    {
+      question: "How to find a memory care facility?",
+      answer: "To find the best memory care facility, begin by using an online search. Then select the communities you want to tour. Next, connect with a local senior living expert who can arrange tours at all the properties. Prepare all your questions ahead of time so you don't forget to get all the information you need when visiting a memory care community. Take a good look around as you visit to see how much the community matches the impression you've gotten from the website or various brochures. Keep your eyes open for any hygiene or safety issues."
+    },
+    {
+      question: "What is a care plan for memory loss?",
+      answer: "Every person with Alzheimer's or dementia follows a unique journey and responds to different types of treatment. Make sure that the memory care communities you're considering take these individual variations into consideration. Rather than following a set routine for every resident, they should be preparing an individualized care plan for your loved one that takes into consideration other medical conditions they have, the stage of their dementia symptoms, and their personal preferences."
+    },
+  ];
+
 
   const TableOfContents = () => {
     return (
@@ -161,6 +188,12 @@ const MemoryCareNearMePage = ({
             onClick={e => handleAnchor(e, chooseRef)}
           >
             Choosing a Memory Care Facility
+          </StyledLink>
+          <StyledLink
+            href={`#${sectionIdMap.faqs}`}
+            onClick={e => handleAnchor(e, faqRef)}
+          >
+            Memory Care FAQs
           </StyledLink>
 
           <StyledLink
@@ -827,6 +860,29 @@ const MemoryCareNearMePage = ({
           >
             Back to top
           </Link>
+        </StyledArticle>
+
+        <StyledArticle>
+          <Heading level="title" size="title" _ref={faqRef} >
+            Memory Care FAQs
+          </Heading>
+          <Paragraph>
+            Below you will find a sampling of the 5 most frequently asked questions we get regarding memory care.  For a comprehensive list of memory care frequently asked questions, click through to our
+            <Link href="https://www.seniorly.com/memory-care/articles/seniorly-memory-care-faqs">
+              Memory Care FAQ section
+            </Link>.
+          </Paragraph>
+          {faqs.map(p => (
+            <>
+            <Heading level="subtitle" size="subtitle">
+              {p.question}
+            </Heading>
+            <Paragraph>
+              {p.answer}
+            </Paragraph>
+            </>
+
+          ))}
         </StyledArticle>
 
 

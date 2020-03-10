@@ -63,6 +63,7 @@ const NearMePage = ({
   const nextRef = React.createRef();
   const medicareRef = React.createRef();
   const paymentRef = React.createRef();
+  const faqRef = React.createRef();
   const moreRef = React.createRef();
 
   const sectionIdMap = {
@@ -73,8 +74,31 @@ const NearMePage = ({
     next: 'next',
     medicare: 'medicare',
     payment: 'payment',
+    faqs: 'frequently-asked-question',
     more: 'more',
   };
+
+  const faqs = [
+    {
+      question: "Does Medicare pay for hospice in a skilled nursing facility?",
+      answer: "Yes, Medicare can be used to pay up to 100% of hospice care in a skilled nursing facility (SNF). However, seniors must qualify and this is where it can get complicated. Medicare will only pay if a senior resident requires hospice care prescribed by a physician. Generally, Medicare will only cover up to 100 days when a senior is in a skilled nursing facility, regardless of why.  Be sure to consult with a hospice provider to learn more about payment options."
+    },
+    {
+      question: "Is a skilled nursing facility a hospital?",
+      answer: "No, a skilled nursing facility is not a hospital. It might look like one, though, since senior residents are provided 24/7 medical care. In fact, many residents are discharged from a hospital and sent to a SNF for either rehabilitative care or even end of life hospice care."
+    },
+    {
+      question: "What is skilled nursing facility vs nursing home?",
+      answer: "The term “nursing home does NOT automatically equal a skilled nursing facility (SNF). It’s a catch-all phrase used for many types of senior living. “Nursing home” most typically means an assisted living community near you, but can also refer to memory care facilities and other types of senior living communities. Always confirm beforehand what types of services a nursing home offers and whether they meet your medical and non-medical needs."
+    },
+    {
+      question: "What do skilled nursing facilities provide?",
+      answer: "A skilled nursing facility (SNF) is a type of “nursing home.” A skilled nursing facility is a type of long-term or convalescent community that provides 24/7, nursing and therapy care. What differentiates a skilled nursing facility (SNF) from other types of senior living options is that they provide healthcare services that can only be safely and effectively performed by professionals or technical personnel."
+    },
+    {
+      question: "Does the VA pay for skilled nursing facility?",
+      answer: "Yes, the VA will pay for a stay in a skilled nursing facility for qualified Veterans."},
+  ];
 
   const TableOfContents = () => (
     <>
@@ -128,6 +152,12 @@ const NearMePage = ({
           onClick={e => handleAnchor(e, paymentRef)}
         >
           Other Payment Options
+        </StyledLink>
+        <StyledLink
+          href={`#${sectionIdMap.faqs}`}
+          onClick={e => handleAnchor(e, faqRef)}
+        >
+          Skilled Nursing Facility FAQs
         </StyledLink>
 
         <StyledLink
@@ -516,6 +546,25 @@ const NearMePage = ({
             Back to top
           </Link>
         </StyledArticle>
+      <StyledArticle>
+        <Heading level="title" size="title" _ref={faqRef} >
+          Skilled Nursing Facility FAQs
+        </Heading>
+        <Paragraph>
+          Below you will find a sampling of the 5 most frequently asked questions we get regarding skilled nursing facilities (SNF).
+        </Paragraph>
+        {faqs.map(p => (
+          <>
+          <Heading level="subtitle" size="subtitle">
+            {p.question}
+          </Heading>
+          <Paragraph>
+            {p.answer}
+          </Paragraph>
+          </>
+
+        ))}
+      </StyledArticle>
         <StyledArticle>
           <Heading level="title" size="title" _ref={moreRef}>
             More Information
