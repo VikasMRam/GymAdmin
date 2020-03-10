@@ -134,7 +134,7 @@ const CommunityPricingTable = ({
       {estimated &&
         <StyledBlockNp size="title">
           <StyledBlockSp size="body" palette="slate">The estimated monthly pricing for {name} ranges from</StyledBlockSp>
-          <StyledNumberFormat weight="weight.medium" color="secondary">{formatMoney(from)}</StyledNumberFormat> <Span weight="medium" size="title" palette="secondary" variation="dark35"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary" value={to} displayType="text" thousandSeparator prefix="$" /><Span weight="medium" size="title" palette="secondary" variation="dark35"> per month*</Span>
+          <StyledNumberFormat weight="weight.medium" color="secondary">{formatMoney(from)}</StyledNumberFormat> <Span weight="medium" size="title" palette="secondary" variation="dark35"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary">{formatMoney(to)}</StyledNumberFormat> <Span weight="medium" size="title" palette="secondary" variation="dark35"> per month*</Span>
         </StyledBlockNp>
       }
       {!estimated &&
