@@ -81,7 +81,7 @@ export default class DashboardCommunityContractForm extends Component {
               />
               <Field
                 label="Notes"
-                name="relationships.rgsAux.attributes.rgsInfo.contract_info.note"
+                name="relationships.rgsAux.attributes.rgsInfo.contract_info.notes"
                 type="textarea"
                 canEdit={canEdit}
               />

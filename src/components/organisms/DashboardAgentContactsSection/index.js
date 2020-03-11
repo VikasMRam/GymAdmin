@@ -19,7 +19,7 @@ import AddOrEditContactFormContainer from 'sly/containers/AddOrEditContactFormCo
 import IconButton from 'sly/components/molecules/IconButton';
 import { ENTITY_LABEL_MAP } from 'sly/constants/entityTypes';
 
-const TABLE_HEADINGS = [{ text: 'Contact name' }, { text: 'Entity' }, { text: 'Email' }, { text: 'Phone number' }];
+const TABLE_HEADINGS = [{ text: 'Contact name' }, { text: 'Entity' }, { text: 'Email' }, { text: 'Phone number' }, { text: 'Delete' }];
 
 const Section = styled.section`
   background-color: ${palette('grey.background')};
@@ -118,6 +118,7 @@ export default class DashboardAgentContactsSection extends Component {
     entityType: string.isRequired,
     entityId: string,
     entityName: string,
+    deleteContact: func,
   };
 
   handleAddContactClick = () => {
@@ -161,6 +162,7 @@ export default class DashboardAgentContactsSection extends Component {
       entityId,
       entityType,
       entityName,
+      deleteContact,
     } = this.props;
 
     const entityLabel = ENTITY_LABEL_MAP[entityType];
@@ -196,12 +198,13 @@ export default class DashboardAgentContactsSection extends Component {
                       entity={entity}
                       editContactUrl={`${match.url}/edit/${contact.id}`}
                       onContactClick={() => this.handleContactClick(contact)}
+                      deleteContact={deleteContact}
                     />);
                   })}
                   {contacts.length === 0 && (
                     <Tr>
                       <Td colSpan={TABLE_HEADINGS.length} borderless={noBorder}>
-                        <NoResultMessage>Nice! You are on top of all your tasks here.</NoResultMessage>
+                        <NoResultMessage>Nice! You are on top of all your contacts here.</NoResultMessage>
                       </Td>
                     </Tr>
                   )}
