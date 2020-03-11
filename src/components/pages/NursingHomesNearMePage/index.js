@@ -233,7 +233,7 @@ const NearMePage = ({
             and the other care options available for senior residents that may better meet your needs.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, nhRef)}
           >
             Back to top
