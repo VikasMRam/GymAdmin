@@ -40,16 +40,6 @@ describe('Given the PageEventsContainer', () => {
     mockEvents.sendEvent.mockReset();
   });
 
-  describe('when rendered', () => {
-    it('should always render a helmet with the canonical url llink', () => {
-      const { wrapper } = mountComponent('/home?query=true');
-
-      expect(wrapper.find('.helmet link').props()).toEqual({
-        href: `${config.host}/home`,
-        rel: 'canonical',
-      });
-    });
-  });
 
   describe('when mounted without an event in the query', () => {
     it('should send a page view event only and not do any redirecting', () => {
