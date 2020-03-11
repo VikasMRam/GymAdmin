@@ -247,8 +247,6 @@ export const getHelmetForCommunityPage = (community, location) => {
 
   const description = websiteMetaDescription || `${name} is ${article} ${toc.label} community located at ${address.line1} in ${titleize(address.city)}, ${titleize(address.state)}. See pricing, photos & reviews on Seniorly.com!`;
 
-  console.log(title);
-  console.log(description);
   let imageUrl = null;
   if (gallery.images && gallery.images.length > 0) {
     imageUrl = gallery.images[0].url;
