@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string, func } from 'prop-types';
+import { string, func, bool } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
@@ -107,7 +107,7 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
 `;
 const StyledLabel = styled(Label)`
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.small')};
 `;
 
 const HubHeader = ({
@@ -117,6 +117,7 @@ const HubHeader = ({
   label,
   onCurrentLocation,
   onLocationSearch,
+  showSearch,
 }) => (
   <>
     <HeaderContainer />
@@ -132,7 +133,9 @@ const HubHeader = ({
           <StyledLabel palette="white">
             {label}
           </StyledLabel>
-          <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
+          {showSearch &&
+            <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
+          }
         </SearchBoxWrapper>
       </CTAWrapper>
     </HeroWrapper>
@@ -156,9 +159,14 @@ HubHeader.propTypes = {
   imagePath: string.isRequired,
   toc: string.isRequired,
   heading: string.isRequired,
-  label: string.isRequired,
-  onLocationSearch: func.isRequired,
-  onCurrentLocation: func.isRequired,
+  label: string,
+  onLocationSearch: func,
+  onCurrentLocation: func,
+  showSearch: bool,
+};
+
+HubHeader.defaultProps = {
+  showSearch: true,
 };
 
 export default HubHeader;

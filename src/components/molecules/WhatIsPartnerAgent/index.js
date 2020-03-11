@@ -56,7 +56,7 @@ const WhatIsPartnerAgent = ({ toc, agents }) => (
       ))}
     </AgentWrapper>
     <Paragraph>
-      Working with Seniorly means we will connect you to the local senior living expert in your preferred city.
+      Working with Seniorly means we will connect you to the Local Senior Living Expert in your preferred city.
       They will support you for as much or as little as you need through every step of the process.
       There is never any cost for our services. We are compensated by the community eventually selected.
     </Paragraph>

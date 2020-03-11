@@ -7,6 +7,7 @@ import HubHeader from 'sly/components/molecules/HubHeader';
 import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -71,6 +72,7 @@ const MemoryCareNearMePage = ({
   const otherRef = React.createRef();
   const costRef = React.createRef();
   const touringRef = React.createRef();
+  const faqRef = React.createRef();
   const nextRef = React.createRef();
   const nearRef = React.createRef();
 
@@ -80,9 +82,57 @@ const MemoryCareNearMePage = ({
     other: 'bnc-vs-other',
     cost: 'cost',
     touring: 'touring-questions',
+    faqs: 'frequently-asked-question',
     next: 'next-steps',
     near: 'memory-care-near-you',
   };
+
+
+  const tocList = [
+    {
+      title: "What is a Board and Care Home Near You?",
+      id: "what-is-board-and-care",
+      ref: bncRef
+    },
+    {
+      title: "What Services are Provided at a Board and Care Home?",
+      id: "services",
+      ref: servicesRef
+    },
+    {
+      title: "How Much Does a Board and Care Home Cost?",
+      id: "cost",
+      ref: costRef
+    },
+    {
+      title: "Board and Care Homes vs. Other Types of Senior Living",
+      id: "other",
+      ref: otherRef
+    },
+    {
+      title:" What Questions to Ask When Touring",
+      id: "touring-questions",
+      ref: touringRef
+    },
+    {
+      title: "Board and Care Home FAQs",
+      id: "frequently-asked-question",
+      ref: faqRef
+
+    },
+    {
+      title: "Next Steps",
+      id: "next",
+      ref: nextRef
+
+    },
+    {
+      title: "Browse Board and Care Homes Near You",
+      id: "board-and-care-near-you",
+      ref: nearRef
+    },
+
+  ];
 
   const nextSteps = [
     {title: "Evaluating a Board and Care Home", to:"https://www.seniorly.com/resources/articles/evaluating-a-board-and-care-home"},
@@ -114,57 +164,46 @@ const MemoryCareNearMePage = ({
     },
   ];
 
+  const faqs = [
+    {
+      question: "Are board and care homes licensed?",
+      answer: "Not all states license board and care homes, which are sometimes also called residential care homes, residential personal care homes, or residential care facilities for the elderly. Check with your state's Department of Aging to understand whether licenses are required."
+    },
+    {
+      question: "What is a residential care home for elderly?",
+      answer: "The name \"board and care home\" is primarily used in California. In other states, this type of senior living can be called a residential care home or a residential personal care home or some variation of that.  Use your preferred online search engine to find the right term or ask one of our Seniorly Partner Agents in your region.  Or reach out to your state’s Department of Aging for details.  Regardless of the name, this type of senior housing is different from others because of its home-like, intimate setting."
+    },
+    {
+      question: "Does insurance pay for board and care?",
+      answer: "No, they do not. Low-income residents may be eligible for financial help from Medicaid or the Veterans Administration in some cases. While traditional health insurance doesn't cover the costs of a board and care home, long-term care insurance policies typically do cover them."
+    },
+    {
+      question: "Are pets allowed in board and care homes?",
+      answer: "Some board and care homes only accept cats, some accept cats or dogs, and some have a communal pet that all the residents can enjoy. If you or your loved one wants to bring a pet, make sure to ask who takes care of the pet and whether there's a surcharge."
+    },
+    {
+      question: "What is a care plan in a residential care home?",
+      answer: "In addition to their room and three meals a day, senior residents in a residential care home receive the customized help they need with the activities of daily living (ADLs), which include bathing, dressing and grooming, as well as help with medication management. Housekeeping services, linen and laundry are also provided. The goal is always to help senior residents maintain as much independence as possible. Some residential care homes also provide transportation to medical appointments, shopping and entertainment. Because these homes are small, they don't offer a great variety of planned activities.  However, many are known to welcome residents who all have something in common, like a shared passion for an activity or culture."
+    },
+  ];
+
   const TableOfContents = () => {
     return (
       <>
-        <Heading level="subtitle" size="subtitle">
-          Table of Contents
-        </Heading>
-        <Paragraph>
+      <Heading level="subtitle" size="subtitle">
+        Table of Contents
+      </Heading>
+      <Paragraph>
+        {tocList.map(p => (
           <StyledLink
-            href={`#${sectionIdMap.bnc}`}
-            onClick={e => handleAnchor(e, bncRef)}
+            href={`#${p.id}`}
+            onClick={e => handleAnchor(e, p.ref)}
           >
-            What is a Board and Care Home Near You?
+            {p.title}
           </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.services}`}
-            onClick={e => handleAnchor(e, servicesRef)}
-          >
-            What Services are Provided at a Board and Care Home?
-          </StyledLink>
-          <StyledLink
-          href={`#${sectionIdMap.cost}`}
-          onClick={e => handleAnchor(e, costRef)}
-        >
-          How Much Does a Board and Care Home Cost?
-        </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.other}`}
-            onClick={e => handleAnchor(e, otherRef)}
-          >
-            Board and Care Homes vs. Other Types of Senior Living
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.touring}`}
-            onClick={e => handleAnchor(e, touringRef)}
-          >
-            What Questions to Ask When Touring
-          </StyledLink>
+        ))}
 
-          <StyledLink
-            href={`#${sectionIdMap.next}`}
-            onClick={e => handleAnchor(e, nextRef)}
-          >
-            Next Steps
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.near}`}
-            onClick={e => handleAnchor(e, nearRef)}
-          >
-            Browse Board and Care Homes Near You
-          </StyledLink>
-        </Paragraph>
+      </Paragraph>
       </>
     )
   };
@@ -944,6 +983,29 @@ const MemoryCareNearMePage = ({
           </Link>
         </StyledArticle>
 
+        <StyledArticle>
+          <Heading level="title" size="title" _ref={faqRef} >
+            Board and Care Home FAQs
+          </Heading>
+          <Paragraph>
+            Below you will find a sampling of the 5 most frequently asked questions we get regarding board and care home.  For a comprehensive list of board and care home frequently asked questions, click through to our{' '}
+            <Link href="https://www.seniorly.com/resources/articles/seniorly-board-and-care-faqs">
+              Board and Care Home FAQ section.
+            </Link>.
+          </Paragraph>
+          {faqs.map(p => (
+            <>
+            <Heading level="subtitle" size="subtitle">
+              {p.question}
+            </Heading>
+            <Paragraph>
+              {p.answer}
+            </Paragraph>
+            </>
+
+          ))}
+        </StyledArticle>
+
 
         <StyledArticle>
           <NextSteps nextRef={nextRef}
@@ -971,6 +1033,9 @@ const MemoryCareNearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/board-and-care-home", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/board-and-care-home")}
       </Helmet>
       <HubHeader imagePath="react-assets/hub/board-and-care-home-cover.jpg"
          toc="board and care home"

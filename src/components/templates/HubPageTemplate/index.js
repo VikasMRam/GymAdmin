@@ -83,7 +83,7 @@ export const HubPageTemplate = styled.main`
   
   .overlayStickToTop {
     background-color: ${palette('white', 'base')};
-    padding: ${size('spacing.xLarge')} ${size('spacing.large')} ${size('spacing.regular')} ${size('spacing.large')};
+    padding: ${size('spacing.xLarge')} ${size('spacing.xLarge')} ${size('spacing.regular')} ${size('spacing.xLarge')};
     line-height: ${size('lineHeight.body')};
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
     border-radius: ${size('spacing.small')};
@@ -114,14 +114,17 @@ export const HubPageTemplate = styled.main`
       background-color: ${palette('slate', 'stroke')};
       padding: ${size('spacing.regular')} ${size('spacing.large')};
       color: ${palette('grey', 'base')};
+      text-align: left;
     };
     tr {
       border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+      text-align: left;
     };
     td, th {
       padding: ${size('spacing.regular')} ${size('spacing.large')};
       border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
       font-weight: normal;
+      text-align: left;
   
     };
     table-layout: fixed;
@@ -132,7 +135,7 @@ export const HubPageTemplate = styled.main`
   }
   
   .overlayOneColumnListWrapper {
-    padding: ${size('spacing.xLarge')} ${size('spacing.large')};
+    padding: ${size('spacing.xLarge')} ${size('spacing.xLarge')};
     line-height: ${size('lineHeight.body')};
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
     border-radius: ${size('spacing.small')};
@@ -143,7 +146,7 @@ export const HubPageTemplate = styled.main`
   }
   
   .overlayTwoColumnListWrapper {
-    padding: ${size('spacing.xLarge')} ${size('spacing.large')};
+    padding: ${size('spacing.xLarge')} ${size('spacing.xLarge')};
     line-height: ${size('lineHeight.body')};
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
     border-radius: ${size('spacing.small')};

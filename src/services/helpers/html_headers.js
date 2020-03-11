@@ -24,6 +24,19 @@ const getSDForCommunity = ({
   ld['@type'] = 'LodgingBusiness';
   ld.name = name;
   ld.url = `${host}${url}`;
+  ld.url = `${host}${url.pathname}`;
+  ld.inLanguage = "EN-US";
+
+  const author = {};
+  author['@type'] = 'Organization';
+  author['name'] = 'Seniorly Inc.';
+  ld.author = author;
+
+  const audience = {};
+  audience['@type'] = "Audience";
+  audience.name = "Care Givers, Seniors, Adult Children, Senior Care Providers, Senior Housing";
+  ld.audience = audience;
+
 
   const addressLd = {};
   addressLd['@type'] = 'PostalAddress';
@@ -148,6 +161,12 @@ export const getHelmetForSearchPage = ({
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'Webpage';
   ld.url = `${host}${url.pathname}`;
+  ld.inLanguage = "EN-US";
+  ld.author = author();
+  ld.audience = audience();
+  ld.name = title;
+  ld.description = description;
+
   const ldCommunities = [];
   if (communityList.length > 0) {
     communityList.map(e => ldCommunities.push(getSDForSearchResource({ ...e })));
@@ -237,6 +256,8 @@ export const getHelmetForCommunityPage = (community, location) => {
   }
 
   const ld = getSDForCommunity({ ...community });
+  ld.headline = title;
+  ld.description = description;
 
   const criticReviewsJsonLDs = reviews && reviews.filter(review => review.isCriticReview === true).map((criticReview) => {
     const result = {
@@ -378,7 +399,7 @@ export const getHelmetForPartnersPage = () => {
   return (
     <Helmet>
       <title>Partner Agent Program</title>
-      <meta name="description" content="Seniorly partners with over 300 local senior living experts nationwide who provide a personalized approach to finding pricing, availability, amenities and more for thousands of senior care communities." />
+      <meta name="description" content="Seniorly partners with over 300 Local Senior Living Experts nationwide who provide a personalized approach to finding pricing, availability, amenities and more for thousands of senior care communities." />
     </Helmet>
   );
 };
@@ -407,4 +428,74 @@ export const getHelmetForAgentsRegionPage = ({ locationName }) => {
       <meta name="description" content={description} />
     </Helmet>
   );
+};
+
+export const faqPage = ( faqs ) => {
+  const ld = {};
+  ld['@context'] = 'http://schema.org';
+  ld['@type'] = 'FAQPage';
+  const ldFAQs = [];
+  if (faqs.length > 0) {
+    faqs.map(e => ldFAQs.push(questionLD(e)));
+  }
+  ld.mainEntity = ldFAQs;
+  return (<script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>);
+};
+
+const questionLD = ( faq ) => {
+  const question = {};
+  question['@type'] = 'Question';
+  question.name = faq.question;
+  const answer = {};
+  answer['@type'] = 'Answer';
+  answer.text = faq.answer;
+  question.acceptedAnswer = answer;
+  return question;
+};
+
+export const tocSiteNavigationLD = ( baseUrl, links ) => {
+  const ld = {};
+  ld['@context'] = 'http://schema.org';
+  const ldLinks = [];
+  if (links.length > 0) {
+    links.map(e => ldLinks.push(
+      {
+        "@context": "https://schema.org",
+        "@type":"SiteNavigationElement",
+        "@id": baseUrl,
+        "name": e.title,
+        "url": `${baseUrl}#${e.id}`,
+      }
+    ))
+  }
+  ld['@graph'] = ldLinks;
+  return (<script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>);
+};
+
+export const guideLD = ( title, description, url) => {
+  const ld = {};
+  ld['@context'] = 'http://schema.org';
+  ld['@type'] = 'Guide';
+  ld.headline = title;
+  ld.description = description;
+  ld.url = url;
+  ld.audience = audience();
+  ld.author = author();
+  return (<script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>);
+
+
+};
+
+const author = () => {
+  return {
+    '@type': 'Organization',
+    'name': 'Seniorly Inc.',
+  };
+};
+
+const audience = () => {
+  return {
+    '@type': "Audience",
+    'name': "Care Givers, Seniors, Adult Children, Senior Care Providers, Senior Housing",
+  };
 };

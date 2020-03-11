@@ -5,7 +5,7 @@ Like for example when you add At the current time there is not a clear way in JS
 The greatest challenge is the size of the requests, we have to 
 ## Removing galleries
 
-Our tables `galleries` and `video_galleries` don't hold any data, so the polymorphic relationship should be done at `Video` and `Image` levels:
+~Our tables `galleries` and `video_galleries` don't hold any data, so the polymorphic relationship should be done at `Video` and `Image` levels~:
 
 ```sql
 CREATE TABLE public.images (
@@ -26,7 +26,9 @@ CREATE TABLE public.images (
 CREATE INDEX index_images_on_owner_id_and_owner_type ON public.images USING btree (owner_id, owner_type);
 ```
 
-^ Same for videos
+^ this does not stand anymore, let's follow current schema where images belong to gallery and gallery to gallery-able polymorphic relationshiop
+
+The only thing that we have to change in the model is calling the db `sequence` column in the db `order` of `sortOrder` in the api.
 
 ## Data schema
 
@@ -57,9 +59,9 @@ Adding an image, this is a double step, first we have to acquire a temporary sig
 GET /v0/uploads/s3-signed-url?file=[url-encoded-filename]
 
 {
-  "key": "[folder]/[filename]",
+  "path": "[folder]/[filename]",
   "signedUrl": "http://bucket.s3.aws......",
-   ^ signed url for private key /temp/[folder]/[image]
+   ^ signed url for private key /uploads(or temp)/[folder]/[image]
 }
 ```
 
@@ -68,7 +70,7 @@ Actual key at that point being for example: `temp/83080026d3337c666cc71dead8bc9c
 Then we add the image resource
 
 ```http request
-POST /v0/marketplace/community/1/relationships/images
+POST /v0/marketplace/images
 
 {
   "data": {
@@ -81,6 +83,14 @@ POST /v0/marketplace/community/1/relationships/images
        ^ if the image should by default be added at the end
     }
   }
+  "relationships": {
+    "Gallery": {
+      "data": {
+        "id": 1,
+        "type": "Galery",
+      }
+    }
+  }
 }
 ```
 
@@ -89,34 +99,7 @@ Api should be able to manage the relationship;
 ### Remove
 
 ```http request
-DELETE /v0/marketplace/community/1/relationships/images
-
-{
-  "data": [{ 
-    "type": "Image",
-    "id": 2
-  }]
-}
-```
-
-or
-
-```http request
-DELETE /v0/marketplace/community/1/relationships/images/2
-```
-
-or sort and delete at the same time
-
-
-```http request
-PATCH /v0/marketplace/community/1/images
-
-{
-  "data": [
-    // image id 2 deleted by omission  
-    { "type": "Image", "id": 3, "attributes": { "order": 0 } }
-  ]
-}
+DELETE /v0/marketplace/images/2
 ```
 
 ### Edit one image
@@ -124,7 +107,7 @@ PATCH /v0/marketplace/community/1/images
 In this example we just add a description
 
 ```http request
-PATCH /v0/marketplace/community/1/relationships/images/2
+PATCH /v0/marketplace/images/2
 
 {
   "data": {
@@ -137,15 +120,37 @@ PATCH /v0/marketplace/community/1/relationships/images/2
 }
 ```
 
-### Sort
+### Sort using resource endpoint
+
+A series of http requests
 
 ```http request
-PATCH /v0/marketplace/community/1/images
+PATCH /v0/marketplace/images/1
 
 {
-  "data": [
-    { "type": "Image", "id": 2, "attributes": { "order": 0 } },
-    { "type": "Image", "id": 3, "attributes": { "order": 1 } }
-  ]
+  "data": {
+    "type": "Image",
+    "id": 1,
+    "attributes": {
+      "order": 0
+    }
+  }
 }
 ```
+
+
+```http request
+PATCH /v0/marketplace/images/2
+
+{
+  "data": {
+    "type": "Image",
+    "id": 2,
+    "attributes": {
+      "order": 1
+    }
+  }
+}
+```
+
+... etc
