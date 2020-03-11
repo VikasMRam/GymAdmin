@@ -367,7 +367,7 @@ const NearMePage = ({
             will be on site, or just a short stroll (or wheelchair ride) away.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -388,7 +388,7 @@ const NearMePage = ({
             <StyledArticle><SeoLinks title="Please Click on Your State Below" links={alTable} /></StyledArticle>
           </TableWrapper>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -502,7 +502,7 @@ const NearMePage = ({
             </Link>
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -537,7 +537,7 @@ const NearMePage = ({
             and fish to come along with their faithful owners.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -564,7 +564,7 @@ const NearMePage = ({
             </Link>
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -600,7 +600,7 @@ const NearMePage = ({
             spend time together assured of their safety and happiness.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -696,7 +696,7 @@ const NearMePage = ({
             just the right balance.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -787,7 +787,7 @@ const NearMePage = ({
             might be the ticket.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -825,7 +825,7 @@ const NearMePage = ({
                      links={ALNextSteps} />
 
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
