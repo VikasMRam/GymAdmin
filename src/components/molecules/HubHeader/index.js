@@ -107,7 +107,7 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
 `;
 const StyledLabel = styled(Label)`
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.small')};
 `;
 
 const HubHeader = ({
@@ -134,7 +134,7 @@ const HubHeader = ({
             {label}
           </StyledLabel>
           {showSearch &&
-            <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch}/>
+            <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
           }
         </SearchBoxWrapper>
       </CTAWrapper>
@@ -166,7 +166,7 @@ HubHeader.propTypes = {
 };
 
 HubHeader.defaultProps = {
-  showSearch: true
+  showSearch: true,
 };
 
 export default HubHeader;

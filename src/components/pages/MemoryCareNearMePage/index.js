@@ -176,7 +176,7 @@ const MemoryCareNearMePage = ({
     },
     {
       question: "How to find a memory care facility?",
-      answer: "To find the best memory care facility, begin by using an online search. Then select the communities you want to tour. Next, connect with a local senior living expert who can arrange tours at all the properties. Prepare all your questions ahead of time so you don't forget to get all the information you need when visiting a memory care community. Take a good look around as you visit to see how much the community matches the impression you've gotten from the website or various brochures. Keep your eyes open for any hygiene or safety issues."
+      answer: "To find the best memory care facility, begin by using an online search. Then select the communities you want to tour. Next, connect with a Local Senior Living Expert who can arrange tours at all the properties. Prepare all your questions ahead of time so you don't forget to get all the information you need when visiting a memory care community. Take a good look around as you visit to see how much the community matches the impression you've gotten from the website or various brochures. Keep your eyes open for any hygiene or safety issues."
     },
     {
       question: "What is a care plan for memory loss?",
@@ -508,7 +508,7 @@ const MemoryCareNearMePage = ({
             They do not all specialize in memory care. Please do your research.
             Or let one of our {' '}
             <Link href="https://www.seniorly.com/agents">
-              local senior living experts
+              Local Senior Living Experts
             </Link>{' '}tell you about all the memory care options
             in your desired location.
           </Paragraph>

@@ -88,7 +88,7 @@ const toolTipCode = size => (
       In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
       Small communities like this typically have &quot;all-inclusive&quot; pricing that gives the resident one monthly
       price.<br />
-      Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+      Seniorly can connect you to a Local Senior Living Expert for more details on pricing. This is a free
       service.<br />
     </TooltipContent>
     }
@@ -99,7 +99,7 @@ const toolTipCode = size => (
       Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
       price.<br />
       Some communities will use a Points or Level of Care system to determine the care related fees.<br />
-      Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+      Seniorly can connect you to a Local Senior Living Expert for more details on pricing. This is a free
       service.<br />
     </TooltipContent>
     }
@@ -109,7 +109,7 @@ const toolTipCode = size => (
       In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
       Most large sized communities like this typically charge additional care fees.<br />
       Communities will use a Points or a Level of Care system to determine the care related fees.<br />
-      Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+      Seniorly can connect you to a Local Senior Living Expert for more details on pricing. This is a free
       service.<br />
     </TooltipContent>
     }
@@ -208,7 +208,7 @@ const CommunityPricingTable = ({
               In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
               Small communities like this typically have &quot;all-inclusive&quot; pricing that gives the resident one monthly
               price.
-              Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+              Seniorly can connect you to a Local Senior Living Expert for more details on pricing. This is a free
               service.
             </Paragraph>
           }
@@ -219,7 +219,7 @@ const CommunityPricingTable = ({
               Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
               price.
               Some communities will use a Points or Level of Care system to determine the care related fees.
-              Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+              Seniorly can connect you to a Local Senior Living Expert for more details on pricing. This is a free
               service.
             </Paragraph>
           }
@@ -229,7 +229,7 @@ const CommunityPricingTable = ({
               In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
               Most large sized communities like this typically charge additional care fees.
               Communities will use a Points or a Level of Care system to determine the care related fees.
-              Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+              Seniorly can connect you to a Local Senior Living Expert for more details on pricing. This is a free
               service.
             </Paragraph>
           }
