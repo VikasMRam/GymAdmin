@@ -7,6 +7,6 @@ export default [
   'continuing-care-retirement-community',
   'skilled-nursing-facility',
   'senior-living',
-  'home-care',
+  'in-home-care',
   'respite-care',
 ];
