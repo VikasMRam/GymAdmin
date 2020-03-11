@@ -6,6 +6,8 @@ import { tocs } from 'sly/services/helpers/search';
 import { titleize } from 'sly/services/helpers/strings';
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { getImagePath } from 'sly/services/images';
+import { assetPath } from 'sly/components/themes';
+
 
 
 const stringifyReplacer = (k, v) => {
@@ -363,6 +365,11 @@ export const getHelmetForCommunityPage = (community, location) => {
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+      <meta content="Seniorly" property="author" />
+      <meta content="English" property="language" />
+      <link rel="canonical" href={url} />
 
       <meta content={description} property="og:description" />
       <meta content={`${title} | Seniorly`} property="og:title" />
@@ -373,6 +380,7 @@ export const getHelmetForCommunityPage = (community, location) => {
       <meta content={description} property="twitter:description" />
       <meta content={`${title} | Seniorly`} property="twitter:title" />
       {imageUrl && <meta content={imageUrl} property="twitter:image:src" /> }
+      <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
 
 
       {
