@@ -4,7 +4,6 @@ import path from 'path';
 import crypto from 'crypto';
 import 'isomorphic-fetch';
 
-import parseUrl from 'parseurl';
 import express from 'express';
 import React from 'react';
 import serialize from 'serialize-javascript';
@@ -14,8 +13,6 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
-import pathToRegexp from 'path-to-regexp';
-import cloneDeep from 'lodash/cloneDeep';
 import { ChunkExtractor } from '@loadable/server';
 import { cache } from 'emotion';
 import { CacheProvider } from '@emotion/core';
@@ -28,7 +25,7 @@ import { configure as configureStore } from 'sly/store';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 import { ApiProvider, renderToString, apiInstance as api } from 'sly/services/newApi';
-import clientConfigs from 'sly/clientConfigs';
+import { clientConfigsMiddleware } from 'sly/clientConfigs';
 
 const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
 const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
@@ -73,23 +70,6 @@ const createSetCookie = (res, apiCookies) => (key, value) => {
 
 const makeSid = () => crypto.randomBytes(16).toString('hex');
 
-const clientConfigsMiddleware = (configs) => {
-  configs.forEach((config) => {
-    config.regexp = pathToRegexp(config.path);
-  });
-  return (req, res, next) => {
-    const path = parseUrl(req).pathname;
-    for (let i = 0; i < configs.length; i++) {
-      const config = configs[i];
-      if (path.match(config.regexp)) {
-        // we are going to modify this object in subsequent middlewares
-        req.clientConfig = cloneDeep(config);
-        break;
-      }
-    }
-    next();
-  };
-};
 
 const app = express();
 
@@ -100,8 +80,7 @@ if (!isDev) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
 
-// global.clientConfigs is injected by plugins in private/webpack
-app.use(clientConfigsMiddleware(clientConfigs));
+app.use(clientConfigsMiddleware());
 
 // non ssr apps
 app.use((req, res, next) => {
@@ -211,29 +190,7 @@ app.use(async (req, res, next) => {
 
   const store = configureStore({ experiments: userExperiments });
 
-  const ignoreUnauthorized = (e) => {
-    if (e.status === 401) {
-      // ignore 401
-      // logWarn(e);
-    } else {
-      return Promise.reject(e);
-    }
-    return null;
-  };
-
   // prefetch user data
-  try {
-    await Promise.all([
-      store.dispatch(api.getUser.asAction({ id: 'me' }, apiConfig)).catch(ignoreUnauthorized),
-      store.dispatch(api.getUuidAux.asAction({ id: 'me' }, apiConfig)),
-    ]);
-  } catch (e) {
-    e.message = `Error trying to prefetch user data: ${e.message}`;
-    console.log('new user/me error', e);
-    next(e);
-    return;
-  }
-
   req.clientConfig.store = store;
   req.clientConfig.apiConfig = apiConfig;
 
