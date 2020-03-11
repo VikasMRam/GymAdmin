@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import Helmet from 'react-helmet';
 
 import { host } from 'sly/config';
 import SlyEvent from 'sly/services/helpers/events';
@@ -45,13 +44,9 @@ export default class PageEventsContainer extends Component {
   }
 
   render() {
-    const canonicalUrl = `${host}${this.props.location.pathname}`;
-
     return (
-      <Helmet>
-        <link rel="canonical" href={canonicalUrl} />
-        <meta content={canonicalUrl} property="og:url" />
-      </Helmet>
+      <>
+      </>
     )
   }
 }
