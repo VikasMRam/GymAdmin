@@ -238,7 +238,7 @@ const HomeCareNearMePage = ({
           <Paragraph>
             To learn more about signs your loved one is ready for home care, watch this short video featuring Meghan Heinan from Home Care Assistance.
           </Paragraph>
-          <iframe width="100%" heigh="480px" src="https://www.youtube.com/embed/T83pBbpr9J4" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/T83pBbpr9J4" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
 
 
           <Link

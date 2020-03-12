@@ -9,6 +9,7 @@ import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
 import ADLChart from 'sly/components/molecules/ADLChart';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer'
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -22,8 +23,8 @@ import {
   makeArticle,
   makeTable,
   makeTwoColumnListWrapper,
+  makeOneColumnListWrapper,
 } from 'sly/components/templates/HubPageTemplate';
-import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
@@ -65,6 +66,18 @@ const StyledImage = styled(ResponsiveImage)`
   height: 100%;
 `;
 
+const FullWidthDiv = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  padding: ${size('spacing.large')} 0;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.col8')};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('layout.col12')};
+  }
+`;
+
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
 const Column = makeColumn('aside');
@@ -73,6 +86,8 @@ const StickToTop = makeStickToTop('div');
 const StyledArticle = makeArticle('article');
 const StyledTable = makeTable('table');
 const ListWrapper = makeTwoColumnListWrapper('div');
+const ListWrapperOne = makeOneColumnListWrapper('div');
+
 
 const NearMePage = ({
   onLocationSearch,
@@ -404,7 +419,7 @@ const NearMePage = ({
             <Link href="https://www.genworth.com/aging-and-you/finances/cost-of-care.html">
               Genworth
             </Link>
-            {' '}, the national median rate of assisted living facility per month for a 1-bedroom apartment is $4,051 per month. However, there are a few factors that go into this cost. For example, your location, as well as the personal care services needed.
+            , the national median rate of assisted living facility per month for a 1-bedroom apartment is $4,051 per month. However, there are a few factors that go into this cost. For example, your location, as well as the personal care services needed.
           </Paragraph>
           <Paragraph>
             That comes to about $48,612 a year. That may sound like a big number, but once you add up all current
@@ -419,7 +434,7 @@ const NearMePage = ({
             In general, assisted living communities fall under 3 pricing levels:
           </Paragraph>
           <TypesWrapper>
-            <ListItem icon="favourite-dark" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="favourite-fill" iconPalette="secondary" iconVariation="dark35">
               <Paragraph>
                 <strong>
                   Basic:{' '}
@@ -466,18 +481,19 @@ const NearMePage = ({
             If you’re still unsure if Assisted Living can realistically fit into your budget,
             look into the many financial aid options available.
           </Paragraph>
-          <ul>
-            <li>
-              <Paragraph>
+          <ListWrapperOne>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              <div>
                 <Link href="https://www.seniorly.com/resources/articles/long-term-care-insurance-for-respite-care">
                   Long Term Care Insurance
                 </Link>
                 {' '}- is an insurance product that helps pay for the costs associated with long-term care. Long-term care
                 insurance covers care generally not covered by health insurance, Medicare, or Medicaid.
-              </Paragraph>
-            </li>
-            <li>
-              <Paragraph>
+
+              </div>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              <div>
                 Government services like Medicare, Medicaid, or{' '}
                 <Link href="https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living">
                   Veterans Assistance
@@ -485,15 +501,12 @@ const NearMePage = ({
                 {' '}can be valuable tools in making
                 Assisted Living affordable. Many communities also offer special payment plans, programs, and other
                 strategies to help your loved one live in their ideal community.
-              </Paragraph>
-            </li>
-
-            <li>
-              <Paragraph>
-                Many communities also offer special payment plans, programs, and other strategies to help your loved one live in their ideal community.
-              </Paragraph>
-            </li>
-          </ul>
+              </div>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Many communities also offer special payment plans, programs, and other strategies to help your loved one live in their ideal community.
+            </ListItem>
+          </ListWrapperOne>
 
           <Paragraph>
             You can learn more about the different costs that go into assisted living. Read our resource on{' '}
@@ -823,7 +836,19 @@ const NearMePage = ({
                      toc="assisted living"
                      label="Think Assisted Living might be right for your loved one? Explore one of the three topics below to help narrow down your search:"
                      links={ALNextSteps} />
-
+          <Heading level="subtitle" size="subtitle" >
+            How Seniorly Works
+          </Heading>
+          <Paragraph>
+            <HowSlyWorksVideoContainer eventLabel='assisted-living' />
+          </Paragraph>
+          <Heading level="subtitle" size="subtitle" >
+            Top 5 Social Benefits of Assisted Living
+          </Heading>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/Um8D9IaiR5g" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+          <Paragraph>
+            Seniorly proudly presents our very own, Marlena Del Hierro! She shares the top 5 social benefits of assisted living
+          </Paragraph>
           <Link
             href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
@@ -864,28 +889,28 @@ const NearMePage = ({
               </StickToTop>
             </Column>
             <Body>
-            {SEOContentAL()}
-            <Heading level="title" size="title">
-              {heading}
-            </Heading>
-            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-            {!isFetchingResults && (
-              <CommunitySearchList
-                communityList={communityList}
-                searchParams={searchParams}
-                requestMeta={requestMeta}
-                location={location}
-              />
-            )}
+              {SEOContentAL()}
+              <Heading level="title" size="title">
+                {heading}
+              </Heading>
+              {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
+              {!isFetchingResults && (
+                <CommunitySearchList
+                  communityList={communityList}
+                  searchParams={searchParams}
+                  requestMeta={requestMeta}
+                  location={location}
+                />
+              )}
             </Body>
           </TwoColumn>
         </Wrapper>
       </HubPageTemplate>
       <PhoneCTAFooter/>
-      <TemplateContent>
+      <FullWidthDiv>
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by City" links={ALSeoCities} /></StyledArticle>
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>
-      </TemplateContent>
+      </FullWidthDiv>
       <Footer />
     </>
 

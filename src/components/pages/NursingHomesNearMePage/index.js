@@ -296,46 +296,56 @@ const NearMePage = ({
             options, it’s essential to ask a senior living expert or the property management what payment options are
             accepted. Some of the most common financing options include:
           </Paragraph>
-          <ul>
-            <li>
+          <ListWrapper>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               <Paragraph>
-                Private Pay - this is going to be the most common form of payment accepted for assisted living facilities,
+                <strong>
+                  Private Pay
+                </strong>
+                {' '}- this is going to be the most common form of payment accepted for assisted living facilities,
                 memory care communities, respite care and independent living options. According to{' '}
                 <Link href="https://www.genworth.com/aging-and-you/finances/cost-of-care.html" target="_blank" rel="noopener">
                   Genworth
                 </Link>
                 , in 2019 the average cost for assisted living in the United States was $4,051 per month.
               </Paragraph>
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               <Paragraph>
-                <Link href="https://www.medicaid.gov/" target="_blank" rel="noopener">
-                  Medicaid
-                </Link>
+                <strong>
+                  <Link href="https://www.medicaid.gov/" target="_blank" rel="noopener">
+                    Medicaid
+                  </Link>
+                </strong>
                 {' '}– This is only available at skilled nursing facilities near you. However, if you’ve been
                 looking for nursing homes near you that take Medicaid, you’ll find that while this type of care can
                 be covered through Medicaid, requirements and covered services can vary significantly between states.
                 Most people have to spend all assets first before Medicaid pays.
               </Paragraph>
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               <Paragraph>
-                <Link href="https://www.medicare.gov/index" target="_blank" rel="noopener">
-                  Medicare
-                </Link>
+                <strong>
+                  <Link href="https://www.medicare.gov/index" target="_blank" rel="noopener">
+                    Medicare
+                  </Link>
+                </strong>
                 {' '}- Medicare provides health care benefits for Americans over the age of 65, and it does pay for
                 some skilled nursing facility care. Medicare will only pay if a senior resident requires skilled nursing
                 care and has been referred by a physician after discharge from a hospital, and only 100 days of
                 skilled nursing care are offered per year.
               </Paragraph>
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               <Paragraph>
-                Private Long-Term Care Insurance – This option can supplement Medicare coverage, although the amount
+                <strong>
+                  Private Long-Term Care Insurance
+                </strong>
+                {' '}– This option can supplement Medicare coverage, although the amount
                 they’ll pay for senior living of any kind varies from policy to policy.
               </Paragraph>
-            </li>
-          </ul>
+            </ListItem>
+          </ListWrapper>
           <Link
             href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, nhRef)}

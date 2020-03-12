@@ -9,6 +9,7 @@ import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
 import ADLChart from 'sly/components/molecules/ADLChart';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer'
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -817,7 +818,19 @@ const SeniorLivingNearMePage = ({
                      toc="senior living"
                      label="Think a senior living community might be right for you or your loved one? Learn more about each type below to help narrow down your search:"
                      links={nextSteps} />
-
+          <Heading level="subtitle" size="subtitle" >
+            How Seniorly Works
+          </Heading>
+          <Paragraph>
+            <HowSlyWorksVideoContainer eventLabel='senior-living' />
+          </Paragraph>
+          <Heading level="subtitle" size="subtitle" >
+            How to Pay for Senior Living
+          </Heading>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/lW0zg6rZKdc" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+          <Paragraph>
+            Paying for senior care may seem stressful, but Lars Larson of Heritage Financial North shares advice on how to pay for assisted living.
+          </Paragraph>
           <Link
             href={`#${sectionIdMap.sl}`}
             onClick={e => handleAnchor(e, slRef)}
