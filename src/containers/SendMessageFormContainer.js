@@ -29,7 +29,6 @@ const mapDispatchToProps = {
   clearSubmitErrors: () => clearSubmitErrors(formName),
 };
 
-@query('updateClient', 'updateClient')
 @query('createConversationParticipant', 'createConversationParticipant')
 @query('createConversationMessage', 'createConversationMessage')
 @connect(null, mapDispatchToProps)

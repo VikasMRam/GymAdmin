@@ -9,8 +9,13 @@ const validate = createValidator({
   phone: [required, usPhone],
 });
 
+const initialValues = {
+  name: '',
+};
+
 export default reduxForm({
   validate,
+  initialValues,
   form: 'BookATourWizardForm',
   destroyOnUnmount: false,
 })(CommunityBookATourContactForm);

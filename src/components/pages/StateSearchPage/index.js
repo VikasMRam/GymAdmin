@@ -16,6 +16,7 @@ import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 
 /**
@@ -72,7 +73,7 @@ const ImageButtonWrapper = styled.div`
   `)};
 `;
 
-const StyledImage = styled(Image)`
+const StyledImage = styled(ResponsiveImage)`
   max-width: 100%;
 `;
 
@@ -145,14 +146,14 @@ const StateSearchPage = ({
           <FilterColumnWrapper>
             <ImageButtonWrapper isMapView={isMapView}>
               {isMapView &&
-              <IconButton icon="list" to={listViewUrl} palette="primary" ghost>
+              <IconButton icon="list" to={listViewUrl} iconPalette="primary" ghost>
                 View List
               </IconButton>
               }
               {!isMapView &&
               <>
-                <StyledImage src={assetPath('images/map-placeholder.png')} />
-                <IconButton icon="map" iconSize="regular" to={mapViewUrl} palette="primary" ghost>
+                <StyledImage path="react-assets/map-placeholder.png" aspectRatio="16:9" />
+                <IconButton icon="map" iconSize="regular" to={mapViewUrl} iconPalette="primary" ghost>
                   View Map
                 </IconButton>
               </>

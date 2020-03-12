@@ -27,8 +27,10 @@ describe('Subscriptions', () => {
     notifyInfo = jest.fn();
 
     ws = {
-      on: jest.fn(),
-      off: jest.fn(),
+      pubsub: {
+        on: jest.fn(),
+        off: jest.fn(),
+      },
     };
   });
 
@@ -37,13 +39,13 @@ describe('Subscriptions', () => {
     const { onMessage } = wrapper.instance();
 
     Object.keys(subscriptionList).forEach((key) => {
-      expect(ws.on).toHaveBeenCalledWith(key, onMessage);
+      expect(ws.pubsub.on).toHaveBeenCalledWith(key, onMessage);
     });
 
     wrapper.unmount();
 
     Object.keys(subscriptionList).forEach((key) => {
-      expect(ws.off).toHaveBeenCalledWith(key, onMessage);
+      expect(ws.pubsub.off).toHaveBeenCalledWith(key, onMessage);
     });
   });
 

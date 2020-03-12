@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import WS from 'jest-websocket-mock';
 
-const wait = time => new Promise(resolve => setTimeout(resolve, time));
 const user = {};
 
 describe('WSProvider', () => {

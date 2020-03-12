@@ -27,7 +27,7 @@ const taskTypes = [
 ];
 
 export const FAMILY_DASHBOARD_FAVORITES_PATH = `${FAMILY_DASHBOARD_PATH}/favorites`;
-export const FAMILY_DASHBOARD_PROFILE_PATH = `${FAMILY_DASHBOARD_PATH}/my-profile`;
+export const FAMILY_DASHBOARD_ACCOUNT_PATH = `${FAMILY_DASHBOARD_PATH}/my-account`;
 export const AGENT_DASHBOARD_FAMILIES_PATH = `${AGENT_DASHBOARD_PATH}/my-families/:clientType(${familyTypes.join('|')})?`;
 export const AGENT_DASHBOARD_FAMILIES_DETAILS_PATH = `${AGENT_DASHBOARD_PATH}/my-families/:id/:tab?`;
 export const AGENT_DASHBOARD_TASKS_BASE_PATH = `${AGENT_DASHBOARD_PATH}/tasks`;
@@ -38,6 +38,8 @@ export const FAMILY_DASHBOARD_MESSAGES_PATH = `${FAMILY_DASHBOARD_PATH}/messages
 export const AGENT_DASHBOARD_MESSAGES_PATH = `${AGENT_DASHBOARD_PATH}/messages`;
 export const AGENT_DASHBOARD_MESSAGE_DETAILS_PATH = `${AGENT_DASHBOARD_PATH}/messages/:id`;
 export const FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH = `${FAMILY_DASHBOARD_PATH}/messages/:id`;
+export const AGENT_DASHBOARD_ACCOUNT_PATH = `${AGENT_DASHBOARD_PATH}/my-account`;
+export const AGENT_DASHBOARD_PROFILE_PATH = `${AGENT_DASHBOARD_PATH}/my-profile`;
 
 export const SUMMARY = 'summary';
 export const ACTIVITY = 'activity';
@@ -46,7 +48,10 @@ export const COMMUNITIES = 'communities';
 export const PARTNER_AGENTS = 'partner-agents';
 export const TASKS = 'tasks';
 export const MESSAGES = 'messages';
+export const AGENT_DETAILS = 'agent-details';
+export const CONTACTS = 'contacts';
 
 export const ADMIN_DASHBOARD_CALLS_PATH = `${AGENT_DASHBOARD_PATH}/calls`;
 export const ADMIN_DASHBOARD_CALL_DETAILS_PATH = `${ADMIN_DASHBOARD_CALLS_PATH}/:id/:tab?`;
-
+export const ADMIN_DASHBOARD_AGENTS_PATH = `${AGENT_DASHBOARD_PATH}/agents`;
+export const ADMIN_DASHBOARD_AGENT_DETAILS_PATH = `${ADMIN_DASHBOARD_AGENTS_PATH}/:id/:tab?`;

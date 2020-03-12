@@ -33,7 +33,7 @@ export const tocPaths = (toc) => {
           path: '/memory-care',
           label: 'Memory Care',
         };
-      case 'Board And Care Home':
+      case 'Board and Care Home':
         return {
           path: '/board-and-care-home',
           label: 'Board and Care Home',
@@ -374,7 +374,7 @@ export const getCitySearchUrl = ({ propInfo, address }) => {
 
 export const getCitySearchWithSizeUrl = ({ propInfo, address }) => {
   const sizeParam = communitySizeSearchParamMap[propInfo.communitySize];
-  return `${getCitySearchUrl({ propInfo, address })}&size=${sizeParam}`;
+  return `${getCitySearchUrl({ propInfo, address })}?size=${sizeParam}`;
 };
 
 export const getOrigin = () => {
@@ -423,4 +423,13 @@ export const replaceLastSegment = (orig, id) => {
 export const getLastSegment = (url) => {
   const [last] = url.match(/([^\/]+)\/?$/gm);
   return last;
+};
+
+export const generateSearchUrl = (toc, address) => {
+  const tocBc = tocPaths(toc);
+  return `${tocBc.path}/${urlize(stateNames[address.state])}/${urlize(address.city)}`;
+};
+
+export const generateCityPathSearchUrl = (address) => {
+  return `${urlize(stateNames[address.state])}/${urlize(address.city)}`;
 };

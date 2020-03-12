@@ -1,11 +1,11 @@
 import React from 'react';
-import { string, func, object } from 'prop-types';
+import { string, func, object, oneOf } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { ROOMTYPE_OPTIONS, CARETYPE_OPTIONS, MEDICAID_OPTIONS } from 'sly/constants/pricingForm';
+import { ROOMTYPE_OPTIONS, CARETYPE_OPTIONS, MEDICAID_OPTIONS, MOVETIMELINE_OPTIONS } from 'sly/constants/pricingForm';
 import { Heading, Block } from 'sly/components/atoms';
 import HelpBubble from 'sly/components/molecules/HelpBubble';
 
@@ -53,23 +53,33 @@ const StyledHelpBubble = styled(HelpBubble)`
 `;
 
 const CommunityPWEstimatedPricingForm = ({
-  error, handleSubmit, communityName, onRoomTypeChange, onCareTypeChange, onHelpHover, uuidAux,
+  error, handleSubmit, communityName, onMoveTimelineChange, onRoomTypeChange, onCareTypeChange, onHelpHover, uuidAux,
+  type,
 }) => (
   <form name="CommunityPWEstimatedPricingForm" onSubmit={handleSubmit}>
-    <HeadingSection level="subtitle" size="subtitle">Get your Pricing and Availability for {communityName}</HeadingSection>
+    <HeadingSection level="subtitle" size="subtitle">
+      Our Local Senior Living Expert will provide you {type} for {communityName}. Please help by answering these three questions:
+    </HeadingSection>
     <StyledBlock size="caption">
-      What type of room are you looking for?
-      <div onMouseEnter={() => onHelpHover('room-type')}>
-        <StyledHelpBubble>All shown room types may not be available in this community.</StyledHelpBubble>
-      </div>
+      What is your timeline to move in?
+      {/*<div onMouseEnter={() => onHelpHover('room-type')}>*/}
+        {/*<StyledHelpBubble>All shown room types may not be available in this community.</StyledHelpBubble>*/}
+      {/*</div>*/}
     </StyledBlock>
+    {/*<StyledField*/}
+      {/*options={ROOMTYPE_OPTIONS}*/}
+      {/*name="roomType"*/}
+      {/*type="boxChoice"*/}
+      {/*component={ReduxField}*/}
+      {/*onChange={onRoomTypeChange}*/}
+      {/*multiChoice*/}
+    {/*/>*/}
     <StyledField
-      options={ROOMTYPE_OPTIONS}
-      name="roomType"
+      options={MOVETIMELINE_OPTIONS}
+      name="moveTimeline"
       type="boxChoice"
       component={ReduxField}
-      onChange={onRoomTypeChange}
-      multiChoice
+      onChange={onMoveTimelineChange}
     />
     <StyledBlock size="caption">
       What care needs do you or your loved one have?
@@ -119,6 +129,11 @@ CommunityPWEstimatedPricingForm.propTypes = {
   onCareTypeChange: func,
   onHelpHover: func,
   uuidAux: object,
+  type: oneOf(['pricing', 'availability']),
+};
+
+CommunityPWEstimatedPricingForm.defaultProps = {
+  type: 'pricing',
 };
 
 export default CommunityPWEstimatedPricingForm;

@@ -2,81 +2,44 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
 
 import { size, assetPath, palette } from 'sly/components/themes';
 
 import { getStateAbbr } from 'sly/services/helpers/url';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Image, Label, Heading, Paragraph } from 'sly/components/atoms';
+import HubHeader from 'sly/components/molecules/HubHeader';
+import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
+import {
+  HubPageTemplate,
+  makeBody,
+  makeColumn,
+  makeTwoColumn,
+  makeWrapper,
+  makeStickToTop,
+  makeArticle,
+  makeTable,
+  makeOneColumnListWrapper,
+} from 'sly/components/templates/HubPageTemplate';
+import { Label, Heading, Paragraph } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import Link from 'sly/components/atoms/Link';
+import ListItem from 'sly/components/molecules/ListItem';
 
-const HeroWrapper = styled.div`
-  position: relative;
-  background-color: ${palette('slate', 'stroke')};
-  height: ${size('header.home.heroImage.mobileHeight')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    height: calc(0.5 * ${size('header.home.heroImage.height')});
-  }
-`;
-const StyledImage = styled(Image)`
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  opacity: 0.8;
-  z-index: 0;
+const StyledLink = styled(Link)`
+  margin-bottom: ${size('spacing.large')};
   display: block;
 `;
-const SearchBoxWrapper = styled.div`
-  margin: auto;
-  width: 90%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  align-items: center;
-  justify-content: center;
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('header.home.heroSearchBox.width')};
-  }
-`;
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.regular')};
-`;
-const StyledLabel = styled(Label)`
-  text-align: center;
-  font-size: ${size('text.subtitle')};
-  margin-bottom: ${size('spacing.large')};
-`;
-const ImageCreditDiv = styled.div`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin-bottom: ${size('spacing.large')};
-  margin-right: ${size('spacing.large')};
-`;
 
-const ImageCreditLabel = styled.label`
-  font-size: ${size('text', 'tiny')};
-  color: ${palette('white', 'base')};
-`;
-
-const StyledArticle = styled.article`
-  margin-bottom: ${size('spacing.xLarge')};
-  &:last-of-type {
-    margin-bottom: 0;
-    p {
-      margin-bottom: ${size('spacing.regular')};
-    }
-  }
-`;
+const TwoColumn = makeTwoColumn('div');
+const Body = makeBody('div');
+const Column = makeColumn('aside');
+const Wrapper = makeWrapper('div');
+const StickToTop = makeStickToTop('div');
+const StyledArticle = makeArticle('article');
+const ListWrapper = makeOneColumnListWrapper('div');
 
 const NearMePage = ({
   onLocationSearch,
@@ -86,36 +49,14 @@ const NearMePage = ({
   isFetchingResults,
   handleAnchor,
   location,
+  onCurrentLocation,
 }) => {
-  const HeaderContent = (
-    <>
-      <HeaderContainer />
-      <HeroWrapper>
-        <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
-        <SearchBoxWrapper>
-          <StyledHeading level="hero" size="hero" palette="white">
-            Find The Best Skilled Nursing Facility Near Me
-          </StyledHeading>
-          <StyledLabel palette="white">
-            Use our free search to find skilled nursing facilities nearby
-          </StyledLabel>
-          <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
-        </SearchBoxWrapper>
-        <ImageCreditDiv>
-          <ImageCreditLabel palette="white">
-            Sagebrook Senior Living San Francisco
-          </ImageCreditLabel>
-        </ImageCreditDiv>
-      </HeroWrapper>
-    </>
-  );
 
   const { geo } = requestMeta;
   const city = geo && geo.city;
   const state = geo && geo.state;
   const tocLabel = getTocSeoLabel('skilled-nursing-facility');
 
-  const topRef = React.createRef();
   const snfRef = React.createRef();
   const costRef = React.createRef();
   const servicesRef = React.createRef();
@@ -123,118 +64,131 @@ const NearMePage = ({
   const nextRef = React.createRef();
   const medicareRef = React.createRef();
   const paymentRef = React.createRef();
+  const faqRef = React.createRef();
   const moreRef = React.createRef();
 
-  const sectionIdMap = {
-    top: 'top',
-    snf: 'what-is-skilled-nursing-facility',
-    cost: 'cost',
-    services: 'services',
-    other: 'other',
-    next: 'next',
-    medicare: 'medicare',
-    payment: 'payment',
-    more: 'more',
+  const tocList = [
+    {
+      title: "What is a Skilled Nursing Facility?",
+      id: "what-is-skilled-nursing-facility",
+      ref: snfRef
+    },
+    {
+      title: "What is The Cost of a Skilled Nursing Facility?",
+      id: "cost",
+      ref: costRef
+    },
+    {
+      title: "What Services are Provided in a Skilled Nursing Facility?",
+      id: "services",
+      ref: servicesRef
+    },
+    {
+      title: "Skilled Nursing Facility vs Other Care Types",
+      id: "other",
+      ref: otherRef
+    },
+    {
+      title: "How to Choose a Skilled Nursing Facility Near Me",
+      id: "next",
+      ref: nextRef
+    },
+    {
+      title: "Does Medicare Pay for Hospice in a Skilled Nursing Facility?",
+      id: "medicare",
+      ref: medicareRef
+    },
+    {
+      title: "Other Payment Options",
+      id: "payment",
+      ref: paymentRef
+    },
+    {
+      title: "Skilled Nursing Facility FAQs",
+      id: "frequently-asked-question",
+      ref: faqRef
+
+    },
+    {
+      title: "More Information",
+      id: "more",
+      ref: moreRef
+
+    },
+
+  ];
+
+  const faqs = [
+    {
+      question: "Does Medicare pay for hospice in a skilled nursing facility?",
+      answer: "Yes, Medicare can be used to pay up to 100% of hospice care in a skilled nursing facility (SNF). However, seniors must qualify and this is where it can get complicated. Medicare will only pay if a senior resident requires hospice care prescribed by a physician. Generally, Medicare will only cover up to 100 days when a senior is in a skilled nursing facility, regardless of why.  Be sure to consult with a hospice provider to learn more about payment options."
+    },
+    {
+      question: "Is a skilled nursing facility a hospital?",
+      answer: "No, a skilled nursing facility is not a hospital. It might look like one, though, since senior residents are provided 24/7 medical care. In fact, many residents are discharged from a hospital and sent to a SNF for either rehabilitative care or even end of life hospice care."
+    },
+    {
+      question: "What is skilled nursing facility vs nursing home?",
+      answer: "The term “nursing home does NOT automatically equal a skilled nursing facility (SNF). It’s a catch-all phrase used for many types of senior living. “Nursing home” most typically means an assisted living community near you, but can also refer to memory care facilities and other types of senior living communities. Always confirm beforehand what types of services a nursing home offers and whether they meet your medical and non-medical needs."
+    },
+    {
+      question: "What do skilled nursing facilities provide?",
+      answer: "A skilled nursing facility (SNF) is a type of “nursing home.” A skilled nursing facility is a type of long-term or convalescent community that provides 24/7, nursing and therapy care. What differentiates a skilled nursing facility (SNF) from other types of senior living options is that they provide healthcare services that can only be safely and effectively performed by professionals or technical personnel."
+    },
+    {
+      question: "Does the VA pay for skilled nursing facility?",
+      answer: "Yes, the VA will pay for a stay in a skilled nursing facility for qualified Veterans."},
+  ];
+
+  const TableOfContents = () => {
+    return (
+      <>
+      <Heading level="subtitle" size="subtitle">
+        Table of Contents
+      </Heading>
+      <Paragraph>
+        {tocList.map(p => (
+          <StyledLink
+            href={`#${p.id}`}
+            onClick={e => handleAnchor(e, p.ref)}
+          >
+            {p.title}
+          </StyledLink>
+        ))}
+
+      </Paragraph>
+      </>
+    )
   };
 
   const SEOContentSNF = () => {
     return (
       <>
-        <Paragraph innerRef={topRef} />
-        <StyledHeading level="title"size="title">
-          Table of Contents
-        </StyledHeading>
         <StyledArticle>
-          <ul>
-            <li>
-              <Link
-                href={`#${sectionIdMap.snf}`}
-                onClick={e => handleAnchor(e, snfRef)}
-              >
-                What is a Skilled Nursing Facility?
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.cost}`}
-                onClick={e => handleAnchor(e, costRef)}
-              >
-                What is The Cost of a Skilled Nursing Facility?
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.services}`}
-                onClick={e => handleAnchor(e, servicesRef)}
-              >
-                What Services are Provided in a Skilled Nursing Facility?
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.other}`}
-                onClick={e => handleAnchor(e, otherRef)}
-              >
-                Skilled Nursing Facility vs Other Care Types
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.next}`}
-                onClick={e => handleAnchor(e, nextRef)}
-              >
-                How to Choose a Skilled Nursing Facility Near Me
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.medicare}`}
-                onClick={e => handleAnchor(e, medicareRef)}
-              >
-                Does Medicare Pay for Hospice in a Skilled Nursing Facility?
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.payment}`}
-                onClick={e => handleAnchor(e, paymentRef)}
-              >
-                Other Payment Options
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.more}`}
-                onClick={e => handleAnchor(e, moreRef)}
-              >
-                More Information
-              </Link>
-            </li>
-          </ul>
-        </StyledArticle>
-        <StyledArticle>
-          <Paragraph innerRef={snfRef} />
-          <StyledHeading level="title" size="title" >
+          <Heading level="title" size="title" _ref={snfRef} >
             What is a Skilled Nursing Facility?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
-            A skilled nursing facility is a type of long-term or convalescent community that provides 24/7,
+            A skilled nursing facility (SNF) is type of “
+            <Link href="https://www.seniorly.com/nursing-homes">
+              nursing home
+            </Link>
+            .” A skilled nursing facility is a type of long-term or convalescent community that provides 24/7,
             nursing and therapy care. What differentiates a skilled nursing facility (SNF) from other types of
             senior living options is that they provide healthcare services that can only be safely and effectively
             performed by professionals or technical personnel.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${tocList[0].id}`}
+            onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={costRef} />
-          <StyledHeading level="title" size="title" >
+          <Heading level="title" size="title" _ref={costRef} >
             What is The Cost of a Skilled Nursing Facility?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             The average cost for a private room at a skilled nursing facility (SNF) in the US is $8,517 per month,
             according to the{' '}
@@ -245,68 +199,64 @@ const NearMePage = ({
             Note that this will change city by city and state by state.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${tocList[0].id}`}
+            onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={servicesRef} />
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title" _ref={servicesRef}>
             What Services are Provided in a Skilled Nursing Facility?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Skilled nursing facilities (SNF) can be a great option if you or your loved one need daily skilled
             assistance to treat, manage, or observe a condition, and evaluate medical care. Skilled nursing
             facilities typically offer:
           </Paragraph>
-          <ul>
-            <li>
-              <Paragraph>
-                Physical, speech and occupational therapy services
-              </Paragraph>
-            </li>
-            <li>
-              <Paragraph>
-                Mobility assistance
-              </Paragraph>
-            </li>
-            <li>
-              <Paragraph>
-                Post-hospitalization rehabilitation services
-              </Paragraph>
-            </li>
-            <li>
-              <Paragraph>
+          <ListWrapper>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Physical, speech and occupational therapy services
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Mobility assistance
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Post-hospitalization rehabilitation services
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              <div>
                 Custodial care to assist residents with{' '}
                 <Link href="https://www.seniorly.com/resources/articles/what-are-the-activities-of-daily-living-adls">
                   activities of daily living (ADLs)
                 </Link>
                 {' '}such as bathing and dressing.
-              </Paragraph>
-            </li>
-          </ul>
+              </div>
+            </ListItem>
+          </ListWrapper>
           <Paragraph>
             A SNF helps senior residents recover after a significant health event while also offering a community where they can be with others who share similar experiences.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${tocList[0].id}`}
+            onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={otherRef} />
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title" _ref={otherRef}>
             Skilled Nursing Facility vs Other Care Types
-          </StyledHeading>
-          <StyledHeading level="subtitle" size="subtitle">
+          </Heading>
+          <Heading level="subtitle" size="subtitle">
             Nursing Home
-          </StyledHeading>
+          </Heading>
           <Paragraph>
-            The term “nursing home” does NOT automatically equal a skilled nursing facility (SNF).
+            The term “
+            <Link href="https://www.seniorly.com/nursing-homes">
+              nursing home
+            </Link>
+            {' '}does NOT automatically equal a skilled nursing facility (SNF).
             It’s a catch-all phrase used for many types of senior living. “Nursing home” most typically means an{' '}
             <Link href="https://www.seniorly.com/assisted-living">
               assisted living community near you,
@@ -320,9 +270,9 @@ const NearMePage = ({
             look at the difference between a skilled nursing facility and all of the other retirement living community types.
           </Paragraph>
 
-          <StyledHeading level="subtitle" size="subtitle">
+          <Heading level="subtitle" size="subtitle">
             Independent Living
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             <Link href="https://www.seniorly.com/independent-living">
               Independent living communities
@@ -336,9 +286,9 @@ const NearMePage = ({
             such as on-site dining and exercise facilities, housekeeping services, and planned social activities.
           </Paragraph>
 
-          <StyledHeading level="subtitle" size="subtitle">
+          <Heading level="subtitle" size="subtitle">
             Assisted Living
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Rather than focusing on nursing and therapeutic services, assisted living focuses on lifestyle services.{' '}
             <Link href="https://www.seniorly.com/assisted-living">
@@ -357,14 +307,14 @@ const NearMePage = ({
             Email us at{' '}
             <Link href="mailto:ask@seniorly.com">ask@seniorly.com</Link>
             {' '}or call us at (855) 866-4515 to connect to a{' '}
-            <Link href="https://www.seniorly.com/agents">local senior living expert</Link>
+            <Link href="https://www.seniorly.com/agents">Local Senior Living Expert</Link>
             {' '}who specializes within the city you’re searching.
 
           </Paragraph>
 
-          <StyledHeading level="subtitle" size="subtitle">
+          <Heading level="subtitle" size="subtitle">
             Memory Care
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             <Link href="https://www.seniorly.com/https://www.seniorly.com/memory-care">
               Memory care facilities
@@ -382,13 +332,13 @@ const NearMePage = ({
             We can help you find the best memory care communities near you. Email us at{' '}
             <Link href="mailto:ask@seniorly.com">ask@seniorly.com</Link>
             {' '}or call us at (855) 866-4515 to connect to a{' '}
-            <Link href="https://www.seniorly.com/agents">local senior living expert</Link>
+            <Link href="https://www.seniorly.com/agents">Local Senior Living Expert</Link>
             {' '}who specializes within the city you’re searching.
           </Paragraph>
 
-          <StyledHeading level="subtitle" size="subtitle">
+          <Heading level="subtitle" size="subtitle">
             Rehab
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Inpatient rehab facilities (IRF) are intended for those who need a higher level of rehabilitation
             following traumatic injuries and surgeries. While they offer a similar set of services as skilled nursing,
@@ -400,9 +350,9 @@ const NearMePage = ({
             longer require acute care, but are not yet ready to return home.
           </Paragraph>
 
-          <StyledHeading level="subtitle" size="subtitle">
+          <Heading level="subtitle" size="subtitle">
             Hospice
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Skilled nursing facilities are generally intended for senior residents who need subacute medical care
             for non-terminal conditions.{' '}
@@ -415,8 +365,8 @@ const NearMePage = ({
           </Paragraph>
 
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${tocList[0].id}`}
+            onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
           </Link>
@@ -424,10 +374,10 @@ const NearMePage = ({
 
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={nextRef} />
-          <StyledHeading level="title"size="title">
+          <Paragraph innerR/>
+          <Heading level="title" size="title" _ref={nextRef}>
             How to Choose a Skilled Nursing Facility Near Me
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             You may be wondering “is skilled nursing near me?” or “how do I find the best skilled nursing facilities near me”?
             Fortunately, high-quality skilled nursing communities can be found all over the country, and they
@@ -491,17 +441,16 @@ const NearMePage = ({
             Make sure you know the care and service requirements for you or your loved one to help determine the best skilled nursing facility fit.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${tocList[0].id}`}
+            onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={medicareRef} />
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title" _ref={medicareRef}>
             Does Medicare Pay for Hospice in a Skilled Nursing Facility?
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             Medicare Part A will cover short-term skilled nursing care provided in an approved SNF{' '}
             <Link href="https://www.medicare.gov/coverage/skilled-nursing-facility-snf-care" target="_blank" rel="noopener">
@@ -533,17 +482,16 @@ const NearMePage = ({
 
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${tocList[0].id}`}
+            onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={paymentRef} />
-          <StyledHeading level="title" size="title" >
+          <Heading level="title" size="title" _ref={paymentRef}>
             Other Payment Options
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             While skilled nursing often comes after you or your loved one has experienced some sort of unexpected
             medical event, if you realize that a SNF is in the near future, you should start discussing
@@ -583,17 +531,35 @@ const NearMePage = ({
           </ul>
 
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${tocList[0].id}`}
+            onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
+      <StyledArticle>
+        <Heading level="title" size="title" _ref={faqRef} >
+          Skilled Nursing Facility FAQs
+        </Heading>
+        <Paragraph>
+          Below you will find a sampling of the 5 most frequently asked questions we get regarding skilled nursing facilities (SNF).
+        </Paragraph>
+        {faqs.map(p => (
+          <>
+          <Heading level="subtitle" size="subtitle">
+            {p.question}
+          </Heading>
+          <Paragraph>
+            {p.answer}
+          </Paragraph>
+          </>
+
+        ))}
+      </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={moreRef} />
-          <StyledHeading level="title" size="title">
+          <Heading level="title" size="title" _ref={moreRef}>
             More Information
-          </StyledHeading>
+          </Heading>
           <Paragraph>
             If you have more questions about a skilled nursing facility or how to find a skilled nursing facility, Seniorly is here to help.
             Our powerful website will search through thousands of facilities across the country that you can connect with directly.
@@ -604,13 +570,13 @@ const NearMePage = ({
               ask@seniorly.com
             </Link>
             {' '}or call us at (855) 866-4515 to speak with a{' '}
-            <Link href="https://www.seniorly.com/agents">local senior living expert</Link>
+            <Link href="https://www.seniorly.com/agents">Local Senior Living Expert</Link>
             , and we’ll connect you with the type of retirement living that’s right for you or your family.
 
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.top}`}
-            onClick={e => handleAnchor(e, topRef)}
+            href={`#${tocList[0].id}`}
+            onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
           </Link>
@@ -625,32 +591,50 @@ const NearMePage = ({
 
   return (
     <>
-      <TemplateHeader>{HeaderContent}</TemplateHeader>
-      <TemplateContent>
-        <Helmet>
-          <title>{title}</title>
-          <meta name="description" content={description} />
-        </Helmet>
-        {SEOContentSNF()}
-        <StyledArticle>
-          <StyledHeading level="title" size="title">
-            {heading}
-          </StyledHeading>
-          {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
-          {!isFetchingResults && (
-            <CommunitySearchList
-              communityList={communityList}
-              searchParams={searchParams}
-              requestMeta={requestMeta}
-              location={location}
-            />
-          )}
-        </StyledArticle>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/skilled-nursing-facility", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/skilled-nursing-facility")}
+      </Helmet>
 
-      </TemplateContent>
+      <HubHeader imagePath="react-assets/hub/memory-care-cover.jpg"
+                 toc="skilled nursing facility"
+                 heading="What is Skilled Nursing Facility Near You?"
+                 label="Use our free search to find skilled nursing facilities nearby"
+                 onCurrentLocation={onCurrentLocation}
+                 onLocationSearch={onLocationSearch} />
+
+      <HubPageTemplate>
+        <Wrapper>
+          <TwoColumn>
+            <Column>
+              <StickToTop>
+                {TableOfContents()}
+              </StickToTop>
+            </Column>
+            <Body>
+            {SEOContentSNF()}
+            <Heading level="title" size="title">
+              {heading}
+            </Heading>
+            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
+            {!isFetchingResults && (
+              <CommunitySearchList
+                communityList={communityList}
+                searchParams={searchParams}
+                requestMeta={requestMeta}
+                location={location}
+              />
+            )}
+            </Body>
+          </TwoColumn>
+        </Wrapper>
+      </HubPageTemplate>
+      <PhoneCTAFooter/>
       <Footer />
     </>
-
   );
 };
 

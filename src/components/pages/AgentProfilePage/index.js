@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { shape, object } from 'prop-types';
+import { shape, object, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
@@ -15,7 +15,6 @@ import EntityReviews from 'sly/components/organisms/EntityReviews';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import { getBreadCrumbsForAgent } from 'sly/services/helpers/url';
-import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 import { formatDate } from 'sly/services/helpers/date';
 
 const StyledHr = styled(Hr)`
@@ -82,6 +81,7 @@ class AgentProfilePage extends Component {
       info: object.isRequired,
     }).isRequired,
     location: object.isRequired,
+    onConsultationRequested: func.isRequired,
   };
 
   constructor(props) {
@@ -94,6 +94,7 @@ class AgentProfilePage extends Component {
     const {
       agent,
       location,
+      onConsultationRequested,
     } = this.props;
     if (!agent) {
       return null;
@@ -115,7 +116,7 @@ class AgentProfilePage extends Component {
         </TemplateHeader>
 
         <TemplateContent>
-          <AgentSummaryWrapper innerRef={this.agentSummaryRef}>
+          <AgentSummaryWrapper ref={this.agentSummaryRef}>
             <BreadCrumb size="caption" items={getBreadCrumbsForAgent({ name: displayName, state, city, id })} />
             <AgentSummary
               agent={agent}
@@ -153,21 +154,19 @@ class AgentProfilePage extends Component {
 
           <StyledSection>
             <AskQuestionToAgentWrapper id="ask-agent-question">
-              <BannerNotificationController>
-                {({ notifyInfo }) => (
-                  <AskQuestionToAgentFormContainer
-                    agent={agent}
-                    heading={`Ask ${firstName} a question`}
-                    firstName={firstName}
-                    postSubmit={() => {
-                      notifyInfo(`We have received your request and our Seniorly Partner Agent, ${displayName} will get back to you soon.`);
-                      if (this.agentSummaryRef.current.scrollIntoView) {
-                        this.agentSummaryRef.current.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    }}
-                  />)
-                }
-              </BannerNotificationController>
+              <AskQuestionToAgentFormContainer
+                hasEmail
+                entityId={id}
+                heading={`Ask ${firstName} a question`}
+                firstName={firstName}
+                type="agent-profile-page"
+                postSubmit={() => {
+                  onConsultationRequested();
+                  if (this.agentSummaryRef.current.scrollIntoView) {
+                    this.agentSummaryRef.current.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              />
             </AskQuestionToAgentWrapper>
           </StyledSection>
         </TemplateContent>

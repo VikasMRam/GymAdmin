@@ -2,14 +2,19 @@ import React, { PureComponent } from 'react';
 import { func, object, string } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { CUSTOMER_ROLE, PROVIDER_OD_ROLE, AGENT_ND_ROLE } from 'sly/constants/roles';
+import { CUSTOMER_ROLE, PROVIDER_OD_ROLE, AGENT_ND_ROLE, AGENT_ADMIN_ROLE } from 'sly/constants/roles';
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
-  FAMILY_DASHBOARD_PROFILE_PATH,
+  FAMILY_DASHBOARD_ACCOUNT_PATH,
   AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_TASKS_PATH,
+  AGENT_DASHBOARD_ACCOUNT_PATH,
+  AGENT_DASHBOARD_PROFILE_PATH,
 } from 'sly/constants/dashboardAppPaths';
+import { withAuth } from 'sly/services/newApi';
+import { withRedirectTo } from 'sly/services/redirectTo';
+import { generateSearchUrl } from 'sly/services/helpers/url';
 import SlyEvent from 'sly/services/helpers/events';
 import AuthContainer from 'sly/containers/AuthContainer';
 import NotificationController from 'sly/controllers/NotificationController';
@@ -17,7 +22,6 @@ import Notifications from 'sly/components/organisms/Notifications';
 import Header from 'sly/components/organisms/Header';
 import ModalController from 'sly/controllers/ModalController';
 import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
-import { withAuth } from 'sly/services/newApi';
 
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,
@@ -77,7 +81,7 @@ const customerMenuItems = [
     name: 'Favorites', to: FAMILY_DASHBOARD_FAVORITES_PATH, section: 1, icon: 'favourite-light', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
   {
-    name: 'My Profile', to: FAMILY_DASHBOARD_PROFILE_PATH, section: 1, icon: 'user', onClick: ({ name }) => sendHeaderItemClickEvent(name),
+    name: 'My Account', to: FAMILY_DASHBOARD_ACCOUNT_PATH, section: 1, icon: 'user', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
 ];
 
@@ -91,6 +95,12 @@ const agentMenuItems = [
   {
     name: 'Tasks', to: generatePath(AGENT_DASHBOARD_TASKS_PATH), section: 1, icon: 'checkbox-fill', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
+  {
+    name: 'My Account', to: AGENT_DASHBOARD_ACCOUNT_PATH, section: 1, icon: 'user', onClick: ({ name }) => sendHeaderItemClickEvent(name),
+  },
+  {
+    name: 'My Profile', to: AGENT_DASHBOARD_PROFILE_PATH, section: 1, icon: 'settings', onClick: ({ name }) => sendHeaderItemClickEvent(name),
+  },
 ];
 
 const loggedInMenuItems = (user) => {
@@ -103,6 +113,10 @@ const loggedInMenuItems = (user) => {
     }
     /* eslint-disable-next-line no-bitwise */
     if (roleID & AGENT_ND_ROLE) {
+      roleBasedItems = agentMenuItems;
+    }
+    /* eslint-disable-next-line no-bitwise */
+    if (roleID & AGENT_ADMIN_ROLE) {
       roleBasedItems = agentMenuItems;
     }
     roleBasedItems = [...roleBasedItems, { name: 'Log Out', section: 3, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
@@ -119,6 +133,7 @@ const loginHeaderItems = user => user
 const generateMenuItems = user => [...defaultMenuItems(user), ...loggedInMenuItems(user)];
 
 @withAuth
+@withRedirectTo
 
 export default class HeaderContainer extends PureComponent {
   static typeHydrationId = 'HeaderContainer';
@@ -127,6 +142,7 @@ export default class HeaderContainer extends PureComponent {
     logoutUser: func,
     ensureAuthenticated: func,
     className: string,
+    redirectTo: func.isRequired,
   };
 
   state = { isDropdownOpen: false };
@@ -147,7 +163,17 @@ export default class HeaderContainer extends PureComponent {
 
   onLogoClick = () => {
     sendEvent(category, clickAction, logoLabel);
-  }
+  };
+
+  handleCurrentLocation = (addresses, { latitude, longitude }) => {
+    const { redirectTo } = this.props;
+
+    if (addresses.length) {
+      const path = `${generateSearchUrl(['Assisted Living'], addresses[0])}?latitude=${latitude}&longitude=${longitude}`;
+
+      redirectTo(path);
+    }
+  };
 
   render() {
     const {
@@ -156,7 +182,6 @@ export default class HeaderContainer extends PureComponent {
       ensureAuthenticated,
     } = this.props;
     const { isDropdownOpen } = this.state;
-    const { toggleDropdown, logout, onLogoClick } = this;
 
     const hItems = defaultHeaderItems;
     const lhItems = loginHeaderItems(user);
@@ -164,19 +189,19 @@ export default class HeaderContainer extends PureComponent {
 
     const logoutLeftMenuItem = menuItems.find(item => item.name === 'Log Out');
     if (logoutLeftMenuItem) {
-      logoutLeftMenuItem.onClick = logout;
+      logoutLeftMenuItem.onClick = this.logout;
     }
     let loginItem = lhItems.find(item => item.name === 'Sign in');
     if (loginItem) {
-      loginItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(() => {}); };
+      loginItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(); };
     }
     loginItem = menuItems.find(item => item.name === 'Sign in');
     if (loginItem) {
-      loginItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(() => {}); };
+      loginItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(); };
     }
     const mySlyMenuItem = lhItems.find(item => item.name === 'My Seniorly');
     if (mySlyMenuItem) {
-      mySlyMenuItem.onClick = toggleDropdown;
+      mySlyMenuItem.onClick = this.toggleDropdown;
     }
 
     const howItWorksItem = hItems.find(item => item.name === 'How It Works');
@@ -209,14 +234,15 @@ export default class HeaderContainer extends PureComponent {
                 <>
                   <Header
                     menuOpen={isDropdownOpen}
-                    onMenuIconClick={toggleDropdown}
-                    onMenuItemClick={toggleDropdown}
-                    onHeaderBlur={toggleDropdown}
-                    onLogoClick={onLogoClick}
+                    onMenuIconClick={this.toggleDropdown}
+                    onMenuItemClick={this.toggleDropdown}
+                    onHeaderBlur={this.toggleDropdown}
+                    onLogoClick={this.onLogoClick}
                     headerItems={headerItems}
                     menuItems={menuItems}
                     smallScreenMenuItems={smallScreenMenuItems}
                     className={className}
+                    onCurrentLocation={this.handleCurrentLocation}
                   />
                   <AuthContainer notifyInfo={notifyInfo} showModal={show} hideModal={hide} />
                   <Notifications messages={messages} dismiss={dismiss} />

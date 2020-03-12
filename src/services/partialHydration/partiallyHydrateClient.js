@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import '@babel/polyfill';
 import 'isomorphic-fetch';
-import 'intersection-observer';
 import 'react-hot-loader/patch';
 
 import React from 'react';
@@ -12,7 +11,7 @@ import { ThemeProvider } from 'styled-components';
 
 import configureStore from 'sly/store/configure';
 import theme from 'sly/components/themes/default';
-import { hydrateComponents } from 'sly/services/partialHydration/index';
+import { hydrateComponents } from 'sly/services/partialHydration';
 
 export default function partiallyHydrateClient(componentsToHydrate, routePath, root) {
   const initialState = window.__INITIAL_STATE__;

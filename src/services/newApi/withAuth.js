@@ -26,6 +26,7 @@ const userApiMethods = [
   'loginUser',
   'logoutUser',
   'recoverPassword',
+  'resetPassword',
   'setPassword',
   'updatePassword',
   'thirdPartyLogin',
@@ -54,6 +55,7 @@ export default function withAuth(InnerComponent) {
       loginUser: func.isRequired,
       logoutUser: func.isRequired,
       recoverPassword: func.isRequired,
+      resetPassword: func.isRequired,
       setPassword: func.isRequired,
       updatePassword: func.isRequired,
       thirdPartyLogin: func.isRequired,
@@ -80,12 +82,14 @@ export default function withAuth(InnerComponent) {
           name,
           email,
           phone_number: phone,
-        }).catch((error) => {
-          if (!(error.status === 400 && ignoreAlreadyRegistered)) {
-            return Promise.reject(error);
-          }
-          return Promise.resolve();
-        });
+        })
+          .catch((e) => {
+            const alreadyExists = e.status && e.status === 409;
+            if (ignoreAlreadyRegistered && alreadyExists) {
+              return Promise.resolve({ alreadyExists });
+            }
+            return Promise.reject(e);
+          });
       }
 
       const userData = pick(status.user.result, [
@@ -145,6 +149,11 @@ export default function withAuth(InnerComponent) {
       return recoverPassword(data);
     };
 
+    resetPassword = (data) => {
+      const { resetPassword } = this.props;
+      return resetPassword(data);
+    };
+
     setPassword = (data) => {
       const { setPassword, status } = this.props;
       return setPassword(data).then(status.user.refetch);
@@ -191,6 +200,7 @@ export default function withAuth(InnerComponent) {
         setPassword={this.setPassword}
         updatePassword={this.updatePassword}
         recoverPassword={this.recoverPassword}
+        resetPassword={this.resetPassword}
         thirdPartyLogin={this.thirdPartyLogin}
         ensureAuthenticated={this.ensureAuthenticated}
         resendOtpCode={this.resendOtpCode}

@@ -1,40 +1,45 @@
-import { assetPath } from 'sly/components/themes';
-
 export const mostSearchedRegions = [
   {
     to: '/agents/pacific-west',
-    image: assetPath('images/agents/regions/pacific-west.jpg'),
+    image: 'react-assets/agents/regions/pacific-west.jpg',
     title: 'Pacific West',
+    states: 'California, Oregon, Washington, Hawaii and Alaska',
   },
   {
     to: '/agents/northeast',
-    image: assetPath('images/agents/regions/northeast.jpg'),
+    image: 'react-assets/agents/regions/northeast.jpg',
     title: 'Northeast',
+    states: 'New York, New Jersey, Pennsylvania, Connecticut, Massachusetts, Maine, New Hampshire and Rhode Island',
   },
   {
     to: '/agents/south',
-    image: assetPath('images/agents/regions/south.jpg'),
+    image: 'react-assets/agents/regions/south.jpg',
     title: 'South',
+    states: 'Florida, Georgia, North Carolina, South Carolina, Maryland, Virginia and West Virginia',
   },
   {
     to: '/agents/midwest',
-    image: assetPath('images/agents/regions/midwest.jpg'),
+    image: 'react-assets/agents/regions/midwest.jpg',
+    states: 'Illinois, Indiana, Michigan, Ohio, Wisconsin, Iowa, Kansas, Minnesota and Nebraska',
     title: 'Midwest',
   },
   {
     to: '/agents/southeast',
-    image: assetPath('images/agents/regions/southeast.jpg'),
+    image: 'react-assets/agents/regions/southeast.jpg',
     title: 'Southeast',
+    states: 'Kentucky, Alabama, Tennessee and Mississippi',
   },
   {
     to: '/agents/southwest',
-    image: assetPath('images/agents/regions/southwest.jpg'),
+    image: 'react-assets/agents/regions/southwest.jpg',
     title: 'Southwest',
+    states: 'Texas, Oklahoma, Louisiana and Arkansas',
   },
   {
     to: '/agents/mountain-west',
-    image: assetPath('images/agents/regions/mountain-west.jpg'),
+    image: 'react-assets/agents/regions/mountain-west.jpg',
     title: 'Mountain West',
+    states: 'Arizona, Colorado, Nevada, New Mexico, Utah, Montana and Idaho ',
   },
 ];
 
@@ -71,8 +76,12 @@ export const agentsFAQs = [
     description: 'The process of choosing the right Senior Living option can be a challenge. A Seniorly Partner Agent will help you seamlessly navigate this process by providing insight into  the best communities in your area for your specific situation. Your agent will also help with other aspects of your transition such as knowing what to look for on a tour, questions to ask, how to negotiate rent and care costs.  In addition, they can help with other items such as moving, financing or furniture. Your agent is there to be your personal guide.',
   },
   {
+    title: 'What is the difference between a Seniorly Partner Agent and senior living advisor?',
+    description: 'There are a few names that professionals go by who can help you choose an assisted living facility. You may see "senior living" followed by an agent, adviser or expert, or even "eldercare adviser". We refer to our professionals as Seniorly Partner Agents.',
+  },
+  {
     title: 'Should I use a Seniorly Partner Agent even if I already know the community I’d like to visit?',
-    description: 'Yes. Since they do not charge for their services we recommend you speak with an agent. You may already have a great community in mind. An agent can give a second opinion based on their extensive knowledge, as well as offer best practices for going through the transition process. By the way, visiting additional communities is helpful to ensure you have made the best choice.',
+    description: 'Yes. Since they do not charge for their services we recommend you speak with an agent. You may already have a great community in mind. A senior living advisor can give a second opinion based on their extensive knowledge, as well as offer best practices for going through the transition process. By the way, visiting additional senior living communities is helpful to ensure you have made the best choice.',
   },
   {
     title: 'How much do Seniorly Partner Agents cost?',

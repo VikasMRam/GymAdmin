@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
 import { host } from 'sly/config';
-import { size, assetPath, palette, gridColumns } from 'sly/components/themes';
+import { size, palette, gridColumns, assetPath } from 'sly/components/themes';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import SlyEvent from 'sly/services/helpers/events';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
-import { Image, Centered, Label, Heading, Hr, Link, Block, Button, Paragraph } from 'sly/components/atoms';
+import {  Centered, Label, Heading, Hr, Link, Block, Paragraph, ResponsiveImage } from 'sly/components/atoms';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
@@ -27,7 +27,7 @@ const HeroWrapper = styled.div`
     height: ${size('header.home.heroImage.height')};
   }
 `;
-const StyledImage = styled(Image)`
+const StyledImage = styled(ResponsiveImage)`
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -123,7 +123,7 @@ const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const CWTImage = styled(Image)`
+const CWTImage = styled(ResponsiveImage)`
   margin-bottom: ${size('spacing.regular')};
   height: ${size('picture.tiny.height')};
 `;
@@ -159,11 +159,11 @@ const CenteredTile = styled(({
   title, to, alt, image, children, ...props
 }) => (
   <StyledLink key={title} to={to} {...props}>
-    <Image src={image} alt={alt} aspectRatio="3:2">
+    <ResponsiveImage path={image} alt={alt} aspectRatio="3:2">
       <Centered>
         {children}
       </Centered>
-    </Image>
+    </ResponsiveImage>
   </StyledLink>
 ))`
   overflow: hidden;
@@ -174,7 +174,7 @@ const firstRowDiscoverHomes = [
   {
     title: 'Assisted Living',
     description: 'Living that includes assistance with activities of daily living (ADLs)',
-    image: assetPath('images/home/discover-home/assisted-living.jpeg'),
+    image: 'react-assets/home/discover-home/assisted-living.jpeg',
     alt: 'assisted living senior living seniorly',
     buttonText: 'See more',
     searchParams: { toc: 'assisted-living' },
@@ -182,7 +182,7 @@ const firstRowDiscoverHomes = [
   {
     title: 'Board and Care Home',
     description: 'A residential personal care home that’s usually more affordable',
-    image: assetPath('images/home/discover-home/care-home.jpeg'),
+    image: 'react-assets/home/discover-home/care-home.jpeg',
     alt: 'board and care home senior living seniorly',
     buttonText: 'See more',
     searchParams: { size: 'small' },
@@ -194,7 +194,7 @@ const secondRowDiscoverHomes = [
   {
     title: 'Luxury Assisted Living',
     description: 'The ultimate in comfort, care and community',
-    image: assetPath('images/home/discover-home/1-bedroom-tile.jpeg'),
+    image: 'react-assets/home/discover-home/1-bedroom-tile.jpeg',
     alt: 'luxury assisted living senior living seniorly',
     buttonText: 'See more',
     searchParams: { size: 'large', budget: 5000 },
@@ -202,7 +202,7 @@ const secondRowDiscoverHomes = [
   {
     title: 'Memory Care Options',
     description: 'For those with Alzheimer’s, Dementia and more',
-    image: assetPath('images/home/discover-home/shared-rooms-tile.jpeg'),
+    image: 'react-assets/home/discover-home/shared-rooms-tile.jpeg',
     alt: 'memory care senior living seniorly',
     buttonText: 'See more',
     searchParams: { toc: 'memory-care' },
@@ -210,7 +210,7 @@ const secondRowDiscoverHomes = [
   {
     title: 'More Senior Living',
     description: 'Compare all retirement community features, cost, photos and reviews',
-    image: assetPath('images/home/discover-home/studios-tile.jpeg'),
+    image: 'react-assets/home/discover-home/studios-tile.jpeg',
     alt: 'senior living seniorly',
     buttonText: 'See more',
     searchParams: {},
@@ -220,42 +220,42 @@ const secondRowDiscoverHomes = [
 const usefulInformationTiles = [
   {
     to: '/independent-living',
-    image: assetPath('images/home/useful-info/independent-living.jpg'),
+    image: 'react-assets/home/useful-info/independent-living.jpg',
     alt: 'independent living senior living seniorly',
     title: 'Independent Living',
   },
   {
     to: '/assisted-living',
-    image: assetPath('images/home/useful-info/assisted-living.jpg'),
+    image: 'react-assets/home/useful-info/assisted-living.jpg',
     alt: 'assisted living senior living seniorly',
     title: 'Assisted Living',
   },
   {
     to: '/memory-care',
-    image: assetPath('images/home/useful-info/memory-care.jpg'),
+    image: 'react-assets/home/useful-info/memory-care.jpg',
     alt: 'memory care senior living seniorly',
     title: 'Memory Care',
   },
   {
     to: '/board-and-care-home',
-    image: assetPath('images/home/useful-info/board-and-care.jpg'),
+    image: 'react-assets/home/useful-info/board-and-care.jpg',
     alt: 'board and care home senior living seniorly',
     title: 'Board & Care Home',
   },
   /* {
     to: '#',
-    image: assetPath('images/home/useful-info/skilled-nursing.jpeg'),
+    image: 'react-assets/home/useful-info/skilled-nursing.jpeg',
     title: 'Skilled Nursing',
   }, */
   {
     to: '/continuing-care-retirement-community',
-    image: assetPath('images/home/useful-info/ccrc.jpg'),
+    image: 'react-assets/home/useful-info/ccrc.jpg',
     alt: 'ccrc senior living seniorly',
     title: 'CCRC / Life Plan',
   },
   {
     to: '/resources',
-    image: assetPath('images/home/useful-info/more-resources.jpg'),
+    image: 'react-assets/home/useful-info/more-resources.jpg',
     alt: 'more senior living resources seniorly',
     title: 'More Resources',
   },
@@ -264,56 +264,56 @@ const usefulInformationTiles = [
 const mostSearchedCities = [
   {
     to: '/assisted-living/california/san-francisco',
-    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    image: 'react-assets/cities/SanFrancisco.jpeg',
     alt: 'san francisco assisted living seniorly',
     subtitle: 'San Francisco, CA',
     title: '95+ communities',
   },
   {
     to: '/assisted-living/california/los-angeles',
-    image: assetPath('images/cities/LosAngeles.jpeg'),
+    image: 'react-assets/cities/LosAngeles.jpeg',
     alt: 'los angeles assisted living seniorly',
     subtitle: 'Los Angeles, CA',
     title: '105+ communities',
   },
   {
     to: '/assisted-living/california/san-diego',
-    image: assetPath('images/cities/SanDiego.jpeg'),
+    image: 'react-assets/cities/SanDiego.jpeg',
     alt: 'san diego assisted living seniorly',
     subtitle: 'San Diego, CA',
     title: '75+ communities',
   },
   {
     to: '/assisted-living/texas/dallas',
-    image: assetPath('images/cities/Dallas.jpeg'),
+    image: 'react-assets/cities/Dallas.jpeg',
     alt: 'dallas assisted living seniorly',
     subtitle: 'Dallas, TX',
     title: '90+ communities',
   },
   {
     to: '/assisted-living/florida/miami',
-    image: assetPath('images/cities/Miami.jpeg'),
+    image: 'react-assets/cities/Miami.jpeg',
     alt: 'miami assisted living seniorly',
     subtitle: 'Miami, FL',
     title: '150+ communities',
   },
   {
     to: '/assisted-living/arizona/phoenix',
-    image: assetPath('images/cities/Pheonix.jpeg'),
+    image: 'react-assets/cities/Pheonix.jpeg',
     alt: 'phoenix assisted living seniorly',
     subtitle: 'Phoenix, AZ',
     title: '151+ communities',
   },
   {
     to: '/assisted-living/florida/orlando',
-    image: assetPath('images/cities/Orlando.jpeg'),
+    image: 'react-assets/cities/Orlando.jpeg',
     alt: 'orlando assisted living seniorly',
     subtitle: 'Orlando, FL',
     title: '60+ communities',
   },
   {
     to: '/assisted-living/florida/sacramento',
-    image: assetPath('images/cities/Sacramento.jpeg'),
+    image: 'react-assets/cities/Sacramento.jpeg',
     alt: 'sacramento assisted living seniorly',
     subtitle: 'Sacramento, CA',
     title: '150+ communities',
@@ -322,17 +322,17 @@ const mostSearchedCities = [
 
 const familiesWeHaveHelpedTiles = [
   {
-    image: assetPath('images/home/meet-others/Sharon.jpg'),
+    image: 'react-assets/home/meet-others/Sharon.jpg',
     title: 'Sharon T.',
     description: '"I felt like Seniorly was a lifesaver! I was daunted at the prospect of going through so many possibilities to find the right fit for my mom in such a short time, while taking care of so many other things that need attending as we deal with the aftermath of her stroke."',
   },
   {
-    image: assetPath('images/home/meet-others/Kathy.jpg'),
+    image: 'react-assets/home/meet-others/Kathy.jpg',
     title: 'Aileen H.',
     description: '"I was very frustrated that every time I wanted to see the price of a facility that I had to give my phone number and I would get bombarded with calls. Your site was the only one that allowed me to search on my own time and it listed more info than other sites."',
   },
   {
-    image: assetPath('images/home/meet-others/Henry.jpg'),
+    image: 'react-assets/home/meet-others/Henry.jpg',
     title: 'Henry W.',
     description: '"We were lucky enough to find a great place for my father-in-law. Seniorly is a really helpful website, very helpful and informative. Thank you so much for what you do."',
   },
@@ -346,14 +346,14 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 });
 
 const HomePage = ({
-  showModal, hideModal, onLocationSearch, setActiveDiscoverHome, queryParams, setQueryParams, pathName, ishowSlyWorksVideoPlaying,
-  toggleHowSlyWorksVideoPlaying, history,
+  showModal, hideModal, onLocationSearch, setActiveDiscoverHome, ishowSlyWorksVideoPlaying,
+  toggleHowSlyWorksVideoPlaying, onCurrentLocation,
 }) => {
   const HeaderContent = (
     <>
       <HeaderContainer />
       <HeroWrapper>
-        <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
+        <StyledImage path="react-assets/home/cover4.jpg" alt="A Home To Love" height={640} />
         <SearchBoxWrapper>
           <StyledHeading level="hero" size="hero" palette="white">
             Find The Best Senior Living Near You
@@ -361,7 +361,7 @@ const HomePage = ({
           <StyledLabel palette="white">
             Search Assisted Living, Memory Care, Nursing Homes and More
           </StyledLabel>
-          <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
+          <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>
         <ImageCreditDiv>
           <ImageCreditLabel palette="white">
@@ -543,6 +543,7 @@ HomePage.propTypes = {
   showModal: func,
   hideModal: func,
   history: object,
+  onCurrentLocation: func,
 };
 
 export default HomePage;

@@ -89,13 +89,13 @@ const CareTypeRegionGuidePage = ({
     <>
       <HeaderContainer />
       <HeroWrapper>
-        <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
+        <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love"  height={320} />
         <SearchBoxWrapper>
           <StyledHeading level="hero" size="hero" palette="white">
-            Assisted Living Guide For {geoGuide.city}, {stateNames[geoGuide.state]}
+            {searchParams.tocg ==='assisted-living-guide' ? 'Assisted Living' : 'Memory Care'} Guide For {geoGuide.city}, {stateNames[geoGuide.state]}
           </StyledHeading>
           <StyledLabel palette="white">
-            Find the best assisted living near you.
+            Find the best {searchParams.tocg ==='assisted-living-guide' ? 'assisted living' : 'memory care'} near you.
           </StyledLabel>
           <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>
@@ -112,7 +112,10 @@ const CareTypeRegionGuidePage = ({
 
   const HelmetContent = () => {
     const { title, url } = geoGuide;
-    const description = `Learn everything about ${geoGuide.city}, ${geoGuide.state} ${geoGuide.caretype} facilities. Understand cost, compare retirement living communities and options, and find ${geoGuide.city} resources for senior residents.`;
+    const description = searchParams.tocg === 'assisted-living-guide' ?
+      `Learn everything about ${geoGuide.city}, ${geoGuide.state} ${geoGuide.caretype} facilities. Understand cost, compare retirement living communities and options, and find ${geoGuide.city} resources for senior residents.` :
+      `Learn everything about ${geoGuide.city}, ${geoGuide.state} ${geoGuide.caretype} facilities. Understand cost, compare retirement living communities and options, and find ${geoGuide.city} resources for senior residents with Alzheimer’s disease or other dementia related diagnoses.`;
+
     const canonicalUrl = `${host}${url}`;
 
     return (

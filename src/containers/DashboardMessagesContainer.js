@@ -79,12 +79,12 @@ export default class DashboardMessagesContainer extends Component {
 
   componentDidMount() {
     const { ws } = this.props;
-    ws.on(NOTIFY_MESSAGE_NEW, this.onMessage, { capture: true });
+    ws.pubsub.on(NOTIFY_MESSAGE_NEW, this.onMessage, { capture: true });
   }
 
   componentWillUnmount() {
     const { ws } = this.props;
-    ws.off(NOTIFY_MESSAGE_NEW, this.onMessage);
+    ws.pubsub.off(NOTIFY_MESSAGE_NEW, this.onMessage);
   }
 
   onMessage = (message) => {
@@ -166,7 +166,7 @@ export default class DashboardMessagesContainer extends Component {
         />
       ));
     }
-    const modelConfig = { name: 'Conversation', defaultSearchField: 'name' };
+    const modelConfig = { name: 'Conversation', defaultSearchField: 'user-name' };
     return (
       <>
         <HeadingWrapper>

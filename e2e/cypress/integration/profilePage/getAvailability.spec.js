@@ -12,8 +12,9 @@ describe('Marketplace Profile Page', () => {
     it('tests Get Availability Flow for Assisited Living Community - Talk to Advisor Flow', () => {
       const communitySlug = TEST_COMMUNITY;
       const { name, phone, email } = randomUser();
-      const typeOfRoom = 'Suite';
-      const typeOfCare = 'Medication Management';
+      // const typeOfRoom = 'Suite';
+      const moveTimeline = 'Immediately';
+      const typeOfCare = 'Medication management';
       const medicaid = 'Yes';
 
       cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
@@ -21,7 +22,7 @@ describe('Marketplace Profile Page', () => {
       waitForHydration(cy.get('button').contains('Get Detailed Pricing')).click();
 
       const data = {
-        communitySlug, name, phone, typeOfRoom, typeOfCare, medicaid, email,
+        communitySlug, name, phone, moveTimeline, typeOfCare, medicaid, email,
       };
 
       doCustomPricingTalkToAdvisorFlow(cy, data);
@@ -34,8 +35,8 @@ describe('Marketplace Profile Page', () => {
     it('tests Get Availability Flow for Assisited Living Community - Affordable Options Flow', () => {
       const communitySlug = TEST_COMMUNITY;
       const { name, phone, email } = randomUser();
-      const typeOfRoom = 'Suite';
-      const typeOfCare = 'Medication Management';
+      const moveTimeline = 'Immediately';
+      const typeOfCare = 'Medication management';
       const medicaid = 'Yes';
 
       cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
@@ -43,7 +44,7 @@ describe('Marketplace Profile Page', () => {
       waitForHydration(cy.get('button').contains('Get Detailed Pricing')).click();
 
       const data = {
-        communitySlug, name, phone, typeOfRoom, typeOfCare, medicaid, email,
+        communitySlug, name, phone, moveTimeline, typeOfCare, medicaid, email,
       };
 
       doCustomPricingExploreAffordableOptionsFlow(cy, data);

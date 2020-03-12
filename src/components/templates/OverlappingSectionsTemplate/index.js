@@ -5,6 +5,7 @@ import { size, assetPath, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { Image, Heading, Block } from 'sly/components/atoms';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const FixedWidthContainer = styled.div`
   width: 100%;
@@ -34,11 +35,11 @@ const HeroWrapper = styled.div`
   }
 `;
 
-const HeroBackgroundImage = styled(Image)`
+const HeroBackgroundImage = styled(ResponsiveImage)`
   object-fit: cover;
   width: 100%;
   height: 100%;
-  opacity: 0.5;
+  opacity: 0.8;
   z-index: 0;
   display: block;
 `;
@@ -97,8 +98,9 @@ const OverlappingSectionsTemplate = ({
       <HeaderContainer />
       <HeroWrapper>
         <HeroBackgroundImage
-          src={assetPath(imagePath)}
+          path={imagePath}
           alt={`${title} - ${subtitle}`}
+          height={416}
         />
         {(title || subtitle) && (
           <HeroTextWrapper>

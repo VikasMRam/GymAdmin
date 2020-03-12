@@ -3,20 +3,20 @@ import styled from 'styled-components';
 import { string, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import { Box, Heading, Block, Button, Image } from 'sly/components/atoms';
+import { Box, Heading, Block, Button, ResponsiveImage } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   text-align: left;
   overflow: hidden;
-  border-top-left-radius: ${size('spacing.small')}; 
-  border-top-right-radius: ${size('spacing.small')}; 
-  
+  border-top-left-radius: ${size('spacing.small')};
+  border-top-right-radius: ${size('spacing.small')};
+
   > :first-child {
     flex-grow: 0;
   }
-  
+
   > :last-child {
     flex-grow: 1;
   }
@@ -25,7 +25,7 @@ const Wrapper = styled.div`
 const StyledBox = styled(Box)`
   display: flex;
   flex-direction: column;
-  
+
   > :last-child {
     margin-top: auto;
   }
@@ -48,7 +48,7 @@ const DiscoverHomeTile = ({
   onButtonClick,
 }) => (
   <Wrapper>
-    <Image src={image} alt={title} aspectRatio="3:2" />
+    <ResponsiveImage path={image} alt={title} aspectRatio="3:2" />
     <StyledBox snap="top">
       <StyledHeading>{title}</StyledHeading>
       <Block palette="slate">{description}</Block>

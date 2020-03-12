@@ -18,10 +18,10 @@ const FullWidthButton = fullWidth(Button);
 
 const CommunityPricingWizardLanding = ({ user, onBeginClick, buttonText }) => (
   <section>
-    <PaddedHeading>{user ? `Nice to meet you, ${user.name}` : 'Thank you for choosing Seniorly'}!</PaddedHeading>
+    <PaddedHeading>{(user && user.name) ? `Nice to meet you, ${user.name}` : 'Thank you for choosing Seniorly'}!</PaddedHeading>
     <PaddedBlock palette="primary" size="subtitle">Here&apos;s what happens next:</PaddedBlock>
     <PaddedIconItem iconRightMarginSpacing="large" icon="check" iconPalette="green" iconSize="regular" size="subtitle">Complete your care profile to help your expert better understand your needs and preferences</PaddedIconItem>
-    <PaddedIconItem iconRightMarginSpacing="large" icon="check" iconPalette="green" iconSize="regular" size="subtitle">We&apos;ll call shortly to match you with a local senior living expert - working with them is 100% free!</PaddedIconItem>
+    <PaddedIconItem iconRightMarginSpacing="large" icon="check" iconPalette="green" iconSize="regular" size="subtitle">We&apos;ll call shortly to match you with a Local Senior Living Expert - working with them is 100% free!</PaddedIconItem>
     <PaddedIconItem iconRightMarginSpacing="large" icon="check" iconPalette="green" iconSize="regular" size="subtitle">Your expert will guide you throughout your search, set up tours and answer all your questions</PaddedIconItem>
     <FullWidthButton onClick={onBeginClick}>{buttonText}</FullWidthButton>
   </section>

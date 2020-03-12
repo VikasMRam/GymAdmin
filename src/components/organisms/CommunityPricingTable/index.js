@@ -88,7 +88,7 @@ const toolTipCode = size => (
       In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
       Small communities like this typically have &quot;all-inclusive&quot; pricing that gives the resident one monthly
       price.<br />
-      Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+      Seniorly can connect you to a Local Senior Living Expert for more details on pricing. This is a free
       service.<br />
     </TooltipContent>
     }
@@ -99,7 +99,7 @@ const toolTipCode = size => (
       Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
       price.<br />
       Some communities will use a Points or Level of Care system to determine the care related fees.<br />
-      Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+      Seniorly can connect you to a Local Senior Living Expert for more details on pricing. This is a free
       service.<br />
     </TooltipContent>
     }
@@ -109,7 +109,7 @@ const toolTipCode = size => (
       In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.<br />
       Most large sized communities like this typically charge additional care fees.<br />
       Communities will use a Points or a Level of Care system to determine the care related fees.<br />
-      Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+      Seniorly can connect you to a Local Senior Living Expert for more details on pricing. This is a free
       service.<br />
     </TooltipContent>
     }
@@ -124,17 +124,20 @@ const StyledGetPricingButton = styled(GetCustomPricingButtonContainer)`
 const CommunityPricingTable = ({
   pricesList, estimatedPriceList, price, isAlreadyPricingRequested, name, size: communitySize, showToolTip,
 }) => {
-  const basePer = percentageOf(price, 20);
   const from = Math.round(price);
-  const to = Math.round(price + basePer);
+  let to;
   const estimated = pricesList.length === 0;
+  if (estimated && estimatedPriceList.length) {
+    // do concat to create a copy so that order of original array is not changed
+    to = estimatedPriceList.concat().sort((a, b) => b.value - a.value)[0].value;
+  }
 
   return (
     <>
       {estimated &&
         <StyledBlockNp size="title">
           <StyledBlockSp size="body" palette="slate">The estimated monthly pricing for {name} ranges from</StyledBlockSp>
-          <StyledNumberFormat weight="weight.medium" color="secondary">{formatMoney(from)}</StyledNumberFormat> <Span weight="medium" size="title" palette="secondary" variation="dark35"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary" value={to} displayType="text" thousandSeparator prefix="$" /><Span weight="medium" size="title" palette="secondary" variation="dark35"> per month*</Span>
+          <StyledNumberFormat weight="weight.medium" color="secondary">{formatMoney(from)}</StyledNumberFormat> <Span weight="medium" size="title" palette="secondary" variation="dark35"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary">{formatMoney(to)}</StyledNumberFormat> <Span weight="medium" size="title" palette="secondary" variation="dark35"> per month*</Span>
         </StyledBlockNp>
       }
       {!estimated &&
@@ -197,6 +200,7 @@ const CommunityPricingTable = ({
       <Block>
         <StyledGetPricingButton
           hasAlreadyRequestedPricing={isAlreadyPricingRequested}
+          locTrack="pricing-table"
         >
           Get Detailed Pricing
         </StyledGetPricingButton>
@@ -208,7 +212,7 @@ const CommunityPricingTable = ({
               In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
               Small communities like this typically have &quot;all-inclusive&quot; pricing that gives the resident one monthly
               price.
-              Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+              Seniorly can connect you to a Local Senior Living Expert for more details on pricing. This is a free
               service.
             </Paragraph>
           }
@@ -219,7 +223,7 @@ const CommunityPricingTable = ({
               Many medium sized communities like this have &quot;all-inclusive&quot; pricing that gives the resident one monthly
               price.
               Some communities will use a Points or Level of Care system to determine the care related fees.
-              Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+              Seniorly can connect you to a Local Senior Living Expert for more details on pricing. This is a free
               service.
             </Paragraph>
           }
@@ -229,7 +233,7 @@ const CommunityPricingTable = ({
               In addition to the cost of &quot;room and board,&quot; many communities also charge separately for care.
               Most large sized communities like this typically charge additional care fees.
               Communities will use a Points or a Level of Care system to determine the care related fees.
-              Seniorly can connect you to a local senior living expert for more details on pricing. This is a free
+              Seniorly can connect you to a Local Senior Living Expert for more details on pricing. This is a free
               service.
             </Paragraph>
           }

@@ -1,17 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import { object, arrayOf, func } from 'prop-types';
+import { object, arrayOf } from 'prop-types';
 import queryString from 'query-string';
 
-import { size, gridColumns, assetPath } from 'sly/components/themes';
+import { size, gridColumns } from 'sly/components/themes';
 import { getPaginationData } from 'sly/services/helpers/pagination';
 import pad from 'sly/components/helpers/pad';
 import { shadowOnHover } from 'sly/components/helpers/shadow';
-import { Image, Centered, Link, Block } from 'sly/components/atoms';
+
+import { getTocLabel, getLocationLabel } from 'sly/services/helpers/search';
+import { Centered, Link, Block, Heading } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
-import Heading from 'sly/components/atoms/Heading';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import CommunityTile from 'sly/components/organisms/CommunityTile';
+import SearchResultsAdTileContainer from 'sly/containers/SearchResultsAdTileContainer';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;
@@ -50,28 +53,31 @@ const MSCColumnWrapper = styled.div`
   }
 `;
 
+const PaginationText = pad('div');
 const PaddedPagination = pad(Pagination, 'small');
 
 const ShadowCommunityTile = shadowOnHover(styled(CommunityTile)`
   position: relative;
 `);
 
+const PaddedSearchResultsAdTileContainer = pad(SearchResultsAdTileContainer);
+
 const mostSearchedCities = [
   {
     to: '/assisted-living/california/san-francisco',
-    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    image: 'react-assets/cities/SanFrancisco.jpeg',
     subtitle: 'San Francisco, CA',
     title: '95+ communities',
   },
   {
     to: '/assisted-living/california/los-angeles',
-    image: assetPath('images/cities/LosAngeles.jpeg'),
+    image: 'react-assets/cities/LosAngeles.jpeg',
     subtitle: 'Los Angeles, CA',
     title: '105+ communities',
   },
   {
     to: '/assisted-living/california/san-diego',
-    image: assetPath('images/cities/SanDiego.jpeg'),
+    image: 'react-assets/cities/SanDiego.jpeg',
     subtitle: 'San Diego, CA',
     title: '75+ communities',
   },
@@ -80,17 +86,17 @@ const mostSearchedCities = [
 const usefulInformationTiles = [
   {
     to: '/independent-living',
-    image: assetPath('images/home/useful-info/independent-living.jpg'),
+    image: 'react-assets/home/useful-info/independent-living.jpg',
     title: 'Independent Living',
   },
   {
     to: '/assisted-living',
-    image: assetPath('images/home/useful-info/assisted-living.jpg'),
+    image: 'react-assets/home/useful-info/assisted-living.jpg',
     title: 'Assisted Living',
   },
   {
     to: '/memory-care',
-    image: assetPath('images/home/useful-info/memory-care.jpg'),
+    image: 'react-assets/home/useful-info/memory-care.jpg',
     title: 'Memory Care',
   },
 ];
@@ -102,21 +108,21 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
   if (communityList.length < 1) {
     mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
       <Link key={mostSearchedCity.title} to={mostSearchedCity.to}>
-        <Image src={mostSearchedCity.image} aspectRatio="4:3">
+        <ResponsiveImage path={mostSearchedCity.image} aspectRatio="4:3">
           <Centered>
             <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
             <Block palette="white">{mostSearchedCity.title}</Block>
           </Centered>
-        </Image>
+        </ResponsiveImage>
       </Link>
     ));
     usefulInformationTilesComponents = usefulInformationTiles.map(usefulInformation => (
       <Link key={usefulInformation.title} to={usefulInformation.to}>
-        <Image src={usefulInformation.image} aspectRatio="4:3">
+        <ResponsiveImage path={usefulInformation.image} aspectRatio="4:3">
           <Centered>
             <Heading size="subtitle" palette="white">{usefulInformation.title}</Heading>
           </Centered>
-        </Image>
+        </ResponsiveImage>
       </Link>
     ));
   }
@@ -126,7 +132,8 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
   const present = (requestMeta['page-number'] * requestMeta['page-size']);
   const start = present + 1;
   const end = (present + requestMeta['page-size']  > count ? count : present + requestMeta['page-size']);
-
+  const locLabel = getLocationLabel(searchParams);
+  const tocLabel = getTocLabel(searchParams.toc);
   // pagination pathname
   let params = {};
   if (location.search) {
@@ -147,26 +154,30 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
         <CommunityFilterBar searchParams={searchParams} />
       </CommunityFilterBarWrapper>
       {communityList.map((similarProperty, index) => (
-        <CommunityTileWrapper key={similarProperty.id}>
-          <StyledLink
-            to={similarProperty.url}
-            event={{
-              category: 'SearchPage',
-              action: 'communityClick',
-              label: index,
-              value: similarProperty.id,
-            }}
-          />
-          <ShadowCommunityTile
-            community={similarProperty}
-            layout="column"
-            imageSize="regular"
-            noGallery
-            showDescription
-            showSeeMoreButtonOnHover
-            lazyLoadImage={index !== 0}
-          />
-        </CommunityTileWrapper>
+        <>
+          <CommunityTileWrapper key={similarProperty.id}>
+            <StyledLink
+              to={similarProperty.url}
+              event={{
+                category: 'SearchPage',
+                action: 'communityClick',
+                label: index,
+                value: similarProperty.id,
+              }}
+            />
+            <ShadowCommunityTile
+              community={similarProperty}
+              layout="column"
+              imageSize="regular"
+              noGallery
+              showDescription
+              showSeeMoreButtonOnHover
+              lazyLoadImage={index !== 0}
+            />
+          </CommunityTileWrapper>
+          {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
+            <PaddedSearchResultsAdTileContainer type="askAgent" locationLabel={locLabel} tocLabel={tocLabel} />}
+        </>
       ))}
       {communityList.length < 1 &&
         <>
@@ -180,7 +191,9 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
           </MSCColumnWrapper>
         </>
       }
-      {`Showing ${start} to ${end} of ${count}`}
+      <PaginationText>
+        {`Showing ${start} to ${end} of ${count}`}
+      </PaginationText>
       {communityList.length > 0 &&
         <PaddedPagination basePath={basePath} pageParam="page-number" current={current} total={total} />
       }

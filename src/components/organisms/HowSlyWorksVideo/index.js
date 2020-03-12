@@ -2,7 +2,6 @@ import React from 'react';
 import { bool, func, string } from 'prop-types';
 import styled from 'styled-components';
 
-import { assetPath } from 'sly/components/themes';
 import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
 
 const StyledVideo = styled.video`
@@ -16,7 +15,7 @@ const HowSlyWorksVideo = ({
 }) => (
   <div className={className}>
     {!isPlaying &&
-      <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.jpg')} onClick={onThumbnailClick} />
+      <VideoThumbnail path="react-assets/how-sly-works-video-thumbnail.jpg" onClick={onThumbnailClick} />
     }
     {isPlaying &&
       <StyledVideo
@@ -26,8 +25,8 @@ const HowSlyWorksVideo = ({
         onPause={onPause}
         onPlay={onPlay}
       >
-        <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
-        <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
+        <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/hiw_captions.mp4" type="video/mp4" />
+        <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/hiw_captions.webm" type="video/webm" />
       </StyledVideo>
     }
   </div>

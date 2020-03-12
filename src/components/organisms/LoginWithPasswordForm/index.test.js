@@ -9,6 +9,8 @@ const defaultProps = {
   handleSubmit,
   emailOrPhone,
 };
+const phone = '2345678901';
+const phoneFormatted = '(234) 567-8901';
 
 const wrap = (props = {}) => shallow(<LoginWithPasswordForm {...defaultProps} {...props} />);
 
@@ -26,6 +28,18 @@ describe('LoginWithPasswordForm', () => {
     expect(wrapper.find('FullWidthButton')).toHaveLength(2);
     expect(otpBlock).toHaveLength(1);
     expect(otpBlock.contains(emailOrPhone)).toBeTruthy();
+  });
+
+  it('renders with phone', () => {
+    const wrapper = wrap({
+      emailOrPhone: phone,
+    });
+    const otpBlock = wrapper.find('PaddedBlock');
+
+    expect(wrapper.find('Field').filter({ name: 'password' })).toHaveLength(1);
+    expect(wrapper.find('FullWidthButton')).toHaveLength(2);
+    expect(otpBlock).toHaveLength(1);
+    expect(otpBlock.contains(phoneFormatted)).toBeTruthy();
   });
 
   it('renders error', () => {

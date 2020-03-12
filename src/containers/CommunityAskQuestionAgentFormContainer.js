@@ -51,16 +51,16 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
     match: shape({ url: string }),
     heading: string,
     description: string,
-    agentImageUrl: string,
     placeholder: string,
     user: userPropType,
     question: string,
+    type: string,
   };
 
   handleOnSubmit = (data) => {
     const {
       notifyInfo, clearSubmitErrors, toggleAskAgentQuestionModal,
-      community, createAction, match,
+      community, createAction, match, type
     } = this.props;
     const { id } = community;
 
@@ -80,8 +80,9 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
         },
       },
     }).then(() => {
+      const c = `Community-${type}`;
       const event = {
-        action: 'ask-question', category: 'BAT', label: id,
+        action: 'ask-question', category: c, label: id,
       };
       SlyEvent.getInstance().sendEvent(event);
       toggleAskAgentQuestionModal();
@@ -93,7 +94,7 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
 
   render() {
     const {
-      heading, description, agentImageUrl, placeholder, user, question,
+      heading, description, placeholder, user, question,
     } = this.props;
 
     let initialValues = {
@@ -115,7 +116,6 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
         placeholder={placeholder}
         heading={heading}
         description={description}
-        agentImageUrl={agentImageUrl}
       />
     );
   }

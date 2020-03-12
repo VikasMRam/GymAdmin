@@ -41,6 +41,7 @@ export default {
 
   getAgent: { method: get, path: '/marketplace/agents/:id' },
   getAgents: { method: get, path: '/marketplace/agents' },
+  updateAgent: { method: put, path: '/marketplace/agents/:id' },
 
   getSearchResources: { method: get, path: '/platform/search-resources' },
   getGeoGuides: { method: get, path: '/platform/geo-guides' },
@@ -86,4 +87,6 @@ export default {
 
   getDatatable: { method: get, path: '/meta-data/datatables/:id' },
   sendEbook: { method: post, path: '/platform/send-ebook' },
+
+  getAddresses: { method: get, path: '/platform/addresses' },
 };

@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import { getHelmetForPartnersPage } from 'sly/services/helpers/html_headers';
 import { partnerFAQs } from 'sly/constants/agents';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Hr, Paragraph } from 'sly/components/atoms';
+import { Hr, Paragraph, ResponsiveImage } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Section from 'sly/components/molecules/Section';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
@@ -30,14 +30,22 @@ const HeroWrapper = styled.div`
   }
 `;
 
+const StyledImage = styled(ResponsiveImage)`
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  z-index: 0;
+  display: block;
+  img {
+    object-position: right;
+  }
+`;
+
 const HeroTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-position: right 50%;
-  background-image: url(${assetPath('images/agents-partners-hero.png')});
-  background-size: cover;
   > * {
     max-width: calc(100% - ${size('spacing.large')});
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -82,6 +90,7 @@ const PartnersPage = () => {
     <>
       <HeaderContainer />
       <HeroWrapper>
+        <StyledImage path="react-assets/agents-partners-hero.png" alt="A Home To Love" height={480} />
         <HeroTextWrapper><PartnerWithSly /></HeroTextWrapper>
       </HeroWrapper>
     </>
@@ -90,7 +99,9 @@ const PartnersPage = () => {
   return (
     <>
       {getHelmetForPartnersPage()}
-      <TemplateHeader>{headerContent}</TemplateHeader>
+      <TemplateHeader>
+        {headerContent}
+      </TemplateHeader>
       <TemplateContent>
         <StyledSection title="How does it work?">
           <ColumnWrapper>

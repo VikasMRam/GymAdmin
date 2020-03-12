@@ -33,6 +33,10 @@ const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
+const StyledButton = styled(Button)`
+  color: ${palette('primary', 'base')};
+`;
+
 const BecomeSlyPartnerBanner = ({ palette }) => (
   <Wrapper type={palette} palette="white">
     <TopWrapper>
@@ -41,7 +45,7 @@ const BecomeSlyPartnerBanner = ({ palette }) => (
       <div>PARTNERS</div>
     </TopWrapper>
     <StyledBlock palette="white" size="title">Become A Seniorly Partner Agent</StyledBlock>
-    <Button href="https://docs.google.com/forms/d/1wMTmjC8RdS0lGYSBppTRYBBhJ0yd-P6SsTLtOinqMsA/viewform" kind="jumbo" palette="white" foregroundPalette="primary">Apply now</Button>
+    <StyledButton href="https://docs.google.com/forms/d/1wMTmjC8RdS0lGYSBppTRYBBhJ0yd-P6SsTLtOinqMsA/viewform" kind="jumbo" palette="white">Apply now</StyledButton>
   </Wrapper>
 );
 

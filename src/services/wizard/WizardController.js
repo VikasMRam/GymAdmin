@@ -3,15 +3,17 @@ import { arrayOf, any, func, object, bool, string, number } from 'prop-types';
 import { isValid, isSubmitting, reset, SubmissionError } from 'redux-form';
 
 import { connectController } from 'sly/controllers';
-import { ABORT_WIZARD } from 'sly/constants/wizard';
 import { selectFormData } from 'sly/services/helpers/forms';
 
 const mapStateToProps = (state, { controller, ...ownProps }) => {
   isValid(ownProps.formName)(state);
+  const steps = controller.steps || [];
+  const initialStepIndex = steps.findIndex(s => s === ownProps.initialStep);
+
   return {
-    steps: controller.steps || [],
+    steps,
     progressPath: controller.progressPath || [0],
-    currentStepIndex: controller.currentStepIndex || 0,
+    currentStepIndex: controller.currentStepIndex || (initialStepIndex > -1 ? initialStepIndex : 0),
     data: selectFormData(state, ownProps.formName, {}),
     submitEnabled: isValid(ownProps.formName)(state) && !isSubmitting(ownProps.formName)(state),
   };
@@ -45,6 +47,7 @@ export default class WizardController extends Component {
 
   constructor(props) {
     super(props);
+
     const { formName } = props;
 
     this.formOptions = {
@@ -77,6 +80,9 @@ export default class WizardController extends Component {
   };
 
   goto = (nextStep) => {
+    if (nextStep === null) {
+      return;
+    }
     const { set, steps, progressPath } = this.props;
     const nextStepIndex = steps.indexOf(nextStep);
     // Checking if we had already visited the step
@@ -154,9 +160,6 @@ export default class WizardController extends Component {
         doSubmit,
       };
       const returnVal = onStepChange(args);
-      if (returnVal === ABORT_WIZARD) {
-        return null;
-      }
       return Promise.resolve(returnVal)
         .then(() => {
           if (!wasGotoCalled) {

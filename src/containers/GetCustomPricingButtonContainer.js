@@ -1,12 +1,12 @@
 import React from 'react';
-import { bool } from 'prop-types';
+import { bool , string } from 'prop-types';
 
 import GetCustomPricingContainer from 'sly/containers/GetCustomPricingContainer';
 import Button from 'sly/components/atoms/Button';
 
-export default function GetCustomPricingButtonContainer({ hasAlreadyRequestedPricing, ...props }) {
+export default function GetCustomPricingButtonContainer({ hasAlreadyRequestedPricing, locTrack, ...props }) {
   return (
-    <GetCustomPricingContainer hasAlreadyRequestedPricing={hasAlreadyRequestedPricing}>
+    <GetCustomPricingContainer hasAlreadyRequestedPricing={hasAlreadyRequestedPricing} locTrack={locTrack}>
       {getCustomPricing => <Button onClick={getCustomPricing} {...props} />}
     </GetCustomPricingContainer>
   );
@@ -14,4 +14,5 @@ export default function GetCustomPricingButtonContainer({ hasAlreadyRequestedPri
 GetCustomPricingButtonContainer.typeHydrationId = 'GetCustomPricingButtonContainer';
 GetCustomPricingButtonContainer.propTypes = {
   hasAlreadyRequestedPricing: bool,
+  locTrack: string,
 };

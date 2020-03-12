@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 
 import { authenticateCancel, authenticateSuccess } from 'sly/store/authenticated/actions';
 import { withAuth } from 'sly/services/newApi';
+import SlyEvent from 'sly/services/helpers/events';
 import withNotification from 'sly/controllers/withNotification';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { email } from 'sly/services/validation';
@@ -31,12 +32,11 @@ const mapStateToProps = state => ({
 export default class AuthContainer extends Component {
   static propTypes = {
     authenticated: object,
-    authenticateCancel: func,
-    authenticateSuccess: func,
-    notifyInfo: func,
-    showModal: func,
-    hideModal: func,
-    children: func,
+    authenticateCancel: func.isRequired,
+    authenticateSuccess: func.isRequired,
+    notifyInfo: func.isRequired,
+    showModal: func.isRequired,
+    hideModal: func.isRequired,
     sendOtpCode: func.isRequired,
     notifyError: func.isRequired,
   };
@@ -83,27 +83,40 @@ export default class AuthContainer extends Component {
       });
   };
 
+  handleAuthenticationCancel = () => {
+    const { authenticateCancel } = this.props;
+
+    SlyEvent.getInstance().sendEvent({
+      category: 'Auth',
+      action: 'cancel',
+    });
+    authenticateCancel();
+  };
+
   render() {
     const { isOpen } = this.state;
-    const { authenticateCancel, authenticateSuccess } = this.props;
+    const { authenticateSuccess, authenticated } = this.props;
 
     return (
       <Modal
         isOpen={isOpen}
-        onClose={authenticateCancel}
+        onClose={this.handleAuthenticationCancel}
         closeable
       >
         <WizardController
           formName="AuthForm"
+          controllerKey="AuthFormControllerKey"
+          initialStep={authenticated.options && authenticated.options.emailOrPhone ? 'LoginWithPassword' : null}
           onComplete={authenticateSuccess}
         >
           {({
-            data: { emailOrPhone }, goto, next, ...props
+            data: { emailOrPhone = authenticated.options && authenticated.options.emailOrPhone }, goto, next, ...props
           }) => (
             <WizardSteps {...props}>
               <WizardStep
                 component={LoginOrRegisterFormContainer}
                 name="LoginOrRegister"
+                heading={authenticated.reason}
                 onUserAlreadyExists={() => goto('LoginWithPassword')}
                 onSocialSigninSuccess={authenticateSuccess}
                 onPartnerAgentLoginClick={() => goto('PartherAgentLogin')}
@@ -137,6 +150,7 @@ export default class AuthContainer extends Component {
                 component={LoginWithPasswordFormContainer}
                 name="LoginWithPassword"
                 emailOrPhone={emailOrPhone}
+                initialValues={authenticated.options && authenticated.options.emailOrPhone ? { emailOrPhone: authenticated.options.emailOrPhone }  : null}
                 onSubmitSuccess={authenticateSuccess}
                 onResetPasswordClick={() => goto('ResetPassword')}
                 onLoginWithOtpClick={() => this.gotoOtpLogin(goto, emailOrPhone)}

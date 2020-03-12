@@ -6,7 +6,7 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 
 import shadow from 'sly/components/helpers/shadow';
 import { size, assetPath, palette, key } from 'sly/components/themes';
-import { Input, Image } from 'sly/components/atoms';
+import { Input, Image, Icon } from 'sly/components/atoms';
 import LoadGoogleMaps from 'sly/services/search/LoadGoogleMaps';
 
 const Wrapper = styled.div`
@@ -68,6 +68,10 @@ const GoogleLogo = styled(Image)`
   float: right;
 `;
 
+const StyledIcon = styled(Icon)`
+  margin-right: ${size('spacing.regular')};
+`;
+
 const baseSearchOptions = { types: ['(regions)'] };
 
 const SearchBox = ({
@@ -77,7 +81,10 @@ const SearchBox = ({
   onSelect,
   onSearchButtonClick,
   onTextboxFocus,
+  onTextboxBlur,
+  isTextboxInFocus,
   onLocationSearch,
+  onCurrentLocationClick,
   onBlur,
   placeholder,
   readOnly,
@@ -104,13 +111,19 @@ const SearchBox = ({
                   {...getInputProps({ onBlur, placeholder })}
                   disabled={false}
                   layout={layout}
-                  onFocus={(e) => { loadMaps(); onTextboxFocus(e); }}
+                  onFocus={(e) => { loadMaps(); onTextboxFocus && onTextboxFocus(e); }}
+                  onBlur={onTextboxBlur}
                   readOnly={readOnly}
                   type="search"
                   size="large"
                 />
-                {suggestions.length > 0 && (
+                {(isTextboxInFocus && (onCurrentLocationClick || suggestions.length > 0)) && (
                   <SearchSuggestionsWrapper layout={layout}>
+                    {/* user mouseDown instead of onClick as the onClick which is triggered after mouse button is release will trigger blur of textbox
+                        that will by the time hide the suggestions dropdown
+                    */}
+                    {onCurrentLocationClick &&
+                      <SearchSuggestion onMouseDown={onCurrentLocationClick}><StyledIcon icon="map" /> Current Location</SearchSuggestion>}
                     {suggestions.map(suggestion => (
                       <SearchSuggestion {...getSuggestionItemProps(suggestion)} active={suggestion.active}>
                         {suggestion.description}
@@ -136,6 +149,9 @@ SearchBox.propTypes = {
   onSearchButtonClick: func.isRequired,
   onLocationSearch: func,
   onTextboxFocus: func,
+  onTextboxBlur: func,
+  isTextboxInFocus: bool,
+  onCurrentLocationClick: func,
   onBlur: func,
   placeholder: string,
   readOnly: bool,

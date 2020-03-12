@@ -65,7 +65,7 @@ const OfferNotification = ({
         {description && <Span>{description}</Span>}
       </TopWrapper>
       {hasLearnMore && (
-        <GetCustomPricingContainer hasAlreadyRequestedPricing={hasAlreadyRequestedPricing}>
+        <GetCustomPricingContainer hasAlreadyRequestedPricing={hasAlreadyRequestedPricing} locTrack="offer">
           {getPricing => (
             <>
               <BigScreenLearnMore onClick={getPricing}>

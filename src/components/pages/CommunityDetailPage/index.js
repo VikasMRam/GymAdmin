@@ -16,8 +16,7 @@ import {
 } from 'sly/services/helpers/pricing';
 import pad from 'sly/components/helpers/pad';
 import { withHydration } from 'sly/services/partialHydration';
-import { Experiment, Variant } from 'sly/services/experiments';
-import { Button, Paragraph } from 'sly/components/atoms';
+import { Button, Paragraph, Hr, Block, Link } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';
 import {
@@ -38,12 +37,11 @@ import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
 import UnhydratedLazyCommunityMap from 'sly/containers/LazyCommunityMapContainer';
 import UnhydratedCommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
-import UnhydratedConciergeContainer from 'sly/containers/ConciergeContainer';
 import UnhydratedOfferNotification from 'sly/components/molecules/OfferNotification';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
 import IconItem from 'sly/components/molecules/IconItem';
+import IconButton from 'sly/components/molecules/IconButton';
 import UnhydratedGetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
 import UnhydratedHowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
@@ -63,8 +61,8 @@ import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/containers/Tracked
 import UnhydratedPageViewActionContainer from 'sly/containers/PageViewActionContainer';
 import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
-import GetCommunityPricingAndAvailability from 'sly/components/organisms/GetCommunityPricingAndAvailability';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
+import UnhydratedCommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -81,9 +79,9 @@ const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContai
 const CommunityAddReviewButtonContainer = withHydration(UnhydratedCommunityAddReviewButtonContainer);
 const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuestionAnswersContainer);
 const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { alwaysHydrate: true });
-const ConciergeContainer = withHydration(UnhydratedConciergeContainer);
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
+const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -154,6 +152,38 @@ const StyledAskAgentButton = styled(AskAgentQuestionButtonContainer)`
 const StickToTop = styled.div`
   position: sticky;
   top: 24px;
+`;
+
+const StyledIconButton = styled(IconButton)`
+  font-weight: bold;
+  margin-bottom: ${size('spacing.large')};
+`;
+
+const StyledHr = styled(Hr)`
+  margin-top: ${size('spacing.regular')};;
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
+const TextBlock = styled(Block)`
+  font-weight: bold;
+  margin-bottom: ${size('spacing.large')};
+  text-align: center;
+`;
+
+const CTAWrapper = styled.div`
+  text-align: center;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: auto auto;
+`;
+
+const CTAButton = styled(AskAgentQuestionButtonContainer)`
+`;
+
+const CTABlock = styled(Block)`
+  display: inline-block;
+  padding-left: ${size('spacing.regular')};
+  line-height: ${size('element.regular')};
 `;
 
 const Header = makeHeader();
@@ -288,7 +318,6 @@ export default class CommunityDetailPage extends Component {
         {getHelmetForCommunityPage(community, location)}
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
         <PageEventsContainer />
-
         <Header noBottomMargin={!!bannerNotification} />
         {bannerNotification && (
           <StyledBannerNotification>
@@ -381,7 +410,7 @@ export default class CommunityDetailPage extends Component {
                         fee and a monthly component. Connect directly with{' '}
                         {name} to find out your pricing.
                       </Paragraph>
-                      <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested}>
+                      <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested} locTrack="ccrc-pricing-table">
                       Get Detailed Pricing
                       </GetCustomPricingButtonContainer>
                     </>
@@ -391,7 +420,7 @@ export default class CommunityDetailPage extends Component {
                       <Paragraph>
                         90% of Skilled Nursing Facilities in the United States are Medicare-certified. Some also accept Medicaid. To learn about pricing at {name}, click the button below.
                       </Paragraph>
-                      <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested}>
+                      <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested} locTrack="snf-pricing-table">
                         Get Pricing
                       </GetCustomPricingButtonContainer>
                     </>
@@ -405,6 +434,7 @@ export default class CommunityDetailPage extends Component {
                       GetPricingButton={props => (
                         <GetCustomPricingButtonContainer
                           hasAlreadyRequestedPricing={isAlreadyPricingRequested}
+                          locTrack="pricing-table"
                           {...props}
                         />
                       )}
@@ -447,6 +477,33 @@ export default class CommunityDetailPage extends Component {
                     <StyledAskAgentButton type="services">Ask a Question</StyledAskAgentButton>
                   </StyledHeadingBoxSection>
                 )}
+                {rgsAux.rgsInfo && rgsAux.rgsInfo.resourceLinks && rgsAux.rgsInfo.resourceLinks.length > 0 && (
+                  <StyledHeadingBoxSection
+                    heading={`Helpful ${typeOfCare} Resources`}
+                  >
+                    {rgsAux.rgsInfo.resourceLinks.map(item => (
+                      <StyledIconButton to={item.to}
+                                        icon="chevron"
+                                        right
+                                        fullWidth
+                                        ghost
+                                        transparent
+                                        borderPalette="slate"
+                                        rotate={-1}
+                      >{item.title}
+                      </StyledIconButton>)
+                    )}
+
+                    <StyledHr />
+                    <TextBlock size="body">Didn't find what you are looking for? Our Senior Living Experts can help.</TextBlock>
+                    <CTAWrapper>
+                      <CTAButton type="resources">Ask a Question</CTAButton>
+                      <CTABlock>or call our team at <Link href="tel:+18558664515">(855) 866-4515</Link></CTABlock>
+                    </CTAWrapper>
+
+
+                  </StyledHeadingBoxSection>
+                )}
                 {careServices &&
                   careServices.length > 0 && (
                     <StyledHeadingBoxSection heading={`Care Services at ${name}`}>
@@ -456,7 +513,7 @@ export default class CommunityDetailPage extends Component {
                   )}
                 <StyledHeadingBoxSection heading={`Amenities at ${name}`}>
                   <CommunityAmenities community={community} />
-                  <StyledAskAgentButton type="services">Ask About Amenities</StyledAskAgentButton>
+                  <StyledAskAgentButton type="amenities">Ask About Amenities</StyledAskAgentButton>
                 </StyledHeadingBoxSection>
                 {sortedEstimatedPrice.length > 0 && (
                   <StyledHeadingBoxSection heading={`Compare Costs to Nearby ${typeOfCare} Communities`}>
@@ -538,18 +595,12 @@ export default class CommunityDetailPage extends Component {
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
-                <CommunityStickyFooter isAlreadyPricingRequested={isAlreadyPricingRequested} />
+
+                <CommunityStickyFooter isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack="sticky-footer"/>
               </Body>
               <Column>
                 <StickToTop>
-                  <Experiment name="Community_DetailPage_Sidebar">
-                    <Variant name="Sidebar_Concierge_Form">
-                      <ConciergeContainer />
-                    </Variant>
-                    <Variant name="Sidebar_GetDetailed_PricingBox">
-                      <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
-                    </Variant>
-                  </Experiment>
+                  <CommunityDetailsPageColumnContainer community={community} />
                 </StickToTop>
               </Column>
             </TwoColumn>
@@ -576,17 +627,6 @@ export default class CommunityDetailPage extends Component {
                 />
               </Wrapper>
             )}
-          {(address.state === 'NY' ||
-            address.state === 'FL' ||
-            address.state === 'TX') && (
-            <Wrapper>
-              {rgsAux && rgsAux.localDetails !== '' ? (
-                <Section title="Local Details" titleSize="subtitle">
-                  <CommunityLocalDetails localDetails={rgsAux.localDetails} />
-                </Section>
-              ) : null}
-            </Wrapper>
-          )}
         </CommunityDetailPageTemplate>
         <Footer />
       </>

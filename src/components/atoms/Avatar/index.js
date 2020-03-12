@@ -24,7 +24,7 @@ const dimensions = ({ size: sizeProp }) => size('element', sizeProp);
 const fontSize = ({ size: sizeProp }) => size('text', dimensionToTextSizeMap[sizeProp]);
 
 const styles = css`
-  border-radius: ${size('spacing.xLarge')};
+  border-radius: 50%;
   width: ${dimensions};
   height: ${dimensions};
 `;

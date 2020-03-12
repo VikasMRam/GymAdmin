@@ -16,6 +16,7 @@ import Slider from 'sly/components/molecules/Slider';
 import DateChoice from 'sly/components/molecules/DateChoice';
 import DateRange from 'sly/components/molecules/DateRange';
 import BoxChoice from 'sly/components/molecules/BoxChoice';
+import PhoneInput from 'sly/components/molecules/PhoneInput';
 import IconInput from 'sly/components/molecules/IconInput';
 import InputMessage from 'sly/components/molecules/InputMessage';
 import Autocomplete from 'sly/components/molecules/Autocomplete';
@@ -24,6 +25,7 @@ import LocationSearch from 'sly/components/molecules/LocationSearch';
 import DatepickerStyles from 'sly/components/themes/DatepickerStyles';
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/components/atoms/Select'));
+const RichTextArea = loadable(() => import(/* webpackChunkName: "chunkAtomRichTextArea" */'sly/components/atoms/RichTextArea'));
 const DatePickerLoadable = loadable(() => import(/* webpackChunkName: "chunkReactDatePicker" */'react-datepicker'));
 const DatePicker = props => (
   <>
@@ -61,6 +63,8 @@ const getInputComponent = (type) => {
       return DatePicker;
     case 'select':
       return Input;
+    case 'phone':
+      return PhoneInput;
     case 'choice':
       return Select;
     case 'autocomplete':
@@ -69,6 +73,8 @@ const getInputComponent = (type) => {
       return CheckboxInput;
     case 'locationSearch':
       return LocationSearch;
+    case 'richtextarea':
+      return RichTextArea;
     default:
       return Input;
   }
@@ -161,9 +167,9 @@ const InputWrapper = styled.div`
     `};
   }
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    ${({ wideWidth }) => wideWidth && css`
+    ${({ wideWidth, widthSpacing }) => wideWidth && css`
       margin-right: ${size('spacing.large')};
-      flex: 0 0 ${size('tabletLayout.col3')};
+      flex: 0 0 ${size(widthSpacing)};
     `}
   }
 `;
@@ -211,6 +217,7 @@ const Field = ({
   hideErrors,
   labelRight,
   wideWidth,
+  widthSpacing,
   hideValue,
   showCharacterCount,
   options,
@@ -254,7 +261,7 @@ const Field = ({
           }
         </LabelWrapper>
       }
-      {renderInputFirst || (wideWidth ? <InputWrapper wideWidth={wideWidth} type={type} options={options}><InputComponent {...inputProps} /></InputWrapper> : <InputComponent {...inputProps} />)}
+      {renderInputFirst || (wideWidth ? <InputWrapper wideWidth={wideWidth} widthSpacing={widthSpacing} type={type} options={options}><InputComponent {...inputProps} /></InputWrapper> : <InputComponent {...inputProps} />)}
       {invalid && !hideErrors && message && (
         <StyledInputMessage name={`${name}Error`} icon="close" palette="danger" message={message} wideWidth={wideWidth} renderInputFirst={renderInputFirst} />
       )}
@@ -313,16 +320,20 @@ Field.propTypes = {
     'hidden',
     'date',
     'locationSearch',
+    'daterange',
+    'richtextarea',
   ]),
   placeholder: string,
   labelRight: node,
   wideWidth: bool,
+  widthSpacing: string,
   hideValue: bool,
   options: arrayOf(object),
 };
 
 Field.defaultProps = {
   type: 'text',
+  widthSpacing: 'tabletLayout.col3',
 };
 
 export default Field;

@@ -3,7 +3,7 @@ import { arrayOf, shape } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import { Link, Heading } from 'sly/components/atoms';
+import { Link, Heading, Block } from 'sly/components/atoms';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 
 const StyledLink = styled(Link)`
@@ -12,7 +12,6 @@ const StyledLink = styled(Link)`
 
 const StyledImageOverlayContentTile = styled(ImageOverlayContentTile)`
   border-radius: 4px;
-  height: ${size('element.huge')};
 `;
 
 // TODO: to move this to a common place for reusability
@@ -48,6 +47,10 @@ const MostSearchedRegions = ({ mostSearchedRegions }) => (
       <StyledLink key={mostSearchedRegion.title} to={mostSearchedRegion.to}>
         <StyledImageOverlayContentTile size="small" image={mostSearchedRegion.image}>
           <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedRegion.title}</Heading>
+          <Block palette="white">
+            <strong> Includes: </strong>
+            {mostSearchedRegion.states}
+          </Block>
         </StyledImageOverlayContentTile>
       </StyledLink>
     ))

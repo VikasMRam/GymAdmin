@@ -2,6 +2,8 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
+import { email } from 'sly/services/validation';
+import { phoneFormatter } from 'sly/services/helpers/phone';
 import pad from 'sly/components/helpers/pad';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -42,7 +44,7 @@ const LoginWithPasswordForm = ({
     {getButton(error, { type: 'submit', disabled: submitting || invalid, children: 'Log in' })}
     {error && <Block palette="danger" size="caption">{error}</Block>}
     <HrWithText text="or" />
-    <PaddedBlock>Use a one time password for easy log in for your account<br />{emailOrPhone}</PaddedBlock>
+    <PaddedBlock>Use a one time password for easy log in for your account<br />{!email(emailOrPhone) ? emailOrPhone : phoneFormatter(emailOrPhone, true)}</PaddedBlock>
     <FullWidthButton ghost onClick={onLoginWithOtpClick}>Log in with a one-time password</FullWidthButton>
   </form>
 );

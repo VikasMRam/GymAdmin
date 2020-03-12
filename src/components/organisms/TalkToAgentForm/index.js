@@ -9,16 +9,28 @@ import userPropType from 'sly/propTypes/user';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
-import { Button, Block } from 'sly/components/atoms';
+import fullWidth from 'sly/components/helpers/fullWidth';
+import { Button, Block, Heading, ResponsiveImage } from 'sly/components/atoms';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
-const StyledBlock = textAlign(pad(Block));
+const StyledHeading = textAlign(pad(Heading));
 
-const StyledButton = styled(Button)`
+const CenteredTosAndPrivacy = textAlign(TosAndPrivacy);
+
+const StyledButton = styled(fullWidth(Button))`
   margin-bottom: ${ifProp('hasMarginBottom', size('spacing.large'), 0)};
-  width: 100%;
 `;
+
+const ImageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledResponsiveImage = pad(textAlign(styled(ResponsiveImage)`
+  max-width: calc(${size('layout.col2')} + ${size('layout.gutter')});
+`));
 
 export default class TalkToAgentForm extends Component {
   static propTypes = {
@@ -31,27 +43,43 @@ export default class TalkToAgentForm extends Component {
     heading: string.isRequired,
     user: userPropType,
     hasLocation: bool,
+    image: string,
     hasEmail: bool,
     firstName: string.isRequired,
+    showMessageFieldFirst: bool,
+    buttonKind: string,
   };
 
   static defaultProps = {
     heading: 'Talk to a local Seniorly Agent',
     firstName: 'we',
+    buttonKind: 'jumbo',
   };
 
   render() {
     const {
       invalid, submitting, handleSubmit, error, heading, user, hasLocation, hasEmail,
-      firstName,
+      firstName, showMessageFieldFirst, image, buttonKind,
     } = this.props;
-
     const showTos = !user;
+    const messageField = (
+      <Field
+        type="textarea"
+        rows="3"
+        name="message"
+        label={`What can ${firstName} help you with?`}
+        placeholder="Type your question here. NO JOB INQUIRIES"
+        component={ReduxField}
+        required
+      />
+    );
 
     return (
       <section>
-        <StyledBlock size="title" weight="medium">{heading}</StyledBlock>
+        {image && <ImageWrapper><StyledResponsiveImage src={image} /></ImageWrapper>}
+        <StyledHeading size="subtitle">{heading}</StyledHeading>
         <form onSubmit={handleSubmit}>
+          {showMessageFieldFirst && messageField}
           {hasLocation &&
             <Field
               name="location"
@@ -65,9 +93,8 @@ export default class TalkToAgentForm extends Component {
           {!(user && user.name) &&
             <Field
               name="name"
-              label="Full Name"
+              label="Full name"
               type="text"
-              placeholder="Full Name"
               component={ReduxField}
               required
             />
@@ -77,7 +104,6 @@ export default class TalkToAgentForm extends Component {
               name="email"
               label="Email"
               type="email"
-              placeholder="Email"
               component={ReduxField}
               required
             />
@@ -89,24 +115,15 @@ export default class TalkToAgentForm extends Component {
               type="text"
               parse={phoneParser}
               format={phoneFormatter}
-              placeholder="925-555-5555"
               component={ReduxField}
               required
             />
           }
-          <Field
-            type="textarea"
-            rows="3"
-            name="message"
-            label={`What can ${firstName} help you with?`}
-            placeholder="I'm interested in a free consult with a Seniorly Agent."
-            component={ReduxField}
-            required
-          />
-          <StyledButton hasMarginBottom={error || showTos} type="submit" kind="jumbo" disabled={invalid || submitting}>
+          {!showMessageFieldFirst && messageField}
+          <StyledButton hasMarginBottom={error || showTos} type="submit" kind={buttonKind} disabled={invalid || submitting}>
             Send
           </StyledButton>
-          {showTos && <TosAndPrivacy />}
+          {showTos && <CenteredTosAndPrivacy />}
         </form>
         {error && <Block palette="danger">{error}</Block>}
       </section>

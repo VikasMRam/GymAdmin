@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { object } from 'prop-types';
+import { withRouter } from 'react-router';
 
 import MorePictures from 'sly/components/organisms/MorePictures';
 import SlyEvent from 'sly/services/helpers/events';
 import FullscreenMediaGallery from 'sly/components/molecules/FullscreenMediaGallery';
-import { withRouter } from 'react-router';
 import { prefetch } from 'sly/services/newApi';
 
 @withRouter
@@ -15,7 +15,7 @@ import { prefetch } from 'sly/services/newApi';
 export default class CommunityMorePicturesContainer extends Component {
   static typeHydrationId = 'CommunityMorePicturesContainer';
   static propTypes = {
-    community: object.isRequired
+    community: object.isRequired,
   };
 
   state = { isFullscreen: false, currentIndex: 0 };

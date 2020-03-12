@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { string, bool } from 'prop-types';
 
 
-import { size, assetPath } from 'sly/components/themes';
-import { Heading, Block, Icon, Image } from 'sly/components/atoms';
+import { size, getKey, assetPath } from 'sly/components/themes';
+import { Heading, Block, Icon } from 'sly/components/atoms';
+import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,7 +37,7 @@ const ImageWrapper = styled.div`
   }
 `;
 
-const StyledImage = styled(Image)`
+const StyledImage = styled(ResponsiveImage)`
   display: block;
   width: 100%;
 `;
@@ -59,15 +60,18 @@ const HeadingWrapper = styled(Heading)`
 `;
 
 const HowItWorksInfoTile = ({
-  imageUrl,
+  imagePath,
+  assetImagePath,
   heading,
   content,
   invert,
 }) => {
+  const { sizes, sources } = getKey('imageFormats.howItWorks');
+  const src = assetImagePath && assetPath(assetImagePath);
   return (
     <Wrapper>
       <ImageWrapper invert={invert}>
-        <StyledImage src={assetPath(imageUrl)} />
+        <StyledImage sizes={sizes} sources={sources} src={src} path={imagePath} />
       </ImageWrapper>
       <InfoContentWrapper invert={invert}>
         <HeadingWrapper>{heading}</HeadingWrapper>
@@ -78,7 +82,8 @@ const HowItWorksInfoTile = ({
 };
 
 HowItWorksInfoTile.propTypes = {
-  imageUrl: string.isRequired,
+  imagePath: string,
+  assetImagePath: string,
   heading: string.isRequired,
   content: string.isRequired,
   invert: bool,

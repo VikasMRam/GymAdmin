@@ -65,9 +65,10 @@ const renderHtml = ({
 
 const experiments = require('sly/../experiments.json');
 
-const createSetCookie = (res, cookies) => (key, value, maxAge = 27000000) => {
-  res.cookie(key, value, { domain, maxAge });
-  cookies.push(`${key}=${value}`);
+const A_MONTH = 30 * 24 * 3600 * 1000;
+const createSetCookie = (res, apiCookies) => (key, value) => {
+  res.cookie(key, value, { domain, maxAge: A_MONTH });
+  apiCookies.push(`${key}=${value}`);
 };
 
 const makeSid = () => crypto.randomBytes(16).toString('hex');
@@ -121,9 +122,9 @@ app.use((req, res, next) => {
 
 // headers
 app.use((req, res, next) => {
-  const cookies = req.headers.cookie ? [req.headers.cookie] : [];
-  const setCookie = createSetCookie(res, cookies);
-  req.clientConfig.cookies = cookies;
+  const apiCookies = req.headers.cookie ? [req.headers.cookie] : [];
+  const setCookie = createSetCookie(res, apiCookies);
+  req.clientConfig.apiCookies = apiCookies;
 
   if (req.query.sly_uuid) {
     if (!req.cookies.sly_uuid) {
@@ -145,7 +146,7 @@ app.use((req, res, next) => {
   const slySID = req.cookies.sly_sid || makeSid();
 
   if (!req.cookies.sly_sid) {
-    setCookie('sly_sid', slySID, 3600);
+    setCookie('sly_sid', slySID);
   }
 
   if (!req.cookies.referrer && req.headers.referer) {
@@ -180,7 +181,7 @@ app.use((req, res, next) => {
 
 // store
 app.use(async (req, res, next) => {
-  const { slyUUID, cookies } = req.clientConfig;
+  const { slyUUID, apiCookies } = req.clientConfig;
 
   const hmac = crypto.createHmac('sha256', slyUUID);
   const slyUUIDHash = hmac.digest('hex');
@@ -201,7 +202,7 @@ app.use(async (req, res, next) => {
 
   const apiConfig = {
     headers: {
-      Cookie: cookies.join('; '),
+      Cookie: apiCookies.join('; '),
       'User-Agent': req.headers['user-agent'],
       'X-is-sly-ssr': 'true',
       'X-forwarded-for': req.headers['x-forwarded-for'] || req.connection.remoteAddress,

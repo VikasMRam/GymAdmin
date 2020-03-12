@@ -10,6 +10,7 @@
     "start:staging": "npm run env:staging -- node .",
     "predev": "npm run prebuild",
     "dev": "npm run env:dev -- webpack-dev-server",
+    "dev:https": "HOST=https://www.lvh.me API_URL=https://www.lvh.me/v0 NODE_TLS_REJECT_UNAUTHORIZED=0 npm run dev -- --https",
     "dev:eb": "npm-run-all -p dev storybook",
     "prestaging": "npm run prebuild",
     "preprod": "npm run prebuild",
@@ -87,6 +88,7 @@
     "@storybook/addon-options": "5.2.8",
     "@storybook/addons": "5.2.8",
     "@storybook/react": "^5.2.8",
+    "@tinymce/tinymce-react": "^3.4.0",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-module-resolver": "^4.0.0",
@@ -112,6 +114,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.17.0",
+    "estree-walk": "^2.2.0",
     "express": "^4.17.1",
     "file-loader": "^5.0.2",
     "history": "^4.10.1",
@@ -178,7 +181,7 @@
     "serialize-javascript": "^2.1.1",
     "sinon": "^7.5.0",
     "smoothscroll-polyfill": "^0.4.4",
-    "styled-components": "beta",
+    "styled-components": "^5.0.0",
     "styled-theme": "^0.3.3",
     "styled-tools": "^1.7.1",
     "uglify-es": "^3.3.9",
@@ -194,6 +197,7 @@
     "webpack-merge-and-include-globally": "^2.1.20",
     "webpack-node-externals": "^1.7.2",
     "webpack-sort-chunks": "^0.2.0",
-    "webpack-spawn-plugin": "^0.3.0"
+    "webpack-spawn-plugin": "^0.3.0",
+    "yall-js": "^3.1.7"
   }
 }

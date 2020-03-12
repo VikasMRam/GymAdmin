@@ -109,10 +109,9 @@ function transformAgent(agent) {
   let leadCount = null;
   let isOnVacation = false;
   let an = null;
-  let email;
-  const { name: businessName, info={}, status } = agent;
+  const { name: businessName, info = {}, status } = agent;
 
-  const { slyScore, displayName, last5DayLeadCount, adminNotes, vacationStart, vacationEnd } = info;
+  const { email, slyScore, displayName, last24hrLeadCount, adminNotes, vacationStart, vacationEnd } = info;
   if (slyScore) {
     slyScoreValue = slyScore;
   }
@@ -120,13 +119,13 @@ function transformAgent(agent) {
     name = displayName;
   }
 
-  if (last5DayLeadCount !== undefined && last5DayLeadCount !== null) {
-    leadCount = last5DayLeadCount;
+  if (last24hrLeadCount !== undefined && last24hrLeadCount !== null) {
+    leadCount = last24hrLeadCount;
   }
   if (adminNotes) {
     an = adminNotes;
   }
-  ({ cellPhone, workPhone, email } = info);
+  ({ cellPhone, workPhone } = info);
 
   if (name === null) {
     name = agent.name || 'Agent Lead';
@@ -136,7 +135,7 @@ function transformAgent(agent) {
     const eDate = Date.parse(vacationEnd);
     const sDate = Date.parse(vacationStart);
     isOnVacation = (sDate < n) && (eDate > n);
-  } catch(e){
+  } catch (e) {
     isOnVacation = false;
   }
 

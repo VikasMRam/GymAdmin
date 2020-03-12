@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import { withHydration } from './services/partialHydration/index';
+import { withHydration } from './services/partialHydration';
 
 import AppTemplate from 'sly/components/templates/AppTemplate';
 import Router from 'sly/components/molecules/Router';

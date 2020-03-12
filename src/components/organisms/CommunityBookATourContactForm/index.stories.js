@@ -29,39 +29,31 @@ const userDetails = {
 storiesOf('Organisms|CommunityBookATourContactForm', module).add('default', () => (
   <CommunityBookATourContactFormContainer
     handleSubmit={withPreventDefault(action('form submitted'))}
-    onAdvisorHelpClick={action('onAdvisorHelpClick')}
     onMedicaidHelpClick={action('onMedicaidHelpClick')}
     user={user}
     heading="How can we contact you about this community tour?"
-    subheading="A local senior living advisor will help get you set up a tour with this community."
   />
 )).add('Guest User', () => (
   <CommunityBookATourContactFormContainer
     handleSubmit={withPreventDefault(action('form submitted'))}
-    onAdvisorHelpClick={action('onAdvisorHelpClick')}
     onMedicaidHelpClick={action('onMedicaidHelpClick')}
     onContactByTextMsgChange={action('onContactByTextMsgChange')}
     heading="Do you have any questions about this tour?"
-    subheading="A local senior living advisor will help get you set up a tour with this community."
   />
 )).add('Guest User with User Details', () => (
   <CommunityBookATourContactFormContainer
     handleSubmit={withPreventDefault(action('form submitted'))}
-    onAdvisorHelpClick={action('onAdvisorHelpClick')}
     onMedicaidHelpClick={action('onMedicaidHelpClick')}
     onContactByTextMsgChange={action('onContactByTextMsgChange')}
     heading="Do you have any questions about this tour?"
-    subheading="A local senior living advisor will help get you set up a tour with this community."
     userDetails={userDetails}
   />
 ))
   .add('Pricing Wizard', () => (
     <CommunityBookATourContactFormContainer
       handleSubmit={withPreventDefault(action('form submitted'))}
-      onAdvisorHelpClick={action('onAdvisorHelpClick')}
       onMedicaidHelpClick={action('onMedicaidHelpClick')}
       onContactByTextMsgChange={action('onContactByTextMsgChange')}
       heading="How can we contact you about your pricing?"
-      subheading="Your advisor will help get your custom pricing according to your care needs and room accomodations."
     />
   ));

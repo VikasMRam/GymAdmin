@@ -1,7 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { arrayOf, object, func, string } from 'prop-types';
 import dayjs from 'dayjs';
-import build from 'redux-object';
 import styled from 'styled-components';
 import { generatePath, withRouter } from 'react-router';
 import { connect } from 'react-redux';
@@ -26,6 +25,7 @@ import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE, CONVERSTION_MESSAGE_RESOURCE_TYP
 import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 import { newUuidAction } from 'sly/constants/payloads/uuidAction';
 import { CONVERSATION_MESSAGE_BUTTONLIST_BUTTON_CLICKED } from 'sly/services/newApi/constants';
+import { normJsonApi } from 'sly/services/helpers/jsonApi';
 import withWS from 'sly/services/ws/withWS';
 import textAlign from 'sly/components/helpers/textAlign';
 import fullHeight from 'sly/components/helpers/fullHeight';
@@ -116,7 +116,6 @@ const mapStateToProps = (state, { conversation, user }) => ({
 @prefetch('messages', 'getConversationMessages', (req, { conversationId }) => req({
   'filter[conversationID]': conversationId,
   sort: '-created_at',
-  'page-size': 1000, // todo: remove after api fix
 }))
 
 @prefetch('conversation', 'getConversation', (req, { conversationId }) => req({
@@ -161,32 +160,44 @@ export default class ConversationMessagesContainer extends Component {
 
   static defaultProps = {
     messages: [],
-  }
+  };
+
+  state = {
+    messages: [],
+    loadingMore: false,
+  };
 
   static getDerivedStateFromProps(props, state) {
     const { messages } = state;
-    if (!messages || (props.messages && props.messages.length !== messages.length)) {
+
+    if (!messages || !messages.length) {
       return {
         messages: props.messages,
+      };
+    }
+    if (props.messages && messages[0].id !== props.messages[0].id) {
+      const existingIds = messages.map(m => m.id);
+      const newMessages = props.messages.filter(m => !existingIds.includes(m.id));
+      return {
+        messages: [...newMessages, ...messages],
       };
     }
 
     return null;
   }
 
-  state = {
-    messages: null,
-    pageNumber: 0,
-    loadingMore: false,
-  };
-
   componentDidMount() {
     const { ws } = this.props;
 
-    ws.on(NOTIFY_MESSAGE_NEW, this.onMessage, { capture: true });
+    ws.pubsub.on(NOTIFY_MESSAGE_NEW, this.onMessage, { capture: true });
+    this.setHandlers();
   }
 
   componentDidUpdate() {
+    this.setHandlers();
+  }
+
+  setHandlers = () => {
     const { messages } = this.state;
 
     if (!this.timeoutInst) {
@@ -202,12 +213,12 @@ export default class ConversationMessagesContainer extends Component {
         this.messagesRef.current.scrollTop = this.messagesRef.current.scrollHeight;
       }
     }
-  }
+  };
 
   componentWillUnmount() {
     const { ws, invalidateConversationMessages } = this.props;
 
-    ws.off(NOTIFY_MESSAGE_NEW, this.onMessage);
+    ws.pubsub.off(NOTIFY_MESSAGE_NEW, this.onMessage);
     if (this.messagesRef.current) {
       this.messagesRef.current.removeEventListener('scroll', this.handleScroll);
     }
@@ -240,28 +251,13 @@ export default class ConversationMessagesContainer extends Component {
 
   // FIXME: query should normalize this
   onNewMessagesLoaded = (resp) => {
-    const { pageNumber } = this.state;
-    // TODO: utilize logic from helper.
-    let messages = [...this.state.messages];
-    const result = resp.body.data.reduce((acc, item) => {
-      if (!acc[item.type]) {
-        acc[item.type] = {};
-      }
-      acc[item.type][item.id] = item;
-      return acc;
-    }, {});
-    const ids = messages.map(({ id }) => id);
-    messages = resp.body.data.reduce((acc, elem) => {
-      if (!ids.includes(elem.id)) {
-        acc.push(build(result, elem.type, elem.id));
-      }
-      return acc;
-    }, messages);
+    const { messages } = this.state;
+    const normMessages = normJsonApi(resp);
+    const allMessages = [...messages, ...normMessages];
 
     this.setState({
-      messages,
+      messages: allMessages,
       loadingMore: false,
-      pageNumber: pageNumber + 1,
     });
   };
 
@@ -353,19 +349,20 @@ export default class ConversationMessagesContainer extends Component {
   handleScroll = () => {
     const { conversation, getConversationMessages } = this.props;
     if (conversation) {
-      const { messages, pageNumber } = this.state;
+      const { messages } = this.state;
       const { info, id } = conversation;
       const { messageCount } = info;
 
       this.wasScrollAtBottom = this.isScrollAtBottom();
       if (this.messagesRef.current && !this.messagesRef.current.scrollTop && messages && (messages.length < messageCount)) {
+        const lastMessage = messages[messages.length - 1];
         this.setState({
           loadingMore: true,
         });
         getConversationMessages({
           'filter[conversationID]': id,
           sort: '-created_at',
-          'page-number': pageNumber + 1,
+          'filter[created_at]': `le:${lastMessage.createdAt}`,
         }).then(this.onNewMessagesLoaded);
       }
       if (this.gotNewMessage && this.wasScrollAtBottom) {
@@ -492,14 +489,14 @@ export default class ConversationMessagesContainer extends Component {
     return (
       <ContainerWrapper className={className}>
         {headingBoxSection}
-        <MessagesWrapper innerRef={this.messagesRef}>
+        <MessagesWrapper ref={this.messagesRef}>
           {!messages.length && (
             <>
               <br />
               <FullHeightTextCenterBlock size="caption">No messages</FullHeightTextCenterBlock>
             </>
           )}
-          {messages && messages.length > 0 && (
+          {messages.length > 0 && (
             <>
               {viewingAsParticipantUnreadMessageCount > 0 &&
                 <Wrapper >

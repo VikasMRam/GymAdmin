@@ -1,15 +1,17 @@
 const JPG = 'jpg';
+const JJPG = 'JPG';
 const JPEG = 'jpeg';
 const WEBP = 'webp';
 const PNG = 'png';
 const GIF = 'gif';
 const SVG = 'svg';
 
-const extPriority = [JPG, JPEG, WEBP, PNG, GIF, SVG];
+const extPriority = [JPG, JJPG, JPEG, WEBP, PNG, GIF, SVG];
 
 const getContentType = (ext) => {
   switch (ext) {
     case JPG: return 'image/jpeg';
+    case JJPG: return 'image/jpeg';
     case JPEG: return 'image/jpeg';
     case PNG: return 'image/png';
     case GIF: return 'image/gif';
@@ -105,7 +107,7 @@ class ImageRequest {
     }
   }
 
-  async uploadEditedImage(buffer, headers) {
+  async uploadEditedImage(buffer, extraParams={}) {
     console.time('putting object');
     const key = this.parseDestImageKey(this.requestType);
 
@@ -115,8 +117,8 @@ class ImageRequest {
     const params = {
       Bucket: this.bucket,
       Key: key,
-      Metadata: headers,
       Body: buffer,
+      ...extraParams,
     };
 
     const request = s3.putObject(params).promise();
@@ -131,6 +133,8 @@ class ImageRequest {
       });
     } finally {
       console.timeEnd('putting object');
+      const { Body, ...extra } = params;
+      console.log('with params:', JSON.stringify(extra, null, 2));
     }
   }
 

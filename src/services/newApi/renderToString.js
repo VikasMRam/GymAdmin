@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderToString as reactRenderToString } from 'react-dom/server';
+import { renderToNodeStream } from 'react-dom/server';
 
 import { ApiContextProvider } from './context';
 
@@ -8,14 +8,28 @@ const renderPass = async (element) => {
     promises: [],
   };
 
-  const html = reactRenderToString((
-    <ApiContextProvider context={context}>
-      {element}
-    </ApiContextProvider>
-  ));
+  const html = await new Promise((resolve, reject) => {
+    const body = [];
+    const bodyStream = renderToNodeStream((
+      <ApiContextProvider context={context}>
+        {element}
+      </ApiContextProvider>
+    ));
+    bodyStream.on('data', (chunk) => {
+      body.push(chunk.toString());
+    });
+    bodyStream.on('error', (err) => {
+      reject(err);
+    });
+    bodyStream.on('end', () => {
+      resolve(body.join(''));
+    });
+  });
 
   // we don't mind the result, just completion
-  await Promise.all(context.promises.map(promise => promise.catch(() => {})));
+  const apiPromises = context.promises.map(promise => promise.catch(() => {}));
+
+  await Promise.all(apiPromises);
 
   return {
     promises: context.promises,

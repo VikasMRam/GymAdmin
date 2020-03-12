@@ -23,7 +23,7 @@ describe('DashboardAdminReferralAgentTile', () => {
     expect(wrapper.contains(AgentLinda.info.slyScore)).toBeTruthy();
     expect(wrapper.contains(AgentLinda.info.workPhone)).toBeTruthy();
     expect(wrapper.contains(AgentLinda.info.cellPhone)).toBeTruthy();
-    expect(wrapper.contains(AgentLinda.info.last5DayLeadCount)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.last24hrLeadCount)).toBeTruthy();
     expect(wrapper.contains(AGENT_STATUS_NAME_MAP[AgentLinda.status])).toBeTruthy();
   });
 
@@ -38,7 +38,7 @@ describe('DashboardAdminReferralAgentTile', () => {
     expect(wrapper.contains(AgentLinda.info.slyScore)).toBeFalsy();
     expect(wrapper.contains(AgentLinda.info.workPhone)).toBeFalsy();
     expect(wrapper.contains(AgentLinda.info.cellPhone)).toBeFalsy();
-    expect(wrapper.contains(AgentLinda.info.last5DayLeadCount)).toBeFalsy();
+    expect(wrapper.contains(AgentLinda.info.last24hrLeadCount)).toBeFalsy();
     expect(wrapper.contains(AGENT_STATUS_NAME_MAP[agentWithoutInfo.status])).toBeTruthy();
   });
 
@@ -50,7 +50,7 @@ describe('DashboardAdminReferralAgentTile', () => {
     expect(wrapper.contains(AgentLinda.info.slyScore)).toBeTruthy();
     expect(wrapper.contains(AgentLinda.info.workPhone)).toBeTruthy();
     expect(wrapper.contains(AgentLinda.info.cellPhone)).toBeTruthy();
-    expect(wrapper.contains(AgentLinda.info.last5DayLeadCount)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.last24hrLeadCount)).toBeTruthy();
     expect(wrapper.contains(AGENT_STATUS_NAME_MAP[newAgent.status])).toBeTruthy();
   });
 
@@ -60,7 +60,7 @@ describe('DashboardAdminReferralAgentTile', () => {
     expect(wrapper.contains(AgentLinda.info.slyScore)).toBeTruthy();
     expect(wrapper.contains(AgentLinda.info.workPhone)).toBeTruthy();
     expect(wrapper.contains(AgentLinda.info.cellPhone)).toBeTruthy();
-    expect(wrapper.contains(AgentLinda.info.last5DayLeadCount)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.last24hrLeadCount)).toBeTruthy();
     expect(wrapper.contains(AGENT_STATUS_NAME_MAP[AgentLinda.status])).toBeTruthy();
 
     expect(wrapper.find('IconBadge').find('[text="RECOMMENDED"]')).toHaveLength(2);
@@ -74,7 +74,7 @@ describe('DashboardAdminReferralAgentTile', () => {
     expect(wrapper.contains(AgentLinda.info.slyScore)).toBeTruthy();
     expect(wrapper.contains(AgentLinda.info.workPhone)).toBeTruthy();
     expect(wrapper.contains(AgentLinda.info.cellPhone)).toBeTruthy();
-    expect(wrapper.contains(AgentLinda.info.last5DayLeadCount)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.last24hrLeadCount)).toBeTruthy();
     expect(wrapper.contains(AGENT_STATUS_NAME_MAP[AgentLinda.status])).toBeTruthy();
 
     expect(wrapper.contains(referralSentAtString)).toBeTruthy();
@@ -87,7 +87,7 @@ describe('DashboardAdminReferralAgentTile', () => {
     expect(wrapper.contains(AgentLinda.info.slyScore)).toBeTruthy();
     expect(wrapper.contains(AgentLinda.info.workPhone)).toBeTruthy();
     expect(wrapper.contains(AgentLinda.info.cellPhone)).toBeTruthy();
-    expect(wrapper.contains(AgentLinda.info.last5DayLeadCount)).toBeTruthy();
+    expect(wrapper.contains(AgentLinda.info.last24hrLeadCount)).toBeTruthy();
     expect(wrapper.contains(AGENT_STATUS_NAME_MAP[AgentLinda.status])).toBeTruthy();
 
     expect(wrapper.find('Stage').find('[stage="New"]')).toHaveLength(1);

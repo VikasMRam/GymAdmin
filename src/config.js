@@ -25,6 +25,7 @@ const config = {
     eventServerUrl: 'http://localhost:8888/events/new',
     domain: process.env.DOMAIN,
     publicPath,
+    assetsUrl: process.env.ASSETS_URL,
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-NTC7HG2',
     rokoApiKey: 'OgRs7tffvTdiKOKqsDSwwLgyJF6wHYVxFAK+qQO4paU=',
@@ -36,6 +37,7 @@ const config = {
     loadAutoComplete: !process.env.OFFLINE_MODE,
     disableExperiments: process.env.DISABLE_EXPERIMENTS,
     enableExperimentsDebugger: process.env.ENABLE_EXPERIMENT_DEBUGGER,
+    tinyMCEApiKey: 'zalf4x4cr6354ko1klhtu90vmtbee1qw9r4j1qy1dpm3xabb',
   },
 
   test: {
@@ -45,6 +47,7 @@ const config = {
     domain: 'localhost',
     host: 'http://localhost',
     apiUrl: 'http://localhost/v0',
+    assetsUrl: 'http://localhost/assets',
   },
 
   development: {

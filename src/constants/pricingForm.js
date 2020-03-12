@@ -27,19 +27,25 @@ export const ROOMTYPE_OPTIONS = [
   // { label: "I'm not sure", value: 'i-am-not-sure' },
 ];
 
+export const MOVETIMELINE_OPTIONS = [
+  { label: 'Immediately', value: 'immediately' },
+  { label: '1 - 3 months', value: '1-3-months' },
+  { label: '3 - 6 months', value: '3-6-months' },
+  { label: "I'm not sure", value: 'i-am-not-sure' },
+];
+
 export const CARETYPE_OPTIONS = [
   { label: 'None', value: 'none' },
-  { label: 'Memory Care', value: 'memory-care' },
+  { label: 'Memory care', value: 'memory-care' },
   // { label: 'Palliative Care', value: 'palliative-care' },
-  // { label: 'Medication Management', value: 'medication-management' },
   // { label: 'Physical Therapy', value: 'physical-therapy' },
   // { label: 'Parkinsons Care', value: 'parkinsons-care' },
   // { label: 'Diabetes Care', value: 'diabetes-care' },
-  { label: 'Medication Management', value: 'medication-management' },
-  { label: 'Mobility Assistance', value: 'mobility-assistance' },
-  { label: 'Eating Assistance', value: 'eating-assistance' },
-  { label: 'Bathing Assistance', value: 'bathing-assistance' },
-  { label: 'Extra Supervision', value: 'extra-supervision' },
+  { label: 'Medication management', value: 'medication-management' },
+  { label: 'Mobility assistance', value: 'mobility-assistance' },
+  { label: 'Eating assistance', value: 'eating-assistance' },
+  { label: 'Bathing assistance', value: 'bathing-assistance' },
+  { label: 'Extra supervision', value: 'extra-supervision' },
   { label: 'Other', value: 'other' },
 ];
 
@@ -52,7 +58,7 @@ export const MEDICAID_OPTIONS = [
 export const WHAT_TO_NEXT_OPTIONS = [
   // { value: 'schedule-tour', label: 'Schedule a tour' },
   { value: 'talk-advisor', label: 'Talk to an advisor', type: 'submit' },
-  { value: 'explore-affordable-options', label: 'Explore more affordable options', type: 'submit' },
+  { value: 'explore-affordable-options', label: 'Explore more options', type: 'submit' },
 ];
 
 export const EXPLORE_AFFORDABLE_PRICING_OPTIONS = [

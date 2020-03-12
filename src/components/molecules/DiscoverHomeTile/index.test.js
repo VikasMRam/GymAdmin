@@ -20,7 +20,7 @@ describe('DiscoverHomeTile', () => {
     const wrapper = wrap({
       image, title, description, buttonText, onButtonClick,
     });
-    expect(wrapper.find('Image')).toHaveLength(1);
+    expect(wrapper.find('ResponsiveImage')).toHaveLength(1);
   });
 
   it('renders title', () => {

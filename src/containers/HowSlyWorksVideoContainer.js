@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string } from 'prop-types';
+import { string, bool } from 'prop-types';
 
 import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 import SlyEvent from 'sly/services/helpers/events';
@@ -17,6 +17,8 @@ export default class HowSlyWorksVideoContainer extends Component {
   static typeHydrationId = 'HowSlyWorksVideoContainer';
   static propTypes = {
     eventLabel: string,
+    className: string,
+    isPlaying: bool,
   };
 
   state = {
@@ -28,11 +30,12 @@ export default class HowSlyWorksVideoContainer extends Component {
   };
 
   render() {
-    const { eventLabel } = this.props;
+    const { eventLabel, className } = this.props;
     const { isPlaying } = this.state;
 
     return (
       <HowSlyWorksVideo
+        className={className}
         isPlaying={isPlaying}
         onThumbnailClick={this.toggleIsPlaying}
         onPause={e =>

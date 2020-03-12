@@ -1,0 +1,22 @@
+<svg viewBox="0 0 36 36" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <path d="M19.3819505,6 C18.0134862,6.38005814 12.4270392,8.64285585 11.5381169,9.47100991 C11.288308,9.70394179 7.46107855,19.2929344 6.00320464,21.4051389 C5.83183615,21.6928911 12.5851618,24.3535147 13.8395874,24.8720319 L13.8395874,42 L34.1604126,42 L34.1604126,24.8720319 C35.4148382,24.3535147 42.1681638,21.6928911 41.9967954,21.4051389 C40.5389214,19.2929344 36.711692,9.70394179 36.4618831,9.47100991 C35.5729608,8.64285585 29.9865138,6.38005814 28.6180495,6 C27.6148816,9.98476012 20.3844975,9.98237663 19.3819505,6 Z" id="path-4"></path>
+  </defs>
+  <g id="Hub-4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="Tablet4" transform="translate(-321.000000, -2246.000000)">
+      <g id="Group-34" transform="translate(44.000000, 2024.000000)">
+        <g id="Group-144" transform="translate(0.000000, 192.000000)">
+          <g id="icon-/-shirt" transform="translate(271.000000, 24.000000)">
+            <mask id="mask-24" fill="white">
+              <use xlink:href="#path-4"></use>
+            </mask>
+            <use id="Path4" fill="#000000" fill-rule="evenodd" xlink:href="#path-4"></use>
+            <g id="color-/-teal-/-base" mask="url(#mask-24)" fill="currentColor" fill-rule="nonzero">
+              <rect id="Rectangle" x="0" y="0" width="48" height="48"></rect>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
