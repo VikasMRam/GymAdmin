@@ -8,7 +8,8 @@ import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
 import Tip from 'sly/components/molecules/Tip';
-
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer'
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -76,20 +77,66 @@ const IndependentLivingNearMePage = ({
   const servicesRef = React.createRef();
   const ilvsalRef = React.createRef();
   const chooseRef = React.createRef();
+  const faqRef = React.createRef();
   const nextRef = React.createRef();
   const nearRef = React.createRef();
 
-  const sectionIdMap = {
-    il: 'what-is-independent-living',
-    cost: 'cost',
-    types:'types',
-    alternative:' alternative',
-    services: 'services',
-    ilvsal: 'il-vs-al',
-    choose: 'choosing-memory-care',
-    next: 'next-steps',
-    near: 'memory-care-near-you',
-  };
+  const tocList = [
+    {
+      title: "What Is Independent Living?",
+      id: "what-is-independent-livingwhat-is-assisted-living",
+      ref: ilRef
+    },
+    {
+      title: "The Cost of Independent Living",
+      id: "cost",
+      ref: costRef
+    },
+    {
+      title: "Types of Independent Living",
+      id: "types",
+      ref: typesRef
+    },
+    {
+      title: "Independent Living Alternatives",
+      id: "alternative",
+      ref: alternativeRef
+    },
+    {
+      title: "Services Provided in Independent Living",
+      id: "services",
+      ref: servicesRef
+    },
+    {
+      title: "Independent Living vs. Assisted Living",
+      id: "il-vs-al",
+      ref: ilvsalRef
+    },
+    {
+      title: "How to Choose the Right Independent Living Community",
+      id: "choosing-memory-care",
+      ref: chooseRef
+    },
+    {
+      title: "Independent Living FAQs",
+      id: "frequently-asked-question",
+      ref: faqRef
+
+    },
+    {
+      title: "Next Steps",
+      id: "next",
+      ref: nextRef
+
+    },
+    {
+      title: "Browse Independent Living Near You",
+      id: "near",
+      ref: nearRef
+
+    },
+
+  ];
 
   const nextSteps = [
     {title: "Evaluating Independent Living Communities", to:"https://www.seniorly.com/independent-living/articles/evaluating-independent-living-communities"},
@@ -126,69 +173,44 @@ const IndependentLivingNearMePage = ({
     },
   ];
 
+  const faqs = [
+    {
+      question: "How much is independent living?",
+      answer: "The cost of independent living is as varied as the types of communities available.  To begin, most independent living communities do require some kind of upfront fee to become a resident. If you're joining a CCRC, the fee can be sizable ($500,000 and up), because you're joining a system that involves medical services. In other types of independent living communities, the fee may be the equivalent of a security deposit on a new apartment. The fee is often larger or smaller depending on the types of amenities and services the independent living community offers and on the type of residential unit you're choosing. If you're buying a condo or other home within an independent living community, of course you'll be subject to the down payment and other closing fees involved with any real estate transaction, and a membership fee may also be required."
+    },
+    {
+      question: "What’s the difference between independent living and assisted living?",
+      answer: "Residents in an independent living community do receive some help that makes life a little easier, but these are generally confined to areas like maintenance, yard care and maybe housekeeping. Residents in assisted living facilities typically receive some assistance with the activities of daily living (ADLs), including medication management and often including meal preparation. Assisted living residents, however, usually don't need significant skilled medical care on a daily basis."
+    },
+    {
+      question: "How many independent living facilities are there in the U.S.?",
+      answer: "There are thousands of independent living facilities in the U.S. They range from large campuses to smaller, home-like settings. You can search Seniorly.com for the independent living communities near you."
+    },
+    {
+      question: "How old do you have to be for independent living?",
+      answer: "Most independent living communities have a minimum age requirement of 55.  These are known as age-restricted communities. As detailed above, there are many other types of independent living and their age requirements vary, but never go below 55."},
+    {
+      question: "Are pets allowed in an independent living community?",
+      answer: "Most independent living communities welcome pets, understanding how therapeutic they can be for older adults. Because some communities have restrictions on the type, breed, or size of pets allowed, make sure you ask about the policy if you want to bring a pet with you. Also ask about any deposits or fees required."},
+  ];
+
   const TableOfContents = () => {
     return (
       <>
-        <Heading level="subtitle" size="subtitle">
-          Table of Contents
-        </Heading>
-        <Paragraph>
+      <Heading level="subtitle" size="subtitle">
+        Table of Contents
+      </Heading>
+      <Paragraph>
+        {tocList.map(p => (
           <StyledLink
-            href={`#${sectionIdMap.il}`}
-            onClick={e => handleAnchor(e, ilRef)}
+            href={`#${p.id}`}
+            onClick={e => handleAnchor(e, p.ref)}
           >
-            What Is Independent Living?
+            {p.title}
           </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.cost}`}
-            onClick={e => handleAnchor(e, costRef)}
-          >
-            The Cost of Independent Living
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.types}`}
-            onClick={e => handleAnchor(e, typesRef)}
-          >
-            Types of Independent Living
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.alternative}`}
-            onClick={e => handleAnchor(e, alternativeRef)}
-          >
-            Independent Living Alternatives
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.services}`}
-            onClick={e => handleAnchor(e, servicesRef)}
-          >
-            Services Provided in Independent Living
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.ilvsal}`}
-            onClick={e => handleAnchor(e, ilvsalRef)}
-          >
-            Independent Living vs. Assisted Living
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.choose}`}
-            onClick={e => handleAnchor(e, chooseRef)}
-          >
-            How to Choose the Right Independent Living Community
-          </StyledLink>
+        ))}
 
-          <StyledLink
-            href={`#${sectionIdMap.next}`}
-            onClick={e => handleAnchor(e, nextRef)}
-          >
-            Next Steps
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.near}`}
-            onClick={e => handleAnchor(e, nearRef)}
-          >
-            Browse Independent Living Near You
-          </StyledLink>
-        </Paragraph>
+      </Paragraph>
       </>
     )
   };
@@ -232,7 +254,7 @@ const IndependentLivingNearMePage = ({
 
 
           <Link
-            href={`#${sectionIdMap.il}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, ilRef)}
           >
             Back to top
@@ -273,7 +295,7 @@ const IndependentLivingNearMePage = ({
           </Paragraph>
 
           <Link
-            href={`#${sectionIdMap.il}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, ilRef)}
           >
             Back to top
@@ -385,7 +407,7 @@ const IndependentLivingNearMePage = ({
           </Paragraph>
 
           <Link
-            href={`#${sectionIdMap.il}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, ilRef)}
           >
             Back to top
@@ -414,7 +436,7 @@ const IndependentLivingNearMePage = ({
             In{' '}
             <Link href="https://www.seniorly.com/resources/articles/what-is-cohousing">
               senior co-housing
-            </Link>{' '}, residents enjoy both private and common living space. Generally, a senior cohousing
+            </Link>, residents enjoy both private and common living space. Generally, a senior cohousing
             community features 20 to 40 homes centered around a central lawn or outdoor area. While everyone has
             personal living space, the entire community enjoys living space, dining space, a large kitchen,
             and shared laundry facilities.  Sometimes, co-housing senior communities cater to residents who
@@ -462,7 +484,7 @@ const IndependentLivingNearMePage = ({
 
 
           <Link
-            href={`#${sectionIdMap.il}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, ilRef)}
           >
             Back to top
@@ -552,7 +574,7 @@ const IndependentLivingNearMePage = ({
           </Paragraph>
 
           <Link
-            href={`#${sectionIdMap.il}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, ilRef)}
           >
             Back to top
@@ -689,7 +711,7 @@ const IndependentLivingNearMePage = ({
             </StyledArticle>
 
             <Link
-              href={`#${sectionIdMap.il}`}
+              href={`#${tocList[0].id}`}
               onClick={e => handleAnchor(e, ilRef)}
             >
               Back to top
@@ -720,38 +742,38 @@ const IndependentLivingNearMePage = ({
           <Paragraph>
             Here are some suggestions of questions you might want to ask during your visit, just to get you started.
           </Paragraph>
-          <ol>
-            <li>
+          <ListWrapper>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What social and recreational activities are offered? How many residents actually participate in the activities you're interested in?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What options are available if you need regular medical or personal care in your home? Are you allowed to bring in an in-home caregiver? Under what circumstances would you be asked to move to an Assisted Living community?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What's included in the monthly fee? Is the monthly fee increased every year? If not, when is it increased? What happens if a resident has difficulty paying the monthly fee?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What assistance will the Independent Living community provide to help you move and get settled there?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What's the security like at the community? What emergency services are available?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               Are any meals provided? If the answer is yes, how many meals are provided, and which ones? Are they included in the monthly fee? Are any accommodations available if you need to follow a restricted diet (gluten-free, vegetarian, kosher, etc.)?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               Are visitors allowed? What about overnight visitors? Are children allowed to visit? Is there a curfew for visitors (or for any other activities)?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               Does the community allow residents to have pets? Are there restrictions on the size or type of pets? Is it possible to make arrangements for pet care if you need to travel away from the community for any reason?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What transportation is available at the community? Does the community provide any kind of shuttles or private transportation for medical appointments, errands, or entertainment?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               Do residents of the Independent Living community get involved with the surrounding community? What's the relationship between the Independent Living community and the surrounding neighborhood like?
-            </li>
-          </ol>
+            </ListItem>
+          </ListWrapper>
 
           <Paragraph>
             <strong> FREE TOOL: </strong>{' '}
@@ -762,11 +784,34 @@ const IndependentLivingNearMePage = ({
 
 
           <Link
-            href={`#${sectionIdMap.il}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, ilRef)}
           >
             Back to top
           </Link>
+        </StyledArticle>
+
+        <StyledArticle>
+          <Heading level="title" size="title" _ref={faqRef} >
+            Independent Living FAQs
+          </Heading>
+          <Paragraph>
+            Below you will find a sampling of the 5 most frequently asked questions we get regarding independent living.  For a comprehensive list of independent living frequently asked questions, click through to our{' '}
+            <Link href="https://www.seniorly.com/independent-living/articles/seniorly-independent-living-faqs">
+              Independent Living FAQ section
+            </Link>.
+          </Paragraph>
+          {faqs.map(p => (
+            <>
+            <Heading level="subtitle" size="subtitle">
+              {p.question}
+            </Heading>
+            <Paragraph>
+              {p.answer}
+            </Paragraph>
+            </>
+
+          ))}
         </StyledArticle>
 
 
@@ -775,9 +820,21 @@ const IndependentLivingNearMePage = ({
                      toc="independent living"
                      label="By asking these questions, you can determine whether an Independent Living community is the right choice. We are providing additional Independent Living resources below to help you through the decision making process. Explore one of the three topics below to help narrow down your search:"
                      links={nextSteps} />
-
+          <Heading level="subtitle" size="subtitle" >
+            How Seniorly Works
+          </Heading>
+          <Paragraph>
+            <HowSlyWorksVideoContainer eventLabel='independent-living' />
+          </Paragraph>
+          <Heading level="subtitle" size="subtitle" >
+            Independent Living vs Assisted Living: Understand the Difference
+          </Heading>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/L3OJqWZcXFU" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+          <Paragraph>
+            Seniorly Co-founder and CEO, Arthur Bretschneider explains the differences of independent living vs assisted living.
+          </Paragraph>
           <Link
-            href={`#${sectionIdMap.il}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, ilRef)}
           >
             Back to top
@@ -796,6 +853,9 @@ const IndependentLivingNearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/independent-living", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/independent-living")}
       </Helmet>
       <HubHeader imagePath="react-assets/hub/independent-living-cover.jpg"
          toc="independent living"

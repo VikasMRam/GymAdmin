@@ -8,6 +8,8 @@ import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
 import ADLChart from 'sly/components/molecules/ADLChart';
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer'
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -71,6 +73,7 @@ const SeniorLivingNearMePage = ({
   const costRef = React.createRef();
   const chooseRef = React.createRef();
   const typesRef = React.createRef();
+  const faqRef = React.createRef();
   const nextRef = React.createRef();
   const nearRef = React.createRef();
 
@@ -79,9 +82,51 @@ const SeniorLivingNearMePage = ({
     cost: 'cost',
     choose: 'choosing-senior-living',
     typesil: 'types-of-senior-living',
+    faqs: 'frequently-asked-question',
     next: 'next-steps',
     near: 'senior-living-near-you',
   };
+
+  const tocList = [
+    {
+      title: "What is Senior Living?",
+      id: "what-is-senior-living",
+      ref: slRef
+    },
+    {
+      title: "How Much Does Senior Living Cost?",
+      id: "cost",
+      ref: costRef
+    },
+    {
+      title: "The Benefits of Choosing a Senior Living Community",
+      id: "choosing-senior-living",
+      ref: chooseRef
+    },
+    {
+      title: "Different Types of Senior Living",
+      id: "types-of-senior-living",
+      ref: typesRef
+    },
+    {
+      title: "Senior Living FAQs",
+      id: "frequently-asked-question",
+      ref: faqRef
+
+    },
+    {
+      title: "Next Steps",
+      id: "next-steps",
+      ref: nextRef
+
+    },
+    {
+      title: "How to Find the Best Senior Living Near Me",
+      id: "senior-living-near-you",
+      ref: nearRef
+
+    },
+  ];
 
   const nextSteps = [
     {title: "Independent Living", to:"https://www.seniorly.com/independent-living"},
@@ -119,52 +164,45 @@ const SeniorLivingNearMePage = ({
     },
   ];
 
+  const faqs = [
+    {
+      question: "How much does senior living cost?",
+      answer: "In 2019, the cost of senior living ranged from $4,051 for assisted living to $7,513 for a semi-private room at a skilled nursing facility. Other kinds of senior living options include independent living, memory care and even short-term respite care stays. Prices vary from based on care needs, room type, and geographic location."
+    },
+    {
+      question: "What is independent senior living?",
+      answer: "Independent senior living is for adults aged 55 and older who want to downsize, remove the burden of home maintenance, and instead live a leisurely life with like minded peers. Usually, there is no medical care available unless the property includes skilled nursing."},
+    {
+      question: "Does Medicare cover senior living?",
+      answer: "Medicare and Medicaid can be options for a stay in a skilled nursing facility.  That is the only senior living option that you can be assured will work those government programs. Once you start exploring independent living or assisted living, private pay becomes the way to pay.  If you’re a Veteran or the spouse of a Veteran, don’t forget to explore all of the Veteran’s Benefits available for senior living."
+    },
+    {
+      question: "How to pay for senior assisted living?",
+      answer: "Paying for senior assisted living is usually handled through private pay.  There are circumstances when a community might have a Medicare or Medicaid option, but this is few and far between. Long-term care insurance is a great investment early in life to help cover assisted living costs later in life. Finally, Veteran’s can often get assistance from the government if they are qualified."
+    },
+    {
+      question: "What is a senior living advisor?",
+      answer: "Senior living referral agents, sometimes also called elder care referral agents or senior placement agents (we call them Seniorly Partner Agents), can be a company with several employees or just one senior living expert. In either case, they have a wealth of valuable information about all the various senior housing options, care services, and types of senior living available to you and your loved ones in the local area you are searching."
+    },
+  ];
+
   const TableOfContents = () => {
     return (
       <>
-        <Heading level="subtitle" size="subtitle">
-          Table of Contents
-        </Heading>
-        <Paragraph>
+      <Heading level="subtitle" size="subtitle">
+        Table of Contents
+      </Heading>
+      <Paragraph>
+        {tocList.map(p => (
           <StyledLink
-            href={`#${sectionIdMap.sl}`}
-            onClick={e => handleAnchor(e, slRef)}
+            href={`#${p.id}`}
+            onClick={e => handleAnchor(e, p.ref)}
           >
-            What is Senior Living?
+            {p.title}
           </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.cost}`}
-            onClick={e => handleAnchor(e, costRef)}
-          >
-            How Much Does Senior Living Cost?
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.choose}`}
-            onClick={e => handleAnchor(e, chooseRef)}
-          >
-            The Benefits of Choosing a Senior Living Community
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.sltypes}`}
-            onClick={e => handleAnchor(e, sltypesRef)}
-          >
-            Different Types of Senior Living
-          </StyledLink>
+        ))}
 
-
-          <StyledLink
-            href={`#${sectionIdMap.next}`}
-            onClick={e => handleAnchor(e, nextRef)}
-          >
-            Next Steps
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.near}`}
-            onClick={e => handleAnchor(e, nearRef)}
-          >
-            How to Find the Best Senior Living Near Me
-          </StyledLink>
-        </Paragraph>
+      </Paragraph>
       </>
     )
   };
@@ -434,7 +472,7 @@ const SeniorLivingNearMePage = ({
           <Paragraph>
             To learn about all the assisted living communities in a specific city, let us connect you to a{' '}
             <Link href="https://www.seniorly.com/agents">
-              local senior living expert in that city.
+              Local Senior Living Expert in that city.
             </Link>
             {' '}These senior living advisors know all the communities and
             can share costs, availability, features and so much more at no cost to you. To connect to one of our
@@ -470,7 +508,7 @@ const SeniorLivingNearMePage = ({
             residents enjoy plenty of personal contact.
           </Paragraph>
           <Paragraph>
-            A local senior living expert in the city of your choice can share the details about all the
+            A Local Senior Living Expert in the city of your choice can share the details about all the
             memory care communities. They can set up tours and often help negotiate fees on your behalf.
             To connect to one of our approved senior living advisors, email us now at ask@seniorly.com or call (855) 866-4515.
           </Paragraph>
@@ -756,11 +794,43 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
+          <Heading level="title" size="title" _ref={faqRef} >
+            Senior Living FAQs
+          </Heading>
+          <Paragraph>
+            Below you will find a sampling of the 5 most frequently asked questions we get regarding senior living.
+          </Paragraph>
+          {faqs.map(p => (
+            <>
+            <Heading level="subtitle" size="subtitle">
+              {p.question}
+            </Heading>
+            <Paragraph>
+              {p.answer}
+            </Paragraph>
+            </>
+
+          ))}
+        </StyledArticle>
+
+        <StyledArticle>
           <NextSteps nextRef={nextRef}
                      toc="senior living"
                      label="Think a senior living community might be right for you or your loved one? Learn more about each type below to help narrow down your search:"
                      links={nextSteps} />
-
+          <Heading level="subtitle" size="subtitle" >
+            How Seniorly Works
+          </Heading>
+          <Paragraph>
+            <HowSlyWorksVideoContainer eventLabel='senior-living' />
+          </Paragraph>
+          <Heading level="subtitle" size="subtitle" >
+            How to Pay for Senior Living
+          </Heading>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/lW0zg6rZKdc" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+          <Paragraph>
+            Paying for senior care may seem stressful, but Lars Larson of Heritage Financial North shares advice on how to pay for assisted living.
+          </Paragraph>
           <Link
             href={`#${sectionIdMap.sl}`}
             onClick={e => handleAnchor(e, slRef)}
@@ -781,6 +851,9 @@ const SeniorLivingNearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/senior-living", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/senior-living")}
       </Helmet>
       <HubHeader imagePath="react-assets/hub/memory-care-cover.jpg"
          toc="senior living"

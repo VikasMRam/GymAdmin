@@ -7,6 +7,8 @@ import HubHeader from 'sly/components/molecules/HubHeader';
 import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer'
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -21,7 +23,7 @@ import {
   makeTable,
   makeOneColumnListWrapper,
 } from 'sly/components/templates/HubPageTemplate';
-import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image } from 'sly/components/atoms';
+import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import { getTocSeoLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
@@ -37,6 +39,10 @@ const StyledImage = styled(ResponsiveImage)`
   vertical-align:top;
   width: 100%;
   height: 100%;
+`;
+
+const StyledBox = styled(Box)`
+  text-align: center;
 `;
 
 
@@ -71,6 +77,7 @@ const MemoryCareNearMePage = ({
   const otherRef = React.createRef();
   const costRef = React.createRef();
   const touringRef = React.createRef();
+  const faqRef = React.createRef();
   const nextRef = React.createRef();
   const nearRef = React.createRef();
 
@@ -80,9 +87,57 @@ const MemoryCareNearMePage = ({
     other: 'bnc-vs-other',
     cost: 'cost',
     touring: 'touring-questions',
+    faqs: 'frequently-asked-question',
     next: 'next-steps',
     near: 'memory-care-near-you',
   };
+
+
+  const tocList = [
+    {
+      title: "What is a Board and Care Home Near You?",
+      id: "what-is-board-and-care",
+      ref: bncRef
+    },
+    {
+      title: "What Services are Provided at a Board and Care Home?",
+      id: "services",
+      ref: servicesRef
+    },
+    {
+      title: "How Much Does a Board and Care Home Cost?",
+      id: "cost",
+      ref: costRef
+    },
+    {
+      title: "Board and Care Homes vs. Other Types of Senior Living",
+      id: "other",
+      ref: otherRef
+    },
+    {
+      title:" What Questions to Ask When Touring",
+      id: "touring-questions",
+      ref: touringRef
+    },
+    {
+      title: "Board and Care Home FAQs",
+      id: "frequently-asked-question",
+      ref: faqRef
+
+    },
+    {
+      title: "Next Steps",
+      id: "next",
+      ref: nextRef
+
+    },
+    {
+      title: "Browse Board and Care Homes Near You",
+      id: "board-and-care-near-you",
+      ref: nearRef
+    },
+
+  ];
 
   const nextSteps = [
     {title: "Evaluating a Board and Care Home", to:"https://www.seniorly.com/resources/articles/evaluating-a-board-and-care-home"},
@@ -114,57 +169,46 @@ const MemoryCareNearMePage = ({
     },
   ];
 
+  const faqs = [
+    {
+      question: "Are board and care homes licensed?",
+      answer: "Not all states license board and care homes, which are sometimes also called residential care homes, residential personal care homes, or residential care facilities for the elderly. Check with your state's Department of Aging to understand whether licenses are required."
+    },
+    {
+      question: "What is a residential care home for elderly?",
+      answer: "The name \"board and care home\" is primarily used in California. In other states, this type of senior living can be called a residential care home or a residential personal care home or some variation of that.  Use your preferred online search engine to find the right term or ask one of our Seniorly Partner Agents in your region.  Or reach out to your state’s Department of Aging for details.  Regardless of the name, this type of senior housing is different from others because of its home-like, intimate setting."
+    },
+    {
+      question: "Does insurance pay for board and care?",
+      answer: "No, they do not. Low-income residents may be eligible for financial help from Medicaid or the Veterans Administration in some cases. While traditional health insurance doesn't cover the costs of a board and care home, long-term care insurance policies typically do cover them."
+    },
+    {
+      question: "Are pets allowed in board and care homes?",
+      answer: "Some board and care homes only accept cats, some accept cats or dogs, and some have a communal pet that all the residents can enjoy. If you or your loved one wants to bring a pet, make sure to ask who takes care of the pet and whether there's a surcharge."
+    },
+    {
+      question: "What is a care plan in a residential care home?",
+      answer: "In addition to their room and three meals a day, senior residents in a residential care home receive the customized help they need with the activities of daily living (ADLs), which include bathing, dressing and grooming, as well as help with medication management. Housekeeping services, linen and laundry are also provided. The goal is always to help senior residents maintain as much independence as possible. Some residential care homes also provide transportation to medical appointments, shopping and entertainment. Because these homes are small, they don't offer a great variety of planned activities.  However, many are known to welcome residents who all have something in common, like a shared passion for an activity or culture."
+    },
+  ];
+
   const TableOfContents = () => {
     return (
       <>
-        <Heading level="subtitle" size="subtitle">
-          Table of Contents
-        </Heading>
-        <Paragraph>
+      <Heading level="subtitle" size="subtitle">
+        Table of Contents
+      </Heading>
+      <Paragraph>
+        {tocList.map(p => (
           <StyledLink
-            href={`#${sectionIdMap.bnc}`}
-            onClick={e => handleAnchor(e, bncRef)}
+            href={`#${p.id}`}
+            onClick={e => handleAnchor(e, p.ref)}
           >
-            What is a Board and Care Home Near You?
+            {p.title}
           </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.services}`}
-            onClick={e => handleAnchor(e, servicesRef)}
-          >
-            What Services are Provided at a Board and Care Home?
-          </StyledLink>
-          <StyledLink
-          href={`#${sectionIdMap.cost}`}
-          onClick={e => handleAnchor(e, costRef)}
-        >
-          How Much Does a Board and Care Home Cost?
-        </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.other}`}
-            onClick={e => handleAnchor(e, otherRef)}
-          >
-            Board and Care Homes vs. Other Types of Senior Living
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.touring}`}
-            onClick={e => handleAnchor(e, touringRef)}
-          >
-            What Questions to Ask When Touring
-          </StyledLink>
+        ))}
 
-          <StyledLink
-            href={`#${sectionIdMap.next}`}
-            onClick={e => handleAnchor(e, nextRef)}
-          >
-            Next Steps
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.near}`}
-            onClick={e => handleAnchor(e, nearRef)}
-          >
-            Browse Board and Care Homes Near You
-          </StyledLink>
-        </Paragraph>
+      </Paragraph>
       </>
     )
   };
@@ -229,31 +273,62 @@ const MemoryCareNearMePage = ({
           </Paragraph>
           <ListWrapper>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Assistance with the Activities of Daily Living (ADLs). These activities may include bathing, dressing,
-              grooming, eating, and transferring, depending on the needs of the resident.
+              <div>
+                <strong>
+                  Assistance with the Activities of Daily Living (ADLs)
+                </strong>
+                . These activities may include bathing, dressing,
+                grooming, eating, and transferring, depending on the needs of the resident.
+              </div>.
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Medication Management. Many senior residents have complex medication regimens. Typically, the staff helps
-              with the storage and dispensing of medication, though in some states, non-certified staff are only allowed
-              to give residents reminders to take their medications.
+              <div>
+                <strong>
+                  Medication Management
+                </strong>
+                . Many senior residents have complex medication regimens. Typically, the staff helps
+                with the storage and dispensing of medication, though in some states, non-certified staff are only allowed
+                to give residents reminders to take their medications.
+              </div>
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Meals. Senior residents don't have to prepare their own meals. Most residential care homes are willing
-              and able to accommodate any special dietary needs you or your loved one might have.
-              They often plan menus based on the preferences of the residents.
+
+              <div>
+                <strong>
+                  Meals
+                </strong>
+                . Senior residents don't have to prepare their own meals. Most residential care homes are willing
+                and able to accommodate any special dietary needs you or your loved one might have.
+                They often plan menus based on the preferences of the residents.
+              </div>
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Activities. Board and care homes are far less likely to offer a wide menu of activities than other types
-              of senior living options. They may encourage residents to enjoy movies or games together, or they may
-              take residents to nearby senior centers for activities.
+              <div>
+                <strong>
+                  Activities
+                </strong>
+                . Board and care homes are far less likely to offer a wide menu of activities than other types
+                of senior living options. They may encourage residents to enjoy movies or games together, or they may
+                take residents to nearby senior centers for activities.
+              </div>
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Transportation. Board and care homes typically provide transportation to medical appointments.
-              They may also provide transportation for errands and group outings
+              <div>
+                <strong>
+                  Transportation
+                </strong>
+                . Board and care homes typically provide transportation to medical appointments.
+                They may also provide transportation for errands and group outings.
+              </div>
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Housekeeping. Included in the monthly cost for room and board is also housekeeping services.
-              These include cleaning of both the common areas and residents' private rooms and bathrooms.
+              <div>
+                <strong>
+                  Housekeeping
+                </strong>
+                . Included in the monthly cost for room and board is also housekeeping services.
+                These include cleaning of both the common areas and residents' private rooms and bathrooms.
+              </div>
             </ListItem>
           </ListWrapper>
           <Paragraph>
@@ -267,10 +342,16 @@ const MemoryCareNearMePage = ({
               Ayres Residential Care Homes, Westwood, CA
             </Link>
           </Paragraph>
-          <Paragraph>
-            If you are ready to search for a Board and Care Home near you, just enter your city or zip code in the search box below:
-          </Paragraph>
-          <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
+
+          <StyledBox backgroundPalette="primary" backgroundVariation="stroke">
+            <Heading level="subtitle" size="subtitle">
+              Find Board and Care Home near you
+            </Heading>
+            <Paragraph>
+              If you are ready to search for a Board and Care Home near you, just enter your city or zip code in the search box below:
+            </Paragraph>
+            <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
+          </StyledBox>
 
           <Link
             href={`#${sectionIdMap.bnc}`}
@@ -885,50 +966,51 @@ const MemoryCareNearMePage = ({
           <Paragraph>
             Here's a starter list of questions to ask at board and care homes to help you make a wise decision for yourself or your loved one:
           </Paragraph>
-          <ul>
-            <li>
+
+          <ListWrapper>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               How do you handle billing and payment? What happens if my loved one is unable to pay the fees any given month?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               Are your staff permitted to administer medications? Or can they only store them?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               How do you handle medical emergencies?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What happens if the care needs of a resident should change? Are additional services available, or does the resident need to look for a new place to live?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What happens if a resident is unhappy in the board and care home? Are any upfront fees refunded?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               How are residents' care needs assessed? Who participates in that assessment? Can family be part of any care plan decisions?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What happens if a resident is temporarily hospitalized?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               How long have your staff members worked at the board and care home? What does the home's owner do to retain them?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What training do the staff have? Is ongoing training required?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               Are there visiting hours for family and friends? Can family or friends spend the night?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What security measures are in place? How does the home handle residents with a tendency to wander?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               May residents bring their own furniture to the board and care home?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               Can the kitchen accommodate special dietary needs?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What would cause you to discharge a resident?
-            </li>
-          </ul>
+            </ListItem>
+          </ListWrapper>
           <Paragraph>
             In some states, board and care homes are licensed by the state. Take a few minutes to check with the
             licensing authority to see if there are any complaints or citations involving the home you're
@@ -944,13 +1026,48 @@ const MemoryCareNearMePage = ({
           </Link>
         </StyledArticle>
 
+        <StyledArticle>
+          <Heading level="title" size="title" _ref={faqRef} >
+            Board and Care Home FAQs
+          </Heading>
+          <Paragraph>
+            Below you will find a sampling of the 5 most frequently asked questions we get regarding board and care home.  For a comprehensive list of board and care home frequently asked questions, click through to our{' '}
+            <Link href="https://www.seniorly.com/resources/articles/seniorly-board-and-care-faqs">
+              Board and Care Home FAQ section.
+            </Link>.
+          </Paragraph>
+          {faqs.map(p => (
+            <>
+            <Heading level="subtitle" size="subtitle">
+              {p.question}
+            </Heading>
+            <Paragraph>
+              {p.answer}
+            </Paragraph>
+            </>
+
+          ))}
+        </StyledArticle>
+
 
         <StyledArticle>
           <NextSteps nextRef={nextRef}
                      toc="board and care homes"
                      label="By asking these questions, and others like them, you can determine whether this senior living option is the right choice for you or your loved one. We are providing additional resources below to help you through the decision-making process. Explore one of the three topics below to help narrow down your search:"
                      links={nextSteps} />
-
+          <Heading level="subtitle" size="subtitle" >
+            How Seniorly Works
+          </Heading>
+          <Paragraph>
+            <HowSlyWorksVideoContainer eventLabel='biard-and-care-home' />
+          </Paragraph>
+          <Heading level="subtitle" size="subtitle" >
+            3 Ways Lyft Helps Transportation Needs for Seniors
+          </Heading>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/w5xK791ppM8" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+          <Paragraph>
+            Mike Masserman of Lyft explains 3 great ways that Lyft helps transportation needs for seniors.
+          </Paragraph>
           <Link
             href={`#${sectionIdMap.mc}`}
             onClick={e => handleAnchor(e, mcRef)}
@@ -971,6 +1088,9 @@ const MemoryCareNearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/board-and-care-home", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/board-and-care-home")}
       </Helmet>
       <HubHeader imagePath="react-assets/hub/board-and-care-home-cover.jpg"
          toc="board and care home"

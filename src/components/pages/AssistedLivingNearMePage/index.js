@@ -8,6 +8,8 @@ import WhatIsPartnerAgent from 'sly/components/molecules/WhatIsPartnerAgent';
 import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
 import ADLChart from 'sly/components/molecules/ADLChart';
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer'
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -21,8 +23,8 @@ import {
   makeArticle,
   makeTable,
   makeTwoColumnListWrapper,
+  makeOneColumnListWrapper,
 } from 'sly/components/templates/HubPageTemplate';
-import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
@@ -64,6 +66,18 @@ const StyledImage = styled(ResponsiveImage)`
   height: 100%;
 `;
 
+const FullWidthDiv = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  padding: ${size('spacing.large')} 0;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.col8')};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('layout.col12')};
+  }
+`;
+
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
 const Column = makeColumn('aside');
@@ -72,6 +86,8 @@ const StickToTop = makeStickToTop('div');
 const StyledArticle = makeArticle('article');
 const StyledTable = makeTable('table');
 const ListWrapper = makeTwoColumnListWrapper('div');
+const ListWrapperOne = makeOneColumnListWrapper('div');
+
 
 const NearMePage = ({
   onLocationSearch,
@@ -96,18 +112,59 @@ const NearMePage = ({
   const costRef = React.createRef();
   const alvsnhRef = React.createRef();
   const alvsilRef = React.createRef();
+  const faqRef = React.createRef();
   const nextRef = React.createRef();
 
-  const sectionIdMap = {
-    al: 'what-is-assisted-living',
-    staff: 'medical-staff',
-    license: 'license',
-    social: 'social',
-    cost: 'cost',
-    alvsnh: 'al-vs-nh',
-    alvsil: 'al-vs-il',
-    next: 'next',
-  };
+  const tocList = [
+    {
+      title: "What is Assisted Living?",
+      id: "what-is-assisted-living",
+      ref: alRef
+    },
+    {
+      title: "What Does Assisted Living Cost Near You?",
+      id: "cost",
+      ref: costRef
+    },
+    {
+      title: "What Type of Medical Staff is Present?",
+      id: "medical-staff",
+      ref: staffRef
+    },
+    {
+      title: "Licensing and Inspection",
+      id: "license",
+      ref: licenseRef
+    },
+    {
+      title: "The Social and Community Aspects",
+      id: "social",
+      ref: socialRef
+    },
+    {
+      title: "Assisted Living vs. Skilled Nursing",
+      id: "al-vs-nh",
+      ref: alvsnhRef
+    },
+    {
+      title: "Assisted Living vs. Independent Living",
+      id: "al-vs-il",
+      ref: alvsilRef
+    },
+    {
+      title: "Assisted Living FAQs",
+      id: "frequently-asked-question",
+      ref: faqRef
+
+    },
+    {
+      title: "Next Steps",
+      id: "next",
+      ref: nextRef
+
+    },
+
+  ];
 
   const mapHtml = "<iframe src=\"https://createaclickablemap.com/map.php?&id=88362&maplocation=false&online=true\" width=\"680\" height=\"525\" style=\"border: none;\"></iframe>\n" +
     "<script>if (window.addEventListener){ window.addEventListener(\"message\", function(event) { if(event.data.length >= 22) { if( event.data.substr(0, 22) == \"__MM-LOCATION.REDIRECT\") location = event.data.substr(22); } }, false); } else if (window.attachEvent){ window.attachEvent(\"message\", function(event) { if( event.data.length >= 22) { if ( event.data.substr(0, 22) == \"__MM-LOCATION.REDIRECT\") location = event.data.substr(22); } }, false); } </script>\n"
@@ -200,64 +257,47 @@ const NearMePage = ({
     },
   ];
 
+  const faqs = [
+    {
+      question: "How much does assisted living cost?",
+      answer: "On average in the U.S., in 2019 assisted living cost $4,051 per month, though this price can vary greatly depending on location, amenities, daily activities, on-site medical care and more. The average number can reach as high as $6,960 in New York state., and as low as $2,881 in Missouri."
+    },
+    {
+      question: "How to pay for assisted living?",
+      answer: "Most communities are private pay. They will accept long-term care insurance, but you must check with your insurance policy first.  Also, many financial aid options exist, including Medicare, Medicaid, VA benefits, payment plans, low income services, etc.\n" +
+      "Talk to the community as they often have additional options to help your loved one afford to live in the community of their dreams."
+    },
+    {
+      question: "What is the difference between assisted living and a nursing home?",
+      answer: "Also called skilled nursing, a nursing home is a better option for seniors who need considerable, 24/7 daily care, or memory issues. Assisted living communities are best for those who are largely self-sufficient, active, and are looking to simplify their lifestyle, with a little extra help."
+    },
+    {
+      question: "What services are offered in assisted living?",
+      answer: "Though every community is different, services that are commonly offered at assisted living include transportation services, basic medical care, medication monitoring, day trips, structure exercise classes, religious services, and more."
+    },
+    {
+      question: "Are pets allowed in assisted living facilities?",
+      answer: "In many assisted living communities, residents are welcome to bring their pet with them. Check with each community to discuss their particular pet policies."
+    },
+  ];
 
   const TableOfContents = () => {
     return (
       <>
-        <Heading level="subtitle" size="subtitle">
-          Table of Contents
-        </Heading>
-        <Paragraph>
+      <Heading level="subtitle" size="subtitle">
+        Table of Contents
+      </Heading>
+      <Paragraph>
+        {tocList.map(p => (
           <StyledLink
-            href={`#${sectionIdMap.al}`}
-            onClick={e => handleAnchor(e, alRef)}
+            href={`#${p.id}`}
+            onClick={e => handleAnchor(e, p.ref)}
           >
-            What is Assisted Living?
+            {p.title}
           </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.cost}`}
-            onClick={e => handleAnchor(e, costRef)}
-          >
-            What Does Assisted Living Cost Near You?
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.staff}`}
-            onClick={e => handleAnchor(e, staffRef)}
-          >
-            What Type of Medical Staff is Present?
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.license}`}
-            onClick={e => handleAnchor(e, licenseRef)}
-          >
-            Licensing and Inspection
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.social}`}
-            onClick={e => handleAnchor(e, socialRef)}
-          >
-            The Social and Community Aspects
-          </StyledLink>
+        ))}
 
-          <StyledLink
-            href={`#${sectionIdMap.alvsnh}`}
-            onClick={e => handleAnchor(e, alvsnhRef)}
-          >
-            Assisted Living vs. Skilled Nursing
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.alvsil}`}
-            onClick={e => handleAnchor(e, alvsilRef)}
-          >
-            Assisted Living vs. Independent Living
-          </StyledLink>
-          <StyledLink
-            href={`#${sectionIdMap.next}`}
-            onClick={e => handleAnchor(e, nextRef)}
-          >
-            Next Steps
-          </StyledLink>
-        </Paragraph>
+      </Paragraph>
       </>
     )
   };
@@ -342,7 +382,7 @@ const NearMePage = ({
             will be on site, or just a short stroll (or wheelchair ride) away.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -363,7 +403,7 @@ const NearMePage = ({
             <StyledArticle><SeoLinks title="Please Click on Your State Below" links={alTable} /></StyledArticle>
           </TableWrapper>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -379,7 +419,7 @@ const NearMePage = ({
             <Link href="https://www.genworth.com/aging-and-you/finances/cost-of-care.html">
               Genworth
             </Link>
-            {' '}, the national median rate of assisted living facility per month for a 1-bedroom apartment is $4,051 per month. However, there are a few factors that go into this cost. For example, your location, as well as the personal care services needed.
+            , the national median rate of assisted living facility per month for a 1-bedroom apartment is $4,051 per month. However, there are a few factors that go into this cost. For example, your location, as well as the personal care services needed.
           </Paragraph>
           <Paragraph>
             That comes to about $48,612 a year. That may sound like a big number, but once you add up all current
@@ -394,7 +434,7 @@ const NearMePage = ({
             In general, assisted living communities fall under 3 pricing levels:
           </Paragraph>
           <TypesWrapper>
-            <ListItem icon="favourite-dark" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="favourite-fill" iconPalette="secondary" iconVariation="dark35">
               <Paragraph>
                 <strong>
                   Basic:{' '}
@@ -441,18 +481,19 @@ const NearMePage = ({
             If you’re still unsure if Assisted Living can realistically fit into your budget,
             look into the many financial aid options available.
           </Paragraph>
-          <ul>
-            <li>
-              <Paragraph>
+          <ListWrapperOne>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              <div>
                 <Link href="https://www.seniorly.com/resources/articles/long-term-care-insurance-for-respite-care">
                   Long Term Care Insurance
                 </Link>
                 {' '}- is an insurance product that helps pay for the costs associated with long-term care. Long-term care
                 insurance covers care generally not covered by health insurance, Medicare, or Medicaid.
-              </Paragraph>
-            </li>
-            <li>
-              <Paragraph>
+
+              </div>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              <div>
                 Government services like Medicare, Medicaid, or{' '}
                 <Link href="https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living">
                   Veterans Assistance
@@ -460,15 +501,12 @@ const NearMePage = ({
                 {' '}can be valuable tools in making
                 Assisted Living affordable. Many communities also offer special payment plans, programs, and other
                 strategies to help your loved one live in their ideal community.
-              </Paragraph>
-            </li>
-
-            <li>
-              <Paragraph>
-                Many communities also offer special payment plans, programs, and other strategies to help your loved one live in their ideal community.
-              </Paragraph>
-            </li>
-          </ul>
+              </div>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Many communities also offer special payment plans, programs, and other strategies to help your loved one live in their ideal community.
+            </ListItem>
+          </ListWrapperOne>
 
           <Paragraph>
             You can learn more about the different costs that go into assisted living. Read our resource on{' '}
@@ -477,7 +515,7 @@ const NearMePage = ({
             </Link>
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -512,7 +550,7 @@ const NearMePage = ({
             and fish to come along with their faithful owners.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -539,7 +577,7 @@ const NearMePage = ({
             </Link>
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -575,7 +613,7 @@ const NearMePage = ({
             spend time together assured of their safety and happiness.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -671,7 +709,7 @@ const NearMePage = ({
             just the right balance.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -762,21 +800,57 @@ const NearMePage = ({
             might be the ticket.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
           </Link>
         </StyledArticle>
+        <StyledArticle>
+          <Heading level="title" size="title" _ref={faqRef} >
+            Assisted Living FAQs
+          </Heading>
+          <Paragraph>
+            Below you will find a sampling of the 5 most frequently asked questions we get regarding assisted living.
+            For a comprehensive list of assisted living frequently asked questions, click through to our{' '}
+            <Link href="https://www.seniorly.com/resources/articles/seniorly-assisted-living-faqs">
+              Assisted Living FAQ section
+            </Link>.
+          </Paragraph>
+          {faqs.map(p => (
+            <>
+            <Heading level="subtitle" size="subtitle">
+              {p.question}
+            </Heading>
+            <Paragraph>
+              {p.answer}
+            </Paragraph>
+            </>
+
+          ))}
+        </StyledArticle>
+
 
         <StyledArticle>
           <NextSteps nextRef={nextRef}
                      toc="assisted living"
                      label="Think Assisted Living might be right for your loved one? Explore one of the three topics below to help narrow down your search:"
                      links={ALNextSteps} />
-
+          <Heading level="subtitle" size="subtitle" >
+            How Seniorly Works
+          </Heading>
+          <Paragraph>
+            <HowSlyWorksVideoContainer eventLabel='assisted-living' />
+          </Paragraph>
+          <Heading level="subtitle" size="subtitle" >
+            Top 5 Social Benefits of Assisted Living
+          </Heading>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/Um8D9IaiR5g" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+          <Paragraph>
+            Seniorly proudly presents our very own, Marlena Del Hierro! She shares the top 5 social benefits of assisted living
+          </Paragraph>
           <Link
-            href={`#${sectionIdMap.al}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, alRef)}
           >
             Back to top
@@ -795,6 +869,10 @@ const NearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/assisted-living", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/assisted-living")}
+
       </Helmet>
       <HubHeader imagePath="react-assets/hub/assisted-living-cover.jpg"
          toc="assisted living"
@@ -811,36 +889,28 @@ const NearMePage = ({
               </StickToTop>
             </Column>
             <Body>
-            {SEOContentAL()}
-            <Heading level="title" size="title">
-              {heading}
-            </Heading>
-            <StyledArticle>
-              <Paragraph>
-                Seniorly promises to make your search for assisted living near you easy and stress-free. In 2019, the
-                national average monthly cost has been $4,051 for an assisted living facility. Below, compare assisted
-                living communities near you and then let us connect you to your local senior living advisor.
-                They can answer all your questions, share costs, arrange tours, and even negotiate rent. Our services are free.
-              </Paragraph>
-            </StyledArticle>
-            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-            {!isFetchingResults && (
-              <CommunitySearchList
-                communityList={communityList}
-                searchParams={searchParams}
-                requestMeta={requestMeta}
-                location={location}
-              />
-            )}
+              {SEOContentAL()}
+              <Heading level="title" size="title">
+                {heading}
+              </Heading>
+              {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
+              {!isFetchingResults && (
+                <CommunitySearchList
+                  communityList={communityList}
+                  searchParams={searchParams}
+                  requestMeta={requestMeta}
+                  location={location}
+                />
+              )}
             </Body>
           </TwoColumn>
         </Wrapper>
       </HubPageTemplate>
       <PhoneCTAFooter/>
-      <TemplateContent>
+      <FullWidthDiv>
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by City" links={ALSeoCities} /></StyledArticle>
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>
-      </TemplateContent>
+      </FullWidthDiv>
       <Footer />
     </>
 

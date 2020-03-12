@@ -19,6 +19,11 @@ const pricesList = [
 storiesOf('Organisms|CommunityPricingTable', module)
   .add('default', () => (
     <Box>
-      <CommunityPricingTable pricesList={pricesList} />
+      <CommunityPricingTable pricesList={pricesList} price={3000} />
+    </Box>
+  ))
+  .add('with estimatedPriceList', () => (
+    <Box>
+      <CommunityPricingTable pricesList={[]} estimatedPriceList={pricesList} price={3000} />
     </Box>
   ));

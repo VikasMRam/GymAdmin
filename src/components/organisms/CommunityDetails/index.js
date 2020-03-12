@@ -111,7 +111,7 @@ const CommunityDetails = ({
         <Paragraph>
           Seniorly is not affiliated with the owner or operator(s) of {communityName}.
           The information above has not been verified or approved by the owner or operator.
-          For exact details, connect to a local senior living expert in {city} by calling&nbsp;
+          For exact details, connect to a Local Senior Living Expert in {city} by calling&nbsp;
           <Link href={`tel:${phone}`}>
             {phoneFormatter(phone, true)}
           </Link>
@@ -120,7 +120,7 @@ const CommunityDetails = ({
       </StyledArticle>
       <StyledArticle>
         <StyledHeading level="subtitle" size="subtitle">
-          What is a local senior living expert in {city}, {state}?
+          What is a Local Senior Living Expert in {city}, {state}?
         </StyledHeading>
         <Paragraph>
           A senior living expert is a professional who knows
