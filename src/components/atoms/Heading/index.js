@@ -22,7 +22,7 @@ const getTag = (level) => {
   }
 };
 
-const getMarginBottom = p => {
+const getMarginBottom = (p) => {
   switch (p.size) {
     case 'hero': return '2.000rem';
     case 'title': return '1.500rem';
