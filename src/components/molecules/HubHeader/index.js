@@ -7,7 +7,7 @@ import HeaderContainer from 'sly/containers/HeaderContainer';
 import { ResponsiveImage, Label, Heading, Link } from 'sly/components/atoms';
 import IconItem from 'sly/components/molecules/IconItem';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
-
+import BannerNotification from 'sly/components/molecules/BannerNotification';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -121,6 +121,11 @@ const HubHeader = ({
 }) => (
   <>
     <HeaderContainer />
+    <BannerNotification palette="warning">
+      <Link href="https://www.seniorly.com/resources/articles/coronavirus-and-seniors-a-message-from-our-ceo-co-founder-arthur-bretschneider" _target="blank">
+        Coronavirus & Seniors: A Message from Arthur Bretschneider, CEO & Co-founder: Click Here.
+      </Link>
+    </BannerNotification>
     <HeroWrapper>
       <ImageWrapper>
         <StyledImage path={imagePath} alt={heading} height={320} />
