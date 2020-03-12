@@ -124,10 +124,13 @@ const StyledGetPricingButton = styled(GetCustomPricingButtonContainer)`
 const CommunityPricingTable = ({
   pricesList, estimatedPriceList, price, isAlreadyPricingRequested, name, size: communitySize, showToolTip,
 }) => {
-  const basePer = percentageOf(price, 20);
   const from = Math.round(price);
-  const to = Math.round(price + basePer);
+  let to;
   const estimated = pricesList.length === 0;
+  if (estimated && estimatedPriceList.length) {
+    // do concat to create a copy so that order of original array is not changed
+    to = estimatedPriceList.concat().sort((a, b) => b.value - a.value)[0].value;
+  }
 
   return (
     <>
