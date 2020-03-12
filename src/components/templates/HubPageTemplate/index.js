@@ -97,12 +97,6 @@ export const HubPageTemplate = styled.main`
   
   .overlayArticle {
     margin-bottom: ${size('spacing.xLarge')};
-    &:last-of-type {
-      margin-bottom: 0;
-      p {
-        margin-bottom: ${size('spacing.regular')};
-      }
-    }
   }
   
   .overlayTable {

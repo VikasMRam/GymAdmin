@@ -379,7 +379,7 @@ const NearMePage = ({
             How to Choose a Skilled Nursing Facility Near Me
           </Heading>
           <Paragraph>
-            You may be wondering “is skilled nursing near me?” or “how do I find the best skilled nursing facilities near me”?
+            You may be wondering “is skilled nursing near me?” or “how do I find the best skilled nursing facilities near me?”
             Fortunately, high-quality skilled nursing communities can be found all over the country, and they
             never shy away from answering questions. To get you started, here are some basic questions
             you can ask prospective skilled nursing providers.
