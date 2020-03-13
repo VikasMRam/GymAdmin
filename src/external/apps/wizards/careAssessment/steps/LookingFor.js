@@ -25,6 +25,7 @@ const LookingFor = () => (
       options={LOOKING_FOR_OPTIONS}
       name={STEP_INPUT_FIELD_NAMES.LookingFor[0]}
       type="boxChoice"
+      align="left"
       component={ReduxField}
     />
   </>

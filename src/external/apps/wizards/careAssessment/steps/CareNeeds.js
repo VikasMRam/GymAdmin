@@ -32,6 +32,7 @@ const CareNeeds = () => (
       options={CARE_NEEDS_OPTIONS}
       name={STEP_INPUT_FIELD_NAMES.CareNeeds[0]}
       type="boxChoice"
+      align="left"
       component={ReduxField}
     />
   </>
