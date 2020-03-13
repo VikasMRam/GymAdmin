@@ -8,6 +8,7 @@ import { Heading, BoxChoiceTile } from 'sly/components/atoms';
 
 const StyledBoxChoiceTile = styled(BoxChoiceTile)`
   height: ${size('element.huge')};
+  flex-direction: column;
 `;
 
 const StyledHeading = styled(Heading)`

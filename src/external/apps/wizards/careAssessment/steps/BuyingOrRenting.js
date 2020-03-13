@@ -25,6 +25,7 @@ const BuyingOrRenting = () => (
       options={BUYING_OR_RENTING_OPTIONS}
       name={STEP_INPUT_FIELD_NAMES.BuyingOrRenting[0]}
       type="boxChoice"
+      align="left"
       component={ReduxField}
     />
   </>
