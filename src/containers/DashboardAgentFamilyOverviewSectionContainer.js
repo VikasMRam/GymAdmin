@@ -8,6 +8,7 @@ import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAp
 import DashboardAgentFamilyOverviewSection from 'sly/components/organisms/DashboardAgentFamilyOverviewSection';
 import ModalController from 'sly/controllers/ModalController';
 import NotificationController from 'sly/controllers/NotificationController';
+import { withDatatable } from 'sly/services/datatable';
 
 const getPaginationData = ({ result, meta }) => {
   if (!result) return {};
@@ -41,7 +42,7 @@ const getPaginationData = ({ result, meta }) => {
 };
 
 @withRouter
-
+@withDatatable('clients')
 @prefetch('clients', 'getClients', (req, { datatable }) => req(datatable.query))
 
 export default class DashboardAgentFamilyOverviewSectionContainer extends Component {

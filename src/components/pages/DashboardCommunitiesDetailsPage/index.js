@@ -11,7 +11,7 @@ import {
   MESSAGES,
   TASKS,
   PROFILE,
-  CARE_SERVICES, PRICING, AMENITIES, SERVICES, CONTRACT, CONTACTS, PHOTOS,
+  CARE_SERVICES, PRICING, AMENITIES, SERVICES, CONTRACT, CONTACTS, PHOTOS, CLIENTS,
 } from 'sly/constants/dashboardAppPaths';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import communityPropType from 'sly/propTypes/community';
@@ -49,6 +49,7 @@ import DashboardCommunityPhotosFormContainer from 'sly/containers/DashboardCommu
 import DashboardCommunityAmenitiesFormContainer from 'sly/containers/DashboardCommunityAmenitiesFormContainer';
 import DashboardCommunityContractFormContainer from 'sly/containers/DashboardCommunityContractFormContainer';
 import DashboardContactsSectionContainer from 'sly/containers/dashboard/DashboardContactsSectionContainer';
+import DashboardAgentFamilyOverviewSectionContainer from 'sly/containers/DashboardAgentFamilyOverviewSectionContainer';
 import { PROPERTY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 
 const BackLinkWrapper = pad(styled.div`
@@ -105,6 +106,7 @@ export default class DashboardCommunitiesDetailsPage extends Component {
       Services: SERVICES,
       Contacts: CONTACTS,
       Contract: CONTRACT,
+      Clients: CLIENTS,
       // ...
     };
 
@@ -171,6 +173,10 @@ export default class DashboardCommunitiesDetailsPage extends Component {
     const sectionFilters = {
       include: 'entities',
       'filter[community-id]': community.id,
+    };
+
+    const clientsSectionFilters = {
+      'filter[community]': community.id,
     };
 
     return (
@@ -266,6 +272,13 @@ export default class DashboardCommunitiesDetailsPage extends Component {
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
+              />
+            </Section>
+          )}
+          {currentTab === CLIENTS && (
+            <Section>
+              <DashboardAgentFamilyOverviewSectionContainer
+                sectionFilters={clientsSectionFilters}
               />
             </Section>
           )}
