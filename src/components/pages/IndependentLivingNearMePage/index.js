@@ -9,6 +9,7 @@ import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/components/molecules/NextSteps';
 import Tip from 'sly/components/molecules/Tip';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer'
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -435,7 +436,7 @@ const IndependentLivingNearMePage = ({
             In{' '}
             <Link href="https://www.seniorly.com/resources/articles/what-is-cohousing">
               senior co-housing
-            </Link>{' '}, residents enjoy both private and common living space. Generally, a senior cohousing
+            </Link>, residents enjoy both private and common living space. Generally, a senior cohousing
             community features 20 to 40 homes centered around a central lawn or outdoor area. While everyone has
             personal living space, the entire community enjoys living space, dining space, a large kitchen,
             and shared laundry facilities.  Sometimes, co-housing senior communities cater to residents who
@@ -741,38 +742,38 @@ const IndependentLivingNearMePage = ({
           <Paragraph>
             Here are some suggestions of questions you might want to ask during your visit, just to get you started.
           </Paragraph>
-          <ol>
-            <li>
+          <ListWrapper>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What social and recreational activities are offered? How many residents actually participate in the activities you're interested in?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What options are available if you need regular medical or personal care in your home? Are you allowed to bring in an in-home caregiver? Under what circumstances would you be asked to move to an Assisted Living community?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What's included in the monthly fee? Is the monthly fee increased every year? If not, when is it increased? What happens if a resident has difficulty paying the monthly fee?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What assistance will the Independent Living community provide to help you move and get settled there?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What's the security like at the community? What emergency services are available?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               Are any meals provided? If the answer is yes, how many meals are provided, and which ones? Are they included in the monthly fee? Are any accommodations available if you need to follow a restricted diet (gluten-free, vegetarian, kosher, etc.)?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               Are visitors allowed? What about overnight visitors? Are children allowed to visit? Is there a curfew for visitors (or for any other activities)?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               Does the community allow residents to have pets? Are there restrictions on the size or type of pets? Is it possible to make arrangements for pet care if you need to travel away from the community for any reason?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               What transportation is available at the community? Does the community provide any kind of shuttles or private transportation for medical appointments, errands, or entertainment?
-            </li>
-            <li>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               Do residents of the Independent Living community get involved with the surrounding community? What's the relationship between the Independent Living community and the surrounding neighborhood like?
-            </li>
-          </ol>
+            </ListItem>
+          </ListWrapper>
 
           <Paragraph>
             <strong> FREE TOOL: </strong>{' '}
@@ -819,7 +820,19 @@ const IndependentLivingNearMePage = ({
                      toc="independent living"
                      label="By asking these questions, you can determine whether an Independent Living community is the right choice. We are providing additional Independent Living resources below to help you through the decision making process. Explore one of the three topics below to help narrow down your search:"
                      links={nextSteps} />
-
+          <Heading level="subtitle" size="subtitle" >
+            How Seniorly Works
+          </Heading>
+          <Paragraph>
+            <HowSlyWorksVideoContainer eventLabel='independent-living' />
+          </Paragraph>
+          <Heading level="subtitle" size="subtitle" >
+            Independent Living vs Assisted Living: Understand the Difference
+          </Heading>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/L3OJqWZcXFU" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+          <Paragraph>
+            Seniorly Co-founder and CEO, Arthur Bretschneider explains the differences of independent living vs assisted living.
+          </Paragraph>
           <Link
             href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, ilRef)}

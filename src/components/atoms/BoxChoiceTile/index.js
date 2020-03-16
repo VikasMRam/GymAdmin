@@ -1,33 +1,40 @@
 import React from 'react';
-import { node, string, bool, func } from 'prop-types';
+import { node, string, bool, func, oneOf } from 'prop-types';
 import styled from 'styled-components';
-import { ifProp } from 'styled-tools';
+import { ifProp, prop } from 'styled-tools';
 
-import { palette } from 'sly/components/themes';
+import { palette, size } from 'sly/components/themes';
+import { spacing as spacingPropType } from 'sly/propTypes/spacing';
 import Box from 'sly/components/atoms/Box';
+import Icon from 'sly/components/atoms/Icon';
 
 const StyledBox = styled(Box)`
   text-align: center;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  border-color: ${ifProp('highlighted', palette('base'), palette('stroke'))}};
-  background: ${ifProp('highlighted', palette('grey', 'stroke'), 'none')};
+  justify-content: ${prop('align')};
+  border-color: ${ifProp('highlighted', palette('secondary', 'dark35'), palette('stroke'))}};
+`;
+
+const StyledIcon = styled(Icon)`
+  margin-right: ${size('spacing.regular')};
 `;
 
 const BoxChoiceTile = ({
-  label, children, selected, onClick, ...props
+  label, children, selected, onClick, hasCheckbox, padding, ...props
 }) => (
   <StyledBox
     {...props}
-    padding="regular"
+    padding={padding}
+    size="caption"
     border={selected ? 'large' : 'regular'}
     palette={selected ? 'primary' : 'slate'}
     highlighted={selected}
     onClick={onClick}
   >
+    {!selected && hasCheckbox && <StyledIcon icon="checkbox-empty" palette="grey" variation="filler" />}
+    {selected && hasCheckbox && <StyledIcon icon="checkbox" palette="secondary" variation="dark35" />}
     {children || label}
   </StyledBox>
 );
@@ -37,6 +44,14 @@ BoxChoiceTile.propTypes = {
   children: node,
   selected: bool,
   onClick: func,
+  hasCheckbox: bool,
+  padding: spacingPropType,
+  align: oneOf(['center', 'left']),
+};
+
+BoxChoiceTile.defaultProps = {
+  padding: 'large',
+  align: 'center',
 };
 
 export default BoxChoiceTile;

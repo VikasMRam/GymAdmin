@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   padding: ${size('spacing.xLarge')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.small')};
-  margin-bottom:${size('spacing.regular')};
+  margin-bottom:${size('spacing.large')};
 `;
 
 const IconWrapper = styled.div`

@@ -10,6 +10,7 @@ import NextSteps from 'sly/components/molecules/NextSteps';
 import ADLChart from 'sly/components/molecules/ADLChart';
 import Tip from 'sly/components/molecules/Tip';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
+import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer'
 
 import { getStateAbbr } from 'sly/services/helpers/url';
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -41,6 +42,10 @@ const StyledImage = styled(ResponsiveImage)`
   vertical-align:top;
   width: 100%;
   height: 100%;
+`;
+
+const StyledBox = styled(Box)`
+  text-align: center;
 `;
 
 
@@ -320,17 +325,6 @@ const MemoryCareNearMePage = ({
             </tr>
             <tr>
               <td>
-                Moderately Severe
-              </td>
-              <td>
-                Significant memory deficiencies, including memory loss about current details like address or date.
-              </td>
-              <td>
-                2 years
-              </td>
-            </tr>
-            <tr>
-              <td>
                 Severe
               </td>
               <td>
@@ -379,12 +373,15 @@ const MemoryCareNearMePage = ({
               Courtyard Terrace Memory Care, Sacramento, CA
             </Link>
           </Paragraph>
-          <Paragraph>
-            If you are ready to search for Memory Care near you, just enter your city or zip code in the
-            search box below:
-          </Paragraph>
-          <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
-
+          <StyledBox backgroundPalette="primary" backgroundVariation="stroke">
+            <Heading level="subtitle" size="subtitle">
+              Find Memory Care near you
+            </Heading>
+            <Paragraph>
+              If you are ready to search for a Memory Care near you, just enter your city or zip code in the search box below:
+            </Paragraph>
+            <SearchBoxContainer onCurrentLocation={onCurrentLocation} layout="homeHero" onLocationSearch={onLocationSearch} />
+          </StyledBox>
           <Link
             href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, mcRef)}
@@ -514,7 +511,7 @@ const MemoryCareNearMePage = ({
           </Paragraph>
           <Tip>
             FREE RESOURCE: “
-            <Link href="https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living">
+            <Link href="https://www.seniorly.com/resources/articles/board-and-care-homes-the-x-factor-for-dementia-care">
               The X Factor of Dementia Care
             </Link>
             ” by{' '}
@@ -883,7 +880,19 @@ const MemoryCareNearMePage = ({
                      toc="memory care"
                      label="Think Memory Care might be right for your loved one? Explore one of the three topics below to help narrow down your search:"
                      links={nextSteps} />
-
+          <Heading level="subtitle" size="subtitle" >
+            How Seniorly Works
+          </Heading>
+          <Paragraph>
+            <HowSlyWorksVideoContainer eventLabel='memory-care' />
+          </Paragraph>
+          <Heading level="subtitle" size="subtitle" >
+            Helping Seniors Living with Alzheimer's and Dementia
+          </Heading>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/T-oRBofTR2I" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+          <Paragraph>
+            Alexandra Morris and Dr. Elizabeth Edgerly from Alzheimer's Association explain some of the services they offer for seniors living with Alzheimer's disease and dementia-related illnesses.
+          </Paragraph>
           <Link
             href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, mcRef)}

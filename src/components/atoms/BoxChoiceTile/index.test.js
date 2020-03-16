@@ -12,19 +12,35 @@ const wrapChildren = (props = {}) =>
 describe('BoxChoiceTile', () => {
   it('renders', () => {
     const wrapper = wrap({ label });
-    expect(wrapper.contains(label)).toBe(true);
+    expect(wrapper.contains(label)).toBeTruthy();
   });
 
   it('renders with children', () => {
     const wrapper = wrapChildren({ label });
-    expect(wrapper.contains(label)).toBe(true);
+    expect(wrapper.contains(label)).toBeTruthy();
   });
 
   it('renders with selected', () => {
     const wrapper = wrap({
       label, selected: true,
     });
-    expect(wrapper.contains(label)).toBe(true);
+    expect(wrapper.contains(label)).toBeTruthy();
+  });
+
+  it('renders with hasCheckbox', () => {
+    const wrapper = wrap({
+      label, hasCheckbox: true,
+    });
+    expect(wrapper.contains(label)).toBeTruthy();
+    expect(wrapper.find('StyledIcon').filter({ icon: 'checkbox-empty' })).toHaveLength(1);
+  });
+
+  it('renders with hasCheckbox and selected', () => {
+    const wrapper = wrap({
+      label, hasCheckbox: true, selected: true,
+    });
+    expect(wrapper.contains(label)).toBeTruthy();
+    expect(wrapper.find('StyledIcon').filter({ icon: 'checkbox' })).toHaveLength(1);
   });
 
   it('onClick is called', () => {
