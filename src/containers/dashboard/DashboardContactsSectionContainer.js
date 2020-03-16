@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { arrayOf, object, func, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { prefetch, withUser } from 'sly/services/newApi';
+import { prefetch, withUser, query } from 'sly/services/newApi';
 import contactPropType from 'sly/propTypes/contact';
 import DashboardAgentContactsSection from 'sly/components/organisms/DashboardAgentContactsSection';
 import { withRedirectTo } from 'sly/services/redirectTo';
 import { withDatatable } from 'sly/services/datatable';
+import withModal from 'sly/controllers/withModal';
+import withNotification from 'sly/controllers/withNotification';
+import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
 
 const getPaginationData = ({ result, meta }) => {
   if (!result) return {};
@@ -36,6 +39,9 @@ const getPaginationData = ({ result, meta }) => {
 @withRouter
 @withUser
 @withRedirectTo
+@withModal
+@withNotification
+@query('deleteContact', 'deleteContact')
 @prefetch('contacts', 'getContacts', (req, { datatable }) => req(datatable.query))
 
 export default class DashboardContactsSectionContainer extends Component {
@@ -49,6 +55,55 @@ export default class DashboardContactsSectionContainer extends Component {
     entityType: string.isRequired,
     entityId: string,
     entityName: string,
+    showModal: func.isRequired,
+    hideModal: func.isRequired,
+    notifyInfo: func.isRequired,
+    notifyError: func.isRequired,
+    deleteContact: func.isRequired,
+  };
+
+  getContactEntity = (contact, entityType) => {
+    for (let i = 0; i < contact.entities.length; i++) {
+      const e = contact.entities[i];
+      if (e.entityType === entityType)  {
+        return e;
+      }
+    }
+    return null;
+  }
+
+  refetchContacts = () => {
+    const { status } = this.props;
+    status.contacts.refetch();
+  }
+
+  deleteContact = (contact) => {
+    const { showModal, hideModal, notifyInfo, notifyError } = this.props;
+
+    const doDelete = () => {
+      const { deleteContact, entityType } = this.props;
+
+      const entity = this.getContactEntity(contact, entityType);
+      const payload = { id: contact.id, entityId: entity.id, entityType: entity.entityType };
+      return deleteContact(payload)
+        .then(this.refetchContacts)
+        .then(hideModal)
+        .then(() => {
+          notifyInfo(`Contact ${contact.name} removed correctly`);
+        })
+        .catch(() => {
+          notifyError(`Contact ${contact.name} could not be removed`);
+        });
+    };
+
+    return showModal((
+      <ConfirmationDialog
+        heading={`Remove ${contact.name}`}
+        description={`Are you sure that you want to remove ${contact.name}? This cannot be undone.`}
+        onConfirmClick={doDelete}
+        onCancelClick={hideModal}
+      />
+    ), hideModal);
   };
 
   render() {
@@ -70,12 +125,13 @@ export default class DashboardContactsSectionContainer extends Component {
         pagination={getPaginationData(status.contacts)}
         activeTab={match.params.taskType}
         meta={meta || {}}
-        refetchContacts={this.props.status.contacts.refetch}
+        refetchContacts={this.refetchContacts}
         match={match}
         redirectTo={redirectTo}
         entityId={entityId}
         entityType={entityType}
         entityName={entityName}
+        deleteContact={this.deleteContact}
       />
     );
   }

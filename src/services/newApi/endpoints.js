@@ -90,6 +90,7 @@ export default {
   getContacts: { method: get, path: '/platform/contacts' },
   createContact: { method: post, path: '/platform/contacts' },
   updateContact: { method: patch, path: '/platform/contacts/:id' },
+  deleteContact: { method: destroy, path: '/platform/contacts/:id' },
 
   getDatatable: { method: get, path: '/meta-data/datatables/:id' },
   sendEbook: { method: post, path: '/platform/send-ebook' },
