@@ -2,7 +2,7 @@ import React from 'react';
 import { arrayOf, shape, string, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
+import { size, getKey } from 'sly/components/themes';
 import { ResponsiveImage } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
@@ -30,6 +30,8 @@ const Wrapper = styled.div`
   }
 `;
 
+const thumbSizes = getKey('imageFormats.thumbGallery').sizes;
+
 export default function MorePictures({ images = [], onPictureClick }) {
   return (
     <Wrapper>
@@ -40,6 +42,7 @@ export default function MorePictures({ images = [], onPictureClick }) {
           path={image.path}
           aspectRatio="4:3"
           alt={image.alt}
+          sizes={thumbSizes}
         />
       ))}
     </Wrapper>

@@ -47,8 +47,8 @@ export default class CommunityMorePicturesContainer extends Component {
 
     const images = gallery.images.map((img, i) => {
       return {
-        id: image.id,
-        path: image.path,
+        id: img.id,
+        path: img.path,
         alt: `${name}, ${city}, ${state}  ${i + 1}`,
       };
     });
