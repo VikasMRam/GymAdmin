@@ -12,6 +12,7 @@ import { prefetch } from 'sly/services/newApi';
   id: match.params.communitySlug,
   include: 'similar-communities,questions,agents',
 }))
+
 export default class CommunityMorePicturesContainer extends Component {
   static typeHydrationId = 'CommunityMorePicturesContainer';
   static propTypes = {
@@ -46,8 +47,8 @@ export default class CommunityMorePicturesContainer extends Component {
 
     const images = gallery.images.map((img, i) => {
       return {
-        ...img,
-        src: img.hd,
+        id: image.id,
+        path: image.path,
         alt: `${name}, ${city}, ${state}  ${i + 1}`,
       };
     });
