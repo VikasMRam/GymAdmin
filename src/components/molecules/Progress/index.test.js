@@ -30,7 +30,7 @@ describe('Progress', () => {
     });
 
     wrapper.find('Bubble').forEach((b, i) => {
-      if (i <= 1) {
+      if (i === 0) {
         expect(b.prop('checked')).toBeTruthy();
         expect(b.prop('pathHighlighted')).toBeFalsy();
         expect(b.prop('filled')).toBeTruthy();
