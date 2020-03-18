@@ -16,6 +16,7 @@ import {
 } from 'sly/services/helpers/pricing';
 import pad from 'sly/components/helpers/pad';
 import { withHydration } from 'sly/services/partialHydration';
+import { getIsCCRC, getIsSNF } from 'sly/services/helpers/community';
 import { Button, Paragraph, Hr, Block, Link } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';
@@ -271,13 +272,8 @@ export default class CommunityDetailPage extends Component {
     } = propInfo;
 
     const typeOfCare = typeCares[0];
-    const hasCCRC = typeCares.includes(
-      'Continuing Care Retirement Community(CCRC)',
-    );
-
-    const hasSNF = typeCares.includes(
-      'Skilled Nursing Facility'
-    );
+    const hasCCRC = getIsCCRC(community);
+    const hasSNF = getIsSNF(community);
 
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
