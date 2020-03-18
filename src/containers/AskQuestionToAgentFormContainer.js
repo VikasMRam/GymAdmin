@@ -101,6 +101,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
       actionInfo = {
         phone,
         name,
+        email,
         message,
       };
     }
