@@ -6,8 +6,8 @@ import ConversionWizardInfoStep from 'sly/components/organisms/ConversionWizardI
 const heading = 'heading';
 const description = 'description';
 const buttons = [
-  { text: 'I qualify for Medicaid', onClick: jest.fn() },
-  { text: 'I do NOT qualify for Medicaid', onClick: jest.fn() },
+  { text: 'I qualify for Medicaid', props: { onClick: jest.fn() } },
+  { text: 'I do NOT qualify for Medicaid', props: { onClick: jest.fn() } },
 ];
 const points = [
   'point1',

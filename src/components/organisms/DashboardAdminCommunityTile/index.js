@@ -8,13 +8,13 @@ import { buildPriceList } from 'sly/services/helpers/pricing';
 import { size, palette, columnWidth } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { Heading, Badge, Link, Block, Icon, Span } from 'sly/components/atoms';
-import { getHasContract, getIsCCRC, getIsSNF } from 'sly/services/helpers/communityReferral';
+import { getHasContract, getIsCCRC, getIsSNF } from 'sly/services/helpers/community';
 import  IconBadge from 'sly/components/molecules/IconBadge';
 
 const Header = styled.div`
   display: flex;
   align-items: center;
-  > * { 
+  > * {
     margin-right: ${size('spacing.regular')};
   }
 `;
@@ -32,7 +32,7 @@ const CommunityInfoWrapper = styled.div`
   grid-template-columns: max-content auto;
   grid-column-gap: ${size('spacing.large')};
   grid-row-gap: ${size('spacing.regular')};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-left: auto;
     padding: ${size('spacing.regular')};

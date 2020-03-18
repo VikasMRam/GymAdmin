@@ -1,11 +1,29 @@
-export const hasCCRC = (community) => {
+export const getIsCCRC = (community) => {
   const { propInfo } = community;
-  const { typeCare } = propInfo;
-  return typeCare.includes('Continuing Care Retirement Community(CCRC)');
+  if (propInfo) {
+    const { typeCare } = propInfo;
+    if (typeCare) {
+      return typeCare.includes('Continuing Care Retirement Community(CCRC)');
+    }
+  }
+  return false;
 };
 
-export const hasSNF = (community) => {
+export const getHasContract = (community) => {
+  const { rgsAux, info = {} } = community;
+  const hasRgsContract = rgsAux && rgsAux.rgsInfo && rgsAux.rgsInfo.contract_info ? rgsAux.rgsInfo.contract_info.hasContract : false;
+  // When community is sent has a Provider, contract info is stored in the info elsewhere.
+  const { hasContract: hasInfoContract } = info;
+  return hasRgsContract || hasInfoContract;
+};
+
+export const getIsSNF = (community) => {
   const { propInfo } = community;
-  const { typeCare } = propInfo;
-  return typeCare.includes('Skilled Nursing Facility');
+  if (propInfo) {
+    const { typeCare: typeCares } = propInfo;
+    if (typeCares) {
+      return typeCares.includes('Skilled Nursing Facility');
+    }
+  }
+  return false;
 };
