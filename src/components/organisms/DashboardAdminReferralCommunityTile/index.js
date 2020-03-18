@@ -5,11 +5,12 @@ import { ifProp, ifNotProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
+import { getHasContract, getIsCCRC, getIsSNF } from 'sly/services/helpers/community';
+import { buildAddressDisplay, getReferralSentTimeText } from 'sly/services/helpers/communityReferral';
 import { Heading, Block, Span, Button, Link } from 'sly/components/atoms';
 import Stage from 'sly/components/molecules/Stage';
 // import cursor from 'sly/components/helpers/cursor';
 import IconBadge from 'sly/components/molecules/IconBadge';
-import { buildAddressDisplay, getReferralSentTimeText, getHasContract, getIsCCRC, getIsSNF } from 'sly/services/helpers/communityReferral';
 
 const getTitlePalette = variant => p => palette(p.titlePalette, variant);
 
@@ -80,7 +81,7 @@ const DetailsTable = styled.div`
   grid-template-columns: max-content auto;
   grid-column-gap: ${size('spacing.large')};
   grid-row-gap: ${size('spacing.regular')};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-left: auto;
     padding: ${size('spacing.xLarge')};

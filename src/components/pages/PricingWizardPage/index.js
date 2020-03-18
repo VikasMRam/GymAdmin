@@ -22,7 +22,7 @@ import {
   WHAT_TO_NEXT_OPTIONS,
   EXPLORE_AFFORDABLE_PRICING_OPTIONS,
 } from 'sly/constants/pricingForm';
-import { hasCCRC, hasSNF } from 'sly/services/helpers/community';
+import { getIsCCRC, getIsSNF } from 'sly/services/helpers/community';
 import { FAMILY_DASHBOARD_FAVORITES_PATH } from 'sly/constants/dashboardAppPaths';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
@@ -67,7 +67,7 @@ const contactFormHeadingMap = {
   'apply-financing': { heading: 'We Are Here to Help You', subheading: 'We have helped thousands of families to learn about and choose a community they love. This is a free service. ' },
 };
 
-const stepsWithoutControls = ['Landing', 'WhatToDoNext', 'ExploreAffordableOptions', 'MedicaidWarning'];
+const stepsWithoutControls = ['Landing', 'WhatToDoNext', 'ExploreAffordableOptions', 'MedicaidWarning', 'CCRCWarning'];
 
 export default class PricingWizardPage extends Component {
   static propTypes = {
@@ -133,7 +133,7 @@ export default class PricingWizardPage extends Component {
 
   // This function is called after the step is changed
   handleStepChange = ({
-    currentStep, data, goto, doSubmit,
+    currentStep, data, goto, doSubmit, next,
   }) => {
     const { community, userHas, submitActionAndCreateUser, updateUuidAux, match, sendEvent, uuidAux } = this.props;
     const { id } = community;
@@ -149,7 +149,10 @@ export default class PricingWizardPage extends Component {
             if (medicaidCoverage === 'no' ||
               (uuidAux && uuidAux.uuidInfo && uuidAux.uuidInfo.financialInfo && uuidAux.uuidInfo.financialInfo.medicaid === false)) {
               // it's important to check for false value as even if key is missing or it's null, undefined condition will become true
-              return goto('WhatToDoNext');
+              if (!getIsCCRC(community)) {
+                return goto('WhatToDoNext');
+              }
+              return goto('CCRCWarning');
             }
             return null;
           });
@@ -164,7 +167,11 @@ export default class PricingWizardPage extends Component {
     }
 
     if (currentStep === 'Contact') {
-      return submitActionAndCreateUser(data, currentStep);
+      return submitActionAndCreateUser(data, currentStep).then(() => {
+        if (!getIsCCRC(community)) {
+          goto('WhatToDoNext');
+        }
+      });
     }
 
     if (currentStep === 'WhatToDoNext' && interest === 'talk-advisor') {
@@ -309,10 +316,12 @@ export default class PricingWizardPage extends Component {
                             onClick: () => {
                               sendEvent('pricing-medicaid-warning', id, 'i-do-not-qualify');
                               if (userHas(['name', 'phoneNumber'])) {
-                                goto('WhatToDoNext');
-                              } else {
-                                next();
+                                if (!getIsCCRC(community)) {
+                                  return goto('WhatToDoNext');
+                                }
+                                return goto('CCRCWarning');
                               }
+                              return next();
                             },
                           },
                         },
@@ -329,11 +338,37 @@ export default class PricingWizardPage extends Component {
                       subheading={formSubheading}
                     />
                     <WizardStep
+                      component={ConversionWizardInfoStep}
+                      name="CCRCWarning"
+                      heading="This is a Continuing Care Retirement Community (CCRC)"
+                      description="The buying process for CCRCs is different from Assisted Living or Independent Living."
+                      buttons={[
+                        {
+                          text: 'I understand and want more info on this CCRC',
+                          props: {
+                            href: community.url,
+                            target: '_blank',
+                            onClick: () => sendEvent('ccrc-warning', id, 'i-want-info'),
+                          },
+                        },
+                        {
+                          text: "I'd like to talk to a Local Expert about different options",
+                          props: {
+                            onClick: () => {
+                              sendEvent('ccrc-warning', id, 'talk-to-local-expert');
+                              next();
+                            },
+                          },
+                        },
+                      ]}
+                      points={['A CCRC is a community with multiple levels of care', 'Often they have $100,000+ entrance fees']}
+                    />
+                    <WizardStep
                       component={CommunityPricingWizardWhatToDoNextFormContainer}
                       name="WhatToDoNext"
                       communityName={name}
                       estimatedPrice={estimatedPrice}
-                      showEstimatePrice={!hasCCRC(community) && !hasSNF(community)}
+                      showEstimatePrice={!getIsCCRC(community) && !getIsSNF(community)}
                       listOptions={compiledWhatToDoNextOptions}
                       onInterestChange={(e, interest) => sendEvent('pricing-next-interest', id, interest)}
                       onSubmit={onSubmit}
