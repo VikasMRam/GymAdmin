@@ -64,6 +64,7 @@ import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
+import UnhydratedCommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -83,6 +84,7 @@ const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { a
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
+const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer);
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -185,6 +187,10 @@ const CTABlock = styled(Block)`
   display: inline-block;
   padding-left: ${size('spacing.regular')};
   line-height: ${size('element.regular')};
+`;
+
+const AdWrapper = styled.div`
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const Header = makeHeader();
@@ -447,7 +453,9 @@ export default class CommunityDetailPage extends Component {
                     />
                   )}
                 </StyledHeadingBoxSection>
-
+                <AdWrapper>
+                  <CommunityProfileAdTileContainer type="getOffer" profileId={community.id}/>
+                </AdWrapper>
                 <StyledHeadingBoxSection
                   heading={`Get Availability at ${name}`}
                   id="availability"

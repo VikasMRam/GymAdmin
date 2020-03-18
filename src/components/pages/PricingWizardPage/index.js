@@ -29,9 +29,10 @@ import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import ConversionWizardInfoStep from 'sly/components/organisms/ConversionWizardInfoStep';
+import PostConversionGreetingForm from 'sly/components/organisms/PostConversionGreetingForm';
 import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
 import CommunityPricingWizardWhatToDoNextFormContainer from 'sly/containers/CommunityPricingWizardWhatToDoNextFormContainer';
-import CommunityPricingWizardLandingContainer from 'sly/containers/CommunityPricingWizardLandingContainer';
+
 import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWizardAcknowledgementContainer';
 import CommunityPricingWizardExploreAffordableOptionsFormContainer
   from 'sly/containers/CommunityPricingWizardExploreAffordableOptionsFormContainer';
@@ -67,7 +68,7 @@ const contactFormHeadingMap = {
   'apply-financing': { heading: 'We Are Here to Help You', subheading: 'We have helped thousands of families to learn about and choose a community they love. This is a free service. ' },
 };
 
-const stepsWithoutControls = ['Landing', 'WhatToDoNext', 'ExploreAffordableOptions', 'MedicaidWarning', 'CCRCWarning'];
+const stepsWithoutControls = ['Landing', 'WhatToDoNext', 'ExploreAffordableOptions', 'MedicaidWarning', 'CCRCWarning','PostConversionGreeting'];
 
 export default class PricingWizardPage extends Component {
   static propTypes = {
@@ -150,7 +151,7 @@ export default class PricingWizardPage extends Component {
               (uuidAux && uuidAux.uuidInfo && uuidAux.uuidInfo.financialInfo && uuidAux.uuidInfo.financialInfo.medicaid === false)) {
               // it's important to check for false value as even if key is missing or it's null, undefined condition will become true
               if (!getIsCCRC(community)) {
-                return goto('WhatToDoNext');
+                return goto('PostConversionGreeting');
               }
               return goto('CCRCWarning');
             }
@@ -169,7 +170,7 @@ export default class PricingWizardPage extends Component {
     if (currentStep === 'Contact') {
       return submitActionAndCreateUser(data, currentStep).then(() => {
         if (!getIsCCRC(community)) {
-          goto('WhatToDoNext');
+          goto('PostConversionGreeting');
         }
       });
     }
@@ -317,7 +318,7 @@ export default class PricingWizardPage extends Component {
                               sendEvent('pricing-medicaid-warning', id, 'i-do-not-qualify');
                               if (userHas(['name', 'phoneNumber'])) {
                                 if (!getIsCCRC(community)) {
-                                  return goto('WhatToDoNext');
+                                  return goto('PostConversionGreeting');
                                 }
                                 return goto('CCRCWarning');
                               }
@@ -364,28 +365,10 @@ export default class PricingWizardPage extends Component {
                       points={['A CCRC is a community with multiple levels of care', 'Often they have $100,000+ entrance fees']}
                     />
                     <WizardStep
-                      component={CommunityPricingWizardWhatToDoNextFormContainer}
-                      name="WhatToDoNext"
-                      communityName={name}
-                      estimatedPrice={estimatedPrice}
-                      showEstimatePrice={!getIsCCRC(community) && !getIsSNF(community)}
-                      listOptions={compiledWhatToDoNextOptions}
-                      onInterestChange={(e, interest) => sendEvent('pricing-next-interest', id, interest)}
+                      component={PostConversionGreetingForm}
+                      name="PostConversionGreeting"
+                      community={community}
                       onSubmit={onSubmit}
-                      type={type}
-                    />
-                    <WizardStep
-                      component={CommunityPricingWizardExploreAffordableOptionsFormContainer}
-                      name="ExploreAffordableOptions"
-                      listOptions={EXPLORE_AFFORDABLE_PRICING_OPTIONS}
-                      onBudgetChange={this.handleBudgetChange}
-                      onSubmit={onSubmit}
-                    />
-                    <WizardStep
-                      component={CommunityPricingWizardLandingContainer}
-                      name="Landing"
-                      buttonText="View Dashboard"
-                      onBeginClick={onSubmit}
                     />
                   </WizardSteps>
                 </Body>
