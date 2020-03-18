@@ -16,7 +16,7 @@ const PhoneCTAWrapper = styled.div`
   background-color: ${palette('primary', 'base')};
   color: ${palette('white', 'base')};
   padding: ${size('spacing.massive')} ${size('spacing.large')};
-  margin: ${size('spacing.xLarge')} auto;
+  margin: ${size('spacing.xLarge')} auto 0 auto;
   width: 100%;
   text-align: center;
 `;

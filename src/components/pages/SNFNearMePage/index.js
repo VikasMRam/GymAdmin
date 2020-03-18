@@ -179,7 +179,7 @@ const NearMePage = ({
             performed by professionals or technical personnel.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.snf}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
@@ -199,7 +199,7 @@ const NearMePage = ({
             Note that this will change city by city and state by state.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.snf}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
@@ -238,7 +238,7 @@ const NearMePage = ({
             A SNF helps senior residents recover after a significant health event while also offering a community where they can be with others who share similar experiences.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.snf}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
@@ -365,7 +365,7 @@ const NearMePage = ({
           </Paragraph>
 
           <Link
-            href={`#${sectionIdMap.snf}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
@@ -379,7 +379,7 @@ const NearMePage = ({
             How to Choose a Skilled Nursing Facility Near Me
           </Heading>
           <Paragraph>
-            You may be wondering “is skilled nursing near me?” or “how do I find the best skilled nursing facilities near me”?
+            You may be wondering “is skilled nursing near me?” or “how do I find the best skilled nursing facilities near me?”
             Fortunately, high-quality skilled nursing communities can be found all over the country, and they
             never shy away from answering questions. To get you started, here are some basic questions
             you can ask prospective skilled nursing providers.
@@ -441,7 +441,7 @@ const NearMePage = ({
             Make sure you know the care and service requirements for you or your loved one to help determine the best skilled nursing facility fit.
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.snf}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
@@ -482,7 +482,7 @@ const NearMePage = ({
 
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.snf}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
@@ -531,7 +531,7 @@ const NearMePage = ({
           </ul>
 
           <Link
-            href={`#${sectionIdMap.snf}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top
@@ -575,7 +575,7 @@ const NearMePage = ({
 
           </Paragraph>
           <Link
-            href={`#${sectionIdMap.snf}`}
+            href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, snfRef)}
           >
             Back to top

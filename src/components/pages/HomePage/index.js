@@ -17,6 +17,7 @@ import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import Footer from 'sly/components/organisms/Footer';
 import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
+import BannerNotification from 'sly/components/molecules/BannerNotification';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -352,6 +353,11 @@ const HomePage = ({
   const HeaderContent = (
     <>
       <HeaderContainer />
+      <BannerNotification palette="warning">
+        <Link href="https://www.seniorly.com/resources/articles/coronavirus-and-seniors-a-message-from-our-ceo-co-founder-arthur-bretschneider" _target="blank">
+          Coronavirus & Seniors: A Message from Arthur Bretschneider, CEO & Co-founder: Click Here.
+        </Link>
+      </BannerNotification>
       <HeroWrapper>
         <StyledImage path="react-assets/home/cover4.jpg" alt="A Home To Love" height={640} />
         <SearchBoxWrapper>

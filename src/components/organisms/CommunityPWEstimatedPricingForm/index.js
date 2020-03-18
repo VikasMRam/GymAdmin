@@ -70,6 +70,7 @@ const CommunityPWEstimatedPricingForm = ({
       {/*options={ROOMTYPE_OPTIONS}*/}
       {/*name="roomType"*/}
       {/*type="boxChoice"*/}
+      {/*padding="regular"*/}
       {/*component={ReduxField}*/}
       {/*onChange={onRoomTypeChange}*/}
       {/*multiChoice*/}
@@ -78,6 +79,7 @@ const CommunityPWEstimatedPricingForm = ({
       options={MOVETIMELINE_OPTIONS}
       name="moveTimeline"
       type="boxChoice"
+      padding="regular"
       component={ReduxField}
       onChange={onMoveTimelineChange}
     />
@@ -94,6 +96,8 @@ const CommunityPWEstimatedPricingForm = ({
       options={CARETYPE_OPTIONS}
       name="careType"
       type="boxChoice"
+      padding="regular"
+      hasCheckbox={false}
       component={ReduxField}
       onChange={onCareTypeChange}
       multiChoice
@@ -113,6 +117,7 @@ const CommunityPWEstimatedPricingForm = ({
           options={MEDICAID_OPTIONS}
           name="medicaidCoverage"
           type="boxChoice"
+          padding="regular"
           component={ReduxField}
         />
       </>

@@ -22,13 +22,20 @@ const getTag = (level) => {
   }
 };
 
+const getMarginBottom = (p) => {
+  switch (p.size) {
+    case 'hero': return '2.000rem';
+    case 'title': return '1.500rem';
+    case 'subtitle': return '1.000rem';
+    default: return '1.000rem';
+  }
+};
+
 const styles = css`
   font-size: ${fontSize};
   line-height: ${lineHeight};
   font-weight: ${fontWeight};
-  // TODO: review this with @jared,
-  // for now let's make margin-bottom relative to font-size
-  margin: 0 0 calc(${fontSize} * 0.25) 0;
+  margin: 0 0 ${getMarginBottom} 0;
   color: ${color};
 `;
 
