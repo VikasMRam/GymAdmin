@@ -459,7 +459,8 @@ export default class CommunityDetailPage extends Component {
                   <GetCurrentAvailabilityContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested} />
                 </StyledHeadingBoxSection>
                 {plusCommunity && <PlusBranding />}
-                {(communityDescription || rgsAux.communityDescription) && (
+                {(communityDescription || rgsAux.communityDescription ||
+                  staffDescription || residentDescription || ownerExperience) && (
                   <StyledHeadingBoxSection heading={`Details on ${name}`}>
                     <CommunityDetails
                       communityName={name}
