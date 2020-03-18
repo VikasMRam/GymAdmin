@@ -51,7 +51,7 @@ export default class CheckboxInput extends Component {
   render() {
     const { type, label, value } = this.props;
     let { options } = this.props;
-    if (!options && type === 'boolean') {
+    if (options.length === 0 && type === 'boolean') {
       options = [{ value: true, label }];
     }
 
