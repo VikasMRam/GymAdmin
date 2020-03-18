@@ -66,7 +66,6 @@ const CommunityDetails = ({
           <LegacyContent dangerouslySetInnerHTML={{ __html: rgsAuxDescription }} />
         </StyledArticle>
       )}
-      {(!communityDescription && !rgsAuxDescription && 'No details are available')}
       {ownerExperience && (
         <StyledArticle>
           <StyledHeading level="subtitle" size="subtitle">
