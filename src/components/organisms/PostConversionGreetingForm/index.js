@@ -11,6 +11,7 @@ import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import { community as communityProptype } from 'sly/propTypes/community';
 import PostConversionAskNotHelpModal from 'sly/components/organisms/PostConversionAskNotHelpModal';
 import PostConversionSureNotHelpModal from 'sly/components/organisms/PostConversionSureNotHelpModal';
+import PostConversionAdTileContainer from 'sly/containers/postConversion/AdTileContainer';
 import { getCitySearchUrl, getCitySearchWithSizeUrl } from 'sly/services/helpers/url';
 
 const DO_NOT_REFER = 'do-not-refer';
@@ -71,8 +72,7 @@ const PostConversionGreetingForm = ({
         <RejectButton ghost palette="danger" onClick={tryReject}>Don’t want help from an expert? Click here.</RejectButton>
       </TextWrapper>
       <Wrapper>
-        <PaddedHeading size="subtitle">Explore nearby Assisted Living communities</PaddedHeading>
-        <SimilarCommunities communities={community.similarProperties} communityStyle={{ layout: 'row', showDescription: false }} />
+        <PostConversionAdTileContainer notifyInfo={closeModal} type="getOffer"/>
       </Wrapper>
       {currentModal === ASK_NOT_HELP && (
         <PostConversionAskNotHelpModal onReject={doReject} onClose={closeModal} />
