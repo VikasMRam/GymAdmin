@@ -90,18 +90,18 @@ export default class SearchResultsAdTileContainer extends Component {
         }
         {type === 'getOffer' &&
           <AdTile
-            title="Selling a home to pay the cost of senior living?"
-            buttonText="Get Instant Offer"
+            title="Moving into senior living and selling your home?"
+            buttonText="Get Your Cash Offer"
             buttonPosition="right"
             image={assetPath('vectors/house-sold.svg')}
             buttonProps={{
               target: '_blank',
-              href: 'https://zillow.com',
+              href: 'https://www.zillow.com/offers/?t=seniorly-0220',
               onClick: this.handleGetInstantOfferClick,
             }}
             {...this.props}
           >
-            Our partner <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> will make you an Instant Offer.
+            Check out <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> Offers for a no obligation cash offer.
           </AdTile>
         }
         {isModalOpen &&

@@ -28,10 +28,10 @@ const onClickEvent = (id) => {
 
 const GetCommunityPricingAndAvailability = ({ community: { id, startingRate, propRatings: { reviewsValue, numReviews } }, buttonTo }) => (
   <Box>
-    <PaddedHeading level="title" size="subtitle">Get pricing and availability</PaddedHeading>
+    <PaddedHeading level="title" size="subtitle">Get Pricing and Availability</PaddedHeading>
     {startingRate > 0 && <PaddedCommunityPricing description="Estimated pricing starts at" price={startingRate} />}
     {reviewsValue > 0 && <PaddedCommunityRating description="Average rating" numReviewsPalette="slate" rating={reviewsValue} numReviews={numReviews} />}
-    {getButton(startingRate, { to: buttonTo, children: 'Get detailed pricing', event: onClickEvent(id) })}
+    {getButton(startingRate, { to: buttonTo, children: 'Get Detailed Pricing', event: onClickEvent(id) })}
     {startingRate > 0 &&
       <Block size="caption" palette="grey">
         * Pricing varies depending on senior living room type and care service needs.

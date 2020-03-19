@@ -10,8 +10,8 @@ storiesOf('Organisms|ConversionWizardInfoStep', module)
       heading="Let's double check your Medicaid qualification."
       description="To qualify for Medicaid you must have:"
       buttons={[
-        { text: 'I qualify for Medicaid', onClick: action('onButton1Click') },
-        { text: 'I do NOT qualify for Medicaid', onClick: action('onButton2Click') },
+        { text: 'I qualify for Medicaid', props: { onClick: action('onButton1Click') } },
+        { text: 'I do NOT qualify for Medicaid', props: { onClick: action('onButton2Click') } },
       ]}
       points={['Asset limit in most states $1,600 to $15,750', 'Income limit is typically less than $2,360/month']}
     />

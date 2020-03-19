@@ -376,6 +376,10 @@ export const getCitySearchWithSizeUrl = ({ propInfo, address }) => {
   const sizeParam = communitySizeSearchParamMap[propInfo.communitySize];
   return `${getCitySearchUrl({ propInfo, address })}?size=${sizeParam}`;
 };
+export const getCitySearchWithSizeUrlMapView = ({ propInfo, address }) => {
+  const sizeParam = communitySizeSearchParamMap[propInfo.communitySize];
+  return `${getCitySearchUrl({ propInfo, address })}?size=${sizeParam}&view=map`;
+};
 
 export const getOrigin = () => {
   if (!window) {

@@ -16,7 +16,8 @@ import {
 } from 'sly/services/helpers/pricing';
 import pad from 'sly/components/helpers/pad';
 import { withHydration } from 'sly/services/partialHydration';
-import { Button, Paragraph, Hr, Block, Link } from 'sly/components/atoms';
+import { getIsCCRC, getIsSNF } from 'sly/services/helpers/community';
+import { Button, Paragraph, Hr, Block, Link, Heading } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';
 import {
@@ -63,6 +64,7 @@ import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
+import UnhydratedCommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -82,6 +84,7 @@ const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { a
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
+const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer);
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -186,6 +189,19 @@ const CTABlock = styled(Block)`
   line-height: ${size('element.regular')};
 `;
 
+const CovidWrapper = styled.div`
+  padding: ${size('spacing.large')};
+  background-color: ${palette('secondary', 'filler')};
+  border-radius: ${size('border.xLarge')};
+  text-align: center;
+  border-top: 4px solid ${palette('secondary', 'dark35')};
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
+const AdWrapper = styled.div`
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
 const Header = makeHeader();
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
@@ -253,6 +269,8 @@ export default class CommunityDetailPage extends Component {
       careServices,
       promoDescription,
       promoTitle,
+      covidInfoDescription,
+      covidInfoTitle,
       communitySize,
       communityInsights,
       plusCommunity,
@@ -271,13 +289,8 @@ export default class CommunityDetailPage extends Component {
     } = propInfo;
 
     const typeOfCare = typeCares[0];
-    const hasCCRC = typeCares.includes(
-      'Continuing Care Retirement Community(CCRC)',
-    );
-
-    const hasSNF = typeCares.includes(
-      'Skilled Nursing Facility'
-    );
+    const hasCCRC = getIsCCRC(community);
+    const hasSNF = getIsSNF(community);
 
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
@@ -351,6 +364,16 @@ export default class CommunityDetailPage extends Component {
                     community={community}
                     hasAlreadyRequested={isAlreadyPricingRequested}
                   />
+                )}
+                {(covidInfoDescription || covidInfoTitle) && (
+                  <CovidWrapper>
+                    <Heading size="subtitle" level="subtitle">
+                      {covidInfoTitle}
+                    </Heading>
+                    <Paragraph>
+                      {covidInfoDescription}
+                    </Paragraph>
+                  </CovidWrapper>
                 )}
                 {communityInsights &&
                   communityInsights.length > 0 && (
@@ -451,7 +474,9 @@ export default class CommunityDetailPage extends Component {
                     />
                   )}
                 </StyledHeadingBoxSection>
-
+                <AdWrapper>
+                  <CommunityProfileAdTileContainer type="getOffer" profileId={community.id}/>
+                </AdWrapper>
                 <StyledHeadingBoxSection
                   heading={`Get Availability at ${name}`}
                   id="availability"
