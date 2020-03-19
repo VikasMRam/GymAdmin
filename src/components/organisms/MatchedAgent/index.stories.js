@@ -12,4 +12,10 @@ storiesOf('Organisms|MatchedAgent', module)
       agent={LindaIwamota}
       onLearnMoreClick={action('onLearnMoreClick')}
     />
+  ))
+  .add('without agent', () => (
+    <MatchedAgent
+      heading="Sarah will call you shortly to assist you with pricing for Portola Gardens"
+      onLearnMoreClick={action('onLearnMoreClick')}
+    />
   ));
