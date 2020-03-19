@@ -12,7 +12,7 @@ import { community as communityProptype } from 'sly/propTypes/community';
 import PostConversionAskNotHelpModal from 'sly/components/organisms/PostConversionAskNotHelpModal';
 import PostConversionSureNotHelpModal from 'sly/components/organisms/PostConversionSureNotHelpModal';
 import PostConversionAdTileContainer from 'sly/containers/postConversion/AdTileContainer';
-import { getCitySearchWithSizeUrlMapView } from 'sly/services/helpers/url';
+import { getCitySearchWithSizeUrl } from 'sly/services/helpers/url';
 
 const DO_NOT_REFER = 'do-not-refer';
 const ASK_NOT_HELP = 'AskNotHelp';
@@ -61,7 +61,7 @@ const PostConversionGreetingForm = ({
   const closeModal = () => setCurrentModal(null);
   const tryReject = () => setCurrentModal(ASK_NOT_HELP);
   const doReject = () => onSubmit({ interest: DO_NOT_REFER }).then(() => setCurrentModal(SURE_NOT_HELP));
-  const doDismiss = () => onSubmit({ redirectLink: getCitySearchWithSizeUrlMapView(community) });
+  const doDismiss = () => onSubmit({ redirectLink: getCitySearchWithSizeUrl(community) });
 
   return (
     <div>

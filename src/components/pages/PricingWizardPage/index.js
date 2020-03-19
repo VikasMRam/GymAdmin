@@ -147,9 +147,15 @@ export default class PricingWizardPage extends Component {
       return updateUuidAux(data).then(() => {
         if (userHas(['name', 'phoneNumber'])) {
           return submitActionAndCreateUser(data).then(() => {
-            if (medicaidCoverage === 'no' ||
+
+            if (medicaidCoverage === 'yes' || medicaidCoverage === 'i-am-not-sure' ||
               (uuidAux && uuidAux.uuidInfo && uuidAux.uuidInfo.financialInfo && uuidAux.uuidInfo.financialInfo.medicaid === false)) {
               // it's important to check for false value as even if key is missing or it's null, undefined condition will become true
+              if (!getIsCCRC(community)) {
+                return goto('PostConversionGreeting');
+              }
+              return goto('MedicaidWarning');
+            } else {
               if (!getIsCCRC(community)) {
                 return goto('PostConversionGreeting');
               }
@@ -158,12 +164,13 @@ export default class PricingWizardPage extends Component {
             return null;
           });
         }
-        if (medicaidCoverage === 'no' ||
+
+        if (medicaidCoverage === 'yes' || medicaidCoverage === 'i-am-not-sure' ||
           (uuidAux && uuidAux.uuidInfo && uuidAux.uuidInfo.financialInfo && uuidAux.uuidInfo.financialInfo.medicaid === false)) {
           // it's important to check for false value as even if key is missing or it's null, undefined condition will become true
-          return goto('Contact');
+          return goto('MedicaidWarning');
         }
-        return null;
+        return goto('Contact');
       });
     }
 
@@ -246,7 +253,8 @@ export default class PricingWizardPage extends Component {
       return <Redirect to="/" />;
     }
 
-    const { id, mainImage, name } = community;
+    const { id, mainImage, name, propInfo={} } = community;
+    const { websiteUrl='https://www.seniorly.com/resources/articles/understanding-continuing-care-retirement-communities' } = propInfo;
     const { estimatedPrice } = this.state;
     const compiledWhatToDoNextOptions = [...WHAT_TO_NEXT_OPTIONS];
     // const scheduleTourOption = compiledWhatToDoNextOptions.find(o => o.value === 'schedule-tour');
@@ -347,7 +355,7 @@ export default class PricingWizardPage extends Component {
                         {
                           text: 'I understand and want more info on this CCRC',
                           props: {
-                            href: community.url,
+                            href: websiteUrl,
                             target: '_blank',
                             onClick: () => sendEvent('ccrc-warning', id, 'i-want-info'),
                           },
