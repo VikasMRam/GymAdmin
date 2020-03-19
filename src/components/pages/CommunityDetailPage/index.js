@@ -16,7 +16,7 @@ import {
 } from 'sly/services/helpers/pricing';
 import pad from 'sly/components/helpers/pad';
 import { withHydration } from 'sly/services/partialHydration';
-import { Button, Paragraph, Hr, Block, Link } from 'sly/components/atoms';
+import { Button, Paragraph, Hr, Block, Link, Heading } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';
 import {
@@ -186,6 +186,15 @@ const CTABlock = styled(Block)`
   line-height: ${size('element.regular')};
 `;
 
+const CovidWrapper = styled.div`
+  padding: ${size('spacing.large')};
+  background-color: ${palette('secondary', 'filler')};
+  border-radius: ${size('border.xLarge')};
+  text-align: center;
+  border-top: 4px solid ${palette('secondary', 'dark35')};
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
 const Header = makeHeader();
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
@@ -253,6 +262,8 @@ export default class CommunityDetailPage extends Component {
       careServices,
       promoDescription,
       promoTitle,
+      covidInfoDescription,
+      covidInfoTitle,
       communitySize,
       communityInsights,
       plusCommunity,
@@ -351,6 +362,16 @@ export default class CommunityDetailPage extends Component {
                     community={community}
                     hasAlreadyRequested={isAlreadyPricingRequested}
                   />
+                )}
+                {(covidInfoDescription || covidInfoTitle) && (
+                  <CovidWrapper>
+                    <Heading size="subtitle" level="subtitle">
+                      {covidInfoTitle}
+                    </Heading>
+                    <Paragraph>
+                      {covidInfoDescription}
+                    </Paragraph>
+                  </CovidWrapper>
                 )}
                 {communityInsights &&
                   communityInsights.length > 0 && (
