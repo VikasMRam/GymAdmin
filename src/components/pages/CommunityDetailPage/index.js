@@ -16,6 +16,7 @@ import {
 } from 'sly/services/helpers/pricing';
 import pad from 'sly/components/helpers/pad';
 import { withHydration } from 'sly/services/partialHydration';
+import { getIsCCRC, getIsSNF } from 'sly/services/helpers/community';
 import { Button, Paragraph, Hr, Block, Link, Heading } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';
@@ -63,6 +64,7 @@ import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
+import UnhydratedCommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -82,6 +84,7 @@ const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { a
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
+const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer);
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -195,6 +198,10 @@ const CovidWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
+const AdWrapper = styled.div`
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
 const Header = makeHeader();
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
@@ -282,13 +289,8 @@ export default class CommunityDetailPage extends Component {
     } = propInfo;
 
     const typeOfCare = typeCares[0];
-    const hasCCRC = typeCares.includes(
-      'Continuing Care Retirement Community(CCRC)',
-    );
-
-    const hasSNF = typeCares.includes(
-      'Skilled Nursing Facility'
-    );
+    const hasCCRC = getIsCCRC(community);
+    const hasSNF = getIsSNF(community);
 
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
@@ -472,7 +474,9 @@ export default class CommunityDetailPage extends Component {
                     />
                   )}
                 </StyledHeadingBoxSection>
-
+                <AdWrapper>
+                  <CommunityProfileAdTileContainer type="getOffer" profileId={community.id}/>
+                </AdWrapper>
                 <StyledHeadingBoxSection
                   heading={`Get Availability at ${name}`}
                   id="availability"
@@ -480,7 +484,8 @@ export default class CommunityDetailPage extends Component {
                   <GetCurrentAvailabilityContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested} />
                 </StyledHeadingBoxSection>
                 {plusCommunity && <PlusBranding />}
-                {(communityDescription || rgsAux.communityDescription) && (
+                {(communityDescription || rgsAux.communityDescription ||
+                  staffDescription || residentDescription || ownerExperience) && (
                   <StyledHeadingBoxSection heading={`Details on ${name}`}>
                     <CommunityDetails
                       communityName={name}

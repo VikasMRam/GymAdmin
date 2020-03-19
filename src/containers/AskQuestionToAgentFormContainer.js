@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import * as immutable from 'object-path-immutable';
 
 import { prefetch, query, withAuth, withUser } from 'sly/services/newApi';
-import { AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED } from 'sly/services/newApi/constants';
+import { AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/services/newApi/constants';
 import { capitalize } from  'sly/services/helpers/utils';
 import matchPropType from 'sly/propTypes/match';
 import userPropType from 'sly/propTypes/user';
@@ -48,7 +48,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
     createAction: func.isRequired,
     category: oneOf(['agent', 'community']),
     type: string,
-    actionType: oneOf([AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED]),
+    actionType: oneOf([AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED, HOME_CARE_REQUESTED]),
     status: object.isRequired,
     updateUuidAux: func.isRequired,
   };
@@ -97,7 +97,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
       email,
       phone,
     };
-    if (actionType === CONSULTATION_REQUESTED) {
+    if (actionType === CONSULTATION_REQUESTED || actionType === HOME_CARE_REQUESTED){
       actionInfo = {
         phone,
         name,
@@ -122,7 +122,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
         phone,
       }, { ignoreAlreadyRegistered: true }))
       .then(() => {
-        const c = `${category}${type ? `-${type}` : ''}`;
+        const c = `${category}-${actionType}${type ? `-${type}` : ''}`;
         const event = {
           action: 'ask_question', category: c, label: entityId || match.url,
         };

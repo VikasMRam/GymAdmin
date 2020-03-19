@@ -9,7 +9,6 @@ import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBook
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
-import { Experiment, Variant } from 'sly/services/experiments';
 import {
   FullScreenWizard,
   makeBody,
@@ -23,20 +22,21 @@ import {
   WHAT_TO_NEXT_OPTIONS,
   EXPLORE_AFFORDABLE_PRICING_OPTIONS,
 } from 'sly/constants/pricingForm';
-import { hasCCRC, hasSNF } from 'sly/services/helpers/community';
+import { getIsCCRC, getIsSNF } from 'sly/services/helpers/community';
 import { FAMILY_DASHBOARD_FAVORITES_PATH } from 'sly/constants/dashboardAppPaths';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
+import ConversionWizardInfoStep from 'sly/components/organisms/ConversionWizardInfoStep';
+import PostConversionGreetingForm from 'sly/components/organisms/PostConversionGreetingForm';
 import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
 import CommunityPricingWizardWhatToDoNextFormContainer from 'sly/containers/CommunityPricingWizardWhatToDoNextFormContainer';
-import CommunityPricingWizardLandingContainer from 'sly/containers/CommunityPricingWizardLandingContainer';
+
 import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWizardAcknowledgementContainer';
 import CommunityPricingWizardExploreAffordableOptionsFormContainer
   from 'sly/containers/CommunityPricingWizardExploreAffordableOptionsFormContainer';
 import Modal from 'sly/components/molecules/Modal';
-import PostConversionGreetingForm from 'sly/components/organisms/PostConversionGreetingForm';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -68,7 +68,7 @@ const contactFormHeadingMap = {
   'apply-financing': { heading: 'We Are Here to Help You', subheading: 'We have helped thousands of families to learn about and choose a community they love. This is a free service. ' },
 };
 
-const stepsWithoutControls = ['Landing', 'WhatToDoNext', 'ExploreAffordableOptions', 'PostConversionGreeting'];
+const stepsWithoutControls = ['Landing', 'WhatToDoNext', 'ExploreAffordableOptions', 'MedicaidWarning', 'CCRCWarning','PostConversionGreeting'];
 
 export default class PricingWizardPage extends Component {
   static propTypes = {
@@ -134,11 +134,11 @@ export default class PricingWizardPage extends Component {
 
   // This function is called after the step is changed
   handleStepChange = ({
-    currentStep, data, goto, doSubmit,
+    currentStep, data, goto, doSubmit, next,
   }) => {
-    const { community, userHas, submitActionAndCreateUser, updateUuidAux, match, sendEvent } = this.props;
+    const { community, userHas, submitActionAndCreateUser, updateUuidAux, match, sendEvent, uuidAux } = this.props;
     const { id } = community;
-    const { interest } = data;
+    const { interest, medicaidCoverage } = data;
 
     sendEvent('step-completed', id, currentStep);
 
@@ -146,14 +146,33 @@ export default class PricingWizardPage extends Component {
       // return promise so that wizard will wait till api call is complete
       return updateUuidAux(data).then(() => {
         if (userHas(['name', 'phoneNumber'])) {
-          return submitActionAndCreateUser(data).then(() => goto('WhatToDoNext'));
+          return submitActionAndCreateUser(data).then(() => {
+            if (medicaidCoverage === 'no' ||
+              (uuidAux && uuidAux.uuidInfo && uuidAux.uuidInfo.financialInfo && uuidAux.uuidInfo.financialInfo.medicaid === false)) {
+              // it's important to check for false value as even if key is missing or it's null, undefined condition will become true
+              if (!getIsCCRC(community)) {
+                return goto('PostConversionGreeting');
+              }
+              return goto('CCRCWarning');
+            }
+            return null;
+          });
+        }
+        if (medicaidCoverage === 'no' ||
+          (uuidAux && uuidAux.uuidInfo && uuidAux.uuidInfo.financialInfo && uuidAux.uuidInfo.financialInfo.medicaid === false)) {
+          // it's important to check for false value as even if key is missing or it's null, undefined condition will become true
+          return goto('Contact');
         }
         return null;
       });
     }
 
     if (currentStep === 'Contact') {
-      return submitActionAndCreateUser(data, currentStep);
+      return submitActionAndCreateUser(data, currentStep).then(() => {
+        if (!getIsCCRC(community)) {
+          goto('PostConversionGreeting');
+        }
+      });
     }
 
     if (currentStep === 'WhatToDoNext' && interest === 'talk-advisor') {
@@ -161,27 +180,6 @@ export default class PricingWizardPage extends Component {
     }
 
     return updateUuidAux(data);
-  };
-
-  handleStepChangePostConversionExperiment = ({
-    currentStep, data, goto,
-  }) => {
-    const { community, userHas, submitActionAndCreateUser, updateUuidAux, sendEvent } = this.props;
-    const { id } = community;
-
-    sendEvent('step-completed', id, currentStep);
-
-    if (currentStep === 'EstimatedPricing') {
-      return updateUuidAux(data).then(() => {
-        if (userHas(['name', 'phoneNumber'])) {
-          return submitActionAndCreateUser(data).then(() => goto('PostConversionGreeting'));
-        }
-        return null;
-      });
-    }
-
-    // previous to last step: Contact
-    return submitActionAndCreateUser(data, currentStep);
   };
 
   handleComplete = (data, { redirectLink }) => {
@@ -268,155 +266,127 @@ export default class PricingWizardPage extends Component {
           <StyledCommunityInfo inverted community={community} headerIsLink />
         </Column>
 
-        <Experiment name="Pricing_Wizard_Post_Conversion">
-          <Variant name="Pricing_Wizard_Traditional">
-            <WizardController
-              formName="PricingWizardForm"
-              onComplete={this.handleComplete}
-              onStepChange={this.handleStepChange}
-            >
-              {({
-                  data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
-              }) => {
-                let formHeading = `Thank you! Our Local Senior Living Expert will be contacting you shortly with ${type}. What is the best way to reach you?`;
-                let formSubheading = null;
-                if (data.interest) {
-                  const contactFormHeadingObj = contactFormHeadingMap[data.interest];
-                  formHeading = contactFormHeadingObj.heading;
-                  formSubheading = contactFormHeadingObj.subheading;
-                }
+        <WizardController
+          formName="PricingWizardForm"
+          onComplete={this.handleComplete}
+          onStepChange={this.handleStepChange}
+        >
+          {({
+              data, onSubmit, isFinalStep, submitEnabled, next, currentStep, goto, ...props
+          }) => {
+            let formHeading = `Thank you! Our Local Senior Living Expert will be contacting you shortly with ${type}. What is the best way to reach you?`;
+            let formSubheading = null;
+            if (data.interest) {
+              const contactFormHeadingObj = contactFormHeadingMap[data.interest];
+              formHeading = contactFormHeadingObj.heading;
+              formSubheading = contactFormHeadingObj.subheading;
+            }
 
-                return (
-                  <>
-                    <Body>
-                      <WizardSteps {...props}>
-                        <WizardStep
-                          component={CommunityPWEstimatedPricingFormContainer}
-                          name="EstimatedPricing"
-                          communityName={name}
-                          onRoomTypeChange={this.handleRoomTypeChange}
-                          onMoveTimelineChange={this.handleMoveTimelineChange}
-                          onCareTypeChange={this.handleCareTypeChange}
-                          onHelpHover={this.handleHelpHover}
-                          uuidAux={uuidAux}
-                          type={type}
-                        />
-                        <WizardStep
-                          component={CommunityBookATourContactFormContainer}
-                          name="Contact"
-                          onAdvisorHelpClick={openHelpModal}
-                          user={user}
-                          community={community}
-                          heading={formHeading}
-                          subheading={formSubheading}
-                        />
-                        <WizardStep
-                          component={CommunityPricingWizardWhatToDoNextFormContainer}
-                          name="WhatToDoNext"
-                          communityName={name}
-                          estimatedPrice={estimatedPrice}
-                          showEstimatePrice={!hasCCRC(community) && !hasSNF(community)}
-                          listOptions={compiledWhatToDoNextOptions}
-                          onInterestChange={(e, interest) => sendEvent('pricing-next-interest', id, interest)}
-                          onSubmit={onSubmit}
-                          type={type}
-                        />
-                        <WizardStep
-                          component={CommunityPricingWizardExploreAffordableOptionsFormContainer}
-                          name="ExploreAffordableOptions"
-                          listOptions={EXPLORE_AFFORDABLE_PRICING_OPTIONS}
-                          onBudgetChange={this.handleBudgetChange}
-                          onSubmit={onSubmit}
-                        />
-                        <WizardStep
-                          component={CommunityPricingWizardLandingContainer}
-                          name="Landing"
-                          buttonText="View Dashboard"
-                          onBeginClick={onSubmit}
-                        />
-                      </WizardSteps>
-                    </Body>
-                    {currentStep && !stepsWithoutControls.includes(currentStep) &&
-                    <Controls>
-                      <PricingFormFooter
-                        price={estimatedPrice}
-                        onProgressClick={onSubmit}
-                        isFinalStep={userHas(['phoneNumber', 'name']) || isFinalStep}
-                        isButtonDisabled={!submitEnabled}
-                      />
-                    </Controls>
-                    }
-                  </>
-                );
-              }}
-            </WizardController>
-          </Variant>
-          <Variant name="Pricing_Wizard_Post_Conversion">
-            {/* http://www.lvh.me/custom-pricing/almavia-of-san-francisco?experimentEvaluations=Pricing_Wizard_Post_Conversion:Pricing_Wizard_Post_Conversion */}
-            <WizardController
-              formName="PricingWizardForm"
-              onComplete={this.handleCompletePostConversion}
-              onStepChange={this.handleStepChangePostConversionExperiment}
-            >
-              {({
-                  data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
-              }) => {
-                let formHeading = `Thank you! Our Local Senior Living Expert will be contacting you shortly with ${type}. What is the best way to reach you?`;
-                let formSubheading = null;
-                if (data.interest) {
-                  const contactFormHeadingObj = contactFormHeadingMap[data.interest];
-                  formHeading = contactFormHeadingObj.heading;
-                  formSubheading = contactFormHeadingObj.subheading;
+            return (
+              <>
+                <Body>
+                  <WizardSteps {...props}>
+                    <WizardStep
+                      component={CommunityPWEstimatedPricingFormContainer}
+                      name="EstimatedPricing"
+                      communityName={name}
+                      onRoomTypeChange={this.handleRoomTypeChange}
+                      onMoveTimelineChange={this.handleMoveTimelineChange}
+                      onCareTypeChange={this.handleCareTypeChange}
+                      onHelpHover={this.handleHelpHover}
+                      uuidAux={uuidAux}
+                      type={type}
+                    />
+                    <WizardStep
+                      component={ConversionWizardInfoStep}
+                      name="MedicaidWarning"
+                      heading="Let's double check your Medicaid qualification."
+                      description="To qualify for Medicaid you must have:"
+                      buttons={[
+                        {
+                          text: 'I qualify for Medicaid',
+                          props: {
+                            href: 'https://www.communityresourcefinder.org/',
+                            target: '_blank',
+                            onClick: () => sendEvent('pricing-medicaid-warning', id, 'i-qualify'),
+                          },
+                        },
+                        {
+                          text: 'I do NOT qualify for Medicaid',
+                          props: {
+                            onClick: () => {
+                              sendEvent('pricing-medicaid-warning', id, 'i-do-not-qualify');
+                              if (userHas(['name', 'phoneNumber'])) {
+                                if (!getIsCCRC(community)) {
+                                  return goto('PostConversionGreeting');
+                                }
+                                return goto('CCRCWarning');
+                              }
+                              return next();
+                            },
+                          },
+                        },
+                      ]}
+                      points={['Asset limit in most states $1,600 to $15,750', 'Income limit is typically less than $2,360/month']}
+                    />
+                    <WizardStep
+                      component={CommunityBookATourContactFormContainer}
+                      name="Contact"
+                      onAdvisorHelpClick={openHelpModal}
+                      user={user}
+                      community={community}
+                      heading={formHeading}
+                      subheading={formSubheading}
+                    />
+                    <WizardStep
+                      component={ConversionWizardInfoStep}
+                      name="CCRCWarning"
+                      heading="This is a Continuing Care Retirement Community (CCRC)"
+                      description="The buying process for CCRCs is different from Assisted Living or Independent Living."
+                      buttons={[
+                        {
+                          text: 'I understand and want more info on this CCRC',
+                          props: {
+                            href: community.url,
+                            target: '_blank',
+                            onClick: () => sendEvent('ccrc-warning', id, 'i-want-info'),
+                          },
+                        },
+                        {
+                          text: "I'd like to talk to a Local Expert about different options",
+                          props: {
+                            onClick: () => {
+                              sendEvent('ccrc-warning', id, 'talk-to-local-expert');
+                              next();
+                            },
+                          },
+                        },
+                      ]}
+                      points={['A CCRC is a community with multiple levels of care', 'Often they have $100,000+ entrance fees']}
+                    />
+                    <WizardStep
+                      component={PostConversionGreetingForm}
+                      name="PostConversionGreeting"
+                      community={community}
+                      onSubmit={onSubmit}
+                    />
+                  </WizardSteps>
+                </Body>
+                {currentStep && !stepsWithoutControls.includes(currentStep) &&
+                  <Controls>
+                    <PricingFormFooter
+                      price={estimatedPrice}
+                      onProgressClick={onSubmit}
+                      isFinalStep={userHas(['phoneNumber', 'name']) || isFinalStep}
+                      isButtonDisabled={!submitEnabled}
+                    />
+                  </Controls>
                 }
+              </>
+            );
+          }}
+        </WizardController>
 
-                return (
-                  <>
-                    <Body>
-                      <WizardSteps {...props}>
-                        <WizardStep
-                          component={CommunityPWEstimatedPricingFormContainer}
-                          name="EstimatedPricing"
-                          communityName={name}
-                          onRoomTypeChange={this.handleRoomTypeChange}
-                          onMoveTimelineChange={this.handleMoveTimelineChange}
-                          onCareTypeChange={this.handleCareTypeChange}
-                          onHelpHover={this.handleHelpHover}
-                          uuidAux={uuidAux}
-                          type={type}
-                        />
-                        <WizardStep
-                          component={CommunityBookATourContactFormContainer}
-                          name="Contact"
-                          onAdvisorHelpClick={openHelpModal}
-                          user={user}
-                          community={community}
-                          heading={formHeading}
-                          subheading={formSubheading}
-                        />
-                        <WizardStep
-                          component={PostConversionGreetingForm}
-                          name="PostConversionGreeting"
-                          community={community}
-                          onSubmit={onSubmit}
-                        />
-                      </WizardSteps>
-                    </Body>
-                    {currentStep && !stepsWithoutControls.includes(currentStep) &&
-                      <Controls>
-                        <PricingFormFooter
-                          price={estimatedPrice}
-                          onProgressClick={onSubmit}
-                          isFinalStep={userHas(['phoneNumber', 'name']) || isFinalStep}
-                          isButtonDisabled={!submitEnabled}
-                        />
-                      </Controls>
-                    }
-                  </>
-                );
-              }}
-            </WizardController>
-          </Variant>
-        </Experiment>
         <Route path={`${match.url}/thank-you`}>
           {routeProps => (
             <Modal isOpen={!!routeProps.match} onClose={() => redirectTo(community.url)} closeable>
