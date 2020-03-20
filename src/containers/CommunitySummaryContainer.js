@@ -149,6 +149,14 @@ export default class CommunitySummaryContainer extends Component {
     this.sendEvent('click', 'viewReviews');
   };
 
+  conciergeNumberClicked = () => {
+    this.sendEvent('click', 'conciergeNumberClicked');
+  };
+
+  communityNumberClicked = () => {
+    this.sendEvent('click', 'communityNumberClicked');
+  };
+
   render() {
     const { community, isAdmin, userSaves, className, match } = this.props;
 
@@ -159,9 +167,12 @@ export default class CommunitySummaryContainer extends Component {
         isFavorited={isCommunityAlreadySaved(community, userSaves)}
         onFavouriteClick={this.handleFavouriteClick}
         onShareClick={this.handleShareClick}
+        onConciergeNumberClicked={this.conciergeNumberClicked}
+        onCommunityNumberClicked={this.communityNumberClicked}
         goToReviews={this.goToReviews}
         className={className}
         searchParams={match.params}
+
       />
     );
   }

@@ -91,7 +91,7 @@ const CommunityAgentSection = ({
   return (
     <>
       <SubHeadingSection onClick={onAdvisorHelpClick}>
-        <AdvisorHelpBlock size="caption" weight="medium" palette="primary">What can my Seniorly Partner Agent help me with?</AdvisorHelpBlock>
+        <AdvisorHelpBlock size="caption" weight="medium" palette="primary">What can my Local Senior Living Expert help me with?</AdvisorHelpBlock>
         <Icon icon="help" palette="primary" />
       </SubHeadingSection>
       <AgentInfoSection>

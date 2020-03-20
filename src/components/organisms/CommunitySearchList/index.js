@@ -176,7 +176,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
             />
           </CommunityTileWrapper>
           {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
-            <PaddedSearchResultsAdTileContainer type="getOffer" locationLabel={locLabel} tocLabel={tocLabel} />}
+            <PaddedSearchResultsAdTileContainer type="homeCare" locationLabel={locLabel} tocLabel={tocLabel} />}
         </>
       ))}
       {communityList.length < 1 &&

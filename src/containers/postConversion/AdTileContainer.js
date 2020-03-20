@@ -8,7 +8,9 @@ import SlyEvent from 'sly/services/helpers/events';
 import withNotification from 'sly/controllers/withNotification';
 import AdTile from 'sly/components/organisms/AdTile';
 import { ResponsiveImage } from 'sly/components/atoms';
-
+import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
+import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
+import { HOME_CARE_REQUESTED } from 'sly/services/newApi/constants';
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
   vertical-align: middle;
@@ -21,7 +23,7 @@ const StyledResponsiveImage = styled(ResponsiveImage)`
 export default class PostConversionAdTileContainer extends Component {
   static propTypes = {
     notifyInfo: func.isRequired,
-    type: oneOf(['askAgent', 'getOffer']).isRequired,
+    type: oneOf(['askAgent', 'homeCare','getOffer']).isRequired,
     city: string,
     tocLabel: string,
   };
@@ -32,6 +34,9 @@ export default class PostConversionAdTileContainer extends Component {
 
   state = {
     isModalOpen: false,
+    modalMessagePrompt: '',
+    modalHeading: '',
+    modalAction: HOME_CARE_REQUESTED,
   };
 
   componentDidMount() {
@@ -43,8 +48,6 @@ export default class PostConversionAdTileContainer extends Component {
     });
   }
 
-
-
   handleGetInstantOfferClick = () => {
     SlyEvent.getInstance().sendEvent({
       action: 'click-get-instant-offer-button',
@@ -52,8 +55,39 @@ export default class PostConversionAdTileContainer extends Component {
     });
   };
 
+  handleUseHomecareClick = () => {
+    SlyEvent.getInstance().sendEvent({
+      action: 'click-use-homecare-button',
+      category: 'CommunityProfileAdTile',
+    });
+    this.setState({
+      isModalOpen: true,
+      modalMessagePrompt: 'What kinds of care do you need at home?',
+      modalHeading: 'We Can Help You Find the Best Home Care',
+      modalAction: HOME_CARE_REQUESTED,
+    });
+  };
+
+  handleClose = () => {
+    SlyEvent.getInstance().sendEvent({
+      action: 'close-ask-agent-question-modal',
+      category: 'CommunityProfileAdTile',
+    });
+    this.setState({
+      isModalOpen: false,
+    });
+  };
+
+  handleComplete = () => {
+    const { notifyInfo } = this.props;
+
+    notifyInfo('We have received your request and we will get back to you soon.');
+    this.handleClose();
+  };
+
   render() {
     const { type } = this.props;
+    const { isModalOpen, modalHeading, modalMessagePrompt, modalAction } = this.state;
     return (
       <>
         {type === 'getOffer' &&
@@ -71,6 +105,34 @@ export default class PostConversionAdTileContainer extends Component {
         >
           Check out <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> Offers for a no obligation cash offer.
         </AdTile>
+        }
+        {type === 'homeCare' &&
+        <AdTile
+          title="Get In-Home Care for Seniors"
+          buttonText="Get Home Care"
+          buttonPosition="right"
+          image={assetPath('images/homecare-ad.png')}
+          buttonProps={{ onClick: this.handleUseHomecareClick }}
+          {...this.props}
+        >
+          Our team will help you find the right caregiver.
+        </AdTile>
+        }
+        {isModalOpen &&
+        <Modal onClose={this.handleClose}>
+          <HeaderWithClose onClose={this.handleClose} />
+          <PaddedHeaderWithCloseBody>
+            <AskQuestionToAgentFormContainer
+              heading={modalHeading}
+              messagePrompt={modalMessagePrompt}
+              image={assetPath('images/agents.png')}
+              buttonKind="regular"
+              postSubmit={this.handleComplete}
+              actionType={modalAction}
+              showMessageFieldFirst
+            />
+          </PaddedHeaderWithCloseBody>
+        </Modal>
         }
       </>
     );

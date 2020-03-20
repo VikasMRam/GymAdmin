@@ -64,7 +64,7 @@ import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
-import UnhydratedCommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
+// import UnhydratedCommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -84,7 +84,7 @@ const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { a
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
-const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer);
+// const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer);
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -232,7 +232,7 @@ const makeBanner = (profileContacted) => {
 
   return `We have your ${requests.join(
     '',
-  )} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
+  )} request. Your Seniorly Local Expert is checking with this community and will get back to you shortly.`;
 };
 
 export default class CommunityDetailPage extends Component {
@@ -474,9 +474,10 @@ export default class CommunityDetailPage extends Component {
                     />
                   )}
                 </StyledHeadingBoxSection>
-                <AdWrapper>
-                  <CommunityProfileAdTileContainer type="getOffer" profileId={community.id}/>
-                </AdWrapper>
+                {/* TODO: ENABLE AFTER FIGURING OUT HYDRATION*/}
+                {/*<AdWrapper>*/}
+                  {/*<CommunityProfileAdTileContainer type="homeCare" profileId={community.id} />*/}
+                {/*</AdWrapper>*/}
                 <StyledHeadingBoxSection
                   heading={`Get Availability at ${name}`}
                   id="availability"
@@ -505,7 +506,7 @@ export default class CommunityDetailPage extends Component {
                   <HowSlyWorksVideoContainer eventLabel={community.id} />
                 </StyledHeadingBoxSection>
                 {partnerAgent && (
-                  <StyledHeadingBoxSection heading={`Your Seniorly Partner Agent for ${name}`}>
+                  <StyledHeadingBoxSection heading={`Your Local Senior Living Expert for ${name}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} />
                     <StyledAskAgentButton type="services">Ask a Question</StyledAskAgentButton>
                   </StyledHeadingBoxSection>
