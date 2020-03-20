@@ -197,6 +197,7 @@ const CovidWrapper = styled.div`
   border-radius: ${size('border.xLarge')};
   border-top: 4px solid ${palette('secondary', 'dark35')};
   margin-bottom: ${size('spacing.xLarge')};
+  text-align: center;
 `;
 
 const AdWrapper = styled.div`
@@ -366,17 +367,18 @@ export default class CommunityDetailPage extends Component {
                     hasAlreadyRequested={isAlreadyPricingRequested}
                   />
                 )}
-                {(covidInfoDescription || covidInfoTitle) && (
+                {(promoDescription || promoTitle) && (
                   <CovidWrapper>
                     <Heading size="subtitle" level="subtitle">
-                      {covidInfoTitle}
+                      {promoTitle}
                     </Heading>
                     <Paragraph>
-                      {covidInfoDescription}
+                      {promoDescription}
                     </Paragraph>
-                    <AskAgentQuestionContainer type="covid-banner">
-                      {askAgent => <Link onClick={askAgent}> Ask us for details</Link>}
-                    </AskAgentQuestionContainer>
+                    <CTAWrapper>
+                      <CTAButton type="covid-banner">Take a Virtual Tour</CTAButton>
+                      <CTABlock>or call our team at <Link href="tel:+18558664515">(855) 866-4515</Link></CTABlock>
+                    </CTAWrapper>
                   </CovidWrapper>
                 )}
                 {communityInsights &&
