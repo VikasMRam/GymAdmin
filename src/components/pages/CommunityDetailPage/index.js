@@ -365,13 +365,13 @@ export default class CommunityDetailPage extends Component {
                     hasAlreadyRequested={isAlreadyPricingRequested}
                   />
                 )}
-                {(promoDescription || promoTitle) && (
+                {(covidInfoDescription || covidInfoTitle) && (
                   <CovidWrapper>
                     <Heading size="subtitle" level="subtitle">
-                      {promoTitle}
+                      {covidInfoTitle}
                     </Heading>
                     <Paragraph>
-                      {promoDescription}
+                      {covidInfoDescription}
                     </Paragraph>
                     <CTAWrapper>
                       <CTAButton type="covid-banner">Take a Virtual Tour</CTAButton>
