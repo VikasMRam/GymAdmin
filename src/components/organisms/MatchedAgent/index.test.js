@@ -21,4 +21,11 @@ describe('MatchedAgent', () => {
     expect(wrapper.find('Link').at(1).contains(defaultProps.agent.info.workPhone)).toBeTruthy();
     expect(wrapper.find('AdTile')).toHaveLength(1);
   });
+
+  it('renders loading', () => {
+    const wrapper = wrap({ agent: null });
+
+    expect(wrapper.contains('hold on we are matching you with a local senior living expert')).toBeTruthy();
+    expect(wrapper.find('AgentPlaceholder')).toHaveLength(1);
+  });
 });
