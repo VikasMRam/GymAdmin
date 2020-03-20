@@ -57,6 +57,7 @@ const StyledHr = styled(Hr)`
 const FilterColumnWrapper = styled(Box)`
   padding: ${size('spacing.large')};
   width: ${size('layout.col3')};
+  margin-bottom: ${size('spacing.xLarge')}
 `;
 
 const ImageButtonWrapper = pad(styled.div`
@@ -155,6 +156,7 @@ const CommunitySearchPage = ({
       })}
       <CommunitySearchPageTemplate
         column={(
+          <>
           <FilterColumnWrapper>
             <>
               <ImageButtonWrapper isMapView={isMapView}>
@@ -180,8 +182,10 @@ const CommunitySearchPage = ({
               />
               <ApplyFilterButton kind="jumbo" onClick={toggleFiltersOpen}>Apply Filters</ApplyFilterButton>
             </ResponsiveSidebar>
-            <AdSenseTile isMobileOnly={false} adLocation={'search'}/>
+
           </FilterColumnWrapper>
+          <AdSenseTile isMobileOnly={false} adLocation={'search'}/>
+          </>
         )}
       >
         <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
