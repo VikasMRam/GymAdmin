@@ -48,6 +48,7 @@ import UnhydratedHowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideo
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 import UnhydratedAskAgentQuestionButtonContainer from 'sly/containers/AskAgentQuestionButtonContainer';
+import UnhydratedAskAgentQuestionContainer from 'sly/containers/AskAgentQuestionContainer';
 import UnhydratedGetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
 import PlusBranding from 'sly/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
@@ -77,6 +78,7 @@ const GetCurrentAvailabilityContainer = withHydration(UnhydratedGetCurrentAvaila
 const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContainer);
 const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
 const AskAgentQuestionButtonContainer = withHydration(UnhydratedAskAgentQuestionButtonContainer);
+const AskAgentQuestionContainer = withHydration(UnhydratedAskAgentQuestionContainer);
 const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContainer);
 const CommunityAddReviewButtonContainer = withHydration(UnhydratedCommunityAddReviewButtonContainer);
 const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuestionAnswersContainer);
@@ -193,7 +195,6 @@ const CovidWrapper = styled.div`
   padding: ${size('spacing.large')};
   background-color: ${palette('secondary', 'filler')};
   border-radius: ${size('border.xLarge')};
-  text-align: center;
   border-top: 4px solid ${palette('secondary', 'dark35')};
   margin-bottom: ${size('spacing.xLarge')};
 `;
@@ -373,6 +374,9 @@ export default class CommunityDetailPage extends Component {
                     <Paragraph>
                       {covidInfoDescription}
                     </Paragraph>
+                    <AskAgentQuestionContainer type="covid-banner">
+                      {askAgent => <Link onClick={askAgent}> Ask us for details</Link>}
+                    </AskAgentQuestionContainer>
                   </CovidWrapper>
                 )}
                 {communityInsights &&
