@@ -91,6 +91,10 @@ export const generateAskAgentQuestionContents = (name, city, type) => {
   } else if (type === 'services') {
     heading = `Ask your Seniorly Partner Agent about services provided at ${name}`;
     question = `Hi, I would like more information about ${name}'s amenities.`;
+  } else if (type === 'covid-banner') {
+    heading = `We are excited to provide you a virtual tour of ${name}`;
+    description = "Please tell us when you are available to take your virtual tour?";
+    placeholder = "Write your preferred day and time here."
   }
 
   return {
@@ -106,7 +110,7 @@ export const isOnVacation = (agent) => {
   const { vacationStart, vacationEnd } = info;
   try {
     const now = new Date();
-    const eDate = Date.parse(vacationEnd); 
+    const eDate = Date.parse(vacationEnd);
     return eDate > now;
   }catch (e){
     return false

@@ -193,9 +193,9 @@ const CovidWrapper = styled.div`
   padding: ${size('spacing.large')};
   background-color: ${palette('secondary', 'filler')};
   border-radius: ${size('border.xLarge')};
-  text-align: center;
   border-top: 4px solid ${palette('secondary', 'dark35')};
   margin-bottom: ${size('spacing.xLarge')};
+  text-align: center;
 `;
 
 const AdWrapper = styled.div`
@@ -373,6 +373,10 @@ export default class CommunityDetailPage extends Component {
                     <Paragraph>
                       {covidInfoDescription}
                     </Paragraph>
+                    <CTAWrapper>
+                      <CTAButton type="covid-banner">Take a Virtual Tour</CTAButton>
+                      <CTABlock>or call our team at <Link href="tel:+18558664515">(855) 866-4515</Link></CTABlock>
+                    </CTAWrapper>
                   </CovidWrapper>
                 )}
                 {communityInsights &&
