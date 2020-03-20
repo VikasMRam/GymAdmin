@@ -15,7 +15,6 @@ export default class ExperimentalAdTileContainer extends Component {
     const { locationLabel, tocLabel, handleClick } = this.props;
     const agentAdTitle = `Find the Best ${tocLabel} in ${locationLabel}`;
     const agentAdTitleVerA = `Need Live Help Now in ${locationLabel}?`;
-    const agentAdTitleVerB = `Want Custom Pricing and Options in ${locationLabel}?`;
     return (
       <Experiment name="SearchAdTile">
         <Variant name="Ask_Question">
@@ -38,17 +37,6 @@ export default class ExperimentalAdTileContainer extends Component {
             {...this.props}
           >
             Our Local Senior Living Experts are Available
-          </AdTile>
-        </Variant>
-        <Variant name="Custom_Options">
-          <AdTile
-            title={agentAdTitleVerB}
-            buttonText="Get Pricing Now"
-            image={assetPath('images/agents-1.png')}
-            buttonProps={{ onClick: handleClick }}
-            {...this.props}
-          >
-            Our Local Senior Living Experts Will Help
           </AdTile>
         </Variant>
       </Experiment>

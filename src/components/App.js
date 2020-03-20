@@ -340,6 +340,11 @@ export default class App extends Component {
                 exact
               />
               <Route
+                path="/ads.txt"
+                render={() => `google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0`}
+                exact
+              />
+              <Route
                 path={`/:toc(${careTypes})/:state/:city/filters`}
                 render={({ match }) => (
                   <Redirect

@@ -72,7 +72,7 @@ const PostConversionGreetingForm = ({
         <RejectButton ghost palette="primary" onClick={doDismiss}>See similar communities in the area.</RejectButton>
       </TextWrapper>
       <Wrapper>
-        <PostConversionAdTileContainer notifyInfo={closeModal} type="getOffer"/>
+        <PostConversionAdTileContainer notifyInfo={closeModal} type="homeCare"/>
       </Wrapper>
       {currentModal === ASK_NOT_HELP && (
         <PostConversionAskNotHelpModal onReject={doReject} onClose={closeModal} />

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
-import { CONSULTATION_REQUESTED } from 'sly/services/newApi/constants';
+import { CONSULTATION_REQUESTED,HOME_CARE_REQUESTED } from 'sly/services/newApi/constants';
 import withNotification from 'sly/controllers/withNotification';
 import AdTile from 'sly/components/organisms/AdTile';
 import { ResponsiveImage } from 'sly/components/atoms';
@@ -23,7 +23,7 @@ const StyledResponsiveImage = styled(ResponsiveImage)`
 export default class SearchResultsAdTileContainer extends Component {
   static propTypes = {
     notifyInfo: func.isRequired,
-    type: oneOf(['askAgent', 'getOffer']).isRequired,
+    type: oneOf(['askAgent', 'getOffer','homeCare']).isRequired,
     city: string,
     tocLabel: string,
   };
@@ -34,6 +34,9 @@ export default class SearchResultsAdTileContainer extends Component {
 
   state = {
     isModalOpen: false,
+    modalAction: CONSULTATION_REQUESTED,
+    modalMessagePrompt: 'What can we help you with?',
+    modalHeading: 'Our Local Senior Living Experts can help you with your search.',
   };
 
   componentDidMount() {
@@ -53,6 +56,19 @@ export default class SearchResultsAdTileContainer extends Component {
     });
     this.setState({
       isModalOpen: true,
+    });
+  };
+
+  handleUseHomecareClick = () => {
+    SlyEvent.getInstance().sendEvent({
+      action: 'click-use-homecare-button',
+      category: 'SearchResultsAdTile',
+    });
+    this.setState({
+      isModalOpen: true,
+      modalMessagePrompt: 'What kinds of care do you need at home?',
+      modalHeading: 'We Can Help You Find the Best Home Care',
+      modalAction: HOME_CARE_REQUESTED,
     });
   };
 
@@ -82,7 +98,7 @@ export default class SearchResultsAdTileContainer extends Component {
 
   render() {
     const { type } = this.props;
-    const { isModalOpen } = this.state;
+    const { isModalOpen, modalHeading, modalMessagePrompt, modalAction } = this.state;
     return (
       <>
         {type === 'askAgent' &&
@@ -104,16 +120,29 @@ export default class SearchResultsAdTileContainer extends Component {
             Check out <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> Offers for a no obligation cash offer.
           </AdTile>
         }
+        {type === 'homeCare' &&
+          <AdTile
+            title="Get In-Home Care for Seniors"
+            buttonText="Get Home Care"
+            buttonPosition="right"
+            image={assetPath('images/homecare-ad.png')}
+            buttonProps={{ onClick: this.handleUseHomecareClick }}
+            {...this.props}
+          >
+            Our team will help you find the best caregivers nationwide.
+          </AdTile>
+        }
         {isModalOpen &&
           <Modal onClose={this.handleClose}>
             <HeaderWithClose onClose={this.handleClose} />
             <PaddedHeaderWithCloseBody>
               <AskQuestionToAgentFormContainer
-                heading="Our Local Senior Living Experts can help you with your search."
+                heading={modalHeading}
+                messagePrompt={modalMessagePrompt}
                 image={assetPath('images/agents.png')}
                 buttonKind="regular"
                 postSubmit={this.handleComplete}
-                actionType={CONSULTATION_REQUESTED}
+                actionType={modalAction}
                 showMessageFieldFirst
               />
             </PaddedHeaderWithCloseBody>

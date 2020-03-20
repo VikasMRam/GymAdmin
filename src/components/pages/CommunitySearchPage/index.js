@@ -13,6 +13,7 @@ import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearc
 import { Heading, Button, Hr, Box, Image } from 'sly/components/atoms';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
+import AdSenseTile from 'sly/components/organisms/AdsenseTile';
 import IconButton from 'sly/components/molecules/IconButton';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
@@ -56,6 +57,7 @@ const StyledHr = styled(Hr)`
 const FilterColumnWrapper = styled(Box)`
   padding: ${size('spacing.large')};
   width: ${size('layout.col3')};
+  margin-bottom: ${size('spacing.xLarge')}
 `;
 
 const ImageButtonWrapper = pad(styled.div`
@@ -154,6 +156,7 @@ const CommunitySearchPage = ({
       })}
       <CommunitySearchPageTemplate
         column={(
+          <>
           <FilterColumnWrapper>
             <>
               <ImageButtonWrapper isMapView={isMapView}>
@@ -179,7 +182,10 @@ const CommunitySearchPage = ({
               />
               <ApplyFilterButton kind="jumbo" onClick={toggleFiltersOpen}>Apply Filters</ApplyFilterButton>
             </ResponsiveSidebar>
+
           </FilterColumnWrapper>
+          <AdSenseTile isMobileOnly={false} adLocation={'search'}/>
+          </>
         )}
       >
         <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />

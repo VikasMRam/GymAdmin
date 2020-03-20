@@ -14,6 +14,7 @@ import Pagination from 'sly/components/molecules/Pagination';
 import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import CommunityTile from 'sly/components/organisms/CommunityTile';
+import AdSenseTile from 'sly/components/organisms/AdsenseTile';
 import SearchResultsAdTileContainer from 'sly/containers/SearchResultsAdTileContainer';
 
 const CommunityFilterBarWrapper = styled.div`
@@ -176,7 +177,9 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
             />
           </CommunityTileWrapper>
           {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
-            <PaddedSearchResultsAdTileContainer type="getOffer" locationLabel={locLabel} tocLabel={tocLabel} />}
+            <><PaddedSearchResultsAdTileContainer type="homeCare" locationLabel={locLabel} tocLabel={tocLabel} />
+              <AdSenseTile isMobileOnly={true} adLocation={'search'}/>
+            </>}
         </>
       ))}
       {communityList.length < 1 &&
@@ -189,6 +192,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
           <MSCColumnWrapper>
             {usefulInformationTilesComponents}
           </MSCColumnWrapper>
+          <AdSenseTile isMobileOnly={true} adLocation={'search'}/>
         </>
       }
       <PaginationText>
