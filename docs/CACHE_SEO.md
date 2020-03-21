@@ -15,7 +15,9 @@ We have to tag as cdn cacheable the client configs for community pages and geo p
 
 An example of the expected behaviour described above is that when requesting a community profile (cdn cacheable), the server side render of the page will skip (cdn tagged) prefetch calls to user, uuidAux etc, but will request the community profile data, once the page loads in the browser and react takes over, the request to user and uuidAux will be done (triggering some flashes around the page).
 
-## Make experiments independent of user uuid
+## ~~Make experiments independent of user uuid~~
+
+> As per conversation with Kunal, let's keep the experiments out of the feature so we can simplify implementing it, we will flip the experiment on reload
 
 Because the web server will not know the user uuid for requests of a cacheable page (because of cookie whitelisting described in next section), which is the current mechanism that we use to define the experiments for the user, we have to use a new cookie that specifies the combination of experiments rendered for that user, let's call this cookie sly-experiments.
 
@@ -32,9 +34,9 @@ The web server should always generate a cookie for the experiments, and ignore t
 Using the technique described [here](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Cookies.html) under the section: Forward a whitelist of cookies that you specify. We would whitelist sly-experiments cookie, so this will be the only cookie allowed to reach origin. This would mean that if we have 2 experiments with 2 variants, we will cache 4 versions per profile page, but if we have 4 experiments we would cache 16 versions per page. To mitigate this, we can minimize the impact of experiments changing doing both of this things: 
 
 1. Limiting the number of experiments we have running at any given point.
-2. Separating the cdn-sensitive experiments to a different cookie:
-    1. sly-experiments, sly-cdn-experiments
-    2. tagging the cdn sensitive experiments as such
+2. ~~Separating the cdn-sensitive experiments to a different cookie:~~
+    1. ~~sly-experiments, sly-cdn-experiments~~
+    2. ~~tagging the cdn sensitive experiments as such~~
 
 ## Invalidate cache
 

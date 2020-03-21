@@ -101,54 +101,54 @@ app.use((req, res, next) => {
 
 // headers
 app.use((req, res, next) => {
-  const apiCookies = req.headers.cookie ? [req.headers.cookie] : [];
-  const setCookie = createSetCookie(res, apiCookies);
-  req.clientConfig.apiCookies = apiCookies;
-
-  if (req.query.sly_uuid) {
-    if (!req.cookies.sly_uuid) {
-      setCookie('sly_uuid', req.query.sly_uuid);
-    }
-    const newUrl = removeQueryParamFromURL('sly_uuid', req.url);
-    res.redirect(newUrl);
-    return;
-  }
-
-  let slyUUID = req.cookies.sly_uuid;
-  if (!slyUUID) {
-    slyUUID = v4();
-    setCookie('sly_uuid', slyUUID);
-  }
-
-  req.clientConfig.slyUUID = slyUUID;
-
-  const slySID = req.cookies.sly_sid || makeSid();
-
-  if (!req.cookies.sly_sid) {
-    setCookie('sly_sid', slySID);
-  }
-
-  if (!req.cookies.referrer && req.headers.referer) {
-    setCookie('referrer', req.headers.referer);
-  }
-
-  const utmStr = [
-    'utm_content',
-    'utm_medium',
-    'utm_source',
-    'utm_campaign',
-    'utm_term',
-  ].reduce((cumul, key) => {
-    if (req.query[key]) {
-      cumul.push(`${key}:${req.query[key]}`);
-    }
-    return cumul;
-  }, [])
-    .join(',');
-
-  if (!req.cookies.utm && utmStr) {
-    setCookie('utm', utmStr);
-  }
+  // const apiCookies = req.headers.cookie ? [req.headers.cookie] : [];
+  // const setCookie = createSetCookie(res, apiCookies);
+  // req.clientConfig.apiCookies = apiCookies;
+  //
+  // if (req.query.sly_uuid) {
+  //   if (!req.cookies.sly_uuid) {
+  //     setCookie('sly_uuid', req.query.sly_uuid);
+  //   }
+  //   const newUrl = removeQueryParamFromURL('sly_uuid', req.url);
+  //   res.redirect(newUrl);
+  //   return;
+  // }
+  //
+  // let slyUUID = req.cookies.sly_uuid;
+  // if (!slyUUID) {
+  //   slyUUID = v4();
+  //   setCookie('sly_uuid', slyUUID);
+  // }
+  //
+  // req.clientConfig.slyUUID = slyUUID;
+  //
+  // const slySID = req.cookies.sly_sid || makeSid();
+  //
+  // if (!req.cookies.sly_sid) {
+  //   setCookie('sly_sid', slySID);
+  // }
+  //
+  // if (!req.cookies.referrer && req.headers.referer) {
+  //   setCookie('referrer', req.headers.referer);
+  // }
+  //
+  // const utmStr = [
+  //   'utm_content',
+  //   'utm_medium',
+  //   'utm_source',
+  //   'utm_campaign',
+  //   'utm_term',
+  // ].reduce((cumul, key) => {
+  //   if (req.query[key]) {
+  //     cumul.push(`${key}:${req.query[key]}`);
+  //   }
+  //   return cumul;
+  // }, [])
+  //   .join(',');
+  //
+  // if (!req.cookies.utm && utmStr) {
+  //   setCookie('utm', utmStr);
+  // }
 
   res.header('Cache-Control', [
     'max-age=0, private, must-revalidate',
@@ -160,39 +160,39 @@ app.use((req, res, next) => {
 
 // store
 app.use(async (req, res, next) => {
-  const { slyUUID, apiCookies } = req.clientConfig;
+  // const { slyUUID, apiCookies } = req.clientConfig;
+  //
+  // const hmac = crypto.createHmac('sha256', slyUUID);
+  // const slyUUIDHash = hmac.digest('hex');
+  // const userExperiments = Object.keys(experiments)
+  //   .reduce((cumul, key, i) => {
+  //     let segment;
+  //     if (disableExperiments) {
+  //       segment = 0;
+  //     } else {
+  //       const channel = i % 8;
+  //       const part = slyUUIDHash.substr(channel * 4, 4);
+  //       segment = Math.floor((parseInt(part, 16) / 65536) / (1 / experiments[key].length));
+  //     }
+  //     const variant = experiments[key][segment];
+  //     cumul[key] = variant;
+  //     return cumul;
+  //   }, {});
+  //
+  // const apiConfig = {
+  //   headers: {
+  //     Cookie: apiCookies.join('; '),
+  //     'User-Agent': req.headers['user-agent'],
+  //     'X-is-sly-ssr': 'true',
+  //     'X-forwarded-for': req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+  //   },
+  // };
 
-  const hmac = crypto.createHmac('sha256', slyUUID);
-  const slyUUIDHash = hmac.digest('hex');
-  const userExperiments = Object.keys(experiments)
-    .reduce((cumul, key, i) => {
-      let segment;
-      if (disableExperiments) {
-        segment = 0;
-      } else {
-        const channel = i % 8;
-        const part = slyUUIDHash.substr(channel * 4, 4);
-        segment = Math.floor((parseInt(part, 16) / 65536) / (1 / experiments[key].length));
-      }
-      const variant = experiments[key][segment];
-      cumul[key] = variant;
-      return cumul;
-    }, {});
-
-  const apiConfig = {
-    headers: {
-      Cookie: apiCookies.join('; '),
-      'User-Agent': req.headers['user-agent'],
-      'X-is-sly-ssr': 'true',
-      'X-forwarded-for': req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-    },
-  };
-
-  const store = configureStore({ experiments: userExperiments });
+  const store = configureStore({ experiments: {} });
 
   // prefetch user data
   req.clientConfig.store = store;
-  req.clientConfig.apiConfig = apiConfig;
+  // req.clientConfig.apiConfig = apiConfig;
 
   next();
 });
@@ -214,9 +214,9 @@ app.use(async (req, res, next) => {
       <CacheProvider value={cache}>
         <Provider store={store}>
           <StaticRouter context={context} location={req.url}>
-            <ApiProvider apiConfig={apiConfig}>
+            {/*<ApiProvider apiConfig={apiConfig}>*/}
               <ClientApp />
-            </ApiProvider>
+            {/*</ApiProvider>*/}
           </StaticRouter>
         </Provider>
       </CacheProvider>
