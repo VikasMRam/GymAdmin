@@ -114,6 +114,8 @@ const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
   { value: 'WarmTransferVM', label: 'WarmTransferVM' },
   { value: 'NoAgent', label: 'NoAgent' },
   { value: 'ReferralSent', label: 'ReferralSent' },
+  { value: 'HomeCareOnline', label: 'HomeCareOnline' },
+  { value: 'HomeCarePhone', label: 'HomeCarePhone' },
 ];
 
 // const tagsOptions = [
