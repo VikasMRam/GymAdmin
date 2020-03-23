@@ -7,6 +7,7 @@ import { isServer } from 'sly/config';
 import api from 'sly/services/newApi/apiInstance';
 import { createMemoizedRequestInfoSelector } from 'sly/services/newApi/selectors';
 import withPrefetchWait from 'sly/services/newApi/withPrefetchWait';
+import withReduxContext from 'sly/services/newApi/withReduxContext';
 
 const defaultDispatcher = call => call();
 
@@ -23,6 +24,8 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
     const mapStateToProps = (state, props) => {
       const argumentsAbsorber = (...args) => args;
 
+      const { getState } = props.store;
+
       // to be able to pass requestInfo for tests
       if (props[`${propName}RequestInfo`]) {
         return {
@@ -33,13 +36,14 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       const args = dispatcher(argumentsAbsorber, props);
       const { placeholders = {} } = api[apiCall].method(...args);
 
-      const requestInfo = getMemoizedRequestInfo(
-        state,
+      const getRequestInfo = () => getMemoizedRequestInfo(
+        getState(),
         { call: apiCall, args: placeholders },
       );
 
       return {
-        requestInfo,
+        requestInfo: getRequestInfo(),
+        getRequestInfo,
       };
     };
 
@@ -48,6 +52,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       props,
     );
 
+    @withReduxContext
     @withPrefetchWait
     @connect(mapStateToProps, { fetch })
 
@@ -59,6 +64,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       static propTypes = {
         api: object,
         requestInfo: object,
+        getRequestInfo: func,
         fetch: func,
         prefetchWait: func,
         apiConfig: object,
@@ -81,9 +87,10 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       }
 
       mayBeFetch = () => {
-        const { requestInfo } = this.props;
-        const { hasStarted, isLoading } = requestInfo;
-        if (!isLoading && !hasStarted) {
+        const { getRequestInfo } = this.props;
+        const { hasStarted, isLoading } = getRequestInfo();
+        const shouldSkip = isServer && api[apiCall].ssrIgnore;
+        if (!shouldSkip && !isLoading && !hasStarted) {
           return this.fetch();
         }
         return false;
@@ -100,8 +107,8 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       };
 
       render() {
-        const { requestInfo, status, ...props } = this.props;
-        const { normalized, ...request } = requestInfo;
+        const { getRequestInfo, status, ...props } = this.props;
+        const { normalized, ...request } = getRequestInfo();
 
         const innerProps = {
           ...props,

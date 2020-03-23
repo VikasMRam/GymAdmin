@@ -31,7 +31,7 @@ export default function buildApi(endpoints, config = {}) {
   };
 
   return Object.keys(endpoints).reduce((acc, key) => {
-    const { path, required, method } = endpoints[key];
+    const { path, required, method, ssrIgnore } = endpoints[key];
 
     const requiredPlaceholders = required || [];
     const placeholderRegexp = /:([^\/$]+)/g;
@@ -68,6 +68,7 @@ export default function buildApi(endpoints, config = {}) {
       const { placeholders, options } = normalizeArguments(...args);
       return makeApiCallAction(request, { placeholders, path, options, actionName: key });
     };
+    acc[key].ssrIgnore = ssrIgnore;
 
     return acc;
   }, {});
