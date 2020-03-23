@@ -4,13 +4,14 @@ import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
-import { CONSULTATION_REQUESTED,HOME_CARE_REQUESTED } from 'sly/services/newApi/constants';
-import withNotification from 'sly/controllers/withNotification';
+
 import AdTile from 'sly/components/organisms/AdTile';
-import { ResponsiveImage } from 'sly/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
+import { ResponsiveImage } from 'sly/components/atoms';
 import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
-import ExperimentalAdTileContainer from 'sly/containers/ExperimentalAdTileContainer';
+import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/services/newApi/constants';
+import withNotification from 'sly/controllers/withNotification';
+
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
   vertical-align: middle;
@@ -19,17 +20,15 @@ const StyledResponsiveImage = styled(ResponsiveImage)`
 `;
 
 @withNotification
-
-export default class SearchResultsAdTileContainer extends Component {
+export default class CommunityProfileAdTileContainer extends Component {
+  static typeHydrationId = 'CommunityProfileAdTileContainer';
   static propTypes = {
-    notifyInfo: func.isRequired,
     type: oneOf(['askAgent', 'getOffer','homeCare']).isRequired,
-    city: string,
-    tocLabel: string,
+    profileId: string.isRequired,
   };
 
   static defaultProps = {
-    type: 'askAgent',
+    type: 'getOffer',
   };
 
   state = {
@@ -40,29 +39,28 @@ export default class SearchResultsAdTileContainer extends Component {
   };
 
   componentDidMount() {
-    const { type, city, tocLabel } = this.props;
+    const { type, profileId } = this.props;
     SlyEvent.getInstance().sendEvent({
       action: 'view',
-      category: `SearchResultsAdTile-${type}`,
-      label: `${tocLabel}-${city}`,
+      category: `CommunityProfileAdTile-${type}`,
+      label: profileId,
       nonInteraction: true,
     });
   }
 
-  handleAskExpertQuestionClick = () => {
+  handleGetInstantOfferClick = () => {
+    const { profileId } = this.props;
     SlyEvent.getInstance().sendEvent({
-      action: 'click-ask-our-experts-question-button',
-      category: 'SearchResultsAdTile',
-    });
-    this.setState({
-      isModalOpen: true,
+      action: 'click-get-instant-offer-button',
+      category: 'CommunityProfileAdTile',
+      label: profileId,
     });
   };
 
   handleUseHomecareClick = () => {
     SlyEvent.getInstance().sendEvent({
       action: 'click-use-homecare-button',
-      category: 'SearchResultsAdTile',
+      category: 'CommunityProfileAdTile',
     });
     this.setState({
       isModalOpen: true,
@@ -72,17 +70,10 @@ export default class SearchResultsAdTileContainer extends Component {
     });
   };
 
-  handleGetInstantOfferClick = () => {
-    SlyEvent.getInstance().sendEvent({
-      action: 'click-get-instant-offer-button',
-      category: 'SearchResultsAdTile',
-    });
-  };
-
   handleClose = () => {
     SlyEvent.getInstance().sendEvent({
       action: 'close-ask-agent-question-modal',
-      category: 'SearchResultsAdTile',
+      category: 'CommunityProfileAdTile',
     });
     this.setState({
       isModalOpen: false,
@@ -101,24 +92,21 @@ export default class SearchResultsAdTileContainer extends Component {
     const { isModalOpen, modalHeading, modalMessagePrompt, modalAction } = this.state;
     return (
       <>
-        {type === 'askAgent' &&
-          <ExperimentalAdTileContainer {...this.props} handleClick={this.handleAskExpertQuestionClick}/>
-        }
         {type === 'getOffer' &&
-          <AdTile
-            title="Moving into senior living and selling your home?"
-            buttonText="Get Your Cash Offer"
-            buttonPosition="right"
-            image={assetPath('vectors/house-sold.svg')}
-            buttonProps={{
-              target: '_blank',
-              href: 'https://www.zillow.com/offers/?t=seniorly-0220',
-              onClick: this.handleGetInstantOfferClick,
-            }}
-            {...this.props}
-          >
-            Check out <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> Offers for a no obligation cash offer.
-          </AdTile>
+        <AdTile
+          title="Moving into senior living and selling your home?"
+          buttonText="Get Your Cash Offer"
+          buttonPosition="right"
+          image={assetPath('vectors/house-sold.svg')}
+          buttonProps={{
+            target: '_blank',
+            href: 'https://www.zillow.com/offers/?t=seniorly-0220',
+            onClick: this.handleGetInstantOfferClick,
+          }}
+          {...this.props}
+        >
+          Check out <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> Offers for a no obligation cash offer.
+        </AdTile>
         }
         {type === 'homeCare' &&
           <AdTile
@@ -129,24 +117,24 @@ export default class SearchResultsAdTileContainer extends Component {
             buttonProps={{ onClick: this.handleUseHomecareClick }}
             {...this.props}
           >
-            Our team will help you find the best caregivers nationwide.
+            Our team will help you find the right caregiver.
           </AdTile>
         }
         {isModalOpen &&
-          <Modal onClose={this.handleClose}>
-            <HeaderWithClose onClose={this.handleClose} />
-            <PaddedHeaderWithCloseBody>
-              <AskQuestionToAgentFormContainer
-                heading={modalHeading}
-                messagePrompt={modalMessagePrompt}
-                image={assetPath('images/agents.png')}
-                buttonKind="regular"
-                postSubmit={this.handleComplete}
-                actionType={modalAction}
-                showMessageFieldFirst
-              />
-            </PaddedHeaderWithCloseBody>
-          </Modal>
+        <Modal onClose={this.handleClose}>
+          <HeaderWithClose onClose={this.handleClose} />
+          <PaddedHeaderWithCloseBody>
+            <AskQuestionToAgentFormContainer
+              heading={modalHeading}
+              messagePrompt={modalMessagePrompt}
+              image={assetPath('images/agents.png')}
+              buttonKind="regular"
+              postSubmit={this.handleComplete}
+              actionType={modalAction}
+              showMessageFieldFirst
+            />
+          </PaddedHeaderWithCloseBody>
+        </Modal>
         }
       </>
     );

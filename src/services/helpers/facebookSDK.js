@@ -18,7 +18,7 @@ function lazilyLoadFacebookSDK(opts = {}) {
       sdkModule = '',
     } = opts;
 
-    opts.version = opts.version || 'v2.11';
+    opts.version = opts.version || 'v3.11';
     delete opts.lang;
     delete opts.debug;
 

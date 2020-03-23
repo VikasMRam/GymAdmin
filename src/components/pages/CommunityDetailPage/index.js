@@ -16,7 +16,8 @@ import {
 } from 'sly/services/helpers/pricing';
 import pad from 'sly/components/helpers/pad';
 import { withHydration } from 'sly/services/partialHydration';
-import { Button, Paragraph, Hr, Block, Link } from 'sly/components/atoms';
+import { getIsCCRC, getIsSNF } from 'sly/services/helpers/community';
+import { Button, Paragraph, Hr, Block, Link, Heading } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import SampleMenu from 'sly/components/organisms/SampleMenu';
 import {
@@ -63,6 +64,8 @@ import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
+import AdSenseTile from 'sly/components/organisms/AdsenseTile';
+// import UnhydratedCommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -82,6 +85,7 @@ const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { a
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
+// const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer);
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -186,6 +190,19 @@ const CTABlock = styled(Block)`
   line-height: ${size('element.regular')};
 `;
 
+const CovidWrapper = styled.div`
+  padding: ${size('spacing.large')};
+  background-color: ${palette('secondary', 'filler')};
+  border-radius: ${size('border.xLarge')};
+  border-top: 4px solid ${palette('secondary', 'dark35')};
+  margin-bottom: ${size('spacing.xLarge')};
+  text-align: center;
+`;
+
+const AdWrapper = styled.div`
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
 const Header = makeHeader();
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
@@ -216,7 +233,7 @@ const makeBanner = (profileContacted) => {
 
   return `We have your ${requests.join(
     '',
-  )} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
+  )} request. Your Seniorly Local Expert is checking with this community and will get back to you shortly.`;
 };
 
 export default class CommunityDetailPage extends Component {
@@ -253,6 +270,8 @@ export default class CommunityDetailPage extends Component {
       careServices,
       promoDescription,
       promoTitle,
+      covidInfoDescription,
+      covidInfoTitle,
       communitySize,
       communityInsights,
       plusCommunity,
@@ -271,13 +290,8 @@ export default class CommunityDetailPage extends Component {
     } = propInfo;
 
     const typeOfCare = typeCares[0];
-    const hasCCRC = typeCares.includes(
-      'Continuing Care Retirement Community(CCRC)',
-    );
-
-    const hasSNF = typeCares.includes(
-      'Skilled Nursing Facility'
-    );
+    const hasCCRC = getIsCCRC(community);
+    const hasSNF = getIsSNF(community);
 
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
@@ -351,6 +365,20 @@ export default class CommunityDetailPage extends Component {
                     community={community}
                     hasAlreadyRequested={isAlreadyPricingRequested}
                   />
+                )}
+                {(covidInfoDescription || covidInfoTitle) && (
+                  <CovidWrapper>
+                    <Heading size="subtitle" level="subtitle">
+                      {covidInfoTitle}
+                    </Heading>
+                    <Paragraph>
+                      {covidInfoDescription}
+                    </Paragraph>
+                    <CTAWrapper>
+                      <CTAButton type="covid-banner">Take a Virtual Tour</CTAButton>
+                      <CTABlock>or call our team at <Link href="tel:+18558664515">(855) 866-4515</Link></CTABlock>
+                    </CTAWrapper>
+                  </CovidWrapper>
                 )}
                 {communityInsights &&
                   communityInsights.length > 0 && (
@@ -451,7 +479,10 @@ export default class CommunityDetailPage extends Component {
                     />
                   )}
                 </StyledHeadingBoxSection>
-
+                {/* TODO: ENABLE AFTER FIGURING OUT HYDRATION*/}
+                {/*<AdWrapper>*/}
+                  {/*<CommunityProfileAdTileContainer type="homeCare" profileId={community.id} />*/}
+                {/*</AdWrapper>*/}
                 <StyledHeadingBoxSection
                   heading={`Get Availability at ${name}`}
                   id="availability"
@@ -459,7 +490,8 @@ export default class CommunityDetailPage extends Component {
                   <GetCurrentAvailabilityContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested} />
                 </StyledHeadingBoxSection>
                 {plusCommunity && <PlusBranding />}
-                {(communityDescription || rgsAux.communityDescription) && (
+                {(communityDescription || rgsAux.communityDescription ||
+                  staffDescription || residentDescription || ownerExperience) && (
                   <StyledHeadingBoxSection heading={`Details on ${name}`}>
                     <CommunityDetails
                       communityName={name}
@@ -479,7 +511,7 @@ export default class CommunityDetailPage extends Component {
                   <HowSlyWorksVideoContainer eventLabel={community.id} />
                 </StyledHeadingBoxSection>
                 {partnerAgent && (
-                  <StyledHeadingBoxSection heading={`Your Seniorly Partner Agent for ${name}`}>
+                  <StyledHeadingBoxSection heading={`Your Local Senior Living Expert for ${name}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} />
                     <StyledAskAgentButton type="services">Ask a Question</StyledAskAgentButton>
                   </StyledHeadingBoxSection>
@@ -518,6 +550,7 @@ export default class CommunityDetailPage extends Component {
                       <StyledAskAgentButton type="services">Ask About Care Services</StyledAskAgentButton>
                     </StyledHeadingBoxSection>
                   )}
+                <AdWrapper><AdSenseTile isMobileOnly={true} adLocation={'profile'}/></AdWrapper>
                 <StyledHeadingBoxSection heading={`Amenities at ${name}`}>
                   <CommunityAmenities community={community} />
                   <StyledAskAgentButton type="amenities">Ask About Amenities</StyledAskAgentButton>
@@ -608,6 +641,7 @@ export default class CommunityDetailPage extends Component {
               <Column>
                 <StickToTop>
                   <CommunityDetailsPageColumnContainer community={community} />
+                  <AdWrapper><AdSenseTile isMobileOnly={false} adLocation={'profile'}/></AdWrapper>
                 </StickToTop>
               </Column>
             </TwoColumn>

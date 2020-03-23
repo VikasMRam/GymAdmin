@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string, func, arrayOf, shape } from 'prop-types';
+import { string, arrayOf, shape, object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
@@ -32,7 +32,7 @@ const ConversionWizardInfoStep = ({ heading, description, buttons, points }) => 
       {points.map(p => <ListItem iconPalette="secondary" iconVariation="dark" icon="checkmark-circle" key={p}>{p}</ListItem>)}
     </PointsWrapper>
     <ButtonWrapper>
-      {buttons.map(b => <Button onClick={b.onClick} ghost key={b.text}>{b.text}</Button>)}
+      {buttons.map(b => <Button {...b.props} ghost key={b.text}>{b.text}</Button>)}
     </ButtonWrapper>
   </ShadowBox>
 );
@@ -42,7 +42,7 @@ ConversionWizardInfoStep.propTypes = {
   description: string.isRequired,
   buttons: arrayOf(shape({
     text: string.isRequired,
-    onClick: func,
+    props: object.isRequired,
   })).isRequired,
   points: arrayOf(string).isRequired,
 };
