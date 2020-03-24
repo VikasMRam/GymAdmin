@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { func } from 'prop-types';
+import React, { useState } from 'react';
+import { func, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
@@ -7,7 +7,6 @@ import { Block, Box, Button, Heading } from 'sly/components/atoms';
 import shadow from 'sly/components/helpers/shadow';
 import Icon from 'sly/components/atoms/Icon';
 import pad from 'sly/components/helpers/pad';
-
 import { community as communityProptype } from 'sly/propTypes/community';
 import PostConversionAskNotHelpModal from 'sly/components/organisms/PostConversionAskNotHelpModal';
 import PostConversionSureNotHelpModal from 'sly/components/organisms/PostConversionSureNotHelpModal';
@@ -49,17 +48,12 @@ const RejectButton = styled(Button)`
   margin-bottom: 0;
 `;
 
-const PaddedHeading = styled(Heading)`
-  margin: ${size('spacing.xLarge')} 0;
-`;
-
 const PostConversionGreetingForm = ({
-  onSubmit, community,
+  onSubmit, community, heading, description,
 }) => {
   const [currentModal, setCurrentModal] = useState(null);
 
   const closeModal = () => setCurrentModal(null);
-  const tryReject = () => setCurrentModal(ASK_NOT_HELP);
   const doReject = () => onSubmit({ interest: DO_NOT_REFER }).then(() => setCurrentModal(SURE_NOT_HELP));
   const doDismiss = () => onSubmit({ redirectLink: getCitySearchWithSizeUrl(community) });
 
@@ -67,12 +61,12 @@ const PostConversionGreetingForm = ({
     <div>
       <TextWrapper>
         <Icon icon="checkmark-circle" size="xLarge" palette="green" />
-        <Heading level="subtitle">You’re all set! Your Local Senior Living Expert will reach out shortly.</Heading>
-        <PaddedBlock>Did you know your local expert can often negotiate fees on your behalf?</PaddedBlock>
+        <Heading level="subtitle">{heading}</Heading>
+        {description && <PaddedBlock>{description}</PaddedBlock>}
         <RejectButton ghost palette="primary" onClick={doDismiss}>See similar communities in the area.</RejectButton>
       </TextWrapper>
       <Wrapper>
-        <PostConversionAdTileContainer notifyInfo={closeModal} type="homeCare" community={community}/>
+        <PostConversionAdTileContainer notifyInfo={closeModal} type="homeCare" community={community} />
       </Wrapper>
       {currentModal === ASK_NOT_HELP && (
         <PostConversionAskNotHelpModal onReject={doReject} onClose={closeModal} />
@@ -88,6 +82,12 @@ PostConversionGreetingForm.propTypes = {
   community: communityProptype,
   onSubmit: func.isRequired,
   handleSubmit: func.isRequired,
+  heading: string.isRequired,
+  description: string,
+};
+
+PostConversionGreetingForm.defaultProps = {
+  heading: "You're all set! A local senior living expert will reach out shortly.",
 };
 
 export default PostConversionGreetingForm;

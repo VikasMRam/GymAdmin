@@ -19,24 +19,20 @@ import {
 import {
   EST_ADDL_COST_ACCOMODATION,
   EST_ADDL_COST_CARE_SERVICE,
-  WHAT_TO_NEXT_OPTIONS,
-  EXPLORE_AFFORDABLE_PRICING_OPTIONS,
+  // WHAT_TO_NEXT_OPTIONS,
 } from 'sly/constants/pricingForm';
-import { getIsCCRC, getIsSNF } from 'sly/services/helpers/community';
+import { getIsCCRC } from 'sly/services/helpers/community';
 import { FAMILY_DASHBOARD_FAVORITES_PATH } from 'sly/constants/dashboardAppPaths';
-import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
+import Modal from 'sly/components/molecules/Modal';
 import ConversionWizardInfoStep from 'sly/components/organisms/ConversionWizardInfoStep';
 import PostConversionGreetingForm from 'sly/components/organisms/PostConversionGreetingForm';
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
-import CommunityPricingWizardWhatToDoNextFormContainer from 'sly/containers/CommunityPricingWizardWhatToDoNextFormContainer';
-
 import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWizardAcknowledgementContainer';
-import CommunityPricingWizardExploreAffordableOptionsFormContainer
-  from 'sly/containers/CommunityPricingWizardExploreAffordableOptionsFormContainer';
-import Modal from 'sly/components/molecules/Modal';
+import MatchedAgentContainer from 'sly/containers/MatchedAgentContainer';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -68,7 +64,14 @@ const contactFormHeadingMap = {
   'apply-financing': { heading: 'We Are Here to Help You', subheading: 'We have helped thousands of families to learn about and choose a community they love. This is a free service. ' },
 };
 
-const stepsWithoutControls = ['Landing', 'WhatToDoNext', 'ExploreAffordableOptions', 'MedicaidWarning', 'CCRCWarning','PostConversionGreeting'];
+const stepsWithoutControls = [
+  'Landing',
+  'WhatToDoNext',
+  'ExploreAffordableOptions',
+  'MedicaidWarning',
+  'CCRCWarning',
+  'PostConversionGreeting',
+];
 
 export default class PricingWizardPage extends Component {
   static propTypes = {
@@ -134,7 +137,7 @@ export default class PricingWizardPage extends Component {
 
   // This function is called after the step is changed
   handleStepChange = ({
-    currentStep, data, goto, doSubmit, next,
+    currentStep, data, goto, doSubmit,
   }) => {
     const { community, userHas, submitActionAndCreateUser, updateUuidAux, match, sendEvent, uuidAux } = this.props;
     const { id } = community;
@@ -147,7 +150,6 @@ export default class PricingWizardPage extends Component {
       return updateUuidAux(data).then(() => {
         if (userHas(['name', 'phoneNumber'])) {
           return submitActionAndCreateUser(data).then(() => {
-
             if (medicaidCoverage === 'yes' || medicaidCoverage === 'i-am-not-sure' ||
               (uuidAux && uuidAux.uuidInfo && uuidAux.uuidInfo.financialInfo && uuidAux.uuidInfo.financialInfo.medicaid === false)) {
               // it's important to check for false value as even if key is missing or it's null, undefined condition will become true
@@ -155,13 +157,11 @@ export default class PricingWizardPage extends Component {
                 return goto('PostConversionGreeting');
               }
               return goto('MedicaidWarning');
-            } else {
-              if (!getIsCCRC(community)) {
-                return goto('PostConversionGreeting');
-              }
-              return goto('CCRCWarning');
             }
-            return null;
+            if (!getIsCCRC(community)) {
+              return goto('PostConversionGreeting');
+            }
+            return goto('CCRCWarning');
           });
         }
 
@@ -253,10 +253,10 @@ export default class PricingWizardPage extends Component {
       return <Redirect to="/" />;
     }
 
-    const { id, mainImage, name, propInfo={} } = community;
-    const { websiteUrl='https://www.seniorly.com/resources/articles/understanding-continuing-care-retirement-communities' } = propInfo;
+    const { id, mainImage, name, propInfo = {} } = community;
+    const { websiteUrl = 'https://www.seniorly.com/resources/articles/understanding-continuing-care-retirement-communities' } = propInfo;
     const { estimatedPrice } = this.state;
-    const compiledWhatToDoNextOptions = [...WHAT_TO_NEXT_OPTIONS];
+    // const compiledWhatToDoNextOptions = [...WHAT_TO_NEXT_OPTIONS];
     // const scheduleTourOption = compiledWhatToDoNextOptions.find(o => o.value === 'schedule-tour');
     // scheduleTourOption.to = `/book-a-tour/${id}`;
 
@@ -372,11 +372,16 @@ export default class PricingWizardPage extends Component {
                       ]}
                       points={['A CCRC is a community with multiple levels of care', 'Often they have $100,000+ entrance fees']}
                     />
-                    <WizardStep
+                    {/* <WizardStep
                       component={PostConversionGreetingForm}
                       name="PostConversionGreeting"
                       community={community}
+                      description="Did you know your local expert can often negotiate fees on your behalf?"
                       onSubmit={onSubmit}
+                    /> */}
+                    <WizardStep
+                      component={MatchedAgentContainer}
+                      name="PostConversionGreeting"
                     />
                   </WizardSteps>
                 </Body>
