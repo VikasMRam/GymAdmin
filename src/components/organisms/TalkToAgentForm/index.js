@@ -49,6 +49,7 @@ export default class TalkToAgentForm extends Component {
     messagePrompt: string,
     showMessageFieldFirst: bool,
     buttonKind: string,
+    messagePlaceholder: string,
   };
 
   static defaultProps = {
@@ -56,12 +57,13 @@ export default class TalkToAgentForm extends Component {
     firstName: 'we',
     messagePrompt: '',
     buttonKind: 'jumbo',
+    messagePlaceholder: 'Type your question here. NO JOB INQUIRIES'
   };
 
   render() {
     const {
       invalid, submitting, handleSubmit, error, heading, user, hasLocation, hasEmail,
-      firstName, messagePrompt, showMessageFieldFirst, image, buttonKind,
+      firstName, messagePrompt, showMessageFieldFirst, image, buttonKind, messagePlaceholder,
     } = this.props;
     const messageLabel = (messagePrompt === '') ? `What can ${firstName} help you with?` : messagePrompt;
     const showTos = !user;
@@ -71,7 +73,7 @@ export default class TalkToAgentForm extends Component {
         rows="3"
         name="message"
         label={messageLabel}
-        placeholder="Type your question here. NO JOB INQUIRIES"
+        placeholder={messagePlaceholder}
         component={ReduxField}
         required
       />

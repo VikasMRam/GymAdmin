@@ -1,11 +1,11 @@
 import React from 'react';
-import { string, node, oneOf, object } from 'prop-types';
+import { string, node, oneOf, object, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
-import { Button, Box, ResponsiveImage, Block } from 'sly/components/atoms';
+import { Button, Box, ResponsiveImage, Block, Link } from 'sly/components/atoms';
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
   max-width: calc(${size('layout.col2')} + ${size('layout.gutter')});
@@ -61,7 +61,7 @@ const PaddedBlock = pad(Block);
 PaddedBlock.displayName = 'PaddedBlock';
 
 const AdTile = ({
-  image, imagePosition, title, children, buttonText, buttonPosition, buttonProps, layout, className,
+  image, imagePosition, title, children, buttonText, buttonPosition, buttonProps, layout, className, showSecondary, linkProps, linkText
 }) => (
   <Box className={className} backgroundPalette="primary" backgroundVariation="stroke">
     <ContentWrapper imagePosition={imagePosition} layout={layout}>
@@ -69,10 +69,30 @@ const AdTile = ({
       <div>
         <PaddedBlock weight="medium" size="subtitle">{title}</PaddedBlock>
         {children && <PaddedBlock>{children}</PaddedBlock>}
-        {layout === 'column' && <StyledButton layout={layout} buttonPosition={buttonPosition} {...buttonProps}>{buttonText}</StyledButton>}
+        {layout === 'column' && (
+          <>
+            <StyledButton layout={layout} buttonPosition={buttonPosition} {...buttonProps}>{buttonText}</StyledButton>
+            {showSecondary && (
+              <>
+                {' '}or call our team at{' '}
+                <Link {...linkProps}>{linkText}</Link>
+              </>
+            )}
+          </>
+        )}
       </div>
     </ContentWrapper>
-    {layout === 'row' && <StyledButton layout={layout} buttonPosition={buttonPosition} {...buttonProps}>{buttonText}</StyledButton>}
+    {layout === 'row' && (
+      <>
+        <StyledButton layout={layout} buttonPosition={buttonPosition} {...buttonProps}>{buttonText}</StyledButton>
+        {showSecondary && (
+          <>
+          {' '}or call our team at{' '}
+          <Link {...linkProps}>{linkText}</Link>)
+          </>
+        )}
+      </>
+    )}
     <Clearfix />
   </Box>
 );
@@ -87,6 +107,9 @@ AdTile.propTypes = {
   image: string.isRequired,
   layout: oneOf(['row', 'column']).isRequired,
   imagePosition: oneOf(['left', 'right']).isRequired,
+  showSecondary: bool,
+  linkProps: object,
+  linkText: string,
 };
 
 AdTile.defaultProps = {

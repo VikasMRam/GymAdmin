@@ -68,6 +68,7 @@ export default class SearchResultsAdTileContainer extends Component {
       isModalOpen: true,
       modalMessagePrompt: 'What kinds of care do you need at home?',
       modalHeading: 'We Can Help You Find the Best Home Care',
+      modalMessagePlaceholder: 'Type your care needs here',
       modalAction: HOME_CARE_REQUESTED,
     });
   };
@@ -98,7 +99,7 @@ export default class SearchResultsAdTileContainer extends Component {
 
   render() {
     const { type } = this.props;
-    const { isModalOpen, modalHeading, modalMessagePrompt, modalAction } = this.state;
+    const { isModalOpen, modalHeading, modalMessagePrompt, modalAction, modalMessagePlaceholder } = this.state;
     return (
       <>
         {type === 'askAgent' &&
@@ -124,9 +125,12 @@ export default class SearchResultsAdTileContainer extends Component {
           <AdTile
             title="Get In-Home Care for Seniors"
             buttonText="Get Home Care"
-            buttonPosition="right"
-            image={assetPath('images/homecare-ad.png')}
+            buttonPosition="left"
+            image={assetPath('images/homecare-2.png')}
             buttonProps={{ onClick: this.handleUseHomecareClick }}
+            showSecondary
+            linkProps={{href:"tel:+18558664515"}}
+            linkText="(855) 866-4515"
             {...this.props}
           >
             Our team will help you find the best caregivers nationwide.
@@ -139,6 +143,7 @@ export default class SearchResultsAdTileContainer extends Component {
               <AskQuestionToAgentFormContainer
                 heading={modalHeading}
                 messagePrompt={modalMessagePrompt}
+                messagePlaceholder={modalMessagePlaceholder}
                 image={assetPath('images/agents.png')}
                 buttonKind="regular"
                 postSubmit={this.handleComplete}

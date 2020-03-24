@@ -27,6 +27,7 @@ const afterSubmit = (result, dispatch) => dispatch(reset(form));
 const ReduxForm = reduxForm({
   form,
   validate,
+  hasEmail: true,
   onSubmitSuccess: afterSubmit,
   destroyOnUnmount: false,
 })(TalkToAgentForm);
