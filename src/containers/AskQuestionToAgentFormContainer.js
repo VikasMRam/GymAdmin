@@ -4,8 +4,8 @@ import { func, string, oneOf, object } from 'prop-types';
 import { withRouter } from 'react-router';
 import * as immutable from 'object-path-immutable';
 
-import { prefetch, query, withAuth, withUser } from 'sly/services/newApi';
-import { AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/services/newApi/constants';
+import { prefetch, query, withAuth, withUser } from 'sly/services/api';
+import { AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/services/api/constants';
 import { capitalize } from  'sly/services/helpers/utils';
 import matchPropType from 'sly/propTypes/match';
 import userPropType from 'sly/propTypes/user';

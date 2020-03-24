@@ -1,8 +1,8 @@
 import React from 'react';
-import hoistNonReactStatic from 'hoist-non-react-statics';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 
-import { destroy, get } from 'sly/services/newApi/httpMethods';
-import api from 'sly/services/newApi/apiInstance';
+import { destroy, get } from 'sly/services/api/httpMethods';
+import api from 'sly/services/api/apiInstance';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -44,9 +44,8 @@ export default function query(propName, apiCall) {
       }
     }
 
-    // FIXME: hack because hoist... loses contextTypes
     Wrapper.typeHydrationId = InnerComponent.typeHydrationId;
-    // hoistNonReactStatic(Wrapper, InnerComponent);
+    hoistNonReactStatics(Wrapper, InnerComponent);
 
     return Wrapper;
   };

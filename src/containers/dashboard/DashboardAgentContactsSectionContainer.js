@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { arrayOf, object, func } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { prefetch, withUser } from 'sly/services/newApi';
+import { prefetch, withUser } from 'sly/services/api';
 import contactPropType from 'sly/propTypes/contact';
 import DashboardAgentContactsSection from 'sly/components/organisms/DashboardAgentContactsSection';
 import { withRedirectTo } from 'sly/services/redirectTo';

@@ -3,7 +3,7 @@ import { func, object, string, bool } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import { host, isServer, isBrowser } from 'sly/config';
-import { withUser } from 'sly/services/newApi';
+import { withUser } from 'sly/services/api';
 import { CUSTOMER_ROLE } from 'sly/constants/roles';
 import {
   RETENTION_POPUP_IDLE_TIMEOUT,

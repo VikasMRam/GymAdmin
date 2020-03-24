@@ -28,7 +28,7 @@
 import { select } from '../helpers/tests';
 import { toJson } from '../helpers/request';
 
-import { normalizeResponse } from 'sly/services/newApi';
+import { normalizeResponse } from 'sly/services/api';
 
 Cypress.Commands.add('registerWithEmailFlow', (email, password) => {
   cy.route('POST', '**/auth/register').as('registerUser');

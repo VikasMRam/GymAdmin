@@ -7,9 +7,9 @@ import { community as communityPropType } from 'sly/propTypes/community';
 import SlyEvent from 'sly/services/helpers/events';
 import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
 import { medicareToBool } from 'sly/services/helpers/userDetails';
-import { prefetch, query, withAuth } from 'sly/services/newApi';
+import { prefetch, query, withAuth } from 'sly/services/api';
 import withWS from 'sly/services/ws/withWS';
-import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/services/newApi/constants';
+import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/services/api/constants';
 import { withRedirectTo } from 'sly/services/redirectTo';
 
 const eventCategory = 'PricingWizard';

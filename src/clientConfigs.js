@@ -13,7 +13,6 @@ const configs = [
   {
     bundle: 'community-details',
     ssr: true,
-    cacheable: true,
     path: `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
   },
   {

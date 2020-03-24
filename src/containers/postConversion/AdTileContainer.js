@@ -10,7 +10,7 @@ import AdTile from 'sly/components/organisms/AdTile';
 import { ResponsiveImage } from 'sly/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
 import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
-import { HOME_CARE_REQUESTED } from 'sly/services/newApi/constants';
+import { HOME_CARE_REQUESTED } from 'sly/services/api/constants';
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
   vertical-align: middle;

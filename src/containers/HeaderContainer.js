@@ -12,7 +12,7 @@ import {
   AGENT_DASHBOARD_ACCOUNT_PATH,
   AGENT_DASHBOARD_PROFILE_PATH,
 } from 'sly/constants/dashboardAppPaths';
-import { withAuth } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/api';
 import { withRedirectTo } from 'sly/services/redirectTo';
 import { generateSearchUrl } from 'sly/services/helpers/url';
 import SlyEvent from 'sly/services/helpers/events';

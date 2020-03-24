@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import EntityReviews from 'sly/components/organisms/EntityReviews';
 import SlyEvent from 'sly/services/helpers/events';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 
 @withRouter
 @prefetch('community', 'getCommunity', (req, { match }) => req({

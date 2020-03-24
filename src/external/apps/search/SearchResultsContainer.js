@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { size } from 'sly/components/themes';
 import { NUMBER_OF_RESULTS_PER_PAGE } from 'sly/external/constants/search';
 import { palette as palettePropType } from 'sly/propTypes/palette';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 import { getPaginationData } from 'sly/services/helpers/pagination';
 import { getCitySearchUrl, getStateAbbr } from 'sly/services/helpers/url';
 import textAlign from 'sly/components/helpers/textAlign';

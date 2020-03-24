@@ -6,13 +6,13 @@ import { withRouter } from 'react-router';
 
 import { createValidator, email, required } from 'sly/services/validation';
 import userPropType from 'sly/propTypes/user';
-import { EXIT_INTENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
+import { EXIT_INTENT_ASK_QUESTIONS } from 'sly/services/api/constants';
 import ExitIntentQuestionForm from 'sly/components/organisms/ExitIntentQuestionForm';
 import Thankyou from 'sly/components/molecules/Thankyou';
-import { query } from 'sly/services/newApi';
+import { query } from 'sly/services/api';
 import SlyEvent from 'sly/services/helpers/events';
-import withAuth from 'sly/services/newApi/withAuth';
-import withUser from 'sly/services/newApi/withUser';
+import withAuth from 'sly/services/api/withAuth';
+import withUser from 'sly/services/api/withUser';
 
 const formName = 'ExitIntentQuestionForm';
 const validate = createValidator({

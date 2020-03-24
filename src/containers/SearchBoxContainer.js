@@ -8,7 +8,7 @@ import {
 } from 'sly/services/helpers/search';
 import { LOCATION_CURRENT_LATITUDE, LOCATION_CURRENT_LONGITUDE } from 'sly/constants/location';
 import SlyEvent from 'sly/services/helpers/events';
-import { query } from 'sly/services/newApi';
+import { query } from 'sly/services/api';
 import { withRedirectTo } from 'sly/services/redirectTo';
 import { normJsonApi } from 'sly/services/helpers/jsonApi';
 import SearchBox from 'sly/components/molecules/SearchBox';

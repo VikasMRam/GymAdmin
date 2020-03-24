@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 import isBoolean from 'lodash/isBoolean';
 
-import { query, getRelationship, invalidateRequests, withUser } from 'sly/services/newApi';
+import { query, getRelationship, invalidateRequests, withUser } from 'sly/services/api';
 import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';

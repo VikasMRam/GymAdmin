@@ -24,8 +24,9 @@ import { port, host, publicPath, isDev, domain, disableExperiments } from 'sly/c
 import { configure as configureStore } from 'sly/store';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
-import { ApiProvider, renderToString, apiInstance as api } from 'sly/services/newApi';
+import { renderToString, apiInstance as api } from 'sly/services/api';
 import { clientConfigsMiddleware } from 'sly/clientConfigs';
+import { ApiContext } from 'sly/services/api/context';
 
 const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
 const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
@@ -59,17 +60,6 @@ const renderHtml = ({
   const html = <Html {...props} />;
   return `<!doctype html>\n${renderToStaticMarkup(html)}`;
 };
-
-const experiments = require('sly/../experiments.json');
-
-const A_MONTH = 30 * 24 * 3600 * 1000;
-const createSetCookie = (res, apiCookies) => (key, value) => {
-  res.cookie(key, value, { domain, maxAge: A_MONTH });
-  apiCookies.push(`${key}=${value}`);
-};
-
-const makeSid = () => crypto.randomBytes(16).toString('hex');
-
 
 const app = express();
 
@@ -214,9 +204,7 @@ app.use(async (req, res, next) => {
       <CacheProvider value={cache}>
         <Provider store={store}>
           <StaticRouter context={context} location={req.url}>
-            {/*<ApiProvider apiConfig={apiConfig}>*/}
-              <ClientApp />
-            {/*</ApiProvider>*/}
+            <ClientApp />
           </StaticRouter>
         </Provider>
       </CacheProvider>

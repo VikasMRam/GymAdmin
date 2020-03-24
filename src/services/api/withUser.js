@@ -1,10 +1,11 @@
 import React from 'react';
 import { object, func } from 'prop-types';
 import get from 'lodash/get';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 
 import userPropType, { uuidAux as uuidAuxPropType } from 'sly/propTypes/user';
-import { query } from 'sly/services/newApi';
-import prefetch from 'sly/services/newApi/prefetch';
+import { query } from 'sly/services/api';
+import prefetch from 'sly/services/api/prefetch';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -57,9 +58,8 @@ export default function withUser(InnerComponent) {
     }
   }
 
-  // FIXME: hack because hoist... loses contextTypes
   Wrapper.typeHydrationId = InnerComponent.typeHydrationId;
-  // hoistNonReactStatic(Wrapper, InnerComponent);
+  hoistNonReactStatics(Wrapper, InnerComponent);
 
   return Wrapper;
 }

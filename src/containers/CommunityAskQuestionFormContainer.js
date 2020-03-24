@@ -4,13 +4,13 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { string, func, object } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import api from 'sly/services/newApi/apiInstance';
+import api from 'sly/services/api/apiInstance';
 import { createValidator, required } from 'sly/services/validation';
 import CommunityAskQuestionForm from 'sly/components/organisms/CommunityAskQuestionForm';
 import Thankyou from 'sly/components/molecules/Thankyou';
-import { prefetch, query } from 'sly/services/newApi';
-import { PROFILE_ASK_QUESTION } from 'sly/services/newApi/constants';
-import withUser from 'sly/services/newApi/withUser';
+import { prefetch, query } from 'sly/services/api';
+import { PROFILE_ASK_QUESTION } from 'sly/services/api/constants';
+import withUser from 'sly/services/api/withUser';
 
 const validate = createValidator({
   question: [required],

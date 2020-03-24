@@ -52,7 +52,7 @@ export default {
   updateContent: { method: put, path: '/platform/contents/:id' },
   updateRating: { method: put, path: '/platform/ratings/:id' },
 
-  getClients: { method: get, path: '/marketplace/clients' },
+  getClients: { method: get, path: '/marketplace/clients', ssrIgnore: true },
   getClient: { method: get, path: '/marketplace/clients/:id' },
   updateClient: { method: patch, path: '/marketplace/clients/:id' },
   createClient: { method: post, path: '/marketplace/clients' },

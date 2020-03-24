@@ -4,7 +4,7 @@ import { node } from 'prop-types';
 import WSContext from 'sly/services/ws/WSContext';
 import Pubsub from 'sly/services/ws/Pubsub';
 import { apiUrl } from 'sly/config';
-import withUser from 'sly/services/newApi/withUser';
+import withUser from 'sly/services/api/withUser';
 import userPropType from 'sly/propTypes/user';
 
 let _instantiated_ = false;

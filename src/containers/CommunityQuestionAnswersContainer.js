@@ -7,7 +7,7 @@ import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestion
 import { community as communityPropType } from 'sly/propTypes/community';
 import SlyEvent from 'sly/services/helpers/events';
 import withModal from 'sly/controllers/withModal';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 
 const CommunityLeaveAnAnswerFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityLeaveAnAnswerFormContainer" */'sly/containers/CommunityLeaveAnAnswerFormContainer'));
 const CommunityAskQuestionFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityAskQuestionFormContainer" */'sly/containers/CommunityAskQuestionFormContainer'));

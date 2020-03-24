@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { func } from 'prop-types';
 import { reduxForm } from 'redux-form';
-import { query } from 'sly/services/newApi';
-import { withUser } from 'sly/services/newApi';
+import { query } from 'sly/services/api';
+import { withUser } from 'sly/services/api';
 import contactPropType from 'sly/propTypes/contact';
 import { createValidator, email, required, usPhone } from 'sly/services/validation';
 import { PROPERTY_ENTITY_TYPE } from 'sly/constants/entityTypes';

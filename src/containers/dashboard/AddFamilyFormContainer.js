@@ -3,7 +3,7 @@ import { object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 import * as immutable from 'object-path-immutable';
 
-import { query } from 'sly/services/newApi';
+import { query } from 'sly/services/api';
 import { createValidator, dependentRequired, usPhone, email, required } from 'sly/services/validation';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { CLIENT_RESOURCE_TYPE, UUIDAUX_RESOURCE_TYPE } from 'sly/constants/resourceTypes';

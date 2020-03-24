@@ -5,15 +5,15 @@ import loadable from '@loadable/component';
 
 import SlyEvent from 'sly/services/helpers/events';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import {
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED,
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS,
 } from 'sly/constants/notifications';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
-import api from 'sly/services/newApi/apiInstance';
-import withAuth from 'sly/services/newApi/withAuth';
+import api from 'sly/services/api/apiInstance';
+import withAuth from 'sly/services/api/withAuth';
 import withNotification from 'sly/controllers/withNotification';
 import withModal from 'sly/controllers/withModal';
 

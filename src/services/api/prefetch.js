@@ -4,10 +4,11 @@ import { object, func } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { isServer } from 'sly/config';
-import api from 'sly/services/newApi/apiInstance';
-import { createMemoizedRequestInfoSelector } from 'sly/services/newApi/selectors';
-import withPrefetchWait from 'sly/services/newApi/withPrefetchWait';
-import withReduxContext from 'sly/services/newApi/withReduxContext';
+import api from 'sly/services/api/apiInstance';
+import { createMemoizedRequestInfoSelector } from 'sly/services/api/selectors';
+import withPrefetchWait from 'sly/services/api/withPrefetchWait';
+import withReduxContext from 'sly/services/api/withReduxContext';
+import withApiContext, { apiContextPropType } from 'sly/services/api/context';
 
 const defaultDispatcher = call => call();
 
@@ -52,6 +53,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       props,
     );
 
+    @withApiContext
     @withReduxContext
     @withPrefetchWait
     @connect(mapStateToProps, { fetch })
@@ -67,19 +69,12 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
         getRequestInfo: func,
         fetch: func,
         prefetchWait: func,
-        apiConfig: object,
         status: object,
+        apiContext: apiContextPropType,
       };
 
-      // necessary because we configure the request options
-      // in the server with the credentials taken from the
-      // ssr request
-      static defaultProps = {
-        apiConfig: {},
-      };
-
-      constructor(props) {
-        super(props);
+      constructor(props, context) {
+        super(props, context);
 
         if (isServer) {
           props.prefetchWait(this.mayBeFetch());
@@ -87,9 +82,10 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       }
 
       mayBeFetch = () => {
-        const { getRequestInfo } = this.props;
+        console.log('apiCall', apiCall, getDisplayName(InnerComponent));
+        const { getRequestInfo, apiContext } = this.props;
         const { hasStarted, isLoading } = getRequestInfo();
-        const shouldSkip = isServer && api[apiCall].ssrIgnore;
+        const shouldSkip = apiContext.skipApiCalls || (isServer && api[apiCall].ssrIgnore);
         if (!shouldSkip && !isLoading && !hasStarted) {
           return this.fetch();
         }
@@ -102,8 +98,8 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
 
       // props fetch bound to dispatch
       fetch = () => {
-        const { fetch, apiConfig } = this.props;
-        return fetch(this.props, apiConfig);
+        const { fetch } = this.props;
+        return fetch(this.props);
       };
 
       render() {

@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import SlyEvent from 'sly/services/helpers/events';
 import CareTypeRegionGuidePage from 'sly/components/pages/CareTypeRegionGuidePage';
 import { getSearchParamFromPlacesResponse, filterLinkPath, getGuideParams } from 'sly/services/helpers/search';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 import { withProps } from 'sly/services/helpers/hocs';
 
 @withProps(({ match }) => ({

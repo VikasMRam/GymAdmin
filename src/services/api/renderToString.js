@@ -1,30 +1,17 @@
 import React from 'react';
-import { renderToNodeStream } from 'react-dom/server';
+import { renderToString as renderToStringReact } from 'react-dom/server';
 
-import { ApiContextProvider } from './context';
+import { ApiContext } from './context';
 
 const renderPass = async (element) => {
   const context = {
     promises: [],
+    skipApiCalls: false,
   };
 
-  const html = await new Promise((resolve, reject) => {
-    const body = [];
-    const bodyStream = renderToNodeStream((
-      <ApiContextProvider context={context}>
-        {element}
-      </ApiContextProvider>
-    ));
-    bodyStream.on('data', (chunk) => {
-      body.push(chunk.toString());
-    });
-    bodyStream.on('error', (err) => {
-      reject(err);
-    });
-    bodyStream.on('end', () => {
-      resolve(body.join(''));
-    });
-  });
+  const html = renderToStringReact((
+    element
+  ));
 
   // we don't mind the result, just completion
   const apiPromises = context.promises.map(promise => promise.catch(() => {}));

@@ -3,7 +3,7 @@ import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { arrayOf, func, oneOf, object } from 'prop-types';
 
-import { normalizeResponse, query } from 'sly/services/newApi';
+import { normalizeResponse, query } from 'sly/services/api';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import userPropType from 'sly/propTypes/user';

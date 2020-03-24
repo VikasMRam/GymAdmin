@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { object, shape } from 'prop-types';
 
 import DashboardAgentDetailPage from 'sly/components/pages/DashboardAgentDetailPage';
-import { withUser, prefetch } from 'sly/services/newApi';
+import { withUser, prefetch } from 'sly/services/api';
 import userPropType from 'sly/propTypes/user';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import { AGENT_DETAILS } from 'sly/constants/dashboardAppPaths';

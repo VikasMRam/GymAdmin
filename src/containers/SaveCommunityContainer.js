@@ -12,12 +12,12 @@ import { USER_SAVE_INIT_STATUS } from 'sly/constants/userSave';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_SUCCESS, NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED } from 'sly/constants/notifications';
 import { community as communityPropType } from 'sly/propTypes/community';
-import api from 'sly/services/newApi/apiInstance';
-import { withAuth, prefetch, query } from 'sly/services/newApi';
+import api from 'sly/services/api/apiInstance';
+import { withAuth, prefetch, query } from 'sly/services/api';
 import { Block } from 'sly/components/atoms';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import CommunitySaved from 'sly/components/organisms/CommunitySaved';
-import { USER_SAVE } from 'sly/services/newApi/constants';
+import { USER_SAVE } from 'sly/services/api/constants';
 import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 
 const PaddedBlock = styled(Block)`

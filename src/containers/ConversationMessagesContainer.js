@@ -8,7 +8,7 @@ import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
 import { size, palette } from 'sly/components/themes';
-import { prefetch, withUser, query, invalidateRequests } from 'sly/services/newApi';
+import { prefetch, withUser, query, invalidateRequests } from 'sly/services/api';
 import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
@@ -24,7 +24,7 @@ import {
 import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE, CONVERSTION_MESSAGE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 import { newUuidAction } from 'sly/constants/payloads/uuidAction';
-import { CONVERSATION_MESSAGE_BUTTONLIST_BUTTON_CLICKED } from 'sly/services/newApi/constants';
+import { CONVERSATION_MESSAGE_BUTTONLIST_BUTTON_CLICKED } from 'sly/services/api/constants';
 import { normJsonApi } from 'sly/services/helpers/jsonApi';
 import withWS from 'sly/services/ws/withWS';
 import textAlign from 'sly/components/helpers/textAlign';
