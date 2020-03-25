@@ -10,8 +10,6 @@ import { ServerStyleSheet } from 'styled-components';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
-import cookieParser from 'cookie-parser';
-import { ChunkExtractor } from '@loadable/server';
 import { cache } from 'emotion';
 import { CacheProvider } from '@emotion/core';
 import { renderStylesToString } from 'emotion-server';
@@ -26,6 +24,8 @@ import { clientConfigsMiddleware } from 'sly/clientConfigs';
 const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
 const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
 
+const sheet = new ServerStyleSheet();
+
 const getErrorContent = (err) => {
   if (isDev) {
     const Redbox = require('redbox-react').RedBoxError;
@@ -35,11 +35,11 @@ const getErrorContent = (err) => {
 };
 
 const renderHtml = ({
-  initialState, content, sheet, extractorWeb,
+  initialState, content, sheet, extractor,
 }) => {
-  const linkElements = extractorWeb && extractorWeb.getLinkElements();
+  const linkElements = extractor && extractor.getLinkElements();
   const styleElements = sheet && sheet.getStyleElement();
-  const scriptElements = extractorWeb && extractorWeb.getScriptElements();
+  const scriptElements = extractor && extractor.getScriptElements();
 
   const state = `
     ${initialState ? `window.__INITIAL_STATE__ = ${serialize(initialState)};` : ''}
@@ -59,143 +59,42 @@ const renderHtml = ({
 const app = express();
 
 app.disable('x-powered-by');
-app.use(cookieParser());
 
 if (!isDev) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
 
-app.use(clientConfigsMiddleware());
+app.use(clientConfigsMiddleware({ statsNode, statsWeb }));
 
 // non ssr apps
 app.use((req, res, next) => {
-  const { ssr, bundle } = req.clientConfig;
+  const { ssr, extractor } = req.clientConfig;
   if (!ssr) {
-    const extractorWeb = new ChunkExtractor({
-      entrypoints: [bundle],
-      statsFile: statsWeb,
-    });
     res.send(renderHtml({
       content: '',
-      extractorWeb,
+      extractor,
     }));
   } else {
     next();
   }
 });
 
-// headers
-app.use((req, res, next) => {
-  // const apiCookies = req.headers.cookie ? [req.headers.cookie] : [];
-  // const setCookie = createSetCookie(res, apiCookies);
-  // req.clientConfig.apiCookies = apiCookies;
-  //
-  // if (req.query.sly_uuid) {
-  //   if (!req.cookies.sly_uuid) {
-  //     setCookie('sly_uuid', req.query.sly_uuid);
-  //   }
-  //   const newUrl = removeQueryParamFromURL('sly_uuid', req.url);
-  //   res.redirect(newUrl);
-  //   return;
-  // }
-  //
-  // let slyUUID = req.cookies.sly_uuid;
-  // if (!slyUUID) {
-  //   slyUUID = v4();
-  //   setCookie('sly_uuid', slyUUID);
-  // }
-  //
-  // req.clientConfig.slyUUID = slyUUID;
-  //
-  // const slySID = req.cookies.sly_sid || makeSid();
-  //
-  // if (!req.cookies.sly_sid) {
-  //   setCookie('sly_sid', slySID);
-  // }
-  //
-  // if (!req.cookies.referrer && req.headers.referer) {
-  //   setCookie('referrer', req.headers.referer);
-  // }
-  //
-  // const utmStr = [
-  //   'utm_content',
-  //   'utm_medium',
-  //   'utm_source',
-  //   'utm_campaign',
-  //   'utm_term',
-  // ].reduce((cumul, key) => {
-  //   if (req.query[key]) {
-  //     cumul.push(`${key}:${req.query[key]}`);
-  //   }
-  //   return cumul;
-  // }, [])
-  //   .join(',');
-  //
-  // if (!req.cookies.utm && utmStr) {
-  //   setCookie('utm', utmStr);
-  // }
-
-  res.header('Cache-Control', [
-    'max-age=0, private, must-revalidate',
-    'no-cache="set-cookie"',
-  ]);
-
-  next();
-});
-
-// store
-app.use(async (req, res, next) => {
-  // const { slyUUID, apiCookies } = req.clientConfig;
-  //
-  // const hmac = crypto.createHmac('sha256', slyUUID);
-  // const slyUUIDHash = hmac.digest('hex');
-  // const userExperiments = Object.keys(experiments)
-  //   .reduce((cumul, key, i) => {
-  //     let segment;
-  //     if (disableExperiments) {
-  //       segment = 0;
-  //     } else {
-  //       const channel = i % 8;
-  //       const part = slyUUIDHash.substr(channel * 4, 4);
-  //       segment = Math.floor((parseInt(part, 16) / 65536) / (1 / experiments[key].length));
-  //     }
-  //     const variant = experiments[key][segment];
-  //     cumul[key] = variant;
-  //     return cumul;
-  //   }, {});
-  //
-  // const apiConfig = {
-  //   headers: {
-  //     Cookie: apiCookies.join('; '),
-  //     'User-Agent': req.headers['user-agent'],
-  //     'X-is-sly-ssr': 'true',
-  //     'X-forwarded-for': req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-  //   },
-  // };
-
-  const store = configureStore({ experiments: {} });
-
-  // prefetch user data
-  req.clientConfig.store = store;
-  // req.clientConfig.apiConfig = apiConfig;
-
-  next();
-});
-
 // render
 app.use(async (req, res, next) => {
-  const { store, apiConfig, bundle } = req.clientConfig;
+  const store = configureStore({ experiments: {} });
+  const {
+    renderToString,
+    extractor,
+    ClientApp,
+  } = req.clientConfig;
+
+  // hack to reset chunk count in the extractor
+  extractor.chunks = [];
 
   try {
-    const extractorNode = new ChunkExtractor({ statsFile: statsNode, entrypoints: [bundle] });
-    const { default: ClientApp, renderToString } = extractorNode.requireEntrypoint();
-
-    const extractorWeb = new ChunkExtractor({ statsFile: statsWeb, entrypoints: [bundle] });
-
-    const sheet = new ServerStyleSheet();
     const context = {};
 
-    const app = sheet.collectStyles(extractorWeb.collectChunks((
+    const app = sheet.collectStyles(extractor.collectChunks((
       <CacheProvider value={cache}>
         <Provider store={store}>
           <StaticRouter context={context} location={req.url}>
@@ -216,11 +115,16 @@ app.use(async (req, res, next) => {
       res.redirect(301, context.url);
     } else {
       const initialState = store.getState();
+      res.header('Cache-Control', [
+        'max-age=0, private, must-revalidate',
+        'no-cache="set-cookie"',
+      ]);
+
       res.send(renderHtml({
         initialState,
         content,
         sheet,
-        extractorWeb,
+        extractor,
       }));
     }
   } catch (error) {
