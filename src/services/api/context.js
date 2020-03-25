@@ -1,6 +1,8 @@
-import { any, arrayOf, object, shape, bool } from 'prop-types';
+import { arrayOf, object, shape, bool } from 'prop-types';
 import React, { useContext } from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
+
+import { isServer } from 'sly/config';
 
 export const apiContextPropType = shape({
   promises: arrayOf(object),
@@ -15,7 +17,7 @@ function getDisplayName(WrappedComponent) {
 
 export default function withApiContext(Component) {
   function WithApiContext(props) {
-    const apiContext = useContext(ApiContext);
+    const apiContext = isServer ? useContext(ApiContext) : null;
     return (
       <Component {...props} apiContext={apiContext} />
     );

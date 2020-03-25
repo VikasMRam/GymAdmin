@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import '@babel/polyfill';
 import path from 'path';
-import crypto from 'crypto';
 import 'isomorphic-fetch';
 
 import express from 'express';
@@ -11,7 +10,6 @@ import { ServerStyleSheet } from 'styled-components';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
-import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import { ChunkExtractor } from '@loadable/server';
 import { cache } from 'emotion';
@@ -19,14 +17,11 @@ import { CacheProvider } from '@emotion/core';
 import { renderStylesToString } from 'emotion-server';
 
 import { cleanError } from 'sly/services/helpers/logging';
-import { removeQueryParamFromURL } from 'sly/services/helpers/url';
 import { port, host, publicPath, isDev, domain, disableExperiments } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
-import { renderToString, apiInstance as api } from 'sly/services/api';
 import { clientConfigsMiddleware } from 'sly/clientConfigs';
-import { ApiContext } from 'sly/services/api/context';
 
 const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
 const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
@@ -193,7 +188,7 @@ app.use(async (req, res, next) => {
 
   try {
     const extractorNode = new ChunkExtractor({ statsFile: statsNode, entrypoints: [bundle] });
-    const { default: ClientApp } = extractorNode.requireEntrypoint();
+    const { default: ClientApp, renderToString } = extractorNode.requireEntrypoint();
 
     const extractorWeb = new ChunkExtractor({ statsFile: statsWeb, entrypoints: [bundle] });
 

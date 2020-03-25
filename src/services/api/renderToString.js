@@ -10,7 +10,9 @@ const renderPass = async (element) => {
   };
 
   const html = renderToStringReact((
-    element
+    <ApiContext.Provider value={context}>
+      {element}
+    </ApiContext.Provider>
   ));
 
   // we don't mind the result, just completion
