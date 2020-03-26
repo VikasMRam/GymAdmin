@@ -31,7 +31,7 @@ const color = (p) => {
   return (p.disabled || p.readOnly) ? palette('grey', 'base') : palette('slate', 'base');
 };
 
-const styles = css`
+export const styles = css`
   display: block;
   width: 100%;
   margin: 0;
@@ -99,7 +99,7 @@ const StyledInput = styled.input`
 
 export default class Input extends Component {
   static propTypes = {
-    type: oneOf(['search', 'textarea', 'select', 'text', 'checkbox', 'radio', 'password', 'number', 'hidden', 'date', 'locationSearch']),
+    type: oneOf(['search', 'textarea', 'select', 'text', 'file', 'checkbox', 'radio', 'password', 'number', 'hidden', 'date', 'locationSearch']),
     size: oneOf(['small', 'regular', 'button', 'large', 'xLarge']),
     onFocus: func,
     invalid: bool,
@@ -118,9 +118,6 @@ export default class Input extends Component {
   onFocus = (...args) => {
     if (this.props.onFocus) {
       this.props.onFocus(...args);
-    }
-    if (this.ref && this.ref.current) {
-      this.ref.current.scrollIntoView(true);
     }
   };
 

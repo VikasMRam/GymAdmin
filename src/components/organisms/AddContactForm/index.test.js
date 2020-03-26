@@ -17,13 +17,13 @@ describe('AddContactForm', () => {
         name: 'Frank Grimes',
         email: 'frang.grimes@snpp.biz',
         mobilePhone: '8768768765',
-        community: { name: 'Springfield Retirement Castle' },
+        entity: { name: 'Springfield Retirement Castle' },
       },
     });
 
     expect(wrapper.find('Field').find({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find('Field').find({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find('Field').find({ name: 'mobilePhone' })).toHaveLength(1);
-    expect(wrapper.find('Field').find({ name: 'community.name' })).toHaveLength(1);
+    expect(wrapper.find('Field').find({ name: 'entity.name' })).toHaveLength(1);
   });
 });

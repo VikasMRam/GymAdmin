@@ -20,8 +20,8 @@ import Router from 'sly/components/molecules/Router';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 import {
   DASHBOARD_PATH,
+  DASHBOARD_ACCOUNT_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
-  FAMILY_DASHBOARD_ACCOUNT_PATH,
   AGENT_DASHBOARD_PROFILE_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH,
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
@@ -32,9 +32,10 @@ import {
   FAMILY_DASHBOARD_MESSAGES_PATH,
   ADMIN_DASHBOARD_CALLS_PATH,
   ADMIN_DASHBOARD_CALL_DETAILS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
-  AGENT_DASHBOARD_ACCOUNT_PATH,
   ADMIN_DASHBOARD_AGENTS_PATH,
   ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
+  ADMIN_DASHBOARD_COMMUNITIES_PATH,
+  ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import careTypes from 'sly/constants/careTypes';
 import hubTypes from 'sly/constants/hubTypes';
@@ -74,7 +75,9 @@ const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkNa
 const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
 const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/components/pages/DashboardAgentTasksPage'));
 const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/components/pages/DashboardAgentContactsPage'));
-const DashboardAgentsIndexPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndexPage" */ 'sly/containers/DashboardAgentsIndexPageContainer'));
+const DashboardAgentsIndexPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndex" */ 'sly/containers/DashboardAgentsIndexPageContainer'));
+const DashboardCommunitiesIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunitiesIndex" */ 'sly/containers/DashboardCommunitiesIndexPageContainer'));
+const DashboardCommunitiesDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunitiesDetail" */ 'sly/containers/DashboardCommunitiesDetailsPageContainer'));
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -108,11 +111,6 @@ const routes = [
   {
     path: FAMILY_DASHBOARD_FAVORITES_PATH,
     component: DashboardFavoritesPageContainer,
-    exact: true,
-  },
-  {
-    path: FAMILY_DASHBOARD_ACCOUNT_PATH,
-    component: DashboardMyAccountPageContainer,
     exact: true,
   },
   {
@@ -164,7 +162,7 @@ const routes = [
     component: DashboardCallDetailsPageContainer,
   },
   {
-    path: AGENT_DASHBOARD_ACCOUNT_PATH,
+    path: DASHBOARD_ACCOUNT_PATH,
     component: DashboardMyAccountPageContainer,
     exact: true,
   },
@@ -181,6 +179,14 @@ const routes = [
   {
     path: ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
     component: DashboardAgentDetailPageContainer,
+  },
+  {
+    path: ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH,
+    component: DashboardCommunitiesDetailPageContainer,
+  },
+  {
+    path: ADMIN_DASHBOARD_COMMUNITIES_PATH,
+    component: DashboardCommunitiesIndexPageContainer,
   },
   {
     path: `/:toc(${careTypes.join('|')})/:state/:city`,

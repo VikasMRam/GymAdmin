@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { string, bool, object } from 'prop-types';
 import { generatePath } from 'react-router';
-import { parse } from 'query-string';
 
 import {
   ADMIN_DASHBOARD_AGENTS_PATH,
@@ -27,8 +26,8 @@ import Tab from 'sly/components/molecules/Tab';
 import AgentSummary from 'sly/components/molecules/AgentSummary';
 import BackLink from 'sly/components/molecules/BackLink';
 import PartnerAgentProfileFormContainer from 'sly/containers/PartnerAgentProfileFormContainer';
-import DashboardAgentContactsSectionContainer from 'sly/containers/dashboard/DashboardAgentContactsSectionContainer';
-import { Datatable } from 'sly/services/datatable';
+import DashboardContactsSectionContainer from 'sly/containers/dashboard/DashboardContactsSectionContainer';
+import { AGENT_ENTITY_TYPE } from 'sly/constants/entityTypes';
 
 const LargePaddingWrapper = styled.div`
   padding: ${size('spacing.large')};
@@ -178,7 +177,6 @@ export default class DashboardAgentDetailPage extends Component {
     rawAgent: object,
     isLoading: bool,
     currentTab: string,
-    location: object,
   };
 
   getTabPathsForUser = () => {
@@ -228,7 +226,7 @@ export default class DashboardAgentDetailPage extends Component {
   };
 
   render() {
-    const { agent, rawAgent, user, currentTab, isLoading: agentIsLoading, location } = this.props;
+    const { agent, rawAgent, user, currentTab, isLoading: agentIsLoading } = this.props;
     if (agentIsLoading) {
       return (
         <StyledDashboardTwoColumnTemplate activeMenuItem="Agents">
@@ -251,7 +249,7 @@ export default class DashboardAgentDetailPage extends Component {
     const backLinkHref = generatePath(ADMIN_DASHBOARD_AGENTS_PATH);
     const backlink = <PaddedBackLink linkText="Back to Agents List" to={backLinkHref} onClick={clickEventHandler('agentDetails', 'Back to Agents List')} />;
 
-    const { id } = agent;
+    const { id, name } = agent;
 
     const agentName = (
       <AgentName
@@ -260,10 +258,9 @@ export default class DashboardAgentDetailPage extends Component {
       />
     );
 
-    const { 'page-number': pageNumber, ...filters } = parse(location.search);
-    const sectionFilters = {
-      'page-number': pageNumber,
+    const contactsSectionFilters = {
       include: 'entities',
+      'filter[agent-id]': id,
     };
 
     return (
@@ -303,15 +300,13 @@ export default class DashboardAgentDetailPage extends Component {
 
             {currentTab === CONTACTS && (
               <LargePaddingWrapper>
-                <Datatable
+                <DashboardContactsSectionContainer
                   id="contacts"
-                  sectionFilters={sectionFilters}
-                  filters={filters}
-                >
-                  {datatable => (
-                    <DashboardAgentContactsSectionContainer datatable={datatable} agentId={id} />
-                  )}
-                </Datatable>
+                  sectionFilters={contactsSectionFilters}
+                  entityType={AGENT_ENTITY_TYPE}
+                  entityId={id}
+                  entityName={name}
+                />
               </LargePaddingWrapper>
             )}
           </TabWrapper>

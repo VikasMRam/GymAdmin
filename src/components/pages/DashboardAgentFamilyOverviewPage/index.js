@@ -1,10 +1,9 @@
 import React from 'react';
 import { Redirect, generatePath } from 'react-router';
-import { parse } from 'query-string';
+import { object } from 'prop-types';
 
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardAgentFamilyOverviewSectionContainer from 'sly/containers/DashboardAgentFamilyOverviewSectionContainer';
-import { Datatable } from 'sly/services/datatable';
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
   NEWFAMILIES,
@@ -12,7 +11,7 @@ import {
 
 global.generatePath = generatePath;
 
-const DashboardAgentFamilyOverviewPage = ({ match, location }) => {
+const DashboardAgentFamilyOverviewPage = ({ match }) => {
   if (!match.params.clientType) {
     return (
       <Redirect
@@ -22,26 +21,20 @@ const DashboardAgentFamilyOverviewPage = ({ match, location }) => {
       />
     );
   }
-  const { 'page-number': pageNumber, ...filters } = parse(location.search);
 
   const sectionFilters = {
     client_type: match.params.clientType,
-    'page-number': pageNumber,
   };
 
   return (
     <DashboardPageTemplate activeMenuItem="My Families">
-      <Datatable
-        id="clients"
-        sectionFilters={sectionFilters}
-        filters={filters}
-      >
-        {datatable => (
-          <DashboardAgentFamilyOverviewSectionContainer datatable={datatable} />
-        )}
-      </Datatable>
+      <DashboardAgentFamilyOverviewSectionContainer sectionFilters={sectionFilters} />
     </DashboardPageTemplate>
   );
+};
+
+DashboardAgentFamilyOverviewPage.propTypes = {
+  match: object,
 };
 
 export default DashboardAgentFamilyOverviewPage;

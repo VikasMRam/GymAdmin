@@ -20,7 +20,7 @@
     "transform-export-extensions",
 
     ["styled-components", {
-      "displayName": true
+      "ssr": true
     }],
     "@babel/plugin-syntax-dynamic-import",
     "@loadable/babel-plugin"
@@ -30,7 +30,9 @@
       "plugins": [
         "react-hot-loader/babel",
         ["styled-components", {
-          "minify": false
+          "displayName": true,
+          "minify": false,
+          "transpileTemplateLiterals": false
         }]
       ]
     },

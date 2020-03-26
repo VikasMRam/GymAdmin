@@ -14,6 +14,18 @@ const fontSize = ({ size: sizeProp }) => size('text', sizeProp);
 
 const borderColour = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 
+export const topSnap = css`
+  border-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+`;
+
+export const bottomSnap = css`
+  border-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+`;
+
 const backgroundColour = ({ backgroundPalette, backgroundVariation }) => backgroundPalette ? palette(backgroundPalette, backgroundVariation) : 'transparent';
 
 const Box = styled.div`
@@ -24,16 +36,9 @@ const Box = styled.div`
   font-size: ${fontSize};
 
   ${switchProp('snap', {
-    top: css`
-      border-top: 0;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-    `,
-    bottom: css`
-      border-bottom: 0;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    `,
+    top: topSnap,
+    bottom: bottomSnap,
+    vertical: `${topSnap} ${bottomSnap}`,
   })};
 `;
 
@@ -43,7 +48,7 @@ Box.propTypes = {
   backgroundPalette: palettePropType,
   backgroundVariation: variationPropType,
   padding: spacingPropType,
-  snap: oneOf(['none', 'top', 'bottom']),
+  snap: oneOf(['none', 'top', 'bottom', 'vertical']),
   noBorderRadius: bool,
   noPadding: bool,
   size: textPropType,

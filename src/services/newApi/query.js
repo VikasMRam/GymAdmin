@@ -1,5 +1,6 @@
 import React from 'react';
-import hoistNonReactStatic from 'hoist-non-react-statics';
+import { connect } from 'react-redux';
+import { func } from 'prop-types';
 
 import { destroy, get } from 'sly/services/newApi/httpMethods';
 import api from 'sly/services/newApi/apiInstance';
@@ -11,25 +12,34 @@ function getDisplayName(WrappedComponent) {
 }
 
 export default function query(propName, apiCall) {
+  if (typeof apiCall === 'undefined') apiCall = propName;
   return (InnerComponent) => {
+    @connect(null, dispatch => ({ dispatch }))
     class Wrapper extends React.Component {
       static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
       static WrappedComponent = InnerComponent.WrappedComponent || InnerComponent;
+      static propTypes = {
+        dispatch: func.isRequired,
+      };
 
       // props fetch not bound to dispatch
       // FIXME: dispatch posts and patches, dispatch invalidate for delete
       fetch = (...args) => {
         const call = api[apiCall];
 
-        if ([destroy, get].includes(call.method)) {
+        if (get === call.method) {
           return call(...args);
+        }
+
+        if (destroy === call.method) {
+          return this.props.dispatch(call.asAction(...args));
         }
 
         const placeholders = args.length >= 2 ? args[0] : {};
         const data = args.length >= 2 ? args[1] : args[0];
         const options = args.length === 3 ? args[2] : {};
 
-        return call(placeholders, { data }, options);
+        return this.props.dispatch(call.asAction(placeholders, { data }, options));
       };
 
       render() {

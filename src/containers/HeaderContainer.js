@@ -2,15 +2,20 @@ import React, { PureComponent } from 'react';
 import { func, object, string } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { CUSTOMER_ROLE, PROVIDER_OD_ROLE, AGENT_ND_ROLE, AGENT_ADMIN_ROLE } from 'sly/constants/roles';
 import {
+  CUSTOMER_ROLE,
+  PROVIDER_OD_ROLE,
+  AGENT_ND_ROLE,
+  AGENT_ADMIN_ROLE,
+  PLATFORM_ADMIN_ROLE,
+} from 'sly/constants/roles';
+import {
+  DASHBOARD_ACCOUNT_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
-  FAMILY_DASHBOARD_ACCOUNT_PATH,
   AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_TASKS_PATH,
-  AGENT_DASHBOARD_ACCOUNT_PATH,
-  AGENT_DASHBOARD_PROFILE_PATH,
+  AGENT_DASHBOARD_PROFILE_PATH, ADMIN_DASHBOARD_COMMUNITIES_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import { withAuth } from 'sly/services/newApi';
 import { withRedirectTo } from 'sly/services/redirectTo';
@@ -80,9 +85,6 @@ const customerMenuItems = [
   {
     name: 'Favorites', to: FAMILY_DASHBOARD_FAVORITES_PATH, section: 1, icon: 'favourite-light', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
-  {
-    name: 'My Account', to: FAMILY_DASHBOARD_ACCOUNT_PATH, section: 1, icon: 'user', onClick: ({ name }) => sendHeaderItemClickEvent(name),
-  },
 ];
 
 const agentMenuItems = [
@@ -96,34 +98,46 @@ const agentMenuItems = [
     name: 'Tasks', to: generatePath(AGENT_DASHBOARD_TASKS_PATH), section: 1, icon: 'checkbox-fill', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
   {
-    name: 'My Account', to: AGENT_DASHBOARD_ACCOUNT_PATH, section: 1, icon: 'user', onClick: ({ name }) => sendHeaderItemClickEvent(name),
-  },
-  {
     name: 'My Profile', to: AGENT_DASHBOARD_PROFILE_PATH, section: 1, icon: 'settings', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
 ];
 
+const customerAndAgentMenuItems = [
+  {
+    name: 'My Account', to: DASHBOARD_ACCOUNT_PATH, section: 1, icon: 'user', onClick: ({ name }) => sendHeaderItemClickEvent(name),
+  },
+];
+
+const adminMenuItems = [
+  {
+    name: 'Communities', to: generatePath(ADMIN_DASHBOARD_COMMUNITIES_PATH), section: 1, icon: 'house', onClick: ({ name }) => sendHeaderItemClickEvent(name),
+  },
+];
+
 const loggedInMenuItems = (user) => {
+  /* eslint-disable no-bitwise */
   let roleBasedItems = [];
   if (user) {
     const { roleID } = user;
-    /* eslint-disable-next-line no-bitwise */
     if (roleID & CUSTOMER_ROLE) {
       roleBasedItems = customerMenuItems;
     }
-    /* eslint-disable-next-line no-bitwise */
     if (roleID & AGENT_ND_ROLE) {
       roleBasedItems = agentMenuItems;
     }
-    /* eslint-disable-next-line no-bitwise */
-    if (roleID & AGENT_ADMIN_ROLE) {
-      roleBasedItems = agentMenuItems;
+    if (roleID & (CUSTOMER_ROLE | AGENT_ND_ROLE)) {
+      roleBasedItems = [...roleBasedItems, ...customerAndAgentMenuItems];
     }
-    roleBasedItems = [...roleBasedItems, { name: 'Log Out', section: 3, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
-  } else {
-    roleBasedItems = [...roleBasedItems, { name: 'Sign in', section: 3, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
+    if (roleID & PLATFORM_ADMIN_ROLE) {
+      roleBasedItems = [...adminMenuItems, ...agentMenuItems];
+    }
   }
-  return roleBasedItems;
+
+  const loginButtonText = user
+    ? 'Log Out'
+    : 'Sign in';
+
+  return [...roleBasedItems, { name: loginButtonText, section: 3, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
 };
 
 const loginHeaderItems = user => user
