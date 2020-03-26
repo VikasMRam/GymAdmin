@@ -58,7 +58,7 @@ export default function withUser(InnerComponent) {
     }
   }
 
-  Wrapper.typeHydrationId = InnerComponent.typeHydrationId;
+  Wrapper.WrappedComponent = InnerComponent.WrappedComponent || InnerComponent;
   hoistNonReactStatics(Wrapper, InnerComponent);
 
   return Wrapper;

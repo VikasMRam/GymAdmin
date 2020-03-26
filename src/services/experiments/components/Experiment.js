@@ -1,28 +1,15 @@
 import React, { Component } from 'react';
-import { string, node, bool, object } from 'prop-types';
-import styled from 'styled-components';
-import { prop } from 'styled-tools';
+import { string, any, bool, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 
-import { enableExperimentsDebugger, isProd } from 'sly/config';
+import { isProd } from 'sly/config';
 import SlyEvent from 'sly/services/helpers/events';
-import { size } from 'sly/components/themes';
 import { getExperiment } from 'sly/store/selectors';
-import { selectedExperimentVariants } from 'sly/services/experiments/helpers';
 import { ExperimentContext } from 'sly/services/experiments/components/Context';
 import withUser from 'sly/services/api/withUser';
 import { uuidAux as uuidAuxPropType } from 'sly/propTypes/user';
-
-const DebugWrapper = styled.div`
-  position: relative;
-  outline: ${size('border.regular')} solid ${prop('color')};
-
-  :hover > span {
-    display: block;
-  }
-`;
 
 const mapStateToProps = (state, ownProps) => {
   const { name } = ownProps;
@@ -44,12 +31,8 @@ export default class Experiment extends Component {
     disabled: bool,
     defaultVariant: string,
     variantKey: string,
-    children: node,
+    children: any,
     location: object,
-  };
-
-  static defaultProp = {
-    disabled: false,
   };
 
   state = {
@@ -83,13 +66,28 @@ export default class Experiment extends Component {
     }
   };
 
-  componentDidMount() {
-    this.sendExperimentEvent('view_experiment');
+  setVariant(id) {
+    const int = parseInt(id.substr(id.length - 12), 16)
+    const selected = this.variants[int % this.variants.length];
+    this.setState({ selected });
   }
 
-  componentDidUpdate({ disabled }) {
-    const { disabled: newDisabled, uuidAux } = this.props;
-    console.log('uuidAux', uuidAux);
+  componentDidMount() {
+    this.sendExperimentEvent('view_experiment');
+    const { uuidAux } = this.props;
+    if (uuidAux) {
+      this.setVariant(uuidAux.id);
+    }
+  }
+
+  componentDidUpdate({ disabled, uuidAux }) {
+    const { disabled: newDisabled, uuidAux: newUuidAux } = this.props;
+    if (!newUuidAux) {
+      return;
+    }
+    if ((!uuidAux && newUuidAux) || (uuidAux.uuid !== newUuidAux.uuid) ) {
+      this.setVariant(newUuidAux.uuid);
+    }
     // if an experiment is disabled or enabled by updating prop then
     // also send view_experiment event
     if (newDisabled !== disabled) {

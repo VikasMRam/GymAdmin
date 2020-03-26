@@ -81,7 +81,7 @@ export default function clientConfigsMiddleware ({ statsNode, statsWeb }) {
       .then(() => {
         debouncedPatchConfig();
         files.forEach(file => {
-          fs.watchFile(file, debouncedPatchConfig);
+          fs.watch(file, { persistent: false }, debouncedPatchConfig);
         });
       })
       .catch(console.error);
