@@ -153,7 +153,7 @@ export default class PricingWizardPage extends Component {
       return updateUuidAux(data).then(() => {
         if (userHas(['name', 'phoneNumber'])) {
           return submitActionAndCreateUser(data).then(() => {
-            if (medicaidCoverage === 'yes' || medicaidCoverage === 'i-am-not-sure' ||
+            if (medicaidCoverage === 'yes' || medicaidCoverage === 'not-sure' ||
               (uuidAux && uuidAux.uuidInfo && uuidAux.uuidInfo.financialInfo && uuidAux.uuidInfo.financialInfo.medicaid === false)) {
               // it's important to check for false value as even if key is missing or it's null, undefined condition will become true
               if (!getIsCCRC(community)) {
@@ -168,7 +168,7 @@ export default class PricingWizardPage extends Component {
           });
         }
 
-        if (medicaidCoverage === 'yes' || medicaidCoverage === 'i-am-not-sure' ||
+        if (medicaidCoverage === 'yes' || medicaidCoverage === 'not-sure' ||
           (uuidAux && uuidAux.uuidInfo && uuidAux.uuidInfo.financialInfo && uuidAux.uuidInfo.financialInfo.medicaid === false)) {
           // it's important to check for false value as even if key is missing or it's null, undefined condition will become true
           return goto('MedicaidWarning');
