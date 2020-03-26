@@ -15,11 +15,11 @@ import { CacheProvider } from '@emotion/core';
 import { renderStylesToString } from 'emotion-server';
 
 import { cleanError } from 'sly/services/helpers/logging';
-import { port, host, publicPath, isDev, domain, disableExperiments } from 'sly/config';
+import { port, host, publicPath, isDev } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
-import { clientConfigsMiddleware } from 'sly/clientConfigs';
+import clientConfigsMiddleware from 'sly/clientConfigs';
 
 const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
 const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');

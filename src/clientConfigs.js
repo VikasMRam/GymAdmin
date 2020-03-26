@@ -1,6 +1,7 @@
 import fs from 'fs';
 import parseUrl from 'parseurl';
 import pathToRegexp from 'path-to-regexp';
+import debounce from 'lodash/debounce';
 import { ChunkExtractor } from '@loadable/server';
 
 import careTypes from 'sly/constants/careTypes';
@@ -39,38 +40,51 @@ const waitForFile = (path, timeout = 100, max= 10) => new Promise((resolve, reje
   }, timeout);
 });
 
-export const clientConfigsMiddleware = ({ statsNode, statsWeb }) => {
-  Promise.all([
-    statsNode,
-    statsWeb
-  ].map(waitForFile))
-    .then((files) => {
-      console.info('patching clientConfigs', files);
-      configs.forEach((config) => {
-        const { bundle, ssr } = config;
+function patchConfigs ({ statsWeb, statsNode }) {
+  configs.forEach((config) => {
+    const { bundle, ssr } = config;
 
-        const extractor = new ChunkExtractor({ statsFile: statsWeb, entrypoints: [bundle] });
+    const extractor = new ChunkExtractor({ statsFile: statsWeb, entrypoints: [bundle] });
 
-        Object.assign(config, {
-          regexp: pathToRegexp(config.path),
-          extractor,
-        });
-
-        if (ssr) {
-          const extractorSsr = new ChunkExtractor({ statsFile: statsNode, entrypoints: [bundle] });
-          const { default: ClientApp, renderToString } = extractorSsr.requireEntrypoint();
-
-          Object.assign(config, {
-            ClientApp,
-            renderToString,
-          });
-        }
-      });
-    })
-    .catch((error) => {
-      console.error('error found in clientConfigs.js')
-      console.error(error);
+    Object.assign(config, {
+      regexp: pathToRegexp(config.path),
+      extractor,
     });
+
+    if (ssr) {
+      const extractorSsr = new ChunkExtractor({ statsFile: statsNode, entrypoints: [bundle] });
+      const { default: ClientApp, renderToString } = extractorSsr.requireEntrypoint();
+
+      Object.assign(config, {
+        ClientApp,
+        renderToString,
+      });
+    }
+  });
+
+  console.info('configs patched: ready');
+}
+
+export default function clientConfigsMiddleware ({ statsNode, statsWeb }) {
+  if (process.env.NODE_ENV !== 'development') {
+    // stats files are ready from build step
+    patchConfigs({ statsWeb, statsNode });
+  } else {
+    // stats files might be compiling and might change during development
+    const debouncedPatchConfig = debounce(
+      () => patchConfigs({ statsWeb, statsNode }),
+      100,
+    );
+    const files = [ statsNode, statsWeb ];
+    Promise.all(files.map(waitForFile))
+      .then(() => {
+        debouncedPatchConfig();
+        files.forEach(file => {
+          fs.watchFile(file, debouncedPatchConfig);
+        });
+      })
+      .catch(console.error);
+  }
 
   return (req, res, next) => {
     const path = parseUrl(req).pathname;
@@ -84,6 +98,3 @@ export const clientConfigsMiddleware = ({ statsNode, statsWeb }) => {
     next();
   };
 };
-
-
-export default configs;
