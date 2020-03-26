@@ -65,7 +65,7 @@ import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
 import AdSenseTile from 'sly/components/organisms/AdsenseTile';
-import UnhydratedTestExperiment from 'sly/services/experiments/components/TestExperiment';
+// import UnhydratedTestExperiment from 'sly/services/experiments/components/TestExperiment';
 // import UnhydratedCommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
@@ -86,7 +86,7 @@ const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { a
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
-const TestExperiment = withHydration(UnhydratedTestExperiment);
+// const TestExperiment = withHydration(UnhydratedTestExperiment);
 // const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer);
 
 const BackToSearch = styled.div`
@@ -354,7 +354,6 @@ export default class CommunityDetailPage extends Component {
             />
             <TwoColumn>
               <Body>
-                <TestExperiment />
                 <Gallery>
                   <CommunityMediaGalleryContainer />
                 </Gallery>
