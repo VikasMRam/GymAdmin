@@ -50,3 +50,13 @@ export const community = shape({
   webViewInfo,
   propRatings,
 });
+
+export const rgsAuxAttributes = shape({
+  rgsInfo: shape({
+    contract_info: shape({
+      hasContract: bool,
+    }),
+  }),
+});
+
+export default community;

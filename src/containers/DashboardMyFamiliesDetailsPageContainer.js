@@ -76,7 +76,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     rawNotes: null,
     notes: null,
     isEditStatusDetailsMode: false,
-  }
+  };
 
   componentDidUpdate() {
     if (this.props.client && this.state.clientsWithSameContacts === null) {
@@ -104,7 +104,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       .then((data) => { this.setState({ rawNotes: data.body.data }); return data; })
       .then(resp => normJsonApi(resp))
       .then(data => this.setState({ notes: data }));
-  }
+  };
 
   onRejectSuccess = (hide) => {
     const { history } = this.props;

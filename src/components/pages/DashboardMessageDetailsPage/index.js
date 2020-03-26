@@ -11,13 +11,17 @@ const StyledConversationMessagesContainer = styled(ConversationMessagesContainer
   border-radius: ${size('border.xLarge')};
 `;
 
+const StyledPageTemplate = styled(DashboardPageTemplate)`
+  overflow: auto;
+`;
+
 const DashboardMessageDetailsPage = ({ conversationId, onBackClick }) => (
-  <DashboardPageTemplate activeMenuItem="Messages" bodyHasOverflow>
+  <StyledPageTemplate activeMenuItem="Messages">
     <StyledConversationMessagesContainer
       conversationId={conversationId}
       onBackClick={onBackClick}
     />
-  </DashboardPageTemplate>
+  </StyledPageTemplate>
 );
 
 DashboardMessageDetailsPage.propTypes = {

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
 import { reduxForm } from 'redux-form';
-import { query } from 'sly/services/api';
-import { withUser } from 'sly/services/api';
+
+import { query, withUser } from 'sly/services/api';
 import contactPropType from 'sly/propTypes/contact';
 import { createValidator, email, required, usPhone } from 'sly/services/validation';
-import { PROPERTY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import AddContactForm from 'sly/components/organisms/AddContactForm';
 import withNotification from 'sly/controllers/withNotification';
 import { saveContactPayload } from 'sly/containers/dashboard/helpers';
@@ -36,6 +35,9 @@ export default class AddOrEditContactFormContainer extends Component {
     onCancel: func.isRequired,
     contact: contactPropType,
     refetchContacts: func.isRequired,
+    entityId: string.isRequired,
+    entityType: string.isRequired,
+    entityName: string.isRequired,
   };
 
   constructor(props) {
@@ -45,19 +47,24 @@ export default class AddOrEditContactFormContainer extends Component {
   }
 
   async handleSubmitTask(data) {
-    const { createContact, updateContact, notifyInfo, onSuccess, contact, refetchContacts, notifyError } = this.props;
-
-    const payload = saveContactPayload({
-      name: data.name,
-      email: data.email,
-      mobilePhone: data.mobilePhone,
-      entity: { id: data.community.id, type: PROPERTY_ENTITY_TYPE },
-    });
+    const { createContact, updateContact, notifyInfo, onSuccess, contact, refetchContacts, notifyError, entityId, entityType } = this.props;
 
     try {
       if (contact) {
+        const payload = saveContactPayload({
+          name: data.name,
+          email: data.email,
+          mobilePhone: data.mobilePhone,
+          entity: { id: entityId, type: entityType },
+        });
         await updateContact({ id: contact.id }, payload);
       } else {
+        const payload = saveContactPayload({
+          name: data.name,
+          email: data.email,
+          mobilePhone: data.mobilePhone,
+          entity: { id: entityId, type: entityType },
+        });
         await createContact(payload);
       }
 
@@ -75,11 +82,9 @@ export default class AddOrEditContactFormContainer extends Component {
   }
 
   render() {
-    const { contact, onCancel } = this.props;
-    const initialValues = contact
-      ? { ...contact, community: { id: contact.entities[0].id, name: contact.entities[0].label } }
-      : {};
-
+    const { contact, onCancel, entityId, entityType, entityName } = this.props;
+    const initialValues = contact ? { ...contact } : {};
+    initialValues.entity = { id: entityId, type: entityType, name: entityName };
     return (
       <ReduxForm
         onSubmit={this.handleSubmitTask}

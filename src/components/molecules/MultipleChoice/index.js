@@ -45,9 +45,11 @@ const StyledButton = styled(Button)`
   ${switchProp('orientation', {
     horizontal: css`
       margin-left: 0;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      
+      :not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
       :not(:last-child) {
         border-right: none;
         border-top-right-radius: 0;

@@ -51,7 +51,7 @@ export default class PhoneInput extends Component {
 
     event.persist();
     event.target.value = newValue;
-    onChange(event);
+    return onChange(event);
   };
 
   render() {

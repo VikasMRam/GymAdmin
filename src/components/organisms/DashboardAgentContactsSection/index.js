@@ -16,8 +16,10 @@ import Th from 'sly/components/molecules/Th';
 import ContactRowCard from 'sly/components/organisms/ContactRowCard';
 import Modal from 'sly/components/molecules/Modal';
 import AddOrEditContactFormContainer from 'sly/containers/AddOrEditContactFormContainer';
+import IconButton from 'sly/components/molecules/IconButton';
+import { ENTITY_LABEL_MAP } from 'sly/constants/entityTypes';
 
-const TABLE_HEADINGS = [{ text: 'Contact name' }, { text: 'Community' }, { text: 'Email' }, { text: 'Phone number' }];
+const TABLE_HEADINGS = [{ text: 'Contact name' }, { text: 'Entity' }, { text: 'Email' }, { text: 'Phone number' }, { text: 'Delete' }];
 
 const Section = styled.section`
   background-color: ${palette('grey.background')};
@@ -113,6 +115,10 @@ export default class DashboardAgentContactsSection extends Component {
     history: object,
     redirectTo: func.isRequired,
     noBorder: bool,
+    entityType: string.isRequired,
+    entityId: string,
+    entityName: string,
+    deleteContact: func,
   };
 
   handleAddContactClick = () => {
@@ -131,6 +137,16 @@ export default class DashboardAgentContactsSection extends Component {
     });
   };
 
+  getContactEntity = (contact, entityType) => {
+    for (let i = 0; i < contact.entities.length; i++) {
+      const e = contact.entities[i];
+      if (e.entityType === entityType)  {
+        return e;
+      }
+    }
+    return null;
+  }
+
   render() {
     const {
       contacts,
@@ -143,15 +159,22 @@ export default class DashboardAgentContactsSection extends Component {
       match,
       history,
       redirectTo,
+      entityId,
+      entityType,
+      entityName,
+      deleteContact,
     } = this.props;
 
+    const entityLabel = ENTITY_LABEL_MAP[entityType];
+    // Assuming that the entity type column is at second place
+    if (entityLabel) {
+      TABLE_HEADINGS[1] =  { text: entityLabel };
+    }
     return (
       <>
         <TwoColumn>
           <Heading level="subtitle">Contacts</Heading>
-          {/* <IconButton icon="plus" hideTextInMobile to={`${match.url}/new`} onClick={this.handleAddContactClick}> */}
-          {/*  Add contact */}
-          {/* </IconButton> */}
+          {entityId && entityType && entityName && <IconButton icon="plus" hideTextInMobile to={`${match.url}/new`} onClick={this.handleAddContactClick}>Add contact</IconButton>}
         </TwoColumn>
         <StyledTableHeaderButtons
           datatable={datatable}
@@ -167,18 +190,21 @@ export default class DashboardAgentContactsSection extends Component {
                   <Tr>{TABLE_HEADINGS.map(({ text }) => <Th key={text}>{text}</Th>)}</Tr>
                 </THead>
                 <TBody>
-                  {contacts.map(contact => (
-                    <ContactRowCard
+                  {contacts.map((contact) => {
+                    const entity = this.getContactEntity(contact, entityType);
+                    return (<ContactRowCard
                       key={contact.id}
                       contact={contact}
+                      entity={entity}
                       editContactUrl={`${match.url}/edit/${contact.id}`}
                       onContactClick={() => this.handleContactClick(contact)}
-                    />
-                  ))}
+                      deleteContact={deleteContact}
+                    />);
+                  })}
                   {contacts.length === 0 && (
                     <Tr>
                       <Td colSpan={TABLE_HEADINGS.length} borderless={noBorder}>
-                        <NoResultMessage>Nice! You are on top of all your tasks here.</NoResultMessage>
+                        <NoResultMessage>Nice! You are on top of all your contacts here.</NoResultMessage>
                       </Td>
                     </Tr>
                   )}
@@ -221,6 +247,15 @@ export default class DashboardAgentContactsSection extends Component {
                   redirectTo(match.url, true);
                 }
               };
+              let entityId = null;
+              let entityName = null;
+              if (contact) {
+                const entity = this.getContactEntity(contact, entityType);
+                if (entity) {
+                  entityId = entity.id;
+                  entityName = entity.label;
+                }
+              }
 
               return (
                 <Modal
@@ -234,6 +269,40 @@ export default class DashboardAgentContactsSection extends Component {
                     contact={contact}
                     onSuccess={closeModal}
                     onCancel={closeModal}
+                    entityId={entityId}
+                    entityType={entityType}
+                    entityName={entityName}
+                  />
+                </Modal>
+              );
+            }}
+          </Route>
+        )}
+        {!isPageLoading && (
+          <Route path={`${match.url}/new`}>
+            {({ match: routeMatch }) => {
+              const closeModal = () => {
+                if (history.action === 'PUSH') {
+                  history.goBack();
+                } else {
+                  redirectTo(match.url, true);
+                }
+              };
+
+              return (
+                <Modal
+                  isOpen={!!routeMatch}
+                  onClose={closeModal}
+                  closeable
+                  layout="noPadding"
+                >
+                  <AddOrEditContactFormContainer
+                    refetchContacts={refetchContacts}
+                    onSuccess={closeModal}
+                    onCancel={closeModal}
+                    entityId={entityId}
+                    entityType={entityType}
+                    entityName={entityName}
                   />
                 </Modal>
               );

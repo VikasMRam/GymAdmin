@@ -6,8 +6,8 @@ import { branch } from 'recompose';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import userPropType from 'sly/propTypes/user';
 import { CONVERSATION_PARTICIPANT_TYPE_USER } from 'sly/constants/conversations';
-import { FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH, FAMILY_DASHBOARD_ACCOUNT_PATH } from 'sly/constants/dashboardAppPaths';
 import { prefetch, withUser } from 'sly/services/api';
+import { FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH, DASHBOARD_ACCOUNT_PATH } from 'sly/constants/dashboardAppPaths';
 import CommunityPricingWizardLanding from 'sly/components/organisms/CommunityPricingWizardLanding';
 
 @withUser
@@ -33,7 +33,7 @@ export default class CommunityPricingWizardLandingContainer extends Component {
 
   handleBeginClick = () => {
     const { conversations, onBeginClick } = this.props;
-    let redirectLink = FAMILY_DASHBOARD_ACCOUNT_PATH;
+    let redirectLink = DASHBOARD_ACCOUNT_PATH;
     if (conversations && conversations.length) {
       redirectLink = generatePath(FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH, { id: conversations[0].id });
     }

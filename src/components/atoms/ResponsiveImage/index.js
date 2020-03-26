@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, array, oneOf, any } from 'prop-types';
+import { string, array, oneOf, any, func } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -59,12 +59,14 @@ export default class ResponsiveImage extends React.Component {
     sizes: string,
     sources: array,
     children: any,
+    onLoadFailed: func,
     aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3', '1:1']),
   };
 
   static defaultProps = {
     className: '',
     loading: 'eager',
+    onLoadFailed: () => {},
   };
 
   state = {
@@ -72,14 +74,15 @@ export default class ResponsiveImage extends React.Component {
   };
 
   failedLoadImageHandler = () => {
+    const { onLoadFailed } = this.props;
     this.setState({
       failed: true,
-    });
+    }, onLoadFailed);
   };
 
   render() {
     const {
-      src, path, placeholder, sizes, sources, height, alt, loading, className: classNameProp, aspectRatio, children, ...props
+      src, path, placeholder, sizes, sources, height, alt, loading, className: classNameProp, aspectRatio, children, onLoadFailed, ...props
     } = this.props;
 
     // at least ONE of path (bucket s3 path without /uploads) or src (absolute; e.g. static in public) should be provided
@@ -154,7 +157,7 @@ export default class ResponsiveImage extends React.Component {
       : className;
 
     const picture = (
-      <>
+      <picture>
         {sourceSets}
         <img
           loading={loading}
@@ -164,22 +167,16 @@ export default class ResponsiveImage extends React.Component {
           {...imageProps}
           {...props}
         />
-      </>
+      </picture>
     );
 
     if (!aspectRatio) {
-      return (
-        <picture>
-          {picture}
-        </picture>
-      );
+      return picture;
     }
 
     return (
       <ResponsiveWrapper aspectRatio={aspectRatio} className={classNameProp}>
-        <picture>
-          {picture}
-        </picture>
+        {picture}
         {children}
       </ResponsiveWrapper>
     );

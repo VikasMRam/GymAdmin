@@ -70,6 +70,7 @@ const getInputComponent = (type) => {
     case 'autocomplete':
       return Autocomplete;
     case 'checkbox':
+    case 'boolean':
       return CheckboxInput;
     case 'locationSearch':
       return LocationSearch;
@@ -234,10 +235,11 @@ const Field = ({
     placeholder,
     'aria-describedby': `${name}Error`,
     options,
+    label,
     ...props,
   };
   const InputComponent = getInputComponent(type);
-  const renderInputFirst = (type === 'checkbox' && !options) || type === 'radio';
+  const renderInputFirst = (type === 'checkbox' && !options) || type === 'radio' || type === 'file';
   const valueLength = inputProps.value ? inputProps.value.length : 0;
   if (type === 'date') {
     inputProps.selected = inputProps.value;
@@ -248,7 +250,7 @@ const Field = ({
   return (
     <Wrapper className={className} wideWidth={wideWidth} type={type} options={options} row={renderInputFirst}>
       {renderInputFirst && (wideWidth ? <InputBeforeLabelWrapper wideWidth={wideWidth}><InputComponent {...inputProps} /></InputBeforeLabelWrapper> : <InputComponent {...inputProps} />)}
-      {(label || labelRight) &&
+      {(type !== 'boolean' && (label || labelRight)) &&
         <LabelWrapper wideWidth={wideWidth} type={type} options={options}>
           {label &&
             <StyledLabel htmlFor={inputProps.id} renderInputFirst={renderInputFirst}>
@@ -310,6 +312,8 @@ Field.propTypes = {
     'dateChoice',
     'slider',
     'text',
+    'file',
+    'phone',
     'email',
     'password',
     'checkbox',

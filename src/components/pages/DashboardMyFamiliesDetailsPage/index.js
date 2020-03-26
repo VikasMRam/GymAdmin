@@ -587,7 +587,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     let canEditFamilyDetails = isConnected;
     const isClientAdminUser = userIs(user, PLATFORM_ADMIN_ROLE) ||
       (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg);
-    const isAgentUser = userExact(user, AGENT_ND_ROLE);
+    const isAgentUser = userIs(user, AGENT_ND_ROLE);
     const isOfDifferentOrg = userOrg !== clientOrg;
     // Rule when lead is created by self
     if (stage === FAMILY_STAGE_NEW && isClientAdminUser) {

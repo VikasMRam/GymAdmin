@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { string, func, arrayOf, object } from 'prop-types';
+import { string, func, oneOfType, bool, arrayOf, object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import Checkbox from 'sly/components/molecules/Checkbox';
@@ -18,52 +18,53 @@ const StyledCheckbox = cursor(styled(Checkbox)`
 
 const CheckboxLabel = cursor(Span);
 
-class CheckboxInput extends Component {
-  static propTypes={
-    value: arrayOf(string),
+export default class CheckboxInput extends Component {
+  static propTypes = {
+    value: oneOfType([bool, arrayOf(string)]),
     onChange: func,
     options: arrayOf(object),
+    type: string,
+    label: string,
   };
 
-  constructor(props) {
-    super(props);
-
-    const { value } = props;
-    if (Array.isArray(value)) {
-      this.state = { value };
-    }
-  }
-
-  state = {
+  static defaultProps = {
+    options: [],
     value: [],
   };
 
   handleCheckboxItemOnClick = (option) => {
-    const { onChange } = this.props;
-    const { value } = this.state;
-    const newValue = [...value];
-    if (value.indexOf(option.value) === -1) {
-      newValue.push(option.value);
+    const { onChange, type, value } = this.props;
+    let newValue;
+    if (type === 'boolean') {
+      newValue = !value;
     } else {
-      newValue.splice(newValue.indexOf(option.value), 1);
+      newValue = value ? [...value] : [];
+      if (value.indexOf(option.value) === -1) {
+        newValue.push(option.value);
+      } else {
+        newValue.splice(newValue.indexOf(option.value), 1);
+      }
     }
-    this.setState({ value: newValue });
-    return onChange ? onChange(newValue) : null;
+    return onChange(newValue);
   };
 
   render() {
+    const { type, label, value } = this.props;
     let { options } = this.props;
-    const { value } = this.state;
-    if (!options) {
-      options = [{ value: true, label: 'default' }];
+    if (options.length === 0 && type === 'boolean') {
+      options = [{ value: true, label }];
     }
+
     return options.map((option) => {
+      const checked = type === 'boolean'
+        ? !!value === option.value
+        : value.indexOf(option.value) !== -1;
       return (
         <CheckboxItem key={option.label} onClick={() => this.handleCheckboxItemOnClick(option)} >
           <StyledCheckbox
             palette="primary"
             uncheckedPalette="grey"
-            checked={value.indexOf(option.value) !== -1}
+            checked={checked}
           />
           <CheckboxLabel size="caption">{option.label}</CheckboxLabel>
         </CheckboxItem>
@@ -71,5 +72,3 @@ class CheckboxInput extends Component {
     });
   }
 }
-
-export default CheckboxInput;

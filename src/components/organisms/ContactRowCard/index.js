@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { func, string, bool } from 'prop-types';
+import { func, string, bool, object } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import contactPropType from 'sly/propTypes/contact';
@@ -11,6 +11,7 @@ import { Link, ClampedText } from 'sly/components/atoms';
 import { Td, Tr } from 'sly/components/atoms/Table';
 import { getAppPathForEntity } from 'sly/services/helpers/appPaths';
 import { phoneFormatter } from 'sly/services/helpers/phone';
+import IconButton from 'sly/components/molecules/IconButton';
 
 const Wrapper = mobileOnly(
   borderRadius(pad(Tr, 'large'), 'small'),
@@ -58,7 +59,7 @@ const twoColumnCss = css`
 `;
 
 const StyledTd = styled(Td)`
-  span:first-child {
+  > span:first-child {
     display: none;
   }
 `;
@@ -99,15 +100,31 @@ const PhoneCell = pad(
 );
 PhoneCell.displayName = 'PhoneCell';
 
-const ContactRowCard = ({ contact, editContactUrl, onContactClick }) => {
-  const relatedCommunity = contact.entities[0];
+const DeleteCell = pad(
+  mobileOnly(
+    StyledTd,
+    css`
+      ${twoColumnCss};
+      order: 5;
+    `,
+  ),
+  'regular',
+);
+DeleteCell.displayName = 'DeleteCell';
 
+const RemoveButton = styled(IconButton)`
+  width: ${size('element.regular')};
+  height: ${size('element.regular')};
+  margin: 0 ${size('spacing.large')};
+`;
+
+const ContactRowCard = ({ contact, entity, editContactUrl, onContactClick, deleteContact }) => {
   return (
     <Wrapper>
       <NameCell contact={contact} to={editContactUrl} onClick={() => onContactClick(contact)} />
       <CommunityCell>
         <span>Community</span>
-        {relatedCommunity && <Link to={getAppPathForEntity(relatedCommunity)}>{relatedCommunity.label}</Link>}
+        {entity && <Link to={getAppPathForEntity(entity)}>{entity.label}</Link>}
       </CommunityCell>
       <EmailCell>
         <span>Email</span>
@@ -117,6 +134,10 @@ const ContactRowCard = ({ contact, editContactUrl, onContactClick }) => {
         <span>Phone number</span>
         {contact.mobilePhone && phoneFormatter(contact.mobilePhone)}
       </PhoneCell>
+      <DeleteCell>
+        <span>Delete</span>
+        <RemoveButton icon="trash" onClick={() => deleteContact(contact)} />
+      </DeleteCell>
     </Wrapper>
   );
 };
@@ -125,6 +146,8 @@ ContactRowCard.propTypes = {
   contact: contactPropType.isRequired,
   editContactUrl: string.isRequired,
   onContactClick: func.isRequired,
+  entity: object.isRequired,
+  deleteContact: func.isRequired,
 };
 
 export default ContactRowCard;

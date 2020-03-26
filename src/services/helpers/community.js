@@ -27,3 +27,20 @@ export const getIsSNF = (community) => {
   }
   return false;
 };
+
+export const formatAddress = (community) => {
+  const { address } = community;
+
+  if (!address) return '';
+
+  return [
+    'line1',
+    'city',
+    'state',
+  ].reduce((acc, attr) => {
+    if (address[attr]) {
+      acc.push(address[attr]);
+    }
+    return acc;
+  }, []).join(', ');
+};
