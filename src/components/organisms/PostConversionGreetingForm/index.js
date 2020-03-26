@@ -81,7 +81,6 @@ const PostConversionGreetingForm = ({
 PostConversionGreetingForm.propTypes = {
   community: communityProptype,
   onSubmit: func.isRequired,
-  handleSubmit: func.isRequired,
   heading: string.isRequired,
   description: string,
 };

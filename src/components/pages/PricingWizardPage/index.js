@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { object, func, string } from 'prop-types';
+import { object, func, string, bool } from 'prop-types';
 import Helmet from 'react-helmet';
 import { Route } from 'react-router';
 import { Redirect } from 'react-router-dom';
 
-import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
 import { community as communityPropType } from 'sly/propTypes/community';
+import userPropType from 'sly/propTypes/user';
+import agentPropType from 'sly/propTypes/agent';
 import { size } from 'sly/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import {
@@ -23,16 +24,16 @@ import {
 } from 'sly/constants/pricingForm';
 import { getIsCCRC } from 'sly/services/helpers/community';
 import { FAMILY_DASHBOARD_FAVORITES_PATH } from 'sly/constants/dashboardAppPaths';
+import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
+import HeaderContainer from 'sly/containers/HeaderContainer';
+import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
+import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWizardAcknowledgementContainer';
+import MatchedAgentContainer from 'sly/containers/MatchedAgentContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import Modal from 'sly/components/molecules/Modal';
 import ConversionWizardInfoStep from 'sly/components/organisms/ConversionWizardInfoStep';
-import PostConversionGreetingForm from 'sly/components/organisms/PostConversionGreetingForm';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
-import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWizardAcknowledgementContainer';
-import MatchedAgentContainer from 'sly/containers/MatchedAgentContainer';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -76,7 +77,8 @@ const stepsWithoutControls = [
 export default class PricingWizardPage extends Component {
   static propTypes = {
     community: communityPropType,
-    user: object,
+    agent: agentPropType,
+    user: userPropType,
     userHas: func,
     uuidAux: object,
     userActionSubmit: func,
@@ -86,6 +88,7 @@ export default class PricingWizardPage extends Component {
     updateUuidAux: func,
     type: string,
     sendEvent: func,
+    hasNoAgent: bool,
   };
 
   static defaultProps = {
@@ -242,11 +245,11 @@ export default class PricingWizardPage extends Component {
   handleHelpHover = (type) => {
     const { sendEvent } = this.props;
     sendEvent('help-tooltip-hover', type);
-  }
+  };
 
   render() {
     const {
-      community, user, uuidAux, userHas, match, redirectTo, type, sendEvent,
+      community, user, uuidAux, userHas, match, redirectTo, type, sendEvent, agent, hasNoAgent,
     } = this.props;
 
     if (!community) {
@@ -372,16 +375,13 @@ export default class PricingWizardPage extends Component {
                       ]}
                       points={['A CCRC is a community with multiple levels of care', 'Often they have $100,000+ entrance fees']}
                     />
-                    {/* <WizardStep
-                      component={PostConversionGreetingForm}
-                      name="PostConversionGreeting"
-                      community={community}
-                      description="Did you know your local expert can often negotiate fees on your behalf?"
-                      onSubmit={onSubmit}
-                    /> */}
                     <WizardStep
                       component={MatchedAgentContainer}
                       name="PostConversionGreeting"
+                      community={community}
+                      agent={agent}
+                      hasNoAgent={hasNoAgent}
+                      onSubmit={onSubmit}
                     />
                   </WizardSteps>
                 </Body>
