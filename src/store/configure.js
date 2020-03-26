@@ -8,7 +8,7 @@ import { middleware } from '../services/api';
 import reducer from './reducer';
 import sagas from './sagas';
 
-import { isDev, isBrowser } from 'sly/config';
+import { isDev, isBrowser, muteReduxLogger } from 'sly/config';
 
 const devtools =
   isDev && isBrowser && window.devToolsExtension
@@ -17,7 +17,7 @@ const devtools =
 
 
 const optionalMiddleware = [];
-if (process.env.NODE_ENV !== 'production' && isBrowser) {
+if (!muteReduxLogger && isBrowser) {
   optionalMiddleware.push(require('redux-logger').createLogger());
 }
 

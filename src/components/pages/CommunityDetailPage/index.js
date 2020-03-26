@@ -65,6 +65,7 @@ import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
 import AdSenseTile from 'sly/components/organisms/AdsenseTile';
+import { Experiment, Variant } from 'sly/services/experiments';
 // import UnhydratedCommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
@@ -351,6 +352,14 @@ export default class CommunityDetailPage extends Component {
               items={getBreadCrumbsForCommunity({ name, propInfo, address })}
             />
             <TwoColumn>
+              <div>
+                Herebe experiment
+              </div>
+              <Experiment name="test_exp">
+                <Variant name="uno"><div>uno</div></Variant>
+                <Variant name="dos"><div>dos</div></Variant>
+              </Experiment>
+
               <Body>
                 <Gallery>
                   <CommunityMediaGalleryContainer />

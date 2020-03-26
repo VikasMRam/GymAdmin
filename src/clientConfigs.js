@@ -4,6 +4,7 @@ import pathToRegexp from 'path-to-regexp';
 import debounce from 'lodash/debounce';
 import { ChunkExtractor } from '@loadable/server';
 
+import { isDev } from 'sly/config';
 import careTypes from 'sly/constants/careTypes';
 
 const configs = [
@@ -66,7 +67,7 @@ function patchConfigs ({ statsWeb, statsNode }) {
 }
 
 export default function clientConfigsMiddleware ({ statsNode, statsWeb }) {
-  if (process.env.NODE_ENV !== 'development') {
+  if (!isDev) {
     // stats files are ready from build step
     patchConfigs({ statsWeb, statsNode });
   } else {
