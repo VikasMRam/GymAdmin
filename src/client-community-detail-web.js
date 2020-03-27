@@ -1,7 +1,5 @@
 import 'intersection-observer';
 // eslint-disable-next-line import/extensions
-// For Lazy loading images, used in ResponsiveImage
-require('sly/services/yall');
 /* eslint-disable no-underscore-dangle */
 import partiallyHydrateClient from 'sly/services/partialHydration/partiallyHydrateClient';
 import clientConfigs from 'sly/clientConfigs';
@@ -29,6 +27,9 @@ import AskAgentQuestionHowItWorksBannerNotificationContainer from 'sly/container
 import CommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
 import RetentionPopup from 'sly/services/retentionPopup';
 import Image from 'sly/components/atoms/Image';
+
+// For Lazy loading images, used in ResponsiveImage
+require('sly/services/yall');
 
 const root = document.getElementById('app');
 
