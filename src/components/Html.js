@@ -61,12 +61,6 @@ const Html = ({
           })('script', document, 'https://apis.google.com/js/platform.js');
         `}}></script>
         {/* End Google Platform Library Code */}
-        {/* Begin Google AdSense script*/}
-        <script type="text/javascript" defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <script dangerouslySetInnerHTML={{ __html: `
-        (adsbygoogle = window.adsbygoogle || []).push({});
-        `}}></script>
-        {/* End Google AdSense script*/}
         {/* eslint-enable */}
 
         {helmet.style.toComponent()}

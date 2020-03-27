@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
+import { hcaAdEnabled } from 'sly/services/helpers/tileAds';
 
 import withNotification from 'sly/controllers/withNotification';
 import AdTile from 'sly/components/organisms/AdTile';
@@ -11,6 +12,7 @@ import { ResponsiveImage } from 'sly/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
 import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
 import { HOME_CARE_REQUESTED } from 'sly/services/newApi/constants';
+import { community as communityProptype } from 'sly/propTypes/community';
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
   vertical-align: middle;
@@ -24,7 +26,7 @@ export default class PostConversionAdTileContainer extends Component {
   static propTypes = {
     notifyInfo: func.isRequired,
     type: oneOf(['askAgent', 'homeCare','getOffer']).isRequired,
-    city: string,
+    community: communityProptype,
     tocLabel: string,
   };
 
@@ -87,8 +89,11 @@ export default class PostConversionAdTileContainer extends Component {
   };
 
   render() {
-    const { type } = this.props;
+    const { type, community } = this.props;
     const { isModalOpen, modalHeading, modalMessagePrompt, modalAction, modalMessagePlaceholder } = this.state;
+    const { address: {zip, city, state }} = community;
+    const isHCA = hcaAdEnabled({ zip });
+    const hcaAdTitle = `Home Care Assistance in ${city}, ${state}`;
     return (
       <>
         {type === 'getOffer' &&
@@ -107,11 +112,11 @@ export default class PostConversionAdTileContainer extends Component {
           Check out <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> Offers for a no obligation cash offer.
         </AdTile>
         }
-        {type === 'homeCare' &&
+        {type === 'homeCare' && isHCA &&
         <AdTile
-          title="Get In-Home Care for Seniors"
+          title={hcaAdTitle}
           buttonText="Get Home Care"
-          buttonPosition="right"
+          buttonPosition="left"
           image={assetPath('images/homecare-2.png')}
           buttonProps={{ onClick: this.handleUseHomecareClick }}
           showSecondary
@@ -119,7 +124,19 @@ export default class PostConversionAdTileContainer extends Component {
           linkText="(855) 866-8719"
           {...this.props}
         >
-          Our team will help you find the right caregiver.
+          Help Keep Seniors Safe at Home
+        </AdTile>
+        }
+        {type === 'homeCare' && !isHCA &&
+        <AdTile
+          title="Get In-Home Care for Seniors"
+          buttonText="Get Home Care"
+          buttonPosition="left"
+          image={assetPath('images/homecare-ad.png')}
+          buttonProps={{ onClick: this.handleUseHomecareClick }}
+          {...this.props}
+        >
+          Our team will help you find the best caregivers nationwide.
         </AdTile>
         }
         {isModalOpen &&
