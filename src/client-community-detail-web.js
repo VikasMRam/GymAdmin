@@ -28,6 +28,7 @@ import AskAgentQuestionHowItWorksBannerNotificationContainer from 'sly/container
 import CommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
 import RetentionPopup from 'sly/services/retentionPopup';
 import Image from 'sly/components/atoms/Image';
+import CommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
 
 const root = document.getElementById('app');
 
@@ -57,6 +58,7 @@ partiallyHydrateClient(
     CommunityDetailsPageColumnContainer,
     RetentionPopup,
     Image,
+    CommunityProfileAdTileContainer,
   ],
   clientConfigs.find(x => x.bundle === 'community-details').path,
   root,
