@@ -64,7 +64,7 @@ import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
-// import UnhydratedCommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
+import UnhydratedCommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -84,7 +84,7 @@ const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { a
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
-// const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
+const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -479,9 +479,9 @@ export default class CommunityDetailPage extends Component {
                   )}
                 </StyledHeadingBoxSection>
                 {/* TODO: ENABLE AFTER FIGURING OUT HYDRATION*/}
-                {/*<AdWrapper>*/}
-                  {/*<CommunityProfileAdTileContainer type="homeCare" community={community} />*/}
-                {/*</AdWrapper>*/}
+                <AdWrapper>
+                  <CommunityProfileAdTileContainer type="homeCare" community={community} />
+                </AdWrapper>
                 <StyledHeadingBoxSection
                   heading={`Get Availability at ${name}`}
                   id="availability"
