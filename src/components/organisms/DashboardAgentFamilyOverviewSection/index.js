@@ -19,7 +19,7 @@ import IconButton from 'sly/components/molecules/IconButton';
 import ClientRowCard from 'sly/components/organisms/ClientRowCard';
 import Role from 'sly/components/common/Role';
 import AddFamilyFormContainer from 'sly/containers/dashboard/AddFamilyFormContainer';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/constants/roles';
 import { stripPageNumber } from 'sly/services/helpers/appPaths';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
@@ -165,7 +165,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
     const beforeTabHeader = (
       <TwoColumn>
         <Heading level="subtitle">My Families</Heading>
-        <Role className="addFamily" is={PLATFORM_ADMIN_ROLE}>
+        <Role className="addFamily" is={PLATFORM_ADMIN_ROLE | AGENT_ADMIN_ROLE}>
           <IconButton icon="user-add" onClick={this.handleAddFamilyClick} hideTextInMobile>
             Add family
           </IconButton>
