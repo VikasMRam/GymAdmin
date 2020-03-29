@@ -135,6 +135,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
   const end = (present + requestMeta['page-size']  > count ? count : present + requestMeta['page-size']);
   const locLabel = getLocationLabel(searchParams);
   const tocLabel = getTocLabel(searchParams.toc);
+  const { city, state } = searchParams;
   // pagination pathname
   let params = {};
   if (location.search) {
@@ -177,9 +178,8 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
             />
           </CommunityTileWrapper>
           {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
-            <><PaddedSearchResultsAdTileContainer type="homeCare" locationLabel={locLabel} tocLabel={tocLabel} />
-              <AdSenseTile isMobileOnly={true} adLocation={'search'}/>
-            </>}
+            <PaddedSearchResultsAdTileContainer type="homeCare" locationLabel={locLabel} tocLabel={tocLabel} />
+            }
         </>
       ))}
       {communityList.length < 1 &&
@@ -192,7 +192,6 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
           <MSCColumnWrapper>
             {usefulInformationTilesComponents}
           </MSCColumnWrapper>
-          <AdSenseTile isMobileOnly={true} adLocation={'search'}/>
         </>
       }
       <PaginationText>

@@ -184,7 +184,6 @@ const CommunitySearchPage = ({
             </ResponsiveSidebar>
 
           </FilterColumnWrapper>
-          <AdSenseTile isMobileOnly={false} adLocation={'search'}/>
           </>
         )}
       >

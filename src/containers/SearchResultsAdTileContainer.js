@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { size, assetPath } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
 import { CONSULTATION_REQUESTED,HOME_CARE_REQUESTED } from 'sly/services/newApi/constants';
+import { hcaAdEnabled } from 'sly/services/helpers/tileAds';
 import withNotification from 'sly/controllers/withNotification';
 import AdTile from 'sly/components/organisms/AdTile';
 import { ResponsiveImage } from 'sly/components/atoms';
@@ -25,6 +26,7 @@ export default class SearchResultsAdTileContainer extends Component {
     notifyInfo: func.isRequired,
     type: oneOf(['askAgent', 'getOffer','homeCare']).isRequired,
     city: string,
+    locationLabel: string,
     tocLabel: string,
   };
 
@@ -98,8 +100,10 @@ export default class SearchResultsAdTileContainer extends Component {
   };
 
   render() {
-    const { type } = this.props;
+    const { type, locationLabel } = this.props;
     const { isModalOpen, modalHeading, modalMessagePrompt, modalAction, modalMessagePlaceholder } = this.state;
+    const isHCA = hcaAdEnabled({ cityState:locationLabel });
+    const hcaAdTitle = `Home Care Assistance in ${locationLabel}`;
     return (
       <>
         {type === 'askAgent' &&
@@ -121,9 +125,9 @@ export default class SearchResultsAdTileContainer extends Component {
             Check out <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> Offers for a no obligation cash offer.
           </AdTile>
         }
-        {type === 'homeCare' &&
+        {type === 'homeCare' && isHCA &&
           <AdTile
-            title="Get In-Home Care for Seniors"
+            title={hcaAdTitle}
             buttonText="Get Home Care"
             buttonPosition="left"
             image={assetPath('images/homecare-2.png')}
@@ -133,8 +137,20 @@ export default class SearchResultsAdTileContainer extends Component {
             linkText="(855) 866-8719"
             {...this.props}
           >
-            Our team will help you find the best caregivers nationwide.
+            Help Keep Seniors Safe at Home
           </AdTile>
+        }
+        {type === 'homeCare' && !isHCA &&
+        <AdTile
+          title="Get In-Home Care for Seniors"
+          buttonText="Get Home Care"
+          buttonPosition="left"
+          image={assetPath('images/homecare-ad.png')}
+          buttonProps={{ onClick: this.handleUseHomecareClick }}
+          {...this.props}
+        >
+          Our team will help you find the best caregivers nationwide.
+        </AdTile>
         }
         {isModalOpen &&
           <Modal onClose={this.handleClose}>
