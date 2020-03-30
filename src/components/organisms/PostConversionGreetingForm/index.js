@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { func } from 'prop-types';
 import styled from 'styled-components';
 
@@ -49,17 +49,12 @@ const RejectButton = styled(Button)`
   margin-bottom: 0;
 `;
 
-const PaddedHeading = styled(Heading)`
-  margin: ${size('spacing.xLarge')} 0;
-`;
-
 const PostConversionGreetingForm = ({
   onSubmit, community,
 }) => {
   const [currentModal, setCurrentModal] = useState(null);
 
   const closeModal = () => setCurrentModal(null);
-  const tryReject = () => setCurrentModal(ASK_NOT_HELP);
   const doReject = () => onSubmit({ interest: DO_NOT_REFER }).then(() => setCurrentModal(SURE_NOT_HELP));
   const doDismiss = () => onSubmit({ redirectLink: getCitySearchWithSizeUrl(community) });
 
@@ -72,7 +67,7 @@ const PostConversionGreetingForm = ({
         <RejectButton ghost palette="primary" onClick={doDismiss}>See similar communities in the area.</RejectButton>
       </TextWrapper>
       <Wrapper>
-        <PostConversionAdTileContainer notifyInfo={closeModal} type="homeCare"/>
+        <PostConversionAdTileContainer notifyInfo={closeModal} type="homeCare" community={community}/>
       </Wrapper>
       {currentModal === ASK_NOT_HELP && (
         <PostConversionAskNotHelpModal onReject={doReject} onClose={closeModal} />

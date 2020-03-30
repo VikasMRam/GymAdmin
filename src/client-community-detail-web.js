@@ -28,6 +28,7 @@ import CommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetails
 import RetentionPopup from 'sly/services/retentionPopup';
 import Image from 'sly/components/atoms/Image';
 import careTypes from 'sly/constants/careTypes';
+import CommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
 
 const root = document.getElementById('app');
 
@@ -57,6 +58,7 @@ partiallyHydrateClient(
     CommunityDetailsPageColumnContainer,
     RetentionPopup,
     Image,
+    CommunityProfileAdTileContainer,
   ],
   `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
   root,
