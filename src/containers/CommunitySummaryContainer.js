@@ -112,8 +112,8 @@ export default class CommunitySummaryContainer extends Component {
           notifyError={notifyError}
         />,
         null,
-        'noPadding',
-        false
+        'letsmovetothismodaltypealltheothermodals',
+        false,
       );
 
       this.sendEvent('click', 'saveCommunity');
