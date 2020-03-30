@@ -10,6 +10,7 @@ import { medicareToBool } from 'sly/services/helpers/userDetails';
 import { prefetch, query, withAuth } from 'sly/services/newApi';
 import withWS from 'sly/services/ws/withWS';
 import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/services/newApi/constants';
+import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/constants/notifications';
 import { withRedirectTo } from 'sly/services/redirectTo';
 
 const eventCategory = 'PricingWizard';
@@ -55,6 +56,11 @@ export default class PricingWizardPageContainer extends Component {
 
     ws.doDestroyWSConnection();
   }
+
+  state = {
+    agent: null,
+    hasNoAgent: false,
+  };
 
   sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
     category: `${eventCategory}-${this.type}`,
@@ -137,10 +143,24 @@ export default class PricingWizardPageContainer extends Component {
     }).then(({ alreadyExists }) => {
       if (alreadyExists) {
         ensureAuthenticated({ emailOrPhone: email || regPhone });
-        ws.setup(true);
       }
+      ws.setup(true);
+      this.agentMatchTimeout = setTimeout(this.onNoAgentMatch, NOTIFY_AGENT_MATCHED_TIMEOUT);
+      ws.pubsub.on(NOTIFY_AGENT_MATCHED, this.onMessage, { capture: true });
       this.sendEvent('pricing-contact-submitted', community.id, currentStep);
     }));
+  };
+
+  onMessage = () => {
+    clearTimeout(this.agentMatchTimeout);
+
+    // todo: when api code is there do agent fetch
+  };
+
+  onNoAgentMatch = () => {
+    this.setState({
+      hasNoAgent: true,
+    });
   };
 
   getHasFinished = () => {
@@ -154,6 +174,7 @@ export default class PricingWizardPageContainer extends Component {
     const {
       community, user, userHas, uuidAux, redirectTo, match,
     } = this.props;
+    const { agent, hasNoAgent } = this.state;
 
     if (!this.getHasFinished()) {
       return null;
@@ -171,6 +192,8 @@ export default class PricingWizardPageContainer extends Component {
         match={match}
         type={this.type}
         sendEvent={this.sendEvent}
+        agent={agent}
+        hasNoAgent={hasNoAgent}
       />
     );
   }

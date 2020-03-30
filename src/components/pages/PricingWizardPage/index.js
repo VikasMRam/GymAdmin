@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { object, func, string } from 'prop-types';
+import { object, func, string, bool } from 'prop-types';
 import Helmet from 'react-helmet';
 import { Route } from 'react-router';
 import { Redirect } from 'react-router-dom';
 
-import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
 import { community as communityPropType } from 'sly/propTypes/community';
+import userPropType from 'sly/propTypes/user';
+import agentPropType from 'sly/propTypes/agent';
 import { size } from 'sly/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import {
@@ -19,24 +20,20 @@ import {
 import {
   EST_ADDL_COST_ACCOMODATION,
   EST_ADDL_COST_CARE_SERVICE,
-  WHAT_TO_NEXT_OPTIONS,
-  EXPLORE_AFFORDABLE_PRICING_OPTIONS,
+  // WHAT_TO_NEXT_OPTIONS,
 } from 'sly/constants/pricingForm';
-import { getIsCCRC, getIsSNF } from 'sly/services/helpers/community';
+import { getIsCCRC } from 'sly/services/helpers/community';
 import { FAMILY_DASHBOARD_FAVORITES_PATH } from 'sly/constants/dashboardAppPaths';
+import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
+import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
+import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWizardAcknowledgementContainer';
+import MatchedAgentContainer from 'sly/containers/MatchedAgentContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
-import ConversionWizardInfoStep from 'sly/components/organisms/ConversionWizardInfoStep';
-import PostConversionGreetingForm from 'sly/components/organisms/PostConversionGreetingForm';
-import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
-import CommunityPricingWizardWhatToDoNextFormContainer from 'sly/containers/CommunityPricingWizardWhatToDoNextFormContainer';
-
-import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWizardAcknowledgementContainer';
-import CommunityPricingWizardExploreAffordableOptionsFormContainer
-  from 'sly/containers/CommunityPricingWizardExploreAffordableOptionsFormContainer';
 import Modal from 'sly/components/molecules/Modal';
+import ConversionWizardInfoStep from 'sly/components/organisms/ConversionWizardInfoStep';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -68,12 +65,20 @@ const contactFormHeadingMap = {
   'apply-financing': { heading: 'We Are Here to Help You', subheading: 'We have helped thousands of families to learn about and choose a community they love. This is a free service. ' },
 };
 
-const stepsWithoutControls = ['Landing', 'WhatToDoNext', 'ExploreAffordableOptions', 'MedicaidWarning', 'CCRCWarning','PostConversionGreeting'];
+const stepsWithoutControls = [
+  'Landing',
+  'WhatToDoNext',
+  'ExploreAffordableOptions',
+  'MedicaidWarning',
+  'CCRCWarning',
+  'PostConversionGreeting',
+];
 
 export default class PricingWizardPage extends Component {
   static propTypes = {
     community: communityPropType,
-    user: object,
+    agent: agentPropType,
+    user: userPropType,
     userHas: func,
     uuidAux: object,
     userActionSubmit: func,
@@ -83,6 +88,7 @@ export default class PricingWizardPage extends Component {
     updateUuidAux: func,
     type: string,
     sendEvent: func,
+    hasNoAgent: bool,
   };
 
   static defaultProps = {
@@ -134,7 +140,7 @@ export default class PricingWizardPage extends Component {
 
   // This function is called after the step is changed
   handleStepChange = ({
-    currentStep, data, goto, doSubmit, next,
+    currentStep, data, goto, doSubmit,
   }) => {
     const { community, userHas, submitActionAndCreateUser, updateUuidAux, match, sendEvent, uuidAux } = this.props;
     const { id } = community;
@@ -147,25 +153,22 @@ export default class PricingWizardPage extends Component {
       return updateUuidAux(data).then(() => {
         if (userHas(['name', 'phoneNumber'])) {
           return submitActionAndCreateUser(data).then(() => {
-
-            if (medicaidCoverage === 'yes' || medicaidCoverage === 'i-am-not-sure' ||
+            if (medicaidCoverage === 'yes' || medicaidCoverage === 'not-sure' ||
               (uuidAux && uuidAux.uuidInfo && uuidAux.uuidInfo.financialInfo && uuidAux.uuidInfo.financialInfo.medicaid === false)) {
               // it's important to check for false value as even if key is missing or it's null, undefined condition will become true
               if (!getIsCCRC(community)) {
                 return goto('PostConversionGreeting');
               }
               return goto('MedicaidWarning');
-            } else {
-              if (!getIsCCRC(community)) {
-                return goto('PostConversionGreeting');
-              }
-              return goto('CCRCWarning');
             }
-            return null;
+            if (!getIsCCRC(community)) {
+              return goto('PostConversionGreeting');
+            }
+            return goto('CCRCWarning');
           });
         }
 
-        if (medicaidCoverage === 'yes' || medicaidCoverage === 'i-am-not-sure' ||
+        if (medicaidCoverage === 'yes' || medicaidCoverage === 'not-sure' ||
           (uuidAux && uuidAux.uuidInfo && uuidAux.uuidInfo.financialInfo && uuidAux.uuidInfo.financialInfo.medicaid === false)) {
           // it's important to check for false value as even if key is missing or it's null, undefined condition will become true
           return goto('MedicaidWarning');
@@ -242,21 +245,21 @@ export default class PricingWizardPage extends Component {
   handleHelpHover = (type) => {
     const { sendEvent } = this.props;
     sendEvent('help-tooltip-hover', type);
-  }
+  };
 
   render() {
     const {
-      community, user, uuidAux, userHas, match, redirectTo, type, sendEvent,
+      community, user, uuidAux, userHas, match, redirectTo, type, sendEvent, agent, hasNoAgent,
     } = this.props;
 
     if (!community) {
       return <Redirect to="/" />;
     }
 
-    const { id, mainImage, name, propInfo={} } = community;
-    const { websiteUrl='https://www.seniorly.com/resources/articles/understanding-continuing-care-retirement-communities' } = propInfo;
+    const { id, mainImage, name, propInfo = {} } = community;
+    const { websiteUrl = 'https://www.seniorly.com/resources/articles/understanding-continuing-care-retirement-communities' } = propInfo;
     const { estimatedPrice } = this.state;
-    const compiledWhatToDoNextOptions = [...WHAT_TO_NEXT_OPTIONS];
+    // const compiledWhatToDoNextOptions = [...WHAT_TO_NEXT_OPTIONS];
     // const scheduleTourOption = compiledWhatToDoNextOptions.find(o => o.value === 'schedule-tour');
     // scheduleTourOption.to = `/book-a-tour/${id}`;
 
@@ -373,9 +376,11 @@ export default class PricingWizardPage extends Component {
                       points={['A CCRC is a community with multiple levels of care', 'Often they have $100,000+ entrance fees']}
                     />
                     <WizardStep
-                      component={PostConversionGreetingForm}
+                      component={MatchedAgentContainer}
                       name="PostConversionGreeting"
                       community={community}
+                      agent={agent}
+                      hasNoAgent={hasNoAgent}
                       onSubmit={onSubmit}
                     />
                   </WizardSteps>
