@@ -1,6 +1,5 @@
 import 'intersection-observer';
 // eslint-disable-next-line import/extensions
-import 'sly/services/yall';
 /* eslint-disable no-underscore-dangle */
 import partiallyHydrateClient from 'sly/services/partialHydration/partiallyHydrateClient';
 import ModalContainer from 'sly/containers/ModalContainer';
@@ -29,6 +28,9 @@ import RetentionPopup from 'sly/services/retentionPopup';
 import Image from 'sly/components/atoms/Image';
 import careTypes from 'sly/constants/careTypes';
 import CommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
+
+// For Lazy loading images, used in ResponsiveImage
+require('sly/services/yall');
 
 const root = document.getElementById('app');
 
