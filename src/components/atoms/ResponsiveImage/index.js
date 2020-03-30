@@ -156,19 +156,27 @@ export default class ResponsiveImage extends React.Component {
       ? `${className} ${classNameProp}`
       : className;
 
-    const picture = (
-      <picture>
-        {sourceSets}
+    const picture = this.state.failed
+      ? (
         <img
-          loading={loading}
-          alt={alt || getAlt(path)}
-          className={imgClassName}
-          onError={this.failedLoadImageHandler}
+          alt={alt || getAlt(imageProps.src)}
+          className={classNameProp}
           {...imageProps}
           {...props}
         />
-      </picture>
-    );
+      ) : (
+        <picture>
+          {sourceSets}
+          <img
+            loading={loading}
+            alt={alt || getAlt(path)}
+            className={imgClassName}
+            onError={this.failedLoadImageHandler}
+            {...imageProps}
+            {...props}
+          />
+        </picture>
+      );
 
     if (!aspectRatio) {
       return picture;

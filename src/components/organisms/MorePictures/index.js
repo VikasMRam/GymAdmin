@@ -43,6 +43,7 @@ export default function MorePictures({ images = [], onPictureClick }) {
           aspectRatio="4:3"
           alt={image.alt}
           sizes={thumbSizes}
+          loading="lazy"
         />
       ))}
     </Wrapper>
