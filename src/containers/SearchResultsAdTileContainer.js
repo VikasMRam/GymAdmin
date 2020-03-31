@@ -68,8 +68,8 @@ export default class SearchResultsAdTileContainer extends Component {
     });
     this.setState({
       isModalOpen: true,
-      modalMessagePrompt: 'What kinds of care do you need at home?',
-      modalHeading: 'We Can Help You Find the Best Home Care',
+      modalMessagePrompt: 'Please give us a little more information on what services you are currently looking for?',
+      modalHeading: 'Get A Free Consultation About In-Home Care',
       modalMessagePlaceholder: 'Type your care needs here',
       modalAction: HOME_CARE_REQUESTED,
     });
@@ -127,7 +127,7 @@ export default class SearchResultsAdTileContainer extends Component {
         }
         {type === 'homeCare' && isHCA &&
           <AdTile
-            title={hcaAdTitle}
+            title="Delaying Assisted Living More? Consider In-Home Care"
             buttonText="Get Home Care"
             buttonPosition="left"
             image={assetPath('images/homecare-2.png')}
@@ -137,19 +137,19 @@ export default class SearchResultsAdTileContainer extends Component {
             linkText="(855) 866-8719"
             {...this.props}
           >
-            Help Keep Seniors Safe at Home
+            Have pre-screened caregivers at your home
           </AdTile>
         }
         {type === 'homeCare' && !isHCA &&
         <AdTile
-          title="Get In-Home Care for Seniors"
+          title="Delaying Assisted Living More? Consider In-Home Care"
           buttonText="Get Home Care"
           buttonPosition="left"
           image={assetPath('images/homecare-ad.png')}
           buttonProps={{ onClick: this.handleUseHomecareClick }}
           {...this.props}
         >
-          Our team will help you find the best caregivers nationwide.
+          Have pre-screened caregivers at your home
         </AdTile>
         }
         {isModalOpen &&
