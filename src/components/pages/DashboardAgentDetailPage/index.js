@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
-import { string, bool, object } from 'prop-types';
+import { string, bool, object, arrayOf, func } from 'prop-types';
 import { generatePath } from 'react-router';
 
 import {
@@ -9,10 +9,12 @@ import {
   SUMMARY,
   AGENT_DETAILS,
   CONTACTS,
+  ACTIVITY,
 } from 'sly/constants/dashboardAppPaths';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import userPropType from 'sly/propTypes/user';
+import notePropType from 'sly/propTypes/note';
 import { size, palette } from 'sly/components/themes';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import pad from 'sly/components/helpers/pad';
@@ -20,14 +22,22 @@ import { userIs } from 'sly/services/helpers/role';
 import textAlign from 'sly/components/helpers/textAlign';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
-import { Box, Block, Icon, Link, Hr } from 'sly/components/atoms';
+import { Box, Block, Icon, Link, Hr, Button } from 'sly/components/atoms';
 import Tabs from 'sly/components/molecules/Tabs';
 import Tab from 'sly/components/molecules/Tab';
 import AgentSummary from 'sly/components/molecules/AgentSummary';
 import BackLink from 'sly/components/molecules/BackLink';
 import PartnerAgentProfileFormContainer from 'sly/containers/PartnerAgentProfileFormContainer';
 import DashboardContactsSectionContainer from 'sly/containers/dashboard/DashboardContactsSectionContainer';
+import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
+import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import { AGENT_ENTITY_TYPE } from 'sly/constants/entityTypes';
+import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
+import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
+import withModal from 'sly/controllers/withModal';
+import withNotification from 'sly/controllers/withNotification';
+import SlyEvent from 'sly/services/helpers/events';
+import fullWidth from 'sly/components/helpers/fullWidth';
 
 const LargePaddingWrapper = styled.div`
   padding: ${size('spacing.large')};
@@ -130,6 +140,23 @@ const StyledAgentNameBlock = styled(Block)`
 
 `;
 
+const StyledFamilyActivityItem = styled(FamilyActivityItem)`
+  border-right: 0;
+  border-left: 0;
+  &:first-child {
+    border-top: 0;
+  }
+  &:last-child {
+    border-bottom: 0;
+  }
+`;
+
+const SmallScreenBorderDiv = styled.div`
+  ${SmallScreenBorder}
+  ${p => p.padding && css`padding: ${size('spacing', p.padding)};`}
+`;
+
+const FullWidthButton = fullWidth(Button);
 
 const AgentName = ({ agent, backLinkHref }) => {
   const { name } = agent;
@@ -170,24 +197,35 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
 
 const PaddedBackLink = pad(BackLink, 'regular');
 
+@withModal
+@withNotification
 export default class DashboardAgentDetailPage extends Component {
   static propTypes = {
     agent: adminAgentPropType,
     user: userPropType.isRequired,
+    notes: arrayOf(notePropType),
     rawAgent: object,
     isLoading: bool,
     currentTab: string,
+    onAddNote: func.isRequired,
+    onEditNote: func.isRequired,
+    showModal: func.isRequired,
+    hideModal: func.isRequired,
+    notifyInfo: func.isRequired,
+    notifyError: func.isRequired,
   };
 
   getTabPathsForUser = () => {
     const { agent } = this.props;
     const { id } = agent;
     const summaryPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: SUMMARY });
+    const activitesPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: ACTIVITY });
     const agentDetailsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: AGENT_DETAILS });
     const contactsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: CONTACTS });
 
     return {
       summaryPath,
+      activitesPath,
       agentDetailsPath,
       contactsPath,
     };
@@ -197,6 +235,7 @@ export default class DashboardAgentDetailPage extends Component {
     const { user } = this.props;
     const {
       summaryPath,
+      activitesPath,
       agentDetailsPath,
       contactsPath,
     } = this.getTabPathsForUser();
@@ -215,6 +254,7 @@ export default class DashboardAgentDetailPage extends Component {
       );
     };
     const adminTabList = [
+      { id: ACTIVITY, to: activitesPath, label: 'Activities' },
       { id: AGENT_DETAILS, to: agentDetailsPath, label: 'Agent Details' },
       { id: CONTACTS, to: contactsPath, label: 'Contacts' },
     ];
@@ -225,8 +265,62 @@ export default class DashboardAgentDetailPage extends Component {
     return tabs;
   };
 
+  handleAddNoteClick = () => {
+    const {
+      showModal, agent, hideModal, onAddNote, notifyError, notifyInfo,
+    } = this.props;
+    const { name } = agent;
+    SlyEvent.getInstance().sendEvent({
+      category: 'agentDetails',
+      action: 'launch',
+      label: 'add-note',
+      value: '',
+    });
+    const handleSubmit = data => onAddNote(data, notifyError, notifyInfo, hideModal);
+
+    showModal(<AddNoteFormContainer
+      hasCancel
+      noteRequired
+      onCancelClick={hideModal}
+      heading={`Add a note on ${name}`}
+      label="Note"
+      placeholder=""
+      submitButtonText="Save note"
+      onSubmit={handleSubmit}
+    />, null, 'noPadding', false);
+  };
+
+  handleEditNoteClick = (note) => {
+    const {
+      showModal, agent, hideModal, onEditNote, notifyError, notifyInfo,
+    } = this.props;
+    const { name } = agent;
+    SlyEvent.getInstance().sendEvent({
+      category: 'agentDetails',
+      action: 'launch',
+      label: 'edit-note',
+      value: note.id,
+    });
+    const handleSubmit = data => onEditNote(data, note, notifyError, notifyInfo, hideModal);
+    const initialValues = {
+      note: note.body,
+    };
+
+    showModal(<AddNoteFormContainer
+      hasCancel
+      noteRequired
+      onCancelClick={hideModal}
+      heading={`Edit note on ${name}`}
+      label="Note"
+      placeholder="Edit a note."
+      submitButtonText="Save note"
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+    />, null, 'noPadding', false);
+  };
+
   render() {
-    const { agent, rawAgent, user, currentTab, isLoading: agentIsLoading } = this.props;
+    const { agent, rawAgent, user, notes, currentTab, isLoading: agentIsLoading } = this.props;
     if (agentIsLoading) {
       return (
         <StyledDashboardTwoColumnTemplate activeMenuItem="Agents">
@@ -263,6 +357,29 @@ export default class DashboardAgentDetailPage extends Component {
       'filter[agent-id]': id,
     };
 
+    const activityCards = notes ? notes.map((a, i) => {
+      const props = {
+        key: a.id,
+        noBorderRadius: true,
+        snap: i === notes.length - 1 ? null : 'bottom',
+        title: a.title,
+        description: a.body,
+        date: a.createdAt,
+        cType: a.cType,
+      };
+
+      if (a.cType === NOTE_CTYPE_NOTE) {
+        props.onEditClick = () => this.handleEditNoteClick(a);
+      }
+
+      return <StyledFamilyActivityItem {...props} />;
+    }) : [];
+
+    const stickyFooterOptions = [
+      {
+        text: 'Add note', icon: 'add-note', iconPalette: 'slate', onClick: this.handleAddNoteClick, ghost: true,
+      },
+    ];
     return (
       <StyledDashboardTwoColumnTemplate activeMenuItem="Agents">
         <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
@@ -275,6 +392,9 @@ export default class DashboardAgentDetailPage extends Component {
             <LargePaddingWrapper>
               <AgentSummary agent={agent} showAskQuestionButton={false} />
             </LargePaddingWrapper>
+            <Box snap="bottom">
+              <FullWidthButton onClick={this.handleAddNoteClick} ghost>Add note</FullWidthButton>
+            </Box>
           </BigScreenSummarySection>
           <SmallScreenAgentNameWrapper>
             {agentName}
@@ -291,7 +411,20 @@ export default class DashboardAgentDetailPage extends Component {
                 <SmallScreenBorderAgentSummary agent={agent} showAskQuestionButton={false} />
               </LargePaddingWrapper>
             )}
-
+            {currentTab === ACTIVITY && (
+              <SmallScreenBorderDiv padding={!agentIsLoading && activityCards.length > 0 ? null : 'xLarge'}>
+                {agentIsLoading && <Block size="subtitle">Loading...</Block>}
+                {!agentIsLoading && activityCards.length === 0 &&
+                <TextAlignCenterBlock>There are no activities.</TextAlignCenterBlock>
+                }
+                {!agentIsLoading && activityCards.length > 0 &&
+                <>
+                  {/* <TableHeaderButtons hasColumnsButton={false} /> */}
+                  {activityCards}
+                </>
+                }
+              </SmallScreenBorderDiv>
+            )}
             {currentTab === AGENT_DETAILS && (
               <LargePaddingWrapper>
                 <PartnerAgentProfileFormContainer title={agentName} user={user} agent={agent} rawAgent={rawAgent} isLoading={agentIsLoading} />
@@ -311,6 +444,10 @@ export default class DashboardAgentDetailPage extends Component {
             )}
           </TabWrapper>
         </div>
+        <DashboardMyFamilyStickyFooterContainer
+          options={stickyFooterOptions}
+          showAskQuestionButton
+        />
       </StyledDashboardTwoColumnTemplate>
     );
   }

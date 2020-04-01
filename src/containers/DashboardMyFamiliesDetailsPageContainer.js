@@ -98,7 +98,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   getNotes = () => {
     const { client, getNotes } = this.props;
     const params = {
-      'filter[commentable_id]': client.id,
+      'filter[client]': client.id,
     };
     return getNotes(params)
       .then((data) => { this.setState({ rawNotes: data.body.data }); return data; })

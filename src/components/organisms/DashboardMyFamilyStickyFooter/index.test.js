@@ -15,9 +15,9 @@ const options = [
     text: 'Add Note', icon: 'add-note', iconPalette: 'slate', onClick: itemClicks[1], ghost: true,
   },
 ];
-const stage = 'Discussing Options';
+const stage = 'New';
 
-const wrap = (props = {}) => shallow(<DashboardMyFamilyStickyFooter options={options} stage={stage} {...props} />);
+const wrap = (props = {}) => shallow(<DashboardMyFamilyStickyFooter options={options} stage={stage} stageLabel={stage} {...props} />);
 
 describe('DashboardMyFamilyStickyFooter', () => {
   it('renders', () => {
@@ -26,6 +26,7 @@ describe('DashboardMyFamilyStickyFooter', () => {
     const buttons = wrapper.find('RightSideButtons').find('Button');
     expect(buttons).toHaveLength(1);
     expect(buttons.at(0).contains(options[options.length - 1].text)).toBeTruthy();
+    expect(wrapper.find('Stage').find('[stage="New"]')).toHaveLength(1);
   });
 
   it('renders with showAcceptRejectButtons', () => {
@@ -38,5 +39,25 @@ describe('DashboardMyFamilyStickyFooter', () => {
     buttons.forEach((button, i) => {
       expect(button.contains(options[i].text)).toBeTruthy();
     });
+    expect(wrapper.find('Stage').find('[stage="New"]')).toHaveLength(0);
+  });
+
+  it('renders only one button', () => {
+    const [, newOptions] = options;
+    const wrapper = wrap({ options: [newOptions] });
+
+    const buttons = wrapper.find('RightSideButtons').find('Button');
+    expect(buttons).toHaveLength(1);
+    expect(buttons.at(0).contains(options[options.length - 1].text)).toBeTruthy();
+    expect(wrapper.find('Stage').find('[stage="New"]')).toHaveLength(1);
+  });
+
+  it('renders without stage', () => {
+    const wrapper = wrap({ stage: undefined });
+
+    const buttons = wrapper.find('RightSideButtons').find('Button');
+    expect(buttons).toHaveLength(1);
+    expect(buttons.at(0).contains(options[options.length - 1].text)).toBeTruthy();
+    expect(wrapper.find('Stage').find('[stage="New"]')).toHaveLength(0);
   });
 });

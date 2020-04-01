@@ -1,4 +1,5 @@
 export const NOTE_COMMENTABLE_TYPE_CLIENT = 'Client';
+export const NOTE_COMMENTABLE_TYPE_AGENT = 'PartnerAgent';
 
 export const NOTE_CTYPE_NOTE = 'note';
 export const NOTE_CTYPE_ACTIVITY = 'activity';
