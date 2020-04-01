@@ -20,7 +20,7 @@ const Overlay = styled.div`
   right: 0;
   background-color: ${palette('slate', 'base')}e5;
   overflow: auto;
-  z-index: calc(${key('zIndexes.modal.overlay')} + ${prop('instanceNumber')});
+  z-index: calc(${key('zIndexes.modal.overlay')} - ${prop('instanceNumber')});
 `;
 
 const Modal = styled.div`
@@ -82,8 +82,19 @@ export default class NewModal extends Component {
     }
   }
 
+  state = {
+    mounted: false,
+    instanceNumber: 0,
+  };
+
   componentDidMount() {
     instanceNumber++;
+
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({
+      mounted: true,
+      instanceNumber,
+    });
   }
 
   componentWillUnmount() {
@@ -111,12 +122,9 @@ export default class NewModal extends Component {
 
   render() {
     const { children, isOpen, ...props } = this.props;
+    const { mounted, instanceNumber } = this.state;
 
-    if (!isBrowser) {
-      return null;
-    }
-
-    return ReactDom.createPortal(
+    return mounted && ReactDom.createPortal(
       (
         <Overlay ref={this.overlayRef} onClick={this.onClick} isOpen={isOpen} instanceNumber={instanceNumber}>
           <Modal isOpen={isOpen} {...props}>

@@ -28,7 +28,7 @@ import CommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetails
 import RetentionPopup from 'sly/services/retentionPopup';
 import Image from 'sly/components/atoms/Image';
 import CommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
-import BannerNotificationAdContainer from 'sly/containers/BannerNotificationAdContainer'
+import BannerNotificationAdContainer from 'sly/containers/BannerNotificationAdContainer';
 
 // For Lazy loading images, used in ResponsiveImage
 require('sly/services/yall');
