@@ -31,6 +31,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       if (props[`${propName}RequestInfo`]) {
         return {
           requestInfo: props[`${propName}RequestInfo`],
+          getRequestInfo: () => props[`${propName}RequestInfo`],
         };
       }
 

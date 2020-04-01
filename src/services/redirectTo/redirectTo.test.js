@@ -7,8 +7,11 @@ const routes = [{ path: '/known/path', component: Fragment }];
 
 describe('Given the redirectTo function', () => {
   beforeEach(() => {
-    window.location.replace = jest.fn();
-    window.location.assign = jest.fn();
+    delete window.location;
+    window.location = {
+      replace: jest.fn(),
+      assign: jest.fn(),
+    };
     history.push.mockReset();
     history.replace.mockReset();
   });

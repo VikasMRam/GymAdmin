@@ -1,23 +1,22 @@
-/**
- * @jest-environment node
- */
 
 import React from 'react';
 import configureStore from 'redux-mock-store';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import thunkMiddleware from 'redux-thunk';
 
 import Role from 'sly/components/common/Role';
 
+
 const mockStore = configureStore([thunkMiddleware]);
-const wrap = (props = {}, children) => shallow((
-  <Role
-    store={mockStore({ api: { requests: {} } })}
-    {...props}
-  >
-    {children}
-  </Role>
-));
+
+const wrap = (props = {}, children) => mount(
+    <Role
+      store={mockStore({ api: { requests: {} } })}
+      {...props}
+    >
+      {children}
+    </Role>
+);
 
 const makeUserRequestInfo = roleID => ({
   hasStarted: true,
