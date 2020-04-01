@@ -90,6 +90,7 @@ export default class NewModal extends Component {
   componentDidMount() {
     instanceNumber++;
 
+    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
       mounted: true,
       instanceNumber,
