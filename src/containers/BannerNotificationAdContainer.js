@@ -99,7 +99,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
       {type === 'homeCare' &&
       <StyledBannerNotification palette="warning" childrenPalette="slate" onCloseClick={this.handleBannerCloseClick}>
         <Link onClick={this.handleUseHomecareClick}>
-          Delaying Assisted Living More? Consider In-Home Care
+          Delaying Assisted Living Move? Consider In-Home Care
         </Link>
       </StyledBannerNotification>
       }

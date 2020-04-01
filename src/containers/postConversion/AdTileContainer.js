@@ -114,7 +114,7 @@ export default class PostConversionAdTileContainer extends Component {
         }
         {type === 'homeCare' && isHCA &&
         <AdTile
-          title="Delaying Assisted Living More? Consider In-Home Care"
+          title="Delaying Assisted Living Move? Consider In-Home Care"
           buttonText="Get Home Care"
           buttonPosition="left"
           image={assetPath('images/homecare-2.png')}
@@ -129,7 +129,7 @@ export default class PostConversionAdTileContainer extends Component {
         }
         {type === 'homeCare' && !isHCA &&
         <AdTile
-          title="Delaying Assisted Living More? Consider In-Home Care"
+          title="Delaying Assisted Living Move? Consider In-Home Care"
           buttonText="Get Home Care"
           buttonPosition="left"
           image={assetPath('images/homecare-ad.png')}
