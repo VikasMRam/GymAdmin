@@ -1,20 +1,18 @@
 import React, { PureComponent } from 'react';
 import { oneOf } from 'prop-types';
-import { BANNER_COMMUNITY_PROFILE_HOW_IT_WORKS_SHOWN } from  'sly/constants/banner';
 import SlyEvent from 'sly/services/helpers/events';
 import { Link } from 'sly/components/atoms';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
-import { size, assetPath } from 'sly/components/themes';
+import { assetPath } from 'sly/components/themes';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
 import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
-import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/services/newApi/constants';
+import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/services/api/constants';
 import withNotification from 'sly/controllers/withNotification';
 import pad from 'sly/components/helpers/pad';
 
-
 const StyledBannerNotification = pad(BannerNotification, 'large');
-@withNotification
 
+@withNotification
 
 export default class BannerNotificationAdContainer extends PureComponent {
   static typeHydrationId = 'BannerNotificationAdContainer';

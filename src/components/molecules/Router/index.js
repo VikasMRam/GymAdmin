@@ -7,8 +7,9 @@ import {
   parseURLQueryParams,
   removeQueryParamFromURL,
 } from 'sly/services/helpers/url';
-import { withAuth } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/api';
 import { isServer } from 'sly/config';
+import withApiContext, { apiContextPropType } from 'sly/services/api/context';
 
 const searchWhitelist = [
   'page-number',
@@ -18,6 +19,7 @@ const searchWhitelist = [
 const bumpOnSearch = (prev, next) => searchWhitelist
   .some(key => next[key] !== prev[key]);
 
+@withApiContext
 @withAuth
 @withRouter
 
@@ -31,6 +33,7 @@ export default class Router extends Component {
     staticContext: object,
     authenticated: object,
     ensureAuthenticated: func,
+    apiContext: apiContextPropType,
   };
 
   static defaultProps = {
@@ -90,15 +93,20 @@ export default class Router extends Component {
       location,
       children,
       staticContext,
+      apiContext,
     } = this.props;
 
-    if (requiresAuth.some(regex => regex.test(location.pathname)) && status.user.status === 401) {
-      const afterLogin = `${location.pathname}${location.search}${location.hash}`;
-      const url = `/?${stringify({ loginRedirect: afterLogin })}`;
-      if (isServer) {
-        staticContext.status = 302;
+    if (requiresAuth.some(regex => regex.test(location.pathname))) {
+      if (status.user.status === 401) {
+        const afterLogin = `${location.pathname}${location.search}${location.hash}`;
+        const url = `/?${stringify({ loginRedirect: afterLogin })}`;
+        if (isServer) {
+          staticContext.status = 302;
+        }
+        return <Redirect to={url} />;
+      } else if (isServer) {
+        apiContext.skipApiCalls = true;
       }
-      return <Redirect to={url} />;
     }
 
     return children;

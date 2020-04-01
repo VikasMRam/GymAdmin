@@ -21,7 +21,6 @@ export {
   createMemoizedRequestInfoSelector,
 } from './selectors';
 
-export ApiProvider from './ApiProvider';
 export createApi from './createApi';
 export query from './query';
 export prefetch from './prefetch';

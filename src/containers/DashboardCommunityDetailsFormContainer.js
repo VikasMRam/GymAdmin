@@ -8,9 +8,9 @@ import { connect } from 'react-redux';
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
 import clientPropType from 'sly/propTypes/client';
 import userProptype from 'sly/propTypes/user';
-import { query, prefetch, getRelationship } from 'sly/services/newApi';
+import { query, prefetch, getRelationship } from 'sly/services/api';
 import DashboardCommunityDetailsForm from 'sly/components/organisms/DashboardCommunityDetailsForm';
-import withUser from 'sly/services/newApi/withUser';
+import withUser from 'sly/services/api/withUser';
 import { userIs } from 'sly/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 

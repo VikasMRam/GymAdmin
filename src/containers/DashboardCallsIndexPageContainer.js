@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
 
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 import voiceCallsPropType from 'sly/propTypes/calls';
 import { ADMIN_DASHBOARD_CALL_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
 import DashboardCallsIndexPage from 'sly/components/pages/DashboardCallsIndexPage';

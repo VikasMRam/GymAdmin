@@ -4,7 +4,7 @@ import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
 import DashboardAgentDetailPage from 'sly/components/pages/DashboardAgentDetailPage';
-import { withUser, prefetch, query } from 'sly/services/newApi';
+import { withUser, prefetch, query } from 'sly/services/api';
 import userPropType from 'sly/propTypes/user';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import notePropType from 'sly/propTypes/note';

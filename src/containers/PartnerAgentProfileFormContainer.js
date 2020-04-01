@@ -7,7 +7,7 @@ import pick from 'lodash/pick';
 import PartnerAgentProfileForm from 'sly/components/organisms/PartnerAgentProfileForm';
 import { createValidator, required, email, usPhone } from 'sly/services/validation';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
-import { withUser, query } from 'sly/services/newApi';
+import { withUser, query } from 'sly/services/api';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import { userIs } from 'sly/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';

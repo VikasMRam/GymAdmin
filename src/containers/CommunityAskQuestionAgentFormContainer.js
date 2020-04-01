@@ -5,7 +5,7 @@ import { func, string, shape } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import SlyEvent from 'sly/services/helpers/events';
-import { query, withUser } from 'sly/services/newApi';
+import { query, withUser } from 'sly/services/api';
 import {
   createValidator,
   required,
@@ -15,7 +15,7 @@ import {
 import userPropType from 'sly/propTypes/user';
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
-import { AGENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
+import { AGENT_ASK_QUESTIONS } from 'sly/services/api/constants';
 
 const validate = createValidator({
   full_name: [required],

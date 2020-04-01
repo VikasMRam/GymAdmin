@@ -5,7 +5,7 @@ import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 import { Redirect, generatePath } from 'react-router';
 
-import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
+import { withUser, prefetch, query, invalidateRequests } from 'sly/services/api';
 import userPropType from 'sly/propTypes/user';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import clientPropType from 'sly/propTypes/client';

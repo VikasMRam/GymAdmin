@@ -4,7 +4,7 @@ import { func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { createValidator, required, email } from 'sly/services/validation';
-import { withAuth } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/api';
 import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/constants/loginProviders';
 import loadFB from 'sly/services/helpers/facebookSDK';
 import LoginOrRegisterForm from 'sly/components/organisms/LoginOrRegisterForm';

@@ -14,7 +14,7 @@ import IndependentLivingNearMePage from 'sly/components/pages/IndependentLivingN
 import HomeCareNearMePage from 'sly/components/pages/HomeCareNearMePage';
 import RespiteCareNearMePage from 'sly/components/pages/RespiteCareNearMePage';
 import { parseURLQueryParams, generateCityPathSearchUrl } from 'sly/services/helpers/url';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 import { withProps } from 'sly/services/helpers/hocs';
 
 const handleClick = (e, sectionRef) => {

@@ -1,10 +1,8 @@
 /* eslint-disable no-console */
 import '@babel/polyfill';
 import path from 'path';
-import crypto from 'crypto';
 import 'isomorphic-fetch';
 
-import parseUrl from 'parseurl';
 import express from 'express';
 import React from 'react';
 import serialize from 'serialize-javascript';
@@ -12,26 +10,21 @@ import { ServerStyleSheet } from 'styled-components';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
-import { v4 } from 'uuid';
-import cookieParser from 'cookie-parser';
-import pathToRegexp from 'path-to-regexp';
-import cloneDeep from 'lodash/cloneDeep';
-import { ChunkExtractor } from '@loadable/server';
 import { cache } from 'emotion';
 import { CacheProvider } from '@emotion/core';
 import { renderStylesToString } from 'emotion-server';
 
 import { cleanError } from 'sly/services/helpers/logging';
-import { removeQueryParamFromURL } from 'sly/services/helpers/url';
-import { port, host, publicPath, isDev, domain, disableExperiments } from 'sly/config';
+import { port, host, publicPath, isDev } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
-import { ApiProvider, renderToString, apiInstance as api } from 'sly/services/newApi';
-import clientConfigs from 'sly/clientConfigs';
+import clientConfigsMiddleware from 'sly/clientConfigs';
 
 const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
 const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
+
+const sheet = new ServerStyleSheet();
 
 const getErrorContent = (err) => {
   if (isDev) {
@@ -42,11 +35,11 @@ const getErrorContent = (err) => {
 };
 
 const renderHtml = ({
-  initialState, content, sheet, extractorWeb,
+  initialState, content, sheet, extractor,
 }) => {
-  const linkElements = extractorWeb && extractorWeb.getLinkElements();
+  const linkElements = extractor && extractor.getLinkElements();
   const styleElements = sheet && sheet.getStyleElement();
-  const scriptElements = extractorWeb && extractorWeb.getScriptElements();
+  const scriptElements = extractor && extractor.getScriptElements();
 
   const state = `
     ${initialState ? `window.__INITIAL_STATE__ = ${serialize(initialState)};` : ''}
@@ -63,203 +56,49 @@ const renderHtml = ({
   return `<!doctype html>\n${renderToStaticMarkup(html)}`;
 };
 
-const experiments = require('sly/../experiments.json');
-
-const A_MONTH = 30 * 24 * 3600 * 1000;
-const createSetCookie = (res, apiCookies) => (key, value) => {
-  res.cookie(key, value, { domain, maxAge: A_MONTH });
-  apiCookies.push(`${key}=${value}`);
-};
-
-const makeSid = () => crypto.randomBytes(16).toString('hex');
-
-const clientConfigsMiddleware = (configs) => {
-  configs.forEach((config) => {
-    config.regexp = pathToRegexp(config.path);
-  });
-  return (req, res, next) => {
-    const path = parseUrl(req).pathname;
-    for (let i = 0; i < configs.length; i++) {
-      const config = configs[i];
-      if (path.match(config.regexp)) {
-        // we are going to modify this object in subsequent middlewares
-        req.clientConfig = cloneDeep(config);
-        break;
-      }
-    }
-    next();
-  };
-};
-
 const app = express();
 
 app.disable('x-powered-by');
-app.use(cookieParser());
 
 if (!isDev) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
 
-// global.clientConfigs is injected by plugins in private/webpack
-app.use(clientConfigsMiddleware(clientConfigs));
+app.use(clientConfigsMiddleware({ statsNode, statsWeb }));
 
 // non ssr apps
 app.use((req, res, next) => {
-  const { ssr, bundle } = req.clientConfig;
+  const { ssr, extractor } = req.clientConfig;
   if (!ssr) {
-    const extractorWeb = new ChunkExtractor({
-      entrypoints: [bundle],
-      statsFile: statsWeb,
-    });
     res.send(renderHtml({
       content: '',
-      extractorWeb,
+      extractor,
     }));
   } else {
     next();
   }
 });
 
-// headers
-app.use((req, res, next) => {
-  const apiCookies = req.headers.cookie ? [req.headers.cookie] : [];
-  const setCookie = createSetCookie(res, apiCookies);
-  req.clientConfig.apiCookies = apiCookies;
-
-  if (req.query.sly_uuid) {
-    if (!req.cookies.sly_uuid) {
-      setCookie('sly_uuid', req.query.sly_uuid);
-    }
-    const newUrl = removeQueryParamFromURL('sly_uuid', req.url);
-    res.redirect(newUrl);
-    return;
-  }
-
-  let slyUUID = req.cookies.sly_uuid;
-  if (!slyUUID) {
-    slyUUID = v4();
-    setCookie('sly_uuid', slyUUID);
-  }
-
-  req.clientConfig.slyUUID = slyUUID;
-
-  const slySID = req.cookies.sly_sid || makeSid();
-
-  if (!req.cookies.sly_sid) {
-    setCookie('sly_sid', slySID);
-  }
-
-  if (!req.cookies.referrer && req.headers.referer) {
-    setCookie('referrer', req.headers.referer);
-  }
-
-  const utmStr = [
-    'utm_content',
-    'utm_medium',
-    'utm_source',
-    'utm_campaign',
-    'utm_term',
-  ].reduce((cumul, key) => {
-    if (req.query[key]) {
-      cumul.push(`${key}:${req.query[key]}`);
-    }
-    return cumul;
-  }, [])
-    .join(',');
-
-  if (!req.cookies.utm && utmStr) {
-    setCookie('utm', utmStr);
-  }
-
-  res.header('Cache-Control', [
-    'max-age=0, private, must-revalidate',
-    'no-cache="set-cookie"',
-  ]);
-
-  next();
-});
-
-// store
-app.use(async (req, res, next) => {
-  const { slyUUID, apiCookies } = req.clientConfig;
-
-  const hmac = crypto.createHmac('sha256', slyUUID);
-  const slyUUIDHash = hmac.digest('hex');
-  const userExperiments = Object.keys(experiments)
-    .reduce((cumul, key, i) => {
-      let segment;
-      if (disableExperiments) {
-        segment = 0;
-      } else {
-        const channel = i % 8;
-        const part = slyUUIDHash.substr(channel * 4, 4);
-        segment = Math.floor((parseInt(part, 16) / 65536) / (1 / experiments[key].length));
-      }
-      const variant = experiments[key][segment];
-      cumul[key] = variant;
-      return cumul;
-    }, {});
-
-  const apiConfig = {
-    headers: {
-      Cookie: apiCookies.join('; '),
-      'User-Agent': req.headers['user-agent'],
-      'X-is-sly-ssr': 'true',
-      'X-forwarded-for': req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-    },
-  };
-
-  const store = configureStore({ experiments: userExperiments });
-
-  const ignoreUnauthorized = (e) => {
-    if (e.status === 401) {
-      // ignore 401
-      // logWarn(e);
-    } else {
-      return Promise.reject(e);
-    }
-    return null;
-  };
-
-  // prefetch user data
-  try {
-    await Promise.all([
-      store.dispatch(api.getUser.asAction({ id: 'me' }, apiConfig)).catch(ignoreUnauthorized),
-      store.dispatch(api.getUuidAux.asAction({ id: 'me' }, apiConfig)),
-    ]);
-  } catch (e) {
-    e.message = `Error trying to prefetch user data: ${e.message}`;
-    console.log('new user/me error', e);
-    next(e);
-    return;
-  }
-
-  req.clientConfig.store = store;
-  req.clientConfig.apiConfig = apiConfig;
-
-  next();
-});
-
 // render
 app.use(async (req, res, next) => {
-  const { store, apiConfig, bundle } = req.clientConfig;
+  const store = configureStore({ experiments: {} });
+  const {
+    renderToString,
+    extractor,
+    ClientApp,
+  } = req.clientConfig;
+
+  // hack to reset chunk count in the extractor
+  extractor.chunks = [];
 
   try {
-    const extractorNode = new ChunkExtractor({ statsFile: statsNode, entrypoints: [bundle] });
-    const { default: ClientApp } = extractorNode.requireEntrypoint();
-
-    const extractorWeb = new ChunkExtractor({ statsFile: statsWeb, entrypoints: [bundle] });
-
-    const sheet = new ServerStyleSheet();
     const context = {};
 
-    const app = sheet.collectStyles(extractorWeb.collectChunks((
+    const app = sheet.collectStyles(extractor.collectChunks((
       <CacheProvider value={cache}>
         <Provider store={store}>
           <StaticRouter context={context} location={req.url}>
-            <ApiProvider apiConfig={apiConfig}>
-              <ClientApp />
-            </ApiProvider>
+            <ClientApp />
           </StaticRouter>
         </Provider>
       </CacheProvider>
@@ -276,11 +115,15 @@ app.use(async (req, res, next) => {
       res.redirect(301, context.url);
     } else {
       const initialState = store.getState();
+      res.header('Cache-Control', [
+        'max-age=86400, public',
+      ]);
+
       res.send(renderHtml({
         initialState,
         content,
         sheet,
-        extractorWeb,
+        extractor,
       }));
     }
   } catch (error) {

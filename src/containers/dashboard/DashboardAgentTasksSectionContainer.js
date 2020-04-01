@@ -5,7 +5,7 @@ import qs from 'query-string';
 import debounce from 'lodash/debounce';
 import { withRouter } from 'react-router';
 
-import { prefetch, withUser } from 'sly/services/newApi';
+import { prefetch, withUser } from 'sly/services/api';
 import clientPropType from 'sly/propTypes/client';
 import taskPropType from 'sly/propTypes/task';
 import { TASK_STATUS_NOT_STARTED_CODE, TASK_STATUS_IN_PROGRESS_CODE } from 'sly/constants/tasks';

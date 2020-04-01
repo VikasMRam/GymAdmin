@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { func, string } from 'prop-types';
 import { reduxForm } from 'redux-form';
 
-import { query, withUser } from 'sly/services/newApi';
+import { query, withUser } from 'sly/services/api';
 import contactPropType from 'sly/propTypes/contact';
 import { createValidator, email, required, usPhone } from 'sly/services/validation';
 import AddContactForm from 'sly/components/organisms/AddContactForm';

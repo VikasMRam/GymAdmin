@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { string, object } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { prefetch, query } from 'sly/services/newApi';
+import { prefetch, query } from 'sly/services/api';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'constants/dashboardAppPaths';
 import NotificationController from 'sly/controllers/NotificationController';
 import DashboardCallDetailsPage from 'sly/components/pages/DashboardCallDetailsPage';

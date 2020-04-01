@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
-import { CONSULTATION_REQUESTED,HOME_CARE_REQUESTED } from 'sly/services/newApi/constants';
+import { CONSULTATION_REQUESTED,HOME_CARE_REQUESTED } from 'sly/services/api/constants';
 import { hcaAdEnabled } from 'sly/services/helpers/tileAds';
 import withNotification from 'sly/controllers/withNotification';
 import AdTile from 'sly/components/organisms/AdTile';

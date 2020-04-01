@@ -1,5 +1,5 @@
 import { logWarn } from 'sly/services/helpers/logging';
-import { API_CALL } from 'sly/services/newApi/constants';
+import { API_CALL } from 'sly/services/api/constants';
 
 export default () => next => (action) => {
   const { type, payload } = action;

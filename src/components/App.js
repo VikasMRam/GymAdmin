@@ -347,7 +347,7 @@ export default class App extends Component {
               />
               <Route
                 path="/ads.txt"
-                render={() => `google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0`}
+                render={() => 'google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0'}
                 exact
               />
               <Route

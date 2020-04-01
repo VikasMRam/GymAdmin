@@ -7,7 +7,7 @@ import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePa
 import { Hr } from 'sly/components/atoms';
 import { getHelmetForAgentsPage } from 'sly/services/helpers/html_headers';
 import { agentsFAQs, mostSearchedRegions } from 'sly/constants/agents';
-import { CONSULTATION_REQUESTED } from 'sly/services/newApi/constants';
+import { CONSULTATION_REQUESTED } from 'sly/services/api/constants';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import Section from 'sly/components/molecules/Section';

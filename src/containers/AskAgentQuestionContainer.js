@@ -8,7 +8,7 @@ import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import SlyEvent from 'sly/services/helpers/events';
 import withModal from 'sly/controllers/withModal';
 import withNotification from 'sly/controllers/withNotification';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 
 const CommunityAskQuestionAgentFormContainer = loadable(() =>
   import(/* webpackChunkName: "chunkCommunityAskQuestionAgentFormContainer" */ 'sly/containers/CommunityAskQuestionAgentFormContainer'),

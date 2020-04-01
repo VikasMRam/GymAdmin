@@ -1,6 +1,6 @@
 import { apiUrl } from 'sly/config';
-import apiEndpoints from 'sly/services/newApi/endpoints';
-import buildApi from 'sly/services/newApi/buildApi';
+import apiEndpoints from 'sly/services/api/endpoints';
+import buildApi from 'sly/services/api/buildApi';
 
 const config = {
   baseUrl: apiUrl,

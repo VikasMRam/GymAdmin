@@ -14,7 +14,6 @@ import Pagination from 'sly/components/molecules/Pagination';
 import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import CommunityTile from 'sly/components/organisms/CommunityTile';
-import AdSenseTile from 'sly/components/organisms/AdsenseTile';
 import SearchResultsAdTileContainer from 'sly/containers/SearchResultsAdTileContainer';
 
 const CommunityFilterBarWrapper = styled.div`
@@ -30,10 +29,10 @@ const CommunityTileWrapper = pad(styled.div`
 
 const StyledLink = styled(Link)`
   position: absolute !important;
-  top: 0px !important;
-  right: 0px !important;
-  bottom: 0px !important;
-  left: 0px !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
   z-index: 10;
 `;
 
@@ -135,7 +134,6 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
   const end = (present + requestMeta['page-size']  > count ? count : present + requestMeta['page-size']);
   const locLabel = getLocationLabel(searchParams);
   const tocLabel = getTocLabel(searchParams.toc);
-  const { city, state } = searchParams;
   // pagination pathname
   let params = {};
   if (location.search) {

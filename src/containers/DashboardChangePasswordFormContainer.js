@@ -4,7 +4,7 @@ import { func } from 'prop-types';
 
 import DashboardChangePasswordForm from 'sly/components/organisms/DashboardChangePasswordForm';
 import { createValidator, required, minLength, match } from 'sly/services/validation';
-import { withAuth } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/api';
 
 const validate = createValidator({
   oldPassword: [required, minLength(8)],

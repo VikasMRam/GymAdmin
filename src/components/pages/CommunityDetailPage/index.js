@@ -60,7 +60,7 @@ import UnhydratedCommunityAddReviewButtonContainer from 'sly/containers/Communit
 import UnhydratedCommunityMorePicturesContainer from 'sly/containers/CommunityMorePicturesContainer';
 import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/containers/TrackedSimilarCommunitiesContainer';
 import UnhydratedPageViewActionContainer from 'sly/containers/PageViewActionContainer';
-import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
+import { PROFILE_VIEWED } from 'sly/services/api/constants';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';

@@ -10,13 +10,13 @@ import { STEP_ORDERS, DEFAULT_STEP_ORDER, STEP_INPUT_FIELD_NAMES } from 'sly/ext
 import { connectController } from 'sly/controllers';
 import { createValidator } from 'sly/services/validation';
 import { selectFormData } from 'sly/services/helpers/forms';
-import { CARE_ASSESSMENT } from 'sly/services/newApi/constants';
+import { CARE_ASSESSMENT } from 'sly/services/api/constants';
 import CareAssessmentComponent from 'sly/external/apps/wizards/careAssessment/Component';
 import {
   inputBasedNextSteps, getStepInputFieldValidations,
   getStepInputFieldDefaultValues, converStepInputToString,
 } from 'sly/external/apps/wizards/careAssessment/helpers';
-import { query } from 'sly/services/newApi';
+import { query } from 'sly/services/api';
 
 const formName = 'CareAssessmentForm';
 const validate = createValidator(getStepInputFieldValidations());

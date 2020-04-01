@@ -5,7 +5,7 @@ import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
-import { withUser, query, prefetch } from 'sly/services/newApi';
+import { withUser, query, prefetch } from 'sly/services/api';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import userPropType from 'sly/propTypes/user';
 import withWS from 'sly/services/ws/withWS';

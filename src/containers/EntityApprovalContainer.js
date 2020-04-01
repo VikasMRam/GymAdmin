@@ -6,8 +6,8 @@ import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 import EntityApprovalPage from 'sly/components/pages/EntityApprovalPage/index';
 import { titleize } from 'sly/services/helpers/strings';
 import { logError } from 'sly/services/helpers/logging';
-import withAuth from 'sly/services/newApi/withAuth';
-import api from 'sly/services/newApi/apiInstance';
+import withAuth from 'sly/services/api/withAuth';
+import api from 'sly/services/api/apiInstance';
 
 const getApiFor = (entity) => {
   switch (entity) {

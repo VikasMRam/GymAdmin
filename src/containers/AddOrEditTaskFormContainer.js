@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { arrayOf, string, object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 
-import { prefetch, query, withUser } from 'sly/services/newApi';
+import { prefetch, query, withUser } from 'sly/services/api';
 import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
 import taskPropType from 'sly/propTypes/task';

@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 
 import Concierge from 'sly/components/organisms/Concierge';
 import ConciergeController from 'sly/controllers/ConciergeController';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 
 function ConciergeContainer({
   community,

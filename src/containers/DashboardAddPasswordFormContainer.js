@@ -5,7 +5,7 @@ import { object, func } from 'prop-types';
 import DashboardAddPasswordForm from 'sly/components/organisms/DashboardAddPasswordForm';
 import { createValidator, minLength, match } from 'sly/services/validation';
 import userPropType from 'sly/propTypes/user';
-import { withAuth } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/api';
 
 const validate = createValidator({
   newPassword: [minLength(8)],

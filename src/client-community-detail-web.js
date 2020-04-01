@@ -2,7 +2,6 @@ import 'intersection-observer';
 // eslint-disable-next-line import/extensions
 /* eslint-disable no-underscore-dangle */
 import partiallyHydrateClient from 'sly/services/partialHydration/partiallyHydrateClient';
-import clientConfigs from 'sly/clientConfigs';
 import ModalContainer from 'sly/containers/ModalContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
@@ -27,6 +26,7 @@ import AskAgentQuestionHowItWorksBannerNotificationContainer from 'sly/container
 import CommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
 import RetentionPopup from 'sly/services/retentionPopup';
 import Image from 'sly/components/atoms/Image';
+import careTypes from 'sly/constants/careTypes';
 import CommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
 import BannerNotificationAdContainer from 'sly/containers/BannerNotificationAdContainer';
 
@@ -64,6 +64,6 @@ partiallyHydrateClient(
     CommunityProfileAdTileContainer,
     BannerNotificationAdContainer,
   ],
-  clientConfigs.find(x => x.bundle === 'community-details').path,
+  `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
   root,
 );

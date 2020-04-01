@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
-import { googleTagManagerId, isProd, googleAppId, version, publicPath, assetsUrl } from 'sly/config';
+import { googleTagManagerId, googleAppId, version, publicPath, assetsUrl } from 'sly/config';
 
 const Html = ({
   linkElements, styleElements, scriptElements, state, content,
