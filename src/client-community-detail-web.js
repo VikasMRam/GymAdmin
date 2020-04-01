@@ -28,6 +28,7 @@ import RetentionPopup from 'sly/services/retentionPopup';
 import Image from 'sly/components/atoms/Image';
 import careTypes from 'sly/constants/careTypes';
 import CommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
+import BannerNotificationAdContainer from 'sly/containers/BannerNotificationAdContainer';
 
 // For Lazy loading images, used in ResponsiveImage
 require('sly/services/yall');
@@ -61,6 +62,7 @@ partiallyHydrateClient(
     RetentionPopup,
     Image,
     CommunityProfileAdTileContainer,
+    BannerNotificationAdContainer,
   ],
   `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
   root,

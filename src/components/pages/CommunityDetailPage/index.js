@@ -65,6 +65,7 @@ import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
 import UnhydratedCommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
+import UnhydratedBannerNotificationAdContainer from 'sly/containers/BannerNotificationAdContainer'
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -85,7 +86,7 @@ const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePict
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
 const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
-// const TestExperiment = withHydration(UnhydratedTestExperiment);
+const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -332,18 +333,14 @@ export default class CommunityDetailPage extends Component {
         {getHelmetForCommunityPage(community, location)}
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
         <PageEventsContainer />
-        <Header noBottomMargin={!!bannerNotification} />
+        <Header noBottomMargin/>
         {bannerNotification && (
           <StyledBannerNotification>
             {bannerNotification}
           </StyledBannerNotification>
         )}
         {!bannerNotification && (
-          <StyledBannerNotification palette="warning">
-            <Link href="https://www.seniorly.com/resources/articles/coronavirus-and-seniors-a-message-from-our-ceo-co-founder-arthur-bretschneider" _target="blank">
-              Coronavirus & Seniors: A Message from Arthur Bretschneider, CEO & Co-founder: Click Here.
-            </Link>
-          </StyledBannerNotification>
+          <BannerNotificationAdContainer type="homeCare" />
         )}
         <CommunityDetailPageTemplate>
           <Wrapper>

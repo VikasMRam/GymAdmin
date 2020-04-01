@@ -6,8 +6,7 @@ import { size } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import Footer from 'sly/components/organisms/Footer';
-import BannerNotification from 'sly/components/molecules/BannerNotification';
-import Link from 'sly/components/atoms/Link'
+import BannerNotificationAdContainer from 'sly/containers/BannerNotificationAdContainer';
 
 const TwoColumnWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -39,10 +38,6 @@ const ColumnWrapper = styled.aside`
   }
 `;
 
-const StyledBannerNotification = styled(BannerNotification)`
-  margin-bottom: ${size('spacing.large')};
-`;
-
 
 const CommunitySearchPageTemplate = ({
   children,
@@ -51,11 +46,7 @@ const CommunitySearchPageTemplate = ({
   <>
     <TemplateHeader>
       <HeaderContainer />
-      <StyledBannerNotification palette="warning">
-        <Link href="https://www.seniorly.com/resources/articles/coronavirus-and-seniors-a-message-from-our-ceo-co-founder-arthur-bretschneider" _target="blank">
-          Coronavirus & Seniors: A Message from Arthur Bretschneider, CEO & Co-founder: Click Here.
-        </Link>
-      </StyledBannerNotification>
+      <BannerNotificationAdContainer type="homeCare" />
     </TemplateHeader>
     <TemplateContent>
       <TwoColumnWrapper>
