@@ -19,6 +19,7 @@ const searchWhitelist = [
 const bumpOnSearch = (prev, next) => searchWhitelist
   .some(key => next[key] !== prev[key]);
 
+@withApiContext
 @withAuth
 @withRouter
 

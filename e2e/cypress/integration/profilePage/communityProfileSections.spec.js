@@ -1,9 +1,10 @@
+
 import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
 import { TEST_COMMUNITY } from '../../constants/community';
 
-import { normalizeResponse } from 'sly/services/api';
 import { formatMoney } from 'sly/services/helpers/numbers';
+import { normalizeResponse } from 'sly/services/api';
 
 const randHash = () => Math.random().toString(36).substring(7);
 

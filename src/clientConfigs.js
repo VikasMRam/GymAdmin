@@ -1,4 +1,5 @@
 import fs from 'fs';
+
 import parseUrl from 'parseurl';
 import pathToRegexp from 'path-to-regexp';
 import debounce from 'lodash/debounce';
@@ -26,9 +27,9 @@ const configs = [
 ];
 
 
-const waitForFile = (path, timeout = 100, max= 10) => new Promise((resolve, reject) => {
+const waitForFile = (path, timeout = 100, max = 10) => new Promise((resolve, reject) => {
   let counter = 0;
-  const interval = setInterval(function() {
+  const interval = setInterval(() => {
     if (fs.existsSync(path)) {
       clearInterval(interval);
       resolve(path);
@@ -41,7 +42,7 @@ const waitForFile = (path, timeout = 100, max= 10) => new Promise((resolve, reje
   }, timeout);
 });
 
-function patchConfigs ({ statsWeb, statsNode }) {
+function patchConfigs({ statsWeb, statsNode }) {
   configs.forEach((config) => {
     const { bundle, ssr } = config;
 
@@ -63,10 +64,11 @@ function patchConfigs ({ statsWeb, statsNode }) {
     }
   });
 
+  // eslint-disable-next-line
   console.info('configs patched: ready');
 }
 
-export default function clientConfigsMiddleware ({ statsNode, statsWeb }) {
+export default function clientConfigsMiddleware({ statsNode, statsWeb }) {
   if (!isDev) {
     // stats files are ready from build step
     patchConfigs({ statsWeb, statsNode });
@@ -76,14 +78,15 @@ export default function clientConfigsMiddleware ({ statsNode, statsWeb }) {
       () => patchConfigs({ statsWeb, statsNode }),
       100,
     );
-    const files = [ statsNode, statsWeb ];
+    const files = [statsNode, statsWeb];
     Promise.all(files.map(waitForFile))
       .then(() => {
         debouncedPatchConfig();
-        files.forEach(file => {
+        files.forEach((file) => {
           fs.watch(file, { persistent: false }, debouncedPatchConfig);
         });
       })
+      // eslint-disable-next-line
       .catch(console.error);
   }
 
@@ -98,4 +101,4 @@ export default function clientConfigsMiddleware ({ statsNode, statsWeb }) {
     }
     next();
   };
-};
+}

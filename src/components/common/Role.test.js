@@ -10,12 +10,12 @@ import Role from 'sly/components/common/Role';
 const mockStore = configureStore([thunkMiddleware]);
 
 const wrap = (props = {}, children) => mount(
-    <Role
-      store={mockStore({ api: { requests: {} } })}
-      {...props}
-    >
-      {children}
-    </Role>
+  <Role
+    store={mockStore({ api: { requests: {} } })}
+    {...props}
+  >
+    {children}
+  </Role>,
 );
 
 const makeUserRequestInfo = roleID => ({
