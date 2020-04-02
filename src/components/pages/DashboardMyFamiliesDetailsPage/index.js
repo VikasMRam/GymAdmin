@@ -552,6 +552,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       conversation, setSelectedConversation, refetchClient,
       showModal, hideModal, onAcceptClick, clients, onEditStatusDetailsClick, isEditStatusDetailsMode, onStatusChange,
     } = this.props;
+
     const { organization } = user;
 
     if (clientIsLoading) {

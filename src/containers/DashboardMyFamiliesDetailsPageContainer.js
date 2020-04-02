@@ -330,7 +330,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 goToFamilyDetails={this.goToFamilyDetails}
                 goToMessagesTab={this.goToMessagesTab}
                 refetchConversations={this.refetchConversations}
-                user={user}
+                user={user || {}}
                 conversation={selectedConversation}
                 setSelectedConversation={this.setSelectedConversation}
                 onAcceptClick={() => this.handleAcceptClick(show, hide, notifyError)}
