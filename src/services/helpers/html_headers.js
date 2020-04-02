@@ -8,8 +8,6 @@ import { getStateAbbr } from 'sly/services/helpers/url';
 import { getImagePath } from 'sly/services/images';
 import { assetPath } from 'sly/components/themes';
 
-
-
 const stringifyReplacer = (k, v) => {
   if (k === 'hash' || k === 'key') {
     return undefined;
@@ -18,7 +16,7 @@ const stringifyReplacer = (k, v) => {
 };
 
 const getSDForCommunity = ({
-  name, url, address, latitude, longitude, propRatings = {}, startingRate, gallery = {},
+  name, url, address, propRatings = {}, startingRate, gallery = {}, twilioNumber = {},
 }) => {
   const { reviewsValue, numReviews } = propRatings;
   const ld = {};
@@ -27,16 +25,14 @@ const getSDForCommunity = ({
   ld.name = name;
   ld.url = `${host}${url}`;
   ld.url = `${host}${url.pathname}`;
-  ld.inLanguage = "EN-US";
 
-  const author = {};
-  author['@type'] = 'Organization';
-  author['name'] = 'Seniorly Inc.';
-  ld.author = author;
+  if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length > 0) {
+    [ld.telephone] = twilioNumber.numbers;
+  }
 
   const audience = {};
-  audience['@type'] = "Audience";
-  audience.name = "Care Givers, Seniors, Adult Children, Senior Care Providers, Senior Housing";
+  audience['@type'] = 'Audience';
+  audience.name = 'Care Givers, Seniors, Adult Children, Senior Care Providers, Senior Housing';
   ld.audience = audience;
 
 
@@ -50,8 +46,8 @@ const getSDForCommunity = ({
 
   const geo = {};
   geo['@type'] = 'GeoCoordinates';
-  geo.latitude = latitude;
-  geo.longitude = longitude;
+  geo.latitude = address.latitude;
+  geo.longitude = address.longitude;
   ld.geo = geo;
 
   if (numReviews && numReviews > 0) {
@@ -81,7 +77,7 @@ const getSDForCommunity = ({
 };
 
 const getSDForSearchResource = ({
-  name, url, addressString, latitude, longitude, imageUrl,
+  name, url, addressString, latitude, longitude, gallery,
   reviewsValue, numReviews, startingRate,
 }) => {
   const ld = {};
@@ -117,11 +113,13 @@ const getSDForSearchResource = ({
     ld.priceRange = `From $${startingRate.toLocaleString()} per month`;
   }
 
-  if (imageUrl) {
+  if (gallery && gallery.images && gallery.images.length > 0) {
     const imageObj = {};
     imageObj['@type'] = 'ImageObject';
     imageObj.name = `Front Image for ${name}`;
-    imageObj.url = imageUrl;
+    const [image] = gallery.images;
+    imageObj.url = getImagePath(encodeURI(image.path.replace(/\.jpe?g$/i, '.jpg')));
+
     ld.image = imageObj;
   }
 
@@ -163,7 +161,7 @@ export const getHelmetForSearchPage = ({
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'Webpage';
   ld.url = `${host}${url.pathname}`;
-  ld.inLanguage = "EN-US";
+  ld.inLanguage = 'EN-US';
   ld.author = author();
   ld.audience = audience();
   ld.name = title;
@@ -171,7 +169,9 @@ export const getHelmetForSearchPage = ({
 
   const ldCommunities = [];
   if (communityList.length > 0) {
-    communityList.map(e => ldCommunities.push(getSDForSearchResource({ ...e })));
+    communityList.map(e => {
+      return ldCommunities.push(getSDForSearchResource({ ...e }));
+    });
   }
 
 
@@ -258,7 +258,6 @@ export const getHelmetForCommunityPage = (community, location) => {
   }
 
   const ld = getSDForCommunity({ ...community });
-  ld.headline = title;
   ld.description = description;
 
   const criticReviewsJsonLDs = reviews && reviews.filter(review => review.isCriticReview === true).map((criticReview) => {
@@ -438,7 +437,7 @@ export const getHelmetForAgentsRegionPage = ({ locationName }) => {
   );
 };
 
-export const faqPage = ( faqs ) => {
+export const faqPage = (faqs) => {
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'FAQPage';
@@ -450,7 +449,7 @@ export const faqPage = ( faqs ) => {
   return (<script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>);
 };
 
-const questionLD = ( faq ) => {
+const questionLD = (faq) => {
   const question = {};
   question['@type'] = 'Question';
   question.name = faq.question;
@@ -461,26 +460,26 @@ const questionLD = ( faq ) => {
   return question;
 };
 
-export const tocSiteNavigationLD = ( baseUrl, links ) => {
+export const tocSiteNavigationLD = (baseUrl, links) => {
   const ld = {};
   ld['@context'] = 'http://schema.org';
   const ldLinks = [];
   if (links.length > 0) {
     links.map(e => ldLinks.push(
       {
-        "@context": "https://schema.org",
-        "@type":"SiteNavigationElement",
-        "@id": baseUrl,
-        "name": e.title,
-        "url": `${baseUrl}#${e.id}`,
-      }
-    ))
+        '@context': 'https://schema.org',
+        '@type': 'SiteNavigationElement',
+        '@id': baseUrl,
+        name: e.title,
+        url: `${baseUrl}#${e.id}`,
+      },
+    ));
   }
   ld['@graph'] = ldLinks;
   return (<script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>);
 };
 
-export const guideLD = ( title, description, url) => {
+export const guideLD = (title, description, url) => {
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'Guide';
@@ -490,20 +489,18 @@ export const guideLD = ( title, description, url) => {
   ld.audience = audience();
   ld.author = author();
   return (<script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>);
-
-
 };
 
 const author = () => {
   return {
     '@type': 'Organization',
-    'name': 'Seniorly Inc.',
+    name: 'Seniorly Inc.',
   };
 };
 
 const audience = () => {
   return {
-    '@type': "Audience",
-    'name': "Care Givers, Seniors, Adult Children, Senior Care Providers, Senior Housing",
+    '@type': 'Audience',
+    name: 'Care Givers, Seniors, Adult Children, Senior Care Providers, Senior Housing',
   };
 };
