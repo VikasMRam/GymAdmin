@@ -23,8 +23,7 @@ const getSDForCommunity = ({
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'LodgingBusiness';
   ld.name = name;
-  ld.url = `${host}${url}`;
-  ld.url = `${host}${url.pathname}`;
+  ld.url = `https://www.seniorly.com${url}`;
 
   if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length > 0) {
     [ld.telephone] = twilioNumber.numbers;
@@ -359,6 +358,16 @@ export const getHelmetForCommunityPage = (community, location) => {
     return (<script key={`helmet_question_${question.creator + question.createdAt}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
 
+  const webPageLD = {};
+  webPageLD['@context'] = 'http://schema.org';
+  webPageLD['@type'] = 'Webpage';
+  webPageLD.url = `https://www.seniorly.com${url}`,
+  webPageLD.inLanguage = 'EN-US';
+  webPageLD.author = author();
+  webPageLD.audience = audience();
+  webPageLD.name = title;
+  webPageLD.description = description;
+
   // TODO Add Image and Video and structured data.
   return (
     <Helmet>
@@ -386,6 +395,7 @@ export const getHelmetForCommunityPage = (community, location) => {
         search && search.length > 0 && <meta name="robots" content="noindex" />
       }
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
+      <script type="application/ld+json">{`${JSON.stringify(webPageLD, stringifyReplacer)}`}</script>
       {criticReviewsJsonLDs}
       {qaPageLdObjs}
     </Helmet>
