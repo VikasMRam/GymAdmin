@@ -9,8 +9,8 @@ import {
   AVAILABILITY_REQUEST,
   CONSULTATION_REQUESTED, PRICING_REQUEST,
   PROFILE_CONTACTED,
-} from 'sly/services/newApi/constants';
-import { prefetch, query, withAuth } from 'sly/services/newApi';
+} from 'sly/services/api/constants';
+import { prefetch, query, withAuth } from 'sly/services/api';
 import { withRedirectTo } from 'sly/services/redirectTo';
 
 export const CONVERSION_FORM = 'conversionForm';

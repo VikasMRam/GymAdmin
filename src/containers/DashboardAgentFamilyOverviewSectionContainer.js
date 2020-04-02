@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
 import { withRouter, generatePath } from 'react-router';
 
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 import clientPropType from 'sly/propTypes/client';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
 import DashboardAgentFamilyOverviewSection from 'sly/components/organisms/DashboardAgentFamilyOverviewSection';
@@ -70,9 +70,9 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
 
     const { error, hasFinished } = status.clients;
 
-    if (error) {
-      throw new Error(JSON.stringify(error));
-    }
+    // if (error) {
+    //   throw new Error(JSON.stringify(error));
+    // }
 
     const { meta } = status.clients;
 
@@ -83,7 +83,7 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
             {({ show, hide }) => (
               <DashboardAgentFamilyOverviewSection
                 isPageLoading={!hasFinished || !datatable.hasFinished}
-                clients={clients}
+                clients={clients || []}
                 meta={meta || {}}
                 pagination={getPaginationData(status.clients)}
                 activeTab={match.params.clientType}

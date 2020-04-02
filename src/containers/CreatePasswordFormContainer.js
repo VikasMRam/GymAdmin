@@ -4,7 +4,7 @@ import { func } from 'prop-types';
 
 import withNotification from 'sly/controllers/withNotification';
 import { createValidator, required, minLength } from 'sly/services/validation';
-import { withAuth, withUser } from 'sly/services/newApi';
+import { withAuth, withUser } from 'sly/services/api';
 import userPropType from 'sly/propTypes/user';
 import CreatePasswordForm from 'sly/components/organisms/CreatePasswordForm';
 

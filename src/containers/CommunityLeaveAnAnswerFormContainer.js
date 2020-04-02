@@ -9,8 +9,8 @@ import {
 } from 'sly/services/validation';
 import CommunityLeaveAnAnswerForm from 'sly/components/organisms/CommunityLeaveAnAnswerForm';
 import { ensureAuthenticated } from 'sly/store/authenticated/actions';
-import { prefetch } from 'sly/services/newApi';
-import api from 'sly/services/newApi/apiInstance';
+import { prefetch } from 'sly/services/api';
+import api from 'sly/services/api/apiInstance';
 
 const validate = createValidator({
   answer: [required],

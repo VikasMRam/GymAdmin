@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { object } from 'prop-types';
 
-import { withUser } from 'sly/services/newApi';
+import { withUser } from 'sly/services/api';
 import DashboardMessageDetailsPage from 'sly/components/pages/DashboardMessageDetailsPage';
 import { FAMILY_DASHBOARD_MESSAGES_PATH, AGENT_DASHBOARD_MESSAGES_PATH } from 'sly/constants/dashboardAppPaths';
 import userPropType from 'sly/propTypes/user';

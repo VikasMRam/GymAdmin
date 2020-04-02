@@ -5,7 +5,7 @@ import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 import { Redirect, generatePath } from 'react-router';
 
-import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
+import { withUser, prefetch, query, invalidateRequests } from 'sly/services/api';
 import userPropType from 'sly/propTypes/user';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import clientPropType from 'sly/propTypes/client';
@@ -98,7 +98,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   getNotes = () => {
     const { client, getNotes } = this.props;
     const params = {
-      'filter[commentable_id]': client.id,
+      'filter[client]': client.id,
     };
     return getNotes(params)
       .then((data) => { this.setState({ rawNotes: data.body.data }); return data; })
@@ -330,7 +330,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 goToFamilyDetails={this.goToFamilyDetails}
                 goToMessagesTab={this.goToMessagesTab}
                 refetchConversations={this.refetchConversations}
-                user={user}
+                user={user || {}}
                 conversation={selectedConversation}
                 setSelectedConversation={this.setSelectedConversation}
                 onAcceptClick={() => this.handleAcceptClick(show, hide, notifyError)}

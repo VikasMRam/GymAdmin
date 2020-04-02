@@ -9,7 +9,7 @@ import { required, createValidator, email, usPhone, dependentRequired } from 'sl
 import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
 import { USER_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import { query, getRelationship } from 'sly/services/newApi';
+import { query, getRelationship } from 'sly/services/api';
 import SlyEvent from 'sly/services/helpers/events';
 import { validateAM } from 'sly/services/helpers/client';
 import { selectFormData, trimFormData } from 'sly/services/helpers/forms';

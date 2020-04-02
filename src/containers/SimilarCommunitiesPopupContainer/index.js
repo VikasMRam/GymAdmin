@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { func, object, string } from 'prop-types';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 import { Heading } from 'sly/components/atoms';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import { size } from 'sly/components/themes';

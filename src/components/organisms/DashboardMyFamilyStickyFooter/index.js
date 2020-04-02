@@ -65,21 +65,17 @@ const DashboardMyFamilyStickyFooter = ({
     <FooterWrapper showAcceptRejectButtons={showAcceptRejectButtons}>
       {!showAcceptRejectButtons &&
         <>
-          <Stage stage={stage} stageLabel={stageLabel} />
-          {options.length > 1 &&
-            <>
-              <RightSideButtons>
-                <Button
-                  key={options[options.length - 1].text}
-                  onClick={options[options.length - 1].onClick}
-                  ghost={options[options.length - 1].ghost}
-                >
-                  {options[options.length - 1].text}
-                </Button>
-              </RightSideButtons>
-              <OptionsButton onClick={onOptionsClick} >...</OptionsButton>
-            </>
-          }
+          {stage && stageLabel && <Stage stage={stage} stageLabel={stageLabel} />}
+          <RightSideButtons>
+            <Button
+              key={options[options.length - 1].text}
+              onClick={options[options.length - 1].onClick}
+              ghost={options[options.length - 1].ghost}
+            >
+              {options[options.length - 1].text}
+            </Button>
+          </RightSideButtons>
+          {options.length > 1 && <OptionsButton onClick={onOptionsClick} >...</OptionsButton>}
         </>
       }
       {showAcceptRejectButtons &&
@@ -93,7 +89,7 @@ const DashboardMyFamilyStickyFooter = ({
 
 DashboardMyFamilyStickyFooter.propTypes = {
   options: arrayOf(object),
-  stage: string.isRequired,
+  stage: string,
   stageLabel: string,
   onOptionsClick: func,
   showAcceptRejectButtons: bool,

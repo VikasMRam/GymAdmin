@@ -10,6 +10,8 @@ import UnhydratedRetentionPopup from 'sly/services/retentionPopup';
 
 const HydratedRetentionPopup = withHydration(UnhydratedRetentionPopup, { alwaysHydrate: true });
 
+export renderToString from 'sly/services/api/renderToString';
+
 export default function () {
   return (
     <AppTemplate>

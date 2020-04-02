@@ -4,7 +4,7 @@ import { object, array } from 'prop-types';
 import SlyEvent from 'sly/services/helpers/events';
 import CareTypeGuidePage from 'sly/components/pages/CareTypeGuidePage';
 import { getSearchParamFromPlacesResponse, filterLinkPath, getGuideParams } from 'sly/services/helpers/search';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 import { withProps } from 'sly/services/helpers/hocs';
 
 @withProps(({ match }) => ({

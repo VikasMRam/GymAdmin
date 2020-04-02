@@ -4,7 +4,7 @@ import { func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { createValidator, required, minLength, email } from 'sly/services/validation';
-import { withAuth } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/api';
 import LoginWithPasswordForm from 'sly/components/organisms/LoginWithPasswordForm';
 
 const formName = 'LoginWithPasswordForm';

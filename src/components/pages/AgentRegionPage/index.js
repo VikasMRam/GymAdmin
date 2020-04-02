@@ -7,7 +7,7 @@ import { getHelmetForAgentsRegionPage } from 'sly/services/helpers/html_headers'
 import agentPropType from 'sly/propTypes/agent';
 import { size, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
-import { CONSULTATION_REQUESTED } from 'sly/services/newApi/constants';
+import { CONSULTATION_REQUESTED } from 'sly/services/api/constants';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import AgentTile from 'sly/components/molecules/AgentTile';
 import Section from 'sly/components/molecules/Section';

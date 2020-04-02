@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import { func, oneOf, string } from 'prop-types';
+import { oneOf, string } from 'prop-types';
+import { community as communityProptype } from 'sly/propTypes/community';
 import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
+import { hcaAdEnabled } from 'sly/services/helpers/tileAds';
 
 import AdTile from 'sly/components/organisms/AdTile';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
 import { ResponsiveImage } from 'sly/components/atoms';
 import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
-import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/services/newApi/constants';
+import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/services/api/constants';
 import withNotification from 'sly/controllers/withNotification';
 
 
@@ -24,7 +26,8 @@ export default class CommunityProfileAdTileContainer extends Component {
   static typeHydrationId = 'CommunityProfileAdTileContainer';
   static propTypes = {
     type: oneOf(['askAgent', 'getOffer','homeCare']).isRequired,
-    profileId: string.isRequired,
+    zip: string.isRequired,
+    community: communityProptype,
   };
 
   static defaultProps = {
@@ -64,8 +67,8 @@ export default class CommunityProfileAdTileContainer extends Component {
     });
     this.setState({
       isModalOpen: true,
-      modalMessagePrompt: 'What kinds of care do you need at home?',
-      modalHeading: 'We Can Help You Find the Best Home Care',
+      modalMessagePrompt: 'Please give us a little more information on what services you are currently looking for?',
+      modalHeading: 'Get A Free Consultation About In-Home Care',
       modalMessagePlaceholder: 'Type your care needs here',
       modalAction: HOME_CARE_REQUESTED,
     });
@@ -89,8 +92,11 @@ export default class CommunityProfileAdTileContainer extends Component {
   };
 
   render() {
-    const { type } = this.props;
+    const { type, community  } = this.props;
     const { isModalOpen, modalHeading, modalMessagePrompt, modalAction, modalMessagePlaceholder } = this.state;
+    const { address: {zip, city, state }} = community;
+    const isHCA = hcaAdEnabled({ zip });
+    const hcaAdTitle = `Home Care Assistance in ${city}, ${state}`;
     return (
       <>
         {type === 'getOffer' &&
@@ -109,20 +115,32 @@ export default class CommunityProfileAdTileContainer extends Component {
           Check out <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> Offers for a no obligation cash offer.
         </AdTile>
         }
-        {type === 'homeCare' &&
-          <AdTile
-            title="Get In-Home Care for Seniors"
-            buttonText="Get Home Care"
-            buttonPosition="left"
-            image={assetPath('images/homecare-ad.png')}
-            buttonProps={{ onClick: this.handleUseHomecareClick }}
-            showSecondary
-            linkProps={{href:"tel:+18558668719"}}
-            linkText="(855) 866-8719"
-            {...this.props}
-          >
-            Our team will help you find the right caregiver.
-          </AdTile>
+        {type === 'homeCare' && isHCA &&
+        <AdTile
+          title="Delaying Assisted Living Move? Consider In-Home Care"
+          buttonText="Get Home Care"
+          buttonPosition="left"
+          image={assetPath('images/homecare-2.png')}
+          buttonProps={{ onClick: this.handleUseHomecareClick }}
+          showSecondary
+          linkProps={{href:"tel:+18558668719"}}
+          linkText="(855) 866-8719"
+          {...this.props}
+        >
+          Have pre-screened caregivers at your home
+        </AdTile>
+        }
+        {type === 'homeCare' && !isHCA &&
+        <AdTile
+          title="Delaying Assisted Living Move? Consider In-Home Care"
+          buttonText="Get Home Care"
+          buttonPosition="left"
+          image={assetPath('images/homecare-ad.png')}
+          buttonProps={{ onClick: this.handleUseHomecareClick }}
+          {...this.props}
+        >
+          Have pre-screened caregivers at your home
+        </AdTile>
         }
         {isModalOpen &&
         <Modal onClose={this.handleClose}>

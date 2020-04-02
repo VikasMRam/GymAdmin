@@ -7,8 +7,8 @@ import { withRouter } from 'react-router';
 
 import clientPropType from 'sly/propTypes/client';
 import userProptype from 'sly/propTypes/user';
-import { query, prefetch, getRelationship } from 'sly/services/newApi';
-import withUser from 'sly/services/newApi/withUser';
+import { query, prefetch, getRelationship } from 'sly/services/api';
+import withUser from 'sly/services/api/withUser';
 import { userIs } from 'sly/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import DashboardCommunityContractForm from 'sly/components/organisms/DashboardCommunityContractForm';

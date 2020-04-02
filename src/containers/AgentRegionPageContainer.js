@@ -8,7 +8,7 @@ import withNotification from 'sly/controllers/withNotification';
 import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/agents';
 import { getAgentParams } from 'sly/services/helpers/search';
-import prefetch from 'sly/services/newApi/prefetch';
+import prefetch from 'sly/services/api/prefetch';
 import AgentRegionPage from 'sly/components/pages/AgentRegionPage';
 
 @prefetch('agentsList', 'getAgents', (req, { match, location }) => req(getAgentParams(match, location)))

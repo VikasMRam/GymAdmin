@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
 import SlyEvent from 'sly/services/helpers/events';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 import { assetPath, getKey } from 'sly/components/themes';
 
 // TODO: move this to common helper, used in multiple places

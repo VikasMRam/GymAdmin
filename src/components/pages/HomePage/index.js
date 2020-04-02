@@ -354,8 +354,8 @@ const HomePage = ({
     <>
       <HeaderContainer />
       <BannerNotification palette="warning">
-        <Link href="https://www.seniorly.com/resources/articles/coronavirus-and-seniors-a-message-from-our-ceo-co-founder-arthur-bretschneider" _target="blank">
-          Coronavirus & Seniors: A Message from Arthur Bretschneider, CEO & Co-founder: Click Here.
+        <Link href="https://live.seniorly.com/curtainup/" _target="blank">
+          Watch CurtainUp! Live Here (4pm ET/ 1pm PT): Click Here.
         </Link>
       </BannerNotification>
       <HeroWrapper>

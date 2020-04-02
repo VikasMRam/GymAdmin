@@ -12,7 +12,7 @@ import {
 import ConciergeController from 'sly/controllers/ConciergeController';
 import GetAvailabilitySuccessBox from 'sly/components/molecules/GetAvailabilitySuccessBox';
 import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 
 const hasAllUserData = createBooleanValidator({
   fullName: [required],

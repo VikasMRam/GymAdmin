@@ -150,7 +150,7 @@ const CommunityTile = ({
 
   const CommunityInfoComponent = actionButtons.length ? PaddedCommunityInfo : CommunityInfo;
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
-  const loading = 'auto'; //lazyLoadImage ? 'lazy' : 'auto';
+  const loading = lazyLoadImage ? 'lazy' : 'auto';
 
   return (
     <MainWrapper className={className} plusCategory={plusCategory}>

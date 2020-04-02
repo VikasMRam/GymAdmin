@@ -8,7 +8,7 @@ import experiments from './experiments/reducer';
 import controller from './controller/reducer';
 import chatBox from './chatBox/reducer';
 
-import { reducer as api } from 'sly/services/newApi';
+import { reducer as api } from 'sly/services/api';
 import notifications from 'sly/services/notifications/reducer';
 
 export default combineReducers({

@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
-import { CONSULTATION_REQUESTED,HOME_CARE_REQUESTED } from 'sly/services/newApi/constants';
+import { CONSULTATION_REQUESTED,HOME_CARE_REQUESTED } from 'sly/services/api/constants';
+import { hcaAdEnabled } from 'sly/services/helpers/tileAds';
 import withNotification from 'sly/controllers/withNotification';
 import AdTile from 'sly/components/organisms/AdTile';
 import { ResponsiveImage } from 'sly/components/atoms';
@@ -25,6 +26,7 @@ export default class SearchResultsAdTileContainer extends Component {
     notifyInfo: func.isRequired,
     type: oneOf(['askAgent', 'getOffer','homeCare']).isRequired,
     city: string,
+    locationLabel: string,
     tocLabel: string,
   };
 
@@ -66,8 +68,8 @@ export default class SearchResultsAdTileContainer extends Component {
     });
     this.setState({
       isModalOpen: true,
-      modalMessagePrompt: 'What kinds of care do you need at home?',
-      modalHeading: 'We Can Help You Find the Best Home Care',
+      modalMessagePrompt: 'Please give us a little more information on what services you are currently looking for?',
+      modalHeading: 'Get A Free Consultation About In-Home Care',
       modalMessagePlaceholder: 'Type your care needs here',
       modalAction: HOME_CARE_REQUESTED,
     });
@@ -98,8 +100,10 @@ export default class SearchResultsAdTileContainer extends Component {
   };
 
   render() {
-    const { type } = this.props;
+    const { type, locationLabel } = this.props;
     const { isModalOpen, modalHeading, modalMessagePrompt, modalAction, modalMessagePlaceholder } = this.state;
+    const isHCA = hcaAdEnabled({ cityState:locationLabel });
+    const hcaAdTitle = `Home Care Assistance in ${locationLabel}`;
     return (
       <>
         {type === 'askAgent' &&
@@ -121,9 +125,9 @@ export default class SearchResultsAdTileContainer extends Component {
             Check out <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> Offers for a no obligation cash offer.
           </AdTile>
         }
-        {type === 'homeCare' &&
+        {type === 'homeCare' && isHCA &&
           <AdTile
-            title="Get In-Home Care for Seniors"
+            title="Delaying Assisted Living Move? Consider In-Home Care"
             buttonText="Get Home Care"
             buttonPosition="left"
             image={assetPath('images/homecare-2.png')}
@@ -133,8 +137,20 @@ export default class SearchResultsAdTileContainer extends Component {
             linkText="(855) 866-8719"
             {...this.props}
           >
-            Our team will help you find the best caregivers nationwide.
+            Have pre-screened caregivers at your home
           </AdTile>
+        }
+        {type === 'homeCare' && !isHCA &&
+        <AdTile
+          title="Delaying Assisted Living Move? Consider In-Home Care"
+          buttonText="Get Home Care"
+          buttonPosition="left"
+          image={assetPath('images/homecare-ad.png')}
+          buttonProps={{ onClick: this.handleUseHomecareClick }}
+          {...this.props}
+        >
+          Have pre-screened caregivers at your home
+        </AdTile>
         }
         {isModalOpen &&
           <Modal onClose={this.handleClose}>

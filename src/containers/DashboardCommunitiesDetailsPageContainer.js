@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { object, arrayOf, func } from 'prop-types';
 import { Redirect, generatePath } from 'react-router';
 
-import { prefetch, withUser } from 'sly/services/newApi';
+import { prefetch, withUser } from 'sly/services/api';
 import userPropType from 'sly/propTypes/user';
 import communityPropType from 'sly/propTypes/community';
 import {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func, bool } from 'prop-types';
 
-import { withUser } from 'sly/services/newApi';
+import { withUser } from 'sly/services/api';
 
 import {
   createValidator,
