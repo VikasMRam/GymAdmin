@@ -81,7 +81,7 @@ Accept: application/vnd.api+json
                   "id": "3ccab710f945cdc45456f3a624b4d1b8", // <- noop
                 },
                 // {
-                //   type": "Image",
+                //   "type": "Image",
                 //   id": "6d627274f1f5c271b973d29915e07ac1"
                 // }, <- absence indicates deleting
                 {
