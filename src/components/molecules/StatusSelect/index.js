@@ -18,7 +18,7 @@ import {
   FAMILY_STATUS_ON_PAUSE,
 } from 'sly/constants/familyDetails';
 import SlyEvent from 'sly/services/helpers/events';
-import { query } from 'sly/services/newApi';
+import { query } from 'sly/services/api';
 import ConfirmReasonFormContainer from 'sly/containers/ConfirmReasonFormContainer';
 import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
 

@@ -69,7 +69,7 @@
     }],
     "import/newline-after-import": ["error", { "count": 1 }],
     "import/order": ["error", { "newlines-between": "always" }],
-    "import/first": ["error", "DISABLE-absolute-first"],
+    "import/first": 0,
     "react/jsx-fragments": [2]
   }
 }

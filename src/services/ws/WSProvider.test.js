@@ -75,6 +75,6 @@ describe('WSProvider', () => {
       jest.advanceTimersByTime(1);
     }).toThrow();
 
-    expect(provider.setup).toHaveBeenCalledTimes(3);
+    expect(provider.setup).toHaveBeenCalledTimes(2);
   });
 });

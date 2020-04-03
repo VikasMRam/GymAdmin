@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import MorePictures from 'sly/components/organisms/MorePictures';
 import SlyEvent from 'sly/services/helpers/events';
 import FullscreenMediaGallery from 'sly/components/molecules/FullscreenMediaGallery';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 
 @withRouter
 @prefetch('community', 'getCommunity', (req, { match }) => req({

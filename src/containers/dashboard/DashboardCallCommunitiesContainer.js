@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { string, object, func } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { normalizeResponse, prefetch, query } from 'sly/services/newApi';
+import { normalizeResponse, prefetch, query } from 'sly/services/api';
 import DashboardCommunityReferralSearch from 'sly/components/organisms/DashboardCommunityReferralSearch';
 
 

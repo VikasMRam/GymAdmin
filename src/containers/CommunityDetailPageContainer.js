@@ -5,13 +5,13 @@ import { Redirect } from 'react-router-dom';
 
 import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
-import { prefetch, withAuth } from 'sly/services/newApi';
+import { prefetch, withAuth } from 'sly/services/api';
 import {
   AVAILABILITY_REQUEST,
   PRICING_REQUEST,
   PROFILE_CONTACTED,
   TOUR_BOOKED,
-} from 'sly/services/newApi/constants';
+} from 'sly/services/api/constants';
 import { HydrationData } from 'sly/services/partialHydration';
 
 const createHasProfileAction = uuidActions => (type, actionInfo) => {

@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { func, object, string, shape, bool } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 import datatableColumnsProptype from 'sly/propTypes/datatableColumns';
 import {
   makeQuerystringFilters,

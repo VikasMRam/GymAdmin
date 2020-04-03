@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 
 import agentPropType from 'sly/propTypes/agent';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 import withNotification from 'sly/controllers/withNotification';
 import AgentProfilePage from 'sly/components/pages/AgentProfilePage';
 

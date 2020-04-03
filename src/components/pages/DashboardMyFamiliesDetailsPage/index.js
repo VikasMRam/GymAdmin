@@ -16,6 +16,7 @@ import {
 } from 'sly/constants/dashboardAppPaths';
 import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
+import { CLIENT_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { FAMILY_STAGE_NEW, FAMILY_STAGE_REJECTED } from 'sly/constants/familyDetails';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
@@ -26,7 +27,7 @@ import { size, palette } from 'sly/components/themes';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import { isReferralSent } from 'sly/services/helpers/client';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
-import { userIs, userExact } from 'sly/services/helpers/role';
+import { userIs } from 'sly/services/helpers/role';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import SlyEvent from 'sly/services/helpers/events';
@@ -551,6 +552,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       conversation, setSelectedConversation, refetchClient,
       showModal, hideModal, onAcceptClick, clients, onEditStatusDetailsClick, isEditStatusDetailsMode, onStatusChange,
     } = this.props;
+
     const { organization } = user;
 
     if (clientIsLoading) {
@@ -594,8 +596,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       showUpdateAddNoteButtons = true;
       canEditFamilyDetails = true;
     }
-    const { uuidInfo: { residentInfo: { interest } } } = uuidAux || { uuidInfo: { residentInfo: {interest: "" }}};
-    const explicitOptOut = interest === "do-not-refer";
+    const { uuidInfo: { residentInfo: { interest } } } = uuidAux || { uuidInfo: { residentInfo: { interest: '' } } };
+    const explicitOptOut = interest === 'do-not-refer';
     // Sticky footer is for smaller width devices
     const stickyFooterOptions = this.getStickyFooterOptions(showUpdateAddNoteButtons, showAcceptRejectButtons);
 
@@ -610,6 +612,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         date: a.createdAt,
         cType: a.cType,
       };
+      if (a.commentableType === CLIENT_ENTITY_TYPE && a.commentableID !== id && a.title !== '') {
+        if (!a.title.includes('[Note on Agent Record]')) { // not to allow multiple presence due to rerender
+          a.title = `[Note on Agent Record] ${a.title}`;
+        }
+      }
       if (a.cType === NOTE_CTYPE_NOTE) {
         props.onEditClick = () => this.handleEditNoteClick(a);
       }
@@ -659,7 +666,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     let plink = <span/> ;
     if ( parentSlug != "" ) {
       plink = <Link palette="white" target="_blank" to={`/dashboard/agent/my-families/${parentSlug}`}
-                    onClick={clickEventHandler('fdetails', `Nav to Parent`)}>You are looking at {client.organization.name}'s family. Go to the parent record.</Link>;
+                    onClick={clickEventHandler('fdetails', 'Nav to Parent')}>You are looking at {client.organization.name}'s family. Go to the parent record.</Link>;
     }
 
     const topSection = (

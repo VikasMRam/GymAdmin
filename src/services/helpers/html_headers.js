@@ -16,24 +16,15 @@ const stringifyReplacer = (k, v) => {
 };
 
 const getSDForCommunity = ({
-  name, url, address, propRatings = {}, startingRate, gallery = {}, twilioNumber = {},
+  name, url, address, propRatings = {}, startingRate, gallery = {}, communityPhone,
 }) => {
   const { reviewsValue, numReviews } = propRatings;
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'LodgingBusiness';
   ld.name = name;
-  ld.url = `https://www.seniorly.com${url}`;
-
-  if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length > 0) {
-    [ld.telephone] = twilioNumber.numbers;
-  }
-
-  const audience = {};
-  audience['@type'] = 'Audience';
-  audience.name = 'Care Givers, Seniors, Adult Children, Senior Care Providers, Senior Housing';
-  ld.audience = audience;
-
+  ld.url = `${host}${url.pathname}`;
+  ld.telephone = communityPhone;
 
   const addressLd = {};
   addressLd['@type'] = 'PostalAddress';
@@ -256,8 +247,17 @@ export const getHelmetForCommunityPage = (community, location) => {
     videoUrl = videoGallery.videos[0].url;
   }
 
+  const ldWP = {};
+  ldWP['@context'] = 'http://schema.org';
+  ldWP['@type'] = 'Webpage';
+  ldWP.url = `${host}${url.pathname}`;
+  ldWP.inLanguage = "EN-US";
+  ldWP.author = author();
+  ldWP.audience = audience();
+  ldWP.name = title;
+  ldWP.description = description;
+
   const ld = getSDForCommunity({ ...community });
-  ld.description = description;
 
   const criticReviewsJsonLDs = reviews && reviews.filter(review => review.isCriticReview === true).map((criticReview) => {
     const result = {
@@ -395,7 +395,7 @@ export const getHelmetForCommunityPage = (community, location) => {
         search && search.length > 0 && <meta name="robots" content="noindex" />
       }
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
-      <script type="application/ld+json">{`${JSON.stringify(webPageLD, stringifyReplacer)}`}</script>
+      <script type="application/ld+json">{`${JSON.stringify(ldWP, stringifyReplacer)}`}</script>
       {criticReviewsJsonLDs}
       {qaPageLdObjs}
     </Helmet>

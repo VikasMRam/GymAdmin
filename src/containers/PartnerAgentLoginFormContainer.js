@@ -4,7 +4,7 @@ import { func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { createValidator, required, email } from 'sly/services/validation';
-import { withAuth } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/api';
 import withNotification from 'sly/controllers/withNotification';
 import PartnerAgentLoginForm from 'sly/components/organisms/PartnerAgentLoginForm';
 

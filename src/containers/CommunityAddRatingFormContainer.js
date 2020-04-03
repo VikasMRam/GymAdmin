@@ -4,8 +4,8 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { func, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import api from 'sly/services/newApi/apiInstance';
-import { withUser, prefetch, query } from 'sly/services/newApi';
+import api from 'sly/services/api/apiInstance';
+import { withUser, prefetch, query } from 'sly/services/api';
 
 import {
   createValidator,
@@ -17,7 +17,7 @@ import {
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityAddRatingForm from 'sly/components/organisms/CommunityAddRatingForm';
 import Thankyou from 'sly/components/molecules/Thankyou';
-import { PROFILE_RATING } from 'sly/services/newApi/constants';
+import { PROFILE_RATING } from 'sly/services/api/constants';
 
 const validate = createValidator({
   comments: [required],

@@ -9,7 +9,7 @@ import { userIs } from 'sly/services/helpers/role';
 import { Link } from 'sly/components/atoms';
 import WSContext from 'sly/services/ws/WSContext';
 import NotificationController from 'sly/controllers/NotificationController';
-import withUser from 'sly/services/newApi/withUser';
+import withUser from 'sly/services/api/withUser';
 import subscriptionList from 'sly/services/notifications/subscriptionList';
 
 const StyledLink = styled(Link)`

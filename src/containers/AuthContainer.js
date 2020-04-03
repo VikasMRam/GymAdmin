@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import styled from 'styled-components';
 
 import { authenticateCancel, authenticateSuccess } from 'sly/store/authenticated/actions';
-import { withAuth } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/api';
 import spacing from 'sly/components/helpers/spacing';
 import withNotification from 'sly/controllers/withNotification';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';

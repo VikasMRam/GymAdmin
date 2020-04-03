@@ -7,7 +7,7 @@ import ErrorPage from 'sly/components/pages/Error';
 import StateSearchPage from 'sly/components/pages/StateSearchPage';
 import ModalController from 'sly/controllers/ModalController';
 import { withProps } from 'sly/services/helpers/hocs';
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 import { getSearchParams } from 'sly/services/helpers/search';
 import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
 

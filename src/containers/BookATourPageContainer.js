@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { object, func, string, shape } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 
-import { prefetch, query, withAuth } from 'sly/services/newApi';
+import { prefetch, query, withAuth } from 'sly/services/api';
 import { community as communityPropType } from 'sly/propTypes/community';
 import SlyEvent from 'sly/services/helpers/events';
 import BookATourPage from 'sly/components/pages/BookATourPage';
-import { TOUR_BOOKED } from 'sly/services/newApi/constants';
+import { TOUR_BOOKED } from 'sly/services/api/constants';
 import { medicareToBool, boolToMedicare } from 'sly/services/helpers/userDetails';
 import { withRedirectTo } from 'sly/services/redirectTo';
 

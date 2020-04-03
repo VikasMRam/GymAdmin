@@ -8,7 +8,7 @@ import { getSearchParams } from 'sly/services/helpers/search';
 import { DASHBOARD_PATH } from 'sly/constants/dashboardAppPaths';
 import { createValidator, required } from 'sly/services/validation';
 import { withRedirectTo } from 'sly/services/redirectTo';
-import { withAuth } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/api';
 import PasswordResetPage from 'sly/components/pages/PasswordResetPage';
 
 const validate = createValidator({

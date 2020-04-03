@@ -12,7 +12,7 @@ import {
   FAMILY_DETAILS,
   MESSAGES,
 } from 'sly/constants/dashboardAppPaths';
-import { withUser } from 'sly/services/newApi';
+import { withUser } from 'sly/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import AcceptAndContactFamilyForm from 'sly/components/organisms/AcceptAndContactFamilyForm';
 import AcceptFamilyContactDetails from 'sly/components/organisms/AcceptFamilyContactDetails';

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as immutable from 'object-path-immutable';
 
 import { size } from 'sly/components/themes';
-import { query } from 'sly/services/newApi';
+import { query } from 'sly/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { community as communityPropType } from 'sly/propTypes/community';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';

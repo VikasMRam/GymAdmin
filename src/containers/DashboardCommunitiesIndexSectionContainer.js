@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { arrayOf, object, func } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { prefetch, withUser } from 'sly/services/newApi';
+import { prefetch, withUser } from 'sly/services/api';
 import communityPropType from 'sly/propTypes/community';
 import DashboardCommunitiesIndexSection from 'sly/components/organisms/DashboardCommunitiesIndexSection';
 import withNotification from 'sly/controllers/withNotification';

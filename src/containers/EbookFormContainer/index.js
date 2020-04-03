@@ -5,12 +5,12 @@ import { withRouter } from 'react-router';
 import { func, string, object } from 'prop-types';
 
 import { createValidator, email, required } from 'sly/services/validation';
-import { query } from 'sly/services/newApi';
+import { query } from 'sly/services/api';
 import EbookForm from 'sly/components/organisms/EbookForm';
 import withNotification from 'sly/controllers/withNotification';
 import SlyEvent from 'sly/services/helpers/events';
-import { EBOOK_SEND_EMAIL } from 'sly/services/newApi/constants';
-import withAuth from 'sly/services/newApi/withAuth';
+import { EBOOK_SEND_EMAIL } from 'sly/services/api/constants';
+import withAuth from 'sly/services/api/withAuth';
 
 const formName = 'EbookForm';
 const validate = createValidator({

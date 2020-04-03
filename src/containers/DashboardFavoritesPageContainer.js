@@ -3,7 +3,7 @@ import { arrayOf, object, func } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
-import { prefetch, query } from 'sly/services/newApi';
+import { prefetch, query } from 'sly/services/api';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import SlyEvent from 'sly/services/helpers/events';

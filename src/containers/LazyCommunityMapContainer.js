@@ -3,7 +3,7 @@ import { Lazy } from 'react-lazy';
 import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 
-import { prefetch } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/api';
 import { community as communityPropType } from 'sly/propTypes/community';
 
 const CommunityMap = loadable(() =>

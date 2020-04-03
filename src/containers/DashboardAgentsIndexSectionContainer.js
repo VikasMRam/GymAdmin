@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { arrayOf, object, func } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { prefetch, withUser } from 'sly/services/newApi';
+import { prefetch, withUser } from 'sly/services/api';
 import agentPropType from 'sly/propTypes/agent';
 import DashboardAgentsIndexSection from 'sly/components/organisms/DashboardAgentsIndexSection';
 import withNotification from 'sly/controllers/withNotification';

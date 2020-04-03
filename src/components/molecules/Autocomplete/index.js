@@ -3,7 +3,7 @@ import { object } from 'prop-types';
 import loadable from '@loadable/component';
 
 import { getAutocompleteValues } from 'sly/services/datatable/helpers';
-import { normalizeResponse } from 'sly/services/newApi';
+import { normalizeResponse } from 'sly/services/api';
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/components/atoms/Select'));
 

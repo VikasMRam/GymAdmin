@@ -3,22 +3,22 @@ import { get, patch, put, post, destroy } from './httpMethods';
 // method names should start with `get`, `create`, `update`, `delete`
 // patch is prefered over put as per specification
 export default {
-  getUser: { method: get, path: '/platform/users/:id' },
+  getUser: { method: get, path: '/platform/users/:id', ssrIgnore: true },
   updateUser: { method: patch, path: '/platform/users/:id' },
 
   getUsers: { method: get, path: '/platform/users' },
 
-  getUuidActions: { method: get, path: '/platform/uuid-actions' },
+  getUuidActions: { method: get, path: '/platform/uuid-actions', ssrIgnore: true },
   createUuidAction: { method: post, path: '/platform/uuid-actions' },
 
-  getUuidAux: { method: get, path: '/platform/uuid-auxes/:id' },
+  getUuidAux: { method: get, path: '/platform/uuid-auxes/:id', ssrIgnore: true },
   updateUuidAux: { method: patch, path: '/platform/uuid-auxes/:id' },
   createUuidAux: { method: post, path: '/platform/uuid-auxes' },
 
   createUserShare: { method: post, path: '/platform/user-shares' },
 
-  getUserSaves: { method: get, path: '/marketplace/user-saves' },
-  getUserSave: { method: get, path: '/marketplace/user-saves/:id' },
+  getUserSaves: { method: get, path: '/marketplace/user-saves', ssrIgnore: true },
+  getUserSave: { method: get, path: '/marketplace/user-saves/:id', ssrIgnore: true },
   updateUserSave: { method: patch, path: '/marketplace/user-saves/:id' },
   createUserSave: { method: post, path: '/marketplace/user-saves' },
   updateOldUserSave: { method: patch, path: '/platform/user-saves/:id' },
@@ -58,7 +58,7 @@ export default {
   updateContent: { method: put, path: '/platform/contents/:id' },
   updateRating: { method: put, path: '/platform/ratings/:id' },
 
-  getClients: { method: get, path: '/marketplace/clients' },
+  getClients: { method: get, path: '/marketplace/clients', ssrIgnore: true },
   getClient: { method: get, path: '/marketplace/clients/:id' },
   updateClient: { method: patch, path: '/marketplace/clients/:id' },
   createClient: { method: post, path: '/marketplace/clients' },
