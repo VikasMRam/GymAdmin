@@ -17,15 +17,23 @@ const PaddedHeading = pad(Heading);
 const PaddedLink = pad(Link, 'large');
 
 const StyledMiddleContent = styled(textAlign(MiddleContent))`
-  max-width: ${size('layout.col8')};
+  width: 100%;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.col8')};
+  }
 `;
 
 const YoutubeVideo = styled.iframe`
-  margin-top: -115px; // video has a non-standard dimension that's only used in this page
+  margin-top: -200px; // video has a non-standard dimension that's only used in this page
   position: relative;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-top: -115px; // video has a non-standard dimension that's only used in this page
+  }
 
   @media screen and (min-width: 515px) {
     width: 505px;
