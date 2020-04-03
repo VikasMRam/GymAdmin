@@ -134,7 +134,7 @@ const CommunitySummary = ({
     line1, line2, city, state, zip,
   } = address;
   const {
-    communityPhone, plusCommunity, plusCategory, typeCare,
+    communityPhone, plusCommunity, plusCategory, typeCare, tier
   } = propInfo;
   const { reviewsValue, numReviews } = propRatings;
   const formattedAddress = `${line1}, ${line2}, ${city},
@@ -192,18 +192,24 @@ const CommunitySummary = ({
       <Hr />
       <Wrapper>
         <div>
-          For pricing and availability, call&nbsp;
-          <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
-            {phoneFormatter(conciergeNumber, true)}
-          </Link>
-          <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="conciergePhone" />
-          {isBrowser &&
-            <TooltipContent id="conciergePhone" place="top" effect="solid" multiline>
-              This phone number will connect you to the concierge team at Seniorly.
-            </TooltipContent>
+          {
+            tier !== "4" &&
+              <>
+                For pricing and availability, call&nbsp;
+                <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
+                  {phoneFormatter(conciergeNumber, true)}
+                </Link>
+                <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="conciergePhone" />
+                {isBrowser &&
+                <TooltipContent id="conciergePhone" place="top" effect="solid" multiline>
+                  This phone number will connect you to the concierge team at Seniorly.
+                </TooltipContent>
+                }
+                <br/>
+                <br/>
+              </>
           }
-          <br/>
-          <br/>
+
           To connect directly, call&nbsp;
           <Link href={`tel:${communityPhone}`} onClick={onCommunityNumberClicked}>
             {phoneFormatter(communityPhone, true)}
