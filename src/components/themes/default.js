@@ -194,13 +194,14 @@ theme.sizes = {
   },
 
   text: {
-    micro   : '0.625rem',   // 10px
-    tiny    : '0.750rem',   // 12px
-    caption : '0.875rem',   // 14px
-    body    : '1.000rem',   // 16px
-    subtitle: '1.250rem',   // 20px
-    title   : '1.750rem',   // 28px
-    hero    : '2.250rem',   // 36px
+    micro     : '0.625rem',   // 10px
+    tiny      : '0.750rem',   // 12px
+    caption   : '0.875rem',   // 14px
+    body      : '1.000rem',   // 16px
+    subtitle  : '1.250rem',   // 20px
+    title     : '1.750rem',   // 28px
+    hero      : '2.250rem',   // 36px
+    superHero : '3.000rem',   // 48px
   },
 
   lineHeight: {
