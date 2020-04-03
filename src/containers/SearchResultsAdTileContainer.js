@@ -165,6 +165,7 @@ export default class SearchResultsAdTileContainer extends Component {
                 postSubmit={this.handleComplete}
                 actionType={modalAction}
                 showMessageFieldFirst
+                hideMessage
               />
             </PaddedHeaderWithCloseBody>
           </Modal>

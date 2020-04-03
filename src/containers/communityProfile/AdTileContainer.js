@@ -155,6 +155,7 @@ export default class CommunityProfileAdTileContainer extends Component {
               postSubmit={this.handleComplete}
               actionType={modalAction}
               showMessageFieldFirst
+              hideMessage
             />
           </PaddedHeaderWithCloseBody>
         </Modal>
