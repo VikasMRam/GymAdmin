@@ -58,7 +58,7 @@ Accept: application/vnd.api+json
           "type": "Address",
           "id": "1a68758983ce9fafb83dc676c87f4641",
           "attributes": {
-            // city": "San Francisco", <-absence indicates ignore
+            // "city": "San Francisco", <-absence indicates ignore
             "county": "Alameda",
             "latitude": null, // nullifying indicates removing
             "longitude": null,
