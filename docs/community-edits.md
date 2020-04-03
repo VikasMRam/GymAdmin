@@ -82,7 +82,7 @@ Accept: application/vnd.api+json
                 },
                 // {
                 //   "type": "Image",
-                //   id": "6d627274f1f5c271b973d29915e07ac1"
+                //   "id": "6d627274f1f5c271b973d29915e07ac1"
                 // }, <- absence indicates deleting
                 {
                   "type": "Image",
