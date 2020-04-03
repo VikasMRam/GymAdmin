@@ -18,26 +18,16 @@ const stringifyReplacer = (k, v) => {
 };
 
 const getSDForCommunity = ({
-  name, url, address, latitude, longitude, propRatings = {}, startingRate, gallery = {},
+  name, url, address, latitude, longitude, propRatings = {}, startingRate, gallery = {}, communityPhone,
 }) => {
   const { reviewsValue, numReviews } = propRatings;
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'LodgingBusiness';
   ld.name = name;
-  ld.url = `${host}${url}`;
   ld.url = `${host}${url.pathname}`;
-  ld.inLanguage = "EN-US";
+  ld.telephone = communityPhone;
 
-  const author = {};
-  author['@type'] = 'Organization';
-  author['name'] = 'Seniorly Inc.';
-  ld.author = author;
-
-  const audience = {};
-  audience['@type'] = "Audience";
-  audience.name = "Care Givers, Seniors, Adult Children, Senior Care Providers, Senior Housing";
-  ld.audience = audience;
 
 
   const addressLd = {};
@@ -257,9 +247,17 @@ export const getHelmetForCommunityPage = (community, location) => {
     videoUrl = videoGallery.videos[0].url;
   }
 
+  const ldWP = {};
+  ldWP['@context'] = 'http://schema.org';
+  ldWP['@type'] = 'Webpage';
+  ldWP.url = `${host}${url.pathname}`;
+  ldWP.inLanguage = "EN-US";
+  ldWP.author = author();
+  ldWP.audience = audience();
+  ldWP.name = title;
+  ldWP.description = description;
+
   const ld = getSDForCommunity({ ...community });
-  ld.headline = title;
-  ld.description = description;
 
   const criticReviewsJsonLDs = reviews && reviews.filter(review => review.isCriticReview === true).map((criticReview) => {
     const result = {
@@ -387,6 +385,7 @@ export const getHelmetForCommunityPage = (community, location) => {
         search && search.length > 0 && <meta name="robots" content="noindex" />
       }
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
+      <script type="application/ld+json">{`${JSON.stringify(ldWP, stringifyReplacer)}`}</script>
       {criticReviewsJsonLDs}
       {qaPageLdObjs}
     </Helmet>
