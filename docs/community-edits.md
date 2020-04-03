@@ -92,7 +92,7 @@ Accept: application/vnd.api+json
                   },
                 },
                 {
-                  "type": Image,
+                  "type": "Image",
                   "attributes": {
                     "name": "Mission_villa_07_10_logo-5.jpg",
                     "path": "cf353653b41892c1a95fd71500493ef7/Mission_villa_07_10_logo-5.jpg",
