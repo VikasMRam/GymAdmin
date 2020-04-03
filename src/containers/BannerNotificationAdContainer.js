@@ -115,6 +115,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
             postSubmit={this.handleComplete}
             actionType={modalAction}
             showMessageFieldFirst
+            hideMessage
           />
         </PaddedHeaderWithCloseBody>
       </Modal>

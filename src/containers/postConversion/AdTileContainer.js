@@ -151,6 +151,7 @@ export default class PostConversionAdTileContainer extends Component {
               postSubmit={this.handleComplete}
               actionType={modalAction}
               showMessageFieldFirst
+              hideMessage
             />
           </PaddedHeaderWithCloseBody>
         </Modal>
