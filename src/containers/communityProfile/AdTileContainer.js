@@ -68,7 +68,7 @@ export default class CommunityProfileAdTileContainer extends Component {
     this.setState({
       isModalOpen: true,
       modalMessagePrompt: 'Please give us a little more information on what services you are currently looking for?',
-      modalHeading: 'Get A Free Consultation About In-Home Care',
+      modalHeading: 'In-home caregivers can serve as a vital support system to keep seniors cared for and safe.',
       modalMessagePlaceholder: 'Type your care needs here',
       modalAction: HOME_CARE_REQUESTED,
     });
@@ -117,8 +117,8 @@ export default class CommunityProfileAdTileContainer extends Component {
         }
         {type === 'homeCare' && isHCA &&
         <AdTile
-          title="Delaying Assisted Living Move? Consider In-Home Care"
-          buttonText="Get Home Care"
+          title="During Covid-19 In-Home Care can be a safe temporary option."
+          buttonText="Get Free Consultation"
           buttonPosition="left"
           image={assetPath('images/homecare-2.png')}
           buttonProps={{ onClick: this.handleUseHomecareClick }}
@@ -132,8 +132,8 @@ export default class CommunityProfileAdTileContainer extends Component {
         }
         {type === 'homeCare' && !isHCA &&
         <AdTile
-          title="Delaying Assisted Living Move? Consider In-Home Care"
-          buttonText="Get Home Care"
+          title="During Covid-19 In-Home Care can be a safe temporary option."
+          buttonText="Get Free Consultation"
           buttonPosition="left"
           image={assetPath('images/homecare-ad.png')}
           buttonProps={{ onClick: this.handleUseHomecareClick }}
