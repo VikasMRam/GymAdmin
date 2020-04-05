@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object } from 'prop-types';
+import { func, object, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -36,6 +36,7 @@ export default class AddFamilyForm extends Component {
     initialValues: object,
     change: func,
     onLocationChange: func,
+    needsSource: bool,
   };
 
   handleLocationChange = (value) => {
@@ -48,7 +49,7 @@ export default class AddFamilyForm extends Component {
 
   render() {
     const {
-      handleSubmit, onCancel, ...props
+      handleSubmit, onCancel, needsSource, ...props
     } = this.props;
 
     // todo: convert to new select options after enabling react select
@@ -106,16 +107,17 @@ export default class AddFamilyForm extends Component {
             component={ReduxField}
           />
         </PaddedTwoColumnWrapper>
-        <Field
+        { needsSource && <Field
           name="source"
           label="Source"
           type="select"
           required
           component={ReduxField}
-        >
-          <option>Select an option</option>
-          {sourceOptions}
-        </Field>
+          >
+            <option>Select an option</option>
+            {sourceOptions}
+          </Field>
+        }
         <Field
           type="textarea"
           rows={3}
