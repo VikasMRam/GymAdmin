@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { size, palette, assetPath } from 'sly/components/themes';
-import { Block, Heading, Link, Image, ResponsiveImage, Icon } from 'sly/components/atoms';
+import { Block, Heading, Link, Image, ResponsiveImage } from 'sly/components/atoms';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import HeaderContainer from 'sly/containers/HeaderContainer';
@@ -121,24 +121,7 @@ const CurtainUpPage = () => (
         </SubscribeForm>
         <PaddedHeading weight="regular" palette="secondary" variant="dark35">Share the show!</PaddedHeading>
         <ShareButtons>
-          <Link href="" target="_blank">
-            <Icon icon="youtube-round" size="xLarge" />
-          </Link>
-          <Link href="" target="_blank">
-            <Icon icon="facebook-round" size="xLarge" />
-          </Link>
-          <Link href="" target="_blank">
-            <Icon icon="twitter-round" size="xLarge" />
-          </Link>
-          <Link href="" target="_blank">
-            <Icon icon="linkedin-round" size="xLarge" />
-          </Link>
-          <Link href="" target="_blank">
-            <Icon icon="instagram-round" size="xLarge" />
-          </Link>
-          <Link href="" target="_blank">
-            <Icon icon="share-round" size="xLarge" palette="slate" />
-          </Link>
+          <div className="addthis_inline_share_toolbox" />
         </ShareButtons>
       </ColouredSection>
       <Section>
@@ -164,6 +147,7 @@ const CurtainUpPage = () => (
       </Section>
     </Content>
     <Footer />
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5542ad2748437167" />
   </>
 );
 
