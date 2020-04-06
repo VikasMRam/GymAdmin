@@ -6,7 +6,7 @@ import { func, string } from 'prop-types';
 import { createValidator, required, email } from 'sly/services/validation';
 import { withAuth } from 'sly/services/api';
 import withNotification from 'sly/controllers/withNotification';
-import ResetPasswordForm from 'sly/components/organisms/ResetPasswordForm';
+import ResetPasswordForm from 'sly/services/auth/components/ResetPasswordForm';
 
 const validate = createValidator({
   email: [required, email],

@@ -10,13 +10,14 @@ import spacing from 'sly/components/helpers/spacing';
 import withNotification from 'sly/controllers/withNotification';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { email } from 'sly/services/validation';
-import LoginOrRegisterFormContainer from 'sly/containers/LoginOrRegisterFormContainer';
-import LoginWithPasswordFormContainer from 'sly/containers/LoginWithPasswordFormContainer';
-import ResetPasswordFormContainer from 'sly/containers/ResetPasswordFormContainer';
-import CreatePasswordFormContainer from 'sly/containers/CreatePasswordFormContainer';
-import OtpLoginFormContainer from 'sly/containers/OtpLoginFormContainer';
-import PartnerAgentLoginFormContainer from 'sly/containers/PartnerAgentLoginFormContainer';
 import Modal, { HeaderWithClose } from 'sly/components/atoms/NewModal';
+
+import LoginOrRegisterFormContainer from 'sly/services/auth/containers/LoginOrRegisterFormContainer';
+import LoginWithPasswordFormContainer from 'sly/services/auth/containers/LoginWithPasswordFormContainer';
+import ResetPasswordFormContainer from 'sly/services/auth/containers/ResetPasswordFormContainer';
+import CreatePasswordFormContainer from 'sly/services/auth/containers/CreatePasswordFormContainer';
+import OtpLoginFormContainer from 'sly/services/auth/containers/OtpLoginFormContainer';
+import PartnerAgentLoginFormContainer from 'sly/services/auth/containers/PartnerAgentLoginFormContainer';
 
 const ModalBody = spacing(styled.div``, { top: null });
 
@@ -95,7 +96,7 @@ export default class AuthContainer extends Component {
         isOpen={isOpen}
         onClose={authenticateCancel}
       >
-        <HeaderWithClose />
+        <HeaderWithClose onClose={authenticateCancel} />
         <ModalBody>
           <WizardController
             formName="AuthForm"
