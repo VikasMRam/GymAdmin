@@ -280,6 +280,7 @@ export const getHelmetForCommunityPage = (community, location) => {
   ldWP.audience = audience();
   ldWP.name = title;
   ldWP.description = description;
+  ldWP.hasPart = 'CollectionPage';
 
   const ld = getSDForCommunity({ ...community });
 
@@ -414,6 +415,27 @@ export const getHelmetForCommunityPage = (community, location) => {
     url: `${url}#map`,
   };
 
+  let imagesLD = null;
+  if (gallery.images && gallery.images.length > 0) {
+    imagesLD = {
+      '@context': 'http://schema.org',
+      '@type': 'CollectionPage',
+      '@id': url,
+      url,
+      isPartOf: url,
+      description: `Images for ${name}`,
+      mainEntityOfPage: {
+        '@type': 'ImageGallery',
+        image: gallery.images.map((image) => {
+          return {
+            '@type': 'ImageObject',
+            url: getImagePath(encodeURI(image.path.replace(/\.jpe?g$/i, '.jpg'))),
+          };
+        }),
+      },
+    };
+  }
+
   // TODO Add Image and Video and structured data.
   return (
     <Helmet>
@@ -443,6 +465,7 @@ export const getHelmetForCommunityPage = (community, location) => {
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
       <script type="application/ld+json">{`${JSON.stringify(ldWP, stringifyReplacer)}`}</script>
       <script type="application/ld+json">{`${JSON.stringify(shareActionLD, stringifyReplacer)}`}</script>
+      {imagesLD && <script type="application/ld+json">{`${JSON.stringify(imagesLD, stringifyReplacer)}`}</script>}
       {criticReviewsJsonLDs}
       {qaPageLdObjs}
     </Helmet>
