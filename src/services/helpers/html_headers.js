@@ -16,9 +16,11 @@ const stringifyReplacer = (k, v) => {
 };
 
 const getSDForCommunity = ({
-  name, url, address, propRatings = {}, startingRate, gallery = {}, communityPhone,
+  name, url, address, propRatings = {}, startingRate, gallery = {}, propInfo = {},
 }) => {
   const { reviewsValue, numReviews } = propRatings;
+  const { communityPhone } = propInfo;
+
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'LodgingBusiness';
@@ -62,6 +64,28 @@ const getSDForCommunity = ({
     imageObj.url = imageUrl;
     ld.image = imageObj;
   }
+
+  // https://schema.org/amenityFeature
+  // Copied from sly/components/organisms/CommunityAmenities
+  const {
+    communityHighlights = [],
+    personalSpace = [],
+    communitySpace = [],
+    nonCareServices = [],
+    languages = [],
+  } = propInfo;
+  const amenities = [
+    ...communityHighlights,
+    ...personalSpace,
+    ...communitySpace,
+    ...nonCareServices,
+    ...languages,
+  ];
+  ld.amenityFeature = amenities.map(amenity => ({
+    '@type': 'LocationFeatureSpecification',
+    name: amenity,
+    value: 'True',
+  }));
 
   return ld;
 };
