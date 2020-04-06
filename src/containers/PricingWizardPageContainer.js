@@ -10,6 +10,7 @@ import { medicareToBool } from 'sly/services/helpers/userDetails';
 import { prefetch, query, withAuth } from 'sly/services/api';
 import withWS from 'sly/services/ws/withWS';
 import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/services/api/constants';
+import { normJsonApi } from 'sly/services/helpers/jsonApi';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/constants/notifications';
 import { withRedirectTo } from 'sly/services/redirectTo';
 
@@ -24,6 +25,7 @@ const eventCategory = 'PricingWizard';
 @withAuth
 @query('updateUuidAux', 'updateUuidAux')
 @query('createAction', 'createUuidAction')
+@query('getAgent', 'getAgent')
 @withRedirectTo
 
 export default class PricingWizardPageContainer extends Component {
@@ -41,6 +43,7 @@ export default class PricingWizardPageContainer extends Component {
     location: object.isRequired,
     ensureAuthenticated: func.isRequired,
     ws: object,
+    getAgent: func.isRequired,
   };
 
   constructor(props) {
@@ -151,10 +154,19 @@ export default class PricingWizardPageContainer extends Component {
     }));
   };
 
-  onMessage = () => {
+  onMessage = ({ payload: { agentSlug } }) => {
+    const { getAgent } = this.props;
     clearTimeout(this.agentMatchTimeout);
 
-    // todo: when api code is there do agent fetch
+    if (agentSlug) {
+      getAgent({ id: agentSlug })
+        .then((resp) => {
+          const agent = normJsonApi(resp);
+          this.setState({
+            agent,
+          });
+        });
+    }
   };
 
   onNoAgentMatch = () => {
