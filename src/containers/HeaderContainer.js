@@ -21,7 +21,7 @@ import { withAuth } from 'sly/services/api';
 import { withRedirectTo } from 'sly/services/redirectTo';
 import { generateSearchUrl } from 'sly/services/helpers/url';
 import SlyEvent from 'sly/services/helpers/events';
-import AuthContainer from 'sly/containers/AuthContainer';
+import AuthContainer from 'sly/services/auth/containers/AuthContainer';
 import NotificationController from 'sly/controllers/NotificationController';
 import Notifications from 'sly/components/organisms/Notifications';
 import Header from 'sly/components/organisms/Header';

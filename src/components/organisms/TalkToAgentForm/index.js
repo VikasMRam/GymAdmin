@@ -48,6 +48,7 @@ export default class TalkToAgentForm extends Component {
     firstName: string.isRequired,
     messagePrompt: string,
     showMessageFieldFirst: bool,
+    hideMessage: bool,
     buttonKind: string,
     messagePlaceholder: string,
   };
@@ -57,13 +58,14 @@ export default class TalkToAgentForm extends Component {
     firstName: 'we',
     messagePrompt: '',
     buttonKind: 'jumbo',
-    messagePlaceholder: 'Type your question here. NO JOB INQUIRIES'
+    messagePlaceholder: 'Type your question here. NO JOB INQUIRIES',
+    hideMessage: false,
   };
 
   render() {
     const {
       invalid, submitting, handleSubmit, error, heading, user, hasLocation, hasEmail,
-      firstName, messagePrompt, showMessageFieldFirst, image, buttonKind, messagePlaceholder,
+      firstName, messagePrompt, showMessageFieldFirst, hideMessage, image, buttonKind, messagePlaceholder,
     } = this.props;
     const messageLabel = (messagePrompt === '') ? `What can ${firstName} help you with?` : messagePrompt;
     const showTos = !user;
@@ -84,7 +86,7 @@ export default class TalkToAgentForm extends Component {
         {image && <ImageWrapper><StyledResponsiveImage src={image} /></ImageWrapper>}
         <StyledHeading size="subtitle">{heading}</StyledHeading>
         <form onSubmit={handleSubmit}>
-          {showMessageFieldFirst && messageField}
+          {showMessageFieldFirst && !hideMessage && messageField}
           {hasLocation &&
             <Field
               name="location"
@@ -104,6 +106,17 @@ export default class TalkToAgentForm extends Component {
               required
             />
           }
+          {!(user && user.phoneNumber) &&
+          <Field
+            name="phone"
+            label="Phone"
+            type="text"
+            parse={phoneParser}
+            format={phoneFormatter}
+            component={ReduxField}
+            required
+          />
+          }
           {!(user && user.email) && hasEmail &&
             <Field
               name="email"
@@ -113,18 +126,7 @@ export default class TalkToAgentForm extends Component {
               required
             />
           }
-          {!(user && user.phoneNumber) &&
-            <Field
-              name="phone"
-              label="Phone"
-              type="text"
-              parse={phoneParser}
-              format={phoneFormatter}
-              component={ReduxField}
-              required
-            />
-          }
-          {!showMessageFieldFirst && messageField}
+          {!showMessageFieldFirst && !hideMessage && messageField}
           <StyledButton hasMarginBottom={error || showTos} type="submit" kind={buttonKind} disabled={invalid || submitting}>
             Send
           </StyledButton>

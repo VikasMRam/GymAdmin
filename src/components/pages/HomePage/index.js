@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
 import { host } from 'sly/config';
-import { size, palette, gridColumns, assetPath } from 'sly/components/themes';
+import { size, palette, gridColumns, assetPath, getKey } from 'sly/components/themes';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import SlyEvent from 'sly/services/helpers/events';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
-import {  Centered, Label, Heading, Hr, Link, Block, Paragraph, ResponsiveImage } from 'sly/components/atoms';
+import { Centered, Label, Heading, Hr, Link, Block, Paragraph, ResponsiveImage } from 'sly/components/atoms';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
@@ -18,31 +18,10 @@ import SeoLinks from 'sly/components/organisms/SeoLinks';
 import Footer from 'sly/components/organisms/Footer';
 import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
+import ContentOverImage, { MiddleContent } from 'sly/components/molecules/ContentOverImage';
 
-const HeroWrapper = styled.div`
-  position: relative;
-  background-color: ${palette('slate', 'filler')};
-  height: ${size('header.home.heroImage.mobileHeight')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    height: ${size('header.home.heroImage.height')};
-  }
-`;
-const StyledImage = styled(ResponsiveImage)`
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  opacity: 0.8;
-  z-index: 0;
-  display: block;
-`;
-const SearchBoxWrapper = styled.div`
-  margin: auto;
+const SearchBoxWrapper = styled(MiddleContent)`
   width: 90%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('header.home.heroSearchBox.width')};
@@ -358,8 +337,14 @@ const HomePage = ({
           Watch CurtainUp! Live Here (4pm ET/ 1pm PT): Click Here.
         </Link>
       </BannerNotification>
-      <HeroWrapper>
-        <StyledImage path="react-assets/home/cover4.jpg" alt="A Home To Love" height={640} />
+      <ContentOverImage
+        image="react-assets/home/cover4.jpg"
+        imageAlt="A Home To Love"
+        imageHeight={640}
+        mobileHeight={getKey('sizes.header.home.heroImage.mobileHeight')}
+        tabletHeight={getKey('sizes.header.home.heroImage.height')}
+        laptopHeight={getKey('sizes.header.home.heroImage.height')}
+      >
         <SearchBoxWrapper>
           <StyledHeading level="hero" size="hero" palette="white">
             Find The Best Senior Living Near You
@@ -374,7 +359,7 @@ const HomePage = ({
             Sagebrook Senior Living San Francisco
           </ImageCreditLabel>
         </ImageCreditDiv>
-      </HeroWrapper>
+      </ContentOverImage>
     </>
   );
 

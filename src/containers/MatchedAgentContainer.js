@@ -3,6 +3,7 @@ import { bool, func } from 'prop-types';
 
 import agentPropType from 'sly/propTypes/agent';
 import { community as communityPropType } from 'sly/propTypes/community';
+import PostConversionAdTileContainer from 'sly/containers/postConversion/AdTileContainer';
 import PostConversionGreetingForm from 'sly/components/organisms/PostConversionGreetingForm';
 import MatchedAgent from 'sly/components/organisms/MatchedAgent';
 
@@ -11,12 +12,11 @@ export default class MatchedAgentContainer extends Component {
     agent: agentPropType,
     community: communityPropType.isRequired,
     hasNoAgent: bool,
-    onLearnMoreClick: func,
     onSubmit: func,
   };
 
   render() {
-    const { hasNoAgent, agent, community, onLearnMoreClick, onSubmit } = this.props;
+    const { hasNoAgent, agent, community, onSubmit } = this.props;
 
     if (hasNoAgent) {
       return (
@@ -28,8 +28,9 @@ export default class MatchedAgentContainer extends Component {
       <MatchedAgent
         heading={agent ? `${agent.name} will call you shortly to assist you with pricing for Portola Gardens` : ''}
         agent={agent}
-        onLearnMoreClick={onLearnMoreClick}
-      />
+      >
+        <PostConversionAdTileContainer community={community} />
+      </MatchedAgent>
     );
   }
 }

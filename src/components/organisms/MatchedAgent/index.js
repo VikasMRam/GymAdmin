@@ -1,20 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string, func } from 'prop-types';
+import { string, node } from 'prop-types';
 
-import { size, assetPath, palette } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import agentPropType from 'sly/propTypes/agent';
 import pad from 'sly/components/helpers/pad';
 import shadow from 'sly/components/helpers/shadow';
 import textAlign from 'sly/components/helpers/textAlign';
-import { Heading, Box, Avatar, Block, Link, Image } from 'sly/components/atoms';
-import AdTile from 'sly/components/organisms/AdTile';
-
-const StyledImage = styled(Image)`
-  vertical-align: middle;
-  margin-left: ${size('spacing.regular')};
-  margin-right: ${size('spacing.regular')};
-`;
+import { Heading, Box, Avatar, Block, Link } from 'sly/components/atoms';
 
 const AgentInfoWrapper = pad(styled.div``);
 
@@ -40,7 +33,7 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const MatchedAgent = ({ heading, agent, onLearnMoreClick }) => (
+const MatchedAgent = ({ heading, agent, children }) => (
   <ShadowBox>
     {agent &&
       <>
@@ -52,16 +45,7 @@ const MatchedAgent = ({ heading, agent, onLearnMoreClick }) => (
           <Link to={`mailto:${agent.info.email}`}>{agent.info.email}</Link><br />
           <Link to={`tel:${agent.info.workPhone}`}>{agent.info.workPhone}</Link>
         </AgentInfoWrapper>
-        <AdTile
-          title="Selling a home to pay the cost of senior living? "
-          layout="row"
-          imagePosition="right"
-          buttonText="Learn more about selling my home"
-          image={assetPath('vectors/house-sold.svg')}
-          buttonProps={{ onClick: onLearnMoreClick }}
-        >
-          Our partner <StyledImage src={assetPath('vectors/zillow.svg')} /> will make you an Instant Offer.
-        </AdTile>
+        {children}
       </>
     }
     {!agent &&
@@ -76,7 +60,7 @@ const MatchedAgent = ({ heading, agent, onLearnMoreClick }) => (
 MatchedAgent.propTypes = {
   heading: string,
   agent: agentPropType,
-  onLearnMoreClick: func,
+  children: node,
 };
 
 export default MatchedAgent;

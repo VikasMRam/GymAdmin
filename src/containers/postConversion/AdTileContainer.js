@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { size, assetPath } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
 import { hcaAdEnabled } from 'sly/services/helpers/tileAds';
-
+import { HOME_CARE_REQUESTED } from 'sly/services/api/constants';
 import withNotification from 'sly/controllers/withNotification';
 import AdTile from 'sly/components/organisms/AdTile';
 import { ResponsiveImage } from 'sly/components/atoms';
@@ -24,7 +24,7 @@ const StyledResponsiveImage = styled(ResponsiveImage)`
 export default class PostConversionAdTileContainer extends Component {
   static propTypes = {
     notifyInfo: func.isRequired,
-    type: oneOf(['askAgent', 'homeCare','getOffer']).isRequired,
+    type: oneOf(['askAgent', 'homeCare', 'getOffer']).isRequired,
     community: communityProptype,
     tocLabel: string,
   };
@@ -64,7 +64,7 @@ export default class PostConversionAdTileContainer extends Component {
     this.setState({
       isModalOpen: true,
       modalMessagePrompt: 'Please give us a little more information on what services you are currently looking for?',
-      modalHeading: 'Get A Free Consultation About In-Home Care',
+      modalHeading: 'In-home caregivers can serve as a vital support system to keep seniors cared for and safe.',
       modalMessagePlaceholder: 'Type your care needs here',
       modalAction: HOME_CARE_REQUESTED,
     });
@@ -113,8 +113,8 @@ export default class PostConversionAdTileContainer extends Component {
         }
         {type === 'homeCare' && isHCA &&
         <AdTile
-          title="Delaying Assisted Living Move? Consider In-Home Care"
-          buttonText="Get Home Care"
+          title="During Covid-19 In-Home Care can be a safe temporary option."
+          buttonText="Get Free Consultation"
           buttonPosition="left"
           image={assetPath('images/homecare-2.png')}
           buttonProps={{ onClick: this.handleUseHomecareClick }}
@@ -128,8 +128,8 @@ export default class PostConversionAdTileContainer extends Component {
         }
         {type === 'homeCare' && !isHCA &&
         <AdTile
-          title="Delaying Assisted Living Move? Consider In-Home Care"
-          buttonText="Get Home Care"
+          title="During Covid-19 In-Home Care can be a safe temporary option."
+          buttonText="Get Free Consultation"
           buttonPosition="left"
           image={assetPath('images/homecare-ad.png')}
           buttonProps={{ onClick: this.handleUseHomecareClick }}
@@ -151,6 +151,7 @@ export default class PostConversionAdTileContainer extends Component {
               postSubmit={this.handleComplete}
               actionType={modalAction}
               showMessageFieldFirst
+              hideMessage
             />
           </PaddedHeaderWithCloseBody>
         </Modal>
