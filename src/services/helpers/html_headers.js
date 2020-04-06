@@ -415,6 +415,8 @@ export const getHelmetForCommunityPage = (community, location) => {
     url: `${url}#map`,
   };
 
+  // https://schema.org/MediaGallery
+  // https://github.com/schemaorg/schemaorg/issues/1769
   let imagesLD = null;
   if (gallery.images && gallery.images.length > 0) {
     imagesLD = {
@@ -435,6 +437,28 @@ export const getHelmetForCommunityPage = (community, location) => {
       },
     };
   }
+
+  // https://schema.org/VideoObject
+  // https://developers.google.com/search/docs/data-types/video
+  // Data from src/components/organisms/HowSlyWorksVideo/index.js
+  const videoObjectLD = {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: 'How Seniorly Works',
+    description: 'This Video explains you how Seniorly Works',
+    thumbnailUrl: [
+      'https://d354o3y6yz93dt.cloudfront.net/images/768x512/react-assets/how-sly-works-video-thumbnail.jpg',
+    ],
+    uploadDate: '2020-03-04T08:00:00+08:00', // Date on which the component was created on S3
+    // duration: 'PT1M54S',
+    contentUrl: 'https://d1qiigpe5txw4q.cloudfront.net/appassets/hiw_captions.mp4',
+    // embedUrl: 'https://www.example.com/embed/123',
+    // interactionStatistic: {
+    //   '@type': 'InteractionCounter',
+    //   interactionType: { '@type': 'http://schema.org/WatchAction' },
+    //   userInteractionCount: 5647018
+    // },
+  };
 
   // TODO Add Image and Video and structured data.
   return (
@@ -466,6 +490,7 @@ export const getHelmetForCommunityPage = (community, location) => {
       <script type="application/ld+json">{`${JSON.stringify(ldWP, stringifyReplacer)}`}</script>
       <script type="application/ld+json">{`${JSON.stringify(shareActionLD, stringifyReplacer)}`}</script>
       {imagesLD && <script type="application/ld+json">{`${JSON.stringify(imagesLD, stringifyReplacer)}`}</script>}
+      <script type="application/ld+json">{`${JSON.stringify(videoObjectLD, stringifyReplacer)}`}</script>
       {criticReviewsJsonLDs}
       {qaPageLdObjs}
     </Helmet>
