@@ -368,6 +368,21 @@ export const getHelmetForCommunityPage = (community, location) => {
   webPageLD.name = title;
   webPageLD.description = description;
 
+
+  // https://schema.org/ShareAction
+  const shareActionLD = {};
+  shareActionLD['@context'] = 'http://schema.org';
+  shareActionLD['@type'] = 'ShareAction';
+  shareActionLD.object = {
+    '@type': 'LodgingBusiness',
+    name,
+    url: `https://www.seniorly.com${url}`,
+    image: ld.image,
+    address: ld.address,
+    priceRange: ld.priceRange,
+    telephone: ld.telephone,
+  };
+
   // TODO Add Image and Video and structured data.
   return (
     <Helmet>
@@ -396,6 +411,7 @@ export const getHelmetForCommunityPage = (community, location) => {
       }
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
       <script type="application/ld+json">{`${JSON.stringify(ldWP, stringifyReplacer)}`}</script>
+      <script type="application/ld+json">{`${JSON.stringify(shareActionLD, stringifyReplacer)}`}</script>
       {criticReviewsJsonLDs}
       {qaPageLdObjs}
     </Helmet>
