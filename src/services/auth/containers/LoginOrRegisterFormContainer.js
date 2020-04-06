@@ -7,7 +7,7 @@ import { createValidator, required, email } from 'sly/services/validation';
 import { withAuth } from 'sly/services/api';
 import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/constants/loginProviders';
 import loadFB from 'sly/services/helpers/facebookSDK';
-import LoginOrRegisterForm from 'sly/components/organisms/LoginOrRegisterForm';
+import LoginOrRegisterForm from 'sly/services/auth/components/LoginOrRegisterForm';
 
 const validate = createValidator({
   emailOrPhone: [required], // todo: add email or phone validation

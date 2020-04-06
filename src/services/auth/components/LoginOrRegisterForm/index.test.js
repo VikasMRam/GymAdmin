@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import LoginOrRegisterForm from 'sly/components/organisms/LoginOrRegisterForm';
+import LoginOrRegisterForm from 'sly/services/auth/components/LoginOrRegisterForm/index';
 
 const handleSubmit = jest.fn();
 const defaultProps = {

@@ -5,7 +5,7 @@ import configureStore from 'redux-mock-store';
 
 import * as actions from 'sly/store/authenticated/actions';
 import authenticated from 'sly/store/authenticated/reducer';
-import AuthContainer from 'sly/containers/AuthContainer';
+import AuthContainer from 'sly/services/auth/containers/AuthContainer';
 
 const reducer = combineReducers({ authenticated });
 

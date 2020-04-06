@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { createValidator, required, email } from 'sly/services/validation';
 import { withAuth } from 'sly/services/api';
 import withNotification from 'sly/controllers/withNotification';
-import OtpLoginForm from 'sly/components/organisms/OtpLoginForm';
+import OtpLoginForm from 'sly/services/auth/components/OtpLoginForm';
 
 const formName = 'OtpLoginForm';
 
