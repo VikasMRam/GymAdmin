@@ -1,6 +1,6 @@
 import React  from 'react';
 import styled from 'styled-components';
-import { node } from 'prop-types';
+import { node, string } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import ModalContainer from 'sly/containers/ModalContainer';
@@ -18,15 +18,16 @@ const Main = styled.main`
   }
 `;
 
-export const TemplateContent = ({ children }) => (
+export const TemplateContent = ({ children, className }) => (
   <>
-    <Main>{children}</Main>
+    <Main className={className}>{children}</Main>
     <ModalContainer />
   </>
 );
 
 TemplateContent.propTypes = {
   children: node,
+  className: string,
 };
 
 export const TemplateHeader = styled.header`

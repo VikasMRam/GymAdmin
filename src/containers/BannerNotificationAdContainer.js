@@ -59,7 +59,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
     this.setState({
       isModalOpen: true,
       modalMessagePrompt: 'Please give us a little more information on what services you are currently looking for?',
-      modalHeading: 'Get A Free Consultation About In-Home Care',
+      modalHeading: 'In-home caregivers can serve as a vital support system to keep seniors cared for and safe.',
       modalMessagePlaceholder: 'Type your care needs here',
       modalAction: HOME_CARE_REQUESTED,
     });
@@ -97,7 +97,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
       {type === 'homeCare' &&
       <StyledBannerNotification palette="warning" childrenPalette="slate" onCloseClick={this.handleBannerCloseClick}>
         <Link onClick={this.handleUseHomecareClick}>
-          Delaying Assisted Living Move? Consider In-Home Care
+          During Covid-19 In-Home Care can be a safe temporary option. Get Free Consultation
         </Link>
       </StyledBannerNotification>
       }
