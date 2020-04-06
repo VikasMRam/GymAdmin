@@ -59,7 +59,7 @@ export default class PostConversionAdTileContainer extends Component {
   handleUseHomecareClick = () => {
     SlyEvent.getInstance().sendEvent({
       action: 'click-use-homecare-button',
-      category: 'CommunityProfileAdTile',
+      category: 'PostConversionAdTile',
     });
     this.setState({
       isModalOpen: true,
@@ -73,7 +73,7 @@ export default class PostConversionAdTileContainer extends Component {
   handleClose = () => {
     SlyEvent.getInstance().sendEvent({
       action: 'close-ask-agent-question-modal',
-      category: 'CommunityProfileAdTile',
+      category: 'PostConversionAdTile',
     });
     this.setState({
       isModalOpen: false,
