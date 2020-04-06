@@ -275,7 +275,7 @@ export const getHelmetForCommunityPage = (community, location) => {
   ldWP['@context'] = 'http://schema.org';
   ldWP['@type'] = 'Webpage';
   ldWP.url = `${host}${url.pathname}`;
-  ldWP.inLanguage = "EN-US";
+  ldWP.inLanguage = 'EN-US';
   ldWP.author = author();
   ldWP.audience = audience();
   ldWP.name = title;
@@ -405,6 +405,13 @@ export const getHelmetForCommunityPage = (community, location) => {
     address: ld.address,
     priceRange: ld.priceRange,
     telephone: ld.telephone,
+  };
+
+  // https://schema.org/Map
+  ld.hasMap = {
+    '@type': 'Map',
+    mapType: { '@id': 'http://schema.org/VenueMap' },
+    url: `${url}#map`,
   };
 
   // TODO Add Image and Video and structured data.
