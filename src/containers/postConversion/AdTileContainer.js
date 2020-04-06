@@ -24,7 +24,7 @@ const StyledResponsiveImage = styled(ResponsiveImage)`
 export default class PostConversionAdTileContainer extends Component {
   static propTypes = {
     notifyInfo: func.isRequired,
-    type: oneOf(['askAgent', 'homeCare','getOffer']).isRequired,
+    type: oneOf(['askAgent', 'homeCare', 'getOffer']).isRequired,
     community: communityProptype,
     tocLabel: string,
   };
