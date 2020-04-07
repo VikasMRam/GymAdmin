@@ -53,8 +53,8 @@ const HomeCareNearMePage = ({
 
   const nextSteps = [
     {title: "Evaluating Home Care Companies", to:"https://www.seniorly.com/in-home-care/articles/evaluating-home-care-companies"},
-    {title: "Understanding the Cost of Home Care", to:"Understanding the Cost of Home Care"},
-    {title: "Frequently Asked Questions About Home Care", to:"Frequently Asked Questions About Home Care"},
+    {title: "Understanding the Cost of Home Care", to:"https://www.seniorly.com/in-home-care/articles/understanding-the-cost-of-home-care"},
+    {title: "Frequently Asked Questions About Home Care", to:"https://www.seniorly.com/in-home-care/articles/seniorly-home-care-faqs"},
   ];
 
   const faqs = [
