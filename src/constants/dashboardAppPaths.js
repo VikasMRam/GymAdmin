@@ -8,12 +8,13 @@ export const NEWFAMILIES = 'new';
 export const PROSPECTING = 'prospecting';
 export const CONNECTED = 'connected';
 export const CLOSED = 'closed';
+export const WON = 'won';
 const familyTypes = [
   NEWFAMILIES,
   PROSPECTING,
   CONNECTED,
   CLOSED,
-
+  WON,
 ];
 
 export const OVERDUE = 'overdue';
