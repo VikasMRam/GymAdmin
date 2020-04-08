@@ -22,12 +22,14 @@ import {
 } from 'sly/constants/familyDetails';
 import { NOTE_COMMENTABLE_TYPE_CLIENT, NOTE_CTYPE_ACTIVITY } from 'sly/constants/notes';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
+import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
 import { createValidator, required, float } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import { selectFormData } from 'sly/services/helpers/forms';
 import { userIs } from 'sly/services/helpers/role';
 import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
 import SlyEvent from 'sly/services/helpers/events';
+
 
 const validate = createValidator({
   stage: [required],
@@ -277,7 +279,11 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const {
       client, formState, lossReasons, initialValues, user, ...props
     } = this.props;
-    const { clientInfo, stage, status, uuidAux: { uuidInfo: { locationInfo } } } = client;
+    const { clientInfo, stage, status, uuidAux: { uuidInfo: { locationInfo } }, provider, } = client;
+    const { entityType, id: providerOrg } = provider;
+    const { organization } = user;
+    const { id: userOrg } = organization;
+    const userIsOwner = (entityType === PROVIDER_ENTITY_TYPE_ORGANIZATION && userOrg === providerOrg);
     const isPaused = status === FAMILY_STATUS_ON_PAUSE;
     const {
       name,
@@ -369,7 +375,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
         monthlyFees={monthlyFees}
         roomTypes={ROOM_TYPES}
         currentRejectReason={currentRejectReason}
-        canUpdateStage={nextStage !== FAMILY_STAGE_REJECTED || userIs(user, PLATFORM_ADMIN_ROLE)}
+        canUpdateStage={nextStage !== FAMILY_STAGE_REJECTED || userIs(user, PLATFORM_ADMIN_ROLE) || userIsOwner}
+        userIsOwner={userIsOwner}
       />
     );
   }
