@@ -184,7 +184,7 @@ const CurtainUpPage = () => (
         </SubscribeForm>
         <PaddedHeading weight="regular" palette="secondary" variant="dark35">Share the show!</PaddedHeading>
         <ShareButtons>
-          <div className="addthis_inline_share_toolbox" />
+          <div className="addthis_sharing_toolbox" />
         </ShareButtons>
       </ColouredSection>
       <Section>
