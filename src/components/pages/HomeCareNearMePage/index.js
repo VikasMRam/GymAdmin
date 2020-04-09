@@ -21,6 +21,7 @@ import {
 } from 'sly/components/templates/HubPageTemplate';
 import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
+import CarePageAdTileContainer from 'sly/containers/CarePageAdTileContainer';
 
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};
@@ -53,8 +54,8 @@ const HomeCareNearMePage = ({
 
   const nextSteps = [
     {title: "Evaluating Home Care Companies", to:"https://www.seniorly.com/in-home-care/articles/evaluating-home-care-companies"},
-    {title: "Understanding the Cost of Home Care", to:"Understanding the Cost of Home Care"},
-    {title: "Frequently Asked Questions About Home Care", to:"Frequently Asked Questions About Home Care"},
+    {title: "Understanding the Cost of Home Care", to:"https://www.seniorly.com/in-home-care/articles/understanding-the-cost-of-home-care"},
+    {title: "Frequently Asked Questions About Home Care", to:"https://www.seniorly.com/in-home-care/articles/seniorly-home-care-faqs"},
   ];
 
   const faqs = [
@@ -235,6 +236,10 @@ const HomeCareNearMePage = ({
               social interaction.
             </Link>
           </Paragraph>
+          <Paragraph>
+            <CarePageAdTileContainer type="homeCare"/>
+          </Paragraph>
+
           <Paragraph>
             To learn more about signs your loved one is ready for home care, watch this short video featuring Meghan Heinan from Home Care Assistance.
           </Paragraph>
