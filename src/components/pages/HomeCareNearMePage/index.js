@@ -21,6 +21,7 @@ import {
 } from 'sly/components/templates/HubPageTemplate';
 import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
+import CarePageAdTileContainer from 'sly/containers/CarePageAdTileContainer';
 
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};
@@ -235,6 +236,10 @@ const HomeCareNearMePage = ({
               social interaction.
             </Link>
           </Paragraph>
+          <Paragraph>
+            <CarePageAdTileContainer type="homeCare"/>
+          </Paragraph>
+
           <Paragraph>
             To learn more about signs your loved one is ready for home care, watch this short video featuring Meghan Heinan from Home Care Assistance.
           </Paragraph>
