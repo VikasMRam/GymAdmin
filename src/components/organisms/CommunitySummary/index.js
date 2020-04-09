@@ -128,7 +128,7 @@ const CommunitySummary = ({
   onFavouriteClick, isFavorited, onShareClick, goToReviews, searchParams,
 }) => {
   const {
-    address, name, startingRate, propRatings, propInfo, twilioNumber,
+    address, name, startingRate, propRatings, propInfo, twilioNumber, partnerAgents,
   } = community;
   const {
     line1, line2, city, state, zip,
@@ -153,6 +153,8 @@ const CommunitySummary = ({
 
   const favIcon = isFavorited ? 'favourite-light' : 'favourite-empty';
   const careTypes = getCareTypes(state, typeCare);
+
+  const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 
   return (
     <Box ref={innerRef} className={className}>
@@ -193,7 +195,7 @@ const CommunitySummary = ({
       <Wrapper>
         <div>
           {
-            tier !== "4" &&
+            tier !== "4" && partnerAgent &&
               <>
                 For pricing and availability, call&nbsp;
                 <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
