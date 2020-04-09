@@ -1,5 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import { string } from 'prop-types';
 
 import { host } from 'sly/config';
 import { tocs } from 'sly/services/helpers/search';
@@ -613,4 +614,34 @@ const audience = () => {
     '@type': 'Audience',
     name: 'Care Givers, Seniors, Adult Children, Senior Care Providers, Senior Housing',
   };
+};
+
+export const getHelmetForHomePage = ({ canonicalUrl }) => {
+  const ld = {};
+  ld['@context'] = 'http://schema.org';
+  ld['@type'] = 'Webpage';
+  ld.url = `${host}`;
+  ld.inLanguage = 'EN-US';
+  ld.author = author();
+  ld.audience = audience();
+  ld.contentLocation = {
+    '@type': 'Place',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'San Francisco',
+      addressRegion: 'CA',
+    },
+  };
+  return (
+    <Helmet>
+      <title>Assisted Living Cost & Reviews | Senior Living Advisors</title>
+      <meta name="description" content="Find the best assisted living and other senior living like nursing homes, memory care, respite care, CCRC, skilled nursing facilities, independent living and more." />
+      <link rel="canonical" href={canonicalUrl} />
+      <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
+    </Helmet>
+  );
+};
+
+getHelmetForHomePage.propTypes = {
+  canonicalUrl: string.isRequired,
 };
