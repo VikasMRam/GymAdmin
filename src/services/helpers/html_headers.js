@@ -181,13 +181,18 @@ export const getHelmetForSearchPage = ({
   ld.name = title;
   ld.description = description;
 
+  const communityUrls = [];
+
   const ldCommunities = [];
   if (communityList.length > 0) {
-    communityList.map(e => {
+    communityList.map((e) => {
+      const { url } = e;
+      communityUrls.push(`${host}/${url}`);
       return ldCommunities.push(getSDForSearchResource({ ...e }));
     });
   }
 
+  ld.significantLink = communityUrls.join(', ');
 
   const ldCity = {};
   if (city) {
