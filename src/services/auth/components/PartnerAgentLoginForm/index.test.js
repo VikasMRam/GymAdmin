@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import PartnerAgentLoginForm from 'sly/components/organisms/PartnerAgentLoginForm';
+import PartnerAgentLoginForm from 'sly/services/auth/components/PartnerAgentLoginForm/index';
 
 const handleSubmit = jest.fn();
 const defaultProps = {

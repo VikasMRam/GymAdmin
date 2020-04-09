@@ -6,7 +6,7 @@ import withNotification from 'sly/controllers/withNotification';
 import { createValidator, required, minLength } from 'sly/services/validation';
 import { withAuth, withUser } from 'sly/services/api';
 import userPropType from 'sly/propTypes/user';
-import CreatePasswordForm from 'sly/components/organisms/CreatePasswordForm';
+import CreatePasswordForm from 'sly/services/auth/components/CreatePasswordForm';
 
 const validate = createValidator({
   password: [required, minLength(8)],

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import LoginOrRegisterForm from 'sly/components/organisms/LoginOrRegisterForm';
+import LoginOrRegisterForm from 'sly/services/auth/components/LoginOrRegisterForm/index';
 import { withPreventDefault } from 'sly/services/helpers/forms';
 
 const LoginOrRegisterFormContainer = reduxForm({
