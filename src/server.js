@@ -116,7 +116,8 @@ app.use(async (req, res, next) => {
     } else {
       const initialState = store.getState();
       res.header('Cache-Control', [
-        'max-age=86400, public',
+        'max-age=0, private, must-revalidate',
+        'no-cache="set-cookie"',
       ]);
 
       res.send(renderHtml({
