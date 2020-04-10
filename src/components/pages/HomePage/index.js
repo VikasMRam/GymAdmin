@@ -431,7 +431,8 @@ const HomePage = ({
   ));
 
   const canonicalUrl = `${host}`;
-  const header = getHelmetForHomePage({ canonicalUrl });
+  const significantLinks = usefulInformationTiles.map(info => info.to);
+  const header = getHelmetForHomePage({ canonicalUrl, significantLinks });
   return (
     <>
       {header}

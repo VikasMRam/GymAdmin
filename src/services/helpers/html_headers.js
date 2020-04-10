@@ -1,6 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { string } from 'prop-types';
+import { string, arrayOf } from 'prop-types';
 
 import { host } from 'sly/config';
 import { tocs } from 'sly/services/helpers/search';
@@ -616,7 +616,7 @@ const audience = () => {
   };
 };
 
-export const getHelmetForHomePage = ({ canonicalUrl }) => {
+export const getHelmetForHomePage = ({ canonicalUrl, significantLinks }) => {
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'Webpage';
@@ -632,6 +632,7 @@ export const getHelmetForHomePage = ({ canonicalUrl }) => {
       addressRegion: 'CA',
     },
   };
+  ld.significantLink = significantLinks.map(link => `${host}${link}`).join(', ');
   return (
     <Helmet>
       <title>Assisted Living Cost & Reviews | Senior Living Advisors</title>
@@ -644,4 +645,5 @@ export const getHelmetForHomePage = ({ canonicalUrl }) => {
 
 getHelmetForHomePage.propTypes = {
   canonicalUrl: string.isRequired,
+  significantLinks: arrayOf(string).isRequired,
 };
