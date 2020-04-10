@@ -72,6 +72,7 @@ const StageCell = mobileOnly(Td, css`
   margin: ${size('spacing.large')} -${size('spacing.large')} 0 -${size('spacing.large')};
   padding: ${size('spacing.regular')} ${size('spacing.large')} 0;
 `);
+StageCell.displayName = 'StageCell';
 
 const RelatedToCell = pad(mobileOnly(StyledTd, css`
   ${twoColumnCss};
