@@ -5,7 +5,7 @@ import { string, arrayOf } from 'prop-types';
 import { host } from 'sly/config';
 import { tocs } from 'sly/services/helpers/search';
 import { titleize } from 'sly/services/helpers/strings';
-import { getStateAbbr } from 'sly/services/helpers/url';
+import { getStateAbbr, getCitySearchUrl } from 'sly/services/helpers/url';
 import { getImagePath } from 'sly/services/images';
 import { assetPath } from 'sly/components/themes';
 
@@ -241,7 +241,7 @@ export const getHelmetForSearchPage = ({
 
 export const getHelmetForCommunityPage = (community, location) => {
   const {
-    name, mainImage, address, propInfo, propRatings, rates, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions, communityPhone,
+    name, mainImage, address, propInfo, propRatings, similarProperties, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions, communityPhone,
   } = community;
   const { search } = location;
   const {
@@ -287,6 +287,13 @@ export const getHelmetForCommunityPage = (community, location) => {
   ldWP.name = title;
   ldWP.description = description;
   ldWP.hasPart = 'CollectionPage';
+
+  let significantLinks = [];
+  const spUrls = similarProperties.map(p => `${host}${p.url}`);
+  significantLinks = significantLinks.concat(spUrls);
+  const searchPageUrl = getCitySearchUrl({ propInfo, address });
+  significantLinks.push(`${host}${searchPageUrl}`);
+  ldWP.significantLink = significantLinks.join(', ');
 
   const ld = getSDForCommunity({ ...community });
 
