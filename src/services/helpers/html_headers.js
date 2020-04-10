@@ -95,11 +95,12 @@ const getSDForSearchResource = ({
   name, url, addressString, latitude, longitude, gallery,
   reviewsValue, numReviews, startingRate,
 }) => {
+  // Uses LodgingBusiness schema type
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'LodgingBusiness';
   ld.name = name;
-  ld.url = `${host}/${url}`;
+  ld.url = `${host}${url}`;
 
   const addressLd = {};
   addressLd['@type'] = 'PostalAddress';
@@ -182,14 +183,38 @@ export const getHelmetForSearchPage = ({
   ld.name = title;
   ld.description = description;
 
-  const communityUrls = [];
+  const ldIL = {};
+  ldIL['@context'] = 'http://schema.org';
+  ldIL['@type'] = 'ItemList';
+  ldIL.name = title;
+  ldIL.description = description;
+  // not setting host in this page, as it clashes with Breadcrumbs url in local. should be fine in prod, as url is relative
+  ldIL.url = `${url.pathname}`;
+  ldIL.itemListElement = [];
+  ldIL.numberOfItems = communityList.length;
 
-  const ldCommunities = [];
+  const communityUrls = [];
   if (communityList.length > 0) {
-    communityList.map((e) => {
-      const { url } = e;
-      communityUrls.push(`${host}/${url}`);
-      return ldCommunities.push(getSDForSearchResource({ ...e }));
+    communityList.map((e, index) => {
+      const { name, url, gallery } = e;
+      communityUrls.push(`${url}`);
+      let imageUrl = null;
+      if (gallery && gallery.images && gallery.images.length > 0) {
+        const [image] = gallery.images;
+        imageUrl = getImagePath(encodeURI(image.path.replace(/\.jpe?g$/i, '.jpg')));
+      }
+      const ldLI = {
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `${url}`,
+        image: {
+          '@type': 'ImageObject',
+          name,
+          url: imageUrl,
+        },
+      };
+      return ldIL.itemListElement.push(ldLI);
+      // return ldCommunities.push(getSDForSearchResource({ ...e }));
     });
   }
 
@@ -230,8 +255,8 @@ export const getHelmetForSearchPage = ({
       }
 
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
-      {ldCommunities.length > 0 &&
-        <script type="application/ld+json">{`${JSON.stringify(ldCommunities, stringifyReplacer)}`}</script>
+      {ldIL.itemListElement.length > 0 &&
+        <script type="application/ld+json">{`${JSON.stringify(ldIL, stringifyReplacer)}`}</script>
       }
       {city && <script type="application/ld+json">{`${JSON.stringify(ldCity, stringifyReplacer)}`}</script>}
     </Helmet>
