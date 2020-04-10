@@ -30,7 +30,7 @@ export default class PostConversionAdTileContainer extends Component {
   };
 
   static defaultProps = {
-    type: 'getOffer',
+    type: 'homeCare',
   };
 
   state = {
