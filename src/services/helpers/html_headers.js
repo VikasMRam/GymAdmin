@@ -447,11 +447,8 @@ export const getHelmetForCommunityPage = (community, location) => {
   };
 
   // https://schema.org/Map
-  ld.hasMap = {
-    '@type': 'Map',
-    mapType: { '@id': 'http://schema.org/VenueMap' },
-    url: `${url}#map`,
-  };
+  // https://schema.org/docs/hotels.html
+  ld.hasMap = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
 
   // https://schema.org/MediaGallery
   // https://github.com/schemaorg/schemaorg/issues/1769
