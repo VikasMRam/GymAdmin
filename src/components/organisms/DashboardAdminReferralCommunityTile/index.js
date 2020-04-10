@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, func, bool } from 'prop-types';
 import { ifProp, ifNotProp } from 'styled-tools';
+import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 
 import { size, palette } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
@@ -173,18 +174,30 @@ const DashboardAdminReferralCommunityTile = ({
             <Span size="caption"><Link to={communityUrl} target="_blank">Link to Profile</Link></Span>
           </>
         )}
+        { referralSentAt && (
+          <>
+            <Span size="caption" palette="grey" variation="dark">Sent At:</Span>
+            <Span size="caption">{getReferralSentTimeText(referralSentAt)}</Span>
+          </>
+        )
+
+        }
         { childFamilyPath && (
           <>
-            <Span size="caption" palette="grey" variation="dark">Referral Link:</Span>
-            <Span size="caption"><Link to={childFamilyPath} target="_blank">Referral</Link></Span>
+            <Role is={PLATFORM_ADMIN_ROLE}>
+              <Span size="caption" palette="grey" variation="dark">Referral Link:</Span>
+              <Span size="caption"><Link to={childFamilyPath} target="_blank">Referral</Link></Span>
+            </Role>
           </>
         )}
       </DetailsTable>
       {stage && (
         <>
-          <BottomSection title={title} titlePalette={titlePalette} disabled={disabled} >
-            <Stage stage={stage} />
-          </BottomSection>
+          <Role is={PLATFORM_ADMIN_ROLE}>
+            <BottomSection title={title} titlePalette={titlePalette} disabled={disabled} >
+              <Stage stage={stage} />
+            </BottomSection>
+          </Role>
         </>
       )}
     </Wrapper>

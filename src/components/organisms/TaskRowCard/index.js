@@ -130,7 +130,7 @@ const TaskRowCard = ({ task, onTaskClick }) => {
         <span>{dueDateStr}</span>
       </DueDateCell>
       <StageCell>
-        <Stage stageType="task" stage={status} />
+        <span>{status}</span>
       </StageCell>
       <PriorityCell>
         <span>Priority</span>

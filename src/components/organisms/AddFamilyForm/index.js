@@ -92,7 +92,6 @@ export default class AddFamilyForm extends Component {
           name="email"
           label="Email"
           type="email"
-          required
           component={ReduxField}
         />
         <PaddedTwoColumnWrapper>

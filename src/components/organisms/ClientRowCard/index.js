@@ -48,7 +48,7 @@ const ClampedTextWrapper = styled.div`
   display: flex;
 `;
 
-const StyledNameCell = styled(({ disabled, client, to, ...props }) => {
+const StyledNameCell = styled(({ disabled, seniorlySourced, client, to, ...props }) => {
   return (
     <Td disabled={disabled} {...props}>
       <ClampedTextWrapper>
@@ -57,7 +57,8 @@ const StyledNameCell = styled(({ disabled, client, to, ...props }) => {
             {client.clientInfo.name}
           </Link>
         </ClampedText>
-        {disabled && <Icon icon="pause" palette="danger" size="caption" />}
+        { disabled && <Icon icon="pause" palette="danger" size="caption" />}
+        {/*{seniorlySourced && <Icon icon="seniorlyLogo" palette="green" size="tiny" />}*/}
       </ClampedTextWrapper>
     </Td>
   );
@@ -128,7 +129,6 @@ const ClientRowCard = ({ client }) => {
   const {
     clientInfo, uuidAux, stage, status, createdAt, notes,
   } = client;
-
   const { uuidInfo } = uuidAux;
   let residentName = '';
   if (uuidInfo) {
