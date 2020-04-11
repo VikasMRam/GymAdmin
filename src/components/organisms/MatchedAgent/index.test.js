@@ -24,7 +24,7 @@ describe('MatchedAgent', () => {
   it('renders loading', () => {
     const wrapper = wrap({ agent: null });
 
-    expect(wrapper.contains('hold on we are matching you with a local senior living expert')).toBeTruthy();
+    expect(wrapper.contains('Hold on we are matching you with a local senior living expert...')).toBeTruthy();
     expect(wrapper.find('AgentPlaceholder')).toHaveLength(1);
   });
 });
