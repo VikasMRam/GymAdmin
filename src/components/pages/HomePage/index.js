@@ -1,5 +1,4 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
@@ -19,6 +18,7 @@ import Footer from 'sly/components/organisms/Footer';
 import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import ContentOverImage, { MiddleContent } from 'sly/components/molecules/ContentOverImage';
+import { getHelmetForHomePage } from 'sly/services/helpers/html_headers';
 
 const SearchBoxWrapper = styled(MiddleContent)`
   width: 90%;
@@ -431,14 +431,11 @@ const HomePage = ({
   ));
 
   const canonicalUrl = `${host}`;
-
+  const significantLinks = usefulInformationTiles.map(info => info.to);
+  const header = getHelmetForHomePage({ canonicalUrl, significantLinks });
   return (
     <>
-      <Helmet>
-        <title>Assisted Living Cost & Reviews | Senior Living Advisors</title>
-        <meta name="description" content="Find the best assisted living and other senior living like nursing homes, memory care, respite care, CCRC, skilled nursing facilities, independent living and more." />
-        <link rel="canonical" href={canonicalUrl} />
-      </Helmet>
+      {header}
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
         <VideoSection title="How Seniorly Can Help You Find The Best Senior Living Options" id="watch-video">

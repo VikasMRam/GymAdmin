@@ -147,11 +147,11 @@ const CommunityPricingTable = ({
         </StyledBlockNp>
       }
       {pricesList.length > 0 &&
-        <StyledBlockNp>
+        <StyledBlockNp itemScope itemType="http://schema.org/Table">
           <StyledTable>
             <thead>
               <tr>
-                <StyledTh colSpan={2} color="slate" bgcolor="grey">
+                <StyledTh colSpan={2} color="slate" bgcolor="grey" itemProp="about">
                   Costs By Room Type**
                 </StyledTh>
               </tr>
