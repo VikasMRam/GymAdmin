@@ -48,7 +48,7 @@ const verify = (wrapper) => {
   expect(wrapper.find('StyledHeading').render().text()).toContain(name);
   expect(wrapper.find(CommunityPricing)).toHaveLength(1);
   expect(wrapper.find(CommunityRating)).toHaveLength(1);
-  expect(renderedWrapper.childAt(0).find(Link)).toHaveLength(2);
+  expect(renderedWrapper.childAt(0).find(Link)).toHaveLength(1);
 };
 
 describe('CommunitySummary', () => {
