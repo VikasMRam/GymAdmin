@@ -130,7 +130,7 @@ const MatchedAgent = ({ heading, agent, children }) => (
     {!agent &&
       <Wrapper>
         <AgentPlaceholder><div/><div/><div/><div/><div/><div/><div/><div/></AgentPlaceholder>
-        <Block weight="medium" size="subtitle">Hold on we are matching you with a local senior living expert...</Block>
+        <Block weight="medium" size="subtitle">Hold on, we are matching you with a local senior living expert...</Block>
       </Wrapper>
     }
   </ShadowBox>
