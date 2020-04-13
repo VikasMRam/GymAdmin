@@ -59,6 +59,7 @@ const AgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "ch
 const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentRegion" */ 'sly/containers/AgentRegionPageContainer'));
 const CareTypeGuideContainer = loadable(() => import(/* webpackChunkName: "chunkCTGuide" */ 'sly/containers/CareTypeGuideContainer'));
 const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: "chunkRegionGuide" */ 'sly/containers/CareTypeRegionGuideContainer'));
+const EmailViewPageContainer = loadable(() => import(/* webpackChunkName: "emailView" */ 'sly/containers/EmailViewPageContainer'));
 const CurtainUpPage = loadable(() => import(/* webpackChunkName: "chunkCurtainUp" */ 'sly/components/pages/CurtainUpPage'));
 
 // Dashboard
@@ -275,6 +276,10 @@ const routes = [
     path: '/users/password-reset',
     component: PasswordResetPageContainer,
     exact: true,
+  },
+  {
+    path: '/email/view/:id',
+    component: EmailViewPageContainer,
   },
   {
     path: '/curtainup',

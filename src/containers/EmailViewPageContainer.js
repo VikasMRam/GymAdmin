@@ -1,0 +1,31 @@
+import React, { Component } from 'react';
+import { object } from 'prop-types';
+import { withRouter } from 'react-router';
+
+import emailPropType from 'sly/propTypes/email';
+import { prefetch } from 'sly/services/api';
+import EmailViewPage from 'sly/components/pages/EmailViewPage';
+
+@withRouter
+@prefetch('email', 'getEmail', (req, { match }) => req({
+  id: match.params.id,
+}))
+
+export default class DashboardCommunityServicesFormContainer extends Component {
+  static propTypes = {
+    email: emailPropType.isRequired,
+    status: object,
+  };
+
+  render() {
+    const { email, status, ...props } = this.props;
+
+    // TODO: handle error
+
+    const html = email && email.html ? email.html : '';
+
+    return (
+      <EmailViewPage html={html} />
+    );
+  }
+}
