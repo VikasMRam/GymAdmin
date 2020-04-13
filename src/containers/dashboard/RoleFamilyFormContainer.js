@@ -10,6 +10,7 @@ import AddFamilyForm from 'sly/components/organisms/AddFamilyForm';
 const validateAgentFields = createValidator({
   name: [required],
   preferredLocation: [required],
+  source: [required],
   phone: [usPhone, dependentRequired('email', 'Either Phone or Email is required')],
   email: [email, dependentRequired('phone', 'Either Email or Phone is required')],
 });
@@ -47,7 +48,7 @@ export default class RoleFamilyFormContainer extends Component {
     if (roleID & PLATFORM_ADMIN_ROLE) {
       return <AddFamilyReduxFormAdmin needsSource={true} {...props} />
     } else {
-      return <AddFamilyReduxFormAgent needsSource={false} {...props} />
+      return <AddFamilyReduxFormAgent needsSource={true} isNonSlyCreator={true} {...props} />
     }
   }
 
