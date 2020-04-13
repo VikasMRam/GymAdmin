@@ -169,7 +169,7 @@ const CommunityPricingTable = ({
         </StyledBlockNp>
       }
       {pricesList.length === 0 && estimatedPriceList.length > 0 &&
-        <StyledBlockNp itemScope itemType="http://schema.org/Table">
+        <StyledBlockNp>
           <StyledTable>
             <thead>
               <tr>
@@ -179,7 +179,7 @@ const CommunityPricingTable = ({
                 </StyledTh>
                 }
                 {!showToolTip &&
-                <StyledTh colSpan={2} color="slate" bgcolor="grey" itemProp="about">
+                <StyledTh colSpan={2} color="slate" bgcolor="grey">
                   Costs By Room Type**
                 </StyledTh>
                 }
