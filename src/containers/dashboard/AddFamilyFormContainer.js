@@ -10,26 +10,13 @@ import { CLIENT_RESOURCE_TYPE, UUIDAUX_RESOURCE_TYPE } from 'sly/constants/resou
 import { newClient } from 'sly/constants/payloads/client';
 import { normJsonApi } from 'sly/services/helpers/jsonApi';
 import { FAMILY_STAGE_CONTACT1 } from 'sly/constants/familyDetails';
-import AddFamilyForm from 'sly/components/organisms/AddFamilyForm';
+import RoleFamilyFormContainer from 'sly/containers/dashboard/RoleFamilyFormContainer';
 import DuplicateFamilies from 'sly/components/organisms/DuplicateFamilies';
 
-const validate = createValidator({
-  name: [required],
-  preferredLocation: [required],
-  source: [required],
-  phone: [usPhone, dependentRequired('email', 'Either Phone or Email is required')],
-  email: [email, dependentRequired('phone', 'Either Email or Phone is required')],
-});
 
-const AddFamilyReduxForm = reduxForm({
-  form: 'AddFamilyForm',
-  destroyOnUnmount: false,
-  validate,
-})(AddFamilyForm);
 
 const DuplicateFamiliesReduxForm = reduxForm({
   form: 'DuplicateFamilies',
-  validate,
 })(DuplicateFamilies);
 
 @query('createClient', 'createClient')
@@ -146,7 +133,8 @@ export default class AddFamilyFormContainer extends Component {
 
   render() {
     const { duplicates, currentClient } = this.state;
-    const { initialValues, onCancel } = this.props;
+    const { initialValues, onCancel, user, } = this.props;
+
 
     return (
       <WizardController
@@ -159,7 +147,7 @@ export default class AddFamilyFormContainer extends Component {
         }) => (
           <WizardSteps {...props}>
             <WizardStep
-              component={AddFamilyReduxForm}
+              component={RoleFamilyFormContainer}
               name="Add"
               initialValues={initialValues}
               onCancel={onCancel}

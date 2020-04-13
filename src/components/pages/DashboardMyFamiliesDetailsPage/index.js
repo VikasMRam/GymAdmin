@@ -18,7 +18,7 @@ import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/constants/notes';
 import { CLIENT_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { FAMILY_STAGE_NEW, FAMILY_STAGE_REJECTED } from 'sly/constants/familyDetails';
-import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { AGENT_ND_ROLE, AGENT_ADMIN_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
 import notePropType from 'sly/propTypes/note';
 import userPropType from 'sly/propTypes/user';
@@ -343,6 +343,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       { id: ACTIVITY, to: activityPath, label: 'Activity' },
       { id: FAMILY_DETAILS, to: familyDetailsPath, label: 'Family Details' },
     ];
+    const agentAdminTabList = [
+      { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
+      { id: TASKS, to: tasksPath, label: 'Tasks' },
+
+    ];
     const adminTabList = [
       { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
       { id: PARTNER_AGENTS, to: agentsPath, label: 'Agents' },
@@ -352,8 +357,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     // TODO: CHANGE TO HAS ROLE INSTEAD OF IS ROLE...
     let tabs = [summaryTab];
     /* eslint-disable no-bitwise */
-    if (roleID & AGENT_ND_ROLE) {
+    if (roleID & ( AGENT_ND_ROLE | AGENT_ADMIN_ROLE)) {
       tabs = tabs.concat(agentTabList.map(e => genTab(e)));
+    }
+    /* eslint-disable no-bitwise */
+    if (roleID & ( AGENT_ADMIN_ROLE | PLATFORM_ADMIN_ROLE)) {
+      tabs = tabs.concat(agentAdminTabList.map(e => genTab(e)));
     }
     /* eslint-disable no-bitwise */
     if (roleID & PLATFORM_ADMIN_ROLE) {
@@ -592,7 +601,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const isAgentUser = userIs(user, AGENT_ND_ROLE);
     const isOfDifferentOrg = userOrg !== clientOrg;
     // Rule when lead is created by self
-    if (stage === FAMILY_STAGE_NEW && isClientAdminUser) {
+    if (isClientAdminUser) {
       showUpdateAddNoteButtons = true;
       canEditFamilyDetails = true;
     }
@@ -781,7 +790,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             )}
 
             {currentTab === COMMUNITIES && (
-              <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
+              <Role className="agentTab" is={PLATFORM_ADMIN_ROLE | AGENT_ADMIN_ROLE}>
                 <ReferralSearchContainer
                   notifyError={notifyError}
                   notifyInfo={notifyInfo}
@@ -809,7 +818,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             )}
 
             {currentTab === TASKS && (
-              <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
+              <Role className="agentTab" is={PLATFORM_ADMIN_ROLE | AGENT_ADMIN_ROLE}>
                 <FamilyTasksTab>
                   <Datatable
                     id="tasks"

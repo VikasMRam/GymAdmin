@@ -23,6 +23,6 @@ describe('TaskRowCard', () => {
     expect(wrapper.find('DueDateCell').contains(dueDateStr)).toBeTruthy();
     expect(wrapper.find('PriorityCell').contains(task.priority)).toBeTruthy();
     expect(wrapper.find('AssignedToCell').contains(task.owner.name)).toBeTruthy();
-    expect(wrapper.find('Stage').prop('stage')).toBe(task.status);
+    expect(wrapper.find('StageCell').contains(task.status)).toBeTruthy();
   });
 });

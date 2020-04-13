@@ -8,7 +8,7 @@ import taskPropType from 'sly/propTypes/task';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import pad from 'sly/components/helpers/pad';
 import borderRadius from 'sly/components/helpers/borderRadius';
-import { Link, ClampedText } from 'sly/components/atoms';
+import { Badge, Link, ClampedText } from 'sly/components/atoms';
 import { Td, Tr } from 'sly/components/atoms/Table';
 import Stage from 'sly/components/molecules/Stage';
 import { getAppPathForEntity } from 'sly/services/helpers/appPaths';
@@ -72,6 +72,7 @@ const StageCell = mobileOnly(Td, css`
   margin: ${size('spacing.large')} -${size('spacing.large')} 0 -${size('spacing.large')};
   padding: ${size('spacing.regular')} ${size('spacing.large')} 0;
 `);
+StageCell.displayName = 'StageCell';
 
 const RelatedToCell = pad(mobileOnly(StyledTd, css`
   ${twoColumnCss};
@@ -85,11 +86,29 @@ const AssignedToCell = pad(mobileOnly(StyledTd, css`
 `), 'regular');
 AssignedToCell.displayName = 'AssignedToCell';
 
+const getColor = ({ priority }) => {
+  switch(priority) {
+    case "Urgent":
+      return palette('danger','base');
+    case "High":
+      return palette('warning','base');
+    default:
+      return palette('slate','base');
+  }
+};
+
 const PriorityCell = pad(mobileOnly(StyledTd, css`
   ${twoColumnCss};
   order: 5;
 `), 'regular');
+
 PriorityCell.displayName = 'PriorityCell';
+
+const StyledBadge = styled(Badge)`
+  text-transform: uppercase;
+  color: ${palette('white','base')};
+  background-color: ${ props => getColor(props)};
+`;
 
 const TaskRowCard = ({ task, onTaskClick }) => {
   const {
@@ -112,11 +131,11 @@ const TaskRowCard = ({ task, onTaskClick }) => {
         <span>{dueDateStr}</span>
       </DueDateCell>
       <StageCell>
-        <Stage stageType="task" stage={status} />
+        <span>{status}</span>
       </StageCell>
       <PriorityCell>
         <span>Priority</span>
-        <span>{priority}</span>
+        <StyledBadge badgePalette="warning" palette="white" priority={priority}>{priority}</StyledBadge>
       </PriorityCell>
       <AssignedToCell>
         <span>Assigned to</span>

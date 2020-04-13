@@ -253,7 +253,14 @@ export default class ReferralSearchContainer extends Component {
       referralMode, parentClient, user,
     } = this.props;
     const { communitiesInterested, children: childrenClients, clientInfo, recommendedAgents: allRecommendedAgents, uuidAux } = parentClient;
-    const { slyCommunityMessage: communityMessage, slyAgentMessage: agentMessage } = clientInfo;
+    let { slyCommunityMessage: communityMessage, slyAgentMessage: agentMessage } = clientInfo;
+    if (communityMessage === undefined || communityMessage === "") {
+      communityMessage = "I look forward to working with you to help meet this client's needs."
+    }
+    if (agentMessage === undefined || agentMessage === "") {
+      agentMessage = "We look forward to working with you to help meet this client's needs."
+    }
+
     const { uuidInfo } = uuidAux;
     const { locationInfo } = uuidInfo;
     const { communities, agents } = this.state;
