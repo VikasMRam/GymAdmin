@@ -11,7 +11,7 @@ import EmailViewPage from 'sly/components/pages/EmailViewPage';
   id: match.params.id,
 }))
 
-export default class DashboardCommunityServicesFormContainer extends Component {
+export default class EmailViewPageContainer extends Component {
   static propTypes = {
     email: emailPropType.isRequired,
     status: object,

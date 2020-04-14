@@ -60,6 +60,7 @@ const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chu
 const CareTypeGuideContainer = loadable(() => import(/* webpackChunkName: "chunkCTGuide" */ 'sly/containers/CareTypeGuideContainer'));
 const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: "chunkRegionGuide" */ 'sly/containers/CareTypeRegionGuideContainer'));
 const EmailViewPageContainer = loadable(() => import(/* webpackChunkName: "emailView" */ 'sly/containers/EmailViewPageContainer'));
+const EmailSharePageContainer = loadable(() => import(/* webpackChunkName: "emailShare" */ 'sly/containers/EmailSharePageFormContainer'));
 const CurtainUpPage = loadable(() => import(/* webpackChunkName: "chunkCurtainUp" */ 'sly/components/pages/CurtainUpPage'));
 
 // Dashboard
@@ -280,6 +281,10 @@ const routes = [
   {
     path: '/email/view/:id',
     component: EmailViewPageContainer,
+  },
+  {
+    path: '/email/share/:id',
+    component: EmailSharePageContainer,
   },
   {
     path: '/curtainup',

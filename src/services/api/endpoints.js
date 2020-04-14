@@ -96,6 +96,7 @@ export default {
   sendEbook: { method: post, path: '/platform/send-ebook' },
 
   getEmail: { method: get, path: '/platform/emails/:id' },
+  createEmail: { method: post, path: '/platform/emails' },
 
   getAddresses: { method: get, path: '/platform/addresses' },
 };
