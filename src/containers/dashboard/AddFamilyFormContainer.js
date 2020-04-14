@@ -9,7 +9,7 @@ import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { CLIENT_RESOURCE_TYPE, UUIDAUX_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { newClient } from 'sly/constants/payloads/client';
 import { normJsonApi } from 'sly/services/helpers/jsonApi';
-import { FAMILY_STAGE_CONTACT1 } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
 import RoleFamilyFormContainer from 'sly/containers/dashboard/RoleFamilyFormContainer';
 import DuplicateFamilies from 'sly/components/organisms/DuplicateFamilies';
 
@@ -77,6 +77,7 @@ export default class AddFamilyFormContainer extends Component {
     if (source === 'Direct Call') {
       am.push('PhoneConnect')
     }
+
     const payload = {
       type: CLIENT_RESOURCE_TYPE,
       attributes: {
@@ -88,7 +89,7 @@ export default class AddFamilyFormContainer extends Component {
           slyMessage: notes,
           additionalMetadata: am,
         },
-        stage: FAMILY_STAGE_CONTACT1,
+        stage: FAMILY_STAGE_NEW,
       },
       relationships: {
         uuidAux: {

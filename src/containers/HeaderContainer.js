@@ -92,9 +92,6 @@ const agentMenuItems = [
     name: 'My Families', to: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), section: 1, icon: 'users', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
   {
-    name: 'Messages', to: generatePath(AGENT_DASHBOARD_MESSAGES_PATH), section: 1, icon: 'message', onClick: ({ name }) => sendHeaderItemClickEvent(name),
-  },
-  {
     name: 'Tasks', to: generatePath(AGENT_DASHBOARD_TASKS_PATH), section: 1, icon: 'checkbox-fill', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
   {

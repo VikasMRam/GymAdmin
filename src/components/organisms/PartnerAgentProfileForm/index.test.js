@@ -16,8 +16,6 @@ describe('PartnerAgentProfileForm', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find(Field).filter({ name: 'adminRegion' })).toHaveLength(1);
-    expect(wrapper.find(Field).filter({ name: 'zipcodesServed' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'bio' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'parentCompany' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'displayName' })).toHaveLength(1);

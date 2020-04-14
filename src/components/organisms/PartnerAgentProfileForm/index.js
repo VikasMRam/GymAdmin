@@ -77,27 +77,6 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
   <Form onSubmit={handleSubmit}>
     <FormScrollSection>
       <FormSection>
-        <FormSectionHeading weight="medium">Area Served</FormSectionHeading>
-        <Field
-          name="adminRegion"
-          label="Region"
-          type="select"
-          component={ReduxField}
-          wideWidth
-        >
-          <option value="" disabled>Select an option</option>
-          {agentRegionOptions}
-        </Field>
-        <Field
-          name="zipcodesServed"
-          label="Zipcodes Served"
-          type="textarea"
-          placeholder=""
-          component={ReduxField}
-          wideWidth
-        />
-      </FormSection>
-      <FormSection>
         <FormSectionHeading weight="medium">Profile</FormSectionHeading>
         <Field
           name="bio"
@@ -160,6 +139,24 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
       {isSlyAdmin && (
         <FormSection>
           <FormSectionHeading weight="medium">Admin</FormSectionHeading>
+          <Field
+            name="adminRegion"
+            label="Region"
+            type="select"
+            component={ReduxField}
+            wideWidth
+          >
+            <option value="" disabled>Select an option</option>
+            {agentRegionOptions}
+          </Field>
+          <Field
+            name="zipcodesServed"
+            label="Zipcodes Served"
+            type="textarea"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
           <Field
             name="status"
             label="Status"
