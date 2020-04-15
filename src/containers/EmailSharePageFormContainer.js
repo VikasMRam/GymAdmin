@@ -14,12 +14,15 @@ import { connect } from 'react-redux';
 const formName = 'EmailShareForm';
 
 export const validate = createValidator({
-  name: [required],
-  email: [email, required],
+  'to.name': [required],
+  'to.email': [email, required],
+  'from.name': [required],
+  'from.email': [email, required],
 });
 
 const ReduxForm = reduxForm({
   form: formName,
+  validate,
   destroyOnUnmount: false,
 })(EmailSharePageForm);
 
@@ -30,7 +33,7 @@ const ReduxForm = reduxForm({
   id: match.params.id,
 }))
 
-@connect((state) => ({
+@connect(state => ({
   currentValues: state.form[formName]?.values,
   state,
 }))
@@ -51,20 +54,24 @@ export default class EmailSharePageFormContainer extends Component {
   };
 
   render() {
-    const { email, user, status } = this.props;
+    const { email, user, currentValues, status } = this.props;
 
     // TODO: handle error
     const from = user?.contact || {};
     const initialValues = {
       from,
       to: {},
-      originalEmailId: email?.id,
+      info: {
+        clonedEmailId: email?.id,
+      },
     };
 
     return (
       <ReduxForm
         onSubmit={this.onSubmit}
+        email={email || {}}
         initialValues={initialValues}
+        currentValues={currentValues}
         from={from}
       />
     );
