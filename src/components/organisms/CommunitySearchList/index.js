@@ -28,11 +28,11 @@ const CommunityTileWrapper = pad(styled.div`
 `, 'xLarge');
 
 const StyledLink = styled(Link)`
-  position: absolute !important;
-  top: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  left: 0 !important;
+  // position: absolute !important;
+  // top: 0 !important;
+  // right: 0 !important;
+  // bottom: 0 !important;
+  // left: 0 !important;
   z-index: 10;
 `;
 
@@ -164,7 +164,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
                 label: index,
                 value: similarProperty.id,
               }}
-            />
+            >
             <ShadowCommunityTile
               community={similarProperty}
               layout="column"
@@ -174,6 +174,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
               showSeeMoreButtonOnHover
               lazyLoadImage={index !== 0}
             />
+            </StyledLink>
           </CommunityTileWrapper>
           {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
             <PaddedSearchResultsAdTileContainer type="homeCare" locationLabel={locLabel} tocLabel={tocLabel} />

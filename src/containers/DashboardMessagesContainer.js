@@ -117,11 +117,11 @@ export default class DashboardMessagesContainer extends Component {
   }
 
   render() {
-    const { heading, user, onConversationClick, datatable, status, conversations } = this.props;
+    const { heading, onConversationClick, user, datatable, status, conversations } = this.props;
     const { conversations: conversationsStatus } = status;
     const { hasFinished: conversationsHasFinished, meta } = conversationsStatus;
     const isLoading = !conversationsHasFinished;
-    const { id: userId } = user;
+    const { id: userId } = user || {};
     const pagination = getDetailedPaginationData(conversationsStatus, 'conversations');
 
     let messagesComponent = null;
