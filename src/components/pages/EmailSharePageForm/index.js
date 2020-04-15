@@ -47,7 +47,6 @@ const FormScrollSection = styled.div`
 const FormSection = styled.div`
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
   padding-bottom: 0;
-  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: ${size('spacing.xLarge')};
@@ -56,14 +55,16 @@ const FormSection = styled.div`
 `;
 
 const FormBottomSection = styled.div`
-  margin-top: ${size('spacing.xLarge')};
+  border-top: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  padding: ${size('spacing.xLarge')};
+  text-align: right;
 `;
 
 const FormSectionHeading = pad(Block, 'large');
 
 const StyledButton = pad(Button, 'regular');
 
-export default function EmailSharePageForm({ formName, email, invalid, submitting, handleSubmit, currentValues, user }) {
+export default function EmailSharePageForm({ formName, email, invalid, submitting, handleSubmit }) {
   return (
     <Wrapper>
       <Form name={formName} onSubmit={handleSubmit}>
@@ -78,7 +79,7 @@ export default function EmailSharePageForm({ formName, email, invalid, submittin
         </FormScrollSection>
         <FormBottomSection>
           <StyledButton type="submit" disabled={invalid || submitting}>
-            Save changes
+            Send
           </StyledButton>
         </FormBottomSection>
       </Form>
@@ -88,9 +89,10 @@ export default function EmailSharePageForm({ formName, email, invalid, submittin
 
 EmailSharePageForm.propTypes = {
   user: userPropType,
-  form: string.isRequired,
+  formName: string.isRequired,
   submitting: bool,
   invalid: bool,
+  email: object,
   handleSubmit: func.isRequired,
 };
 
