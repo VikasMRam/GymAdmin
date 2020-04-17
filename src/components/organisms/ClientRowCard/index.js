@@ -58,7 +58,7 @@ const StyledNameCell = styled(({ disabled, seniorlySourced, client, to, ...props
           </Link>
         </ClampedText>
         { disabled && <Icon icon="pause" palette="danger" size="caption" />}
-        {/*{seniorlySourced && <Icon icon="seniorlyLogo" palette="green" size="tiny" />}*/}
+        { seniorlySourced && <Icon icon="logo" palette="secondary" size="caption" />}
       </ClampedTextWrapper>
     </Td>
   );
@@ -129,6 +129,8 @@ const ClientRowCard = ({ client }) => {
   const {
     clientInfo, uuidAux, stage, status, createdAt, notes,
   } = client;
+  const { referralSource } = clientInfo || {};
+  const seniorlySourced = referralSource === 'Seniorly';
   const { uuidInfo } = uuidAux;
   let residentName = '';
   if (uuidInfo) {
@@ -143,7 +145,7 @@ const ClientRowCard = ({ client }) => {
 
   return (
     <Wrapper disabled={disabled}>
-      <NameCell disabled={disabled} to={to} client={client} onClick={() => onClientClick(clientInfo.name, to)} />
+      <NameCell seniorlySourced={seniorlySourced} disabled={disabled} to={to} client={client} onClick={() => onClientClick(clientInfo.name, to)} />
       <ResidentCell disabled={disabled}>{residentName}</ResidentCell>
       <StageCell disabled={disabled}>
         <Stage stage={stage} />
