@@ -26,7 +26,7 @@ const getSDForCommunity = ({
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'LodgingBusiness';
   ld.name = name;
-  ld.url = `${host}${url.pathname}`;
+  ld.url = `https://www.seniorly.com${url}`;
   ld.telephone = communityPhone;
 
   const addressLd = {};
@@ -176,7 +176,7 @@ export const getHelmetForSearchPage = ({
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'Webpage';
-  ld.url = `${host}${url.pathname}`;
+  ld.url = `https://www.seniorly.com${url}`;
   ld.inLanguage = 'EN-US';
   ld.author = author();
   ld.audience = audience();
@@ -197,7 +197,7 @@ export const getHelmetForSearchPage = ({
   if (communityList.length > 0) {
     communityList.map((e, index) => {
       const { name, url, gallery } = e;
-      communityUrls.push(`${url}`);
+      communityUrls.push(`https://www.seniorly.com${url}`);
       let imageUrl = null;
       if (gallery && gallery.images && gallery.images.length > 0) {
         const [image] = gallery.images;
@@ -305,7 +305,7 @@ export const getHelmetForCommunityPage = (community, location) => {
   const ldWP = {};
   ldWP['@context'] = 'http://schema.org';
   ldWP['@type'] = 'Webpage';
-  ldWP.url = `${host}${url.pathname}`;
+  ldWP.url = `https://www.seniorly.com${url}`;
   ldWP.inLanguage = 'EN-US';
   ldWP.author = author();
   ldWP.audience = audience();
@@ -314,10 +314,10 @@ export const getHelmetForCommunityPage = (community, location) => {
   ldWP.hasPart = 'CollectionPage';
 
   let significantLinks = [];
-  const spUrls = similarProperties.map(p => `${host}${p.url}`);
+  const spUrls = similarProperties.map(p => `https://www.seniorly.com${p.url}`);
   significantLinks = significantLinks.concat(spUrls);
   const searchPageUrl = getCitySearchUrl({ propInfo, address });
-  significantLinks.push(`${host}${searchPageUrl}`);
+  significantLinks.push(`https://www.seniorly.com${searchPageUrl}`);
   ldWP.significantLink = significantLinks.join(', ');
 
   const ld = getSDForCommunity({ ...community });
@@ -457,9 +457,9 @@ export const getHelmetForCommunityPage = (community, location) => {
     imagesLD = {
       '@context': 'http://schema.org',
       '@type': 'CollectionPage',
-      '@id': url,
-      url,
-      isPartOf: url,
+      '@id': `https://www.seniorly.com${url}`,
+      url: `https://www.seniorly.com${url}`,
+      isPartOf: `https://www.seniorly.com${url}`,
       description: `Images for ${name}`,
       mainEntityOfPage: {
         '@type': 'ImageGallery',
@@ -649,7 +649,7 @@ export const getHelmetForHomePage = ({ canonicalUrl, significantLinks }) => {
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'Webpage';
-  ld.url = `${host}`;
+  ld.url = 'https://www.seniorly.com';
   ld.inLanguage = 'EN-US';
   ld.author = author();
   ld.audience = audience();
@@ -661,7 +661,7 @@ export const getHelmetForHomePage = ({ canonicalUrl, significantLinks }) => {
       addressRegion: 'CA',
     },
   };
-  ld.significantLink = significantLinks.map(link => `${host}${link}`).join(', ');
+  ld.significantLink = significantLinks.map(link => `https://www.seniorly.com${link}`).join(', ');
   return (
     <Helmet>
       <title>Assisted Living Cost & Reviews | Senior Living Advisors</title>
