@@ -60,8 +60,8 @@ Accept: application/vnd.api+json
           "attributes": {
             // "city": "San Francisco", <-absence indicates ignore
             "county": "Alameda",
-            "latitude": null, // nullifying indicates removing
-            "longitude": null,
+            "latitude": 0, // zero value or "" string or null for object indicates removing
+            "longitude": 0,
           }
         }
       },
