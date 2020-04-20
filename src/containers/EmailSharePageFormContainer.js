@@ -2,22 +2,22 @@ import React, { Component } from 'react';
 import { func, object } from 'prop-types';
 import { withRouter } from 'react-router';
 import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 
 import emailPropType from 'sly/propTypes/email';
-import { getRelationship, prefetch, query } from 'sly/services/api';
+import { prefetch, query } from 'sly/services/api';
 import EmailSharePageForm from 'sly/components/pages/EmailSharePageForm';
 import { createValidator, email, required } from 'sly/services/validation';
 import withUser from 'sly/services/api/withUser';
 import userPropType from 'sly/propTypes/user';
-import { connect } from 'react-redux';
 
 const formName = 'EmailShareForm';
 
 export const validate = createValidator({
-  'to.name': [required],
-  'to.email': [email, required],
-  'from.name': [required],
-  'from.email': [email, required],
+  toName: [required],
+  toEmail: [email, required],
+  fromName: [required],
+  fromEmail: [email, required],
 });
 
 const ReduxForm = reduxForm({
@@ -28,7 +28,7 @@ const ReduxForm = reduxForm({
 
 @withUser
 @withRouter
-@query('createEmail', 'createEmail')
+@query('createShareEmail', 'createShareEmail')
 @prefetch('email', 'getEmail', (req, { match }) => req({
   id: match.params.id,
 }))
@@ -43,27 +43,30 @@ export default class EmailSharePageFormContainer extends Component {
     user: userPropType.isRequired,
     email: emailPropType.isRequired,
     status: object.isRequired,
-    createEmail: func.isRequired,
+    createShareEmail: func.isRequired,
   };
 
   onSubmit = (data) => {
-    const { createEmail } = this.props;
-    return createEmail({
+    const { createShareEmail } = this.props;
+    return createShareEmail({
       attributes: data,
     });
   };
 
   render() {
     const { email, user, currentValues, status } = this.props;
+    const { hasFinished: userHasFinished } = status.user;
+    const { hasFinished: emailHasFinished } = status.email;
 
+    if (!(emailHasFinished && userHasFinished)) {
+      return <div>Loading...</div>;
+    }
     // TODO: handle error
-    const from = user?.contact || {};
+    const from = user || {};
     const initialValues = {
-      from,
-      to: {},
-      info: {
-        clonedEmailId: email?.id,
-      },
+      fromName: from.name,
+      fromEmail: from.email,
+      emailId: email?.id,
     };
 
     return (
