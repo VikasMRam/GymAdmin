@@ -1,0 +1,20 @@
+{
+  "id": "57d69642f8247437f84d9b098bf4fa79",
+  "createdAt": "2020-04-20T17:44:29Z",
+  "description": "performer 1 description",
+  "galleryID": "51a0b60db6f7dfcee2773c9f4c832fbf",
+  "gallery": {
+    "id": "51a0b60db6f7dfcee2773c9f4c832fbf",
+    "images": [
+      {
+        "id": "d827499a4622709c068a8be15376e3df",
+        "name": "Buena_Vista-1.jpg",
+        "path": "b073e814dedefa35e64a79cbf3fdd5be/Buena_Vista-1.jpg",
+        "sortOrder": null
+      }
+    ]
+  },
+  "name": "performer 1",
+  "status": "Live",
+  "updatedAt": "2020-04-20T17:44:29Z"
+}

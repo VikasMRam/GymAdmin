@@ -61,7 +61,10 @@ Avatar.propTypes = {
   size: elementPropType,
   user: shape({
     name: string.isRequired,
-    picture: string,
+    picture: shape({
+      src: string,
+      path: string,
+    }),
   }),
 };
 

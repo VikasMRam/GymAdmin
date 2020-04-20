@@ -1,14 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
+import { arrayOf, bool } from 'prop-types';
 
 import { size, palette, assetPath } from 'sly/components/themes';
-import { Block, Heading, Link, Image, ResponsiveImage, Box, Button } from 'sly/components/atoms';
+import eventPropType from 'sly/propTypes/event';
+import performerPropType from 'sly/propTypes/performer';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CurtainupSubscribeFormContainer from 'sly/containers/CurtainupSubscribeFormContainer';
 import { TemplateHeader } from 'sly/components/templates/BasePageTemplate';
+import { Block, Heading, Link, Image, ResponsiveImage, Box, Button } from 'sly/components/atoms';
 import ContentOverImage, { MiddleContent } from 'sly/components/molecules/ContentOverImage';
 import Footer from 'sly/components/organisms/Footer';
 import CurtainupEventBox from 'sly/components/organisms/CurtainupEventBox';
@@ -151,7 +154,7 @@ const OurHostsWrapper = styled.div`
   }
 `;
 
-const CurtainUpPage = () => (
+const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoading }) => (
   <>
     <TemplateHeader noBottomMargin>
       <HeaderContainer />
@@ -217,104 +220,18 @@ const CurtainUpPage = () => (
       <ColouredSection>
         <PaddedHeading weight="regular" palette="secondary" variant="dark35">The Shows This Week</PaddedHeading>
         <XxxLargePaddedBlock>Performers subject to change</XxxLargePaddedBlock>
-        {/* todo replace with data from api */}
-        <TwoCol6Columns>
-          <CurtainupEventBox
-            date="2020-04-02T08:02:17-05:00"
-            performers={[
-              {
-                name: 'Jackie Burns',
-                description: '"Wicked," "Hair," "If/Then"',
-                gallery: {
-                  id: 'dsfdsfs',
-                  images: [
-                    {
-                      id: 'sdfsdfsd',
-                      name: 'arthur.png',
-                      path: assetPath('images/curtainup/arthur.png'),
-                    },
-                  ],
-                },
-              },
-              {
-                name: 'Jackie Burns 1',
-                description: '"Wicked," "Hair," "If/Then"',
-                gallery: {
-                  id: 'dsfdsfs',
-                  images: [
-                    {
-                      id: 'sdfsdfsd',
-                      name: 'arthur.png',
-                      path: assetPath('images/curtainup/arthur.png'),
-                    },
-                  ],
-                },
-              },
-              {
-                name: 'Jackie Burns 2',
-                description: '"Wicked," "Hair," "If/Then"',
-                gallery: {
-                  id: 'dsfdsfs',
-                  images: [
-                    {
-                      id: 'sdfsdfsd',
-                      name: 'arthur.png',
-                      path: assetPath('images/curtainup/arthur.png'),
-                    },
-                  ],
-                },
-              },
-            ]}
-          />
-          <CurtainupEventBox
-            date="2020-04-05T08:02:17-05:00"
-            palette="razzmatazz"
-            performers={[
-              {
-                name: 'Jackie Burns',
-                description: '"Wicked," "Hair," "If/Then"',
-                gallery: {
-                  id: 'dsfdsfs',
-                  images: [
-                    {
-                      id: 'sdfsdfsd',
-                      name: 'arthur.png',
-                      path: assetPath('images/curtainup/arthur.png'),
-                    },
-                  ],
-                },
-              },
-              {
-                name: 'Jackie Burns 1',
-                description: '"Wicked," "Hair," "If/Then"',
-                gallery: {
-                  id: 'dsfdsfs',
-                  images: [
-                    {
-                      id: 'sdfsdfsd',
-                      name: 'arthur.png',
-                      path: assetPath('images/curtainup/arthur.png'),
-                    },
-                  ],
-                },
-              },
-              {
-                name: 'Jackie Burns 2',
-                description: '"Wicked," "Hair," "If/Then"',
-                gallery: {
-                  id: 'dsfdsfs',
-                  images: [
-                    {
-                      id: 'sdfsdfsd',
-                      name: 'arthur.png',
-                      path: assetPath('images/curtainup/arthur.png'),
-                    },
-                  ],
-                },
-              },
-            ]}
-          />
-        </TwoCol6Columns>
+        {eventsIsLoading && <Block>loading events...</Block>}
+        {!eventsIsLoading &&
+          <TwoCol6Columns>
+            {events.map((e, i) => (
+              <CurtainupEventBox
+                event={e}
+                performers={e.performers}
+                palette={i % 2 !== 0 ? 'razzmatazz' : 'orange'}
+              />
+            ))}
+          </TwoCol6Columns>
+        }
       </ColouredSection>
       <Section>
         <ContentWrapper>
@@ -380,5 +297,12 @@ const CurtainUpPage = () => (
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5542ad2748437167" />
   </>
 );
+
+CurtainUpPage.propTypes = {
+  events: arrayOf(eventPropType),
+  performers: arrayOf(performerPropType),
+  eventsIsLoading: bool,
+  performersIsLoading: bool,
+};
 
 export default CurtainUpPage;

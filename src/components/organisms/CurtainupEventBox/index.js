@@ -1,13 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string, arrayOf, object } from 'prop-types';
+import { arrayOf } from 'prop-types';
 import dayjs from 'dayjs';
 
 import { size, palette } from 'sly/components/themes';
 import { palette as palettePropType } from 'sly/propTypes/palette';
+import eventPropType from 'sly/propTypes/event';
+import performerPropType from 'sly/propTypes/performer';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
-import { Box, Block, Image } from 'sly/components/atoms';
+import { Box, Block, Image, Avatar } from 'sly/components/atoms';
 
 const Header = textAlign(styled.div`
   padding: ${size('spacing.regular')} ${size('spacing.xxLarge')};
@@ -33,15 +35,10 @@ const PerformerWrapper = pad(styled.div`
 `);
 PerformerWrapper.displayName = 'PerformerWrapper';
 
-const StyledImage = styled(Image)`
-  width: ${size('element.xxxLarge')};
-  height: ${size('element.xxxLarge')};
-`;
-
 const StyledBox = textAlign(Box, 'left');
 
-const CurtainupEventBox = ({ date, performers, palette }) => {
-  const parsedDate = dayjs(date);
+const CurtainupEventBox = ({ event: { liveAt }, performers, palette }) => {
+  const parsedDate = dayjs(liveAt);
   const validDate = parsedDate.isValid();
   let month;
   let day;
@@ -54,7 +51,13 @@ const CurtainupEventBox = ({ date, performers, palette }) => {
   }
   const performerComponents = performers.map(p => (
     <PerformerWrapper key={p.name}>
-      <StyledImage src={p.gallery.images[0].path} />
+      <Avatar
+        user={{
+          name: p.name,
+          picture: p.gallery && p.gallery.images && p.gallery.images.length ? p.gallery.images[0].path : null,
+        }}
+        size="xxxLarge"
+      />
       <div>
         <Block size="subtitle" weight="medium">{p.name}</Block>
         <div>{p.description}</div>
@@ -83,10 +86,9 @@ const CurtainupEventBox = ({ date, performers, palette }) => {
   );
 };
 
-// todo: replace types after api is ready
 CurtainupEventBox.propTypes = {
-  date: string.isRequired,
-  performers: arrayOf(object),
+  event: eventPropType.isRequired,
+  performers: arrayOf(performerPropType),
   palette: palettePropType.isRequired,
 };
 
