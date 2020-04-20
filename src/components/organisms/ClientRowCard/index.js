@@ -48,7 +48,7 @@ const ClampedTextWrapper = styled.div`
   display: flex;
 `;
 
-const StyledNameCell = styled(({ disabled, client, to, ...props }) => {
+const StyledNameCell = styled(({ disabled, seniorlySourced, client, to, ...props }) => {
   return (
     <Td disabled={disabled} {...props}>
       <ClampedTextWrapper>
@@ -57,7 +57,8 @@ const StyledNameCell = styled(({ disabled, client, to, ...props }) => {
             {client.clientInfo.name}
           </Link>
         </ClampedText>
-        {disabled && <Icon icon="pause" palette="danger" size="caption" />}
+        { disabled && <Icon icon="pause" palette="danger" size="caption" />}
+        { seniorlySourced && <Icon icon="logo" palette="secondary" size="caption" />}
       </ClampedTextWrapper>
     </Td>
   );
@@ -128,7 +129,8 @@ const ClientRowCard = ({ client }) => {
   const {
     clientInfo, uuidAux, stage, status, createdAt, notes,
   } = client;
-
+  const { referralSource } = clientInfo || {};
+  const seniorlySourced = referralSource === 'Seniorly';
   const { uuidInfo } = uuidAux;
   let residentName = '';
   if (uuidInfo) {
@@ -143,7 +145,7 @@ const ClientRowCard = ({ client }) => {
 
   return (
     <Wrapper disabled={disabled}>
-      <NameCell disabled={disabled} to={to} client={client} onClick={() => onClientClick(clientInfo.name, to)} />
+      <NameCell seniorlySourced={seniorlySourced} disabled={disabled} to={to} client={client} onClick={() => onClientClick(clientInfo.name, to)} />
       <ResidentCell disabled={disabled}>{residentName}</ResidentCell>
       <StageCell disabled={disabled}>
         <Stage stage={stage} />

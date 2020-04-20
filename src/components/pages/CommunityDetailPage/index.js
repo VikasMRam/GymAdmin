@@ -651,7 +651,7 @@ export default class CommunityDetailPage extends Component {
             <Section title={`Map View of ${name}`} titleSize="subtitle" />
           </Wrapper>
           <StyledSection>
-            <LazyCommunityMap />
+            <LazyCommunityMap id="map" />
           </StyledSection>
 
           {nearbyCities &&

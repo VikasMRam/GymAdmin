@@ -537,10 +537,8 @@ export default class ConversationMessagesContainer extends Component {
         <StyledSendMessageFormContainer
           conversation={conversation}
           placeholder={sendMessageFormPlaceholder}
-          canCreateParticipant={!viewingAsParticipant && userOrgParticipant}
           otherParticipantId={userId}
           otherParticipantType={CONVERSATION_PARTICIPANT_TYPE_USER}
-          disabled={!viewingAsParticipant && !userOrgParticipant}
           onCreateConversationSuccess={onCreateConversationSuccess}
         />
       </ContainerWrapper>

@@ -13,13 +13,13 @@ import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import Tab from 'sly/components/molecules/Tab';
 import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
-import { AGENT_DASHBOARD_FAMILIES_PATH, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED } from 'sly/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_FAMILIES_PATH, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED, WON } from 'sly/constants/dashboardAppPaths';
 import Th from 'sly/components/molecules/Th';
 import IconButton from 'sly/components/molecules/IconButton';
 import ClientRowCard from 'sly/components/organisms/ClientRowCard';
 import Role from 'sly/components/common/Role';
 import AddFamilyFormContainer from 'sly/containers/dashboard/AddFamilyFormContainer';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/constants/roles';
 import { stripPageNumber } from 'sly/services/helpers/appPaths';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
@@ -82,6 +82,7 @@ const TabMap = {
   Prospects: PROSPECTING,
   Connected: CONNECTED,
   Closed: CLOSED,
+  Won: WON,
 };
 
 const onTabClick = (label) => {
@@ -165,7 +166,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
     const beforeTabHeader = (
       <TwoColumn>
         <Heading level="subtitle">My Families</Heading>
-        <Role className="addFamily" is={PLATFORM_ADMIN_ROLE}>
+        <Role className="addFamily" is={PLATFORM_ADMIN_ROLE | AGENT_ADMIN_ROLE}>
           <IconButton icon="user-add" onClick={this.handleAddFamilyClick} hideTextInMobile>
             Add family
           </IconButton>
