@@ -55,11 +55,8 @@ function patchConfigs({ statsWeb, statsNode }) {
 
     if (ssr) {
       const extractorSsr = new ChunkExtractor({ statsFile: statsNode, entrypoints: [bundle] });
-      const { default: ClientApp, renderToString } = extractorSsr.requireEntrypoint();
-
       Object.assign(config, {
-        ClientApp,
-        renderToString,
+        extractorSsr,
       });
     }
   });
