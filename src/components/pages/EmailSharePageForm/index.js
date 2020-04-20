@@ -71,10 +71,10 @@ export default function EmailSharePageForm({ formName, email, invalid, submittin
         <FormScrollSection>
           <FormSection>
             <FormSectionHeading weight="medium">{email.subject}</FormSectionHeading>
-            <Field type="text" name="to.name" label="Your friend's name" component={ReduxField} />
-            <Field type="email" name="to.email" label="Your friend's email address" component={ReduxField} />
-            <Field type="text" name="from.name" label="Your name" component={ReduxField} />
-            <Field type="email" name="from.email" label="Your email address" component={ReduxField} />
+            <Field type="text" name="toName" label="Your friend's name" component={ReduxField} />
+            <Field type="email" name="toEmail" label="Your friend's email address" component={ReduxField} />
+            <Field type="text" name="fromName" label="Your name" component={ReduxField} />
+            <Field type="email" name="fromEmail" label="Your email address" component={ReduxField} />
           </FormSection>
         </FormScrollSection>
         <FormBottomSection>
