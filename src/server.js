@@ -13,6 +13,8 @@ import { StaticRouter } from 'react-router';
 import { cache } from 'emotion';
 import { CacheProvider } from '@emotion/core';
 import { renderStylesToString } from 'emotion-server';
+import debounce from 'lodash/debounce';
+import fs from "fs";
 
 import { cleanError } from 'sly/services/helpers/logging';
 import { port, host, publicPath, isDev } from 'sly/config';
@@ -20,9 +22,72 @@ import { configure as configureStore } from 'sly/store';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 import clientConfigsMiddleware from 'sly/clientConfigs';
+import { ChunkExtractor } from '@loadable/server';
 
-const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
-const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
+const waitForFile = (path, timeout = 100, max = 10) => new Promise((resolve, reject) => {
+  let counter = 0;
+  const interval = setInterval(() => {
+    if (fs.existsSync(path)) {
+      clearInterval(interval);
+      resolve(path);
+    } else {
+      counter++;
+      if (counter >= max) {
+        reject(new Error(`file: ${path} not found`));
+      }
+    }
+  }, timeout);
+});
+
+const requireJson = (file) => {
+  let json = {};
+  try {
+    const data = fs.readFileSync(file);
+    json = JSON.parse(data);
+  } catch (e) {
+    console.error(e);
+  }
+  return json;
+};
+
+const getStats = (() => {
+  const statsNodeFile = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
+  const statsWebFile = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
+
+  let statsNode;
+  let statsWeb;
+
+  const patchStats = () => {
+    statsNode = requireJson(statsNodeFile);
+    statsWeb = requireJson(statsWebFile);
+  };
+
+  if (!isDev) {
+    // stats files are ready from build step
+    patchStats();
+  } else {
+    // stats files might be compiling and might change during development
+    const debouncedPatchConfig = debounce(
+      patchStats,
+      100,
+    );
+    const files = [statsNodeFile, statsWebFile];
+    Promise.all(files.map(waitForFile))
+      .then(() => {
+        debouncedPatchConfig();
+        files.forEach((file) => {
+          fs.watch(file, { persistent: false }, debouncedPatchConfig);
+        });
+      })
+      // eslint-disable-next-line
+      .catch(console.error);
+  }
+
+  return () => ({
+    statsNode,
+    statsWeb,
+  });
+})();
 
 const sheet = new ServerStyleSheet();
 
@@ -64,12 +129,16 @@ if (!isDev) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
 
-app.use(clientConfigsMiddleware({ statsNode, statsWeb }));
+app.use(clientConfigsMiddleware());
 
 // non ssr apps
 app.use((req, res, next) => {
-  const { ssr, extractor } = req.clientConfig;
+  const { ssr, bundle } = req.clientConfig;
+
   if (!ssr) {
+    const { statsWeb } = getStats();
+    const extractor = new ChunkExtractor({ stats: statsWeb, entrypoints: [bundle] });
+
     res.send(renderHtml({
       content: '',
       extractor,
@@ -82,16 +151,15 @@ app.use((req, res, next) => {
 // render
 app.use(async (req, res, next) => {
   const store = configureStore({ experiments: {} });
-  const {
-    renderToString,
-    extractor,
-    ClientApp,
-  } = req.clientConfig;
-
-  // hack to reset chunk count in the extractor
-  extractor.chunks = [];
+  const { bundle } = req.clientConfig;
 
   try {
+    const { statsNode, statsWeb } = getStats();
+
+    const extractor = new ChunkExtractor({ stats: statsWeb, entrypoints: [bundle] });
+    const extractorSsr = new ChunkExtractor({ stats: statsNode, entrypoints: [bundle] });
+    const { default: ClientApp, renderToString } = extractorSsr.requireEntrypoint();
+
     const context = {};
 
     const app = sheet.collectStyles(extractor.collectChunks((
