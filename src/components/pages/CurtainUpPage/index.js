@@ -12,6 +12,7 @@ import HeaderContainer from 'sly/containers/HeaderContainer';
 import CurtainupSubscribeFormContainer from 'sly/containers/CurtainupSubscribeFormContainer';
 import { TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { Block, Heading, Link, Image, ResponsiveImage, Box, Button } from 'sly/components/atoms';
+import Avatar from 'sly/components/molecules/Avatar';
 import ContentOverImage, { MiddleContent } from 'sly/components/molecules/ContentOverImage';
 import Footer from 'sly/components/organisms/Footer';
 import CurtainupEventBox from 'sly/components/organisms/CurtainupEventBox';
@@ -26,7 +27,7 @@ const PaddedLink = pad(Link, 'large');
 
 const PaddedImage = pad(Image);
 
-const LargePaddedImage = pad(Image, 'large');
+const LargePaddedAvatar = pad(Avatar, 'large');
 
 const FullWidthCurtainupSubscribeFormContainer = fullWidth(CurtainupSubscribeFormContainer);
 
@@ -116,6 +117,8 @@ const WhyDoingThisWrapper = styled.div`
     grid-gap: ${size('layout.gutter')};
   }
 `;
+
+const TextAlignLeftBox = textAlign(Box, 'left');
 
 const PaddedBlock = pad(Block);
 
@@ -211,10 +214,12 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
       <Section>
         <XxxLargePaddedHeading weight="regular" palette="secondary" variant="dark35">Why We Are Doing This</XxxLargePaddedHeading>
         <WhyDoingThisWrapper>
-          <Image src={assetPath('images/curtainup/arthur.png')} />
-          <Box>
-            <div>&quot;I&apos;m motivated by a simple belief, “we all need community”. That’s why I’ve dedicated my life to helping seniors find and live in communities as they grow older. In this current health crisis, the need for community and engagement has never been more important for our aging loved ones. Millions of seniors are living at home and in senior living communities under lockdown. This is our opportunity to let them know they are still part of our community and offer some happy moments in an uncertain isolated world.&quot;</div>
-          </Box>
+          <Avatar user={{ picture: { src: assetPath('images/curtainup/arthur.png') } }} size="xxxHuge" />
+          <TextAlignLeftBox>
+            <PaddedBlock>&quot;I&apos;m motivated by a simple belief, “we all need community”. That’s why I’ve dedicated my life to helping seniors find and live in communities as they grow older. In this current health crisis, the need for community and engagement has never been more important for our aging loved ones. Millions of seniors are living at home and in senior living communities under lockdown. This is our opportunity to let them know they are still part of our community and offer some happy moments in an uncertain isolated world.&quot;</PaddedBlock>
+            <Block weight="weight" palette="secondary" variant="dark35">Arthur Bretscheider,</Block>
+            <Block weight="weight" palette="secondary" variant="dark35">CEO & CO-FOUNDER, Seniorly</Block>
+          </TextAlignLeftBox>
         </WhyDoingThisWrapper>
       </Section>
       <ColouredSection>
@@ -238,7 +243,7 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
           <XxxLargePaddedHeading weight="regular" palette="secondary" variant="dark35">We Are Teaming Up With:</XxxLargePaddedHeading>
           <TeamingUpWithWrapper>
             <div>
-              <LargePaddedImage src={assetPath('images/curtainup/ashley.png')} />
+              <LargePaddedAvatar user={{ picture: { src: assetPath('images/curtainup/ashley.png') } }} size="xxxHuge" />
               <RegularPaddedBlock weight="medium" size="subtitle">Ashley Rodbro</RegularPaddedBlock>
               <PaddedBlock>Director, Writer, and Producer</PaddedBlock>
               <div>
@@ -246,7 +251,7 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
               </div>
             </div>
             <div>
-              <LargePaddedImage src={assetPath('images/curtainup/stephanie.png')} />
+              <LargePaddedAvatar user={{ picture: { src: assetPath('images/curtainup/stephanie.png') } }} size="xxxHuge" />
               <RegularPaddedBlock weight="medium" size="subtitle">Stephanie Cowen</RegularPaddedBlock>
               <PaddedBlock>Producer, Casting Director, and Dramaturg</PaddedBlock>
               <div>
@@ -258,11 +263,11 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
           <div>
             <OurHostsWrapper>
               <div>
-                <LargePaddedImage src={assetPath('images/curtainup/andrew.png')} />
+                <LargePaddedAvatar user={{ picture: { src: assetPath('images/curtainup/andrew.png') } }} size="xxxHuge" />
                 <RegularPaddedBlock weight="medium" size="subtitle">Andrew</RegularPaddedBlock>
               </div>
               <div>
-                <LargePaddedImage src={assetPath('images/curtainup/emma.png')} />
+                <LargePaddedAvatar user={{ picture: { src: assetPath('images/curtainup/emma.png') } }} size="xxxHuge" />
                 <RegularPaddedBlock weight="medium" size="subtitle">Emma</RegularPaddedBlock>
               </div>
             </OurHostsWrapper>

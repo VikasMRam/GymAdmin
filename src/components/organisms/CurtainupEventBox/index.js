@@ -9,7 +9,8 @@ import eventPropType from 'sly/propTypes/event';
 import performerPropType from 'sly/propTypes/performer';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
-import { Box, Block, Image, Avatar } from 'sly/components/atoms';
+import { Box, Block } from 'sly/components/atoms';
+import Avatar from 'sly/components/molecules/Avatar';
 
 const Header = textAlign(styled.div`
   padding: ${size('spacing.regular')} ${size('spacing.xxLarge')};
@@ -54,7 +55,7 @@ const CurtainupEventBox = ({ event: { liveAt }, performers, palette }) => {
       <Avatar
         user={{
           name: p.name,
-          picture: p.gallery && p.gallery.images && p.gallery.images.length ? p.gallery.images[0].path : null,
+          picture: p.gallery && p.gallery.images && p.gallery.images.length ? { path: p.gallery.images[0].path } : null,
         }}
         size="xxxLarge"
       />
