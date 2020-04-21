@@ -157,6 +157,17 @@ const OurHostsWrapper = styled.div`
   }
 `;
 
+const PerformersWrapper = styled.div`
+  max-width: 100%;
+  display: grid;
+  grid-gap: calc(2 * ${size('layout.gutter')});
+  grid-template-columns: repeat(auto-fit, ${size('layout.col2')});
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    max-width: ${size('layout.col12')};
+  }
+`;
+
 const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoading }) => (
   <>
     <TemplateHeader noBottomMargin>
@@ -196,8 +207,25 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
       <Section>
         <ContentWrapper>
           <PaddedHeading weight="regular" palette="secondary" variant="dark35">Just Some of the Scheduled Guests to Appear</PaddedHeading>
-          <Block>Seniorly Presents: CURTAIN UP! - a Live Free Show streaming daily for 1 hour via the Seniorly YouTube Channel and Facebook Page. Viewers can watch performers in real-time, ask questions, or sit back and enjoy the show.</Block>
+          <XxxLargePaddedBlock>Seniorly Presents: CURTAIN UP! - a Live Free Show streaming daily for 1 hour via the Seniorly YouTube Channel and Facebook Page. Viewers can watch performers in real-time, ask questions, or sit back and enjoy the show.</XxxLargePaddedBlock>
         </ContentWrapper>
+        {performersIsLoading && <Block>loading performers...</Block>}
+        {!performersIsLoading &&
+          <PerformersWrapper>
+            {performers.map(p => (
+              <div key={p.name}>
+                <LargePaddedAvatar
+                  user={{
+                    name: p.name,
+                    picture: p.gallery && p.gallery.images && p.gallery.images.length ? { path: p.gallery.images[0].path } : null,
+                  }}
+                  size="xxxHuge"
+                />
+                <Block weight="medium" size="subtitle">{p.name}</Block>
+              </div>
+            ))}
+          </PerformersWrapper>
+        }
       </Section>
       <ColouredSection>
         <ShowStarts>
