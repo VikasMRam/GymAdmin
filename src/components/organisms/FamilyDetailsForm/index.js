@@ -11,7 +11,7 @@ import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import Role from 'sly/components/common/Role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE, AGENT_ADMIN_ROLE } from 'sly/constants/roles';
 import {
   SOURCE_OPTIONS,
   FAMILY_STAGE_WON,
@@ -118,11 +118,6 @@ const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
   { value: 'HomeCarePhone', label: 'HomeCarePhone' },
 ];
 
-// const tagsOptions = [
-//   { value: 'chocolate', label: 'Chocolate' },
-//   { value: 'strawberry', label: 'Strawberry' },
-//   { value: 'vanilla', label: 'Vanilla' },
-// ];
 
 class FamilyDetailsForm extends Component {
   static propTypes = {
@@ -140,7 +135,8 @@ class FamilyDetailsForm extends Component {
     timeToMove: arrayOf(string).isRequired,
     monthlyBudget: arrayOf(string).isRequired,
     roomTypes: arrayOf(string).isRequired,
-    careLevels: arrayOf(string).isRequired,
+    careServices: arrayOf(string).isRequired,
+    mobilityLevels: arrayOf(string).isRequired,
     communityTypes: arrayOf(string).isRequired,
     preferredLocation: string,
     assignedTos: arrayOf(userPropType).isRequired,
@@ -171,7 +167,7 @@ class FamilyDetailsForm extends Component {
     const { handleLocationChange } = this;
     const {
       handleSubmit, submitting, invalid, accepted, initialValues, lookingFor, isAgentUser,
-      gender, timeToMove, monthlyBudget, roomTypes, communityTypes, careLevels, canEditFamilyDetails, assignedTos,
+      gender, timeToMove, monthlyBudget, roomTypes, communityTypes, mobilityLevels, careServices, canEditFamilyDetails, assignedTos,
       client, onEditStageDetailsClick, onEditStatusDetailsClick,
     } = this.props;
     const { stage, status } = client;
@@ -190,7 +186,8 @@ class FamilyDetailsForm extends Component {
     const timeToMoveOptions = timeToMove.map(i => <option key={i} value={i}>{i}</option>);
     const monthlyBudgetOptions = monthlyBudget.map(i => <option key={i} value={i}>{i}</option>);
     const roomPreferenceOptions = roomTypes.map(i => ({ value: i, label: i }));
-    const mobilityLevelOptions = careLevels.map(i => ({ value: i, label: i }));
+    const mobilityLevelOptions = mobilityLevels.map(i => ({ value: i, label: i }));
+    const adls = careServices.map(i => ({ value: i, label: i }));
     const communityCareTypeOptions = communityTypes.map(i => ({ value: i, label: i }));
     const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
     const tagColumn = { typeInfo: { api: '/v0/platform/tags?filter[name]=' }, value: 'tag.name' };
@@ -301,7 +298,7 @@ class FamilyDetailsForm extends Component {
                   component={ReduxField}
                 />
               </PaddedTwoColumnWrapper>
-              {!isAgentUser &&
+              <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE | AGENT_ADMIN_ROLE}>
                 <>
                   <Field
                     name="referralSource"
@@ -321,25 +318,23 @@ class FamilyDetailsForm extends Component {
                     options={medicaidOptions}
                     wideWidth
                   />
-                  <Field
+                  {!isAgentUser && <Field
                     name="slyAgentMessage"
                     label="Summary for Agent"
                     type="textarea"
                     disabled={!canEditFamilyDetails}
                     component={ReduxField}
                     wideWidth
-                  />
+                  />}
                 </>
-              }
-              <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
-              <Field
-                name="slyCommunityMessage"
-                label="Summary for Community"
-                type="textarea"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              />
+                <Field
+                  name="slyCommunityMessage"
+                  label="Summary for Community"
+                  type="textarea"
+                  disabled={!canEditFamilyDetails}
+                  component={ReduxField}
+                  wideWidth
+                />
               </Role>
               <Field
                 name="slyMessage"
@@ -456,6 +451,14 @@ class FamilyDetailsForm extends Component {
             </FormSection>
             <FormSection>
               <FormSectionHeading weight="medium">Care Needs</FormSectionHeading>
+              <Field
+                name="adls"
+                label="ADLs"
+                type="checkbox"
+                component={ReduxField}
+                options={adls}
+                wideWidth
+              />
               <Field
                 name="mobilityLevel"
                 label="Level of mobility"
