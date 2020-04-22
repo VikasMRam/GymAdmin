@@ -266,13 +266,13 @@ export const getHelmetForSearchPage = ({
 
 export const getHelmetForCommunityPage = (community, location) => {
   const {
-    name, mainImage, address, propInfo, propRatings, similarProperties, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions, communityPhone,
+    name, mainImage, address, propInfo, propRatings, similarProperties, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions,
   } = community;
   const { search } = location;
   const {
     line1, city, state, country, zip, latitude, longitude,
   } = address;
-  const { websiteUrl, websiteTitle, websiteMetaDescription } = propInfo;
+  const { websiteUrl, websiteTitle, websiteMetaDescription, communityPhone } = propInfo;
   const { numReviews, reviewsValue } = propRatings;
 
   // const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);
