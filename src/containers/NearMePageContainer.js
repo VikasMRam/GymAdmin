@@ -13,6 +13,7 @@ import CCRCNearMePage from 'sly/components/pages/CCRCNearMePage';
 import IndependentLivingNearMePage from 'sly/components/pages/IndependentLivingNearMePage';
 import HomeCareNearMePage from 'sly/components/pages/HomeCareNearMePage';
 import RespiteCareNearMePage from 'sly/components/pages/RespiteCareNearMePage';
+import VeteransBenefitAssistedLivingPage from 'sly/components/pages/VeteransBenefitAssistedLivingPage';
 import { parseURLQueryParams, generateCityPathSearchUrl } from 'sly/services/helpers/url';
 import { prefetch } from 'sly/services/api';
 import { withProps } from 'sly/services/helpers/hocs';
@@ -215,6 +216,13 @@ export default class NearMePageContainer extends Component {
     if (hub === 'respite-care') {
       return (
         <RespiteCareNearMePage
+          handleAnchor={handleClick}
+        />
+      );
+    }
+    if (hub === 'veretans-benefit-assisted-living') {
+      return (
+        <VeteransBenefitAssistedLivingPage
           handleAnchor={handleClick}
         />
       );
