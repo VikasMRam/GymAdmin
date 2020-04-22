@@ -1,21 +1,35 @@
 import React from 'react';
 import styled from 'styled-components';
+import { arrayOf, bool } from 'prop-types';
 
 import { size, palette, assetPath } from 'sly/components/themes';
-import { Block, Heading, Link, Image, ResponsiveImage } from 'sly/components/atoms';
+import eventPropType from 'sly/propTypes/event';
+import performerPropType from 'sly/propTypes/performer';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
+import fullWidth from 'sly/components/helpers/fullWidth';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CurtainupSubscribeFormContainer from 'sly/containers/CurtainupSubscribeFormContainer';
 import { TemplateHeader } from 'sly/components/templates/BasePageTemplate';
+import { Block, Heading, Link, Image, ResponsiveImage, Box, Button } from 'sly/components/atoms';
+import Avatar from 'sly/components/molecules/Avatar';
 import ContentOverImage, { MiddleContent } from 'sly/components/molecules/ContentOverImage';
 import Footer from 'sly/components/organisms/Footer';
+import CurtainupEventBox from 'sly/components/organisms/CurtainupEventBox';
 
 const PaddedResponsiveImage = pad(ResponsiveImage);
 
 const PaddedHeading = pad(Heading);
 
+const XxxLargePaddedHeading = pad(Heading, 'xxxLarge');
+
 const PaddedLink = pad(Link, 'large');
+
+const PaddedImage = pad(Image);
+
+const LargePaddedAvatar = pad(Avatar, 'large');
+
+const FullWidthCurtainupSubscribeFormContainer = fullWidth(CurtainupSubscribeFormContainer);
 
 const StyledMiddleContent = styled(textAlign(MiddleContent))`
   width: 100%;
@@ -37,6 +51,10 @@ const HeroVideo = pad(styled.iframe`
 `, 'xxxLarge');
 
 const Section = styled.section`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-items: center;
   padding: calc(${size('spacing.massive')} + ${size('spacing.regular')}) ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -50,6 +68,10 @@ const ColouredSection = styled(Section)`
 
 const ContentWrapper = styled.div`
   margin: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-items: center;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.col8')};
@@ -88,7 +110,65 @@ const PastShows = styled.div`
   }
 `;
 
-const CurtainUpPage = () => (
+const WhyDoingThisWrapper = styled.div`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: grid;
+    grid-template-columns: ${size('layout.col2')} ${size('layout.col6')};
+    grid-gap: ${size('layout.gutter')};
+  }
+`;
+
+const TextAlignLeftBox = textAlign(Box, 'left');
+
+const PaddedBlock = pad(Block);
+
+const LargePaddedBlock = pad(Block, 'large');
+
+const XxxLargePaddedBlock = pad(Block, 'xxxLarge');
+
+const RegularPaddedBlock = pad(Block, 'regular');
+
+const TwoCol6Columns = textAlign(fullWidth(styled.div`
+  display: grid;
+  grid-gap: ${size('layout.gutter')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    grid-template-columns: ${size('layout.col6')} ${size('layout.col6')};
+    width: auto;
+  }
+`), 'left');
+
+const TeamingUpWithWrapper = pad(styled.div`
+  display: grid;
+  grid-gap: calc(${size('layout.gutter')} * 2);
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    grid-gap: ${size('layout.gutter')};
+    grid-template-columns: ${size('layout.col4')} ${size('layout.col4')};
+  }
+`, 'massive');
+
+const OurHostsWrapper = styled.div`
+  display: grid;
+  grid-gap: ${size('layout.gutter')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    grid-template-columns: ${size('layout.col2')} ${size('layout.col2')};
+  }
+`;
+
+const PerformersWrapper = styled.div`
+  max-width: 100%;
+  display: grid;
+  grid-gap: calc(2 * ${size('layout.gutter')});
+  grid-template-columns: repeat(auto-fit, ${size('layout.col2')});
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    max-width: ${size('layout.col12')};
+  }
+`;
+
+const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoading }) => (
   <>
     <TemplateHeader noBottomMargin>
       <HeaderContainer />
@@ -117,18 +197,35 @@ const CurtainUpPage = () => (
         <HeroVideo title="what is curtainup" height="285" src="https://www.youtube.com/embed/H-wOQ-Areys" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
         <SubscribeForm>
           <PaddedHeading weight="regular" palette="secondary" variant="dark35">Get Our Weekly Performance Alert and Find Out Who is Performing Each Day.</PaddedHeading>
-          <CurtainupSubscribeFormContainer />
+          <FullWidthCurtainupSubscribeFormContainer />
         </SubscribeForm>
         <PaddedHeading weight="regular" palette="secondary" variant="dark35">Share the show!</PaddedHeading>
         <ShareButtons>
-          <div className="addthis_inline_share_toolbox" />
+          <div className="addthis_sharing_toolbox" />
         </ShareButtons>
       </ColouredSection>
       <Section>
         <ContentWrapper>
           <PaddedHeading weight="regular" palette="secondary" variant="dark35">Just Some of the Scheduled Guests to Appear</PaddedHeading>
-          <Block>Seniorly Presents: CURTAIN UP! - a Live Free Show streaming daily for 1 hour via the Seniorly YouTube Channel and Facebook Page. Viewers can watch performers in real-time, ask questions, or sit back and enjoy the show.</Block>
+          <XxxLargePaddedBlock>Seniorly Presents: CURTAIN UP! - a Live Free Show streaming daily for 1 hour via the Seniorly YouTube Channel and Facebook Page. Viewers can watch performers in real-time, ask questions, or sit back and enjoy the show.</XxxLargePaddedBlock>
         </ContentWrapper>
+        {performersIsLoading && <Block>loading performers...</Block>}
+        {!performersIsLoading &&
+          <PerformersWrapper>
+            {performers.map(p => (
+              <div key={p.name}>
+                <LargePaddedAvatar
+                  user={{
+                    name: p.name,
+                    picture: p.gallery && p.gallery.images && p.gallery.images.length ? { path: p.gallery.images[0].path } : null,
+                  }}
+                  size="xxxHuge"
+                />
+                <Block weight="medium" size="subtitle">{p.name}</Block>
+              </div>
+            ))}
+          </PerformersWrapper>
+        }
       </Section>
       <ColouredSection>
         <ShowStarts>
@@ -143,12 +240,103 @@ const CurtainUpPage = () => (
         </PastShows>
       </ColouredSection>
       <Section>
-        <PaddedHeading weight="regular" palette="secondary" variant="dark35">Why We Are Doing This</PaddedHeading>
+        <XxxLargePaddedHeading weight="regular" palette="secondary" variant="dark35">Why We Are Doing This</XxxLargePaddedHeading>
+        <WhyDoingThisWrapper>
+          <Avatar user={{ name: 'arthur', picture: { src: assetPath('images/curtainup/arthur.png') } }} size="xxxHuge" />
+          <TextAlignLeftBox>
+            <PaddedBlock>&quot;I&apos;m motivated by a simple belief, “we all need community”. That’s why I’ve dedicated my life to helping seniors find and live in communities as they grow older. In this current health crisis, the need for community and engagement has never been more important for our aging loved ones. Millions of seniors are living at home and in senior living communities under lockdown. This is our opportunity to let them know they are still part of our community and offer some happy moments in an uncertain isolated world.&quot;</PaddedBlock>
+            <Block weight="medium" palette="secondary" variant="dark35">Arthur Bretscheider,</Block>
+            <Block weight="medium" palette="secondary" variant="dark35">CEO & CO-FOUNDER, Seniorly</Block>
+          </TextAlignLeftBox>
+        </WhyDoingThisWrapper>
+      </Section>
+      <ColouredSection>
+        <PaddedHeading weight="regular" palette="secondary" variant="dark35">The Shows This Week</PaddedHeading>
+        <XxxLargePaddedBlock>Performers subject to change</XxxLargePaddedBlock>
+        {eventsIsLoading && <Block>loading events...</Block>}
+        {!eventsIsLoading &&
+          <TwoCol6Columns>
+            {events.map((e, i) => (
+              <CurtainupEventBox
+                key={e.title}
+                event={e}
+                performers={e.performers}
+                palette={i % 2 !== 0 ? 'razzmatazz' : 'orange'}
+              />
+            ))}
+          </TwoCol6Columns>
+        }
+      </ColouredSection>
+      <Section>
+        <ContentWrapper>
+          <XxxLargePaddedHeading weight="regular" palette="secondary" variant="dark35">We Are Teaming Up With:</XxxLargePaddedHeading>
+          <TeamingUpWithWrapper>
+            <div>
+              <LargePaddedAvatar user={{ name: 'ashley', picture: { src: assetPath('images/curtainup/ashley.png') } }} size="xxxHuge" />
+              <RegularPaddedBlock weight="medium" size="subtitle">Ashley Rodbro</RegularPaddedBlock>
+              <PaddedBlock>Director, Writer, and Producer</PaddedBlock>
+              <div>
+                Ashley Rodbro frequently works as Alex Timbers’ associate. She is currently the Associate and Resident Director for Moulin Rouge (Broadway), was the Resident for Hamilton (Puerto Rico & San Francisco, CA), Associate for Oh, Hello with Nick Kroll and John Mulaney (Off-Broadway, Tour, Broadway, Netflix), and the Assistant Director for John Mulaney’s Kid Gorgeous.
+              </div>
+            </div>
+            <div>
+              <LargePaddedAvatar user={{ name: 'stephanie', picture: { src: assetPath('images/curtainup/stephanie.png') } }} size="xxxHuge" />
+              <RegularPaddedBlock weight="medium" size="subtitle">Stephanie Cowen</RegularPaddedBlock>
+              <PaddedBlock>Producer, Casting Director, and Dramaturg</PaddedBlock>
+              <div>
+                Stephanie Cowen specializes in new works. She is Creative Director at Gold/Ross Productions, Casting Associate at Michael Cassara Casting, and Line Producer for JoCo Cruise. She was an Associate Producer on Broadway’s Amélie, which she helped develop at Triptyk Studios, where she was Director of Creative Development from 2008-2017. She is an alumna of CTI.
+              </div>
+            </div>
+          </TeamingUpWithWrapper>
+          <XxxLargePaddedHeading weight="regular" palette="secondary" variant="dark35">And, Presenting Our Hosts From Seniorly!</XxxLargePaddedHeading>
+          <div>
+            <OurHostsWrapper>
+              <div>
+                <LargePaddedAvatar user={{ name: 'andrew', picture: { src: assetPath('images/curtainup/andrew.png') } }} size="xxxHuge" />
+                <RegularPaddedBlock weight="medium" size="subtitle">Andrew</RegularPaddedBlock>
+              </div>
+              <div>
+                <LargePaddedAvatar user={{ name: 'emma', picture: { src: assetPath('images/curtainup/emma.png') } }} size="xxxHuge" />
+                <RegularPaddedBlock weight="medium" size="subtitle">Emma</RegularPaddedBlock>
+              </div>
+            </OurHostsWrapper>
+          </div>
+        </ContentWrapper>
+      </Section>
+      <ColouredSection>
+        <PaddedHeading weight="regular" palette="secondary" variant="dark35">Want to Join the Show?</PaddedHeading>
+        <XxxLargePaddedBlock>Performers subject to change</XxxLargePaddedBlock>
+        <TwoCol6Columns>
+          <Box backgroundPalette="white">
+            <LargePaddedBlock weight="medium" size="title">For Communities and Home Care</LargePaddedBlock>
+            <PaddedBlock>We would love to work with senior living communities and home care agencies to feature your residents on Curtain Up! If you would like to join the show please complete the form below:</PaddedBlock>
+            <Button href="" target="_blank">Join The Show As a Community</Button>
+          </Box>
+          <Box backgroundPalette="white">
+            <LargePaddedBlock weight="medium" size="title">For Performers</LargePaddedBlock>
+            <PaddedBlock>We are looking for professional performers of the stage and screen to help us bring entertainment to the homes of seniors. To join the show please complete out our volunteer form:</PaddedBlock>
+            <Button href="" target="_blank">Join The Show As a Performer</Button>
+          </Box>
+        </TwoCol6Columns>
+      </ColouredSection>
+      <Section>
+        <ContentWrapper>
+          <XxxLargePaddedHeading weight="regular" palette="secondary" variant="dark35">Thank You to Our Partners</XxxLargePaddedHeading>
+          <PaddedImage src={assetPath('images/curtainup/sing-for-your-seniors.png')} />
+          <Block size="caption">The views, information or opinions expressed during &quot;Curtain Up!&quot; are solely those of the individuals appearing and do not necessarily represent those of Seniorly.com.</Block>
+        </ContentWrapper>
       </Section>
     </Content>
     <Footer />
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5542ad2748437167" />
   </>
 );
+
+CurtainUpPage.propTypes = {
+  events: arrayOf(eventPropType),
+  performers: arrayOf(performerPropType),
+  eventsIsLoading: bool,
+  performersIsLoading: bool,
+};
 
 export default CurtainUpPage;
