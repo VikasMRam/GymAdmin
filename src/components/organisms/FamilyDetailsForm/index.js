@@ -135,7 +135,8 @@ class FamilyDetailsForm extends Component {
     timeToMove: arrayOf(string).isRequired,
     monthlyBudget: arrayOf(string).isRequired,
     roomTypes: arrayOf(string).isRequired,
-    careLevels: arrayOf(string).isRequired,
+    careServices: arrayOf(string).isRequired,
+    mobilityLevels: arrayOf(string).isRequired,
     communityTypes: arrayOf(string).isRequired,
     preferredLocation: string,
     assignedTos: arrayOf(userPropType).isRequired,
@@ -326,14 +327,14 @@ class FamilyDetailsForm extends Component {
                     wideWidth
                   />}
                 </>
-              <Field
-                name="slyCommunityMessage"
-                label="Summary for Community"
-                type="textarea"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              />
+                <Field
+                  name="slyCommunityMessage"
+                  label="Summary for Community"
+                  type="textarea"
+                  disabled={!canEditFamilyDetails}
+                  component={ReduxField}
+                  wideWidth
+                />
               </Role>
               <Field
                 name="slyMessage"

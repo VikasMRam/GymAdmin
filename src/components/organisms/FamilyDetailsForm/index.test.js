@@ -46,9 +46,13 @@ const roomTypes = [
   'Suite',
 ];
 
-const careLevels = [
+const mobilityLevels = [
   'Ambulatory',
   'Non Ambulatory',
+];
+const careServices = [
+  'Toileting',
+  'Bathing',
 ];
 
 const communityTypes = [
@@ -71,7 +75,8 @@ const defaultProps = {
   lookingFor,
   monthlyBudget,
   roomTypes,
-  careLevels,
+  mobilityLevels,
+  careServices,
   communityTypes,
   assignedTos,
   client: PraneshKumar,
@@ -135,11 +140,10 @@ describe('FamilyDetailsForm', () => {
     expect(handleSubmit).toHaveBeenCalled();
   });
 
-  it('does not render medicard and slyAgentMessage for agents', () => {
+  it('does not render slyAgentMessage for agents', () => {
     const wrapper = wrap({
       isAgentUser: true,
     });
-    expect(wrapper.find(Field).filter({ name: 'medicaid' })).toHaveLength(0);
     expect(wrapper.find(Field).filter({ name: 'slyAgentMessage' })).toHaveLength(0);
   });
 });
