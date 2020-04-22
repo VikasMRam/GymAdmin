@@ -15,8 +15,8 @@ import CurtainUpPage from 'sly/components/pages/CurtainUpPage';
   const today = dayjs().utc().format();
 
   return req({
-    'filter[liveAt]': `le:${lastDayOfWeek}`,
-    // 'filter[liveAt]': `gt:${today}`,
+    // 'filter[live_at]': `bet:${today},${lastDayOfWeek}`,
+    'filter[live_at]': `le:${lastDayOfWeek}`,
     sort: 'live_at',
     'page-size': 2,
   });

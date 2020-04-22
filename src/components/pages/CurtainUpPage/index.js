@@ -242,11 +242,11 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
       <Section>
         <XxxLargePaddedHeading weight="regular" palette="secondary" variant="dark35">Why We Are Doing This</XxxLargePaddedHeading>
         <WhyDoingThisWrapper>
-          <Avatar user={{ picture: { src: assetPath('images/curtainup/arthur.png') } }} size="xxxHuge" />
+          <Avatar user={{ name: 'arthur', picture: { src: assetPath('images/curtainup/arthur.png') } }} size="xxxHuge" />
           <TextAlignLeftBox>
             <PaddedBlock>&quot;I&apos;m motivated by a simple belief, “we all need community”. That’s why I’ve dedicated my life to helping seniors find and live in communities as they grow older. In this current health crisis, the need for community and engagement has never been more important for our aging loved ones. Millions of seniors are living at home and in senior living communities under lockdown. This is our opportunity to let them know they are still part of our community and offer some happy moments in an uncertain isolated world.&quot;</PaddedBlock>
-            <Block weight="weight" palette="secondary" variant="dark35">Arthur Bretscheider,</Block>
-            <Block weight="weight" palette="secondary" variant="dark35">CEO & CO-FOUNDER, Seniorly</Block>
+            <Block weight="medium" palette="secondary" variant="dark35">Arthur Bretscheider,</Block>
+            <Block weight="medium" palette="secondary" variant="dark35">CEO & CO-FOUNDER, Seniorly</Block>
           </TextAlignLeftBox>
         </WhyDoingThisWrapper>
       </Section>
@@ -258,6 +258,7 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
           <TwoCol6Columns>
             {events.map((e, i) => (
               <CurtainupEventBox
+                key={e.title}
                 event={e}
                 performers={e.performers}
                 palette={i % 2 !== 0 ? 'razzmatazz' : 'orange'}
@@ -271,7 +272,7 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
           <XxxLargePaddedHeading weight="regular" palette="secondary" variant="dark35">We Are Teaming Up With:</XxxLargePaddedHeading>
           <TeamingUpWithWrapper>
             <div>
-              <LargePaddedAvatar user={{ picture: { src: assetPath('images/curtainup/ashley.png') } }} size="xxxHuge" />
+              <LargePaddedAvatar user={{ name: 'ashley', picture: { src: assetPath('images/curtainup/ashley.png') } }} size="xxxHuge" />
               <RegularPaddedBlock weight="medium" size="subtitle">Ashley Rodbro</RegularPaddedBlock>
               <PaddedBlock>Director, Writer, and Producer</PaddedBlock>
               <div>
@@ -279,7 +280,7 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
               </div>
             </div>
             <div>
-              <LargePaddedAvatar user={{ picture: { src: assetPath('images/curtainup/stephanie.png') } }} size="xxxHuge" />
+              <LargePaddedAvatar user={{ name: 'stephanie', picture: { src: assetPath('images/curtainup/stephanie.png') } }} size="xxxHuge" />
               <RegularPaddedBlock weight="medium" size="subtitle">Stephanie Cowen</RegularPaddedBlock>
               <PaddedBlock>Producer, Casting Director, and Dramaturg</PaddedBlock>
               <div>
@@ -291,11 +292,11 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
           <div>
             <OurHostsWrapper>
               <div>
-                <LargePaddedAvatar user={{ picture: { src: assetPath('images/curtainup/andrew.png') } }} size="xxxHuge" />
+                <LargePaddedAvatar user={{ name: 'andrew', picture: { src: assetPath('images/curtainup/andrew.png') } }} size="xxxHuge" />
                 <RegularPaddedBlock weight="medium" size="subtitle">Andrew</RegularPaddedBlock>
               </div>
               <div>
-                <LargePaddedAvatar user={{ picture: { src: assetPath('images/curtainup/emma.png') } }} size="xxxHuge" />
+                <LargePaddedAvatar user={{ name: 'emma', picture: { src: assetPath('images/curtainup/emma.png') } }} size="xxxHuge" />
                 <RegularPaddedBlock weight="medium" size="subtitle">Emma</RegularPaddedBlock>
               </div>
             </OurHostsWrapper>
