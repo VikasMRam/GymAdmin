@@ -59,7 +59,7 @@ const AgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "ch
 const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentRegion" */ 'sly/containers/AgentRegionPageContainer'));
 const CareTypeGuideContainer = loadable(() => import(/* webpackChunkName: "chunkCTGuide" */ 'sly/containers/CareTypeGuideContainer'));
 const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: "chunkRegionGuide" */ 'sly/containers/CareTypeRegionGuideContainer'));
-const CurtainUpPage = loadable(() => import(/* webpackChunkName: "chunkCurtainUp" */ 'sly/components/pages/CurtainUpPage'));
+const CurtainUpPageContainer = loadable(() => import(/* webpackChunkName: "chunkCurtainUp" */ 'sly/containers/CurtainUpPageContainer'));
 
 // Dashboard
 const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/containers/DashboardHomePageContainer'));
@@ -278,7 +278,7 @@ const routes = [
   },
   {
     path: '/curtainup',
-    component: CurtainUpPage,
+    component: CurtainUpPageContainer,
     exact: true,
   },
   {

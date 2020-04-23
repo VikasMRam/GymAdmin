@@ -96,4 +96,7 @@ export default {
   sendEbook: { method: post, path: '/platform/send-ebook' },
 
   getAddresses: { method: get, path: '/platform/addresses' },
+
+  getEvents: { method: get, path: '/platform/events' },
+  getPerformers: { method: get, path: '/platform/performers' },
 };

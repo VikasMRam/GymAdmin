@@ -6,6 +6,7 @@ import { prop } from 'styled-tools';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { element as elementPropType } from 'sly/propTypes/element';
 import { size, palette } from 'sly/components/themes';
+import { ResponsiveImage } from 'sly/components/atoms';
 
 const dimensionToTextSizeMap = {
   small: 'tiny',
@@ -29,7 +30,7 @@ const styles = css`
   height: ${dimensions};
 `;
 
-const StyledImg = styled.img`
+const StyledImg = styled(ResponsiveImage)`
   ${styles};
 `;
 
@@ -48,7 +49,7 @@ const StyledDiv = styled.div`
 
 const Avatar = ({ user, ...props }) =>
   user.picture ? (
-    <StyledImg src={user.picture} title={user.name} {...props} />
+    <StyledImg src={user.picture.src} path={user.picture.path} title={user.name} {...props} />
   ) : (
     <StyledDiv data-title={user.name} {...props}>
       {user.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
@@ -61,7 +62,10 @@ Avatar.propTypes = {
   size: elementPropType,
   user: shape({
     name: string.isRequired,
-    picture: string,
+    picture: shape({
+      src: string,
+      path: string,
+    }),
   }),
 };
 

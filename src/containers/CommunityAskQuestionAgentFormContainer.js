@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
-import { func, string, shape } from 'prop-types';
+import { func, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import SlyEvent from 'sly/services/helpers/events';
@@ -13,6 +13,7 @@ import {
   email,
 } from 'sly/services/validation';
 import userPropType from 'sly/propTypes/user';
+import matchPropType from 'sly/propTypes/match';
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
 import { AGENT_ASK_QUESTIONS } from 'sly/services/api/constants';
@@ -48,7 +49,7 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
     toggleAskAgentQuestionModal: func.isRequired,
     community: communityPropType,
     createAction: func.isRequired,
-    match: shape({ url: string }),
+    match: matchPropType,
     heading: string,
     description: string,
     placeholder: string,

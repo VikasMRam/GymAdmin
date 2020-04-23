@@ -1,4 +1,3 @@
-export Avatar from './Avatar';
 export Bar from './Bar';
 export Block from './Block';
 export Box from './Box';

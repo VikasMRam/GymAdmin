@@ -10,7 +10,7 @@ export const TOUR_BOOKED = 'tourBooked';
 export const AGENT_ASK_QUESTIONS = 'agentAskQuestions';
 export const FLOOR_PLAN_REQUESTED = 'floorPlanRequested';
 export const HOME_CARE_REQUESTED = 'homeCareRequested';
-
+export const CURTIANUP_SUBSCRIBE = 'curtainupSubscribe';
 
 export const PRICING_REQUEST = 'pricingRequest';
 export const AVAILABILITY_REQUEST = 'availabilityRequest';
