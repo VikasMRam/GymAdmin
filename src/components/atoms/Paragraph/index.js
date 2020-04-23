@@ -25,7 +25,7 @@ Paragraph.propTypes = {
 Paragraph.defaultProps = {
   palette: 'slate',
   size: 'body',
-  marginBottom: 'xLarge',
+  marginBottom: 'large',
 };
 
 export default Paragraph;
