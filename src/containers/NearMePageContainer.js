@@ -220,7 +220,7 @@ export default class NearMePageContainer extends Component {
         />
       );
     }
-    if (hub === 'veretans-benefit-assisted-living') {
+    if (hub === 'veterans-benefit-assisted-living') {
       return (
         <VeteransBenefitAssistedLivingPage
           handleAnchor={handleClick}
