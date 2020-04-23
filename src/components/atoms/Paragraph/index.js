@@ -13,7 +13,7 @@ const ParaWrapper = styled.p`
   color: ${palette('base')};
   font-size: ${p => size('text', p.size)};
   line-height: 1.5;
-  margin: 0 0 1rem 0;
+  margin: 0 0 ${p => size('spacing', p.marginBottom)} 0;
 `;
 
 Paragraph.propTypes = {
@@ -25,6 +25,7 @@ Paragraph.propTypes = {
 Paragraph.defaultProps = {
   palette: 'slate',
   size: 'body',
+  marginBottom: 'xLarge',
 };
 
 export default Paragraph;
