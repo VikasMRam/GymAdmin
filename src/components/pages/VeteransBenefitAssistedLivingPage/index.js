@@ -15,6 +15,7 @@ import {
   makeWrapper,
   makeStickToTop,
   makeArticle,
+  makeTable,
   makeOneColumnListWrapper,
 } from 'sly/components/templates/HubPageTemplate';
 import ListItem from 'sly/components/molecules/ListItem';
@@ -32,6 +33,7 @@ const Column = makeColumn('aside');
 const Wrapper = makeWrapper('div');
 const StickToTop = makeStickToTop('div');
 const StyledArticle = makeArticle('article');
+const StyledTable = makeTable('table');
 
 const StyledImage = styled(ResponsiveImage)`
   object-fit: cover;
@@ -61,38 +63,6 @@ const TwoColumnGrid = styled.div`
   grid-column-gap: ${size('spacing', 'xLarge')};
   grid-row-gap: ${size('spacing', 'xLarge')};
   margin-bottom: ${size('spacing.xLarge')};
-`;
-
-const StyledTh = styled.th`
-  text-align: left;
-  font-weight: ${size('weight.regular')};
-  color:${palette('grey', 'dark')};
-  background-color:${palette('grey', 'background')};
-  padding: ${size('spacing.regular')} ${size('spacing.xLarge')};
-  border-top: ${size('border.regular')} solid ${palette('grey', 'filler')};
-  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
-`;
-
-const Tr = styled.tr`
-  border-top: ${size('border.regular')} solid ${palette('grey', 'filler')};
-  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
-  padding: ${size('spacing.medium')} ${size('spacing.xLarge')};
-  background-color: ${p => palette(p.bgcolor, 'base')};
-  color: ${p => palette(p.color, 'base')};
-`;
-
-const StyledTd = styled.td`
-  border: none;
-  padding: ${size('spacing.regular')} ${size('spacing.xLarge')};
-`;
-
-const StyledTable = styled.table`
-  border-collapse: collapse;
-  width: 100%;
-  position: relative;
-  border-radius: ${size('spacing.small')};
-  border: ${size('border.regular')} solid ${palette('grey', 'filler')};
-  margin-bottom: ${size('spacing.xxLarge')};
 `;
 
 const TwoColumnGridTable = styled.div`
@@ -259,7 +229,7 @@ const VeteransBenefitAssistedLivingPage = ({
             The VAMC will contact you for the exam, and it’s critical to make sure you attend this appointment! If you have
             been seeing a PCP, take your medical history with you to support your claim for disability.
           </Paragraph>
-          <Paragraph marginBottom="xxLarge">To enroll: www.va.gov/healthbenefits/apply/</Paragraph>
+          <Paragraph marginBottom="xxLarge">To enroll: <Link href="https://www.va.gov/healthbenefits/apply/">www.va.gov/healthbenefits/apply/</Link></Paragraph>
           <Paragraph marginBottom="xxLarge">You can enroll online, via phone or in person.</Paragraph>
           <Paragraph marginBottom="xxLarge">Married veterans with a dependent can have aid and attendance added for their spouse to their monthly
             payment if the spouse can demonstrate the need for aid and attendance. The veteran must be at least 30% rated
@@ -293,7 +263,8 @@ const VeteransBenefitAssistedLivingPage = ({
                 a total rating of 70% percent or more.
               </Paragraph>
               <Paragraph marginBottom="xxLarge">
-                A compensation rating table can be found at: www.benefits.va.gov/COMPENSATION/resources_comp01.asp
+                A compensation rating table can be found at:
+                <Link href="https://www.benefits.va.gov/COMPENSATION/resources_comp01.asp"> www.benefits.va.gov/COMPENSATION/resources_comp01.asp</Link>
               </Paragraph>
             </Span>
           </TwoColumnGrid>
@@ -409,18 +380,18 @@ const VeteransBenefitAssistedLivingPage = ({
           <StyledTable>
             <thead>
               <tr>
-                <StyledTh color="slate" bgcolor="grey">
+                <th>
                   2019 Pension Rates
-                </StyledTh>
-                <StyledTh color="slate" bgcolor="grey">
+                </th>
+                <th>
                   *Rates are tied to COLA and are subject to change
-                </StyledTh>
+                </th>
               </tr>
             </thead>
             <tbody>
-              <Tr color="slate" bgcolor="white"><StyledTd>Surviving Spouse</StyledTd><StyledTd>$756</StyledTd> </Tr>
-              <Tr color="slate" bgcolor="white"><StyledTd>Single Veteran</StyledTd><StyledTd>$1,128</StyledTd> </Tr>
-              <Tr color="slate" bgcolor="white"><StyledTd>Married Veteran</StyledTd><StyledTd>$1,477</StyledTd> </Tr>
+              <tr><td>Surviving Spouse</td><td>$756</td> </tr>
+              <tr><td>Single Veteran</td><td>$1,128</td> </tr>
+              <tr><td>Married Veteran</td><td>$1,477</td> </tr>
             </tbody>
           </StyledTable>
 
@@ -461,9 +432,9 @@ const VeteransBenefitAssistedLivingPage = ({
 
           <StyledTable>
             <tbody>
-              <Tr color="grey" bgcolor="white"><StyledTd>Surviving Spouse</StyledTd><StyledTd>$453/month</StyledTd> </Tr>
-              <Tr color="grey" bgcolor="white"><StyledTd>Single Veteran</StyledTd><StyledTd>$753/month</StyledTd> </Tr>
-              <Tr color="grey" bgcolor="white"><StyledTd>Married Veteran</StyledTd><StyledTd>$753/month</StyledTd> </Tr>
+              <tr><td>Surviving Spouse</td><td>$453/month</td> </tr>
+              <tr><td>Single Veteran</td><td>$753/month</td> </tr>
+              <tr><td>Married Veteran</td><td>$753/month</td> </tr>
             </tbody>
           </StyledTable>
 
@@ -473,9 +444,9 @@ const VeteransBenefitAssistedLivingPage = ({
 
           <StyledTable>
             <tbody>
-              <Tr color="grey" bgcolor="white"><StyledTd>Surviving Spouse</StyledTd><StyledTd>$1,209/month</StyledTd> </Tr>
-              <Tr color="grey" bgcolor="white"><StyledTd>Single Veteran</StyledTd><StyledTd>$1,881/month</StyledTd> </Tr>
-              <Tr color="grey" bgcolor="white"><StyledTd>Married Veteran</StyledTd><StyledTd>$2,230/month</StyledTd> </Tr>
+              <tr><td>Surviving Spouse</td><td>$1,209/month</td> </tr>
+              <tr><td>Single Veteran</td><td>$1,881/month</td> </tr>
+              <tr><td>Married Veteran</td><td>$2,230/month</td> </tr>
             </tbody>
           </StyledTable>
 
@@ -610,11 +581,12 @@ const VeteransBenefitAssistedLivingPage = ({
 
           <ListWrapper>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Surviving spouse income is $1,600/month, and her cost of care in assisted living is $1,800/month. She effectively
-              has a negative monthly income. ($1,600 – $1,800 = negative $200.) The VA said if her income fell beneath $756
-              they would pay the difference. In this case, since she has a negative income and she would receive the full
-              $757, and since her income was driven down by her need for care (aid and attendance) they will add $453 to the
-              payment for a total monthly payment of $1209.
+              <Block>Surviving spouse income is $1,600/month, and her cost of care in <Link href="https://www.seniorly.com/assisted-living">assisted living</Link> is $1,800/month. She effectively
+                has a negative monthly income. ($1,600 – $1,800 = negative $200.) The VA said if her income fell beneath $756
+                they would pay the difference. In this case, since she has a negative income and she would receive the full
+                $757, and since her income was driven down by her need for care (aid and attendance) they will add $453 to the
+                payment for a total monthly payment of $1209.
+              </Block>
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               <div>
@@ -643,8 +615,9 @@ const VeteransBenefitAssistedLivingPage = ({
 
           <ListWrapper>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Monthly fees from an assisted living community, supplemental medical insurance premiums, monthly fees from home
-              care agencies, unreimbursed diabetic supplies, incontinence supplies, custodial care in a retirement community, etc.
+              <Block>Monthly fees from an <Link href="https://www.seniorly.com/assisted-living">assisted living community</Link>, supplemental medical insurance premiums, monthly fees from home
+                care agencies, unreimbursed diabetic supplies, incontinence supplies, custodial care in a retirement community, etc.
+              </Block>
             </ListItem>
           </ListWrapper>
 
@@ -697,7 +670,7 @@ const VeteransBenefitAssistedLivingPage = ({
               <Image src={assetPath('images/hub/icons/deductables.png')} />
               <Paragraph marginBottom="xxLarge">
                 <Span weight="medium">Countable deductions:</Span>
-                Unreimbursed medical expenses, health insurance premiums, cost of care (i.e. assisted living monthly fees,
+                Unreimbursed medical expenses, health insurance premiums, cost of care (i.e. <Link href="https://www.seniorly.com/assisted-living">assisted living</Link> monthly fees,
                 private care, custodial care, home care, etc.). These amounts are deducted from your net worth and eligibility
                 may exist if the deductions bring your net worth to $123,600 or lower.
               </Paragraph>
@@ -764,7 +737,8 @@ const VeteransBenefitAssistedLivingPage = ({
             </Paragraph>
 
             <Paragraph marginBottom="xxLarge">
-              OGC accreditation can be checked by using this site: www.va.gov/ogc/apps/accreditation/index.asp
+              OGC accreditation can be checked by using this site:
+              <Link href="https://www.va.gov/ogc/apps/accreditation/index.asp"> www.va.gov/ogc/apps/accreditation/index.asp</Link>
             </Paragraph>
 
             <Paragraph marginBottom="xxLarge">
