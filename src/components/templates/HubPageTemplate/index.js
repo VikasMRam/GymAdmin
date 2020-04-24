@@ -133,7 +133,7 @@ export const HubPageTemplate = styled.main`
     line-height: ${size('lineHeight.body')};
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
     border-radius: ${size('spacing.small')};
-    margin-bottom: ${size('spacing.large')};
+    margin-bottom: ${size('spacing.xxLarge')};
     display: grid;
     grid-template-columns: 100%;
     grid-row-gap: ${size('spacing.large')};
