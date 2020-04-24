@@ -1,10 +1,13 @@
 /* eslint-disable no-console */
 import '@babel/polyfill';
-import path from 'path';
 import 'isomorphic-fetch';
+
+import path from 'path';
+import fs from 'fs';
 
 import express from 'express';
 import React from 'react';
+import { ChunkExtractor } from '@loadable/server';
 import serialize from 'serialize-javascript';
 import { ServerStyleSheet } from 'styled-components';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -14,7 +17,6 @@ import { cache } from 'emotion';
 import { CacheProvider } from '@emotion/core';
 import { renderStylesToString } from 'emotion-server';
 import debounce from 'lodash/debounce';
-import fs from "fs";
 
 import { cleanError } from 'sly/services/helpers/logging';
 import { port, host, publicPath, isDev } from 'sly/config';
@@ -22,7 +24,6 @@ import { configure as configureStore } from 'sly/store';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 import clientConfigsMiddleware from 'sly/clientConfigs';
-import { ChunkExtractor } from '@loadable/server';
 
 const waitForFile = (path, timeout = 100, max = 10) => new Promise((resolve, reject) => {
   let counter = 0;
