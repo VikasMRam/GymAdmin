@@ -83,11 +83,10 @@ app.use((req, res, next) => {
 app.use(async (req, res, next) => {
   const store = configureStore({ experiments: {} });
   const {
-    extractorSsr,
+    renderToString,
     extractor,
+    ClientApp,
   } = req.clientConfig;
-
-  const { default: ClientApp, renderToString } = extractorSsr.requireEntrypoint();
 
   // hack to reset chunk count in the extractor
   extractor.chunks = [];
