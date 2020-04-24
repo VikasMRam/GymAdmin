@@ -857,9 +857,6 @@ const CCRCNearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
-        {faqPage(faqs)}
-        {tocSiteNavigationLD("https://www.seniorly.com/continuing-care-retirement-community", tocList)}
-        {guideLD(title, description, "https://www.seniorly.com/continuing-care-retirement-community")}
       </Helmet>
       <HubHeader imagePath="react-assets/hub/independent-living-cover.jpg"
          toc="CCRC"
@@ -895,6 +892,9 @@ const CCRCNearMePage = ({
       </HubPageTemplate>
       <PhoneCTAFooter/>
       <Footer />
+      {faqPage(faqs)}
+      {tocSiteNavigationLD("https://www.seniorly.com/continuing-care-retirement-community", tocList)}
+      {guideLD(title, description, "https://www.seniorly.com/continuing-care-retirement-community")}
     </>
 
   );
