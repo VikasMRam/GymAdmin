@@ -49,7 +49,7 @@ export default class ResponsiveImage extends React.Component {
     className: string,
     loading: oneOf(['lazy', 'auto', 'eager']),
     // provided to signify the s3 path in our bucket without /uploads, optional but src has to be provided
-    path: string.isRequired,
+    path: string,
     // provided to signify absolute route to asset or relative to env domain, optional but path has to be provided
     src: string,
     placeholder: string,

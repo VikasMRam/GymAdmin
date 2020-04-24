@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
+import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
@@ -15,8 +16,10 @@ Error.displayName = 'Error';
 const Wrapper = styled.div`
   display: grid;
   align-items: center;
+  margin-bottom: ${ifProp('hasError', size('spacing.large'), 0)};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-bottom: 0;
     grid-gap: ${size('spacing.regular')};
     grid-template-columns: ${size('layout.col3')} min-content ${size('layout.col3')} ${size('layout.col2')};
   }
@@ -31,7 +34,7 @@ const CurtainupSubscribeForm = ({
   handleSubmit, submitting, invalid, error, className,
 }) => (
   <form onSubmit={handleSubmit} className={className}>
-    <Wrapper>
+    <Wrapper hasError={!!error}>
       <Field
         name="email"
         type="email"

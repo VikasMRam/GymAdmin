@@ -584,7 +584,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }
 
     const {
-      gender, lookingFor, monthlyBudget, timeToMove, roomTypes, careLevels, communityTypes, assignedTos,
+      gender, lookingFor, monthlyBudget, timeToMove, roomTypes, mobilityLevels, careServices, communityTypes, assignedTos,
     } = meta;
     const {
       id, clientInfo, stage, status, provider, organization: clientOrganization, parentSlug, uuidAux,
@@ -779,7 +779,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   lookingFor={lookingFor}
                   monthlyBudget={monthlyBudget}
                   timeToMove={timeToMove}
-                  careLevels={careLevels}
+                  careServices={careServices}
+                  mobilityLevels={mobilityLevels}
                   roomTypes={roomTypes}
                   communityTypes={communityTypes}
                   assignedTos={assignedTos}

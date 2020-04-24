@@ -26,7 +26,7 @@ const getSDForCommunity = ({
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'LodgingBusiness';
   ld.name = name;
-  ld.url = `${host}${url.pathname}`;
+  ld.url = `${host}${url}`;
   ld.telephone = communityPhone;
 
   const addressLd = {};
@@ -176,7 +176,7 @@ export const getHelmetForSearchPage = ({
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'Webpage';
-  ld.url = `${host}${url.pathname}`;
+  ld.url = `${host}${url}`;
   ld.inLanguage = 'EN-US';
   ld.author = author();
   ld.audience = audience();
@@ -197,7 +197,7 @@ export const getHelmetForSearchPage = ({
   if (communityList.length > 0) {
     communityList.map((e, index) => {
       const { name, url, gallery } = e;
-      communityUrls.push(`${url}`);
+      communityUrls.push(`${host}${url}`);
       let imageUrl = null;
       if (gallery && gallery.images && gallery.images.length > 0) {
         const [image] = gallery.images;
@@ -266,13 +266,13 @@ export const getHelmetForSearchPage = ({
 
 export const getHelmetForCommunityPage = (community, location) => {
   const {
-    name, mainImage, address, propInfo, propRatings, similarProperties, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions, communityPhone,
+    name, mainImage, address, propInfo, propRatings, similarProperties, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions,
   } = community;
   const { search } = location;
   const {
     line1, city, state, country, zip, latitude, longitude,
   } = address;
-  const { websiteUrl, websiteTitle, websiteMetaDescription } = propInfo;
+  const { websiteUrl, websiteTitle, websiteMetaDescription, communityPhone } = propInfo;
   const { numReviews, reviewsValue } = propRatings;
 
   // const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);
@@ -305,7 +305,7 @@ export const getHelmetForCommunityPage = (community, location) => {
   const ldWP = {};
   ldWP['@context'] = 'http://schema.org';
   ldWP['@type'] = 'Webpage';
-  ldWP.url = `${host}${url.pathname}`;
+  ldWP.url = `${host}${url}`;
   ldWP.inLanguage = 'EN-US';
   ldWP.author = author();
   ldWP.audience = audience();
@@ -330,12 +330,12 @@ export const getHelmetForCommunityPage = (community, location) => {
         '@type': 'Person',
         name: criticReview.author,
       },
-      url: `https://www.seniorly.com${url}`,
+      url: `${host}${url}`,
       datePublished: criticReview.updatedAt,
       publisher: {
         '@type': 'Organization',
         name: 'Seniorly',
-        sameAs: 'https://www.seniorly.com',
+        sameAs: host,
       },
       description: criticReview.comments,
       inLanguage: 'en',
@@ -386,7 +386,7 @@ export const getHelmetForCommunityPage = (community, location) => {
       text: answer.contentData,
       dateCreated: answer.createdAt,
       upvoteCount: 1,
-      url: `https://www.seniorly.com/resources/questions/${question.url}`,
+      url: `${host}/resources/questions/${question.url}`,
       author: {
         '@type': 'Person',
         name: answer.creator,
@@ -424,7 +424,7 @@ export const getHelmetForCommunityPage = (community, location) => {
   const webPageLD = {};
   webPageLD['@context'] = 'http://schema.org';
   webPageLD['@type'] = 'Webpage';
-  webPageLD.url = `https://www.seniorly.com${url}`,
+  webPageLD.url = `${host}${url}`,
   webPageLD.inLanguage = 'EN-US';
   webPageLD.author = author();
   webPageLD.audience = audience();
@@ -439,7 +439,7 @@ export const getHelmetForCommunityPage = (community, location) => {
   shareActionLD.object = {
     '@type': 'LodgingBusiness',
     name,
-    url: `https://www.seniorly.com${url}`,
+    url: `${host}${url}`,
     image: ld.image,
     address: ld.address,
     priceRange: ld.priceRange,
@@ -457,9 +457,9 @@ export const getHelmetForCommunityPage = (community, location) => {
     imagesLD = {
       '@context': 'http://schema.org',
       '@type': 'CollectionPage',
-      '@id': url,
-      url,
-      isPartOf: url,
+      '@id': `${host}${url}`,
+      url: `${host}${url}`,
+      isPartOf: `${host}${url}`,
       description: `Images for ${name}`,
       mainEntityOfPage: {
         '@type': 'ImageGallery',
@@ -649,7 +649,7 @@ export const getHelmetForHomePage = ({ canonicalUrl, significantLinks }) => {
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'Webpage';
-  ld.url = `${host}`;
+  ld.url = host;
   ld.inLanguage = 'EN-US';
   ld.author = author();
   ld.audience = audience();
