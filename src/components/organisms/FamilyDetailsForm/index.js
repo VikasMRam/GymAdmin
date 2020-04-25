@@ -141,6 +141,7 @@ class FamilyDetailsForm extends Component {
     preferredLocation: string,
     assignedTos: arrayOf(userPropType).isRequired,
     isAgentUser: bool,
+    isAgentProUser: bool,
     isWon: bool,
     client: clientPropType.isRequired,
     onEditStageDetailsClick: func,
@@ -166,7 +167,7 @@ class FamilyDetailsForm extends Component {
   render() {
     const { handleLocationChange } = this;
     const {
-      handleSubmit, submitting, invalid, accepted, initialValues, lookingFor, isAgentUser,
+      handleSubmit, submitting, invalid, accepted, initialValues, lookingFor, isAgentUser, isAgentProUser,
       gender, timeToMove, monthlyBudget, roomTypes, communityTypes, mobilityLevels, careServices, canEditFamilyDetails, assignedTos,
       client, onEditStageDetailsClick, onEditStatusDetailsClick,
     } = this.props;
@@ -266,9 +267,9 @@ class FamilyDetailsForm extends Component {
                 label="Contact Email"
                 type="email"
                 readOnly={!canEditFamilyDetails}
-                disabled={!accepted}
-                hideValue={!accepted}
-                placeholder={!accepted ? 'Accept family to view' : null}
+                disabled={!canEditFamilyDetails}
+                hideValue={!canEditFamilyDetails}
+                placeholder={!canEditFamilyDetails ? 'Accept family to view' : null}
                 component={ReduxField}
                 wideWidth
               />
@@ -276,9 +277,9 @@ class FamilyDetailsForm extends Component {
                 name="phone"
                 label="Contact Phone"
                 readOnly={!canEditFamilyDetails}
-                disabled={!accepted}
-                hideValue={!accepted}
-                placeholder={!accepted ? 'Accept family to view' : null}
+                disabled={!canEditFamilyDetails}
+                hideValue={!canEditFamilyDetails}
+                placeholder={!canEditFamilyDetails ? 'Accept family to view' : null}
                 parse={phoneParser}
                 format={phoneFormatter}
                 component={ReduxField}
@@ -298,9 +299,9 @@ class FamilyDetailsForm extends Component {
                   component={ReduxField}
                 />
               </PaddedTwoColumnWrapper>
-              <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE | AGENT_ADMIN_ROLE}>
+              <Role is={PLATFORM_ADMIN_ROLE}>
                 <>
-                  <Field
+                  {!isAgentUser && <Field
                     name="referralSource"
                     label="Referral Source"
                     type="select"
@@ -310,6 +311,7 @@ class FamilyDetailsForm extends Component {
                     <option>Select an option</option>
                     {sourceOptions}
                   </Field>
+                  }
                   <Field
                     name="medicaid"
                     label="Qualifies for Medicaid"
@@ -318,27 +320,36 @@ class FamilyDetailsForm extends Component {
                     options={medicaidOptions}
                     wideWidth
                   />
-                  {!isAgentUser && <Field
+                  <Field
                     name="slyAgentMessage"
                     label="Summary for Agent"
                     type="textarea"
                     disabled={!canEditFamilyDetails}
                     component={ReduxField}
                     wideWidth
-                  />}
+                  />
+                  <Field
+                    name="slyCommunityMessage"
+                    label="Summary for Community"
+                    type="textarea"
+                    disabled={!canEditFamilyDetails}
+                    component={ReduxField}
+                    wideWidth
+                  />
                 </>
+              </Role>
+              {isAgentProUser &&
                 <Field
-                  name="slyCommunityMessage"
-                  label="Summary for Community"
-                  type="textarea"
-                  disabled={!canEditFamilyDetails}
+                  name="referralSource"
+                  label="Referral Source"
+                  type="text"
                   component={ReduxField}
                   wideWidth
                 />
-              </Role>
+              }
               <Field
                 name="slyMessage"
-                label="Seniorly Introduction"
+                label="Message"
                 type="textarea"
                 disabled={!canEditFamilyDetails}
                 component={ReduxField}

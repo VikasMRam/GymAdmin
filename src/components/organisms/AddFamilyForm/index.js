@@ -36,7 +36,6 @@ export default class AddFamilyForm extends Component {
     initialValues: object,
     change: func,
     onLocationChange: func,
-    needsSource: bool,
     isNonSlyCreator: bool,
   };
 
@@ -50,7 +49,7 @@ export default class AddFamilyForm extends Component {
 
   render() {
     const {
-      handleSubmit, onCancel, needsSource, isNonSlyCreator, ...props
+      handleSubmit, onCancel, isAgentProUser, ...props
     } = this.props;
 
     // todo: convert to new select options after enabling react select
@@ -107,7 +106,7 @@ export default class AddFamilyForm extends Component {
             component={ReduxField}
           />
         </PaddedTwoColumnWrapper>
-        { !isNonSlyCreator && needsSource && <Field
+        { !isNonSlyCreator && <Field
           name="source"
           label="Source"
           type="select"
@@ -118,14 +117,13 @@ export default class AddFamilyForm extends Component {
             {sourceOptions}
           </Field>
         }
-        { isNonSlyCreator && needsSource && <Field
+        { isNonSlyCreator && <Field
           name="source"
           label="Source"
           type="text"
           required
           component={ReduxField}
         />
-
 
         }
         <Field
