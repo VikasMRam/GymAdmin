@@ -47,7 +47,7 @@ describe('LoginForm', () => {
     const onRegisterClick = jest.fn();
     const wrapper = wrap({ onRegisterClick });
 
-    wrapper.find('Register').simulate('click');
+    wrapper.find('Link').simulate('click');
     expect(onRegisterClick).toHaveBeenCalled();
   });
 });

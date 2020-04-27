@@ -2,10 +2,8 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
-import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
-import fullWidth from 'sly/components/helpers/fullWidth';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import ReduxField from 'sly/components/organisms/ReduxField';
