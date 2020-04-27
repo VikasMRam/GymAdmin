@@ -1,16 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import PartnerAgentLoginForm from 'sly/services/auth/components/PartnerAgentLoginForm/index';
+import LoginForm from 'sly/services/auth/components/LoginForm/index';
 
 const handleSubmit = jest.fn();
 const defaultProps = {
   handleSubmit,
 };
 
-const wrap = (props = {}) => shallow(<PartnerAgentLoginForm {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<LoginForm {...defaultProps} {...props} />);
 
-describe('PartnerAgentLoginForm', () => {
+describe('LoginForm', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ childred: 'test' });
     expect(wrapper.contains('test')).toBe(false);

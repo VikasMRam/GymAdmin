@@ -2,15 +2,15 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import SignupForm from 'sly/components/organisms/SignupForm';
+import ProviderSignupForm from 'sly/services/auth/components/ProviderSignUpForm';
 import { Block } from 'sly/components/atoms/index';
 
 
 const error = 'Blah';
 
-const wrap = (props = {}) => shallow(<SignupForm {...props} />);
+const wrap = (props = {}) => shallow(<ProviderSignupForm {...props} />);
 
-describe('SignupForm', () => {
+describe('ProviderSignupForm', () => {
   it('render SignupForm', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
