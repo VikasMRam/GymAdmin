@@ -113,6 +113,12 @@ export const HeaderItems = styled.div`
   }
 `;
 
+const HeaderButton = styled(Button)`
+  margin-right: ${size('spacing.regular')};
+  &:last-child {
+    margin-right: 0;
+  }
+`;
 const HeaderItem = styled(Link)`
   display: none;
   padding: calc(${size('spacing.xLarge')} + ${size('spacing.regular')} - ${size('spacing.small')}) 0;
@@ -175,9 +181,9 @@ const Header = ({
   onCurrentLocation,
 }) => {
   const headerItemComponents = headerItems.map(item => item.isButton ? (
-    <Button onClick={() => item.onClick(item)} key={item.name}>
+    <HeaderButton ghost={item.ghost ? item.ghost : false} onClick={() => item.onClick(item)} key={item.name}>
       {item.name}
-    </Button>
+    </HeaderButton>
   ) : (
     <HeaderItem noHoverColorChange size="caption" onClick={() => item.onClick(item)} to={item.to} palette={item.palette ? item.palette : 'slate'} key={item.name}>
       {item.name}
@@ -278,6 +284,7 @@ Header.propTypes = {
     onClick: func,
     palette: palettePropType,
     isButton: bool,
+    ghost: bool,
   })).isRequired,
   menuItems: arrayOf(shape({
     name: string.isRequired,
