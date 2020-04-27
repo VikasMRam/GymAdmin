@@ -1088,9 +1088,6 @@ const MemoryCareNearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
-        {faqPage(faqs)}
-        {tocSiteNavigationLD("https://www.seniorly.com/board-and-care-home", tocList)}
-        {guideLD(title, description, "https://www.seniorly.com/board-and-care-home")}
       </Helmet>
       <HubHeader imagePath="react-assets/hub/board-and-care-home-cover.jpg"
          toc="board and care home"
@@ -1126,6 +1123,9 @@ const MemoryCareNearMePage = ({
       </HubPageTemplate>
       <PhoneCTAFooter/>
       <Footer />
+      {faqPage(faqs)}
+      {tocSiteNavigationLD("https://www.seniorly.com/board-and-care-home", tocList)}
+      {guideLD(title, description, "https://www.seniorly.com/board-and-care-home")}
     </>
 
   );
