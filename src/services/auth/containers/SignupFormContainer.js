@@ -5,7 +5,7 @@ import { func, bool } from 'prop-types';
 
 import { withAuth } from 'sly/services/api';
 import { createValidator, required, email, minLength } from 'sly/services/validation';
-import SignupForm from 'sly/services/auth/components/SignupForm';
+import SignupForm from 'sly/services/auth/components/SignUpForm';
 
 const validate = createValidator({
   name: [required],
