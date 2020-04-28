@@ -31,13 +31,15 @@ export default class SignupFormContainer extends Component {
     registerUser: func,
     clearSubmitErrors: func,
     submitFailed: bool,
-    onSubmitSuccess: func,
+    onSubmit: func,
   };
 
   handleSubmit = (data) => {
-    const { registerUser, clearSubmitErrors, onSubmitSuccess } = this.props;
+    const { registerUser, clearSubmitErrors, onSubmit } = this.props;
     clearSubmitErrors();
-    return registerUser(data).then(onSubmitSuccess).catch((data) => {
+    return registerUser(data)
+      .then(onSubmit)
+      .catch((data) => {
       // TODO: Need to set a proper way to handle server side errors
       const errorMessage = Object.values(data.body.errors).join('. ');
       throw new SubmissionError({ _error: errorMessage });
@@ -45,6 +47,8 @@ export default class SignupFormContainer extends Component {
   };
 
   render() {
-    return <ReduxForm onSubmit={this.handleSubmit} {...this.props} />;
+    return <ReduxForm
+      {...this.props}
+      onSubmit={this.handleSubmit}  />;
   }
 }

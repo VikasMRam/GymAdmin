@@ -15,7 +15,7 @@ const validate = createValidator({
 const ReduxForm = reduxForm({
   form: 'ProviderSignupForm',
   validate,
-})(SignupForm);
+})(ProviderSignupForm);
 
 const mapDispatchToProps = {
   clearSubmitErrors: () => clearSubmitErrors('ProviderSignupForm'),
