@@ -15,7 +15,7 @@ import Modal, { HeaderWithClose } from 'sly/components/atoms/NewModal';
 import ResetPasswordFormContainer from 'sly/services/auth/containers/ResetPasswordFormContainer';
 import LoginFormContainer from 'sly/services/auth/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/services/auth/containers/SignupFormContainer';
-import ProviderSignupFormContainer from 'sly/services/auth/containers/SignupFormContainer';
+import ProviderSignupFormContainer from 'sly/services/auth/containers/ProviderSignupFormContainer';
 
 
 const ModalBody = spacing(styled.div``, { top: null });

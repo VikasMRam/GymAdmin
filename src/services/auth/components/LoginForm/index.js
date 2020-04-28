@@ -39,7 +39,7 @@ Error.displayName = 'Error';
 const getSubmitButton = (error, props = {}) =>
   error ? <LargePaddedFullWidthButton {...props} /> : <PaddedFullWidthButton {...props} />;
 
-const PartnerAgentLoginForm = ({
+const LoginForm = ({
   handleSubmit, submitting, invalid, error, onResetPasswordClick, onRegisterClick,
 }) => (
   <form onSubmit={handleSubmit}>
@@ -68,7 +68,7 @@ const PartnerAgentLoginForm = ({
   </form>
 );
 
-PartnerAgentLoginForm.propTypes = {
+LoginForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
   invalid: bool,
@@ -77,4 +77,4 @@ PartnerAgentLoginForm.propTypes = {
   onRegisterClick: func,
 };
 
-export default PartnerAgentLoginForm;
+export default LoginForm;
