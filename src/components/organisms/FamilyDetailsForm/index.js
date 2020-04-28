@@ -267,7 +267,7 @@ class FamilyDetailsForm extends Component {
                 label="Contact Email"
                 type="email"
                 readOnly={!canEditFamilyDetails}
-                disabled={!canEditFamilyDetails}
+                disabled={!accepted && !canEditFamilyDetails}
                 hideValue={!accepted && !canEditFamilyDetails}
                 placeholder={!accepted && !canEditFamilyDetails ? 'Accept family to view' : null}
                 component={ReduxField}
@@ -277,7 +277,7 @@ class FamilyDetailsForm extends Component {
                 name="phone"
                 label="Contact Phone"
                 readOnly={!canEditFamilyDetails}
-                disabled={!canEditFamilyDetails}
+                disabled={!accepted && !canEditFamilyDetails}
                 hideValue={!accepted && !canEditFamilyDetails}
                 placeholder={!accepted && !canEditFamilyDetails ? 'Accept family to view' : null}
                 parse={phoneParser}
@@ -480,7 +480,7 @@ class FamilyDetailsForm extends Component {
               />
             </FormSection>
           </FormScrollSection>
-          {accepted &&
+          {(accepted || canEditFamilyDetails) &&
             <FormBottomSection>
               <StyledButton type="submit" disabled={invalid || submitting}>
                 Save changes
