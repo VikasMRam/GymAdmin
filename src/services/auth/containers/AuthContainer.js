@@ -71,6 +71,15 @@ export default class AuthContainer extends Component {
     const { isOpen } = this.state;
     const { authenticateCancel, authenticateSuccess, authenticated } = this.props;
 
+    let initialStep = 'Login';
+    if (authenticated.options && authenticated.options.register) {
+      initialStep = 'Signup';
+    }
+    if (authenticated.options && authenticated.options.provider) {
+      initialStep = 'ProviderSignup';
+    }
+
+
     return (
       <Modal
         isOpen={isOpen}
@@ -81,7 +90,7 @@ export default class AuthContainer extends Component {
           <WizardController
             formName="AuthForm"
             controllerKey="AuthFormControllerKey"
-            initialStep={authenticated.options && authenticated.options.register ? 'Signup' : 'Login'}
+            initialStep={initialStep}
             onComplete={authenticateSuccess}
           >
             {({
@@ -99,12 +108,13 @@ export default class AuthContainer extends Component {
                   component={SignupFormContainer}
                   name="Signup"
                   onLoginClicked={() => (delete authenticated.options.register && goto('Login'))}
+                  onProviderClicked={() => (delete authenticated.options.register && goto('ProviderSignup'))}
                   onSubmit={authenticateSuccess}
                 />
                 <WizardStep
                   component={ProviderSignupFormContainer}
-                  name="Signup"
-                  onLoginClicked={() => goto('Login')}
+                  name="ProviderSignup"
+                  onLoginClicked={() => (delete authenticated.options.provider && goto('Login'))}
                   onSubmit={authenticateSuccess}
                 />
                 <WizardStep
