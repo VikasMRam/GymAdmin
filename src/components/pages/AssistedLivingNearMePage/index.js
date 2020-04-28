@@ -869,6 +869,9 @@ const NearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/assisted-living", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/assisted-living")}
 
       </Helmet>
       <HubHeader imagePath="react-assets/hub/assisted-living-cover.jpg"
@@ -909,9 +912,6 @@ const NearMePage = ({
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>
       </FullWidthDiv>
       <Footer />
-      {faqPage(faqs)}
-      {tocSiteNavigationLD("https://www.seniorly.com/assisted-living", tocList)}
-      {guideLD(title, description, "https://www.seniorly.com/assisted-living")}
     </>
 
   );

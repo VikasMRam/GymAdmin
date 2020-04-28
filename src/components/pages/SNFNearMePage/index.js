@@ -594,6 +594,9 @@ const NearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/skilled-nursing-facility", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/skilled-nursing-facility")}
       </Helmet>
 
       <HubHeader imagePath="react-assets/hub/memory-care-cover.jpg"
@@ -631,9 +634,6 @@ const NearMePage = ({
       </HubPageTemplate>
       <PhoneCTAFooter/>
       <Footer />
-      {faqPage(faqs)}
-      {tocSiteNavigationLD("https://www.seniorly.com/skilled-nursing-facility", tocList)}
-      {guideLD(title, description, "https://www.seniorly.com/skilled-nursing-facility")}
     </>
   );
 };
