@@ -46,7 +46,7 @@ const sendHeaderItemClickEvent = value => sendEvent(category, clickAction, heade
 const defaultHeaderItems = [
   { name: 'Senior Living Resources', to: '/resources', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
   { name: 'Assisted Living', to: '/assisted-living', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
-  { name: 'Nursing Homes', to: '/nursing-homes', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+  //{ name: 'Nursing Homes', to: '/nursing-homes', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
   { name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
 ];
 
@@ -132,14 +132,15 @@ const loggedInMenuItems = (user) => {
 
   const loginButtonText = user
     ? 'Log Out'
-    : 'Sign in';
+    : 'Log In';
 
   return [...roleBasedItems, { name: loginButtonText, section: 3, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
 };
 
 const loginHeaderItems = user => user
   ? [{ name: 'My Seniorly', onClick: ({ name }) => sendHeaderItemClickEvent(name) }]
-  : [{ name: 'Sign in', isButton: true, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
+  : [{ name: 'Log In', ghost: true, isButton: true, onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+    { name: 'Sign Up', isButton: true, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
 
 const generateMenuItems = user => [...defaultMenuItems(user), ...loggedInMenuItems(user)];
 
@@ -202,13 +203,21 @@ export default class HeaderContainer extends PureComponent {
     if (logoutLeftMenuItem) {
       logoutLeftMenuItem.onClick = this.logout;
     }
-    let loginItem = lhItems.find(item => item.name === 'Sign in');
+    let loginItem = lhItems.find(item => item.name === 'Log In');
     if (loginItem) {
       loginItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(); };
     }
-    loginItem = menuItems.find(item => item.name === 'Sign in');
+    loginItem = menuItems.find(item => item.name === 'Log In');
     if (loginItem) {
       loginItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(); };
+    }
+    let registerItem = lhItems.find(item => item.name === 'Sign Up');
+    if (registerItem) {
+      registerItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated({register:true}); };
+    }
+    registerItem = menuItems.find(item => item.name === 'Sign Up');
+    if (registerItem) {
+      registerItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated({register:true}); };
     }
     const mySlyMenuItem = lhItems.find(item => item.name === 'My Seniorly');
     if (mySlyMenuItem) {
