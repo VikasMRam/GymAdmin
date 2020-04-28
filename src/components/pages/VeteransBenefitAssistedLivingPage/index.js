@@ -100,10 +100,10 @@ const VeteransBenefitAssistedLivingPage = ({
   };
 
   const nextSteps = [
-    { title: 'How can I pay the costs of Respite Care?', to: 'https://www.seniorly.com/resources/articles/caregiver-respite-grants-for-elderly-loved-ones' },
-    { title: 'What is Respite Care for family caregivers?', to: 'https://www.seniorly.com/respite-care/articles/respite-for-caregivers' },
-    { title: 'Why use Respite Care after cardiac surgery?', to: 'https://www.seniorly.com/respite-care/articles/respite-care-following-cardiac-surgery' },
-    { title: 'Can I try an assisted living community for a short time before moving in?', to: 'https://www.seniorly.com/short-term-stays/articles/try-it-before-you-buy-it-senior-living' },
+    { title: 'Veterans Benefits for Assisted Living', to: 'https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living' },
+    { title: '4 Commemorative Veterans Day Activities', to: 'https://www.seniorly.com/resources/articles/veterans-day-activities' },
+    { title: '5 Ways to Honor Our Senior Veteran\'s This Memorial Day', to: 'https://www.seniorly.com/resources/articles/5-ways-to-honor-our-senior-veteran-s-this-memorial-day' },
+    { title: '3 Female Senior Veterans We Honor', to: 'https://www.seniorly.com/resources/articles/3-female-senior-veterans-we-honor-this-memorial-day' },
   ];
 
   const TableOfContents = () => {
@@ -166,14 +166,13 @@ const VeteransBenefitAssistedLivingPage = ({
     return (
       <>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={alRef} >What is Assisted Living?</Heading>
-          <Paragraph marginBottom="xxLarge">Long-term care costs quickly add up, but for veterans and their surviving spouses,
+          <Heading level="title" size="title" _ref={alRef} >What is Assisted Living for Veterans?</Heading>
+          <Paragraph marginBottom="xxLarge">Long-term care costs quickly add up, but for Veterans and their surviving spouses,
             assistance may be available to help with these costs. Unfortunately, it’s hard to know what help is available,
-            if you qualify, and how to apply. In fact, many veterans and their families struggle through the application
-            process only to be denied. The information we’ve compiled in this document is based on the new law effective
-            October 2018, so you have the most current data at your disposal. Two main benefits are available under Title 38.
-            You cannot get both at the same time. The best option is to file for the benefit that will bring you the
-            highest amount. Many families need some help choosing their best option. The choices are:
+            if you qualify, and how to apply. In fact, many Veterans and their families struggle through the application
+            process only to be denied. The information we’ve compiled in this document is based on the new law effective October
+            2018 with updated information as of February 2020.  It is our hope that this page will provide you the most current
+            Vetaran’s data available. Two main benefits are available until...
           </Paragraph>
 
           <ListWrapper>
@@ -201,7 +200,7 @@ const VeteransBenefitAssistedLivingPage = ({
           <Paragraph marginBottom="xxLarge">
             We’re going to take a closer look at each option so you can easily determine which one, if any,
             applies to your specific situation. We’ll highlight and address the most frequently asked questions.
-            Our goal is to give you enough information to decide whether you want to pursue a veterans benefit claim.
+            Our goal is to give you enough information to decide whether you want to pursue a Veterans benefit claim.
           </Paragraph>
 
           <StyledArticle>
@@ -220,7 +219,7 @@ const VeteransBenefitAssistedLivingPage = ({
         <StyledArticle>
           <Heading level="title" size="title" _ref={sccRef}>Service-Connected Compensation</Heading>
           <Paragraph marginBottom="xxLarge">
-            This is a monthly payment made to a veteran who suffered an injury while on active duty or had a pre-existing
+            This is a monthly payment made to a Veteran who suffered an injury while on active duty or had a pre-existing
             condition aggravated by his/her service. The severity of the disability is given a specific percentage rating.
             For example, you may have a single rating of 10% or multiple individual ratings adding up to 70% or more.
             Some individuals carry 120%+ ratings when totaled but will only be paid the 100% rate. Each percentage rating
@@ -231,11 +230,11 @@ const VeteransBenefitAssistedLivingPage = ({
           </Paragraph>
           <Paragraph marginBottom="xxLarge">To enroll: <Link href="https://www.va.gov/healthbenefits/apply/">www.va.gov/healthbenefits/apply/</Link></Paragraph>
           <Paragraph marginBottom="xxLarge">You can enroll online, via phone or in person.</Paragraph>
-          <Paragraph marginBottom="xxLarge">Married veterans with a dependent can have aid and attendance added for their spouse to their monthly
-            payment if the spouse can demonstrate the need for aid and attendance. The veteran must be at least 30% rated
-            for a spouse to claim aid and attendance benefits under the veteran’s service-connected disability. Unfortunately,
+          <Paragraph marginBottom="xxLarge">Married Veterans with a dependent can have aid and attendance added for their spouse to their monthly
+            payment if the spouse can demonstrate the need for aid and attendance. The Veteran must be at least 30% rated
+            for a spouse to claim aid and attendance benefits under the Veteran’s service-connected disability. Unfortunately,
             this is a small sum, and not enough to cover all care needs, but every dollar counts when it comes to care.
-            Examples for 2018
+            Examples for 2018:
           </Paragraph>
 
           <TwoColumnGrid>
@@ -250,10 +249,10 @@ const VeteransBenefitAssistedLivingPage = ({
               her/his care needs. This is an additional $122/mth.
             </Span>
             <PercentageDiv>100%</PercentageDiv>
-            <Span>A 100% rated veteran can also have the housebound benefit or aid and attendance added to their income if
+            <Span>A 100% rated Veteran can also have the housebound benefit or aid and attendance added to their income if
               they demonstrate the need for housebound or aid and attendance. This can add an additional $500-$700 or so to
               the household income. You can also receive 100% rated pay if you are granted IU — individual unemployable.
-              This means your disability is so severe that y ou are unable to sustain gainful employment. For IU to come into
+              This means your disability is so severe that you are unable to sustain gainful employment. For IU to come into
               play, the following must apply:
             </Span>
             <PercentageDiv>60%</PercentageDiv>
@@ -282,14 +281,14 @@ const VeteransBenefitAssistedLivingPage = ({
           </Heading>
 
           <Paragraph marginBottom="xxLarge">
-            This payment should be made automatically to a surviving spouse whose veteran spouse carried a 100% serviceconnected
+            This payment should be made automatically to a surviving spouse whose Veteran spouse carried a 100% service connected
             rating at the time of death and cause of death can be linked to why they were granted the 100% rating.
           </Paragraph>
           <Paragraph marginBottom="xxLarge">
             In 2018, this monthly payment was $1238.11/mth*
           </Paragraph>
           <Paragraph marginBottom="xxLarge">
-            If the veteran carried the 100% rating for the last 8 years of his/her life and was married to the same spouse those
+            If the Veteran carried the 100% rating for the last 8 years of his/her life and was married to the same spouse those
             last 8 years, the spouse is entitled to an additional marriage stipend of $272.46/mth*
           </Paragraph>
           <Paragraph marginBottom="xxLarge">
@@ -305,7 +304,7 @@ const VeteransBenefitAssistedLivingPage = ({
 
           <StyledArticle>
             <Paragraph marginBottom="xxLarge">
-              <StyledImage path="react-assets/hub/veterans-benefit/vet-with-wife.png" alt="Veterans Salute Assisted Living" height={640} />
+              <StyledImage path="react-assets/hub/veterans-benefit/vet-with-wife.png" alt="Veteran with Wife" height={640} />
             </Paragraph>
           </StyledArticle>
 
@@ -321,29 +320,20 @@ const VeteransBenefitAssistedLivingPage = ({
           <Heading level="title" size="title" _ref={whossRef}>
             Who is a Surviving Spouse?
           </Heading>
-          <Paragraph marginBottom="xxLarge">
-            Long-term care costs quickly add up, but for veterans and their surviving spouses, assistance may be available to
-            help with these costs. Unfortunately, it’s hard to know what help is available, if you qualify, and how to apply.
-            In fact, many veterans and their families struggle through the application process only to be denied. The information
-            we’ve compiled in this document is based on the new law effective October 2018, so you have the most current data
-            at your disposal. Two main benefits are available under Title 38. You cannot get both at the same time. The best
-            option is to file for the benefit that will bring you the highest amount. Many families need some help choosing
-            their best option. The choices are:
-          </Paragraph>
 
           <ListWrapper>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Married to the veteran at the time the veteran passed away
+              Married to the Veteran at the time the Veteran passed away
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               Can produce a marriage certificate evidencing the marriage
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Claiming spouse is named on the deceased veteran’s death certificate
+              Claiming spouse is named on the deceased Veteran’s death certificate
             </ListItem>
           </ListWrapper>
 
-          <Paragraph marginBottom="xxLarge">If you divorced the veteran, you are NOT the surviving spouse even if neither party remarried. No VA
+          <Paragraph marginBottom="xxLarge">If you divorced the Veteran, you are NOT the surviving spouse even if neither party remarried. No VA
             disability benefits are available to surviving ex-spouses. This can be confusing as the SSA allows ex-spouses
             to claim on deceased spouses under certain circumstances. VA law and SSA law are not the same.
           </Paragraph>
@@ -361,7 +351,7 @@ const VeteransBenefitAssistedLivingPage = ({
           </Heading>
 
           <Paragraph marginBottom="xxLarge">
-            The Language the Government proposed to help aged and disabled veterans. However, some qualifications must be met.
+            The language the government proposed to help aged and disabled Veterans. However, some qualifications must be met.
           </Paragraph>
 
           <ListWrapper>
@@ -402,7 +392,7 @@ const VeteransBenefitAssistedLivingPage = ({
           <ListWrapper>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               Veteran is aged 72 and has an income of $800/mth. The VA promised a minimum income of $1128/mth. The VA will
-              currently pay $328/mth to bring the veteran’s income up to basic pension of 1128/mth.
+              currently pay $328/mth to bring the Veteran’s income up to basic pension of 1128/mth.
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               Surviving spouse is 62 but is on SSI and has an income of $550/mth. The VA will pay $206/mth to bring the
@@ -413,7 +403,7 @@ const VeteransBenefitAssistedLivingPage = ({
 
           <StyledArticle>
             <Paragraph marginBottom="xxLarge">
-              <StyledImage path="react-assets/hub/veterans-benefit/veteran-pension.png" alt="Veterans Salute Assisted Living" height={640} />
+              <StyledImage path="react-assets/hub/veterans-benefit/veteran-pension.png" alt="Veterans Pension" height={640} />
             </Paragraph>
           </StyledArticle>
 
@@ -451,7 +441,7 @@ const VeteransBenefitAssistedLivingPage = ({
           </StyledTable>
 
           <Paragraph marginBottom="xxLarge">
-            There are three criteria which must be met to qualify for pension plus aid and attendance
+            There are three criteria which must be met to qualify for pension plus aid and attendance:
           </Paragraph>
 
           <ListWrapper>
@@ -476,7 +466,7 @@ const VeteransBenefitAssistedLivingPage = ({
 
         <StyledArticle>
           <Heading level="title" size="title" _ref={mlRef} >
-            Military Time:
+            Military Time
           </Heading>
 
           <Paragraph marginBottom="xxLarge">
@@ -505,7 +495,7 @@ const VeteransBenefitAssistedLivingPage = ({
 
         <StyledArticle>
           <Heading level="title" size="title" >
-            Medical Need:
+            Medical Need
           </Heading>
 
           <Paragraph marginBottom="xxLarge">
@@ -514,33 +504,36 @@ const VeteransBenefitAssistedLivingPage = ({
           </Paragraph>
 
           <Heading level="subtitle" size="subtitle" >
-            ADLs are as follows and are delivered on a regular basis:
+            Activities of Daily Living (ADLs) are as follows and are delivered on a regular basis:
           </Heading>
 
           <ListWrapper>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Assistance bathing/showering
+              Bathing/showering
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Assistance dressing
+              Dressing
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Assistance with incontinence concerns
+              Incontinence concerns
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Assistance transferring (getting up or down, or in and out of bed, for example)
+              Transferring (getting up or down, or in and out of bed, for example)
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Assistance with ambulation
+              Ambulation
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              Assistance with eating
+              Eating
             </ListItem>
           </ListWrapper>
 
+          <Heading level="subtitle" size="subtitle" >
+            Assistance with medications if claimant is in a custodial care setting (not at home):
+          </Heading>
+
           <Paragraph marginBottom="xxLarge">
-            Assistance with medications if claimant is in a custodial care setting (not at home): Medication administration,
-            if performed by a health care provider, would be a health care expense under § 3.278(c)(1). A medication reminder
+            Medication administration, if performed by a health care provider, would be a health care expense under § 3.278(c)(1). A medication reminder
             from a provider who is not a health care provider would not be a medical expense unless the individual requires
             custodial care and the provisions of final § 3.278(d) apply. A claimant can be paid as little as a $1 up to the
             full amount based on deductible medical expenses or, in VA vernacular unreimbursed Medical Expenses (UME).
@@ -549,7 +542,7 @@ const VeteransBenefitAssistedLivingPage = ({
 
         <StyledArticle>
           <Heading level="title" size="title" >
-            Monetary Need:
+            Monetary Need
           </Heading>
 
           <Paragraph marginBottom="xxLarge">
@@ -558,7 +551,7 @@ const VeteransBenefitAssistedLivingPage = ({
 
           <StyledArticle>
             <Paragraph marginBottom="xxLarge">
-              <StyledImage path="react-assets/hub/veterans-benefit/veteran-holding-hand.png" alt="Veterans Salute Assisted Living" height={640} />
+              <StyledImage path="react-assets/hub/veterans-benefit/veteran-holding-hand.png" alt="Veterans Holding Hand Assisted Living" height={640} />
             </Paragraph>
           </StyledArticle>
 
@@ -591,7 +584,7 @@ const VeteransBenefitAssistedLivingPage = ({
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
               <div>
                 <Paragraph marginBottom="xxLarge">
-                  Veteran has an income of $2,600/month. His cost of care is $2,400/month. Since the veteran is not spending
+                  Veteran has an income of $2,600/month. His cost of care is $2,400/month. Since the Veteran is not spending
                   all of his income on deductible medical expenses, the award would be approximately $1,587/month. The more
                   unreimbursed, predictable, recurring medical expenses the claimant has each month, the closer they are to
                   being awarded the maximum amount.
@@ -615,9 +608,22 @@ const VeteransBenefitAssistedLivingPage = ({
 
           <ListWrapper>
             <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
-              <Block>Monthly fees from an <Link href="https://www.seniorly.com/assisted-living">assisted living community</Link>, supplemental medical insurance premiums, monthly fees from home
-                care agencies, unreimbursed diabetic supplies, incontinence supplies, custodial care in a retirement community, etc.
-              </Block>
+              <Block>Monthly fees from an <Link href="https://www.seniorly.com/assisted-living">assisted living community</Link></Block>
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Supplemental medical insurance premiums
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Monthly fees from home care agencies
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Unreimbursed diabetic supplies
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Incontinence supplies
+            </ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+              Custodial care in a retirement community
             </ListItem>
           </ListWrapper>
 
@@ -628,13 +634,13 @@ const VeteransBenefitAssistedLivingPage = ({
 
           <StyledArticle>
             <Heading level="title" size="title" >
-              How do you receive the full award/amount to help with long-term care costs?
+              Recent Changes in Law Affecting Eligibility
             </Heading>
 
             <TwoColumnGrid>
               <Image src={assetPath('images/hub/icons/primary-residency.png')} />
               <Paragraph marginBottom="xxLarge">
-                <Span weight="medium">Your primary residence is exempt.</Span> This is defined as your home and 2 acres. If your
+                <Span weight="medium">Your primary residence is exempt: </Span>This is defined as your home and 2 acres. If your
                 home is on 10 acres, then the fair market value of the additional 8 acres will be counted in tabulating your net
                 worth. If you can evidence that any additional land you own is exempt, this will be considered. For example, the
                 land may be landlocked and inaccessible. The fair market value of a second residence will also be included in
@@ -644,47 +650,47 @@ const VeteransBenefitAssistedLivingPage = ({
               </Paragraph>
               <Image src={assetPath('images/hub/icons/net-worth-limit.png')} />
               <Paragraph marginBottom="xxLarge">
-                <Span weight="medium">Net worth limit:</Span>
-                There is a $123,600 net worth limit regarless of age, married, single veteran or a surviving spouse. This is a
+                <Span weight="medium">Net worth limit: </Span>
+                There is a $123,600 net worth limit regardless of age, married, single Veteran or a surviving spouse. This is a
                 highly technical figure, Do not rule out benefits until you have spoken with someone knowledgeable in VA law.
               </Paragraph>
               <Image src={assetPath('images/hub/icons/net-worth.png')} />
               <Paragraph marginBottom="xxLarge">
-                <Span weight="medium">Net worth:</Span>
+                <Span weight="medium">Net worth: </Span>
                 Defined as the sum of the claimant’s net annual income plus all countable assets.
               </Paragraph>
               <Image src={assetPath('images/hub/icons/assets.png')} />
               <Paragraph marginBottom="xxLarge">
-                <Span weight="medium">Countable assets is another highly technical term:</Span>
+                <Span weight="medium">Countable assets is another highly technical term: </Span>
                 Principal balances in annuities (unless mandated at retirement — the payment still counts as income), liquid
                 assets in revocable and irrevocable trusts (if created in the last 36 months), IRA principal, checking, savings,
                 CDs, stocks, bonds, etc. plus marketable real property.
               </Paragraph>
               <Image src={assetPath('images/hub/icons/look-back-period.png')} />
               <Paragraph marginBottom="xxLarge">
-                <Span weight="medium">Look back period:</Span>
+                <Span weight="medium">Look back period: </Span>
                 There will be a 36-month “look back” period from the date of the pension application for any transferred assets
                 (homes quitclaimed, trusts created, purchased financial products). Any transfers made before the look back date
                 are exempt.
               </Paragraph>
               <Image src={assetPath('images/hub/icons/deductables.png')} />
               <Paragraph marginBottom="xxLarge">
-                <Span weight="medium">Countable deductions:</Span>
+                <Span weight="medium">Countable deductions: </Span>
                 Unreimbursed medical expenses, health insurance premiums, cost of care (i.e. <Link href="https://www.seniorly.com/assisted-living">assisted living</Link> monthly fees,
                 private care, custodial care, home care, etc.). These amounts are deducted from your net worth and eligibility
                 may exist if the deductions bring your net worth to $123,600 or lower.
               </Paragraph>
               <Image src={assetPath('images/hub/icons/penalties.png')} />
               <Paragraph marginBottom="xxLarge">
-                <Span weight="medium">Penalties for transfers:</Span>
-                The penalty is <Span weight="medium">$2,230 per month for 2019</Span> (veteran plus one dependent pension plus
+                <Span weight="medium">Penalties for transfers: </Span>
+                The penalty is <Span weight="medium">$2,230 per month for 2019</Span> (Veteran plus one dependent pension plus
                 aid and attendance rate) per month for transferred assets - not to exceed 5 years. Similar to pre — 2006 Medicaid
                 rules, a penalty applies and begins to run on the date of the most recent transfer, not on the date of the
                 application. Any penalty remaining on the application will result in no pension until it expires.
               </Paragraph>
               <Image src={assetPath('images/hub/icons/penalty-cures.png')} />
               <Paragraph marginBottom="xxLarge">
-                <Span weight="medium">Penalties for transfers:</Span>
+                <Span weight="medium">Penalties for transfers: </Span>
                 If a penalty is imposed, the claimant has 60 days to cure the transfer and 90 days to notify the VA of the cure.
               </Paragraph>
             </TwoColumnGrid>
@@ -698,7 +704,7 @@ const VeteransBenefitAssistedLivingPage = ({
 
             <StyledArticle>
               <Paragraph marginBottom="xxLarge">
-                <StyledImage path="react-assets/hub/veterans-benefit/3-veterans.png" alt="Veterans Salute Assisted Living" height={640} />
+                <StyledImage path="react-assets/hub/veterans-benefit/3-veterans.png" alt="Veterans Benefit Assisted Living" height={640} />
               </Paragraph>
             </StyledArticle>
 
@@ -724,7 +730,7 @@ const VeteransBenefitAssistedLivingPage = ({
 
             <Paragraph marginBottom="xxLarge">
               Make sure that anyone or any organization assisting or advising you with a claim holds current VA Accreditation by
-              the Office of General Counsel. The VA accredits attorneys, veteran service officers and claims agents only. If they
+              the Office of General Counsel. The VA accredits attorneys, Veteran service officers and claims agents only. If they
               are not accredited and/ or are unable to produce their accreditation, then be very circumspect of their advice and
               offer of assistance. An individual is in violation of federal law if they assist someone with filing and are not
               accredited by the VA.
@@ -749,7 +755,7 @@ const VeteransBenefitAssistedLivingPage = ({
           <StyledArticle>
             <NextSteps
               nextRef={nextRef}
-              toc="respite care"
+              toc="Veteran’s Benefits"
               label="Recommended reading:"
               links={nextSteps}
             />
@@ -768,9 +774,9 @@ const VeteransBenefitAssistedLivingPage = ({
   };
 
   const title = 'Veteran’s Benefits for Assisted Living';
-  const description = `Long-term care costs quickly add up, but for veterans and their surviving spouses, assistance 
+  const description = `Long-term care costs quickly add up, but for Veterans and their surviving spouses, assistance 
     may be available to help with these costs. Unfortunately, it’s hard to know what help is available, if you qualify, 
-    and how to apply. In fact, many veterans and their families struggle through the application process only to be denied. 
+    and how to apply. In fact, many Veterans and their families struggle through the application process only to be denied. 
     The information we’ve compiled in this document is based on the new law effective October 2018, so you have the most 
     current data at your disposal.`;
 
@@ -783,6 +789,7 @@ const VeteransBenefitAssistedLivingPage = ({
       <HubHeader
         imagePath="react-assets/hub/veterans-benefit/veteran-benefit.png"
         heading="Veteran’s Benefits for Assisted Living"
+        toc="Veteran’s Benefits"
         showSearch={false}
         mobileBGGradientPalette="slate"
         mobileBGGradientVariation="dark"
