@@ -49,7 +49,7 @@ export default class AddFamilyForm extends Component {
 
   render() {
     const {
-      handleSubmit, onCancel, isAgentProUser, ...props
+      handleSubmit, onCancel, isNonSlyCreator, ...props
     } = this.props;
 
     // todo: convert to new select options after enabling react select

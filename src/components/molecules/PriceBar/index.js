@@ -36,7 +36,7 @@ const PriceBar = ({
   } else if (children) {
     ([title] = children);
   }
-  const barWidth = Math.round(width * 0.8);
+  let barWidth = Math.round(width * 0.8);
 
   return (
     <StyledBlock size="caption" className={className}>

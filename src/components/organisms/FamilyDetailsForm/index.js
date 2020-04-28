@@ -268,8 +268,8 @@ class FamilyDetailsForm extends Component {
                 type="email"
                 readOnly={!canEditFamilyDetails}
                 disabled={!canEditFamilyDetails}
-                hideValue={!canEditFamilyDetails}
-                placeholder={!canEditFamilyDetails ? 'Accept family to view' : null}
+                hideValue={!accepted && !canEditFamilyDetails}
+                placeholder={!accepted && !canEditFamilyDetails ? 'Accept family to view' : null}
                 component={ReduxField}
                 wideWidth
               />
@@ -278,8 +278,8 @@ class FamilyDetailsForm extends Component {
                 label="Contact Phone"
                 readOnly={!canEditFamilyDetails}
                 disabled={!canEditFamilyDetails}
-                hideValue={!canEditFamilyDetails}
-                placeholder={!canEditFamilyDetails ? 'Accept family to view' : null}
+                hideValue={!accepted && !canEditFamilyDetails}
+                placeholder={!accepted && !canEditFamilyDetails ? 'Accept family to view' : null}
                 parse={phoneParser}
                 format={phoneFormatter}
                 component={ReduxField}
