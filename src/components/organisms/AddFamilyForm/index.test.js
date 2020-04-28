@@ -34,7 +34,7 @@ const wrap = (props = {}) => shallow(<AddFamilyForm {...defaultProps} {...props}
 
 describe('AddFamilyForm', () => {
   it('renders with source', () => {
-    const wrapper = wrap({ needsSource: true });
+    const wrapper = wrap({ isNonSlyCreator: false });
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
@@ -43,11 +43,11 @@ describe('AddFamilyForm', () => {
     expect(wrapper.find(Field).filter({ name: 'timeToMove' })).toHaveLength(1);
     expect(wrapper.find('StyledSearchBoxContainer')).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
-    expect(wrapper.find(Field).filter({ name: 'source' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'source', type: 'select' })).toHaveLength(1);
   });
 
-  it('renders without Source', () => {
-    const wrapper = wrap({ needsSource: false });
+  it('renders text source for non sly created', () => {
+    const wrapper = wrap({ isNonSlyCreator: true });
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
@@ -56,7 +56,7 @@ describe('AddFamilyForm', () => {
     expect(wrapper.find(Field).filter({ name: 'timeToMove' })).toHaveLength(1);
     expect(wrapper.find('StyledSearchBoxContainer')).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
-    expect(wrapper.find(Field).filter({ name: 'source' })).toHaveLength(0);
+    expect(wrapper.find(Field).filter({ name: 'source', type: 'text' })).toHaveLength(1);
   });
 
   it('handles onFormSubmit', () => {

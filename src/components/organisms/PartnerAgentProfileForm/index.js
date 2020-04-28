@@ -70,8 +70,17 @@ const AGENT_STATUS_OPTIONS = [
   { value: 1, label: 'Live' },
 ];
 
+const AGENT_TIMEZONES = [{value:"America/New_York", label:"New York"},
+  {value:"America/Chicago", label:"Chicago"},
+  {value:"America/Denver", label:"Denver"},
+  {value:"America/Phoenix", label:"Phoenix"},
+  {value:"America/Los_Angeles", label:"Los Angeles"},
+  {value:"America/Anchorage", label:"Anchorage"},
+  {value:"Pacific/Honolulu", label:"Honolulu"}];
+
 const agentRegionOptions = AGENT_REGION_OPTIONS.map(i => <option key={i} value={i}>{i}</option>);
 const agentStatusOptions = AGENT_STATUS_OPTIONS.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
+const agentTimeZoneOptions = AGENT_TIMEZONES.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
 
 const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, submitting, invalid, isSlyAdmin }) => (
   <Form onSubmit={handleSubmit}>
@@ -192,6 +201,33 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
             wideWidth
             options={[{ label: '', value: true }]}
           />
+          <Field
+            name="email"
+            label="Email"
+            type="email"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
+            name="cellPhone"
+            label="Cell Phone"
+            type="phone"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
+            name="timeZone"
+            label="Time Zone"
+            type="select"
+            placeholder="America/Los_Angeles"
+            component={ReduxField}
+            wideWidth
+          > <option value="" disabled>Select an option</option>
+            {agentTimeZoneOptions}
+          </Field>
+
         </FormSection>
       )}
     </FormScrollSection>

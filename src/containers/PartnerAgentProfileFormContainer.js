@@ -6,6 +6,7 @@ import pick from 'lodash/pick';
 
 import PartnerAgentProfileForm from 'sly/components/organisms/PartnerAgentProfileForm';
 import { createValidator, required, email, usPhone } from 'sly/services/validation';
+import { phoneParser } from 'sly/services/helpers/phone';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
 import { withUser, query } from 'sly/services/api';
 import { adminAgentPropType } from 'sly/propTypes/agent';
@@ -59,6 +60,9 @@ export default class PartnerAgentProfileFormContainer extends Component {
       .set('attributes.status', parseInt(values.status, 10))
       .set('attributes.info.adminNotes', values.adminNotes)
       .set('attributes.info.isPro', values.isPro.length > 0)
+      .set('attributes.info.cellPhone', phoneParser(values.cellPhone))
+      .set('attributes.info.email', values.email)
+      .set('attributes.info.timeZone', values.timeZone)
       .set('attributes.info.slyScore', parseFloat(values.slyScore));
 
     if (values.vacation && values.vacation[0].getTime() !== 0 && values.vacation[1].getTime() !== 0) {
@@ -88,7 +92,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
       }
       const { info, status } = agent;
       const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;
-      const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore, isPro } = info;
+      const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore, isPro, cellPhone, email, timeZone } = info;
       let zipcodesServed = null;
       if (serviceArea) {
         ({ zipcodesServed } = serviceArea);
@@ -97,7 +101,8 @@ export default class PartnerAgentProfileFormContainer extends Component {
       if (vacationStart && vacationEnd) {
         vacation = [new Date(vacationStart), new Date(vacationEnd)];
       }
-      const initialValues = { bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation, adminRegion, zipcodesServed, status, adminNotes, slyScore, isPro: [isPro] };
+      const initialValues = { bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation, adminRegion,
+        zipcodesServed, status, adminNotes, slyScore, isPro: [isPro], cellPhone, email, timeZone };
       const isSlyAdmin = userIs(user, PLATFORM_ADMIN_ROLE);
       return (
         <ReduxForm

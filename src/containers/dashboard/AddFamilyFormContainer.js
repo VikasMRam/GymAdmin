@@ -3,17 +3,31 @@ import { object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 import * as immutable from 'object-path-immutable';
 
-import { query } from 'sly/services/api';
+import { query, withUser } from 'sly/services/api';
 import { createValidator, dependentRequired, usPhone, email, required } from 'sly/services/validation';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { CLIENT_RESOURCE_TYPE, UUIDAUX_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { newClient } from 'sly/constants/payloads/client';
 import { normJsonApi } from 'sly/services/helpers/jsonApi';
 import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
-import RoleFamilyFormContainer from 'sly/containers/dashboard/RoleFamilyFormContainer';
+import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import DuplicateFamilies from 'sly/components/organisms/DuplicateFamilies';
+import AddFamilyForm from 'sly/components/organisms/AddFamilyForm';
 
 
+const agentFields = createValidator({
+  name: [required],
+  preferredLocation: [required],
+  source: [required],
+  phone: [usPhone, dependentRequired('email', 'Either Phone or Email is required')],
+  email: [email, dependentRequired('phone', 'Either Email or Phone is required')],
+});
+
+const AddFamilyReduxForm = reduxForm({
+  form: 'AddFamilyFormAdmin',
+  destroyOnUnmount: false,
+  validate: agentFields,
+})(AddFamilyForm);
 
 const DuplicateFamiliesReduxForm = reduxForm({
   form: 'DuplicateFamilies',
@@ -23,6 +37,7 @@ const DuplicateFamiliesReduxForm = reduxForm({
 
 @query('getClients', 'getClients')
 
+@withUser
 export default class AddFamilyFormContainer extends Component {
   static propTypes = {
     status: object,
@@ -135,7 +150,9 @@ export default class AddFamilyFormContainer extends Component {
   render() {
     const { duplicates, currentClient } = this.state;
     const { initialValues, onCancel, user, } = this.props;
-
+    const { roleID } = user;
+    /* eslint-disable-next-line no-bitwise */
+    const isNonSlyCreator = !(roleID & PLATFORM_ADMIN_ROLE);
 
     return (
       <WizardController
@@ -148,7 +165,8 @@ export default class AddFamilyFormContainer extends Component {
         }) => (
           <WizardSteps {...props}>
             <WizardStep
-              component={RoleFamilyFormContainer}
+              component={AddFamilyReduxForm}
+              isNonSlyCreator={isNonSlyCreator}
               name="Add"
               initialValues={initialValues}
               onCancel={onCancel}

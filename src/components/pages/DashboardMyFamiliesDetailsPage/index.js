@@ -773,8 +773,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   refetchClient={refetchClient}
                   notifyInfo={notifyInfo}
                   notifyError={notifyError}
-                  accepted={!showAcceptRejectButtons || userIs(user, PLATFORM_ADMIN_ROLE)}
+                  accepted={!showAcceptRejectButtons  || userIs(user, PLATFORM_ADMIN_ROLE)}
                   canEditFamilyDetails={canEditFamilyDetails || userIs(user, PLATFORM_ADMIN_ROLE)}
+                  isAgentProUser={userIs(user, AGENT_ADMIN_ROLE)}
                   gender={gender}
                   lookingFor={lookingFor}
                   monthlyBudget={monthlyBudget}
