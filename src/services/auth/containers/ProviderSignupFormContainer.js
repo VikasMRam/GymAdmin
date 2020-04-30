@@ -39,7 +39,7 @@ export default class ProviderSignupFormContainer extends Component {
   handleSubmit = (data) => {
     const { registerUser, clearSubmitErrors, onSubmit } = this.props;
     clearSubmitErrors();
-    data.role_id = PROVIDER_OD_ROLE;
+    data.role_id = PROVIDER_OD_ROLE.toString();
     return registerUser(data)
       .then(onSubmit)
       .catch((data) => {

@@ -16,6 +16,7 @@ import ResetPasswordFormContainer from 'sly/services/auth/containers/ResetPasswo
 import LoginFormContainer from 'sly/services/auth/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/services/auth/containers/SignupFormContainer';
 import ProviderSignupFormContainer from 'sly/services/auth/containers/ProviderSignupFormContainer';
+import CustomerSignupConfirmationContainer from 'sly/services/auth/containers/CustomerSignupConfirmationContainer';
 
 
 const ModalBody = spacing(styled.div``, { top: null });
@@ -108,7 +109,12 @@ export default class AuthContainer extends Component {
                   component={SignupFormContainer}
                   name="Signup"
                   onLoginClicked={() => (delete authenticated.options.register && goto('Login'))}
-                  onProviderClicked={() => (delete authenticated.options.register && goto('ProviderSignup'))}
+                  onProviderClicked={() => (delete authenticated.options.register && goto('ProviderSignupFormContainer'))}
+                  onSubmit={() => goto('CustomerSignupConfirmation')}
+                />
+                <WizardStep
+                  component={CustomerSignupConfirmationContainer}
+                  name="CustomerSignupConfirmation"
                   onSubmit={authenticateSuccess}
                 />
                 <WizardStep

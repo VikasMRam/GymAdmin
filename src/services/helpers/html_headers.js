@@ -551,6 +551,15 @@ export const getHelmetForPartnersPage = () => {
   );
 };
 
+export const getHelmetForCommunityPartnersPage = () => {
+  return (
+    <Helmet>
+      <title>Senior Housing Rental Advertising & Marketing</title>
+      <meta name="description" content="Create and manage your community profile &amp; inventory that is listed on Seniorly." />
+    </Helmet>
+  );
+};
+
 export const getHelmetForAgentProfilePage = ({ agent }) => {
   const { info } = agent;
   const { displayName, citiesServed } = info;

@@ -45,6 +45,7 @@ const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/co
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage'));
 const LegalPolicyPage = loadable(() => import(/* webpackChunkName: "chunkLegalPolicy" */ 'sly/components/pages/LegalPolicyPage'));
 const PartnersPage = loadable(() => import(/* webpackChunkName: "chunkPartners" */ 'sly/components/pages/PartnersPage'));
+const CommunityPartnersPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityPartners" */ 'sly/containers/CommunityPartnersPageContainer'));
 const CommunitySearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunitySearch" */ 'sly/containers/CommunitySearchPageContainer'));
 const StateSearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkStateSearch" */ 'sly/containers/StateSearchPageContainer'));
 const HomePageContainer = loadable(() => import(/* webpackChunkName: "chunkHomePage" */ 'sly/containers/HomePageContainer'));
@@ -217,6 +218,11 @@ const routes = [
   {
     path: '/agents/partners',
     component: PartnersPage,
+    exact: true,
+  },
+  {
+    path: '/partners/communities',
+    component: CommunityPartnersPageContainer,
     exact: true,
   },
   {
