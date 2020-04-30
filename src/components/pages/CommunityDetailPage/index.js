@@ -340,7 +340,7 @@ export default class CommunityDetailPage extends Component {
           </StyledBannerNotification>
         )}
         {!bannerNotification && (
-          <BannerNotificationAdContainer type="homeCare" />
+          <BannerNotificationAdContainer type="covid-19" />
         )}
         <CommunityDetailPageTemplate>
           <Wrapper>

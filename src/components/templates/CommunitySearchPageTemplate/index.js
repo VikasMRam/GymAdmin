@@ -46,7 +46,7 @@ const CommunitySearchPageTemplate = ({
   <>
     <TemplateHeader>
       <HeaderContainer />
-      <BannerNotificationAdContainer type="homeCare" />
+      <BannerNotificationAdContainer type="covid-19" />
     </TemplateHeader>
     <TemplateContent>
       <TwoColumnWrapper>

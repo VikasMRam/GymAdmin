@@ -40,6 +40,10 @@ const ReduxField = ({
     fieldProps.onBlur = _ => _;
   }
 
+  if (fieldProps.type === 'button') {
+    fieldProps.onClick = props => input.onChange(fieldProps.inputValue, ...props);
+  }
+  console.log(fieldProps);
   return <Field {...fieldProps} />;
 };
 
