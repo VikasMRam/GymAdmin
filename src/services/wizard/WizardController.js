@@ -61,11 +61,15 @@ export default class WizardController extends Component {
   }
 
   init = (steps) => {
-    const { set } = this.props;
-
-    set({
-      steps,
-    });
+    const { steps: propSteps, set } = this.props;
+    // on reset, steps will be empty array, and init will be called on each update in WizardSteps.
+    // We set the steps, only when the steps are empty(reset happened) so that we dont want to
+    // set steps unnecessarily on each update.
+    if (propSteps.length === 0) {
+      set({
+        steps,
+      });
+    }
   };
 
   reset = () => {
