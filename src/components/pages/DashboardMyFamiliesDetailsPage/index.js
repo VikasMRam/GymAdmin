@@ -357,11 +357,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     // TODO: CHANGE TO HAS ROLE INSTEAD OF IS ROLE...
     let tabs = [summaryTab];
     /* eslint-disable no-bitwise */
-    if (roleID & ( AGENT_ND_ROLE | AGENT_ADMIN_ROLE)) {
+    if (roleID & (AGENT_ND_ROLE | AGENT_ADMIN_ROLE)) {
       tabs = tabs.concat(agentTabList.map(e => genTab(e)));
     }
     /* eslint-disable no-bitwise */
-    if (roleID & ( AGENT_ADMIN_ROLE | PLATFORM_ADMIN_ROLE)) {
+    if (roleID & (AGENT_ADMIN_ROLE | PLATFORM_ADMIN_ROLE)) {
       tabs = tabs.concat(agentAdminTabList.map(e => genTab(e)));
     }
     /* eslint-disable no-bitwise */
@@ -838,19 +838,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               <SmallScreenBorderDiv>
                 {!conversation &&
                   <DashboardMessagesContainerWrapper>
-                    <Datatable
-                      id="conversations"
-                      filters={{}}
-                    >
-                      {datatable => (
-                        <DashboardMessagesContainer
-                          datatable={datatable}
-                          onConversationClick={setSelectedConversation}
-                          heading="Conversations"
-                          clientId={id}
-                        />
-                      )}
-                    </Datatable>
+                    <DashboardMessagesContainer
+                      onConversationClick={setSelectedConversation}
+                      heading="Conversations"
+                      clientId={id}
+                    />
                   </DashboardMessagesContainerWrapper>
                 }
                 {conversation &&
