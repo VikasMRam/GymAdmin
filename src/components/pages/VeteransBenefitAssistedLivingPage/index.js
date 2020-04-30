@@ -773,12 +773,8 @@ const VeteransBenefitAssistedLivingPage = ({
     );
   };
 
-  const title = 'Veteran’s Benefits for Assisted Living';
-  const description = `Long-term care costs quickly add up, but for Veterans and their surviving spouses, assistance 
-    may be available to help with these costs. Unfortunately, it’s hard to know what help is available, if you qualify, 
-    and how to apply. In fact, many Veterans and their families struggle through the application process only to be denied. 
-    The information we’ve compiled in this document is based on the new law effective October 2018, so you have the most 
-    current data at your disposal.`;
+  const title = 'Guide to VA Benefits and Senior Living';
+  const description = 'The Seniorly Veterans Benefits Guide answers your questions about the Veterans Aid and Attendance Pension Program, and several other ways to qualify for government assistance for long term care.';
 
   return (
     <>
