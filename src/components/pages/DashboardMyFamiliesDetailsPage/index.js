@@ -863,14 +863,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               </SmallScreenBorderDiv>
             )}
           </TabWrapper>
+          <DashboardMyFamilyStickyFooterContainer
+            options={stickyFooterOptions}
+            stage={stage}
+            stageLabel={`${group} - ${stage}`}
+            showAcceptRejectButtons={showAcceptRejectButtons && !isClientAdminUser}
+            user={user}
+          />
         </div>
-        <DashboardMyFamilyStickyFooterContainer
-          options={stickyFooterOptions}
-          stage={stage}
-          stageLabel={`${group} - ${stage}`}
-          showAcceptRejectButtons={showAcceptRejectButtons && !isClientAdminUser}
-          user={user}
-        />
       </StyledDashboardTwoColumnTemplate>
     );
   }
