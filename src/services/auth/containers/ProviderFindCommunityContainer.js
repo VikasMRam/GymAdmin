@@ -30,8 +30,7 @@ export default class ProviderFindCommunityContainer extends Component {
   };
 
   state = {
-    community: null,
-    label: ''
+    community: {},
   };
 
   handleSubmit = (data) => {

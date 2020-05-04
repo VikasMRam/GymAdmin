@@ -28,8 +28,8 @@ const Login = textAlign(Block);
 Login.displayName = 'Log in';
 
 const ProviderSignupForm = ({
-                      handleSubmit, submitting, error, onLoginClicked,
-                    }) => (
+  handleSubmit, submitting, error, onLoginClicked,
+}) => (
   <form onSubmit={handleSubmit}>
     <StyledHeading size="subtitle">Create a community manager account</StyledHeading>
     <Field
