@@ -9,6 +9,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
+import BannerNotificationAdContainer from 'sly/containers/BannerNotificationAdContainer';
 import { Centered, Label, Heading, Hr, Link, Block, Paragraph, ResponsiveImage } from 'sly/components/atoms';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
@@ -16,7 +17,6 @@ import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import Footer from 'sly/components/organisms/Footer';
 import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
-import BannerNotification from 'sly/components/molecules/BannerNotification';
 import ContentOverImage, { MiddleContent } from 'sly/components/molecules/ContentOverImage';
 import { getHelmetForHomePage } from 'sly/services/helpers/html_headers';
 
@@ -332,11 +332,7 @@ const HomePage = ({
   const HeaderContent = (
     <>
       <HeaderContainer />
-      <BannerNotification palette="warning">
-        <Link href="https://live.seniorly.com/curtainup/" _target="blank">
-          Watch CurtainUp! Live Here (4pm ET/ 1pm PT): Click Here.
-        </Link>
-      </BannerNotification>
+      <BannerNotificationAdContainer type="covid-19" noMarginBottom />
       <ContentOverImage
         image="react-assets/home/cover4.jpg"
         imageAlt="A Home To Love"

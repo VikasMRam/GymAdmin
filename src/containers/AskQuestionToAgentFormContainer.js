@@ -140,8 +140,8 @@ export default class AskQuestionToAgentFormContainer extends Component {
   render() {
     return (
       <ReduxForm
-        onSubmit={this.handleSubmit}
         {...this.props}
+        onSubmit={this.handleSubmit}
       />
     );
   }

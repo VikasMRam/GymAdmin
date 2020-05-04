@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
-import { oneOf, func, string } from 'prop-types';
-import { reduxForm } from 'redux-form';
+import { oneOf, func, string, bool } from 'prop-types';
 
 import SlyEvent from 'sly/services/helpers/events';
 import { Link } from 'sly/components/atoms';
@@ -15,7 +14,7 @@ import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFo
 import ImportantCovid19UpdatesStepContainer from 'sly/containers/ImportantCovid19UpdatesStepContainer';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
 
-const StyledBannerNotification = pad(BannerNotification, 'large');
+const PaddedBannerNotification = pad(BannerNotification, 'large');
 
 const DecoratedLink = textDecoration(Link);
 
@@ -25,9 +24,10 @@ export default class BannerNotificationAdContainer extends PureComponent {
   static typeHydrationId = 'BannerNotificationAdContainer';
 
   static propTypes = {
-    type: oneOf(['askAgent', 'getOffer', 'homeCare', 'covid-19']).isRequired,
+    type: oneOf(['askAgent', 'getOffer', 'homeCare', 'covid-19', 'covid-19-community']).isRequired,
     notifyInfo: func.isRequired,
     profileId: string,
+    noMarginBottom: bool,
   };
 
   static defaultProps = {
@@ -39,7 +39,6 @@ export default class BannerNotificationAdContainer extends PureComponent {
     modalAction: CONSULTATION_REQUESTED,
     modalMessagePrompt: 'What can we help you with?',
     modalHeading: 'Our Local Senior Living Experts can help you with your search.',
-    covid19ContactType: null, // todo: remove when fieldbutton molecule is added
   };
 
   componentDidMount() {
@@ -86,32 +85,32 @@ export default class BannerNotificationAdContainer extends PureComponent {
     });
   };
 
-  handleAdmissionPoliciesContact = (next) => {
+  handleAdmissionPoliciesContact = () => {
     SlyEvent.getInstance().sendEvent({
       action: 'click-covid19-admission-policies-button',
       category: 'BannerNotificationAd',
     });
     this.setState({
-      covid19ContactType: 'admission-policies',
       modalHeading: 'Our Local Senior Living Expert will contact you as soon as possible with updated admissions policies.',
     });
-    next();
   };
 
-  handleInhomeCareContact = (next) => {
+  handleInhomeCareContact = () => {
     SlyEvent.getInstance().sendEvent({
       action: 'click-covid19-home-care-button',
       category: 'BannerNotificationAd',
     });
     this.setState({
-      covid19ContactType: 'home-care',
       modalHeading: 'Our in-home care agency partners will contact you as soon as possible with up to date information.',
     });
-    next();
   };
 
-  handleCovid19StepChange = (data) => {
-    console.log(data);
+  handleCovid19StepChange = ({ data: { typeOfUpdate } }) => {
+    if (typeOfUpdate === 'home-care') {
+      this.handleInhomeCareContact();
+    } else {
+      this.handleAdmissionPoliciesContact();
+    }
   };
 
   handleClose = () => {
@@ -132,45 +131,45 @@ export default class BannerNotificationAdContainer extends PureComponent {
   };
 
   render() {
-    const { type  } = this.props;
+    const { type, noMarginBottom } = this.props;
     const {
       isModalOpen,
       modalHeading,
       modalMessagePrompt,
       modalAction,
       modalMessagePlaceholder,
-      covid19ContactType,
     } = this.state;
+    const BannerComponent = noMarginBottom ? BannerNotification : PaddedBannerNotification;
 
     return (
       <>
         {type === 'getOffer' &&
-          <StyledBannerNotification palette="warning" childrenPalette="slate" onCloseClick={this.handleBannerCloseClick}>
+          <BannerComponent palette="warning" childrenPalette="slate">
             <Link onClick={this.handleGetInstantOfferClick}>
               Moving into senior living and selling your home? Check out Zillow Offers for a no obligation cash offer.
             </Link>
-          </StyledBannerNotification>
+          </BannerComponent>
         }
         {type === 'homeCare' &&
-          <StyledBannerNotification palette="warning" childrenPalette="slate" onCloseClick={this.handleBannerCloseClick}>
+          <BannerComponent palette="warning" childrenPalette="slate">
             <Link onClick={this.handleUseHomecareClick}>
               During Covid-19 In-Home Care can be a safe temporary option. Get Free Consultation
             </Link>
-          </StyledBannerNotification>
+          </BannerComponent>
         }
-        {type === 'covid-19' &&
-          <StyledBannerNotification palette="warning" childrenPalette="slate" onCloseClick={this.handleBannerCloseClick}>
+        {type.includes('covid-19') &&
+          <BannerComponent palette="warning" childrenPalette="slate">
             Important COVID-19 senior living and in-home care updates.&nbsp;
             <DecoratedLink onClick={this.handleCovid19Click}>
               Click here to learn more.
             </DecoratedLink>
-          </StyledBannerNotification>
+          </BannerComponent>
         }
         {isModalOpen &&
           <Modal onClose={this.handleClose}>
             <HeaderWithClose onClose={this.handleClose} />
             <PaddedHeaderWithCloseBody>
-              {type !== 'covid-19' &&
+              {!type.includes('covid-19') &&
                 <AskQuestionToAgentFormContainer
                   heading={modalHeading}
                   messagePrompt={modalMessagePrompt}
@@ -183,7 +182,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
                   hideMessage
                 />
               }
-              {type === 'covid-19' &&
+              {type.includes('covid-19') &&
                 <WizardController
                   formName="bannerAdCovid19"
                   onStepChange={this.handleCovid19StepChange}
@@ -216,6 +215,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
                         buttonKind="regular"
                         postSubmit={this.handleComplete}
                         actionType={modalAction}
+                        hasLocation={type !== 'covid-19-community'}
                         hideMessage
                       />
                     </WizardSteps>
