@@ -1,9 +1,9 @@
 import React from 'react';
+import { Field } from 'redux-form';
 import { arrayOf, string, shape, func } from 'prop-types';
 
 import textAlign from 'sly/components/helpers/textAlign';
 import { Heading } from 'sly/components/atoms';
-import Field from 'sly/components/molecules/Field';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
 const TextAlignCenterHeading = textAlign(Heading);
@@ -25,6 +25,7 @@ const ImportantCovid19UpdatesStep = ({
           key={label}
           name="typeOfUpdate"
           type="button"
+          buttonType="submit"
           component={ReduxField}
           inputValue={value}
           ghost

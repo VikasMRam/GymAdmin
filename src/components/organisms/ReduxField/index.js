@@ -41,9 +41,9 @@ const ReduxField = ({
   }
 
   if (fieldProps.type === 'button') {
-    fieldProps.onClick = props => input.onChange(fieldProps.inputValue, ...props);
+    fieldProps.onClick = () => input.onChange(fieldProps.inputValue);
   }
-  console.log(fieldProps);
+
   return <Field {...fieldProps} />;
 };
 

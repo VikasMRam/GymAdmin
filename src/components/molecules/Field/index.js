@@ -249,7 +249,7 @@ const Field = ({
     inputProps.customInput = <Input size={props.size} autocomplete="off" />;
   }
   if (type === 'button' && inputProps.buttonType) {
-    //inputProps.type = inputProps.buttonType;
+    inputProps.type = inputProps.buttonType;
   }
 
   return (
