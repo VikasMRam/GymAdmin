@@ -333,14 +333,14 @@ export default class CommunityDetailPage extends Component {
         {getHelmetForCommunityPage(community, location)}
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
         <PageEventsContainer />
-        <Header noBottomMargin/>
+        <Header noBottomMargin={bannerNotification || partnerAgent} />
         {bannerNotification && (
           <StyledBannerNotification>
             {bannerNotification}
           </StyledBannerNotification>
         )}
-        {!bannerNotification && (
-          <BannerNotificationAdContainer type="homeCare" />
+        {!bannerNotification && partnerAgent && (
+          <BannerNotificationAdContainer type="covid-19-community" />
         )}
         <CommunityDetailPageTemplate>
           <Wrapper>

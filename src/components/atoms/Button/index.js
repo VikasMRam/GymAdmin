@@ -111,7 +111,6 @@ export const styles = css`
   justify-content: center;
   text-decoration: none;
   font-weight: ${size('weight.medium')};
-  white-space: nowrap;
   font-size: ${fontSize};
   line-height: ${lineHeight};
   border: ${size('border.regular')} solid ${borderColor};

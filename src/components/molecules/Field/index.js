@@ -6,7 +6,7 @@ import loadable from '@loadable/component';
 import Helmet from 'react-helmet';
 
 import { size } from 'sly/components/themes';
-import { Label, Input, Icon, Block, Span } from 'sly/components/atoms';
+import { Label, Input, Icon, Block, Span, Button } from 'sly/components/atoms';
 import textAlign from 'sly/components/helpers/textAlign';
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
@@ -76,6 +76,8 @@ const getInputComponent = (type) => {
       return LocationSearch;
     case 'richtextarea':
       return RichTextArea;
+    case 'button':
+      return Button;
     default:
       return Input;
   }
@@ -246,6 +248,9 @@ const Field = ({
     inputProps.placeholderText = inputProps.placeholder;
     inputProps.customInput = <Input size={props.size} autocomplete="off" />;
   }
+  if (type === 'button' && inputProps.buttonType) {
+    inputProps.type = inputProps.buttonType;
+  }
 
   return (
     <Wrapper className={className} wideWidth={wideWidth} type={type} options={options} row={renderInputFirst}>
@@ -326,6 +331,7 @@ Field.propTypes = {
     'locationSearch',
     'daterange',
     'richtextarea',
+    'button',
   ]),
   placeholder: string,
   labelRight: node,

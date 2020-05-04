@@ -6,6 +6,7 @@ import { ifProp } from 'styled-tools';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { spacing as spacingPropType } from 'sly/propTypes/spacing';
 import borderRadius from 'sly/components/helpers/borderRadius';
+import fullWidth from 'sly/components/helpers/fullWidth';
 import { Block } from 'sly/components/atoms';
 import IconButton from 'sly/components/molecules/IconButton';
 import { size, palette } from 'sly/components/themes';
@@ -18,9 +19,10 @@ const styles = css`
   background: ${background};
   text-align: center;
   padding: ${padding};
-  display: flex;
-  justify-content: ${ifProp('hasCloseButton', 'initial', 'center')};
-  align-items: center;
+  ${ifProp('hasCloseButton', css`
+    display: flex;
+    align-items: center;
+  `)};
 `;
 
 const Wrapper = styled(Block)`
@@ -28,6 +30,8 @@ const Wrapper = styled(Block)`
 `;
 
 const BorderRadiusWrapper = borderRadius(Wrapper);
+
+const FullWidthContainer = fullWidth(styled.div``);
 
 const StyledIconButton = styled(IconButton)`
   padding-left: ${size('spacing.large')};
@@ -51,12 +55,12 @@ const BannerNotification = ({
 
   return hasBorderRadius ? (
     <BorderRadiusWrapper {...props}>
-      {children}
+      <FullWidthContainer>{children}</FullWidthContainer>
       {close}
     </BorderRadiusWrapper>
   ) : (
     <Wrapper {...props}>
-      {children}
+      <FullWidthContainer>{children}</FullWidthContainer>
       {close}
     </Wrapper>
   );
