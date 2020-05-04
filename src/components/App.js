@@ -34,8 +34,8 @@ import {
   ADMIN_DASHBOARD_CALL_DETAILS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
   ADMIN_DASHBOARD_AGENTS_PATH,
   ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
-  ADMIN_DASHBOARD_COMMUNITIES_PATH,
-  ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH,
+  DASHBOARD_COMMUNITIES_PATH,
+  DASHBOARD_COMMUNITIES_DETAIL_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import careTypes from 'sly/constants/careTypes';
 import hubTypes from 'sly/constants/hubTypes';
@@ -183,11 +183,11 @@ const routes = [
     component: DashboardAgentDetailPageContainer,
   },
   {
-    path: ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH,
+    path: DASHBOARD_COMMUNITIES_DETAIL_PATH,
     component: DashboardCommunitiesDetailPageContainer,
   },
   {
-    path: ADMIN_DASHBOARD_COMMUNITIES_PATH,
+    path: DASHBOARD_COMMUNITIES_PATH,
     component: DashboardCommunitiesIndexPageContainer,
   },
   {

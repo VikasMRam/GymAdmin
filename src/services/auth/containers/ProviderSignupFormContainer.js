@@ -25,7 +25,6 @@ const mapDispatchToProps = {
 };
 
 @withAuth
-
 @connect(null, mapDispatchToProps)
 
 export default class ProviderSignupFormContainer extends Component {

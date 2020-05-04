@@ -42,6 +42,10 @@ export const AGENT_DASHBOARD_MESSAGE_DETAILS_PATH = `${AGENT_DASHBOARD_PATH}/mes
 export const FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH = `${FAMILY_DASHBOARD_PATH}/messages/:id`;
 export const AGENT_DASHBOARD_PROFILE_PATH = `${AGENT_DASHBOARD_PATH}/my-profile`;
 
+
+export const DASHBOARD_COMMUNITIES_PATH = `${DASHBOARD_PATH}/communities`;
+export const DASHBOARD_COMMUNITIES_DETAIL_PATH = `${DASHBOARD_PATH}/communities/:id/:tab?`;
+
 export const SUMMARY = 'summary';
 export const ACTIVITY = 'activity';
 export const FAMILY_DETAILS = 'family-details';
@@ -66,5 +70,3 @@ export const ADMIN_DASHBOARD_CALL_DETAILS_PATH = `${ADMIN_DASHBOARD_CALLS_PATH}/
 export const ADMIN_DASHBOARD_AGENTS_PATH = `${AGENT_DASHBOARD_PATH}/agents`;
 export const ADMIN_DASHBOARD_AGENT_DETAILS_PATH = `${ADMIN_DASHBOARD_AGENTS_PATH}/:id/:tab?`;
 
-export const ADMIN_DASHBOARD_COMMUNITIES_PATH = `${ADMIN_DASHBOARD_PATH}/communities`;
-export const ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH = `${ADMIN_DASHBOARD_PATH}/communities/:id/:tab?`;

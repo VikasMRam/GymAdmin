@@ -35,7 +35,7 @@ const ProviderSignupForm = ({
     <Field
       name="name"
       label="Full Name"
-      type="name"
+      type="text"
       placeholder="First and Last Name"
       component={ReduxField}
     />

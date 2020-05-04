@@ -15,7 +15,7 @@ import {
   FAMILY_DASHBOARD_FAVORITES_PATH,
   AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_TASKS_PATH,
-  AGENT_DASHBOARD_PROFILE_PATH, ADMIN_DASHBOARD_COMMUNITIES_PATH,
+  AGENT_DASHBOARD_PROFILE_PATH, DASHBOARD_COMMUNITIES_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import { withAuth } from 'sly/services/api';
 import { withRedirectTo } from 'sly/services/redirectTo';
@@ -107,7 +107,7 @@ const customerAndAgentMenuItems = [
 
 const adminMenuItems = [
   {
-    name: 'Communities', to: generatePath(ADMIN_DASHBOARD_COMMUNITIES_PATH), section: 1, icon: 'house', onClick: ({ name }) => sendHeaderItemClickEvent(name),
+    name: 'Communities', to: generatePath(DASHBOARD_COMMUNITIES_PATH), section: 1, icon: 'house', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
 ];
 
