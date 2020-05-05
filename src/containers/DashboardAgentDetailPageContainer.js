@@ -38,6 +38,10 @@ export default class DashboardAgentDetailPageContainer extends Component {
     updateNote: func.isRequired,
   };
 
+  state = {
+    selectedConversation: null,
+  };
+
   onAddNote = (data, notifyError, notifyInfo, hideModal) => {
     const {
       createNote, agent, status,
@@ -125,8 +129,13 @@ export default class DashboardAgentDetailPageContainer extends Component {
       });
   };
 
+  setSelectedConversation = (conversation) => {
+    this.setState({ selectedConversation: conversation });
+  };
+
   render() {
     const { user, agent, notes, status, location, match } = this.props;
+    const { selectedConversation } = this.state;
     const { hasFinished: agentHasFinished, result: rawAgent  } = status.agent;
     const { hasFinished: userHasFinished } = status.user;
     const { hasFinished: notesHasFinished } = status.notes;
@@ -143,6 +152,8 @@ export default class DashboardAgentDetailPageContainer extends Component {
         isLoading={isLoading}
         currentTab={currentTab}
         location={location}
+        selectedConversation={selectedConversation}
+        setSelectedConversation={this.setSelectedConversation}
       />
     );
   }

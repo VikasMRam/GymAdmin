@@ -357,11 +357,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     // TODO: CHANGE TO HAS ROLE INSTEAD OF IS ROLE...
     let tabs = [summaryTab];
     /* eslint-disable no-bitwise */
-    if (roleID & ( AGENT_ND_ROLE | AGENT_ADMIN_ROLE)) {
+    if (roleID & (AGENT_ND_ROLE | AGENT_ADMIN_ROLE)) {
       tabs = tabs.concat(agentTabList.map(e => genTab(e)));
     }
     /* eslint-disable no-bitwise */
-    if (roleID & ( AGENT_ADMIN_ROLE | PLATFORM_ADMIN_ROLE)) {
+    if (roleID & (AGENT_ADMIN_ROLE | PLATFORM_ADMIN_ROLE)) {
       tabs = tabs.concat(agentAdminTabList.map(e => genTab(e)));
     }
     /* eslint-disable no-bitwise */
@@ -773,8 +773,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   refetchClient={refetchClient}
                   notifyInfo={notifyInfo}
                   notifyError={notifyError}
-                  accepted={!showAcceptRejectButtons || userIs(user, PLATFORM_ADMIN_ROLE)}
+                  accepted={!showAcceptRejectButtons  || userIs(user, PLATFORM_ADMIN_ROLE)}
                   canEditFamilyDetails={canEditFamilyDetails || userIs(user, PLATFORM_ADMIN_ROLE)}
+                  isAgentProUser={userIs(user, AGENT_ADMIN_ROLE)}
                   gender={gender}
                   lookingFor={lookingFor}
                   monthlyBudget={monthlyBudget}
@@ -837,19 +838,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               <SmallScreenBorderDiv>
                 {!conversation &&
                   <DashboardMessagesContainerWrapper>
-                    <Datatable
-                      id="conversations"
-                      filters={{}}
-                    >
-                      {datatable => (
-                        <DashboardMessagesContainer
-                          datatable={datatable}
-                          onConversationClick={setSelectedConversation}
-                          heading="Conversations"
-                          clientId={id}
-                        />
-                      )}
-                    </Datatable>
+                    <DashboardMessagesContainer
+                      onConversationClick={setSelectedConversation}
+                      heading="Conversations"
+                      clientId={id}
+                    />
                   </DashboardMessagesContainerWrapper>
                 }
                 {conversation &&
@@ -862,14 +855,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               </SmallScreenBorderDiv>
             )}
           </TabWrapper>
+          <DashboardMyFamilyStickyFooterContainer
+            options={stickyFooterOptions}
+            stage={stage}
+            stageLabel={`${group} - ${stage}`}
+            showAcceptRejectButtons={showAcceptRejectButtons && !isClientAdminUser}
+            user={user}
+          />
         </div>
-        <DashboardMyFamilyStickyFooterContainer
-          options={stickyFooterOptions}
-          stage={stage}
-          stageLabel={`${group} - ${stage}`}
-          showAcceptRejectButtons={showAcceptRejectButtons && !isClientAdminUser}
-          user={user}
-        />
       </StyledDashboardTwoColumnTemplate>
     );
   }

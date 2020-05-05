@@ -10,7 +10,7 @@ export default class WizardSteps extends Component {
     init: func.isRequired,
   };
 
-  componentDidMount() {
+  initSteps() {
     // NOTE: React caches the class objects, so utilizing same components can clash
     const { children, init } = this.props;
     // filter to remove children that are falsy values and not react elements
@@ -18,6 +18,14 @@ export default class WizardSteps extends Component {
     const stepNames = children.filter(c => c).map(c => c.props.name);
 
     init(stepNames);
+  }
+
+  componentDidMount() {
+    this.initSteps();
+  }
+
+  componentDidUpdate() {
+    this.initSteps();
   }
 
   render() {

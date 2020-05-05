@@ -707,6 +707,9 @@ const HomeCareNearMePage = ({
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {faqPage(faqs)}
+        {tocSiteNavigationLD("https://www.seniorly.com/in-home-care", tocList)}
+        {guideLD(title, description, "https://www.seniorly.com/in-home-care")}
       </Helmet>
       <HubHeader imagePath="react-assets/hub/home-care-cover.jpg"
          toc="home care"
@@ -728,10 +731,6 @@ const HomeCareNearMePage = ({
       </HubPageTemplate>
       <PhoneCTAFooter/>
       <Footer />
-
-      {faqPage(faqs)}
-      {tocSiteNavigationLD("https://www.seniorly.com/in-home-care", tocList)}
-      {guideLD(title, description, "https://www.seniorly.com/in-home-care")}
     </>
 
   );

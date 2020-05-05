@@ -73,6 +73,8 @@ const Sidebar = styled.aside`
 
 const Body = styled.main`
   height: 100%;
+  display: flex;
+  flex-direction: column;
   background-color: ${palette('grey.background')};
   grid-area: body;
 
