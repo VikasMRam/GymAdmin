@@ -116,7 +116,7 @@ export default class AuthContainer extends Component {
                   component={SignupFormContainer}
                   name="Signup"
                   onLoginClicked={() => (delete authenticated.options.register && goto('Login'))}
-                  onProviderClicked={() => (delete authenticated.options.register && (authenticated.options.provider = true) && goto('ProviderSignupFormContainer'))}
+                  onProviderClicked={() => goto('ProviderSignup')}
                   onSubmit={() => goto('CustomerSignupConfirmation')}
                 />
                 <WizardStep
