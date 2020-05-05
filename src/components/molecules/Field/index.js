@@ -23,7 +23,7 @@ import Autocomplete from 'sly/components/molecules/Autocomplete';
 import CheckboxInput from 'sly/components/molecules/CheckboxInput';
 import LocationSearch from 'sly/components/molecules/LocationSearch';
 import DatepickerStyles from 'sly/components/themes/DatepickerStyles';
-import CommunityAutocomplete from 'sly/components/molecules/CommunityAutocomplete';
+import CommunityAutoComplete from 'sly/components/molecules/CommunityAutoComplete';
 
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/components/atoms/Select'));
@@ -72,7 +72,7 @@ const getInputComponent = (type) => {
     case 'autocomplete':
       return Autocomplete;
     case 'community':
-      return CommunityAutocomplete;
+      return CommunityAutoComplete;
     case 'checkbox':
     case 'boolean':
       return CheckboxInput;
