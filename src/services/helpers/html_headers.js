@@ -20,7 +20,12 @@ const getSDForCommunity = ({
   name, url, address, propRatings = {}, startingRate, gallery = {}, propInfo = {},
 }) => {
   const { reviewsValue, numReviews } = propRatings;
-  const { communityPhone } = propInfo;
+  const { communityPhone,
+    communityHighlights,
+    personalSpace,
+    communitySpace,
+    nonCareServices,
+    languages, } = propInfo;
 
   const ld = {};
   ld['@context'] = 'http://schema.org';
@@ -68,25 +73,30 @@ const getSDForCommunity = ({
 
   // https://schema.org/amenityFeature
   // Copied from sly/components/organisms/CommunityAmenities
-  const {
-    communityHighlights = [],
-    personalSpace = [],
-    communitySpace = [],
-    nonCareServices = [],
-    languages = [],
-  } = propInfo;
-  const amenities = [
-    ...communityHighlights,
-    ...personalSpace,
-    ...communitySpace,
-    ...nonCareServices,
-    ...languages,
-  ];
-  ld.amenityFeature = amenities.map(amenity => ({
-    '@type': 'LocationFeatureSpecification',
-    name: amenity,
-    value: 'True',
-  }));
+  let amenities = [];
+  if (communityHighlights) {
+    amenities = amenities.concat(communityHighlights)
+  }
+  if (personalSpace) {
+    amenities = amenities.concat(personalSpace)
+  }
+  if (communitySpace) {
+    amenities = amenities.concat(communitySpace)
+  }
+  if (nonCareServices) {
+    amenities = amenities.concat(nonCareServices)
+  }
+  if (languages) {
+    amenities = amenities.concat(languages)
+  }
+  if (amenities.length > 0 ) {
+    ld.amenityFeature = amenities.map(amenity => ({
+      '@type': 'LocationFeatureSpecification',
+      name: amenity,
+      value: 'True',
+    }));
+
+  }
 
   return ld;
 };
@@ -265,6 +275,7 @@ export const getHelmetForSearchPage = ({
 
 
 export const getHelmetForCommunityPage = (community, location) => {
+  console.log(community);
   const {
     name, mainImage, address, propInfo, propRatings, similarProperties, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions,
   } = community;
@@ -273,6 +284,7 @@ export const getHelmetForCommunityPage = (community, location) => {
     line1, city, state, country, zip, latitude, longitude,
   } = address;
   const { websiteUrl, websiteTitle, websiteMetaDescription, communityPhone } = propInfo;
+  console.log(propRatings);
   const { numReviews, reviewsValue } = propRatings;
 
   // const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);

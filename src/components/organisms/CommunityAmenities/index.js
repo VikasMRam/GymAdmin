@@ -21,30 +21,42 @@ const Wrapper = styled(CollapsibleBlock)`
 const CommunityAmenities = ({ community }) => {
   const { propInfo } = community;
   const {
-    communityHighlights = [],
-    personalSpace = [],
-    communitySpace = [],
-    nonCareServices = [],
-    languages = [],
+    communityHighlights,
+    personalSpace,
+    communitySpace,
+    nonCareServices,
+    languages,
   } = propInfo;
-  const amenities = [
-    ...communityHighlights,
-    ...personalSpace,
-    ...communitySpace,
-    ...nonCareServices,
-    ...languages,
-  ];
-  const amenitiesComponents = amenities.map(amenity => (
-    <IconItem
-      key={amenity}
-      icon="check"
-      iconPalette="secondary"
-      iconVariation="dark35"
-      borderless={false}
-    >
-      {amenity}
-    </IconItem>
-  ));
+  let amenities = [];
+  if (communityHighlights) {
+    amenities = amenities.concat(communityHighlights)
+  }
+  if (personalSpace) {
+    amenities = amenities.concat(personalSpace)
+  }
+  if (communitySpace) {
+    amenities = amenities.concat(communitySpace)
+  }
+  if (nonCareServices) {
+    amenities = amenities.concat(nonCareServices)
+  }
+  if (languages) {
+    amenities = amenities.concat(languages)
+  }
+  let amenitiesComponents;
+  if (amenities.length > 0 ) {
+    amenitiesComponents = amenities.map(amenity => (
+      <IconItem
+        key={amenity}
+        icon="check"
+        iconPalette="secondary"
+        iconVariation="dark35"
+        borderless={false}
+      >
+        {amenity}
+      </IconItem>
+    ));
+  }
 
   return (
     <section>
@@ -53,9 +65,11 @@ const CommunityAmenities = ({ community }) => {
           No information about amenities currently available
         </Paragraph>
       }
-      <Wrapper minHeight="regular">
-        {amenitiesComponents}
-      </Wrapper>
+      {amenities.length > 0 &&
+        <Wrapper minHeight="regular">
+          {amenitiesComponents}
+        </Wrapper>
+      }
     </section>
   );
 };

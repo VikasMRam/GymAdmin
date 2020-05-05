@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { func } from 'prop-types';
 
 
-import { size } from 'sly/components/themes';
+import { size, gridColumns, assetPath } from 'sly/components/themes';
 import { getHelmetForCommunityPartnersPage } from 'sly/services/helpers/html_headers';
 import { partnerCommunityFAQs } from 'sly/constants/communities';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
@@ -15,7 +15,7 @@ import Footer from 'sly/components/organisms/Footer';
 import PartnerWithSlyCommunities from 'sly/components/molecules/PartnerWithSlyCommunities';
 import FactBox from 'sly/components/molecules/FactBox';
 import { ColumnWrapper } from 'sly/components/molecules/MostSearchedRegions';
-import PartnerReview from 'sly/components/molecules/PartnerReview';
+import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import BecomeSlyCommunityPartner from 'sly/components/molecules/BecomeSlyCommunityPartner';
 import FAQSection from 'sly/components/organisms/FAQSection';
 
@@ -78,14 +78,52 @@ const StyledColumnWrapper = styled(ColumnWrapper)`
   }
 `;
 
-const MSPAColumnWrapper = styled(ColumnWrapper)`
-  grid-template-columns: auto;
-  grid-row-gap: ${size('spacing.xxxLarge')};
+const ThreeColumnWrapper = styled.div`
+  margin-bottom: ${size('spacing.xLarge')};
+  ${gridColumns(1, size('spacing.xLarge'))};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    grid-template-columns: repeat(2, 1fr);
+    ${gridColumns(3, size('spacing.xLarge'))};
   }
 `;
+
+const CWTImage = styled(ResponsiveImage)`
+  margin-bottom: ${size('spacing.regular')};
+  height: ${size('picture.tiny.height')};
+`;
+
+const CWTColumnWrapper = styled.div`
+  margin-bottom: ${size('spacing.xxLarge')};
+  > * {
+    margin-right: ${size('spacing.large')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    justify-content: center;
+    > * {
+      margin-right: ${size('spacing.huge')};
+    }
+  }
+`;
+
+
+const familiesWeHaveHelpedTiles = [
+  {
+    image: 'react-assets/home/meet-others/Sharon.jpg',
+    title: 'Sharon T.',
+    description: '"I felt like Seniorly was a lifesaver! I was daunted at the prospect of going through so many possibilities to find the right fit for my mom in such a short time, while taking care of so many other things that need attending as we deal with the aftermath of her stroke."',
+  },
+  {
+    image: 'react-assets/home/meet-others/Kathy.jpg',
+    title: 'Aileen H.',
+    description: '"I was very frustrated that every time I wanted to see the price of a facility that I had to give my phone number and I would get bombarded with calls. Your site was the only one that allowed me to search on my own time and it listed more info than other sites."',
+  },
+  {
+    image: 'react-assets/home/meet-others/Henry.jpg',
+    title: 'Henry W.',
+    description: '"We were lucky enough to find a great place for my father-in-law. Seniorly is a really helpful website, very helpful and informative. Thank you so much for what you do."',
+  },
+];
 
 const CommunityPartnersPage = ({
    onRegisterClick
@@ -99,6 +137,15 @@ const CommunityPartnersPage = ({
       </HeroWrapper>
     </>
   );
+
+  const familiesWeHaveHelpedTilesComponents = familiesWeHaveHelpedTiles.map(familyWeHaveHelped => (
+    <MeetOthersTile
+      key={familyWeHaveHelped.title}
+      image={familyWeHaveHelped.image}
+      title={familyWeHaveHelped.title}
+      description={familyWeHaveHelped.description}
+    />
+  ));
 
   return (
     <>
@@ -128,13 +175,10 @@ const CommunityPartnersPage = ({
       </TemplateContent>
       <Hr />
       <TemplateContent>
-        <StyledSection title="Meet Seniorly Partner Agents">
-          <MSPAColumnWrapper>
-            <PartnerReview name="Steve Villa" location="San Francisco, California" image="https://d1qiigpe5txw4q.cloudfront.net/uploads/d7ec3977575a476a64e7210857d64985/Steve_Villa_sd.jpg" review="'Steve was very professional, was very knowledgeable, extremely resourceful and most accommodating. It's been a pleasure to work with him. Thank you!'- Raymond T" />
-            <PartnerReview name="Rijan & Sarah Shrestha" location="Phoenix, Arizona" image="https://d1qiigpe5txw4q.cloudfront.net/uploads/fa166abaea9307fae330875fb498eb43/sara%2520and%2520R%25204x4_sd.jpg" review="I am so very grateful for Rijan, Seniorly and Assisted Living Locators. They helped find the perfect place for my daughter, and were so service-oriented. I would recommend this service, and Rijan especially, to anyone looking to locate senior housing. - Donna B." />
-            <PartnerReview name="David Greenwood" location="Springfield, Virginia" image="https://d1qiigpe5txw4q.cloudfront.net/uploads/a352ccccf80f218594eba5772de13b07/David_Greenwood_sd.jpg" review="Mr Greenwood has been nothing but wonderful, very helpful and I trust him. It's so nice to feel like I've got someone I can count on through this arduous and painful process. I will recommend this service to everyone I know. - Maureen B." />
-            <PartnerReview name="Megan Wiswell" location="San Diego, California" image="https://d1qiigpe5txw4q.cloudfront.net/uploads/2adf1680a1abef2901f053e7bcaaf55f/Megan_Wiswell_sd.jpg" review="Good morning. Megan Wiswell is amazing. I would recommend her anytime. She is thorough and friendly. She knew the area and respected the budget I was working with. (Didn’t try to push me somewhere that wouldn’t work) I really appreciated that because she didn’t make me feel bad. She said “it is what it is” and we work with it. She’s a good listener and followed up to make sure I had what I needed. Thank you to all of you for being there for me. It is a steep learning curve and you don’t need it until you need it. Blessings for all - Sue G" />
-          </MSPAColumnWrapper>
+        <StyledSection title="What Our Customers Are Saying About Us">
+          <ThreeColumnWrapper>
+            {familiesWeHaveHelpedTilesComponents}
+          </ThreeColumnWrapper>
         </StyledSection>
       </TemplateContent>
       <BecomeSlyCommunityPartner onRegisterClick={onRegisterClick} />
@@ -143,6 +187,22 @@ const CommunityPartnersPage = ({
           <FAQSection faqs={partnerCommunityFAQs} />
         </TemplateContent>
       </StyledSection>
+      <TemplateContent>
+        <StyledSection title="Corporate Senior Living Partners">
+          <CWTColumnWrapper>
+            <CWTImage src={assetPath('images/home/companies-we-trust/Brookdale_BW.png')} alt="Brookdale Senior Living Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/SunriseSeniorLiving_BW.png')} alt="SunriseSenior Living Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/HolidayRetirement_BW.png')} alt="Holidat Retirement" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/PacificaSeniorLiving_BW.png')} alt="Pacifica Senior Living Logo" />
+          </CWTColumnWrapper>
+          <CWTColumnWrapper>
+            <CWTImage src={assetPath('images/home/companies-we-trust/HomeCareAssistance_BW.png')} alt="Home Care Assistance Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/FCA_BW.png')} alt="Family Caregiver Alliance Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/SeniorCareAuthority_BW.png')} alt="SeniorCareAuthority Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/AssistedLivingLocators_BW.png')} alt="Assisted Living Locators Logo" />
+          </CWTColumnWrapper>
+        </StyledSection>
+      </TemplateContent>
       <Footer />
     </>
   );

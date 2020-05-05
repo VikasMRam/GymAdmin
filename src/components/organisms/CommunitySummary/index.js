@@ -124,7 +124,7 @@ const getPricingAndRating = (startingRate, reviewsValue, numReviews, goToReviews
 };
 
 const CommunitySummary = ({
-  community, innerRef, isAdmin, onConciergeNumberClicked, onCommunityNumberClicked, className,
+  community, innerRef, isAdmin, onConciergeNumberClicked, onCommunityNumberClicked, onCommunityClaimClicked, className,
   onFavouriteClick, isFavorited, onShareClick, goToReviews, searchParams,
 }) => {
   const {
@@ -208,7 +208,6 @@ const CommunitySummary = ({
                 </TooltipContent>
                 }
                 <br/>
-                <br/>
               </>
           }
 
@@ -222,6 +221,11 @@ const CommunitySummary = ({
             This phone number will connect you to the community.
           </TooltipContent>
           }
+          <br/>
+          Manage this community?&nbsp;
+          <Link href={`/partners/communities?prop=${community.id}`} onClick={onCommunityClaimClicked}>
+            Click here to claim this profile
+          </Link>
         </div>
         <div>
           <StyledIconButton ghost transparent icon="share" onClick={onShareClick}>
@@ -242,6 +246,7 @@ CommunitySummary.propTypes = {
   innerRef: object,
   isAdmin: bool,
   onConciergeNumberClicked: func,
+  onCommunityClaimClicked: func,
   className: string,
   onFavouriteClick: func,
   onShareClick: func,
