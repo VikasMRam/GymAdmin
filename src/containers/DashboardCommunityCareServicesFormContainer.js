@@ -10,7 +10,7 @@ import { query, prefetch } from 'sly/services/api';
 import DashboardCommunityCareServicesForm from 'sly/components/organisms/DashboardCommunityCareServicesForm';
 import withUser from 'sly/services/api/withUser';
 import { userIs } from 'sly/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
 
 const formName = 'DashboardCommunityCareServicesForm';
 
@@ -53,7 +53,7 @@ export default class DashboardCommunityCareServicesFormContainer extends Compone
     const { typeCare } = propInfo;
     // console.log(status);
     // console.log(JSON.stringify(community));
-    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
+    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
     const initialValues = pick(
       status.community.result.attributes,
       [

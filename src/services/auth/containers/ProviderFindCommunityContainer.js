@@ -3,9 +3,8 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { connect } from 'react-redux';
 import { func, object } from 'prop-types';
 
-import { PROVIDER_OD_ROLE } from 'sly/constants/roles';
-import { withAuth } from 'sly/services/api';
-import { createValidator, required, email, minLength, usPhone } from 'sly/services/validation';
+import { withAuth, normalizeResponse, query } from 'sly/services/api';
+import { createValidator, required } from 'sly/services/validation';
 import ProviderFindCommunity from 'sly/services/auth/components/ProviderFindCommunity';
 
 const validate = createValidator({
@@ -23,22 +22,41 @@ const mapDispatchToProps = {
 
 @withAuth
 @connect(null, mapDispatchToProps)
+@query('claimCommunity', 'claimCommunity')
 
 export default class ProviderFindCommunityContainer extends Component {
   static propTypes = {
     authenticated: object,
+    claimCommunity: func,
   };
 
   state = {
-    community: {},
+    community: null,
   };
 
+  componentDidMount() {
+    const { authenticated } = this.props;
+    if (authenticated && authenticated.options && authenticated.options.community) {
+      this.setState({ community: authenticated.options.community });
+    }
+  }
+
   handleSubmit = (data) => {
-    const { authenticated, onClaimApproved, onApprovalNeeded } = this.props;
+    const { authenticated, claimCommunity, onClaimApproved, onApprovalNeeded } = this.props;
     const { community } = this.state;
     clearSubmitErrors();
-    console.log(data);
-    console.log(community);
+
+    // send claim request
+    return claimCommunity({id: community.value})
+      .then((resp) => {
+        authenticated.options.community = community;
+        resp.status === 200 ? onClaimApproved() : onApprovalNeeded()
+      })
+      .catch((data) => {
+        // TODO: Need to set a proper way to handle server side errors
+        const errorMessage = Object.values(data.body.errors).join('. ');
+        throw new SubmissionError({ _error: errorMessage });
+      });
   };
 
   onSelectChange = (option) => {

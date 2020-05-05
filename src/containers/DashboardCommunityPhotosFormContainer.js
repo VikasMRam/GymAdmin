@@ -11,7 +11,7 @@ import { galleryPropType, imagePropType } from 'sly/propTypes/gallery';
 import { query, prefetch, getRelationship } from 'sly/services/api';
 import withUser from 'sly/services/api/withUser';
 import { userIs } from 'sly/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
 import DashboardCommunityPhotosForm from 'sly/components/organisms/DashboardCommunityPhotosForm';
 import { purgeFromRelationships, invalidateRequests } from 'sly/services/api/actions';
 import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
@@ -211,7 +211,7 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
     const { gallery, user, status, currentValues, images: discardImagesProp, deleteImage: discardDeleteImage, ...props } = this.props;
     const { images } = this.state;
 
-    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
+    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
 
     const initialValues = pick(
       status.community.result.attributes,

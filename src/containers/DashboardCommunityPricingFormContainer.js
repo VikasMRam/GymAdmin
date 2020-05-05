@@ -10,7 +10,7 @@ import userProptype from 'sly/propTypes/user';
 import { query, prefetch } from 'sly/services/api';
 import withUser from 'sly/services/api/withUser';
 import { userIs } from 'sly/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
 import DashboardCommunityPricingForm from 'sly/components/organisms/DashboardCommunityPricingForm';
 import { connect } from 'react-redux';
 
@@ -56,7 +56,7 @@ export default class DashboardCommunityPricingFormContainer extends Component {
   render() {
     const { community, status, user, currentValues, ...props } = this.props;
 
-    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
+    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
 
     const initialValues = pick(
       status.community.result.attributes,

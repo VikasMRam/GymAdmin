@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { func, object } from 'prop-types';
 
-import { withAuth, withUser } from 'sly/services/api';
+import { withAuth, normalizeResponse, query, withUser } from 'sly/services/api';
 import withNotification from 'sly/controllers/withNotification';
 import { withProps } from 'sly/services/helpers/hocs';
 import { parseURLQueryParams } from 'sly/services/helpers/url';
@@ -19,17 +19,42 @@ const label = 'register';
 @withProps(({ match, location }) => ({
   queryParams: parseURLQueryParams(location.search),
 }))
+
+@query('getCommunity', 'getCommunity')
+
 export default class CommunityPartnersPageContainer extends PureComponent {
   static propTypes = {
     ensureAuthenticated: func,
     queryParams: object,
     user: object,
     notifyError: func,
-
+    getCommunity: func,
   };
 
+  state = {
+    community: {}
+  };
+
+  componentDidMount() {
+    const { queryParams, getCommunity } = this.props;
+    if ( !queryParams ) {
+      return
+    }
+    const { prop } = queryParams;
+    if ( !prop ) {
+      return
+    }
+    return getCommunity({id: prop}).then((resp) => {
+      const community = normalizeResponse(resp.body);
+      return this.setState({
+        community
+      });
+    });
+  }
+
   onRegisterClick = () => {
-    const { ensureAuthenticated, queryParams, user, notifyError } = this.props;
+    const { ensureAuthenticated, user, notifyError } = this.props;
+    const { community } = this.state;
     if (user) {
       notifyError("Cannot create an account as user is already logged in.")
     }
@@ -39,10 +64,10 @@ export default class CommunityPartnersPageContainer extends PureComponent {
       label,
     });
     const data = {register:true, provider:true};
-    if (queryParams['prop']) {
-      data.prop = queryParams['prop']
+    console.log(community);
+    if (community.id) {
+      data.prop = {value: community.id, label: `${community.name}: ${community.address.city}, ${community.address.state}`}
     }
-    console.log(data);
     ensureAuthenticated(data);
   };
 

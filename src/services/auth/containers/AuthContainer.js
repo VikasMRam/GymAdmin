@@ -102,7 +102,7 @@ export default class AuthContainer extends Component {
                 <WizardStep
                   component={LoginFormContainer}
                   name="Login"
-                  onRegisterClick={() => goto('ProviderFindCommunity')}
+                  onRegisterClick={() => goto('Signup')}
                   onResetPasswordClick={() => goto('ResetPassword')}
                   onSubmit={authenticateSuccess}
                 />
@@ -135,7 +135,7 @@ export default class AuthContainer extends Component {
                   name="ProviderFindCommunity"
                   onClaimApproved={() => (goto('ProviderConfirmation'))}
                   onApprovalNeeded={() => (goto('ProviderClaimNeedsApproval'))}
-                  onNotFound={() => (goto('ProviderClaimNeedsApproval'))}
+                  onNotFound={() => (goto('ProviderCommunityNotFound'))}
                 />
                 <WizardStep
                   component={ProviderConfirmation}

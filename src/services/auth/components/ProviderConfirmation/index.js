@@ -30,18 +30,17 @@ export default class CustomerSignupConfirmation extends Component {
       <>
         {mode === 'Approved' &&
           <Wrapper>
-            <StyledIcon icon="round-checkmark" palette="secondary" variation="dark35" size="large" />
             <StyledHeading> Our team will contact you to verify your details to complete the process.</StyledHeading>
-            <Paragraph> In the meantime you can begin editingthis community's details. Please note: any details will only become public after being approved by Seniorly</Paragraph>
-            <LargePaddedFullWidthButton href={DASHBOARD_COMMUNITIES_PATH}>Continue</LargePaddedFullWidthButton>
+            <Paragraph> In the meantime you can begin editing this community's details. Please note: any details will only become public after being approved by Seniorly</Paragraph>
+            <LargePaddedFullWidthButton href={DASHBOARD_COMMUNITIES_PATH}>Finish</LargePaddedFullWidthButton>
 
           </Wrapper>
         }
         {mode === 'NotFound' &&
         <Wrapper>
           <StyledHeading> You can add the community in your dashboard.</StyledHeading>
-          <Paragraph>Please note: any details will only become public after being approved by Seniorly</Paragraph>
-          <LargePaddedFullWidthButton href={DASHBOARD_COMMUNITIES_PATH}>Continue to dashboard</LargePaddedFullWidthButton>
+          <Paragraph> Please note: any details will only become public after being approved by Seniorly</Paragraph>
+          <LargePaddedFullWidthButton href={DASHBOARD_COMMUNITIES_PATH}>Continue</LargePaddedFullWidthButton>
         </Wrapper>
         }
         {mode === 'NeedApproval' &&

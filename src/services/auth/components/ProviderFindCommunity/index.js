@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, bool, string, arrayOf, object } from 'prop-types';
+import { func, bool, string, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -33,31 +33,18 @@ export default class ProviderFindCommunity extends Component {
     community: object,
   };
 
-  state = {
-    inputValue: ''
-  };
-
-  onInputChange = (newValue) => {
-    const inputValue = newValue.replace(/\W/g, '');
-    this.setState({ inputValue });
-    return inputValue;
-  };
-
   render() {
     const { handleSubmit, submitting, error, onNotFound, onSelectChange, community } = this.props;
     return (
-      <>
+      <form onSubmit={handleSubmit}>
         <StyledHeading size="subtitle">What is the name of the community you want to manage?</StyledHeading>
-        <Heading>This is the community: {JSON.stringify(community)}</Heading>
         <Field
           name="community"
           label="Community Name"
           type="community"
           placeholder="Enter Community Name"
-          cacheOptions
           value={community}
           onChange={option =>  onSelectChange(option)}
-          //onInputChange={this.onInputChange}
         />
         <StyledButton type="submit" disabled={submitting}>
           Continue
@@ -66,7 +53,7 @@ export default class ProviderFindCommunity extends Component {
         <Continue size="caption">
           <Link onClick={onNotFound}>Can't find my community?</Link>
         </Continue>
-      </>
+      </form>
     );
   }
 }

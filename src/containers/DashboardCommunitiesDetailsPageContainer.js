@@ -55,6 +55,9 @@ export default class DashboardCommunitiesDetailsPageContainer extends Component 
       showModal,
     } = this.props;
 
+    console.log(user);
+    console.log(community);
+
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && community && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
       const activityPath = generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, {

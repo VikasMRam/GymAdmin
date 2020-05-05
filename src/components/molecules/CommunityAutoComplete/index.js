@@ -5,7 +5,7 @@ import { getCommunityAutocompleteValues } from 'sly/services/datatable/helpers';
 import { normalizeResponse } from 'sly/services/api';
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/components/atoms/Select'));
-const CommunityFilterApiEndpoint = "/v0/marketplace/communities?fields=name&filter[name]=";
+const CommunityFilterApiEndpoint = "/v0/marketplace/communities/find?fields=name&filter[name]=";
 
 export default class CommunityAutocomplete extends Component {
 
