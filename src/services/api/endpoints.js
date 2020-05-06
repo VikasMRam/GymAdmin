@@ -40,6 +40,7 @@ export default {
   claimCommunity: { method: get, path: '/marketplace/communities/:id/claim' },
   getCommunities: { method: get, path: '/marketplace/communities' },
   updateCommunity: { method: patch, path: '/marketplace/communities/:id' },
+  createCommunity: { method: post, path: '/marketplace/communities' },
   updateRgsAux: { method: patch, path: '/marketplace/rgsAux/:id' },
 
   createImage: { method: post, path: '/platform/images' },

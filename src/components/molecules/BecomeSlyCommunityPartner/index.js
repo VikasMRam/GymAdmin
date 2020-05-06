@@ -46,7 +46,7 @@ const BecomeSlyCommunityPartner = ({ palette, onRegisterClick }) => (
       <div>PARTNERS</div>
     </TopWrapper>
     <StyledBlock palette="white" size="title">Become A Seniorly Partner Community</StyledBlock>
-    <StyledButton onClick="onRegisterClick" kind="jumbo" palette="white">Create Account</StyledButton>
+    <StyledButton onClick={onRegisterClick} kind="jumbo" palette="white">Create Account</StyledButton>
   </Wrapper>
 );
 

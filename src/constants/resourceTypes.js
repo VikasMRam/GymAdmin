@@ -19,3 +19,7 @@ export const UUIDACTION_RESOURCE_TYPE = 'UUIDAction';
 export const CONTACT_RESOURCE_TYPE = 'Contact';
 
 export const SLY_ENTITY_RESOURCE_TYPE = 'SlyEntity';
+
+export const COMMUNITY_RESOURCE_TYPE = 'Community';
+
+export const ADDRESS_RESOURCE_TYPE = 'Address';

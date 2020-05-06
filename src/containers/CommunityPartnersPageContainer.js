@@ -64,9 +64,8 @@ export default class CommunityPartnersPageContainer extends PureComponent {
       label,
     });
     const data = {register:true, provider:true};
-    console.log(community);
     if (community.id) {
-      data.prop = {value: community.id, label: `${community.name}: ${community.address.city}, ${community.address.state}`}
+      data.community = {value: community.id, label: `${community.name}: ${community.address.city}, ${community.address.state}`}
     }
     ensureAuthenticated(data);
   };

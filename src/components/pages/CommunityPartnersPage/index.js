@@ -169,7 +169,7 @@ const CommunityPartnersPage = ({
           <StyledColumnWrapper>
             <FactBox title="3M+" description="Visits to our website per year" />
             <FactBox title="50K+" description="Families helped per year" />
-            <FactBox title="$35K+" description="Communities listed on Seniorly" />
+            <FactBox title="35K+" description="Communities listed on Seniorly" />
           </StyledColumnWrapper>
         </StyledSection>
       </TemplateContent>

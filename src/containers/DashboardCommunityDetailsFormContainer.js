@@ -6,7 +6,6 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
-import clientPropType from 'sly/propTypes/client';
 import userProptype from 'sly/propTypes/user';
 import { query, prefetch, getRelationship } from 'sly/services/api';
 import DashboardCommunityDetailsForm from 'sly/components/organisms/DashboardCommunityDetailsForm';
@@ -47,7 +46,7 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
     user: userProptype,
-    community: clientPropType.isRequired,
+    community: object.isRequired,
     match: object.isRequired,
     status: object,
     address: object,
