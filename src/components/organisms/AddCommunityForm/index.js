@@ -16,9 +16,6 @@ const statesOptions = states.map(s => <option key={s} value={s}>{s}</option>);
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
 
-const Form = styled.form``;
-Form.displayName = 'Form';
-
 const FormSection = styled.div`
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
   padding-bottom: 0;
@@ -50,7 +47,7 @@ export default class AddCommunityForm extends Component {
     } = this.props;
 
     return (
-      <Form onSubmit={handleSubmit} {...props}>
+      <form onSubmit={handleSubmit}>
         <div>
           <FormSection>
             <FormSectionHeading weight="medium" size="title">Add New Community</FormSectionHeading>
@@ -139,7 +136,7 @@ export default class AddCommunityForm extends Component {
             Create Community
           </StyledButton>
         </FormBottomSection>
-      </Form>
+      </form>
     );
   }
 }

@@ -38,29 +38,29 @@ export default class AddCommunityFormContainer extends Component {
     onCancel: func.isRequired
   };
 
-  handleSubmit = (values) => {
+  handleSubmit = (data) => {
     const { createCommunity, notifyError, notifyInfo, onSuccess, onCancel } = this.props;
-    const { name, communityPhone, typeCare, line1, line2, city, state, zip,} = values;
+    const { name, communityPhone, typeCare, line1, line2, city, state, zip } = data;
 
     const payload = {
       type: COMMUNITY_RESOURCE_TYPE,
       attributes: {
-        name,
+        name: name,
         propInfo: {
-          communityPhone,
-          typeCare,
+          communityPhone: communityPhone,
+          typeCare: typeCare,
         }
       },
-      relationship: {
+      relationships: {
         address: {
           data: {
             type: ADDRESS_RESOURCE_TYPE,
             attributes: {
-              line1,
-              line2,
-              city,
-              state,
-              zip,
+              line1: line1,
+              line2: line2,
+              city: city,
+              state: state,
+              zip: zip,
             }
           }
         }
@@ -75,7 +75,7 @@ export default class AddCommunityFormContainer extends Component {
           onSuccess(normJsonApi(resp));
         }
       })
-      .catch(() => notifyError(`${attributes.name} could not be created`));
+      .catch(() => notifyError(`${name} could not be created`));
   };
 
   render() {
