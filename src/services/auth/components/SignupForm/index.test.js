@@ -34,11 +34,4 @@ describe('SignupForm', () => {
     expect(handleSubmit).toHaveBeenCalled();
   });
 
-  it('handles onLoginClicked', () => {
-    const handleSubmit = jest.fn();
-    const onLoginClicked = jest.fn();
-    const wrapper = wrap({ handleSubmit, onLoginClicked });
-    wrapper.find('Link').simulate('click');
-    expect(onLoginClicked).toHaveBeenCalled();
-  });
 });
