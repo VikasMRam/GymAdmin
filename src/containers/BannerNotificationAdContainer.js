@@ -197,11 +197,11 @@ export default class BannerNotificationAdContainer extends PureComponent {
                         name="Choose"
                         buttons={[
                           {
-                            label: 'Get information about senior living communities that are currently accepting new residents',
+                            label: 'Get updated info on senior living communities near you',
                             value: 'admission-policies',
                           },
                           {
-                            label: 'Get information about in-home caregivers if you are interested in delaying your move',
+                            label: 'Get updated info on in-home care agencies near you',
                             value: 'home-care',
                           },
                         ]}
