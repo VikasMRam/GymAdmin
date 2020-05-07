@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import ProviderSignupForm from 'sly/services/auth/components/ProviderSignUpForm';
+import ProviderSignupForm from 'sly/services/auth/components/ProviderSignupForm';
 import { Block } from 'sly/components/atoms/index';
 
 
