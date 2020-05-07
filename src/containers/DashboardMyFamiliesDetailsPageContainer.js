@@ -313,6 +313,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
                 clients={clientsWithSameContacts || []}
+                requestStatus={status}
                 client={client}
                 rawClient={rawClient}
                 currentTab={match.params.tab || SUMMARY}
