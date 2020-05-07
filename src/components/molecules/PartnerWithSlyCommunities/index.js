@@ -29,9 +29,7 @@ const ContentWrapper = styled.div`
 `;
 
 
-const PartnerWithSlyCommunities = ({
-  onRegisterClick
-  }) => (
+const PartnerWithSlyCommunities = ({ onRegisterClick }) => (
   <Wrapper>
     <ContentWrapper>
       <TitleBlock size="hero">Partner with Seniorly, Build Your Census</TitleBlock>

@@ -52,7 +52,7 @@ const BecomeSlyCommunityPartner = ({ palette, onRegisterClick }) => (
 
 BecomeSlyCommunityPartner.propTypes = {
   palette: palettePropType.isRequired,
-  onRegisterClick: func
+  onRegisterClick: func,
 };
 
 BecomeSlyCommunityPartner.defaultProps = {
