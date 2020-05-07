@@ -466,7 +466,7 @@ export default class DashboardAgentDetailPage extends Component {
                     <DashboardMessagesContainer
                       onConversationClick={setSelectedConversation}
                       heading="Conversations"
-                      userId={userId}
+                      agentId={id}
                     />
                   </DashboardMessagesContainerWrapper>
                 }
