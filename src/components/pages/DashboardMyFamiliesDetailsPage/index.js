@@ -265,6 +265,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
   static propTypes = {
     client: clientPropType,
     clients: arrayOf(clientPropType),
+    requestStatus: object,
     currentTab: string,
     showModal: func,
     hideModal: func,
@@ -342,22 +343,22 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const agentTabList = [
       { id: ACTIVITY, to: activityPath, label: 'Activity' },
       { id: FAMILY_DETAILS, to: familyDetailsPath, label: 'Family Details' },
+      // { id: MESSAGES, to: messagesPath, label: 'Messages' },
     ];
     const agentAdminTabList = [
       { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
       { id: TASKS, to: tasksPath, label: 'Tasks' },
-
     ];
     const adminTabList = [
-      { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
+      // { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
       { id: PARTNER_AGENTS, to: agentsPath, label: 'Agents' },
-      { id: TASKS, to: tasksPath, label: 'Tasks' },
+      // { id: TASKS, to: tasksPath, label: 'Tasks' },
       { id: MESSAGES, to: messagesPath, label: 'Messages' },
     ];
     // TODO: CHANGE TO HAS ROLE INSTEAD OF IS ROLE...
     let tabs = [summaryTab];
     /* eslint-disable no-bitwise */
-    if (roleID & (AGENT_ND_ROLE | AGENT_ADMIN_ROLE)) {
+    if (roleID & (AGENT_ND_ROLE | AGENT_ADMIN_ROLE | PLATFORM_ADMIN_ROLE)) {
       tabs = tabs.concat(agentTabList.map(e => genTab(e)));
     }
     /* eslint-disable no-bitwise */
@@ -368,6 +369,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     if (roleID & PLATFORM_ADMIN_ROLE) {
       tabs = tabs.concat(adminTabList.map(e => genTab(e)));
     }
+
     return tabs;
   };
 
@@ -557,7 +559,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
   render() {
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
+      client, requestStatus, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
       conversation, setSelectedConversation, refetchClient,
       showModal, hideModal, onAcceptClick, clients, onEditStatusDetailsClick, isEditStatusDetailsMode, onStatusChange,
     } = this.props;
@@ -573,11 +575,23 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }
 
     if (!client) {
+      const { status: authStatusCode } = requestStatus.user;
+      const { error: clientError } = requestStatus.client;
       const newUrl = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: NEWFAMILIES });
       const backlink = <BackLink linkText="Back to New" to={newUrl} onClick={clickEventHandler('fdetails', 'Back to Prospects')} />;
+      let message = "Loading...";
+      // FIXME:
+      const clientNotFound = clientError && clientError.errors && clientError.errors[0] && (clientError.errors[0].status === "404");
+      if (clientNotFound) {
+        message = "Family Not Found";
+      }
+      if ( authStatusCode === 200 && !clientNotFound){
+        requestStatus.client.refetch();
+        message = "Loading Family Details...";
+      }
       return (
         <DashboardPageTemplate activeMenuItem="My Families">
-          <TextAlignCenterBlock weight="medium" size="subtitle">Family not found!</TextAlignCenterBlock>
+          <TextAlignCenterBlock weight="medium" size="subtitle">{message}</TextAlignCenterBlock>
           <AlignCenterBackLinkWrapper>{backlink}</AlignCenterBackLinkWrapper>
         </DashboardPageTemplate>
       );
