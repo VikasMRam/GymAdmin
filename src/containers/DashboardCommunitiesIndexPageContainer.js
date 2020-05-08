@@ -21,7 +21,6 @@ import {
 export default class DashboardCommunitiesIndexPageContainer extends Component {
   static propTypes = {
     location: object,
-    status: object,
     showModal: func.isRequired,
     hideModal: func.isRequired,
     notifyInfo: func.isRequired,
@@ -32,7 +31,6 @@ export default class DashboardCommunitiesIndexPageContainer extends Component {
   onAddCommunitySuccess= (resp) => {
     const { history } = this.props;
     const { id } = resp;
-    console.log(resp);
     const path = generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, { id: id, tab: PROFILE });
     history.push(path);
 
