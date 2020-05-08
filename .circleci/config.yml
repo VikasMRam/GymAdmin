@@ -11,7 +11,7 @@ jobs:
     docker:
       - image: circleci/node:8.12 # though we use 8.9 only 8.12 has npm that supports npm ci
 
-    working_directory: ~/project
+    working_directory: ~/project/packages/web
 
     environment:
       TEST_RESULTS: test-results
@@ -26,7 +26,7 @@ jobs:
 
       - node/with-cache:
           cache-key: package-lock.json
-          cache-version: v3
+          cache-version: v4
           use-strict-cache: true
           include-branch-in-cache-key: false
           steps:
@@ -77,7 +77,10 @@ jobs:
     docker:
       - image: circleci/python:2.7
 
-    working_directory: ~/project
+    working_directory: ~/project/packages/web
+
+    environment:
+      CIRCLECI_SCRIPTS_DIR: ~/project/.circleci
 
     steps:
       - run:
@@ -87,14 +90,15 @@ jobs:
               echo "Skipping Deployment since this is not a Sly Master Build"
               circleci step halt
             fi
+            # remove checkout dir as the first step is not checkout the dir path will be created
+            rm -rf ~/project
 
       - checkout:
           path: ~/project
 
       - run:
           name: Install awscli
-          command: |
-            sudo pip install awsebcli --upgrade
+          command: sudo pip install awsebcli --upgrade
 
       - run:
           name: Set up environment
@@ -132,7 +136,6 @@ jobs:
               fi
             fi
 
-
             cat ~/new_env_vars >> $BASH_ENV
             source $BASH_ENV
 
@@ -148,8 +151,8 @@ jobs:
       - run:
           name: Send deploy start notification
           command: |
-            export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
-            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY ./.circleci/push-slack-notification.sh -t "Starting deploy to $EB_ENV" \
+            export DESC_MSG=$($CIRCLECI_SCRIPTS_DIR/generate-deploy-status-message.sh)
+            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY $CIRCLECI_SCRIPTS_DIR/push-slack-notification.sh -t "Starting deploy to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#66d3e4"
 
       - run:
@@ -167,15 +170,15 @@ jobs:
       - run:
           name: Send deploy success notification
           command: |
-            export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
-            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY ./.circleci/push-slack-notification.sh -t "Successfully deployed to $EB_ENV" \
+            export DESC_MSG=$($CIRCLECI_SCRIPTS_DIR/generate-deploy-status-message.sh)
+            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY $CIRCLECI_SCRIPTS_DIR/push-slack-notification.sh -t "Successfully deployed to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#42c88a"
       - run:
           name: Send deploy failed notification
           when: on_fail
           command: |
-            export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
-            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY ./.circleci/push-slack-notification.sh -t "Failed deploying to $EB_ENV" \
+            export DESC_MSG=$($CIRCLECI_SCRIPTS_DIR/generate-deploy-status-message.sh)
+            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY $CIRCLECI_SCRIPTS_DIR/push-slack-notification.sh -t "Failed deploying to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#ed5c5c"
 
       - persist_to_workspace:
@@ -228,6 +231,8 @@ jobs:
           ## this enables colors in the output
           TERM: xterm
 
+    working_directory: ~/project/packages/web
+
     steps:
       - checkout:
           path: ~/project
@@ -255,12 +260,12 @@ jobs:
       - run:
           name: Running HAProxy
           command: sudo haproxy -f haproxy.conf
-          working_directory: ~/project/e2e
+          working_directory: ~/project/packages/web/e2e
           background: true
 
       - node/with-cache:
           cache-key: package-lock.json
-          cache-version: v3
+          cache-version: v4
           use-strict-cache: true
           include-branch-in-cache-key: false
           steps:
@@ -283,17 +288,16 @@ jobs:
             #     command: npx cypress verify
 
             - restore_cache:
-                working_directory: ~/project/e2e
-                key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+                working_directory: ~/project/packages/web/e2e
+                key: cache-v2-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
 
             - run:
                 name: Installing Cypress deps
-                working_directory: ~/project/e2e
                 command: sudo apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 
             - run:
-                name: Install deps
-                working_directory: ~/project/e2e
+                name: Install e2e deps
+                working_directory: ~/project/packages/web/e2e
                 command: |
                   if [ ! -d node_modules ]; then
                     npm ci
@@ -314,16 +318,16 @@ jobs:
                 command: npx wait-on http://localhost:8000
 
             - save_cache:
-                working_directory: ~/project/e2e
-                key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+                working_directory: ~/project/packages/web/e2e
+                key: cache-v2-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
                 paths:
                   - ~/.npm
                   - ~/.cache
-                  - ~/project/e2e/node_modules
+                  - ~/project/packages/web/e2e/node_modules
 
             - run:
                 name: Run Cypress tests
-                working_directory: ~/project/e2e
+                working_directory: ~/project/packages/web/e2e
                 command: |
                   npx cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec "cypress/integration/**/*"
 
