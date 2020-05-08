@@ -24,11 +24,18 @@ const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const Login = textAlign(Block);
+const StyledBlock2 = styled(Block)`
+  margin-bottom: ${size('spacing.large')};
+`;
+
+const Login = textAlign(StyledBlock2);
 Login.displayName = 'Log in';
 
+const Provider = textAlign(StyledBlock2);
+Provider.displayName = 'Provider';
+
 const SignupForm = ({
-                      handleSubmit, submitting, error, onLoginClicked,
+                      handleSubmit, submitting, error, onLoginClicked, onProviderClicked,
                     }) => (
   <form onSubmit={handleSubmit}>
     <StyledHeading size="subtitle">Sign Up</StyledHeading>
@@ -70,6 +77,10 @@ const SignupForm = ({
       Already have an account?{' '}
       <Link onClick={onLoginClicked}>Log in</Link>
     </Login>
+    <Provider size="caption">
+      Are you a community manager?{' '}
+      <Link onClick={onProviderClicked}>Click here</Link>
+    </Provider>
   </form>
 );
 
@@ -78,6 +89,7 @@ SignupForm.propTypes = {
   submitting: bool,
   error: string,
   onLoginClicked: func,
+  onProviderClicked: func,
 };
 
 export default SignupForm;

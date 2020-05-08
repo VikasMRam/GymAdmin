@@ -4,8 +4,8 @@ import { string, func, object, arrayOf, bool } from 'prop-types';
 import { generatePath } from 'react-router';
 
 import {
-  ADMIN_DASHBOARD_COMMUNITIES_PATH,
-  ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH,
+  DASHBOARD_COMMUNITIES_PATH,
+  DASHBOARD_COMMUNITIES_DETAIL_PATH,
   SUMMARY,
   PARTNER_AGENTS,
   MESSAGES,
@@ -110,7 +110,7 @@ export default class DashboardCommunitiesDetailsPage extends Component {
       // ...
     };
 
-    const pathFor = tab => generatePath(ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH, { id, tab });
+    const pathFor = tab => generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, { id, tab });
 
     return Object.entries(tabs)
       .map(([label, tab]) => {
@@ -150,7 +150,7 @@ export default class DashboardCommunitiesDetailsPage extends Component {
       action: 'click',
     };
 
-    const backLinkHref = generatePath(ADMIN_DASHBOARD_COMMUNITIES_PATH);
+    const backLinkHref = generatePath(DASHBOARD_COMMUNITIES_PATH);
     const backlink = (
       <BackLink to={backLinkHref} event={backlinkEvent}>
         Back to Communities

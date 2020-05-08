@@ -28,14 +28,14 @@ const Login = textAlign(Block);
 Login.displayName = 'Log in';
 
 const ProviderSignupForm = ({
-                      handleSubmit, submitting, error, onLoginClicked,
-                    }) => (
+  handleSubmit, submitting, error, onLoginClicked,
+}) => (
   <form onSubmit={handleSubmit}>
-    <StyledHeading size="subtitle">Sign Up</StyledHeading>
+    <StyledHeading size="subtitle">Create a community manager account</StyledHeading>
     <Field
       name="name"
       label="Full Name"
-      type="name"
+      type="text"
       placeholder="First and Last Name"
       component={ReduxField}
     />
@@ -62,7 +62,7 @@ const ProviderSignupForm = ({
       component={ReduxField}
     />
     <StyledButton type="submit"  disabled={submitting}>
-      Sign Up
+      Continue
     </StyledButton>
     <StyledBlock error={error}>By continuing, you agree to Seniorly&apos;s Terms of Use and Privacy Policy.</StyledBlock>
     {error && <Block palette="danger">{error}</Block>}

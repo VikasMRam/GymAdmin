@@ -3,12 +3,15 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { connect } from 'react-redux';
 import { func, bool } from 'prop-types';
 
+import { PROVIDER_OD_ROLE } from 'sly/constants/roles';
 import { withAuth } from 'sly/services/api';
-import { createValidator, required, email, minLength } from 'sly/services/validation';
-import ProviderSignupForm from 'sly/services/auth/components/ProviderSignUpForm';
+import { createValidator, required, email, minLength, usPhone } from 'sly/services/validation';
+import ProviderSignupForm from 'sly/services/auth/components/ProviderSignupForm';
 
 const validate = createValidator({
+  name: [required],
   email: [required, email],
+  phone: [required, usPhone],
   password: [required, minLength(8)],
 });
 
@@ -22,7 +25,6 @@ const mapDispatchToProps = {
 };
 
 @withAuth
-
 @connect(null, mapDispatchToProps)
 
 export default class ProviderSignupFormContainer extends Component {
@@ -30,13 +32,16 @@ export default class ProviderSignupFormContainer extends Component {
     registerUser: func,
     clearSubmitErrors: func,
     submitFailed: bool,
-    onSubmitSuccess: func,
+    onSubmit: func,
   };
 
   handleSubmit = (data) => {
-    const { registerUser, clearSubmitErrors, onSubmitSuccess } = this.props;
+    const { registerUser, clearSubmitErrors, onSubmit } = this.props;
     clearSubmitErrors();
-    return registerUser(data).then(onSubmitSuccess).catch((data) => {
+    data.role_id = PROVIDER_OD_ROLE.toString();
+    return registerUser(data)
+      .then(onSubmit)
+      .catch((data) => {
       // TODO: Need to set a proper way to handle server side errors
       const errorMessage = Object.values(data.body.errors).join('. ');
       throw new SubmissionError({ _error: errorMessage });
@@ -44,6 +49,8 @@ export default class ProviderSignupFormContainer extends Component {
   };
 
   render() {
-    return <ReduxForm onSubmit={this.handleSubmit} {...this.props} />;
+    return <ReduxForm
+      {...this.props}
+      onSubmit={this.handleSubmit}  />;
   }
 }

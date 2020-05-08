@@ -10,7 +10,7 @@ import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePa
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import BannerNotificationAdContainer from 'sly/containers/BannerNotificationAdContainer';
-import { Centered, Label, Heading, Hr, Link, Block, Paragraph, ResponsiveImage } from 'sly/components/atoms';
+import { Centered, Label, Heading, Hr, Link, Block, Paragraph, ResponsiveImage, Button } from 'sly/components/atoms';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
@@ -506,6 +506,10 @@ const HomePage = ({
             <CWTImage src={assetPath('images/home/companies-we-trust/FCA_BW.png')} alt="Family Caregiver Alliance Logo" />
             <CWTImage src={assetPath('images/home/companies-we-trust/SeniorCareAuthority_BW.png')} alt="SeniorCareAuthority Logo" />
             <CWTImage src={assetPath('images/home/companies-we-trust/AssistedLivingLocators_BW.png')} alt="Assisted Living Locators Logo" />
+          </CWTColumnWrapper>
+          <CWTColumnWrapper>
+            <StyledBlock size="subtitle">Become A Seniorly Partner Community</StyledBlock>
+            <Button href="/partners/communities" kind="jumbo">Create Account</Button>
           </CWTColumnWrapper>
         </StyledSection>
         <SeoLinks title="Assisted Living by City" links={ALSeoCities} />

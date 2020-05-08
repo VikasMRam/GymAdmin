@@ -16,7 +16,9 @@ import ResetPasswordFormContainer from 'sly/services/auth/containers/ResetPasswo
 import LoginFormContainer from 'sly/services/auth/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/services/auth/containers/SignupFormContainer';
 import ProviderSignupFormContainer from 'sly/services/auth/containers/ProviderSignupFormContainer';
-
+import CustomerSignupConfirmationContainer from 'sly/services/auth/containers/CustomerSignupConfirmationContainer';
+import ProviderFindCommunityContainer  from 'sly/services/auth/containers/ProviderFindCommunityContainer';
+import ProviderConfirmation from 'sly/services/auth/components/ProviderConfirmation'
 
 const ModalBody = spacing(styled.div``, { top: null });
 
@@ -71,6 +73,15 @@ export default class AuthContainer extends Component {
     const { isOpen } = this.state;
     const { authenticateCancel, authenticateSuccess, authenticated } = this.props;
 
+    let initialStep = 'Login';
+    if (authenticated.options && authenticated.options.register) {
+      initialStep = 'Signup';
+    }
+    if (authenticated.options && authenticated.options.provider) {
+      initialStep = 'ProviderSignup';
+    }
+
+
     return (
       <Modal
         isOpen={isOpen}
@@ -81,7 +92,7 @@ export default class AuthContainer extends Component {
           <WizardController
             formName="AuthForm"
             controllerKey="AuthFormControllerKey"
-            initialStep={authenticated.options && authenticated.options.register ? 'Signup' : 'Login'}
+            initialStep={initialStep}
             onComplete={authenticateSuccess}
           >
             {({
@@ -96,22 +107,53 @@ export default class AuthContainer extends Component {
                   onSubmit={authenticateSuccess}
                 />
                 <WizardStep
-                  component={SignupFormContainer}
-                  name="Signup"
-                  onLoginClicked={() => (delete authenticated.options.register && goto('Login'))}
-                  onSubmit={authenticateSuccess}
-                />
-                <WizardStep
-                  component={ProviderSignupFormContainer}
-                  name="Signup"
-                  onLoginClicked={() => goto('Login')}
-                  onSubmit={authenticateSuccess}
-                />
-                <WizardStep
                   component={ResetPasswordFormContainer}
                   name="ResetPassword"
                   onLoginClick={() => goto('Login')}
                   onSubmit={() => goto('Login')}
+                />
+                <WizardStep
+                  component={SignupFormContainer}
+                  name="Signup"
+                  onLoginClicked={() => (delete authenticated.options.register && goto('Login'))}
+                  onProviderClicked={() => goto('ProviderSignup')}
+                  onSubmit={() => goto('CustomerSignupConfirmation')}
+                />
+                <WizardStep
+                  component={CustomerSignupConfirmationContainer}
+                  name="CustomerSignupConfirmation"
+                  onSubmit={authenticateSuccess}
+                />
+                <WizardStep
+                  component={ProviderSignupFormContainer}
+                  name="ProviderSignup"
+                  onLoginClicked={() => (delete authenticated.options.provider && goto('Login'))}
+                  onSubmit={() => (goto('ProviderFindCommunity'))}
+                />
+                <WizardStep
+                  component={ProviderFindCommunityContainer}
+                  name="ProviderFindCommunity"
+                  onClaimApproved={() => (goto('ProviderConfirmation'))}
+                  onApprovalNeeded={() => (goto('ProviderClaimNeedsApproval'))}
+                  onNotFound={() => (goto('ProviderCommunityNotFound'))}
+                />
+                <WizardStep
+                  component={ProviderConfirmation}
+                  name="ProviderConfirmation"
+                  mode="Approved"
+                  onSubmit={authenticateSuccess}
+                />
+                <WizardStep
+                  component={ProviderConfirmation}
+                  name="ProviderCommunityNotFound"
+                  mode="NotFound"
+                  onSubmit={authenticateSuccess}
+                />
+                <WizardStep
+                  component={ProviderConfirmation}
+                  name="ProviderClaimNeedsApproval"
+                  mode="NeedApproval"
+                  onSubmit={authenticateSuccess}
                 />
               </WizardSteps>
             )}

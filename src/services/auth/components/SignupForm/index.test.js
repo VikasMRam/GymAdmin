@@ -2,16 +2,16 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import ProviderSignupForm from 'sly/services/auth/components/ProviderSignUpForm';
+import SignupForm from 'sly/services/auth/components/SignupForm';
 import { Block } from 'sly/components/atoms/index';
 
 
 const error = 'Blah';
 
-const wrap = (props = {}) => shallow(<ProviderSignupForm {...props} />);
+const wrap = (props = {}) => shallow(<SignupForm {...props} />);
 
-describe('ProviderSignupForm', () => {
-  it('render ProviderSignupForm', () => {
+describe('SignupForm', () => {
+  it('render SignupForm', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
     expect(wrapper.find(Field)).toHaveLength(4);
@@ -34,11 +34,4 @@ describe('ProviderSignupForm', () => {
     expect(handleSubmit).toHaveBeenCalled();
   });
 
-  it('handles onLoginClicked', () => {
-    const handleSubmit = jest.fn();
-    const onLoginClicked = jest.fn();
-    const wrapper = wrap({ handleSubmit, onLoginClicked });
-    wrapper.find('Link').simulate('click');
-    expect(onLoginClicked).toHaveBeenCalled();
-  });
 });
