@@ -168,7 +168,7 @@ const groups = {
   ],
   Listings: [
     { name: 'For Referral Agents', url: '/agents/partners', target: '_blank' },
-    { name: 'List Your Property', url: '/providers', target: '_blank' },
+    { name: 'For Communities', url: '/partners/communities', target: '_blank' },
     { name: 'How It Works', url: '/how-it-works', target: '_blank' },
   ],
   Resources: [

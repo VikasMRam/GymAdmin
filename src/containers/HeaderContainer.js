@@ -71,13 +71,6 @@ const defaultMenuItems = (user) => {
     { name: 'Contact Us', to: '/contact', section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name) },
     { name: 'About Us', to: '/about', section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name) },
   ];
-  if (user) {
-    const { roleID } = user;
-    /* eslint-disable-next-line no-bitwise */
-    if (roleID & PROVIDER_OD_ROLE) {
-      menuItems.unshift({ name: 'Dashboard', to: '/mydashboard', section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name) });
-    }
-  }
   return menuItems;
 };
 
@@ -105,7 +98,7 @@ const customerAndAgentMenuItems = [
   },
 ];
 
-const adminMenuItems = [
+const partnerCommunityMenuItems = [
   {
     name: 'Communities', to: generatePath(DASHBOARD_COMMUNITIES_PATH), section: 1, icon: 'house', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
@@ -122,11 +115,11 @@ const loggedInMenuItems = (user) => {
     if (roleID & AGENT_ND_ROLE) {
       roleBasedItems = agentMenuItems;
     }
-    if (roleID & (CUSTOMER_ROLE | AGENT_ND_ROLE)) {
-      roleBasedItems = [...roleBasedItems, ...customerAndAgentMenuItems];
+    if (roleID & PROVIDER_OD_ROLE) {
+      roleBasedItems = partnerCommunityMenuItems
     }
-    if (roleID & PLATFORM_ADMIN_ROLE) {
-      roleBasedItems = [...adminMenuItems, ...agentMenuItems];
+    if (roleID & (CUSTOMER_ROLE | AGENT_ND_ROLE | PROVIDER_OD_ROLE)) {
+      roleBasedItems = [...roleBasedItems, ...customerAndAgentMenuItems];
     }
   }
 
