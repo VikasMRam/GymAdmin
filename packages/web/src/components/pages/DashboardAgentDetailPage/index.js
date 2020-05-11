@@ -11,6 +11,7 @@ import {
   CONTACTS,
   ACTIVITY,
   MESSAGES,
+  EMAILS,
 } from 'sly/constants/dashboardAppPaths';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import { adminAgentPropType } from 'sly/propTypes/agent';
@@ -33,6 +34,7 @@ import DashboardContactsSectionContainer from 'sly/containers/dashboard/Dashboar
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
 import ConversationMessagesContainer from 'sly/containers/ConversationMessagesContainer';
+import DashboardEmailsContainer from 'sly/containers/DashboardEmailsContainer';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import { AGENT_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
@@ -235,6 +237,7 @@ export default class DashboardAgentDetailPage extends Component {
     const agentDetailsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: AGENT_DETAILS });
     const contactsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: CONTACTS });
     const messagesPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: MESSAGES });
+    const emailsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: EMAILS });
 
     return {
       summaryPath,
@@ -242,6 +245,7 @@ export default class DashboardAgentDetailPage extends Component {
       agentDetailsPath,
       contactsPath,
       messagesPath,
+      emailsPath,
     };
   };
 
@@ -253,6 +257,7 @@ export default class DashboardAgentDetailPage extends Component {
       agentDetailsPath,
       contactsPath,
       messagesPath,
+      emailsPath,
     } = this.getTabPathsForUser();
 
     const summaryTab = (
@@ -273,6 +278,7 @@ export default class DashboardAgentDetailPage extends Component {
       { id: AGENT_DETAILS, to: agentDetailsPath, label: 'Agent Details' },
       { id: CONTACTS, to: contactsPath, label: 'Contacts' },
       { id: MESSAGES, to: messagesPath, label: 'Messages' },
+      { id: EMAILS, to: emailsPath, label: 'Emails' },
     ];
     let tabs = [summaryTab];
     if (userIs(user, PLATFORM_ADMIN_ROLE)) {
@@ -360,7 +366,6 @@ export default class DashboardAgentDetailPage extends Component {
     const backlink = <PaddedBackLink linkText="Back to Agents List" to={backLinkHref} onClick={clickEventHandler('agentDetails', 'Back to Agents List')} />;
 
     const { id, name } = agent;
-    const { id: userId } = user;
 
     const agentName = (
       <AgentName
@@ -478,6 +483,14 @@ export default class DashboardAgentDetailPage extends Component {
                   />
                 }
               </>
+            )}
+            {currentTab === EMAILS && (
+              <SmallScreenBorderDiv>
+                <DashboardEmailsContainer
+                  heading="Emails"
+                  agentId={id}
+                />
+              </SmallScreenBorderDiv>
             )}
           </TabWrapper>
         </div>

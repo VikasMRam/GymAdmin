@@ -105,4 +105,5 @@ export default {
 
   getEvents: { method: get, path: '/platform/events' },
   getPerformers: { method: get, path: '/platform/performers' },
+  getEmails: { method: get, path: '/platform/emails' },
 };
