@@ -502,7 +502,6 @@ export default class CommunityDetailPage extends Component {
                       state={address.state}
                       twilioNumber={twilioNumber}
                       guideUrl={guideUrl}
-                      onCommunityClaimClicked={onCommu}
                     />
                   </StyledHeadingBoxSection>
                 )}
