@@ -54,7 +54,7 @@ const SignupForm = ({
       component={ReduxField}
     />
     <Field
-      name="phone"
+      name="phone_number"
       label="Phone"
       type="phone"
       parens
