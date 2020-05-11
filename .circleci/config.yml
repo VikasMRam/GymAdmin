@@ -155,6 +155,8 @@ jobs:
           name: Deploy to EB
           command: |
             echo "Deploying $VERSION to $EB_ENV"
+            # do an eb init as now eb config is in projet's sub folder
+            eb init
             eb use $EB_ENV
             export DEPLOY_FAILED=$(eb deploy $EB_ENV --timeout 60 -v --staged -l $VERSION | tee /dev/tty | grep -c "ERROR")
 
