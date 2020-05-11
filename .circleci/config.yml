@@ -79,9 +79,6 @@ jobs:
 
     working_directory: ~/project/packages/web
 
-    environment:
-      CIRCLECI_SCRIPTS_DIR: ~/project/.circleci
-
     steps:
       - run:
           name: Check if Sly Master Repo
@@ -141,7 +138,6 @@ jobs:
 
             echo "VERSION=$VERSION"
             echo "EB_ENV=$EB_ENV"
-            echo "CYPRESS_baseUrl=$CYPRESS_baseUrl"
 
             if [[ -z "$EB_ENV" ]]; then
               circleci step halt
@@ -151,8 +147,8 @@ jobs:
       - run:
           name: Send deploy start notification
           command: |
-            export DESC_MSG=$($CIRCLECI_SCRIPTS_DIR/generate-deploy-status-message.sh)
-            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY $CIRCLECI_SCRIPTS_DIR/push-slack-notification.sh -t "Starting deploy to $EB_ENV" \
+            export DESC_MSG=$(~/project/.circleci/generate-deploy-status-message.sh)
+            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY ~/project/.circleci/push-slack-notification.sh -t "Starting deploy to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#66d3e4"
 
       - run:
@@ -170,15 +166,15 @@ jobs:
       - run:
           name: Send deploy success notification
           command: |
-            export DESC_MSG=$($CIRCLECI_SCRIPTS_DIR/generate-deploy-status-message.sh)
-            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY $CIRCLECI_SCRIPTS_DIR/push-slack-notification.sh -t "Successfully deployed to $EB_ENV" \
+            export DESC_MSG=$(~/project/.circleci/generate-deploy-status-message.sh)
+            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY ~/project/.circleci/push-slack-notification.sh -t "Successfully deployed to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#42c88a"
       - run:
           name: Send deploy failed notification
           when: on_fail
           command: |
-            export DESC_MSG=$($CIRCLECI_SCRIPTS_DIR/generate-deploy-status-message.sh)
-            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY $CIRCLECI_SCRIPTS_DIR/push-slack-notification.sh -t "Failed deploying to $EB_ENV" \
+            export DESC_MSG=$(~/project/.circleci/generate-deploy-status-message.sh)
+            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY ~/project/.circleci/push-slack-notification.sh -t "Failed deploying to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#ed5c5c"
 
       - persist_to_workspace:
