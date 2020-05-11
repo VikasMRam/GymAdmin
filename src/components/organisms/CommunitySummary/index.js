@@ -124,7 +124,7 @@ const getPricingAndRating = (startingRate, reviewsValue, numReviews, goToReviews
 };
 
 const CommunitySummary = ({
-  community, innerRef, isAdmin, onConciergeNumberClicked, onCommunityNumberClicked, onCommunityClaimClicked, className,
+  community, innerRef, isAdmin, onConciergeNumberClicked, onCommunityNumberClicked, className,
   onFavouriteClick, isFavorited, onShareClick, goToReviews, searchParams,
 }) => {
   const {
@@ -207,26 +207,25 @@ const CommunitySummary = ({
                   This phone number will connect you to the concierge team at Seniorly.
                 </TooltipContent>
                 }
-                <br/>
               </>
           }
-
-          To connect directly, call&nbsp;
-          <Link href={`tel:${communityPhone}`} onClick={onCommunityNumberClicked}>
-            {phoneFormatter(communityPhone, true)}
-          </Link>
-          <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
-          {isBrowser &&
-          <TooltipContent id="phone" place="top" effect="solid" multiline>
-            This phone number will connect you to the community.
-          </TooltipContent>
+          {
+            (tier === "4" || !partnerAgent) &&
+              <>
+                To connect directly, call&nbsp;
+                <Link href={`tel:${communityPhone}`} onClick={onCommunityNumberClicked}>
+                  {phoneFormatter(communityPhone, true)}
+                </Link>
+                <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
+                {isBrowser &&
+                <TooltipContent id="phone" place="top" effect="solid" multiline>
+                  This phone number will connect you to the community.
+                </TooltipContent>
+                }
+              </>
           }
-          <br/>
-          Manage this community?&nbsp;
-          <Link href={`/partners/communities?prop=${community.id}`} onClick={onCommunityClaimClicked}>
-            Click here to claim this profile
-          </Link>
         </div>
+
         <div>
           <StyledIconButton ghost transparent icon="share" onClick={onShareClick}>
             Share
@@ -246,7 +245,6 @@ CommunitySummary.propTypes = {
   innerRef: object,
   isAdmin: bool,
   onConciergeNumberClicked: func,
-  onCommunityClaimClicked: func,
   className: string,
   onFavouriteClick: func,
   onShareClick: func,
