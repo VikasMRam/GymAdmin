@@ -1,12 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+
 import EmailListItem from 'sly/components/molecules/EmailListItem';
 
 const email = {
   from: 'Pranesh Kumar<pranesh@seniorly.com>',
   subject: 'Test Email',
   body: '<div>html body</div>',
-  timestamp: '2018-04-20 00:00:00.00'
+  timestamp: '2018-04-20 00:00:00.00',
 };
 const wrap = (props = {}) => shallow(<EmailListItem {...email} {...props} />);
 
