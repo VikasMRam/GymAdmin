@@ -6,7 +6,7 @@ import { prefetch, withUser } from 'sly/services/api';
 import userPropType from 'sly/propTypes/user';
 import communityPropType from 'sly/propTypes/community';
 import {
-  ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH,
+  DASHBOARD_COMMUNITIES_DETAIL_PATH,
   SUMMARY,
   PROFILE,
 } from 'sly/constants/dashboardAppPaths';
@@ -57,7 +57,7 @@ export default class DashboardCommunitiesDetailsPageContainer extends Component 
 
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && community && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
-      const activityPath = generatePath(ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH, {
+      const activityPath = generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, {
         id: community.id,
         tab: PROFILE,
       });

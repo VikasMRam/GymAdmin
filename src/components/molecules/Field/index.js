@@ -6,7 +6,7 @@ import loadable from '@loadable/component';
 import Helmet from 'react-helmet';
 
 import { size } from 'sly/components/themes';
-import { Label, Input, Icon, Block, Span } from 'sly/components/atoms';
+import { Label, Input, Icon, Block, Span, Button } from 'sly/components/atoms';
 import textAlign from 'sly/components/helpers/textAlign';
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
@@ -23,6 +23,8 @@ import Autocomplete from 'sly/components/molecules/Autocomplete';
 import CheckboxInput from 'sly/components/molecules/CheckboxInput';
 import LocationSearch from 'sly/components/molecules/LocationSearch';
 import DatepickerStyles from 'sly/components/themes/DatepickerStyles';
+import CommunityAutoComplete from 'sly/components/molecules/CommunityAutoComplete';
+
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/components/atoms/Select'));
 const RichTextArea = loadable(() => import(/* webpackChunkName: "chunkAtomRichTextArea" */'sly/components/atoms/RichTextArea'));
@@ -69,6 +71,8 @@ const getInputComponent = (type) => {
       return Select;
     case 'autocomplete':
       return Autocomplete;
+    case 'community':
+      return CommunityAutoComplete;
     case 'checkbox':
     case 'boolean':
       return CheckboxInput;
@@ -76,6 +80,8 @@ const getInputComponent = (type) => {
       return LocationSearch;
     case 'richtextarea':
       return RichTextArea;
+    case 'button':
+      return Button;
     default:
       return Input;
   }
@@ -246,6 +252,9 @@ const Field = ({
     inputProps.placeholderText = inputProps.placeholder;
     inputProps.customInput = <Input size={props.size} autocomplete="off" />;
   }
+  if (type === 'button' && inputProps.buttonType) {
+    inputProps.type = inputProps.buttonType;
+  }
 
   return (
     <Wrapper className={className} wideWidth={wideWidth} type={type} options={options} row={renderInputFirst}>
@@ -304,6 +313,7 @@ Field.propTypes = {
     'select',
     'choice', // react-select
     'autocomplete',
+    'community',
     'communitychoice',
     'singlechoice',
     'multiplechoice',
@@ -326,6 +336,7 @@ Field.propTypes = {
     'locationSearch',
     'daterange',
     'richtextarea',
+    'button',
   ]),
   placeholder: string,
   labelRight: node,

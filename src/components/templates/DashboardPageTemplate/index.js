@@ -14,7 +14,7 @@ import {
   ADMIN_DASHBOARD_CALLS_PATH,
   AGENT_DASHBOARD_TASKS_PATH,
   AGENT_DASHBOARD_CONTACTS_PATH,
-  ADMIN_DASHBOARD_AGENTS_PATH, ADMIN_DASHBOARD_COMMUNITIES_PATH,
+  ADMIN_DASHBOARD_AGENTS_PATH, DASHBOARD_COMMUNITIES_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import {
   CUSTOMER_ROLE,
@@ -42,11 +42,11 @@ const onMenuItemClick = (menuItem) => {
 const menuItems = [
   { label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick },
   { label: 'My Families', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE, onClick: onMenuItemClick },
-  { label: 'My Account', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: DASHBOARD_ACCOUNT_PATH, role: CUSTOMER_ROLE | AGENT_ND_ROLE, onClick: onMenuItemClick },
+  { label: 'My Account', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: DASHBOARD_ACCOUNT_PATH, role: CUSTOMER_ROLE | PROVIDER_OD_ROLE | AGENT_ND_ROLE, onClick: onMenuItemClick },
   { label: 'My Profile', icon: 'settings', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_PROFILE_PATH, role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE, onClick: onMenuItemClick },
   { label: 'My Contacts', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_CONTACTS_PATH, role: AGENT_ADMIN_ROLE, onClick: onMenuItemClick },
   // { label: 'Messages_', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_MESSAGES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick },
-  { label: 'Communities', icon: 'house', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_COMMUNITIES_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
+  { label: 'Communities', icon: 'house', iconSize: 'regular', palette: 'slate', variation: 'filler', href: DASHBOARD_COMMUNITIES_PATH, role: PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE, onClick: onMenuItemClick },
   { label: 'Messages', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_MESSAGES_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
   { label: 'Tasks', icon: 'checkbox-fill', iconSize: 'regular', palette: 'slate', variation: 'filler', href: generatePath(AGENT_DASHBOARD_TASKS_PATH), role: AGENT_ADMIN_ROLE, onClick: onMenuItemClick },
   { label: 'Calls', icon: 'phone', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick },
@@ -73,6 +73,8 @@ const Sidebar = styled.aside`
 
 const Body = styled.main`
   height: 100%;
+  display: flex;
+  flex-direction: column;
   background-color: ${palette('grey.background')};
   grid-area: body;
 

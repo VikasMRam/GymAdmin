@@ -12,12 +12,13 @@ import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { email } from 'sly/services/validation';
 import Modal, { HeaderWithClose } from 'sly/components/atoms/NewModal';
 
-import LoginOrRegisterFormContainer from 'sly/services/auth/containers/LoginOrRegisterFormContainer';
-import LoginWithPasswordFormContainer from 'sly/services/auth/containers/LoginWithPasswordFormContainer';
 import ResetPasswordFormContainer from 'sly/services/auth/containers/ResetPasswordFormContainer';
-import CreatePasswordFormContainer from 'sly/services/auth/containers/CreatePasswordFormContainer';
-import OtpLoginFormContainer from 'sly/services/auth/containers/OtpLoginFormContainer';
-import PartnerAgentLoginFormContainer from 'sly/services/auth/containers/PartnerAgentLoginFormContainer';
+import LoginFormContainer from 'sly/services/auth/containers/LoginFormContainer';
+import SignupFormContainer from 'sly/services/auth/containers/SignupFormContainer';
+import ProviderSignupFormContainer from 'sly/services/auth/containers/ProviderSignupFormContainer';
+import CustomerSignupConfirmationContainer from 'sly/services/auth/containers/CustomerSignupConfirmationContainer';
+import ProviderFindCommunityContainer  from 'sly/services/auth/containers/ProviderFindCommunityContainer';
+import ProviderConfirmation from 'sly/services/auth/components/ProviderConfirmation'
 
 const ModalBody = spacing(styled.div``, { top: null });
 
@@ -67,29 +68,19 @@ export default class AuthContainer extends Component {
     }
   };
 
-  gotoOtpLogin = (goto, emailOrPhone) => {
-    const { sendOtpCode, notifyError } = this.props;
-    let payload = {};
-    if (!email(emailOrPhone)) {
-      payload = {
-        email: emailOrPhone,
-      };
-    } else {
-      payload = {
-        phone_number: emailOrPhone,
-      };
-    }
-
-    return sendOtpCode(payload)
-      .then(() => goto('OtpLogin'))
-      .catch(() => {
-        notifyError('Failed to send code. Please try again.');
-      });
-  };
 
   render() {
     const { isOpen } = this.state;
     const { authenticateCancel, authenticateSuccess, authenticated } = this.props;
+
+    let initialStep = 'Login';
+    if (authenticated.options && authenticated.options.register) {
+      initialStep = 'Signup';
+    }
+    if (authenticated.options && authenticated.options.provider) {
+      initialStep = 'ProviderSignup';
+    }
+
 
     return (
       <Modal
@@ -101,54 +92,68 @@ export default class AuthContainer extends Component {
           <WizardController
             formName="AuthForm"
             controllerKey="AuthFormControllerKey"
-            initialStep={authenticated.options && authenticated.options.emailOrPhone ? 'LoginWithPassword' : null}
+            initialStep={initialStep}
             onComplete={authenticateSuccess}
           >
             {({
-              data: { emailOrPhone = authenticated.options && authenticated.options.emailOrPhone }, goto, next, ...props
+               goto, next, ...props
             }) => (
               <WizardSteps {...props}>
                 <WizardStep
-                  component={LoginOrRegisterFormContainer}
-                  name="LoginOrRegister"
-                  heading={authenticated.reason}
-                  onUserAlreadyExists={() => goto('LoginWithPassword')}
-                  onSocialSigninSuccess={authenticateSuccess}
-                  onPartnerAgentLoginClick={() => goto('PartherAgentLogin')}
-                />
-                <WizardStep
-                  component={CreatePasswordFormContainer}
-                  name="CreatePassword"
-                  onDoThisLaterClick={authenticateSuccess}
-                  onSubmit={authenticateSuccess}
-                />
-                <WizardStep
-                  component={PartnerAgentLoginFormContainer}
-                  name="PartherAgentLogin"
-                  onRegisterClick={() => goto('LoginOrRegister')}
-                  onResetPasswordClick={next}
+                  component={LoginFormContainer}
+                  name="Login"
+                  onRegisterClick={() => goto('Signup')}
+                  onResetPasswordClick={() => goto('ResetPassword')}
                   onSubmit={authenticateSuccess}
                 />
                 <WizardStep
                   component={ResetPasswordFormContainer}
                   name="ResetPassword"
-                  onLoginClick={() => emailOrPhone ? goto('LoginWithPassword') : goto('LoginOrRegister')}
-                  onSubmit={() => goto('LoginWithPassword')}
+                  onLoginClick={() => goto('Login')}
+                  onSubmit={() => goto('Login')}
                 />
                 <WizardStep
-                  component={OtpLoginFormContainer}
-                  name="OtpLogin"
-                  emailOrPhone={emailOrPhone}
+                  component={SignupFormContainer}
+                  name="Signup"
+                  onLoginClicked={() => (delete authenticated.options.register && goto('Login'))}
+                  onProviderClicked={() => goto('ProviderSignup')}
+                  onSubmit={() => goto('CustomerSignupConfirmation')}
+                />
+                <WizardStep
+                  component={CustomerSignupConfirmationContainer}
+                  name="CustomerSignupConfirmation"
                   onSubmit={authenticateSuccess}
                 />
                 <WizardStep
-                  component={LoginWithPasswordFormContainer}
-                  name="LoginWithPassword"
-                  emailOrPhone={emailOrPhone}
-                  initialValues={authenticated.options && authenticated.options.emailOrPhone ? { emailOrPhone: authenticated.options.emailOrPhone }  : null}
-                  onSubmitSuccess={authenticateSuccess}
-                  onResetPasswordClick={() => goto('ResetPassword')}
-                  onLoginWithOtpClick={() => this.gotoOtpLogin(goto, emailOrPhone)}
+                  component={ProviderSignupFormContainer}
+                  name="ProviderSignup"
+                  onLoginClicked={() => (delete authenticated.options.provider && goto('Login'))}
+                  onSubmit={() => (goto('ProviderFindCommunity'))}
+                />
+                <WizardStep
+                  component={ProviderFindCommunityContainer}
+                  name="ProviderFindCommunity"
+                  onClaimApproved={() => (goto('ProviderConfirmation'))}
+                  onApprovalNeeded={() => (goto('ProviderClaimNeedsApproval'))}
+                  onNotFound={() => (goto('ProviderCommunityNotFound'))}
+                />
+                <WizardStep
+                  component={ProviderConfirmation}
+                  name="ProviderConfirmation"
+                  mode="Approved"
+                  onSubmit={authenticateSuccess}
+                />
+                <WizardStep
+                  component={ProviderConfirmation}
+                  name="ProviderCommunityNotFound"
+                  mode="NotFound"
+                  onSubmit={authenticateSuccess}
+                />
+                <WizardStep
+                  component={ProviderConfirmation}
+                  name="ProviderClaimNeedsApproval"
+                  mode="NeedApproval"
+                  onSubmit={authenticateSuccess}
                 />
               </WizardSteps>
             )}

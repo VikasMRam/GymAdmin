@@ -15,7 +15,7 @@ import {
   FAMILY_DASHBOARD_FAVORITES_PATH,
   AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_TASKS_PATH,
-  AGENT_DASHBOARD_PROFILE_PATH, ADMIN_DASHBOARD_COMMUNITIES_PATH,
+  AGENT_DASHBOARD_PROFILE_PATH, DASHBOARD_COMMUNITIES_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import { withAuth } from 'sly/services/api';
 import { withRedirectTo } from 'sly/services/redirectTo';
@@ -46,7 +46,7 @@ const sendHeaderItemClickEvent = value => sendEvent(category, clickAction, heade
 const defaultHeaderItems = [
   { name: 'Senior Living Resources', to: '/resources', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
   { name: 'Assisted Living', to: '/assisted-living', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
-  { name: 'Nursing Homes', to: '/nursing-homes', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+  //{ name: 'Nursing Homes', to: '/nursing-homes', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
   { name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
 ];
 
@@ -71,13 +71,6 @@ const defaultMenuItems = (user) => {
     { name: 'Contact Us', to: '/contact', section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name) },
     { name: 'About Us', to: '/about', section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name) },
   ];
-  if (user) {
-    const { roleID } = user;
-    /* eslint-disable-next-line no-bitwise */
-    if (roleID & PROVIDER_OD_ROLE) {
-      menuItems.unshift({ name: 'Dashboard', to: '/mydashboard', section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name) });
-    }
-  }
   return menuItems;
 };
 
@@ -105,9 +98,9 @@ const customerAndAgentMenuItems = [
   },
 ];
 
-const adminMenuItems = [
+const partnerCommunityMenuItems = [
   {
-    name: 'Communities', to: generatePath(ADMIN_DASHBOARD_COMMUNITIES_PATH), section: 1, icon: 'house', onClick: ({ name }) => sendHeaderItemClickEvent(name),
+    name: 'Communities', to: generatePath(DASHBOARD_COMMUNITIES_PATH), section: 1, icon: 'house', onClick: ({ name }) => sendHeaderItemClickEvent(name),
   },
 ];
 
@@ -122,24 +115,25 @@ const loggedInMenuItems = (user) => {
     if (roleID & AGENT_ND_ROLE) {
       roleBasedItems = agentMenuItems;
     }
-    if (roleID & (CUSTOMER_ROLE | AGENT_ND_ROLE)) {
-      roleBasedItems = [...roleBasedItems, ...customerAndAgentMenuItems];
+    if (roleID & PROVIDER_OD_ROLE) {
+      roleBasedItems = partnerCommunityMenuItems
     }
-    if (roleID & PLATFORM_ADMIN_ROLE) {
-      roleBasedItems = [...adminMenuItems, ...agentMenuItems];
+    if (roleID & (CUSTOMER_ROLE | AGENT_ND_ROLE | PROVIDER_OD_ROLE)) {
+      roleBasedItems = [...roleBasedItems, ...customerAndAgentMenuItems];
     }
   }
 
   const loginButtonText = user
     ? 'Log Out'
-    : 'Sign in';
+    : 'Log In';
 
   return [...roleBasedItems, { name: loginButtonText, section: 3, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
 };
 
 const loginHeaderItems = user => user
   ? [{ name: 'My Seniorly', onClick: ({ name }) => sendHeaderItemClickEvent(name) }]
-  : [{ name: 'Sign in', isButton: true, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
+  : [{ name: 'Log In', ghost: true, isButton: true, onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+    { name: 'Sign Up', isButton: true, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
 
 const generateMenuItems = user => [...defaultMenuItems(user), ...loggedInMenuItems(user)];
 
@@ -202,13 +196,21 @@ export default class HeaderContainer extends PureComponent {
     if (logoutLeftMenuItem) {
       logoutLeftMenuItem.onClick = this.logout;
     }
-    let loginItem = lhItems.find(item => item.name === 'Sign in');
+    let loginItem = lhItems.find(item => item.name === 'Log In');
     if (loginItem) {
       loginItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(); };
     }
-    loginItem = menuItems.find(item => item.name === 'Sign in');
+    loginItem = menuItems.find(item => item.name === 'Log In');
     if (loginItem) {
       loginItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(); };
+    }
+    let registerItem = lhItems.find(item => item.name === 'Sign Up');
+    if (registerItem) {
+      registerItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated({register:true}); };
+    }
+    registerItem = menuItems.find(item => item.name === 'Sign Up');
+    if (registerItem) {
+      registerItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated({register:true}); };
     }
     const mySlyMenuItem = lhItems.find(item => item.name === 'My Seniorly');
     if (mySlyMenuItem) {

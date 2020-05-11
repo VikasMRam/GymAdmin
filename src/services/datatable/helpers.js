@@ -141,3 +141,11 @@ export const getAutocompleteValues = column => items => items.map((item) => {
     label,
   };
 });
+
+export const getCommunityAutocompleteValues =  items => items.map((item) => {
+  const label = `${item.name}: ${item.address.city}, ${item.address.state}`;
+  return {
+    value: item.id,
+    label,
+  };
+});

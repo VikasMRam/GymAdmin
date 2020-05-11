@@ -6,13 +6,12 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
-import clientPropType from 'sly/propTypes/client';
 import userProptype from 'sly/propTypes/user';
 import { query, prefetch, getRelationship } from 'sly/services/api';
 import DashboardCommunityDetailsForm from 'sly/components/organisms/DashboardCommunityDetailsForm';
 import withUser from 'sly/services/api/withUser';
 import { userIs } from 'sly/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
 
 const validate = createValidator({
   name: [required],
@@ -47,7 +46,7 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
     user: userProptype,
-    community: clientPropType.isRequired,
+    community: object.isRequired,
     match: object.isRequired,
     status: object,
     address: object,
@@ -75,7 +74,7 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
   render() {
     const { community, status, user, address, respiteAllowed, ...props } = this.props;
 
-    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
+    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
     const initialValues = pick(
       status.community.result,
       [

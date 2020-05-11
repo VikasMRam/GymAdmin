@@ -10,6 +10,7 @@ import {
   AGENT_DETAILS,
   CONTACTS,
   ACTIVITY,
+  MESSAGES,
 } from 'sly/constants/dashboardAppPaths';
 import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import { adminAgentPropType } from 'sly/propTypes/agent';
@@ -30,6 +31,8 @@ import BackLink from 'sly/components/molecules/BackLink';
 import PartnerAgentProfileFormContainer from 'sly/containers/PartnerAgentProfileFormContainer';
 import DashboardContactsSectionContainer from 'sly/containers/dashboard/DashboardContactsSectionContainer';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
+import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
+import ConversationMessagesContainer from 'sly/containers/ConversationMessagesContainer';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import { AGENT_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
@@ -38,6 +41,7 @@ import withModal from 'sly/controllers/withModal';
 import withNotification from 'sly/controllers/withNotification';
 import SlyEvent from 'sly/services/helpers/events';
 import fullWidth from 'sly/components/helpers/fullWidth';
+import conversationPropType from 'sly/propTypes/conversation/conversation';
 
 const LargePaddingWrapper = styled.div`
   padding: ${size('spacing.large')};
@@ -197,6 +201,12 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
 
 const PaddedBackLink = pad(BackLink, 'regular');
 
+const DashboardMessagesContainerWrapper = styled.div`
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding: ${size('spacing.xLarge')};
+  }
+`;
+
 @withModal
 @withNotification
 export default class DashboardAgentDetailPage extends Component {
@@ -213,6 +223,8 @@ export default class DashboardAgentDetailPage extends Component {
     hideModal: func.isRequired,
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
+    selectedConversation: conversationPropType,
+    setSelectedConversation: func.isRequired,
   };
 
   getTabPathsForUser = () => {
@@ -222,12 +234,14 @@ export default class DashboardAgentDetailPage extends Component {
     const activitesPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: ACTIVITY });
     const agentDetailsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: AGENT_DETAILS });
     const contactsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: CONTACTS });
+    const messagesPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: MESSAGES });
 
     return {
       summaryPath,
       activitesPath,
       agentDetailsPath,
       contactsPath,
+      messagesPath,
     };
   };
 
@@ -238,6 +252,7 @@ export default class DashboardAgentDetailPage extends Component {
       activitesPath,
       agentDetailsPath,
       contactsPath,
+      messagesPath,
     } = this.getTabPathsForUser();
 
     const summaryTab = (
@@ -257,6 +272,7 @@ export default class DashboardAgentDetailPage extends Component {
       { id: ACTIVITY, to: activitesPath, label: 'Activities' },
       { id: AGENT_DETAILS, to: agentDetailsPath, label: 'Agent Details' },
       { id: CONTACTS, to: contactsPath, label: 'Contacts' },
+      { id: MESSAGES, to: messagesPath, label: 'Messages' },
     ];
     let tabs = [summaryTab];
     if (userIs(user, PLATFORM_ADMIN_ROLE)) {
@@ -320,7 +336,7 @@ export default class DashboardAgentDetailPage extends Component {
   };
 
   render() {
-    const { agent, rawAgent, user, notes, currentTab, isLoading: agentIsLoading } = this.props;
+    const { agent, rawAgent, user, notes, currentTab, isLoading: agentIsLoading, selectedConversation, setSelectedConversation } = this.props;
     if (agentIsLoading) {
       return (
         <StyledDashboardTwoColumnTemplate activeMenuItem="Agents">
@@ -344,6 +360,7 @@ export default class DashboardAgentDetailPage extends Component {
     const backlink = <PaddedBackLink linkText="Back to Agents List" to={backLinkHref} onClick={clickEventHandler('agentDetails', 'Back to Agents List')} />;
 
     const { id, name } = agent;
+    const { id: userId } = user;
 
     const agentName = (
       <AgentName
@@ -441,6 +458,26 @@ export default class DashboardAgentDetailPage extends Component {
                   entityName={name}
                 />
               </LargePaddingWrapper>
+            )}
+            {currentTab === MESSAGES && (
+              <>
+                {!selectedConversation &&
+                  <DashboardMessagesContainerWrapper>
+                    <DashboardMessagesContainer
+                      onConversationClick={setSelectedConversation}
+                      heading="Conversations"
+                      agentId={id}
+                    />
+                  </DashboardMessagesContainerWrapper>
+                }
+                {selectedConversation &&
+                  <ConversationMessagesContainer
+                    conversationId={selectedConversation.id}
+                    sendMessageFormPlaceholder={`Message ${name}...`}
+                    onBackClick={() => setSelectedConversation(null)}
+                  />
+                }
+              </>
             )}
           </TabWrapper>
         </div>

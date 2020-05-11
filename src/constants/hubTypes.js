@@ -9,4 +9,5 @@ export default [
   'senior-living',
   'in-home-care',
   'respite-care',
+  'veterans-benefit-assisted-living',
 ];

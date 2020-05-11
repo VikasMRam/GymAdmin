@@ -60,6 +60,7 @@ Box.defaultProps = {
   padding: 'xLarge',
   snap: 'none',
   size: 'body',
+  backgroundVariation: 'base',
 };
 
 export default Box;

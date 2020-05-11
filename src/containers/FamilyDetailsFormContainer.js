@@ -73,6 +73,7 @@ export default class FamilyDetailsFormContainer extends Component {
       preferredLocation,
       roomPreference,
       mobilityLevel,
+      adls,
       communityCareType,
       assignedTo,
       additionalMetadata,
@@ -140,6 +141,9 @@ export default class FamilyDetailsFormContainer extends Component {
     if (mobilityLevel) {
       newUuidAux.set('attributes.uuidInfo.careInfo.mobility', mobilityLevel);
     }
+    if (adls) {
+      newUuidAux.set('attributes.uuidInfo.careInfo.adls', adls);
+    }
     if (budget) {
       newUuidAux.set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', budget);
     }
@@ -198,7 +202,7 @@ export default class FamilyDetailsFormContainer extends Component {
     const {
       residentInfo, housingInfo, financialInfo, locationInfo, careInfo,
     } = uuidInfo;
-    const { mobility } = careInfo;
+    const { mobility, adls } = careInfo;
     const { fullName, gender, age } = residentInfo;
     const { typeCare, roomPreference, lookingFor, moveTimeline } = housingInfo;
     const { maxMonthlyBudget, medicaid } = financialInfo;
@@ -229,6 +233,7 @@ export default class FamilyDetailsFormContainer extends Component {
       tags,
       roomPreference,
       mobilityLevel: mobility,
+      adls: adls,
       communityCareType: typeCare,
       budget: maxMonthlyBudget,
       referralSource,

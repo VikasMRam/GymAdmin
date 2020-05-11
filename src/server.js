@@ -24,8 +24,6 @@ import clientConfigsMiddleware from 'sly/clientConfigs';
 const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
 const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
 
-const sheet = new ServerStyleSheet();
-
 const getErrorContent = (err) => {
   if (isDev) {
     const Redbox = require('redbox-react').RedBoxError;
@@ -92,8 +90,8 @@ app.use(async (req, res, next) => {
   extractor.chunks = [];
 
   try {
+    const sheet = new ServerStyleSheet();
     const context = {};
-
     const app = sheet.collectStyles(extractor.collectChunks((
       <CacheProvider value={cache}>
         <Provider store={store}>

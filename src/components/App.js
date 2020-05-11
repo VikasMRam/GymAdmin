@@ -34,8 +34,8 @@ import {
   ADMIN_DASHBOARD_CALL_DETAILS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
   ADMIN_DASHBOARD_AGENTS_PATH,
   ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
-  ADMIN_DASHBOARD_COMMUNITIES_PATH,
-  ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH,
+  DASHBOARD_COMMUNITIES_PATH,
+  DASHBOARD_COMMUNITIES_DETAIL_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import careTypes from 'sly/constants/careTypes';
 import hubTypes from 'sly/constants/hubTypes';
@@ -45,6 +45,7 @@ const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/co
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage'));
 const LegalPolicyPage = loadable(() => import(/* webpackChunkName: "chunkLegalPolicy" */ 'sly/components/pages/LegalPolicyPage'));
 const PartnersPage = loadable(() => import(/* webpackChunkName: "chunkPartners" */ 'sly/components/pages/PartnersPage'));
+const CommunityPartnersPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityPartners" */ 'sly/containers/CommunityPartnersPageContainer'));
 const CommunitySearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunitySearch" */ 'sly/containers/CommunitySearchPageContainer'));
 const StateSearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkStateSearch" */ 'sly/containers/StateSearchPageContainer'));
 const HomePageContainer = loadable(() => import(/* webpackChunkName: "chunkHomePage" */ 'sly/containers/HomePageContainer'));
@@ -61,7 +62,7 @@ const CareTypeGuideContainer = loadable(() => import(/* webpackChunkName: "chunk
 const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: "chunkRegionGuide" */ 'sly/containers/CareTypeRegionGuideContainer'));
 const EmailViewPageContainer = loadable(() => import(/* webpackChunkName: "emailView" */ 'sly/containers/EmailViewPageContainer'));
 const EmailSharePageContainer = loadable(() => import(/* webpackChunkName: "emailShare" */ 'sly/containers/EmailSharePageFormContainer'));
-const CurtainUpPage = loadable(() => import(/* webpackChunkName: "chunkCurtainUp" */ 'sly/components/pages/CurtainUpPage'));
+const CurtainUpPageContainer = loadable(() => import(/* webpackChunkName: "chunkCurtainUp" */ 'sly/containers/CurtainUpPageContainer'));
 
 // Dashboard
 const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/containers/DashboardHomePageContainer'));
@@ -184,11 +185,11 @@ const routes = [
     component: DashboardAgentDetailPageContainer,
   },
   {
-    path: ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH,
+    path: DASHBOARD_COMMUNITIES_DETAIL_PATH,
     component: DashboardCommunitiesDetailPageContainer,
   },
   {
-    path: ADMIN_DASHBOARD_COMMUNITIES_PATH,
+    path: DASHBOARD_COMMUNITIES_PATH,
     component: DashboardCommunitiesIndexPageContainer,
   },
   {
@@ -219,6 +220,11 @@ const routes = [
   {
     path: '/agents/partners',
     component: PartnersPage,
+    exact: true,
+  },
+  {
+    path: '/partners/communities',
+    component: CommunityPartnersPageContainer,
     exact: true,
   },
   {
@@ -288,7 +294,7 @@ const routes = [
   },
   {
     path: '/curtainup',
-    component: CurtainUpPage,
+    component: CurtainUpPageContainer,
     exact: true,
   },
   {

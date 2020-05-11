@@ -32,7 +32,7 @@ const ImageWrapper = styled.div`
     top: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, #387F7Eff 50%, #387F7E00);
+    background: linear-gradient(to top, ${p => palette(p.mobileBGGradientPalette, p.mobileBGGradientVariation)}ff 50%, ${p => palette(p.mobileBGGradientPalette, p.mobileBGGradientVariation)}00);
   }
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     &:after {
@@ -42,7 +42,7 @@ const ImageWrapper = styled.div`
       top: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(to right, #49A7A5ff 50%, #49A7A500);
+      background: linear-gradient(to right, ${p => palette(p.laptopBBGradientPalette, p.laptopBBGradientVariation)}ff 50%, ${p => palette(p.laptopBBGradientPalette, p.laptopBBGradientVariation)}00);
     }
   }
 `;
@@ -69,7 +69,7 @@ const SearchBoxWrapper = styled.div`
 const AuditWrapper = styled.div`
    background-color: ${palette('grey', 'stroke')};
    padding: ${size('spacing.large')};
-   margin-bottom: ${size('spacing.large')};
+   margin-bottom: ${size('spacing.huge')};
 `;
 
 const AuditTextWrapper = styled.div`
@@ -119,12 +119,21 @@ const HubHeader = ({
   onCurrentLocation,
   onLocationSearch,
   showSearch,
+  mobileBGGradientPalette,
+  mobileBGGradientVariation,
+  laptopBBGradientPalette,
+  laptopBBGradientVariation,
 }) => (
   <>
     <HeaderContainer />
-    <BannerNotificationAdContainer type="homeCare" />
+    <BannerNotificationAdContainer type="covid-19" />
     <HeroWrapper>
-      <ImageWrapper>
+      <ImageWrapper
+        mobileBGGradientPalette={mobileBGGradientPalette}
+        mobileBGGradientVariation={mobileBGGradientVariation}
+        laptopBBGradientPalette={laptopBBGradientPalette}
+        laptopBBGradientVariation={laptopBBGradientVariation}
+      >
         <StyledImage path={imagePath} alt={heading} height={320} />
       </ImageWrapper>
       <CTAWrapper>
@@ -145,8 +154,8 @@ const HubHeader = ({
       <AuditTextWrapper>
         <StyledIconItem
           icon="verified"
-          iconPalette="secondary"
-          iconVariation="dark35"
+          iconPalette="green"
+          iconVariation="base"
           borderless
         >
           This {toc} article has been reviewed and approved by{' '}
@@ -165,10 +174,18 @@ HubHeader.propTypes = {
   onLocationSearch: func,
   onCurrentLocation: func,
   showSearch: bool,
+  mobileBGGradientPalette: string,
+  mobileBGGradientVariation: string,
+  laptopBBGradientPalette: string,
+  laptopBBGradientVariation: string,
 };
 
 HubHeader.defaultProps = {
   showSearch: true,
+  mobileBGGradientPalette: 'secondary',
+  mobileBGGradientVariation: 'dark35',
+  laptopBBGradientPalette: 'secondary',
+  laptopBBGradientVariation: 'dark',
 };
 
 export default HubHeader;

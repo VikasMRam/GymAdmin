@@ -16,6 +16,7 @@ import { getConversationName } from 'sly/services/helpers/conversation';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 import Pagination from 'sly/components/molecules/Pagination';
 import { getDetailedPaginationData } from 'sly/services/helpers/pagination';
+import { withDatatable } from 'sly/services/datatable';
 
 const HeadingWrapper = styled.div`
   padding: ${size('spacing', 'xLarge')};
@@ -57,11 +58,14 @@ const StyledPagination = styled(mobileOnly(CenteredPagination, css`
 
 @withUser
 @withWS
+@withDatatable('conversations')
 @query('getConversationMessages', 'getConversationMessages')
-@prefetch('conversations', 'getConversations', (req, { clientId, datatable }) => {
+@prefetch('conversations', 'getConversations', (req, { clientId, agentId, datatable }) => {
   const payload = datatable.query;
   if (clientId) {
     payload['filter[client]'] = clientId;
+  } else if (agentId) {
+    payload['filter[agent]'] = agentId;
   }
   return req(payload);
 })

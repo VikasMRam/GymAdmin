@@ -16,7 +16,8 @@ import {
 } from 'sly/constants/conversations';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
-import { Box, Block, Avatar, Button } from 'sly/components/atoms';
+import { Box, Block, Button } from 'sly/components/atoms';
+import Avatar from 'sly/components/molecules/Avatar';
 import HelpBubble from 'sly/components/molecules/HelpBubble';
 
 const StyledBox = styled(Box)`

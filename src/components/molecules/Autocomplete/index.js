@@ -29,6 +29,8 @@ export default class Autocomplete extends Component {
       <Select
         async
         isSearchable
+        isClearable
+        pageSize={10}
         loadOptions={this.loadOptions}
         {...props}
       />

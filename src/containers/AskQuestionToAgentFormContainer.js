@@ -98,7 +98,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
       email,
       phone,
     };
-    if (actionType === CONSULTATION_REQUESTED || actionType === HOME_CARE_REQUESTED){
+    if (actionType === CONSULTATION_REQUESTED || actionType === HOME_CARE_REQUESTED) {
       actionInfo = {
         phone,
         name,
@@ -140,8 +140,8 @@ export default class AskQuestionToAgentFormContainer extends Component {
   render() {
     return (
       <ReduxForm
-        onSubmit={this.handleSubmit}
         {...this.props}
+        onSubmit={this.handleSubmit}
       />
     );
   }

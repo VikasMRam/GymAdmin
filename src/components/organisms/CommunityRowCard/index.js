@@ -11,7 +11,7 @@ import borderRadius from 'sly/components/helpers/borderRadius';
 import { Link, ClampedText } from 'sly/components/atoms';
 import { Td, Tr } from 'sly/components/atoms/Table';
 import { buildAddressDisplay } from 'sly/services/helpers/communityReferral';
-import { ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH } from 'sly/constants/dashboardAppPaths';
+import { DASHBOARD_COMMUNITIES_DETAIL_PATH } from 'sly/constants/dashboardAppPaths';
 
 const Wrapper = mobileOnly(borderRadius(pad(Tr, 'large'), 'small'), css`
   display: flex;
@@ -63,7 +63,7 @@ const AddressCell = pad(mobileOnly(StyledTd, css`
 
 const CommunityRowCard = ({ community, onCommunityClick }) => {
   const { id } = community;
-  const communityDetailsPath = generatePath(ADMIN_DASHBOARD_COMMUNITIES_DETAIL_PATH, { id });
+  const communityDetailsPath = generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, { id });
   return (
     <Wrapper>
       <NameCell community={community} to={communityDetailsPath} onClick={() => onCommunityClick(community)} />

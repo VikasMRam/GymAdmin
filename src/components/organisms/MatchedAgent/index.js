@@ -7,7 +7,8 @@ import agentPropType from 'sly/propTypes/agent';
 import pad from 'sly/components/helpers/pad';
 import shadow from 'sly/components/helpers/shadow';
 import textAlign from 'sly/components/helpers/textAlign';
-import { Heading, Box, Avatar, Block, Link } from 'sly/components/atoms';
+import { Heading, Box, Block, Link } from 'sly/components/atoms';
+import Avatar from 'sly/components/molecules/Avatar';
 
 const AgentInfoWrapper = pad(styled.div``);
 
@@ -25,7 +26,7 @@ const loading = keyframes`
   }
 `;
 
-const AgentPlaceholder = pad(styled.div` 
+const AgentPlaceholder = pad(styled.div`
   display: inline-block;
   position: relative;
   width: calc(${size('element.small')} + ${size('element.regular')});
@@ -118,7 +119,7 @@ const MatchedAgent = ({ heading, agent, children }) => (
       <>
         <PaddedHeading size="subtitle" weight="medium">{heading}</PaddedHeading>
         <AgentInfoWrapper>
-          <Avatar size="xxLarge" user={{ name: agent.name, picture: agent.info.profileImageUrl }} />
+          <Avatar size="xxLarge" user={{ name: agent.name, picture: { src: agent.info.profileImageUrl } }} />
           <Block weight="medium">{agent.name}</Block>
           <Block>Local Senior Living Expert</Block>
           <Link to={`mailto:${agent.info.email}`}>{agent.info.email}</Link><br />

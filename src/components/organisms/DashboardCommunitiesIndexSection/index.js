@@ -101,7 +101,7 @@ export default class DashboardCommunitiesIndexSection extends Component {
     const {
       communities, pagination, isPageLoading, noBorder, meta, datatable,
     } = this.props;
-    const noResultMessage = 'Nice! You are on top of all your communities here.';
+    const noResultMessage = 'Click Add Community on the top right corner to add a new community';
     const TableHeaderButtonComponent = noBorder ? StyledTableHeaderButtons : TableHeaderButtons;
     const SectionComponent = noBorder ? StyledSection : Section;
     const StatusBlock = noBorder ? StyledFamiliesCountStatusBlock : FamiliesCountStatusBlock;

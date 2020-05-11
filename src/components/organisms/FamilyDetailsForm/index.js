@@ -11,7 +11,7 @@ import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import Role from 'sly/components/common/Role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE, AGENT_ADMIN_ROLE } from 'sly/constants/roles';
 import {
   SOURCE_OPTIONS,
   FAMILY_STAGE_WON,
@@ -43,8 +43,10 @@ const Warning = pad(styled(Block)`
 Warning.displayName = 'Warning';
 
 const FormScrollSection = styled.div`
-  max-height: calc(100vh - 240px);
-  overflow-y: auto;
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    max-height: calc(100vh - 240px);
+    overflow-y: auto;
+  }
 `;
 const TwoColumnWrapper = styled.div`
   display: flex;
@@ -118,11 +120,6 @@ const additionalMDOptions = [{ value: 'PhoneConnect', label: 'PhoneConnect' },
   { value: 'HomeCarePhone', label: 'HomeCarePhone' },
 ];
 
-// const tagsOptions = [
-//   { value: 'chocolate', label: 'Chocolate' },
-//   { value: 'strawberry', label: 'Strawberry' },
-//   { value: 'vanilla', label: 'Vanilla' },
-// ];
 
 class FamilyDetailsForm extends Component {
   static propTypes = {
@@ -140,11 +137,13 @@ class FamilyDetailsForm extends Component {
     timeToMove: arrayOf(string).isRequired,
     monthlyBudget: arrayOf(string).isRequired,
     roomTypes: arrayOf(string).isRequired,
-    careLevels: arrayOf(string).isRequired,
+    careServices: arrayOf(string).isRequired,
+    mobilityLevels: arrayOf(string).isRequired,
     communityTypes: arrayOf(string).isRequired,
     preferredLocation: string,
     assignedTos: arrayOf(userPropType).isRequired,
     isAgentUser: bool,
+    isAgentProUser: bool,
     isWon: bool,
     client: clientPropType.isRequired,
     onEditStageDetailsClick: func,
@@ -170,8 +169,8 @@ class FamilyDetailsForm extends Component {
   render() {
     const { handleLocationChange } = this;
     const {
-      handleSubmit, submitting, invalid, accepted, initialValues, lookingFor, isAgentUser,
-      gender, timeToMove, monthlyBudget, roomTypes, communityTypes, careLevels, canEditFamilyDetails, assignedTos,
+      handleSubmit, submitting, invalid, accepted, initialValues, lookingFor, isAgentUser, isAgentProUser,
+      gender, timeToMove, monthlyBudget, roomTypes, communityTypes, mobilityLevels, careServices, canEditFamilyDetails, assignedTos,
       client, onEditStageDetailsClick, onEditStatusDetailsClick,
     } = this.props;
     const { stage, status } = client;
@@ -190,7 +189,8 @@ class FamilyDetailsForm extends Component {
     const timeToMoveOptions = timeToMove.map(i => <option key={i} value={i}>{i}</option>);
     const monthlyBudgetOptions = monthlyBudget.map(i => <option key={i} value={i}>{i}</option>);
     const roomPreferenceOptions = roomTypes.map(i => ({ value: i, label: i }));
-    const mobilityLevelOptions = careLevels.map(i => ({ value: i, label: i }));
+    const mobilityLevelOptions = mobilityLevels.map(i => ({ value: i, label: i }));
+    const adls = careServices.map(i => ({ value: i, label: i }));
     const communityCareTypeOptions = communityTypes.map(i => ({ value: i, label: i }));
     const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
     const tagColumn = { typeInfo: { api: '/v0/platform/tags?filter[name]=' }, value: 'tag.name' };
@@ -200,281 +200,295 @@ class FamilyDetailsForm extends Component {
     const showStatusSummary = showSummaryStatuses.includes(status);
 
     return (
-      <div>
-        {!canEditFamilyDetails &&
+      <Form onSubmit={handleSubmit}>
+        <FormScrollSection>
+          {!canEditFamilyDetails &&
           <Warning size="caption">
             First update to a <strong>Connected Stage</strong> to edit this family’s details.
           </Warning>
-        }
-        <Form onSubmit={handleSubmit}>
-          <FormScrollSection>
+          }
+          <Role is={PLATFORM_ADMIN_ROLE}>
+            <FormSection>
+              <FormSectionHeading weight="medium">Metadata</FormSectionHeading>
+              {showStageSummary &&
+                <TwoColumnWrapper>
+                  <StyledLabel>{stage} details</StyledLabel>
+                  <StyledFamilyMetaDataSummaryBox client={client} onEditClick={onEditStageDetailsClick} />
+                </TwoColumnWrapper>
+              }
+              {showStatusSummary &&
+                <TwoColumnWrapper>
+                  <StyledLabel>{status} status details</StyledLabel>
+                  <StyledFamilyMetaDataSummaryBox mode="status" client={client} onEditClick={onEditStatusDetailsClick} />
+                </TwoColumnWrapper>
+              }
+              <Field
+                name="assignedTo"
+                label="Assigned to"
+                type="select"
+                placeholder="Select an option"
+                component={ReduxField}
+                wideWidth
+              >
+                <option value="" disabled>Select</option>
+                {assignedToOptions}
+              </Field>
+              <Field
+                name="tags"
+                label="Tags"
+                type="autocomplete"
+                readOnly={!canEditFamilyDetails}
+                component={ReduxField}
+                wideWidth
+                column={tagColumn}
+                isMulti
+              />
+              <Field
+                name="additionalMetadata"
+                type="checkbox"
+                label="Additional Attributes"
+                component={ReduxField}
+                options={additionalMDOptions}
+                wideWidth
+              />
+            </FormSection>
+          </Role>
+          <FormSection>
+            <FormSectionHeading weight="medium">Primary</FormSectionHeading>
+            <Field
+              name="name"
+              label="Contact name"
+              type="text"
+              readOnly={!canEditFamilyDetails}
+              component={ReduxField}
+              wideWidth
+            />
+            <Field
+              name="email"
+              label="Contact Email"
+              type="email"
+              readOnly={!canEditFamilyDetails}
+              disabled={!accepted && !canEditFamilyDetails}
+              hideValue={!accepted && !canEditFamilyDetails}
+              placeholder={!accepted && !canEditFamilyDetails ? 'Accept family to view' : null}
+              component={ReduxField}
+              wideWidth
+            />
+            <Field
+              name="phone"
+              label="Contact Phone"
+              readOnly={!canEditFamilyDetails}
+              disabled={!accepted && !canEditFamilyDetails}
+              hideValue={!accepted && !canEditFamilyDetails}
+              placeholder={!accepted && !canEditFamilyDetails ? 'Accept family to view' : null}
+              parse={phoneParser}
+              format={phoneFormatter}
+              component={ReduxField}
+              wideWidth
+            />
+            <PaddedTwoColumnWrapper verticalCenter>
+              <StyledLabel>Preferred location</StyledLabel>
+              <StyledSearchBoxContainer
+                clearLocationOnBlur={false}
+                onLocationSearch={handleLocationChange}
+                address={preferredLocation}
+                readOnly={!canEditFamilyDetails}
+              />
+              <Field
+                name="preferredLocation"
+                type="hidden"
+                component={ReduxField}
+              />
+            </PaddedTwoColumnWrapper>
             <Role is={PLATFORM_ADMIN_ROLE}>
-              <FormSection>
-                <FormSectionHeading weight="medium">Metadata</FormSectionHeading>
-                {showStageSummary &&
-                  <TwoColumnWrapper>
-                    <StyledLabel>{stage} details</StyledLabel>
-                    <StyledFamilyMetaDataSummaryBox client={client} onEditClick={onEditStageDetailsClick} />
-                  </TwoColumnWrapper>
-                }
-                {showStatusSummary &&
-                  <TwoColumnWrapper>
-                    <StyledLabel>{status} status details</StyledLabel>
-                    <StyledFamilyMetaDataSummaryBox mode="status" client={client} onEditClick={onEditStatusDetailsClick} />
-                  </TwoColumnWrapper>
-                }
-                <Field
-                  name="assignedTo"
-                  label="Assigned to"
+              <>
+                {!isAgentUser && <Field
+                  name="referralSource"
+                  label="Referral Source"
                   type="select"
-                  placeholder="Select an option"
                   component={ReduxField}
                   wideWidth
                 >
-                  <option value="" disabled>Select</option>
-                  {assignedToOptions}
+                  <option>Select an option</option>
+                  {sourceOptions}
                 </Field>
+                }
                 <Field
-                  name="tags"
-                  label="Tags"
-                  type="autocomplete"
-                  readOnly={!canEditFamilyDetails}
-                  component={ReduxField}
-                  wideWidth
-                  column={tagColumn}
-                  isMulti
-                />
-                <Field
-                  name="additionalMetadata"
+                  name="medicaid"
+                  label="Qualifies for Medicaid"
                   type="checkbox"
-                  label="Additional Attributes"
                   component={ReduxField}
-                  options={additionalMDOptions}
+                  options={medicaidOptions}
                   wideWidth
                 />
-              </FormSection>
-            </Role>
-            <FormSection>
-              <FormSectionHeading weight="medium">Primary</FormSectionHeading>
-              <Field
-                name="name"
-                label="Contact name"
-                type="text"
-                readOnly={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              />
-              <Field
-                name="email"
-                label="Contact Email"
-                type="email"
-                readOnly={!canEditFamilyDetails}
-                disabled={!accepted}
-                hideValue={!accepted}
-                placeholder={!accepted ? 'Accept family to view' : null}
-                component={ReduxField}
-                wideWidth
-              />
-              <Field
-                name="phone"
-                label="Contact Phone"
-                readOnly={!canEditFamilyDetails}
-                disabled={!accepted}
-                hideValue={!accepted}
-                placeholder={!accepted ? 'Accept family to view' : null}
-                parse={phoneParser}
-                format={phoneFormatter}
-                component={ReduxField}
-                wideWidth
-              />
-              <PaddedTwoColumnWrapper verticalCenter>
-                <StyledLabel>Preferred location</StyledLabel>
-                <StyledSearchBoxContainer
-                  clearLocationOnBlur={false}
-                  onLocationSearch={handleLocationChange}
-                  address={preferredLocation}
-                  readOnly={!canEditFamilyDetails}
+                <Field
+                  name="slyAgentMessage"
+                  label="Summary for Agent"
+                  type="textarea"
+                  disabled={!canEditFamilyDetails}
+                  component={ReduxField}
+                  wideWidth
                 />
                 <Field
-                  name="preferredLocation"
-                  type="hidden"
+                  name="slyCommunityMessage"
+                  label="Summary for Community"
+                  type="textarea"
+                  disabled={!canEditFamilyDetails}
                   component={ReduxField}
+                  wideWidth
                 />
-              </PaddedTwoColumnWrapper>
-              {!isAgentUser &&
-                <>
-                  <Field
-                    name="referralSource"
-                    label="Referral Source"
-                    type="select"
-                    component={ReduxField}
-                    wideWidth
-                  >
-                    <option>Select an option</option>
-                    {sourceOptions}
-                  </Field>
-                  <Field
-                    name="medicaid"
-                    label="Qualifies for Medicaid"
-                    type="checkbox"
-                    component={ReduxField}
-                    options={medicaidOptions}
-                    wideWidth
-                  />
-                  <Field
-                    name="slyAgentMessage"
-                    label="Summary for Agent"
-                    type="textarea"
-                    disabled={!canEditFamilyDetails}
-                    component={ReduxField}
-                    wideWidth
-                  />
-                </>
-              }
-              <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
+              </>
+            </Role>
+            {isAgentProUser &&
               <Field
-                name="slyCommunityMessage"
-                label="Summary for Community"
-                type="textarea"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              />
-              </Role>
-              <Field
-                name="slyMessage"
-                label="Seniorly Introduction"
-                type="textarea"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              />
-              {/* <Field
-                name="contactPreferences"
-                type="checkbox"
-                label="Contact Preference"
-                component={ReduxField}
-                options={contactPreferenceOptionsList}
-                wideWidth
-              />
-              <Field
-                name="timePreference"
-                label="Contact Time Preference"
+                name="referralSource"
+                label="Referral Source"
                 type="text"
-                readOnly={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              /> */}
-            </FormSection>
-            <FormSection>
-              <FormSectionHeading weight="medium">Resident Info</FormSectionHeading>
-              <Field
-                name="lookingFor"
-                label="Looking for"
-                type="select"
-                placeholder="Select an option"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-                onChange={this.handleLookingForChange}
-              >
-                <option value="" disabled>Select</option>
-                {lookingForOptions}
-              </Field>
-              <Field
-                name="residentName"
-                label="Resident name"
-                type="text"
-                readOnly={!canEditFamilyDetails}
                 component={ReduxField}
                 wideWidth
               />
-              <Field
-                name="gender"
-                label="Gender"
-                type="select"
-                placeholder="Select an option"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              >
-                <option value="" disabled>Select</option>
-                {femaleOptions}
-              </Field>
-              <Field
-                name="age"
-                label="Age"
-                type="number"
-                readOnly={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              />
+            }
+            <Field
+              name="slyMessage"
+              label="Message"
+              type="textarea"
+              disabled={!canEditFamilyDetails}
+              component={ReduxField}
+              wideWidth
+            />
+            {/* <Field
+              name="contactPreferences"
+              type="checkbox"
+              label="Contact Preference"
+              component={ReduxField}
+              options={contactPreferenceOptionsList}
+              wideWidth
+            />
+            <Field
+              name="timePreference"
+              label="Contact Time Preference"
+              type="text"
+              readOnly={!canEditFamilyDetails}
+              component={ReduxField}
+              wideWidth
+            /> */}
+          </FormSection>
+          <FormSection>
+            <FormSectionHeading weight="medium">Resident Info</FormSectionHeading>
+            <Field
+              name="lookingFor"
+              label="Looking for"
+              type="select"
+              placeholder="Select an option"
+              disabled={!canEditFamilyDetails}
+              component={ReduxField}
+              wideWidth
+              onChange={this.handleLookingForChange}
+            >
+              <option value="" disabled>Select</option>
+              {lookingForOptions}
+            </Field>
+            <Field
+              name="residentName"
+              label="Resident name"
+              type="text"
+              readOnly={!canEditFamilyDetails}
+              component={ReduxField}
+              wideWidth
+            />
+            <Field
+              name="gender"
+              label="Gender"
+              type="select"
+              placeholder="Select an option"
+              disabled={!canEditFamilyDetails}
+              component={ReduxField}
+              wideWidth
+            >
+              <option value="" disabled>Select</option>
+              {femaleOptions}
+            </Field>
+            <Field
+              name="age"
+              label="Age"
+              type="number"
+              readOnly={!canEditFamilyDetails}
+              component={ReduxField}
+              wideWidth
+            />
 
-            </FormSection>
-            <FormSection>
-              <FormSectionHeading weight="medium">Search Preferences</FormSectionHeading>
-              <Field
-                name="timeToMove"
-                label="Time to move"
-                type="select"
-                placeholder="Select an option"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              >
-                <option value="" disabled>Select</option>
-                {timeToMoveOptions}
-              </Field>
-              <Field
-                name="communityCareType"
-                label="Community type"
-                type="checkbox"
-                component={ReduxField}
-                options={communityCareTypeOptions}
-                wideWidth
-              />
-              <Field
-                name="roomPreference"
-                label="Room type"
-                type="checkbox"
-                component={ReduxField}
-                options={roomPreferenceOptions}
-                wideWidth
-              />
-              <Field
-                name="budget"
-                label="Monthly budget"
-                type="select"
-                placeholder="Select an option"
-                disabled={!canEditFamilyDetails}
-                component={ReduxField}
-                wideWidth
-              >
-                <option value="" disabled>Select</option>
-                {monthlyBudgetOptions}
-              </Field>
-            </FormSection>
-            <FormSection>
-              <FormSectionHeading weight="medium">Care Needs</FormSectionHeading>
-              <Field
-                name="mobilityLevel"
-                label="Level of mobility"
-                type="checkbox"
-                component={ReduxField}
-                options={mobilityLevelOptions}
-                wideWidth
-              />
-            </FormSection>
-          </FormScrollSection>
-          {accepted &&
-            <FormBottomSection>
-              <StyledButton type="submit" disabled={invalid || submitting}>
-                Save changes
-              </StyledButton>
-            </FormBottomSection>
-          }
-        </Form>
-      </div>
+          </FormSection>
+          <FormSection>
+            <FormSectionHeading weight="medium">Search Preferences</FormSectionHeading>
+            <Field
+              name="timeToMove"
+              label="Time to move"
+              type="select"
+              placeholder="Select an option"
+              disabled={!canEditFamilyDetails}
+              component={ReduxField}
+              wideWidth
+            >
+              <option value="" disabled>Select</option>
+              {timeToMoveOptions}
+            </Field>
+            <Field
+              name="communityCareType"
+              label="Community type"
+              type="checkbox"
+              component={ReduxField}
+              options={communityCareTypeOptions}
+              wideWidth
+            />
+            <Field
+              name="roomPreference"
+              label="Room type"
+              type="checkbox"
+              component={ReduxField}
+              options={roomPreferenceOptions}
+              wideWidth
+            />
+            <Field
+              name="budget"
+              label="Monthly budget"
+              type="select"
+              placeholder="Select an option"
+              disabled={!canEditFamilyDetails}
+              component={ReduxField}
+              wideWidth
+            >
+              <option value="" disabled>Select</option>
+              {monthlyBudgetOptions}
+            </Field>
+          </FormSection>
+          <FormSection>
+            <FormSectionHeading weight="medium">Care Needs</FormSectionHeading>
+            <Field
+              name="adls"
+              label="ADLs"
+              type="checkbox"
+              component={ReduxField}
+              options={adls}
+              wideWidth
+            />
+            <Field
+              name="mobilityLevel"
+              label="Level of mobility"
+              type="checkbox"
+              component={ReduxField}
+              options={mobilityLevelOptions}
+              wideWidth
+            />
+          </FormSection>
+        </FormScrollSection>
+        {(accepted || canEditFamilyDetails) &&
+          <FormBottomSection>
+            <StyledButton type="submit" disabled={invalid || submitting}>
+              Save changes
+            </StyledButton>
+          </FormBottomSection>
+        }
+      </Form>
     );
   }
 }
