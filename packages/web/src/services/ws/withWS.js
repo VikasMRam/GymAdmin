@@ -1,7 +1,7 @@
 import React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
-import WSContext from 'sly/services/ws/WSContext';
+import WSContext from 'sly/web/services/ws/WSContext';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName

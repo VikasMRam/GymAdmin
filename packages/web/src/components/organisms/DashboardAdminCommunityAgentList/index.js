@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { arrayOf } from 'prop-types';
 
-import { adminCommunityPropType } from 'sly/propTypes/community';
-import { Box, Link, Hr } from 'sly/components/atoms';
-import DashboardAdminCommunityTile from 'sly/components/organisms/DashboardAdminCommunityTile';
-import DashboardAdminAgentTile from 'sly/components/organisms/DashboardAdminAgentTile';
+import { adminCommunityPropType } from 'sly/web/propTypes/community';
+import { Box, Link, Hr } from 'sly/web/components/atoms';
+import DashboardAdminCommunityTile from 'sly/web/components/organisms/DashboardAdminCommunityTile';
+import DashboardAdminAgentTile from 'sly/web/components/organisms/DashboardAdminAgentTile';
 
 export default class DashboardAdminCommunityAgentList extends Component {
   static propTypes = {

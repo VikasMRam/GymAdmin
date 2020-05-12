@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
+import FindLocalAgent from 'sly/web/components/molecules/FindLocalAgent';
 
 const wrap = (props = {}) => shallow(<FindLocalAgent {...props} />);
 

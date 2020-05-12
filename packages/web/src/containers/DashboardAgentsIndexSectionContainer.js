@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { arrayOf, object, func } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { prefetch, withUser } from 'sly/services/api';
-import agentPropType from 'sly/propTypes/agent';
-import DashboardAgentsIndexSection from 'sly/components/organisms/DashboardAgentsIndexSection';
-import withNotification from 'sly/controllers/withNotification';
+import { prefetch, withUser } from 'sly/web/services/api';
+import agentPropType from 'sly/web/propTypes/agent';
+import DashboardAgentsIndexSection from 'sly/web/components/organisms/DashboardAgentsIndexSection';
+import withNotification from 'sly/web/controllers/withNotification';
 
 const getPaginationData = ({ result, meta }) => {
   if (!result) return {};

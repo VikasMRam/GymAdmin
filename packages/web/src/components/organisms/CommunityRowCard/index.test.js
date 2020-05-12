@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import agent from 'sly/../private/storybook/sample-data/agent-linda-iwamota.json';
-import AgentRowCard from 'sly/components/organisms/AgentRowCard';
+import agent from 'sly/web/../private/storybook/sample-data/agent-linda-iwamota.json';
+import AgentRowCard from 'sly/web/components/organisms/AgentRowCard';
 
 const onAgentClick = jest.fn();
 const defaultValues = {

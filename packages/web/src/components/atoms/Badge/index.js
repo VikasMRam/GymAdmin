@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { variation as variationPropType } from 'sly/propTypes/variation';
-import { spacing as spacingPropType } from 'sly/propTypes/spacing';
+import { size, palette } from 'sly/web/components/themes';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { spacing as spacingPropType } from 'sly/web/propTypes/spacing';
 
 const backgroundColour = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 

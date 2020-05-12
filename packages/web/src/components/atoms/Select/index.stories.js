@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 
-import Field from 'sly/components/molecules/Field';
+import Field from 'sly/web/components/molecules/Field';
 
 const options = [
   { value: 'chocolate', label: 'Chocolate' },

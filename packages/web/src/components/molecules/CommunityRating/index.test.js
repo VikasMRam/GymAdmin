@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityRating from 'sly/components/molecules/CommunityRating';
+import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 
 const defaultProps = {
   rating: 3.6234,

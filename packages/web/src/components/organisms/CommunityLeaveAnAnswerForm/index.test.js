@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import CommunityLeaveAnAnswerForm from 'sly/components/organisms/CommunityLeaveAnAnswerForm';
+import CommunityLeaveAnAnswerForm from 'sly/web/components/organisms/CommunityLeaveAnAnswerForm';
 
 const handleSubmit = jest.fn();
 const questionText = 'How is the experience in Rhoda Goldman Plaza';

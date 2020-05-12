@@ -11,12 +11,12 @@ import utc from 'dayjs/plugin/utc';
 import Helmet from 'react-helmet';
 
 
-import configureStore from 'sly/store/configure';
-import theme from 'sly/components/themes/default';
-import GlobalStyles from 'sly/components/themes/GlobalStyles';
+import configureStore from 'sly/web/store/configure';
+import theme from 'sly/web/components/themes/default';
+import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
 
 const store = configureStore({});
-const req = require.context('sly/components', true, /.stories.js$/);
+const req = require.context('sly/web/components', true, /.stories.js$/);
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);

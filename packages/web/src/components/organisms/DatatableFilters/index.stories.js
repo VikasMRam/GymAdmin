@@ -5,11 +5,11 @@ import styled from 'styled-components';
 
 import DatatableFilters from '.';
 
-import datatableClient from 'sly/../private/storybook/sample-data/datatable-client.json';
-import { makeQuerystringFilters, parseQuerystringFilters, simpleQSParse } from 'sly/services/datatable/helpers';
-import PopoverPortal from 'sly/components/molecules/PopoverPortal';
-import ButtonLink from 'sly/components/molecules/ButtonLink';
-import Button from 'sly/components/atoms/Button';
+import datatableClient from 'sly/web/../private/storybook/sample-data/datatable-client.json';
+import { makeQuerystringFilters, parseQuerystringFilters, simpleQSParse } from 'sly/web/services/datatable/helpers';
+import PopoverPortal from 'sly/web/components/molecules/PopoverPortal';
+import ButtonLink from 'sly/web/components/molecules/ButtonLink';
+import Button from 'sly/web/components/atoms/Button';
 
 const StyledInput = styled.input`
   width: 100%;

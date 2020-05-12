@@ -2,10 +2,10 @@ import React from 'react';
 import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 
-import pad from 'sly/components/helpers/pad';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import { Button, Heading, Box, Link, Block } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
+import pad from 'sly/web/components/helpers/pad';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import { Button, Heading, Box, Link, Block } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
 
 const StyledButton = pad(fullWidth(Button), 'large');
 StyledButton.displayName = 'StyledButton';

@@ -2,11 +2,11 @@ import styled, { css } from 'styled-components';
 import { oneOf, bool } from 'prop-types';
 import { ifProp, switchProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { variation as variationPropType } from 'sly/propTypes/variation';
-import { spacing as spacingPropType } from 'sly/propTypes/spacing';
-import { text as textPropType } from 'sly/propTypes/text';
+import { size, palette } from 'sly/web/components/themes';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { spacing as spacingPropType } from 'sly/web/propTypes/spacing';
+import { text as textPropType } from 'sly/web/propTypes/text';
 
 const padding = ({ padding }) => size('spacing', padding);
 

@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { string, node, func } from 'prop-types';
-import { withExperimentContext } from 'sly/services/experiments/components/Context';
+import { withExperimentContext } from 'sly/web/services/experiments/components/Context';
 
 @withExperimentContext
 

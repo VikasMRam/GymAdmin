@@ -2,15 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import DashboardProfileUserDetailsFormContainer from 'sly/containers/DashboardProfileUserDetailsFormContainer';
-import DashboardAddPasswordFormContainer from 'sly/containers/DashboardAddPasswordFormContainer';
-import DashboardChangePasswordFormContainer from 'sly/containers/DashboardChangePasswordFormContainer';
-import userPropType from 'sly/propTypes/user';
-import BannerNotificationController from 'sly/controllers/BannerNotificationController';
-import BannerNotification from 'sly/components/molecules/BannerNotification';
-import pad from 'sly/components/helpers/pad';
+import { size } from 'sly/web/components/themes';
+import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
+import DashboardProfileUserDetailsFormContainer from 'sly/web/containers/DashboardProfileUserDetailsFormContainer';
+import DashboardAddPasswordFormContainer from 'sly/web/containers/DashboardAddPasswordFormContainer';
+import DashboardChangePasswordFormContainer from 'sly/web/containers/DashboardChangePasswordFormContainer';
+import userPropType from 'sly/web/propTypes/user';
+import BannerNotificationController from 'sly/web/controllers/BannerNotificationController';
+import BannerNotification from 'sly/web/components/molecules/BannerNotification';
+import pad from 'sly/web/components/helpers/pad';
 
 const PaddedBannerNotification = pad(BannerNotification);
 

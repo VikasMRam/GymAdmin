@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import communityWithAgents from 'sly/../private/storybook/sample-data/admin-property-rhoda-goldman-plaza.json';
-import DashboardCommunityReferralContactDetailsContainer from 'sly/containers/DashboardCommunityReferralContactDetailsContainer';
+import communityWithAgents from 'sly/web/../private/storybook/sample-data/admin-property-rhoda-goldman-plaza.json';
+import DashboardCommunityReferralContactDetailsContainer from 'sly/web/containers/DashboardCommunityReferralContactDetailsContainer';
 
 const hsAction = action('handleSubmit');
 

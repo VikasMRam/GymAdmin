@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
-import CommunityBookATourDateForm from 'sly/components/organisms/CommunityBookATourDateForm';
+import CommunityBookATourDateForm from 'sly/web/components/organisms/CommunityBookATourDateForm';
 
 const CommunityBookATourDateFormContainer = reduxForm({
   form: 'CommunityBookATourDateForm',

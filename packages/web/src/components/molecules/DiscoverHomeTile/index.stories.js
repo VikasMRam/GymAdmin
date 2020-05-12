@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
+import DiscoverHomeTile from 'sly/web/components/molecules/DiscoverHomeTile';
 
 storiesOf('Molecules|DiscoverHomeTile', module)
   .add('default', () => (

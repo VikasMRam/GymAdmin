@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import FormSection from 'sly/components/molecules/FormSection';
+import FormSection from 'sly/web/components/molecules/FormSection';
 
 const heading = 'My Profie';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Tag from 'sly/components/atoms/Tag';
+import Tag from 'sly/web/components/atoms/Tag';
 
 storiesOf('Atoms|Tag', module)
   .add('default', () => (

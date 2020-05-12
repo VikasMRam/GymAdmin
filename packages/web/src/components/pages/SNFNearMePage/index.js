@@ -2,13 +2,13 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
-import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
 
-import { size, assetPath, palette } from 'sly/components/themes';
+import { size, assetPath, palette } from 'sly/web/components/themes';
 
-import { getStateAbbr } from 'sly/services/helpers/url';
-import HubHeader from 'sly/components/molecules/HubHeader';
-import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
+import { getStateAbbr } from 'sly/web/services/helpers/url';
+import HubHeader from 'sly/web/components/molecules/HubHeader';
+import PhoneCTAFooter from 'sly/web/components/molecules/PhoneCTAFooter';
 import {
   HubPageTemplate,
   makeBody,
@@ -19,13 +19,13 @@ import {
   makeArticle,
   makeTable,
   makeOneColumnListWrapper,
-} from 'sly/components/templates/HubPageTemplate';
-import { Label, Heading, Paragraph } from 'sly/components/atoms';
-import Footer from 'sly/components/organisms/Footer';
-import { getTocSeoLabel } from 'sly/services/helpers/search';
-import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
-import Link from 'sly/components/atoms/Link';
-import ListItem from 'sly/components/molecules/ListItem';
+} from 'sly/web/components/templates/HubPageTemplate';
+import { Label, Heading, Paragraph } from 'sly/web/components/atoms';
+import Footer from 'sly/web/components/organisms/Footer';
+import { getTocSeoLabel } from 'sly/web/services/helpers/search';
+import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
+import Link from 'sly/web/components/atoms/Link';
+import ListItem from 'sly/web/components/molecules/ListItem';
 
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};

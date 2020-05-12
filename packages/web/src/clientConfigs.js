@@ -5,8 +5,8 @@ import pathToRegexp from 'path-to-regexp';
 import debounce from 'lodash/debounce';
 import { ChunkExtractor } from '@loadable/server';
 
-import { isDev } from 'sly/config';
-import careTypes from 'sly/constants/careTypes';
+import { isDev } from 'sly/web/config';
+import careTypes from 'sly/web/constants/careTypes';
 
 const configs = [
   {

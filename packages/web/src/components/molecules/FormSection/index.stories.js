@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import FormSection from 'sly/components/molecules/FormSection';
-import { withPreventDefault } from 'sly/services/helpers/forms';
+import FormSection from 'sly/web/components/molecules/FormSection';
+import { withPreventDefault } from 'sly/web/services/helpers/forms';
 
 const defaultProps = {
   heading: 'My Profile',

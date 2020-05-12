@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { object, arrayOf, func } from 'prop-types';
 import { Redirect, generatePath } from 'react-router';
 
-import { prefetch, withUser } from 'sly/services/api';
-import userPropType from 'sly/propTypes/user';
-import communityPropType from 'sly/propTypes/community';
+import { prefetch, withUser } from 'sly/web/services/api';
+import userPropType from 'sly/web/propTypes/user';
+import communityPropType from 'sly/web/propTypes/community';
 import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   SUMMARY,
   PROFILE,
-} from 'sly/constants/dashboardAppPaths';
-import DashboardCommunitiesDetailsPage from 'sly/components/pages/DashboardCommunitiesDetailsPage';
-import withBreakpoint from 'sly/components/helpers/breakpoint';
-import withNotification from 'sly/controllers/withNotification';
-import withModal from 'sly/controllers/withModal';
+} from 'sly/web/constants/dashboardAppPaths';
+import DashboardCommunitiesDetailsPage from 'sly/web/components/pages/DashboardCommunitiesDetailsPage';
+import withBreakpoint from 'sly/web/components/helpers/breakpoint';
+import withNotification from 'sly/web/controllers/withNotification';
+import withModal from 'sly/web/controllers/withModal';
 
 @withNotification
 @withModal

@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { BoxChoiceTile } from 'sly/components/atoms';
-import BoxChoice from 'sly/components/molecules/BoxChoice';
+import { BoxChoiceTile } from 'sly/web/components/atoms';
+import BoxChoice from 'sly/web/components/molecules/BoxChoice';
 
 const options = [
   { value: 'first', label: 'First' },

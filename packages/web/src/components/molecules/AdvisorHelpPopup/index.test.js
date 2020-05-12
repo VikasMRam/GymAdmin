@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup/index';
-import IconItem from 'sly/components/molecules/IconItem/index';
+import AdvisorHelpPopup from 'sly/web/components/molecules/AdvisorHelpPopup/index';
+import IconItem from 'sly/web/components/molecules/IconItem/index';
 
 const wrap = (props = {}) =>
   shallow(<AdvisorHelpPopup {...props} />);

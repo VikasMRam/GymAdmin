@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ContentOverImage from 'sly/components/molecules/ContentOverImage';
+import ContentOverImage from 'sly/web/components/molecules/ContentOverImage';
 
 const defaultProps = {
   image: 'images/test.png',

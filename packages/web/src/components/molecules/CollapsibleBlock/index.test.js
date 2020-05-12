@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import Measure from 'react-measure';
 
-import CollapsibleBlock, { ReadMore } from 'sly/components/molecules/CollapsibleBlock';
+import CollapsibleBlock, { ReadMore } from 'sly/web/components/molecules/CollapsibleBlock';
 
 const children = 'test '.repeat(1000);
 const wrap = (props = {}) => mount(<CollapsibleBlock {...props}>{children}</CollapsibleBlock>);

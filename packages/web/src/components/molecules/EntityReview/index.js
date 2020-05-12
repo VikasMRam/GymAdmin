@@ -3,9 +3,9 @@ import { string, number } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-import { size } from 'sly/components/themes';
-import Rating from 'sly/components/molecules/Rating';
-import { Hr, Block } from 'sly/components/atoms';
+import { size } from 'sly/web/components/themes';
+import Rating from 'sly/web/components/molecules/Rating';
+import { Hr, Block } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;

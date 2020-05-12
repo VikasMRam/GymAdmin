@@ -2,16 +2,16 @@ import React, { PureComponent } from 'react';
 import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
 
-import { BANNER_COMMUNITY_PROFILE_HOW_IT_WORKS_SHOWN } from  'sly/constants/banner';
-import { Experiment, Variant } from 'sly/services/experiments';
-import cursor from 'sly/components/helpers/cursor';
-import textDecoration from 'sly/components/helpers/textDecoration';
-import textAlign from 'sly/components/helpers/textAlign';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import SlyEvent from 'sly/services/helpers/events';
-import { Span, Block } from 'sly/components/atoms';
-import BannerNotification from 'sly/components/molecules/BannerNotification';
-import HowItWorksPopup from 'sly/components/organisms/HowItWorksPopup';
+import { BANNER_COMMUNITY_PROFILE_HOW_IT_WORKS_SHOWN } from  'sly/web/constants/banner';
+import { Experiment, Variant } from 'sly/web/services/experiments';
+import cursor from 'sly/web/components/helpers/cursor';
+import textDecoration from 'sly/web/components/helpers/textDecoration';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { Span, Block } from 'sly/web/components/atoms';
+import BannerNotification from 'sly/web/components/molecules/BannerNotification';
+import HowItWorksPopup from 'sly/web/components/organisms/HowItWorksPopup';
 
 const ClickHereToSeeHowItWorks = textDecoration(cursor(Span));
 

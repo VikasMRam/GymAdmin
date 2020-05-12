@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
-import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import CommunityAmenities from 'sly/web/components/organisms/CommunityAmenities';
+import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const noInfoCommunity = {
   ...RhodaGoldmanPlaza,

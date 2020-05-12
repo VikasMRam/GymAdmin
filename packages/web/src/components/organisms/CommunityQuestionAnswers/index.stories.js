@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
-import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import CommunityQuestionAnswers from 'sly/web/components/organisms/CommunityQuestionAnswers';
+import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const { questions } = RhodaGoldmanPlaza;
 const communityName = 'Rhoda Goldman Plaza';

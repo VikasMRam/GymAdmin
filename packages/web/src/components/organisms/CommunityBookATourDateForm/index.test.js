@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityBookATourDateForm from 'sly/components/organisms/CommunityBookATourDateForm';
-import { Block } from 'sly/components/atoms';
+import CommunityBookATourDateForm from 'sly/web/components/organisms/CommunityBookATourDateForm';
+import { Block } from 'sly/web/components/atoms';
 
 const error = 'Blah';
 const wrap = (props = {}) => shallow(<CommunityBookATourDateForm {...props} />);

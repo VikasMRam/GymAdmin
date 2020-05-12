@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { string, object } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { prefetch, query } from 'sly/services/api';
+import { prefetch, query } from 'sly/web/services/api';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'constants/dashboardAppPaths';
-import NotificationController from 'sly/controllers/NotificationController';
-import DashboardCallDetailsPage from 'sly/components/pages/DashboardCallDetailsPage';
+import NotificationController from 'sly/web/controllers/NotificationController';
+import DashboardCallDetailsPage from 'sly/web/components/pages/DashboardCallDetailsPage';
 
 @prefetch('voiceCall', 'getVoiceCall', (req, { match }) => req({
   id: match.params.id,

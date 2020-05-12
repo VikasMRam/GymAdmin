@@ -3,10 +3,10 @@ import { func, bool } from 'prop-types';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
 
-import { size } from 'sly/components/themes';
-import { Button } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
+import { size } from 'sly/web/components/themes';
+import { Button } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 
 const TwoColumnWrapper = styled.div`
   display: flex;

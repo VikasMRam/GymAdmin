@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Marker } from 'react-google-maps';
 
-import Map from 'sly/components/atoms/Map';
-import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import Map from 'sly/web/components/atoms/Map';
+import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const { address, similarProperties } = RhodaGoldmanPlaza;
 const { latitude, longitude } = address;

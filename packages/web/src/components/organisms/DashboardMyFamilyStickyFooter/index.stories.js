@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import DashboardMyFamilyStickyFooter from 'sly/components/organisms/DashboardMyFamilyStickyFooter';
+import DashboardMyFamilyStickyFooter from 'sly/web/components/organisms/DashboardMyFamilyStickyFooter';
 
 const options = [
   {

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
-import AddNoteForm from 'sly/components/organisms/AddNoteForm';
+import AddNoteForm from 'sly/web/components/organisms/AddNoteForm';
 
 const AddNoteFormContainer = reduxForm({
   form: 'AddNoteForm',

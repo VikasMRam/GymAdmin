@@ -3,10 +3,10 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 
-import HubHeader from 'sly/components/molecules/HubHeader';
-import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
-import NextSteps from 'sly/components/molecules/NextSteps';
-import { size, palette, assetPath } from 'sly/components/themes';
+import HubHeader from 'sly/web/components/molecules/HubHeader';
+import PhoneCTAFooter from 'sly/web/components/molecules/PhoneCTAFooter';
+import NextSteps from 'sly/web/components/molecules/NextSteps';
+import { size, palette, assetPath } from 'sly/web/components/themes';
 import {
   HubPageTemplate,
   makeBody,
@@ -17,10 +17,10 @@ import {
   makeArticle,
   makeTable,
   makeOneColumnListWrapper,
-} from 'sly/components/templates/HubPageTemplate';
-import ListItem from 'sly/components/molecules/ListItem';
-import { Heading, Paragraph, Link, ResponsiveImage, Span, Image, Block } from 'sly/components/atoms';
-import Footer from 'sly/components/organisms/Footer';
+} from 'sly/web/components/templates/HubPageTemplate';
+import ListItem from 'sly/web/components/molecules/ListItem';
+import { Heading, Paragraph, Link, ResponsiveImage, Span, Image, Block } from 'sly/web/components/atoms';
+import Footer from 'sly/web/components/organisms/Footer';
 
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};

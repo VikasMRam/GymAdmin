@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { func, oneOf, string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, assetPath } from 'sly/components/themes';
-import SlyEvent from 'sly/services/helpers/events';
-import { hcaAdEnabled } from 'sly/services/helpers/tileAds';
-import { HOME_CARE_REQUESTED } from 'sly/services/api/constants';
-import withNotification from 'sly/controllers/withNotification';
-import AdTile from 'sly/components/organisms/AdTile';
-import { ResponsiveImage } from 'sly/components/atoms';
-import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
-import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
-import { community as communityProptype } from 'sly/propTypes/community';
+import { size, assetPath } from 'sly/web/components/themes';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { hcaAdEnabled } from 'sly/web/services/helpers/tileAds';
+import { HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
+import withNotification from 'sly/web/controllers/withNotification';
+import AdTile from 'sly/web/components/organisms/AdTile';
+import { ResponsiveImage } from 'sly/web/components/atoms';
+import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
+import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
+import { community as communityProptype } from 'sly/web/propTypes/community';
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
   vertical-align: middle;

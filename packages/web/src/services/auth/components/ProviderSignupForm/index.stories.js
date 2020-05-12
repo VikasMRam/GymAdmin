@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import SignupForm from 'sly/components/organisms/SignupForm';
-import { withPreventDefault } from 'sly/services/helpers/forms';
+import SignupForm from 'sly/web/components/organisms/SignupForm';
+import { withPreventDefault } from 'sly/web/services/helpers/forms';
 
 
 const SignupFormContainer = reduxForm({

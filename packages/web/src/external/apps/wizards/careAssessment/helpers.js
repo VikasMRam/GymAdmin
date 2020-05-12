@@ -1,5 +1,5 @@
-import { required, minLength, usPhone, email } from 'sly/services/validation';
-import { STEP_INPUT_FIELD_NAMES } from 'sly/external/constants/steps';
+import { required, minLength, usPhone, email } from 'sly/web/services/validation';
+import { STEP_INPUT_FIELD_NAMES } from 'sly/web/external/constants/steps';
 
 export const inputBasedNextSteps = {
   /* flow1: {

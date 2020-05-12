@@ -2,18 +2,18 @@ import React from 'react';
 import { arrayOf, object, func, bool, shape } from 'prop-types';
 import styled from 'styled-components';
 
-import SlyEvent from 'sly/services/helpers/events';
-import { size } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import shadow from 'sly/components/helpers/shadow';
-import Masonry from 'sly/components/common/Masonry';
-import { Heading, Paragraph, Hr, Link } from 'sly/components/atoms';
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
-import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import FormSection from 'sly/components/molecules/FormSection';
-import CommunityTile from 'sly/components/organisms/CommunityTile';
-import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { size } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import shadow from 'sly/web/components/helpers/shadow';
+import Masonry from 'sly/web/components/common/Masonry';
+import { Heading, Paragraph, Hr, Link } from 'sly/web/components/atoms';
+import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
+import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
+import FormSection from 'sly/web/components/molecules/FormSection';
+import CommunityTile from 'sly/web/components/organisms/CommunityTile';
+import HowSlyWorksVideo from 'sly/web/components/organisms/HowSlyWorksVideo';
 
 const columnCounts = [
   {

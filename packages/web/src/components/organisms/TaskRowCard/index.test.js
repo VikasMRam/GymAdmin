@@ -2,8 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import dayjs from 'dayjs';
 
-import task from 'sly/../private/storybook/sample-data/task-1.json';
-import TaskRowCard from 'sly/components/organisms/TaskRowCard';
+import task from 'sly/web/../private/storybook/sample-data/task-1.json';
+import TaskRowCard from 'sly/web/components/organisms/TaskRowCard';
 
 const onTaskClick = jest.fn();
 const defaultValues = {

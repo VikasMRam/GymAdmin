@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
-import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
+import CommunityQuestionAnswers from 'sly/web/components/organisms/CommunityQuestionAnswers';
+import CommunityAnswer from 'sly/web/components/molecules/CommunityAnswer';
 
 const communityName = 'Rhoda Goldman Plaza';
 const questions = [];

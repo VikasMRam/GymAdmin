@@ -1,7 +1,7 @@
 import { stringify, parse } from 'query-string';
 
-import { titleize } from 'sly/services/helpers/strings';
-import { communitySizeSearchParamMap } from 'sly/services/helpers/search';
+import { titleize } from 'sly/web/services/helpers/strings';
+import { communitySizeSearchParamMap } from 'sly/web/services/helpers/search';
 
 export const getSearchUrl = (matchParams) => {
   /*

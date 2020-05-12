@@ -2,9 +2,9 @@ import React from 'react';
 import { string, node, bool } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import { spacing as spacingPropType } from 'sly/propTypes/spacing';
-import { Heading, Block } from 'sly/components/atoms';
+import { size } from 'sly/web/components/themes';
+import { spacing as spacingPropType } from 'sly/web/propTypes/spacing';
+import { Heading, Block } from 'sly/web/components/atoms';
 
 const margin = ({ headingMargin }) => size('spacing', headingMargin);
 

@@ -3,11 +3,11 @@ import { string, number, shape, arrayOf } from 'prop-types';
 import styled from 'styled-components';
 import { Marker, InfoWindow } from 'react-google-maps';
 
-import { size } from 'sly/components/themes';
-import Map from 'sly/components/atoms/Map';
-import MapTile from 'sly/components/molecules/MapTile';
-import GreenMarker from 'sly/../public/icons/greenmarker.png';
-import RedMarker from 'sly/../public/icons/redmarker.png';
+import { size } from 'sly/web/components/themes';
+import Map from 'sly/web/components/atoms/Map';
+import MapTile from 'sly/web/components/molecules/MapTile';
+import GreenMarker from 'sly/web/../public/icons/greenmarker.png';
+import RedMarker from 'sly/web/../public/icons/redmarker.png';
 
 const Wrapper = styled.article`
   position: relative;

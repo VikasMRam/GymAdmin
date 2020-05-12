@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { arrayOf, oneOfType, string, func, bool, shape, number } from 'prop-types';
 
-import { BoxChoiceTile } from 'sly/components/atoms';
+import { BoxChoiceTile } from 'sly/web/components/atoms';
 
 const isSelected = (multiChoice, value, option) => (multiChoice)
   ? value.includes(option)

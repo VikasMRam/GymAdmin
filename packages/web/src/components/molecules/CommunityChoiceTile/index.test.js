@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Checkbox from 'sly/components/molecules/Checkbox';
-import CommunityChoiceTile from 'sly/components/molecules/CommunityChoiceTile';
-import parentCommunity from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import Checkbox from 'sly/web/components/molecules/Checkbox';
+import CommunityChoiceTile from 'sly/web/components/molecules/CommunityChoiceTile';
+import parentCommunity from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const { similarProperties: { 0: community } } = parentCommunity;
 

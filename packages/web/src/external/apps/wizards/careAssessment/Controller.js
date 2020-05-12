@@ -4,19 +4,19 @@ import { number, func, object, shape, string, bool } from 'prop-types';
 import queryString from 'query-string';
 import Cookies from 'universal-cookie';
 
-import { host, domain } from 'sly/config';
-import SlyEvent from 'sly/services/helpers/events';
-import { STEP_ORDERS, DEFAULT_STEP_ORDER, STEP_INPUT_FIELD_NAMES } from 'sly/external/constants/steps';
-import { connectController } from 'sly/controllers';
-import { createValidator } from 'sly/services/validation';
-import { selectFormData } from 'sly/services/helpers/forms';
-import { CARE_ASSESSMENT } from 'sly/services/api/constants';
-import CareAssessmentComponent from 'sly/external/apps/wizards/careAssessment/Component';
+import { host, domain } from 'sly/web/config';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { STEP_ORDERS, DEFAULT_STEP_ORDER, STEP_INPUT_FIELD_NAMES } from 'sly/web/external/constants/steps';
+import { connectController } from 'sly/web/controllers';
+import { createValidator } from 'sly/web/services/validation';
+import { selectFormData } from 'sly/web/services/helpers/forms';
+import { CARE_ASSESSMENT } from 'sly/web/services/api/constants';
+import CareAssessmentComponent from 'sly/web/external/apps/wizards/careAssessment/Component';
 import {
   inputBasedNextSteps, getStepInputFieldValidations,
   getStepInputFieldDefaultValues, converStepInputToString,
-} from 'sly/external/apps/wizards/careAssessment/helpers';
-import { query } from 'sly/services/api';
+} from 'sly/web/external/apps/wizards/careAssessment/helpers';
+import { query } from 'sly/web/services/api';
 
 const formName = 'CareAssessmentForm';
 const validate = createValidator(getStepInputFieldValidations());

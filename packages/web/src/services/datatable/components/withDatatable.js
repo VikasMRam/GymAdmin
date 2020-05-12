@@ -4,7 +4,7 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import { withRouter } from 'react-router-dom';
 import { parse } from 'query-string';
 
-import Datatable from 'sly/services/datatable/components/Datatable';
+import Datatable from 'sly/web/services/datatable/components/Datatable';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName

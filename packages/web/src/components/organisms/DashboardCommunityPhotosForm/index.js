@@ -3,13 +3,13 @@ import { func, bool, object, arrayOf } from 'prop-types';
 import styled from 'styled-components';
 import { sortableContainer } from 'react-sortable-hoc';
 
-import { size } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import { Button } from 'sly/components/atoms';
-import FormSection from 'sly/components/molecules/FormSection';
-import { imagePropType } from 'sly/propTypes/gallery';
-import MediaItem from 'sly/services/s3Uploader/components/MediaItem';
-import IconButton from 'sly/components/molecules/IconButton';
+import { size } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import { Button } from 'sly/web/components/atoms';
+import FormSection from 'sly/web/components/molecules/FormSection';
+import { imagePropType } from 'sly/web/propTypes/gallery';
+import MediaItem from 'sly/web/services/s3Uploader/components/MediaItem';
+import IconButton from 'sly/web/components/molecules/IconButton';
 
 const genKey = ((cache = {}) => (image) => {
   // check if our key exists

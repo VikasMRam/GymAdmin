@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { bool, string } from 'prop-types';
 
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { size, palette } from 'sly/components/themes';
-import { Icon, Span, Link } from 'sly/components/atoms';
-import GetCustomPricingContainer from 'sly/containers/GetCustomPricingContainer';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { size, palette } from 'sly/web/components/themes';
+import { Icon, Span, Link } from 'sly/web/components/atoms';
+import GetCustomPricingContainer from 'sly/web/containers/GetCustomPricingContainer';
 
 const getColor = ({ palette: paletteProp }) => palette(paletteProp, 'filler');
 

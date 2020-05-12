@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Dotdotdot from 'react-dotdotdot';
 
-import { Link } from 'sly/components/atoms';
-import { size, palette, key } from 'sly/components/themes';
-import Rating from 'sly/components/molecules/Rating';
+import { Link } from 'sly/web/components/atoms';
+import { size, palette, key } from 'sly/web/components/themes';
+import Rating from 'sly/web/components/molecules/Rating';
 
 const defaultImage =
   '//d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';

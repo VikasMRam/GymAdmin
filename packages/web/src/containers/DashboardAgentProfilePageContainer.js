@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { object, shape, arrayOf } from 'prop-types';
 
-import DashboardAgentProfilePage from 'sly/components/pages/DashboardAgentProfilePage';
-import { withUser, prefetch } from 'sly/services/api';
-import userPropType from 'sly/propTypes/user';
-import { adminAgentPropType } from 'sly/propTypes/agent';
-import { userIs } from 'sly/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import DashboardAgentProfilePage from 'sly/web/components/pages/DashboardAgentProfilePage';
+import { withUser, prefetch } from 'sly/web/services/api';
+import userPropType from 'sly/web/propTypes/user';
+import { adminAgentPropType } from 'sly/web/propTypes/agent';
+import { userIs } from 'sly/web/services/helpers/role';
+import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
 
 @withUser
 @prefetch('agents', 'getAgents', (req, { user }) => {

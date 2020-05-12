@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Bar from 'sly/components/atoms/Bar';
+import Bar from 'sly/web/components/atoms/Bar';
 
 storiesOf('Atoms|Bar', module)
   .add('default', () => (

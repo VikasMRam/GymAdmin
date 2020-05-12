@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Slider from 'sly/components/molecules/Slider';
+import Slider from 'sly/web/components/molecules/Slider';
 
 const moneyValue = val => `$${val}K`;
 

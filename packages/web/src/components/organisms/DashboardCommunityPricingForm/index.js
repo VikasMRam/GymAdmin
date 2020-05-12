@@ -3,12 +3,12 @@ import { func, bool, object } from 'prop-types';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
 
-import { size, palette, columnWidth } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import { Block, Button } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import FormSection from 'sly/components/molecules/FormSection';
+import { size, palette, columnWidth } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { Block, Button } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import FormSection from 'sly/web/components/molecules/FormSection';
 
 const trueFalseOptions = [
   { label: 'Yes', value: true },

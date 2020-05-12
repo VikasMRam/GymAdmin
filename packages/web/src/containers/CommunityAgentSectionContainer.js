@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { func } from 'prop-types';
 import loadable from '@loadable/component';
 
-import withModal from 'sly/controllers/withModal';
-import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
-import agentPropType from 'sly/propTypes/agent';
+import withModal from 'sly/web/controllers/withModal';
+import CommunityAgentSection from 'sly/web/components/molecules/CommunityAgentSection';
+import agentPropType from 'sly/web/propTypes/agent';
 
-const AdvisorHelpPopup = loadable(() => import(/* webpackChunkName: "chunkAdvisorHelpPopup" */ 'sly/components/molecules/AdvisorHelpPopup'));
+const AdvisorHelpPopup = loadable(() => import(/* webpackChunkName: "chunkAdvisorHelpPopup" */ 'sly/web/components/molecules/AdvisorHelpPopup'));
 
 @withModal
 export default class CommunityAgentSectionContainer extends Component {

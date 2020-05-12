@@ -5,13 +5,13 @@ import pick from 'lodash/pick';
 import defaultsDeep from 'lodash/defaultsDeep';
 import { withRouter } from 'react-router';
 
-import clientPropType from 'sly/propTypes/client';
-import userProptype from 'sly/propTypes/user';
-import { query, prefetch } from 'sly/services/api';
-import withUser from 'sly/services/api/withUser';
-import { userIs } from 'sly/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
-import DashboardCommunityPricingForm from 'sly/components/organisms/DashboardCommunityPricingForm';
+import clientPropType from 'sly/web/propTypes/client';
+import userProptype from 'sly/web/propTypes/user';
+import { query, prefetch } from 'sly/web/services/api';
+import withUser from 'sly/web/services/api/withUser';
+import { userIs } from 'sly/web/services/helpers/role';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import DashboardCommunityPricingForm from 'sly/web/components/organisms/DashboardCommunityPricingForm';
 import { connect } from 'react-redux';
 
 const formName = 'DashboardCommunityPricingForm';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import { ResponsiveImage, Thumbnail } from 'sly/components/atoms';
+import { ResponsiveImage, Thumbnail } from 'sly/web/components/atoms';
 
 const wrap = (props = {}) => mount(<Thumbnail {...props} />);
 

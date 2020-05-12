@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import classes from 'classnames';
 import { string } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import ModalContainer from 'sly/containers/ModalContainer';
+import { size } from 'sly/web/components/themes';
+import ModalContainer from 'sly/web/containers/ModalContainer';
 
 export const FullScreenWizard = styled.div`
   .overlayHeader {

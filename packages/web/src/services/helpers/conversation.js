@@ -1,4 +1,4 @@
-import { CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION } from 'sly/constants/conversations';
+import { CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION } from 'sly/web/constants/conversations';
 
 export const getConversationName = (conversation, user) => {
   const { conversationParticipants, info } = conversation;

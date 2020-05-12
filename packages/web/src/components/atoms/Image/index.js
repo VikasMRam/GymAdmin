@@ -3,7 +3,7 @@ import { string, oneOf, node, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { Lazy } from 'react-lazy';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size, assetPath } from 'sly/web/components/themes';
 
 const CUSHION = '500px';
 

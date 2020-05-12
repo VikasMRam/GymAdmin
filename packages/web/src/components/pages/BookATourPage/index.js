@@ -4,26 +4,26 @@ import { object, func, bool } from 'prop-types';
 import Helmet from 'react-helmet';
 import { Route } from 'react-router';
 
-import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
-import CommunityBookATourDateFormContainer from 'sly/containers/CommunityBookATourDateFormContainer';
-import { community as communityPropType } from 'sly/propTypes/community';
-import { size } from 'sly/components/themes';
-import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
+import CommunityBookATourContactFormContainer from 'sly/web/containers/CommunityBookATourContactFormContainer';
+import CommunityBookATourDateFormContainer from 'sly/web/containers/CommunityBookATourDateFormContainer';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import { size } from 'sly/web/components/themes';
+import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import {
   FullScreenWizard,
   makeBody,
   makeColumn,
   makeControls,
   makeHeader,
-} from 'sly/components/templates/FullScreenWizard';
-import SlyEvent from 'sly/services/helpers/events';
-import { DASHBOARD_PATH } from 'sly/constants/dashboardAppPaths';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWizardAcknowledgementContainer';
-import CommunityInfo from 'sly/components/molecules/CommunityInfo';
-import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
-import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
-import Modal from 'sly/components/molecules/Modal';
+} from 'sly/web/components/templates/FullScreenWizard';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { DASHBOARD_PATH } from 'sly/web/constants/dashboardAppPaths';
+import HeaderContainer from 'sly/web/containers/HeaderContainer';
+import CommunityWizardAcknowledgementContainer from 'sly/web/containers/CommunityWizardAcknowledgementContainer';
+import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
+import BookingFormFooter from 'sly/web/components/molecules/BookingFormFooter';
+import AdvisorHelpPopup from 'sly/web/components/molecules/AdvisorHelpPopup';
+import Modal from 'sly/web/components/molecules/Modal';
 
 const Header = makeHeader(HeaderContainer);
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { string, bool } from 'prop-types';
 
-import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
-import SlyEvent from 'sly/services/helpers/events';
+import HowSlyWorksVideo from 'sly/web/components/organisms/HowSlyWorksVideo';
+import SlyEvent from 'sly/web/services/helpers/events';
 
 const sendEvent = (category, action, label, value) =>
   SlyEvent.getInstance().sendEvent({

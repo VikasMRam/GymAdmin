@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { node } from 'prop-types';
 
-import clientPropType from 'sly/propTypes/client';
-import { STATUS_PALETTE_MAP, STATUS_ICON_MAP } from 'sly/constants/familyDetails';
-import pad from 'sly/components/helpers/pad';
-import { Box, Block } from 'sly/components/atoms';
-import Stage from 'sly/components/molecules/Stage';
-import IconBadge from 'sly/components/molecules/IconBadge';
+import clientPropType from 'sly/web/propTypes/client';
+import { STATUS_PALETTE_MAP, STATUS_ICON_MAP } from 'sly/web/constants/familyDetails';
+import pad from 'sly/web/components/helpers/pad';
+import { Box, Block } from 'sly/web/components/atoms';
+import Stage from 'sly/web/components/molecules/Stage';
+import IconBadge from 'sly/web/components/molecules/IconBadge';
 
 const StyledBox = styled(Box)`
   border-bottom-left-radius: 0;

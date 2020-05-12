@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import CurtainupSubscribeForm from 'sly/components/organisms/CurtainupSubscribeForm';
-import { withPreventDefault } from 'sly/services/helpers/forms';
+import CurtainupSubscribeForm from 'sly/web/components/organisms/CurtainupSubscribeForm';
+import { withPreventDefault } from 'sly/web/services/helpers/forms';
 
 const CurtainupSubscribeFormContainer = reduxForm({
   form: 'CurtainupSubscribeForm',

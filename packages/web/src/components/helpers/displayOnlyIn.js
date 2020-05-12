@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { size } from 'sly/components/themes';
+import { size } from 'sly/web/components/themes';
 
 const displayOnlyIn = (Component, displayIn = ['mobile', 'tablet', 'laptop']) => {
   let displayCss = css``;

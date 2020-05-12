@@ -8,8 +8,8 @@ import {
   FAMILY_STAGE_LOST,
   DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS,
   PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
-} from 'sly/constants/familyDetails';
-import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
+} from 'sly/web/constants/familyDetails';
+import UpdateFamilyStageForm from 'sly/web/components/organisms/UpdateFamilyStageForm';
 
 const name = 'test';
 const groups = Object.keys(FAMILY_STAGE_ORDERED);

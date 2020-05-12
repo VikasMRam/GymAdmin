@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import DashboardMyAccountPage from 'sly/components/pages/DashboardMyAccountPage';
-import { withUser } from 'sly/services/api';
-import userPropType from 'sly/propTypes/user';
+import DashboardMyAccountPage from 'sly/web/components/pages/DashboardMyAccountPage';
+import { withUser } from 'sly/web/services/api';
+import userPropType from 'sly/web/propTypes/user';
 
 const incompleteInfoWarning = 'Please enter the incomplete fields below to complete your account.';
 

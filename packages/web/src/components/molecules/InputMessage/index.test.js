@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import InputMessage from 'sly/components/molecules/InputMessage/index';
+import InputMessage from 'sly/web/components/molecules/InputMessage/index';
 
 const defaultProps = {
   icon: 'favourite-light',

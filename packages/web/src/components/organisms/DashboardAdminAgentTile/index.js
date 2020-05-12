@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { bool, func } from 'prop-types';
 import { prop, ifProp } from 'styled-tools';
 
-import { size, palette, columnWidth } from 'sly/components/themes';
-import { adminAgentPropType } from 'sly/propTypes/agent';
-import { Heading, Badge, Button, Span } from 'sly/components/atoms';
+import { size, palette, columnWidth } from 'sly/web/components/themes';
+import { adminAgentPropType } from 'sly/web/propTypes/agent';
+import { Heading, Badge, Button, Span } from 'sly/web/components/atoms';
 
 const Header = styled.div`
   display: flex;

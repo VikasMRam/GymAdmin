@@ -1,6 +1,6 @@
-import list from 'sly/services/notifications/subscriptionList';
-import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
-import { AGENT_ND_ROLE, CUSTOMER_ROLE } from 'sly/constants/roles';
+import list from 'sly/web/services/notifications/subscriptionList';
+import { NOTIFY_MESSAGE_NEW } from 'sly/web/constants/notifications';
+import { AGENT_ND_ROLE, CUSTOMER_ROLE } from 'sly/web/constants/roles';
 
 describe('subscriptionList', () => {
   it('should have all handlers', () => {

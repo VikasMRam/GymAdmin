@@ -3,19 +3,19 @@ import { func } from 'prop-types';
 import { Redirect, generatePath } from 'react-router-dom';
 import { reduxForm } from 'redux-form';
 
-import { domain } from 'sly/config';
-import clientPropType from 'sly/propTypes/client';
-import conversationPropType from 'sly/propTypes/conversation/conversation';
-import userPropType from 'sly/propTypes/user';
+import { domain } from 'sly/web/config';
+import clientPropType from 'sly/web/propTypes/client';
+import conversationPropType from 'sly/web/propTypes/conversation/conversation';
+import userPropType from 'sly/web/propTypes/user';
 import {
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   FAMILY_DETAILS,
   MESSAGES,
-} from 'sly/constants/dashboardAppPaths';
-import { withUser } from 'sly/services/api';
-import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
-import AcceptAndContactFamilyForm from 'sly/components/organisms/AcceptAndContactFamilyForm';
-import AcceptFamilyContactDetails from 'sly/components/organisms/AcceptFamilyContactDetails';
+} from 'sly/web/constants/dashboardAppPaths';
+import { withUser } from 'sly/web/services/api';
+import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
+import AcceptAndContactFamilyForm from 'sly/web/components/organisms/AcceptAndContactFamilyForm';
+import AcceptFamilyContactDetails from 'sly/web/components/organisms/AcceptFamilyContactDetails';
 
 const AcceptAndContactFamilyFormRedux = reduxForm({
   form: 'AcceptAndContactFamilyForm',

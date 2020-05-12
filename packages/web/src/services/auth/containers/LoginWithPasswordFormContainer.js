@@ -3,9 +3,9 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
-import { createValidator, required, minLength, email } from 'sly/services/validation';
-import { withAuth } from 'sly/services/api';
-import LoginWithPasswordForm from 'sly/services/auth/components/LoginWithPasswordForm';
+import { createValidator, required, minLength, email } from 'sly/web/services/validation';
+import { withAuth } from 'sly/web/services/api';
+import LoginWithPasswordForm from 'sly/web/services/auth/components/LoginWithPasswordForm';
 
 const formName = 'LoginWithPasswordForm';
 

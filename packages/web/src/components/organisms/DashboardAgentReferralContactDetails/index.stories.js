@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import DashboardAgentReferralContactDetailsContainer from 'sly/containers/DashboardAgentReferralContactDetailsContainer';
+import DashboardAgentReferralContactDetailsContainer from 'sly/web/containers/DashboardAgentReferralContactDetailsContainer';
 
 const onChangeAgent = action('Change Agent');
 const handleSubmit = action('Submit');

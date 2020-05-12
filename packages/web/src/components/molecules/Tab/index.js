@@ -2,9 +2,9 @@ import React from 'react';
 import { string, func, bool, oneOf, any } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
-import Span from 'sly/components/atoms/Span';
-import Link from 'sly/components/atoms/Link';
+import { size, palette } from 'sly/web/components/themes';
+import Span from 'sly/web/components/atoms/Span';
+import Link from 'sly/web/components/atoms/Link';
 
 const Wrapper = styled.li`
   cursor: pointer;

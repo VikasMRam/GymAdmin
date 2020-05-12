@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import { Thumbnail } from 'sly/components/atoms';
+import { size } from 'sly/web/components/themes';
+import { Thumbnail } from 'sly/web/components/atoms';
 
 const Wrapper = styled.ul`
   overflow-x: scroll;

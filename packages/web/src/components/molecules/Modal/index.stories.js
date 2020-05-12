@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { Heading, Block } from 'sly/components/atoms';
-import Modal from 'sly/components/molecules/Modal';
+import { Heading, Block } from 'sly/web/components/atoms';
+import Modal from 'sly/web/components/molecules/Modal';
 
 storiesOf('Molecules|Modal', module)
   .add('default', () => (

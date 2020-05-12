@@ -2,7 +2,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Icon from 'sly/components/atoms/Icon';
+import Icon from 'sly/web/components/atoms/Icon';
 
 const wrap = (props = {}) => mount(<Icon icon="star" {...props} />);
 

@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import CommunityAddRatingForm from 'sly/components/organisms/CommunityAddRatingForm';
-import { withPreventDefault } from 'sly/services/helpers/forms';
+import CommunityAddRatingForm from 'sly/web/components/organisms/CommunityAddRatingForm';
+import { withPreventDefault } from 'sly/web/services/helpers/forms';
 
 
 const CommunityAskQuestionFormContainer = reduxForm({

@@ -3,9 +3,9 @@ import { arrayOf, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
-import textAlign from 'sly/components/helpers/textAlign';
-import { Block } from 'sly/components/atoms';
+import { size, palette } from 'sly/web/components/themes';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { Block } from 'sly/web/components/atoms';
 
 const Bubble = styled.div`
   height: ${size('icon.tiny')};

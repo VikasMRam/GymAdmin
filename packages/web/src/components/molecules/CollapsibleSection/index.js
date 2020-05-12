@@ -4,9 +4,9 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
 
-import { size, key, palette } from 'sly/components/themes';
-import { Icon, ClampedText, Heading } from 'sly/components/atoms';
-import { weight as weightPropType } from 'sly/propTypes/weight';
+import { size, key, palette } from 'sly/web/components/themes';
+import { Icon, ClampedText, Heading } from 'sly/web/components/atoms';
+import { weight as weightPropType } from 'sly/web/propTypes/weight';
 
 const Section = styled.section`
   transition: padding-bottom ${key('transitions.default')};

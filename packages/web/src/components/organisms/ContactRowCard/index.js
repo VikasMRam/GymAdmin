@@ -2,16 +2,16 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { func, string, bool, object } from 'prop-types';
 
-import { size, palette } from 'sly/components/themes';
-import contactPropType from 'sly/propTypes/contact';
-import mobileOnly from 'sly/components/helpers/mobileOnly';
-import pad from 'sly/components/helpers/pad';
-import borderRadius from 'sly/components/helpers/borderRadius';
-import { Link, ClampedText } from 'sly/components/atoms';
-import { Td, Tr } from 'sly/components/atoms/Table';
-import { getAppPathForEntity } from 'sly/services/helpers/appPaths';
-import { phoneFormatter } from 'sly/services/helpers/phone';
-import IconButton from 'sly/components/molecules/IconButton';
+import { size, palette } from 'sly/web/components/themes';
+import contactPropType from 'sly/web/propTypes/contact';
+import mobileOnly from 'sly/web/components/helpers/mobileOnly';
+import pad from 'sly/web/components/helpers/pad';
+import borderRadius from 'sly/web/components/helpers/borderRadius';
+import { Link, ClampedText } from 'sly/web/components/atoms';
+import { Td, Tr } from 'sly/web/components/atoms/Table';
+import { getAppPathForEntity } from 'sly/web/services/helpers/appPaths';
+import { phoneFormatter } from 'sly/web/services/helpers/phone';
+import IconButton from 'sly/web/components/molecules/IconButton';
 
 const Wrapper = mobileOnly(
   borderRadius(pad(Tr, 'large'), 'small'),

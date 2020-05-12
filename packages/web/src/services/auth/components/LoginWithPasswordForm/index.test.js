@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import LoginWithPasswordForm from 'sly/services/auth/components/LoginWithPasswordForm/index';
+import LoginWithPasswordForm from 'sly/web/services/auth/components/LoginWithPasswordForm/index';
 
 const emailOrPhone = 'test@test.com';
 const handleSubmit = jest.fn();

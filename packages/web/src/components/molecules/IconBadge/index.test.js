@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import IconBadge from 'sly/components/molecules/IconBadge';
+import IconBadge from 'sly/web/components/molecules/IconBadge';
 
 const wrap = (props = {}) => shallow(<IconBadge icon="hourglass" {...props} />);
 

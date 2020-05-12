@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Modal from 'sly/components/molecules/Modal';
+import Modal from 'sly/web/components/molecules/Modal';
 
 const onClose = jest.fn();
 const wrap = (props = {}) => shallow(<Modal onClose={onClose} {...props} />);

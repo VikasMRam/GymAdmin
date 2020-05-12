@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
-import Section from 'sly/components/molecules/Section';
+import CommunityExtraInfoSection from 'sly/web/components/molecules/CommunityExtraInfoSection';
+import Section from 'sly/web/components/molecules/Section';
 
 const wrap = (props = {}) =>
   shallow(<CommunityExtraInfoSection {...props} />);

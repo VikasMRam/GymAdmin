@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import PartnerReview from 'sly/components/molecules/PartnerReview';
+import PartnerReview from 'sly/web/components/molecules/PartnerReview';
 
 storiesOf('Molecules|PartnerReview', module)
   .add('default', () => (

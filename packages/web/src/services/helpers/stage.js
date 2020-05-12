@@ -4,7 +4,7 @@ import {
   FAMILY_STAGE_LOST,
   FAMILY_STAGE_REJECTED,
   TOTAL_STAGES_COUNT,
-} from 'sly/constants/familyDetails';
+} from 'sly/web/constants/familyDetails';
 
 const stagesIndex = Object.entries(FAMILY_STAGE_ORDERED)
   .reduce((acc, [group, stages], groupIndex) => {

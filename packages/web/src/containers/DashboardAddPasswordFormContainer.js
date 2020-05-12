@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { reduxForm, SubmissionError, reset } from 'redux-form';
 import { object, func } from 'prop-types';
 
-import DashboardAddPasswordForm from 'sly/components/organisms/DashboardAddPasswordForm';
-import { createValidator, minLength, match } from 'sly/services/validation';
-import userPropType from 'sly/propTypes/user';
-import { withAuth } from 'sly/services/api';
+import DashboardAddPasswordForm from 'sly/web/components/organisms/DashboardAddPasswordForm';
+import { createValidator, minLength, match } from 'sly/web/services/validation';
+import userPropType from 'sly/web/propTypes/user';
+import { withAuth } from 'sly/web/services/api';
 
 const validate = createValidator({
   newPassword: [minLength(8)],

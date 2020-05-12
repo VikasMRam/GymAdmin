@@ -3,9 +3,9 @@ import { object, func } from 'prop-types';
 import get from 'lodash/get';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
-import userPropType, { uuidAux as uuidAuxPropType } from 'sly/propTypes/user';
-import { query } from 'sly/services/api';
-import prefetch from 'sly/services/api/prefetch';
+import userPropType, { uuidAux as uuidAuxPropType } from 'sly/web/propTypes/user';
+import { query } from 'sly/web/services/api';
+import prefetch from 'sly/web/services/api/prefetch';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName

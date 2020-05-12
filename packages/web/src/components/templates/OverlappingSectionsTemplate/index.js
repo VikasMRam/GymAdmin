@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { size, assetPath, palette } from 'sly/components/themes';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
-import { Image, Heading, Block } from 'sly/components/atoms';
-import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
+import { size, assetPath, palette } from 'sly/web/components/themes';
+import HeaderContainer from 'sly/web/containers/HeaderContainer';
+import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
+import { Image, Heading, Block } from 'sly/web/components/atoms';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 
 const FixedWidthContainer = styled.div`
   width: 100%;

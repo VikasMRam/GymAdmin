@@ -3,9 +3,9 @@ import React, { Fragment } from 'react';
 import { number, oneOf, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { palette, size } from 'sly/components/themes';
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { variation as variationPropType } from 'sly/propTypes/variation';
+import { palette, size } from 'sly/web/components/themes';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { variation as variationPropType } from 'sly/web/propTypes/variation';
 
 const times = (nr, fn) => Array.from(Array(nr).keys()).map((_, i) => fn(i));
 

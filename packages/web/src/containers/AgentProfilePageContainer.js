@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 
-import agentPropType from 'sly/propTypes/agent';
-import { prefetch } from 'sly/services/api';
-import withNotification from 'sly/controllers/withNotification';
-import AgentProfilePage from 'sly/components/pages/AgentProfilePage';
+import agentPropType from 'sly/web/propTypes/agent';
+import { prefetch } from 'sly/web/services/api';
+import withNotification from 'sly/web/controllers/withNotification';
+import AgentProfilePage from 'sly/web/components/pages/AgentProfilePage';
 
 const getAgentSlug = match => match.params.agentSlug;
 

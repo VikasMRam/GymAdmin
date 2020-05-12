@@ -4,12 +4,12 @@ import { Link as RRLink } from 'react-router-dom';
 import { string, bool, object } from 'prop-types';
 import { ifNotProp, ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { routes as routesPropType } from 'sly/propTypes/routes';
-import { variation as variationPropType } from 'sly/propTypes/variation';
-import isPathInRoutes from 'sly/services/helpers/isPathInRoutes';
-import { addEventToUrl } from 'sly/services/helpers/queryParamEvents';
+import { size, palette } from 'sly/web/components/themes';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { routes as routesPropType } from 'sly/web/propTypes/routes';
+import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
+import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
 const getSize = type => p => size(type, p.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);

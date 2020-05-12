@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import InteractiveDetail from 'sly/components/molecules/InteractiveDetail';
+import InteractiveDetail from 'sly/web/components/molecules/InteractiveDetail';
 
 const label = 'test';
 const phone = 1234567890;

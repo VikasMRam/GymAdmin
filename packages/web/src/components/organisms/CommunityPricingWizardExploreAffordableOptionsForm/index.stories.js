@@ -4,8 +4,8 @@ import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
 import CommunityPricingWizardExploreAffordableOptionsForm
-  from 'sly/components/organisms/CommunityPricingWizardExploreAffordableOptionsForm';
-import { EXPLORE_AFFORDABLE_PRICING_OPTIONS } from 'sly/constants/pricingForm';
+  from 'sly/web/components/organisms/CommunityPricingWizardExploreAffordableOptionsForm';
+import { EXPLORE_AFFORDABLE_PRICING_OPTIONS } from 'sly/web/constants/pricingForm';
 
 const CommunityPricingWizardExploreAffordableOptionsFormContainer = reduxForm({
   form: 'CommunityPricingWizardWhatToDoNextForm',

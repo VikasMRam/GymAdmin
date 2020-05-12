@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Tag from 'sly/components/atoms/Tag';
+import Tag from 'sly/web/components/atoms/Tag';
 
 const wrap = (props = {}) => shallow(<Tag {...props} />);
 

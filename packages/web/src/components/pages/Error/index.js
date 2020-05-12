@@ -3,14 +3,14 @@ import { number, object } from 'prop-types';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
 
-import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
-import { size, palette } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import Heading from 'sly/components/atoms/Heading';
-import Link from 'sly/components/atoms/Link';
-import Footer from 'sly/components/organisms/Footer';
+import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
+import { size, palette } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import HeaderContainer from 'sly/web/containers/HeaderContainer';
+import Heading from 'sly/web/components/atoms/Heading';
+import Link from 'sly/web/components/atoms/Link';
+import Footer from 'sly/web/components/organisms/Footer';
 
 const Wrapper = textAlign(styled.div`
   position: relative;

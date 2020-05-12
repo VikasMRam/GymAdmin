@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
+import PricingFormFooter from 'sly/web/components/molecules/PricingFormFooter';
 
 storiesOf('Molecules|PricingFormFooter', module)
   .add('default', () => <PricingFormFooter onProgressClick={action('clicked')} />)

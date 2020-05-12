@@ -2,9 +2,9 @@ import React from 'react';
 import { parse } from 'query-string';
 import { object } from 'prop-types';
 
-import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import DashboardAgentsIndexSectionContainer from 'sly/containers/DashboardAgentsIndexSectionContainer';
-import { Datatable } from 'sly/services/datatable';
+import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
+import DashboardAgentsIndexSectionContainer from 'sly/web/containers/DashboardAgentsIndexSectionContainer';
+import { Datatable } from 'sly/web/services/datatable';
 
 const DashboardAgentsIndexPageContainer = ({ location }) => {
   const { 'page-number': pageNumber, ...filters } = parse(location.search);

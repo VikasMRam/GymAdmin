@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 import { generatePath } from 'react-router';
 
-import { size, palette } from 'sly/components/themes';
+import { size, palette } from 'sly/web/components/themes';
 import {
   DASHBOARD_ACCOUNT_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
@@ -15,18 +15,18 @@ import {
   AGENT_DASHBOARD_TASKS_PATH,
   AGENT_DASHBOARD_CONTACTS_PATH,
   ADMIN_DASHBOARD_AGENTS_PATH, DASHBOARD_COMMUNITIES_PATH,
-} from 'sly/constants/dashboardAppPaths';
+} from 'sly/web/constants/dashboardAppPaths';
 import {
   CUSTOMER_ROLE,
   AGENT_ND_ROLE,
   AGENT_ADMIN_ROLE,
   PLATFORM_ADMIN_ROLE,
   PROVIDER_OD_ROLE,
-} from 'sly/constants/roles';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import ModalContainer from 'sly/containers/ModalContainer';
-import DashboardMenu from 'sly/components/molecules/DashboardMenu';
-import SlyEvent from 'sly/services/helpers/events';
+} from 'sly/web/constants/roles';
+import HeaderContainer from 'sly/web/containers/HeaderContainer';
+import ModalContainer from 'sly/web/containers/ModalContainer';
+import DashboardMenu from 'sly/web/components/molecules/DashboardMenu';
+import SlyEvent from 'sly/web/services/helpers/events';
 
 const onMenuItemClick = (menuItem) => {
   const { label } = menuItem;

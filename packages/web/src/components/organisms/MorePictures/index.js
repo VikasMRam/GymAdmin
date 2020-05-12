@@ -2,8 +2,8 @@ import React from 'react';
 import { arrayOf, shape, string, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, getKey } from 'sly/components/themes';
-import { ResponsiveImage } from 'sly/components/atoms';
+import { size, getKey } from 'sly/web/components/themes';
+import { ResponsiveImage } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};

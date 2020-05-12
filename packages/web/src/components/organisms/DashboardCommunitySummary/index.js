@@ -1,11 +1,11 @@
 import React from 'react';
 
-import communityPropType from 'sly/propTypes/community';
-import pad from 'sly/components/helpers/pad';
+import communityPropType from 'sly/web/propTypes/community';
+import pad from 'sly/web/components/helpers/pad';
 import styled from 'styled-components';
-import { size } from 'sly/components/themes';
-import { Block, Label } from 'sly/components/atoms';
-import { formatAddress } from 'sly/services/helpers/community';
+import { size } from 'sly/web/components/themes';
+import { Block, Label } from 'sly/web/components/atoms';
+import { formatAddress } from 'sly/web/services/helpers/community';
 
 const ColumWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.mobile')}) {

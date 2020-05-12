@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { func, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { size } from 'sly/components/themes';
-import { Block, Hr, Button } from 'sly/components/atoms';
-import DashboardAdminReferralCommunityTile from 'sly/components/organisms/DashboardAdminReferralCommunityTile';
-import pad from 'sly/components/helpers/pad';
-import { adminCommunityPropType } from 'sly/propTypes/community';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import { FAMILIES_INTERESTED_COMMUNITY_TITLE } from 'sly/constants/referrals';
+import { size } from 'sly/web/components/themes';
+import { Block, Hr, Button } from 'sly/web/components/atoms';
+import DashboardAdminReferralCommunityTile from 'sly/web/components/organisms/DashboardAdminReferralCommunityTile';
+import pad from 'sly/web/components/helpers/pad';
+import { adminCommunityPropType } from 'sly/web/propTypes/community';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import { FAMILIES_INTERESTED_COMMUNITY_TITLE } from 'sly/web/constants/referrals';
 
 const SendReferralTitleBlock = pad(Block);
 

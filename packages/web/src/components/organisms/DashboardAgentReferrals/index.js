@@ -3,12 +3,12 @@ import { func, arrayOf, object } from 'prop-types';
 import styled from 'styled-components';
 import { generatePath } from 'react-router';
 
-import { size, palette } from 'sly/components/themes';
-import { Heading, Block, Button } from 'sly/components/atoms';
-import pad from 'sly/components/helpers/pad';
-import clientPropType from 'sly/propTypes/client';
-import DashboardAdminReferralAgentTile from 'sly/components/organisms/DashboardAdminReferralAgentTile';
-import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
+import { size, palette } from 'sly/web/components/themes';
+import { Heading, Block, Button } from 'sly/web/components/atoms';
+import pad from 'sly/web/components/helpers/pad';
+import clientPropType from 'sly/web/propTypes/client';
+import DashboardAdminReferralAgentTile from 'sly/web/components/organisms/DashboardAdminReferralAgentTile';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/web/constants/dashboardAppPaths';
 
 const TopWrapper = styled.div`
   display: flex;

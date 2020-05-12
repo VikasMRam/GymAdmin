@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import { assetPath } from 'sly/components/themes';
-import PressTile from 'sly/components/molecules/PressTile';
+import { assetPath } from 'sly/web/components/themes';
+import PressTile from 'sly/web/components/molecules/PressTile';
 
 const props = {
   text: `Seniorly is launching a new tool designed to make booking a short-term stay in an assisted living

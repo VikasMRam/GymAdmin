@@ -1,8 +1,8 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 
-import { createValidator, required } from 'sly/services/validation';
-import AddNoteForm from 'sly/components/organisms/AddNoteForm';
+import { createValidator, required } from 'sly/web/services/validation';
+import AddNoteForm from 'sly/web/components/organisms/AddNoteForm';
 
 const validate = createValidator({
   note: [required],

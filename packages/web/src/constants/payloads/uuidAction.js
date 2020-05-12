@@ -1,4 +1,4 @@
-import { UUIDACTION_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
+import { UUIDACTION_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
 
 export const newUuidAction = {
   data: {

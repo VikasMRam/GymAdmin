@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 
-import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
-import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import CommunityMediaGallery from 'sly/web/components/organisms/CommunityMediaGallery';
+import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 
 class CommunityMediaGalleryWithState extends Component {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Paragraph from 'sly/components/atoms/Paragraph';
+import Paragraph from 'sly/web/components/atoms/Paragraph';
 
 storiesOf('Atoms|Paragraph', module)
   .add('default', () => (

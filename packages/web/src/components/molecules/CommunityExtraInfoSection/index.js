@@ -2,9 +2,9 @@ import React from 'react';
 import { string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import { Box, Link } from 'sly/components/atoms';
-import Section from 'sly/components/molecules/Section';
+import { size } from 'sly/web/components/themes';
+import { Box, Link } from 'sly/web/components/atoms';
+import Section from 'sly/web/components/molecules/Section';
 
 const DescriptionWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};

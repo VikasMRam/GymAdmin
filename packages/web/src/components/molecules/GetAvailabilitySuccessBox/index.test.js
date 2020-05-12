@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import GetAvailabilitySuccessBox from 'sly/components/molecules/GetAvailabilitySuccessBox';
+import GetAvailabilitySuccessBox from 'sly/web/components/molecules/GetAvailabilitySuccessBox';
 
 const wrap = (props = {}) => shallow(<GetAvailabilitySuccessBox {...props} />);
 

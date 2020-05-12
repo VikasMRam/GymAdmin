@@ -2,10 +2,10 @@ import React from 'react';
 import { shape, arrayOf, string, number } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
-import Role from 'sly/components/common/Role';
-import { Icon, Span, Link } from 'sly/components/atoms';
-import pad from 'sly/components/helpers/pad';
+import { size, palette } from 'sly/web/components/themes';
+import Role from 'sly/web/components/common/Role';
+import { Icon, Span, Link } from 'sly/web/components/atoms';
+import pad from 'sly/web/components/helpers/pad';
 
 const Wrapper = styled.div`
   display: flex;

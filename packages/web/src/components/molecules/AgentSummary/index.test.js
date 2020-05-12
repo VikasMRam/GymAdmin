@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import AgentSummary from 'sly/components/molecules/AgentSummary';
-import Image from 'sly/components/atoms/Image';
-import LindaIwamota from 'sly/../private/storybook/sample-data/agent-linda-iwamota.json';
+import AgentSummary from 'sly/web/components/molecules/AgentSummary';
+import Image from 'sly/web/components/atoms/Image';
+import LindaIwamota from 'sly/web/../private/storybook/sample-data/agent-linda-iwamota.json';
 
 const defaultProp = {
   agent: LindaIwamota,

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
 
-import { createValidator, required, email } from 'sly/services/validation';
-import { withUser } from 'sly/services/api';
-import GetCurrentAvailabilityForm from 'sly/components/molecules/GetCurrentAvailabilityForm';
+import { createValidator, required, email } from 'sly/web/services/validation';
+import { withUser } from 'sly/web/services/api';
+import GetCurrentAvailabilityForm from 'sly/web/components/molecules/GetCurrentAvailabilityForm';
 
 const validate = createValidator({
   email: [required, email],

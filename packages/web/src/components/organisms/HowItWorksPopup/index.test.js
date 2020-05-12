@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import HowItWorksPopup from 'sly/components/organisms/HowItWorksPopup';
+import HowItWorksPopup from 'sly/web/components/organisms/HowItWorksPopup';
 
 const wrap = (props = {}) => shallow(<HowItWorksPopup {...props} />);
 

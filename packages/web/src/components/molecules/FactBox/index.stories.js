@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import FactBox from 'sly/components/molecules/FactBox';
+import FactBox from 'sly/web/components/molecules/FactBox';
 
 storiesOf('Molecules|FactBox', module)
   .add('default', () => (

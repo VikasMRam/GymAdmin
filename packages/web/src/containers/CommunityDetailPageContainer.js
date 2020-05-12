@@ -3,16 +3,16 @@ import { func, object, array, bool, number, shape, string } from 'prop-types';
 import isMatch from 'lodash/isMatch';
 import { Redirect } from 'react-router-dom';
 
-import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
-import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
-import { prefetch, withAuth } from 'sly/services/api';
+import { getLastSegment, replaceLastSegment } from 'sly/web/services/helpers/url';
+import CommunityDetailPage from 'sly/web/components/pages/CommunityDetailPage';
+import { prefetch, withAuth } from 'sly/web/services/api';
 import {
   AVAILABILITY_REQUEST,
   PRICING_REQUEST,
   PROFILE_CONTACTED,
   TOUR_BOOKED,
-} from 'sly/services/api/constants';
-import { HydrationData } from 'sly/services/partialHydration';
+} from 'sly/web/services/api/constants';
+import { HydrationData } from 'sly/web/services/partialHydration';
 
 const createHasProfileAction = uuidActions => (type, actionInfo) => {
   if (!uuidActions) return false;

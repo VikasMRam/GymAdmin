@@ -2,10 +2,10 @@ import React from 'react';
 import { func, string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import { community as communityPropType } from 'sly/propTypes/community';
-import { getCitySearchUrl } from 'sly/services/helpers/url';
-import { Button, Block, Icon, Heading } from 'sly/components/atoms';
+import { size } from 'sly/web/components/themes';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import { getCitySearchUrl } from 'sly/web/services/helpers/url';
+import { Button, Block, Icon, Heading } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;

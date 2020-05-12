@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import StickyFooter from 'sly/components/atoms/StickyFooter';
+import StickyFooter from 'sly/web/components/atoms/StickyFooter';
 
 const wrap = (props = {}) => shallow(<StickyFooter {...props} />);
 

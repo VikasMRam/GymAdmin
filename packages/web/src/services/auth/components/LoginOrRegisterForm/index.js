@@ -3,15 +3,15 @@ import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import textAlign from 'sly/components/helpers/textAlign';
-import cursor from 'sly/components/helpers/cursor';
-import HrWithText from 'sly/components/molecules/HrWithText';
-import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import { Heading, Button, Block, Icon } from 'sly/components/atoms';
+import { size } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import cursor from 'sly/web/components/helpers/cursor';
+import HrWithText from 'sly/web/components/molecules/HrWithText';
+import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import { Heading, Button, Block, Icon } from 'sly/web/components/atoms';
 
 const StyledHeading = textAlign(pad(Heading));
 

@@ -3,7 +3,7 @@ import {
   TASK_STATUS_DELETED,
   TASK_STATUS_NOT_STARTED,
   TASK_STATUS_ORDERED,
-} from 'sly/constants/tasks';
+} from 'sly/web/constants/tasks';
 
 export const getTaskStatusDetails = (status) => {
   let palette = 'primary';

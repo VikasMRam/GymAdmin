@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 
-import IconButton from 'sly/components/molecules/IconButton';
+import IconButton from 'sly/web/components/molecules/IconButton';
 
 const wrap = (props = {}) => shallow(<IconButton icon="github" {...props} />);
 

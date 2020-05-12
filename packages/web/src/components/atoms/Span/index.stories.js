@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Span from 'sly/components/atoms/Span';
+import Span from 'sly/web/components/atoms/Span';
 
 storiesOf('Atoms|Span', module)
   .add('default', () => (

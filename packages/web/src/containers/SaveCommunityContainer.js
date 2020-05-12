@@ -5,20 +5,20 @@ import { SubmissionError, clearSubmitErrors } from 'redux-form';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import SlyEvent from 'sly/services/helpers/events';
-import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
-import { USER_SAVE_INIT_STATUS } from 'sly/constants/userSave';
-import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
-import { NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_SUCCESS, NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED } from 'sly/constants/notifications';
-import { community as communityPropType } from 'sly/propTypes/community';
-import api from 'sly/services/api/apiInstance';
-import { withAuth, prefetch, query } from 'sly/services/api';
-import { Block } from 'sly/components/atoms';
-import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
-import CommunitySaved from 'sly/components/organisms/CommunitySaved';
-import { USER_SAVE } from 'sly/services/api/constants';
-import { ensureAuthenticated } from 'sly/store/authenticated/actions';
+import { size } from 'sly/web/components/themes';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
+import { USER_SAVE_INIT_STATUS } from 'sly/web/constants/userSave';
+import { COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
+import { NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_SUCCESS, NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED } from 'sly/web/constants/notifications';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import api from 'sly/web/services/api/apiInstance';
+import { withAuth, prefetch, query } from 'sly/web/services/api';
+import { Block } from 'sly/web/components/atoms';
+import AddNoteFormContainer from 'sly/web/containers/AddNoteFormContainer';
+import CommunitySaved from 'sly/web/components/organisms/CommunitySaved';
+import { USER_SAVE } from 'sly/web/services/api/constants';
+import { ensureAuthenticated } from 'sly/web/store/authenticated/actions';
 
 const PaddedBlock = styled(Block)`
   padding: ${size('spacing.xxLarge')};

@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import { object } from 'prop-types';
 import Helmet from 'react-helmet';
 
-import { size, palette } from 'sly/components/themes';
-import { Heading, Block, Icon, Hr } from 'sly/components/atoms';
-import ProfileTile from 'sly/components/molecules/ProfileTile';
-import PressTile from 'sly/components/molecules/PressTile';
-import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
-import Footer from 'sly/components/organisms/Footer';
-import { PressTileContents as press } from 'sly/services/helpers/press';
-import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
+import { size, palette } from 'sly/web/components/themes';
+import { Heading, Block, Icon, Hr } from 'sly/web/components/atoms';
+import ProfileTile from 'sly/web/components/molecules/ProfileTile';
+import PressTile from 'sly/web/components/molecules/PressTile';
+import OverlappingSectionsTemplate from 'sly/web/components/templates/OverlappingSectionsTemplate';
+import Footer from 'sly/web/components/organisms/Footer';
+import { PressTileContents as press } from 'sly/web/services/helpers/press';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 
 
 const IntroText = styled.div`

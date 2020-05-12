@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import ClampedText from 'sly/components/atoms/ClampedText';
+import ClampedText from 'sly/web/components/atoms/ClampedText';
 
 storiesOf('Atoms|ClampedText', module)
   .add('default', () => <ClampedText>{'hello world'.repeat(100)}</ClampedText>)

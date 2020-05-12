@@ -6,10 +6,10 @@ import { stringify, parse } from 'query-string';
 import {
   parseURLQueryParams,
   removeQueryParamFromURL,
-} from 'sly/services/helpers/url';
-import { withAuth } from 'sly/services/api';
-import { isServer } from 'sly/config';
-import withApiContext, { apiContextPropType } from 'sly/services/api/context';
+} from 'sly/web/services/helpers/url';
+import { withAuth } from 'sly/web/services/api';
+import { isServer } from 'sly/web/config';
+import withApiContext, { apiContextPropType } from 'sly/web/services/api/context';
 
 const searchWhitelist = [
   'page-number',

@@ -1,7 +1,7 @@
 import { PureComponent } from 'react';
 import { string, func, bool, node } from 'prop-types';
 
-import { connectController } from 'sly/controllers';
+import { connectController } from 'sly/web/controllers';
 
 const mapStateToProps = (state, { controller = {} }) => ({
   isModalOpen: controller.isModalOpen,

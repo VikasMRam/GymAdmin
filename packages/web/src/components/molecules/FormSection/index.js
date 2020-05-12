@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, node, func, bool } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import { Block, Hr, Button } from 'sly/components/atoms';
-import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
+import { size } from 'sly/web/components/themes';
+import { Block, Hr, Button } from 'sly/web/components/atoms';
+import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 
 const BottomWrapper = styled.div`
   margin-left: -${size('spacing.xLarge')};

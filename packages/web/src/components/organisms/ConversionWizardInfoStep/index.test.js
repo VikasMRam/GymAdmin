@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ConversionWizardInfoStep from 'sly/components/organisms/ConversionWizardInfoStep';
+import ConversionWizardInfoStep from 'sly/web/components/organisms/ConversionWizardInfoStep';
 
 const heading = 'heading';
 const description = 'description';

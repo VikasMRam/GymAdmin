@@ -2,8 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
-import SearchBox from 'sly/components/molecules/SearchBox';
-import LoadGoogleMaps from 'sly/services/search/LoadGoogleMaps';
+import SearchBox from 'sly/web/components/molecules/SearchBox';
+import LoadGoogleMaps from 'sly/web/services/search/LoadGoogleMaps';
 
 const onChange = jest.fn();
 const onSelect = jest.fn();

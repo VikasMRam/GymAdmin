@@ -3,16 +3,16 @@ import { object, func } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 import { parse } from 'query-string';
 
-import { community as communityPropType } from 'sly/propTypes/community';
-import SlyEvent from 'sly/services/helpers/events';
-import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
-import { medicareToBool } from 'sly/services/helpers/userDetails';
-import { prefetch, query, withAuth } from 'sly/services/api';
-import withWS from 'sly/services/ws/withWS';
-import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/services/api/constants';
-import { normJsonApi } from 'sly/services/helpers/jsonApi';
-import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/constants/notifications';
-import { withRedirectTo } from 'sly/services/redirectTo';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import SlyEvent from 'sly/web/services/helpers/events';
+import PricingWizardPage from 'sly/web/components/pages/PricingWizardPage';
+import { medicareToBool } from 'sly/web/services/helpers/userDetails';
+import { prefetch, query, withAuth } from 'sly/web/services/api';
+import withWS from 'sly/web/services/ws/withWS';
+import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/web/services/api/constants';
+import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
+import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
+import { withRedirectTo } from 'sly/web/services/redirectTo';
 
 const eventCategory = 'PricingWizard';
 

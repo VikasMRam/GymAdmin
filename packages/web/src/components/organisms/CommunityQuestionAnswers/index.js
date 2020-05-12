@@ -2,14 +2,14 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, arrayOf, func } from 'prop-types';
 
-import { content as contentPropType } from 'sly/propTypes/content';
-import { size } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import cursor from 'sly/components/helpers/cursor';
-import { Hr, Block } from 'sly/components/atoms';
-import CommunityQuestion from 'sly/components/molecules/CommunityQuestion';
-import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
-import Button from 'sly/components/atoms/Button';
+import { content as contentPropType } from 'sly/web/propTypes/content';
+import { size } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import cursor from 'sly/web/components/helpers/cursor';
+import { Hr, Block } from 'sly/web/components/atoms';
+import CommunityQuestion from 'sly/web/components/molecules/CommunityQuestion';
+import CommunityAnswer from 'sly/web/components/molecules/CommunityAnswer';
+import Button from 'sly/web/components/atoms/Button';
 
 const AnswersDiv = pad(styled.div`
   margin-left: ${size('spacing.huge')};

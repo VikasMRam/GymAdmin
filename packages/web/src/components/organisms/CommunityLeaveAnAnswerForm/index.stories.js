@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import CommunityLeaveAnAnswerForm from 'sly/components/organisms/CommunityLeaveAnAnswerForm';
-import { withPreventDefault } from 'sly/services/helpers/forms';
+import CommunityLeaveAnAnswerForm from 'sly/web/components/organisms/CommunityLeaveAnAnswerForm';
+import { withPreventDefault } from 'sly/web/services/helpers/forms';
 
 const CommunityLeaveAnAnswerFormContainer = reduxForm({
   form: 'CommunityLeaveAnAnswerForm',

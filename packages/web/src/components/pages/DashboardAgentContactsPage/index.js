@@ -1,8 +1,8 @@
 import React from 'react';
 
-import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import DashboardContactsSectionContainer from 'sly/containers/dashboard/DashboardContactsSectionContainer';
-import { PROPERTY_ENTITY_TYPE } from 'sly/constants/entityTypes';
+import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
+import DashboardContactsSectionContainer from 'sly/web/containers/dashboard/DashboardContactsSectionContainer';
+import { PROPERTY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 
 const DashboardAgentContactsPage = () => {
   const sectionFilters = {

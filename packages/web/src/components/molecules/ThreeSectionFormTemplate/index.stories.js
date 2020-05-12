@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { withPreventDefault } from 'sly/services/helpers/forms';
-import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
+import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
 
 storiesOf('Molecules|ThreeSectionFormTemplate', module)
   .add('default', () => <ThreeSectionFormTemplate hasCancel onCancelClick={action('onCancelClick')} heading="test heading">Hello world</ThreeSectionFormTemplate>)

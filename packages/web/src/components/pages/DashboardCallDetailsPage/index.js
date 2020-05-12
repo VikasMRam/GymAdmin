@@ -3,19 +3,19 @@ import styled from 'styled-components';
 import { object, string, shape, func } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import voiceCallPropType from 'sly/propTypes/calls';
-import { palette, size } from 'sly/components/themes';
-import { Hr, Box } from 'sly/components/atoms';
-import Tabs from 'sly/components/molecules/Tabs';
-import Tab from 'sly/components/molecules/Tab';
-import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
-import DashboardCallCommunitiesContainer from 'sly/containers/dashboard/DashboardCallCommunitiesContainer';
-import AddFamilyFormContainer from 'sly/containers/dashboard/AddFamilyFormContainer';
+import voiceCallPropType from 'sly/web/propTypes/calls';
+import { palette, size } from 'sly/web/components/themes';
+import { Hr, Box } from 'sly/web/components/atoms';
+import Tabs from 'sly/web/components/molecules/Tabs';
+import Tab from 'sly/web/components/molecules/Tab';
+import DashboardTwoColumnTemplate from 'sly/web/components/templates/DashboardTwoColumnTemplate';
+import DashboardCallCommunitiesContainer from 'sly/web/containers/dashboard/DashboardCallCommunitiesContainer';
+import AddFamilyFormContainer from 'sly/web/containers/dashboard/AddFamilyFormContainer';
 import {
   ADMIN_DASHBOARD_CALL_DETAILS_PATH,
   COMMUNITIES,
-} from 'sly/constants/dashboardAppPaths';
-import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
+} from 'sly/web/constants/dashboardAppPaths';
+import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 
 const TabWrapper = styled.div`
   padding: ${size('spacing.large')};

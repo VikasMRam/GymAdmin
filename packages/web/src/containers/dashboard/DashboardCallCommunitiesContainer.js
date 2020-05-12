@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { string, object, func } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { normalizeResponse, prefetch, query } from 'sly/services/api';
-import DashboardCommunityReferralSearch from 'sly/components/organisms/DashboardCommunityReferralSearch';
+import { normalizeResponse, prefetch, query } from 'sly/web/services/api';
+import DashboardCommunityReferralSearch from 'sly/web/components/organisms/DashboardCommunityReferralSearch';
 
 
 @prefetch('voiceCommunities', 'getCommunities', (req, { voiceCall }) => {

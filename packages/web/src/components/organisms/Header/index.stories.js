@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Header from 'sly/components/organisms/Header';
+import Header from 'sly/web/components/organisms/Header';
 
 const headerItems = [
   { name: 'List on Seniorly', href: '#' },

@@ -4,13 +4,13 @@ import { object, func } from 'prop-types';
 import pick from 'lodash/pick';
 import { withRouter } from 'react-router';
 
-import clientPropType from 'sly/propTypes/client';
-import userProptype from 'sly/propTypes/user';
-import { query, prefetch } from 'sly/services/api';
-import DashboardCommunityCareServicesForm from 'sly/components/organisms/DashboardCommunityCareServicesForm';
-import withUser from 'sly/services/api/withUser';
-import { userIs } from 'sly/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
+import clientPropType from 'sly/web/propTypes/client';
+import userProptype from 'sly/web/propTypes/user';
+import { query, prefetch } from 'sly/web/services/api';
+import DashboardCommunityCareServicesForm from 'sly/web/components/organisms/DashboardCommunityCareServicesForm';
+import withUser from 'sly/web/services/api/withUser';
+import { userIs } from 'sly/web/services/helpers/role';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
 
 const formName = 'DashboardCommunityCareServicesForm';
 

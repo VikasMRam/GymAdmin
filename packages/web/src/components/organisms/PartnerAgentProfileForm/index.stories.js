@@ -3,9 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import { withPreventDefault } from 'sly/services/helpers/forms';
-import PartnerAgentProfileForm from 'sly/components/organisms/PartnerAgentProfileForm';
-import agent from 'sly/../private/storybook/sample-data/agent-linda-iwamota.json';
+import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import PartnerAgentProfileForm from 'sly/web/components/organisms/PartnerAgentProfileForm';
+import agent from 'sly/web/../private/storybook/sample-data/agent-linda-iwamota.json';
 
 const { info, status } = agent;
 const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;

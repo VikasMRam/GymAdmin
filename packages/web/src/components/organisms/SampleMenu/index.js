@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { arrayOf, string } from 'prop-types';
 
-import { size, palette } from 'sly/components/themes';
+import { size, palette } from 'sly/web/components/themes';
 
 const StyledP = styled.p`
   margin: 0;

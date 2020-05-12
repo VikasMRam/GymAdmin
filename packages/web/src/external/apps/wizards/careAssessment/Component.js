@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { bool, object, number, func, string, arrayOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size, assetPath, palette, key } from 'sly/components/themes';
-import { Button, Hr, Heading, Image, Logo } from 'sly/components/atoms';
-import { getStepComponent } from 'sly/external/apps/wizards/careAssessment/steps';
+import { size, assetPath, palette, key } from 'sly/web/components/themes';
+import { Button, Hr, Heading, Image, Logo } from 'sly/web/components/atoms';
+import { getStepComponent } from 'sly/web/external/apps/wizards/careAssessment/steps';
 
 const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import CommunityAddRatingForm, { ErrorBlock } from 'sly/components/organisms/CommunityAddRatingForm';
+import CommunityAddRatingForm, { ErrorBlock } from 'sly/web/components/organisms/CommunityAddRatingForm';
 
 const handleSubmit = jest.fn();
 const community = {

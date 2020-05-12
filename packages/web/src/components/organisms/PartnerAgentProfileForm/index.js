@@ -3,10 +3,10 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { func, string, bool } from 'prop-types';
 
-import { size, palette } from 'sly/components/themes';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import { Block, Button } from 'sly/components/atoms';
-import pad from 'sly/components/helpers/pad';
+import { size, palette } from 'sly/web/components/themes';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import { Block, Button } from 'sly/web/components/atoms';
+import pad from 'sly/web/components/helpers/pad';
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';

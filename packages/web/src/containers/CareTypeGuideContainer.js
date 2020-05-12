@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
 import { object, array } from 'prop-types';
 
-import SlyEvent from 'sly/services/helpers/events';
-import CareTypeGuidePage from 'sly/components/pages/CareTypeGuidePage';
-import { getSearchParamFromPlacesResponse, filterLinkPath, getGuideParams } from 'sly/services/helpers/search';
-import { prefetch } from 'sly/services/api';
-import { withProps } from 'sly/services/helpers/hocs';
+import SlyEvent from 'sly/web/services/helpers/events';
+import CareTypeGuidePage from 'sly/web/components/pages/CareTypeGuidePage';
+import { getSearchParamFromPlacesResponse, filterLinkPath, getGuideParams } from 'sly/web/services/helpers/search';
+import { prefetch } from 'sly/web/services/api';
+import { withProps } from 'sly/web/services/helpers/hocs';
 
 @withProps(({ match }) => ({
   searchParams: getGuideParams(match),

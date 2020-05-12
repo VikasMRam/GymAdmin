@@ -3,13 +3,13 @@ import { func, arrayOf, string, bool } from 'prop-types';
 import styled from 'styled-components';
 import { generatePath } from 'react-router';
 
-import { size } from 'sly/components/themes';
-import clientPropType from 'sly/propTypes/client';
-import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
-import { phoneFormatter } from 'sly/services/helpers/phone';
-import { Link, Block } from 'sly/components/atoms';
-import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
-import FamilyEntry from 'sly/components/molecules/FamilyEntry';
+import { size } from 'sly/web/components/themes';
+import clientPropType from 'sly/web/propTypes/client';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { phoneFormatter } from 'sly/web/services/helpers/phone';
+import { Link, Block } from 'sly/web/components/atoms';
+import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
+import FamilyEntry from 'sly/web/components/molecules/FamilyEntry';
 
 const ClientsWrapper = styled.div`
   display: grid;

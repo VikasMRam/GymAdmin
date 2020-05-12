@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import FactBox from 'sly/components/molecules/FactBox';
-import { Paragraph } from 'sly/components/atoms';
+import FactBox from 'sly/web/components/molecules/FactBox';
+import { Paragraph } from 'sly/web/components/atoms';
 
 const wrap = (props = {}) => mount(<FactBox {...props} />);
 

@@ -3,7 +3,7 @@ import { string, shape, oneOf } from 'prop-types';
 import {
   CONVERSATION_STATUS_LIVE,
   CONVERSATION_STATUS_ARCHIVED,
-} from 'sly/constants/conversations';
+} from 'sly/web/constants/conversations';
 
 export default shape({
   id: string.isRequired,

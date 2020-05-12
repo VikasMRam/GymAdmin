@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
+import BookingFormFooter from 'sly/web/components/molecules/BookingFormFooter';
 
 storiesOf('Molecules|BookingFormFooter', module)
   .add('default', () => <BookingFormFooter onProgressClick={action('clicked')} />)

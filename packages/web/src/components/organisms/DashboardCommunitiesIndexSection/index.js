@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, bool } from 'prop-types';
 
-import { size, palette } from 'sly/components/themes';
-import mobileOnly from 'sly/components/helpers/mobileOnly';
-import pad from 'sly/components/helpers/pad';
-import SlyEvent from 'sly/services/helpers/events';
-import communityPropType from 'sly/propTypes/community';
-import textAlign from 'sly/components/helpers/textAlign';
-import { Box, Table, THead, TBody, Tr, Td, Block } from 'sly/components/atoms';
-import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
-import Pagination from 'sly/components/molecules/Pagination';
-import Th from 'sly/components/molecules/Th';
-import CommunityRowCard from 'sly/components/organisms/CommunityRowCard';
+import { size, palette } from 'sly/web/components/themes';
+import mobileOnly from 'sly/web/components/helpers/mobileOnly';
+import pad from 'sly/web/components/helpers/pad';
+import SlyEvent from 'sly/web/services/helpers/events';
+import communityPropType from 'sly/web/propTypes/community';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { Box, Table, THead, TBody, Tr, Td, Block } from 'sly/web/components/atoms';
+import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons';
+import Pagination from 'sly/web/components/molecules/Pagination';
+import Th from 'sly/web/components/molecules/Th';
+import CommunityRowCard from 'sly/web/components/organisms/CommunityRowCard';
 
 const TABLE_HEADINGS = [
   { text: 'Name' },

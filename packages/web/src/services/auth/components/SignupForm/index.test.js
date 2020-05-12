@@ -2,8 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import SignupForm from 'sly/services/auth/components/SignupForm';
-import { Block } from 'sly/components/atoms/index';
+import SignupForm from 'sly/web/services/auth/components/SignupForm';
+import { Block } from 'sly/web/components/atoms/index';
 
 
 const error = 'Blah';

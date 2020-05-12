@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { func } from 'prop-types';
 
-import withNotification from 'sly/controllers/withNotification';
-import { createValidator, required, minLength } from 'sly/services/validation';
-import { withAuth, withUser } from 'sly/services/api';
-import userPropType from 'sly/propTypes/user';
-import CreatePasswordForm from 'sly/services/auth/components/CreatePasswordForm';
+import withNotification from 'sly/web/controllers/withNotification';
+import { createValidator, required, minLength } from 'sly/web/services/validation';
+import { withAuth, withUser } from 'sly/web/services/api';
+import userPropType from 'sly/web/propTypes/user';
+import CreatePasswordForm from 'sly/web/services/auth/components/CreatePasswordForm';
 
 const validate = createValidator({
   password: [required, minLength(8)],

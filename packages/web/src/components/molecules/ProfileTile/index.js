@@ -3,8 +3,8 @@ import styled, { css } from 'styled-components';
 import { switchProp } from 'styled-tools';
 import { string, shape, oneOf, func } from 'prop-types';
 
-import { size, palette } from 'sly/components/themes';
-import { Image, Link } from 'sly/components/atoms';
+import { size, palette } from 'sly/web/components/themes';
+import { Image, Link } from 'sly/web/components/atoms';
 
 const Wrapper = styled(Link)`
   display: flex;

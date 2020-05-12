@@ -3,22 +3,22 @@ import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { arrayOf, func, oneOf, object } from 'prop-types';
 
-import { normalizeResponse, query } from 'sly/services/api';
-import { adminCommunityPropType } from 'sly/propTypes/community';
-import { adminAgentPropType } from 'sly/propTypes/agent';
-import userPropType from 'sly/propTypes/user';
-import clientPropType from 'sly/propTypes/client';
-import { newProvider, newParentClient, newContact, newSlyEntity } from 'sly/constants/payloads/client';
-import { normJsonApi } from 'sly/services/helpers/jsonApi';
-import DashboardCommunityReferrals from 'sly/components/organisms/DashboardCommunityReferrals';
-import DashboardCommunityReferralSearch from 'sly/components/organisms/DashboardCommunityReferralSearch';
-import DashboardAgentReferrals from 'sly/components/organisms/DashboardAgentReferrals';
-import DashboardAgentReferralSearch from 'sly/components/organisms/DashboardAgentReferralSearch';
-import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
-import DashboardCommunityReferralContactDetailsContainer from 'sly/containers/DashboardCommunityReferralContactDetailsContainer';
-import DashboardAgentReferralContactDetailsContainer from 'sly/containers/DashboardAgentReferralContactDetailsContainer';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
-import { userIs } from 'sly/services/helpers/role';
+import { normalizeResponse, query } from 'sly/web/services/api';
+import { adminCommunityPropType } from 'sly/web/propTypes/community';
+import { adminAgentPropType } from 'sly/web/propTypes/agent';
+import userPropType from 'sly/web/propTypes/user';
+import clientPropType from 'sly/web/propTypes/client';
+import { newProvider, newParentClient, newContact, newSlyEntity } from 'sly/web/constants/payloads/client';
+import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
+import DashboardCommunityReferrals from 'sly/web/components/organisms/DashboardCommunityReferrals';
+import DashboardCommunityReferralSearch from 'sly/web/components/organisms/DashboardCommunityReferralSearch';
+import DashboardAgentReferrals from 'sly/web/components/organisms/DashboardAgentReferrals';
+import DashboardAgentReferralSearch from 'sly/web/components/organisms/DashboardAgentReferralSearch';
+import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
+import DashboardCommunityReferralContactDetailsContainer from 'sly/web/containers/DashboardCommunityReferralContactDetailsContainer';
+import DashboardAgentReferralContactDetailsContainer from 'sly/web/containers/DashboardAgentReferralContactDetailsContainer';
+import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { userIs } from 'sly/web/services/helpers/role';
 
 @query('getCommunities', 'getCommunities')
 @query('getAgents', 'getAgents')

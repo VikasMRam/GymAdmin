@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import ShareCommunityForm from 'sly/components/organisms/ShareCommunityForm';
+import ShareCommunityForm from 'sly/web/components/organisms/ShareCommunityForm';
 
 const wrap = (props = {}) => shallow(<ShareCommunityForm {...props} />);
 

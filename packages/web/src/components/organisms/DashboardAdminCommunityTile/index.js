@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { prop, ifProp } from 'styled-tools';
 
-import { parseDate, durationInS } from 'sly/services/helpers/date';
-import { phoneFormatter } from 'sly/services/helpers/phone';
-import { buildPriceList } from 'sly/services/helpers/pricing';
-import { size, palette, columnWidth } from 'sly/components/themes';
-import { adminCommunityPropType } from 'sly/propTypes/community';
-import { Heading, Badge, Link, Block, Icon, Span } from 'sly/components/atoms';
-import { getHasContract, getIsCCRC, getIsSNF } from 'sly/services/helpers/community';
-import  IconBadge from 'sly/components/molecules/IconBadge';
+import { parseDate, durationInS } from 'sly/web/services/helpers/date';
+import { phoneFormatter } from 'sly/web/services/helpers/phone';
+import { buildPriceList } from 'sly/web/services/helpers/pricing';
+import { size, palette, columnWidth } from 'sly/web/components/themes';
+import { adminCommunityPropType } from 'sly/web/propTypes/community';
+import { Heading, Badge, Link, Block, Icon, Span } from 'sly/web/components/atoms';
+import { getHasContract, getIsCCRC, getIsSNF } from 'sly/web/services/helpers/community';
+import  IconBadge from 'sly/web/components/molecules/IconBadge';
 
 const Header = styled.div`
   display: flex;

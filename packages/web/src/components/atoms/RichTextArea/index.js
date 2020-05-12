@@ -2,7 +2,7 @@ import React from 'react';
 import { string, bool, func } from 'prop-types';
 import { Editor } from '@tinymce/tinymce-react';
 
-import { tinyMCEApiKey } from 'sly/config';
+import { tinyMCEApiKey } from 'sly/web/config';
 
 class RichTextArea extends React.Component {
   render() {

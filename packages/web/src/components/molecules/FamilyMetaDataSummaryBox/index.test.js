@@ -2,10 +2,10 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import dayjs from 'dayjs';
 
-import { priceFormatter } from 'sly/services/helpers/pricing';
-import FamilyMetaDataSummaryBox from 'sly/components/molecules/FamilyMetaDataSummaryBox';
-import { FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST } from 'sly/constants/familyDetails';
-import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
+import { priceFormatter } from 'sly/web/services/helpers/pricing';
+import FamilyMetaDataSummaryBox from 'sly/web/components/molecules/FamilyMetaDataSummaryBox';
+import { FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST } from 'sly/web/constants/familyDetails';
+import PraneshKumar from 'sly/web/../private/storybook/sample-data/client-pranesh-kumar.json';
 
 // For deep cloning object
 const clientWithRejectedStage = JSON.parse(JSON.stringify(PraneshKumar));

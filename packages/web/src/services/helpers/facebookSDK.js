@@ -1,4 +1,4 @@
-import { facebookAppId } from 'sly/config';
+import { facebookAppId } from 'sly/web/config';
 
 // as per https://github.com/klaemo/lazy-fb
 function lazilyLoadFacebookSDK(opts = {}) {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Tabs from 'sly/components/molecules/Tabs';
-import Tab from 'sly/components/molecules/Tab';
+import Tabs from 'sly/web/components/molecules/Tabs';
+import Tab from 'sly/web/components/molecules/Tab';
 
 const wrap = () => mount((
   <Tabs>

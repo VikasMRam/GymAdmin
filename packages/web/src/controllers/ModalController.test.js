@@ -3,8 +3,8 @@ import configureStore from 'redux-mock-store';
 import { shallow } from 'enzyme';
 import thunkMiddleware from 'redux-thunk';
 
-import { SET } from 'sly/store/controller/actions';
-import ModalController from 'sly/controllers/ModalController';
+import { SET } from 'sly/web/store/controller/actions';
+import ModalController from 'sly/web/controllers/ModalController';
 
 describe('ModalController', () => {
   const mockStore = configureStore([thunkMiddleware]);

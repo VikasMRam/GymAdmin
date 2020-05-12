@@ -3,11 +3,11 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
-import { createValidator, required, email } from 'sly/services/validation';
-import { withAuth } from 'sly/services/api';
-import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/constants/loginProviders';
-import loadFB from 'sly/services/helpers/facebookSDK';
-import LoginOrRegisterForm from 'sly/services/auth/components/LoginOrRegisterForm';
+import { createValidator, required, email } from 'sly/web/services/validation';
+import { withAuth } from 'sly/web/services/api';
+import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/web/constants/loginProviders';
+import loadFB from 'sly/web/services/helpers/facebookSDK';
+import LoginOrRegisterForm from 'sly/web/services/auth/components/LoginOrRegisterForm';
 
 const validate = createValidator({
   emailOrPhone: [required], // todo: add email or phone validation

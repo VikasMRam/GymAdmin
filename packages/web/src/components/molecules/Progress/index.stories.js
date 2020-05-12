@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Progress from 'sly/components/molecules/Progress';
+import Progress from 'sly/web/components/molecules/Progress';
 
 const steps = ['TIMELINE', 'CARE', 'MEDICAID', 'FINISH'];
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Select from 'sly/components/atoms/Select';
+import Select from 'sly/web/components/atoms/Select';
 
 const options = [
   { value: 'chocolate', label: 'Chocolate' },

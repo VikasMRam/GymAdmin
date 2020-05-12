@@ -11,13 +11,13 @@ import utc from 'dayjs/plugin/utc';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 
-import { hideChatbox } from 'sly/config';
-import theme from 'sly/components/themes/default';
-import GlobalStyles from 'sly/components/themes/GlobalStyles';
-import { assetPath } from 'sly/components/themes';
-import { routes as routesPropType } from 'sly/propTypes/routes';
-import Router from 'sly/components/molecules/Router';
-import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
+import { hideChatbox } from 'sly/web/config';
+import theme from 'sly/web/components/themes/default';
+import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
+import { assetPath } from 'sly/web/components/themes';
+import { routes as routesPropType } from 'sly/web/propTypes/routes';
+import Router from 'sly/web/components/molecules/Router';
+import ChatBoxContainer from 'sly/web/containers/ChatBoxContainer';
 import {
   DASHBOARD_PATH,
   DASHBOARD_ACCOUNT_PATH,
@@ -36,50 +36,50 @@ import {
   ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
   DASHBOARD_COMMUNITIES_PATH,
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
-} from 'sly/constants/dashboardAppPaths';
-import careTypes from 'sly/constants/careTypes';
-import hubTypes from 'sly/constants/hubTypes';
-import PageEventsContainer from 'sly/containers/PageEventsContainer';
+} from 'sly/web/constants/dashboardAppPaths';
+import careTypes from 'sly/web/constants/careTypes';
+import hubTypes from 'sly/web/constants/hubTypes';
+import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
 
-const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/components/pages/Error'));
-const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage'));
-const LegalPolicyPage = loadable(() => import(/* webpackChunkName: "chunkLegalPolicy" */ 'sly/components/pages/LegalPolicyPage'));
-const PartnersPage = loadable(() => import(/* webpackChunkName: "chunkPartners" */ 'sly/components/pages/PartnersPage'));
-const CommunityPartnersPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityPartners" */ 'sly/containers/CommunityPartnersPageContainer'));
-const CommunitySearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunitySearch" */ 'sly/containers/CommunitySearchPageContainer'));
-const StateSearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkStateSearch" */ 'sly/containers/StateSearchPageContainer'));
-const HomePageContainer = loadable(() => import(/* webpackChunkName: "chunkHomePage" */ 'sly/containers/HomePageContainer'));
-const NearMePageContainer = loadable(() => import(/* webpackChunkName: "chunkNearMe" */ 'sly/containers/NearMePageContainer'));
-const AgentsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgents" */ 'sly/containers/AgentsPageContainer'));
-const PasswordResetPageContainer = loadable(() => import(/* webpackChunkName: "chunkPasswordReset" */ 'sly/containers/PasswordResetPageContainer'));
-const HowItWorksDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkHowItWorks" */ 'sly/containers/HowItWorksDetailPageContainer'));
-const EntityApprovalContainer = loadable(() => import(/* webpackChunkName: "chunkEntityApprovalContainer" */ 'sly/containers/EntityApprovalContainer'));
-const BookATourPageContainer = loadable(() => import(/* webpackChunkName: "chunkBookATour" */ 'sly/containers/BookATourPageContainer'));
-const PricingWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkPricingWizard" */ 'sly/containers/PricingWizardPageContainer'));
-const AgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentProfile" */ 'sly/containers/AgentProfilePageContainer'));
-const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentRegion" */ 'sly/containers/AgentRegionPageContainer'));
-const CareTypeGuideContainer = loadable(() => import(/* webpackChunkName: "chunkCTGuide" */ 'sly/containers/CareTypeGuideContainer'));
-const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: "chunkRegionGuide" */ 'sly/containers/CareTypeRegionGuideContainer'));
-const CurtainUpPageContainer = loadable(() => import(/* webpackChunkName: "chunkCurtainUp" */ 'sly/containers/CurtainUpPageContainer'));
+const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/web/components/pages/Error'));
+const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/web/components/pages/OurHistoryPage'));
+const LegalPolicyPage = loadable(() => import(/* webpackChunkName: "chunkLegalPolicy" */ 'sly/web/components/pages/LegalPolicyPage'));
+const PartnersPage = loadable(() => import(/* webpackChunkName: "chunkPartners" */ 'sly/web/components/pages/PartnersPage'));
+const CommunityPartnersPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityPartners" */ 'sly/web/containers/CommunityPartnersPageContainer'));
+const CommunitySearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunitySearch" */ 'sly/web/containers/CommunitySearchPageContainer'));
+const StateSearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkStateSearch" */ 'sly/web/containers/StateSearchPageContainer'));
+const HomePageContainer = loadable(() => import(/* webpackChunkName: "chunkHomePage" */ 'sly/web/containers/HomePageContainer'));
+const NearMePageContainer = loadable(() => import(/* webpackChunkName: "chunkNearMe" */ 'sly/web/containers/NearMePageContainer'));
+const AgentsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgents" */ 'sly/web/containers/AgentsPageContainer'));
+const PasswordResetPageContainer = loadable(() => import(/* webpackChunkName: "chunkPasswordReset" */ 'sly/web/containers/PasswordResetPageContainer'));
+const HowItWorksDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkHowItWorks" */ 'sly/web/containers/HowItWorksDetailPageContainer'));
+const EntityApprovalContainer = loadable(() => import(/* webpackChunkName: "chunkEntityApprovalContainer" */ 'sly/web/containers/EntityApprovalContainer'));
+const BookATourPageContainer = loadable(() => import(/* webpackChunkName: "chunkBookATour" */ 'sly/web/containers/BookATourPageContainer'));
+const PricingWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkPricingWizard" */ 'sly/web/containers/PricingWizardPageContainer'));
+const AgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentProfile" */ 'sly/web/containers/AgentProfilePageContainer'));
+const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentRegion" */ 'sly/web/containers/AgentRegionPageContainer'));
+const CareTypeGuideContainer = loadable(() => import(/* webpackChunkName: "chunkCTGuide" */ 'sly/web/containers/CareTypeGuideContainer'));
+const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: "chunkRegionGuide" */ 'sly/web/containers/CareTypeRegionGuideContainer'));
+const CurtainUpPageContainer = loadable(() => import(/* webpackChunkName: "chunkCurtainUp" */ 'sly/web/containers/CurtainUpPageContainer'));
 
 // Dashboard
-const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/containers/DashboardHomePageContainer'));
-const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/containers/DashboardFavoritesPageContainer'));
-const DashboardMyAccountPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyAccount" */ 'sly/containers/DashboardMyAccountPageContainer'));
-const DashboardAgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardAgentProfilePageContainer'));
-const DashboardAgentDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardAgentDetailPageContainer'));
+const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/web/containers/DashboardHomePageContainer'));
+const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/web/containers/DashboardFavoritesPageContainer'));
+const DashboardMyAccountPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyAccount" */ 'sly/web/containers/DashboardMyAccountPageContainer'));
+const DashboardAgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/web/containers/DashboardAgentProfilePageContainer'));
+const DashboardAgentDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/web/containers/DashboardAgentDetailPageContainer'));
 
-const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer'));
-const DashboardAgentFamilyOverviewPage = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/components/pages/DashboardAgentFamilyOverviewPage'));
-const DashboardMessagesPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessagesOverview" */ 'sly/containers/DashboardMessagesPageContainer'));
-const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/containers/DashboardMessageDetailsPageContainer'));
-const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallsOverview" */ 'sly/containers/DashboardCallsIndexPageContainer'));
-const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
-const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/components/pages/DashboardAgentTasksPage'));
-const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/components/pages/DashboardAgentContactsPage'));
-const DashboardAgentsIndexPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndex" */ 'sly/containers/DashboardAgentsIndexPageContainer'));
-const DashboardCommunitiesIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunitiesIndex" */ 'sly/containers/DashboardCommunitiesIndexPageContainer'));
-const DashboardCommunitiesDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunitiesDetail" */ 'sly/containers/DashboardCommunitiesDetailsPageContainer'));
+const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/web/containers/DashboardMyFamiliesDetailsPageContainer'));
+const DashboardAgentFamilyOverviewPage = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/web/components/pages/DashboardAgentFamilyOverviewPage'));
+const DashboardMessagesPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessagesOverview" */ 'sly/web/containers/DashboardMessagesPageContainer'));
+const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/web/containers/DashboardMessageDetailsPageContainer'));
+const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallsOverview" */ 'sly/web/containers/DashboardCallsIndexPageContainer'));
+const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/web/containers/DashboardCallDetailsPageContainer'));
+const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/web/components/pages/DashboardAgentTasksPage'));
+const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/web/components/pages/DashboardAgentContactsPage'));
+const DashboardAgentsIndexPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndex" */ 'sly/web/containers/DashboardAgentsIndexPageContainer'));
+const DashboardCommunitiesIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunitiesIndex" */ 'sly/web/containers/DashboardCommunitiesIndexPageContainer'));
+const DashboardCommunitiesDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunitiesDetail" */ 'sly/web/containers/DashboardCommunitiesDetailsPageContainer'));
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);

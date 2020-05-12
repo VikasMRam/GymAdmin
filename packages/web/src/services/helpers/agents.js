@@ -1,4 +1,4 @@
-import { urlize, stateRegionMap, getStateAbbr, objectToURLQueryParams } from 'sly/services/helpers/url';
+import { urlize, stateRegionMap, getStateAbbr, objectToURLQueryParams } from 'sly/web/services/helpers/url';
 
 export const getSearchParamFromPlacesResponse = ({ address_components, geometry }) => {
   const cityFull = address_components.filter(e => e.types.indexOf('locality') > -1 || e.types.indexOf('administrative_area_level_3') > -1);

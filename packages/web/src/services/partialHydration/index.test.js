@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { renderToString } from 'react-dom/server';
 import ReactDom from 'react-dom';
 
-import { hydrateComponents, HydrationData, withHydration } from 'sly/services/partialHydration/index';
+import { hydrateComponents, HydrationData, withHydration } from 'sly/web/services/partialHydration/index';
 
 jest.mock('react-dom');
 

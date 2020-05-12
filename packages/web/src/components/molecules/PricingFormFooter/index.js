@@ -2,9 +2,9 @@ import React from 'react';
 import { bool, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { palette, size } from 'sly/components/themes';
-import { Button } from 'sly/components/atoms';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { palette, size } from 'sly/web/components/themes';
+import { Button } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   background-color: ${palette('grey', 'stroke')};

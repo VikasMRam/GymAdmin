@@ -1,21 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import { getHelmetForPartnersPage } from 'sly/services/helpers/html_headers';
-import { partnerFAQs } from 'sly/constants/agents';
-import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Hr, Paragraph, ResponsiveImage } from 'sly/components/atoms';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import Section from 'sly/components/molecules/Section';
-import IconInfoTile from 'sly/components/molecules/IconInfoTile';
-import Footer from 'sly/components/organisms/Footer';
-import PartnerWithSly from 'sly/components/molecules/PartnerWithSly';
-import FactBox from 'sly/components/molecules/FactBox';
-import { ColumnWrapper } from 'sly/components/molecules/MostSearchedRegions';
-import PartnerReview from 'sly/components/molecules/PartnerReview';
-import BecomeSlyPartnerBanner from 'sly/components/molecules/BecomeSlyPartnerBanner';
-import FAQSection from 'sly/components/organisms/FAQSection';
+import { size } from 'sly/web/components/themes';
+import { getHelmetForPartnersPage } from 'sly/web/services/helpers/html_headers';
+import { partnerFAQs } from 'sly/web/constants/agents';
+import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
+import { Hr, Paragraph, ResponsiveImage } from 'sly/web/components/atoms';
+import HeaderContainer from 'sly/web/containers/HeaderContainer';
+import Section from 'sly/web/components/molecules/Section';
+import IconInfoTile from 'sly/web/components/molecules/IconInfoTile';
+import Footer from 'sly/web/components/organisms/Footer';
+import PartnerWithSly from 'sly/web/components/molecules/PartnerWithSly';
+import FactBox from 'sly/web/components/molecules/FactBox';
+import { ColumnWrapper } from 'sly/web/components/molecules/MostSearchedRegions';
+import PartnerReview from 'sly/web/components/molecules/PartnerReview';
+import BecomeSlyPartnerBanner from 'sly/web/components/molecules/BecomeSlyPartnerBanner';
+import FAQSection from 'sly/web/components/organisms/FAQSection';
 
 const HeroWrapper = styled.div`
   position: relative;

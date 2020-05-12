@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityActions from 'sly/components/molecules/CommunityActions';
+import CommunityActions from 'sly/web/components/molecules/CommunityActions';
 
-jest.mock('sly/containers/AskAgentQuestionContainer');
+jest.mock('sly/web/containers/AskAgentQuestionContainer');
 
 const community = { id: 'The place 123' };
 

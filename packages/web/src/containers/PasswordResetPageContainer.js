@@ -4,12 +4,12 @@ import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { getSearchParams } from 'sly/services/helpers/search';
-import { DASHBOARD_PATH } from 'sly/constants/dashboardAppPaths';
-import { createValidator, required } from 'sly/services/validation';
-import { withRedirectTo } from 'sly/services/redirectTo';
-import { withAuth } from 'sly/services/api';
-import PasswordResetPage from 'sly/components/pages/PasswordResetPage';
+import { getSearchParams } from 'sly/web/services/helpers/search';
+import { DASHBOARD_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { createValidator, required } from 'sly/web/services/validation';
+import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withAuth } from 'sly/web/services/api';
+import PasswordResetPage from 'sly/web/components/pages/PasswordResetPage';
 
 const validate = createValidator({
   password: [required],

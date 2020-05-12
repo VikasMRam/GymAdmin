@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bool, func } from 'prop-types';
 
-import ChatBox from 'sly/components/organisms/ChatBox';
-import { toggleChatBoxFooterReached } from 'sly/store/actions';
-import { hasChatBoxFooterReached } from 'sly/store/selectors';
+import ChatBox from 'sly/web/components/organisms/ChatBox';
+import { toggleChatBoxFooterReached } from 'sly/web/store/actions';
+import { hasChatBoxFooterReached } from 'sly/web/store/selectors';
 
 class ChatBoxContainer extends Component {
   static propTypes = {

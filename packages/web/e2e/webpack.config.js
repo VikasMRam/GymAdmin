@@ -6,7 +6,7 @@ module.exports = {
   resolve: {
     alias: {
       e2e: path.resolve(process.cwd(), 'cypress'),
-      sly: path.join(path.resolve(process.cwd(), '..'), SOURCE),
+      'sly/web': path.join(path.resolve(process.cwd(), '..'), SOURCE),
     },
   },
   module: {

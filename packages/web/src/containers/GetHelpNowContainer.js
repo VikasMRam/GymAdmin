@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { string, func } from 'prop-types';
 
-import { createValidator, required } from 'sly/services/validation';
-import { withRedirectTo } from 'sly/services/redirectTo';
-import SlyEvent from 'sly/services/helpers/events';
-import GetHelpNow from 'sly/components/organisms/GetHelpNow';
+import { createValidator, required } from 'sly/web/services/validation';
+import { withRedirectTo } from 'sly/web/services/redirectTo';
+import SlyEvent from 'sly/web/services/helpers/events';
+import GetHelpNow from 'sly/web/components/organisms/GetHelpNow';
 
 const validate = createValidator({
   what: [required],

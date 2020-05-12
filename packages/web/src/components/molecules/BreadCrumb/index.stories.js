@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import BreadCrumb from 'sly/components/molecules/BreadCrumb';
+import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 
 const items = [
   {

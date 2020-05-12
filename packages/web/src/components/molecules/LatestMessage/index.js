@@ -4,10 +4,10 @@ import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
 
-import messagePropType from 'sly/propTypes/conversation/conversationMessage';
-import { palette } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import { Box, Block, ClampedText } from 'sly/components/atoms';
+import messagePropType from 'sly/web/propTypes/conversation/conversationMessage';
+import { palette } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import { Box, Block, ClampedText } from 'sly/web/components/atoms';
 
 const StyledBox = styled(Box)`
   ${ifProp('hasUnread', css`background: ${palette('primary', 'background')}`, '')};

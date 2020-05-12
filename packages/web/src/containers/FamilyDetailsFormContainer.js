@@ -5,15 +5,15 @@ import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
-import { required, createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
-import clientPropType from 'sly/propTypes/client';
-import userPropType from 'sly/propTypes/user';
-import { USER_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import { query, getRelationship } from 'sly/services/api';
-import SlyEvent from 'sly/services/helpers/events';
-import { validateAM } from 'sly/services/helpers/client';
-import { selectFormData, trimFormData } from 'sly/services/helpers/forms';
-import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
+import { required, createValidator, email, usPhone, dependentRequired } from 'sly/web/services/validation';
+import clientPropType from 'sly/web/propTypes/client';
+import userPropType from 'sly/web/propTypes/user';
+import { USER_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
+import { query, getRelationship } from 'sly/web/services/api';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { validateAM } from 'sly/web/services/helpers/client';
+import { selectFormData, trimFormData } from 'sly/web/services/helpers/forms';
+import FamilyDetailsForm from 'sly/web/components/organisms/FamilyDetailsForm';
 
 const validate = createValidator({
   name: [required],

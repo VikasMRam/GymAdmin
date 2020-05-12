@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Stage from 'sly/components/molecules/Stage';
+import Stage from 'sly/web/components/molecules/Stage';
 
 const stage = 'New';
 

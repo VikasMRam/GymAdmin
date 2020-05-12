@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Progress from 'sly/components/molecules/Progress';
+import Progress from 'sly/web/components/molecules/Progress';
 
 const steps = ['TIMELINE', 'CARE', 'MEDICAID', 'FINISH'];
 const defaultProps = {

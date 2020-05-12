@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import PartnerReview from 'sly/components/molecules/PartnerReview';
-import { Paragraph, Block } from 'sly/components/atoms';
+import PartnerReview from 'sly/web/components/molecules/PartnerReview';
+import { Paragraph, Block } from 'sly/web/components/atoms';
 
 const wrap = (props = {}) => mount(<PartnerReview {...props} />);
 

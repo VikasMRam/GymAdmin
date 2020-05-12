@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import FAQSection from 'sly/components/organisms/FAQSection';
-import { partnerFAQs } from 'sly/constants/agents';
+import FAQSection from 'sly/web/components/organisms/FAQSection';
+import { partnerFAQs } from 'sly/web/constants/agents';
 
 const wrap = (props = {}) => shallow(<FAQSection {...props} />);
 

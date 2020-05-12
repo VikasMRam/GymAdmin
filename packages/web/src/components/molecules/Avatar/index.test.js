@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Avatar from 'sly/components/molecules/Avatar';
+import Avatar from 'sly/web/components/molecules/Avatar';
 
 const wrap = (props = {}) => shallow(<Avatar {...props} />);
 

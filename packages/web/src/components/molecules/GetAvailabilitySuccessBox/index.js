@@ -2,8 +2,8 @@ import React from 'react';
 import { bool } from 'prop-types';
 import styled from 'styled-components';
 
-import { Icon, Block } from 'sly/components/atoms';
-import { size } from 'sly/components/themes';
+import { Icon, Block } from 'sly/web/components/atoms';
+import { size } from 'sly/web/components/themes';
 
 const Wrapper = styled.div`
   display: flex;

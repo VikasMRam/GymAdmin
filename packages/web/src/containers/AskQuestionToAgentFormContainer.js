@@ -4,14 +4,14 @@ import { func, string, oneOf, object } from 'prop-types';
 import { withRouter } from 'react-router';
 import * as immutable from 'object-path-immutable';
 
-import { prefetch, query, withAuth, withUser } from 'sly/services/api';
-import { AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/services/api/constants';
-import { capitalize } from  'sly/services/helpers/utils';
-import matchPropType from 'sly/propTypes/match';
-import userPropType from 'sly/propTypes/user';
-import TalkToAgentForm from 'sly/components/organisms/TalkToAgentForm';
-import { createValidator, required, usPhone, email } from 'sly/services/validation';
-import SlyEvent from 'sly/services/helpers/events';
+import { prefetch, query, withAuth, withUser } from 'sly/web/services/api';
+import { AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
+import { capitalize } from  'sly/web/services/helpers/utils';
+import matchPropType from 'sly/web/propTypes/match';
+import userPropType from 'sly/web/propTypes/user';
+import TalkToAgentForm from 'sly/web/components/organisms/TalkToAgentForm';
+import { createValidator, required, usPhone, email } from 'sly/web/services/validation';
+import SlyEvent from 'sly/web/services/helpers/events';
 
 const form = 'AskQuestionToAgentForm';
 const validate = createValidator({

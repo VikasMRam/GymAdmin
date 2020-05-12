@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import subscriptionList from 'sly/services/notifications/subscriptionList';
-import Subscriptions from 'sly/services/notifications/Subscriptions';
+import subscriptionList from 'sly/web/services/notifications/subscriptionList';
+import Subscriptions from 'sly/web/services/notifications/Subscriptions';
 
 const wrap = (props = {}) => shallow((
   <Subscriptions.WrappedComponent {...props}>

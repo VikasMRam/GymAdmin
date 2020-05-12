@@ -3,11 +3,11 @@ import React from 'react';
 import { mount } from 'enzyme';
 import queryString from 'query-string';
 
-import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
-import careTypes from 'sly/constants/careTypes';
-import { addEventToUrl } from 'sly/services/helpers/queryParamEvents';
-import { getSearchParams } from 'sly/services/helpers/search';
-import { withProps } from 'sly/services/helpers/hocs';
+import withGenerateFilterLinkPath from 'sly/web/services/search/withGenerateFilterLinkPath';
+import careTypes from 'sly/web/constants/careTypes';
+import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
+import { getSearchParams } from 'sly/web/services/helpers/search';
+import { withProps } from 'sly/web/services/helpers/hocs';
 
 function Component() {
   return null;

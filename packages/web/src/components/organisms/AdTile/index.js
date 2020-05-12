@@ -3,9 +3,9 @@ import { string, node, oneOf, object, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import { Button, Box, ResponsiveImage, Block, Link } from 'sly/components/atoms';
+import { size } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import { Button, Box, ResponsiveImage, Block, Link } from 'sly/web/components/atoms';
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
   max-width: calc(${size('layout.col2')} + ${size('layout.gutter')});

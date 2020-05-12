@@ -2,9 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { createStore } from 'redux';
 
-import { Experiment } from 'sly/services/experiments/components/Experiment';
-import Variant from 'sly/services/experiments/components/Variant';
-import experimentsReducer from 'sly/store/experiments/reducer';
+import { Experiment } from 'sly/web/services/experiments/components/Experiment';
+import Variant from 'sly/web/services/experiments/components/Variant';
+import experimentsReducer from 'sly/web/store/experiments/reducer';
 
 const initialState = {
   test1: 'variant1',

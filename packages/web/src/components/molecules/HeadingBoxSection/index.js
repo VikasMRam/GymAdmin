@@ -3,8 +3,8 @@ import styled, { css } from 'styled-components';
 import { string, node, bool } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
-import { Heading, Hr } from 'sly/components/atoms';
+import { size, palette } from 'sly/web/components/themes';
+import { Heading, Hr } from 'sly/web/components/atoms';
 
 const StyledSection = styled.section`
   border: ${size('border.regular')} ${ifProp('hasNoBorder', 'none', 'solid')} ${palette('slate', 'stroke')};

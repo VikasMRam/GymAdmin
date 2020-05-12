@@ -1,4 +1,4 @@
-import { titleize } from 'sly/services/helpers/strings';
+import { titleize } from 'sly/web/services/helpers/strings';
 
 
 it('titleizes parametrized correctly', () => {

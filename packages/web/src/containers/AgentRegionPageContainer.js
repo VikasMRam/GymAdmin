@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { arrayOf, object, func } from 'prop-types';
 
-import agentPropType from 'sly/propTypes/agent';
-import { titleize } from 'sly/services/helpers/strings';
-import { getAgentUrl } from 'sly/services/helpers/url';
-import withNotification from 'sly/controllers/withNotification';
-import SlyEvent from 'sly/services/helpers/events';
-import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/agents';
-import { getAgentParams } from 'sly/services/helpers/search';
-import prefetch from 'sly/services/api/prefetch';
-import AgentRegionPage from 'sly/components/pages/AgentRegionPage';
+import agentPropType from 'sly/web/propTypes/agent';
+import { titleize } from 'sly/web/services/helpers/strings';
+import { getAgentUrl } from 'sly/web/services/helpers/url';
+import withNotification from 'sly/web/controllers/withNotification';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/web/services/helpers/agents';
+import { getAgentParams } from 'sly/web/services/helpers/search';
+import prefetch from 'sly/web/services/api/prefetch';
+import AgentRegionPage from 'sly/web/components/pages/AgentRegionPage';
 
 @prefetch('agentsList', 'getAgents', (req, { match, location }) => req(getAgentParams(match, location)))
 @withNotification

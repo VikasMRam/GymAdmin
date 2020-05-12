@@ -10,20 +10,20 @@ import {
   Link,
   Icon,
   ClampedText,
-} from 'sly/components/atoms';
+} from 'sly/web/components/atoms';
 import {
   DoubleLineTd,
   Td,
   TextTd,
   Tr,
-} from 'sly/components/atoms/Table';
-import Stage from 'sly/components/molecules/Stage';
-import { FAMILY_STATUS_ON_PAUSE } from 'sly/constants/familyDetails';
-import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
-import clientPropType from 'sly/propTypes/client';
-import mobileOnly from 'sly/components/helpers/mobileOnly';
-import { size, palette } from 'sly/components/themes';
-import SlyEvent from 'sly/services/helpers/events';
+} from 'sly/web/components/atoms/Table';
+import Stage from 'sly/web/components/molecules/Stage';
+import { FAMILY_STATUS_ON_PAUSE } from 'sly/web/constants/familyDetails';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/web/constants/dashboardAppPaths';
+import clientPropType from 'sly/web/propTypes/client';
+import mobileOnly from 'sly/web/components/helpers/mobileOnly';
+import { size, palette } from 'sly/web/components/themes';
+import SlyEvent from 'sly/web/services/helpers/events';
 
 const Wrapper = mobileOnly(Tr, css`
   display: flex;

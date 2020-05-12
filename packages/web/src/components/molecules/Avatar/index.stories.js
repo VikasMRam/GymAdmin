@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Avatar from 'sly/components/molecules/Avatar';
+import Avatar from 'sly/web/components/molecules/Avatar';
 
 const name = 'Fonz';
 const picture = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
+import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
 
 const wrap = (props = {}, children) => shallow(<ThreeSectionFormTemplate {...props}>{children}</ThreeSectionFormTemplate>);
 

@@ -2,13 +2,13 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { string, node } from 'prop-types';
 
-import { size, palette } from 'sly/components/themes';
-import agentPropType from 'sly/propTypes/agent';
-import pad from 'sly/components/helpers/pad';
-import shadow from 'sly/components/helpers/shadow';
-import textAlign from 'sly/components/helpers/textAlign';
-import { Heading, Box, Block, Link } from 'sly/components/atoms';
-import Avatar from 'sly/components/molecules/Avatar';
+import { size, palette } from 'sly/web/components/themes';
+import agentPropType from 'sly/web/propTypes/agent';
+import pad from 'sly/web/components/helpers/pad';
+import shadow from 'sly/web/components/helpers/shadow';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { Heading, Box, Block, Link } from 'sly/web/components/atoms';
+import Avatar from 'sly/web/components/molecules/Avatar';
 
 const AgentInfoWrapper = pad(styled.div``);
 
