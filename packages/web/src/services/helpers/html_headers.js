@@ -275,7 +275,6 @@ export const getHelmetForSearchPage = ({
 
 
 export const getHelmetForCommunityPage = (community, location) => {
-  console.log(community);
   const {
     name, mainImage, address, propInfo, propRatings, similarProperties, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions,
   } = community;
@@ -284,7 +283,6 @@ export const getHelmetForCommunityPage = (community, location) => {
     line1, city, state, country, zip, latitude, longitude,
   } = address;
   const { websiteUrl, websiteTitle, websiteMetaDescription, communityPhone } = propInfo;
-  console.log(propRatings);
   const { numReviews, reviewsValue } = propRatings;
 
   // const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);
