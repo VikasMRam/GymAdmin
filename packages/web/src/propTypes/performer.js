@@ -3,7 +3,7 @@ import { string, shape, oneOf } from 'prop-types';
 import {
   PERFORMER_STATUS_NOT_LIVE,
   PERFORMER_STATUS_LIVE,
-} from 'sly/constants/performers';
+} from 'sly/web/constants/performers';
 
 export default shape({
   id: string.isRequired,

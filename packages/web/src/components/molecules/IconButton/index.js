@@ -3,9 +3,9 @@ import { string, bool, node, number } from 'prop-types';
 import styled, { css, keyframes } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { Icon, Button } from 'sly/components/atoms';
+import { size } from 'sly/web/components/themes';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { Icon, Button } from 'sly/web/components/atoms';
 
 const fadeIn = keyframes`
   0% { display: none; opacity: 0; }

@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { number } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { palette } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import { STEP_INPUT_FIELD_NAMES } from 'sly/external/constants/steps';
-import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
-import { Heading } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
+import { palette } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import { STEP_INPUT_FIELD_NAMES } from 'sly/web/external/constants/steps';
+import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
+import { Heading } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 
 const PaddedHeading = pad(Heading, 'regular');
 PaddedHeading.displayName = 'PaddedHeading';

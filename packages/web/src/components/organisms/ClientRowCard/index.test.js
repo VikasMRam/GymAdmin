@@ -6,9 +6,9 @@ import ClientRowCard from './index';
 
 import {
   Icon,
-} from 'sly/components/atoms';
-import clients from 'sly/../private/storybook/sample-data/clients.json';
-import { FAMILY_STATUS_ON_PAUSE } from 'sly/constants/familyDetails';
+} from 'sly/web/components/atoms';
+import clients from 'sly/web/../private/storybook/sample-data/clients.json';
+import { FAMILY_STATUS_ON_PAUSE } from 'sly/web/constants/familyDetails';
 
 const activeClient = clients[1];
 const createdDate = dayjs(activeClient.createdAt).format('MM/DD/YYYY');

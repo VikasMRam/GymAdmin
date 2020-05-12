@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { node, bool, string } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size, palette, key } from 'sly/components/themes';
+import { size, palette, key } from 'sly/web/components/themes';
 
 const getSize = type => p => size(type, p.paddingSize);
 

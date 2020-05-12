@@ -3,13 +3,13 @@ import { func, arrayOf, object, shape, string } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
-import { Block, Hr } from 'sly/components/atoms';
-import DashboardCommunityAgentSearchBox from 'sly/components/organisms/DashboardCommunityAgentSearchBox';
-import DashboardAdminReferralAgentTile from 'sly/components/organisms/DashboardAdminReferralAgentTile';
-import { adminCommunityPropType } from 'sly/propTypes/community';
-import pad from 'sly/components/helpers/pad';
-import cursor from 'sly/components/helpers/cursor';
+import { size, palette } from 'sly/web/components/themes';
+import { Block, Hr } from 'sly/web/components/atoms';
+import DashboardCommunityAgentSearchBox from 'sly/web/components/organisms/DashboardCommunityAgentSearchBox';
+import DashboardAdminReferralAgentTile from 'sly/web/components/organisms/DashboardAdminReferralAgentTile';
+import { adminCommunityPropType } from 'sly/web/propTypes/community';
+import pad from 'sly/web/components/helpers/pad';
+import cursor from 'sly/web/components/helpers/cursor';
 
 const Wrapper = styled.div`
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};

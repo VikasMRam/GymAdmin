@@ -3,19 +3,19 @@ import { arrayOf, object, string } from 'prop-types';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
-import { size } from 'sly/components/themes';
-import { NUMBER_OF_RESULTS_PER_PAGE } from 'sly/external/constants/search';
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { prefetch } from 'sly/services/api';
-import { getPaginationData } from 'sly/services/helpers/pagination';
-import { getCitySearchUrl, getStateAbbr } from 'sly/services/helpers/url';
-import textAlign from 'sly/components/helpers/textAlign';
-import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
-import pad from 'sly/components/helpers/pad';
-import shadow from 'sly/components/helpers/shadow';
-import { Block, Link, Button } from 'sly/components/atoms';
-import CommunityTile from 'sly/components/organisms/CommunityTile';
-import Pagination from 'sly/components/molecules/Pagination';
+import { size } from 'sly/web/components/themes';
+import { NUMBER_OF_RESULTS_PER_PAGE } from 'sly/web/external/constants/search';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { prefetch } from 'sly/web/services/api';
+import { getPaginationData } from 'sly/web/services/helpers/pagination';
+import { getCitySearchUrl, getStateAbbr } from 'sly/web/services/helpers/url';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
+import pad from 'sly/web/components/helpers/pad';
+import shadow from 'sly/web/components/helpers/shadow';
+import { Block, Link, Button } from 'sly/web/components/atoms';
+import CommunityTile from 'sly/web/components/organisms/CommunityTile';
+import Pagination from 'sly/web/components/molecules/Pagination';
 
 const CenteredBlock = textAlign(Block);
 

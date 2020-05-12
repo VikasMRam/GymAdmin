@@ -1,11 +1,11 @@
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
-import { variation as variationPropType } from 'sly/propTypes/variation';
-import { weight as weightPropType } from 'sly/propTypes/weight';
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { text as textPropType } from 'sly/propTypes/text';
+import { size, palette } from 'sly/web/components/themes';
+import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { weight as weightPropType } from 'sly/web/propTypes/weight';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { text as textPropType } from 'sly/web/propTypes/text';
 
 const getSize = type => p => size(type, p.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);

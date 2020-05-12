@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Thumbnail } from 'sly/components/atoms';
-import ThumbnailScroller from 'sly/components/molecules/ThumbnailScroller';
-import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import { Thumbnail } from 'sly/web/components/atoms';
+import ThumbnailScroller from 'sly/web/components/molecules/ThumbnailScroller';
+import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => shallow(<ThumbnailScroller {...props} />);
 

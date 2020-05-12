@@ -2,9 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import CommunityBookATourContactForm from 'sly/components/organisms/CommunityBookATourContactForm';
-import { Link, Block } from 'sly/components/atoms';
-import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy/index';
+import CommunityBookATourContactForm from 'sly/web/components/organisms/CommunityBookATourContactForm';
+import { Link, Block } from 'sly/web/components/atoms';
+import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy/index';
 
 const onAdvisorHelpClick = jest.fn();
 const fullName = 'Pranesh Kumar';

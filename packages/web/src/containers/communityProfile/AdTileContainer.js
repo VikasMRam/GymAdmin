@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { oneOf, string } from 'prop-types';
-import { community as communityProptype } from 'sly/propTypes/community';
+import { community as communityProptype } from 'sly/web/propTypes/community';
 import styled from 'styled-components';
 
-import { size, assetPath } from 'sly/components/themes';
-import SlyEvent from 'sly/services/helpers/events';
-import { hcaAdEnabled } from 'sly/services/helpers/tileAds';
+import { size, assetPath } from 'sly/web/components/themes';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { hcaAdEnabled } from 'sly/web/services/helpers/tileAds';
 
-import AdTile from 'sly/components/organisms/AdTile';
-import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
-import { ResponsiveImage } from 'sly/components/atoms';
-import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
-import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/services/api/constants';
-import withNotification from 'sly/controllers/withNotification';
+import AdTile from 'sly/web/components/organisms/AdTile';
+import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
+import { ResponsiveImage } from 'sly/web/components/atoms';
+import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
+import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
+import withNotification from 'sly/web/controllers/withNotification';
 
 
 const StyledResponsiveImage = styled(ResponsiveImage)`

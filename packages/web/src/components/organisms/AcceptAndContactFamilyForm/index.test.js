@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import AcceptAndContactFamilyForm from 'sly/components/organisms/AcceptAndContactFamilyForm';
+import AcceptAndContactFamilyForm from 'sly/web/components/organisms/AcceptAndContactFamilyForm';
 
 const defaultProps = {
   contactTypes: ['email', 'phone', 'message'],

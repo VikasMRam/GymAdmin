@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { object, func } from 'prop-types';
 
-import { ensureAuthenticated } from 'sly/store/authenticated/actions';
-import EntityApprovalPage from 'sly/components/pages/EntityApprovalPage/index';
-import { titleize } from 'sly/services/helpers/strings';
-import { logError } from 'sly/services/helpers/logging';
-import withAuth from 'sly/services/api/withAuth';
-import api from 'sly/services/api/apiInstance';
+import { ensureAuthenticated } from 'sly/web/store/authenticated/actions';
+import EntityApprovalPage from 'sly/web/components/pages/EntityApprovalPage/index';
+import { titleize } from 'sly/web/services/helpers/strings';
+import { logError } from 'sly/web/services/helpers/logging';
+import withAuth from 'sly/web/services/api/withAuth';
+import api from 'sly/web/services/api/apiInstance';
 
 const getApiFor = (entity) => {
   switch (entity) {

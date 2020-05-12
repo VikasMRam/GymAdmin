@@ -3,14 +3,14 @@ import { Route } from 'react-router-dom';
 
 import { withHydration } from './services/partialHydration';
 
-import AppTemplate from 'sly/components/templates/AppTemplate';
-import Router from 'sly/components/molecules/Router';
-import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
-import UnhydratedRetentionPopup from 'sly/services/retentionPopup';
+import AppTemplate from 'sly/web/components/templates/AppTemplate';
+import Router from 'sly/web/components/molecules/Router';
+import CommunityDetailPageContainer from 'sly/web/containers/CommunityDetailPageContainer';
+import UnhydratedRetentionPopup from 'sly/web/services/retentionPopup';
 
 const HydratedRetentionPopup = withHydration(UnhydratedRetentionPopup, { alwaysHydrate: true });
 
-export renderToString from 'sly/services/api/renderToString';
+export renderToString from 'sly/web/services/api/renderToString';
 
 export default function () {
   return (

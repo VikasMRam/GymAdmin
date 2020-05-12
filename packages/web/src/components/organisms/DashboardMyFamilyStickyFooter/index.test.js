@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import DashboardMyFamilyStickyFooter from 'sly/components/organisms/DashboardMyFamilyStickyFooter';
+import DashboardMyFamilyStickyFooter from 'sly/web/components/organisms/DashboardMyFamilyStickyFooter';
 
 const itemClicks = [
   jest.fn(),

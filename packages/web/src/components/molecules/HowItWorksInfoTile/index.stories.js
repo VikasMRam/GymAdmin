@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import HowItWorksInfoTile from 'sly/components/molecules/HowItWorksInfoTile';
+import HowItWorksInfoTile from 'sly/web/components/molecules/HowItWorksInfoTile';
 
 const props = {
   heading: 'Use our powerful search platform',

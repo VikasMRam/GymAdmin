@@ -3,8 +3,8 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import { connect } from 'react-redux';
 import { func } from 'prop-types';
 
-import { destroy, get } from 'sly/services/api/httpMethods';
-import api from 'sly/services/api/apiInstance';
+import { destroy, get } from 'sly/web/services/api/httpMethods';
+import api from 'sly/web/services/api/apiInstance';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName

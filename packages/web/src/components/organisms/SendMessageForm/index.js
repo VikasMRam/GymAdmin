@@ -3,11 +3,11 @@ import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { getKey, size } from 'sly/components/themes';
-import { Block, Button } from 'sly/components/atoms';
-import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
-import IconButton from 'sly/components/molecules/IconButton';
-import ReduxField from 'sly/components/organisms/ReduxField';
+import { getKey, size } from 'sly/web/components/themes';
+import { Block, Button } from 'sly/web/components/atoms';
+import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
+import IconButton from 'sly/web/components/molecules/IconButton';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
 
 const TwoColumWrapper = styled.div`
   display: grid;

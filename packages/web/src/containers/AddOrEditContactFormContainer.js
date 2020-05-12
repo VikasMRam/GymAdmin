@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { func, string } from 'prop-types';
 import { reduxForm } from 'redux-form';
 
-import { query, withUser } from 'sly/services/api';
-import contactPropType from 'sly/propTypes/contact';
-import { createValidator, email, required, usPhone } from 'sly/services/validation';
-import AddContactForm from 'sly/components/organisms/AddContactForm';
-import withNotification from 'sly/controllers/withNotification';
-import { saveContactPayload } from 'sly/containers/dashboard/helpers';
+import { query, withUser } from 'sly/web/services/api';
+import contactPropType from 'sly/web/propTypes/contact';
+import { createValidator, email, required, usPhone } from 'sly/web/services/validation';
+import AddContactForm from 'sly/web/components/organisms/AddContactForm';
+import withNotification from 'sly/web/controllers/withNotification';
+import { saveContactPayload } from 'sly/web/containers/dashboard/helpers';
 
 const validate = createValidator({
   name: [required],

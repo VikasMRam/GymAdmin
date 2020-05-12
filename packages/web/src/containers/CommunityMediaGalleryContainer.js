@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
-import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
-import SlyEvent from 'sly/services/helpers/events';
-import { prefetch } from 'sly/services/api';
-import { assetPath, getKey } from 'sly/components/themes';
+import CommunityMediaGallery from 'sly/web/components/organisms/CommunityMediaGallery';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { prefetch } from 'sly/web/services/api';
+import { assetPath, getKey } from 'sly/web/components/themes';
 
 // TODO: move this to common helper, used in multiple places
 const communityDefaultImages = {

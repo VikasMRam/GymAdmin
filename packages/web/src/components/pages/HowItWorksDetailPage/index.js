@@ -2,16 +2,16 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, func, arrayOf, object } from 'prop-types';
 
-import { size, assetPath, palette } from 'sly/components/themes';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
-import { Image, Link, Block, Heading, Hr } from 'sly/components/atoms';
-import Footer from 'sly/components/organisms/Footer';
-import HowItWorksInfoTile from 'sly/components/molecules/HowItWorksInfoTile';
-import IconInfoTile from 'sly/components/molecules/IconInfoTile';
-import { FAQ } from 'sly/services/helpers/howItWorks';
-import FAQTile from 'sly/components/molecules/FAQTile';
-import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
+import { size, assetPath, palette } from 'sly/web/components/themes';
+import HeaderContainer from 'sly/web/containers/HeaderContainer';
+import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
+import { Image, Link, Block, Heading, Hr } from 'sly/web/components/atoms';
+import Footer from 'sly/web/components/organisms/Footer';
+import HowItWorksInfoTile from 'sly/web/components/molecules/HowItWorksInfoTile';
+import IconInfoTile from 'sly/web/components/molecules/IconInfoTile';
+import { FAQ } from 'sly/web/services/helpers/howItWorks';
+import FAQTile from 'sly/web/components/molecules/FAQTile';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 
 // Copied from BasePageTemplate
 const FixedWidthContainer = styled.div`

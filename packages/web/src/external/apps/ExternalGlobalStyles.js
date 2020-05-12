@@ -1,4 +1,4 @@
-import GlobalStyles from 'sly/components/themes/GlobalStyles';
+import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
 
 export default `
   ${GlobalStyles};

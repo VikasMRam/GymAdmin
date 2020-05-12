@@ -3,11 +3,11 @@ import { string, func, object, oneOf } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import { ROOMTYPE_OPTIONS, CARETYPE_OPTIONS, MEDICAID_OPTIONS, MOVETIMELINE_OPTIONS } from 'sly/constants/pricingForm';
-import { Heading, Block } from 'sly/components/atoms';
-import HelpBubble from 'sly/components/molecules/HelpBubble';
+import { size } from 'sly/web/components/themes';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import { ROOMTYPE_OPTIONS, CARETYPE_OPTIONS, MEDICAID_OPTIONS, MOVETIMELINE_OPTIONS } from 'sly/web/constants/pricingForm';
+import { Heading, Block } from 'sly/web/components/atoms';
+import HelpBubble from 'sly/web/components/molecules/HelpBubble';
 
 const HeadingSection = styled(Heading)`
   margin-bottom: ${size('spacing.large')};

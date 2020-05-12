@@ -3,12 +3,12 @@ import { bool, func, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { Button, Heading } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import textAlign from 'sly/components/helpers/textAlign';
-import { size } from 'sly/components/themes';
+import { Button, Heading } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { size } from 'sly/web/components/themes';
 
 const StyledButton = fullWidth(styled(Button)`
   margin-bottom: ${size('spacing.regular')};

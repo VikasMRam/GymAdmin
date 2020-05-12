@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 
-import SlyEvent from 'sly/services/helpers/events';
-import { filterLinkPath, getSearchParamFromPlacesResponse } from 'sly/services/helpers/agents';
-import withNotification from 'sly/controllers/withNotification';
-import AgentsPage from 'sly/components/pages/AgentsPage';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { filterLinkPath, getSearchParamFromPlacesResponse } from 'sly/web/services/helpers/agents';
+import withNotification from 'sly/web/controllers/withNotification';
+import AgentsPage from 'sly/web/components/pages/AgentsPage';
 
 @withNotification
 

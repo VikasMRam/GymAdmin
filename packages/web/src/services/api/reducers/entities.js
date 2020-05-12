@@ -1,5 +1,5 @@
 import * as immutable from 'object-path-immutable';
-import { PURGE_FROM_RELATIONSHIPS } from 'sly/services/api/actions';
+import { PURGE_FROM_RELATIONSHIPS } from 'sly/web/services/api/actions';
 
 const initialState = {};
 

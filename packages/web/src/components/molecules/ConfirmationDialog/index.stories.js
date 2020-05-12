@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
+import ConfirmationDialog from 'sly/web/components/molecules/ConfirmationDialog';
 
 const defaultProps = {
   onConfirmClick: action('onConfirmClick'),

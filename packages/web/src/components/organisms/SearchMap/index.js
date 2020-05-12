@@ -5,14 +5,14 @@ import { Marker, InfoWindow } from 'react-google-maps';
 import debounce from 'lodash/debounce';
 import { withRouter } from 'react-router-dom';
 
-import { isServer } from 'sly/config';
-import { size, palette } from 'sly/components/themes';
-import Checkbox from 'sly/components/molecules/Checkbox';
-import Map from 'sly/components/atoms/Map';
-import MapTile from 'sly/components/molecules/MapTile';
-import GreenMarker from 'sly/../public/icons/greenmarker.png';
-import { getRadiusFromMapBounds } from 'sly/services/helpers/search';
-import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
+import { isServer } from 'sly/web/config';
+import { size, palette } from 'sly/web/components/themes';
+import Checkbox from 'sly/web/components/molecules/Checkbox';
+import Map from 'sly/web/components/atoms/Map';
+import MapTile from 'sly/web/components/molecules/MapTile';
+import GreenMarker from 'sly/web/../public/icons/greenmarker.png';
+import { getRadiusFromMapBounds } from 'sly/web/services/helpers/search';
+import withGenerateFilterLinkPath from 'sly/web/services/search/withGenerateFilterLinkPath';
 
 const MapWrapper = styled.div`
   width: 100%;

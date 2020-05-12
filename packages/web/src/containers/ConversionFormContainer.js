@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func, bool } from 'prop-types';
 
-import { withUser } from 'sly/services/api';
+import { withUser } from 'sly/web/services/api';
 
 import {
   createValidator,
@@ -11,8 +11,8 @@ import {
   required,
   email,
   usPhone,
-} from 'sly/services/validation';
-import ConversionForm from 'sly/components/organisms/ConversionForm';
+} from 'sly/web/services/validation';
+import ConversionForm from 'sly/web/components/organisms/ConversionForm';
 
 const validate = createValidator({
   full_name: [required],

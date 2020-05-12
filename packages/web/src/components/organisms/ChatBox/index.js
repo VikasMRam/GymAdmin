@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { bool } from 'prop-types';
 import Helmet from 'react-helmet';
 
-import { /* isBrowser, olarkSiteId, */ rokoApiKey } from 'sly/config';
+import { /* isBrowser, olarkSiteId, */ rokoApiKey } from 'sly/web/config';
 
 import ChatBoxGlobalStyle from './ChatBoxGlobalStyle';
 

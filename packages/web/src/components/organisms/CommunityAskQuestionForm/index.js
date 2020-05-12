@@ -3,11 +3,11 @@ import { func, string, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import { Heading, Button } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
+import { size } from 'sly/web/components/themes';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import { Heading, Button } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 
 const StyledButton = fullWidth(styled(Button)`
   margin-bottom: ${size('spacing.regular')};

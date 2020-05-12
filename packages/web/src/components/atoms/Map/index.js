@@ -2,8 +2,8 @@ import React from 'react';
 import { compose, withProps } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap } from 'react-google-maps';
 
-import mapsTheme from 'sly/components/themes/maps';
-import { gMapsApiKey } from 'sly/config';
+import mapsTheme from 'sly/web/components/themes/maps';
+import { gMapsApiKey } from 'sly/web/config';
 
 const mapOptions = {
   styles: mapsTheme.propertyDetailTheme,

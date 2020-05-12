@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { Field } from 'redux-form';
 
-import { size, gridColumns } from 'sly/components/themes';
-import { TIME_OPTIONS, MEDICAID_OPTIONS } from 'sly/constants/bookingForm';
-import { Heading, Block } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import HelpBubble from 'sly/components/molecules/HelpBubble';
+import { size, gridColumns } from 'sly/web/components/themes';
+import { TIME_OPTIONS, MEDICAID_OPTIONS } from 'sly/web/constants/bookingForm';
+import { Heading, Block } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import HelpBubble from 'sly/web/components/molecules/HelpBubble';
 
 const HeadingSection = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};

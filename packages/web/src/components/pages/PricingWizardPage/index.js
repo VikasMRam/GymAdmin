@@ -5,35 +5,35 @@ import Helmet from 'react-helmet';
 import { Route } from 'react-router';
 import { Redirect } from 'react-router-dom';
 
-import { community as communityPropType } from 'sly/propTypes/community';
-import userPropType from 'sly/propTypes/user';
-import agentPropType from 'sly/propTypes/agent';
-import { size } from 'sly/components/themes';
-import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import userPropType from 'sly/web/propTypes/user';
+import agentPropType from 'sly/web/propTypes/agent';
+import { size } from 'sly/web/components/themes';
+import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import {
   FullScreenWizard,
   makeBody,
   makeColumn,
   makeControls,
   makeHeader,
-} from 'sly/components/templates/FullScreenWizard';
+} from 'sly/web/components/templates/FullScreenWizard';
 import {
   EST_ADDL_COST_ACCOMODATION,
   EST_ADDL_COST_CARE_SERVICE,
   // WHAT_TO_NEXT_OPTIONS,
-} from 'sly/constants/pricingForm';
-import { getIsCCRC } from 'sly/services/helpers/community';
-import { FAMILY_DASHBOARD_FAVORITES_PATH } from 'sly/constants/dashboardAppPaths';
-import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
-import CommunityWizardAcknowledgementContainer from 'sly/containers/CommunityWizardAcknowledgementContainer';
-import MatchedAgentContainer from 'sly/containers/MatchedAgentContainer';
-import CommunityInfo from 'sly/components/molecules/CommunityInfo';
-import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
-import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
-import Modal from 'sly/components/molecules/Modal';
-import ConversionWizardInfoStep from 'sly/components/organisms/ConversionWizardInfoStep';
+} from 'sly/web/constants/pricingForm';
+import { getIsCCRC } from 'sly/web/services/helpers/community';
+import { FAMILY_DASHBOARD_FAVORITES_PATH } from 'sly/web/constants/dashboardAppPaths';
+import CommunityBookATourContactFormContainer from 'sly/web/containers/CommunityBookATourContactFormContainer';
+import HeaderContainer from 'sly/web/containers/HeaderContainer';
+import CommunityPWEstimatedPricingFormContainer from 'sly/web/containers/CommunityPWEstimatedPricingFormContainer';
+import CommunityWizardAcknowledgementContainer from 'sly/web/containers/CommunityWizardAcknowledgementContainer';
+import MatchedAgentContainer from 'sly/web/containers/MatchedAgentContainer';
+import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
+import PricingFormFooter from 'sly/web/components/molecules/PricingFormFooter';
+import AdvisorHelpPopup from 'sly/web/components/molecules/AdvisorHelpPopup';
+import Modal from 'sly/web/components/molecules/Modal';
+import ConversionWizardInfoStep from 'sly/web/components/organisms/ConversionWizardInfoStep';
 
 const Header = makeHeader(HeaderContainer);
 

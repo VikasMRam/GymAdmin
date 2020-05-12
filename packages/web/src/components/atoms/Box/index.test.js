@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Box from 'sly/components/atoms/Box';
+import Box from 'sly/web/components/atoms/Box';
 
 const wrap = (props = {}) => mount(<Box {...props} />);
 const palette = 'danger';

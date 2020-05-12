@@ -4,10 +4,10 @@ import { string, bool, arrayOf, shape, number, func } from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
-import { Icon, ResponsiveImage } from 'sly/components/atoms';
-import ThumbnailScroller from 'sly/components/molecules/ThumbnailScroller';
-import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
+import { size, palette } from 'sly/web/components/themes';
+import { Icon, ResponsiveImage } from 'sly/web/components/atoms';
+import ThumbnailScroller from 'sly/web/components/molecules/ThumbnailScroller';
+import VideoThumbnail from 'sly/web/components/molecules/VideoThumbnail';
 
 const videoMimeTypes = {
   mp4: 'video/mp4',

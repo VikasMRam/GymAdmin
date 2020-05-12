@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { object, func, string, shape } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 
-import { prefetch, query, withAuth } from 'sly/services/api';
-import { community as communityPropType } from 'sly/propTypes/community';
-import SlyEvent from 'sly/services/helpers/events';
-import BookATourPage from 'sly/components/pages/BookATourPage';
-import { TOUR_BOOKED } from 'sly/services/api/constants';
-import { medicareToBool, boolToMedicare } from 'sly/services/helpers/userDetails';
-import { withRedirectTo } from 'sly/services/redirectTo';
+import { prefetch, query, withAuth } from 'sly/web/services/api';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import SlyEvent from 'sly/web/services/helpers/events';
+import BookATourPage from 'sly/web/components/pages/BookATourPage';
+import { TOUR_BOOKED } from 'sly/web/services/api/constants';
+import { medicareToBool, boolToMedicare } from 'sly/web/services/helpers/userDetails';
+import { withRedirectTo } from 'sly/web/services/redirectTo';
 
 const eventCategory = 'BAT';
 

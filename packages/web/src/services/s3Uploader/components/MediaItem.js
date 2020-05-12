@@ -4,12 +4,12 @@ import { sortableElement, sortableHandle } from 'react-sortable-hoc';
 
 import S3Uploader from './S3Uploader';
 
-import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
-import { imagePropType } from 'sly/propTypes/gallery';
-import Icon from 'sly/components/atoms/Icon';
-import { size, palette } from 'sly/components/themes';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
+import { imagePropType } from 'sly/web/propTypes/gallery';
+import Icon from 'sly/web/components/atoms/Icon';
+import { size, palette } from 'sly/web/components/themes';
 import { func } from 'prop-types';
-import IconButton from 'sly/components/molecules/IconButton';
+import IconButton from 'sly/web/components/molecules/IconButton';
 
 const getSignedUrl = (file, callback) => {
   return fetch(`/v0/platform/uploads/s3-signed-url?file=${encodeURIComponent(file.name)}`)

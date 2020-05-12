@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, bool } from 'prop-types';
 
-import { assetPath, size } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import border from 'sly/components/helpers/border';
-import borderRadius from 'sly/components/helpers/borderRadius';
-import { ResponsiveImage } from 'sly/components/atoms';
+import { assetPath, size } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import border from 'sly/web/components/helpers/border';
+import borderRadius from 'sly/web/components/helpers/borderRadius';
+import { ResponsiveImage } from 'sly/web/components/atoms';
 
 const Wrapper = borderRadius(styled.div`
   display: flex;

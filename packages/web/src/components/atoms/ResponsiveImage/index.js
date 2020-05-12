@@ -3,8 +3,8 @@ import { string, array, oneOf, any, func } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, getKey, assetPath } from 'sly/components/themes';
-import { getSrcset } from 'sly/services/images';
+import { size, getKey, assetPath } from 'sly/web/components/themes';
+import { getSrcset } from 'sly/web/services/images';
 
 const paddingTop = ({ aspectRatio }) => size('picture.ratios', aspectRatio);
 

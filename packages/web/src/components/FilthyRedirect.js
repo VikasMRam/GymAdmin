@@ -3,13 +3,13 @@ import { Redirect } from 'react-router-dom';
 import { object, func, bool } from 'prop-types';
 import loadable from '@loadable/component';
 
-import { isBrowser } from 'sly/config';
-import { parseURLQueryParams, objectToURLQueryParams } from 'sly/services/helpers/url';
-import { THANK_YOU, CARE_ASSESSMENT_WIZARD, ADD_RATING } from 'sly/constants/modalType';
-import Thankyou from 'sly/components/molecules/Thankyou';
+import { isBrowser } from 'sly/web/config';
+import { parseURLQueryParams, objectToURLQueryParams } from 'sly/web/services/helpers/url';
+import { THANK_YOU, CARE_ASSESSMENT_WIZARD, ADD_RATING } from 'sly/web/constants/modalType';
+import Thankyou from 'sly/web/components/molecules/Thankyou';
 
-const CareAssessmentController = loadable(() => import(/* webpackChunkName: "chunkCareAssessmentController" */'sly/external/apps/wizards/careAssessment/Controller'));
-const CommunityAddRatingFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityAddRatingFormContainer" */'sly/containers/CommunityAddRatingFormContainer'));
+const CareAssessmentController = loadable(() => import(/* webpackChunkName: "chunkCareAssessmentController" */'sly/web/external/apps/wizards/careAssessment/Controller'));
+const CommunityAddRatingFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityAddRatingFormContainer" */'sly/web/containers/CommunityAddRatingFormContainer'));
 
 const FilthyRedirect = ({
   location, isModalOpen, showModal,

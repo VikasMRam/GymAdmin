@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { string, number, bool, func } from 'prop-types';
 
-import Rating from 'sly/components/molecules/Rating';
+import Rating from 'sly/web/components/molecules/Rating';
 
 const getPalette = ({ disabled, palette }) => disabled
   ? 'slate'

@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 
-import { isProd } from 'sly/config';
-import SlyEvent from 'sly/services/helpers/events';
-import { getExperiment } from 'sly/store/selectors';
-import { ExperimentContext } from 'sly/services/experiments/components/Context';
-import withUser from 'sly/services/api/withUser';
-import { uuidAux as uuidAuxPropType } from 'sly/propTypes/user';
+import { isProd } from 'sly/web/config';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { getExperiment } from 'sly/web/store/selectors';
+import { ExperimentContext } from 'sly/web/services/experiments/components/Context';
+import withUser from 'sly/web/services/api/withUser';
+import { uuidAux as uuidAuxPropType } from 'sly/web/propTypes/user';
 
 const mapStateToProps = (state, ownProps) => {
   const { name } = ownProps;

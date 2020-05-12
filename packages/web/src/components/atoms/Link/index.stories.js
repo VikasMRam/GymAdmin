@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Link from 'sly/components/atoms/Link';
+import Link from 'sly/web/components/atoms/Link';
 
 storiesOf('Atoms|Link', module)
   .add('default', () => <Link href="/">Hello</Link>)

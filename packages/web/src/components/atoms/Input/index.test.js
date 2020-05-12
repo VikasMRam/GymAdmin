@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Input from 'sly/components/atoms/Input';
+import Input from 'sly/web/components/atoms/Input';
 
 const wrap = (props = {}) => mount(<Input {...props} />);
 

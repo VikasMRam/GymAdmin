@@ -1,6 +1,6 @@
 import { serializeError } from 'serialize-error';
 
-import { isBrowser } from 'sly/config';
+import { isBrowser } from 'sly/web/config';
 
 const cleanResponse = (response) => {
   return ['url', 'status', 'statusText', 'headers']

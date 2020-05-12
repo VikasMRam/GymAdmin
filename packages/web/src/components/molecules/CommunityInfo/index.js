@@ -2,12 +2,12 @@ import React, { Fragment, Component } from 'react';
 import { bool, string } from 'prop-types';
 import styled from 'styled-components';
 
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { size } from 'sly/components/themes';
-import { community as communityPropType } from 'sly/propTypes/community';
-import { Link, Block, Icon, Heading, ClampedText } from 'sly/components/atoms';
-import CommunityRating from 'sly/components/molecules/CommunityRating';
-import { formatMoney } from 'sly/services/helpers/numbers';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { size } from 'sly/web/components/themes';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import { Link, Block, Icon, Heading, ClampedText } from 'sly/web/components/atoms';
+import CommunityRating from 'sly/web/components/molecules/CommunityRating';
+import { formatMoney } from 'sly/web/services/helpers/numbers';
 
 const Wrapper = styled.div`
   overflow: hidden;

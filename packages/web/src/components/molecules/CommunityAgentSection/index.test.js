@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { phoneFormatter } from 'sly/services/helpers/phone';
-import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
-import LindaIwamota from 'sly/../private/storybook/sample-data/agent-linda-iwamota.json';
+import { phoneFormatter } from 'sly/web/services/helpers/phone';
+import CommunityAgentSection from 'sly/web/components/molecules/CommunityAgentSection';
+import LindaIwamota from 'sly/web/../private/storybook/sample-data/agent-linda-iwamota.json';
 
 const wrap = (props = {}) =>
   shallow(<CommunityAgentSection agent={LindaIwamota} {...props} />);

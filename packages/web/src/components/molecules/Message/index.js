@@ -4,21 +4,21 @@ import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
 
-import messagePropType from 'sly/propTypes/conversation/conversationMessage';
-import participantPropType from 'sly/propTypes/conversation/conversationParticipant';
-import { size, palette } from 'sly/components/themes';
+import messagePropType from 'sly/web/propTypes/conversation/conversationMessage';
+import participantPropType from 'sly/web/propTypes/conversation/conversationParticipant';
+import { size, palette } from 'sly/web/components/themes';
 import {
   CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST,
   CONVERSATION_MESSAGE_DATA_TYPE_TEXT,
   CONVERSATION_MESSAGE_DATA_TYPE_HTML,
   CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUTOMATED_RESPONSE,
   CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_OPEN_LINK,
-} from 'sly/constants/conversations';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import { Box, Block, Button } from 'sly/components/atoms';
-import Avatar from 'sly/components/molecules/Avatar';
-import HelpBubble from 'sly/components/molecules/HelpBubble';
+} from 'sly/web/constants/conversations';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { Box, Block, Button } from 'sly/web/components/atoms';
+import Avatar from 'sly/web/components/molecules/Avatar';
+import HelpBubble from 'sly/web/components/molecules/HelpBubble';
 
 const StyledBox = styled(Box)`
   ${ifProp('dark', css`background: ${palette('grey', 'background')}`, '')};

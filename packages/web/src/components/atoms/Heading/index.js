@@ -2,11 +2,11 @@ import React from 'react';
 import { node, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { text as textPropType } from 'sly/propTypes/text';
-import { weight as weightPropType } from 'sly/propTypes/weight';
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { variation as variationPropType } from 'sly/propTypes/variation';
-import { size, palette } from 'sly/components/themes';
+import { text as textPropType } from 'sly/web/propTypes/text';
+import { weight as weightPropType } from 'sly/web/propTypes/weight';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { size, palette } from 'sly/web/components/themes';
 
 const fontSize = p => size('text', p.size || p.level);
 const lineHeight = p => size('lineHeight', p.size || p.level);

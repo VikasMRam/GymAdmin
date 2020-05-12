@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { arrayOf, object, func, string, number, bool } from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 
-import { palette, size } from 'sly/components/themes';
-import { Block, Span, Icon, Paragraph } from 'sly/components/atoms';
-import { isServer } from 'sly/config';
-import { formatMoney } from 'sly/services/helpers/numbers';
-import { withHydration } from 'sly/services/partialHydration';
-import UnhydratedGetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
+import { palette, size } from 'sly/web/components/themes';
+import { Block, Span, Icon, Paragraph } from 'sly/web/components/atoms';
+import { isServer } from 'sly/web/config';
+import { formatMoney } from 'sly/web/services/helpers/numbers';
+import { withHydration } from 'sly/web/services/partialHydration';
+import UnhydratedGetCustomPricingButtonContainer from 'sly/web/containers/GetCustomPricingButtonContainer';
 
 const GetCustomPricingButtonContainer = withHydration(UnhydratedGetCustomPricingButtonContainer);
 

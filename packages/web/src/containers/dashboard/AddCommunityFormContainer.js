@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { func } from 'prop-types';
 
-import { required, createValidator } from 'sly/services/validation';
-import { COMMUNITY_RESOURCE_TYPE, ADDRESS_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import { query } from 'sly/services/api';
-import AddCommunityForm from 'sly/components/organisms/AddCommunityForm';
-import { normJsonApi } from 'sly/services/helpers/jsonApi';
+import { required, createValidator } from 'sly/web/services/validation';
+import { COMMUNITY_RESOURCE_TYPE, ADDRESS_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
+import { query } from 'sly/web/services/api';
+import AddCommunityForm from 'sly/web/components/organisms/AddCommunityForm';
+import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 
 
 const validate = createValidator({

@@ -1,10 +1,10 @@
 import React from 'react';
 import { string, bool, object } from 'prop-types';
 
-import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import PartnerAgentProfileFormContainer from 'sly/containers/PartnerAgentProfileFormContainer';
-import userPropType from 'sly/propTypes/user';
-import { adminAgentPropType } from 'sly/propTypes/agent';
+import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
+import PartnerAgentProfileFormContainer from 'sly/web/containers/PartnerAgentProfileFormContainer';
+import userPropType from 'sly/web/propTypes/user';
+import { adminAgentPropType } from 'sly/web/propTypes/agent';
 
 const DashboardAgentProfilePage = ({ title, user, agent, rawAgent, isLoading }) => {
   return (

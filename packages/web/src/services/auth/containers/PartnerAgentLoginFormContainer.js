@@ -3,10 +3,10 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
-import { createValidator, required, email } from 'sly/services/validation';
-import { withAuth } from 'sly/services/api';
-import withNotification from 'sly/controllers/withNotification';
-import PartnerAgentLoginForm from 'sly/services/auth/components/PartnerAgentLoginForm';
+import { createValidator, required, email } from 'sly/web/services/validation';
+import { withAuth } from 'sly/web/services/api';
+import withNotification from 'sly/web/controllers/withNotification';
+import PartnerAgentLoginForm from 'sly/web/services/auth/components/PartnerAgentLoginForm';
 
 const formName = 'PartnerAgentLoginForm';
 

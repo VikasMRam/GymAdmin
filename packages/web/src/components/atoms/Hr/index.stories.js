@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Hr from 'sly/components/atoms/Hr';
+import Hr from 'sly/web/components/atoms/Hr';
 
 storiesOf('Atoms|Hr', module)
   .add('default', () => <Hr />)

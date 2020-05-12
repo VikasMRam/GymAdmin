@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
+import ConfirmationDialog from 'sly/web/components/molecules/ConfirmationDialog';
 
 const wrap = (props = {}) => shallow(<ConfirmationDialog {...props} />);
 

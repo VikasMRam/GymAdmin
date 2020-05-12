@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
-import messagePropType from 'sly/propTypes/conversation/conversationMessage';
-import participantPropType from 'sly/propTypes/conversation/conversationParticipant';
-import pad from 'sly/components/helpers/pad';
-import { isAfter, isSameDay } from 'sly/services/helpers/date';
-import HrWithText from 'sly/components/molecules/HrWithText';
-import Message from 'sly/components/molecules/Message';
+import { size } from 'sly/web/components/themes';
+import messagePropType from 'sly/web/propTypes/conversation/conversationMessage';
+import participantPropType from 'sly/web/propTypes/conversation/conversationParticipant';
+import pad from 'sly/web/components/helpers/pad';
+import { isAfter, isSameDay } from 'sly/web/services/helpers/date';
+import HrWithText from 'sly/web/components/molecules/HrWithText';
+import Message from 'sly/web/components/molecules/Message';
 
 const Wrapper = styled.div`
   display: flex;

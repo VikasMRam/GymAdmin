@@ -1,4 +1,4 @@
-import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
+import { objectToURLQueryParams, parseURLQueryParams } from 'sly/web/services/helpers/url';
 
 export const getQueryParamsSetter = (history, location) => {
   const changeSearchParams = ({ changedParams }) => {

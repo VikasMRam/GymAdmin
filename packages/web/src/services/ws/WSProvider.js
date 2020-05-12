@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { node } from 'prop-types';
 
-import WSContext from 'sly/services/ws/WSContext';
-import Pubsub from 'sly/services/ws/Pubsub';
-import { apiUrl } from 'sly/config';
-import withUser from 'sly/services/api/withUser';
-import userPropType from 'sly/propTypes/user';
+import WSContext from 'sly/web/services/ws/WSContext';
+import Pubsub from 'sly/web/services/ws/Pubsub';
+import { apiUrl } from 'sly/web/config';
+import withUser from 'sly/web/services/api/withUser';
+import userPropType from 'sly/web/propTypes/user';
 
 let _instantiated_ = false;
 

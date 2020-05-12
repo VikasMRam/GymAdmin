@@ -2,20 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, bool } from 'prop-types';
 
-import { size, palette, assetPath } from 'sly/components/themes';
-import eventPropType from 'sly/propTypes/event';
-import performerPropType from 'sly/propTypes/performer';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import CurtainupSubscribeFormContainer from 'sly/containers/CurtainupSubscribeFormContainer';
-import { TemplateHeader } from 'sly/components/templates/BasePageTemplate';
-import { Block, Heading, Link, Image, ResponsiveImage, Box, Button } from 'sly/components/atoms';
-import Avatar from 'sly/components/molecules/Avatar';
-import ContentOverImage, { MiddleContent } from 'sly/components/molecules/ContentOverImage';
-import Footer from 'sly/components/organisms/Footer';
-import CurtainupEventBox from 'sly/components/organisms/CurtainupEventBox';
+import { size, palette, assetPath } from 'sly/web/components/themes';
+import eventPropType from 'sly/web/propTypes/event';
+import performerPropType from 'sly/web/propTypes/performer';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import HeaderContainer from 'sly/web/containers/HeaderContainer';
+import CurtainupSubscribeFormContainer from 'sly/web/containers/CurtainupSubscribeFormContainer';
+import { TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
+import { Block, Heading, Link, Image, ResponsiveImage, Box, Button } from 'sly/web/components/atoms';
+import Avatar from 'sly/web/components/molecules/Avatar';
+import ContentOverImage, { MiddleContent } from 'sly/web/components/molecules/ContentOverImage';
+import Footer from 'sly/web/components/organisms/Footer';
+import CurtainupEventBox from 'sly/web/components/organisms/CurtainupEventBox';
 
 const PaddedResponsiveImage = pad(ResponsiveImage);
 

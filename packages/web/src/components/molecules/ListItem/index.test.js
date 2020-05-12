@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Icon from 'sly/components/atoms/Icon';
-import ListItem from 'sly/components/molecules/ListItem';
+import Icon from 'sly/web/components/atoms/Icon';
+import ListItem from 'sly/web/components/molecules/ListItem';
 
 const wrap = () => shallow(<ListItem>blah</ListItem>);
 

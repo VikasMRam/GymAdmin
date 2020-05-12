@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ImportantCovid19UpdatesStep from 'sly/components/organisms/ImportantCovid19UpdatesStep';
+import ImportantCovid19UpdatesStep from 'sly/web/components/organisms/ImportantCovid19UpdatesStep';
 
 const buttons = [
   {

@@ -1,4 +1,4 @@
-import { CONTACT_RESOURCE_TYPE, SLY_ENTITY_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
+import { CONTACT_RESOURCE_TYPE, SLY_ENTITY_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
 
 export function saveContactPayload({ name, email, mobilePhone, entity }) {
   const payload = {

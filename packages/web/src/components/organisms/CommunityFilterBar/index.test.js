@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 
 import CommunityFilterBar, { FilterButton, ClearAllButton } from '.';
 
-jest.mock('sly/services/search/withGenerateFilterLinkPath', () => (Component) => {
+jest.mock('sly/web/services/search/withGenerateFilterLinkPath', () => (Component) => {
   return props => <Component {...props} generateFilterLinkPath={() => 'path'} />;
 });
 

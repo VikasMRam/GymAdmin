@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
+import CommunityAnswer from 'sly/web/components/molecules/CommunityAnswer';
 
 const answer = {
   creator: 'The Seniorly Team',

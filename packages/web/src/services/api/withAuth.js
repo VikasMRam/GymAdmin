@@ -8,8 +8,8 @@ import set from 'lodash/set';
 
 import withUser from './withUser';
 
-import api from 'sly/services/api/apiInstance';
-import { ensureAuthenticated } from 'sly/store/actions';
+import api from 'sly/web/services/api/apiInstance';
+import { ensureAuthenticated } from 'sly/web/store/actions';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName

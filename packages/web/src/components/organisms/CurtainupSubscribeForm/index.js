@@ -4,11 +4,11 @@ import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import mobileOnly from 'sly/components/helpers/mobileOnly';
-import { Button, Block } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
+import { size } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import mobileOnly from 'sly/web/components/helpers/mobileOnly';
+import { Button, Block } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
 
 const Error = pad(Block);
 Error.displayName = 'Error';

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { oneOf } from 'prop-types';
 
-import SlyEvent from 'sly/services/helpers/events';
-import CommunityWizardAcknowledgement from 'sly/components/organisms/CommunityWizardAcknowledgement';
+import SlyEvent from 'sly/web/services/helpers/events';
+import CommunityWizardAcknowledgement from 'sly/web/components/organisms/CommunityWizardAcknowledgement';
 
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,

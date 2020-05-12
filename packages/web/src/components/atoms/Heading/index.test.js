@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Heading from 'sly/components/atoms/Heading';
+import Heading from 'sly/web/components/atoms/Heading';
 
 const wrap = (props = {}) => mount(<Heading {...props} />);
 

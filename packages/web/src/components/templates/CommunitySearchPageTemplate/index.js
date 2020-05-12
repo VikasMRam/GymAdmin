@@ -2,11 +2,11 @@ import React from 'react';
 import { any } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
-import Footer from 'sly/components/organisms/Footer';
-import BannerNotificationAdContainer from 'sly/containers/BannerNotificationAdContainer';
+import { size } from 'sly/web/components/themes';
+import HeaderContainer from 'sly/web/containers/HeaderContainer';
+import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
+import Footer from 'sly/web/components/organisms/Footer';
+import BannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
 
 const TwoColumnWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {

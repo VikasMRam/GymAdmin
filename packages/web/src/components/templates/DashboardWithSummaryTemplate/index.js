@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
 
-import { size, palette, columnWidth } from 'sly/components/themes';
-import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import Box, { topSnap, bottomSnap } from 'sly/components/atoms/Box';
+import { size, palette, columnWidth } from 'sly/web/components/themes';
+import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
+import Box, { topSnap, bottomSnap } from 'sly/web/components/atoms/Box';
 import { ifProp } from 'styled-tools';
 
 export const Top = styled.div`

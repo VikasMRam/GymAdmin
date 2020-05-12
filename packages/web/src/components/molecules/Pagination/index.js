@@ -3,10 +3,10 @@ import { number, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { Link, Icon } from 'sly/components/atoms';
-import { styles as buttonStyles } from 'sly/components/atoms/Button';
-import { size, palette } from 'sly/components/themes';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { Link, Icon } from 'sly/web/components/atoms';
+import { styles as buttonStyles } from 'sly/web/components/atoms/Button';
+import { size, palette } from 'sly/web/components/themes';
 
 const Wrapper = styled.div`
   display: flex;

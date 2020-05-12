@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityQuestion from 'sly/components/molecules/CommunityQuestion';
+import CommunityQuestion from 'sly/web/components/molecules/CommunityQuestion';
 
 const question = {
   creator: 'Guest User',

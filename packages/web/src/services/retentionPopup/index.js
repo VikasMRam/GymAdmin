@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { func, object, string, bool } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { host, isServer, isBrowser } from 'sly/config';
-import { withUser } from 'sly/services/api';
-import { CUSTOMER_ROLE } from 'sly/constants/roles';
+import { host, isServer, isBrowser } from 'sly/web/config';
+import { withUser } from 'sly/web/services/api';
+import { CUSTOMER_ROLE } from 'sly/web/constants/roles';
 import {
   RETENTION_POPUP_IDLE_TIMEOUT,
   RETENTION_POPUP_EBOOK_TIMEOUT,
@@ -15,11 +15,11 @@ import {
   RETENTION_POPUP_EXIT_INTENT,
   RETENTION_POPUP_FOCUS,
   RETENTION_POPUP_FOCUS_TIMEOUT,
-} from 'sly/constants/retentionPopup';
-import withModal from 'sly/controllers/withModal';
-import EbookFormContainer from 'sly/containers/EbookFormContainer';
-import ExitIntentQuestionFormContainer from 'sly/containers/ExitIntentQuestionFormContainer';
-import SimilarCommunitiesPopupContainer from 'sly/containers/SimilarCommunitiesPopupContainer';
+} from 'sly/web/constants/retentionPopup';
+import withModal from 'sly/web/controllers/withModal';
+import EbookFormContainer from 'sly/web/containers/EbookFormContainer';
+import ExitIntentQuestionFormContainer from 'sly/web/containers/ExitIntentQuestionFormContainer';
+import SimilarCommunitiesPopupContainer from 'sly/web/containers/SimilarCommunitiesPopupContainer';
 
 @withUser
 @withModal

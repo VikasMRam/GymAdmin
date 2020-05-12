@@ -11,14 +11,14 @@ import { BrowserRouter } from 'react-router-dom';
 import Modal from 'react-modal';
 import { loadableReady } from '@loadable/component';
 
-import RetentionPopup from 'sly/services/retentionPopup';
-import App from 'sly/components/App';
-import configureStore from 'sly/store/configure';
-import WSProvider from 'sly/services/ws/WSProvider';
-import NotificationSubscriptions from 'sly/services/notifications/Subscriptions';
+import RetentionPopup from 'sly/web/services/retentionPopup';
+import App from 'sly/web/components/App';
+import configureStore from 'sly/web/store/configure';
+import WSProvider from 'sly/web/services/ws/WSProvider';
+import NotificationSubscriptions from 'sly/web/services/notifications/Subscriptions';
 
 // For Lazy loading images, used in ResponsiveImage
-require('sly/services/yall');
+require('sly/web/services/yall');
 
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState);

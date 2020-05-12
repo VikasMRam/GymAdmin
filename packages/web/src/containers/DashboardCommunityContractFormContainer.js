@@ -5,14 +5,14 @@ import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import clientPropType from 'sly/propTypes/client';
-import userProptype from 'sly/propTypes/user';
-import { query, prefetch, getRelationship } from 'sly/services/api';
-import withUser from 'sly/services/api/withUser';
-import { userIs } from 'sly/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
-import DashboardCommunityContractForm from 'sly/components/organisms/DashboardCommunityContractForm';
-import { rgsAuxAttributes } from 'sly/propTypes/community';
+import clientPropType from 'sly/web/propTypes/client';
+import userProptype from 'sly/web/propTypes/user';
+import { query, prefetch, getRelationship } from 'sly/web/services/api';
+import withUser from 'sly/web/services/api/withUser';
+import { userIs } from 'sly/web/services/helpers/role';
+import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import DashboardCommunityContractForm from 'sly/web/components/organisms/DashboardCommunityContractForm';
+import { rgsAuxAttributes } from 'sly/web/propTypes/community';
 
 const formName = 'DashboardCommunityContractForm';
 

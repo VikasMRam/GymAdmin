@@ -3,21 +3,21 @@ import styled, { css } from 'styled-components';
 import { arrayOf, bool, string, func, number, shape, oneOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { size, assetPath, getKey, palette } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import cursor from 'sly/components/helpers/cursor';
-import borderRadius from 'sly/components/helpers/borderRadius';
-import border from 'sly/components/helpers/border';
-import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/constants/communityTile';
-import { Button, Hr, Span, Image } from 'sly/components/atoms';
-import { community as communityPropType } from 'sly/propTypes/community';
-import CommunityInfo from 'sly/components/molecules/CommunityInfo';
-import MediaGallery from 'sly/components/molecules/MediaGallery';
-import IconButton from 'sly/components/molecules/IconButton';
-import PlusBadge from 'sly/components/molecules/PlusBadge';
-import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { size, assetPath, getKey, palette } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import cursor from 'sly/web/components/helpers/cursor';
+import borderRadius from 'sly/web/components/helpers/borderRadius';
+import border from 'sly/web/components/helpers/border';
+import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
+import { Button, Hr, Span, Image } from 'sly/web/components/atoms';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
+import MediaGallery from 'sly/web/components/molecules/MediaGallery';
+import IconButton from 'sly/web/components/molecules/IconButton';
+import PlusBadge from 'sly/web/components/molecules/PlusBadge';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 
 const communityDefaultImages = {
   'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),

@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 
-import Modal, { HeaderWithClose } from 'sly/components/atoms/NewModal';
-import Heading from 'sly/components/atoms/Heading';
-import Button from 'sly/components/atoms/Button';
-import IconItem from 'sly/components/molecules/IconItem';
-import { palette, size } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
+import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
+import Heading from 'sly/web/components/atoms/Heading';
+import Button from 'sly/web/components/atoms/Button';
+import IconItem from 'sly/web/components/molecules/IconItem';
+import { palette, size } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
 
 const PaddedHeading = pad(Heading);
 

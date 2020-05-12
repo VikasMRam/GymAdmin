@@ -1,4 +1,4 @@
-import { getImagePath, getFormat } from 'sly/services/images/index';
+import { getImagePath, getFormat } from 'sly/web/services/images/index';
 
 describe('Image Handler service', () => {
   it('should throw an error when the wrong dimmensions are passed', () => {

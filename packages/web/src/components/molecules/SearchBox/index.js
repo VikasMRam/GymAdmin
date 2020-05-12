@@ -4,10 +4,10 @@ import styled, { css } from 'styled-components';
 import { switchProp, ifProp } from 'styled-tools';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
-import shadow from 'sly/components/helpers/shadow';
-import { size, assetPath, palette, key } from 'sly/components/themes';
-import { Input, Image, Icon } from 'sly/components/atoms';
-import LoadGoogleMaps from 'sly/services/search/LoadGoogleMaps';
+import shadow from 'sly/web/components/helpers/shadow';
+import { size, assetPath, palette, key } from 'sly/web/components/themes';
+import { Input, Image, Icon } from 'sly/web/components/atoms';
+import LoadGoogleMaps from 'sly/web/services/search/LoadGoogleMaps';
 
 const Wrapper = styled.div`
   position: relative;

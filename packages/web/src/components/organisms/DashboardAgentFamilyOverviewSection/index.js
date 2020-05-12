@@ -3,24 +3,24 @@ import styled, { css } from 'styled-components';
 import { arrayOf, shape, object, string, bool, func } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { size, palette } from 'sly/components/themes';
-import mobileOnly from 'sly/components/helpers/mobileOnly';
-import pad from 'sly/components/helpers/pad';
-import SlyEvent from 'sly/services/helpers/events';
-import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
-import { Box, Table, THead, TBody, Tr, Heading } from 'sly/components/atoms';
-import Pagination from 'sly/components/molecules/Pagination';
-import Tabs from 'sly/components/molecules/Tabs';
-import Tab from 'sly/components/molecules/Tab';
-import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
-import { AGENT_DASHBOARD_FAMILIES_PATH, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED, WON } from 'sly/constants/dashboardAppPaths';
-import Th from 'sly/components/molecules/Th';
-import IconButton from 'sly/components/molecules/IconButton';
-import ClientRowCard from 'sly/components/organisms/ClientRowCard';
-import Role from 'sly/components/common/Role';
-import AddFamilyFormContainer from 'sly/containers/dashboard/AddFamilyFormContainer';
-import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/constants/roles';
-import { stripPageNumber } from 'sly/services/helpers/appPaths';
+import { size, palette } from 'sly/web/components/themes';
+import mobileOnly from 'sly/web/components/helpers/mobileOnly';
+import pad from 'sly/web/components/helpers/pad';
+import SlyEvent from 'sly/web/services/helpers/events';
+import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons';
+import { Box, Table, THead, TBody, Tr, Heading } from 'sly/web/components/atoms';
+import Pagination from 'sly/web/components/molecules/Pagination';
+import Tabs from 'sly/web/components/molecules/Tabs';
+import Tab from 'sly/web/components/molecules/Tab';
+import clientPropType, { meta as clientMetaPropType } from 'sly/web/propTypes/client';
+import { AGENT_DASHBOARD_FAMILIES_PATH, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED, WON } from 'sly/web/constants/dashboardAppPaths';
+import Th from 'sly/web/components/molecules/Th';
+import IconButton from 'sly/web/components/molecules/IconButton';
+import ClientRowCard from 'sly/web/components/organisms/ClientRowCard';
+import Role from 'sly/web/components/common/Role';
+import AddFamilyFormContainer from 'sly/web/containers/dashboard/AddFamilyFormContainer';
+import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { stripPageNumber } from 'sly/web/services/helpers/appPaths';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },

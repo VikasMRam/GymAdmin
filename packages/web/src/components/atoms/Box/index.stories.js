@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Box from 'sly/components/atoms/Box';
-import shadow from 'sly/components/helpers/shadow';
+import Box from 'sly/web/components/atoms/Box';
+import shadow from 'sly/web/components/helpers/shadow';
 
 const ShadowBox = shadow(Box);
 

@@ -2,9 +2,9 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { middleware as thunkMiddleware } from 'redux-saga-thunk';
 import { createLogger } from 'redux-logger';
 
-import { middleware as apiMiddleware } from 'sly/services/api';
-import reducer from 'sly/external/apps/store/reducer';
-import { isDev, isBrowser } from 'sly/config';
+import { middleware as apiMiddleware } from 'sly/web/services/api';
+import reducer from 'sly/web/external/apps/store/reducer';
+import { isDev, isBrowser } from 'sly/web/config';
 
 const devtools =
   isDev && isBrowser && window.devToolsExtension

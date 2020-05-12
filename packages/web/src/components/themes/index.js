@@ -4,7 +4,7 @@ import { prop } from 'styled-tools';
 
 import theme, { colorIndex } from './default';
 
-import { publicPath } from 'sly/config';
+import { publicPath } from 'sly/web/config';
 
 export { key, font } from 'styled-theme';
 

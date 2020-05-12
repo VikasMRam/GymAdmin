@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
+import PricingFormFooter from 'sly/web/components/molecules/PricingFormFooter';
 
 const wrap = (props = {}) => mount(<PricingFormFooter {...props} />);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Tabs from 'sly/components/molecules/Tabs';
+import Tabs from 'sly/web/components/molecules/Tabs';
 
 storiesOf('Molecules|Tabs', module)
   .add('default', () => (

@@ -3,9 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import { withPreventDefault } from 'sly/services/helpers/forms';
-import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
-import Modal from 'sly/components/molecules/Modal';
+import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import CommunityAskQuestionAgentForm from 'sly/web/components/organisms/CommunityAskQuestionAgentForm';
+import Modal from 'sly/web/components/molecules/Modal';
 
 const CommunityAskQuestionAgentFormContainer = reduxForm({
   form: 'CommunityAskQuestionAgentForm',

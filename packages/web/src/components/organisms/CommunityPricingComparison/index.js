@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { community as communityPropType } from 'sly/propTypes/community';
-import { size } from 'sly/components/themes';
-import { calculatePricing, findPercentage } from 'sly/services/helpers/pricing';
-import pad from 'sly/components/helpers/pad';
-import { Block } from 'sly/components/atoms';
-import PriceBar from 'sly/components/molecules/PriceBar';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import { size } from 'sly/web/components/themes';
+import { calculatePricing, findPercentage } from 'sly/web/services/helpers/pricing';
+import pad from 'sly/web/components/helpers/pad';
+import { Block } from 'sly/web/components/atoms';
+import PriceBar from 'sly/web/components/molecules/PriceBar';
 
 const StyledPriceBar = styled(PriceBar)`
   margin-bottom: ${ifProp('last', size('spacing.large'), size('spacing.regular'))};

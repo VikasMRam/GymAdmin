@@ -1,4 +1,4 @@
-import * as v from 'sly/services/validation';
+import * as v from 'sly/web/services/validation';
 
 describe('services/validation', () => {
   test('email', () => {

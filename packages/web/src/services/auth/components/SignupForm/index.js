@@ -3,11 +3,11 @@ import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import { Heading, Button, Block, Hr, Link } from 'sly/components/atoms';
+import { size, palette } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import { Heading, Button, Block, Hr, Link } from 'sly/web/components/atoms';
 
 
 const StyledHeading = textAlign(pad(Heading));

@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import ConversionWizardInfoStep from 'sly/components/organisms/ConversionWizardInfoStep';
+import ConversionWizardInfoStep from 'sly/web/components/organisms/ConversionWizardInfoStep';
 
 storiesOf('Organisms|ConversionWizardInfoStep', module)
   .add('default', () => (

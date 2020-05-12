@@ -4,14 +4,14 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette, columnWidth } from 'sly/components/themes';
-import userPropType from 'sly/propTypes/user';
-import clientPropType from 'sly/propTypes/client';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
-import Role from 'sly/components/common/Role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE, AGENT_ADMIN_ROLE } from 'sly/constants/roles';
+import { size, palette, columnWidth } from 'sly/web/components/themes';
+import userPropType from 'sly/web/propTypes/user';
+import clientPropType from 'sly/web/propTypes/client';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
+import Role from 'sly/web/components/common/Role';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE, AGENT_ADMIN_ROLE } from 'sly/web/constants/roles';
 import {
   SOURCE_OPTIONS,
   FAMILY_STAGE_WON,
@@ -19,11 +19,11 @@ import {
   FAMILY_STAGE_LOST,
   FAMILY_STATUS_ON_PAUSE,
   FAMILY_STATUS_LONG_TERM,
-} from 'sly/constants/familyDetails';
-import { Block, Button, Label } from 'sly/components/atoms';
-import FamilyMetaDataSummaryBox from 'sly/components/molecules/FamilyMetaDataSummaryBox';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
+} from 'sly/web/constants/familyDetails';
+import { Block, Button, Label } from 'sly/web/components/atoms';
+import FamilyMetaDataSummaryBox from 'sly/web/components/molecules/FamilyMetaDataSummaryBox';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 
 const showSummaryStages = [FAMILY_STAGE_WON, FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST];
 const showSummaryStatuses = [FAMILY_STATUS_ON_PAUSE, FAMILY_STATUS_LONG_TERM];

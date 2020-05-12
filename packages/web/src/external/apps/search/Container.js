@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { getSearchParamFromPlacesResponse } from 'sly/services/helpers/agents';
-import { getSearchParams } from 'sly/services/helpers/search';
-import { parseURLQueryParams, objectToURLQueryParams } from 'sly/services/helpers/url';
-import { withProps } from 'sly/services/helpers/hocs';
-import SearchComponent from 'sly/external/apps/search/Component';
+import { getSearchParamFromPlacesResponse } from 'sly/web/services/helpers/agents';
+import { getSearchParams } from 'sly/web/services/helpers/search';
+import { parseURLQueryParams, objectToURLQueryParams } from 'sly/web/services/helpers/url';
+import { withProps } from 'sly/web/services/helpers/hocs';
+import SearchComponent from 'sly/web/external/apps/search/Component';
 
 @withRouter
 

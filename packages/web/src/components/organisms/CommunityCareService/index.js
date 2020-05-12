@@ -2,9 +2,9 @@ import React from 'react';
 import { arrayOf, string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import IconItem from 'sly/components/molecules/IconItem';
-import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
+import { size } from 'sly/web/components/themes';
+import IconItem from 'sly/web/components/molecules/IconItem';
+import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 
 const Wrapper = styled(CollapsibleBlock)`
   display: grid;

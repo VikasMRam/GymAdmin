@@ -3,10 +3,10 @@ import { oneOf, string, bool, func } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-import { getKey, palette, size } from 'sly/components/themes';
-import { LATER_DATE } from 'sly/constants/date';
-import { TIME_OPTIONS } from 'sly/constants/bookingForm';
-import { Block, Button } from 'sly/components/atoms';
+import { getKey, palette, size } from 'sly/web/components/themes';
+import { LATER_DATE } from 'sly/web/constants/date';
+import { TIME_OPTIONS } from 'sly/web/constants/bookingForm';
+import { Block, Button } from 'sly/web/components/atoms';
 
 const datePlaceholder = 'Select a Date';
 const timePlaceholder = 'Select a Time';

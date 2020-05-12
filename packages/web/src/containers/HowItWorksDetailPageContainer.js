@@ -1,8 +1,8 @@
 import React from 'react';
 import { object } from 'prop-types';
 
-import HowItWorksDetailPage from 'sly/components/pages/HowItWorksDetailPage';
-import { howItWorksContents } from 'sly/services/helpers/howItWorks';
+import HowItWorksDetailPage from 'sly/web/components/pages/HowItWorksDetailPage';
+import { howItWorksContents } from 'sly/web/services/helpers/howItWorks';
 
 const HowItWorksDetailPageContainer = ({ match, history }) => {
   const { type } = match.params;

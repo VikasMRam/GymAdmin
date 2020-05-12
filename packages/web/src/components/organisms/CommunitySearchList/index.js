@@ -3,18 +3,18 @@ import styled from 'styled-components';
 import { object, arrayOf } from 'prop-types';
 import queryString from 'query-string';
 
-import { size, gridColumns } from 'sly/components/themes';
-import { getPaginationData } from 'sly/services/helpers/pagination';
-import pad from 'sly/components/helpers/pad';
-import { shadowOnHover } from 'sly/components/helpers/shadow';
+import { size, gridColumns } from 'sly/web/components/themes';
+import { getPaginationData } from 'sly/web/services/helpers/pagination';
+import pad from 'sly/web/components/helpers/pad';
+import { shadowOnHover } from 'sly/web/components/helpers/shadow';
 
-import { getTocLabel, getLocationLabel } from 'sly/services/helpers/search';
-import { Centered, Link, Block, Heading } from 'sly/components/atoms';
-import Pagination from 'sly/components/molecules/Pagination';
-import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
-import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
-import CommunityTile from 'sly/components/organisms/CommunityTile';
-import SearchResultsAdTileContainer from 'sly/containers/SearchResultsAdTileContainer';
+import { getTocLabel, getLocationLabel } from 'sly/web/services/helpers/search';
+import { Centered, Link, Block, Heading } from 'sly/web/components/atoms';
+import Pagination from 'sly/web/components/molecules/Pagination';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
+import CommunityFilterBar from 'sly/web/components/organisms/CommunityFilterBar';
+import CommunityTile from 'sly/web/components/organisms/CommunityTile';
+import SearchResultsAdTileContainer from 'sly/web/containers/SearchResultsAdTileContainer';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;

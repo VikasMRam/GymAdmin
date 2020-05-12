@@ -4,9 +4,9 @@ import ReactTooltip from 'react-tooltip';
 import uniqueId from 'lodash/uniqueId';
 import styled from 'styled-components';
 
-import { isServer } from 'sly/config';
-import { size, palette } from 'sly/components/themes';
-import { Icon } from 'sly/components/atoms';
+import { isServer } from 'sly/web/config';
+import { size, palette } from 'sly/web/components/themes';
+import { Icon } from 'sly/web/components/atoms';
 
 const TooltipContent = styled(ReactTooltip)`
   padding: ${size('spacing.regular')};

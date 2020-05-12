@@ -77,7 +77,7 @@ A function used to hydrate components in the client.
 Given the following was rendered on the server:
 
 ```javascript
-import FoobarContainer from 'sly/containers/Foobar';
+import FoobarContainer from 'sly/web/containers/Foobar';
 
 const HydratedFoobarContainer = withHydration(FoobarContainer);
 
@@ -91,7 +91,7 @@ export default Page() {
 We can hydrate the `FoobarContainer` on the client by:
 
 ```javascript
-import FoobarContainer from 'sly/containers/Foobar';
+import FoobarContainer from 'sly/web/containers/Foobar';
 
 function Wrapper() {
   // Providers required to run the hydrated components need to go here

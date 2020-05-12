@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { object, string, arrayOf } from 'prop-types';
 
-import { Heading, Link, Paragraph, Hr, Image } from 'sly/components/atoms';
-import { size, palette, assetPath } from 'sly/components/themes';
+import { Heading, Link, Paragraph, Hr, Image } from 'sly/web/components/atoms';
+import { size, palette, assetPath } from 'sly/web/components/themes';
 
 const AgentWrapper = styled.div`
   padding: ${size('spacing.large')};

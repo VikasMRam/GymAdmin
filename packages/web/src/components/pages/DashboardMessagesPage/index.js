@@ -1,8 +1,8 @@
 import React from 'react';
 import { func } from 'prop-types';
 
-import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import DashboardMessagesContainer from 'sly/containers/DashboardMessagesContainer';
+import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
+import DashboardMessagesContainer from 'sly/web/containers/DashboardMessagesContainer';
 
 const DashboardMessagesPage = ({ onConversationClick }) => {
   return (

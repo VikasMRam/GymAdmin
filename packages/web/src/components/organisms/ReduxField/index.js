@@ -1,7 +1,7 @@
 import React from 'react';
 import { shape, string, bool, func } from 'prop-types';
 
-import Field from 'sly/components/molecules/Field';
+import Field from 'sly/web/components/molecules/Field';
 
 const getReactSelectValue = (value, { value: oldValue }) => {
   if (Array.isArray(value)) {

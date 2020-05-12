@@ -1,5 +1,5 @@
 import { stringify } from 'query-string';
-import { titleize } from 'sly/services/helpers/strings';
+import { titleize } from 'sly/web/services/helpers/strings';
 
 import { urlize, getStateAbbr, objectToURLQueryParams, parseURLQueryParams } from './url';
 

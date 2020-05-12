@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { object, number, array, func } from 'prop-types';
 import { Redirect, withRouter } from 'react-router-dom';
 
-import { stateNames, urlize, replaceLastSegment } from  'sly/services/helpers/url';
-import ErrorPage from 'sly/components/pages/Error';
-import StateSearchPage from 'sly/components/pages/StateSearchPage';
-import ModalController from 'sly/controllers/ModalController';
-import { withProps } from 'sly/services/helpers/hocs';
-import { prefetch } from 'sly/services/api';
-import { getSearchParams } from 'sly/services/helpers/search';
-import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
+import { stateNames, urlize, replaceLastSegment } from  'sly/web/services/helpers/url';
+import ErrorPage from 'sly/web/components/pages/Error';
+import StateSearchPage from 'sly/web/components/pages/StateSearchPage';
+import ModalController from 'sly/web/controllers/ModalController';
+import { withProps } from 'sly/web/services/helpers/hocs';
+import { prefetch } from 'sly/web/services/api';
+import { getSearchParams } from 'sly/web/services/helpers/search';
+import withGenerateFilterLinkPath from 'sly/web/services/search/withGenerateFilterLinkPath';
 
 @withProps(({ match, location }) => ({
   searchParams: getSearchParams(match, location),

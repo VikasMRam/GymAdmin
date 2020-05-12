@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Badge from 'sly/components/atoms/Badge';
+import Badge from 'sly/web/components/atoms/Badge';
 
 storiesOf('Atoms|Badge', module)
   .add('default', () => <Badge>New</Badge>)

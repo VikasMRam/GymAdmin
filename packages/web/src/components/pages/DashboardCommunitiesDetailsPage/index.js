@@ -12,24 +12,24 @@ import {
   TASKS,
   PROFILE,
   CARE_SERVICES, PRICING, AMENITIES, SERVICES, CONTRACT, CONTACTS, PHOTOS, CLIENTS,
-} from 'sly/constants/dashboardAppPaths';
-import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
-import communityPropType from 'sly/propTypes/community';
-import notePropType from 'sly/propTypes/note';
-import userPropType from 'sly/propTypes/user';
-import { size, palette } from 'sly/components/themes';
-import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
-import { userIs } from 'sly/services/helpers/role';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import SlyEvent from 'sly/services/helpers/events';
-import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
-import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import { Block } from 'sly/components/atoms';
-import Tabs from 'sly/components/molecules/Tabs';
-import BackLink from 'sly/components/molecules/BackLink';
-import Tab from 'sly/components/molecules/Tab';
-import BannerNotification from 'sly/components/molecules/BannerNotification';
+} from 'sly/web/constants/dashboardAppPaths';
+import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import communityPropType from 'sly/web/propTypes/community';
+import notePropType from 'sly/web/propTypes/note';
+import userPropType from 'sly/web/propTypes/user';
+import { size, palette } from 'sly/web/components/themes';
+import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
+import { userIs } from 'sly/web/services/helpers/role';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import SlyEvent from 'sly/web/services/helpers/events';
+import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
+import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
+import { Block } from 'sly/web/components/atoms';
+import Tabs from 'sly/web/components/molecules/Tabs';
+import BackLink from 'sly/web/components/molecules/BackLink';
+import Tab from 'sly/web/components/molecules/Tab';
+import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import {
   Top,
   Right,
@@ -37,20 +37,20 @@ import {
   Section,
   SummarySection,
   DashboardWithSummaryPageTemplate,
-} from 'sly/components/templates/DashboardWithSummaryTemplate';
-import DashboardCommunitySummary from 'sly/components/organisms/DashboardCommunitySummary';
-import DashboardCommunityNameAndStatus from 'sly/components/organisms/DashboardCommunityNameAndStatus';
-import { topSnap } from 'sly/components/atoms/Box';
-import DashboardCommunityDetailsFormContainer from 'sly/containers/DashboardCommunityDetailsFormContainer';
-import DashboardCommunityCareServicesFormContainer from 'sly/containers/DashboardCommunityCareServicesFormContainer';
-import DashboardCommunityServicesFormContainer from 'sly/containers/DashboardCommunityServicesFormContainer';
-import DashboardCommunityPricingFormContainer from 'sly/containers/DashboardCommunityPricingFormContainer';
-import DashboardCommunityPhotosFormContainer from 'sly/containers/DashboardCommunityPhotosFormContainer';
-import DashboardCommunityAmenitiesFormContainer from 'sly/containers/DashboardCommunityAmenitiesFormContainer';
-import DashboardCommunityContractFormContainer from 'sly/containers/DashboardCommunityContractFormContainer';
-import DashboardContactsSectionContainer from 'sly/containers/dashboard/DashboardContactsSectionContainer';
-import DashboardAgentFamilyOverviewSectionContainer from 'sly/containers/DashboardAgentFamilyOverviewSectionContainer';
-import { PROPERTY_ENTITY_TYPE } from 'sly/constants/entityTypes';
+} from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import DashboardCommunitySummary from 'sly/web/components/organisms/DashboardCommunitySummary';
+import DashboardCommunityNameAndStatus from 'sly/web/components/organisms/DashboardCommunityNameAndStatus';
+import { topSnap } from 'sly/web/components/atoms/Box';
+import DashboardCommunityDetailsFormContainer from 'sly/web/containers/DashboardCommunityDetailsFormContainer';
+import DashboardCommunityCareServicesFormContainer from 'sly/web/containers/DashboardCommunityCareServicesFormContainer';
+import DashboardCommunityServicesFormContainer from 'sly/web/containers/DashboardCommunityServicesFormContainer';
+import DashboardCommunityPricingFormContainer from 'sly/web/containers/DashboardCommunityPricingFormContainer';
+import DashboardCommunityPhotosFormContainer from 'sly/web/containers/DashboardCommunityPhotosFormContainer';
+import DashboardCommunityAmenitiesFormContainer from 'sly/web/containers/DashboardCommunityAmenitiesFormContainer';
+import DashboardCommunityContractFormContainer from 'sly/web/containers/DashboardCommunityContractFormContainer';
+import DashboardContactsSectionContainer from 'sly/web/containers/dashboard/DashboardContactsSectionContainer';
+import DashboardAgentFamilyOverviewSectionContainer from 'sly/web/containers/DashboardAgentFamilyOverviewSectionContainer';
+import { PROPERTY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 
 const BackLinkWrapper = pad(styled.div`
   display: flex;

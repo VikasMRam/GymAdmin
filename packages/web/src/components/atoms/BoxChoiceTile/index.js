@@ -3,10 +3,10 @@ import { node, string, bool, func, oneOf } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
 
-import { palette, size } from 'sly/components/themes';
-import { spacing as spacingPropType } from 'sly/propTypes/spacing';
-import Box from 'sly/components/atoms/Box';
-import Icon from 'sly/components/atoms/Icon';
+import { palette, size } from 'sly/web/components/themes';
+import { spacing as spacingPropType } from 'sly/web/propTypes/spacing';
+import Box from 'sly/web/components/atoms/Box';
+import Icon from 'sly/web/components/atoms/Icon';
 
 const StyledBox = styled(Box)`
   text-align: center;

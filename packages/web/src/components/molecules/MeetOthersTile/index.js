@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import { Heading, Block, Link } from 'sly/components/atoms';
-import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
+import { size } from 'sly/web/components/themes';
+import { Heading, Block, Link } from 'sly/web/components/atoms';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 
 const Wrapper = styled.div`
   text-align: left;

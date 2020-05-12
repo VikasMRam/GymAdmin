@@ -3,10 +3,10 @@ import { arrayOf, oneOfType, string, number, func, bool } from 'prop-types';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import { LATER_DATE } from 'sly/constants/date';
-import { BoxChoiceTile } from 'sly/components/atoms';
-import DateChoiceTile from 'sly/components/molecules/DateChoiceTile';
+import { size } from 'sly/web/components/themes';
+import { LATER_DATE } from 'sly/web/constants/date';
+import { BoxChoiceTile } from 'sly/web/components/atoms';
+import DateChoiceTile from 'sly/web/components/molecules/DateChoiceTile';
 
 const StyledBoxChoiceTile = styled(BoxChoiceTile)`
   height: ${size('element.huge')};

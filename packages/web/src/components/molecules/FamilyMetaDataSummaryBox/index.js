@@ -4,20 +4,20 @@ import dayjs from 'dayjs';
 import { string, func, oneOf } from 'prop-types';
 import isBoolean from 'lodash/isBoolean';
 
-import { size } from 'sly/components/themes';
-import clientPropType from 'sly/propTypes/client';
-import { priceFormatter } from 'sly/services/helpers/pricing';
-import textTransform from 'sly/components/helpers/textTransform';
-import pad from 'sly/components/helpers/pad';
-import cursor from 'sly/components/helpers/cursor';
+import { size } from 'sly/web/components/themes';
+import clientPropType from 'sly/web/propTypes/client';
+import { priceFormatter } from 'sly/web/services/helpers/pricing';
+import textTransform from 'sly/web/components/helpers/textTransform';
+import pad from 'sly/web/components/helpers/pad';
+import cursor from 'sly/web/components/helpers/cursor';
 import {
   FAMILY_STAGE_WON,
   FAMILY_STAGE_REJECTED,
   FAMILY_STAGE_LOST,
   FAMILY_STATUS_ON_PAUSE,
   FAMILY_STATUS_LONG_TERM,
-} from 'sly/constants/familyDetails';
-import { Box, Block } from 'sly/components/atoms';
+} from 'sly/web/constants/familyDetails';
+import { Box, Block } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   display: grid;

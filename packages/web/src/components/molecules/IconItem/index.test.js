@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import IconItem from 'sly/components/molecules/IconItem/index';
+import IconItem from 'sly/web/components/molecules/IconItem/index';
 
 const defaultProps = {
   icon: 'favourite-light',

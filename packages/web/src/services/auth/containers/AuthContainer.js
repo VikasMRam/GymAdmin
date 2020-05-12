@@ -4,21 +4,21 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
 
-import { authenticateCancel, authenticateSuccess } from 'sly/store/authenticated/actions';
-import { withAuth } from 'sly/services/api';
-import spacing from 'sly/components/helpers/spacing';
-import withNotification from 'sly/controllers/withNotification';
-import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
-import { email } from 'sly/services/validation';
-import Modal, { HeaderWithClose } from 'sly/components/atoms/NewModal';
+import { authenticateCancel, authenticateSuccess } from 'sly/web/store/authenticated/actions';
+import { withAuth } from 'sly/web/services/api';
+import spacing from 'sly/web/components/helpers/spacing';
+import withNotification from 'sly/web/controllers/withNotification';
+import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
+import { email } from 'sly/web/services/validation';
+import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
 
-import ResetPasswordFormContainer from 'sly/services/auth/containers/ResetPasswordFormContainer';
-import LoginFormContainer from 'sly/services/auth/containers/LoginFormContainer';
-import SignupFormContainer from 'sly/services/auth/containers/SignupFormContainer';
-import ProviderSignupFormContainer from 'sly/services/auth/containers/ProviderSignupFormContainer';
-import CustomerSignupConfirmationContainer from 'sly/services/auth/containers/CustomerSignupConfirmationContainer';
-import ProviderFindCommunityContainer  from 'sly/services/auth/containers/ProviderFindCommunityContainer';
-import ProviderConfirmation from 'sly/services/auth/components/ProviderConfirmation'
+import ResetPasswordFormContainer from 'sly/web/services/auth/containers/ResetPasswordFormContainer';
+import LoginFormContainer from 'sly/web/services/auth/containers/LoginFormContainer';
+import SignupFormContainer from 'sly/web/services/auth/containers/SignupFormContainer';
+import ProviderSignupFormContainer from 'sly/web/services/auth/containers/ProviderSignupFormContainer';
+import CustomerSignupConfirmationContainer from 'sly/web/services/auth/containers/CustomerSignupConfirmationContainer';
+import ProviderFindCommunityContainer  from 'sly/web/services/auth/containers/ProviderFindCommunityContainer';
+import ProviderConfirmation from 'sly/web/services/auth/components/ProviderConfirmation'
 
 const ModalBody = spacing(styled.div``, { top: null });
 

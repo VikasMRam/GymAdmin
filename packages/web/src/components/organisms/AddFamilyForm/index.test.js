@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import AddFamilyForm from 'sly/components/organisms/AddFamilyForm';
+import AddFamilyForm from 'sly/web/components/organisms/AddFamilyForm';
 
 const timeToMove = [
   'Immediately',

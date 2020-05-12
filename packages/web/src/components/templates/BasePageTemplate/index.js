@@ -2,8 +2,8 @@ import React  from 'react';
 import styled from 'styled-components';
 import { node, string } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import ModalContainer from 'sly/containers/ModalContainer';
+import { size } from 'sly/web/components/themes';
+import ModalContainer from 'sly/web/containers/ModalContainer';
 
 const Main = styled.main`
   width: 100%;

@@ -7,45 +7,45 @@ import { connect } from 'react-redux';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
-import { size, palette } from 'sly/components/themes';
-import { prefetch, withUser, query, invalidateRequests } from 'sly/services/api';
-import userPropType from 'sly/propTypes/user';
-import messagePropType from 'sly/propTypes/conversation/conversationMessage';
-import conversationPropType from 'sly/propTypes/conversation/conversation';
-import matchPropType from 'sly/propTypes/match';
-import conversationParticipantPropType from 'sly/propTypes/conversation/conversationParticipant';
+import { size, palette } from 'sly/web/components/themes';
+import { prefetch, withUser, query, invalidateRequests } from 'sly/web/services/api';
+import userPropType from 'sly/web/propTypes/user';
+import messagePropType from 'sly/web/propTypes/conversation/conversationMessage';
+import conversationPropType from 'sly/web/propTypes/conversation/conversation';
+import matchPropType from 'sly/web/propTypes/match';
+import conversationParticipantPropType from 'sly/web/propTypes/conversation/conversationParticipant';
 import {
   MESSAGES_UPDATE_LAST_READ_TIMEOUT,
   CONVERSATION_PARTICIPANT_TYPE_USER,
   CONVERSATION_PARTICIPANT_TYPE_CLIENT,
   CONVERSATION_PARTICIPANT_TYPE_ORGANIZATION,
   CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_AUTOMATED_RESPONSE,
-} from 'sly/constants/conversations';
-import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE, CONVERSTION_MESSAGE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
-import { newUuidAction } from 'sly/constants/payloads/uuidAction';
-import { CONVERSATION_MESSAGE_BUTTONLIST_BUTTON_CLICKED } from 'sly/services/api/constants';
-import { normJsonApi } from 'sly/services/helpers/jsonApi';
-import withWS from 'sly/services/ws/withWS';
-import textAlign from 'sly/components/helpers/textAlign';
-import fullHeight from 'sly/components/helpers/fullHeight';
-import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import SlyEvent from 'sly/services/helpers/events';
-import pad from 'sly/components/helpers/pad';
-import { isAfter } from 'sly/services/helpers/date';
+} from 'sly/web/constants/conversations';
+import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE, CONVERSTION_MESSAGE_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
+import { NOTIFY_MESSAGE_NEW } from 'sly/web/constants/notifications';
+import { newUuidAction } from 'sly/web/constants/payloads/uuidAction';
+import { CONVERSATION_MESSAGE_BUTTONLIST_BUTTON_CLICKED } from 'sly/web/services/api/constants';
+import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
+import withWS from 'sly/web/services/ws/withWS';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import fullHeight from 'sly/web/components/helpers/fullHeight';
+import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import SlyEvent from 'sly/web/services/helpers/events';
+import pad from 'sly/web/components/helpers/pad';
+import { isAfter } from 'sly/web/services/helpers/date';
 import {
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   SUMMARY,
-} from 'sly/constants/dashboardAppPaths';
-import { Block, Button, Link } from 'sly/components/atoms';
-import ConversationMessages from 'sly/components/organisms/ConversationMessages';
-import BannerNotification from 'sly/components/molecules/BannerNotification';
-import IconButton from 'sly/components/molecules/IconButton';
-import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
-import BackLink from 'sly/components/molecules/BackLink';
-import SendMessageFormContainer from 'sly/containers/SendMessageFormContainer';
-import { getConversationName } from 'sly/services/helpers/conversation';
+} from 'sly/web/constants/dashboardAppPaths';
+import { Block, Button, Link } from 'sly/web/components/atoms';
+import ConversationMessages from 'sly/web/components/organisms/ConversationMessages';
+import BannerNotification from 'sly/web/components/molecules/BannerNotification';
+import IconButton from 'sly/web/components/molecules/IconButton';
+import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
+import BackLink from 'sly/web/components/molecules/BackLink';
+import SendMessageFormContainer from 'sly/web/containers/SendMessageFormContainer';
+import { getConversationName } from 'sly/web/services/helpers/conversation';
 
 const categoryName = 'conversation-messages';
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import FamilyStage from 'sly/components/molecules/FamilyStage';
-import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
-import AmalFrancis from 'sly/../private/storybook/sample-data/user-amal-francis.json';
-import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
+import FamilyStage from 'sly/web/components/molecules/FamilyStage';
+import { FAMILY_STAGE_ORDERED } from 'sly/web/constants/familyDetails';
+import AmalFrancis from 'sly/web/../private/storybook/sample-data/user-amal-francis.json';
+import PraneshKumar from 'sly/web/../private/storybook/sample-data/client-pranesh-kumar.json';
 
 const stageGroups = Object.keys(FAMILY_STAGE_ORDERED);
 const newStage = FAMILY_STAGE_ORDERED[stageGroups[0]][0];

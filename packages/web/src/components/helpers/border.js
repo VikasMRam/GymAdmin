@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
+import { size, palette } from 'sly/web/components/themes';
 
 const border = (Component, borderSize = 'regular', borderPalette = 'grey', borderPaletteVariation = 'base') => styled(Component)`
   border: ${size('border', borderSize)} ${palette(borderPalette, borderPaletteVariation)} solid;

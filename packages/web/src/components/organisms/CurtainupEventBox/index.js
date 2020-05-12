@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import { arrayOf } from 'prop-types';
 import dayjs from 'dayjs';
 
-import { size, palette } from 'sly/components/themes';
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import eventPropType from 'sly/propTypes/event';
-import performerPropType from 'sly/propTypes/performer';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import { Box, Block } from 'sly/components/atoms';
-import Avatar from 'sly/components/molecules/Avatar';
+import { size, palette } from 'sly/web/components/themes';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import eventPropType from 'sly/web/propTypes/event';
+import performerPropType from 'sly/web/propTypes/performer';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { Box, Block } from 'sly/web/components/atoms';
+import Avatar from 'sly/web/components/molecules/Avatar';
 
 const Header = textAlign(styled.div`
   padding: ${size('spacing.regular')} ${size('spacing.xxLarge')};

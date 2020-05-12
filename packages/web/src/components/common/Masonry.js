@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { array, shape, number, arrayOf } from 'prop-types';
 import { ifProp, prop } from 'styled-tools';
 
-import { size, getKey, remToPx } from 'sly/components/themes';
+import { size, getKey, remToPx } from 'sly/web/components/themes';
 
 // ref: https://medium.com/@andybarefoot/a-masonry-style-layout-using-css-grid-8c663d355ebb
 const Parent = styled.div`

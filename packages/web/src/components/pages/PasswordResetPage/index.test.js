@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Block } from 'sly/components/atoms/index';
-import PasswordResetPage from 'sly/components/pages/PasswordResetPage';
+import { Block } from 'sly/web/components/atoms/index';
+import PasswordResetPage from 'sly/web/components/pages/PasswordResetPage';
 
 const error = 'Blah';
 const handleSubmit = jest.fn();

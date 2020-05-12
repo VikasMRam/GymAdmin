@@ -2,21 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import { object, func, bool, array } from 'prop-types';
 
-import { size, palette } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
-import Field from 'sly/components/molecules/Field';
-import Radio from 'sly/components/molecules/Radio';
-import { Link, Button } from 'sly/components/atoms';
+import { size, palette } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import CollapsibleSection from 'sly/web/components/molecules/CollapsibleSection';
+import Field from 'sly/web/components/molecules/Field';
+import Radio from 'sly/web/components/molecules/Radio';
+import { Link, Button } from 'sly/web/components/atoms';
 import {
   tocs,
   budgets,
   sizes,
   filterLinkPath,
   getFiltersApplied,
-} from 'sly/services/helpers/search';
-import { withRedirectTo } from 'sly/services/redirectTo';
-import withGenerateFilterLinkPath from 'sly/services/search/withGenerateFilterLinkPath';
+} from 'sly/web/services/helpers/search';
+import { withRedirectTo } from 'sly/web/services/redirectTo';
+import withGenerateFilterLinkPath from 'sly/web/services/search/withGenerateFilterLinkPath';
 
 const StyledLink = pad(styled(Link)`
   display: flex;

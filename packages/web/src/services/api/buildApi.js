@@ -1,7 +1,7 @@
 import applyUrlWithPlaceholders from './applyUrlWithPlaceholders';
 import apiFetch from './apiFetch';
 
-import makeApiCallAction from 'sly/services/api/makeApiCallAction';
+import makeApiCallAction from 'sly/web/services/api/makeApiCallAction';
 
 const defaultConfigure = options => options;
 

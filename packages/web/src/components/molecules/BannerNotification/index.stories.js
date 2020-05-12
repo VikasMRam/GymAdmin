@@ -3,10 +3,10 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 
-import BannerNotification from 'sly/components/molecules/BannerNotification';
-import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
-import { Block } from 'sly/components/atoms';
-import IconButton from 'sly/components/molecules/IconButton';
+import BannerNotification from 'sly/web/components/molecules/BannerNotification';
+import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
+import { Block } from 'sly/web/components/atoms';
+import IconButton from 'sly/web/components/molecules/IconButton';
 
 const SmallScreen = displayOnlyIn(styled(Block)`
   > * {

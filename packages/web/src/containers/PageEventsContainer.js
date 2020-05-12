@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 
-import { host } from 'sly/config';
-import SlyEvent from 'sly/services/helpers/events';
-import { extractEventFromQuery } from 'sly/services/helpers/queryParamEvents';
+import { host } from 'sly/web/config';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { extractEventFromQuery } from 'sly/web/services/helpers/queryParamEvents';
 
 @withRouter
 export default class PageEventsContainer extends Component {

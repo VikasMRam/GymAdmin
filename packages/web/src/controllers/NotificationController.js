@@ -3,8 +3,8 @@ import { string, func, shape, arrayOf, oneOf } from 'prop-types';
 import uniqueId from 'lodash/uniqueId';
 import { connect } from 'react-redux';
 
-import { TIMEOUT } from 'sly/constants/notifications';
-import { add, remove } from 'sly/services/notifications/actions';
+import { TIMEOUT } from 'sly/web/constants/notifications';
+import { add, remove } from 'sly/web/services/notifications/actions';
 
 const mapStateToProps = state => ({
   messages: state.notifications.messages,

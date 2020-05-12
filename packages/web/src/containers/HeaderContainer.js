@@ -8,7 +8,7 @@ import {
   AGENT_ND_ROLE,
   AGENT_ADMIN_ROLE,
   PLATFORM_ADMIN_ROLE,
-} from 'sly/constants/roles';
+} from 'sly/web/constants/roles';
 import {
   DASHBOARD_ACCOUNT_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH,
@@ -16,17 +16,17 @@ import {
   AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_TASKS_PATH,
   AGENT_DASHBOARD_PROFILE_PATH, DASHBOARD_COMMUNITIES_PATH,
-} from 'sly/constants/dashboardAppPaths';
-import { withAuth } from 'sly/services/api';
-import { withRedirectTo } from 'sly/services/redirectTo';
-import { generateSearchUrl } from 'sly/services/helpers/url';
-import SlyEvent from 'sly/services/helpers/events';
-import AuthContainer from 'sly/services/auth/containers/AuthContainer';
-import NotificationController from 'sly/controllers/NotificationController';
-import Notifications from 'sly/components/organisms/Notifications';
-import Header from 'sly/components/organisms/Header';
-import ModalController from 'sly/controllers/ModalController';
-import HowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
+} from 'sly/web/constants/dashboardAppPaths';
+import { withAuth } from 'sly/web/services/api';
+import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { generateSearchUrl } from 'sly/web/services/helpers/url';
+import SlyEvent from 'sly/web/services/helpers/events';
+import AuthContainer from 'sly/web/services/auth/containers/AuthContainer';
+import NotificationController from 'sly/web/controllers/NotificationController';
+import Notifications from 'sly/web/components/organisms/Notifications';
+import Header from 'sly/web/components/organisms/Header';
+import ModalController from 'sly/web/controllers/ModalController';
+import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,

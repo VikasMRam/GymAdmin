@@ -5,12 +5,12 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import utc from 'dayjs/plugin/utc';
 
-import { hideChatbox } from 'sly/config';
-import theme from 'sly/components/themes/default';
-import { assetPath } from 'sly/components/themes';
-import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
-import Router from 'sly/components/molecules/Router';
-import GlobalStyles from 'sly/components/themes/GlobalStyles';
+import { hideChatbox } from 'sly/web/config';
+import theme from 'sly/web/components/themes/default';
+import { assetPath } from 'sly/web/components/themes';
+import ChatBoxContainer from 'sly/web/containers/ChatBoxContainer';
+import Router from 'sly/web/components/molecules/Router';
+import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);

@@ -2,8 +2,8 @@ import { Component } from 'react';
 import { arrayOf, any, func, object, bool, string, number } from 'prop-types';
 import { isValid, isSubmitting, reset, SubmissionError } from 'redux-form';
 
-import { connectController } from 'sly/controllers';
-import { selectFormData } from 'sly/services/helpers/forms';
+import { connectController } from 'sly/web/controllers';
+import { selectFormData } from 'sly/web/services/helpers/forms';
 
 const mapStateToProps = (state, { controller, ...ownProps }) => {
   isValid(ownProps.formName)(state);

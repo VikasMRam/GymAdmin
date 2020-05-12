@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import EntityReviews from 'sly/components/organisms/EntityReviews';
-import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import EntityReviews from 'sly/web/components/organisms/EntityReviews';
+import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const { propRatings, reviews } = RhodaGoldmanPlaza;
 const { ratingsArray, hasSlyReviews, hasWebReviews } = propRatings;

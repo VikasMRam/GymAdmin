@@ -8,10 +8,10 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-import { host } from 'sly/config';
-import { getOrigin } from 'sly/services/helpers/url';
-import configureStore from 'sly/external/apps/store/configure';
-import App from 'sly/external/apps/App';
+import { host } from 'sly/web/config';
+import { getOrigin } from 'sly/web/services/helpers/url';
+import configureStore from 'sly/web/external/apps/store/configure';
+import App from 'sly/web/external/apps/App';
 
 const store = configureStore({});
 

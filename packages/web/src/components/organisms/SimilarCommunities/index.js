@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, func, object } from 'prop-types';
 
-import pad from 'sly/components/helpers/pad';
-import { community as communityPropType } from 'sly/propTypes/community';
-import CommunityTile from 'sly/components/organisms/CommunityTile';
-import { Link } from 'sly/components/atoms';
+import pad from 'sly/web/components/helpers/pad';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import CommunityTile from 'sly/web/components/organisms/CommunityTile';
+import { Link } from 'sly/web/components/atoms';
 
 const PaddedLink = pad(styled(Link)`
   display: block;

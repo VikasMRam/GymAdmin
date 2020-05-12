@@ -3,22 +3,22 @@ import { array, bool, func, object, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import loadable from '@loadable/component';
 
-import SlyEvent from 'sly/services/helpers/events';
-import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
-import { prefetch } from 'sly/services/api';
-import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { USER_SAVE_DELETE_STATUS } from 'sly/web/constants/userSave';
+import { prefetch } from 'sly/web/services/api';
+import { COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 import {
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED,
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS,
-} from 'sly/constants/notifications';
-import CommunitySummary from 'sly/components/organisms/CommunitySummary';
-import api from 'sly/services/api/apiInstance';
-import withAuth from 'sly/services/api/withAuth';
-import withNotification from 'sly/controllers/withNotification';
-import withModal from 'sly/controllers/withModal';
+} from 'sly/web/constants/notifications';
+import CommunitySummary from 'sly/web/components/organisms/CommunitySummary';
+import api from 'sly/web/services/api/apiInstance';
+import withAuth from 'sly/web/services/api/withAuth';
+import withNotification from 'sly/web/controllers/withNotification';
+import withModal from 'sly/web/controllers/withModal';
 
-const ShareCommunityFormContainer = loadable(() => import(/* webpackChunkName: "chunkShareCommunityFormContainer" */'sly/containers/ShareCommunityFormContainer'));
-const SaveCommunityContainer = loadable(() => import(/* webpackChunkName: "chunkSaveCommunityContainer" */'sly/containers/SaveCommunityContainer'));
+const ShareCommunityFormContainer = loadable(() => import(/* webpackChunkName: "chunkShareCommunityFormContainer" */'sly/web/containers/ShareCommunityFormContainer'));
+const SaveCommunityContainer = loadable(() => import(/* webpackChunkName: "chunkSaveCommunityContainer" */'sly/web/containers/SaveCommunityContainer'));
 
 function getCommunityUserSave(community, userSaves) {
   return (

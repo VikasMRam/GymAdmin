@@ -3,12 +3,12 @@ import { string } from 'prop-types';
 import styled from 'styled-components';
 import classes from 'classnames';
 
-import { size } from 'sly/components/themes';
-import { withHydration } from 'sly/services/partialHydration';
-import BaseHeaderContainer from 'sly/containers/HeaderContainer';
-import { TemplateHeader } from 'sly/components/templates/BasePageTemplate';
-import FooterOrganism from 'sly/components/organisms/Footer';
-import BaseModalContainer from 'sly/containers/ModalContainer';
+import { size } from 'sly/web/components/themes';
+import { withHydration } from 'sly/web/services/partialHydration';
+import BaseHeaderContainer from 'sly/web/containers/HeaderContainer';
+import { TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
+import FooterOrganism from 'sly/web/components/organisms/Footer';
+import BaseModalContainer from 'sly/web/containers/ModalContainer';
 
 const HeaderContainer = withHydration(BaseHeaderContainer);
 const ModalContainer = withHydration(BaseModalContainer, { alwaysHydrate: true });

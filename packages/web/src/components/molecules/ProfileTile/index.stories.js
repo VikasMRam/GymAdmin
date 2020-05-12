@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import ProfileTile from 'sly/components/molecules/ProfileTile';
+import ProfileTile from 'sly/web/components/molecules/ProfileTile';
 
 const profile = {
   heading: 'Arthur Bretschneider',

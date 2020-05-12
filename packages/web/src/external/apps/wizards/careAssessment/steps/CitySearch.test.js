@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
-import CitySearch from 'sly/external/apps/wizards/careAssessment/steps/CareNeeds';
+import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
+import CitySearch from 'sly/web/external/apps/wizards/careAssessment/steps/CareNeeds';
 
 const wrap = (props = {}) => shallow(<CitySearch {...props} />);
 

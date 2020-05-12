@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store';
 import { mount } from 'enzyme';
 import thunkMiddleware from 'redux-thunk';
 
-import Role from 'sly/components/common/Role';
+import Role from 'sly/web/components/common/Role';
 
 
 const mockStore = configureStore([thunkMiddleware]);

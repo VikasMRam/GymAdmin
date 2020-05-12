@@ -4,15 +4,15 @@ import styled from 'styled-components';
 import { Field } from 'redux-form';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
-import userPropType from 'sly/propTypes/user';
-import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import { Button, Block, Heading, ResponsiveImage } from 'sly/components/atoms';
-import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
-import ReduxField from 'sly/components/organisms/ReduxField';
+import { size } from 'sly/web/components/themes';
+import userPropType from 'sly/web/propTypes/user';
+import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import { Button, Block, Heading, ResponsiveImage } from 'sly/web/components/atoms';
+import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
 
 const StyledHeading = textAlign(pad(Heading));
 

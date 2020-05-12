@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
 
-import { palette } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import { STEP_INPUT_FIELD_NAMES } from 'sly/external/constants/steps';
-import { Heading } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import { formatMoney } from 'sly/services/helpers/numbers';
+import { palette } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import { STEP_INPUT_FIELD_NAMES } from 'sly/web/external/constants/steps';
+import { Heading } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import { formatMoney } from 'sly/web/services/helpers/numbers';
 
 const PaddedHeading = pad(Heading, 'xLarge');
 PaddedHeading.displayName = 'PaddedHeading';

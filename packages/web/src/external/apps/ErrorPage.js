@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
-import textAlign from 'sly/components/helpers/textAlign';
+import { size, palette } from 'sly/web/components/themes';
+import textAlign from 'sly/web/components/helpers/textAlign';
 
 const Wrapper = textAlign(styled.div`
   background-color: ${palette('white', 'base')};

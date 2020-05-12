@@ -2,15 +2,15 @@ import React from 'react';
 import { string, bool, func, array } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import mobileOnly from 'sly/components/helpers/mobileOnly';
-import { Block, Button, Heading, Hr } from 'sly/components/atoms';
-import IconItem from 'sly/components/molecules/IconItem';
-import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
-import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
+import { size } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import mobileOnly from 'sly/web/components/helpers/mobileOnly';
+import { Block, Button, Heading, Hr } from 'sly/web/components/atoms';
+import IconItem from 'sly/web/components/molecules/IconItem';
+import HowSlyWorksVideo from 'sly/web/components/organisms/HowSlyWorksVideo';
+import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
 
 const TopWrapper = styled.section`
   display: flex;

@@ -2,14 +2,14 @@ import React from 'react';
 import { number, func, string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import { text as textPropType } from 'sly/propTypes/text';
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { variation as variationPropType } from 'sly/propTypes/variation';
-import { formatRating } from 'sly/services/helpers/rating';
-import pad from 'sly/components/helpers/pad';
-import { Block, Link } from 'sly/components/atoms';
-import Rating from 'sly/components/molecules/Rating';
+import { size } from 'sly/web/components/themes';
+import { text as textPropType } from 'sly/web/propTypes/text';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { formatRating } from 'sly/web/services/helpers/rating';
+import pad from 'sly/web/components/helpers/pad';
+import { Block, Link } from 'sly/web/components/atoms';
+import Rating from 'sly/web/components/molecules/Rating';
 
 const DescriptionBlock = pad(Block, 'regular');
 

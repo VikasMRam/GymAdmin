@@ -3,9 +3,9 @@ import styled, { css } from 'styled-components';
 import { arrayOf, bool, string, func, object } from 'prop-types';
 import { ifNotProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
-import { Button, StickyFooter } from 'sly/components/atoms';
-import Stage from 'sly/components/molecules/Stage';
+import { size } from 'sly/web/components/themes';
+import { Button, StickyFooter } from 'sly/web/components/atoms';
+import Stage from 'sly/web/components/molecules/Stage';
 
 const FooterWrapper = styled.div`
   ${ifNotProp('showAcceptRejectButtons', css`

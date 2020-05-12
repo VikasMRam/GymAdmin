@@ -2,9 +2,9 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { arrayOf, string, shape, func } from 'prop-types';
 
-import textAlign from 'sly/components/helpers/textAlign';
-import { Heading } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { Heading } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
 
 const TextAlignCenterHeading = textAlign(Heading);
 TextAlignCenterHeading.displayName = 'TextAlignCenterHeading';

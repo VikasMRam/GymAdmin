@@ -1,7 +1,7 @@
 import { reduxForm } from 'redux-form';
 
-import DashboardAgentReferralContactDetails from 'sly/components/organisms/DashboardAgentReferralContactDetails';
-import { createValidator, required, email } from 'sly/services/validation';
+import DashboardAgentReferralContactDetails from 'sly/web/components/organisms/DashboardAgentReferralContactDetails';
+import { createValidator, required, email } from 'sly/web/services/validation';
 
 const validate = createValidator({
   name: [required],

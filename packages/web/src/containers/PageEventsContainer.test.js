@@ -5,12 +5,12 @@ import { createMemoryHistory } from 'history';
 
 import PageEventsContainer from './PageEventsContainer';
 
-import SlyEvent from 'sly/services/helpers/events';
-import config from 'sly/config';
+import SlyEvent from 'sly/web/services/helpers/events';
+import config from 'sly/web/config';
 
 
-jest.mock('sly/services/helpers/events');
-jest.mock('sly/config');
+jest.mock('sly/web/services/helpers/events');
+jest.mock('sly/web/config');
 jest.mock('react-helmet', () => ({ children }) => <div className="helmet">{children}</div>);
 
 const mockEvents = {

@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { func, bool, string, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import { getAutocompleteValues } from 'sly/services/datatable/helpers';
-import { normalizeResponse } from 'sly/services/api';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import { Heading, Button, Block, Link } from 'sly/components/atoms';
-import Field from 'sly/components/molecules/Field';
+import { size } from 'sly/web/components/themes';
+import { getAutocompleteValues } from 'sly/web/services/datatable/helpers';
+import { normalizeResponse } from 'sly/web/services/api';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { Heading, Button, Block, Link } from 'sly/web/components/atoms';
+import Field from 'sly/web/components/molecules/Field';
 
 
 const StyledHeading = textAlign(pad(Heading));

@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { object, func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
-import { withRedirectTo } from 'sly/services/redirectTo';
-import { generateSearchUrl } from 'sly/services/helpers/url';
-import SlyEvent from 'sly/services/helpers/events';
-import { getSearchParamFromPlacesResponse, filterLinkPath, getSearchParams } from 'sly/services/helpers/search';
-import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
-import ModalController from 'sly/controllers/ModalController';
-import HomePage from 'sly/components/pages/HomePage';
+import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { generateSearchUrl } from 'sly/web/services/helpers/url';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { getSearchParamFromPlacesResponse, filterLinkPath, getSearchParams } from 'sly/web/services/helpers/search';
+import { getQueryParamsSetter } from 'sly/web/services/helpers/queryParams';
+import ModalController from 'sly/web/controllers/ModalController';
+import HomePage from 'sly/web/components/pages/HomePage';
 
 @withRedirectTo
 

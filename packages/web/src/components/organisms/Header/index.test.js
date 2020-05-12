@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import Header, { HeaderMenu, HeaderMenuItem, SeniorlyIconMenu, HeaderItems } from 'sly/components/organisms/Header';
+import Header, { HeaderMenu, HeaderMenuItem, SeniorlyIconMenu, HeaderItems } from 'sly/web/components/organisms/Header';
 
 const headerItems = [
   { name: 'List on Seniorly', href: '#' },

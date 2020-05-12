@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import PriceBar from 'sly/components/molecules/PriceBar';
+import PriceBar from 'sly/web/components/molecules/PriceBar';
 
 const wrap = (props = {}) => mount(<PriceBar {...props} />);
 

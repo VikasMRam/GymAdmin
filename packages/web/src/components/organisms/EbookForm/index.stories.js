@@ -5,8 +5,8 @@ import { reduxForm } from 'redux-form';
 
 import EbookForm from './index';
 
-import Modal from 'sly/components/molecules/Modal';
-import { withPreventDefault } from 'sly/services/helpers/forms';
+import Modal from 'sly/web/components/molecules/Modal';
+import { withPreventDefault } from 'sly/web/services/helpers/forms';
 
 const EbookFormContainer = reduxForm({
   form: 'EbookForm',

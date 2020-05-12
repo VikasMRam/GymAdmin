@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, number, shape, oneOf, oneOfType } from 'prop-types';
 
-import { size, palette } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import { Block, Link } from 'sly/components/atoms';
-import { phoneFormatter } from 'sly/services/helpers/phone';
+import { size, palette } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import { Block, Link } from 'sly/web/components/atoms';
+import { phoneFormatter } from 'sly/web/services/helpers/phone';
 
 const Label = pad(Block, 'regular');
 Label.displayName = 'Label';

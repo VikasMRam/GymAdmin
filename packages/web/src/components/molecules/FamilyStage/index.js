@@ -2,18 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import { func, string, bool } from 'prop-types';
 
-import pad from 'sly/components/helpers/pad';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import { size } from 'sly/components/themes';
-import clientPropType from 'sly/propTypes/client';
-import userPropType from 'sly/propTypes/user';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
-import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
-import { TOTAL_STAGES_COUNT, FAMILY_STAGE_NEW, FAMILY_STAGE_REJECTED } from 'sly/constants/familyDetails';
-import { userIs } from 'sly/services/helpers/role';
-import { getStageDetails } from 'sly/services/helpers/stage';
-import { Box, Heading, Button } from 'sly/components/atoms';
-import Stage from 'sly/components/molecules/Stage';
+import pad from 'sly/web/components/helpers/pad';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import { size } from 'sly/web/components/themes';
+import clientPropType from 'sly/web/propTypes/client';
+import userPropType from 'sly/web/propTypes/user';
+import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/web/constants/provider';
+import { TOTAL_STAGES_COUNT, FAMILY_STAGE_NEW, FAMILY_STAGE_REJECTED } from 'sly/web/constants/familyDetails';
+import { userIs } from 'sly/web/services/helpers/role';
+import { getStageDetails } from 'sly/web/services/helpers/stage';
+import { Box, Heading, Button } from 'sly/web/components/atoms';
+import Stage from 'sly/web/components/molecules/Stage';
 
 const ColumWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.mobile')}) {

@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 
-import AgentTile from 'sly/components/molecules/AgentTile';
-import { size } from 'sly/components/themes';
-import LindaIwamota from 'sly/../private/storybook/sample-data/agent-linda-iwamota.json';
+import AgentTile from 'sly/web/components/molecules/AgentTile';
+import { size } from 'sly/web/components/themes';
+import LindaIwamota from 'sly/web/../private/storybook/sample-data/agent-linda-iwamota.json';
 
 const Wrapper = styled.div`
   width: ${size('layout.col4')};

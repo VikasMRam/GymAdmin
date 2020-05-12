@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { node, shape, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { assetPath } from 'sly/components/themes';
-import userPropType from 'sly/propTypes/user';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
-import { userIs } from 'sly/services/helpers/role';
-import { Link } from 'sly/components/atoms';
-import WSContext from 'sly/services/ws/WSContext';
-import NotificationController from 'sly/controllers/NotificationController';
-import withUser from 'sly/services/api/withUser';
-import subscriptionList from 'sly/services/notifications/subscriptionList';
+import { assetPath } from 'sly/web/components/themes';
+import userPropType from 'sly/web/propTypes/user';
+import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { userIs } from 'sly/web/services/helpers/role';
+import { Link } from 'sly/web/components/atoms';
+import WSContext from 'sly/web/services/ws/WSContext';
+import NotificationController from 'sly/web/controllers/NotificationController';
+import withUser from 'sly/web/services/api/withUser';
+import subscriptionList from 'sly/web/services/notifications/subscriptionList';
 
 const StyledLink = styled(Link)`
   display: block;

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import CommunityAskQuestionForm from 'sly/components/organisms/CommunityAskQuestionForm';
+import CommunityAskQuestionForm from 'sly/web/components/organisms/CommunityAskQuestionForm';
 
 const handleSubmit = jest.fn();
 const communityName = 'Rhoda Goldman Plaza';

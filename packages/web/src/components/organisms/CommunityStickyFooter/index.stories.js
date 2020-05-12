@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
+import CommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
 
 storiesOf('Organisms|CommunityStickyFooter', module)
   .add('default', () => (

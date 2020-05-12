@@ -2,9 +2,9 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { Block } from 'sly/components/atoms';
-import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
-import ReduxField from 'sly/components/organisms/ReduxField';
+import { Block } from 'sly/web/components/atoms';
+import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
 
 const AddNoteForm = ({
   submitting, handleSubmit, error, onCancelClick, hasCancel, heading, submitButtonText, cancelButtonText, placeholder, label, ...props

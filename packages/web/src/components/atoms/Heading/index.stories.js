@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Heading from 'sly/components/atoms/Heading';
+import Heading from 'sly/web/components/atoms/Heading';
 
 storiesOf('Atoms|Heading', module)
   .add('default', () => (

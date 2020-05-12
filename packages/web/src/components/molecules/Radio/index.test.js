@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Radio, { StyledIcon } from 'sly/components/molecules/Radio';
+import Radio, { StyledIcon } from 'sly/web/components/molecules/Radio';
 
 const wrap = (props = {}) => shallow(<Radio {...props} />);
 

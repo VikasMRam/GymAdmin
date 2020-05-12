@@ -3,12 +3,12 @@ import { func, arrayOf, oneOf } from 'prop-types';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
 
-import { size } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import { Block } from 'sly/components/atoms';
-import IconButton from 'sly/components/molecules/IconButton';
-import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
-import ReduxField from 'sly/components/organisms/ReduxField';
+import { size } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import { Block } from 'sly/web/components/atoms';
+import IconButton from 'sly/web/components/molecules/IconButton';
+import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
 
 const StyledIconButton = styled(IconButton)`
   margin-right: ${size('spacing.regular')};

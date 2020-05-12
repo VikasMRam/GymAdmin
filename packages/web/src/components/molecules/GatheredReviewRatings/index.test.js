@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import GatheredReviewRatings, { ReviewDiv }
-  from 'sly/components/molecules/GatheredReviewRatings';
+  from 'sly/web/components/molecules/GatheredReviewRatings';
 
 const review = {
   name: 'Yelp',

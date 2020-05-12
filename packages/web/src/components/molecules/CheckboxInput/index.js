@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { string, func, oneOfType, bool, arrayOf, object } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import Checkbox from 'sly/components/molecules/Checkbox';
-import { Span } from 'sly/components/atoms';
-import cursor from 'sly/components/helpers/cursor';
+import { size } from 'sly/web/components/themes';
+import Checkbox from 'sly/web/components/molecules/Checkbox';
+import { Span } from 'sly/web/components/atoms';
+import cursor from 'sly/web/components/helpers/cursor';
 
 const CheckboxItem = styled.div`
   display: flex;

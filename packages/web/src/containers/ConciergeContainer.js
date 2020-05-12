@@ -2,9 +2,9 @@ import React from 'react';
 import { object } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import Concierge from 'sly/components/organisms/Concierge';
-import ConciergeController from 'sly/controllers/ConciergeController';
-import { prefetch } from 'sly/services/api';
+import Concierge from 'sly/web/components/organisms/Concierge';
+import ConciergeController from 'sly/web/controllers/ConciergeController';
+import { prefetch } from 'sly/web/services/api';
 
 function ConciergeContainer({
   community,

@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import FamilyEntry from 'sly/components/molecules/FamilyEntry';
-import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
+import FamilyEntry from 'sly/web/components/molecules/FamilyEntry';
+import PraneshKumar from 'sly/web/../private/storybook/sample-data/client-pranesh-kumar.json';
 
 const defaultProps = {
   client: PraneshKumar,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Heading, Block } from 'sly/components/atoms';
+import { Heading, Block } from 'sly/web/components/atoms';
 
 
 const TOSHTML = () => {

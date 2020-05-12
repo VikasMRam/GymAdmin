@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
+import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 
 const heading = 'test heading';
 const body = 'test body';

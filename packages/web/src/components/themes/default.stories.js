@@ -3,9 +3,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 
-import { key } from 'sly/components/themes';
-import { Heading } from 'sly/components/atoms';
-import theme from 'sly/components/themes/default';
+import { key } from 'sly/web/components/themes';
+import { Heading } from 'sly/web/components/atoms';
+import theme from 'sly/web/components/themes/default';
 
 const oldPalette = {
   slate    : ['#384c57'],

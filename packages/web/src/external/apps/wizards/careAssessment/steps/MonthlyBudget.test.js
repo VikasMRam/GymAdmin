@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import MonthlyBudget from 'sly/external/apps/wizards/careAssessment/steps/MonthlyBudget';
+import MonthlyBudget from 'sly/web/external/apps/wizards/careAssessment/steps/MonthlyBudget';
 
 const wrap = (props = {}) => shallow(<MonthlyBudget {...props} />);
 

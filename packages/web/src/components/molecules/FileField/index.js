@@ -3,8 +3,8 @@ import { string } from 'prop-types';
 import { prop } from 'styled-tools';
 import styled from 'styled-components';
 
-import Icon from 'sly/components/atoms/Icon';
-import { palette, size } from 'sly/components/themes';
+import Icon from 'sly/web/components/atoms/Icon';
+import { palette, size } from 'sly/web/components/themes';
 
 const Wrapper = styled.div`
   position: relative;

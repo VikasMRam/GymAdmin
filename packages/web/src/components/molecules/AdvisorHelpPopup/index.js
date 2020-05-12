@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 
-import { size, assetPath } from 'sly/components/themes';
-import { Block, Button, Image } from 'sly/components/atoms/index';
-import IconItem from 'sly/components/molecules/IconItem/index';
+import { size, assetPath } from 'sly/web/components/themes';
+import { Block, Button, Image } from 'sly/web/components/atoms/index';
+import IconItem from 'sly/web/components/molecules/IconItem/index';
 
 const SubHeading = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};

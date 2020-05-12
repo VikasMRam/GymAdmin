@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import FAQTile from 'sly/components/molecules/FAQTile';
+import FAQTile from 'sly/web/components/molecules/FAQTile';
 
 const props = {
   question: 'If Seniorly is free for searchers, how does it make money?',

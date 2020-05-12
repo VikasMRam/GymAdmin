@@ -9,9 +9,9 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Modal from 'react-modal';
 import { ThemeProvider } from 'styled-components';
 
-import configureStore from 'sly/store/configure';
-import theme from 'sly/components/themes/default';
-import { hydrateComponents } from 'sly/services/partialHydration';
+import configureStore from 'sly/web/store/configure';
+import theme from 'sly/web/components/themes/default';
+import { hydrateComponents } from 'sly/web/services/partialHydration';
 
 export default function partiallyHydrateClient(componentsToHydrate, routePath, root) {
   const initialState = window.__INITIAL_STATE__;

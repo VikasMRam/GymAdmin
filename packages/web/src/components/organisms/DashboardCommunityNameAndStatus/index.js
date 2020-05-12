@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Heading from 'sly/components/atoms/Heading';
-import communityPropType from 'sly/propTypes/community';
+import Heading from 'sly/web/components/atoms/Heading';
+import communityPropType from 'sly/web/propTypes/community';
 
 const DashboardCommunityNameAndStatus = ({ community }) => {
   return (

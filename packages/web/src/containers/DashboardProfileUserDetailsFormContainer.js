@@ -4,12 +4,12 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
-import DashboardProfileUserDetailsForm from 'sly/components/organisms/DashboardProfileUserDetailsForm';
-import { createValidator, required, email, usPhone } from 'sly/services/validation';
-import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
-import { withUser, query } from 'sly/services/api';
-import { userIs } from 'sly/services/helpers/role';
-import { CUSTOMER_ROLE } from 'sly/constants/roles';
+import DashboardProfileUserDetailsForm from 'sly/web/components/organisms/DashboardProfileUserDetailsForm';
+import { createValidator, required, email, usPhone } from 'sly/web/services/validation';
+import userPropType, { uuidAux as uuidAuxProps } from 'sly/web/propTypes/user';
+import { withUser, query } from 'sly/web/services/api';
+import { userIs } from 'sly/web/services/helpers/role';
+import { CUSTOMER_ROLE } from 'sly/web/constants/roles';
 
 const validate = createValidator({
   name: [required],

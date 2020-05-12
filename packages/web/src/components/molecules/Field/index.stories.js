@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import { Block } from 'sly/components/atoms';
-import Field from 'sly/components/molecules/Field';
+import { Block } from 'sly/web/components/atoms';
+import Field from 'sly/web/components/molecules/Field';
 
 const labelRight = (
   <Block palette="primary" size="caption">

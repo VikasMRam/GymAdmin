@@ -3,17 +3,17 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
 
-import { host } from 'sly/config';
-import { size, assetPath, palette } from 'sly/components/themes';
-import { getBreadCrumbsForGuides, stateNames } from 'sly/services/helpers/url';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Image, Label, Heading } from 'sly/components/atoms';
-import Footer from 'sly/components/organisms/Footer';
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
-import SeoLinks from 'sly/components/organisms/SeoLinks';
-import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import pad from 'sly/components/helpers/pad';
+import { host } from 'sly/web/config';
+import { size, assetPath, palette } from 'sly/web/components/themes';
+import { getBreadCrumbsForGuides, stateNames } from 'sly/web/services/helpers/url';
+import HeaderContainer from 'sly/web/containers/HeaderContainer';
+import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
+import { Image, Label, Heading } from 'sly/web/components/atoms';
+import Footer from 'sly/web/components/organisms/Footer';
+import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
+import SeoLinks from 'sly/web/components/organisms/SeoLinks';
+import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
+import pad from 'sly/web/components/helpers/pad';
 
 const HeroWrapper = styled.div`
   position: relative;

@@ -1,6 +1,6 @@
 import { reduxForm } from 'redux-form';
 
-import CommunityPWEstimatedPricingForm from 'sly/components/organisms/CommunityPWEstimatedPricingForm';
+import CommunityPWEstimatedPricingForm from 'sly/web/components/organisms/CommunityPWEstimatedPricingForm';
 
 export default reduxForm({
   form: 'PWizardForm',

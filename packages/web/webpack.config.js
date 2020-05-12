@@ -116,7 +116,7 @@ const resolveModules = modules => (context, { merge }) =>
   merge({
     resolve: {
       alias: {
-        sly: modules,
+        'sly/web': modules,
       },
       modules: [].concat(modules, 'node_modules'),
     },

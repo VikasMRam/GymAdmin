@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityPWEstimatedPricingForm from 'sly/components/organisms/CommunityPWEstimatedPricingForm';
-import { Block } from 'sly/components/atoms';
+import CommunityPWEstimatedPricingForm from 'sly/web/components/organisms/CommunityPWEstimatedPricingForm';
+import { Block } from 'sly/web/components/atoms';
 
 const error = 'Blah';
 const wrap = (props = {}) => shallow(<CommunityPWEstimatedPricingForm {...props} />);

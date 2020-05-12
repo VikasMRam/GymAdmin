@@ -2,10 +2,10 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import dayjs from 'dayjs';
 
-import Message from 'sly/components/molecules/Message';
-import participant1 from 'sly/../private/storybook/sample-data/conversation-participant-1.json';
-import message from 'sly/../private/storybook/sample-data/conversation-message-1.json';
-import message6 from 'sly/../private/storybook/sample-data/conversation-message-6.json';
+import Message from 'sly/web/components/molecules/Message';
+import participant1 from 'sly/web/../private/storybook/sample-data/conversation-participant-1.json';
+import message from 'sly/web/../private/storybook/sample-data/conversation-message-1.json';
+import message6 from 'sly/web/../private/storybook/sample-data/conversation-message-6.json';
 
 const dateString = dayjs(message.createdAt).format('h:mm A');
 const defaultProps = {

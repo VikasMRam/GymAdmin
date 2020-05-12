@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunitySummary from 'sly/components/organisms/CommunitySummary';
-import CommunityPricing from 'sly/components/molecules/CommunityPricing';
-import CommunityRating from 'sly/components/molecules/CommunityRating';
-import { Link } from 'sly/components/atoms';
-import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-import { CONTINUING_CARE_RETIREMENT_COMMUNITY } from 'sly/constants/tags';
+import CommunitySummary from 'sly/web/components/organisms/CommunitySummary';
+import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';
+import CommunityRating from 'sly/web/components/molecules/CommunityRating';
+import { Link } from 'sly/web/components/atoms';
+import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import { CONTINUING_CARE_RETIREMENT_COMMUNITY } from 'sly/web/constants/tags';
 
 const searchParams = {
   city: 'san-carlos',

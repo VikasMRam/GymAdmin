@@ -2,8 +2,8 @@ import React from 'react';
 import { mount } from 'enzyme';
 import Measure from 'react-measure';
 
-import CollapsibleSection, { Header } from 'sly/components/molecules/CollapsibleSection';
-import { ClampedText } from 'sly/components/atoms';
+import CollapsibleSection, { Header } from 'sly/web/components/molecules/CollapsibleSection';
+import { ClampedText } from 'sly/web/components/atoms';
 
 const title = 'Section Title';
 const wrap = (props = {}) => mount(<CollapsibleSection title={title} {...props} />);

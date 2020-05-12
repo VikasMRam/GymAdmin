@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import { object, number, array, bool, func } from 'prop-types';
-import SlyEvent from 'sly/services/helpers/events';
-import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
-import ErrorPage from 'sly/components/pages/Error';
-import AssistedLivingNearMePage from 'sly/components/pages/AssistedLivingNearMePage';
-import MemoryCareNearMePage from 'sly/components/pages/MemoryCareNearMePage';
-import SeniorLivingNearMePage from 'sly/components/pages/SeniorLivingNearMePage';
-import BNCNearMePage from 'sly/components/pages/BNCNearMePage';
-import NursingHomesNearMePage from 'sly/components/pages/NursingHomesNearMePage';
-import SNFNearMePage from 'sly/components/pages/SNFNearMePage';
-import CCRCNearMePage from 'sly/components/pages/CCRCNearMePage';
-import IndependentLivingNearMePage from 'sly/components/pages/IndependentLivingNearMePage';
-import HomeCareNearMePage from 'sly/components/pages/HomeCareNearMePage';
-import RespiteCareNearMePage from 'sly/components/pages/RespiteCareNearMePage';
-import VeteransBenefitAssistedLivingPage from 'sly/components/pages/VeteransBenefitAssistedLivingPage';
-import { parseURLQueryParams, generateCityPathSearchUrl } from 'sly/services/helpers/url';
-import { prefetch } from 'sly/services/api';
-import { withProps } from 'sly/services/helpers/hocs';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/web/services/helpers/search';
+import ErrorPage from 'sly/web/components/pages/Error';
+import AssistedLivingNearMePage from 'sly/web/components/pages/AssistedLivingNearMePage';
+import MemoryCareNearMePage from 'sly/web/components/pages/MemoryCareNearMePage';
+import SeniorLivingNearMePage from 'sly/web/components/pages/SeniorLivingNearMePage';
+import BNCNearMePage from 'sly/web/components/pages/BNCNearMePage';
+import NursingHomesNearMePage from 'sly/web/components/pages/NursingHomesNearMePage';
+import SNFNearMePage from 'sly/web/components/pages/SNFNearMePage';
+import CCRCNearMePage from 'sly/web/components/pages/CCRCNearMePage';
+import IndependentLivingNearMePage from 'sly/web/components/pages/IndependentLivingNearMePage';
+import HomeCareNearMePage from 'sly/web/components/pages/HomeCareNearMePage';
+import RespiteCareNearMePage from 'sly/web/components/pages/RespiteCareNearMePage';
+import VeteransBenefitAssistedLivingPage from 'sly/web/components/pages/VeteransBenefitAssistedLivingPage';
+import { parseURLQueryParams, generateCityPathSearchUrl } from 'sly/web/services/helpers/url';
+import { prefetch } from 'sly/web/services/api';
+import { withProps } from 'sly/web/services/helpers/hocs';
 
 const handleClick = (e, sectionRef) => {
   // Link triggers router navigation so need to preventDefault.

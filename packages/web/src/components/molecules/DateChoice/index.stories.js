@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import DateChoice from 'sly/components/molecules/DateChoice';
+import DateChoice from 'sly/web/components/molecules/DateChoice';
 
 const from = '2018-1-1';
 const to = '2018-1-20';

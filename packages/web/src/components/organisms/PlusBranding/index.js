@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { size, palette, assetPath } from 'sly/components/themes';
-import { Heading, ResponsiveImage, Icon, Paragraph } from 'sly/components/atoms';
-import IconItem from 'sly/components/molecules/IconItem';
-import PlusBadge from 'sly/components/molecules/PlusBadge';
+import { size, palette, assetPath } from 'sly/web/components/themes';
+import { Heading, ResponsiveImage, Icon, Paragraph } from 'sly/web/components/atoms';
+import IconItem from 'sly/web/components/molecules/IconItem';
+import PlusBadge from 'sly/web/components/molecules/PlusBadge';
 
 const TextWrapper = styled.div`
   display: block;

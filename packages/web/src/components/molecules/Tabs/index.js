@@ -3,7 +3,7 @@ import { instanceOf, string, bool, node } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
+import { size, palette } from 'sly/web/components/themes';
 
 const Wrapper = styled.div`
   border-bottom: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};

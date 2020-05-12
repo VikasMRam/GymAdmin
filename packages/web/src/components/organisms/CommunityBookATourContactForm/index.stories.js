@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import CommunityBookATourContactForm from 'sly/components/organisms/CommunityBookATourContactForm';
-import { withPreventDefault } from 'sly/services/helpers/forms';
+import CommunityBookATourContactForm from 'sly/web/components/organisms/CommunityBookATourContactForm';
+import { withPreventDefault } from 'sly/web/services/helpers/forms';
 
 
 const CommunityBookATourContactFormContainer = reduxForm({

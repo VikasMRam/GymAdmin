@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import { shape, object, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
-import { getHelmetForAgentProfilePage } from 'sly/services/helpers/html_headers';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
-import Footer from 'sly/components/organisms/Footer';
-import AgentSummary from 'sly/components/molecules/AgentSummary';
-import Section from 'sly/components/molecules/Section';
-import { Hr, Paragraph } from 'sly/components/atoms';
-import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
-import EntityReviews from 'sly/components/organisms/EntityReviews';
-import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
-import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import { getBreadCrumbsForAgent } from 'sly/services/helpers/url';
-import { formatDate } from 'sly/services/helpers/date';
+import { size, palette } from 'sly/web/components/themes';
+import { getHelmetForAgentProfilePage } from 'sly/web/services/helpers/html_headers';
+import HeaderContainer from 'sly/web/containers/HeaderContainer';
+import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
+import Footer from 'sly/web/components/organisms/Footer';
+import AgentSummary from 'sly/web/components/molecules/AgentSummary';
+import Section from 'sly/web/components/molecules/Section';
+import { Hr, Paragraph } from 'sly/web/components/atoms';
+import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
+import EntityReviews from 'sly/web/components/organisms/EntityReviews';
+import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
+import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
+import { getBreadCrumbsForAgent } from 'sly/web/services/helpers/url';
+import { formatDate } from 'sly/web/services/helpers/date';
 
 const StyledHr = styled(Hr)`
   margin-top: ${size('spacing.huge')};

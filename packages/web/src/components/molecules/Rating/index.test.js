@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Rating from 'sly/components/molecules/Rating';
+import Rating from 'sly/web/components/molecules/Rating';
 
 const wrap = (props = {}) => mount(<Rating {...props} />);
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
-import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
-import LindaIwamota from 'sly/../private/storybook/sample-data/agent-linda-iwamota.json';
+import CommunityAgentSection from 'sly/web/components/molecules/CommunityAgentSection';
+import CollapsibleSection from 'sly/web/components/molecules/CollapsibleSection';
+import LindaIwamota from 'sly/web/../private/storybook/sample-data/agent-linda-iwamota.json';
 
 storiesOf('Molecules|CommunityAgentSection', module)
   .add('default', () => (

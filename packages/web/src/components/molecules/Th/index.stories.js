@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { node } from 'prop-types';
 
-import Th from 'sly/components/molecules/Th';
+import Th from 'sly/web/components/molecules/Th';
 
 const ThWrapper = ({ children }) => (
   <table>

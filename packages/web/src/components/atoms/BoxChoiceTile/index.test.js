@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import BoxChoiceTile from 'sly/components/atoms/BoxChoiceTile';
+import BoxChoiceTile from 'sly/web/components/atoms/BoxChoiceTile';
 
 const label = 'hello';
 const wrap = (props = {}) =>

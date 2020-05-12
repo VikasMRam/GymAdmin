@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import InputMessage from 'sly/components/molecules/InputMessage';
+import InputMessage from 'sly/web/components/molecules/InputMessage';
 
 const name = 'blah';
 

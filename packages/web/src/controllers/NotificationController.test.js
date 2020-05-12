@@ -3,14 +3,14 @@ import configureStore from 'redux-mock-store';
 import { shallow } from 'enzyme';
 import thunkMiddleware from 'redux-thunk';
 
-import NotificationController from 'sly/controllers/NotificationController';
-import { ADD, REMOVE } from 'sly/services/notifications/actions';
+import NotificationController from 'sly/web/controllers/NotificationController';
+import { ADD, REMOVE } from 'sly/web/services/notifications/actions';
 
 const message = 'test message';
 
 const mockGetMessageId = () => `notificationMessage_${message}`;
 
-jest.mock('sly/services/helpers/utils', () => ({
+jest.mock('sly/web/services/helpers/utils', () => ({
   randomHexNumber: jest.fn().mockReturnValue(123),
 }));
 

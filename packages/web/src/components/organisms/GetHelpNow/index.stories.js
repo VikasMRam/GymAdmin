@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import GetHelpNow from 'sly/components/organisms/GetHelpNow';
-import { withPreventDefault } from 'sly/services/helpers/forms';
+import GetHelpNow from 'sly/web/components/organisms/GetHelpNow';
+import { withPreventDefault } from 'sly/web/services/helpers/forms';
 
 const GetHelpNowContainer = reduxForm({
   form: 'GetHelpNow',

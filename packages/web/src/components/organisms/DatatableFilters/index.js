@@ -3,12 +3,12 @@ import { object } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { Box } from 'sly/components/atoms';
-import { size, palette } from 'sly/components/themes';
-import mobileOnly from 'sly/components/helpers/mobileOnly';
-import DatatableFilterRow from 'sly/components/organisms/DatatableFilterRow';
-import ButtonLink from 'sly/components/molecules/ButtonLink';
-import IconButton from 'sly/components/molecules/IconButton';
+import { Box } from 'sly/web/components/atoms';
+import { size, palette } from 'sly/web/components/themes';
+import mobileOnly from 'sly/web/components/helpers/mobileOnly';
+import DatatableFilterRow from 'sly/web/components/organisms/DatatableFilterRow';
+import ButtonLink from 'sly/web/components/molecules/ButtonLink';
+import IconButton from 'sly/web/components/molecules/IconButton';
 
 const Wrapper = styled(mobileOnly(Box,
   css`

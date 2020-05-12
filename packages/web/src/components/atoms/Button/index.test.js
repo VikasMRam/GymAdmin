@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Button from 'sly/components/atoms/Button';
-import SlyEvent from 'sly/services/helpers/events';
+import Button from 'sly/web/components/atoms/Button';
+import SlyEvent from 'sly/web/services/helpers/events';
 
 const wrap = (props = {}) => shallow(<Button {...props} />);
 

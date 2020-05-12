@@ -2,17 +2,17 @@ import React from 'react';
 import { bool, object } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { community as communityPropType } from 'sly/propTypes/community';
+import { community as communityPropType } from 'sly/web/propTypes/community';
 import {
   createBooleanValidator,
   email,
   required,
   usPhone,
-} from 'sly/services/validation';
-import ConciergeController from 'sly/controllers/ConciergeController';
-import GetAvailabilitySuccessBox from 'sly/components/molecules/GetAvailabilitySuccessBox';
-import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
-import { prefetch } from 'sly/services/api';
+} from 'sly/web/services/validation';
+import ConciergeController from 'sly/web/controllers/ConciergeController';
+import GetAvailabilitySuccessBox from 'sly/web/components/molecules/GetAvailabilitySuccessBox';
+import GetCurrentAvailabilityFormContainer from 'sly/web/containers/GetCurrentAvailabilityFormContainer';
+import { prefetch } from 'sly/web/services/api';
 
 const hasAllUserData = createBooleanValidator({
   fullName: [required],

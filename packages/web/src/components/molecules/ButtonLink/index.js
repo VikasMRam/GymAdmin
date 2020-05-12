@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, any } from 'prop-types';
 
-import { Icon, Block } from 'sly/components/atoms';
+import { Icon, Block } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   display: inline-flex;

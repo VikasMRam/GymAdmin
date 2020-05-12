@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityPricingComparison from 'sly/components/organisms/CommunityPricingComparison';
-import { findPercentage, sortProperties } from 'sly/services/helpers/pricing';
-import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import CommunityPricingComparison from 'sly/web/components/organisms/CommunityPricingComparison';
+import { findPercentage, sortProperties } from 'sly/web/services/helpers/pricing';
+import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => shallow(<CommunityPricingComparison community={RhodaGoldmanPlaza} {...props} />);
 

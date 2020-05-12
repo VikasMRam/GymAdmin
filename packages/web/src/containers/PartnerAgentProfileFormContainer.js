@@ -4,15 +4,15 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
-import PartnerAgentProfileForm from 'sly/components/organisms/PartnerAgentProfileForm';
-import { createValidator, required, email, usPhone } from 'sly/services/validation';
-import { phoneParser } from 'sly/services/helpers/phone';
-import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
-import { withUser, query } from 'sly/services/api';
-import { adminAgentPropType } from 'sly/propTypes/agent';
-import { userIs } from 'sly/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
-import withNotification from 'sly/controllers/withNotification';
+import PartnerAgentProfileForm from 'sly/web/components/organisms/PartnerAgentProfileForm';
+import { createValidator, required, email, usPhone } from 'sly/web/services/validation';
+import { phoneParser } from 'sly/web/services/helpers/phone';
+import userPropType, { uuidAux as uuidAuxProps } from 'sly/web/propTypes/user';
+import { withUser, query } from 'sly/web/services/api';
+import { adminAgentPropType } from 'sly/web/propTypes/agent';
+import { userIs } from 'sly/web/services/helpers/role';
+import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import withNotification from 'sly/web/controllers/withNotification';
 
 const validate = createValidator({
   name: [required],
