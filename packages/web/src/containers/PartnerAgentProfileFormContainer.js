@@ -59,7 +59,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
       .set('attributes.info.serviceArea.zipcodesServed', values.zipcodesServed)
       .set('attributes.status', parseInt(values.status, 10))
       .set('attributes.info.adminNotes', values.adminNotes)
-      .set('attributes.info.isPro', values.isPro.length > 0)
+      .set('attributes.info.isPro', (values.isPro.length > 0 ? values.isPro[0] : false))
       .set('attributes.info.cellPhone', phoneParser(values.cellPhone))
       .set('attributes.info.email', values.email)
       .set('attributes.info.timeZone', values.timeZone)
@@ -88,7 +88,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
     const { user, agent, isLoading, ...props } = this.props;
     if (!isLoading) {
       if (!agent) {
-        return <div>Parnet Agent Record Not Found...</div>;
+        return <div>Partner Agent Record Not Found...</div>;
       }
       const { info, status } = agent;
       const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;
