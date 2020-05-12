@@ -226,7 +226,7 @@ const Select = ({
   // autocomplete, which doesn't have a given array of options
   if (flattenedOptions.length) {
     if (props.isMulti) {
-      value = flattenedOptions.filter(o => value.includes(o.value));
+      value = flattenedOptions.filter(o => (value || []).includes(o.value));
     } else {
       value = flattenedOptions.find((o => value === o.value));
     }
