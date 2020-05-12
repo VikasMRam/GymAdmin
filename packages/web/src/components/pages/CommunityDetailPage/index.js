@@ -491,6 +491,7 @@ export default class CommunityDetailPage extends Component {
                   staffDescription || residentDescription || ownerExperience) && (
                   <StyledHeadingBoxSection heading={`Details on ${name}`}>
                     <CommunityDetails
+                      id={community.id}
                       communityName={name}
                       communityDescription={communityDescription}
                       rgsAuxDescription={rgsAux.communityDescription}
@@ -607,7 +608,7 @@ export default class CommunityDetailPage extends Component {
                 <StyledCommunityExtraInfoSection
                   title="Disclaimer"
                   description="The information on this page has been created to the best of our abilities. To ensure accuracy, please confirm with your local Seniorly Seniorly Partner Agent or directly with the property. If this is your senior living community, we would welcome any updates you wish to provide."
-                  url={`/partners/communities?prop=${community.id}`}
+                  url={`/partners/communities?prop=${community.id}&sly_category=disclaimer&sly_action=cta_link&sly_label=claim`}
                   urlText="Simply claim your profile by clicking here"
                 />
                 {!showSimilarEarlier && (

@@ -11,7 +11,7 @@ import ProviderSignupForm from 'sly/services/auth/components/ProviderSignupForm'
 const validate = createValidator({
   name: [required],
   email: [required, email],
-  phone: [required, usPhone],
+  phone_number: [required, usPhone],
   password: [required, minLength(8)],
 });
 

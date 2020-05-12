@@ -157,10 +157,6 @@ export default class CommunitySummaryContainer extends Component {
     this.sendEvent('click', 'communityNumberClicked');
   };
 
-  communityClaimClicked = () => {
-    this.sendEvent('click', 'communityClaimClicked');
-  };
-
   render() {
     const { community, isAdmin, userSaves, className, match } = this.props;
 
@@ -173,7 +169,6 @@ export default class CommunitySummaryContainer extends Component {
         onShareClick={this.handleShareClick}
         onConciergeNumberClicked={this.conciergeNumberClicked}
         onCommunityNumberClicked={this.communityNumberClicked}
-        onCommunityClaimClicked={this.communityClaimClicked}
         goToReviews={this.goToReviews}
         className={className}
         searchParams={match.params}
