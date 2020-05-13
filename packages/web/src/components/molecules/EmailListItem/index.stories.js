@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import EmailListItem from 'sly/components/molecules/EmailListItem';
+import EmailListItem from 'sly/web/components/molecules/EmailListItem';
 
 const email = {
   from: 'Pranesh Kumar<pranesh@seniorly.com>',

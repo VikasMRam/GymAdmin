@@ -4,12 +4,12 @@ import { withRouter } from 'react-router';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
-import emailPropType from 'sly/propTypes/email';
-import { prefetch, query } from 'sly/services/api';
-import EmailSharePageForm from 'sly/components/pages/EmailSharePageForm';
-import { createValidator, email, required } from 'sly/services/validation';
-import withUser from 'sly/services/api/withUser';
-import userPropType from 'sly/propTypes/user';
+import emailPropType from 'sly/web/propTypes/email';
+import { prefetch, query } from 'sly/web/services/api';
+import EmailSharePageForm from 'sly/web/components/pages/EmailSharePageForm';
+import { createValidator, email, required } from 'sly/web/services/validation';
+import withUser from 'sly/web/services/api/withUser';
+import userPropType from 'sly/web/propTypes/user';
 
 const formName = 'EmailShareForm';
 

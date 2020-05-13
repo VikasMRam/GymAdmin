@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, func } from 'prop-types';
 
-import { size, palette } from 'sly/components/themes';
-import { ClampedText } from 'sly/components/atoms';
+import { size, palette } from 'sly/web/components/themes';
+import { ClampedText } from 'sly/web/components/atoms';
 
 
 const Wrapper = styled.div`

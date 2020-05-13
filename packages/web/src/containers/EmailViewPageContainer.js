@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { object } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import emailPropType from 'sly/propTypes/email';
-import { prefetch } from 'sly/services/api';
-import EmailViewPage from 'sly/components/pages/EmailViewPage';
+import emailPropType from 'sly/web/propTypes/email';
+import { prefetch } from 'sly/web/services/api';
+import EmailViewPage from 'sly/web/components/pages/EmailViewPage';
 
 @withRouter
 @prefetch('email', 'getEmail', (req, { match }) => req({

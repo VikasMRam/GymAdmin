@@ -3,12 +3,12 @@ import { func, object, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import Button from 'sly/components/atoms/Button';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import userPropType from 'sly/propTypes/user';
-import { palette, size } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import { Block } from 'sly/components/atoms';
+import Button from 'sly/web/components/atoms/Button';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import userPropType from 'sly/web/propTypes/user';
+import { palette, size } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import { Block } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   position: absolute;
