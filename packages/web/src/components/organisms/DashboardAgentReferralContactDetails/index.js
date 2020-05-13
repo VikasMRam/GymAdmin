@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { func, object } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { size } from 'sly/components/themes';
-import { Block, Hr, Button } from 'sly/components/atoms';
-import DashboardAdminReferralAgentTile from 'sly/components/organisms/DashboardAdminReferralAgentTile';
-import pad from 'sly/components/helpers/pad';
-import ReduxField from 'sly/components/organisms/ReduxField';
+import { size } from 'sly/web/components/themes';
+import { Block, Hr, Button } from 'sly/web/components/atoms';
+import DashboardAdminReferralAgentTile from 'sly/web/components/organisms/DashboardAdminReferralAgentTile';
+import pad from 'sly/web/components/helpers/pad';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
 
 const SendReferralTitleBlock = pad(Block);
 

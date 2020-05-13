@@ -3,8 +3,8 @@ import { string, bool, func } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-import { size } from 'sly/components/themes';
-import { Heading, BoxChoiceTile } from 'sly/components/atoms';
+import { size } from 'sly/web/components/themes';
+import { Heading, BoxChoiceTile } from 'sly/web/components/atoms';
 
 const StyledBoxChoiceTile = styled(BoxChoiceTile)`
   height: ${size('element.huge')};

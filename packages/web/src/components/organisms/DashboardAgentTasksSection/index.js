@@ -3,26 +3,26 @@ import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { size, palette } from 'sly/components/themes';
-import mobileOnly from 'sly/components/helpers/mobileOnly';
-import pad from 'sly/components/helpers/pad';
-import SlyEvent from 'sly/services/helpers/events';
-import taskPropType from 'sly/propTypes/task';
-import clientPropType from 'sly/propTypes/client';
-import textAlign from 'sly/components/helpers/textAlign';
-import { Box, Table, THead, TBody, Tr, Td, Heading, Block } from 'sly/components/atoms';
-import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
-import Pagination from 'sly/components/molecules/Pagination';
-import Tabs from 'sly/components/molecules/Tabs';
-import Tab from 'sly/components/molecules/Tab';
-import Th from 'sly/components/molecules/Th';
-import IconButton from 'sly/components/molecules/IconButton';
-import TaskRowCard from 'sly/components/organisms/TaskRowCard';
-import AddOrEditTaskFormContainer from 'sly/containers/AddOrEditTaskFormContainer';
+import { size, palette } from 'sly/web/components/themes';
+import mobileOnly from 'sly/web/components/helpers/mobileOnly';
+import pad from 'sly/web/components/helpers/pad';
+import SlyEvent from 'sly/web/services/helpers/events';
+import taskPropType from 'sly/web/propTypes/task';
+import clientPropType from 'sly/web/propTypes/client';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { Box, Table, THead, TBody, Tr, Td, Heading, Block } from 'sly/web/components/atoms';
+import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons';
+import Pagination from 'sly/web/components/molecules/Pagination';
+import Tabs from 'sly/web/components/molecules/Tabs';
+import Tab from 'sly/web/components/molecules/Tab';
+import Th from 'sly/web/components/molecules/Th';
+import IconButton from 'sly/web/components/molecules/IconButton';
+import TaskRowCard from 'sly/web/components/organisms/TaskRowCard';
+import AddOrEditTaskFormContainer from 'sly/web/containers/AddOrEditTaskFormContainer';
 import {
   AGENT_DASHBOARD_TASKS_PATH, AGENT_DASHBOARD_CONTEXT_TASKS_PATH, TODAY, OVERDUE, UPCOMING, COMPLETED,
-} from 'sly/constants/dashboardAppPaths';
-import { stripPageNumber } from 'sly/services/helpers/appPaths';
+} from 'sly/web/constants/dashboardAppPaths';
+import { stripPageNumber } from 'sly/web/services/helpers/appPaths';
 
 
 const TABLE_HEADINGS = [

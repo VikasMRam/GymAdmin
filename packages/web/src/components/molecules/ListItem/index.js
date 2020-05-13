@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes, { string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { variation as variationPropType } from 'sly/propTypes/variation';
-import pad from 'sly/components/helpers/pad';
-import { Icon } from 'sly/components/atoms';
+import { size } from 'sly/web/components/themes';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import pad from 'sly/web/components/helpers/pad';
+import { Icon } from 'sly/web/components/atoms';
 
 const ListItemWrapper = pad(styled.li`
   display: flex;

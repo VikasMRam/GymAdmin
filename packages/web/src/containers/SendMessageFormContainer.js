@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { func, string, bool } from 'prop-types';
 import { reduxForm, SubmissionError, clearSubmitErrors, reset } from 'redux-form';
 
-import { query } from 'sly/services/api';
-import { CONVERSATION_MESSAGE_DATA_TYPE_TEXT, CONVERSATION_MEDIUM_INAPP, CONVERSATION_MEDIUM_SMS, CONVERSATION_MEDIUM_EMAIL } from 'sly/constants/conversations';
-import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE, CONVERSTION_MESSAGE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import SendMessageForm from 'sly/components/organisms/SendMessageForm';
-import { createValidator, required } from 'sly/services/validation';
-import conversationPropType from 'sly/propTypes/conversation/conversation';
+import { query } from 'sly/web/services/api';
+import { CONVERSATION_MESSAGE_DATA_TYPE_TEXT, CONVERSATION_MEDIUM_INAPP, CONVERSATION_MEDIUM_SMS, CONVERSATION_MEDIUM_EMAIL } from 'sly/web/constants/conversations';
+import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE, CONVERSTION_MESSAGE_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
+import SendMessageForm from 'sly/web/components/organisms/SendMessageForm';
+import { createValidator, required } from 'sly/web/services/validation';
+import conversationPropType from 'sly/web/propTypes/conversation/conversation';
 
 const formName = 'SendMessageForm';
 

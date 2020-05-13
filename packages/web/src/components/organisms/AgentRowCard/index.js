@@ -3,16 +3,16 @@ import styled, { css } from 'styled-components';
 import { func, string } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { size, palette } from 'sly/components/themes';
-import taskPropType from 'sly/propTypes/agent';
-import mobileOnly from 'sly/components/helpers/mobileOnly';
-import pad from 'sly/components/helpers/pad';
-import borderRadius from 'sly/components/helpers/borderRadius';
-import { Link, ClampedText } from 'sly/components/atoms';
-import { Td, Tr } from 'sly/components/atoms/Table';
-import { buildAddressDisplay } from 'sly/services/helpers/communityReferral';
-import { AGENT_STATUS_NAME_MAP } from 'sly/constants/agents';
-import { ADMIN_DASHBOARD_AGENT_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
+import { size, palette } from 'sly/web/components/themes';
+import taskPropType from 'sly/web/propTypes/agent';
+import mobileOnly from 'sly/web/components/helpers/mobileOnly';
+import pad from 'sly/web/components/helpers/pad';
+import borderRadius from 'sly/web/components/helpers/borderRadius';
+import { Link, ClampedText } from 'sly/web/components/atoms';
+import { Td, Tr } from 'sly/web/components/atoms/Table';
+import { buildAddressDisplay } from 'sly/web/services/helpers/communityReferral';
+import { AGENT_STATUS_NAME_MAP } from 'sly/web/constants/agents';
+import { ADMIN_DASHBOARD_AGENT_DETAILS_PATH } from 'sly/web/constants/dashboardAppPaths';
 
 const Wrapper = mobileOnly(borderRadius(pad(Tr, 'large'), 'small'), css`
   display: flex;

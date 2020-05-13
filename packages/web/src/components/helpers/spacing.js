@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
+import { size } from 'sly/web/components/themes';
 
 const spacing = (Component, { top = 'xLarge', bottom = 'xLarge', left = 'xLarge', right = 'xLarge' }) => styled(Component)`
   padding-top: ${size('spacing', top)};

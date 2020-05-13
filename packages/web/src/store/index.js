@@ -1,2 +1,2 @@
-export configure from 'sly/store/configure';
+export configure from 'sly/web/store/configure';
 

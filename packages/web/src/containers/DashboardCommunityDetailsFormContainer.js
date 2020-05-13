@@ -5,13 +5,13 @@ import pick from 'lodash/pick';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
-import { required, createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
-import userProptype from 'sly/propTypes/user';
-import { query, prefetch, getRelationship } from 'sly/services/api';
-import DashboardCommunityDetailsForm from 'sly/components/organisms/DashboardCommunityDetailsForm';
-import withUser from 'sly/services/api/withUser';
-import { userIs } from 'sly/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
+import { required, createValidator, email, usPhone, dependentRequired } from 'sly/web/services/validation';
+import userProptype from 'sly/web/propTypes/user';
+import { query, prefetch, getRelationship } from 'sly/web/services/api';
+import DashboardCommunityDetailsForm from 'sly/web/components/organisms/DashboardCommunityDetailsForm';
+import withUser from 'sly/web/services/api/withUser';
+import { userIs } from 'sly/web/services/helpers/role';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
 
 const validate = createValidator({
   name: [required],

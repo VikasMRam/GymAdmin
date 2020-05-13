@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
+import { size } from 'sly/web/components/themes';
+import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 
 const Box = styled.div`
   margin: ${size('spacing.xLarge')};

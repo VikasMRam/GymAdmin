@@ -5,13 +5,13 @@ import { geocodeByAddress } from 'react-places-autocomplete';
 import {
   filterLinkPath,
   getSearchParamFromPlacesResponse,
-} from 'sly/services/helpers/search';
-import { LOCATION_CURRENT_LATITUDE, LOCATION_CURRENT_LONGITUDE } from 'sly/constants/location';
-import SlyEvent from 'sly/services/helpers/events';
-import { query } from 'sly/services/api';
-import { withRedirectTo } from 'sly/services/redirectTo';
-import { normJsonApi } from 'sly/services/helpers/jsonApi';
-import SearchBox from 'sly/components/molecules/SearchBox';
+} from 'sly/web/services/helpers/search';
+import { LOCATION_CURRENT_LATITUDE, LOCATION_CURRENT_LONGITUDE } from 'sly/web/constants/location';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { query } from 'sly/web/services/api';
+import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
+import SearchBox from 'sly/web/components/molecules/SearchBox';
 
 @withRedirectTo
 @query('getAddresses', 'getAddresses')

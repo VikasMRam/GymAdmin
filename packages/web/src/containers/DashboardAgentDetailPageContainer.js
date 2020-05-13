@@ -3,15 +3,15 @@ import { object, shape, arrayOf, func } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
-import DashboardAgentDetailPage from 'sly/components/pages/DashboardAgentDetailPage';
-import { withUser, prefetch, query } from 'sly/services/api';
-import userPropType from 'sly/propTypes/user';
-import { adminAgentPropType } from 'sly/propTypes/agent';
-import notePropType from 'sly/propTypes/note';
-import SlyEvent from 'sly/services/helpers/events';
-import { AGENT_DETAILS } from 'sly/constants/dashboardAppPaths';
-import { NOTE_COMMENTABLE_TYPE_AGENT } from 'sly/constants/notes';
-import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
+import DashboardAgentDetailPage from 'sly/web/components/pages/DashboardAgentDetailPage';
+import { withUser, prefetch, query } from 'sly/web/services/api';
+import userPropType from 'sly/web/propTypes/user';
+import { adminAgentPropType } from 'sly/web/propTypes/agent';
+import notePropType from 'sly/web/propTypes/note';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { AGENT_DETAILS } from 'sly/web/constants/dashboardAppPaths';
+import { NOTE_COMMENTABLE_TYPE_AGENT } from 'sly/web/constants/notes';
+import { NOTE_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
 @withUser
 @query('createNote', 'createNote')
 @query('updateNote', 'updateNote')

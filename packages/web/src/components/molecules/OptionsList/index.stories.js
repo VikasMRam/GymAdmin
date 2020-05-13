@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import OptionsList from 'sly/components/molecules/OptionsList';
+import OptionsList from 'sly/web/components/molecules/OptionsList';
 
 const options = [
   {

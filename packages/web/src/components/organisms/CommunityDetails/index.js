@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
-import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
-import { Link, Paragraph, Heading } from 'sly/components/atoms';
-import { phoneFormatter } from 'sly/services/helpers/phone';
+import { size, palette } from 'sly/web/components/themes';
+import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
+import { Link, Paragraph, Heading } from 'sly/web/components/atoms';
+import { phoneFormatter } from 'sly/web/services/helpers/phone';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
@@ -45,7 +45,7 @@ LegacyContent.defaultProps = {
 };
 
 const CommunityDetails = ({
-  communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription, ownerExperience, city, state, twilioNumber, guideUrl,
+  id, communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription, ownerExperience, city, state, twilioNumber, guideUrl,
 }) => {
   let phone = '8558664515';
   if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
@@ -96,6 +96,16 @@ const CommunityDetails = ({
           }
         </StyledArticle>
       )}
+      {
+        <StyledArticle>
+          Manage this community?&nbsp;
+          <Link href={`/partners/communities?prop=${id}&sly_category=community-details&sly_action=cta_link&sly_label=claim`}>
+            Click here to claim this profile
+          </Link>
+
+        </StyledArticle>
+      }
+
       {guideUrl &&
         <StyledArticle>
           <Paragraph>
@@ -136,6 +146,7 @@ const CommunityDetails = ({
 };
 
 CommunityDetails.propTypes = {
+  id: PropTypes.string.isRequired,
   communityName: PropTypes.string.isRequired,
   communityDescription: PropTypes.string,
   rgsAuxDescription: PropTypes.string,
@@ -146,7 +157,6 @@ CommunityDetails.propTypes = {
   city: PropTypes.string,
   state: PropTypes.string,
   twilioNumber: PropTypes.object,
-
 };
 
 export default CommunityDetails;

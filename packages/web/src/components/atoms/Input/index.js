@@ -4,7 +4,7 @@ import { bool, oneOf, func } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette, assetPath } from 'sly/components/themes';
+import { size, palette, assetPath } from 'sly/web/components/themes';
 
 const backgroundColor = (p) => {
   if (p.disabled || p.readOnly) {

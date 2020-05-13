@@ -4,22 +4,22 @@ import { array, bool, func, object } from 'prop-types';
 import loadable from '@loadable/component';
 import { ifProp } from 'styled-tools';
 
-import { size, palette, assetPath } from 'sly/components/themes';
-import { titleize } from 'sly/services/helpers/strings';
-import { getTocSeoLabel } from 'sly/services/helpers/search';
-import { getHelmetForSearchPage } from 'sly/services/helpers/html_headers';
-import { getBreadCrumbsForLocation, getStateAbbr} from 'sly/services/helpers/url';
-import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
-import { Heading, Button, Hr, Box, Image } from 'sly/components/atoms';
-import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
-import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
-import IconButton from 'sly/components/molecules/IconButton';
-import SeoLinks from 'sly/components/organisms/SeoLinks';
-import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import pad from 'sly/components/helpers/pad';
-import ResponsiveSidebar from 'sly/components/molecules/ResponsiveSidebar';
+import { size, palette, assetPath } from 'sly/web/components/themes';
+import { titleize } from 'sly/web/services/helpers/strings';
+import { getTocSeoLabel } from 'sly/web/services/helpers/search';
+import { getHelmetForSearchPage } from 'sly/web/services/helpers/html_headers';
+import { getBreadCrumbsForLocation, getStateAbbr} from 'sly/web/services/helpers/url';
+import CommunitySearchPageTemplate from 'sly/web/components/templates/CommunitySearchPageTemplate';
+import { Heading, Button, Hr, Box, Image } from 'sly/web/components/atoms';
+import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
+import CommunityFilterList from 'sly/web/components/organisms/CommunityFilterList';
+import IconButton from 'sly/web/components/molecules/IconButton';
+import SeoLinks from 'sly/web/components/organisms/SeoLinks';
+import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
+import pad from 'sly/web/components/helpers/pad';
+import ResponsiveSidebar from 'sly/web/components/molecules/ResponsiveSidebar';
 
-const SearchMap = loadable(() => import(/* webpackChunkName: "chunkSearchMap" */'sly/components/organisms/SearchMap'));
+const SearchMap = loadable(() => import(/* webpackChunkName: "chunkSearchMap" */'sly/web/components/organisms/SearchMap'));
 
 /**
  * Order of appearance as in editor :

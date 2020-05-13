@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import MultipleChoice from 'sly/components/molecules/MultipleChoice';
+import MultipleChoice from 'sly/web/components/molecules/MultipleChoice';
 
 const options = [
   { value: 'first', label: 'First' },

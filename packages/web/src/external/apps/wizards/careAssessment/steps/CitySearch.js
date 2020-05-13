@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { func } from 'prop-types';
 import { Field } from 'redux-form';
 
-import pad from 'sly/components/helpers/pad';
-import { STEP_INPUT_FIELD_NAMES } from 'sly/external/constants/steps';
-import { getSearchParamFromPlacesResponse } from 'sly/services/helpers/search';
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
-import { Heading } from 'sly/components/atoms';
+import pad from 'sly/web/components/helpers/pad';
+import { STEP_INPUT_FIELD_NAMES } from 'sly/web/external/constants/steps';
+import { getSearchParamFromPlacesResponse } from 'sly/web/services/helpers/search';
+import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
+import { Heading } from 'sly/web/components/atoms';
 
 const PaddedHeading = pad(Heading, 'xLarge');
 PaddedHeading.displayName = 'PaddedHeading';

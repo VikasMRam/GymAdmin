@@ -3,11 +3,11 @@ import { Lazy } from 'react-lazy';
 import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 
-import { prefetch } from 'sly/services/api';
-import { community as communityPropType } from 'sly/propTypes/community';
+import { prefetch } from 'sly/web/services/api';
+import { community as communityPropType } from 'sly/web/propTypes/community';
 
 const CommunityMap = loadable(() =>
-  import(/* webpackChunkName: "chunkCommunityMap" */ 'sly/components/organisms/CommunityMap'),
+  import(/* webpackChunkName: "chunkCommunityMap" */ 'sly/web/components/organisms/CommunityMap'),
 );
 
 class LazyCommunityMapContainer extends Component {

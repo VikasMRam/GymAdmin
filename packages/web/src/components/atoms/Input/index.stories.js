@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Input from 'sly/components/atoms/Input';
+import Input from 'sly/web/components/atoms/Input';
 
 storiesOf('Atoms|Input', module)
   .add('default', () => <Input placeholder="Input some text" />)

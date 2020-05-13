@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import SlyEvent from '../../../services/helpers/events';
 import config from '../../../config';
 
-import Router from 'sly/components/molecules/Router';
+import Router from 'sly/web/components/molecules/Router';
 
 jest.mock('../../../services/helpers/events');
 jest.mock('../../../config');

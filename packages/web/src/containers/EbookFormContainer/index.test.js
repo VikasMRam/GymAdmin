@@ -6,11 +6,11 @@ import { BrowserRouter } from 'react-router-dom';
 
 import EbookFormContainer from './index';
 
-import api from 'sly/services/api/apiInstance';
+import api from 'sly/web/services/api/apiInstance';
 
-jest.mock('sly/services/api/apiInstance');
+jest.mock('sly/web/services/api/apiInstance');
 
-jest.mock('sly/services/api/withAuth', () => ({
+jest.mock('sly/web/services/api/withAuth', () => ({
   __esModule: true,
   default: (Component) => {
     const Wrapper = props => (

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
-import { Block, Button } from 'sly/components/atoms';
+import { size, palette } from 'sly/web/components/themes';
+import { Block, Button } from 'sly/web/components/atoms';
 
 const TitleBlock = styled(Block)`
   margin: auto;

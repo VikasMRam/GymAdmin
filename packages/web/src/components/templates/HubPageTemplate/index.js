@@ -3,9 +3,9 @@ import { string } from 'prop-types';
 import styled from 'styled-components';
 import classes from 'classnames';
 
-import { size, palette } from 'sly/components/themes';
-import { withHydration } from 'sly/services/partialHydration';
-import { TemplateHeader } from 'sly/components/templates/BasePageTemplate';
+import { size, palette } from 'sly/web/components/themes';
+import { withHydration } from 'sly/web/services/partialHydration';
+import { TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
 
 export const HubPageTemplate = styled.main`
   .overlayWrapper {

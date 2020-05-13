@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
+import FamilyActivityItem from 'sly/web/components/molecules/FamilyActivityItem';
 
 storiesOf('Molecules|FamilyActivityItem', module)
   .add('default', () => (

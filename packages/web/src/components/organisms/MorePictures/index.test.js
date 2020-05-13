@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import MorePictures from 'sly/components/organisms/MorePictures';
-import { ResponsiveImage } from 'sly/components/atoms';
+import MorePictures from 'sly/web/components/organisms/MorePictures';
+import { ResponsiveImage } from 'sly/web/components/atoms';
 
 const images = [
   {

@@ -3,11 +3,11 @@ import { object, array } from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 
-import SlyEvent from 'sly/services/helpers/events';
-import CareTypeRegionGuidePage from 'sly/components/pages/CareTypeRegionGuidePage';
-import { getSearchParamFromPlacesResponse, filterLinkPath, getGuideParams } from 'sly/services/helpers/search';
-import { prefetch } from 'sly/services/api';
-import { withProps } from 'sly/services/helpers/hocs';
+import SlyEvent from 'sly/web/services/helpers/events';
+import CareTypeRegionGuidePage from 'sly/web/components/pages/CareTypeRegionGuidePage';
+import { getSearchParamFromPlacesResponse, filterLinkPath, getGuideParams } from 'sly/web/services/helpers/search';
+import { prefetch } from 'sly/web/services/api';
+import { withProps } from 'sly/web/services/helpers/hocs';
 
 @withProps(({ match }) => ({
   searchParams: getGuideParams(match),

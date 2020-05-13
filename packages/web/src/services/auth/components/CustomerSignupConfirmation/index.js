@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { func, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { Icon, Heading, Button, Paragraph } from 'sly/components/atoms';
-import pad from 'sly/components/helpers/pad';
-import fullWidth from 'sly/components/helpers/fullWidth';
+import { Icon, Heading, Button, Paragraph } from 'sly/web/components/atoms';
+import pad from 'sly/web/components/helpers/pad';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
 
 
 const Wrapper = styled.div`

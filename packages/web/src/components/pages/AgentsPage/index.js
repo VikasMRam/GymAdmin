@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { func, object } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Hr } from 'sly/components/atoms';
-import { getHelmetForAgentsPage } from 'sly/services/helpers/html_headers';
-import { agentsFAQs, mostSearchedRegions } from 'sly/constants/agents';
-import { CONSULTATION_REQUESTED } from 'sly/services/api/constants';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import Footer from 'sly/components/organisms/Footer';
-import Section from 'sly/components/molecules/Section';
-import IconInfoTile from 'sly/components/molecules/IconInfoTile';
-import MostSearchedRegions, { ColumnWrapper } from 'sly/components/molecules/MostSearchedRegions';
-import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
-import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
-import FAQSection from 'sly/components/organisms/FAQSection';
-import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
+import { size } from 'sly/web/components/themes';
+import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
+import { Hr } from 'sly/web/components/atoms';
+import { getHelmetForAgentsPage } from 'sly/web/services/helpers/html_headers';
+import { agentsFAQs, mostSearchedRegions } from 'sly/web/constants/agents';
+import { CONSULTATION_REQUESTED } from 'sly/web/services/api/constants';
+import HeaderContainer from 'sly/web/containers/HeaderContainer';
+import Footer from 'sly/web/components/organisms/Footer';
+import Section from 'sly/web/components/molecules/Section';
+import IconInfoTile from 'sly/web/components/molecules/IconInfoTile';
+import MostSearchedRegions, { ColumnWrapper } from 'sly/web/components/molecules/MostSearchedRegions';
+import FindLocalAgent from 'sly/web/components/molecules/FindLocalAgent';
+import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
+import FAQSection from 'sly/web/components/organisms/FAQSection';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 
 const HeroWrapper = styled.div`
   position: relative;

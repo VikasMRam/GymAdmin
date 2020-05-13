@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import ImageOverlayContentTile, { StyledImage, ContentWrapper }
-  from 'sly/components/molecules/ImageOverlayContentTile';
+  from 'sly/web/components/molecules/ImageOverlayContentTile';
 
 const image =
   'https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_sd.jpg';

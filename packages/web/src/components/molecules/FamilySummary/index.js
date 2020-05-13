@@ -2,17 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, bool } from 'prop-types';
 
-import pad from 'sly/components/helpers/pad';
-import cursor from 'sly/components/helpers/cursor';
-import { size } from 'sly/components/themes';
-import clientPropType from 'sly/propTypes/client';
-import { Box, Heading, Label, Block, Link, Hr } from 'sly/components/atoms';
-import Role from 'sly/components/common/Role';
-import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
-import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
-import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
-import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
-import { phoneFormatter } from 'sly/services/helpers/phone';
+import pad from 'sly/web/components/helpers/pad';
+import cursor from 'sly/web/components/helpers/cursor';
+import { size } from 'sly/web/components/themes';
+import clientPropType from 'sly/web/propTypes/client';
+import { Box, Heading, Label, Block, Link, Hr } from 'sly/web/components/atoms';
+import Role from 'sly/web/components/common/Role';
+import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
+import { FAMILY_STAGE_NEW } from 'sly/web/constants/familyDetails';
+import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
+import { phoneFormatter } from 'sly/web/services/helpers/phone';
 
 const ColumWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.mobile')}) {

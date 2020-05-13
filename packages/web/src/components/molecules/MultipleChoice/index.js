@@ -12,8 +12,8 @@ import {
 import styled, { css } from 'styled-components';
 import { ifProp, prop, switchProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
-import { Button } from 'sly/components/atoms';
+import { size } from 'sly/web/components/themes';
+import { Button } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   ${switchProp('orientation', {

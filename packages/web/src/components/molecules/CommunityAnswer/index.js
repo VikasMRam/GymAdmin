@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { content as contentPropType } from 'sly/propTypes/content';
-import { Block } from 'sly/components/atoms';
+import { content as contentPropType } from 'sly/web/propTypes/content';
+import { Block } from 'sly/web/components/atoms';
 
 const CommunityAnswer = ({ answer }) => {
   const { contentData } = answer;

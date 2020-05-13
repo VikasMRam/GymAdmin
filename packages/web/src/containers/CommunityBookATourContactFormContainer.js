@@ -1,7 +1,7 @@
 import { reduxForm } from 'redux-form';
 
-import CommunityBookATourContactForm from 'sly/components/organisms/CommunityBookATourContactForm';
-import { createValidator, required, usPhone, email } from 'sly/services/validation';
+import CommunityBookATourContactForm from 'sly/web/components/organisms/CommunityBookATourContactForm';
+import { createValidator, required, usPhone, email } from 'sly/web/services/validation';
 
 const validate = createValidator({
   name: [required],

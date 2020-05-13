@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, shape, string, func } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import { Hr, Link } from 'sly/components/atoms';
-import IconItem from 'sly/components/molecules/IconItem';
+import { size } from 'sly/web/components/themes';
+import { Hr, Link } from 'sly/web/components/atoms';
+import IconItem from 'sly/web/components/molecules/IconItem';
 
 const getMarginRight = p => p.borderless ? size('spacing', p.iconRightMarginSpacing) : size('spacing.large');
 

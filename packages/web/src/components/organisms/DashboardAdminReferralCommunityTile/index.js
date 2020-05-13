@@ -3,16 +3,16 @@ import styled from 'styled-components';
 import { string, func, bool } from 'prop-types';
 import { ifProp, ifNotProp } from 'styled-tools';
 
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
-import { size, palette } from 'sly/components/themes';
-import { adminCommunityPropType } from 'sly/propTypes/community';
-import { getHasContract, getIsCCRC, getIsSNF } from 'sly/services/helpers/community';
-import { buildAddressDisplay, getReferralSentTimeText } from 'sly/services/helpers/communityReferral';
-import { Heading, Block, Span, Button, Link } from 'sly/components/atoms';
-import Role from 'sly/components/common/Role'
-import Stage from 'sly/components/molecules/Stage';
-// import cursor from 'sly/components/helpers/cursor';
-import IconBadge from 'sly/components/molecules/IconBadge';
+import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { size, palette } from 'sly/web/components/themes';
+import { adminCommunityPropType } from 'sly/web/propTypes/community';
+import { getHasContract, getIsCCRC, getIsSNF } from 'sly/web/services/helpers/community';
+import { buildAddressDisplay, getReferralSentTimeText } from 'sly/web/services/helpers/communityReferral';
+import { Heading, Block, Span, Button, Link } from 'sly/web/components/atoms';
+import Role from 'sly/web/components/common/Role'
+import Stage from 'sly/web/components/molecules/Stage';
+// import cursor from 'sly/web/components/helpers/cursor';
+import IconBadge from 'sly/web/components/molecules/IconBadge';
 
 const getTitlePalette = variant => p => palette(p.titlePalette, variant);
 

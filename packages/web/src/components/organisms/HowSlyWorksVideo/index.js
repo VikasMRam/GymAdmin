@@ -2,7 +2,7 @@ import React from 'react';
 import { bool, func, string } from 'prop-types';
 import styled from 'styled-components';
 
-import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
+import VideoThumbnail from 'sly/web/components/molecules/VideoThumbnail';
 
 const StyledVideo = styled.video`
   width: 100%!important;

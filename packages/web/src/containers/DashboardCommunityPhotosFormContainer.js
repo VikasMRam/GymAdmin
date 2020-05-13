@@ -6,15 +6,15 @@ import defaultsDeep from 'lodash/defaultsDeep';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
-import userPropType from 'sly/propTypes/user';
-import { galleryPropType, imagePropType } from 'sly/propTypes/gallery';
-import { query, prefetch, getRelationship } from 'sly/services/api';
-import withUser from 'sly/services/api/withUser';
-import { userIs } from 'sly/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/constants/roles';
-import DashboardCommunityPhotosForm from 'sly/components/organisms/DashboardCommunityPhotosForm';
-import { purgeFromRelationships, invalidateRequests } from 'sly/services/api/actions';
-import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
+import userPropType from 'sly/web/propTypes/user';
+import { galleryPropType, imagePropType } from 'sly/web/propTypes/gallery';
+import { query, prefetch, getRelationship } from 'sly/web/services/api';
+import withUser from 'sly/web/services/api/withUser';
+import { userIs } from 'sly/web/services/helpers/role';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import DashboardCommunityPhotosForm from 'sly/web/components/organisms/DashboardCommunityPhotosForm';
+import { purgeFromRelationships, invalidateRequests } from 'sly/web/services/api/actions';
+import ConfirmationDialog from 'sly/web/components/molecules/ConfirmationDialog';
 
 const arrayMove = (array, from, to) => {
   array = array.slice();

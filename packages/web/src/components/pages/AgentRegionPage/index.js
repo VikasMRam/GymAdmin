@@ -3,20 +3,20 @@ import styled from 'styled-components';
 import { string, arrayOf, func, object, bool } from 'prop-types';
 import Helmet from 'react-helmet';
 
-import { getHelmetForAgentsRegionPage } from 'sly/services/helpers/html_headers';
-import agentPropType from 'sly/propTypes/agent';
-import { size, palette } from 'sly/components/themes';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import { CONSULTATION_REQUESTED } from 'sly/services/api/constants';
-import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
-import AgentTile from 'sly/components/molecules/AgentTile';
-import Section from 'sly/components/molecules/Section';
-import Footer from 'sly/components/organisms/Footer';
-import { Heading, Block, Link, Hr } from 'sly/components/atoms';
-import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
-import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
-import MostSearchedRegions from 'sly/components/molecules/MostSearchedRegions';
-import { mostSearchedRegions } from 'sly/constants/agents';
+import { getHelmetForAgentsRegionPage } from 'sly/web/services/helpers/html_headers';
+import agentPropType from 'sly/web/propTypes/agent';
+import { size, palette } from 'sly/web/components/themes';
+import HeaderContainer from 'sly/web/containers/HeaderContainer';
+import { CONSULTATION_REQUESTED } from 'sly/web/services/api/constants';
+import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
+import AgentTile from 'sly/web/components/molecules/AgentTile';
+import Section from 'sly/web/components/molecules/Section';
+import Footer from 'sly/web/components/organisms/Footer';
+import { Heading, Block, Link, Hr } from 'sly/web/components/atoms';
+import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
+import FindLocalAgent from 'sly/web/components/molecules/FindLocalAgent';
+import MostSearchedRegions from 'sly/web/components/molecules/MostSearchedRegions';
+import { mostSearchedRegions } from 'sly/web/constants/agents';
 
 const PageHeadingSection = styled.div`
   text-align: center;

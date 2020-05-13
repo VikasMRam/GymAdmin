@@ -3,9 +3,9 @@ import { createStore, combineReducers } from 'redux';
 import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 
-import * as actions from 'sly/store/authenticated/actions';
-import authenticated from 'sly/store/authenticated/reducer';
-import AuthContainer from 'sly/services/auth/containers/AuthContainer';
+import * as actions from 'sly/web/store/authenticated/actions';
+import authenticated from 'sly/web/store/authenticated/reducer';
+import AuthContainer from 'sly/web/services/auth/containers/AuthContainer';
 
 const reducer = combineReducers({ authenticated });
 

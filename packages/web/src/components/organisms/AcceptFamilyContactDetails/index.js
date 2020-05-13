@@ -1,8 +1,8 @@
 import React from 'react';
 import { string, object, func } from 'prop-types';
 
-import InteractiveDetail from 'sly/components/molecules/InteractiveDetail';
-import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
+import InteractiveDetail from 'sly/web/components/molecules/InteractiveDetail';
+import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
 
 const AcceptFamilyContactDetails = ({
   label, detail, handleSubmit, ...props

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Pagination from 'sly/components/molecules/Pagination';
+import Pagination from 'sly/web/components/molecules/Pagination';
 
 const wrap = (props = {}) => shallow(<Pagination {...props} />);
 

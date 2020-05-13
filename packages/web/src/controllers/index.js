@@ -4,8 +4,8 @@ import get from 'lodash/get';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import { func, string } from 'prop-types';
 
-import { randomHexNumber } from 'sly/services/helpers/utils';
-import { set, unset, reset } from 'sly/store/controller/actions';
+import { randomHexNumber } from 'sly/web/services/helpers/utils';
+import { set, unset, reset } from 'sly/web/store/controller/actions';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName

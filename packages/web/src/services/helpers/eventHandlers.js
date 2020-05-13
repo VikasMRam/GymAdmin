@@ -1,4 +1,4 @@
-import SlyEvent from 'sly/services/helpers/events';
+import SlyEvent from 'sly/web/services/helpers/events';
 
 export const clickEventHandler = (category, label) => {
   return (event) => {

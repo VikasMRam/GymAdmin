@@ -3,19 +3,19 @@ import { func, object, string } from 'prop-types';
 import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 
-import { assetPath } from 'sly/components/themes';
-import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
-import SlyEvent from 'sly/services/helpers/events';
-import withModal from 'sly/controllers/withModal';
-import withNotification from 'sly/controllers/withNotification';
-import { prefetch } from 'sly/services/api';
+import { assetPath } from 'sly/web/components/themes';
+import { generateAskAgentQuestionContents } from 'sly/web/services/helpers/agents';
+import SlyEvent from 'sly/web/services/helpers/events';
+import withModal from 'sly/web/controllers/withModal';
+import withNotification from 'sly/web/controllers/withNotification';
+import { prefetch } from 'sly/web/services/api';
 
 const CommunityAskQuestionAgentFormContainer = loadable(() =>
-  import(/* webpackChunkName: "chunkCommunityAskQuestionAgentFormContainer" */ 'sly/containers/CommunityAskQuestionAgentFormContainer'),
+  import(/* webpackChunkName: "chunkCommunityAskQuestionAgentFormContainer" */ 'sly/web/containers/CommunityAskQuestionAgentFormContainer'),
 );
 
 const AskQuestionToAgentFormContainer = loadable(() =>
-  import(/* webpackChunkName: "chunkAskQuestionToAgentFormContainer" */ 'sly/containers/AskQuestionToAgentFormContainer'),
+  import(/* webpackChunkName: "chunkAskQuestionToAgentFormContainer" */ 'sly/web/containers/AskQuestionToAgentFormContainer'),
 );
 
 @withRouter

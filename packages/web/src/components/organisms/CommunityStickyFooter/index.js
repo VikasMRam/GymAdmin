@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { bool, string } from 'prop-types';
 
-import { size, palette, key } from 'sly/components/themes';
-import CommunityActions from 'sly/components/molecules/CommunityActions';
+import { size, palette, key } from 'sly/web/components/themes';
+import CommunityActions from 'sly/web/components/molecules/CommunityActions';
 
 const Wrapper = styled.div`
   position: fixed;

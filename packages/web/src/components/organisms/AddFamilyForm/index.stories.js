@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 
-import AddFamilyForm from 'sly/components/organisms/AddFamilyForm';
+import AddFamilyForm from 'sly/web/components/organisms/AddFamilyForm';
 
 const timeToMove = [
   'Immediately',

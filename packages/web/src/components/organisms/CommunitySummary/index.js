@@ -3,19 +3,19 @@ import { object, bool, func, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
-import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES, CONTINUING_CARE_RETIREMENT_COMMUNITY, CCRC } from 'sly/constants/tags';
-import { size, palette } from 'sly/components/themes';
-import { community as communityPropType } from 'sly/propTypes/community';
-import pad from 'sly/components/helpers/pad';
-import mobileOnly from 'sly/components/helpers/mobileOnly';
-import { Link, Box, Heading, Hr, Icon, Tag, Block } from 'sly/components/atoms';
-import IconButton from 'sly/components/molecules/IconButton';
-import CommunityRating from 'sly/components/molecules/CommunityRating';
-import CommunityPricing from 'sly/components/molecules/CommunityPricing';
-import { isBrowser } from 'sly/config';
-import PlusBadge from 'sly/components/molecules/PlusBadge';
-import { tocPaths } from 'sly/services/helpers/url';
-import { phoneFormatter } from 'sly/services/helpers/phone';
+import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES, CONTINUING_CARE_RETIREMENT_COMMUNITY, CCRC } from 'sly/web/constants/tags';
+import { size, palette } from 'sly/web/components/themes';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import pad from 'sly/web/components/helpers/pad';
+import mobileOnly from 'sly/web/components/helpers/mobileOnly';
+import { Link, Box, Heading, Hr, Icon, Tag, Block } from 'sly/web/components/atoms';
+import IconButton from 'sly/web/components/molecules/IconButton';
+import CommunityRating from 'sly/web/components/molecules/CommunityRating';
+import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';
+import { isBrowser } from 'sly/web/config';
+import PlusBadge from 'sly/web/components/molecules/PlusBadge';
+import { tocPaths } from 'sly/web/services/helpers/url';
+import { phoneFormatter } from 'sly/web/services/helpers/phone';
 
 const StyledHeading = pad(Heading, 'regular');
 StyledHeading.displayName = 'StyledHeading';
@@ -124,7 +124,7 @@ const getPricingAndRating = (startingRate, reviewsValue, numReviews, goToReviews
 };
 
 const CommunitySummary = ({
-  community, innerRef, isAdmin, onConciergeNumberClicked, onCommunityNumberClicked, onCommunityClaimClicked, className,
+  community, innerRef, isAdmin, onConciergeNumberClicked, onCommunityNumberClicked, className,
   onFavouriteClick, isFavorited, onShareClick, goToReviews, searchParams,
 }) => {
   const {
@@ -207,26 +207,25 @@ const CommunitySummary = ({
                   This phone number will connect you to the concierge team at Seniorly.
                 </TooltipContent>
                 }
-                <br/>
               </>
           }
-
-          To connect directly, call&nbsp;
-          <Link href={`tel:${communityPhone}`} onClick={onCommunityNumberClicked}>
-            {phoneFormatter(communityPhone, true)}
-          </Link>
-          <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
-          {isBrowser &&
-          <TooltipContent id="phone" place="top" effect="solid" multiline>
-            This phone number will connect you to the community.
-          </TooltipContent>
+          {
+            (tier === "4" || !partnerAgent) &&
+              <>
+                To connect directly, call&nbsp;
+                <Link href={`tel:${communityPhone}`} onClick={onCommunityNumberClicked}>
+                  {phoneFormatter(communityPhone, true)}
+                </Link>
+                <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
+                {isBrowser &&
+                <TooltipContent id="phone" place="top" effect="solid" multiline>
+                  This phone number will connect you to the community.
+                </TooltipContent>
+                }
+              </>
           }
-          <br/>
-          Manage this community?&nbsp;
-          <Link href={`/partners/communities?prop=${community.id}`} onClick={onCommunityClaimClicked}>
-            Click here to claim this profile
-          </Link>
         </div>
+
         <div>
           <StyledIconButton ghost transparent icon="share" onClick={onShareClick}>
             Share
@@ -246,7 +245,6 @@ CommunitySummary.propTypes = {
   innerRef: object,
   isAdmin: bool,
   onConciergeNumberClicked: func,
-  onCommunityClaimClicked: func,
   className: string,
   onFavouriteClick: func,
   onShareClick: func,

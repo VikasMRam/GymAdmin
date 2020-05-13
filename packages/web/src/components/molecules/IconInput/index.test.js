@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import IconInput from 'sly/components/molecules/IconInput';
+import IconInput from 'sly/web/components/molecules/IconInput';
 
 const wrap = (props = {}) => shallow(<IconInput {...props} />);
 

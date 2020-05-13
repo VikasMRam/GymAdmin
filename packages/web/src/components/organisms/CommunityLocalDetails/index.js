@@ -2,7 +2,7 @@
 import React from 'react';
 import { string } from 'prop-types';
 
-import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
+import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 
 const CommunityLocalDetails = ({ localDetails }) => {
   if (localDetails) {

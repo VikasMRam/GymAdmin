@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { object } from 'prop-types';
 
-import pad from 'sly/components/helpers/pad';
-import { Table, THead, TBody, Tr } from 'sly/components/atoms';
-import Th from 'sly/components/molecules/Th';
-import VoiceRowCard from 'sly/components/organisms/VoiceRowCard';
-import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
+import pad from 'sly/web/components/helpers/pad';
+import { Table, THead, TBody, Tr } from 'sly/web/components/atoms';
+import Th from 'sly/web/components/molecules/Th';
+import VoiceRowCard from 'sly/web/components/organisms/VoiceRowCard';
+import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 
 const TableSectionWrapper = styled.div`
   overflow: auto;

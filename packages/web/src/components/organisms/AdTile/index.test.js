@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import AdTile from 'sly/components/organisms/AdTile';
+import AdTile from 'sly/web/components/organisms/AdTile';
 
 const defaultProps = {
   title: 'title',

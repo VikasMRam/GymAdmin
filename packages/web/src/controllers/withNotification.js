@@ -1,7 +1,7 @@
 import React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
-import NotificationController from 'sly/controllers/NotificationController';
+import NotificationController from 'sly/web/controllers/NotificationController';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';

@@ -3,14 +3,14 @@ import { func } from 'prop-types';
 import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 
-import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
-import { community as communityPropType } from 'sly/propTypes/community';
-import SlyEvent from 'sly/services/helpers/events';
-import withModal from 'sly/controllers/withModal';
-import { prefetch } from 'sly/services/api';
+import CommunityQuestionAnswers from 'sly/web/components/organisms/CommunityQuestionAnswers';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import SlyEvent from 'sly/web/services/helpers/events';
+import withModal from 'sly/web/controllers/withModal';
+import { prefetch } from 'sly/web/services/api';
 
-const CommunityLeaveAnAnswerFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityLeaveAnAnswerFormContainer" */'sly/containers/CommunityLeaveAnAnswerFormContainer'));
-const CommunityAskQuestionFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityAskQuestionFormContainer" */'sly/containers/CommunityAskQuestionFormContainer'));
+const CommunityLeaveAnAnswerFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityLeaveAnAnswerFormContainer" */'sly/web/containers/CommunityLeaveAnAnswerFormContainer'));
+const CommunityAskQuestionFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityAskQuestionFormContainer" */'sly/web/containers/CommunityAskQuestionFormContainer'));
 
 @withRouter
 @prefetch('community', 'getCommunity', (req, { match }) => req({

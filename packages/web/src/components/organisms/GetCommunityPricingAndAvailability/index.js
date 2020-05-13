@@ -1,12 +1,12 @@
 import React from 'react';
 import { string } from 'prop-types';
 
-import { community as communityPropType } from 'sly/propTypes/community';
-import pad from 'sly/components/helpers/pad';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import { Button, Heading, Box, Block } from 'sly/components/atoms';
-import CommunityRating from 'sly/components/molecules/CommunityRating';
-import CommunityPricing from 'sly/components/molecules/CommunityPricing';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import pad from 'sly/web/components/helpers/pad';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import { Button, Heading, Box, Block } from 'sly/web/components/atoms';
+import CommunityRating from 'sly/web/components/molecules/CommunityRating';
+import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';
 
 const StyledButton = fullWidth(Button);
 

@@ -1,4 +1,4 @@
-import { removeQueryParamFromURL } from 'sly/services/helpers/url';
+import { removeQueryParamFromURL } from 'sly/web/services/helpers/url';
 
 it('removeQueryParamFromURL removes correctly', () => {
   const url = 'http://www.lvh.me/foo?sly_uuid=blah';

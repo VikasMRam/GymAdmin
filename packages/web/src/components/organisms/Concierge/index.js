@@ -1,7 +1,7 @@
 import React from 'react';
 import { object, func } from 'prop-types';
 
-import ConversionFormContainer from 'sly/containers/ConversionFormContainer';
+import ConversionFormContainer from 'sly/web/containers/ConversionFormContainer';
 
 const Concierge = ({
   community,

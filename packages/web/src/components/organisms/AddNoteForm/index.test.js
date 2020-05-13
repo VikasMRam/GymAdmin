@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import AddNoteForm from 'sly/components/organisms/AddNoteForm';
+import AddNoteForm from 'sly/web/components/organisms/AddNoteForm';
 
 const wrap = (props = {}) => shallow(<AddNoteForm {...props} />);
 

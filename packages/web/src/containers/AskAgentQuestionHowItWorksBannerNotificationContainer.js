@@ -1,7 +1,7 @@
 import React from 'react';
 
-import HowItWorksBannerNotificationContainer from 'sly/containers/HowItWorksBannerNotificationContainer';
-import AskAgentQuestionContainer from 'sly/containers/AskAgentQuestionContainer';
+import HowItWorksBannerNotificationContainer from 'sly/web/containers/HowItWorksBannerNotificationContainer';
+import AskAgentQuestionContainer from 'sly/web/containers/AskAgentQuestionContainer';
 
 export default function AskAgentQuestionHowItWorksBannerNotificationContainer(props) {
   return (

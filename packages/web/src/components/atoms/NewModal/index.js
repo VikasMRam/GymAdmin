@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
 import { any, func, bool } from 'prop-types';
 
-import { isBrowser } from 'sly/config';
-import { size, palette, key } from 'sly/components/themes';
-import textAlign from 'sly/components/helpers/textAlign';
-import IconButton from 'sly/components/molecules/IconButton';
+import { isBrowser } from 'sly/web/config';
+import { size, palette, key } from 'sly/web/components/themes';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import IconButton from 'sly/web/components/molecules/IconButton';
 
 const Overlay = styled.div`
   display: ${ifProp('isOpen', 'flex', 'none')};

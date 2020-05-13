@@ -4,14 +4,14 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import isMatch from 'lodash/isMatch';
 
-import SlyEvent from 'sly/services/helpers/events';
+import SlyEvent from 'sly/web/services/helpers/events';
 import {
   AVAILABILITY_REQUEST,
   CONSULTATION_REQUESTED, PRICING_REQUEST,
   PROFILE_CONTACTED,
-} from 'sly/services/api/constants';
-import { prefetch, query, withAuth } from 'sly/services/api';
-import { withRedirectTo } from 'sly/services/redirectTo';
+} from 'sly/web/services/api/constants';
+import { prefetch, query, withAuth } from 'sly/web/services/api';
+import { withRedirectTo } from 'sly/web/services/redirectTo';
 
 export const CONVERSION_FORM = 'conversionForm';
 export const ADVANCED_INFO = 'advancedInfo';

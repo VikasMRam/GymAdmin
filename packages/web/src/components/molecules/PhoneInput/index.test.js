@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import PhoneInput from 'sly/components/molecules/PhoneInput/index';
+import PhoneInput from 'sly/web/components/molecules/PhoneInput/index';
 
 const wrap = (props = {}) => mount(<PhoneInput {...props} />);
 

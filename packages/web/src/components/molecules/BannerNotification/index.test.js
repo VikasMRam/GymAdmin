@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import BannerNotification from 'sly/components/molecules/BannerNotification';
+import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 
 const wrap = (props = {}) => shallow(<BannerNotification {...props} />);
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import EntityReviews from 'sly/components/organisms/EntityReviews';
-import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
-import EntityReview from 'sly/components/molecules/EntityReview';
+import EntityReviews from 'sly/web/components/organisms/EntityReviews';
+import GatheredReviewRatings from 'sly/web/components/molecules/GatheredReviewRatings';
+import EntityReview from 'sly/web/components/molecules/EntityReview';
 
 const reviewRating = {
   name: 'Yelp',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Rating from 'sly/components/molecules/Rating';
+import Rating from 'sly/web/components/molecules/Rating';
 
 storiesOf('Molecules|Rating', module)
   .add('default', () => <Rating value={3.5} />)

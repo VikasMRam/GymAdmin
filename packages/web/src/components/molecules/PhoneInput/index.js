@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { func, bool, string } from 'prop-types';
 
-import { Input } from 'sly/components/atoms';
-import { phoneFormatter, phoneParser } from 'sly/services/helpers/phone';
+import { Input } from 'sly/web/components/atoms';
+import { phoneFormatter, phoneParser } from 'sly/web/services/helpers/phone';
 
 export default class PhoneInput extends Component {
   static propTypes = {

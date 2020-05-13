@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import PartnerAgentProfileForm from 'sly/components/organisms/PartnerAgentProfileForm';
+import PartnerAgentProfileForm from 'sly/web/components/organisms/PartnerAgentProfileForm';
 
 const handleSubmit = jest.fn();
 const defaultProps = {

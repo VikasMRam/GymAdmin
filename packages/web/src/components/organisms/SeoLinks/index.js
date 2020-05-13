@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { arrayOf, string, object } from 'prop-types';
 
-import { size, palette } from 'sly/components/themes';
-import { Heading, Link } from 'sly/components/atoms';
-import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
+import { size, palette } from 'sly/web/components/themes';
+import { Heading, Link } from 'sly/web/components/atoms';
+import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};

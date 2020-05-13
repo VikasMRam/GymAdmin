@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { func, bool, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette, columnWidth } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import { Block, Button } from 'sly/components/atoms';
+import { size, palette, columnWidth } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { Block, Button } from 'sly/web/components/atoms';
 import { Field } from 'redux-form';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import { AVAILABLE_TAGS } from 'sly/constants/tags';
-import { states } from 'sly/constants/communities';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
+import { states } from 'sly/web/constants/communities';
 
 const statesOptions = states.map(s => <option key={s} value={s}>{s}</option>);
 

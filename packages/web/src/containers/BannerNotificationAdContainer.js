@@ -1,18 +1,18 @@
 import React, { PureComponent } from 'react';
 import { oneOf, func, string, bool } from 'prop-types';
 
-import SlyEvent from 'sly/services/helpers/events';
-import { Link } from 'sly/components/atoms';
-import BannerNotification from 'sly/components/molecules/BannerNotification';
-import { assetPath } from 'sly/components/themes';
-import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
-import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/services/api/constants';
-import pad from 'sly/components/helpers/pad';
-import textDecoration from 'sly/components/helpers/textDecoration';
-import withNotification from 'sly/controllers/withNotification';
-import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
-import ImportantCovid19UpdatesStepContainer from 'sly/containers/ImportantCovid19UpdatesStepContainer';
-import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/components/atoms/NewModal';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { Link } from 'sly/web/components/atoms';
+import BannerNotification from 'sly/web/components/molecules/BannerNotification';
+import { assetPath } from 'sly/web/components/themes';
+import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
+import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
+import pad from 'sly/web/components/helpers/pad';
+import textDecoration from 'sly/web/components/helpers/textDecoration';
+import withNotification from 'sly/web/controllers/withNotification';
+import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
+import ImportantCovid19UpdatesStepContainer from 'sly/web/containers/ImportantCovid19UpdatesStepContainer';
+import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
 
 const PaddedBannerNotification = pad(BannerNotification, 'large');
 

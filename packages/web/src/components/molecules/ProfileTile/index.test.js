@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ProfileTile, { ImageWrapper } from 'sly/components/molecules/ProfileTile';
+import ProfileTile, { ImageWrapper } from 'sly/web/components/molecules/ProfileTile';
 
 const profile = {
   heading: 'Arthur Bretschneider',

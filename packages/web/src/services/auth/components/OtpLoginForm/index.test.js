@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import OtpLoginForm from 'sly/services/auth/components/OtpLoginForm/index';
+import OtpLoginForm from 'sly/web/services/auth/components/OtpLoginForm/index';
 
 const emailOrPhone = 'test@test.com';
 const handleSubmit = jest.fn();

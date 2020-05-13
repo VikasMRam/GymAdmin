@@ -3,12 +3,12 @@ import { func, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
-import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
-import pad from 'sly/components/helpers/pad';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import { Button, Heading, Box } from 'sly/components/atoms';
-import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
+import { size, palette } from 'sly/web/components/themes';
+import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
+import pad from 'sly/web/components/helpers/pad';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import { Button, Heading, Box } from 'sly/web/components/atoms';
+import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 
 const StyledButton = styled(Button)`
   width: 100%;

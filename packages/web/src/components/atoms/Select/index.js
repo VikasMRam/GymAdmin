@@ -5,9 +5,9 @@ import { func, string, arrayOf, object, bool, node, oneOf, oneOfType } from 'pro
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette, getKey } from 'sly/components/themes';
-import Icon from 'sly/components/atoms/Icon';
-import Hr from 'sly/components/atoms/Hr';
+import { size, palette, getKey } from 'sly/web/components/themes';
+import Icon from 'sly/web/components/atoms/Icon';
+import Hr from 'sly/web/components/atoms/Hr';
 
 const { Option, Group, SingleValue } = components;
 
@@ -226,7 +226,7 @@ const Select = ({
   // autocomplete, which doesn't have a given array of options
   if (flattenedOptions.length) {
     if (props.isMulti) {
-      value = flattenedOptions.filter(o => value.includes(o.value));
+      value = flattenedOptions.filter(o => (value || []).includes(o.value));
     } else {
       value = flattenedOptions.find((o => value === o.value));
     }

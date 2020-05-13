@@ -1,4 +1,4 @@
-import { isBrowser } from 'sly/config';
+import { isBrowser } from 'sly/web/config';
 
 export const randomHexNumber = () => {
   return Math.floor(Math.random() * 16777215).toString(16);

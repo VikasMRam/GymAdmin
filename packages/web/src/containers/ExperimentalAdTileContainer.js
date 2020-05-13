@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { func, string } from 'prop-types';
 
-import AdTile from 'sly/components/organisms/AdTile';
-import { Experiment, Variant } from 'sly/services/experiments';
-import { assetPath } from 'sly/components/themes';
+import AdTile from 'sly/web/components/organisms/AdTile';
+import { Experiment, Variant } from 'sly/web/services/experiments';
+import { assetPath } from 'sly/web/components/themes';
 
 export default class ExperimentalAdTileContainer extends Component {
   static propTypes = {

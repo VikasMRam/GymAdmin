@@ -3,11 +3,11 @@ import { func, bool, object } from 'prop-types';
 import styled from 'styled-components';
 import { Field as RFField } from 'redux-form';
 
-import { size, palette, columnWidth } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import { Button } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import communityPropType from 'sly/propTypes/community';
+import { size, palette, columnWidth } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import { Button } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import communityPropType from 'sly/web/propTypes/community';
 
 const nonCareServicesOptions = [
   { value: 'Community Operated Transportation', label: 'Community operated transportation' },

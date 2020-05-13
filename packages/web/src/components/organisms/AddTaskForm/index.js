@@ -4,11 +4,11 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-import { size } from 'sly/components/themes';
-import userPropType from 'sly/propTypes/user';
-import { Label } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
+import { size } from 'sly/web/components/themes';
+import userPropType from 'sly/web/propTypes/user';
+import { Label } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
 
 const StyledTable = styled.table`
   tr td:first-child {

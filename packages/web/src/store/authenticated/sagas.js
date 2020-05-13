@@ -2,8 +2,8 @@ import { call, put, race, takeEvery, take, select } from 'redux-saga/effects';
 
 import * as actions from './actions';
 
-import { isFSA } from 'sly/store/actions';
-import { createMemoizedRequestInfoSelector } from 'sly/services/api';
+import { isFSA } from 'sly/web/store/actions';
+import { createMemoizedRequestInfoSelector } from 'sly/web/services/api';
 
 
 const getMemoizedRequestInfo = createMemoizedRequestInfoSelector();

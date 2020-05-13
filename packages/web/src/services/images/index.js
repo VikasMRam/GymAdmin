@@ -1,4 +1,4 @@
-import { assetsUrl } from 'sly/config';
+import { assetsUrl } from 'sly/web/config';
 
 export const getFormat = ({ width, height, aspectRatio, crop = true }) => {
   if (!(width || height)) {

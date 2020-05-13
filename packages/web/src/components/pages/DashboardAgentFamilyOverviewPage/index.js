@@ -2,12 +2,12 @@ import React from 'react';
 import { Redirect, generatePath } from 'react-router';
 import { object } from 'prop-types';
 
-import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import DashboardAgentFamilyOverviewSectionContainer from 'sly/containers/DashboardAgentFamilyOverviewSectionContainer';
+import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
+import DashboardAgentFamilyOverviewSectionContainer from 'sly/web/containers/DashboardAgentFamilyOverviewSectionContainer';
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
   NEWFAMILIES,
-} from 'sly/constants/dashboardAppPaths';
+} from 'sly/web/constants/dashboardAppPaths';
 
 global.generatePath = generatePath;
 

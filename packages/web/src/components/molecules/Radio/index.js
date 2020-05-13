@@ -3,8 +3,8 @@ import { bool, string } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { palette } from 'sly/components/themes';
-import { Icon } from 'sly/components/atoms';
+import { palette } from 'sly/web/components/themes';
+import { Icon } from 'sly/web/components/atoms';
 
 export const StyledIcon = styled(Icon)`
   svg {

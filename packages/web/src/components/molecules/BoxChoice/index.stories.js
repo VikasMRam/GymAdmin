@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import BoxChoice from 'sly/components/molecules/BoxChoice';
+import BoxChoice from 'sly/web/components/molecules/BoxChoice';
 
 const options = [
   { value: 'first', label: 'First' },

@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { arrayOf, object, func } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 
-import RefreshRedirect from 'sly/components/common/RefreshRedirect';
-import { prefetch, query } from 'sly/services/api';
-import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
-import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
-import SlyEvent from 'sly/services/helpers/events';
-import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
-import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
-import withModal from 'sly/controllers/withModal';
-import withNotification from 'sly/controllers/withNotification';
-import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
-import AddOrEditNoteForSavedCommunityContainer from 'sly/containers/AddOrEditNoteForSavedCommunityContainer';
-import DashboardFavoritesPage from 'sly/components/pages/DashboardFavoritesPage';
+import RefreshRedirect from 'sly/web/components/common/RefreshRedirect';
+import { prefetch, query } from 'sly/web/services/api';
+import { COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
+import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS } from 'sly/web/constants/userSave';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { generateAskAgentQuestionContents } from 'sly/web/services/helpers/agents';
+import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/web/services/helpers/search';
+import withModal from 'sly/web/controllers/withModal';
+import withNotification from 'sly/web/controllers/withNotification';
+import CommunityAskQuestionAgentFormContainer from 'sly/web/containers/CommunityAskQuestionAgentFormContainer';
+import AddOrEditNoteForSavedCommunityContainer from 'sly/web/containers/AddOrEditNoteForSavedCommunityContainer';
+import DashboardFavoritesPage from 'sly/web/components/pages/DashboardFavoritesPage';
 
 @query('updateUserSave', 'updateUserSave')
 

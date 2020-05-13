@@ -4,11 +4,11 @@ import { func, object, string } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
-import userPropType from 'sly/propTypes/user';
-import clientPropType from 'sly/propTypes/client';
-import { size } from 'sly/components/themes';
-import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
-import Field from 'sly/components/molecules/Field';
+import userPropType from 'sly/web/propTypes/user';
+import clientPropType from 'sly/web/propTypes/client';
+import { size } from 'sly/web/components/themes';
+import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import Field from 'sly/web/components/molecules/Field';
 import {
   FAMILY_STATUS_ACTIVE,
   FAMILY_STATUS_ARCHIVED,
@@ -16,11 +16,11 @@ import {
   FAMILY_STATUS_DELETED,
   FAMILY_STATUS_LONG_TERM,
   FAMILY_STATUS_ON_PAUSE,
-} from 'sly/constants/familyDetails';
-import SlyEvent from 'sly/services/helpers/events';
-import { query } from 'sly/services/api';
-import ConfirmReasonFormContainer from 'sly/containers/ConfirmReasonFormContainer';
-import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
+} from 'sly/web/constants/familyDetails';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { query } from 'sly/web/services/api';
+import ConfirmReasonFormContainer from 'sly/web/containers/ConfirmReasonFormContainer';
+import ConfirmationDialog from 'sly/web/components/molecules/ConfirmationDialog';
 
 const options = [
   { label: 'Active',    icon: 'active',     palette: 'green',  value: FAMILY_STATUS_ACTIVE, role: AGENT_ND_ROLE  },

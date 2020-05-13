@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityCareService from 'sly/components/organisms/CommunityCareService';
+import CommunityCareService from 'sly/web/components/organisms/CommunityCareService';
 
 const defaultProps = {
   careServices: ['abc', 'def'],

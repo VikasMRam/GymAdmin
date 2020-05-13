@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import DateChoiceTile from 'sly/components/molecules/DateChoiceTile';
+import DateChoiceTile from 'sly/web/components/molecules/DateChoiceTile';
 
 const wrap = (props = {}) =>
   shallow(<DateChoiceTile {...props} />);

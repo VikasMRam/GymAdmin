@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
+import VideoThumbnail from 'sly/web/components/molecules/VideoThumbnail';
 
 storiesOf('Molecules|VideoThumbnail', module)
   .add('default', () => (

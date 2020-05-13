@@ -2,7 +2,7 @@ import ReactGA from 'react-ga';
 import { Cookies } from 'react-cookie';
 import { stringify } from 'query-string';
 
-import { isServer, isTest, gAnalyticsKey, eventServerUrl, isDev, gaEnv } from 'sly/config';
+import { isServer, isTest, gAnalyticsKey, eventServerUrl, isDev, gaEnv } from 'sly/web/config';
 
 const cookie = new Cookies();
 export default class SlyEvent {

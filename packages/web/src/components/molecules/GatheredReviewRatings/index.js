@@ -2,9 +2,9 @@ import React from 'react';
 import { arrayOf, shape, string, number, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
-import { Block } from 'sly/components/atoms';
-import Rating from 'sly/components/molecules/Rating';
+import { size, palette } from 'sly/web/components/themes';
+import { Block } from 'sly/web/components/atoms';
+import Rating from 'sly/web/components/molecules/Rating';
 
 const ReviewHeadingDiv = styled(Block)`
   margin-bottom: ${size('spacing.large')};

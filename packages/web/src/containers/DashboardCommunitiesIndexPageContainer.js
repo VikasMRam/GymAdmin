@@ -4,15 +4,15 @@ import { object, func } from 'prop-types';
 import { withRouter, generatePath } from 'react-router';
 
 
-import DashboardCommunitiesIndexPage from 'sly/components/pages/DashboardCommunitiesIndexPage';
-import AddCommunityFormContainer from 'sly/containers/dashboard/AddCommunityFormContainer'
-import withNotification from 'sly/controllers/withNotification';
-import withModal from 'sly/controllers/withModal';
-import SlyEvent from 'sly/services/helpers/events';
+import DashboardCommunitiesIndexPage from 'sly/web/components/pages/DashboardCommunitiesIndexPage';
+import AddCommunityFormContainer from 'sly/web/containers/dashboard/AddCommunityFormContainer'
+import withNotification from 'sly/web/controllers/withNotification';
+import withModal from 'sly/web/controllers/withModal';
+import SlyEvent from 'sly/web/services/helpers/events';
 import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   PROFILE,
-} from 'sly/constants/dashboardAppPaths';
+} from 'sly/web/constants/dashboardAppPaths';
 
 @withNotification
 @withModal

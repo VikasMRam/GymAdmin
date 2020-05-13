@@ -2,7 +2,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Icon from 'sly/components/atoms/Icon';
+import Icon from 'sly/web/components/atoms/Icon';
 
 storiesOf('Atoms|Icon', module)
   .add('default', () => <Icon icon="star" />)

@@ -3,10 +3,10 @@ import { string, number, oneOf, oneOfType } from 'prop-types';
 import styled from 'styled-components';
 import { prop, ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
-import Block from 'sly/components/atoms/Block';
-import { getStageDetails } from 'sly/services/helpers/stage';
-import { getTaskStatusDetails } from 'sly/services/helpers/task';
+import { size, palette } from 'sly/web/components/themes';
+import Block from 'sly/web/components/atoms/Block';
+import { getStageDetails } from 'sly/web/services/helpers/stage';
+import { getTaskStatusDetails } from 'sly/web/services/helpers/task';
 
 const TextBlock = styled(Block)`
   margin-bottom: ${size('spacing.regular')};

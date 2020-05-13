@@ -4,14 +4,14 @@ import { func, arrayOf, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import SlyEvent from 'sly/services/helpers/events';
-import { query, prefetch } from 'sly/services/api';
-import { CURTIANUP_SUBSCRIBE } from 'sly/services/api/constants';
-import matchPropType from 'sly/propTypes/match';
-import uuidActionPropType from 'sly/propTypes/uuidAction';
-import withNotification from 'sly/controllers/withNotification';
-import { createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
-import CurtainupSubscribeForm from 'sly/components/organisms/CurtainupSubscribeForm';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { query, prefetch } from 'sly/web/services/api';
+import { CURTIANUP_SUBSCRIBE } from 'sly/web/services/api/constants';
+import matchPropType from 'sly/web/propTypes/match';
+import uuidActionPropType from 'sly/web/propTypes/uuidAction';
+import withNotification from 'sly/web/controllers/withNotification';
+import { createValidator, email, usPhone, dependentRequired } from 'sly/web/services/validation';
+import CurtainupSubscribeForm from 'sly/web/components/organisms/CurtainupSubscribeForm';
 
 const validate = createValidator({
   phone: [usPhone, dependentRequired('email', 'Either Phone or Email is required')],

@@ -3,11 +3,11 @@ import { number, string, node } from 'prop-types';
 import styled from 'styled-components';
 import isString from 'lodash/isString';
 
-import { size } from 'sly/components/themes';
-import { Bar, Block, ClampedText } from 'sly/components/atoms';
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { variation as variationPropType } from 'sly/propTypes/variation';
-import { formatMoney } from 'sly/services/helpers/numbers';
+import { size } from 'sly/web/components/themes';
+import { Bar, Block, ClampedText } from 'sly/web/components/atoms';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { formatMoney } from 'sly/web/services/helpers/numbers';
 
 const StyledBlock = styled(Block)`
   display: flex;

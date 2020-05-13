@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, arrayOf, shape, object } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import shadow from 'sly/components/helpers/shadow';
-import { Heading, Button, Block, Box } from 'sly/components/atoms';
-import ListItem from 'sly/components/molecules/ListItem';
+import { size } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import shadow from 'sly/web/components/helpers/shadow';
+import { Heading, Button, Block, Box } from 'sly/web/components/atoms';
+import ListItem from 'sly/web/components/molecules/ListItem';
 
 const ButtonWrapper = styled.div`
   display: grid;

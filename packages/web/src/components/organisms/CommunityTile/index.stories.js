@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import CommunityTile from 'sly/components/organisms/CommunityTile';
-import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import CommunityTile from 'sly/web/components/organisms/CommunityTile';
+import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const note = 'Location is great. This community is near my hosue, I can visit my mom in just a 20 minute drive. Big mood.';
 const defaultProps = {

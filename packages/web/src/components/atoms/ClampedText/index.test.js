@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import ClampedText from 'sly/components/atoms/ClampedText';
+import ClampedText from 'sly/web/components/atoms/ClampedText';
 
 const wrap = (props = {}, text = '') => mount(<ClampedText {...props}>{text}</ClampedText>);
 const palette = 'slate';

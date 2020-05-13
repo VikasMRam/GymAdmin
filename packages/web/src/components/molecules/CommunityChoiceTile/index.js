@@ -2,11 +2,11 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { bool, func } from 'prop-types';
 
-import { community as communityPropType } from 'sly/propTypes/community';
-import { size, palette } from 'sly/components/themes';
-import { Heading } from 'sly/components/atoms';
-import Rating from 'sly/components/molecules/Rating';
-import Checkbox from 'sly/components/molecules/Checkbox';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import { size, palette } from 'sly/web/components/themes';
+import { Heading } from 'sly/web/components/atoms';
+import Rating from 'sly/web/components/molecules/Rating';
+import Checkbox from 'sly/web/components/molecules/Checkbox';
 
 const defaultImage =
   'https://d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';

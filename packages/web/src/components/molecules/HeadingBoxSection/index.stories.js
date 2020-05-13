@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
+import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 
 const defaultProps = {
   heading: 'My Profile',

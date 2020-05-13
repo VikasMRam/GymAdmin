@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
+import CommunityFilterList from 'sly/web/components/organisms/CommunityFilterList';
 
 const toggleMap = () => {};
 const onFieldChange = () => {};

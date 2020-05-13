@@ -4,14 +4,14 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
-import { Hr, Label } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import FormSection from 'sly/components/molecules/FormSection';
-import textAlign from 'sly/components/helpers/textAlign';
-import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
-import pad from 'sly/components/helpers/pad';
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
+import { size } from 'sly/web/components/themes';
+import { Hr, Label } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import FormSection from 'sly/web/components/molecules/FormSection';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
+import pad from 'sly/web/components/helpers/pad';
+import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 
 // TODO: Copied from FamilyDetailsForm. Need to make it generic field
 const TwoColumnWrapper = styled.div`

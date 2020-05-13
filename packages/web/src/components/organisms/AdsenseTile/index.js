@@ -3,9 +3,9 @@ import React from 'react';
 import { bool, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
-import { size } from 'sly/components/themes';
+import { size } from 'sly/web/components/themes';
 
-import { gadsClient, gadSlots } from 'sly/config';
+import { gadsClient, gadSlots } from 'sly/web/config';
 
 const AdWrapper = styled.div`
   ${ifProp({ isMobileOnly: true }, css`

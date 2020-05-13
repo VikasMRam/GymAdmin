@@ -6,11 +6,11 @@ import { string, func, object } from 'prop-types';
 import {
   createValidator,
   required,
-} from 'sly/services/validation';
-import CommunityLeaveAnAnswerForm from 'sly/components/organisms/CommunityLeaveAnAnswerForm';
-import { ensureAuthenticated } from 'sly/store/authenticated/actions';
-import { prefetch } from 'sly/services/api';
-import api from 'sly/services/api/apiInstance';
+} from 'sly/web/services/validation';
+import CommunityLeaveAnAnswerForm from 'sly/web/components/organisms/CommunityLeaveAnAnswerForm';
+import { ensureAuthenticated } from 'sly/web/store/authenticated/actions';
+import { prefetch } from 'sly/web/services/api';
+import api from 'sly/web/services/api/apiInstance';
 
 const validate = createValidator({
   answer: [required],

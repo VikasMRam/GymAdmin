@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { string, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { Icon, Heading, Button, Paragraph } from 'sly/components/atoms';
-import pad from 'sly/components/helpers/pad';
-import fullWidth from 'sly/components/helpers/fullWidth';
+import { Icon, Heading, Button, Paragraph } from 'sly/web/components/atoms';
+import pad from 'sly/web/components/helpers/pad';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
 import {
   DASHBOARD_COMMUNITIES_PATH,
-} from 'sly/constants/dashboardAppPaths';
+} from 'sly/web/constants/dashboardAppPaths';
 
 
 const Wrapper = styled.div`

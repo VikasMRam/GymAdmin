@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router';
 
-import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/web/constants/dashboardAppPaths';
 
 export const getAppPathForEntity = (entity) => {
   const { entityType, id: entityId } = entity;

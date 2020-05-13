@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import AddTaskForm from 'sly/components/organisms/AddTaskForm';
-import { TASK_STATUS_ORDERED, TASK_PRIORITIES_ORDERED } from 'sly/constants/tasks';
-import AmalFrancis from 'sly/../private/storybook/sample-data/user-amal-francis.json';
-import SushanthRamakrishna from 'sly/../private/storybook/sample-data/user-sushanth-ramakrishna.json';
+import AddTaskForm from 'sly/web/components/organisms/AddTaskForm';
+import { TASK_STATUS_ORDERED, TASK_PRIORITIES_ORDERED } from 'sly/web/constants/tasks';
+import AmalFrancis from 'sly/web/../private/storybook/sample-data/user-amal-francis.json';
+import SushanthRamakrishna from 'sly/web/../private/storybook/sample-data/user-sushanth-ramakrishna.json';
 
 const assignedTos = [
   AmalFrancis,

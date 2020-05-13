@@ -1,0 +1,18 @@
+branch-defaults:
+  temp:
+    environment: slyreact-development
+environment-defaults:
+  slyreact-development:
+    branch: null
+    repository: null
+global:
+  application_name: SlyReact
+  default_ec2_keyname: slynode-eb
+  default_platform: Node.js
+  default_region: us-west-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  workspace_type: Application

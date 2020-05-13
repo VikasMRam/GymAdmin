@@ -2,7 +2,7 @@ import React from 'react';
 import { string } from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
-import { isBrowser } from 'sly/config';
+import { isBrowser } from 'sly/web/config';
 
 const RefreshRedirect = ({ to }) => {
   if (isBrowser) {

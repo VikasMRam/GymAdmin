@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { setDisplayName } from 'sly/components/helpers';
+import { setDisplayName } from 'sly/web/components/helpers';
 
 const textDecoration = (Component, decoration = 'underline') => setDisplayName(styled(Component)`
   text-decoration: ${decoration};

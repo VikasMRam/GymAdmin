@@ -2,12 +2,12 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { string, arrayOf } from 'prop-types';
 
-import { host } from 'sly/config';
-import { tocs } from 'sly/services/helpers/search';
-import { titleize } from 'sly/services/helpers/strings';
-import { getStateAbbr, getCitySearchUrl } from 'sly/services/helpers/url';
-import { getImagePath } from 'sly/services/images';
-import { assetPath } from 'sly/components/themes';
+import { host } from 'sly/web/config';
+import { tocs } from 'sly/web/services/helpers/search';
+import { titleize } from 'sly/web/services/helpers/strings';
+import { getStateAbbr, getCitySearchUrl } from 'sly/web/services/helpers/url';
+import { getImagePath } from 'sly/web/services/images';
+import { assetPath } from 'sly/web/components/themes';
 
 const stringifyReplacer = (k, v) => {
   if (k === 'hash' || k === 'key') {
@@ -72,7 +72,7 @@ const getSDForCommunity = ({
   }
 
   // https://schema.org/amenityFeature
-  // Copied from sly/components/organisms/CommunityAmenities
+  // Copied from sly/web/components/organisms/CommunityAmenities
   let amenities = [];
   if (communityHighlights) {
     amenities = amenities.concat(communityHighlights)
@@ -275,7 +275,6 @@ export const getHelmetForSearchPage = ({
 
 
 export const getHelmetForCommunityPage = (community, location) => {
-  console.log(community);
   const {
     name, mainImage, address, propInfo, propRatings, similarProperties, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions,
   } = community;
@@ -284,7 +283,6 @@ export const getHelmetForCommunityPage = (community, location) => {
     line1, city, state, country, zip, latitude, longitude,
   } = address;
   const { websiteUrl, websiteTitle, websiteMetaDescription, communityPhone } = propInfo;
-  console.log(propRatings);
   const { numReviews, reviewsValue } = propRatings;
 
   // const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);

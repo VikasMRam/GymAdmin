@@ -8,7 +8,7 @@ import { middleware } from '../services/api';
 import reducer from './reducer';
 import sagas from './sagas';
 
-import { isDev, isBrowser, muteReduxLogger } from 'sly/config';
+import { isDev, isBrowser, muteReduxLogger } from 'sly/web/config';
 
 const devtools =
   isDev && isBrowser && window.devToolsExtension

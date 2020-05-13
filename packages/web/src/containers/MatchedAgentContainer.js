@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { bool, func } from 'prop-types';
 
-import agentPropType from 'sly/propTypes/agent';
-import { community as communityPropType } from 'sly/propTypes/community';
-import PostConversionAdTileContainer from 'sly/containers/postConversion/AdTileContainer';
-import PostConversionGreetingForm from 'sly/components/organisms/PostConversionGreetingForm';
-import MatchedAgent from 'sly/components/organisms/MatchedAgent';
+import agentPropType from 'sly/web/propTypes/agent';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import PostConversionAdTileContainer from 'sly/web/containers/postConversion/AdTileContainer';
+import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';
+import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
 
 export default class MatchedAgentContainer extends Component {
   static propTypes = {

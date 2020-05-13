@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { bool, number, string, oneOfType, oneOf, node } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import pad from 'sly/components/helpers/pad';
-import SlyEvent from 'sly/services/helpers/events';
-import { size, key, getKey, remToPx } from 'sly/components/themes';
-import { Link, Icon, Block } from 'sly/components/atoms';
+import pad from 'sly/web/components/helpers/pad';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { size, key, getKey, remToPx } from 'sly/web/components/themes';
+import { Link, Icon, Block } from 'sly/web/components/atoms';
 
 export const blockCapHeight = (props) => {
   if (!props.isRenderedHeightBigger) {

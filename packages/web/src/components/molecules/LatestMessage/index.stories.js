@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import LatestMessage from 'sly/components/molecules/LatestMessage';
-import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
-import message from 'sly/../private/storybook/sample-data/conversation-message-1.json';
+import LatestMessage from 'sly/web/components/molecules/LatestMessage';
+import PraneshKumar from 'sly/web/../private/storybook/sample-data/client-pranesh-kumar.json';
+import message from 'sly/web/../private/storybook/sample-data/conversation-message-1.json';
 
 const { clientInfo } = PraneshKumar;
 const { name } = clientInfo;

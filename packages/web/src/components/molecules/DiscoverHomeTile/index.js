@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, func } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import { Box, Heading, Block, Button, ResponsiveImage } from 'sly/components/atoms';
+import { size } from 'sly/web/components/themes';
+import { Box, Heading, Block, Button, ResponsiveImage } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;

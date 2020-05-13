@@ -1,8 +1,8 @@
 import React from 'react';
 import { arrayOf, object } from 'prop-types';
 
-import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
-import { community as communityPropType } from 'sly/propTypes/community';
+import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
+import { community as communityPropType } from 'sly/web/propTypes/community';
 
 export default function TrackedSimilarCommunitiesContainer({ communities, communityStyle }) {
   return (

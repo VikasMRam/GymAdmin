@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
+import CommunityExtraInfoSection from 'sly/web/components/molecules/CommunityExtraInfoSection';
 
 const title = 'Sagebrook Senior Living at San Francisco State licensing info';
 const description = 'Sagebrook Senior Living (formerly Eden Villa) San Francisco is offical as shit';

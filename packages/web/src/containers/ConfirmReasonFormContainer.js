@@ -5,8 +5,8 @@ import { reduxForm } from 'redux-form';
 import {
   createValidator,
   required,
-} from 'sly/services/validation';
-import ConfirmReasonForm from 'sly/components/organisms/ConfirmReasonForm';
+} from 'sly/web/services/validation';
+import ConfirmReasonForm from 'sly/web/components/organisms/ConfirmReasonForm';
 
 const ReduxForm = reduxForm({
   form: 'ConfirmReasonForm',

@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { string, object, arrayOf, shape, bool, number, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette, getKey } from 'sly/components/themes';
-import { Button, Link } from 'sly/components/atoms';
-import MediaGallery from 'sly/components/molecules/MediaGallery';
-import FullscreenMediaGallery from 'sly/components/molecules/FullscreenMediaGallery';
+import { size, palette, getKey } from 'sly/web/components/themes';
+import { Button, Link } from 'sly/web/components/atoms';
+import MediaGallery from 'sly/web/components/molecules/MediaGallery';
+import FullscreenMediaGallery from 'sly/web/components/molecules/FullscreenMediaGallery';
 
 const BottomRightWrapper = styled.span`
   background: ${palette('slate', 'base')}80;

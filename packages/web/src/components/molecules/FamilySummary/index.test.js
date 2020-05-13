@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Block } from 'sly/components/atoms';
-import FamilySummary from 'sly/components/molecules/FamilySummary';
-import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
+import { Block } from 'sly/web/components/atoms';
+import FamilySummary from 'sly/web/components/molecules/FamilySummary';
+import PraneshKumar from 'sly/web/../private/storybook/sample-data/client-pranesh-kumar.json';
 
 // For deep cloning object
 const clientWithMedicaid = JSON.parse(JSON.stringify(PraneshKumar));

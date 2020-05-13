@@ -2,9 +2,9 @@ import React from 'react';
 import { object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import ModalController from 'sly/controllers/ModalController';
-import Modal from 'sly/components/molecules/Modal';
-import FilthyRedirect from 'sly/components/FilthyRedirect';
+import ModalController from 'sly/web/controllers/ModalController';
+import Modal from 'sly/web/components/molecules/Modal';
+import FilthyRedirect from 'sly/web/components/FilthyRedirect';
 
 const ModalContainer = ({ location, match }) => (
   <ModalController>

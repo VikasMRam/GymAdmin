@@ -4,19 +4,19 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { func, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import SlyEvent from 'sly/services/helpers/events';
-import { query, withUser } from 'sly/services/api';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { query, withUser } from 'sly/web/services/api';
 import {
   createValidator,
   required,
   usPhone,
   email,
-} from 'sly/services/validation';
-import userPropType from 'sly/propTypes/user';
-import matchPropType from 'sly/propTypes/match';
-import { community as communityPropType } from 'sly/propTypes/community';
-import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
-import { AGENT_ASK_QUESTIONS } from 'sly/services/api/constants';
+} from 'sly/web/services/validation';
+import userPropType from 'sly/web/propTypes/user';
+import matchPropType from 'sly/web/propTypes/match';
+import { community as communityPropType } from 'sly/web/propTypes/community';
+import CommunityAskQuestionAgentForm from 'sly/web/components/organisms/CommunityAskQuestionAgentForm';
+import { AGENT_ASK_QUESTIONS } from 'sly/web/services/api/constants';
 
 const validate = createValidator({
   full_name: [required],

@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 
-import DashboardAdminCommunityAgentList from 'sly/components/organisms/DashboardAdminCommunityAgentList';
-import communityWithAgents from 'sly/../private/storybook/sample-data/admin-property-rhoda-goldman-plaza';
+import DashboardAdminCommunityAgentList from 'sly/web/components/organisms/DashboardAdminCommunityAgentList';
+import communityWithAgents from 'sly/web/../private/storybook/sample-data/admin-property-rhoda-goldman-plaza';
 
 const Wrapper = styled.div`
   width: 800px;

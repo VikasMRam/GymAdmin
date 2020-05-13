@@ -3,20 +3,20 @@ import { func, number, object, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 
-import { Box } from 'sly/components/atoms';
-import filterPropType from 'sly/propTypes/datatableFilter';
-import datatableColumnsPropType from 'sly/propTypes/datatableColumns';
-import ButtonLink from 'sly/components/molecules/ButtonLink';
-import Field from 'sly/components/molecules/Field';
+import { Box } from 'sly/web/components/atoms';
+import filterPropType from 'sly/web/propTypes/datatableFilter';
+import datatableColumnsPropType from 'sly/web/propTypes/datatableColumns';
+import ButtonLink from 'sly/web/components/molecules/ButtonLink';
+import Field from 'sly/web/components/molecules/Field';
 import {
   noValueOperators,
   listValueOperators,
   logicalOperatorNames,
   defaultOperatorNames,
   getAutocompleteValues, operatorNamesForDate,
-} from 'sly/services/datatable/helpers';
-import mobileOnly from 'sly/components/helpers/mobileOnly';
-import { size, palette } from 'sly/components/themes';
+} from 'sly/web/services/datatable/helpers';
+import mobileOnly from 'sly/web/components/helpers/mobileOnly';
+import { size, palette } from 'sly/web/components/themes';
 
 const AUTOCOMPLETE = 'MultiSelectDynamicList';
 const SELECT = 'MultiSelectStaticList';

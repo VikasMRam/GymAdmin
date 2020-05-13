@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import DashboardAdminReferralCommunityTile from 'sly/components/organisms/DashboardAdminReferralCommunityTile';
-import community from 'sly/../private/storybook/sample-data/admin-property-rhoda-goldman-plaza.json';
+import DashboardAdminReferralCommunityTile from 'sly/web/components/organisms/DashboardAdminReferralCommunityTile';
+import community from 'sly/web/../private/storybook/sample-data/admin-property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => <DashboardAdminReferralCommunityTile {...props} />;
 

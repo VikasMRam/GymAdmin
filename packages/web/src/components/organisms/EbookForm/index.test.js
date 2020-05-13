@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import EbookForm from './index';
 
-import { Block } from 'sly/components/atoms/index';
+import { Block } from 'sly/web/components/atoms/index';
 
 const error = 'Required field';
 

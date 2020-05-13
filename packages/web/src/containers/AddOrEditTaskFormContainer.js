@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { arrayOf, string, object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 
-import { prefetch, query, withUser } from 'sly/services/api';
-import clientPropType from 'sly/propTypes/client';
-import userPropType from 'sly/propTypes/user';
-import taskPropType from 'sly/propTypes/task';
-import { createValidator, required } from 'sly/services/validation';
-import { TASK_RELATED_ENTITY_TYPE, TASK_STATUS_NOT_STARTED } from 'sly/constants/tasks';
-import { TASK_RESOURCE_TYPE, USER_RESOURCE_TYPE, CLIENT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import AddTaskForm from 'sly/components/organisms/AddTaskForm';
+import { prefetch, query, withUser } from 'sly/web/services/api';
+import clientPropType from 'sly/web/propTypes/client';
+import userPropType from 'sly/web/propTypes/user';
+import taskPropType from 'sly/web/propTypes/task';
+import { createValidator, required } from 'sly/web/services/validation';
+import { TASK_RELATED_ENTITY_TYPE, TASK_STATUS_NOT_STARTED } from 'sly/web/constants/tasks';
+import { TASK_RESOURCE_TYPE, USER_RESOURCE_TYPE, CLIENT_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
+import AddTaskForm from 'sly/web/components/organisms/AddTaskForm';
 
 const validate = createValidator({
   title: [required],

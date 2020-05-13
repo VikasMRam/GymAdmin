@@ -3,13 +3,13 @@ import { func, arrayOf, object, bool } from 'prop-types';
 import styled from 'styled-components';
 import { generatePath } from 'react-router';
 
-import { size, palette } from 'sly/components/themes';
-import { adminCommunityPropType } from 'sly/propTypes/community';
-import pad from 'sly/components/helpers/pad';
-import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
-import { Block, Button } from 'sly/components/atoms';
-import DashboardAdminReferralCommunityTile from 'sly/components/organisms/DashboardAdminReferralCommunityTile';
-import { FAMILIES_INTERESTED_COMMUNITY_TITLE } from 'sly/constants/referrals';
+import { size, palette } from 'sly/web/components/themes';
+import { adminCommunityPropType } from 'sly/web/propTypes/community';
+import pad from 'sly/web/components/helpers/pad';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/web/constants/dashboardAppPaths';
+import { Block, Button } from 'sly/web/components/atoms';
+import DashboardAdminReferralCommunityTile from 'sly/web/components/organisms/DashboardAdminReferralCommunityTile';
+import { FAMILIES_INTERESTED_COMMUNITY_TITLE } from 'sly/web/constants/referrals';
 
 const TopWrapper = styled.div`
   display: flex;

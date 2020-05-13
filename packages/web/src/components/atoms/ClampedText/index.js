@@ -1,10 +1,10 @@
 import { string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
-import { text as textPropType } from 'sly/propTypes/text';
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { weight as weightPropType } from 'sly/propTypes/weight';
+import { size, palette } from 'sly/web/components/themes';
+import { text as textPropType } from 'sly/web/propTypes/text';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { weight as weightPropType } from 'sly/web/propTypes/weight';
 
 const textSize = ({ size: sizeProp }) => size('text', sizeProp);
 

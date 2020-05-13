@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { string, bool } from 'prop-types';
 
 
-import { size, getKey, assetPath } from 'sly/components/themes';
-import { Heading, Block, Icon } from 'sly/components/atoms';
-import ResponsiveImage from 'sly/components/atoms/ResponsiveImage';
+import { size, getKey, assetPath } from 'sly/web/components/themes';
+import { Heading, Block, Icon } from 'sly/web/components/atoms';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 
 const Wrapper = styled.div`
   display: flex;

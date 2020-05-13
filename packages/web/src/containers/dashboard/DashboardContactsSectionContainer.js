@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { arrayOf, object, func, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { prefetch, withUser, query } from 'sly/services/api';
-import contactPropType from 'sly/propTypes/contact';
-import DashboardAgentContactsSection from 'sly/components/organisms/DashboardAgentContactsSection';
-import { withRedirectTo } from 'sly/services/redirectTo';
-import { withDatatable } from 'sly/services/datatable';
-import withModal from 'sly/controllers/withModal';
-import withNotification from 'sly/controllers/withNotification';
-import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
+import { prefetch, withUser, query } from 'sly/web/services/api';
+import contactPropType from 'sly/web/propTypes/contact';
+import DashboardAgentContactsSection from 'sly/web/components/organisms/DashboardAgentContactsSection';
+import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withDatatable } from 'sly/web/services/datatable';
+import withModal from 'sly/web/controllers/withModal';
+import withNotification from 'sly/web/controllers/withNotification';
+import ConfirmationDialog from 'sly/web/components/molecules/ConfirmationDialog';
 
 const getPaginationData = ({ result, meta }) => {
   if (!result) return {};

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
-import CommunityPWEstimatedPricingForm from 'sly/components/organisms/CommunityPWEstimatedPricingForm';
+import CommunityPWEstimatedPricingForm from 'sly/web/components/organisms/CommunityPWEstimatedPricingForm';
 
 const CommunityPWEstimatedPricingFormContainer = reduxForm({
   form: 'CommunityPWEstimatedPricingForm',

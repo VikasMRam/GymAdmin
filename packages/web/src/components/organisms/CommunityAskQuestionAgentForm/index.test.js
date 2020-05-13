@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
-import { Block } from 'sly/components/atoms';
+import CommunityAskQuestionAgentForm from 'sly/web/components/organisms/CommunityAskQuestionAgentForm';
+import { Block } from 'sly/web/components/atoms';
 
 const defaultProps = {
   placeholder: 'rhoda',

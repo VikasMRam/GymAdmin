@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import DuplicateFamilies from 'sly/components/organisms/DuplicateFamilies';
-import clients from 'sly/../private/storybook/sample-data/clients.json';
+import DuplicateFamilies from 'sly/web/components/organisms/DuplicateFamilies';
+import clients from 'sly/web/../private/storybook/sample-data/clients.json';
 
 const wrap = (props = {}) => shallow(<DuplicateFamilies {...props} />);
 

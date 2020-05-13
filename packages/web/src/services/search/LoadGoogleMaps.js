@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { gMapsApiKey, loadAutoComplete } from 'sly/config';
+import { gMapsApiKey, loadAutoComplete } from 'sly/web/config';
 
 let instanceId = 0;
 export default class LoadGoogleMaps extends Component {

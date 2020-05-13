@@ -5,28 +5,28 @@ import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 import { Redirect, generatePath } from 'react-router';
 
-import { withUser, prefetch, query, invalidateRequests } from 'sly/services/api';
-import userPropType from 'sly/propTypes/user';
-import conversationPropType from 'sly/propTypes/conversation/conversation';
-import clientPropType from 'sly/propTypes/client';
-import notePropType from 'sly/propTypes/note';
+import { withUser, prefetch, query, invalidateRequests } from 'sly/web/services/api';
+import userPropType from 'sly/web/propTypes/user';
+import conversationPropType from 'sly/web/propTypes/conversation/conversation';
+import clientPropType from 'sly/web/propTypes/client';
+import notePropType from 'sly/web/propTypes/note';
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   FAMILY_DETAILS,
   SUMMARY,
   MESSAGES, ACTIVITY,
-} from 'sly/constants/dashboardAppPaths';
-import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
-import { NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/notes';
-import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import SlyEvent from 'sly/services/helpers/events';
-import withBreakpoint from 'sly/components/helpers/breakpoint';
-import { normJsonApi } from 'sly/services/helpers/jsonApi';
-import NotificationController from 'sly/controllers/NotificationController';
-import ModalController from 'sly/controllers/ModalController';
-import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFamilyContainer';
-import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
+} from 'sly/web/constants/dashboardAppPaths';
+import { FAMILY_STAGE_ORDERED } from 'sly/web/constants/familyDetails';
+import { NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/web/constants/notes';
+import { NOTE_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
+import SlyEvent from 'sly/web/services/helpers/events';
+import withBreakpoint from 'sly/web/components/helpers/breakpoint';
+import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
+import NotificationController from 'sly/web/controllers/NotificationController';
+import ModalController from 'sly/web/controllers/ModalController';
+import AcceptAndContactFamilyContainer from 'sly/web/containers/AcceptAndContactFamilyContainer';
+import DashboardMyFamiliesDetailsPage from 'sly/web/components/pages/DashboardMyFamiliesDetailsPage';
 
 const mapStateToProps = (state, { conversations }) => ({
   selectedConversation: conversations && conversations.length === 1 ? conversations[0] : null,

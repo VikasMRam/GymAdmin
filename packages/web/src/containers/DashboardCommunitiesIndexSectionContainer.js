@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { arrayOf, object, func } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { prefetch, withUser } from 'sly/services/api';
-import communityPropType from 'sly/propTypes/community';
-import DashboardCommunitiesIndexSection from 'sly/components/organisms/DashboardCommunitiesIndexSection';
-import withNotification from 'sly/controllers/withNotification';
-import { getDetailedPaginationData } from 'sly/services/helpers/pagination';
+import { prefetch, withUser } from 'sly/web/services/api';
+import communityPropType from 'sly/web/propTypes/community';
+import DashboardCommunitiesIndexSection from 'sly/web/components/organisms/DashboardCommunitiesIndexSection';
+import withNotification from 'sly/web/controllers/withNotification';
+import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
 
 @withRouter
 @withUser

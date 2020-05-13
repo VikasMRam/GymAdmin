@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunitySummary from 'sly/components/organisms/CommunitySummary';
-import CommunityPricing from 'sly/components/molecules/CommunityPricing';
-import CommunityRating from 'sly/components/molecules/CommunityRating';
-import { Link } from 'sly/components/atoms';
-import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-import { CONTINUING_CARE_RETIREMENT_COMMUNITY } from 'sly/constants/tags';
+import CommunitySummary from 'sly/web/components/organisms/CommunitySummary';
+import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';
+import CommunityRating from 'sly/web/components/molecules/CommunityRating';
+import { Link } from 'sly/web/components/atoms';
+import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import { CONTINUING_CARE_RETIREMENT_COMMUNITY } from 'sly/web/constants/tags';
 
 const searchParams = {
   city: 'san-carlos',
@@ -48,7 +48,7 @@ const verify = (wrapper) => {
   expect(wrapper.find('StyledHeading').render().text()).toContain(name);
   expect(wrapper.find(CommunityPricing)).toHaveLength(1);
   expect(wrapper.find(CommunityRating)).toHaveLength(1);
-  expect(renderedWrapper.childAt(0).find(Link)).toHaveLength(2);
+  expect(renderedWrapper.childAt(0).find(Link)).toHaveLength(1);
 };
 
 describe('CommunitySummary', () => {

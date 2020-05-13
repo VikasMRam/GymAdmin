@@ -3,16 +3,16 @@ import { object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 import * as immutable from 'object-path-immutable';
 
-import { query, withUser } from 'sly/services/api';
-import { createValidator, dependentRequired, usPhone, email, required } from 'sly/services/validation';
-import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
-import { CLIENT_RESOURCE_TYPE, UUIDAUX_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import { newClient } from 'sly/constants/payloads/client';
-import { normJsonApi } from 'sly/services/helpers/jsonApi';
-import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
-import DuplicateFamilies from 'sly/components/organisms/DuplicateFamilies';
-import AddFamilyForm from 'sly/components/organisms/AddFamilyForm';
+import { query, withUser } from 'sly/web/services/api';
+import { createValidator, dependentRequired, usPhone, email, required } from 'sly/web/services/validation';
+import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
+import { CLIENT_RESOURCE_TYPE, UUIDAUX_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
+import { newClient } from 'sly/web/constants/payloads/client';
+import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
+import { FAMILY_STAGE_NEW } from 'sly/web/constants/familyDetails';
+import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import DuplicateFamilies from 'sly/web/components/organisms/DuplicateFamilies';
+import AddFamilyForm from 'sly/web/components/organisms/AddFamilyForm';
 
 
 const agentFields = createValidator({

@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import CommunityActions from 'sly/components/molecules/CommunityActions';
+import CommunityActions from 'sly/web/components/molecules/CommunityActions';
 
 storiesOf('Molecules|CommunityActions', module)
   .add('default', () => (

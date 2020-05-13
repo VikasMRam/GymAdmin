@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Bar from 'sly/components/atoms/Bar';
+import Bar from 'sly/web/components/atoms/Bar';
 
 const wrap = (props = {}) => shallow(<Bar {...props} />);
 

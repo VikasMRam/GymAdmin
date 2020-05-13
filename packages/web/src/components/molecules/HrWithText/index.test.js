@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import HrWithText from 'sly/components/molecules/HrWithText';
+import HrWithText from 'sly/web/components/molecules/HrWithText';
 
 const text = 'test';
 const defaultProps = {

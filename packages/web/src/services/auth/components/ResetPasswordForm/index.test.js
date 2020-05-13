@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ResetPasswordForm from 'sly/services/auth/components/ResetPasswordForm/index';
+import ResetPasswordForm from 'sly/web/services/auth/components/ResetPasswordForm/index';
 
 const handleSubmit = jest.fn();
 const defaultProps = {

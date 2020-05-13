@@ -2,14 +2,14 @@ import { Component } from 'react';
 import { func, object, string, shape, bool } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { prefetch } from 'sly/services/api';
-import datatableColumnsProptype from 'sly/propTypes/datatableColumns';
+import { prefetch } from 'sly/web/services/api';
+import datatableColumnsProptype from 'sly/web/propTypes/datatableColumns';
 import {
   makeQuerystringFilters,
   parseQuerystringFilters,
   simpleQSObjectify,
   simpleQStringify,
-} from 'sly/services/datatable/helpers';
+} from 'sly/web/services/datatable/helpers';
 
 @prefetch('datatable', 'getDatatable', (req, { id }) => req({ id }))
 

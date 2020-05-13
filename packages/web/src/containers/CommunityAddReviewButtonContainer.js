@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import withModal from 'sly/controllers/withModal';
-import Button from 'sly/components/atoms/Button';
+import withModal from 'sly/web/controllers/withModal';
+import Button from 'sly/web/components/atoms/Button';
 import loadable from "@loadable/component";
 
-const CommunityAddRatingFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityAddRatingFormContainer" */'sly/containers/CommunityAddRatingFormContainer'));
+const CommunityAddRatingFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityAddRatingFormContainer" */'sly/web/containers/CommunityAddRatingFormContainer'));
 
 @withModal
 export default class CommunityAddReviewButtonContainer extends Component {

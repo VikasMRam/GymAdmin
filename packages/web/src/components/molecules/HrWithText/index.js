@@ -2,10 +2,10 @@ import React from 'react';
 import { string, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { variation as variationPropType } from 'sly/propTypes/variation';
-import { Hr, Span, Badge } from 'sly/components/atoms';
+import { size, palette } from 'sly/web/components/themes';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { Hr, Span, Badge } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   position: relative;

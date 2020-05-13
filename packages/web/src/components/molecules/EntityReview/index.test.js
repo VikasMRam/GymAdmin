@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import EntityReview from 'sly/components/molecules/EntityReview';
+import EntityReview from 'sly/web/components/molecules/EntityReview';
 
 const review = {
   value: 3.5,

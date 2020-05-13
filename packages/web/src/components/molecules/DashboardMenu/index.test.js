@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import DashboardMenu from 'sly/components/molecules/DashboardMenu';
+import DashboardMenu from 'sly/web/components/molecules/DashboardMenu';
 
 const menuItems = [
   {

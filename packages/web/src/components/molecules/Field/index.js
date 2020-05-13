@@ -5,29 +5,29 @@ import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
 import Helmet from 'react-helmet';
 
-import { size } from 'sly/components/themes';
-import { Label, Input, Icon, Block, Span, Button } from 'sly/components/atoms';
-import textAlign from 'sly/components/helpers/textAlign';
+import { size } from 'sly/web/components/themes';
+import { Label, Input, Icon, Block, Span, Button } from 'sly/web/components/atoms';
+import textAlign from 'sly/web/components/helpers/textAlign';
 // leave as it is: cyclic dependency
-import MultipleChoice from 'sly/components/molecules/MultipleChoice';
-import CommunityChoice from 'sly/components/molecules/CommunityChoice';
-import RatingInput from 'sly/components/molecules/RatingInput';
-import Slider from 'sly/components/molecules/Slider';
-import DateChoice from 'sly/components/molecules/DateChoice';
-import DateRange from 'sly/components/molecules/DateRange';
-import BoxChoice from 'sly/components/molecules/BoxChoice';
-import PhoneInput from 'sly/components/molecules/PhoneInput';
-import IconInput from 'sly/components/molecules/IconInput';
-import InputMessage from 'sly/components/molecules/InputMessage';
-import Autocomplete from 'sly/components/molecules/Autocomplete';
-import CheckboxInput from 'sly/components/molecules/CheckboxInput';
-import LocationSearch from 'sly/components/molecules/LocationSearch';
-import DatepickerStyles from 'sly/components/themes/DatepickerStyles';
-import CommunityAutoComplete from 'sly/components/molecules/CommunityAutoComplete';
+import MultipleChoice from 'sly/web/components/molecules/MultipleChoice';
+import CommunityChoice from 'sly/web/components/molecules/CommunityChoice';
+import RatingInput from 'sly/web/components/molecules/RatingInput';
+import Slider from 'sly/web/components/molecules/Slider';
+import DateChoice from 'sly/web/components/molecules/DateChoice';
+import DateRange from 'sly/web/components/molecules/DateRange';
+import BoxChoice from 'sly/web/components/molecules/BoxChoice';
+import PhoneInput from 'sly/web/components/molecules/PhoneInput';
+import IconInput from 'sly/web/components/molecules/IconInput';
+import InputMessage from 'sly/web/components/molecules/InputMessage';
+import Autocomplete from 'sly/web/components/molecules/Autocomplete';
+import CheckboxInput from 'sly/web/components/molecules/CheckboxInput';
+import LocationSearch from 'sly/web/components/molecules/LocationSearch';
+import DatepickerStyles from 'sly/web/components/themes/DatepickerStyles';
+import CommunityAutoComplete from 'sly/web/components/molecules/CommunityAutoComplete';
 
 
-const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/components/atoms/Select'));
-const RichTextArea = loadable(() => import(/* webpackChunkName: "chunkAtomRichTextArea" */'sly/components/atoms/RichTextArea'));
+const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/web/components/atoms/Select'));
+const RichTextArea = loadable(() => import(/* webpackChunkName: "chunkAtomRichTextArea" */'sly/web/components/atoms/RichTextArea'));
 const DatePickerLoadable = loadable(() => import(/* webpackChunkName: "chunkReactDatePicker" */'react-datepicker'));
 const DatePicker = props => (
   <>

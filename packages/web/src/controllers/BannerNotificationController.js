@@ -2,8 +2,8 @@ import { Component } from 'react';
 import { string, func, shape, arrayOf, oneOf } from 'prop-types';
 import uniqueId from 'lodash/uniqueId';
 
-import { TIMEOUT } from 'sly/constants/notifications';
-import { connectController } from 'sly/controllers';
+import { TIMEOUT } from 'sly/web/constants/notifications';
+import { connectController } from 'sly/web/controllers';
 
 // FIXME: Copied from NotificationController, find a way to reuse
 class BannerNotificationController extends Component {

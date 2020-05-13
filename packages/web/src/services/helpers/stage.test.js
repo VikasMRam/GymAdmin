@@ -1,9 +1,9 @@
-import { getStageDetails, getPaletteFor } from 'sly/services/helpers/stage';
+import { getStageDetails, getPaletteFor } from 'sly/web/services/helpers/stage';
 import {
   FAMILY_STAGE_ORDERED,
   FAMILY_STAGE_REJECTED,
   TOTAL_STAGES_COUNT,
-} from 'sly/constants/familyDetails';
+} from 'sly/web/constants/familyDetails';
 
 const allStages = Object.entries(FAMILY_STAGE_ORDERED)
   .reduce((acc, [, stages]) => [...acc, ...stages], []);

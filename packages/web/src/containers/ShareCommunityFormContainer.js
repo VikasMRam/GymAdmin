@@ -4,18 +4,18 @@ import { func, string, object } from 'prop-types';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { withRouter } from 'react-router';
 
-import api from 'sly/services/api/apiInstance';
-import { query } from 'sly/services/api';
-import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
-import ShareCommunityForm from 'sly/components/organisms/ShareCommunityForm';
+import api from 'sly/web/services/api/apiInstance';
+import { query } from 'sly/web/services/api';
+import { COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
+import ShareCommunityForm from 'sly/web/components/organisms/ShareCommunityForm';
 
 import {
   createValidator,
   required,
   email,
   emails,
-} from 'sly/services/validation';
-import { USER_SHARE } from 'sly/services/api/constants';
+} from 'sly/web/services/validation';
+import { USER_SHARE } from 'sly/web/services/api/constants';
 
 const formName = 'ShareCommunityForm';
 

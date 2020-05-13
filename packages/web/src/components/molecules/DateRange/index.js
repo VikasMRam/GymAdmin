@@ -4,9 +4,9 @@ import { func, string, array } from 'prop-types';
 import loadable from '@loadable/component';
 import Helmet from 'react-helmet';
 
-import { size } from 'sly/components/themes';
-import { Input } from 'sly/components/atoms';
-import DatepickerStyles from 'sly/components/themes/DatepickerStyles';
+import { size } from 'sly/web/components/themes';
+import { Input } from 'sly/web/components/atoms';
+import DatepickerStyles from 'sly/web/components/themes/DatepickerStyles';
 
 const DatePicker = loadable(() => import(/* webpackChunkName: "chunkReactDatePicker" */'react-datepicker'));
 

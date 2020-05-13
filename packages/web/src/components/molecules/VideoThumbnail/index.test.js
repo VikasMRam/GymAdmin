@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
+import VideoThumbnail from 'sly/web/components/molecules/VideoThumbnail';
 
 const src = '//d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';
 const wrap = (props = {}) => shallow(<VideoThumbnail src={src} {...props} />);

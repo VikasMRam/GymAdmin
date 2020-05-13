@@ -11,7 +11,7 @@ import {
   TASK_PRIORITY_MED,
   TASK_PRIORITY_HIGH,
   TASK_PRIORITY_URGENT,
-} from 'sly/constants/tasks';
+} from 'sly/web/constants/tasks';
 
 export default shape({
   id: string,

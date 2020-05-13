@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import InteractiveDetail from 'sly/components/molecules/InteractiveDetail';
+import InteractiveDetail from 'sly/web/components/molecules/InteractiveDetail';
 
 storiesOf('Molecules|InteractiveDetail', module)
   .add('phone', () => (

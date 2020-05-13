@@ -7,7 +7,7 @@ import {
   AGENT_STATUS_NOT_LIVE,
   AGENT_STATUS_LIVE,
   AGENT_STATUS_LIVE_ON_PROFILE,
-} from 'sly/constants/agents';
+} from 'sly/web/constants/agents';
 
 const aggregateRating = shape({
   ratingValue: number.isRequired,

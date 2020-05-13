@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import HrWithText from 'sly/components/molecules/HrWithText';
+import HrWithText from 'sly/web/components/molecules/HrWithText';
 
 storiesOf('Molecules|HrWithText', module)
   .add('default', () => <HrWithText text="Today" />)

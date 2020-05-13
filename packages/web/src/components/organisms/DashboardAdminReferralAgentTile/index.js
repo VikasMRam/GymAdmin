@@ -2,16 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, bool, func } from 'prop-types';
 
-import { AGENT_STATUS_NAME_MAP } from 'sly/constants/agents';
-import { size, palette } from 'sly/components/themes';
-import cursor from 'sly/components/helpers/cursor';
-import { adminAgentPropType } from 'sly/propTypes/agent';
-import pad from 'sly/components/helpers/pad';
-import { getReferralSentTimeText } from 'sly/services/helpers/communityReferral';
-import { copyToClipboard } from 'sly/services/helpers/utils';
-import { Heading, Badge, Block, Span, Box, Button, Link } from 'sly/components/atoms';
-import IconBadge from 'sly/components/molecules/IconBadge';
-import Stage from 'sly/components/molecules/Stage';
+import { AGENT_STATUS_NAME_MAP } from 'sly/web/constants/agents';
+import { size, palette } from 'sly/web/components/themes';
+import cursor from 'sly/web/components/helpers/cursor';
+import { adminAgentPropType } from 'sly/web/propTypes/agent';
+import pad from 'sly/web/components/helpers/pad';
+import { getReferralSentTimeText } from 'sly/web/services/helpers/communityReferral';
+import { copyToClipboard } from 'sly/web/services/helpers/utils';
+import { Heading, Badge, Block, Span, Box, Button, Link } from 'sly/web/components/atoms';
+import IconBadge from 'sly/web/components/molecules/IconBadge';
+import Stage from 'sly/web/components/molecules/Stage';
 
 const TopWrapper = styled.div`
   padding: ${size('spacing.large')};

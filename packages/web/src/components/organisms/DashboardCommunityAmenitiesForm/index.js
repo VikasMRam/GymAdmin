@@ -3,12 +3,12 @@ import { func, bool, object } from 'prop-types';
 import styled from 'styled-components';
 import { Field as RFField } from 'redux-form';
 
-import { size, columnWidth } from 'sly/components/themes';
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import { Block, Button } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
-import communityPropType from 'sly/propTypes/community';
+import { size, columnWidth } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { Block, Button } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
+import communityPropType from 'sly/web/propTypes/community';
 
 const familyOvernightOptions = [
   { value: 'Family Overnight Stay Rooms', label: 'Family overnight stay rooms' },

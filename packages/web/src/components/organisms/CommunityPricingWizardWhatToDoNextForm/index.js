@@ -3,10 +3,10 @@ import { string, func, array } from 'prop-types';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
 
-import { size } from 'sly/components/themes';
-import { Block, Box } from 'sly/components/atoms';
-import shadow from 'sly/components/helpers/shadow';
-import ReduxField from 'sly/components/organisms/ReduxField/index';
+import { size } from 'sly/web/components/themes';
+import { Block, Box } from 'sly/web/components/atoms';
+import shadow from 'sly/web/components/helpers/shadow';
+import ReduxField from 'sly/web/components/organisms/ReduxField/index';
 
 const Wrapper = shadow(styled(Box)`
   margin: 0 auto;

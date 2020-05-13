@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import TalkToAgentForm from 'sly/components/organisms/TalkToAgentForm';
+import TalkToAgentForm from 'sly/web/components/organisms/TalkToAgentForm';
 
 const wrap = (props = {}) => shallow(<TalkToAgentForm {...props} />);
 

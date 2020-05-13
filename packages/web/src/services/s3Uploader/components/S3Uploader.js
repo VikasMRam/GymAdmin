@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import S3Upload from 'react-s3-uploader/s3upload';
 import objectAssign from 'object-assign';
 
-import FileField from 'sly/components/molecules/FileField';
+import FileField from 'sly/web/components/molecules/FileField';
 
 /* eslint-disable */
 

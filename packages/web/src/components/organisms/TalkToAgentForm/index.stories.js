@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 
-import TalkToAgentForm from 'sly/components/organisms/TalkToAgentForm';
+import TalkToAgentForm from 'sly/web/components/organisms/TalkToAgentForm';
 
 const TalkToAgentFormContainer = reduxForm({
   form: 'TalkToAgentForm',

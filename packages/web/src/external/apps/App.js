@@ -5,16 +5,16 @@ import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import loadable from '@loadable/component';
 
-import theme from 'sly/components/themes/default';
-import { routes as routesPropType } from 'sly/propTypes/routes';
-import { WIZARD_PATH, SEARCH_PATH } from 'sly/external/constants/paths';
-import ErrorPage from 'sly/external/apps/ErrorPage';
-import ExternalGlobalStyles from 'sly/external/apps/ExternalGlobalStyles';
+import theme from 'sly/web/components/themes/default';
+import { routes as routesPropType } from 'sly/web/propTypes/routes';
+import { WIZARD_PATH, SEARCH_PATH } from 'sly/web/external/constants/paths';
+import ErrorPage from 'sly/web/external/apps/ErrorPage';
+import ExternalGlobalStyles from 'sly/web/external/apps/ExternalGlobalStyles';
 
 const CareAssessmentControllerPage = loadable(() =>
-  import(/* webpackChunkName: "chunkCareAssessmentControllerPage" */'sly/external/apps/wizards/careAssessment/Controller'));
+  import(/* webpackChunkName: "chunkCareAssessmentControllerPage" */'sly/web/external/apps/wizards/careAssessment/Controller'));
 const SearchContainerPage = loadable(() =>
-  import(/* webpackChunkName: "chunkSearchContainerPage" */'sly/external/apps/search/Container'));
+  import(/* webpackChunkName: "chunkSearchContainerPage" */'sly/web/external/apps/search/Container'));
 
 export default class App extends Component {
   static childContextTypes = {

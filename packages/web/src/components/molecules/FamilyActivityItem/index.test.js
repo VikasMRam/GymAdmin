@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import dayjs from 'dayjs';
 
-import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
+import FamilyActivityItem from 'sly/web/components/molecules/FamilyActivityItem';
 
 const title = 'test';
 const description = 'test description';

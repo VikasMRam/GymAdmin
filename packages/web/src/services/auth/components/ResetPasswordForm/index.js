@@ -2,12 +2,12 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
-import pad from 'sly/components/helpers/pad';
-import textAlign from 'sly/components/helpers/textAlign';
-import cursor from 'sly/components/helpers/cursor';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import { Heading, Button, Block, Span, Hr } from 'sly/components/atoms';
-import ReduxField from 'sly/components/organisms/ReduxField';
+import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import cursor from 'sly/web/components/helpers/cursor';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import { Heading, Button, Block, Span, Hr } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
 
 const StyledHeading = pad(textAlign(Heading), 'regular');
 

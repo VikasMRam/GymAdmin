@@ -1,7 +1,7 @@
 import { reduxForm } from 'redux-form';
 
-import CommunityBookATourDateForm from 'sly/components/organisms/CommunityBookATourDateForm';
-import { createValidator, required } from 'sly/services/validation';
+import CommunityBookATourDateForm from 'sly/web/components/organisms/CommunityBookATourDateForm';
+import { createValidator, required } from 'sly/web/services/validation';
 
 const validate = createValidator({
   scheduledDate: [required],

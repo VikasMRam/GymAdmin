@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import loadable from '@loadable/component';
 
-import { getCommunityAutocompleteValues } from 'sly/services/datatable/helpers';
-import { normalizeResponse } from 'sly/services/api';
+import { getCommunityAutocompleteValues } from 'sly/web/services/datatable/helpers';
+import { normalizeResponse } from 'sly/web/services/api';
 
-const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/components/atoms/Select'));
+const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/web/components/atoms/Select'));
 const CommunityFilterApiEndpoint = '/v0/marketplace/communities/find?fields=name&filter[name]=';
 
 export default class CommunityAutoComplete extends Component {

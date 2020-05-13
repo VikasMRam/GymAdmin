@@ -8,7 +8,7 @@ import {
   func,
 } from 'prop-types';
 
-import CommunityChoiceTile from 'sly/components/molecules/CommunityChoiceTile';
+import CommunityChoiceTile from 'sly/web/components/molecules/CommunityChoiceTile';
 
 export default class CommunityChoice extends Component {
   static propTypes = {

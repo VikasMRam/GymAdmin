@@ -7,10 +7,10 @@ import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 import isBoolean from 'lodash/isBoolean';
 
-import { query, getRelationship, invalidateRequests, withUser } from 'sly/services/api';
-import clientPropType from 'sly/propTypes/client';
-import userPropType from 'sly/propTypes/user';
-import { PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import { query, getRelationship, invalidateRequests, withUser } from 'sly/web/services/api';
+import clientPropType from 'sly/web/propTypes/client';
+import userPropType from 'sly/web/propTypes/user';
+import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
 import {
   FAMILY_STATUS_ACTIVE,
   FAMILY_STATUS_ON_PAUSE,
@@ -19,16 +19,16 @@ import {
   FAMILY_STAGE_REJECTED,
   ROOM_TYPES, WAITLISTED,
   PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
-} from 'sly/constants/familyDetails';
-import { NOTE_COMMENTABLE_TYPE_CLIENT, NOTE_CTYPE_ACTIVITY } from 'sly/constants/notes';
-import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/constants/provider';
-import { createValidator, required, float } from 'sly/services/validation';
-import { getStageDetails } from 'sly/services/helpers/stage';
-import { selectFormData } from 'sly/services/helpers/forms';
-import { userIs } from 'sly/services/helpers/role';
-import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
-import SlyEvent from 'sly/services/helpers/events';
+} from 'sly/web/constants/familyDetails';
+import { NOTE_COMMENTABLE_TYPE_CLIENT, NOTE_CTYPE_ACTIVITY } from 'sly/web/constants/notes';
+import { NOTE_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
+import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/web/constants/provider';
+import { createValidator, required, float } from 'sly/web/services/validation';
+import { getStageDetails } from 'sly/web/services/helpers/stage';
+import { selectFormData } from 'sly/web/services/helpers/forms';
+import { userIs } from 'sly/web/services/helpers/role';
+import UpdateFamilyStageForm from 'sly/web/components/organisms/UpdateFamilyStageForm';
+import SlyEvent from 'sly/web/services/helpers/events';
 
 
 const validate = createValidator({

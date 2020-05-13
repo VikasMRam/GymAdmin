@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import IconButton from 'sly/components/molecules/IconButton';
-import Notification from 'sly/components/molecules/Notification';
+import IconButton from 'sly/web/components/molecules/IconButton';
+import Notification from 'sly/web/components/molecules/Notification';
 
 const wrap = (props = {}) => mount(<Notification {...props} />);
 

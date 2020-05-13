@@ -3,12 +3,12 @@ import styled, { css } from 'styled-components';
 import { object, string, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
-import Input from 'sly/components/atoms/Input';
-import IconButton from 'sly/components/molecules/IconButton';
-import DatatableFilters from 'sly/components/organisms/DatatableFilters';
-import PopoverPortal from 'sly/components/molecules/PopoverPortal';
-import ButtonLink from 'sly/components/molecules/ButtonLink';
+import { size, palette } from 'sly/web/components/themes';
+import Input from 'sly/web/components/atoms/Input';
+import IconButton from 'sly/web/components/molecules/IconButton';
+import DatatableFilters from 'sly/web/components/organisms/DatatableFilters';
+import PopoverPortal from 'sly/web/components/molecules/PopoverPortal';
+import ButtonLink from 'sly/web/components/molecules/ButtonLink';
 
 const border = css`${size('border.regular')} solid ${palette('slate.stroke')}`;
 const Wrappper = styled.div`

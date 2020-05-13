@@ -2,10 +2,10 @@ import React from 'react';
 import { string, func } from 'prop-types';
 import styled from 'styled-components';
 
-import pad from 'sly/components/helpers/pad';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import textAlign from 'sly/components/helpers/textAlign';
-import { Heading, Block, Button } from 'sly/components/atoms';
+import pad from 'sly/web/components/helpers/pad';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import textAlign from 'sly/web/components/helpers/textAlign';
+import { Heading, Block, Button } from 'sly/web/components/atoms';
 
 const Wrapper = textAlign(styled.div``, 'center');
 

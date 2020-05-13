@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import Notification from 'sly/components/molecules/Notification';
+import Notification from 'sly/web/components/molecules/Notification';
 
 storiesOf('Molecules|Notification', module)
   .add('default', () => (

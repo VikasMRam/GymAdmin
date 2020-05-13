@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import { Heading, Block } from 'sly/components/atoms';
-import Section from 'sly/components/molecules/Section';
+import { Heading, Block } from 'sly/web/components/atoms';
+import Section from 'sly/web/components/molecules/Section';
 
 const title = 'Section Title';
 const subtitle = 'Section SubTitle';

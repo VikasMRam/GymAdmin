@@ -3,23 +3,23 @@ import styled from 'styled-components';
 import { object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
+import { size, palette } from 'sly/web/components/themes';
 import {
   getBreadCrumbsForCommunity,
   getCitySearchUrl,
-} from 'sly/services/helpers/url';
-import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
+} from 'sly/web/services/helpers/url';
+import { getHelmetForCommunityPage } from 'sly/web/services/helpers/html_headers';
 import {
   calculatePricing,
   buildPriceList,
   buildEstimatedPriceList,
-} from 'sly/services/helpers/pricing';
-import pad from 'sly/components/helpers/pad';
-import { withHydration } from 'sly/services/partialHydration';
-import { getIsCCRC, getIsSNF } from 'sly/services/helpers/community';
-import { Button, Paragraph, Hr, Block, Link, Heading } from 'sly/components/atoms';
-import SeoLinks from 'sly/components/organisms/SeoLinks';
-import SampleMenu from 'sly/components/organisms/SampleMenu';
+} from 'sly/web/services/helpers/pricing';
+import pad from 'sly/web/components/helpers/pad';
+import { withHydration } from 'sly/web/services/partialHydration';
+import { getIsCCRC, getIsSNF } from 'sly/web/services/helpers/community';
+import { Button, Paragraph, Hr, Block, Link, Heading } from 'sly/web/components/atoms';
+import SeoLinks from 'sly/web/components/organisms/SeoLinks';
+import SampleMenu from 'sly/web/components/organisms/SampleMenu';
 import {
   CommunityDetailPageTemplate,
   makeBody,
@@ -29,43 +29,43 @@ import {
   makeHeader,
   makeTwoColumn,
   makeWrapper,
-} from 'sly/components/templates/CommunityDetailPageTemplate';
-import UnhydratedCommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
-import Section from 'sly/components/molecules/Section';
-import CommunityDetails from 'sly/components/organisms/CommunityDetails';
-import CommunityPricingComparison from 'sly/components/organisms/CommunityPricingComparison';
-import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
-import UnhydratedLazyCommunityMap from 'sly/containers/LazyCommunityMapContainer';
-import UnhydratedCommunityMediaGalleryContainer from 'sly/containers/CommunityMediaGalleryContainer';
-import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import UnhydratedOfferNotification from 'sly/components/molecules/OfferNotification';
-import CommunityCareService from 'sly/components/organisms/CommunityCareService';
-import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
-import IconItem from 'sly/components/molecules/IconItem';
-import IconButton from 'sly/components/molecules/IconButton';
-import UnhydratedGetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
-import UnhydratedHowSlyWorksVideoContainer from 'sly/containers/HowSlyWorksVideoContainer';
-import BannerNotification from 'sly/components/molecules/BannerNotification';
-import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
-import UnhydratedAskAgentQuestionButtonContainer from 'sly/containers/AskAgentQuestionButtonContainer';
-import UnhydratedGetCustomPricingButtonContainer from 'sly/containers/GetCustomPricingButtonContainer';
-import PlusBranding from 'sly/components/organisms/PlusBranding';
-import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
-import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
-import UnhydratedCommunitySummaryContainer from 'sly/containers/CommunitySummaryContainer';
-import UnhydratedCommunityAgentSectionContainer from 'sly/containers/CommunityAgentSectionContainer';
-import UnhydratedCommunityQuestionAnswersContainer from 'sly/containers/CommunityQuestionAnswersContainer';
-import UnhydratedCommunityReviewsContainer from 'sly/containers/CommunityReviewsContainer';
-import UnhydratedCommunityAddReviewButtonContainer from 'sly/containers/CommunityAddReviewButtonContainer';
-import UnhydratedCommunityMorePicturesContainer from 'sly/containers/CommunityMorePicturesContainer';
-import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/containers/TrackedSimilarCommunitiesContainer';
-import UnhydratedPageViewActionContainer from 'sly/containers/PageViewActionContainer';
-import { PROFILE_VIEWED } from 'sly/services/api/constants';
-import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
-import UnhydratedPageEventsContainer from 'sly/containers/PageEventsContainer';
-import UnhydratedCommunityDetailsPageColumnContainer from 'sly/containers/CommunityDetailsPageColumnContainer';
-import UnhydratedCommunityProfileAdTileContainer from 'sly/containers/communityProfile/AdTileContainer';
-import UnhydratedBannerNotificationAdContainer from 'sly/containers/BannerNotificationAdContainer'
+} from 'sly/web/components/templates/CommunityDetailPageTemplate';
+import UnhydratedCommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
+import Section from 'sly/web/components/molecules/Section';
+import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
+import CommunityPricingComparison from 'sly/web/components/organisms/CommunityPricingComparison';
+import CommunityAmenities from 'sly/web/components/organisms/CommunityAmenities';
+import UnhydratedLazyCommunityMap from 'sly/web/containers/LazyCommunityMapContainer';
+import UnhydratedCommunityMediaGalleryContainer from 'sly/web/containers/CommunityMediaGalleryContainer';
+import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
+import UnhydratedOfferNotification from 'sly/web/components/molecules/OfferNotification';
+import CommunityCareService from 'sly/web/components/organisms/CommunityCareService';
+import CommunityExtraInfoSection from 'sly/web/components/molecules/CommunityExtraInfoSection';
+import IconItem from 'sly/web/components/molecules/IconItem';
+import IconButton from 'sly/web/components/molecules/IconButton';
+import UnhydratedGetCurrentAvailabilityContainer from 'sly/web/containers/GetCurrentAvailabilityContainer';
+import UnhydratedHowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
+import BannerNotification from 'sly/web/components/molecules/BannerNotification';
+import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
+import UnhydratedAskAgentQuestionButtonContainer from 'sly/web/containers/AskAgentQuestionButtonContainer';
+import UnhydratedGetCustomPricingButtonContainer from 'sly/web/containers/GetCustomPricingButtonContainer';
+import PlusBranding from 'sly/web/components/organisms/PlusBranding';
+import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
+import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
+import UnhydratedCommunitySummaryContainer from 'sly/web/containers/CommunitySummaryContainer';
+import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
+import UnhydratedCommunityQuestionAnswersContainer from 'sly/web/containers/CommunityQuestionAnswersContainer';
+import UnhydratedCommunityReviewsContainer from 'sly/web/containers/CommunityReviewsContainer';
+import UnhydratedCommunityAddReviewButtonContainer from 'sly/web/containers/CommunityAddReviewButtonContainer';
+import UnhydratedCommunityMorePicturesContainer from 'sly/web/containers/CommunityMorePicturesContainer';
+import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/web/containers/TrackedSimilarCommunitiesContainer';
+import UnhydratedPageViewActionContainer from 'sly/web/containers/PageViewActionContainer';
+import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
+import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
+import UnhydratedPageEventsContainer from 'sly/web/containers/PageEventsContainer';
+import UnhydratedCommunityDetailsPageColumnContainer from 'sly/web/containers/CommunityDetailsPageColumnContainer';
+import UnhydratedCommunityProfileAdTileContainer from 'sly/web/containers/communityProfile/AdTileContainer';
+import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer'
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -491,6 +491,7 @@ export default class CommunityDetailPage extends Component {
                   staffDescription || residentDescription || ownerExperience) && (
                   <StyledHeadingBoxSection heading={`Details on ${name}`}>
                     <CommunityDetails
+                      id={community.id}
                       communityName={name}
                       communityDescription={communityDescription}
                       rgsAuxDescription={rgsAux.communityDescription}
@@ -607,7 +608,7 @@ export default class CommunityDetailPage extends Component {
                 <StyledCommunityExtraInfoSection
                   title="Disclaimer"
                   description="The information on this page has been created to the best of our abilities. To ensure accuracy, please confirm with your local Seniorly Seniorly Partner Agent or directly with the property. If this is your senior living community, we would welcome any updates you wish to provide."
-                  url={`/partners/communities?prop=${community.id}`}
+                  url={`/partners/communities?prop=${community.id}&sly_category=disclaimer&sly_action=cta_link&sly_label=claim`}
                   urlText="Simply claim your profile by clicking here"
                 />
                 {!showSimilarEarlier && (

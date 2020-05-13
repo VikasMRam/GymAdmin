@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { string, bool, func } from 'prop-types';
 import dayjs from 'dayjs';
 
-import pad from 'sly/components/helpers/pad';
-import { size } from 'sly/components/themes';
-import cursor from 'sly/components/helpers/cursor';
-import { Box, Block, Icon, Span } from 'sly/components/atoms';
+import pad from 'sly/web/components/helpers/pad';
+import { size } from 'sly/web/components/themes';
+import cursor from 'sly/web/components/helpers/cursor';
+import { Box, Block, Icon, Span } from 'sly/web/components/atoms';
 import {
   NOTE_CTYPE_NOTE,
   NOTE_CTYPE_ACTIVITY,
@@ -23,7 +23,7 @@ import {
   NOTE_CTYPE_ACTIVITY_EMAIL,
   NOTE_CTYPE_ACTIVITY_STAGE_CHANGED,
   NOTE_CTYPE_ACTIVITY_USER_ADDED_FAMILY,
-} from 'sly/constants/notes';
+} from 'sly/web/constants/notes';
 
 const StyledBox = styled(Box)`
   display: flex;

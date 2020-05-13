@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, shape, string } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import { Block, Box } from 'sly/components/atoms';
-import CollapsibleSection, { MainSection } from 'sly/components/molecules/CollapsibleSection';
+import { size } from 'sly/web/components/themes';
+import { Block, Box } from 'sly/web/components/atoms';
+import CollapsibleSection, { MainSection } from 'sly/web/components/molecules/CollapsibleSection';
 
 const StyledCollapsibleSection = styled(CollapsibleSection)`
   margin-bottom: 0;

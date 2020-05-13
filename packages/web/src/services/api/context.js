@@ -2,7 +2,7 @@ import { arrayOf, object, shape, bool } from 'prop-types';
 import React, { useContext } from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
-import { isServer } from 'sly/config';
+import { isServer } from 'sly/web/config';
 
 export const apiContextPropType = shape({
   promises: arrayOf(object),

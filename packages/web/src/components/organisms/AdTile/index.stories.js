@@ -3,9 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 
-import AdTile from 'sly/components/organisms/AdTile';
-import { size, assetPath } from 'sly/components/themes';
-import { Image } from 'sly/components/atoms';
+import AdTile from 'sly/web/components/organisms/AdTile';
+import { size, assetPath } from 'sly/web/components/themes';
+import { Image } from 'sly/web/components/atoms';
 
 const StyledImage = styled(Image)`
   vertical-align: middle;

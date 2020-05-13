@@ -2,13 +2,13 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { func } from 'prop-types';
-import HubHeader from 'sly/components/molecules/HubHeader';
-import PhoneCTAFooter from 'sly/components/molecules/PhoneCTAFooter';
-import NextSteps from 'sly/components/molecules/NextSteps';
-import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/services/helpers/html_headers';
+import HubHeader from 'sly/web/components/molecules/HubHeader';
+import PhoneCTAFooter from 'sly/web/components/molecules/PhoneCTAFooter';
+import NextSteps from 'sly/web/components/molecules/NextSteps';
+import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
 
-import { getStateAbbr } from 'sly/services/helpers/url';
-import { size, palette, assetPath } from 'sly/components/themes';
+import { getStateAbbr } from 'sly/web/services/helpers/url';
+import { size, palette, assetPath } from 'sly/web/components/themes';
 import {
   HubPageTemplate,
   makeBody,
@@ -18,10 +18,10 @@ import {
   makeStickToTop,
   makeArticle,
   makeTable,
-} from 'sly/components/templates/HubPageTemplate';
-import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/components/atoms';
-import Footer from 'sly/components/organisms/Footer';
-import CarePageAdTileContainer from 'sly/containers/CarePageAdTileContainer';
+} from 'sly/web/components/templates/HubPageTemplate';
+import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/web/components/atoms';
+import Footer from 'sly/web/components/organisms/Footer';
+import CarePageAdTileContainer from 'sly/web/containers/CarePageAdTileContainer';
 
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};

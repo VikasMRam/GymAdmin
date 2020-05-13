@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { func, string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
-import { Block, Box, Button, Heading } from 'sly/components/atoms';
-import shadow from 'sly/components/helpers/shadow';
-import Icon from 'sly/components/atoms/Icon';
-import pad from 'sly/components/helpers/pad';
-import { community as communityProptype } from 'sly/propTypes/community';
-import PostConversionAskNotHelpModal from 'sly/components/organisms/PostConversionAskNotHelpModal';
-import PostConversionSureNotHelpModal from 'sly/components/organisms/PostConversionSureNotHelpModal';
-import PostConversionAdTileContainer from 'sly/containers/postConversion/AdTileContainer';
-import { getCitySearchWithSizeUrl } from 'sly/services/helpers/url';
+import { size, palette } from 'sly/web/components/themes';
+import { Block, Box, Button, Heading } from 'sly/web/components/atoms';
+import shadow from 'sly/web/components/helpers/shadow';
+import Icon from 'sly/web/components/atoms/Icon';
+import pad from 'sly/web/components/helpers/pad';
+import { community as communityProptype } from 'sly/web/propTypes/community';
+import PostConversionAskNotHelpModal from 'sly/web/components/organisms/PostConversionAskNotHelpModal';
+import PostConversionSureNotHelpModal from 'sly/web/components/organisms/PostConversionSureNotHelpModal';
+import PostConversionAdTileContainer from 'sly/web/containers/postConversion/AdTileContainer';
+import { getCitySearchWithSizeUrl } from 'sly/web/services/helpers/url';
 
 const DO_NOT_REFER = 'do-not-refer';
 const ASK_NOT_HELP = 'AskNotHelp';

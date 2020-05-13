@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import IconInfoTile from 'sly/components/molecules/IconInfoTile';
+import IconInfoTile from 'sly/web/components/molecules/IconInfoTile';
 
 const props = {
   icon: 'search',

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import dayjs from 'dayjs';
 import { arrayOf, object } from 'prop-types';
 
-import { prefetch } from 'sly/services/api';
-import eventPropType from 'sly/propTypes/event';
-import performerPropType from 'sly/propTypes/performer';
-import CurtainUpPage from 'sly/components/pages/CurtainUpPage';
+import { prefetch } from 'sly/web/services/api';
+import eventPropType from 'sly/web/propTypes/event';
+import performerPropType from 'sly/web/propTypes/performer';
+import CurtainUpPage from 'sly/web/components/pages/CurtainUpPage';
 
 @prefetch('events', 'getEvents', (req) => {
   const lastDayOfWeek = dayjs().utc().endOf('week').hour(23)

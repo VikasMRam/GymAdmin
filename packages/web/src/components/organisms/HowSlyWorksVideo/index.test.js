@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
-import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
+import HowSlyWorksVideo from 'sly/web/components/organisms/HowSlyWorksVideo';
+import VideoThumbnail from 'sly/web/components/molecules/VideoThumbnail';
 
 const wrap = (props = {}) => shallow(<HowSlyWorksVideo {...props} />);
 

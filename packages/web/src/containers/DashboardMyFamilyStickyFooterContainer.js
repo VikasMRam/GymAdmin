@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { string, arrayOf, bool, object, func } from 'prop-types';
 
-import withModal from 'sly/controllers/withModal';
-import OptionsList from 'sly/components/molecules/OptionsList';
-import DashboardMyFamilyStickyFooter from 'sly/components/organisms/DashboardMyFamilyStickyFooter';
+import withModal from 'sly/web/controllers/withModal';
+import OptionsList from 'sly/web/components/molecules/OptionsList';
+import DashboardMyFamilyStickyFooter from 'sly/web/components/organisms/DashboardMyFamilyStickyFooter';
 
 @withModal
 

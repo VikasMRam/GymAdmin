@@ -3,13 +3,13 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { object } from 'prop-types';
 
-import { size, palette } from 'sly/components/themes';
-import { Hr } from 'sly/components/atoms';
-import pad from 'sly/components/helpers/pad';
-import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
-import Footer from 'sly/components/organisms/Footer';
-import PPHTML from 'sly/components/pages/LegalPolicyPage/privacypolicytext';
-import TOSHTML from 'sly/components/pages/LegalPolicyPage/tostext';
+import { size, palette } from 'sly/web/components/themes';
+import { Hr } from 'sly/web/components/atoms';
+import pad from 'sly/web/components/helpers/pad';
+import OverlappingSectionsTemplate from 'sly/web/components/templates/OverlappingSectionsTemplate';
+import Footer from 'sly/web/components/organisms/Footer';
+import PPHTML from 'sly/web/components/pages/LegalPolicyPage/privacypolicytext';
+import TOSHTML from 'sly/web/components/pages/LegalPolicyPage/tostext';
 
 const DescriptionText = pad(styled.div`
   color: ${palette('slate', 'filler')};

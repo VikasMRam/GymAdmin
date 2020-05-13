@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import FileField from 'sly/components/molecules/FileField';
-import S3Uploader from 'sly/services/s3Uploader/components/S3Uploader';
+import FileField from 'sly/web/components/molecules/FileField';
+import S3Uploader from 'sly/web/services/s3Uploader/components/S3Uploader';
 
 const getSignedUrl = () => Promise.resolve({ signedUrl: '/ping' });
 

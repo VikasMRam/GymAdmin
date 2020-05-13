@@ -2,9 +2,9 @@ import React from 'react';
 import { bool, func, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import SlyEvent from 'sly/services/helpers/events';
-import AskAgentQuestionContainer from 'sly/containers/AskAgentQuestionContainer';
-import { withRedirectTo } from 'sly/services/redirectTo';
+import SlyEvent from 'sly/web/services/helpers/events';
+import AskAgentQuestionContainer from 'sly/web/containers/AskAgentQuestionContainer';
+import { withRedirectTo } from 'sly/web/services/redirectTo';
 
 function GetCustomPricingContainer({
   match: { params: { communitySlug } },

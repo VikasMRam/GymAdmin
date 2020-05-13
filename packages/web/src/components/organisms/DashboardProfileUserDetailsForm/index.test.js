@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import DashboardProfileUserDetailsForm from 'sly/components/organisms/DashboardProfileUserDetailsForm';
+import DashboardProfileUserDetailsForm from 'sly/web/components/organisms/DashboardProfileUserDetailsForm';
 
 const handleSubmit = jest.fn();
 const timeToMove = [

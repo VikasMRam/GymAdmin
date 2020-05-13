@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityPricing from 'sly/components/molecules/CommunityPricing';
+import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';
 
 const defaultProps = {
   price: 4300,

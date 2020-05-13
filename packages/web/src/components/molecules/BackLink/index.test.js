@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import BackLink from 'sly/components/molecules/BackLink';
+import BackLink from 'sly/web/components/molecules/BackLink';
 
 const defaultProps = {
   to: '/',

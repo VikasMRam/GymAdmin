@@ -1,4 +1,4 @@
-import { Experiment, Variant } from 'sly/services/experiments';
+import { Experiment, Variant } from 'sly/web/services/experiments';
 import React from 'react';
 
 const TestExperiment = () => (

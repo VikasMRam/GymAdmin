@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Heading, Link, Label } from 'sly/components/atoms';
-import { size, palette } from 'sly/components/themes';
+import { Heading, Link, Label } from 'sly/web/components/atoms';
+import { size, palette } from 'sly/web/components/themes';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};

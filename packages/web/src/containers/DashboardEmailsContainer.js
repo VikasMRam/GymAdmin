@@ -3,16 +3,16 @@ import { object, string, arrayOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
-import mobileOnly from 'sly/components/helpers/mobileOnly';
-import { withUser, prefetch } from 'sly/services/api';
-import userPropType from 'sly/propTypes/user';
-import { Heading, Box } from 'sly/components/atoms';
-import EmailListItem from 'sly/components/molecules/EmailListItem';
-import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
-import Pagination from 'sly/components/molecules/Pagination';
-import { getDetailedPaginationData } from 'sly/services/helpers/pagination';
-import { withDatatable } from 'sly/services/datatable';
+import { size, palette } from 'sly/web/components/themes';
+import mobileOnly from 'sly/web/components/helpers/mobileOnly';
+import { withUser, prefetch } from 'sly/web/services/api';
+import userPropType from 'sly/web/propTypes/user';
+import { Heading, Box } from 'sly/web/components/atoms';
+import EmailListItem from 'sly/web/components/molecules/EmailListItem';
+import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons';
+import Pagination from 'sly/web/components/molecules/Pagination';
+import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
+import { withDatatable } from 'sly/web/services/datatable';
 
 const HeadingWrapper = styled.div`
   padding: ${size('spacing', 'xLarge')};

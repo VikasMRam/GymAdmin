@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { object, func } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
-import { isServer } from 'sly/config';
-import api from 'sly/services/api/apiInstance';
-import { createMemoizedRequestInfoSelector } from 'sly/services/api/selectors';
-import withPrefetchWait from 'sly/services/api/withPrefetchWait';
-import withReduxContext from 'sly/services/api/withReduxContext';
-import withApiContext, { apiContextPropType } from 'sly/services/api/context';
+import { isServer } from 'sly/web/config';
+import api from 'sly/web/services/api/apiInstance';
+import { createMemoizedRequestInfoSelector } from 'sly/web/services/api/selectors';
+import withPrefetchWait from 'sly/web/services/api/withPrefetchWait';
+import withReduxContext from 'sly/web/services/api/withReduxContext';
+import withApiContext, { apiContextPropType } from 'sly/web/services/api/context';
 
 const defaultDispatcher = call => call();
 

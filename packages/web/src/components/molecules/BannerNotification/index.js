@@ -3,13 +3,13 @@ import { node, string, bool, func } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { palette as palettePropType } from 'sly/propTypes/palette';
-import { spacing as spacingPropType } from 'sly/propTypes/spacing';
-import borderRadius from 'sly/components/helpers/borderRadius';
-import fullWidth from 'sly/components/helpers/fullWidth';
-import { Block } from 'sly/components/atoms';
-import IconButton from 'sly/components/molecules/IconButton';
-import { size, palette } from 'sly/components/themes';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { spacing as spacingPropType } from 'sly/web/propTypes/spacing';
+import borderRadius from 'sly/web/components/helpers/borderRadius';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import { Block } from 'sly/web/components/atoms';
+import IconButton from 'sly/web/components/molecules/IconButton';
+import { size, palette } from 'sly/web/components/themes';
 
 const background = ({ type }) => palette(type, 'base');
 

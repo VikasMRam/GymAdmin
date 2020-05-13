@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import DashboardChangePasswordForm from 'sly/components/organisms/DashboardChangePasswordForm';
+import DashboardChangePasswordForm from 'sly/web/components/organisms/DashboardChangePasswordForm';
 
 const handleSubmit = jest.fn();
 const wrap = (props = {}) => shallow(<DashboardChangePasswordForm handleSubmit={handleSubmit} {...props} />);

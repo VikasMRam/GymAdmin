@@ -5,15 +5,15 @@ import qs from 'query-string';
 import debounce from 'lodash/debounce';
 import { withRouter } from 'react-router';
 
-import { prefetch, withUser } from 'sly/services/api';
-import clientPropType from 'sly/propTypes/client';
-import taskPropType from 'sly/propTypes/task';
-import { TASK_STATUS_NOT_STARTED_CODE, TASK_STATUS_IN_PROGRESS_CODE } from 'sly/constants/tasks';
-import { getSearchParams } from 'sly/services/helpers/search';
-import RefreshRedirect from 'sly/components/common/RefreshRedirect';
-import DashboardAgentTasksSection from 'sly/components/organisms/DashboardAgentTasksSection';
-import ModalController from 'sly/controllers/ModalController';
-import NotificationController from 'sly/controllers/NotificationController';
+import { prefetch, withUser } from 'sly/web/services/api';
+import clientPropType from 'sly/web/propTypes/client';
+import taskPropType from 'sly/web/propTypes/task';
+import { TASK_STATUS_NOT_STARTED_CODE, TASK_STATUS_IN_PROGRESS_CODE } from 'sly/web/constants/tasks';
+import { getSearchParams } from 'sly/web/services/helpers/search';
+import RefreshRedirect from 'sly/web/components/common/RefreshRedirect';
+import DashboardAgentTasksSection from 'sly/web/components/organisms/DashboardAgentTasksSection';
+import ModalController from 'sly/web/controllers/ModalController';
+import NotificationController from 'sly/web/controllers/NotificationController';
 
 const getPaginationData = ({ result, meta }) => {
   if (!result) return {};

@@ -4,15 +4,15 @@ import { clearSubmitErrors, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { createValidator, email, required } from 'sly/services/validation';
-import userPropType from 'sly/propTypes/user';
-import { EXIT_INTENT_ASK_QUESTIONS } from 'sly/services/api/constants';
-import ExitIntentQuestionForm from 'sly/components/organisms/ExitIntentQuestionForm';
-import Thankyou from 'sly/components/molecules/Thankyou';
-import { query } from 'sly/services/api';
-import SlyEvent from 'sly/services/helpers/events';
-import withAuth from 'sly/services/api/withAuth';
-import withUser from 'sly/services/api/withUser';
+import { createValidator, email, required } from 'sly/web/services/validation';
+import userPropType from 'sly/web/propTypes/user';
+import { EXIT_INTENT_ASK_QUESTIONS } from 'sly/web/services/api/constants';
+import ExitIntentQuestionForm from 'sly/web/components/organisms/ExitIntentQuestionForm';
+import Thankyou from 'sly/web/components/molecules/Thankyou';
+import { query } from 'sly/web/services/api';
+import SlyEvent from 'sly/web/services/helpers/events';
+import withAuth from 'sly/web/services/api/withAuth';
+import withUser from 'sly/web/services/api/withUser';
 
 const formName = 'ExitIntentQuestionForm';
 const validate = createValidator({
