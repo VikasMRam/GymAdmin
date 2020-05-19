@@ -17,7 +17,7 @@ const DashboardCallsIndexPage = ({ tableContents }) => {
   return (
     <DashboardPageTemplate activeMenuItem="Calls">
       <TableSectionWrapper>
-        <Table>
+        <Table sticky>
           <THead>
             <Tr>
               {headings

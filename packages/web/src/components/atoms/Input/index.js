@@ -125,7 +125,7 @@ export default class Input extends Component {
     if (this.props.type === 'textarea') {
       return <StyledTextarea {...this.props} />;
     } else if (this.props.type === 'select') {
-      return <StyledSelect {...this.props} />;
+      return <StyledSelect {...this.props} disabled={this.props.readOnly} />;
     }
     return <StyledInput {...this.props} onFocus={this.onFocus} autoComplete="new-password" />;
   }

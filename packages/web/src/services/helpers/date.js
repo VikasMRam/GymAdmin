@@ -26,6 +26,10 @@ export const dateFormatter = (value) => {
   return `${onlyNums.slice(0, 4)}-${onlyNums.slice(4, 6)}-${onlyNums.slice(6, 8)}`;
 };
 
+export const usDate = (value) => {
+  return dayjs(value).format('MM/DD/YYYY');
+};
+
 export const parseDate = (dateString) => {
   return dayjs(dateString);
 };

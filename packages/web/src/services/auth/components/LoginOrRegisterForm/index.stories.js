@@ -17,6 +17,6 @@ storiesOf('Organisms|LoginOrRegisterForm', module)
       onSignupClick={action('sign up clicked')}
       onFacebookSigninClick={action('facebook login clicked')}
       onGoogleSigninClick={action('google login clicked')}
-      onPartnerAgentLoginClick={action('partner agent login clicked')}
+      onEmailPassLoginClick={action('partner agent login clicked')}
     />
   ));

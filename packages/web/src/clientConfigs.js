@@ -76,7 +76,7 @@ export default function clientConfigsMiddleware({ statsNode, statsWeb }) {
     // stats files might be compiling and might change during development
     const debouncedPatchConfig = debounce(
       () => patchConfigs({ statsWeb, statsNode }),
-      100,
+      200,
     );
     const files = [statsNode, statsWeb];
     Promise.all(files.map(waitForFile))

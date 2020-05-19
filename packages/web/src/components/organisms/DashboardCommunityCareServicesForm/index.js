@@ -7,7 +7,7 @@ import { size, palette, columnWidth } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import textAlign from 'sly/web/components/helpers/textAlign';
 import { Block, Button } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import EditField from 'sly/web/components/form/EditField';
 
 
 const StyledButton = pad(Button, 'regular');
@@ -81,42 +81,37 @@ export default class DashboardCommunityCareServicesForm extends Component {
         <FormScrollSection>
           <FormSection>
             {typeCare.indexOf('Assisted Living') !== -1 &&
-              <Field
+              <EditField
                 name="propInfo.careServices"
                 label="Assisted Living"
                 type="checkbox"
-                component={ReduxField}
                 options={assistedLivingCareServicesOptions}
                 wideWidth
               />
             }
             {typeCare.indexOf('Memory Care') !== -1 &&
-              <Field
+              <EditField
                 name="propInfo.careServices"
                 label="Memory Care"
                 type="checkbox"
-                component={ReduxField}
                 options={memoryCareCareServicesOptions}
                 wideWidth
               />
             }
-            <Field
+            <EditField
               name="propInfo.careServices"
               label="Other"
               type="checkbox"
-              component={ReduxField}
               options={otherCareServicesOptions}
               wideWidth
             />
           </FormSection>
         </FormScrollSection>
-        {canEdit &&
-          <FormBottomSection>
-            <StyledButton type="submit" disabled={invalid || submitting}>
-              Save changes
-            </StyledButton>
-          </FormBottomSection>
-        }
+        <FormBottomSection>
+          <StyledButton type="submit" disabled={!canEdit || invalid || submitting}>
+            Save changes
+          </StyledButton>
+        </FormBottomSection>
       </Form>
     );
   }

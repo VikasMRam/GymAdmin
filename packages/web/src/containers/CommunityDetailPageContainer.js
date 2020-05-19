@@ -24,18 +24,14 @@ const createHasProfileAction = uuidActions => (type, actionInfo) => {
 const getCommunitySlug = match => match.params.communitySlug;
 
 @withAuth
-@prefetch('community', 'getCommunity', (req, { match }) =>
-  req({
-    id: getCommunitySlug(match),
-    include: 'similar-communities,questions,agents',
-  })
-)
-@prefetch('uuidActions', 'getUuidActions', (req, { match }) =>
-  req({
-    'filter[actionType]': `${PROFILE_CONTACTED},${TOUR_BOOKED}`,
-    'filter[actionInfo-slug]': getCommunitySlug(match),
-  })
-)
+@prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: getCommunitySlug(match),
+  include: 'similar-communities,questions,agents',
+}))
+@prefetch('uuidActions', 'getUuidActions', (req, { match }) => req({
+  'filter[actionType]': `${PROFILE_CONTACTED},${TOUR_BOOKED}`,
+  'filter[actionInfo-slug]': getCommunitySlug(match),
+}))
 
 export default class CommunityDetailPageContainer extends React.PureComponent {
   static propTypes = {

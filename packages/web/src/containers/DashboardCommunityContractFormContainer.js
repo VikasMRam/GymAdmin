@@ -10,9 +10,10 @@ import userProptype from 'sly/web/propTypes/user';
 import { query, prefetch, getRelationship } from 'sly/web/services/api';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
 import DashboardCommunityContractForm from 'sly/web/components/organisms/DashboardCommunityContractForm';
 import { rgsAuxAttributes } from 'sly/web/propTypes/community';
+import { patchFormInitialValues } from 'sly/web/services/edits';
 
 const formName = 'DashboardCommunityContractForm';
 
@@ -25,6 +26,7 @@ const ReduxForm = reduxForm({
 @withRouter
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.id,
+  include: 'suggested-edits',
 }))
 @connect((state, { status }) => ({
   rgsAux: getRelationship(state, status.community.result, 'rgsAux'),
@@ -39,23 +41,25 @@ export default class DashboardCommunityContractFormContainer extends Component {
     notifyError: func.isRequired,
     user: userProptype,
     community: clientPropType.isRequired,
-    currentValues: object.isRequired,
+    currentValues: object,
     match: object.isRequired,
     rgsAux: shape({
       attributes: rgsAuxAttributes,
     }),
     status: object,
+    currentEdit: object,
   };
 
   handleSubmit = (values) => {
     const { community, updateCommunity, notifyError, notifyInfo } = this.props;
     const { id } = community;
-    const { relationships } = values;
-    const { rgsAux } = relationships;
+    const { rgsAux, ...attributes } = values;
     return updateCommunity({ id }, {
-      attributes: community,
+      attributes,
       relationships: {
-        rgsAux: { data: rgsAux },
+        rgsAux: { data: {
+          attributes: rgsAux
+        } },
       },
     })
       .then(() => notifyInfo(`Details for ${community.name} saved correctly`))
@@ -63,17 +67,19 @@ export default class DashboardCommunityContractFormContainer extends Component {
   };
 
   render() {
-    const { community, status, user, currentValues, rgsAux, ...props } = this.props;
+    const { community, status, user, currentValues, rgsAux, currentEdit, ...props } = this.props;
 
-    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
+    const canEdit = !currentEdit?.isPendingForAdmin
+      && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
 
     const initialValues = pick(
-      status.community.result,
+      status.community.result.attributes,
       [],
     );
-    initialValues.relationships = {
-      rgsAux,
-    };
+
+    initialValues.rgsAux = rgsAux.attributes;
+
+    patchFormInitialValues(initialValues, currentEdit);
 
     return (
       <ReduxForm

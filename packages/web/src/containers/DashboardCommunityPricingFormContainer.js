@@ -13,6 +13,7 @@ import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
 import DashboardCommunityPricingForm from 'sly/web/components/organisms/DashboardCommunityPricingForm';
 import { connect } from 'react-redux';
+import { patchFormInitialValues } from 'sly/web/services/edits';
 
 const formName = 'DashboardCommunityPricingForm';
 
@@ -25,6 +26,7 @@ const ReduxForm = reduxForm({
 @withRouter
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.id,
+  include: 'suggested-edits',
 }))
 @connect(state => ({
   currentValues: state.form[formName]?.values,
@@ -39,6 +41,7 @@ export default class DashboardCommunityPricingFormContainer extends Component {
     community: clientPropType.isRequired,
     currentValues: object.isRequired,
     match: object.isRequired,
+    currentEdit: object,
     status: object,
   };
 
@@ -54,9 +57,10 @@ export default class DashboardCommunityPricingFormContainer extends Component {
   };
 
   render() {
-    const { community, status, user, currentValues, ...props } = this.props;
+    const { community, status, currentEdit, user, currentValues, ...props } = this.props;
 
-    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
+    const canEdit = !currentEdit?.isPendingForAdmin
+      && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
 
     const initialValues = pick(
       status.community.result.attributes,
@@ -72,6 +76,8 @@ export default class DashboardCommunityPricingFormContainer extends Component {
         'propInfo.isUtilitiesIncluded',
       ],
     );
+
+    patchFormInitialValues(initialValues, currentEdit);
 
     // passes by ref
     defaultsDeep(initialValues, {

@@ -3,3 +3,8 @@ export const PROVIDER_OD_ROLE = 2;
 export const AGENT_ND_ROLE = 4;
 export const AGENT_ADMIN_ROLE = 8;
 export const PLATFORM_ADMIN_ROLE = 128;
+
+export const roleNames = {
+  [PROVIDER_OD_ROLE]: 'Housing Partner',
+  [AGENT_ND_ROLE]: 'Partner Agent',
+};

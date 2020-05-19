@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { node, bool, string, arrayOf, oneOfType } from 'prop-types';
+import { node, bool, string, arrayOf, oneOfType, oneOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/web/components/themes';
@@ -10,9 +10,11 @@ import Block from 'sly/web/components/atoms/Block';
 const TableWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+    ${ifProp('snap.left', css`border-left: none;`)};
+    ${ifProp('snap.right', css`border-right: none;`)};
     border-top: none;
     border-bottom: none;
-    overflow-x: auto;
+    ${ifProp('sticky', css`overflow-x: auto;`)};
   }
 `;
 
@@ -30,34 +32,74 @@ const StyledTable = styled.table`
     width: 100%;
     position: relative;
 
+    ${ifProp('snap.top', css`
+      & > tr:first-child th, & > thead > tr:first-child th {
+        border-top: none;
+      }
+    `)};
+
+    ${ifProp('snap.bottom', css`
+      & > tr:last-child td, & > tbody > tr:last-child td {
+        border-bottom: none;
+      }
+    `)};
+
     td, th {
       white-space: nowrap;
       border-right: none;
     }
+
     th:first-child, td:first-child {
-      left: 0;
-      position: sticky;
-      top: auto;
       border-left: none;
-      box-shadow: 4px 0px 0px 0px ${palette('slate.base')}19;
+
+      ${ifProp('sticky', css`
+        left: 0;
+        position: sticky;
+        top: auto;
+        box-shadow: 4px 0px 0px 0px ${palette('slate.base')}19;
+      `)}
     }
   }
 `;
 
-export const Table = ({ children, className, ...props }) => (
-  <TableWrapper className={className}>
-    <StyledTable {...props}>
-      {children}
-    </StyledTable>
-  </TableWrapper>
-);
+const getSnap = (snapText = '') => {
+  if (snapText === 'all') {
+    return { top: true, right: true, bottom: true, left: true };
+  } else if (snapText === 'none' || snapText === '') {
+    return { top: false, right: false, bottom: false, left: false };
+  }
+
+  return snapText.split(' ').reduce((snap, side) => {
+    if (!Object.prototype.hasOwnProperty.call(snap, side)) {
+      throw new Error(`can't snap ${side}`);
+    }
+    snap[side] = true;
+    return snap;
+  }, { top: false, right: false, bottom: false, left: false });
+};
+
+export const Table = ({ children, className, ...props }) => {
+  const snap = getSnap(props.snap || 'none');
+  return (
+    <TableWrapper className={className} snap={snap} sticky={props.sticky}>
+      <StyledTable {...props} snap={snap}>
+        {children}
+      </StyledTable>
+    </TableWrapper>
+  );
+};
 
 Table.propTypes = {
   children: oneOfType([
     arrayOf(node),
     node,
   ]).isRequired,
+  sticky: bool,
   className: string,
+  snap: oneOfType([
+    oneOf(['all', 'none']),
+    string,
+  ]), // or space separated string with any of 'top right bottom left'
 };
 
 export const THead = styled.thead`

@@ -49,6 +49,7 @@ const GOOGLE_CLIENT_ID =
 const HIDE_CHATBOX = process.env.HIDE_CHATBOX || false;
 const ENABLE_EXPERIMENT_DEBUGGER = process.env.ENABLE_EXPERIMENT_DEBUGGER || false;
 const DISABLE_EXPERIMENTS = process.env.DISABLE_EXPERIMENTS || false;
+const MUTE_REDUX_LOGGER = process.env.MUTE_REDUX_LOGGER || false;
 
 const isDev = NODE_ENV === 'development';
 const isStaging = SLY_ENV === 'staging';
@@ -85,6 +86,7 @@ console.info(
       HIDE_CHATBOX,
       ENABLE_EXPERIMENT_DEBUGGER,
       DISABLE_EXPERIMENTS,
+      MUTE_REDUX_LOGGER,
     },
     null,
     2,
@@ -162,6 +164,7 @@ const base = group([
     'process.env.GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID,
     'process.env.HIDE_CHATBOX': HIDE_CHATBOX,
     'process.env.DISABLE_EXPERIMENTS': DISABLE_EXPERIMENTS,
+    'process.env.MUTE_REDUX_LOGGER': MUTE_REDUX_LOGGER,
     'process.env.ENABLE_EXPERIMENT_DEBUGGER': ENABLE_EXPERIMENT_DEBUGGER,
   }),
 

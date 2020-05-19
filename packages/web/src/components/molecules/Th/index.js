@@ -8,7 +8,6 @@ import { text as textPropTypes } from 'sly/web/propTypes/text';
 
 const Wrapper = styled.th`
   padding: 0;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   background-color: ${palette('grey', 'stroke')};
 `;
 const StyledDiv = styled.div`

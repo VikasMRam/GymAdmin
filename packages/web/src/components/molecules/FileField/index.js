@@ -1,5 +1,5 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { number, string } from 'prop-types';
 import { prop } from 'styled-tools';
 import styled from 'styled-components';
 
@@ -55,7 +55,7 @@ FileField.propTypes = {
   label: string.isRequired,
   name: string.isRequired,
   fileName: string,
-  percent: string.isRequired,
+  percent: number.isRequired,
 };
 
 FileField.defaultProps = {

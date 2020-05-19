@@ -6,19 +6,14 @@ import { size, palette, columnWidth } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import textAlign from 'sly/web/components/helpers/textAlign';
 import { Block, Button } from 'sly/web/components/atoms';
-import { Field } from 'redux-form';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
+import EditField from 'sly/web/components/form/EditField';
 import { states } from 'sly/web/constants/communities';
 
 const statesOptions = states.map(s => <option key={s} value={s}>{s}</option>);
 
-
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
-
-const Form = styled.form``;
-Form.displayName = 'Form';
 
 const Warning = pad(styled(Block)`
   background-color: ${palette('warning.filler')};
@@ -73,73 +68,66 @@ export default class DashboardCommunityDetailsForm extends Component {
     } = this.props;
 
     return (
-      <Form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <FormScrollSection>
           <FormSection>
             <FormSectionHeading weight="medium">Metadata</FormSectionHeading>
-            <Field
-              name="attributes.name"
+            <EditField
+              name="name"
               label="Community name"
               type="text"
               readOnly={!canEdit}
-              component={ReduxField}
               wideWidth
             />
-            <Field
-              name="attributes.propInfo.communityPhone"
+            <EditField
+              name="propInfo.communityPhone"
               label="Front desk phone number"
               type="phone"
               readOnly={!canEdit}
               placeholder="(925) 555-5555"
               parens
-              component={ReduxField}
               wideWidth
             />
-            <Field
-              name="attributes.propInfo.ownerName"
+            <EditField
+              name="propInfo.ownerName"
               label="Owner name"
               type="text"
               readOnly={!canEdit}
               placeholder="John Doe"
-              component={ReduxField}
               wideWidth
             />
-            <Field
-              name="attributes.propInfo.ownerEmail"
+            <EditField
+              name="propInfo.ownerEmail"
               label="Owner email"
               type="email"
               readOnly={!canEdit}
               placeholder="john@community.com"
-              component={ReduxField}
               wideWidth
             />
-            <Field
-              name="attributes.propInfo.typeCare"
+            <EditField
+              name="propInfo.typeCare"
               label="Care type"
               type="choice"
               readOnly={!canEdit}
               isMulti
               options={AVAILABLE_TAGS.map(value => ({ label: value, value }))}
-              component={ReduxField}
               wideWidth
             />
           </FormSection>
           <FormSection>
             <FormSectionHeading weight="medium">Respite care</FormSectionHeading>
-            <Field
-              name="attributes.propInfo.respiteAllowed.checked"
+            <EditField
+              name="propInfo.respiteAllowed.checked"
               type="boolean"
               readOnly={!canEdit}
               options={[{ value: true, label: 'Respite care allowed' }]}
-              component={ReduxField}
             />
             {respiteAllowed?.checked &&
-              <Field
-                name="attributes.propInfo.respiteAllowed.minlength"
+              <EditField
+                name="propInfo.respiteAllowed.minlength"
                 label="Minimum stay length"
                 type="number"
                 readOnly={!canEdit}
-                component={ReduxField}
                 wideWidth
                 parse={value => !value ? null : Number(value)}
               />
@@ -147,69 +135,62 @@ export default class DashboardCommunityDetailsForm extends Component {
           </FormSection>
           <FormSection>
             <FormSectionHeading weight="medium">License Number</FormSectionHeading>
-            <Field
-              name="attributes.propInfo.licenseNumber"
-              label="License Number"
+            <EditField
+              name="propInfo.licenseNumber"
+              label="License number"
               type="text"
               readOnly={!canEdit}
-              component={ReduxField}
               wideWidth
             />
           </FormSection>
           <FormSection>
             <FormSectionHeading weight="medium">Address</FormSectionHeading>
-            <Field
-              name="relationships.address.attributes.line1"
+            <EditField
+              name="address.line1"
               label="Line 1"
               type="text"
               readOnly={!canEdit}
-              component={ReduxField}
               wideWidth
             />
-            <Field
-              name="relationships.address.attributes.line2"
+            <EditField
+              name="address.line2"
               label="Line 2"
               type="text"
               readOnly={!canEdit}
-              component={ReduxField}
               wideWidth
             />
-            <Field
-              name="relationships.address.attributes.city"
+            <EditField
+              name="address.city"
               label="City"
               type="text"
               readOnly={!canEdit}
-              component={ReduxField}
               wideWidth
             />
-            <Field
-              name="relationships.address.attributes.state"
+            <EditField
+              name="address.state"
               label="State"
               type="select"
-              component={ReduxField}
               wideWidth
+              readOnly={!canEdit}
             >
               <option>Select an option</option>
               {statesOptions}
-            </Field>
-            <Field
-              name="relationships.address.attributes.zip"
+            </EditField>
+            <EditField
+              name="address.zip"
               label="Zipcode"
               type="text"
               readOnly={!canEdit}
-              component={ReduxField}
               wideWidth
             />
           </FormSection>
         </FormScrollSection>
-        {canEdit &&
-          <FormBottomSection>
-            <StyledButton type="submit" disabled={invalid || submitting}>
-              Save changes
-            </StyledButton>
-          </FormBottomSection>
-        }
-      </Form>
+        <FormBottomSection>
+          <StyledButton type="submit" disabled={!canEdit || invalid || submitting}>
+            Save changes
+          </StyledButton>
+        </FormBottomSection>
+      </form>
     );
   }
 }
