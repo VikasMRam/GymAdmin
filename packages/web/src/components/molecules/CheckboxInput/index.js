@@ -23,6 +23,7 @@ export default class CheckboxInput extends Component {
     value: oneOfType([bool, arrayOf(string)]),
     onChange: func,
     options: arrayOf(object),
+    readOnly: bool,
     type: string,
     label: string,
   };
@@ -33,7 +34,10 @@ export default class CheckboxInput extends Component {
   };
 
   handleCheckboxItemOnClick = (option) => {
-    const { onChange, type, value } = this.props;
+    const { onChange, type, value, readOnly } = this.props;
+    if (readOnly) {
+      return null;
+    }
     let newValue;
     if (type === 'boolean') {
       newValue = !value;
@@ -49,7 +53,7 @@ export default class CheckboxInput extends Component {
   };
 
   render() {
-    const { type, label, value } = this.props;
+    const { type, label, value, readOnly } = this.props;
     let { options } = this.props;
     if (options.length === 0 && type === 'boolean') {
       options = [{ value: true, label }];
@@ -62,8 +66,9 @@ export default class CheckboxInput extends Component {
       return (
         <CheckboxItem key={option.label} onClick={() => this.handleCheckboxItemOnClick(option)} >
           <StyledCheckbox
-            palette="primary"
+            palette={readOnly ? 'grey' : 'primary'}
             uncheckedPalette="grey"
+            readOnly={readOnly}
             checked={checked}
           />
           <CheckboxLabel size="caption">{option.label}</CheckboxLabel>

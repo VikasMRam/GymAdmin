@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { reduxForm } from 'redux-form';
 import { object, func, arrayOf } from 'prop-types';
 import pick from 'lodash/pick';
 import defaultsDeep from 'lodash/defaultsDeep';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import { set } from 'object-path-immutable';
 
 import userPropType from 'sly/web/propTypes/user';
 import { galleryPropType, imagePropType } from 'sly/web/propTypes/gallery';
@@ -20,16 +20,39 @@ const arrayMove = (array, from, to) => {
   array = array.slice();
   const item = array.splice(from, 1)[0];
   array.splice(to, 0, item);
+  array.forEach((image, i) => {
+    image.attributes.sortOrder = i;
+  });
   return array;
 };
 
-@query('updateImage', 'updateImage')
-@query('createImage', 'createImage')
-@query('deleteImage', 'deleteImage')
+const denormalizeImages = images => images.map(({ id, type, ...attributes }) => ({
+  id,
+  type: 'Image',
+  attributes,
+}));
+
+const imageNotIn = list => image => !list.some(l => (
+  l.attributes.sortOrder === image.attributes.sortOrder
+  && l.attributes.path === image.attributes.path
+));
+
+const imageIsNotNew = image => (image.id && image.attributes.path);
+const imageIsNew = image => !imageIsNotNew(image);
+
+const imageHasChanged = list => image => list.find(n => n.id === image.id && (
+  (n.attributes.path || '') !== (image.attributes.path || '')
+  || (n.attributes.description || '') !== (image.attributes.description || '')
+));
+
+const JSONAPI_IMAGES_PATH = 'relationships.gallery.data.relationships.images.data';
+
+@query('updateCommunity')
 @withUser
 @withRouter
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.id,
+  include: 'suggested-edits',
 }))
 @connect((state, { status }) => {
   const gallery  = getRelationship(state, status.community.result, 'gallery');
@@ -42,9 +65,7 @@ const arrayMove = (array, from, to) => {
 
 export default class DashboardCommunityPhotosFormContainer extends Component {
   static propTypes = {
-    createImage: func.isRequired,
-    updateImage: func.isRequired,
-    deleteImage: func.isRequired,
+    updateCommunity: func.isRequired,
     purgeFromRelationships: func.isRequired,
     invalidateRequests: func.isRequired,
     showModal: func.isRequired,
@@ -54,42 +75,85 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
     gallery: galleryPropType,
     images: arrayOf(imagePropType),
     user: userPropType,
-    currentValues: object.isRequired,
     match: object.isRequired,
     status: object,
-  };
-
-  static getDerivedStateFromProps = (props, state) => {
-    if (!state?.touched) {
-      const { images: a = [] } = props;
-      const { images: b = [] } = state || {};
-      const dest = [];
-      // we don't resort the images while uploading
-      for (let i = 0; i < a.length; i++) {
-        dest.push(a[i]);
-      }
-
-      for (let i = 0; i < b.length; i++) {
-        if (!b[i].id) {
-          dest.push(b[i]);
-        }
-      }
-
-      return {
-        images: dest.sort((a, b) => {
-          const aSort = a.attributes.sortOrder;
-          const bSort = b.attributes.sortOrder;
-
-          return aSort - bSort;
-        }),
-      };
-    }
-
-    return state;
+    currentEdit: object,
   };
 
   static defaultProps = {
     images: [],
+  };
+
+  makeImagesFromProps = () => {
+    const { currentEdit, images } = this.props;
+    const newImages = currentEdit?.changes['gallery.images']
+      ? denormalizeImages(currentEdit.change.gallery.images)
+      : images;
+
+    return newImages.sort((a, b) => {
+      const aSort = a.attributes.sortOrder;
+      const bSort = b.attributes.sortOrder;
+
+      return aSort - bSort;
+    });
+  }
+
+  getChangesFromImages = (newImages) => {
+    const { currentEdit, images } = this.props;
+
+    const changes = {
+      deleted: [],
+      newImages: [],
+      modified: [],
+    };
+
+    if (!currentEdit?.changes['gallery.images']) {
+      return changes;
+    }
+
+    changes.deleted = images.filter(imageNotIn(newImages));
+    changes.newImages = newImages.filter(imageIsNew);
+    changes.modified = images
+      .filter(imageIsNotNew)
+      .filter(imageHasChanged(newImages));
+
+    return changes;
+  };
+
+  makeInitialState = () => {
+    const images = this.makeImagesFromProps();
+    const changes = this.getChangesFromImages(images);
+    return {
+      images,
+      changes,
+    };
+  };
+
+  state = this.makeInitialState();
+
+  reloadImages = (images = this.makeImagesFromProps()) => {
+    const changes = this.getChangesFromImages(images);
+    return new Promise(resolve => this.setState({
+      images,
+      changes,
+    }, resolve));
+  };
+
+  updateCommunityImages = (images) => {
+    const { match, updateCommunity, notifyError, notifyInfo, status } = this.props;
+    const { id } = match.params;
+
+    const community = set(status.community.result, JSONAPI_IMAGES_PATH, images);
+
+    // here:
+    //  1. put the images in the state to reflect the last ui change (adding, removing, sorting..)
+    //  2. patch the community with that change
+    //  3. reload the state with the single source of truth (the response from the server)
+    return this.reloadImages(images)
+      .then(() => updateCommunity({ id }, community))
+      .then(() => notifyInfo(`Details for ${community.name} saved correctly`))
+      .catch(() => notifyError(`Details for ${community.name} could not be saved`))
+      .then(this.reloadImages);
   };
 
   addImage = () => {
@@ -98,6 +162,7 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
     const { status } = this.props;
     const { images } = this.state;
     const newImage = {
+      type: 'Image',
       relationships: {
         gallery: status.community.result.relationships.gallery,
       },
@@ -105,6 +170,7 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
         sortOrder: images.length,
       },
     };
+
     this.setState({
       images: [
         ...images,
@@ -113,87 +179,27 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
     });
   };
 
-  onSortEnd = ({ oldIndex, newIndex }) => {
+  saveImage = (image, original) => {
     const { images } = this.state;
-
-    this.setState({
-      touched: true,
-      images: arrayMove(images, oldIndex, newIndex),
-    }, this.handleSubmitSort);
-  };
-
-  handleSubmitSort = () => {
-    const { updateImage, notifyError } = this.props;
-    const { images } = this.state;
-
-    const promises = images.reduce((acc, { id, attributes }, i) => {
-      if (id && attributes.sortOrder !== i) {
-        acc.push(updateImage({ id }, {
-          attributes: {
-            sortOrder: i,
-          },
-        }));
-      }
-      return acc;
-    }, []);
-
-    return Promise.all(promises)
-      .then(() => this.setState({
-        touched: false,
-      }))
-      .catch(e => {
-        notifyError(`Could not sort images: ${e.message}`);
-      });
-  };
-
-  saveImage = (image) => {
-    const { createImage, notifyError, notifyInfo } = this.props;
-    createImage(image).then(() => {
-      this.spliceImageFromState(image);
-    })
-      .then(() => notifyInfo(`Image ${image.attributes.name} saved correctly`))
-      .catch(() => notifyError(`Image ${image.attributes.name} could not be saved`));
-  };
-
-  spliceImageFromState = (image) => {
-    const { images } = this.state;
-    const index = images.indexOf(image);
-    const newImages = [...images];
-    newImages.splice(index, 1);
-    this.setState({
-      images: newImages,
-    });
+    const index = images.indexOf(original);
+    const newImages = [
+      ...images.slice(0, index),
+      image,
+      ...images.slice(index + 1),
+    ];
+    this.updateCommunityImages(newImages);
   };
 
   deleteImage = (image) => {
-    const { showModal, hideModal, notifyInfo, notifyError } = this.props;
+    const { showModal, hideModal } = this.props;
 
     const doDelete = () => {
-      const { gallery, deleteImage, purgeFromRelationships } = this.props;
-      if (image.id && image.type) {
-        const entity = {
-          ...image,
-          relationships: {
-            gallery: {
-              data: gallery,
-            },
-          },
-        };
-        return deleteImage(image)
-          .then(() => purgeFromRelationships({
-            name: 'images',
-            entity,
-          }))
-          .then(hideModal)
-          .then(this.handleSubmitSort)
-          .then(() => {
-            notifyInfo(`Image ${image.attributes.name} removed correctly`);
-          })
-          .catch(() => {
-            notifyError(`Image ${image.attributes.name} could not be removed`);
-          });
-      }
-      return this.spliceImageFromState(image);
+      const { images } = this.state;
+      const index = images.indexOf(image);
+      const newImages = [...images];
+      newImages.splice(index, 1);
+      this.updateCommunityImages(newImages)
+        .then(hideModal);
     };
 
     return showModal((
@@ -206,12 +212,19 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
     ), hideModal);
   };
 
-
-  render() {
-    const { gallery, user, status, currentValues, images: discardImagesProp, deleteImage: discardDeleteImage, ...props } = this.props;
+  onSortEnd = ({ oldIndex, newIndex }) => {
     const { images } = this.state;
 
-    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
+    const newImages = arrayMove(images, oldIndex, newIndex);
+    this.updateCommunityImages(newImages);
+  };
+
+  render() {
+    const { gallery, user, status, currentEdit, ...props } = this.props;
+    const { images, changes } = this.state;
+
+    const canEdit = !currentEdit?.isPendingForAdmin
+      && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
 
     const initialValues = pick(
       status.community.result.attributes,
@@ -223,16 +236,16 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
 
     return (
       <DashboardCommunityPhotosForm
+        {...props}
         addImage={this.addImage}
         saveImage={this.saveImage}
         deleteImage={this.deleteImage}
         initialValues={initialValues}
-        currentValues={currentValues}
         user={user}
         canEdit={canEdit}
         images={images}
         onSortEnd={this.onSortEnd}
-        {...props}
+        changes={changes}
       />
     );
   }

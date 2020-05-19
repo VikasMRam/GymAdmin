@@ -9,19 +9,33 @@ import { Hr, Span, Badge } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   position: relative;
-  text-align: center;
+  height: calc(2 * ${size('spacing.xLarge')});
+  padding-top: ${size('spacing.xLarge')};
+  hr {
+    margin: 0; 
+  }
 `;
 
-const TextBlock = styled(Span)`
+const TextBlock = styled.div`
   position: absolute;
-  margin-top: -${size('spacing.xxLarge')};
-  background: ${palette('white', 'base')};
-  padding: 0 ${size('spacing.large')};
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  span {
+    background: ${palette('white', 'base')};
+    padding: 0 ${size('spacing.large')};
+  }
 `;
 
 const StyledBadge = styled(Badge)`
   position: absolute;
-  margin-top: calc(-${size('spacing.xxLarge')} + -${size('spacing.tiny')});
+  top: ${size('spacing.medium')};
   right: ${size('spacing.large')};
 `;
 
@@ -30,7 +44,7 @@ const HrWithText = ({
 }) => (
   <Wrapper className={className} ref={hrRef}>
     <Hr palette={palette} variation={variation} />
-    {text && <TextBlock size="caption" weight="medium">{text}</TextBlock>}
+    {text && <TextBlock size="caption" weight="medium"><Span>{text}</Span></TextBlock>}
     {badgeText && <StyledBadge palette={palette} variation={variation} textPalette={badgeTextpalette}>{badgeText}</StyledBadge>}
   </Wrapper>
 );

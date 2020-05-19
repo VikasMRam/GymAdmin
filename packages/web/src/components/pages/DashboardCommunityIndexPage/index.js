@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 
 import { size, palette } from 'sly/web/components/themes';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
-import DashboardCommunitiesIndexSectionContainer from 'sly/web/containers/DashboardCommunitiesIndexSectionContainer';
+import DashboardCommunityIndexSectionContainer from 'sly/web/containers/DashboardCommunityIndexSectionContainer';
 import { Datatable } from 'sly/web/services/datatable';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
 import Role from 'sly/web/components/common/Role';
@@ -39,10 +39,7 @@ const TwoColumn = pad(styled.div`
   }
 `);
 
-const DashboardCommunitiesIndexPage = ({ sectionFilters, filters, onAddCommunity}) => {
-
-
-
+const DashboardCommunityIndexPage = ({ sectionFilters, filters, onAddCommunity}) => {
   return (
     <DashboardPageTemplate activeMenuItem="Communities">
       <Wrapper>
@@ -61,17 +58,17 @@ const DashboardCommunitiesIndexPage = ({ sectionFilters, filters, onAddCommunity
         filters={filters}
       >
         {datatable => (
-          <DashboardCommunitiesIndexSectionContainer datatable={datatable} />
+          <DashboardCommunityIndexSectionContainer datatable={datatable} />
         )}
       </Datatable>
 
     </DashboardPageTemplate>);
 };
 
-DashboardCommunitiesIndexPage.propTypes = {
+DashboardCommunityIndexPage.propTypes = {
   sectionFilters: object,
   filters: object,
   onAddCommunity: func,
 };
 
-export default DashboardCommunitiesIndexPage;
+export default DashboardCommunityIndexPage;

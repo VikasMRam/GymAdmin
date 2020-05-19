@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import { func, bool, object } from 'prop-types';
 import styled from 'styled-components';
-import { Field } from 'redux-form';
 
 import { size, palette, columnWidth } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import textAlign from 'sly/web/components/helpers/textAlign';
 import { Block, Button } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
 import FormSection from 'sly/web/components/molecules/FormSection';
+import EditField from 'sly/web/components/form/EditField';
 
 const trueFalseOptions = [
   { label: 'Yes', value: true },
   { label: 'No', value: false },
-]
+];
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -56,102 +55,91 @@ export default class DashboardCommunityPricingForm extends Component {
       <Form onSubmit={handleSubmit}>
         <FormScrollSection>
           <FormSection heading="Base Costs">
-            <Field
+            <EditField
               name="propInfo.sharedSuiteRate"
               label="Shared suite"
               type="text"
               readOnly={!canEdit}
               placeholder="2,000"
-              component={ReduxField}
               wideWidth
             />
-            <Field
+            <EditField
               name="propInfo.privateSuiteRate"
               label="Private suite"
               type="text"
               readOnly={!canEdit}
               placeholder="3,000"
-              component={ReduxField}
               wideWidth
             />
-            <Field
+            <EditField
               name="propInfo.studioApartmentRate"
               label="Studio apartment"
               type="text"
               readOnly={!canEdit}
               placeholder="5,000"
-              component={ReduxField}
               wideWidth
             />
-            <Field
+            <EditField
               name="propInfo.oneBedroomApartmentRate"
               label="One bedroom apartment"
               type="text"
               readOnly={!canEdit}
               placeholder=""
-              component={ReduxField}
               wideWidth
             />
-            <Field
+            <EditField
               name="propInfo.twoBedroomApartmentRate"
               label="Two bedroom apartment"
               type="text"
               readOnly={!canEdit}
               placeholder=""
-              component={ReduxField}
               wideWidth
             />
           </FormSection>
 
           <FormSection heading="Additional Care Costs">
-            <Field
+            <EditField
               name="propInfo.isCareCostIncluded"
               type="boolean"
               label="Care costs included"
               readOnly={!canEdit}
-              component={ReduxField}
               wideWidth
             />
             {!currentValues?.propInfo?.isCareCostIncluded && (
               <>
-                <Field
+                <EditField
                   name="propInfo.alCareRate"
                   label="Assisted living"
                   type="text"
                   options={trueFalseOptions}
                   readOnly={!canEdit}
-                  component={ReduxField}
                   wideWidth
                 />
-                <Field
+                <EditField
                   name="propInfo.mcCareRate"
                   label="Memory care"
                   type="text"
                   options={trueFalseOptions}
                   readOnly={!canEdit}
-                  component={ReduxField}
                   wideWidth
                 />
               </>
             )}
-            <Field
+            <EditField
               name="propInfo.isUtilitiesIncluded"
               type="boolean"
               label="Utitilies included"
               readOnly={!canEdit}
-              component={ReduxField}
               wideWidth
             />
           </FormSection>
         </FormScrollSection>
 
-        {canEdit &&
-          <FormBottomSection>
-            <StyledButton type="submit" disabled={invalid || submitting}>
-              Save changes
-            </StyledButton>
-          </FormBottomSection>
-        }
+        <FormBottomSection>
+          <StyledButton type="submit" disabled={!canEdit || invalid || submitting}>
+            Save changes
+          </StyledButton>
+        </FormBottomSection>
       </Form>
     );
   }

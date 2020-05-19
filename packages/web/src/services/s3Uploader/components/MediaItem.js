@@ -8,8 +8,9 @@ import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import { imagePropType } from 'sly/web/propTypes/gallery';
 import Icon from 'sly/web/components/atoms/Icon';
 import { size, palette } from 'sly/web/components/themes';
-import { func } from 'prop-types';
+import { bool, func } from 'prop-types';
 import IconButton from 'sly/web/components/molecules/IconButton';
+import HelpBubble from 'sly/web/components/form/HelpBubble';
 
 const getSignedUrl = (file, callback) => {
   return fetch(`/v0/platform/uploads/s3-signed-url?file=${encodeURIComponent(file.name)}`)
@@ -20,9 +21,10 @@ const getSignedUrl = (file, callback) => {
 const Wrapper = sortableElement(styled.div`
   display: flex;
   align-items: center;
+  height: 4rem;
   margin-bottom: ${size('spacing.regular')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('border.xLarge')};
+  border-radius: ${size('border.xxLarge')};
 `);
 
 const DragHandle = sortableHandle(styled(Icon)`
@@ -36,7 +38,7 @@ const Info = styled.div`
 
 const Thumbnail = styled.div`
   flex-grow: 0;
-  width: 100px;
+  width: 96px;
 `;
 
 const RemoveButton = styled(IconButton)`
@@ -50,14 +52,8 @@ export default class MediaItem extends React.Component {
     image: imagePropType,
     deleteImage: func,
     saveImage: func,
-  };
-
-  state = {
-    loadFailed: false,
-  };
-
-  onLoadFailed = () => {
-    this.setState({ loadFailed: true });
+    isNew: bool,
+    disabled: bool,
   };
 
   onFinish = (result, file) => {
@@ -69,15 +65,28 @@ export default class MediaItem extends React.Component {
         name: file.name,
         path: result.path,
       },
-    });
+      // original image
+    }, image);
   };
 
   render() {
-    const { image, deleteImage, saveImage, ...props } = this.props;
+    const { image, isNew, deleteImage, saveImage, disabled, ...props } = this.props;
+    const imgPath = image.attributes.path || 'react-assets/img-placeholder.png';
     return (
       <Wrapper {...props}>
-        <DragHandle icon="menu" />
+        <DragHandle
+          palette="grey"
+          icon="drag"
+        />
+        <Thumbnail>
+          <ResponsiveImage
+            onLoadFailed={this.onLoadFailed}
+            aspectRatio="3:2"
+            path={imgPath}
+          />
+        </Thumbnail>
         <Info>
+          {isNew && <HelpBubble>This image is new</HelpBubble>}
           {image.attributes.path &&
             image.attributes.name
           }
@@ -90,16 +99,7 @@ export default class MediaItem extends React.Component {
             />
           }
         </Info>
-        <Thumbnail>
-          {image.attributes.path &&
-            <ResponsiveImage
-              onLoadFailed={this.onLoadFailed}
-              aspectRatio="16:9"
-              path={image.attributes.path}
-            />
-          }
-        </Thumbnail>
-        <RemoveButton icon="trash" onClick={() => deleteImage(image)} />
+        <RemoveButton icon="trash" palette="grey" transparent onClick={() => deleteImage(image)} disabled={disabled} />
       </Wrapper>
     );
   }

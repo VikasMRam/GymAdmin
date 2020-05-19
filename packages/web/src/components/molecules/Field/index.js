@@ -322,6 +322,7 @@ Field.propTypes = {
     'dateChoice',
     'slider',
     'text',
+    'boolean',
     'file',
     'phone',
     'email',

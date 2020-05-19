@@ -5,9 +5,7 @@ import communityPropType from 'sly/web/propTypes/community';
 
 const DashboardCommunityNameAndStatus = ({ community }) => {
   return (
-    <div>
-      <Heading>{community.name}</Heading>
-    </div>
+    <Heading>{community.name}</Heading>
   );
 };
 

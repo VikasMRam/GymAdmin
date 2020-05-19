@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { func, bool, object } from 'prop-types';
 import styled from 'styled-components';
-import { Field as RFField } from 'redux-form';
 
 import { size, palette, columnWidth } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { Button } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
 import communityPropType from 'sly/web/propTypes/community';
-
-const nonCareServicesOptions = [
-  { value: 'Community Operated Transportation', label: 'Community operated transportation' },
-  { value: 'Scheduled Daily Activities', label: 'Scheduled daily activities' },
-];
+import EditField from 'sly/web/components/form/EditField';
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -27,8 +21,6 @@ const FormScrollSection = styled.div`
 const FormBottomSection = styled.div`
   margin-top: ${size('spacing.xLarge')};
 `;
-
-const Field = ({ canEdit, ...props }) => <RFField component={ReduxField} readOnly={!canEdit} wideWidth {...props} />;
 
 export default class DashboardCommunityContractForm extends Component {
   static propTypes = {
@@ -45,7 +37,7 @@ export default class DashboardCommunityContractForm extends Component {
       handleSubmit, invalid, submitting, canEdit, currentValues,
     } = this.props;
 
-    const contractInfo = currentValues?.relationships?.rgsAux?.attributes?.rgsInfo?.contract_info || {};
+    const contractInfo = currentValues?.rgsAux?.rgsInfo?.contract_info || {};
     const valueLabel = contractInfo.contractType === 'Percentage'
       ? 'Value between 0.0 - 1.0'
       : 'Value in dollars';
@@ -53,49 +45,47 @@ export default class DashboardCommunityContractForm extends Component {
     return (
       <Form onSubmit={handleSubmit}>
         <FormScrollSection>
-          <Field
-            name="relationships.rgsAux.attributes.rgsInfo.contract_info.hasContract"
+          <EditField
+            name="rgsAux.rgsInfo.contract_info.hasContract"
             label="Has contract"
             type="boolean"
-            canEdit={canEdit}
+            readOnly={!canEdit}
           />
           {contractInfo?.hasContract && (
             <>
-              <Field
+              <EditField
                 label="Type of contract"
-                name="relationships.rgsAux.attributes.rgsInfo.contract_info.contractType"
+                name="rgsAux.rgsInfo.contract_info.contractType"
                 type="choice"
                 options={[
                   { value: 'Flat Rate', label: 'Flat rate' },
                   { value: 'Percentage', label: 'Percentage' },
                 ]}
-                canEdit={canEdit}
+                readOnly={!canEdit}
               />
-              <Field
+              <EditField
                 label={valueLabel}
-                name="relationships.rgsAux.attributes.rgsInfo.contract_info.value"
+                name="rgsAux.rgsInfo.contract_info.value"
                 type="number"
                 inputmode="numeric"
-                canEdit={canEdit}
+                readOnly={!canEdit}
                 parse={value => !value ? null : Number(value)}
               />
-              <Field
+              <EditField
                 label="Notes"
-                name="relationships.rgsAux.attributes.rgsInfo.contract_info.notes"
+                name="rgsAux.rgsInfo.contract_info.notes"
                 type="textarea"
-                canEdit={canEdit}
+                readOnly={!canEdit}
               />
             </>
           )}
         </FormScrollSection>
 
-        {canEdit && (
-          <FormBottomSection>
-            <StyledButton type="submit" disabled={invalid || submitting}>
-              Save changes
-            </StyledButton>
-          </FormBottomSection>
-        )}
+        <FormBottomSection>
+          <StyledButton type="submit" disabled={!canEdit || invalid || submitting}>
+            Save changes
+          </StyledButton>
+        </FormBottomSection>
       </Form>
     );
   }
