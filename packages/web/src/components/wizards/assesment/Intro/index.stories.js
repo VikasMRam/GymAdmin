@@ -10,5 +10,5 @@ const IntroContainer = reduxForm({
   form: 'Intro',
 })(Intro);
 
-storiesOf('Wizards|Assesment - Steps|Intro', module)
+storiesOf('Wizards|Assesment/Steps/Intro', module)
   .add('default', () => <IntroContainer handleSubmit={withPreventDefault(action('form submitted'))} />);
