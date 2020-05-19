@@ -17,9 +17,11 @@ import {
   AGENT_DASHBOARD_TASKS_PATH,
   AGENT_DASHBOARD_PROFILE_PATH, DASHBOARD_COMMUNITIES_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
-import { withAuth } from 'sly/web/services/api';
+import { withAuth, normalizeResponse, query } from 'sly/web/services/api';
 import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withProps } from 'sly/web/services/helpers/hocs';
 import { generateSearchUrl } from 'sly/web/services/helpers/url';
+import { parseURLQueryParams } from 'sly/web/services/helpers/url';
 import SlyEvent from 'sly/web/services/helpers/events';
 import AuthContainer from 'sly/web/services/auth/containers/AuthContainer';
 import NotificationController from 'sly/web/controllers/NotificationController';
@@ -46,7 +48,6 @@ const sendHeaderItemClickEvent = value => sendEvent(category, clickAction, heade
 const defaultHeaderItems = [
   { name: 'Senior Living Resources', to: '/resources', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
   { name: 'Assisted Living', to: '/assisted-living', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
-  //{ name: 'Nursing Homes', to: '/nursing-homes', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
   { name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
 ];
 
@@ -139,6 +140,10 @@ const generateMenuItems = user => [...defaultMenuItems(user), ...loggedInMenuIte
 
 @withAuth
 @withRedirectTo
+@query('getCommunity', 'getCommunity')
+@withProps(({ match, location }) => ({
+  queryParams: parseURLQueryParams(location.search),
+}))
 
 export default class HeaderContainer extends PureComponent {
   static typeHydrationId = 'HeaderContainer';
@@ -147,10 +152,33 @@ export default class HeaderContainer extends PureComponent {
     logoutUser: func,
     ensureAuthenticated: func,
     className: string,
+    queryParams: object,
+    location: object,
+    getCommunity: func,
     redirectTo: func.isRequired,
   };
 
-  state = { isDropdownOpen: false };
+  state = {
+    isDropdownOpen: false,
+    community: {}
+  };
+
+  componentDidMount() {
+    const { queryParams, getCommunity } = this.props;
+    if ( !queryParams ) {
+      return
+    }
+    const { prop } = queryParams;
+    if ( !prop ) {
+      return
+    }
+    return getCommunity({id: prop}).then((resp) => {
+      const community = normalizeResponse(resp.body);
+      return this.setState({
+        community
+      });
+    });
+  }
 
   toggleDropdown = () => {
     const { isDropdownOpen } = this.state;
@@ -185,6 +213,7 @@ export default class HeaderContainer extends PureComponent {
       user,
       className,
       ensureAuthenticated,
+      location,
     } = this.props;
     const { isDropdownOpen } = this.state;
 
@@ -206,11 +235,33 @@ export default class HeaderContainer extends PureComponent {
     }
     let registerItem = lhItems.find(item => item.name === 'Sign Up');
     if (registerItem) {
-      registerItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated({register:true}); };
+      registerItem.onClick = ({ name }) => {
+        sendHeaderItemClickEvent(name);
+        const { community } = this.state;
+        const data = {register: true};
+        if (location.pathname === '/partners/communities') {
+          data.provider = true;
+          if (community.id) {
+            data.community = {value: community.id, label: `${community.name}: ${community.address.city}, ${community.address.state}`}
+          }
+        }
+        ensureAuthenticated(data);
+      };
     }
     registerItem = menuItems.find(item => item.name === 'Sign Up');
     if (registerItem) {
-      registerItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated({register:true}); };
+      registerItem.onClick = ({ name }) => {
+        sendHeaderItemClickEvent(name);
+        const { community } = this.state;
+        const data = {register: true};
+        if (location.pathname === '/partners/communities') {
+          data.provider = true;
+          if (community.id) {
+            data.community = {value: community.id, label: `${community.name}: ${community.address.city}, ${community.address.state}`}
+          }
+        }
+        ensureAuthenticated(data);
+      };
     }
     const mySlyMenuItem = lhItems.find(item => item.name === 'My Seniorly');
     if (mySlyMenuItem) {
