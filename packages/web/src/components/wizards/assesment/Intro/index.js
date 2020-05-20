@@ -3,13 +3,10 @@ import { func } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { Heading, Box, Icon } from 'sly/web/components/atoms';
-import shadow from 'sly/web/components/helpers/shadow';
 import pad from 'sly/web/components/helpers/pad';
 import textAlign from 'sly/web/components/helpers/textAlign';
-import ReduxField from 'sly/web/components/organisms/ReduxField/index';
-
-const Wrapper = shadow(Box);
+import { Heading, Box, Icon } from 'sly/web/components/atoms';
+import ReduxField from 'sly/web/components/organisms/ReduxField';
 
 const StyledForm = textAlign(styled.form``);
 StyledForm.displayName = 'StyledForm';
@@ -23,10 +20,10 @@ StyledIcon.displayName = 'StyledIcon';
 const Intro = ({
   handleSubmit,
 }) => (
-  <Wrapper>
+  <Box>
     <StyledForm onSubmit={handleSubmit}>
       <StyledIcon icon="logo" palette="primary" size="xLarge" />
-      <PaddedHeading weight="medium">Complete this 3-minute assessment tool to get personalized senior living and care options.</PaddedHeading>
+      <PaddedHeading level="subtitle" weight="medium">Complete this 3-minute assessment tool to get personalized senior living and care options.</PaddedHeading>
       <Field
         name="whatToDoNext"
         type="button"
@@ -47,7 +44,7 @@ const Intro = ({
         No thanks, I just want pricing
       </Field>
     </StyledForm>
-  </Wrapper>
+  </Box>
 );
 
 Intro.propTypes = {
