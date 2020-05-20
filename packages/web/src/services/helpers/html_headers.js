@@ -245,7 +245,7 @@ export const getHelmetForSearchPage = ({
   }
 
   let noindex = false;
-  if ((url.search && url.search.length > 0) || (listSize && listSize <= 2)) {
+  if ((url.search && url.search.length > 0) || (listSize && listSize <= 3)) {
     noindex = true;
   }
 
