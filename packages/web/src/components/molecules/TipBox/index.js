@@ -8,9 +8,9 @@ const PaddedBlock = pad(Block);
 PaddedBlock.displayName = 'PaddedBlock';
 
 const TipBox = ({
-  heading, children,
+  heading, children, className,
 }) => (
-  <Box palette="grey" backgroundPalette="grey" backgroundVariation="background">
+  <Box palette="grey" backgroundPalette="grey" backgroundVariation="background" className={className}>
     <PaddedBlock weight="bold" size="tiny" palette="secondary" variation="dark35">{heading}</PaddedBlock>
     {children}
   </Box>
@@ -19,6 +19,7 @@ const TipBox = ({
 TipBox.propTypes = {
   heading: string.isRequired,
   children: node,
+  className: string,
 };
 
 export default TipBox;
