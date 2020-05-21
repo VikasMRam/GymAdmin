@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 import { WHO_PERSON_OPTIONS } from 'sly/web/constants/wizards/assesment';
 import pad from 'sly/web/components/helpers/pad';
-import { Wrapper } from 'sly/web/components/wizards/assesment/Template';
-import { Heading, Box, Button } from 'sly/web/components/atoms';
+import { Wrapper, Footer } from 'sly/web/components/wizards/assesment/Template';
+import { Heading, Box } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 import TipBox from 'sly/web/components/molecules/TipBox';
@@ -16,11 +16,6 @@ const PaddedProgressBar = pad(ProgressBar);
 
 const PaddedHeading = pad(Heading);
 PaddedHeading.displayName = 'PaddedHeading';
-
-const ButtonWrapper = styled.div`
-  display:flex;
-  justify-content: flex-end;
-`;
 
 const PaddedIconItem = pad(IconItem, 'large');
 
@@ -46,11 +41,9 @@ const Who = ({
             required
           >
             <option>Select a person</option>
-            {WHO_PERSON_OPTIONS.map(o => <option value={o.value}>{o.label}</option>)}
+            {WHO_PERSON_OPTIONS.map(o => <option value={o.value} key={o.value}>{o.label}</option>)}
           </Field>
-          <ButtonWrapper>
-            <Button type="submit">Continue</Button>
-          </ButtonWrapper>
+          <Footer />
         </form>
       </Box>
       <StyledTipBox heading="WHY THIS IS IMPORTANT:">

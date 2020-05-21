@@ -18,3 +18,9 @@ export const WHO_PERSON_OPTIONS = [
   { label: 'Patient', value: 'patient' },
   { label: 'Myself', value: 'myself' },
 ];
+
+export const FEELING_PERSON_OPTIONS = [
+  { label: "I'm feeling excited about it", value: 'excited' },
+  { label: 'I have mixed feelings about it', value: 'mixed-feelings' },
+  { label: "I'm feeling anxious about it", value: 'anxious' },
+];
