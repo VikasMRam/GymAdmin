@@ -89,9 +89,9 @@ ChangeRow.propTypes = {
 };
 
 export default function DashboardCommunityEditsDetail({ community, canEdit, approveEdit, rejectEdit }) {
-  const { currentEdit } = useContext(EditContext);
-  const { id } = currentEdit;
-  const disabled = currentEdit.status !== 'Initialized';
+  const { selectedEdit } = useContext(EditContext);
+  const { id } = selectedEdit;
+  const disabled = selectedEdit.status !== 'Initialized';
   const approve = () => approveEdit({ id }, {});
   const reject = () => rejectEdit({ id }, {});
   const actions = canEdit ? (
@@ -118,7 +118,7 @@ export default function DashboardCommunityEditsDetail({ community, canEdit, appr
           </Tr>
         </THead>
         <TBody>
-          {Object.values(currentEdit.changes).map((change) => {
+          {Object.values(selectedEdit.changes).map((change) => {
             return (
               <ChangeRow
                 key={change.path}
