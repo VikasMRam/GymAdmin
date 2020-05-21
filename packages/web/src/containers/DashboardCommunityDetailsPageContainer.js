@@ -33,10 +33,7 @@ const editEntities = require('sly/web/services/edits/constants');
   include: 'suggested-edits',
 }))
 @connect((state, { status }) => ({
-  suggestedEdits: (getRelationship(state, status.community.result, 'suggestedEdits') || [])
-    .sort((a, b) => {
-      return b.attributes.updatedAt.localeCompare(a.attributes.updatedAt);
-    }),
+  suggestedEdits: (getRelationship(state, status.community.result, 'suggestedEdits') || []),
 }))
 export default class DashboardCommunityDetailsPageContainer extends Component {
   static propTypes = {
@@ -54,6 +51,19 @@ export default class DashboardCommunityDetailsPageContainer extends Component {
     hideModal: func.isRequired,
     suggestedEdits: arrayOf(object),
   };
+
+  currentEdit(config) {
+
+
+    const { suggestedEdits, user } = this.props;
+
+    if (!suggestedEdits.length || suggestedEdits[0].attributes.status !== 'Initialized') {
+      return null;
+    }
+
+    return this.processEdit(suggestedEdits[0], config, user);
+
+  }
 
   selectEdit(config) {
     const { suggestedEdits, user, location } = this.props;
@@ -82,8 +92,10 @@ export default class DashboardCommunityDetailsPageContainer extends Component {
       return null;
     }
 
-    const selectedEdit = filteredEdits[0];
+    return this.processEdit(suggestedEdits[0], config, user);
+  }
 
+  processEdit(selectedEdit, config, user) {
     const isPendingForAdmin = userIs(user, PLATFORM_ADMIN_ROLE) && selectedEdit.attributes.status === 'Initialized';
 
     // we don't want array inspection, so we bail
@@ -94,7 +106,7 @@ export default class DashboardCommunityDetailsPageContainer extends Component {
       selectedEdit.attributes?.preChange,
       selectedEdit.attributes?.change,
       prefilter,
-    ) || [];
+  ) || [];
 
     // the values of the diff (lhs, rhs) are used when viewing the
     // edit in the edits tab, the keys of the diff (path in changes[path])
@@ -146,11 +158,13 @@ export default class DashboardCommunityDetailsPageContainer extends Component {
 
     const entityType = 'community';
     const editConfig = editEntities[entityType];
-    const currentEdit = this.selectEdit(editConfig);
+    const currentEdit = this.currentEdit(editConfig);
+    const selectedEdit = this.selectEdit(editConfig);
     const editContext = {
       suggestedEdits,
       entityType,
       currentEdit,
+      selectedEdit,
       editConfig,
     };
 
