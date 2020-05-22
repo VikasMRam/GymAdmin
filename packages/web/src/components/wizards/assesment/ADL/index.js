@@ -1,10 +1,10 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/web/components/themes';
-import { FEELING_OPTIONS } from 'sly/web/constants/wizards/assesment';
+import { ADL_OPTIONS, WHO_PERSON_OPTIONS } from 'sly/web/constants/wizards/assesment';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assesment/Template';
 import { Heading, Box } from 'sly/web/components/atoms';
@@ -27,20 +27,36 @@ const StyledTipBox = styled(TipBox)`
   height: fit-content;
 `;
 
-const Feeling = ({
-  handleSubmit, onBackClick, onSkipClick,
+const getLabelForOption = whoNeedsHelp => WHO_PERSON_OPTIONS.find(o => o.value === whoNeedsHelp).label;
+
+const generateHeading = (whoNeedsHelp) => {
+  switch (whoNeedsHelp) {
+    case 'parents':
+      return 'Which activities do your parents need help with?';
+    case 'myself-and-spouse':
+      return 'Which activities do you and your spouse need help with?';
+    case 'myself':
+      return 'Which activities do you need help with?';
+    default:
+      return `Which activities below does your ${getLabelForOption(whoNeedsHelp)} need help with?`;
+  }
+};
+
+const ADL = ({
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp,
 }) => (
   <div>
     <Wrapper>
-      <PaddedProgressBar label totalSteps={8} currentStep={2} />
+      <PaddedProgressBar label totalSteps={8} currentStep={3} />
     </Wrapper>
     <Wrapper>
       <Box>
-        <PaddedHeading level="subtitle" weight="medium">How are you feeling about finding a senior living community?</PaddedHeading>
+        <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
         <form onSubmit={handleSubmit}>
           <StyledField
-            options={FEELING_OPTIONS}
-            name="feeling"
+            multiChoice
+            options={ADL_OPTIONS}
+            name="adl"
             type="boxChoice"
             align="left"
             component={ReduxField}
@@ -48,17 +64,18 @@ const Feeling = ({
           <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} />
         </form>
       </Box>
-      <StyledTipBox heading="DID YOU KNOW?">
-        We&apos;ve been through this with thousands of loved ones. You&apos;re in good hands!
+      <StyledTipBox heading="WHY THIS IS IMPORTANT:">
+        This helps us narrow down our recommendations to only those communities that can support your care needs.
       </StyledTipBox>
     </Wrapper>
   </div>
 );
 
-Feeling.propTypes = {
+ADL.propTypes = {
   handleSubmit: func.isRequired,
+  whoNeedsHelp: string.isRequired,
   onSkipClick: func,
   onBackClick: func,
 };
 
-export default Feeling;
+export default ADL;

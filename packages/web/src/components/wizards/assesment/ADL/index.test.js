@@ -1,15 +1,17 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Feeling } from 'sly/web/components/wizards/assesment';
+import { ADL } from 'sly/web/components/wizards/assesment';
 
 const handleSubmit = jest.fn();
+const whoNeedsHelp = 'parents';
 const defaultProps = {
   handleSubmit,
+  whoNeedsHelp,
 };
-const wrap = (props = {}) => shallow(<Feeling {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<ADL {...defaultProps} {...props} />);
 
-describe('Wizards|Assesment - Steps|Feeling', () => {
+describe('Wizards|Assesment - Steps|ADL', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();
@@ -21,6 +23,36 @@ describe('Wizards|Assesment - Steps|Feeling', () => {
     expect(wrapper.find('PaddedHeading')).toHaveLength(1);
     expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
+  });
+
+  it('renders correct heading for parents', () => {
+    const wrapper = wrap();
+
+    expect(wrapper.find('PaddedHeading').contains('Which activities do your parents need help with?')).toBeTruthy();
+  });
+
+  it('renders correct heading for myself-and-spouse', () => {
+    const wrapper = wrap({
+      whoNeedsHelp: 'myself-and-spouse',
+    });
+
+    expect(wrapper.find('PaddedHeading').contains('Which activities do you and your spouse need help with?')).toBeTruthy();
+  });
+
+  it('renders correct heading for myself', () => {
+    const wrapper = wrap({
+      whoNeedsHelp: 'myself',
+    });
+
+    expect(wrapper.find('PaddedHeading').contains('Which activities do you need help with?')).toBeTruthy();
+  });
+
+  it('renders correct heading for other options', () => {
+    const wrapper = wrap({
+      whoNeedsHelp: 'mom',
+    });
+
+    expect(wrapper.find('PaddedHeading').contains('Which activities below does your Mom need help with?')).toBeTruthy();
   });
 
   it('handles submit', () => {

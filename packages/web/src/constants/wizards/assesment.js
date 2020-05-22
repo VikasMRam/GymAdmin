@@ -19,8 +19,19 @@ export const WHO_PERSON_OPTIONS = [
   { label: 'Myself', value: 'myself' },
 ];
 
-export const FEELING_PERSON_OPTIONS = [
+export const FEELING_OPTIONS = [
   { label: "I'm feeling excited about it", value: 'excited' },
   { label: 'I have mixed feelings about it', value: 'mixed-feelings' },
   { label: "I'm feeling anxious about it", value: 'anxious' },
+];
+
+export const ADL_OPTIONS = [
+  { label: 'Bathing', value: 'bathing' },
+  { label: 'Dressing', value: 'dressing' },
+  { label: 'Transferring', value: 'transferring' },
+  { label: 'Toileting', value: 'toileting' },
+  { label: 'Eating', value: 'eating' },
+  { label: 'Medication management', value: 'medication-management' },
+  { label: 'None', value: 'none' },
+  { label: "I'm not sure", value: 'im-not-sure' },
 ];

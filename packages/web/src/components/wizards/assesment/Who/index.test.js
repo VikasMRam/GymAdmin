@@ -4,7 +4,10 @@ import { shallow } from 'enzyme';
 import { Who } from 'sly/web/components/wizards/assesment';
 
 const handleSubmit = jest.fn();
-const wrap = (props = {}) => shallow(<Who handleSubmit={handleSubmit} {...props} />);
+const defaultProps = {
+  handleSubmit,
+};
+const wrap = (props = {}) => shallow(<Who {...defaultProps} {...props} />);
 
 describe('Wizards|Assesment - Steps|Who', () => {
   it('does not render children when passed in', () => {
