@@ -101,3 +101,11 @@ export const DEMENTIA_FORGETFUL_DEFAULT_OPTIONS = {
     { label: "I'm not sure", value: 'iam-not-sure' },
   ],
 };
+
+export const TIMING_OPTIONS = [
+  { label: 'Just starting to research communities', value: 'starting' },
+  { label: 'Working with a senior living advisor', value: 'working' },
+  { label: 'Inquired directly to communities', value: 'inquired' },
+  { label: 'Toured one or more communities', value: 'toured' },
+  { label: 'Already chosen a community and am just comparing', value: 'already-chosen' },
+];

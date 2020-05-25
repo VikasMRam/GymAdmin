@@ -19,7 +19,7 @@ PaddedHeading.displayName = 'PaddedHeading';
 
 const StyledField = styled(Field)`
   > * {
-    margin-bottom: ${size('spacing.regular')};
+    margin-bottom: ${size('spacing.large')};
   }
 `;
 
