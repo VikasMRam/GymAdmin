@@ -45,7 +45,7 @@ const Timing = ({
           <StyledField
             multiChoice
             options={TIMING_OPTIONS}
-            name="forgetful"
+            name="timing"
             type="boxChoice"
             align="left"
             component={ReduxField}

@@ -109,3 +109,31 @@ export const TIMING_OPTIONS = [
   { label: 'Toured one or more communities', value: 'toured' },
   { label: 'Already chosen a community and am just comparing', value: 'already-chosen' },
 ];
+
+export const CURRENT_LIVING_OPTIONS = {
+  parents: [
+    { label: 'Currently waiting to be discharged', value: 'waiting' },
+    { label: 'Living at home alone', value: 'home' },
+    { label: 'Living at home with a child', value: 'home-with-child' },
+    { label: 'Living at another senior living community', value: 'another-community' },
+    { label: 'Other', value: 'other' },
+    { label: "I'm not sure", value: 'not-sure' },
+  ],
+  'myself-and-spouse': [
+    { label: 'Currently waiting to be discharged', value: 'waiting' },
+    { label: 'Living at home alone', value: 'home' },
+    { label: 'Living at home with a child', value: 'home-with-child' },
+    { label: 'Living at another senior living community', value: 'another-community' },
+    { label: 'Other', value: 'other' },
+    { label: "I'm not sure", value: 'not-sure' },
+  ],
+};
+
+export const CURRENT_LIVING_DEFAULT_OPTIONS = [
+  { label: 'Currently waiting to be discharged', value: 'waiting' },
+  { label: 'Living at home alone', value: 'home' },
+  { label: 'Living at home with a spouse or child', value: 'home-with-spouse-or-child' },
+  { label: 'Living at another senior living community', value: 'another-community' },
+  { label: 'Other', value: 'other' },
+  { label: "I'm not sure", value: 'not-sure' },
+];
