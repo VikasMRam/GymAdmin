@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/web/components/themes';
-import { ADL_OPTIONS } from 'sly/web/constants/wizards/assesment';
+import { DEMENTIA_FORGETFUL_OPTIONS, DEMENTIA_FORGETFUL_DEFAULT_OPTIONS } from 'sly/web/constants/wizards/assesment';
 import pad from 'sly/web/components/helpers/pad';
 import { getLabelForWhoPersonOption } from 'sly/web/components/wizards/assesment/helpers';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assesment/Template';
@@ -31,22 +31,22 @@ const StyledTipBox = styled(TipBox)`
 const generateHeading = (whoNeedsHelp) => {
   switch (whoNeedsHelp) {
     case 'parents':
-      return 'Which activities do your parents need help with?';
+      return 'Are your parents forgetful?';
     case 'myself-and-spouse':
-      return 'Which activities do you and your spouse need help with?';
+      return 'Are you and your spouse forgetful?';
     case 'myself':
-      return 'Which activities do you need help with?';
+      return 'Are you forgetful?';
     default:
-      return `Which activities below does your ${getLabelForWhoPersonOption(whoNeedsHelp)} need help with?`;
+      return `Is your ${getLabelForWhoPersonOption(whoNeedsHelp)} forgetful?`;
   }
 };
 
-const ADL = ({
+const Dementia = ({
   handleSubmit, onBackClick, onSkipClick, whoNeedsHelp,
 }) => (
   <div>
     <Wrapper>
-      <PaddedProgressBar label totalSteps={8} currentStep={3} />
+      <PaddedProgressBar label totalSteps={8} currentStep={4} />
     </Wrapper>
     <Wrapper>
       <Box>
@@ -54,8 +54,8 @@ const ADL = ({
         <form onSubmit={handleSubmit}>
           <StyledField
             multiChoice
-            options={ADL_OPTIONS}
-            name="adl"
+            options={DEMENTIA_FORGETFUL_OPTIONS[whoNeedsHelp] || DEMENTIA_FORGETFUL_DEFAULT_OPTIONS[whoNeedsHelp]}
+            name="forgetful"
             type="boxChoice"
             align="left"
             component={ReduxField}
@@ -64,17 +64,17 @@ const ADL = ({
         </form>
       </Box>
       <StyledTipBox heading="WHY THIS IS IMPORTANT:">
-        This helps us narrow down our recommendations to only those communities that can support your care needs.
+        We can help you find communities that offer additional support and specialized care.
       </StyledTipBox>
     </Wrapper>
   </div>
 );
 
-ADL.propTypes = {
+Dementia.propTypes = {
   handleSubmit: func.isRequired,
   whoNeedsHelp: string.isRequired,
   onSkipClick: func,
   onBackClick: func,
 };
 
-export default ADL;
+export default Dementia;

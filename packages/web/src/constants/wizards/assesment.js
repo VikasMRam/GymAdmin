@@ -35,3 +35,69 @@ export const ADL_OPTIONS = [
   { label: 'None', value: 'none' },
   { label: "I'm not sure", value: 'im-not-sure' },
 ];
+
+export const DEMENTIA_FORGETFUL_OPTIONS = {
+  parents: [
+    { label: 'Yes, they are also at risk of wandering', value: 'risk-of-wandering' },
+    { label: 'Yes, they often forget the names of friends and family', value: 'forget-names' },
+    { label: 'Yes, they often forget to do things like take medicine', value: 'forget-to-do-things' },
+    { label: 'No', value: 'no' },
+    { label: "I'm not sure", value: 'iam-not-sure' },
+  ],
+  'myself-and-spouse': [
+    { label: 'Yes, one or both of us are also at risk of wandering', value: 'risk-of-wandering' },
+    { label: 'Yes, one or both of us often forget the names of friends and family', value: 'forget-names' },
+    { label: 'Yes, one or both of us often forget to do things like take medicine', value: 'forget-to-do-things' },
+    { label: 'No', value: 'no' },
+    { label: "I'm not sure", value: 'iam-not-sure' },
+  ],
+};
+
+const maleDementiaForgetfulDefaultOptions = [
+  { label: 'Yes, he is also at risk of wandering', value: 'risk-of-wandering' },
+  { label: 'Yes, he often forget the names of friends and family', value: 'forget-names' },
+  { label: 'Yes, he often forget to do things like take medicine', value: 'forget-to-do-things' },
+  { label: 'No', value: 'no' },
+  { label: "I'm not sure", value: 'iam-not-sure' },
+];
+
+const femaleDementiaForgetfulDefaultOptions = [
+  { label: 'Yes, she is also at risk of wandering', value: 'risk-of-wandering' },
+  { label: 'Yes, she often forget the names of friends and family', value: 'forget-names' },
+  { label: 'Yes, she often forget to do things like take medicine', value: 'forget-to-do-things' },
+  { label: 'No', value: 'no' },
+  { label: "I'm not sure", value: 'iam-not-sure' },
+];
+
+const theyDementiaForgetfulDefaultOptions = [
+  { label: 'Yes, they are also at risk of wandering', value: 'risk-of-wandering' },
+  { label: 'Yes, they often forget the names of friends and family', value: 'forget-names' },
+  { label: 'Yes, they often forget to do things like take medicine', value: 'forget-to-do-things' },
+  { label: 'No', value: 'no' },
+  { label: "I'm not sure", value: 'iam-not-sure' },
+];
+
+export const DEMENTIA_FORGETFUL_DEFAULT_OPTIONS = {
+  dad: maleDementiaForgetfulDefaultOptions,
+  mom: femaleDementiaForgetfulDefaultOptions,
+  wife: femaleDementiaForgetfulDefaultOptions,
+  husband: maleDementiaForgetfulDefaultOptions,
+  grandmother: femaleDementiaForgetfulDefaultOptions,
+  grandfather: maleDementiaForgetfulDefaultOptions,
+  'mother-in-law': femaleDementiaForgetfulDefaultOptions,
+  'father-in-law': maleDementiaForgetfulDefaultOptions,
+  aunt: femaleDementiaForgetfulDefaultOptions,
+  uncle: maleDementiaForgetfulDefaultOptions,
+  brother: maleDementiaForgetfulDefaultOptions,
+  sister: femaleDementiaForgetfulDefaultOptions,
+  friend: theyDementiaForgetfulDefaultOptions,
+  client: theyDementiaForgetfulDefaultOptions,
+  patient: theyDementiaForgetfulDefaultOptions,
+  myself: [
+    { label: 'Yes, I am at risk of wandering', value: 'risk-of-wandering' },
+    { label: 'Yes, I often forget the names of friends and family', value: 'forget-names' },
+    { label: 'Yes, I often forget to do things like take medicine', value: 'forget-to-do-things' },
+    { label: 'No', value: 'no' },
+    { label: "I'm not sure", value: 'iam-not-sure' },
+  ],
+};
