@@ -8,9 +8,12 @@ import textAlign from 'sly/web/components/helpers/textAlign';
 import { Block, Button } from 'sly/web/components/atoms';
 import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
 import EditField from 'sly/web/components/form/EditField';
-import { states } from 'sly/web/constants/communities';
+import { states, sizeOfCommunity } from 'sly/web/constants/communities';
 
 const statesOptions = states.map(s => <option key={s} value={s}>{s}</option>);
+const sizeOfCommunityOptions = sizeOfCommunity.map(s => <option key={s} value={s}>{s}</option>);
+
+
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -105,6 +108,22 @@ export default class DashboardCommunityDetailsForm extends Component {
               wideWidth
             />
             <EditField
+              name="propInfo.websiteUrl"
+              label="Website URL"
+              type="text"
+              readOnly={!canEdit}
+              placeholder="https://www.seniorly.com"
+              wideWidth
+            />
+            <EditField
+              name="propInfo.parentCompany"
+              label="Name of Parent Company"
+              type="text"
+              readOnly={!canEdit}
+              placeholder="Name of Parent Company(if applicable)"
+              wideWidth
+            />
+            <EditField
               name="propInfo.typeCare"
               label="Care type"
               type="choice"
@@ -139,6 +158,23 @@ export default class DashboardCommunityDetailsForm extends Component {
               name="propInfo.licenseNumber"
               label="License number"
               type="text"
+              readOnly={!canEdit}
+              wideWidth
+            />
+            <EditField
+              name="propInfo.communitySize"
+              label="Community Size"
+              type="select"
+              wideWidth
+              readOnly={!canEdit}
+            >
+              <option>Select an option</option>
+              {sizeOfCommunityOptions}
+            </EditField>
+            <EditField
+              name="propInfo.capacity"
+              label="Licensed Capacity"
+              type="number"
               readOnly={!canEdit}
               wideWidth
             />

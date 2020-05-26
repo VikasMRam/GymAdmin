@@ -21,6 +21,22 @@ const Wrapper = mobileOnly(borderRadius(pad(Tr, 'large'), 'small'), css`
   border: ${size('spacing.nano')} solid ${palette('slate', 'stroke')};
 `);
 
+const GetStatusStr  = (status) => {
+  console.log(status);
+  switch (status) {
+    case -2:
+      return "Deleted";
+    case -1:
+      return "Offline";
+    case 0:
+      return "Initialized";
+    case 1:
+      return "Awaiting Approval";
+    case 2:
+      return "Approved";
+  }
+};
+
 const StyledNameCell = ({
   community, to, ...props
 }) => (
@@ -30,6 +46,14 @@ const StyledNameCell = ({
         {community.name}
       </Link>
     </ClampedText>
+  </Td>
+);
+
+const StatusCell = ({ status }) => (
+  <Td>
+    <span>
+      {GetStatusStr(status)}
+    </span>
   </Td>
 );
 
@@ -62,7 +86,7 @@ const AddressCell = pad(mobileOnly(StyledTd, css`
 `), 'regular');
 
 const CommunityRowCard = ({ community, onCommunityClick }) => {
-  const { id } = community;
+  const { id, status } = community;
   const communityDetailsPath = generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, { id });
   return (
     <Wrapper>
@@ -71,6 +95,7 @@ const CommunityRowCard = ({ community, onCommunityClick }) => {
         <span>Address</span>
         <span>{buildAddressDisplay(community)}</span>
       </AddressCell>
+      <StatusCell status={status} />
     </Wrapper>
   );
 };

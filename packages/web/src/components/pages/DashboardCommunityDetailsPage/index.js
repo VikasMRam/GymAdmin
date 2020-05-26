@@ -17,6 +17,7 @@ import {
   PHOTOS,
   CLIENTS,
   EDITS,
+  ADMIN,
   DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
@@ -51,6 +52,7 @@ import DashboardCommunityServicesFormContainer from 'sly/web/containers/Dashboar
 import DashboardCommunityPricingFormContainer from 'sly/web/containers/DashboardCommunityPricingFormContainer';
 import DashboardCommunityPhotosFormContainer from 'sly/web/containers/DashboardCommunityPhotosFormContainer';
 import DashboardCommunityAmenitiesFormContainer from 'sly/web/containers/DashboardCommunityAmenitiesFormContainer';
+import DashboardCommunityAdminFormContainer from 'sly/web/containers/DashboardCommunityAdminFormContainer';
 import DashboardCommunityContractFormContainer from 'sly/web/containers/DashboardCommunityContractFormContainer';
 import DashboardContactsSectionContainer from 'sly/web/containers/dashboard/DashboardContactsSectionContainer';
 import DashboardAgentFamilyOverviewSectionContainer from 'sly/web/containers/DashboardAgentFamilyOverviewSectionContainer';
@@ -103,6 +105,7 @@ export default class DashboardCommunityDetailsPage extends Component {
       Photos: PHOTOS,
       Amenities: AMENITIES,
       Services: SERVICES,
+      Admin: [ADMIN, PLATFORM_ADMIN_ROLE],
       Contacts: [CONTACTS, PLATFORM_ADMIN_ROLE],
       Contract: [CONTRACT, PLATFORM_ADMIN_ROLE],
       Clients: CLIENTS,
@@ -312,6 +315,14 @@ export default class DashboardCommunityDetailsPage extends Component {
             )}
             {currentTab === CONTRACT && (
               <DashboardCommunityContractFormContainer
+                notifyInfo={notifyInfo}
+                notifyError={notifyError}
+                community={community}
+                currentEdit={currentEdit}
+              />
+            )}
+            {currentTab === ADMIN && (
+              <DashboardCommunityAdminFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}

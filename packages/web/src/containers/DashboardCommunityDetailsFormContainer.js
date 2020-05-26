@@ -90,6 +90,10 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
         'propInfo.ownerEmail',
         'propInfo.typeCare',
         'propInfo.respiteAllowed',
+        'propInfo.websiteUrl',
+        'propInfo.parentCompany',
+        'propInfo.communitySize',
+        'propInfo.capacity',
       ],
     );
     initialValues.address =  address.attributes;
