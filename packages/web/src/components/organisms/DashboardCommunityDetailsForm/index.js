@@ -12,17 +12,6 @@ import { states } from 'sly/web/constants/communities';
 
 const statesOptions = states.map(s => <option key={s} value={s}>{s}</option>);
 
-const StyledButton = pad(Button, 'regular');
-StyledButton.displayName = 'StyledButton';
-
-const Warning = pad(styled(Block)`
-  background-color: ${palette('warning.filler')};
-  border-radius: ${size('border.xxLarge')};
-  text-align: center;
-  padding: ${size('spacing.large')};
-`, 'xLarge');
-Warning.displayName = 'Warning';
-
 const FormScrollSection = styled.div`
   // max-height: calc(100vh - 240px);
 `;
@@ -186,9 +175,9 @@ export default class DashboardCommunityDetailsForm extends Component {
           </FormSection>
         </FormScrollSection>
         <FormBottomSection>
-          <StyledButton type="submit" disabled={!canEdit || invalid || submitting}>
+          <Button type="submit" disabled={!canEdit || invalid || submitting}>
             Save changes
-          </StyledButton>
+          </Button>
         </FormBottomSection>
       </form>
     );

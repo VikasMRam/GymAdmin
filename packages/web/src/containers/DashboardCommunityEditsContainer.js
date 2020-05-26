@@ -24,6 +24,7 @@ export default class DashboardCommunityEditsContainer extends Component {
     notifyError: func.isRequired,
     user: userProptype,
     community: clientPropType.isRequired,
+    currentEdit: object,
     match: object.isRequired,
     status: object,
     suggestedEdits: arrayOf(object).isRequired,
@@ -35,6 +36,7 @@ export default class DashboardCommunityEditsContainer extends Component {
     const {
       community,
       user,
+      currentEdit,
       approveEdit,
       rejectEdit,
       suggestedEdits,
@@ -53,6 +55,7 @@ export default class DashboardCommunityEditsContainer extends Component {
               {...props}
               community={community}
               canEdit={canEdit}
+              currentEdit={currentEdit}
               approveEdit={approveEdit}
               rejectEdit={rejectEdit}
             />

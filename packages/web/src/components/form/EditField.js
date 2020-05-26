@@ -41,7 +41,7 @@ const getChange = (editChange, props = {}) => {
 };
 
 function Bubble(props) {
-  const { currentEdit } = useContext(EditContext);
+  const currentEdit = useContext(EditContext);
 
   if (!currentEdit) {
     return null;

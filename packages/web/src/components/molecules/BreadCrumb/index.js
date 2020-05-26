@@ -2,16 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, shape, string, object } from 'prop-types';
 
+
 import { size } from 'sly/web/components/themes';
 import { text as textPropType } from 'sly/web/propTypes/text';
 import { Link, Span } from 'sly/web/components/atoms';
+import { withPad } from 'sly/web/components/helpers/pad';
 
 const getSize = p => size('text', p.size);
 
 const Wrapper = styled.nav`
-  margin-bottom: ${size('spacing.large')};
-
   ol {
+    display: block;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -29,12 +30,17 @@ const Wrapper = styled.nav`
   }
 `;
 
-const BreadCrumb = ({ items, innerRef, size }) => (
-  <Wrapper ref={innerRef} size={size}>
+const BreadCrumb = withPad(({ items, innerRef, size, ...props }) => (
+  <Wrapper ref={innerRef} size={size} {...props}>
     <ol itemScope itemType="http://schema.org/BreadcrumbList">
       {
-        items.map((item, key) => {
-          const { label, path } = item;
+        items.map((item, index) => {
+          const { label, path, event } = item;
+
+          const isLast = index === items.length - 1;
+          const palette = isLast
+            ? 'slate'
+            : 'primary';
 
           return (
             <li
@@ -43,38 +49,33 @@ const BreadCrumb = ({ items, innerRef, size }) => (
               itemScope
               itemType="http://schema.org/ListItem"
             >
-              {key === items.length - 1 ?
-                <Link itemProp="item" to={path} >
-                  <meta itemProp="position" content={key + 1} />
-                  <Span itemProp="name" size={size}>{label}</Span>
-                </Link>
-              :
-                <Link itemProp="item" to={path}>
-                  <meta itemProp="position" content={key + 1} />
-                  <Span itemProp="name" palette="primary" size={size}>{label}</Span>
-                </Link>
-              }
-
-              {key < items.length - 1 ? <Span size={size}>/</Span> : null}
+              <Link itemProp="item" to={path} event={event}>
+                <meta itemProp="position" content={index + 1} />
+                <Span itemProp="name" palette={palette} size={size}>{label}</Span>
+              </Link>
+              {!isLast ? <Span size={size}>/</Span> : null}
             </li>
           );
         })
       }
     </ol>
   </Wrapper>
-);
+));
 
 BreadCrumb.propTypes = {
   items: arrayOf(shape({
     label: string.isRequired,
     path: string.isRequired,
+    event: object,
   })).isRequired,
   innerRef: object,
   size: textPropType,
+  pad: string,
 };
 
 BreadCrumb.defaultProps = {
   size: 'tiny',
+  pad: 'large',
 };
 
 export default BreadCrumb;

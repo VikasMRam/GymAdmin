@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { string, func, object, arrayOf, bool } from 'prop-types';
+import { string, func, object, arrayOf, bool, shape } from 'prop-types';
 import { generatePath } from 'react-router';
 
 import {
@@ -19,19 +19,13 @@ import {
   EDITS,
   DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
 import communityPropType from 'sly/web/propTypes/community';
 import userPropType from 'sly/web/propTypes/user';
 import { size, palette } from 'sly/web/components/themes';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import { userIs } from 'sly/web/services/helpers/role';
-import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
-import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
-import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
-import { Block } from 'sly/web/components/atoms';
 import Tabs from 'sly/web/components/molecules/Tabs';
-import BackLink from 'sly/web/components/molecules/BackLink';
 import Tab, { MobileTab } from 'sly/web/components/molecules/Tab';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import {
@@ -40,7 +34,7 @@ import {
   Left,
   Section,
   SummarySection,
-  DashboardWithSummaryPageTemplate, LeftNotifications,
+  DashboardWithSummaryPageTemplate, LeftNotifications, Loading,
 } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import DashboardCommunitySummary from 'sly/web/components/organisms/DashboardCommunitySummary';
 import DashboardCommunityNameAndStatus from 'sly/web/components/organisms/DashboardCommunityNameAndStatus';
@@ -57,16 +51,7 @@ import DashboardAgentFamilyOverviewSectionContainer from 'sly/web/containers/Das
 import DashboardCommunityEditsContainer from 'sly/web/containers/DashboardCommunityEditsContainer';
 import { PROPERTY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 import Link from 'sly/web/components/atoms/Link';
-
-const BackLinkWrapper = pad(styled.div`
-  display: flex;
-  align-items: center;
-`, 'regular');
-
-const TextAlignCenterBlock = pad(textAlign(Block, 'center'), 'regular');
-const AlignCenterBackLinkWrapper = styled(BackLinkWrapper)`
-  justify-content: center;
-`;
+import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 
 // FIXME: redundant code to remove styling from tabs, won't be necessary if tabs are styled property according to the
 // definitive designs using DashboardWithSummaryTemplate
@@ -79,6 +64,9 @@ const StyledTabs = styled(Tabs)`
 
 export default class DashboardCommunityDetailsPage extends Component {
   static propTypes = {
+    match: shape({
+      url: string,
+    }),
     community: communityPropType,
     currentTab: string,
     showModal: func,
@@ -124,7 +112,7 @@ export default class DashboardCommunityDetailsPage extends Component {
           {label}
         </TabComponent>
       );
-    }
+    };
 
     return [
       makeTab(SUMMARY, 'Summary', MobileTab),
@@ -141,6 +129,7 @@ export default class DashboardCommunityDetailsPage extends Component {
 
   render() {
     const {
+      match,
       community,
       currentEdit,
       suggestedEdits,
@@ -155,40 +144,44 @@ export default class DashboardCommunityDetailsPage extends Component {
 
     if (communityIsLoading) {
       return (
-        <DashboardPageTemplate activeMenuItem="Communities">
+        <Loading activeMenuItem="Communities">
           Loading...
-        </DashboardPageTemplate>
+        </Loading>
       );
     }
 
-    const backlinkEvent = {
-      category: 'fdetails',
-      label: 'Back to Communities',
-      action: 'click',
+    const backLink = {
+      path: generatePath(DASHBOARD_COMMUNITIES_PATH),
+      label: 'Back to communities',
+      event: {
+        category: 'fdetails',
+        label: 'Back to Communities',
+        action: 'click',
+      },
     };
-
-    const backLinkHref = generatePath(DASHBOARD_COMMUNITIES_PATH);
-    const backlink = (
-      <BackLink to={backLinkHref} event={backlinkEvent}>
-        Back to Communities
-      </BackLink>
-    );
 
     if (!community) {
       return (
-        <DashboardPageTemplate activeMenuItem="Communities">
-          <TextAlignCenterBlock weight="medium" size="subtitle">Community not found!</TextAlignCenterBlock>
-          <AlignCenterBackLinkWrapper>{backlink}</AlignCenterBackLinkWrapper>
-        </DashboardPageTemplate>
+        <Loading activeMenuItem="Communities" backLink={backLink}>
+          Community not found!
+        </Loading>
       );
     }
+
+    const breadCrumbItems = [
+      { ...backLink, label: 'Communities' },
+      {
+        path: match.url,
+        label: community.name,
+      },
+    ];
 
     const userIsAdmin = userIs(user, PLATFORM_ADMIN_ROLE);
     const communityOrgId = community.organization?.id;
     const userOrgId = user.organization?.id;
     const isOfDifferentOrg = !userIsAdmin && (userOrgId !== communityOrgId);
 
-    const pendingChangesUrl = currentEdit?.isPendingForAdmin && generatePath(DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH, { id: community.id, editId: currentEdit.id });
+    const pendingChangesUrl = currentEdit?.isPending && generatePath(DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH, { id: community.id, editId: currentEdit.id });
 
     const sectionFilters = {
       include: 'entities',
@@ -226,13 +219,13 @@ export default class DashboardCommunityDetailsPage extends Component {
     return (
       <DashboardWithSummaryPageTemplate activeMenuItem="Communities">
         <Top>
-          {backlink}
+          <BreadCrumb items={breadCrumbItems} pad={null} />
         </Top>
 
         <Left>
           {(notifications.length || null) && (
             <LeftNotifications>
-              {notifications.map(({ palette, content }, i) => (
+              {notifications.map(({ palette, content }) => (
                 <BannerNotification
                   key={content}
                   palette={palette}
@@ -328,6 +321,7 @@ export default class DashboardCommunityDetailsPage extends Component {
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
+                currentEdit={currentEdit}
                 suggestedEdits={suggestedEdits}
               />
             )}

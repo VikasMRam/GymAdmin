@@ -1,13 +1,12 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-import { size, palette, columnWidth } from 'sly/web/components/themes';
+import { size, palette } from 'sly/web/components/themes';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import Box, { topSnap, bottomSnap } from 'sly/web/components/atoms/Box';
-import { ifProp } from 'styled-tools';
-import pad from 'sly/web/components/helpers/pad';
 import { Block } from 'sly/web/components/atoms';
 import React from 'react';
-import { any } from 'prop-types';
+import { any, object, shape, string } from 'prop-types';
+import BackLink from 'sly/web/components/molecules/BackLink';
 
 export const Top = styled.div`
   grid-area: top;
@@ -120,3 +119,31 @@ export const DashboardWithSummaryPageTemplate = styled(DashboardPageTemplate)`
       "summary right";
   }
 `;
+
+const LoadingPageTemplate = styled(DashboardPageTemplate)`
+  display: flex;
+  align-items: center;
+`;
+
+export const Loading = ({ children, activeMenuItem, backLink }) => {
+  return (
+    <LoadingPageTemplate activeMenuItem={activeMenuItem}>
+      <Block weight="medium" size="subtitle">{children}</Block>
+      {backLink && (
+        <BackLink to={backLink.path} event={backLink.event}>
+          {backLink.label}
+        </BackLink>
+      )}
+    </LoadingPageTemplate>
+  );
+};
+
+Loading.propTypes = {
+  activeMenuItem: string,
+  children: string,
+  backLink: shape({
+    label: string,
+    path: string,
+    event: object,
+  }),
+};
