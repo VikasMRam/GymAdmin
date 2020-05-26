@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
 import pick from 'lodash/pick';
-import defaultsDeep from 'lodash/defaultsDeep';
 import { withRouter } from 'react-router';
 
 import clientPropType from 'sly/web/propTypes/client';
@@ -11,14 +10,14 @@ import { query, prefetch } from 'sly/web/services/api';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
-import DashboardCommunityAmenitiesForm from 'sly/web/components/organisms/DashboardCommunityAmenitiesForm';
+import DashboardCommunityAdminForm from 'sly/web/components/organisms/DashboardCommunityAdminForm';
 import { patchFormInitialValues } from 'sly/web/services/edits';
 
-const formName = 'DashboardCommunityAmenitiesForm';
+const formName = 'DashboardCommunityAdminForm';
 
 const ReduxForm = reduxForm({
   form: formName,
-})(DashboardCommunityAmenitiesForm);
+})(DashboardCommunityAdminForm);
 
 @query('updateCommunity', 'updateCommunity')
 @withUser
@@ -28,7 +27,7 @@ const ReduxForm = reduxForm({
   include: 'suggested-edits',
 }))
 
-export default class DashboardCommunityAmenitiesFormContainer extends Component {
+export default class DashboardCommunityAdminFormContainer extends Component {
   static propTypes = {
     updateCommunity: func.isRequired,
     notifyInfo: func.isRequired,
@@ -60,20 +59,19 @@ export default class DashboardCommunityAmenitiesFormContainer extends Component 
     const initialValues = pick(
       status.community.result.attributes,
       [
-        'propInfo.communitySpace',
-        'propInfo.communitySpaceOther',
-        'propInfo.communityDescription',
+        'propInfo.covidInfoTitle',
+      'propInfo.covidInfoDescription',
+      'propInfo.promoTitle',
+      'propInfo.promoDescription',
+      'propInfo.adminNotes',
+      'slyScore',
+      'status',
+      'propInfo.websiteTitle',
+      'propInfo.websiteMetaDescription'
       ],
     );
 
     patchFormInitialValues(initialValues, currentEdit);
-
-    // passes by ref
-    defaultsDeep(initialValues, {
-      propInfo: {
-        profileServices: [],
-      },
-    });
 
     return (
       <ReduxForm

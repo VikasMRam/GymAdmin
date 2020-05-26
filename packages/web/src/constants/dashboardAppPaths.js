@@ -65,6 +65,7 @@ export const CLIENTS = 'clients';
 export const AGENT_DETAILS = 'agent-details';
 export const CONTACTS = 'contacts';
 export const EDITS = 'edits';
+export const ADMIN = 'admin';
 
 export const ADMIN_DASHBOARD_CALLS_PATH = `${AGENT_DASHBOARD_PATH}/calls`;
 export const ADMIN_DASHBOARD_CALL_DETAILS_PATH = `${ADMIN_DASHBOARD_CALLS_PATH}/:id/:tab?`;
