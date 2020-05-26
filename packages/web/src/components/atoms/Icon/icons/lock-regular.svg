@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+  <defs>
+    <path id="lock-a" d="M18,8 L17,8 L17,6 C17,3.24 14.76,1 12,1 C9.24,1 7,3.24 7,6 L7,8 L6,8 C4.9,8 4,8.9 4,10 L4,20 C4,21.1 4.9,22 6,22 L18,22 C19.1,22 20,21.1 20,20 L20,10 C20,8.9 19.1,8 18,8 Z M12,17 C10.9,17 10,16.1 10,15 C10,13.9 10.9,13 12,13 C13.1,13 14,13.9 14,15 C14,16.1 13.1,17 12,17 Z M9,8 L9,6 C9,4.34 10.34,3 12,3 C13.66,3 15,4.34 15,6 L15,8 L9,8 Z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <rect width="24" height="24"/>
+    <mask id="lock-b" fill="#fff">
+      <use xlink:href="#lock-a"/>
+    </mask>
+    <use fill="#000" fill-rule="nonzero" xlink:href="#lock-a"/>
+    <g fill="currentColor" fill-rule="nonzero" mask="url(#lock-b)">
+      <rect width="24" height="24"/>
+    </g>
+  </g>
+</svg>
