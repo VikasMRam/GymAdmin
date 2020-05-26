@@ -25,9 +25,24 @@ export const states = ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL
 
 export const sizeOfCommunity = ['up to 20 Beds', '20 - 51 Beds', '51 +'];
 export const statuses = [
-  {label: 'Deleted', value: -2},
-  {label: 'Offline', value: -1},
-  {label: 'Initialized', value: 0},
-  {label: 'Awaiting Approval', value: 1},
-  {label: 'Live', value: 2},
+  {
+    label: 'Deleted',
+    value: -2
+  },
+  {
+    label: 'Offline',
+    value: -1
+  },
+  {
+    label: 'Initialized',
+    value: 0
+  },
+  {
+    label: 'Awaiting Approval',
+    value: 1
+  },
+  {
+    label: 'Live',
+    value: 2
+  },
 ];
