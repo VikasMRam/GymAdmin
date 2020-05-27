@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Dementia } from 'sly/web/components/wizards/assesment';
+import { Medicaid } from 'sly/web/components/wizards/assesment';
 
 const handleSubmit = jest.fn();
 const whoNeedsHelp = 'parents';
@@ -9,9 +9,9 @@ const defaultProps = {
   handleSubmit,
   whoNeedsHelp,
 };
-const wrap = (props = {}) => shallow(<Dementia {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<Medicaid {...defaultProps} {...props} />);
 
-describe('Wizards|Assesment - Steps|Dementia', () => {
+describe('Wizards|Assesment - Steps|Medicaid', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();
@@ -20,7 +20,7 @@ describe('Wizards|Assesment - Steps|Dementia', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('PaddedHeading').contains('Are your parents forgetful?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Do your parents qualify for Medicaid?')).toBeTruthy();
     expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
@@ -30,7 +30,7 @@ describe('Wizards|Assesment - Steps|Dementia', () => {
       whoNeedsHelp: 'myself-and-spouse',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Are you and your spouse forgetful?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Do you or your spouse qualify for Medicaid?')).toBeTruthy();
   });
 
   it('renders correct heading for myself', () => {
@@ -38,7 +38,7 @@ describe('Wizards|Assesment - Steps|Dementia', () => {
       whoNeedsHelp: 'myself',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Are you forgetful?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Do you qualify for Medicaid?')).toBeTruthy();
   });
 
   it('renders correct heading for other options', () => {
@@ -46,7 +46,7 @@ describe('Wizards|Assesment - Steps|Dementia', () => {
       whoNeedsHelp: 'mom',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Is your Mom forgetful?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Does your Mom qualify for Medicaid?')).toBeTruthy();
   });
 
   it('handles submit', () => {

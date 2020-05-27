@@ -27,7 +27,6 @@ describe('Wizards|Assesment - Steps|Budget', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('PaddedHeading')).toHaveLength(1);
     expect(wrapper.find('PaddedHeading').contains(`The average monthly cost of senior living in ${city}, ${state} is ${formattedAmount}. Does your ${whoNeedsHelp} have access to any of these benefits?`)).toBeTruthy();
     expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);

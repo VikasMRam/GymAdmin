@@ -147,3 +147,9 @@ export const BUDGET_OPTIONS = [
   { label: "I don't have access to any of these benefits", value: 'dont-have' },
   { label: "I'm not sure", value: 'not-sure' },
 ];
+
+export const MEDICAID_OPTIONS = [
+  { label: 'Yes', value: 'yes' },
+  { label: 'No', value: 'no' },
+  { label: "I'm not sure", value: 'not-sure' },
+];
