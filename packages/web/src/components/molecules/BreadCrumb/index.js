@@ -75,7 +75,7 @@ BreadCrumb.propTypes = {
 
 BreadCrumb.defaultProps = {
   size: 'tiny',
-  pad: 'large',
+  pad: null,
 };
 
 export default BreadCrumb;

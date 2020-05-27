@@ -5,9 +5,7 @@ import { generatePath } from 'react-router';
 
 import voiceCallPropType from 'sly/web/propTypes/calls';
 import { palette, size } from 'sly/web/components/themes';
-import { Hr, Box } from 'sly/web/components/atoms';
-import Tabs from 'sly/web/components/molecules/Tabs';
-import Tab from 'sly/web/components/molecules/Tab';
+import { Box } from 'sly/web/components/atoms';
 import DashboardTwoColumnTemplate from 'sly/web/components/templates/DashboardTwoColumnTemplate';
 import DashboardCallCommunitiesContainer from 'sly/web/containers/dashboard/DashboardCallCommunitiesContainer';
 import AddFamilyFormContainer from 'sly/web/containers/dashboard/AddFamilyFormContainer';
@@ -15,7 +13,6 @@ import {
   ADMIN_DASHBOARD_CALL_DETAILS_PATH,
   COMMUNITIES,
 } from 'sly/web/constants/dashboardAppPaths';
-import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 
 const TabWrapper = styled.div`
   padding: ${size('spacing.large')};

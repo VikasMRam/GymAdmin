@@ -16,7 +16,8 @@ const DashboardAgentContactsPage = () => {
         sectionFilters={sectionFilters}
         entityType={PROPERTY_ENTITY_TYPE}
       />
-    </DashboardPageTemplate>);
+    </DashboardPageTemplate>
+  );
 };
 
 export default DashboardAgentContactsPage;

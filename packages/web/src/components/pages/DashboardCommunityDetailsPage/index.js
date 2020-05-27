@@ -38,7 +38,6 @@ import {
 } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import DashboardCommunitySummary from 'sly/web/components/organisms/DashboardCommunitySummary';
 import DashboardCommunityNameAndStatus from 'sly/web/components/organisms/DashboardCommunityNameAndStatus';
-import { topSnap } from 'sly/web/components/atoms/Box';
 import DashboardCommunityDetailsFormContainer from 'sly/web/containers/DashboardCommunityDetailsFormContainer';
 import DashboardCommunityCareServicesFormContainer from 'sly/web/containers/DashboardCommunityCareServicesFormContainer';
 import DashboardCommunityServicesFormContainer from 'sly/web/containers/DashboardCommunityServicesFormContainer';
@@ -52,15 +51,6 @@ import DashboardCommunityEditsContainer from 'sly/web/containers/DashboardCommun
 import { PROPERTY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 import Link from 'sly/web/components/atoms/Link';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
-
-// FIXME: redundant code to remove styling from tabs, won't be necessary if tabs are styled property according to the
-// definitive designs using DashboardWithSummaryTemplate
-const StyledTabs = styled(Tabs)`
-  border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
-  @media (max-width: calc(${size('breakpoint.laptop')} - 1px)) {
-    ${topSnap};
-  }
-`;
 
 export default class DashboardCommunityDetailsPage extends Component {
   static propTypes = {
@@ -219,7 +209,7 @@ export default class DashboardCommunityDetailsPage extends Component {
     return (
       <DashboardWithSummaryPageTemplate activeMenuItem="Communities">
         <Top>
-          <BreadCrumb items={breadCrumbItems} pad={null} />
+          <BreadCrumb items={breadCrumbItems} />
         </Top>
 
         <Left>
@@ -239,9 +229,9 @@ export default class DashboardCommunityDetailsPage extends Component {
         </Left>
 
         <Right>
-          <StyledTabs activeTab={currentTab}>
+          <Tabs activeTab={currentTab}>
             {this.getTabsForUser()}
-          </StyledTabs>
+          </Tabs>
 
           <Section noPadding={currentTab === EDITS}>
             {currentTab === PROFILE && (

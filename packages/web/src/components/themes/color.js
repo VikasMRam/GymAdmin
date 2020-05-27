@@ -10,6 +10,15 @@ const gradients = [
   { percentage: 0.33, tint: white, variant: 'filler' },
   { percentage: 0.15, tint: white, variant: 'stroke' },
   { percentage: 0.08, tint: white, variant: 'background' },
+
+  // new colors
+  { percentage: 0.65, tint: black, variant: 'darker-30' },
+  { percentage: 0.85, tint: black, variant: 'darker-15' },
+  { percentage: 1.00, tint: white, variant: 'base' },
+  { percentage: 0.70, tint: white, variant: 'lighter-30' },
+  { percentage: 0.40, tint: white, variant: 'lighter-60' },
+  { percentage: 0.10, tint: white, variant: 'lighter-90' },
+  { percentage: 0.05, tint: white, variant: 'lighter-95' },
 ];
 const clear = color => color || '';
 const names = gradients.map(({ variant }) => variant);

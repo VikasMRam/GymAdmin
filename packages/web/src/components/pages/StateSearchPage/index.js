@@ -164,7 +164,7 @@ const StateSearchPage = ({
       >
         {!isMapView && (
           <>
-            <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
+            <BreadCrumb pad="large" items={getBreadCrumbsForLocation(searchParams)} />
             <Heading level="hero" size="title">{listSize} {tocLabel} in {state}</Heading>
             {(gg.autoDescription) && <div dangerouslySetInnerHTML={{ __html: gg.autoDescription }} />}
           </>

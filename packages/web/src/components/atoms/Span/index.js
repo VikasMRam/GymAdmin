@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/web/components/themes';
 import { text as textPropType } from 'sly/web/propTypes/text';
@@ -7,7 +8,10 @@ import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import { weight as weightPropType } from 'sly/web/propTypes/weight';
 
 const getSize = type => p => size(type, p.size);
-const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
+const getColor = ({ palette: paletteProp, variation }) => ifProp([
+  'palette',
+  'variation',
+], palette(paletteProp || 'primary', variation || 'base'));
 
 const Span = styled.span`
   color: ${getColor};
@@ -24,8 +28,6 @@ Span.propTypes = {
 };
 
 Span.defaultProps = {
-  palette: 'slate',
-  variation: 'base',
   size: 'body',
   weight: 'regular',
 };

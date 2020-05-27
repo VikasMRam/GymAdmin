@@ -251,7 +251,7 @@ const Header = ({
           <Link palette="secondary" variation="dark35" to="/"><Icon icon="logo" size="large" /></Link>
         </OnlyInMobile>
       </SeniorlyIconMenu>
-      <StyledSearchBoxContainer onCurrentLocation={onCurrentLocation} menuOpen={menuOpen} hasShadow layout="header" onLocationSearch={onLocationSearch} />
+      <StyledSearchBoxContainer onCurrentLocation={onCurrentLocation} menuOpen={menuOpen} layout="header" onLocationSearch={onLocationSearch} />
       <HeaderItems>
         {headerItemComponents}
       </HeaderItems>

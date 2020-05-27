@@ -1,5 +1,5 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { makeColor } from './color';
+import { makeColor, makeColorTable } from './color';
 
 export { colorIndex } from './color';
 
@@ -22,13 +22,10 @@ theme.palette = {
   green      : makeColor('#4fb75f', ['dark', 'base', 'filler', 'stroke']),
   grey       : makeColor('#70767E', ['dark', 'base', 'filler', 'stroke', 'background']),
   yellow     : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke', 'background']),
-  pink       : makeColor('#9a268e', ['dark', 'base', 'filler', 'stroke', 'background']),
-  purple     : makeColor('#6d27ca', ['dark', 'base', 'filler', 'stroke', 'background']),
+  magenta    : makeColor('#6d27ca', ['dark', 'base', 'filler', 'stroke', 'background']),
   orange     : makeColor('#F99106', ['dark', 'base', 'filler', 'stroke', 'background']),
   razzmatazz : makeColor('#F40767', ['dark', 'base', 'filler', 'stroke', 'background']),
 };
-
-// if (isDev && isBrowser && !isTest) console.table(makeColorTable(theme.palette));
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',

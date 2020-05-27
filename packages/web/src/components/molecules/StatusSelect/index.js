@@ -25,7 +25,7 @@ import ConfirmationDialog from 'sly/web/components/molecules/ConfirmationDialog'
 const options = [
   { label: 'Active',    icon: 'active',     palette: 'green',  value: FAMILY_STATUS_ACTIVE, role: AGENT_ND_ROLE  },
   // { label: 'Hot',       icon: 'hot',        palette: 'yellow', value: FAMILY_STATUS_HOT },
-  { label: 'Long Term', icon: 'hourglass',  palette: 'purple', value: FAMILY_STATUS_LONG_TERM, role: PLATFORM_ADMIN_ROLE },
+  { label: 'Long Term', icon: 'hourglass',  palette: 'magenta', value: FAMILY_STATUS_LONG_TERM, role: PLATFORM_ADMIN_ROLE },
   { label: 'On Pause',  icon: 'pause',      palette: 'danger', value: FAMILY_STATUS_ON_PAUSE, role: AGENT_ND_ROLE },
   { label: 'Archived',  icon: 'archived',   palette: 'slate',  value: FAMILY_STATUS_ARCHIVED, role: PLATFORM_ADMIN_ROLE  },
   { label: 'Deleted',   icon: 'trash-fill', palette: 'grey',   value: FAMILY_STATUS_DELETED, role: PLATFORM_ADMIN_ROLE },

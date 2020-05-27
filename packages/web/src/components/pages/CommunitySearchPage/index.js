@@ -186,7 +186,7 @@ const CommunitySearchPage = ({
           </>
         )}
       >
-        <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
+        <BreadCrumb pad="large" items={getBreadCrumbsForLocation(searchParams)} />
         {!isMapView && !isFetchingResults && (
           <>
             <StyledHeading level="hero" size="title">{listSize} {tocLabel} near {city}, {state}</StyledHeading>
