@@ -99,8 +99,13 @@ export default {
   getDatatable: { method: get, path: '/meta-data/datatables/:id' },
   sendEbook: { method: post, path: '/platform/send-ebook' },
 
+  getEmail: { method: get, path: '/platform/emails/:id' },
+
+  createShareEmail: { method: post, path: '/platform/share-emails' },
+
   getAddresses: { method: get, path: '/platform/addresses' },
 
   getEvents: { method: get, path: '/platform/events' },
   getPerformers: { method: get, path: '/platform/performers' },
+  getEmails: { method: get, path: '/platform/emails' },
 };

@@ -12,6 +12,7 @@ import {
   COMMUNITIES,
   PARTNER_AGENTS,
   MESSAGES,
+  EMAILS,
   TASKS, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED,
 } from 'sly/web/constants/dashboardAppPaths';
 import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/web/constants/provider';
@@ -56,6 +57,7 @@ import BannerNotification from 'sly/web/components/molecules/BannerNotification'
 import DuplicateFamilies from 'sly/web/components/organisms/DuplicateFamilies';
 import DashboardAgentTasksSectionContainer from 'sly/web/containers/dashboard/DashboardAgentTasksSectionContainer';
 import DashboardMessagesContainer from 'sly/web/containers/DashboardMessagesContainer';
+import DashboardEmailsContainer from 'sly/web/containers/DashboardEmailsContainer';
 import AddOrEditTaskFormContainer from 'sly/web/containers/AddOrEditTaskFormContainer';
 import { Datatable } from 'sly/web/services/datatable';
 
@@ -303,6 +305,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const agentsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: PARTNER_AGENTS }); // Only for Admin
     const tasksPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: TASKS }); // Only for Admin
     const messagesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: MESSAGES });
+    const emailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: EMAILS });
 
     return {
       summaryPath,
@@ -312,6 +315,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       agentsPath,
       tasksPath,
       messagesPath,
+      emailsPath,
     };
   };
 
@@ -326,6 +330,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       agentsPath,
       tasksPath,
       messagesPath,
+      emailsPath,
     } = this.getTabPathsForUser();
 
     const summaryTab = (
@@ -355,6 +360,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       { id: PARTNER_AGENTS, to: agentsPath, label: 'Agents' },
       // { id: TASKS, to: tasksPath, label: 'Tasks' },
       { id: MESSAGES, to: messagesPath, label: 'Messages' },
+      { id: EMAILS, to: emailsPath, label: 'Emails' },
     ];
     // TODO: CHANGE TO HAS ROLE INSTEAD OF IS ROLE...
     let tabs = [summaryTab];
@@ -867,6 +873,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                     onBackClick={() => setSelectedConversation(null)}
                   />
                 }
+              </SmallScreenBorderDiv>
+            )}
+            {currentTab === EMAILS && (
+              <SmallScreenBorderDiv>
+                <DashboardEmailsContainer
+                  heading="Emails"
+                  clientId={id}
+                />
               </SmallScreenBorderDiv>
             )}
           </TabWrapper>

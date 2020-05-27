@@ -53,6 +53,7 @@ export const COMMUNITIES = 'communities';
 export const PARTNER_AGENTS = 'partner-agents';
 export const TASKS = 'tasks';
 export const MESSAGES = 'messages';
+export const EMAILS = 'emails';
 export const PROFILE = 'profile';
 export const CARE_SERVICES = 'care-services';
 export const PRICING = 'pricing';
