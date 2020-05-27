@@ -9,7 +9,9 @@ import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { size, palette, key } from 'sly/web/components/themes';
 
 const iconSize = props => size('icon', props.size);
-const getColor = ({ palette: paletteProp, variation }) => paletteProp && variation && palette(paletteProp, variation);
+const getColor = ({ palette: paletteProp, variation }) => {
+  return paletteProp && variation && palette(paletteProp, variation);
+};
 const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)${flip ? ' scaleX(-1) scaleY(-1)' : ''}`;
 
 const Wrapper = styled.span`

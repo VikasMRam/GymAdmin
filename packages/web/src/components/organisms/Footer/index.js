@@ -178,6 +178,7 @@ const groups = {
     { name: 'Board and Care Home', url: '/board-and-care-home', target: '_blank' },
     { name: 'Memory Care', url: '/memory-care', target: '_blank' },
     { name: 'Senior Living', url: '/senior-living', target: '_blank' },
+    { name: 'Veteran\'s Benefits', url: '/veterans-benefit-assisted-living', target: '_blank' },
     { name: 'Home Care', url: '/in-home-care', target: '_blank' },
     { name: 'Respite Care', url: '/respite-care', target: '_blank' },
     { name: 'CCRC', url: '/continuing-care-retirement-community', target: '_blank' },

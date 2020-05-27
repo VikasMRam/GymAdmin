@@ -271,6 +271,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     currentTab: string,
     showModal: func,
     hideModal: func,
+    isModalOpen: bool,
     rawClient: object,
     notifyError: func,
     notifyInfo: func,
@@ -567,7 +568,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       client, requestStatus, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
       conversation, setSelectedConversation, refetchClient,
-      showModal, hideModal, onAcceptClick, clients, onEditStatusDetailsClick, isEditStatusDetailsMode, onStatusChange,
+      showModal, hideModal, isModalOpen, onAcceptClick, clients, onEditStatusDetailsClick, isEditStatusDetailsMode, onStatusChange,
     } = this.props;
 
     const { organization } = user;
@@ -883,13 +884,13 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               </SmallScreenBorderDiv>
             )}
           </TabWrapper>
-          <DashboardMyFamilyStickyFooterContainer
+          {!isModalOpen && <DashboardMyFamilyStickyFooterContainer
             options={stickyFooterOptions}
             stage={stage}
             stageLabel={`${group} - ${stage}`}
             showAcceptRejectButtons={showAcceptRejectButtons && !isClientAdminUser}
             user={user}
-          />
+          />}
         </div>
       </StyledDashboardTwoColumnTemplate>
     );

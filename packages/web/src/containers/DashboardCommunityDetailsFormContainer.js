@@ -12,6 +12,7 @@ import DashboardCommunityDetailsForm from 'sly/web/components/organisms/Dashboar
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import { patchFormInitialValues } from 'sly/web/services/edits';
 
 const validate = createValidator({
   name: [required],
@@ -37,9 +38,9 @@ const mapStateToProps = (state, { status }) => ({
 @withRouter
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.id,
+  include: 'suggested-edits',
 }))
 @connect(mapStateToProps)
-
 export default class DashboardCommunityDetailsFormContainer extends Component {
   static propTypes = {
     updateCommunity: func.isRequired,
@@ -52,19 +53,21 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
     address: object,
     respiteAllowed: object,
     invalidateCommunity: func,
+    currentEdit: object,
   };
 
   handleSubmit = (values) => {
     const { match, updateCommunity, notifyError, notifyInfo } = this.props;
     const { id } = match.params;
 
-    const { attributes, relationships } = values;
-    const { address } = relationships;
+    const { address, ...attributes } = values;
 
     return updateCommunity({ id }, {
       attributes,
       relationships: {
-        address: { data: address },
+        address: { data: {
+          attributes: address,
+        } },
       },
     })
       .then(() => notifyInfo(`Details for ${attributes.name} saved correctly`))
@@ -72,24 +75,30 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
   };
 
   render() {
-    const { community, status, user, address, respiteAllowed, ...props } = this.props;
+    const { community, status, user, address, respiteAllowed, currentEdit, ...props } = this.props;
 
-    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
+    const canEdit = !currentEdit?.isPendingForAdmin
+      && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
+
     const initialValues = pick(
-      status.community.result,
+      status.community.result.attributes,
       [
-        'attributes.name',
-        'attributes.propInfo.communityPhone',
-        'attributes.propInfo.licenseNumber',
-        'attributes.propInfo.ownerName',
-        'attributes.propInfo.ownerEmail',
-        'attributes.propInfo.typeCare',
-        'attributes.propInfo.respiteAllowed',
+        'name',
+        'propInfo.communityPhone',
+        'propInfo.licenseNumber',
+        'propInfo.ownerName',
+        'propInfo.ownerEmail',
+        'propInfo.typeCare',
+        'propInfo.respiteAllowed',
+        'propInfo.websiteUrl',
+        'propInfo.parentCompany',
+        'propInfo.communitySize',
+        'propInfo.capacity',
       ],
     );
-    initialValues.relationships = {
-      address,
-    };
+    initialValues.address =  address.attributes;
+
+    patchFormInitialValues(initialValues, currentEdit);
 
     return (
       <ReduxForm

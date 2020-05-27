@@ -12,6 +12,7 @@ import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
 import DashboardCommunityAmenitiesForm from 'sly/web/components/organisms/DashboardCommunityAmenitiesForm';
+import { patchFormInitialValues } from 'sly/web/services/edits';
 
 const formName = 'DashboardCommunityAmenitiesForm';
 
@@ -24,6 +25,7 @@ const ReduxForm = reduxForm({
 @withRouter
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.id,
+  include: 'suggested-edits',
 }))
 
 export default class DashboardCommunityAmenitiesFormContainer extends Component {
@@ -33,9 +35,9 @@ export default class DashboardCommunityAmenitiesFormContainer extends Component 
     notifyError: func.isRequired,
     user: userProptype,
     community: clientPropType.isRequired,
-    currentValues: object.isRequired,
     match: object.isRequired,
     status: object,
+    currentEdit: object,
   };
 
   handleSubmit = (values) => {
@@ -50,17 +52,21 @@ export default class DashboardCommunityAmenitiesFormContainer extends Component 
   };
 
   render() {
-    const { community, status, user, currentValues, ...props } = this.props;
+    const { community, status, user, currentEdit, ...props } = this.props;
 
-    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
+    const canEdit = !currentEdit?.isPendingForAdmin
+      && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
 
     const initialValues = pick(
       status.community.result.attributes,
       [
         'propInfo.communitySpace',
         'propInfo.communitySpaceOther',
+        'propInfo.communityDescription',
       ],
     );
+
+    patchFormInitialValues(initialValues, currentEdit);
 
     // passes by ref
     defaultsDeep(initialValues, {

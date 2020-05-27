@@ -18,7 +18,7 @@ export function getEntity(entities, handle, isNormalized) {
   return isNormalized ? build(entities, handle.type, handle.id, { eager: true }) : entities[handle.type][handle.id];
 }
 
-export function getRelationship(state, entity, relationshipName) {
+export function getRelationship(state, entity, relationshipName, isNormalized) {
   if (!entity) {
     return null;
   }
@@ -36,10 +36,10 @@ export function getRelationship(state, entity, relationshipName) {
   const entities = getEntities(state);
 
   if (Array.isArray(data)) {
-    return data.map(handle => getEntity(entities, handle));
+    return data.map(handle => getEntity(entities, handle, isNormalized));
   }
 
-  return getEntity(entities, data);
+  return getEntity(entities, data, isNormalized);
 }
 
 

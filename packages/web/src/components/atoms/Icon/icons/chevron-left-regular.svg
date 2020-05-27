@@ -1,0 +1,14 @@
+<svg viewBox="0 0 24 24">
+  <defs>
+    <path id="chevron-left-a" d="M14.71,15.88 L10.83,12 L14.71,8.12 C15.1,7.73 15.1,7.1 14.71,6.71 C14.32,6.32 13.69,6.32 13.3,6.71 L8.71,11.3 C8.32,11.69 8.32,12.32 8.71,12.71 L13.3,17.3 C13.69,17.69 14.32,17.69 14.71,17.3 C15.09,16.91 15.1,16.27 14.71,15.88 Z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <mask id="chevron-left-b" fill="#fff">
+      <use xlink:href="#chevron-left-a"/>
+    </mask>
+    <use fill="#000" fill-rule="nonzero" xlink:href="#chevron-left-a"/>
+    <g fill="currentColor" fill-rule="nonzero" mask="url(#chevron-left-b)">
+      <rect width="24" height="24"/>
+    </g>
+  </g>
+</svg>

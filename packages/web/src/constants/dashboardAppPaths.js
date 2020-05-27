@@ -44,6 +44,7 @@ export const AGENT_DASHBOARD_PROFILE_PATH = `${AGENT_DASHBOARD_PATH}/my-profile`
 
 export const DASHBOARD_COMMUNITIES_PATH = `${DASHBOARD_PATH}/communities`;
 export const DASHBOARD_COMMUNITIES_DETAIL_PATH = `${DASHBOARD_PATH}/communities/:id/:tab?`;
+export const DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH = `${DASHBOARD_PATH}/communities/:id/edits/:editId`;
 
 export const SUMMARY = 'summary';
 export const ACTIVITY = 'activity';
@@ -64,6 +65,8 @@ export const CONTRACT = 'contract';
 export const CLIENTS = 'clients';
 export const AGENT_DETAILS = 'agent-details';
 export const CONTACTS = 'contacts';
+export const EDITS = 'edits';
+export const ADMIN = 'admin';
 
 export const ADMIN_DASHBOARD_CALLS_PATH = `${AGENT_DASHBOARD_PATH}/calls`;
 export const ADMIN_DASHBOARD_CALL_DETAILS_PATH = `${ADMIN_DASHBOARD_CALLS_PATH}/:id/:tab?`;

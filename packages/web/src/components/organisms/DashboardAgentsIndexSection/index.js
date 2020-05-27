@@ -120,7 +120,7 @@ export default class DashboardAgentsIndexSection extends Component {
         <SectionComponent>
           {!isPageLoading && (
             <>
-              <StyledTable>
+              <StyledTable sticky>
                 <THead>
                   <Tr>
                     {TABLE_HEADINGS.map(({ text }) => <Th key={text}>{text}</Th>)}

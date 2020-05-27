@@ -12,6 +12,7 @@ import HrWithText from 'sly/web/components/molecules/HrWithText';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { Heading, Button, Block, Icon } from 'sly/web/components/atoms';
+import { AGENT_ND_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
 
 const StyledHeading = textAlign(pad(Heading));
 
@@ -41,7 +42,7 @@ const getSubmitButton = (error, props = {}) =>
 
 const LoginOrRegisterForm = ({
   handleSubmit, submitting, invalid, error, onFacebookSigninClick, onGoogleSigninClick,
-  socialLoginError, onPartnerAgentLoginClick, heading,
+  socialLoginError, onEmailPassLoginClick, heading,
 }) => (
   <form onSubmit={handleSubmit}>
     <StyledHeading size="subtitle">{heading}</StyledHeading>
@@ -62,7 +63,8 @@ const LoginOrRegisterForm = ({
     </LargePaddedFullWidthButton>
     {socialLoginError && <SocialLoginError palette="danger" size="caption">{socialLoginError}</SocialLoginError>}
     <PaddedTosAndPrivacy />
-    <LoginWithPassword onClick={onPartnerAgentLoginClick} palette="primary" size="caption" weight="medium">Are you a partner agent? Sign in here</LoginWithPassword>
+    <LoginWithPassword onClick={() => onEmailPassLoginClick(AGENT_ND_ROLE)} palette="primary" size="caption" weight="medium">Are you a partner agent? Sign in here</LoginWithPassword>
+    <LoginWithPassword onClick={() => onEmailPassLoginClick(PROVIDER_OD_ROLE)} palette="primary" size="caption" weight="medium">Are you a community provider? Sign in here</LoginWithPassword>
   </form>
 );
 
@@ -74,7 +76,7 @@ LoginOrRegisterForm.propTypes = {
   socialLoginError: string,
   onFacebookSigninClick: func,
   onGoogleSigninClick: func,
-  onPartnerAgentLoginClick: func,
+  onEmailPassLoginClick: func,
   heading: string,
 };
 

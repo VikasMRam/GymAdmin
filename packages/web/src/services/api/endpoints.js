@@ -42,6 +42,8 @@ export default {
   updateCommunity: { method: patch, path: '/marketplace/communities/:id' },
   createCommunity: { method: post, path: '/marketplace/communities' },
   updateRgsAux: { method: patch, path: '/marketplace/rgsAux/:id' },
+  approveEdit: { method: post, path: '/platform/suggested-edits/:id/approve' },
+  rejectEdit: { method: post, path: '/platform/suggested-edits/:id/reject' },
 
   createImage: { method: post, path: '/platform/images' },
   updateImage: { method: patch, path: '/platform/images/:id' },

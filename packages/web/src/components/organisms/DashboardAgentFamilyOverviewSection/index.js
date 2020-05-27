@@ -198,7 +198,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
         <Section>
           {!isPageLoading && (
             <>
-              <StyledTable>
+              <StyledTable sticky>
                 <THead>
                   <Tr>
                     {AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS

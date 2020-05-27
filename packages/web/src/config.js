@@ -33,7 +33,7 @@ const config = {
     facebookAppId: process.env.FB_CLIENT_ID,
     googleAppId: process.env.GOOGLE_CLIENT_ID,
     olarkSiteId: '9319-500-10-7635',
-    muteReduxLogger: false,
+    muteReduxLogger: true,
     hideChatbox: false,
     loadAutoComplete: !process.env.OFFLINE_MODE,
     disableExperiments: process.env.DISABLE_EXPERIMENTS,

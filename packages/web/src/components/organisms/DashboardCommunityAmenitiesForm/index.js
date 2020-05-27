@@ -9,6 +9,7 @@ import textAlign from 'sly/web/components/helpers/textAlign';
 import { Block, Button } from 'sly/web/components/atoms';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import communityPropType from 'sly/web/propTypes/community';
+import EditField from 'sly/web/components/form/EditField';
 
 const familyOvernightOptions = [
   { value: 'Family Overnight Stay Rooms', label: 'Family overnight stay rooms' },
@@ -19,8 +20,6 @@ const communitySpaceOptions = [
   { value: 'Garden', label: 'Garden' },
   { value: 'Pet Friendly', label: 'Pet Friendly' },
 ];
-
-const Field = ({ canEdit, ...props }) => <RFField component={ReduxField} readOnly={!canEdit} wideWidth {...props} />;
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -64,38 +63,43 @@ export default class DashboardCommunityAmenitiesForm extends Component {
     return (
       <Form onSubmit={handleSubmit}>
         <FormScrollSection>
+          <EditField
+            name="propInfo.communityDescription"
+            label="Community Description"
+            type="textarea"
+            placeholder="Enter an exciting description of your senior living community. I.e. Welcome to Manor Home. Our quaint home is located in the Cow Hollow"
+            readOnly={!canEdit}
+          />
           {isCommunityLarge && (
-            <Field
+            <EditField
               name="propInfo.communitySpace"
               type="checkbox"
               options={familyOvernightOptions}
-              canEdit={canEdit}
+              readOnly={!canEdit}
             />
           )}
 
-          <Field
+          <EditField
             name="propInfo.communitySpace"
             type="checkbox"
             options={communitySpaceOptions}
-            canEdit={canEdit}
+            readOnly={!canEdit}
           />
 
-          <Field
+          <EditField
             name="propInfo.communitySpaceOther"
             label="Other"
             type="textarea"
             placeholder="More useful information about the community amenities"
-            canEdit={canEdit}
+            readOnly={!canEdit}
           />
         </FormScrollSection>
 
-        {canEdit && (
-          <FormBottomSection>
-            <StyledButton type="submit" disabled={invalid || submitting}>
-              Save changes
-            </StyledButton>
-          </FormBottomSection>
-        )}
+        <FormBottomSection>
+          <StyledButton type="submit" disabled={!canEdit || invalid || submitting}>
+            Save changes
+          </StyledButton>
+        </FormBottomSection>
       </Form>
     );
   }

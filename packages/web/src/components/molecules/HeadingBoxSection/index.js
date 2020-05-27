@@ -6,7 +6,15 @@ import { ifProp } from 'styled-tools';
 import { size, palette } from 'sly/web/components/themes';
 import { Heading, Hr } from 'sly/web/components/atoms';
 
-const StyledSection = styled.section`
+const filterProps = Component => ({
+  hasNoBodyPadding,
+  hasNoHr,
+  ...props
+}) => (
+  <Component {...props} />
+);
+
+const StyledSection = filterProps(styled.section`
   border: ${size('border.regular')} ${ifProp('hasNoBorder', 'none', 'solid')} ${palette('slate', 'stroke')};
   border-radius: ${ifProp('hasNoBorder', null, size('border.xLarge'))};
   background-color: ${palette('white.base')};
@@ -14,19 +22,20 @@ const StyledSection = styled.section`
   padding-left: ${ifProp('hasNoBodyPadding', 0, null)};
   padding-right: ${ifProp('hasNoBodyPadding', 0, null)};
   padding-bottom: ${ifProp('hasNoBodyPadding', 0, null)};
-`;
+`);
 
-const HeadingBlock = styled(Heading)`
+const HeadingBlock = filterProps(styled(Heading)`
   padding-left: ${ifProp('hasNoBodyPadding', size('spacing.xLarge'), 0)};
   padding-right: ${ifProp('hasNoBodyPadding', size('spacing.xLarge'), 0)};
   padding-bottom: ${ifProp('hasNoHr', size('spacing.xLarge'), 0)};
-`;
+`);
+HeadingBlock.displayName = 'HeadingBlock';
 
-const StyledHr = styled(Hr)`
+const StyledHr = filterProps(styled(Hr)`
   margin-left: ${ifProp('hasNoBodyPadding', 0, css`-${size('spacing.xLarge')}`)};
   margin-right: ${ifProp('hasNoBodyPadding', 0, css`-${size('spacing.xLarge')}`)};
   margin-bottom: ${ifProp('hasNoBodyPadding', 0, null)};
-`;
+`);
 
 const HeadingBoxSection = ({
   id, heading, children, className, hasNoBodyPadding, hasNoBorder, hasNoHr,
@@ -37,6 +46,7 @@ const HeadingBoxSection = ({
     {children}
   </StyledSection>
 );
+
 
 HeadingBoxSection.propTypes = {
   id: string,

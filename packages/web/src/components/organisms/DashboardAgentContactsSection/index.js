@@ -81,7 +81,7 @@ const TwoColumn = pad(styled.div`
   text-transform: capitalize;
   padding: ${size('spacing.large')};
   margin-bottom: 0;
-  
+
   ${Heading} {
     margin-bottom: 0;
   }
@@ -185,7 +185,7 @@ export default class DashboardAgentContactsSection extends Component {
         <StyledSection>
           {!isPageLoading && (
             <>
-              <StyledTable>
+              <StyledTable sticky>
                 <THead>
                   <Tr>{TABLE_HEADINGS.map(({ text }) => <Th key={text}>{text}</Th>)}</Tr>
                 </THead>

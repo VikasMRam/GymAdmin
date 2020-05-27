@@ -1,10 +1,11 @@
 import React from 'react';
 import { node, string, bool, func, oneOf } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
 
 import { palette, size } from 'sly/web/components/themes';
 import { spacing as spacingPropType } from 'sly/web/propTypes/spacing';
+import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import Box from 'sly/web/components/atoms/Box';
 import Icon from 'sly/web/components/atoms/Icon';
 
@@ -14,7 +15,9 @@ const StyledBox = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: ${prop('align')};
-  border-color: ${ifProp('highlighted', palette('secondary', 'dark35'), palette('stroke'))}};
+  border-color: ${ifProp('highlighted', palette('dark35'), palette('stroke'))}};
+  background-color: ${ifProp('highlighted', palette('background'), 'transparent')}};
+  ${ifProp('highlighted', css`color: ${palette('base')}`)}
 `;
 
 const StyledIcon = styled(Icon)`
@@ -22,7 +25,7 @@ const StyledIcon = styled(Icon)`
 `;
 
 const BoxChoiceTile = ({
-  label, children, selected, onClick, hasCheckbox, padding, ...props
+  label, children, selected, onClick, hasCheckbox, padding, palette, ...props
 }) => (
   <StyledBox
     {...props}
@@ -33,8 +36,8 @@ const BoxChoiceTile = ({
     highlighted={selected}
     onClick={onClick}
   >
-    {!selected && hasCheckbox && <StyledIcon icon="checkbox-empty" palette="grey" variation="filler" />}
-    {selected && hasCheckbox && <StyledIcon icon="checkbox" palette="secondary" variation="dark35" />}
+    {!selected && hasCheckbox && <StyledIcon icon="checkbox-empty" palette={palette} variation="filler" />}
+    {selected && hasCheckbox && <StyledIcon icon="checkbox" palette={palette} variation="dark35" />}
     {children || label}
   </StyledBox>
 );
@@ -46,12 +49,14 @@ BoxChoiceTile.propTypes = {
   onClick: func,
   hasCheckbox: bool,
   padding: spacingPropType,
+  palette: palettePropType,
   align: oneOf(['center', 'left']),
 };
 
 BoxChoiceTile.defaultProps = {
   padding: 'large',
   align: 'center',
+  palette: 'grey',
 };
 
 export default BoxChoiceTile;

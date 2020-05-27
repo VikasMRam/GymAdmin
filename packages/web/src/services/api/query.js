@@ -12,7 +12,7 @@ function getDisplayName(WrappedComponent) {
     || 'Component';
 }
 
-export default function query(propName, apiCall) {
+export default function query(propName, apiCall = propName) {
   if (typeof apiCall === 'undefined') apiCall = propName;
   return (InnerComponent) => {
     @connect(null, dispatch => ({ dispatch }))

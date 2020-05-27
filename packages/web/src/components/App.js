@@ -63,6 +63,7 @@ const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: 
 const CurtainUpPageContainer = loadable(() => import(/* webpackChunkName: "chunkCurtainUp" */ 'sly/web/containers/CurtainUpPageContainer'));
 const EmailViewPageContainer = loadable(() => import(/* webpackChunkName: "emailView" */ 'sly/web/containers/EmailViewPageContainer'));
 const EmailSharePageContainer = loadable(() => import(/* webpackChunkName: "emailShare" */ 'sly/web/containers/EmailSharePageFormContainer'));
+const HousingPartnersPage = loadable(() => import(/* webpackChunkName: "chunkHousingPartners" */ 'sly/web/components/pages/HousingPartnersPage'));
 
 // Dashboard
 const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/web/containers/DashboardHomePageContainer'));
@@ -80,8 +81,8 @@ const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkN
 const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/web/components/pages/DashboardAgentTasksPage'));
 const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/web/components/pages/DashboardAgentContactsPage'));
 const DashboardAgentsIndexPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndex" */ 'sly/web/containers/DashboardAgentsIndexPageContainer'));
-const DashboardCommunitiesIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunitiesIndex" */ 'sly/web/containers/DashboardCommunitiesIndexPageContainer'));
-const DashboardCommunitiesDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunitiesDetail" */ 'sly/web/containers/DashboardCommunitiesDetailsPageContainer'));
+const DashboardCommunityIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityIndex" */ 'sly/web/containers/DashboardCommunityIndexPageContainer'));
+const DashboardCommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityDetail" */ 'sly/web/containers/DashboardCommunityDetailsPageContainer'));
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -186,11 +187,11 @@ const routes = [
   },
   {
     path: DASHBOARD_COMMUNITIES_DETAIL_PATH,
-    component: DashboardCommunitiesDetailPageContainer,
+    component: DashboardCommunityDetailPageContainer,
   },
   {
     path: DASHBOARD_COMMUNITIES_PATH,
-    component: DashboardCommunitiesIndexPageContainer,
+    component: DashboardCommunityIndexPageContainer,
   },
   {
     path: `/:toc(${careTypes.join('|')})/:state/:city`,
@@ -211,6 +212,10 @@ const routes = [
     path: `/:tocg(${careTypeGuides})/:region`,
     component: CareTypeRegionGuideContainer,
     exact: true,
+  },
+  {
+    path: '/partners/housing',
+    component: HousingPartnersPage,
   },
   {
     path: '/agents',
@@ -313,7 +318,7 @@ const routeComponents = routes.map(({ component: Component, ...route }) => (
         <PageEventsContainer />
         <Component {...props} />
       </>
-  )}
+    )}
   />
 ));
 

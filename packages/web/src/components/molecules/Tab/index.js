@@ -67,3 +67,10 @@ Tab.defaultProps = {
 };
 
 export default Tab;
+
+export const MobileTab = styled(Tab)`
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
+  }
+`;
+

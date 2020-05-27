@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 
 import { prefetch, withUser } from 'sly/web/services/api';
 import communityPropType from 'sly/web/propTypes/community';
-import DashboardCommunitiesIndexSection from 'sly/web/components/organisms/DashboardCommunitiesIndexSection';
+import DashboardCommunityIndexSection from 'sly/web/components/organisms/DashboardCommunityIndexSection';
 import withNotification from 'sly/web/controllers/withNotification';
 import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
 
@@ -15,7 +15,7 @@ import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
   return req(datatable.query);
 })
 
-export default class DashboardCommunitiesIndexSectionContainer extends Component {
+export default class DashboardCommunityIndexSectionContainer extends Component {
   static propTypes = {
     communities: arrayOf(communityPropType),
     status: object,
@@ -41,7 +41,7 @@ export default class DashboardCommunitiesIndexSectionContainer extends Component
     }
 
     return (
-      <DashboardCommunitiesIndexSection
+      <DashboardCommunityIndexSection
         {...props}
         isPageLoading={!hasFinished || !datatable.hasFinished}
         datatable={datatable}

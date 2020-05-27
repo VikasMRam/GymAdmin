@@ -308,7 +308,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       <NotificationController>
         {({ notifyError, notifyInfo }) => (
           <ModalController>
-            {({ show, hide }) => (
+            {({ show, hide, isModalOpen }) => (
               <DashboardMyFamiliesDetailsPage
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
@@ -319,6 +319,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 currentTab={match.params.tab || SUMMARY}
                 showModal={show}
                 hideModal={hide}
+                isModalOpen={isModalOpen}
                 meta={meta}
                 onRejectSuccess={() => onRejectSuccess(hide)}
                 refetchClient={this.refetchClient}

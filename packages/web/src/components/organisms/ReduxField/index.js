@@ -61,3 +61,4 @@ ReduxField.propTypes = {
 };
 
 export default ReduxField;
+

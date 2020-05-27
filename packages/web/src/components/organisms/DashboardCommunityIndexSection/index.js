@@ -17,6 +17,7 @@ import CommunityRowCard from 'sly/web/components/organisms/CommunityRowCard';
 const TABLE_HEADINGS = [
   { text: 'Name' },
   { text: 'Address' },
+  { text: 'Status' },
 ];
 
 const Section = styled.section`
@@ -77,7 +78,7 @@ const StyledSection = styled(Section)`
   border: none;
 `;
 
-export default class DashboardCommunitiesIndexSection extends Component {
+export default class DashboardCommunityIndexSection extends Component {
   static propTypes = {
     datatable: object,
     communities: arrayOf(communityPropType),

@@ -4,11 +4,10 @@ import ReactTooltip from 'react-tooltip';
 import uniqueId from 'lodash/uniqueId';
 import styled from 'styled-components';
 
-import { isServer } from 'sly/web/config';
 import { size, palette } from 'sly/web/components/themes';
 import { Icon } from 'sly/web/components/atoms';
 
-const TooltipContent = styled(ReactTooltip)`
+export const TooltipContent = styled(ReactTooltip)`
   padding: ${size('spacing.regular')};
   color: ${palette('white', 'base')} !important;
   background-color: ${palette('slate', 'base')} !important;
@@ -23,18 +22,15 @@ const TooltipContent = styled(ReactTooltip)`
 `;
 
 const HelpBubble = ({ children, className, icon, iconPalette, iconVariation, iconSize }) => {
-  if (!isServer) {
-    const id = uniqueId('tooltipHelpBubble_');
-    return (
-      <div className={className}>
-        <Icon palette={iconPalette} variation={iconVariation} icon={icon} size={iconSize} data-tip data-for={id} />
-        <TooltipContent id={id} place="top" effect="solid" multiline>
-          {children}
-        </TooltipContent>
-      </div>
-    );
-  }
-  return <Icon className={className} palette={iconPalette} variation={iconVariation} icon={icon} size={iconSize} />;
+  const id = uniqueId('tooltipHelpBubble_');
+  return (
+    <div className={className}>
+      <Icon palette={iconPalette} variation={iconVariation} icon={icon} size={iconSize} data-tip data-for={id} />
+      <TooltipContent id={id} place="top" effect="solid" multiline>
+        {children}
+      </TooltipContent>
+    </div>
+  );
 };
 
 HelpBubble.propTypes = {

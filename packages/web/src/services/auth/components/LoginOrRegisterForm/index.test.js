@@ -22,7 +22,7 @@ describe('LoginOrRegisterForm', () => {
     expect(wrapper.find('Field').filter({ name: 'emailOrPhone' })).toHaveLength(1);
     expect(wrapper.find('FullWidthButton')).toHaveLength(1);
     expect(wrapper.find('LargePaddedFullWidthButton')).toHaveLength(2);
-    expect(wrapper.find('LoginWithPassword')).toHaveLength(1);
+    expect(wrapper.find('LoginWithPassword')).toHaveLength(2);
   });
 
   it('renders error', () => {

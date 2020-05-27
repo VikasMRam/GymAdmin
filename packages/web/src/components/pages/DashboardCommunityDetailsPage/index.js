@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { string, func, object, arrayOf, bool } from 'prop-types';
 import { generatePath } from 'react-router';
 
@@ -7,28 +7,33 @@ import {
   DASHBOARD_COMMUNITIES_PATH,
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   SUMMARY,
-  PARTNER_AGENTS,
-  MESSAGES,
-  TASKS,
   PROFILE,
-  CARE_SERVICES, PRICING, AMENITIES, SERVICES, CONTRACT, CONTACTS, PHOTOS, CLIENTS,
+  CARE_SERVICES,
+  PRICING,
+  AMENITIES,
+  SERVICES,
+  CONTRACT,
+  CONTACTS,
+  PHOTOS,
+  CLIENTS,
+  EDITS,
+  ADMIN,
+  DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
-import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
 import communityPropType from 'sly/web/propTypes/community';
-import notePropType from 'sly/web/propTypes/note';
 import userPropType from 'sly/web/propTypes/user';
 import { size, palette } from 'sly/web/components/themes';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import { userIs } from 'sly/web/services/helpers/role';
 import pad from 'sly/web/components/helpers/pad';
 import textAlign from 'sly/web/components/helpers/textAlign';
-import SlyEvent from 'sly/web/services/helpers/events';
 import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import { Block } from 'sly/web/components/atoms';
 import Tabs from 'sly/web/components/molecules/Tabs';
 import BackLink from 'sly/web/components/molecules/BackLink';
-import Tab from 'sly/web/components/molecules/Tab';
+import Tab, { MobileTab } from 'sly/web/components/molecules/Tab';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import {
   Top,
@@ -36,7 +41,7 @@ import {
   Left,
   Section,
   SummarySection,
-  DashboardWithSummaryPageTemplate,
+  DashboardWithSummaryPageTemplate, LeftNotifications,
 } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import DashboardCommunitySummary from 'sly/web/components/organisms/DashboardCommunitySummary';
 import DashboardCommunityNameAndStatus from 'sly/web/components/organisms/DashboardCommunityNameAndStatus';
@@ -47,10 +52,13 @@ import DashboardCommunityServicesFormContainer from 'sly/web/containers/Dashboar
 import DashboardCommunityPricingFormContainer from 'sly/web/containers/DashboardCommunityPricingFormContainer';
 import DashboardCommunityPhotosFormContainer from 'sly/web/containers/DashboardCommunityPhotosFormContainer';
 import DashboardCommunityAmenitiesFormContainer from 'sly/web/containers/DashboardCommunityAmenitiesFormContainer';
+import DashboardCommunityAdminFormContainer from 'sly/web/containers/DashboardCommunityAdminFormContainer';
 import DashboardCommunityContractFormContainer from 'sly/web/containers/DashboardCommunityContractFormContainer';
 import DashboardContactsSectionContainer from 'sly/web/containers/dashboard/DashboardContactsSectionContainer';
 import DashboardAgentFamilyOverviewSectionContainer from 'sly/web/containers/DashboardAgentFamilyOverviewSectionContainer';
+import DashboardCommunityEditsContainer from 'sly/web/containers/DashboardCommunityEditsContainer';
 import { PROPERTY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
+import Link from 'sly/web/components/atoms/Link';
 
 const BackLinkWrapper = pad(styled.div`
   display: flex;
@@ -71,15 +79,7 @@ const StyledTabs = styled(Tabs)`
   }
 `;
 
-const MobileTab = styled(Tab)`
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none;
-  }
-`;
-
-const DifferentOrgNotification = displayOnlyIn(BannerNotification, ['mobile', 'tablet']);
-
-export default class DashboardCommunitiesDetailsPage extends Component {
+export default class DashboardCommunityDetailsPage extends Component {
   static propTypes = {
     community: communityPropType,
     currentTab: string,
@@ -88,7 +88,9 @@ export default class DashboardCommunitiesDetailsPage extends Component {
     notifyError: func,
     notifyInfo: func,
     communityIsLoading: bool,
-    user: userPropType.isRequired,
+    currentEdit: object,
+    suggestedEdits: arrayOf(object),
+    user: userPropType,
   };
 
   getTabsForUser = () => {
@@ -97,36 +99,54 @@ export default class DashboardCommunitiesDetailsPage extends Component {
     const { id } = community;
 
     const tabs = {
-      Summary: SUMMARY,
       Profile: PROFILE,
       'Care Services': CARE_SERVICES,
       Pricing: PRICING,
       Photos: PHOTOS,
       Amenities: AMENITIES,
       Services: SERVICES,
-      Contacts: CONTACTS,
-      Contract: CONTRACT,
+      Admin: [ADMIN, PLATFORM_ADMIN_ROLE],
+      Contacts: [CONTACTS, PLATFORM_ADMIN_ROLE],
+      Contract: [CONTRACT, PLATFORM_ADMIN_ROLE],
       Clients: CLIENTS,
+      Edits: EDITS,
       // ...
     };
 
     const pathFor = tab => generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, { id, tab });
+    const makeTab = (tab, label, TabComponent) => {
+      if (Array.isArray(tab)) {
+        let permission;
+        [tab, permission] = tab;
+        if (!(permission & roleID)) {
+          return null;
+        }
+      }
+      return (
+        <TabComponent id={tab} key={tab} to={pathFor(tab)} onClick={clickEventHandler('fdetails-tab', label)}>
+          {label}
+        </TabComponent>
+      );
+    }
 
-    return Object.entries(tabs)
-      .map(([label, tab]) => {
-        const TabComponent = tab === SUMMARY ? MobileTab : Tab;
-        const path = tab === SUMMARY ? pathFor() : pathFor(tab);
-        return (
-          <TabComponent id={tab} key={tab} to={path} onClick={clickEventHandler('fdetails-tab', label)}>
-            {label}
-          </TabComponent>
-        );
-      });
+    return [
+      makeTab(SUMMARY, 'Summary', MobileTab),
+      ...Object.entries(tabs)
+        .reduce((acc, [label, tab]) => {
+          const elem = makeTab(tab, label, Tab);
+          if (elem) {
+            acc.push(elem);
+          }
+          return acc;
+        }, []),
+    ];
   };
 
   render() {
     const {
       community,
+      currentEdit,
+      suggestedEdits,
       currentTab,
       communityIsLoading,
       user,
@@ -166,9 +186,12 @@ export default class DashboardCommunitiesDetailsPage extends Component {
       );
     }
 
-    const { id: communityOrgId } = community.organization;
-    const { id: userOrgId } = user.organization;
-    const isOfDifferentOrg = userOrgId !== communityOrgId;
+    const userIsAdmin = userIs(user, PLATFORM_ADMIN_ROLE);
+    const communityOrgId = community.organization?.id;
+    const userOrgId = user.organization?.id;
+    const isOfDifferentOrg = !userIsAdmin && (userOrgId !== communityOrgId);
+
+    const pendingChangesUrl = currentEdit?.isPendingForAdmin && generatePath(DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH, { id: community.id, editId: currentEdit.id });
 
     const sectionFilters = {
       include: 'entities',
@@ -179,6 +202,30 @@ export default class DashboardCommunitiesDetailsPage extends Component {
       'filter[community]': community.id,
     };
 
+    const notifications =  [];
+
+    if (pendingChangesUrl) {
+      notifications.push({
+        palette: 'yellow',
+        content: (
+          <>
+            Pending changes<br />
+            <Link to={pendingChangesUrl}>View edit history</Link>
+          </>
+        ),
+      });
+    }
+
+    if (isOfDifferentOrg) {
+      notifications.push({
+        palette: 'primary',
+        content: (
+          <>
+            This Family belongs to a different organization named <i>{community.organization?.name || 'Unknown'}</i>
+          </>
+        ),
+      });
+    }
     return (
       <DashboardWithSummaryPageTemplate activeMenuItem="Communities">
         <Top>
@@ -186,10 +233,17 @@ export default class DashboardCommunitiesDetailsPage extends Component {
         </Top>
 
         <Left>
-          {isOfDifferentOrg && (
-            <DifferentOrgNotification palette="primary">
-              This Family belongs to a different organization named <i>{community.organization.name}</i>
-            </DifferentOrgNotification>
+          {(notifications.length || null) && (
+            <LeftNotifications>
+              {notifications.map(({ palette, content }, i) => (
+                <BannerNotification
+                  key={content}
+                  palette={palette}
+                >
+                  {content}
+                </BannerNotification>
+              ))}
+            </LeftNotifications>
           )}
           <DashboardCommunityNameAndStatus community={community} />
         </Left>
@@ -199,64 +253,58 @@ export default class DashboardCommunitiesDetailsPage extends Component {
             {this.getTabsForUser()}
           </StyledTabs>
 
-          {currentTab === PROFILE && (
-            <Section>
+          <Section noPadding={currentTab === EDITS}>
+            {currentTab === PROFILE && (
               <DashboardCommunityDetailsFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
+                currentEdit={currentEdit}
               />
-            </Section>
-          )}
-          {currentTab === CARE_SERVICES && (
-            <Section>
+            )}
+            {currentTab === CARE_SERVICES && (
               <DashboardCommunityCareServicesFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
+                currentEdit={currentEdit}
               />
-            </Section>
-          )}
-          {currentTab === PRICING && (
-            <Section>
+            )}
+            {currentTab === PRICING && (
               <DashboardCommunityPricingFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
+                currentEdit={currentEdit}
               />
-            </Section>
-          )}
-          {currentTab === PHOTOS && (
-            <Section>
+            )}
+            {currentTab === PHOTOS && (
               <DashboardCommunityPhotosFormContainer
                 showModal={showModal}
                 hideModal={hideModal}
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
+                currentEdit={currentEdit}
               />
-            </Section>
-          )}
-          {currentTab === AMENITIES && (
-            <Section>
+            )}
+            {currentTab === AMENITIES && (
               <DashboardCommunityAmenitiesFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
+                currentEdit={currentEdit}
               />
-            </Section>
-          )}
-          {currentTab === SERVICES && (
-            <Section>
+            )}
+            {currentTab === SERVICES && (
               <DashboardCommunityServicesFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
+                currentEdit={currentEdit}
               />
-            </Section>
-          )}
-          {currentTab === CONTACTS && (
-            <Section>
+            )}
+            {currentTab === CONTACTS && (
               <DashboardContactsSectionContainer
                 id="contacts"
                 sectionFilters={sectionFilters}
@@ -264,24 +312,37 @@ export default class DashboardCommunitiesDetailsPage extends Component {
                 entityId={community.id}
                 entityName={community.name}
               />
-            </Section>
-          )}
-          {currentTab === CONTRACT && (
-            <Section>
+            )}
+            {currentTab === CONTRACT && (
               <DashboardCommunityContractFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
+                currentEdit={currentEdit}
               />
-            </Section>
-          )}
-          {currentTab === CLIENTS && (
-            <Section>
+            )}
+            {currentTab === ADMIN && (
+              <DashboardCommunityAdminFormContainer
+                notifyInfo={notifyInfo}
+                notifyError={notifyError}
+                community={community}
+                currentEdit={currentEdit}
+              />
+            )}
+            {currentTab === CLIENTS && (
               <DashboardAgentFamilyOverviewSectionContainer
                 sectionFilters={clientsSectionFilters}
               />
-            </Section>
-          )}
+            )}
+            {currentTab === EDITS && (
+              <DashboardCommunityEditsContainer
+                notifyInfo={notifyInfo}
+                notifyError={notifyError}
+                community={community}
+                suggestedEdits={suggestedEdits}
+              />
+            )}
+          </Section>
         </Right>
 
         <SummarySection className={currentTab === SUMMARY ? 'selected' : ''}>

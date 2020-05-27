@@ -4,7 +4,7 @@ import { object, func } from 'prop-types';
 import { withRouter, generatePath } from 'react-router';
 
 
-import DashboardCommunitiesIndexPage from 'sly/web/components/pages/DashboardCommunitiesIndexPage';
+import DashboardCommunityIndexPage from 'sly/web/components/pages/DashboardCommunityIndexPage';
 import AddCommunityFormContainer from 'sly/web/containers/dashboard/AddCommunityFormContainer'
 import withNotification from 'sly/web/controllers/withNotification';
 import withModal from 'sly/web/controllers/withModal';
@@ -18,7 +18,7 @@ import {
 @withModal
 @withRouter
 
-export default class DashboardCommunitiesIndexPageContainer extends Component {
+export default class DashboardCommunityIndexPageContainer extends Component {
   static propTypes = {
     location: object,
     showModal: func.isRequired,
@@ -45,7 +45,7 @@ export default class DashboardCommunitiesIndexPageContainer extends Component {
     } = this.props;
 
     const event = {
-      category: 'DashboardCommunities',
+      category: 'DashboardCommunity',
       action: 'click',
       label: 'addCommunity',
     };
@@ -66,11 +66,11 @@ export default class DashboardCommunitiesIndexPageContainer extends Component {
       'page-number': pageNumber,
     };
     return (
-      <DashboardCommunitiesIndexPage
+      <DashboardCommunityIndexPage
         sectionFilters={sectionFilters}
         filters={filters}
         onAddCommunity={this.handleAddCommunity}>
-      </DashboardCommunitiesIndexPage>);
+      </DashboardCommunityIndexPage>);
   }
 
 
