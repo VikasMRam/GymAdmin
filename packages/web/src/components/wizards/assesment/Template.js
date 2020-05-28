@@ -9,8 +9,19 @@ import IconButton from 'sly/web/components/molecules/IconButton';
 
 export const Wrapper = styled.main`
   display: grid;
-  grid-template-columns: ${size('layout.col6')} ${size('layout.col4')};
   grid-gap: ${size('layout.gutter')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    grid-template-columns: ${size('layout.col5')} ${size('layout.col3')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    grid-template-columns: ${size('layout.col5')} ${size('layout.col3')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    grid-template-columns: ${size('layout.col6')} ${size('layout.col4')};
+  }
 `;
 
 const ButtonWrapper = styled.div`
