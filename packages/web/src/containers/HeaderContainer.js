@@ -1,27 +1,23 @@
 import React, { PureComponent } from 'react';
-import { func, object, string } from 'prop-types';
+import { func, object, string, oneOf } from 'prop-types';
 import { generatePath } from 'react-router';
 
 import {
   CUSTOMER_ROLE,
   PROVIDER_OD_ROLE,
   AGENT_ND_ROLE,
-  AGENT_ADMIN_ROLE,
-  PLATFORM_ADMIN_ROLE,
 } from 'sly/web/constants/roles';
 import {
   DASHBOARD_ACCOUNT_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
-  AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_TASKS_PATH,
   AGENT_DASHBOARD_PROFILE_PATH, DASHBOARD_COMMUNITIES_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
 import { withAuth, normalizeResponse, query } from 'sly/web/services/api';
 import { withRedirectTo } from 'sly/web/services/redirectTo';
 import { withProps } from 'sly/web/services/helpers/hocs';
-import { generateSearchUrl } from 'sly/web/services/helpers/url';
-import { parseURLQueryParams } from 'sly/web/services/helpers/url';
+import { generateSearchUrl, parseURLQueryParams } from 'sly/web/services/helpers/url';
 import SlyEvent from 'sly/web/services/helpers/events';
 import AuthContainer from 'sly/web/services/auth/containers/AuthContainer';
 import NotificationController from 'sly/web/controllers/NotificationController';
@@ -45,17 +41,28 @@ const headerMenuLabel = 'headerMenu';
 const logoLabel = 'logo';
 const sendHeaderItemClickEvent = value => sendEvent(category, clickAction, headerItemLabel, value);
 
-const defaultHeaderItems = [
-  { name: 'Senior Living Resources', to: '/resources', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
-  { name: 'Assisted Living', to: '/assisted-living', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
-  { name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
-];
+const getDefaultHeaderItems = (layout) => {
+  let items = [
+    { name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+  ];
+
+  if (layout !== 'wizards') {
+    items = [
+      { name: 'Senior Living Resources', to: '/resources', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+      { name: 'Assisted Living', to: '/assisted-living', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+      ...items,
+    ];
+  }
+
+  return items;
+};
+
 
 const smallScreenMenuItems = [
   { name: 'Home', to: '/', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
 ];
 
-const defaultMenuItems = (user) => {
+const defaultMenuItems = () => {
   const menuItems = [
     {
       name: 'Senior Living Resources', to: '/resources', hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),
@@ -117,7 +124,7 @@ const loggedInMenuItems = (user) => {
       roleBasedItems = agentMenuItems;
     }
     if (roleID & PROVIDER_OD_ROLE) {
-      roleBasedItems = partnerCommunityMenuItems
+      roleBasedItems = partnerCommunityMenuItems;
     }
     if (roleID & (CUSTOMER_ROLE | AGENT_ND_ROLE | PROVIDER_OD_ROLE)) {
       roleBasedItems = [...roleBasedItems, ...customerAndAgentMenuItems];
@@ -141,7 +148,7 @@ const generateMenuItems = user => [...defaultMenuItems(user), ...loggedInMenuIte
 @withAuth
 @withRedirectTo
 @query('getCommunity', 'getCommunity')
-@withProps(({ match, location }) => ({
+@withProps(({ location }) => ({
   queryParams: parseURLQueryParams(location.search),
 }))
 
@@ -156,26 +163,27 @@ export default class HeaderContainer extends PureComponent {
     location: object,
     getCommunity: func,
     redirectTo: func.isRequired,
+    layout: oneOf(['default', 'wizards']),
   };
 
   state = {
     isDropdownOpen: false,
-    community: {}
+    community: {},
   };
 
   componentDidMount() {
     const { queryParams, getCommunity } = this.props;
-    if ( !queryParams ) {
-      return
+    if (!queryParams) {
+      return;
     }
     const { prop } = queryParams;
-    if ( !prop ) {
-      return
+    if (!prop) {
+      return;
     }
-    return getCommunity({id: prop}).then((resp) => {
+    getCommunity({ id: prop }).then((resp) => {
       const community = normalizeResponse(resp.body);
       return this.setState({
-        community
+        community,
       });
     });
   }
@@ -214,12 +222,13 @@ export default class HeaderContainer extends PureComponent {
       className,
       ensureAuthenticated,
       location,
+      layout,
     } = this.props;
     const { isDropdownOpen } = this.state;
 
-    const hItems = defaultHeaderItems;
-    const lhItems = loginHeaderItems(user);
-    const menuItems = generateMenuItems(user);
+    const hItems = getDefaultHeaderItems(layout);
+    const lhItems = layout !== 'wizards' ? loginHeaderItems(user) : [];
+    const menuItems = layout !== 'wizards' ? generateMenuItems(user) : [];
 
     const logoutLeftMenuItem = menuItems.find(item => item.name === 'Log Out');
     if (logoutLeftMenuItem) {
@@ -238,11 +247,11 @@ export default class HeaderContainer extends PureComponent {
       registerItem.onClick = ({ name }) => {
         sendHeaderItemClickEvent(name);
         const { community } = this.state;
-        const data = {register: true};
+        const data = { register: true };
         if (location.pathname === '/partners/communities') {
           data.provider = true;
           if (community.id) {
-            data.community = {value: community.id, label: `${community.name}: ${community.address.city}, ${community.address.state}`}
+            data.community = { value: community.id, label: `${community.name}: ${community.address.city}, ${community.address.state}` };
           }
         }
         ensureAuthenticated(data);
@@ -253,11 +262,11 @@ export default class HeaderContainer extends PureComponent {
       registerItem.onClick = ({ name }) => {
         sendHeaderItemClickEvent(name);
         const { community } = this.state;
-        const data = {register: true};
+        const data = { register: true };
         if (location.pathname === '/partners/communities') {
           data.provider = true;
           if (community.id) {
-            data.community = {value: community.id, label: `${community.name}: ${community.address.city}, ${community.address.state}`}
+            data.community = { value: community.id, label: `${community.name}: ${community.address.city}, ${community.address.state}` };
           }
         }
         ensureAuthenticated(data);
@@ -303,12 +312,14 @@ export default class HeaderContainer extends PureComponent {
                     onHeaderBlur={this.toggleDropdown}
                     onLogoClick={this.onLogoClick}
                     headerItems={headerItems}
+                    hideMenuItemsInSmallScreen={layout !== 'wizards'}
                     menuItems={menuItems}
-                    smallScreenMenuItems={smallScreenMenuItems}
+                    smallScreenMenuItems={layout !== 'wizards' ? smallScreenMenuItems : []}
                     className={className}
                     onCurrentLocation={this.handleCurrentLocation}
+                    hasSearchBox={layout !== 'wizards'}
                   />
-                  <AuthContainer notifyInfo={notifyInfo} showModal={show} hideModal={hide} />
+                  {layout !== 'wizards' && <AuthContainer notifyInfo={notifyInfo} showModal={show} hideModal={hide} />}
                   <Notifications messages={messages} dismiss={dismiss} />
                 </>
               );
