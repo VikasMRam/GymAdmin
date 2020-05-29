@@ -283,7 +283,6 @@ export default class HeaderContainer extends PureComponent {
       ...hItems,
       ...lhItems,
     ];
-    const smallScreenHeaderItems = layout === 'wizards' ? hItems : [];
 
     const modalBody = (
       <HowSlyWorksVideoContainer isPlaying eventLabel="header" />
@@ -313,7 +312,7 @@ export default class HeaderContainer extends PureComponent {
                     onHeaderBlur={this.toggleDropdown}
                     onLogoClick={this.onLogoClick}
                     headerItems={headerItems}
-                    smallScreenHeaderItems={smallScreenHeaderItems}
+                    hideMenuItemsInSmallScreen={layout !== 'wizards'}
                     menuItems={menuItems}
                     smallScreenMenuItems={layout !== 'wizards' ? smallScreenMenuItems : []}
                     className={className}

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { bool, func, arrayOf, shape, string, oneOf } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette, key } from 'sly/web/components/themes';
@@ -100,22 +100,14 @@ const MarginnedHR = styled(Hr)`
 `;
 
 const HeaderItems = styled.div`
-  display: none;
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-  }
-`;
-
-const SmallScreenHeaderItems = styled.div`
   display: flex;
   align-items: center;
   margin-left: auto;
 
+  ${ifProp('hideInSmallScreen', css`display: none;`)}
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none;
+    display: flex;
   }
 `;
 
@@ -187,10 +179,9 @@ const mapItem = item => item.isButton ? (
 
 const Header = ({
   menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, onMenuItemClick, onHeaderBlur, className, smallScreenMenuItems, onLogoClick,
-  onCurrentLocation, hasSearchBox, smallScreenHeaderItems,
+  onCurrentLocation, hasSearchBox, hideMenuItemsInSmallScreen,
 }) => {
   const headerItemComponents = headerItems.map(mapItem);
-  const smallScreenHeaderItemComponents = smallScreenHeaderItems.map(mapItem);
   menuItems = menuItems.sort((a, b) => a.section - b.section);
   let prevSection = menuItems.length ? menuItems[0].section : 0;
   const headerMenuItemComponents = menuItems
@@ -262,12 +253,9 @@ const Header = ({
           onLocationSearch={onLocationSearch}
         />
       }
-      <HeaderItems>
+      <HeaderItems hideInSmallScreen={hideMenuItemsInSmallScreen}>
         {headerItemComponents}
       </HeaderItems>
-      <SmallScreenHeaderItems>
-        {smallScreenHeaderItemComponents}
-      </SmallScreenHeaderItems>
       {menuOpen &&
         <HeaderMenu innerRef={headerMenuRef} onClick={onMenuItemClick}>
           {smallScreenMenuItemComponents.length > 0 &&
@@ -299,14 +287,6 @@ Header.propTypes = {
     isButton: bool,
     ghost: bool,
   })).isRequired,
-  smallScreenHeaderItems: arrayOf(shape({
-    name: string.isRequired,
-    to: string,
-    onClick: func,
-    palette: palettePropType,
-    isButton: bool,
-    ghost: bool,
-  })).isRequired,
   menuItems: arrayOf(shape({
     name: string.isRequired,
     to: string,
@@ -323,12 +303,13 @@ Header.propTypes = {
   })),
   className: string,
   hasSearchBox: bool,
+  hideMenuItemsInSmallScreen: bool,
 };
 
 Header.defaultProps = {
   menuItems: [],
   smallScreenMenuItems: [],
-  smallScreenHeaderItems: [],
+  hideMenuItemsInSmallScreen: true,
 };
 
 export default Header;
