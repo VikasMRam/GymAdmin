@@ -47,7 +47,8 @@ export default class PartnerAgentProfileFormContainer extends Component {
       rawAgent, updateAgent, notifyInfo,
     } = this.props;
     const { id } = rawAgent;
-
+    // FIXME: Checkbox issues: the true value comes along in the second element sometimes (browser specific? )
+    const isProVal = ( values.isPro.length > 0 ? values.isPro[0] || values.isPro[1] : false);
     let agent = immutable.wrap(pick(rawAgent, ['id', 'type', 'attributes.status', 'attributes.info', 'attributes.info.serviceArea']))
       .set('attributes.info.bio', values.bio)
       .set('attributes.info.parentCompany', values.parentCompany)
@@ -59,10 +60,11 @@ export default class PartnerAgentProfileFormContainer extends Component {
       .set('attributes.info.serviceArea.zipcodesServed', values.zipcodesServed)
       .set('attributes.status', parseInt(values.status, 10))
       .set('attributes.info.adminNotes', values.adminNotes)
-      .set('attributes.info.isPro', (values.isPro.length > 0 ? values.isPro[0] : false))
+      .set('attributes.info.isPro', isProVal)
       .set('attributes.info.cellPhone', phoneParser(values.cellPhone))
       .set('attributes.info.email', values.email)
       .set('attributes.info.timeZone', values.timeZone)
+      .set('attributes.info.smsFormat', values.smsFormat)
       .set('attributes.info.slyScore', parseFloat(values.slyScore));
 
     if (values.vacation && values.vacation[0].getTime() !== 0 && values.vacation[1].getTime() !== 0) {
@@ -92,7 +94,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
       }
       const { info, status } = agent;
       const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;
-      const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore, isPro, cellPhone, email, timeZone } = info;
+      const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore, isPro, cellPhone, email, timeZone, smsFormat } = info;
       let zipcodesServed = null;
       if (serviceArea) {
         ({ zipcodesServed } = serviceArea);
@@ -102,7 +104,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
         vacation = [new Date(vacationStart), new Date(vacationEnd)];
       }
       const initialValues = { bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation, adminRegion,
-        zipcodesServed, status, adminNotes, slyScore, isPro: [isPro], cellPhone, email, timeZone };
+        zipcodesServed, status, adminNotes, slyScore, isPro: [isPro], cellPhone, email, timeZone, smsFormat };
       const isSlyAdmin = userIs(user, PLATFORM_ADMIN_ROLE);
       return (
         <ReduxForm
