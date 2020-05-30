@@ -73,23 +73,24 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
 };
 
 export const generateAskAgentQuestionContents = (name, city, type) => {
-  let heading = `Ask your Seniorly Partner Agent a question about ${name} in ${city}.`;
+  let heading = `Ask your Local Senior Living Expert a question about ${name} in ${city}.`;
   let placeholder = `Hi Rachel, I have a question about ${name} in ${city}...`;
   let description = null;
   let question = null;
 
   if (type === 'tour') {
     heading = 'We have received your tour request.';
-    description = 'Your Seniorly Partner Agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
+    description = 'Your Local Senior Living Expert will reach out to you soon. Feel free to ask them any questions in' +
+      ' the meantime.';
     placeholder = `Hi, I would like more information about ${name}.`;
   } else if (type === 'pricing') {
     heading = 'We have received your custom pricing request.';
-    description = 'Your Seniorly Partner Agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
+    description = 'Your Local Senior Living Expert will reach out to you soon. Feel free to ask them any questions in the meantime.';
   } else if (type === 'offer') {
-    heading = `Ask your Seniorly Partner Agent about the holiday incentive at ${name}`;
+    heading = `Ask your Local Senior Living Expert about the holiday incentive at ${name}`;
     question = `Hi, I am interested in knowing more about the holiday promotion at ${name}. I am looking for...`;
   } else if (type === 'services') {
-    heading = `Ask your Seniorly Partner Agent about services provided at ${name}`;
+    heading = `Ask your Local Senior Living Expert about services provided at ${name}`;
     question = `Hi, I would like more information about ${name}'s amenities.`;
   } else if (type === 'covid-banner') {
     heading = `We are excited to provide you a virtual tour of ${name}`;
