@@ -54,7 +54,6 @@ const StyledTable = styled.table`
 const StyledBlockNp = styled(Block)`
    padding-top: 0px;
    padding-bottom: ${size('spacing.xLarge')};
-
 `;
 
 const StyledGetPricingButton = styled(GetCustomPricingButtonContainer)`

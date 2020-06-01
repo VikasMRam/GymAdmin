@@ -56,14 +56,12 @@ const getPlace = () => (
   window.innerWidth < 1080 ? 'top' : 'bottom'
 );
 
-const getTip = (id) => (
+const getTip = id => (
   <div>
-    <Link onClick={() => { ReactTooltip.hide() }}>
-      <CloseIcon icon="close" palette="slate"/>
-    </Link>
+    <CloseIcon icon="close" palette="slate" onClick={() => { ReactTooltip.hide();} }/>
     <Wrapper>
       <Paragraph>
-        <Span palette='primary'> The Seniorly Estimate</Span>{' '}
+        <Span palette="primary"> The Seniorly Estimate</Span>{' '}
         estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services.
       </Paragraph>
       <Paragraph>
@@ -81,12 +79,12 @@ const CommunityPricing = ({ id, estimated, price, palette, variation, className,
   <StyledCommunityPricingWrapper className={className}>
     {estimated &&
     <DescriptionBlock size="caption">
-      <StyledParagraph data-tip data-event='click focus' data-for={tipId}>
+      <StyledParagraph data-tip data-event="click focus" data-for={tipId}>
         Seniorly Estimate
-        <StyledIcon palette="slate" icon="help" size="caption"/>
+        <StyledIcon palette="slate" icon="help" size="caption" />
       </StyledParagraph>
       {isBrowser &&
-        <TooltipContent id={tipId} place={getPlace()} effect="solid" type="light" multiline globalEventOff='click' clickable={true} getContent={() => getTip(id)}/>
+        <TooltipContent id={tipId} place={getPlace()} effect="solid" type="light" multiline globalEventOff="click" clickable getContent={() => getTip(id)} />
       }
     </DescriptionBlock>
     }
