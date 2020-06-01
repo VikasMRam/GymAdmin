@@ -29,6 +29,7 @@ import Image from 'sly/web/components/atoms/Image';
 import careTypes from 'sly/web/constants/careTypes';
 import CommunityProfileAdTileContainer from 'sly/web/containers/communityProfile/AdTileContainer';
 import BannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
+import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 
 // For Lazy loading images, used in ResponsiveImage
 require('sly/web/services/yall');
@@ -63,6 +64,7 @@ partiallyHydrateClient(
     Image,
     CommunityProfileAdTileContainer,
     BannerNotificationAdContainer,
+    CommunityPricingTable,
   ],
   `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
   root,

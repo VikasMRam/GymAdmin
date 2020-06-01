@@ -14,10 +14,8 @@ const StyledButton = fullWidth(Button);
 const PaddedHeading = pad(Heading, 'large');
 
 const PaddedCommunityPricing = pad(CommunityPricing, 'large');
-PaddedCommunityPricing.displayName = 'PaddedCommunityPricing';
 
 const PaddedCommunityRating = pad(CommunityRating);
-PaddedCommunityRating.displayName = 'PaddedCommunityRating';
 
 const getButton = (props = {}) => <StyledButton {...props} />;
 

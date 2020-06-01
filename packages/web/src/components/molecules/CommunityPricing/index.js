@@ -13,10 +13,11 @@ import { Block, Icon, Paragraph, Link, Span } from 'sly/web/components/atoms';
 import { isBrowser } from 'sly/web/config';
 
 const StyledParagraph = styled(Paragraph)`
-  cursor: pointer;
   text-decoration: underline;
   margin-bottom: ${size('spacing.small')};
-
+  color: ${palette('slate', 'base')};
+  font-size: ${size('text.caption')};
+  cursor: pointer;
 `;
 
 const StyledCommunityPricingWrapper = styled.div`
@@ -57,14 +58,16 @@ const getPlace = () => (
 
 const getTip = (id) => (
   <div>
-    <CloseIcon icon="close" palette="slate"/>
+    <Link onClick={() => { ReactTooltip.hide() }}>
+      <CloseIcon icon="close" palette="slate"/>
+    </Link>
     <Wrapper>
       <Paragraph>
         <Span palette='primary'> The Seniorly Estimate</Span>{' '}
         estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services.
       </Paragraph>
       <Paragraph>
-      Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.
+        Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.
       </Paragraph>
       <Paragraph>
         If you manage the community and would like to update your pricing.{' '}
@@ -74,18 +77,20 @@ const getTip = (id) => (
   </div>
 );
 
-const CommunityPricing = ({ id, estimated, price, palette, variation, className, size }) => (
+const CommunityPricing = ({ id, estimated, price, palette, variation, className, size, tipId }) => (
   <StyledCommunityPricingWrapper className={className}>
-    {!estimated && isBrowser &&
-    <StyledParagraph data-tip data-event='click focus' data-for="estimate">
-      <Span palette="slate" size="caption">
+    {estimated &&
+    <DescriptionBlock size="caption">
+      <StyledParagraph data-tip data-event='click focus' data-for={tipId}>
         Seniorly Estimate
         <StyledIcon palette="slate" icon="help" size="caption"/>
-      </Span>
-      <TooltipContent id="estimate" place={getPlace()} effect="solid" type="light" multiline globalEventOff='click' clickable={true} getContent={() => getTip(id)}/>
-    </StyledParagraph>
+      </StyledParagraph>
+      {isBrowser &&
+        <TooltipContent id={tipId} place={getPlace()} effect="solid" type="light" multiline globalEventOff='click' clickable={true} getContent={() => getTip(id)}/>
+      }
+    </DescriptionBlock>
     }
-    {estimated &&
+    {!estimated &&
     <DescriptionBlock size="caption">
       Pricing starts from
     </DescriptionBlock>
@@ -110,12 +115,14 @@ CommunityPricing.propTypes = {
   id: string.isRequired,
   estimated: bool.isRequired,
   size: textPropType,
+  tipId: string,
 };
 
 CommunityPricing.defaultProps = {
   palette: 'primary',
   variation: 'base',
-  size: 'title'
+  size: 'title',
+  tipId: 'estimate',
 };
 
 export default CommunityPricing;

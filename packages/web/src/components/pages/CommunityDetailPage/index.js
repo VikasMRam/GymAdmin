@@ -46,7 +46,6 @@ import IconButton from 'sly/web/components/molecules/IconButton';
 import UnhydratedGetCurrentAvailabilityContainer from 'sly/web/containers/GetCurrentAvailabilityContainer';
 import UnhydratedHowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
-import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 import UnhydratedAskAgentQuestionButtonContainer from 'sly/web/containers/AskAgentQuestionButtonContainer';
 import UnhydratedGetCustomPricingButtonContainer from 'sly/web/containers/GetCustomPricingButtonContainer';
 import PlusBranding from 'sly/web/components/organisms/PlusBranding';
@@ -65,7 +64,8 @@ import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/web/containers/PageEventsContainer';
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/web/containers/CommunityDetailsPageColumnContainer';
 import UnhydratedCommunityProfileAdTileContainer from 'sly/web/containers/communityProfile/AdTileContainer';
-import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer'
+import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
+import UnhydratedCommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -87,7 +87,7 @@ const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
 const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
 const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
-
+const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable);
 const BackToSearch = styled.div`
   text-align: center;
 `;
@@ -459,23 +459,18 @@ export default class CommunityDetailPage extends Component {
                   )}
                   {!hasCCRC && !hasSNF && (
                     <CommunityPricingTable
-                      name={name}
                       pricesList={pricesList}
                       estimatedPriceList={estimatedPriceList}
-                      price={estimatedPriceBase}
-                      GetPricingButton={props => (
-                        <GetCustomPricingButtonContainer
-                          hasAlreadyRequestedPricing={isAlreadyPricingRequested}
-                          locTrack="pricing-table"
-                          {...props}
-                        />
-                      )}
-                      size={communitySize}
-                      showToolTip={address.state === 'TN'}
+                      isAlreadyPricingRequested={isAlreadyPricingRequested}
                       community={community}
                     />
                   )}
                 </StyledHeadingBoxSection>
+                {sortedEstimatedPrice.length > 0 && (
+                  <StyledHeadingBoxSection heading={`Compare Costs for ${name}`}>
+                    <CommunityPricingComparison community={community} />
+                  </StyledHeadingBoxSection>
+                )}
                 {/* TODO: ENABLE AFTER FIGURING OUT HYDRATION*/}
                 <AdWrapper>
                   <CommunityProfileAdTileContainer type="homeCare" community={community} />
@@ -552,11 +547,7 @@ export default class CommunityDetailPage extends Component {
                   <CommunityAmenities community={community} />
                   <StyledAskAgentButton type="amenities">Ask About Amenities</StyledAskAgentButton>
                 </StyledHeadingBoxSection>
-                {sortedEstimatedPrice.length > 0 && (
-                  <StyledHeadingBoxSection heading={`Compare Costs to Nearby ${typeOfCare} Communities`}>
-                    <CommunityPricingComparison community={community} />
-                  </StyledHeadingBoxSection>
-                )}
+
                 <StyledHeadingBoxSection
                   heading={`Reviews at ${name}`}
                   id="reviews"
