@@ -1,6 +1,6 @@
 import React  from 'react';
 import styled, { css } from 'styled-components';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/web/components/themes';
@@ -42,13 +42,13 @@ const ProgressButtonsWrapper = styled.div`
   `)}
 `;
 
-export const Footer = ({ onBackClick, onSkipClick }) => (
+export const Footer = ({ onBackClick, onSkipClick, submitButtonText }) => (
   <ButtonWrapper>
     {onBackClick && <StyledIconButton transparent icon="chevron-left" onClick={onBackClick} foregroundPalette="primary">Back</StyledIconButton>}
     {!onBackClick && <div />}
     <ProgressButtonsWrapper hasTwoButtons={!!onSkipClick}>
       {onSkipClick && <Button ghost palette="slate" borderPalette="grey" borderVariation="filler" onClick={onSkipClick}>Skip</Button>}
-      <Button type="submit">Continue</Button>
+      <Button type="submit">{submitButtonText}</Button>
     </ProgressButtonsWrapper>
   </ButtonWrapper>
 );
@@ -56,4 +56,9 @@ export const Footer = ({ onBackClick, onSkipClick }) => (
 Footer.propTypes = {
   onSkipClick: func,
   onBackClick: func,
+  submitButtonText: string.isRequired,
+};
+
+Footer.defaultProps = {
+  submitButtonText: 'Continue',
 };

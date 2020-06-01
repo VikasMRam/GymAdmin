@@ -16,7 +16,6 @@ describe('MatchedAgent', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('PaddedHeading').contains(defaultProps.heading)).toBeTruthy();
-    expect(wrapper.find('Block').at(0).contains(defaultProps.agent.name)).toBeTruthy();
     expect(wrapper.find('Link').at(0).contains(defaultProps.agent.info.email)).toBeTruthy();
     expect(wrapper.find('Link').at(1).contains(defaultProps.agent.info.workPhone)).toBeTruthy();
   });
