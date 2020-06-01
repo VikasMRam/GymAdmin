@@ -120,7 +120,7 @@ const DashboardPageTemplate = ({
   const mi = menuItems.map((mi) => {
     if (mi.label === activeMenuItem) {
       mi.active = true;
-      mi.variation = 'dark35';
+      mi.variation = 'base';
     } else {
       mi.active = false;
       mi.variation = 'filler';

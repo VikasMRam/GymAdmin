@@ -193,9 +193,9 @@ const CTABlock = styled(Block)`
 
 const CovidWrapper = styled.div`
   padding: ${size('spacing.large')};
-  background-color: ${palette('secondary', 'filler')};
+  background-color: ${palette('primary', 'filler')};
   border-radius: ${size('border.xLarge')};
-  border-top: 4px solid ${palette('secondary', 'dark35')};
+  border-top: 4px solid ${palette('primary', 'base')};
   margin-bottom: ${size('spacing.xLarge')};
   text-align: center;
 `;
@@ -384,8 +384,8 @@ export default class CommunityDetailPage extends Component {
                         <IconItemWrapper key={item}>
                           <IconItem
                             icon="check"
-                            iconPalette="secondary"
-                            iconVariation="dark35"
+                            iconPalette="primary"
+                            iconVariation="base"
                             borderless={false}
                           >
                             {item}
@@ -401,8 +401,8 @@ export default class CommunityDetailPage extends Component {
                         <IconItemWrapper key={item}>
                           <IconItem
                             icon="check"
-                            iconPalette="secondary"
-                            iconVariation="dark35"
+                            iconPalette="primary"
+                            iconVariation="base"
                             borderless={false}
                           >
                             {item}
@@ -573,7 +573,7 @@ export default class CommunityDetailPage extends Component {
                   <EventsWrapper>
                     {sampleEvents.map(item => (
                       <IconItemWrapper key={item}>
-                        <IconItem icon="check" iconPalette="secondary" iconVariation="dark35" borderless={false}>{item}</IconItem>
+                        <IconItem icon="check" iconPalette="primary" iconVariation="base" borderless={false}>{item}</IconItem>
                       </IconItemWrapper>))
                     }
                   </EventsWrapper>
@@ -633,7 +633,7 @@ export default class CommunityDetailPage extends Component {
                   </StyledHeadingBoxSection>
                 )}
 
-                <CommunityStickyFooter isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack="sticky-footer"/>
+                <CommunityStickyFooter community={community} isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack="sticky-footer"/>
               </Body>
               <Column>
                 <StickToTop>

@@ -14,19 +14,19 @@ const makeSid = () => crypto.randomBytes(16).toString('hex');
 const getUUID = () => {
   const slyUuid = v4();
   cookie.set('sly_uuid', slyUuid, { domain, path: '/', maxAge: 27000000 });
-  return slyUuid
+  return slyUuid;
 };
 
 const getSID = () => {
   const sid = makeSid();
   cookie.set('sly_sid', sid, { domain, path: '/', maxAge: 3600 });
-  return sid
+  return sid;
 };
 
 const getReferrer = () => {
   const referrer = document.referrer;
   cookie.set('referrer', referrer, { domain, path: '/', maxAge: 27000000 });
-  return sid
+  return referrer;
 };
 
 export default class SlyEvent {

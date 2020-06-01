@@ -51,8 +51,8 @@ IconItem.propTypes = {
 
 IconItem.defaultProps = {
   borderless: true,
-  iconPalette: 'secondary',
-  iconVariation: 'dark35',
+  iconPalette: 'primary',
+  iconVariation: 'base',
   textPalette: 'slate',
   textVariation: 'base',
   iconRightMarginSpacing: 'small',

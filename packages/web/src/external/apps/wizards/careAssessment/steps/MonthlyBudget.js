@@ -26,7 +26,7 @@ const StyledReduxField = styled(ReduxField)`
 `;
 
 const moneyValue = val =>
-  <MoneyValue weight="regular" palette="secondary" variation="dark35">Up to {formatMoney(val)}</MoneyValue>;
+  <MoneyValue weight="regular" palette="primary" variation="base">Up to {formatMoney(val)}</MoneyValue>;
 
 const MonthlyBudget = () => (
   <>

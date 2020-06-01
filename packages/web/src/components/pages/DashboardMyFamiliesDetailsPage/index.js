@@ -217,7 +217,7 @@ const ClientName = ({ client, rawClient, backLinkHref, user, ...props }) => {
         <Icon icon="arrow-left" palette="primary" />
       </Link>
       <span>{name}</span>
-      {isReferralSent(client) && <StyledIconBadge badgePalette="secondary" badgeVariation="dark35" palette="white" icon="checkmark-circle" text="R SENT" />}
+      {isReferralSent(client) && <StyledIconBadge badgePalette="primary" badgeVariation="base" palette="white" icon="checkmark-circle" text="R SENT" />}
       {(userIs(user, PLATFORM_ADMIN_ROLE) || (!isNew && !isProspects)) && <StyledStatusSelect client={client} rawClient={rawClient} user={user} {...props} />}
     </StyledClientNameBlock>
   );

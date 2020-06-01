@@ -138,11 +138,11 @@ export default class CommunityInfo extends Component {
         {header}
         <TopWrapper>
           {community.startingRate ? (
-            <Rate palette={palette || (inverted ? 'white' : 'secondary')} variation={inverted ? 'base' : 'dark35'} weight="medium">
+            <Rate palette={palette || (inverted ? 'white' : 'primary')} variation='base' weight="medium">
               {`${community.estimated ? 'Estimated ' : ''}${communityStartingRate}/month`}
             </Rate>
           ) : null }
-          <CommunityRating rating={reviewsValue} numReviews={numReviews} palette={inverted ? 'white' : 'secondary'} variation={inverted ? 'base' : 'dark35'} numReviewsPalette={inverted ? 'white' : 'slate'} size={reviewsValue > 0 ? 'caption' : 'tiny'} />
+          <CommunityRating rating={reviewsValue} numReviews={numReviews} palette={inverted ? 'white' : 'primary'} variation='base' numReviewsPalette={inverted ? 'white' : 'slate'} size={reviewsValue > 0 ? 'caption' : 'tiny'} />
         </TopWrapper>
         {address && (
           <IconTextWrapper>

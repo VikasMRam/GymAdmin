@@ -357,19 +357,19 @@ const SeniorLivingNearMePage = ({
             older adults to engage in life through:
           </Paragraph>
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Life Enrichment Programs
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Volunteering Opportunities
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Peer-to-Peer Support
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Well-balanced Meals
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Planned Fitness Programs
             </ListItem>
           </ListWrapper>
@@ -449,19 +449,19 @@ const SeniorLivingNearMePage = ({
             In general, lifestyle amenities include:
           </Paragraph>
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Room and board
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               24-hour assistance with activities of daily living (ADLs)
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Home maintenance, housekeeping & laundry services
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Social engagement
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Wellness programs
             </ListItem>
           </ListWrapper>

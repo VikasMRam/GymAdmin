@@ -37,27 +37,27 @@ const ADLChart = () => (
     <ADLWrapper>
       <ADLIconItem>
         Personal Hygiene
-        <Icon icon="bath" palette="secondary" variation="dark35" />
+        <Icon icon="bath" palette="primary" variation="base" />
       </ADLIconItem>
       <ADLIconItem>
         Feeding
-        <Icon icon="food" palette="secondary" variation="dark35" />
+        <Icon icon="food" palette="primary" variation="base" />
       </ADLIconItem>
       <ADLIconItem>
         Continence Management
-        <Icon icon="washroom" palette="secondary" variation="dark35" />
+        <Icon icon="washroom" palette="primary" variation="base" />
       </ADLIconItem>
       <ADLIconItem>
         Ambulating
-        <Icon icon="accessibility" palette="secondary" variation="dark35" />
+        <Icon icon="accessibility" palette="primary" variation="base" />
       </ADLIconItem>
       <ADLIconItem>
         Dressing
-        <Icon icon="shirt" palette="secondary" variation="dark35" />
+        <Icon icon="shirt" palette="primary" variation="base" />
       </ADLIconItem>
       <ADLIconItem>
         Toileting
-        <Icon icon="toilet" palette="secondary" variation="dark35" />
+        <Icon icon="toilet" palette="primary" variation="base" />
       </ADLIconItem>
     </ADLWrapper>
   </>

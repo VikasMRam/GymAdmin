@@ -14,7 +14,7 @@ const GetCustomPricingButtonContainer = withHydration(UnhydratedGetCustomPricing
 
 const StyledNumberFormat = styled.span`
   font-weight: ${p => size(p.weight)};
-  color: ${p => palette(p.color, 'dark35')};
+  color: ${p => palette(p.color, 'base')};
 `;
 
 const StyledTh = styled.th`
@@ -137,13 +137,13 @@ const CommunityPricingTable = ({
       {estimated &&
         <StyledBlockNp size="title">
           <StyledBlockSp size="body" palette="slate">The estimated monthly pricing for {name} ranges from</StyledBlockSp>
-          <StyledNumberFormat weight="weight.medium" color="secondary">{formatMoney(from)}</StyledNumberFormat> <Span weight="medium" size="title" palette="secondary" variation="dark35"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary">{formatMoney(to)}</StyledNumberFormat> <Span weight="medium" size="title" palette="secondary" variation="dark35"> per month*</Span>
+          <StyledNumberFormat weight="weight.medium" color="primary">{formatMoney(from)}</StyledNumberFormat> <Span weight="medium" size="title" palette="primary" variation="base"> to </Span> <StyledNumberFormat weight="weight.medium" color="secondary">{formatMoney(to)}</StyledNumberFormat> <Span weight="medium" size="title" palette="primary" variation="base"> per month*</Span>
         </StyledBlockNp>
       }
       {!estimated &&
         <StyledBlockNp size="title">
           <StyledBlockSp size="body" palette="slate">The estimated pricing for {name} starts around</StyledBlockSp>
-          <StyledNumberFormat weight="weight.medium" color="secondary">{formatMoney(price)}</StyledNumberFormat> <Span weight="medium" size="title" palette="secondary" variation="dark35"> per month*</Span>
+          <StyledNumberFormat weight="weight.medium" color="primary">{formatMoney(price)}</StyledNumberFormat> <Span weight="medium" size="title" palette="primary" variation="base"> per month*</Span>
         </StyledBlockNp>
       }
       {pricesList.length > 0 &&
