@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { bool, string } from 'prop-types';
 
 import { size } from 'sly/web/components/themes';
-
-
 import GetCustomPricingButtonContainer from 'sly/web/containers/GetCustomPricingButtonContainer';
 
 const GetPricingButton = styled(GetCustomPricingButtonContainer)`

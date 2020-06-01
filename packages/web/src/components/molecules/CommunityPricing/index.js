@@ -58,7 +58,7 @@ const getPlace = () => (
 
 const getTip = id => (
   <div>
-    <CloseIcon icon="close" palette="slate" onClick={() => { ReactTooltip.hide();} }/>
+    <CloseIcon icon="close" palette="slate" onClick={() => { ReactTooltip.hide(); }} />
     <Wrapper>
       <Paragraph>
         <Span palette="primary"> The Seniorly Estimate</Span>{' '}
