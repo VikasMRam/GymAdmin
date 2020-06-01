@@ -7,3 +7,5 @@ export Timing from './Timing';
 export CurrentLiving from './CurrentLiving';
 export Budget from './Budget';
 export Medicaid from './Medicaid';
+export ResidentName from './ResidentName';
+export End from './End';
