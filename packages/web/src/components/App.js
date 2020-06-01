@@ -61,6 +61,8 @@ const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chu
 const CareTypeGuideContainer = loadable(() => import(/* webpackChunkName: "chunkCTGuide" */ 'sly/web/containers/CareTypeGuideContainer'));
 const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: "chunkRegionGuide" */ 'sly/web/containers/CareTypeRegionGuideContainer'));
 const CurtainUpPageContainer = loadable(() => import(/* webpackChunkName: "chunkCurtainUp" */ 'sly/web/containers/CurtainUpPageContainer'));
+const EmailViewPageContainer = loadable(() => import(/* webpackChunkName: "emailView" */ 'sly/web/containers/EmailViewPageContainer'));
+const EmailSharePageContainer = loadable(() => import(/* webpackChunkName: "emailShare" */ 'sly/web/containers/EmailSharePageFormContainer'));
 const HousingPartnersPage = loadable(() => import(/* webpackChunkName: "chunkHousingPartners" */ 'sly/web/components/pages/HousingPartnersPage'));
 
 // Dashboard
@@ -81,6 +83,9 @@ const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "c
 const DashboardAgentsIndexPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndex" */ 'sly/web/containers/DashboardAgentsIndexPageContainer'));
 const DashboardCommunityIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityIndex" */ 'sly/web/containers/DashboardCommunityIndexPageContainer'));
 const DashboardCommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityDetail" */ 'sly/web/containers/DashboardCommunityDetailsPageContainer'));
+
+// wizards
+const WizardAssesmentWizardPage = loadable(() => import(/* webpackChunkName: "chunkWizardAssesmentWizardPage" */ 'sly/web/components/pages/wizards/AssesmentWizardPage'));
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -288,8 +293,21 @@ const routes = [
     exact: true,
   },
   {
+    path: '/email/view/:id',
+    component: EmailViewPageContainer,
+  },
+  {
+    path: '/email/share/:id',
+    component: EmailSharePageContainer,
+  },
+  {
     path: '/curtainup',
     component: CurtainUpPageContainer,
+    exact: true,
+  },
+  {
+    path: '/wizards/assesment',
+    component: WizardAssesmentWizardPage,
     exact: true,
   },
   {

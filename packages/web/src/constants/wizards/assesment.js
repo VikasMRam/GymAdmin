@@ -137,3 +137,19 @@ export const CURRENT_LIVING_DEFAULT_OPTIONS = [
   { label: 'Other', value: 'other' },
   { label: "I'm not sure", value: 'not-sure' },
 ];
+
+export const BUDGET_OPTIONS = [
+  { label: 'Veterans benefits', value: 'veterans' },
+  { label: 'Long term care insurance policy holder', value: 'long-term-care-insurance' },
+  { label: 'Life insurance policy holder', value: 'life-insurance' },
+  { label: 'Equity in a home', value: 'equity-home' },
+  { label: 'Pension plan', value: 'pension-plan' },
+  { label: "I don't have access to any of these benefits", value: 'dont-have' },
+  { label: "I'm not sure", value: 'not-sure' },
+];
+
+export const MEDICAID_OPTIONS = [
+  { label: 'Yes', value: 'yes' },
+  { label: 'No', value: 'no' },
+  { label: "I'm not sure", value: 'not-sure' },
+];

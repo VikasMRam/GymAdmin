@@ -62,6 +62,7 @@ export default class DashboardCommunityAmenitiesFormContainer extends Component 
       [
         'propInfo.communitySpace',
         'propInfo.communitySpaceOther',
+        'propInfo.communityDescription',
       ],
     );
 

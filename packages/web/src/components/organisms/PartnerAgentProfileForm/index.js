@@ -78,9 +78,12 @@ const AGENT_TIMEZONES = [{value:"America/New_York", label:"New York"},
   {value:"America/Anchorage", label:"Anchorage"},
   {value:"Pacific/Honolulu", label:"Honolulu"}];
 
+const AGENT_SMS_FORMATS = [{value:"plainText", label:"Plain Text"}, {value:"richText", label:"Rich Text"}];
+
 const agentRegionOptions = AGENT_REGION_OPTIONS.map(i => <option key={i} value={i}>{i}</option>);
 const agentStatusOptions = AGENT_STATUS_OPTIONS.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
 const agentTimeZoneOptions = AGENT_TIMEZONES.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
+const agentSmsFormatOptions = AGENT_SMS_FORMATS.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
 
 const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, submitting, invalid, isSlyAdmin }) => (
   <Form onSubmit={handleSubmit}>
@@ -226,6 +229,17 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
             wideWidth
           > <option value="" disabled>Select an option</option>
             {agentTimeZoneOptions}
+          </Field>
+          <Field
+            name="smsFormat"
+            label="Alert Format"
+            type="select"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          >
+            <option value="" disabled>Select an option</option>
+            {agentSmsFormatOptions}
           </Field>
 
         </FormSection>

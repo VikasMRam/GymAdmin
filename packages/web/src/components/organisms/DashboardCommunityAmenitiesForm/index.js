@@ -63,6 +63,13 @@ export default class DashboardCommunityAmenitiesForm extends Component {
     return (
       <Form onSubmit={handleSubmit}>
         <FormScrollSection>
+          <EditField
+            name="propInfo.communityDescription"
+            label="Community Description"
+            type="textarea"
+            placeholder="Enter an exciting description of your senior living community. I.e. Welcome to Manor Home. Our quaint home is located in the Cow Hollow"
+            readOnly={!canEdit}
+          />
           {isCommunityLarge && (
             <EditField
               name="propInfo.communitySpace"

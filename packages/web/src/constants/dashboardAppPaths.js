@@ -53,6 +53,7 @@ export const COMMUNITIES = 'communities';
 export const PARTNER_AGENTS = 'partner-agents';
 export const TASKS = 'tasks';
 export const MESSAGES = 'messages';
+export const EMAILS = 'emails';
 export const PROFILE = 'profile';
 export const CARE_SERVICES = 'care-services';
 export const PRICING = 'pricing';
@@ -65,6 +66,7 @@ export const CLIENTS = 'clients';
 export const AGENT_DETAILS = 'agent-details';
 export const CONTACTS = 'contacts';
 export const EDITS = 'edits';
+export const ADMIN = 'admin';
 
 export const ADMIN_DASHBOARD_CALLS_PATH = `${AGENT_DASHBOARD_PATH}/calls`;
 export const ADMIN_DASHBOARD_CALL_DETAILS_PATH = `${ADMIN_DASHBOARD_CALLS_PATH}/:id/:tab?`;
