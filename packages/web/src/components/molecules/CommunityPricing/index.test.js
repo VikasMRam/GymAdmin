@@ -24,5 +24,4 @@ describe('CommunityPricing', () => {
 
     expect(wrapper.find('StyledCommunityPricingWrapper Block').text()).toEqual('$4,300/month');
   });
-
 });
