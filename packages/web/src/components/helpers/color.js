@@ -1,22 +1,31 @@
-import { size } from 'sly/web/components/themes';
-import styled from 'styled-components';
-import { string } from 'prop-types';
+import { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 
-const getSize = type => p => size(type, p.size);
-export const withColor = (Component) => {
-  const WithText = styled(Component)`
-    font-size: ${getSize('text')};
-    line-height: ${getSize('lineHeight')};
-    font-weight: ${p => size('weight', p.weight)};
-  `;
-  WithText.displayName = `withText(${Component.displayName || Component.name})`;
-  WithText.propTypes = {
-    size: string,
-    weight: string,
-  };
-  WithText.defaultProps = {
-    size: null,
-    weight: null,
-  };
-  return WithText;
+import { palette } from 'sly/web/components/themes';
+
+const getColor = (color, variation) => {
+  const args = [color];
+  if (variation) {
+    args.push(variation);
+  }
+  return palette(...args);
 };
+/**
+ *
+ * @param props
+ * @returns {[]|string|string|*}
+ */
+export const withColor = (props = {}) => css` 
+  ${ifProp([
+    'palette',
+    'variation',
+  ], css`
+    color: ${getColor(props.palette, props.variation)}};
+  `)}
+  ${ifProp([
+    'bg',
+    'bgVariation',
+  ], css`
+    background: ${getColor(props.bg, props.bgVariation)};
+  `)}
+`;

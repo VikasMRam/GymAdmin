@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 import { string } from 'prop-types';
 
 import { setDisplayName } from 'sly/web/components/helpers/index';
@@ -16,21 +17,14 @@ export const textTransform = (Component, transform = 'capitalize') => styled(Com
   text-transform: ${transform};
 `;
 
-const getSize = type => p => size(type, p.size);
-export const withText = (Component) => {
-  const WithText = styled(Component)`
+// uses props size and weight
+const getSize = (type, prop = 'size') => p => size(type, p[prop]);
+export const withText = () => css`
+  ${ifProp('size', css`
     font-size: ${getSize('text')};
     line-height: ${getSize('lineHeight')};
-    font-weight: ${p => size('weight', p.weight)};
-  `;
-  WithText.displayName = `withText(${Component.displayName || Component.name})`;
-  WithText.propTypes = {
-    size: string,
-    weight: string,
-  };
-  WithText.defaultProps = {
-    size: null,
-    weight: null,
-  };
-  return WithText;
-};
+  `)}  
+  ${ifProp('weight', css`
+    font-weight: ${getSize('weight', 'weight')};
+  `)}
+`;

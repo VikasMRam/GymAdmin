@@ -59,6 +59,7 @@ const Wrapper = styled.div`
 
 const MenuItem = styled(Link)`
   display: block;
+  margin: ${
   > ${Icon} {
     margin-right: 12px;
   }
@@ -71,7 +72,7 @@ const DashboardMenu = ({ activeMenuItem }) => {
       ? 'viridian'
       : 'grey';
     return (
-      // <Role className="role" is={item.role} key={item.label}>
+      // <Role is={item.role} key={item.label}>
         <MenuItem to={item.href} key={item.label} palette={palette}>
           <Icon icon={item.icon} size="caption" />
           <Span weight="medium" size="caption">{item.label}</Span>
