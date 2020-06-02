@@ -29,7 +29,7 @@ const Wrapper = styled.div`
 
 const CommunityStickyFooter = ({ community: { id, startingRate, rates}, isAlreadyPricingRequested, locTrack }) => (
   <Wrapper>
-    {startingRate > 0 && <CommunityPricing size='subtitle' id={id} estimated={rates !=='Provided'} price={startingRate} />}
+    {startingRate > 0 && <CommunityPricing size='subtitle' id={id} estimated={rates !=='Provided'} price={startingRate} tooltipPos="top" />}
     <CommunityActions isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack={locTrack}/>
   </Wrapper>
 );

@@ -69,7 +69,7 @@ const CommunityPricingTable = ({
 
   return (
     <>
-    {startingRate > 0 && <PaddedCommunityPricing id={id} estimated={rates !=='Provided'} price={startingRate} tipId="pricingtable"/>}
+    {startingRate > 0 && <PaddedCommunityPricing id={id} estimated={rates !=='Provided'} price={startingRate} tipId="pricingtable" />}
     {pricesList.length > 0 &&
         <StyledBlockNp itemScope itemType="http://schema.org/Table">
           <StyledTable>
