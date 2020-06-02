@@ -1,28 +1,34 @@
 import React  from 'react';
 import styled, { css } from 'styled-components';
-import { func, string } from 'prop-types';
+import { func, string, bool } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/web/components/themes';
 import { Button } from 'sly/web/components/atoms';
 import IconButton from 'sly/web/components/molecules/IconButton';
 
-export const Wrapper = styled.main`
+export const Wrapper = styled.section`
   display: grid;
-  grid-gap: ${size('layout.gutter')};
+  ${ifProp('hasSidebar', css`
+    grid-gap: ${size('layout.gutter')};
+  `)}
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    grid-template-columns: ${size('layout.col5')} ${size('layout.col3')};
+    grid-template-columns: ${size('layout.col5')} ${ifProp('hasSidebar', css`${size('layout.col3')}`)};
   }
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    grid-template-columns: ${size('layout.col5')} ${size('layout.col3')};
+    grid-template-columns: ${size('layout.col5')} ${ifProp('hasSidebar', css`${size('layout.col3')}`)};
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-template-columns: ${size('layout.col6')} ${size('layout.col4')};
+    grid-template-columns: ${size('layout.col6')} ${ifProp('hasSidebar', css`${size('layout.col4')}`)};
   }
 `;
+
+Wrapper.propTypes = {
+  hasSidebar: bool,
+};
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -42,13 +48,13 @@ const ProgressButtonsWrapper = styled.div`
   `)}
 `;
 
-export const Footer = ({ onBackClick, onSkipClick, submitButtonText }) => (
+export const Footer = ({ onBackClick, onSkipClick, submitButtonText, invalid, submitting }) => (
   <ButtonWrapper>
     {onBackClick && <StyledIconButton transparent icon="chevron-left" onClick={onBackClick} foregroundPalette="primary">Back</StyledIconButton>}
     {!onBackClick && <div />}
     <ProgressButtonsWrapper hasTwoButtons={!!onSkipClick}>
       {onSkipClick && <Button ghost palette="slate" borderPalette="grey" borderVariation="filler" onClick={onSkipClick}>Skip</Button>}
-      <Button type="submit">{submitButtonText}</Button>
+      <Button type="submit" disabled={invalid || submitting}>{submitButtonText}</Button>
     </ProgressButtonsWrapper>
   </ButtonWrapper>
 );
@@ -57,6 +63,8 @@ Footer.propTypes = {
   onSkipClick: func,
   onBackClick: func,
   submitButtonText: string.isRequired,
+  invalid: bool,
+  submitting: bool,
 };
 
 Footer.defaultProps = {

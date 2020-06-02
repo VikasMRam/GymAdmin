@@ -1,5 +1,5 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -31,13 +31,13 @@ const StyledTipBox = styled(TipBox)`
 `;
 
 const Timing = ({
-  handleSubmit, onBackClick, onSkipClick,
+  handleSubmit, onBackClick, onSkipClick, invalid, submitting,
 }) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={8} currentStep={5} />
     </Wrapper>
-    <Wrapper>
+    <Wrapper hasSidebar>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">Please tell us about where you are in your search.</PaddedHeading>
         <PaddedBlock>Select all that apply.</PaddedBlock>
@@ -50,7 +50,7 @@ const Timing = ({
             align="left"
             component={ReduxField}
           />
-          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} />
+          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
       <StyledTipBox heading="WHY THIS IS IMPORTANT:">
@@ -64,6 +64,8 @@ Timing.propTypes = {
   handleSubmit: func.isRequired,
   onSkipClick: func,
   onBackClick: func,
+  invalid: bool,
+  submitting: bool,
 };
 
 export default Timing;

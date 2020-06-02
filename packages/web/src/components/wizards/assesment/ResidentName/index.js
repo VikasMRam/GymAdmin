@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, number } from 'prop-types';
+import { func, number, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -27,9 +27,9 @@ const PaddedField = pad(Field);
 PaddedField.displayName = 'PaddedField';
 
 const ResidentName = ({
-  handleSubmit, onSkipClick, numberOfPeople,
+  handleSubmit, onSkipClick, numberOfPeople, invalid, submitting,
 }) => (
-  <Wrapper>
+  <Wrapper hasSidebar>
     <Box>
       <PaddedHeading level="subtitle" weight="medium">Last question, what is the resident&apos;s name?</PaddedHeading>
       <form onSubmit={handleSubmit}>
@@ -49,7 +49,7 @@ const ResidentName = ({
             />
           </FieldsWrapper>
         ))}
-        <Footer submitButtonText="Finish" onSkipClick={onSkipClick} />
+        <Footer submitButtonText="Finish" onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
       </form>
     </Box>
     <StyledTipBox heading="WHY THIS IS IMPORTANT:">
@@ -62,6 +62,8 @@ ResidentName.propTypes = {
   handleSubmit: func.isRequired,
   onSkipClick: func,
   numberOfPeople: number.isRequired,
+  invalid: bool,
+  submitting: bool,
 };
 
 ResidentName.defaultProps = {

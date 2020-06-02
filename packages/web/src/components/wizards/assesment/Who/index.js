@@ -1,5 +1,5 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -24,18 +24,18 @@ const StyledTipBox = styled(TipBox)`
 `;
 
 const Who = ({
-  handleSubmit,
+  handleSubmit, invalid, submitting,
 }) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={8} />
     </Wrapper>
-    <Wrapper>
+    <Wrapper hasSidebar>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">Who are you looking for?</PaddedHeading>
         <form onSubmit={handleSubmit}>
           <Field
-            name="person"
+            name="lookingFor"
             type="select"
             component={ReduxField}
             required
@@ -43,7 +43,7 @@ const Who = ({
             <option>Select a person</option>
             {WHO_PERSON_OPTIONS.map(o => <option value={o.value} key={o.value}>{o.label}</option>)}
           </Field>
-          <Footer />
+          <Footer invalid={invalid} submitting={submitting} />
         </form>
       </Box>
       <StyledTipBox heading="WHY THIS IS IMPORTANT:">
@@ -56,6 +56,8 @@ const Who = ({
 
 Who.propTypes = {
   handleSubmit: func.isRequired,
+  invalid: bool,
+  submitting: bool,
 };
 
 export default Who;
