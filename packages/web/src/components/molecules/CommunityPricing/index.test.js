@@ -4,6 +4,8 @@ import { shallow } from 'enzyme';
 import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';
 
 const defaultProps = {
+  id: 'abc',
+  estimated: false,
   price: 4300,
 };
 
@@ -20,13 +22,7 @@ describe('CommunityPricing', () => {
   it('renders price and fixed rating', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('StyledCommunityPricingWrapper Block').text()).toEqual('$4,300/month*');
+    expect(wrapper.find('StyledCommunityPricingWrapper Block').text()).toEqual('$4,300/month');
   });
 
-  it('renders description', () => {
-    const description = 'blah';
-    const wrapper = wrap({ description });
-
-    expect(wrapper.contains(description)).toBeTruthy();
-  });
 });

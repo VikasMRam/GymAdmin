@@ -192,10 +192,7 @@ CommunitySummary.propTypes = {
   isAdmin: bool,
   onConciergeNumberClicked: func,
   className: string,
-  onFavouriteClick: func,
-  onShareClick: func,
   goToReviews: func,
-  isFavorited: bool,
   searchParams: object,
 };
 

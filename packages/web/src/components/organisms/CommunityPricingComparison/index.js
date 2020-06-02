@@ -78,7 +78,10 @@ const CommunityPricingComparison = ({ community }) => {
             </tr>
             </thead>
             <tbody>
-            <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Average Monthly Cost*</StyledTd> </Tr>
+            <Tr color="grey" bgcolor="white">
+              <StyledTd>Type</StyledTd>
+              <StyledTd>Average Monthly Cost*</StyledTd>
+            </Tr>
             {sortedEstimatedPrice.map((object, i) => (
               <Tr key={estimatedPriceLabelMap[object[0]]} color="slate" bgcolor="white">
                 <StyledTd>{estimatedPriceLabelMap[object[0]]}</StyledTd>

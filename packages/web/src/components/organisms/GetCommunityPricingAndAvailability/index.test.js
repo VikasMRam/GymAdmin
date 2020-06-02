@@ -28,7 +28,6 @@ describe('GetCommunityPricingAndAvailability', () => {
     expect(ratingComponent.prop('rating')).toBe(defaultProps.community.propRatings.reviewsValue);
     expect(ratingComponent.prop('numReviews')).toBe(defaultProps.community.propRatings.numReviews);
     expect(wrapper.contains('Get Detailed Pricing')).toBeTruthy();
-    expect(wrapper.find('Block')).toHaveLength(1);
   });
 
   it('renders without startingRate', () => {
@@ -41,6 +40,5 @@ describe('GetCommunityPricingAndAvailability', () => {
     expect(wrapper.find('PaddedCommunityPricing')).toHaveLength(0);
     expect(wrapper.find('PaddedCommunityRating')).toHaveLength(1);
     expect(wrapper.contains('Get Detailed Pricing')).toBeTruthy();
-    expect(wrapper.find('Block')).toHaveLength(0);
   });
 });
