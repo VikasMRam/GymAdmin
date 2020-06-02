@@ -7,7 +7,6 @@ import Helmet from 'react-helmet';
 
 import { size } from 'sly/web/components/themes';
 import { Label, Input, Icon, Block, Span, Button } from 'sly/web/components/atoms';
-import textAlign from 'sly/web/components/helpers/textAlign';
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/web/components/molecules/MultipleChoice';
 import CommunityChoice from 'sly/web/components/molecules/CommunityChoice';
@@ -24,6 +23,7 @@ import CheckboxInput from 'sly/web/components/molecules/CheckboxInput';
 import LocationSearch from 'sly/web/components/molecules/LocationSearch';
 import DatepickerStyles from 'sly/web/components/themes/DatepickerStyles';
 import CommunityAutoComplete from 'sly/web/components/molecules/CommunityAutoComplete';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/web/components/atoms/Select'));

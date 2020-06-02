@@ -4,11 +4,11 @@ import styled from 'styled-components';
 
 import { size, palette, columnWidth } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { Block, Button } from 'sly/web/components/atoms';
 import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
 import EditField from 'sly/web/components/form/EditField';
 import { states, sizeOfCommunity } from 'sly/web/constants/communities';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const statesOptions = states.map(s => <option key={s} value={s}>{s}</option>);
 const sizeOfCommunityOptions = sizeOfCommunity.map(s => <option key={s} value={s}>{s}</option>);

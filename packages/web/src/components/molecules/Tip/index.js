@@ -49,7 +49,7 @@ Tip.propTypes = {
 Tip.defaultProps = {
   icon: 'flag',
   iconPalette: 'secondary',
-  iconVariation: 'dark35',
+  iconVariation: 'darker-30',
   textPalette: 'slate',
   textVariation: 'base',
 };

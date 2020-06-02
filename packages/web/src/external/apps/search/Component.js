@@ -4,11 +4,11 @@ import { func, shape, string } from 'prop-types';
 
 import { size } from 'sly/web/components/themes';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import pad from 'sly/web/components/helpers/pad';
 import { Heading, Hr } from 'sly/web/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import SearchResultsContainer from 'sly/web/external/apps/search/SearchResultsContainer';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const Wrapper = styled.div`
   padding: ${size('spacing.large')};

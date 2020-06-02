@@ -30,10 +30,8 @@ import { isReferralSent } from 'sly/web/services/helpers/client';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import { userIs } from 'sly/web/services/helpers/role';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import SlyEvent from 'sly/web/services/helpers/events';
 import cursor from 'sly/web/components/helpers/cursor';
-import textDecoration from 'sly/web/components/helpers/textDecoration';
 import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
 import Role from 'sly/web/components/common/Role';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
@@ -60,6 +58,7 @@ import DashboardMessagesContainer from 'sly/web/containers/DashboardMessagesCont
 import DashboardEmailsContainer from 'sly/web/containers/DashboardEmailsContainer';
 import AddOrEditTaskFormContainer from 'sly/web/containers/AddOrEditTaskFormContainer';
 import { Datatable } from 'sly/web/services/datatable';
+import { textDecoration, textAlign } from 'sly/web/components/helpers/text';
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
@@ -219,7 +218,7 @@ const ClientName = ({ client, rawClient, backLinkHref, user, ...props }) => {
         <Icon icon="arrow-left" palette="primary" />
       </Link>
       <span>{name}</span>
-      {isReferralSent(client) && <StyledIconBadge badgePalette="secondary" badgeVariation="dark35" palette="white" icon="checkmark-circle" text="R SENT" />}
+      {isReferralSent(client) && <StyledIconBadge badgePalette="secondary" badgeVariation="darker-30" palette="white" icon="checkmark-circle" text="R SENT" />}
       {(userIs(user, PLATFORM_ADMIN_ROLE) || (!isNew && !isProspects)) && <StyledStatusSelect client={client} rawClient={rawClient} user={user} {...props} />}
     </StyledClientNameBlock>
   );

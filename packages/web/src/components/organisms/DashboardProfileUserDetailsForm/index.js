@@ -8,10 +8,10 @@ import { size } from 'sly/web/components/themes';
 import { Hr, Label } from 'sly/web/components/atoms';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import FormSection from 'sly/web/components/molecules/FormSection';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import pad from 'sly/web/components/helpers/pad';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 // TODO: Copied from FamilyDetailsForm. Need to make it generic field
 const TwoColumnWrapper = styled.div`

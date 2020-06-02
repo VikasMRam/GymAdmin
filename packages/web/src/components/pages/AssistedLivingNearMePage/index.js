@@ -364,16 +364,16 @@ const NearMePage = ({
 
           <Paragraph>Common activities in most communities include:</Paragraph>
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">Art classes</ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">Day trips</ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">Shopping excursions</ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">Dances</ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">Aerobics</ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">Religious services</ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">Movie nights</ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">Bingo</ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">Tai Chi</ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">Musical performances</ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">Art classes</ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">Day trips</ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">Shopping excursions</ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">Dances</ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">Aerobics</ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">Religious services</ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">Movie nights</ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">Bingo</ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">Tai Chi</ListItem>
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">Musical performances</ListItem>
           </ListWrapper>
 
           <Paragraph>
@@ -434,7 +434,7 @@ const NearMePage = ({
             In general, assisted living communities fall under 3 pricing levels:
           </Paragraph>
           <TypesWrapper>
-            <ListItem icon="favourite-fill" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="favourite-fill" iconPalette="secondary" iconVariation="darker-30">
               <Paragraph>
                 <strong>
                   Basic:{' '}
@@ -443,7 +443,7 @@ const NearMePage = ({
                 amenities are often minimal, but still expect complete comfort, professionalism, and cleanliness.
               </Paragraph>
             </ListItem>
-            <ListItem icon="house" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="house" iconPalette="secondary" iconVariation="darker-30">
               <Paragraph>
                 <strong>
                   Boutique:{' '}
@@ -452,7 +452,7 @@ const NearMePage = ({
                 expanded medical care, high-quality meals, and a wider variety of amenities and activities.
               </Paragraph>
             </ListItem>
-            <ListItem icon="loyalty" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="loyalty" iconPalette="secondary" iconVariation="darker-30">
               <Paragraph>
                 <strong>
                   Luxury:{' '}
@@ -482,7 +482,7 @@ const NearMePage = ({
             look into the many financial aid options available.
           </Paragraph>
           <ListWrapperOne>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               <div>
                 <Link href="https://www.seniorly.com/resources/articles/long-term-care-insurance-for-respite-care">
                   Long Term Care Insurance
@@ -492,7 +492,7 @@ const NearMePage = ({
 
               </div>
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               <div>
                 Government services like Medicare, Medicaid, or{' '}
                 <Link href="https://www.seniorly.com/resources/articles/veterans-benefits-for-assisted-living">
@@ -503,7 +503,7 @@ const NearMePage = ({
                 strategies to help your loved one live in their ideal community.
               </div>
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               Many communities also offer special payment plans, programs, and other strategies to help your loved one live in their ideal community.
             </ListItem>
           </ListWrapperOne>
@@ -665,7 +665,7 @@ const NearMePage = ({
                   </td>
                   <td />
                   <td>
-                    <Icon icon="checkmark-circle" palette="secondary" variation="dark35" />
+                    <Icon icon="checkmark-circle" palette="secondary" variation="darker-30" />
                   </td>
                 </tr>
                 <tr>
@@ -673,7 +673,7 @@ const NearMePage = ({
                     24-Hour Medical Assistance
                   </td>
                   <td>
-                    <Icon icon="checkmark-circle" palette="secondary" variation="dark35" />
+                    <Icon icon="checkmark-circle" palette="secondary" variation="darker-30" />
                   </td>
                   <td />
                 </tr>
@@ -682,10 +682,10 @@ const NearMePage = ({
                     Medication Monitoring
                   </td>
                   <td>
-                    <Icon icon="checkmark-circle" palette="secondary" variation="dark35" />
+                    <Icon icon="checkmark-circle" palette="secondary" variation="darker-30" />
                   </td>
                   <td>
-                    <Icon icon="checkmark-circle" palette="secondary" variation="dark35" />
+                    <Icon icon="checkmark-circle" palette="secondary" variation="darker-30" />
                   </td>
                 </tr>
                 <tr>
@@ -693,10 +693,10 @@ const NearMePage = ({
                     Regular Activities
                   </td>
                   <td>
-                    <Icon icon="checkmark-circle" palette="secondary" variation="dark35" />
+                    <Icon icon="checkmark-circle" palette="secondary" variation="darker-30" />
                   </td>
                   <td>
-                    <Icon icon="checkmark-circle" palette="secondary" variation="dark35" />
+                    <Icon icon="checkmark-circle" palette="secondary" variation="darker-30" />
                   </td>
                 </tr>
               </tbody>
@@ -744,10 +744,10 @@ const NearMePage = ({
                     Private Living
                   </td>
                   <td>
-                    <Icon icon="checkmark-circle" palette="secondary" variation="dark35" />
+                    <Icon icon="checkmark-circle" palette="secondary" variation="darker-30" />
                   </td>
                   <td>
-                    <Icon icon="checkmark-circle" palette="secondary" variation="dark35" />
+                    <Icon icon="checkmark-circle" palette="secondary" variation="darker-30" />
                   </td>
                 </tr>
                 <tr>
@@ -756,7 +756,7 @@ const NearMePage = ({
                   </td>
                   <td />
                   <td>
-                    <Icon icon="checkmark-circle" palette="secondary" variation="dark35" />
+                    <Icon icon="checkmark-circle" palette="secondary" variation="darker-30" />
                   </td>
                 </tr>
                 <tr>
@@ -765,7 +765,7 @@ const NearMePage = ({
                   </td>
                   <td />
                   <td>
-                    <Icon icon="checkmark-circle" palette="secondary" variation="dark35" />
+                    <Icon icon="checkmark-circle" palette="secondary" variation="darker-30" />
                   </td>
                 </tr>
                 <tr>
@@ -773,10 +773,10 @@ const NearMePage = ({
                     Regular Activities
                   </td>
                   <td>
-                    <Icon icon="checkmark-circle" palette="secondary" variation="dark35" />
+                    <Icon icon="checkmark-circle" palette="secondary" variation="darker-30" />
                   </td>
                   <td>
-                    <Icon icon="checkmark-circle" palette="secondary" variation="dark35" />
+                    <Icon icon="checkmark-circle" palette="secondary" variation="darker-30" />
                   </td>
                 </tr>
               </tbody>

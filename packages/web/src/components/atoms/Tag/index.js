@@ -7,7 +7,7 @@ const Tag = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: ${palette('secondary', 'dark35')};
+  background-color: ${palette('secondary', 'darker-30')};
   color: ${palette('white', 'base')};
   letter-spacing: ${size('spacing.nano')};
   line-height: ${size('spacing.large')};

@@ -5,13 +5,12 @@ import { connect } from 'react-redux';
 import { BANNER_COMMUNITY_PROFILE_HOW_IT_WORKS_SHOWN } from  'sly/web/constants/banner';
 import { Experiment, Variant } from 'sly/web/services/experiments';
 import cursor from 'sly/web/components/helpers/cursor';
-import textDecoration from 'sly/web/components/helpers/textDecoration';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { Span, Block } from 'sly/web/components/atoms';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import HowItWorksPopup from 'sly/web/components/organisms/HowItWorksPopup';
+import { textDecoration, textAlign } from 'sly/web/components/helpers/text';
 
 const ClickHereToSeeHowItWorks = textDecoration(cursor(Span));
 

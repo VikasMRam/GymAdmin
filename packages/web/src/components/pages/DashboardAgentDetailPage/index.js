@@ -21,7 +21,6 @@ import { size, palette } from 'sly/web/components/themes';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import pad from 'sly/web/components/helpers/pad';
 import { userIs } from 'sly/web/services/helpers/role';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/web/components/templates/DashboardTwoColumnTemplate';
 import { Box, Block, Icon, Link, Hr, Button } from 'sly/web/components/atoms';
@@ -44,6 +43,7 @@ import withNotification from 'sly/web/controllers/withNotification';
 import SlyEvent from 'sly/web/services/helpers/events';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import conversationPropType from 'sly/web/propTypes/conversation/conversation';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const LargePaddingWrapper = styled.div`
   padding: ${size('spacing.large')};

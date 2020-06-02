@@ -50,7 +50,7 @@ const CommunityAmenities = ({ community }) => {
         key={amenity}
         icon="check"
         iconPalette="secondary"
-        iconVariation="dark35"
+        iconVariation="darker-30"
         borderless={false}
       >
         {amenity}

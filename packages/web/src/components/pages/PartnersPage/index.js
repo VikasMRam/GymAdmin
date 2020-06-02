@@ -105,9 +105,9 @@ const PartnersPage = () => {
       <TemplateContent>
         <StyledSection title="How does it work?">
           <ColumnWrapper>
-            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="dark35" icon="house" heading="Stay with your current agency" content="As a Seniorly Partner Agent you will still operate under your business name and simply receive extra family referrals in addition to your current business. " />
-            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="dark35" icon="star" heading="Work with qualified families" content="We are not one of those “online lead companies”. As a Partner Agent, your profile will be highlighted on Seniorly.com. Families can reach out directly or be matched by Seniorly according to your area of expertise." />
-            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="dark35" icon="loyalty" heading="Keep over 50% commission" content="You receive over 50% of the referral fee when successfully helping a Seniorly prospect. A referral commission is paid to Seniorly upon a new resident move-in." />
+            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="darker-30" icon="house" heading="Stay with your current agency" content="As a Seniorly Partner Agent you will still operate under your business name and simply receive extra family referrals in addition to your current business. " />
+            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="darker-30" icon="star" heading="Work with qualified families" content="We are not one of those “online lead companies”. As a Partner Agent, your profile will be highlighted on Seniorly.com. Families can reach out directly or be matched by Seniorly according to your area of expertise." />
+            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="darker-30" icon="loyalty" heading="Keep over 50% commission" content="You receive over 50% of the referral fee when successfully helping a Seniorly prospect. A referral commission is paid to Seniorly upon a new resident move-in." />
           </ColumnWrapper>
         </StyledSection>
       </TemplateContent>

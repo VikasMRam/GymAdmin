@@ -115,7 +115,7 @@ const AgentSummary = ({
     const { numRatings, ratingValue } = aggregateRating;
     ratingsSection = (
       <ReviewValueSection>
-        <Icon icon="star" size="regular" palette="secondary" variation="dark35" />
+        <Icon icon="star" size="regular" palette="secondary" variation="darker-30" />
         <Span size="subtitle" weight="medium"> {formatRating(ratingValue)} </Span>
         {numRatings && <Span size="caption" palette="grey">from {numRatings} {numRatings > 1 ? 'reviews' : 'review'}</Span>}
       </ReviewValueSection>

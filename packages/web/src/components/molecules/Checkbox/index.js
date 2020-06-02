@@ -6,7 +6,7 @@ import { ifProp } from 'styled-tools';
 import { palette } from 'sly/web/components/themes';
 import { Icon } from 'sly/web/components/atoms';
 
-const checkedPalette = ({ palette: checkedPalette }) => palette(checkedPalette, 'dark35');
+const checkedPalette = ({ palette: checkedPalette }) => palette(checkedPalette, 'darker-30');
 const uncheckedPalette = ({ uncheckedPalette }) => palette(uncheckedPalette, 'base');
 
 export const StyledIcon = styled(Icon)`

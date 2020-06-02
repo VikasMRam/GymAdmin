@@ -52,7 +52,7 @@ IconItem.propTypes = {
 IconItem.defaultProps = {
   borderless: true,
   iconPalette: 'secondary',
-  iconVariation: 'dark35',
+  iconVariation: 'darker-30',
   textPalette: 'slate',
   textVariation: 'base',
   iconRightMarginSpacing: 'small',

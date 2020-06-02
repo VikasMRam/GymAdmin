@@ -4,10 +4,10 @@ import styled from 'styled-components';
 
 import { size, palette, columnWidth } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { Block, Button } from 'sly/web/components/atoms';
 import FormSection from 'sly/web/components/molecules/FormSection';
 import EditField from 'sly/web/components/form/EditField';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const trueFalseOptions = [
   { label: 'Yes', value: true },

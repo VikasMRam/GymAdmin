@@ -6,7 +6,6 @@ import { size, palette, assetPath } from 'sly/web/components/themes';
 import eventPropType from 'sly/web/propTypes/event';
 import performerPropType from 'sly/web/propTypes/performer';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import CurtainupSubscribeFormContainer from 'sly/web/containers/CurtainupSubscribeFormContainer';
@@ -16,6 +15,7 @@ import Avatar from 'sly/web/components/molecules/Avatar';
 import ContentOverImage, { MiddleContent } from 'sly/web/components/molecules/ContentOverImage';
 import Footer from 'sly/web/components/organisms/Footer';
 import CurtainupEventBox from 'sly/web/components/organisms/CurtainupEventBox';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const PaddedResponsiveImage = pad(ResponsiveImage);
 
@@ -196,17 +196,17 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
       <ColouredSection>
         <HeroVideo title="what is curtainup" height="285" src="https://www.youtube.com/embed/H-wOQ-Areys" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
         <SubscribeForm>
-          <PaddedHeading weight="regular" palette="secondary" variant="dark35">Get Our Weekly Performance Alert and Find Out Who is Performing Each Day.</PaddedHeading>
+          <PaddedHeading weight="regular" palette="secondary" variant="darker-30">Get Our Weekly Performance Alert and Find Out Who is Performing Each Day.</PaddedHeading>
           <FullWidthCurtainupSubscribeFormContainer />
         </SubscribeForm>
-        <PaddedHeading weight="regular" palette="secondary" variant="dark35">Share the show!</PaddedHeading>
+        <PaddedHeading weight="regular" palette="secondary" variant="darker-30">Share the show!</PaddedHeading>
         <ShareButtons>
           <div className="addthis_sharing_toolbox" />
         </ShareButtons>
       </ColouredSection>
       <Section>
         <ContentWrapper>
-          <PaddedHeading weight="regular" palette="secondary" variant="dark35">Just Some of the Scheduled Guests to Appear</PaddedHeading>
+          <PaddedHeading weight="regular" palette="secondary" variant="darker-30">Just Some of the Scheduled Guests to Appear</PaddedHeading>
           <XxxLargePaddedBlock>Seniorly Presents: CURTAIN UP! - a Live Free Show streaming daily for 1 hour via the Seniorly YouTube Channel and Facebook Page. Viewers can watch performers in real-time, ask questions, or sit back and enjoy the show.</XxxLargePaddedBlock>
         </ContentWrapper>
         {performersIsLoading && <Block>loading performers...</Block>}
@@ -229,10 +229,10 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
       </Section>
       <ColouredSection>
         <ShowStarts>
-          <PaddedHeading weight="regular" palette="secondary" variant="dark35">The Show Starts</PaddedHeading>
-          <PaddedHeading size="superHero" weight="regular" palette="secondary" variant="dark35">Every Weekday at 1 pm PT / 4 pm ET</PaddedHeading>
+          <PaddedHeading weight="regular" palette="secondary" variant="darker-30">The Show Starts</PaddedHeading>
+          <PaddedHeading size="superHero" weight="regular" palette="secondary" variant="darker-30">Every Weekday at 1 pm PT / 4 pm ET</PaddedHeading>
         </ShowStarts>
-        <PaddedHeading weight="regular" palette="secondary" variant="dark35">See Our Past Shows</PaddedHeading>
+        <PaddedHeading weight="regular" palette="secondary" variant="darker-30">See Our Past Shows</PaddedHeading>
         <PastShows>
           <iframe title="past show 1" height="185" src="https://www.youtube.com/embed/0sP6Ao02JLE" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
           <iframe title="past show 2" height="185" src="https://www.youtube.com/embed/H-wOQ-Areys" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
@@ -240,18 +240,18 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
         </PastShows>
       </ColouredSection>
       <Section>
-        <XxxLargePaddedHeading weight="regular" palette="secondary" variant="dark35">Why We Are Doing This</XxxLargePaddedHeading>
+        <XxxLargePaddedHeading weight="regular" palette="secondary" variant="darker-30">Why We Are Doing This</XxxLargePaddedHeading>
         <WhyDoingThisWrapper>
           <Avatar user={{ name: 'arthur', picture: { src: assetPath('images/curtainup/arthur.png') } }} size="xxxHuge" />
           <TextAlignLeftBox>
             <PaddedBlock>&quot;I&apos;m motivated by a simple belief, “we all need community”. That’s why I’ve dedicated my life to helping seniors find and live in communities as they grow older. In this current health crisis, the need for community and engagement has never been more important for our aging loved ones. Millions of seniors are living at home and in senior living communities under lockdown. This is our opportunity to let them know they are still part of our community and offer some happy moments in an uncertain isolated world.&quot;</PaddedBlock>
-            <Block weight="medium" palette="secondary" variant="dark35">Arthur Bretscheider,</Block>
-            <Block weight="medium" palette="secondary" variant="dark35">CEO & CO-FOUNDER, Seniorly</Block>
+            <Block weight="medium" palette="secondary" variant="darker-30">Arthur Bretscheider,</Block>
+            <Block weight="medium" palette="secondary" variant="darker-30">CEO & CO-FOUNDER, Seniorly</Block>
           </TextAlignLeftBox>
         </WhyDoingThisWrapper>
       </Section>
       <ColouredSection>
-        <PaddedHeading weight="regular" palette="secondary" variant="dark35">The Shows This Week</PaddedHeading>
+        <PaddedHeading weight="regular" palette="secondary" variant="darker-30">The Shows This Week</PaddedHeading>
         <XxxLargePaddedBlock>Performers subject to change</XxxLargePaddedBlock>
         {eventsIsLoading && <Block>loading events...</Block>}
         {!eventsIsLoading &&
@@ -269,7 +269,7 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
       </ColouredSection>
       <Section>
         <ContentWrapper>
-          <XxxLargePaddedHeading weight="regular" palette="secondary" variant="dark35">We Are Teaming Up With:</XxxLargePaddedHeading>
+          <XxxLargePaddedHeading weight="regular" palette="secondary" variant="darker-30">We Are Teaming Up With:</XxxLargePaddedHeading>
           <TeamingUpWithWrapper>
             <div>
               <LargePaddedAvatar user={{ name: 'ashley', picture: { src: assetPath('images/curtainup/ashley.png') } }} size="xxxHuge" />
@@ -288,7 +288,7 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
               </div>
             </div>
           </TeamingUpWithWrapper>
-          <XxxLargePaddedHeading weight="regular" palette="secondary" variant="dark35">And, Presenting Our Hosts From Seniorly!</XxxLargePaddedHeading>
+          <XxxLargePaddedHeading weight="regular" palette="secondary" variant="darker-30">And, Presenting Our Hosts From Seniorly!</XxxLargePaddedHeading>
           <div>
             <OurHostsWrapper>
               <div>
@@ -304,7 +304,7 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
         </ContentWrapper>
       </Section>
       <ColouredSection>
-        <PaddedHeading weight="regular" palette="secondary" variant="dark35">Want to Join the Show?</PaddedHeading>
+        <PaddedHeading weight="regular" palette="secondary" variant="darker-30">Want to Join the Show?</PaddedHeading>
         <XxxLargePaddedBlock>Performers subject to change</XxxLargePaddedBlock>
         <TwoCol6Columns>
           <Box backgroundPalette="white">
@@ -321,7 +321,7 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
       </ColouredSection>
       <Section>
         <ContentWrapper>
-          <XxxLargePaddedHeading weight="regular" palette="secondary" variant="dark35">Thank You to Our Partners</XxxLargePaddedHeading>
+          <XxxLargePaddedHeading weight="regular" palette="secondary" variant="darker-30">Thank You to Our Partners</XxxLargePaddedHeading>
           <PaddedImage src={assetPath('images/curtainup/sing-for-your-seniors.png')} />
           <Block size="caption">The views, information or opinions expressed during &quot;Curtain Up!&quot; are solely those of the individuals appearing and do not necessarily represent those of Seniorly.com.</Block>
         </ContentWrapper>

@@ -6,28 +6,24 @@ import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import { weight as weightPropType } from 'sly/web/propTypes/weight';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { text as textPropType } from 'sly/web/propTypes/text';
+import { withText } from 'sly/web/components/helpers/text';
+import { withPad } from 'sly/web/components/helpers/pad';
 
-const getSize = type => p => size(type, p.size);
-const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
+const getColor = ({ palette: paletteProp, variation }) => ifProp([
+  'palette',
+  'variation',
+], palette(paletteProp || 'primary', variation || 'base'));
 
-const Block = styled.div`
-  ${ifProp('palette', css`color: ${getColor}`)};
-  font-size: ${getSize('text')};
-  line-height: ${getSize('lineHeight')};
-  font-weight: ${p => size('weight', p.weight)};
-`;
+const Block = withText(styled.div`
+  ${withPad}
+  ${ifProp('palette', css`color: ${getColor};`)}
+`);
 
 Block.propTypes = {
   palette: palettePropType,
   variation: variationPropType,
   size: textPropType,
   weight: weightPropType,
-};
-
-Block.defaultProps = {
-  palette: 'slate',
-  variation: 'base',
-  weight: 'regular',
 };
 
 export default Block;

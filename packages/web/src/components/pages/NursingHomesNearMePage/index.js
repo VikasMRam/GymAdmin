@@ -247,25 +247,25 @@ const NearMePage = ({
             Some of the services generally available at any care type that falls under ‘nursing home’ include:
           </Paragraph>
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               Medication monitoring and administration
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               24-hour emergency care
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               Room
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               Recreational and social activities
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               Assistance with ADLs such as toilet assistance, bathing, and dressing
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               Three meals a day
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               Rehabilitation services
             </ListItem>
           </ListWrapper>
@@ -297,7 +297,7 @@ const NearMePage = ({
             accepted. Some of the most common financing options include:
           </Paragraph>
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               <Paragraph>
                 <strong>
                   Private Pay
@@ -310,7 +310,7 @@ const NearMePage = ({
                 , in 2019 the average cost for assisted living in the United States was $4,051 per month.
               </Paragraph>
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               <Paragraph>
                 <strong>
                   <Link href="https://www.medicaid.gov/" target="_blank" rel="noopener">
@@ -323,7 +323,7 @@ const NearMePage = ({
                 Most people have to spend all assets first before Medicaid pays.
               </Paragraph>
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               <Paragraph>
                 <strong>
                   <Link href="https://www.medicare.gov/index" target="_blank" rel="noopener">
@@ -336,7 +336,7 @@ const NearMePage = ({
                 skilled nursing care are offered per year.
               </Paragraph>
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               <Paragraph>
                 <strong>
                   Private Long-Term Care Insurance

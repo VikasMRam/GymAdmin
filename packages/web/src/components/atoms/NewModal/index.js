@@ -6,8 +6,8 @@ import { any, func, bool } from 'prop-types';
 
 import { isBrowser } from 'sly/web/config';
 import { size, palette, key } from 'sly/web/components/themes';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import IconButton from 'sly/web/components/molecules/IconButton';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const Overlay = styled.div`
   display: ${ifProp('isOpen', 'flex', 'none')};

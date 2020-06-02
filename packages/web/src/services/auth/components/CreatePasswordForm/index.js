@@ -4,10 +4,10 @@ import { Field } from 'redux-form';
 
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import cursor from 'sly/web/components/helpers/cursor';
 import { Heading, Button, Block } from 'sly/web/components/atoms';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const StyledHeading = textAlign(pad(Heading, 'large'));
 

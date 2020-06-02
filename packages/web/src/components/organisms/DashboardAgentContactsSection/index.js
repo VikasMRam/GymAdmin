@@ -8,7 +8,6 @@ import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import SlyEvent from 'sly/web/services/helpers/events';
 import contactPropType from 'sly/web/propTypes/contact';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { Box, Table, THead, TBody, Tr, Td, Heading, Block } from 'sly/web/components/atoms';
 import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons';
 import Pagination from 'sly/web/components/molecules/Pagination';
@@ -18,6 +17,7 @@ import Modal from 'sly/web/components/molecules/Modal';
 import AddOrEditContactFormContainer from 'sly/web/containers/AddOrEditContactFormContainer';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import { ENTITY_LABEL_MAP } from 'sly/web/constants/entityTypes';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const TABLE_HEADINGS = [{ text: 'Contact name' }, { text: 'Entity' }, { text: 'Email' }, { text: 'Phone number' }, { text: 'Delete' }];
 

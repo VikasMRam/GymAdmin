@@ -402,28 +402,28 @@ const MemoryCareNearMePage = ({
             Senior residents in memory care typically receive the following types of services:
           </Paragraph>
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               All meals, either in their rooms or in a shared dining hall
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               Housekeeping services to keep their living space clean and safe
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               Social activities designed to stimulate their minds and keep them connected
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               Transportation to doctor's offices and other appointments
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               Comfortable rooms, which may be private or shared
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               All laundry services, including fresh linens
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               Exercise programs and physical therapy when needed
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               Cognitive therapy
             </ListItem>
           </ListWrapper>
@@ -566,25 +566,25 @@ const MemoryCareNearMePage = ({
             Among the issues covered in the written plan for any resident's medical care are typically:
           </Paragraph>
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               A customized approach to expression of unmet needs
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
               Minimal use of psychotropic medications
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
           Flexible care based on the resident's personal sleeping and waking patterns
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
           Provision of care for optimal physical functioning
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
           Activities that promote quality of life and enjoyment
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
           Meeting of all nutrition and hydration needs
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
           Minimizing of any distress
             </ListItem>
           </ListWrapper>

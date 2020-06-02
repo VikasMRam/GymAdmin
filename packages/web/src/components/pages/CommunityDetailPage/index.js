@@ -195,7 +195,7 @@ const CovidWrapper = styled.div`
   padding: ${size('spacing.large')};
   background-color: ${palette('secondary', 'filler')};
   border-radius: ${size('border.xLarge')};
-  border-top: 4px solid ${palette('secondary', 'dark35')};
+  border-top: 4px solid ${palette('secondary', 'darker-30')};
   margin-bottom: ${size('spacing.xLarge')};
   text-align: center;
 `;
@@ -383,7 +383,7 @@ export default class CommunityDetailPage extends Component {
                           <IconItem
                             icon="check"
                             iconPalette="secondary"
-                            iconVariation="dark35"
+                            iconVariation="darker-30"
                             borderless={false}
                           >
                             {item}
@@ -400,7 +400,7 @@ export default class CommunityDetailPage extends Component {
                           <IconItem
                             icon="check"
                             iconPalette="secondary"
-                            iconVariation="dark35"
+                            iconVariation="darker-30"
                             borderless={false}
                           >
                             {item}
@@ -571,7 +571,7 @@ export default class CommunityDetailPage extends Component {
                   <EventsWrapper>
                     {sampleEvents.map(item => (
                       <IconItemWrapper key={item}>
-                        <IconItem icon="check" iconPalette="secondary" iconVariation="dark35" borderless={false}>{item}</IconItem>
+                        <IconItem icon="check" iconPalette="secondary" iconVariation="darker-30" borderless={false}>{item}</IconItem>
                       </IconItemWrapper>))
                     }
                   </EventsWrapper>

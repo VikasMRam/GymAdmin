@@ -66,14 +66,14 @@ const MenuItem = styled(Link)`
 
 const DashboardMenu = ({ activeMenuItem }) => {
   const menuItemComponents = menuItems.map((item) => {
-    const variation = item.label === activeMenuItem
-      ? 'dark35'
-      : 'filler';
-    console.log('menuItems', activeMenuItem, item.label)
+    const selected = item.label === activeMenuItem;
+    const palette = selected
+      ? 'viridian'
+      : 'grey';
     return (
       // <Role className="role" is={item.role} key={item.label}>
-        <MenuItem variation={variation} to={item.href}>
-          <Icon icon={item.icon} />
+        <MenuItem to={item.href} key={item.label} palette={palette}>
+          <Icon icon={item.icon} size="caption" />
           <Span weight="medium" size="caption">{item.label}</Span>
         </MenuItem>
       // </Role>
@@ -87,15 +87,6 @@ const DashboardMenu = ({ activeMenuItem }) => {
 };
 
 DashboardMenu.propTypes = {
-  menuItems: arrayOf(shape({
-    label: string.isRequired,
-    icon: string.isRequired,
-    iconSize: string.isRequired,
-    palette: string.isRequired,
-    variation: string.isRequired,
-    role: number.isRequired,
-    href: string,
-  })).isRequired,
   activeMenuItem: string.isRequired,
 };
 

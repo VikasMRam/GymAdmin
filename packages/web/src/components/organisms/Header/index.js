@@ -41,7 +41,7 @@ export const SeniorlyIconMenu = styled.div`
   display: flex;
   align-items: center;
   margin-right: ${size('spacing.large')};
-  color: ${palette('secondary', 'dark35')};
+  color: ${palette('secondary', 'darker-30')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
@@ -233,15 +233,15 @@ const Header = ({
       <SeniorlyIconMenu>
         {(smallScreenMenuItemComponents.length > 0 || headerMenuItemComponents.length > 0) && (
           <>
-            {!menuOpen && <MenuIcon onClick={onMenuIconClick} icon="menu" palette="secondary" variation="dark35" />}
-            {menuOpen && <MenuIcon onClick={onMenuIconClick} icon="close" palette="secondary" variation="dark35" />}
+            {!menuOpen && <MenuIcon onClick={onMenuIconClick} icon="menu" palette="secondary" variation="darker-30" />}
+            {menuOpen && <MenuIcon onClick={onMenuIconClick} icon="close" palette="secondary" variation="darker-30" />}
           </>
         )}
         <OnlyInTablet>
-          <Link palette="secondary" variation="dark35" to="/"><Icon icon="logo" size="xLarge" /></Link>
+          <Link palette="secondary" variation="darker-30" to="/"><Icon icon="logo" size="xLarge" /></Link>
         </OnlyInTablet>
         <OnlyInMobile>
-          <Link palette="secondary" variation="dark35" to="/"><Icon icon="logo" size="large" /></Link>
+          <Link palette="secondary" variation="darker-30" to="/"><Icon icon="logo" size="large" /></Link>
         </OnlyInMobile>
       </SeniorlyIconMenu>
       {hasSearchBox && (

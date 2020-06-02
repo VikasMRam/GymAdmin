@@ -6,9 +6,9 @@ import { size, palette } from 'sly/web/components/themes';
 import agentPropType from 'sly/web/propTypes/agent';
 import pad from 'sly/web/components/helpers/pad';
 import shadow from 'sly/web/components/helpers/shadow';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { Heading, Box, Block, Link } from 'sly/web/components/atoms';
 import Avatar from 'sly/web/components/molecules/Avatar';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const AgentInfoWrapper = pad(styled.div``);
 

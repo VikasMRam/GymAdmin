@@ -15,10 +15,10 @@ import {
   CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST_ACTION_OPEN_LINK,
 } from 'sly/web/constants/conversations';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { Box, Block, Button } from 'sly/web/components/atoms';
 import Avatar from 'sly/web/components/molecules/Avatar';
 import HelpBubble from 'sly/web/components/molecules/HelpBubble';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const StyledBox = styled(Box)`
   ${ifProp('dark', css`background: ${palette('grey', 'background')}`, '')};

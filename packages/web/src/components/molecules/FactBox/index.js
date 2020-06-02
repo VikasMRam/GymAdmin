@@ -19,7 +19,7 @@ const StyledBox = styled(Box)`
 
 const FactBox = ({ title, description }) => (
   <StyledBox>
-    <StyledBlock size="hero" palette="secondary" variation="dark35">{title}</StyledBlock>
+    <StyledBlock size="hero" palette="secondary" variation="darker-30">{title}</StyledBlock>
     <Paragraph>{description}</Paragraph>
   </StyledBox>
 );

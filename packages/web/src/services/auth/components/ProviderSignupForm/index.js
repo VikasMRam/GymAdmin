@@ -5,9 +5,9 @@ import styled from 'styled-components';
 
 import { size, palette } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { Heading, Button, Block, Hr, Link } from 'sly/web/components/atoms';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 
 const StyledHeading = textAlign(pad(Heading));

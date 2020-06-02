@@ -110,9 +110,9 @@ class AgentsPage extends Component {
         <TemplateContent>
           <StyledSection>
             <ColumnWrapper>
-              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="dark35" icon="loyalty" heading="100% free" content="Seniorly Partner Agents are commissioned by the senior living community you choose only when you move-in. They are on your side to find and choose the right option for mom or dad." />
-              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="dark35" icon="star" heading="Personalized Service" content="Navigating this process can be a challenge. Your senior living agent will help you throughout to answer questions, weigh your options, accompany you on tours and help you get the best deal for your budget." />
-              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="dark35" icon="location" heading="Local Insider Expertise" content="Your agent will know and share the unique details of assisted living communities and care options in your area." />
+              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="darker-30" icon="loyalty" heading="100% free" content="Seniorly Partner Agents are commissioned by the senior living community you choose only when you move-in. They are on your side to find and choose the right option for mom or dad." />
+              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="darker-30" icon="star" heading="Personalized Service" content="Navigating this process can be a challenge. Your senior living agent will help you throughout to answer questions, weigh your options, accompany you on tours and help you get the best deal for your budget." />
+              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" iconVariation="darker-30" icon="location" heading="Local Insider Expertise" content="Your agent will know and share the unique details of assisted living communities and care options in your area." />
             </ColumnWrapper>
           </StyledSection>
           <Hr fullWidth />

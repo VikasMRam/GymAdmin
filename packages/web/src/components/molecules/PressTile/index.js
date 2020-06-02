@@ -4,10 +4,10 @@ import { string, bool } from 'prop-types';
 
 import { assetPath, size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import border from 'sly/web/components/helpers/border';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
 import { ResponsiveImage } from 'sly/web/components/atoms';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const Wrapper = borderRadius(styled.div`
   display: flex;

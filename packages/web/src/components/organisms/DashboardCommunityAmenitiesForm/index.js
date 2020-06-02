@@ -5,11 +5,11 @@ import { Field as RFField } from 'redux-form';
 
 import { size, columnWidth } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { Block, Button } from 'sly/web/components/atoms';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import communityPropType from 'sly/web/propTypes/community';
 import EditField from 'sly/web/components/form/EditField';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const familyOvernightOptions = [
   { value: 'Family Overnight Stay Rooms', label: 'Family overnight stay rooms' },

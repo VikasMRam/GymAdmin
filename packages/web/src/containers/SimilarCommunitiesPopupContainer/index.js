@@ -6,8 +6,8 @@ import { prefetch } from 'sly/web/services/api';
 import { Heading } from 'sly/web/components/atoms';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
 import { size } from 'sly/web/components/themes';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import SlyEvent from 'sly/web/services/helpers/events';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const communityStyle = { layout: 'row', imageSize: 'small', showDescription: false };
 

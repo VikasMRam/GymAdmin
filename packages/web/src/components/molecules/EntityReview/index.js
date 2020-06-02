@@ -34,7 +34,7 @@ const EntityReview = ({
 }) => (
   <Wrapper>
     <RatingIconDiv>
-      <Rating value={value} palette="secondary" variation="dark35" />
+      <Rating value={value} palette="secondary" variation="darker-30" />
     </RatingIconDiv>
     <CommentBlock>{comments}</CommentBlock>
     <BottomSection>

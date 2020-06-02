@@ -13,14 +13,14 @@ const ProgressWrapper = styled.div`
   background-color: ${palette('primary', 'stroke')};
 `;
 const ProgressBar = styled.div`
-  background-color: ${palette('secondary', 'dark35')};
+  background-color: ${palette('secondary', 'darker-30')};
   height: ${size('spacing.regular')};
   width: ${progressBarWidth}%;
   transition: width ${key('transitions.slow.inOut')};
 `;
 const CurrentStep = styled.p`
   font-size: ${size('text.caption')};
-  color: ${ifProp('limitReached', palette('secondary', 'dark35'), 'initial')};
+  color: ${ifProp('limitReached', palette('secondary', 'darker-30'), 'initial')};
 `;
 const StyledForm = styled.form`
   // should be more than height of BottomWrapper

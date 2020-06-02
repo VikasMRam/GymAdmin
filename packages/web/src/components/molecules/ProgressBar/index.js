@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 `;
 
 const Bar = styled.div`
-  background-color: ${palette('dark35')};
+  background-color: ${palette('darker-30')};
   height: ${size('spacing.small')};
   width: ${prop('width')}%;
   transition: width ${key('transitions.slow.inOut')};

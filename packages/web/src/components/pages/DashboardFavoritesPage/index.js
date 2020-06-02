@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import shadow from 'sly/web/components/helpers/shadow';
 import Masonry from 'sly/web/components/common/Masonry';
 import { Heading, Paragraph, Hr, Link } from 'sly/web/components/atoms';
@@ -14,6 +13,7 @@ import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTem
 import FormSection from 'sly/web/components/molecules/FormSection';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import HowSlyWorksVideo from 'sly/web/components/organisms/HowSlyWorksVideo';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const columnCounts = [
   {

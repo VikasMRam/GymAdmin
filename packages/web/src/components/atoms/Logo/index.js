@@ -19,7 +19,7 @@ Logo.propTypes = {
 
 Logo.defaultProps = {
   palette: 'secondary',
-  variation: 'dark35',
+  variation: 'darker-30',
 };
 
 export default Logo;

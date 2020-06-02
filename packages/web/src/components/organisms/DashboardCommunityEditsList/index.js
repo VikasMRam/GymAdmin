@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { size, palette, columnWidth } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import {
   Block,
   Button,
@@ -18,6 +17,7 @@ import Th from 'sly/web/components/molecules/Th';
 import CommunityEditRowCard
   from 'sly/web/components/organisms/CommunityEditRowCard';
 import communityPropType from 'sly/web/propTypes/community';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';

@@ -9,7 +9,6 @@ import pad from 'sly/web/components/helpers/pad';
 import SlyEvent from 'sly/web/services/helpers/events';
 import taskPropType from 'sly/web/propTypes/task';
 import clientPropType from 'sly/web/propTypes/client';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { Box, Table, THead, TBody, Tr, Td, Heading, Block } from 'sly/web/components/atoms';
 import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons';
 import Pagination from 'sly/web/components/molecules/Pagination';
@@ -23,6 +22,7 @@ import {
   AGENT_DASHBOARD_TASKS_PATH, AGENT_DASHBOARD_CONTEXT_TASKS_PATH, TODAY, OVERDUE, UPCOMING, COMPLETED,
 } from 'sly/web/constants/dashboardAppPaths';
 import { stripPageNumber } from 'sly/web/services/helpers/appPaths';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 
 const TABLE_HEADINGS = [
