@@ -12,6 +12,18 @@ import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { Block, Icon, Paragraph, Link, Span } from 'sly/web/components/atoms';
 import { isBrowser } from 'sly/web/config';
 
+const overridePosition = ({ left, top }) => ({
+  top,
+  left: left < 5 ? 5 : left,
+});
+const TooltipContent = styled(ReactTooltip)`
+  padding: ${size('spacing.large')}!important;
+  color: ${palette('slate', 'base')}!important;
+  background-color: ${palette('white', 'base')}!important;
+  box-shadow: 0 0 ${size('spacing', 'large')} ${palette('slate', 'filler')}80;
+  max-width: ${size('tile.large.width')};
+`;
+
 const StyledParagraph = styled(Paragraph)`
   text-decoration: underline;
   margin-bottom: ${size('spacing.small')};
@@ -24,17 +36,6 @@ const StyledCommunityPricingWrapper = styled.div`
   min-width: ${size('element.xxHuge')};
 `;
 
-const TooltipContent = styled(ReactTooltip)`
-  padding: ${size('spacing.regular')}!important;
-  color: ${palette('slate', 'base')}!important;
-  background-color: ${palette('white', 'base')}!important;
-  box-shadow: 0 0 ${size('spacing', 'large')} ${palette('slate', 'filler')}80;
-  max-width: ${size('tile.large.width')};
-  @media screen and (max-width: calc(${size('breakpoint.laptop')} - 1px)) {
-    left: 5px!important;
-  }
-`;
-
 const DescriptionBlock = pad(Block, 'regular');
 
 const StyledIcon = styled(Icon)`
@@ -42,51 +43,47 @@ const StyledIcon = styled(Icon)`
   vertical-align: text-top;
 `;
 
-const CloseIcon = styled(Icon)`
-  right: ${size('spacing.regular')};
-  top: ${size('spacing.regular')};
-  position: absolute;
-`;
-
-const Wrapper = styled.div`
-  padding-top: ${size('spacing.large')};
-`;
-
-const getPlace = () => (
-  window.innerWidth < 1080 ? 'top' : 'bottom'
-);
-
-const getTip = id => (
-  <div>
-    <CloseIcon icon="close" palette="slate" onClick={() => { ReactTooltip.hide(); }} />
-    <Wrapper>
-      <Paragraph>
-        <Span palette="primary"> The Seniorly Estimate</Span>{' '}
-        estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services.
-      </Paragraph>
-      <Paragraph>
-        Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.
-      </Paragraph>
-      <Paragraph>
-        If you manage the community and would like to update your pricing.{' '}
-        <Link href={`/partners/communities?prop=${id}&sly_category=estimatedPricing&sly_action=cta_link&sly_label=claim`} target="_blank"> Click here</Link>
-      </Paragraph>
-    </Wrapper>
-  </div>
-);
-
-const CommunityPricing = ({ id, estimated, price, palette, variation, className, size, tipId }) => (
+const CommunityPricing = ({ id, estimated, price, palette, variation, className, size, tipId, tooltipPos }) => (
   <StyledCommunityPricingWrapper className={className}>
     {estimated &&
-    <DescriptionBlock size="caption">
-      <StyledParagraph data-tip data-event="click focus" data-for={tipId}>
-        Seniorly Estimate
-        <StyledIcon palette="slate" icon="help" size="caption" />
-      </StyledParagraph>
-      {isBrowser &&
-        <TooltipContent id={tipId} place={getPlace()} effect="solid" type="light" multiline globalEventOff="click" clickable getContent={() => getTip(id)} />
-      }
-    </DescriptionBlock>
+      <DescriptionBlock size="caption">
+        <StyledParagraph>
+          Seniorly Estimate
+          <StyledIcon palette="slate" icon="help" size="caption" data-tip data-for={tipId} />
+        </StyledParagraph>
+        {isBrowser && (
+          <TooltipContent
+            id={tipId}
+            type="light"
+            effect="solid"
+            multiline
+            event="click"
+            clickable
+            globalEventOff="click"
+            overridePosition={overridePosition}
+            place={tooltipPos || 'bottom'}
+          >
+            <Paragraph>
+              <Span palette="primary">The Seniorly Estimate</Span>{' '}
+              estimated monthly pricing is based on the local average pricing of other communities in the area and what
+              typical communities of the same size offer in services.
+            </Paragraph>
+            <Paragraph>
+              Please verify all information prior to making a decision. Seniorly is not responsible for any errors
+              regarding the information displayed on this website.
+            </Paragraph>
+            <Paragraph>
+              If you manage the community and would like to update your pricing.{' '}
+              <Link
+                href={`/partners/communities?prop=${id}&sly_category=estimatedPricing&sly_action=cta_link&sly_label=claim`}
+                target="_blank"
+              >
+                Click here
+              </Link>
+            </Paragraph>
+          </TooltipContent>
+        )}
+      </DescriptionBlock>
     }
     {!estimated &&
     <DescriptionBlock size="caption">
@@ -113,6 +110,7 @@ CommunityPricing.propTypes = {
   id: string.isRequired,
   estimated: bool.isRequired,
   size: textPropType,
+  tooltipPos: string,
   tipId: string,
 };
 
