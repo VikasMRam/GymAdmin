@@ -11,7 +11,7 @@ import { Icon, Block } from 'sly/web/components/atoms';
 const Wrapper = styled.div`
   display: flex;
   align-items: baseline;
-  background-color: ${palette('secondary', 'stroke')};
+  background-color: ${palette('primary', 'stroke')};
   padding: ${size('spacing.xLarge')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.small')};
@@ -48,8 +48,8 @@ Tip.propTypes = {
 
 Tip.defaultProps = {
   icon: 'flag',
-  iconPalette: 'secondary',
-  iconVariation: 'dark35',
+  iconPalette: 'primary',
+  iconVariation: 'base',
   textPalette: 'slate',
   textVariation: 'base',
 };

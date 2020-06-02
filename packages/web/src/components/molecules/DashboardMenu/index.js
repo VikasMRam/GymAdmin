@@ -66,8 +66,8 @@ const DashboardMenu = ({ menuItems }) => {
     return (
       <Role className="role" is={item.role} key={item.label}>
         <ItemComponent onClick={() => item.onClick(item)} to={item.href}>
-          <MenuItemIcon icon={item.icon} size={item.iconSize} palette={item.active ? 'secondary' : item.palette} variation={item.variation} />
-          <Span weight="medium" size="caption" palette={item.active ? 'secondary' : item.palette} variation={item.variation}>{item.label}</Span>
+          <MenuItemIcon icon={item.icon} size={item.iconSize} palette={item.active ? 'primary' : item.palette} variation={item.variation} />
+          <Span weight="medium" size="caption" palette={item.active ? 'primary' : item.palette} variation={item.variation}>{item.label}</Span>
         </ItemComponent>
       </Role>
     );

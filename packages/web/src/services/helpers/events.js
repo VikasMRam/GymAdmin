@@ -1,10 +1,34 @@
 import ReactGA from 'react-ga';
 import { Cookies } from 'react-cookie';
 import { stringify } from 'query-string';
+import { v4 } from 'uuid';
+import { domain } from 'sly/web/config';
+import crypto from 'crypto';
+
 
 import { isServer, isTest, gAnalyticsKey, eventServerUrl, isDev, gaEnv } from 'sly/web/config';
 
 const cookie = new Cookies();
+const makeSid = () => crypto.randomBytes(16).toString('hex');
+
+const getUUID = () => {
+  const slyUuid = v4();
+  cookie.set('sly_uuid', slyUuid, { domain, path: '/', maxAge: 27000000 });
+  return slyUuid;
+};
+
+const getSID = () => {
+  const sid = makeSid();
+  cookie.set('sly_sid', sid, { domain, path: '/', maxAge: 3600 });
+  return sid;
+};
+
+const getReferrer = () => {
+  const referrer = document.referrer;
+  cookie.set('referrer', referrer, { domain, path: '/', maxAge: 27000000 });
+  return referrer;
+};
+
 export default class SlyEvent {
   static seInstance = null;
 
@@ -23,8 +47,9 @@ export default class SlyEvent {
   }
 
   address = eventServerUrl;
-  uuid = cookie.get('sly_uuid');
-  sid = cookie.get('sly_sid');
+  slyUuid = cookie.get('sly_uuid') || getUUID();
+  sid = cookie.get('sly_sid') || getSID();
+  referrer = cookie.get('referrer') || getReferrer();
   ga = null;
 
   sendPageView(path, search = '') {
@@ -38,13 +63,13 @@ export default class SlyEvent {
       a: 'view',
       c: path,
       p: uri,
-      u: this.uuid,
+      u: this.slyUuid,
       s: this.sid,
       t: Date.now(),
     };
 
     if (isDev || isTest) {
-      console.info('EVENT pageview', uri);
+      console.info('EVENT pageview', uri, `${eventServerUrl}?${stringify(se)}`);
     } else {
       fetch(`${eventServerUrl}?${stringify(se)}`);
       ReactGA.pageview(uri);
@@ -64,7 +89,7 @@ export default class SlyEvent {
       l: label,
       v: value,
       p: window.location.pathname,
-      u: this.uuid,
+      u: this.slyUuid,
       s: this.sid,
       t: Date.now(),
     };

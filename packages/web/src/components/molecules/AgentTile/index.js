@@ -21,7 +21,7 @@ const Badge = styled(Block)`
   position: absolute;
   top: ${size('spacing.large')};
   left: 0;
-  background: ${palette('secondary', 'dark35')};
+  background: ${palette('primary', 'base')};
   padding: ${size('spacing.regular')};
   border-radius: 0;
   border-top-right-radius: ${size('spacing.xLarge')};

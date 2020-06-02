@@ -4,7 +4,6 @@ const white = Color('white');
 const black = Color('black');
 
 const gradients = [
-  { percentage: 0.65, tint: black, variant: 'dark35' },
   { percentage: 0.85, tint: black, variant: 'dark' },
   { percentage: 1.00, tint: white, variant: 'base' },
   { percentage: 0.33, tint: white, variant: 'filler' },

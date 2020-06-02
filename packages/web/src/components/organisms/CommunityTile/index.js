@@ -108,7 +108,7 @@ const ImageWrapper = styled.div`
 `;
 
 const MainWrapper = styled.article`
-  background-color: ${ifProp('plusCategory', palette('secondary', 'background'), palette('white', 'base'))};
+  background-color: ${ifProp('plusCategory', palette('primary', 'background'), palette('white', 'base'))};
 `;
 
 const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
@@ -129,7 +129,7 @@ const CommunityTile = ({
   const { images = [] } = gallery;
   const galleryImages = images.map((img, i) => ({ ...img, src: img.sd, alt: `${name} ${i + 1}` }));
   const icon = isFavourite ? 'favourite-dark' : 'favourite-empty';
-  const iconPalette = isFavourite ? 'secondary' : 'white';
+  const iconPalette = isFavourite ? 'primary' : 'white';
   const onIconClick = isFavourite ? onUnfavouriteClick : onFavouriteClick;
   const hasImages = galleryImages.length > 0;
   // one image only, don't show gallery

@@ -1,3 +1,5 @@
+import { stateNames } from  'sly/web/services/helpers/url';
+
 export const sortProperties = (obj) => {
   const sortable = [];
   Object.keys(obj).forEach((key) => {
@@ -6,7 +8,7 @@ export const sortProperties = (obj) => {
   });
 
   // sort items by value
-  sortable.sort((a, b) => a[1] - b[1]);
+  //sortable.sort((a, b) => a[1] - b[1]);
   // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
   return sortable;
 };
@@ -123,9 +125,10 @@ export const buildEstimatedPriceList = (community) => {
 
 
 export const calculatePricing = (community, estimatedPrice) => {
-  const { startingRate, name } = community;
+  const { startingRate, name, address } = community;
+  const { city, state } = address;
   const mEstimatedPrice = { ...estimatedPrice };
-  if (mEstimatedPrice && !mEstimatedPrice.providedAverage && mEstimatedPrice.providedAverage) {
+  if (mEstimatedPrice && !mEstimatedPrice.providedAverage) {
     mEstimatedPrice.providedAverage = startingRate || mEstimatedPrice.providedAverage;
   }
   if (mEstimatedPrice && !mEstimatedPrice.providedAverage && mEstimatedPrice.estimatedAverage) {
@@ -135,9 +138,9 @@ export const calculatePricing = (community, estimatedPrice) => {
   const estimatedPriceLabelMap = {
     providedAverage: name,
     estimatedAverage: name,
-    cityAverage: 'Assisted living within 20 miles',
-    homeCareMAverage: 'In-home care',
-    adultDayAverage: 'Adult Daycare',
+    cityAverage: `${city} average cost of assisted living`,
+    stateAverage: `${stateNames[state]} average cost of assisted living`,
+    nationalAverage: 'Nationwide average cost of assisted living',
   };
 
   let sortedEstimatedPrice = [];

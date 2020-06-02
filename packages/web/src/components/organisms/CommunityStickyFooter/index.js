@@ -2,8 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { bool, string } from 'prop-types';
 
+import { community as communityPropType } from 'sly/web/propTypes/community';
 import { size, palette, key } from 'sly/web/components/themes';
+import pad from 'sly/web/components/helpers/pad';
 import CommunityActions from 'sly/web/components/molecules/CommunityActions';
+import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';
+
 
 const Wrapper = styled.div`
   position: fixed;
@@ -23,13 +27,15 @@ const Wrapper = styled.div`
   }
 `;
 
-const CommunityStickyFooter = ({ isAlreadyPricingRequested, locTrack }) => (
+const CommunityStickyFooter = ({ community: { id, startingRate, rates}, isAlreadyPricingRequested, locTrack }) => (
   <Wrapper>
+    {startingRate > 0 && <CommunityPricing size='subtitle' id={id} estimated={rates !=='Provided'} price={startingRate} />}
     <CommunityActions isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack={locTrack}/>
   </Wrapper>
 );
 CommunityStickyFooter.typeHydrationId = 'CommunityStickyFooter';
 CommunityStickyFooter.propTypes = {
+  community: communityPropType,
   isAlreadyPricingRequested: bool,
   locTrack: string,
 };

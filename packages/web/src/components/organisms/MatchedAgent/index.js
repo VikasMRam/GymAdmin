@@ -52,7 +52,7 @@ const AgentPlaceholder = pad(styled.div`
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: ${palette('secondary', 'base')};
+    background: ${palette('primary', 'base')};
     margin: -4px 0 0 -4px;
   }
   div:nth-child(1) {

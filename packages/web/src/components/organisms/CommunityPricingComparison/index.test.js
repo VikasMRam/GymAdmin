@@ -18,14 +18,14 @@ const properties = {
     adultDayAverage: 3000,
   },
   case2: {
-    cityAverage: 0,
     estimatedAverage: 0,
-    nationalAverage: 0,
+    cityAverage:4000,
+    nationalAverage: 4500,
     providedAverage: 7046,
-    stateAverage: 0,
+    stateAverage: 4200,
     homeCareMAverage: 4500,
     adultDayAverage: 3000,
-  },
+},
   case3: {
     cityAverage: 0,
     estimatedAverage: 0,
@@ -41,20 +41,20 @@ const sortedProperties = {
   case1: [
     ['cityAverage', 0],
     ['estimatedAverage', 0],
-    ['adultDayAverage', 3000],
     ['nationalAverage', 3628],
+    ['providedAverage', 7046],
     ['stateAverage', 4000],
     ['homeCareMAverage', 4500],
-    ['providedAverage', 7046],
+    ['adultDayAverage', 3000],
   ],
   case2: [
-    ['cityAverage', 0],
     ['estimatedAverage', 0],
-    ['nationalAverage', 0],
-    ['stateAverage', 0],
-    ['adultDayAverage', 3000],
-    ['homeCareMAverage', 4500],
+    ['cityAverage', 4000],
+    ['nationalAverage', 4500],
     ['providedAverage', 7046],
+    ['stateAverage', 4200],
+    ['homeCareMAverage', 4500],
+    ['adultDayAverage', 3000],
   ],
   case3: [
     ['cityAverage', 0],
@@ -69,7 +69,7 @@ const sortedProperties = {
 
 const expectedPropertiesLength = {
   case1: 4,
-  case2: 3,
+  case2: 4,
   case3: 0,
 };
 
@@ -92,7 +92,7 @@ describe('PricingAndAvailability', () => {
     const wrapper = wrap({
       community,
     });
-    const priceBars = wrapper.find('StyledPriceBar');
+    const priceBars = wrapper.find('StyledNumberFormat');
     expect(priceBars).toHaveLength(expectedPropertiesLength.case2);
   });
 
@@ -102,7 +102,7 @@ describe('PricingAndAvailability', () => {
     const wrapper = wrap({
       community,
     });
-    const priceBars = wrapper.find('StyledPriceBar');
+    const priceBars = wrapper.find('StyledNumberFormat');
     expect(priceBars).toHaveLength(expectedPropertiesLength.case3);
   });
 });

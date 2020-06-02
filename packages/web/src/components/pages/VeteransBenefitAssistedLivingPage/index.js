@@ -49,7 +49,7 @@ const PercentageDiv = styled.div`
   border-radius: 50%;
   width: ${size('element.huge')};
   height: ${size('element.huge')};
-  background: ${palette('secondary', 'dark35')};
+  background: ${palette('primary', 'base')};
   color: ${palette('white', 'base')};
   font-size: ${size('text', 'title')};
 `;
@@ -176,10 +176,10 @@ const VeteransBenefitAssistedLivingPage = ({
           </Paragraph>
 
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Service-connected disability benefits
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Veteran Pension/Survivor Pension
             </ListItem>
           </ListWrapper>
@@ -189,10 +189,10 @@ const VeteransBenefitAssistedLivingPage = ({
           </Paragraph>
 
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Housebound
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Aid and Attendance
             </ListItem>
           </ListWrapper>
@@ -322,13 +322,13 @@ const VeteransBenefitAssistedLivingPage = ({
           </Heading>
 
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Married to the Veteran at the time the Veteran passed away
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Can produce a marriage certificate evidencing the marriage
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Claiming spouse is named on the deceased Veteran’s death certificate
             </ListItem>
           </ListWrapper>
@@ -355,13 +355,13 @@ const VeteransBenefitAssistedLivingPage = ({
           </Paragraph>
 
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Must be age 65; or
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               If you are under age 65 you must be receiving SSD and/or SSI; or
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Be a long-term resident in skilled nursing
             </ListItem>
           </ListWrapper>
@@ -390,11 +390,11 @@ const VeteransBenefitAssistedLivingPage = ({
           </Paragraph>
 
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Veteran is aged 72 and has an income of $800/mth. The VA promised a minimum income of $1128/mth. The VA will
               currently pay $328/mth to bring the Veteran’s income up to basic pension of 1128/mth.
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Surviving spouse is 62 but is on SSI and has an income of $550/mth. The VA will pay $206/mth to bring the
               surviving spouse’s income up to basic pension rate of $756/mth.
             </ListItem>
@@ -445,13 +445,13 @@ const VeteransBenefitAssistedLivingPage = ({
           </Paragraph>
 
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Military service time
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Medical need — assistance with personal care needs
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Monetary need — demonstrate a limited net worth
             </ListItem>
           </ListWrapper>
@@ -508,22 +508,22 @@ const VeteransBenefitAssistedLivingPage = ({
           </Heading>
 
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Bathing/showering
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Dressing
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Incontinence concerns
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Transferring (getting up or down, or in and out of bed, for example)
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Ambulation
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Eating
             </ListItem>
           </ListWrapper>
@@ -573,7 +573,7 @@ const VeteransBenefitAssistedLivingPage = ({
           </Heading>
 
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               <Block>Surviving spouse income is $1,600/month, and her cost of care in <Link href="https://www.seniorly.com/assisted-living">assisted living</Link> is $1,800/month. She effectively
                 has a negative monthly income. ($1,600 – $1,800 = negative $200.) The VA said if her income fell beneath $756
                 they would pay the difference. In this case, since she has a negative income and she would receive the full
@@ -581,7 +581,7 @@ const VeteransBenefitAssistedLivingPage = ({
                 payment for a total monthly payment of $1209.
               </Block>
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               <div>
                 <Paragraph marginBottom="xxLarge">
                   Veteran has an income of $2,600/month. His cost of care is $2,400/month. Since the Veteran is not spending
@@ -607,22 +607,22 @@ const VeteransBenefitAssistedLivingPage = ({
           </Heading>
 
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               <Block>Monthly fees from an <Link href="https://www.seniorly.com/assisted-living">assisted living community</Link></Block>
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Supplemental medical insurance premiums
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Monthly fees from home care agencies
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Unreimbursed diabetic supplies
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Incontinence supplies
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Custodial care in a retirement community
             </ListItem>
           </ListWrapper>
