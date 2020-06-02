@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, string } from 'prop-types';
+import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -42,13 +42,13 @@ const generateHeading = (whoNeedsHelp) => {
 };
 
 const ADL = ({
-  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp,
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting,
 }) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={8} currentStep={3} />
     </Wrapper>
-    <Wrapper>
+    <Wrapper hasSidebar>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
         <form onSubmit={handleSubmit}>
@@ -60,7 +60,7 @@ const ADL = ({
             align="left"
             component={ReduxField}
           />
-          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} />
+          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
       <StyledTipBox heading="WHY THIS IS IMPORTANT:">
@@ -75,6 +75,8 @@ ADL.propTypes = {
   whoNeedsHelp: string.isRequired,
   onSkipClick: func,
   onBackClick: func,
+  invalid: bool,
+  submitting: bool,
 };
 
 export default ADL;

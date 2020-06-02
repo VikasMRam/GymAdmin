@@ -1,12 +1,11 @@
 import React from 'react';
-import { func, string, number } from 'prop-types';
+import { func, string, number, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/web/components/themes';
 import { BUDGET_OPTIONS } from 'sly/web/constants/wizards/assesment';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
-import { getLabelForWhoPersonOption } from 'sly/web/components/wizards/assesment/helpers';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assesment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
@@ -49,13 +48,13 @@ const generateHeading = (whoNeedsHelp, amount, city, state) => {
 };
 
 const Budget = ({
-  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state,
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting,
 }) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={8} currentStep={7} />
     </Wrapper>
-    <Wrapper>
+    <Wrapper hasSidebar>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp, amount, city, state)}</PaddedHeading>
         <PaddedBlock>Select all that apply.</PaddedBlock>
@@ -68,7 +67,7 @@ const Budget = ({
             align="left"
             component={ReduxField}
           />
-          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} />
+          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
       <StyledTipBox heading="DID YOU KNOW?">
@@ -87,6 +86,8 @@ Budget.propTypes = {
   amount: number.isRequired,
   onSkipClick: func,
   onBackClick: func,
+  invalid: bool,
+  submitting: bool,
 };
 
 export default Budget;
