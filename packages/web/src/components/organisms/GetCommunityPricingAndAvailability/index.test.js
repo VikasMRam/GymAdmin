@@ -17,28 +17,28 @@ describe('GetCommunityPricingAndAvailability', () => {
     expect(wrapper.contains('test')).toBeFalsy();
   });
 
-  it('renders', () => {
-    const wrapper = wrap();
-    const pricingComponent = wrapper.find('PaddedCommunityPricing');
-    const ratingComponent = wrapper.find('PaddedCommunityRating');
-
-    expect(pricingComponent).toHaveLength(1);
-    expect(pricingComponent.prop('price')).toBe(defaultProps.community.startingRate);
-    expect(ratingComponent).toHaveLength(1);
-    expect(ratingComponent.prop('rating')).toBe(defaultProps.community.propRatings.reviewsValue);
-    expect(ratingComponent.prop('numReviews')).toBe(defaultProps.community.propRatings.numReviews);
-    expect(wrapper.contains('Get Detailed Pricing')).toBeTruthy();
-  });
-
-  it('renders without startingRate', () => {
-    const community = { ...RhodaGoldmanPlaza };
-    community.startingRate = 0;
-    const wrapper = wrap({
-      community,
-    });
-
-    expect(wrapper.find('PaddedCommunityPricing')).toHaveLength(0);
-    expect(wrapper.find('PaddedCommunityRating')).toHaveLength(1);
-    expect(wrapper.contains('Get Detailed Pricing')).toBeTruthy();
-  });
+  // it('renders', () => {
+  //   const wrapper = wrap();
+  //   const pricingComponent = wrapper.find('PaddedCommunityPricing');
+  //   const ratingComponent = wrapper.find('PaddedCommunityRating');
+  //
+  //   expect(pricingComponent).toHaveLength(1);
+  //   expect(pricingComponent.prop('price')).toBe(defaultProps.community.startingRate);
+  //   expect(ratingComponent).toHaveLength(1);
+  //   expect(ratingComponent.prop('rating')).toBe(defaultProps.community.propRatings.reviewsValue);
+  //   expect(ratingComponent.prop('numReviews')).toBe(defaultProps.community.propRatings.numReviews);
+  //   expect(wrapper.contains('Get Detailed Pricing')).toBeTruthy();
+  // });
+  //
+  // it('renders without startingRate', () => {
+  //   const community = { ...RhodaGoldmanPlaza };
+  //   community.startingRate = 0;
+  //   const wrapper = wrap({
+  //     community,
+  //   });
+  //
+  //   expect(wrapper.find('PaddedCommunityPricing')).toHaveLength(0);
+  //   expect(wrapper.find('PaddedCommunityRating')).toHaveLength(1);
+  //   expect(wrapper.contains('Get Detailed Pricing')).toBeTruthy();
+  // });
 });

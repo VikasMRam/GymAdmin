@@ -17,8 +17,6 @@ const PaddedCommunityPricing = pad(CommunityPricing, 'large');
 
 const PaddedCommunityRating = pad(CommunityRating);
 
-const getButton = (props = {}) => <StyledButton {...props} />;
-
 const onClickEvent = (id) => {
   return { action:'click-gcp-button-sidebar', category:'PricingWizard' , label:id }
 };
@@ -28,7 +26,9 @@ const GetCommunityPricingAndAvailability = ({ community: { id, startingRate, rat
     <PaddedHeading level="title" size="subtitle">Get Pricing and Availability</PaddedHeading>
     {startingRate > 0 && <PaddedCommunityPricing id={id} estimated={rates !=='Provided'} price={startingRate} />}
     {reviewsValue > 0 && <PaddedCommunityRating description="" numReviewsPalette="slate" rating={reviewsValue} numReviews={numReviews} />}
-    {getButton({ to: buttonTo, children: 'Get Detailed Pricing', event: onClickEvent(id) })}
+    <StyledButton to={buttonTo} event={onClickEvent(id)}>
+      Get Detailed Pricing
+    </StyledButton>
   </Box>
 );
 
