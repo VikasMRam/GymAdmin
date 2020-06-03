@@ -7,9 +7,9 @@ import { prop } from 'styled-tools';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { size, key } from 'sly/web/components/themes';
-import { withColor, withSpacing } from 'sly/web/components/helpers';
+import { withColor, withSpacing, withText } from 'sly/web/components/helpers';
 
-const iconSize = props => size('icon', props.size);
+const iconSize = ({ size: s }) => css`calc(1em * ${size('lineHeight', s || 'caption')});`;
 const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)${flip ? ' scaleX(-1) scaleY(-1)' : ''}`;
 
 /**
@@ -19,6 +19,7 @@ const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)
 const Wrapper = styled.span`
   ${withSpacing} 
   ${withColor}
+  ${withText}
   
   display: inline-flex;
   // sizes relative to set font-size
@@ -70,7 +71,6 @@ Icon.propTypes = {
 Icon.defaultProps = {
   flip: false,
   rotate: 0,
-  size: 'regular',
 };
 
 export default Icon;

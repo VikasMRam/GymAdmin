@@ -39,17 +39,16 @@ const menuItemFor = (menuItem) => {
 
 /* eslint-disable no-bitwise */
 const menuItems = [
-  { label: 'Favorites', icon: 'favourite-light', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE },
   { label: 'Families', icon: 'users', href: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE },
-  { label: 'Account', icon: 'settings', href: DASHBOARD_ACCOUNT_PATH, role: CUSTOMER_ROLE | PROVIDER_OD_ROLE | AGENT_ND_ROLE },
-  { label: 'Profile', icon: 'user', href: AGENT_DASHBOARD_PROFILE_PATH, role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE },
-  { label: 'Contacts', icon: 'contacts', href: AGENT_DASHBOARD_CONTACTS_PATH, role: AGENT_ADMIN_ROLE },
-  // { label: 'Messages_', icon: 'message', href: FAMILY_DASHBOARD_MESSAGES_PATH, role: CUSTOMER_ROLE },
-  { label: 'Communities', icon: 'community-size-large', href: DASHBOARD_COMMUNITIES_PATH, role: PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE },
-  { label: 'Messages', icon: 'message', href: AGENT_DASHBOARD_MESSAGES_PATH, role: PLATFORM_ADMIN_ROLE },
-  { label: 'Tasks', icon: 'checkmark-circle', href: generatePath(AGENT_DASHBOARD_TASKS_PATH), role: AGENT_ADMIN_ROLE },
-  { label: 'Calls', icon: 'phone', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE },
   { label: 'Agents', icon: 'user', href: ADMIN_DASHBOARD_AGENTS_PATH, role: PLATFORM_ADMIN_ROLE },
+  { label: 'Communities', icon: 'community-size-large', href: DASHBOARD_COMMUNITIES_PATH, role: PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE },
+  { label: 'Tasks', icon: 'checkmark-circle', href: generatePath(AGENT_DASHBOARD_TASKS_PATH), role: AGENT_ADMIN_ROLE },
+  { label: 'Contacts', icon: 'contacts', href: AGENT_DASHBOARD_CONTACTS_PATH, role: AGENT_ADMIN_ROLE },
+  { label: 'Calls', icon: 'phone', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE },
+  { label: 'Messages', icon: 'message', href: AGENT_DASHBOARD_MESSAGES_PATH, role: PLATFORM_ADMIN_ROLE },
+  { label: 'Favorites', icon: 'favourite-light', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE },
+  { label: 'Profile', icon: 'user', href: AGENT_DASHBOARD_PROFILE_PATH, role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE },
+  { label: 'Account', icon: 'settings', href: DASHBOARD_ACCOUNT_PATH, role: CUSTOMER_ROLE | PROVIDER_OD_ROLE | AGENT_ND_ROLE },
 ].map(menuItemFor);
 /* eslint-enable no-bitwise */
 
@@ -59,6 +58,9 @@ const DashboardMenu = ({ activeMenuItem }) => {
     const palette = selected
       ? 'viridian'
       : 'grey';
+    const weight = selected
+      ? 'medium'
+      : undefined;
 
     return (
       // <Role is={item.role} key={item.label}>
@@ -71,10 +73,11 @@ const DashboardMenu = ({ activeMenuItem }) => {
         marginBottom="medium"
       >
         <Icon
+          size="caption"
           icon={item.icon}
           marginRight="medium"
         />
-        <Span weight="medium">{item.label}</Span>
+        <Span weight={weight}>{item.label}</Span>
       </Link>
       // </Role>
     );

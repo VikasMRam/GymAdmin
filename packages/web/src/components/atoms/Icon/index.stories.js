@@ -56,9 +56,9 @@ function Icons() {
   return (
     <Wrapper>
       {getIcons().map(icon => (
-        <Card key={icon}>
-          <Icon icon={icon} size="large" />
-          <Block title={icon} size="caption">{icon}</Block>
+        <Card title={icon} key={icon}>
+          <Icon icon={icon} size="title" />
+          <Block size="caption">{icon}</Block>
         </Card>
       ))}
     </Wrapper>

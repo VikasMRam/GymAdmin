@@ -145,7 +145,7 @@ const CommunityTile = ({
     imagePath = galleryImages[0].path;
   }
   const topRightSection = canFavourite
-    ? () => <IconButton transparent icon={icon} iconSize="regular" palette={iconPalette} onClick={onIconClick} />
+    ? () => <IconButton transparent icon={icon} iconSize="body" palette={iconPalette} onClick={onIconClick} />
     : null;
 
   const CommunityInfoComponent = actionButtons.length ? PaddedCommunityInfo : CommunityInfo;

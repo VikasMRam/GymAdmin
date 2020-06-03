@@ -19,7 +19,7 @@ import {
   makeArticle,
   makeTable,
 } from 'sly/web/components/templates/HubPageTemplate';
-import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/web/components/atoms';
+import { Heading, Paragraph, Link } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import CarePageAdTileContainer from 'sly/web/containers/CarePageAdTileContainer';
 

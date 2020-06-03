@@ -182,17 +182,17 @@ theme.sizes = {
     massive : '4.500rem',   // 72px
   },
 
-  icon: {
-    tiny   : '0.750rem',   // 12px
-    small  : '1.000rem',   // 16px
-    caption: '1.250rem',   // 20px for use with caption text
-    regular: '1.500rem',   // 24px
-    large  : '2.250rem',   // 36px
-    xLarge : '3.000rem',   // 48px
-    huge   : '4.000rem',   // 64px
-    xxLarge: '4.500rem',   // 72px
-  },
-
+  // icon: {
+  //   tiny   : '0.750rem',   // 12px
+  //   small  : '1.000rem',   // 16px
+  //   caption: '1.250rem',   // 20px for use with caption text
+  //   regular: '1.500rem',   // 24px
+  //   large  : '2.250rem',   // 36px
+  //   xLarge : '3.000rem',   // 48px
+  //   huge   : '4.000rem',   // 64px
+  //   xxLarge: '4.500rem',   // 72px
+  // },
+  //
   text: {
     micro     : '0.625rem',   // 10px
     tiny      : '0.750rem',   // 12px
@@ -205,14 +205,14 @@ theme.sizes = {
   },
 
   lineHeight: {
-    micro    : '1.2',    // 12px/10px
-    tiny    : '1.167',
-    caption : '1.429',
-    body    : '1.5',
-    subtitle: '1.3',
-    title   : '1.28',
-    hero    : '1.33',
-    minimal : '1.125',
+    micro    : '1.2',    // 12px / 10px
+    tiny    : '1.167',   // 14px / 12px
+    caption : '1.429',   // 20px / 14px
+    body    : '1.5',     // 24px / 16px
+    subtitle: '1.3',     // 26px / 20px
+    title   : '1.29',    // 36px / 28px
+    hero    : '1.33',    // 48px / 36px
+    superHero:'1.33',    // 64px / 48px
   },
 
   weight: {

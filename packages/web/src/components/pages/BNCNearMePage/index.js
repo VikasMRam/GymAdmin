@@ -23,7 +23,7 @@ import {
   makeTable,
   makeOneColumnListWrapper,
 } from 'sly/web/components/templates/HubPageTemplate';
-import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/web/components/atoms';
+import { ResponsiveImage, Heading, Paragraph, Link, Box } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import { getTocSeoLabel } from 'sly/web/services/helpers/search';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';

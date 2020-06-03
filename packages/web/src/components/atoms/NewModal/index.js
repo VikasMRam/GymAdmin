@@ -52,7 +52,6 @@ export const HeaderWithClose = ({ onClose }) => (
   <Head>
     <IconButton
       icon="close"
-      iconSize="regular"
       palette="slate"
       onClick={onClose}
       transparent

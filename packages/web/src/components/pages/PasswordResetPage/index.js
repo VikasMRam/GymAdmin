@@ -53,7 +53,7 @@ const PasswordResetPage = ({ handleSubmit, submitting, error, invalid, onClose }
       <Box>
         <StyledIconButton
           icon="close"
-          iconSize="regular"
+          iconSize="body"
           palette="slate"
           onClick={onClose}
           transparent
