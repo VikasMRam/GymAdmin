@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
+import { func, object } from 'prop-types';
+import { withRouter } from 'react-router';
 
+import { query } from 'sly/web/services/api';
+import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
 import { CurrentLiving } from 'sly/web/components/wizards/assesment';
 import { createValidator, required } from 'sly/web/services/validation';
 
@@ -14,6 +18,40 @@ const ReduxForm = reduxForm({
   validate,
 })(CurrentLiving);
 
-const CurrentLivingFormContainer = props => <ReduxForm {...props} />;
+@withRouter
+@query('createAction', 'createUuidAction')
 
-export default CurrentLivingFormContainer;
+export default class CurrentLivingFormContainer extends Component {
+  static propTypes = {
+    createAction: func.isRequired,
+    location: object.isRequired,
+    onSubmit: func.isRequired,
+  };
+
+  handleSubmit = (data) => {
+    const { createAction, location: { pathname }, onSubmit } = this.props;
+
+    return createAction({
+      type: 'UUIDAction',
+      attributes: {
+        actionType: WIZARD_STEP_COMPLETED,
+        actionPage: pathname,
+        actionInfo: {
+          stepName: 'currentLiving',
+          wizardName: 'assesmentWizard',
+          data,
+        },
+      },
+    })
+      .then(onSubmit);
+  };
+
+  render() {
+    return (
+      <ReduxForm
+        {...this.props}
+        onSubmit={this.handleSubmit}
+      />
+    );
+  }
+}
