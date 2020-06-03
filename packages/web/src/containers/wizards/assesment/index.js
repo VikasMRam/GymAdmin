@@ -3,6 +3,7 @@ import { func } from 'prop-types';
 
 import { query } from 'sly/web/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
+import SlyEvent from 'sly/web/services/helpers/events';
 import Intro from 'sly/web/containers/wizards/assesment/Intro';
 import Who from 'sly/web/containers/wizards/assesment/Who';
 import Feeling from 'sly/web/containers/wizards/assesment/Feeling';
@@ -25,11 +26,20 @@ export default class AssesmentWizard extends Component {
   handleComplete = () => {
   };
 
+  handleStepChange = ({ currentStep }) => {
+    SlyEvent.getInstance().sendEvent({
+      category: 'assesmentWizard',
+      action: 'step-completed',
+      label: currentStep,
+    });
+  };
+
   render() {
     return (
       <WizardController
         formName="assesmentWizard"
         onComplete={this.handleComplete}
+        onStepChange={this.handleStepChange}
       >
         {({
           data: { lookingFor }, next, previous, ...props
