@@ -67,4 +67,19 @@ export const withMargin = ({ margin, ...props } = {}) => {
   return css(getValues(props, 'margin'));
 };
 
+export const withPad = ({ pad } = {}) => {
+  if (!pad) {
+    return null;
+  }
+  return css` 
+    margin-bottom: ${size('spacing', pad)};
+  `;
+};
+
+export const withSpacing = () => css`
+  ${withPadding}
+  ${withMargin}
+  ${withPad}
+`;
+
 export default spacing;

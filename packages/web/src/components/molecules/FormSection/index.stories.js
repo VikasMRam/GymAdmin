@@ -6,7 +6,7 @@ import FormSection from 'sly/web/components/molecules/FormSection';
 import { withPreventDefault } from 'sly/web/services/helpers/forms';
 
 const defaultProps = {
-  heading: 'My Profile',
+  heading: 'Profile',
   handleSubmit: withPreventDefault(action('form submitted')),
 };
 

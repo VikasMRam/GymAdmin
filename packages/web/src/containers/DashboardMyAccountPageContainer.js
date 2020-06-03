@@ -20,7 +20,7 @@ export default class DashboardMyAccountPageContainer extends Component {
     if (showIncompleteWarning) {
       warningMessage = incompleteInfoWarning;
     }
-    return <DashboardMyAccountPage user={user} title="My Account" warningMessage={warningMessage} />;
+    return <DashboardMyAccountPage user={user} title="Account" warningMessage={warningMessage} />;
   }
 }
 

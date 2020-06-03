@@ -10,12 +10,11 @@ import { routes as routesPropType } from 'sly/web/propTypes/routes';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
-import { withColor } from 'sly/web/components/helpers/color';
-import { withText } from 'sly/web/components/helpers/text';
-import { withMargin } from 'sly/web/components/helpers/margin';
+import { withColor, withText, withSpacing, withDisplay } from 'sly/web/components/helpers';
 
 export const styles = css`
-  ${withMargin}
+  ${withDisplay}
+  ${withSpacing}
   ${withText}
   
   &, &:active {

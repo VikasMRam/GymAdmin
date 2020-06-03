@@ -574,7 +574,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     if (clientIsLoading) {
       return (
-        <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
+        <StyledDashboardTwoColumnTemplate activeMenuItem="Families">
           Loading...
         </StyledDashboardTwoColumnTemplate>
       );
@@ -596,7 +596,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         message = "Loading Family Details...";
       }
       return (
-        <DashboardPageTemplate activeMenuItem="My Families">
+        <DashboardPageTemplate activeMenuItem="Families">
           <TextAlignCenterBlock weight="medium" size="subtitle">{message}</TextAlignCenterBlock>
           <AlignCenterBackLinkWrapper>{backlink}</AlignCenterBackLinkWrapper>
         </DashboardPageTemplate>
@@ -719,7 +719,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     );
 
     return (
-      <StyledDashboardTwoColumnTemplate top={topSection} activeMenuItem="My Families">
+      <StyledDashboardTwoColumnTemplate top={topSection} activeMenuItem="Families">
         <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
           <BigScreenSummarySection>
             <Box snap="bottom">

@@ -27,7 +27,7 @@ const DashboardAgentFamilyOverviewPage = ({ match }) => {
   };
 
   return (
-    <DashboardPageTemplate activeMenuItem="My Families">
+    <DashboardPageTemplate activeMenuItem="Families">
       <DashboardAgentFamilyOverviewSectionContainer sectionFilters={sectionFilters} />
     </DashboardPageTemplate>
   );

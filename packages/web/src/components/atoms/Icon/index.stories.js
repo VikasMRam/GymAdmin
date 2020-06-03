@@ -52,13 +52,13 @@ const Card = styled.div`
   }
 `;
 
-function Icons () {
+function Icons() {
   return (
     <Wrapper>
       {getIcons().map(icon => (
         <Card key={icon}>
           <Icon icon={icon} size="large" />
-          <Block size="caption">{icon}</Block>
+          <Block title={icon} size="caption">{icon}</Block>
         </Card>
       ))}
     </Wrapper>
@@ -66,15 +66,4 @@ function Icons () {
 }
 
 storiesOf('Atoms|Icon', module)
-  .add('default', () => <Icons />)
-  .add('palette', () => <Icon icon="star" palette="primary" />)
-  .add('star small', () => <Icon icon="star" size="small" />)
-  .add('star regular', () => <Icon icon="star" />)
-  .add('star large', () => <Icon icon="star" size="large" />)
-  .add('star clip', () => <Icon icon="star-clip" size="large" />)
-  .add('schedule regular (default) with palette', () => <Icon icon="schedule" palette="primary" />)
-  .add('chevron small', () => <Icon icon="chevron" size="small" />)
-  .add('chevron regular (default)', () => <Icon icon="chevron" />)
-  .add('chevron left', () => <Icon icon="chevron" rotate={1} />)
-  .add('chevron large', () => <Icon icon="chevron" size="large" palette="slate" />)
-  .add('chevron large flip', () => <Icon flip icon="chevron" size="large" palette="slate" />);
+  .add('default', () => <Icons />);

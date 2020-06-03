@@ -2,22 +2,25 @@
 import React from 'react';
 import { string, number, bool, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
-import { ifProp, prop } from 'styled-tools';
+import { prop } from 'styled-tools';
 
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { size, palette, key } from 'sly/web/components/themes';
+import { size, key } from 'sly/web/components/themes';
+import { withColor, withSpacing } from 'sly/web/components/helpers';
 
 const iconSize = props => size('icon', props.size);
-const getColor = ({ palette: paletteProp, variation }) => ifProp([
-  'palette',
-  'variation',
-], palette(paletteProp || 'viridian', variation || 'base'));
 const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)${flip ? ' scaleX(-1) scaleY(-1)' : ''}`;
 
+/**
+ * To make Icon compatible with text sizes, but backward compatible with the
+ * deprecated icon size
+ */
 const Wrapper = styled.span`
+  ${withSpacing} 
+  ${withColor}
+  
   display: inline-flex;
-  ${ifProp('palette', css`color: ${getColor}`)};
   // sizes relative to set font-size
   vertical-align: top;
 

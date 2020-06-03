@@ -6,3 +6,4 @@ export const setDisplayName = (Component, displayName = 'Unknown') => {
 export * from './color';
 export * from './spacing';
 export * from './text';
+export * from './display';

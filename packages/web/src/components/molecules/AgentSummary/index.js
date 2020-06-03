@@ -115,7 +115,7 @@ const AgentSummary = ({
     const { numRatings, ratingValue } = aggregateRating;
     ratingsSection = (
       <ReviewValueSection>
-        <Icon icon="star" size="regular" palette="secondary" variation="darker-30" />
+        <Icon icon="star" palette="secondary" variation="darker-30" />
         <Span size="subtitle" weight="medium"> {formatRating(ratingValue)} </Span>
         {numRatings && <Span size="caption" palette="grey">from {numRatings} {numRatings > 1 ? 'reviews' : 'review'}</Span>}
       </ReviewValueSection>
@@ -161,7 +161,7 @@ const AgentSummary = ({
             <AskQuestionButton onClick={onButtonClick} href={buttonHref}>Ask a Question</AskQuestionButton>
             {slyPhone &&
               <PhoneSection>
-                <Icon icon="phone" size="regular" palette="primary" />
+                <Icon icon="phone" palette="primary" />
                 <Link href={`tel:${slyPhone}`} onClick={onPhoneClick}>
                   <Span size="subtitle" weight="medium" palette="primary">
                     {phoneFormatter(slyPhone, true)}

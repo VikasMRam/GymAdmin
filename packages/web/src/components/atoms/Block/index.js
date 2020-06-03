@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 
-import { withText } from 'sly/web/components/helpers/text';
-import { withPad } from 'sly/web/components/helpers/pad';
-import { withColor } from 'sly/web/components/helpers/color';
+import { withText, withColor, withSpacing } from 'sly/web/components/helpers';
 
 const Block = styled.div`
-  ${withPad}
+  ${withSpacing}
   ${withText}
   ${withColor}
 `;

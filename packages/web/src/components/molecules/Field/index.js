@@ -280,7 +280,7 @@ const Field = ({
         <StyledInputMessage name={`${name}Warning`} icon="warning" palette="warning" message={message} wideWidth={wideWidth} renderInputFirst={renderInputFirst} />
       )}
       {success &&
-        <CheckIcon icon="check" size="regular" palette="green" />
+        <CheckIcon icon="check" palette="green" />
       }
       {showCharacterCount && inputProps.maxLength &&
         <CharCount size="tiny" palette={((valueLength / inputProps.maxLength) * 100) > 90 ? 'danger' : 'slate'}>{valueLength}/{inputProps.maxLength}</CharCount>
