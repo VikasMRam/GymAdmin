@@ -9,11 +9,13 @@ const mapStateToProps = (state, { controller, ...ownProps }) => {
   isValid(ownProps.formName)(state);
   const steps = controller.steps || [];
   const initialStepIndex = steps.findIndex(s => s === ownProps.initialStep);
+  const defaultInitialStepIndex = initialStepIndex > -1 ? initialStepIndex : 0;
 
   return {
     steps,
     progressPath: controller.progressPath || [0],
-    currentStepIndex: controller.currentStepIndex || (initialStepIndex > -1 ? initialStepIndex : 0),
+    // zero is equated to false, hence current step as first step along with initialStep prop won't work without number type check
+    currentStepIndex: Number.isInteger(controller.currentStepIndex) ? controller.currentStepIndex : defaultInitialStepIndex,
     data: selectFormData(state, ownProps.formName, {}),
     submitEnabled: isValid(ownProps.formName)(state) && !isSubmitting(ownProps.formName)(state),
   };

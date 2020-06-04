@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, func, oneOf } from 'prop-types';
+import { object, func, oneOf, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
@@ -36,12 +36,15 @@ export default class AuthContainer extends Component {
     authenticated: object,
     authenticateCancel: func.isRequired,
     authenticateSuccess: func.isRequired,
+    onAuthenticateSuccess: func,
     sendOtpCode: func.isRequired,
     type: oneOf(['modal', 'inline']),
+    initialStep: string,
   };
 
   static defaultProps = {
     type: 'modal',
+    initialStep: 'Login',
   };
 
   state = { isOpen: false };
@@ -66,11 +69,17 @@ export default class AuthContainer extends Component {
     }
   };
 
+  handleAuthenticateSuccess = () => {
+    const { onAuthenticateSuccess, authenticateSuccess } = this.props;
+
+    return authenticateSuccess().then(onAuthenticateSuccess);
+  };
+
   render() {
     const { isOpen } = this.state;
-    const { authenticateCancel, authenticateSuccess, authenticated, type } = this.props;
+    const { authenticateCancel, authenticated, type } = this.props;
+    let { initialStep } = this.props;
 
-    let initialStep = 'Login';
     if (authenticated.options && authenticated.options.register) {
       initialStep = 'Signup';
     }
@@ -83,7 +92,7 @@ export default class AuthContainer extends Component {
         formName="AuthForm"
         controllerKey="AuthFormControllerKey"
         initialStep={initialStep}
-        onComplete={authenticateSuccess}
+        onComplete={this.handleAuthenticateSuccess}
       >
         {({
           goto, next, ...props
@@ -94,7 +103,7 @@ export default class AuthContainer extends Component {
               name="Login"
               onRegisterClick={() => goto('Signup')}
               onResetPasswordClick={() => goto('ResetPassword')}
-              onSubmit={authenticateSuccess}
+              onSubmit={this.handleAuthenticateSuccess}
             />
             <WizardStep
               component={ResetPasswordFormContainer}
@@ -112,7 +121,7 @@ export default class AuthContainer extends Component {
             <WizardStep
               component={CustomerSignupConfirmationContainer}
               name="CustomerSignupConfirmation"
-              onSubmit={authenticateSuccess}
+              onSubmit={this.handleAuthenticateSuccess}
             />
             <WizardStep
               component={ProviderSignupFormContainer}
@@ -131,19 +140,19 @@ export default class AuthContainer extends Component {
               component={ProviderConfirmation}
               name="ProviderConfirmation"
               mode="Approved"
-              onSubmit={authenticateSuccess}
+              onSubmit={this.handleAuthenticateSuccess}
             />
             <WizardStep
               component={ProviderConfirmation}
               name="ProviderCommunityNotFound"
               mode="NotFound"
-              onSubmit={authenticateSuccess}
+              onSubmit={this.handleAuthenticateSuccess}
             />
             <WizardStep
               component={ProviderConfirmation}
               name="ProviderClaimNeedsApproval"
               mode="NeedApproval"
-              onSubmit={authenticateSuccess}
+              onSubmit={this.handleAuthenticateSuccess}
             />
           </WizardSteps>
         )}
