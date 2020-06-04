@@ -40,15 +40,18 @@ export default class SignupFormContainer extends Component {
     return registerUser(data)
       .then(onSubmit)
       .catch((data) => {
-      // TODO: Need to set a proper way to handle server side errors
-      const errorMessage = Object.values(data.body.errors).join('. ');
-      throw new SubmissionError({ _error: errorMessage });
-    });
+        // TODO: Need to set a proper way to handle server side errors
+        const errorMessage = Object.values(data.body.errors).join('. ');
+        throw new SubmissionError({ _error: errorMessage });
+      });
   };
 
   render() {
-    return <ReduxForm
-      {...this.props}
-      onSubmit={this.handleSubmit}  />;
+    return (
+      <ReduxForm
+        {...this.props}
+        onSubmit={this.handleSubmit}
+      />
+    );
   }
 }

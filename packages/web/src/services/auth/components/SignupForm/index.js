@@ -7,10 +7,9 @@ import { size, palette } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import textAlign from 'sly/web/components/helpers/textAlign';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
-import { Heading, Button, Block, Hr, Link } from 'sly/web/components/atoms';
+import { Heading, Button, Block, Link } from 'sly/web/components/atoms';
 
-
-const StyledHeading = textAlign(pad(Heading));
+const StyledHeading = pad(Heading);
 StyledHeading.displayName = 'StyledHeading';
 
 const StyledButton = styled(Button)`
@@ -35,10 +34,10 @@ const Provider = textAlign(StyledBlock2);
 Provider.displayName = 'Provider';
 
 const SignupForm = ({
-                      handleSubmit, submitting, error, onLoginClicked, onProviderClicked,
-                    }) => (
+  handleSubmit, submitting, error, onLoginClicked, onProviderClicked, heading,
+}) => (
   <form onSubmit={handleSubmit}>
-    <StyledHeading size="subtitle">Sign Up</StyledHeading>
+    <StyledHeading size="subtitle">{heading}</StyledHeading>
     <Field
       name="name"
       label="Full Name"
@@ -90,6 +89,11 @@ SignupForm.propTypes = {
   error: string,
   onLoginClicked: func,
   onProviderClicked: func,
+  heading: string,
+};
+
+SignupForm.defaultProps = {
+  heading: 'Sign Up',
 };
 
 export default SignupForm;

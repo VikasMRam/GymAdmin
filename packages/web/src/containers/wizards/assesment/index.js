@@ -31,12 +31,16 @@ export default class AssesmentWizard extends Component {
   handleComplete = () => {
   };
 
-  handleStepChange = ({ currentStep }) => {
+  handleStepChange = ({ currentStep, goto, data: { whatToDoNext } }) => {
     SlyEvent.getInstance().sendEvent({
       category: 'assesmentWizard',
       action: 'step-completed',
       label: currentStep,
     });
+
+    if (currentStep === 'Intro' && whatToDoNext === 'no-thanks') {
+      goto('Auth');
+    }
   };
 
   render() {
@@ -49,7 +53,7 @@ export default class AssesmentWizard extends Component {
         onStepChange={this.handleStepChange}
       >
         {({
-          data: { lookingFor }, next, previous, ...props
+          data: { lookingFor, whatToDoNext }, next, previous, ...props
         }) => (
           <WizardSteps {...props}>
             {!skipIntro &&
@@ -102,6 +106,9 @@ export default class AssesmentWizard extends Component {
                 type="inline"
                 onAuthenticateSuccess={next}
                 initialStep="Signup"
+                signUpHeading={whatToDoNext === 'start' ?
+                  'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
+                  : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
               />
             }
             <WizardStep
