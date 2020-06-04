@@ -72,10 +72,7 @@ export default class AuthContainer extends Component {
   handleAuthenticateSuccess = () => {
     const { onAuthenticateSuccess, authenticateSuccess } = this.props;
 
-    authenticateSuccess();
-    if (onAuthenticateSuccess) {
-      onAuthenticateSuccess();
-    }
+    return authenticateSuccess().then(onAuthenticateSuccess);
   };
 
   render() {
