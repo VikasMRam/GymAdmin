@@ -10,6 +10,7 @@ import spacing from 'sly/web/components/helpers/spacing';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import { Box } from 'sly/web/components/atoms';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
+import { Wrapper } from 'sly/web/services/auth/components/Template';
 import ResetPasswordFormContainer from 'sly/web/services/auth/containers/ResetPasswordFormContainer';
 import LoginFormContainer from 'sly/web/services/auth/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/web/services/auth/containers/SignupFormContainer';
@@ -40,6 +41,7 @@ export default class AuthContainer extends Component {
     sendOtpCode: func.isRequired,
     type: oneOf(['modal', 'inline']),
     initialStep: string,
+    signUpHeading: string,
   };
 
   static defaultProps = {
@@ -77,7 +79,7 @@ export default class AuthContainer extends Component {
 
   render() {
     const { isOpen } = this.state;
-    const { authenticateCancel, authenticated, type } = this.props;
+    const { authenticateCancel, authenticated, type, signUpHeading } = this.props;
     let { initialStep } = this.props;
 
     if (authenticated.options && authenticated.options.register) {
@@ -117,6 +119,7 @@ export default class AuthContainer extends Component {
               onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.register : true) && goto('Login'))}
               onProviderClicked={() => goto('ProviderSignup')}
               onSubmit={() => goto('CustomerSignupConfirmation')}
+              heading={signUpHeading}
             />
             <WizardStep
               component={CustomerSignupConfirmationContainer}
@@ -161,9 +164,11 @@ export default class AuthContainer extends Component {
 
     if (type === 'inline') {
       return (
-        <Box>
-          {wizard}
-        </Box>
+        <Wrapper>
+          <Box>
+            {wizard}
+          </Box>
+        </Wrapper>
       );
     }
 
