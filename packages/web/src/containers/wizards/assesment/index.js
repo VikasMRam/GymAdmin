@@ -101,6 +101,7 @@ export default class AssesmentWizard extends Component {
                 name="Auth"
                 type="inline"
                 onAuthenticateSuccess={next}
+                initialStep="Signup"
               />
             }
             <WizardStep

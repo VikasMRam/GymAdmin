@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, func, oneOf } from 'prop-types';
+import { object, func, oneOf, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
@@ -39,10 +39,12 @@ export default class AuthContainer extends Component {
     onAuthenticateSuccess: func,
     sendOtpCode: func.isRequired,
     type: oneOf(['modal', 'inline']),
+    initialStep: string,
   };
 
   static defaultProps = {
     type: 'modal',
+    initialStep: 'Login',
   };
 
   state = { isOpen: false };
@@ -79,8 +81,8 @@ export default class AuthContainer extends Component {
   render() {
     const { isOpen } = this.state;
     const { authenticateCancel, authenticated, type } = this.props;
+    let { initialStep } = this.props;
 
-    let initialStep = 'Login';
     if (authenticated.options && authenticated.options.register) {
       initialStep = 'Signup';
     }
