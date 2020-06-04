@@ -97,6 +97,7 @@ export default class AssesmentWizard extends Component {
                 component={AuthContainer}
                 name="Auth"
                 type="inline"
+                onAuthenticateSuccess={next}
               />
             }
             <WizardStep
