@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func } from 'prop-types';
+import { func, bool } from 'prop-types';
 
 import { query, withUser } from 'sly/web/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
@@ -25,6 +25,7 @@ export default class AssesmentWizard extends Component {
   static propTypes = {
     createAction: func.isRequired,
     user: userPropType,
+    skipIntro: bool,
   };
 
   handleComplete = () => {
@@ -39,7 +40,7 @@ export default class AssesmentWizard extends Component {
   };
 
   render() {
-    const { user } = this.props;
+    const { user, skipIntro } = this.props;
 
     return (
       <WizardController
@@ -51,10 +52,12 @@ export default class AssesmentWizard extends Component {
           data: { lookingFor }, next, previous, ...props
         }) => (
           <WizardSteps {...props}>
-            <WizardStep
-              component={Intro}
-              name="Intro"
-            />
+            {!skipIntro &&
+              <WizardStep
+                component={Intro}
+                name="Intro"
+              />
+            }
             <WizardStep
               component={Who}
               name="Who"
