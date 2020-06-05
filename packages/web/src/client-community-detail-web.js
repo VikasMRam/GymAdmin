@@ -66,6 +66,7 @@ partiallyHydrateClient(
     CommunityProfileAdTileContainer,
     BannerNotificationAdContainer,
     CommunityPricingTable,
+    AssessmentWizard,
 
   ],
   `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
