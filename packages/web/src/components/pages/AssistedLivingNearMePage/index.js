@@ -434,7 +434,7 @@ const NearMePage = ({
             In general, assisted living communities fall under 3 pricing levels:
           </Paragraph>
           <TypesWrapper>
-            <ListItem icon="favourite-fill" iconPalette="primary" iconVariation="base">
+            <ListItem icon="favourite-dark" iconPalette="primary" iconVariation="base">
               <Paragraph>
                 <strong>
                   Basic:{' '}

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { arrayOf, bool, string, func, number, shape, oneOf } from 'prop-types';
+import { arrayOf, bool, string, func, number, shape, oneOf, object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
@@ -121,7 +121,7 @@ const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
   layout, showFloorPlan, palette, showDescription, imageSize, showSeeMoreButtonOnHover,
-  canFavourite, lazyLoadImage,
+  canFavourite, lazyLoadImage, event,
 }) => {
   const {
     name, gallery = {}, communitySize, plusCategory,
@@ -195,6 +195,7 @@ const CommunityTile = ({
             showFloorPlan={showFloorPlan}
             showDescription={showDescription}
             headerIsLink
+            event={event}
           />
           {buildActionButtons(actionButtons)}
           {(note || addNote) && <Hr />}
@@ -234,6 +235,7 @@ CommunityTile.propTypes = {
   showSeeMoreButtonOnHover: bool,
   imageSize: oneOf(Object.keys(getKey('sizes.tile'))),
   lazyLoadImage: bool.isRequired,
+  event: object,
 };
 
 CommunityTile.defaultProps = {
