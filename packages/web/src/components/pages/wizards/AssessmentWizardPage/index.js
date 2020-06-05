@@ -5,7 +5,7 @@ import { object } from 'prop-types';
 import { parseURLQueryParams } from 'sly/web/services/helpers/url';
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
-import AssesmentWizard from 'sly/web/containers/wizards/assesment';
+import AssessmentWizard from 'sly/web/containers/wizards/assessment';
 
 const StyledTemplateContent = styled(TemplateContent)`
   > * {
@@ -14,20 +14,20 @@ const StyledTemplateContent = styled(TemplateContent)`
   }
 `;
 
-const AssesmentWizardPage = ({ location: { search } }) => {
+const AssessmentWizardPage = ({ location: { search } }) => {
   const qp = parseURLQueryParams(search);
   return (
     <>
       <TemplateHeader><HeaderContainer layout="wizards" /></TemplateHeader>
       <StyledTemplateContent>
-        <AssesmentWizard skipIntro={qp.skipIntro} />
+        <AssessmentWizard skipIntro={qp.skipIntro} />
       </StyledTemplateContent>
     </>
   );
 };
 
-AssesmentWizardPage.propTypes = {
+AssessmentWizardPage.propTypes = {
   location: object,
 };
 
-export default AssesmentWizardPage;
+export default AssessmentWizardPage;

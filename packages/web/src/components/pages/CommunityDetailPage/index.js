@@ -66,6 +66,7 @@ import UnhydratedCommunityDetailsPageColumnContainer from 'sly/web/containers/Co
 import UnhydratedCommunityProfileAdTileContainer from 'sly/web/containers/communityProfile/AdTileContainer';
 import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
 import UnhydratedCommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
+import UnhydratedAssessmentWizardContainer from 'sly/web/containers/wizards/assessment';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -88,6 +89,7 @@ const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDet
 const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
 const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
 const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable);
+const AssessmentWizardContainer = withHydration(UnhydratedAssessmentWizardContainer);
 const BackToSearch = styled.div`
   text-align: center;
 `;
@@ -500,6 +502,9 @@ export default class CommunityDetailPage extends Component {
                     />
                   </StyledHeadingBoxSection>
                 )}
+                {
+                  <AssessmentWizardContainer community={community}/>
+                }
                 <StyledHeadingBoxSection heading={`How Seniorly Works in ${address.city}, ${address.state}`} hasNoBodyPadding>
                   <HowSlyWorksVideoContainer eventLabel={community.id} />
                 </StyledHeadingBoxSection>
