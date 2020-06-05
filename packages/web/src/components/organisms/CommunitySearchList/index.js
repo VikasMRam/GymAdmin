@@ -173,6 +173,12 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
               showDescription
               showSeeMoreButtonOnHover
               lazyLoadImage={index !== 0}
+              event={{
+                category: 'SearchPage',
+                action: 'communityClick',
+                label: index,
+                value: similarProperty.id,
+              }}
             />
             </StyledLink>
           </CommunityTileWrapper>

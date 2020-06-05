@@ -18,7 +18,7 @@ const SimilarCommunities = ({ communities, onCommunityClick, communityStyle, get
     <>
       {communities.map((community, index) => (
         <PaddedLink key={community.id} to={community.url} onClick={onCommunityClick} event={getEvent(community, index)}>
-          <CommunityTile community={community} layout={layout} imageSize={imageSize} noGallery showDescription={showDescription} showSeeMoreButtonOnHover />
+          <CommunityTile community={community} layout={layout} imageSize={imageSize} noGallery showDescription={showDescription} showSeeMoreButtonOnHover event={getEvent(community, index)}/>
         </PaddedLink>
       ))}
     </>
