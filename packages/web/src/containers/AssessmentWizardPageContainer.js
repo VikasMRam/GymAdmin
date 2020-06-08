@@ -4,7 +4,7 @@ import { object } from 'prop-types';
 import { community as communityPropType } from 'sly/web/propTypes/community';
 import { prefetch } from 'sly/web/services/api';
 import { parseURLQueryParams } from 'sly/web/services/helpers/url';
-import AssesmentWizardPage from 'sly/web/components/pages/wizards/AssesmentWizardPage';
+import AssessmentWizardPage from 'sly/web/components/pages/wizards/AssessmentWizardPage';
 
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.id,
@@ -22,7 +22,7 @@ export default class AssessmentWizardPageContainer extends Component {
     const qp = parseURLQueryParams(search);
 
     return (
-      <AssesmentWizardPage
+      <AssessmentWizardPage
         community={community}
         skipIntro={qp.skipIntro}
       />

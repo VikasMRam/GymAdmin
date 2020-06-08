@@ -503,7 +503,9 @@ export default class CommunityDetailPage extends Component {
                   </StyledHeadingBoxSection>
                 )}
                 {
-                  <AssessmentWizardContainer community={community}/>
+                  <StyledHeadingBoxSection>
+                    <AssessmentWizardContainer community={community}/>
+                  </StyledHeadingBoxSection>
                 }
                 <StyledHeadingBoxSection heading={`How Seniorly Works in ${address.city}, ${address.state}`} hasNoBodyPadding>
                   <HowSlyWorksVideoContainer eventLabel={community.id} />

@@ -60,6 +60,7 @@ export default class AssessmentWizard extends Component {
     ws.pubsub.on(NOTIFY_AGENT_MATCHED, this.onMessage, { capture: true });
   };
 
+
   handleStepChange = ({ currentStep, goto, data: { whatToDoNext } }) => {
     const { user } = this.props;
 
@@ -119,15 +120,18 @@ export default class AssessmentWizard extends Component {
         formName="assesmentWizard"
         onComplete={this.handleComplete}
         onStepChange={this.handleStepChange}
+        onSkipClick={this.handleSkipStep}
+        onBackClick={this.handleBackStep}
       >
         {({
-          data: { lookingFor, whatToDoNext }, next, previous, ...props
+          data: { lookingFor, whatToDoNext }, next, prev, ...props
         }) => (
           <WizardSteps {...props}>
             {!skipIntro &&
               <WizardStep
                 component={Intro}
                 name="Intro"
+
               />
             }
             <WizardStep
@@ -137,25 +141,39 @@ export default class AssessmentWizard extends Component {
             <WizardStep
               component={Feeling}
               name="Feeling"
+              onSkipClick={
+                ()=> { SlyEvent.getInstance().sendEvent({
+                  category: 'assesmentWizard',
+                  action: 'step-skipped',
+                  label: "Feeling",
+                });
+                return next();
+              }}
+              onBackClick={prev}
             />
             <WizardStep
               component={ADL}
               name="ADL"
               whoNeedsHelp={lookingFor}
+              onBackClick={prev}
             />
             <WizardStep
               component={Dementia}
               name="Dementia"
               whoNeedsHelp={lookingFor}
+              onBackClick={prev}
             />
             <WizardStep
               component={Timing}
               name="Timing"
+              onBackClick={prev}
             />
             <WizardStep
               component={CurrentLiving}
               name="CurrentLiving"
               whoNeedsHelp={lookingFor}
+              onSkipClick={next}
+              onBackClick={prev}
             />
             <WizardStep
               component={Budget}
@@ -163,11 +181,13 @@ export default class AssessmentWizard extends Component {
               whoNeedsHelp={lookingFor}
               city={city}
               state={state}
+              onBackClick={prev}
             />
             <WizardStep
               component={Medicaid}
               name="Medicaid"
               whoNeedsHelp={lookingFor}
+              onBackClick={prev}
             />
             {!user &&
               <WizardStep
