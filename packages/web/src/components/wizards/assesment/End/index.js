@@ -1,6 +1,7 @@
 import React from 'react';
 import { func, bool } from 'prop-types';
 import styled from 'styled-components';
+import { prop } from 'styled-tools';
 
 import { size } from 'sly/web/components/themes';
 import { community as communityProptype } from 'sly/web/propTypes/community';
@@ -18,16 +19,23 @@ const Container = styled.div`
 `;
 
 const SimilarCommunitiesContainer = styled.div`
-  max-width: ${size('layout.col12')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    max-width: ${size('breakpoint.tablet')};
+    overflow: hidden;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('layout.col12')};
+  }
 `;
 
 const SimilarCommunitiesWrapper = styled.div`
-  column-width: ${size('layout.col4')};
-  column-gap: ${size('spacing.xLarge')};
+  display: grid;
+  grid-gap: ${size('spacing.xLarge')};
+  overflow: auto;
 
-   > * {
-    break-inside: avoid-column; /* Prevent element from breaking */
-    page-break-inside: avoid;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    grid-template-columns: repeat( ${prop('numberOfItems')}, ${size('layout.col4')});
   }
 `;
 
@@ -53,7 +61,7 @@ const End = ({ handleSubmit, community, hasNoAgent, agent }) => (
     </Wrapper>
     <SimilarCommunitiesContainer>
       <Heading size="subtitle">Explore Similar Assisted Living Communities in {community.address.city}</Heading>
-      <SimilarCommunitiesWrapper>
+      <SimilarCommunitiesWrapper numberOfItems={community.similarProperties ? community.similarProperties.length : 0}>
         <SimilarCommunities communities={community.similarProperties} communityStyle={{ layout: 'row', showDescription: false }} />
       </SimilarCommunitiesWrapper>
     </SimilarCommunitiesContainer>

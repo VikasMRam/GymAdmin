@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { object } from 'prop-types';
+import { bool } from 'prop-types';
 
-import { parseURLQueryParams } from 'sly/web/services/helpers/url';
+import { community as communityPropType } from 'sly/web/propTypes/community';
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import AssesmentWizard from 'sly/web/containers/wizards/assesment';
@@ -14,20 +14,18 @@ const StyledTemplateContent = styled(TemplateContent)`
   }
 `;
 
-const AssesmentWizardPage = ({ location: { search } }) => {
-  const qp = parseURLQueryParams(search);
-  return (
-    <>
-      <TemplateHeader><HeaderContainer layout="wizards" /></TemplateHeader>
-      <StyledTemplateContent>
-        <AssesmentWizard skipIntro={qp.skipIntro} />
-      </StyledTemplateContent>
-    </>
-  );
-};
+const AssesmentWizardPage = ({ skipIntro, community }) => (
+  <>
+    <TemplateHeader><HeaderContainer layout="wizards" /></TemplateHeader>
+    <StyledTemplateContent>
+      <AssesmentWizard skipIntro={skipIntro} community={community} />
+    </StyledTemplateContent>
+  </>
+);
 
 AssesmentWizardPage.propTypes = {
-  location: object,
+  skipIntro: bool,
+  community: communityPropType,
 };
 
 export default AssesmentWizardPage;
