@@ -8,6 +8,7 @@ import { Button } from 'sly/web/components/atoms';
 import IconButton from 'sly/web/components/molecules/IconButton';
 
 export const Wrapper = styled.section`
+  margin: auto;
   display: grid;
   ${ifProp('hasSidebar', css`
     grid-gap: ${size('layout.gutter')};

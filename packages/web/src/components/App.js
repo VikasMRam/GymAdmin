@@ -85,7 +85,8 @@ const DashboardCommunityIndexPageContainer = loadable(() => import(/* webpackChu
 const DashboardCommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityDetail" */ 'sly/web/containers/DashboardCommunityDetailsPageContainer'));
 
 // wizards
-const WizardAssessmentWizardPage = loadable(() => import(/* webpackChunkName: "chunkWizardAssesmentWizardPage" */ 'sly/web/components/pages/wizards/AssessmentWizardPage'));
+const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/containers/AssessmentWizardPageContainer'));
+
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -306,8 +307,8 @@ const routes = [
     exact: true,
   },
   {
-    path: '/wizards/assessment',
-    component: WizardAssessmentWizardPage,
+    path: '/wizards/assesment/:id',
+    component: AssessmentWizardPageContainer,
     exact: true,
   },
   {
