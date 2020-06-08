@@ -107,6 +107,12 @@ export default class AssesmentWizard extends Component {
     const { user, skipIntro, community } = this.props;
     const { agent, hasNoAgent } = this.state;
 
+    if (!community) {
+      return null;
+    }
+
+    const { address: { city, state } } = community;
+
     return (
       <WizardController
         formName="assesmentWizard"
@@ -154,6 +160,8 @@ export default class AssesmentWizard extends Component {
               component={Budget}
               name="Budget"
               whoNeedsHelp={lookingFor}
+              city={city}
+              state={state}
             />
             <WizardStep
               component={Medicaid}
