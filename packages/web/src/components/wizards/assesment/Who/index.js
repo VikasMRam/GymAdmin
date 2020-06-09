@@ -24,13 +24,13 @@ const StyledTipBox = styled(TipBox)`
 `;
 
 const Who = ({
-  handleSubmit, invalid, submitting,
+  handleSubmit, invalid, submitting, hasTip,
 }) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={8} />
     </Wrapper>
-    <Wrapper hasSidebar>
+    <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">Who are you looking for?</PaddedHeading>
         <form onSubmit={handleSubmit}>
@@ -46,10 +46,12 @@ const Who = ({
           <Footer invalid={invalid} submitting={submitting} />
         </form>
       </Box>
-      <StyledTipBox heading="WHY THIS IS IMPORTANT:">
-        <PaddedIconItem icon="favourite-light" iconPalette="slate" iconVariation="base">Getting to know you helps us personalize how we assist you.</PaddedIconItem>
-        <IconItem icon="lock" iconPalette="slate" iconVariation="base">Any information you share with us is private and secure.</IconItem>
-      </StyledTipBox>
+      {hasTip &&
+        <StyledTipBox heading="WHY THIS IS IMPORTANT:">
+          <PaddedIconItem icon="favourite-light" iconPalette="slate" iconVariation="base">Getting to know you helps us personalize how we assist you.</PaddedIconItem>
+          <IconItem icon="lock" iconPalette="slate" iconVariation="base">Any information you share with us is private and secure.</IconItem>
+        </StyledTipBox>
+      }
     </Wrapper>
   </div>
 );
@@ -58,6 +60,11 @@ Who.propTypes = {
   handleSubmit: func.isRequired,
   invalid: bool,
   submitting: bool,
+  hasTip: bool,
+};
+
+Who.defaultProps = {
+  hasTip: true,
 };
 
 export default Who;

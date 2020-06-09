@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, bool } from 'prop-types';
+import { func, bool, string } from 'prop-types';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
 
@@ -39,14 +39,17 @@ const SimilarCommunitiesWrapper = styled.div`
   }
 `;
 
-const End = ({ handleSubmit, community, hasNoAgent, agent }) => (
+const End = ({ handleSubmit, community, city, hasNoAgent, agent }) => (
   <Container>
     <Wrapper>
       {hasNoAgent &&
         <PostConversionGreetingForm
           community={community}
           onSubmit={handleSubmit}
-          heading={`You're all set! One of our Local Senior Living Experts will reach out shortly to assist you with pricing for ${community.name}.`}
+          heading={community ?
+            `You're all set! One of our Local Senior Living Experts will reach out shortly to assist you with pricing for ${community.name}.` :
+            `You're all set! One of our Local Senior Living Experts will reach out shortly to assist you with your search in ${city}.`
+          }
         />
       }
       {!hasNoAgent &&
@@ -59,18 +62,21 @@ const End = ({ handleSubmit, community, hasNoAgent, agent }) => (
     <Wrapper>
       <PostConversionAdTileContainer type="homeCare" layout="row" community={community} />
     </Wrapper>
-    <SimilarCommunitiesContainer>
-      <Heading size="subtitle">Explore Similar Assisted Living Communities in {community.address.city}</Heading>
-      <SimilarCommunitiesWrapper numberOfItems={community.similarProperties ? community.similarProperties.length : 0}>
-        <SimilarCommunities communities={community.similarProperties} communityStyle={{ layout: 'row', showDescription: false }} />
-      </SimilarCommunitiesWrapper>
-    </SimilarCommunitiesContainer>
+    {community &&
+      <SimilarCommunitiesContainer>
+        <Heading size="subtitle">Explore Similar Assisted Living Communities in {community.address.city}</Heading>
+        <SimilarCommunitiesWrapper numberOfItems={community.similarProperties ? community.similarProperties.length : 0}>
+          <SimilarCommunities communities={community.similarProperties} communityStyle={{ layout: 'row', showDescription: false }} />
+        </SimilarCommunitiesWrapper>
+      </SimilarCommunitiesContainer>
+    }
   </Container>
 );
 
 End.propTypes = {
   handleSubmit: func.isRequired,
-  community: communityProptype.isRequired,
+  community: communityProptype,
+  city: string,
   agent: agentPropType,
   hasNoAgent: bool,
 };

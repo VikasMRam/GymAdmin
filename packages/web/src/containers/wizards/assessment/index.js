@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, bool, object } from 'prop-types';
+import { func, bool, object, string } from 'prop-types';
 
 import { community as communityPropType } from 'sly/web/propTypes/community';
 import { query, withUser } from 'sly/web/services/api';
@@ -11,17 +11,17 @@ import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import AuthContainer from 'sly/web/services/auth/containers/AuthContainer';
 import userPropType from 'sly/web/propTypes/user';
 import SlyEvent from 'sly/web/services/helpers/events';
-import Intro from 'sly/web/containers/wizards/assessment/Intro';
-import Who from 'sly/web/containers/wizards/assessment/Who';
-import Feeling from 'sly/web/containers/wizards/assessment/Feeling';
-import ADL from 'sly/web/containers/wizards/assessment/ADL';
-import Budget from 'sly/web/containers/wizards/assessment/Budget';
-import CurrentLiving from 'sly/web/containers/wizards/assessment/CurrentLiving';
-import Dementia from 'sly/web/containers/wizards/assessment/Dementia';
-import End from 'sly/web/containers/wizards/assessment/End';
-import Medicaid from 'sly/web/containers/wizards/assessment/Medicaid';
-import ResidentName from 'sly/web/containers/wizards/assessment/ResidentName';
-import Timing from 'sly/web/containers/wizards/assessment/Timing';
+import Intro from 'sly/web/containers/wizards/assesment/Intro';
+import Who from 'sly/web/containers/wizards/assesment/Who';
+import Feeling from 'sly/web/containers/wizards/assesment/Feeling';
+import ADL from 'sly/web/containers/wizards/assesment/ADL';
+import Budget from 'sly/web/containers/wizards/assesment/Budget';
+import CurrentLiving from 'sly/web/containers/wizards/assesment/CurrentLiving';
+import Dementia from 'sly/web/containers/wizards/assesment/Dementia';
+import End from 'sly/web/containers/wizards/assesment/End';
+import Medicaid from 'sly/web/containers/wizards/assesment/Medicaid';
+import ResidentName from 'sly/web/containers/wizards/assesment/ResidentName';
+import Timing from 'sly/web/containers/wizards/assesment/Timing';
 
 @withWS
 @withUser
@@ -29,8 +29,7 @@ import Timing from 'sly/web/containers/wizards/assessment/Timing';
 @query('getAgent', 'getAgent')
 @query('createAction', 'createUuidAction')
 
-export default class AssessmentWizard extends Component {
-  static typeHydrationId = 'AssessmentWizardContainer';
+export default class AssesmentWizard extends Component {
   static propTypes = {
     createAction: func.isRequired,
     user: userPropType,
@@ -38,7 +37,10 @@ export default class AssessmentWizard extends Component {
     ws: object,
     getAgent: func.isRequired,
     community: communityPropType,
+    city: string,
+    state: string,
     redirectTo: func.isRequired,
+    hasTip: bool,
   };
 
   state = {
@@ -59,7 +61,6 @@ export default class AssessmentWizard extends Component {
     this.agentMatchTimeout = setTimeout(this.onNoAgentMatch, NOTIFY_AGENT_MATCHED_TIMEOUT);
     ws.pubsub.on(NOTIFY_AGENT_MATCHED, this.onMessage, { capture: true });
   };
-
 
   handleStepChange = ({ currentStep, goto, data: { whatToDoNext } }) => {
     const { user } = this.props;
@@ -106,74 +107,67 @@ export default class AssessmentWizard extends Component {
   };
 
   render() {
-    const { user, skipIntro, community } = this.props;
+    const { user, skipIntro, community, hasTip } = this.props;
+    let { city, state } = this.props;
+    let amount = 4000;
     const { agent, hasNoAgent } = this.state;
 
-    if (!community) {
-      return null;
+    if (community) {
+      ({ address: { city, state }, startingRate: amount = 4000 } = community);
     }
 
-    const { address: { city, state } } = community;
+    if (!city || !state) {
+      throw Error('community or state and city is required');
+    }
 
     return (
       <WizardController
         formName="assesmentWizard"
         onComplete={this.handleComplete}
         onStepChange={this.handleStepChange}
-        onSkipClick={this.handleSkipStep}
-        onBackClick={this.handleBackStep}
       >
         {({
-          data: { lookingFor, whatToDoNext }, next, prev, ...props
+          data: { lookingFor, whatToDoNext }, next, previous, ...props
         }) => (
           <WizardSteps {...props}>
             {!skipIntro &&
               <WizardStep
                 component={Intro}
                 name="Intro"
-
               />
             }
             <WizardStep
               component={Who}
               name="Who"
+              hasTip={hasTip}
             />
             <WizardStep
               component={Feeling}
               name="Feeling"
-              onSkipClick={
-                ()=> { SlyEvent.getInstance().sendEvent({
-                  category: 'assesmentWizard',
-                  action: 'step-skipped',
-                  label: "Feeling",
-                });
-                return next();
-              }}
-              onBackClick={prev}
+              hasTip={hasTip}
             />
             <WizardStep
               component={ADL}
               name="ADL"
               whoNeedsHelp={lookingFor}
-              onBackClick={prev}
+              hasTip={hasTip}
             />
             <WizardStep
               component={Dementia}
               name="Dementia"
               whoNeedsHelp={lookingFor}
-              onBackClick={prev}
+              hasTip={hasTip}
             />
             <WizardStep
               component={Timing}
               name="Timing"
-              onBackClick={prev}
+              hasTip={hasTip}
             />
             <WizardStep
               component={CurrentLiving}
               name="CurrentLiving"
               whoNeedsHelp={lookingFor}
-              onSkipClick={next}
-              onBackClick={prev}
+              hasTip={hasTip}
             />
             <WizardStep
               component={Budget}
@@ -181,13 +175,14 @@ export default class AssessmentWizard extends Component {
               whoNeedsHelp={lookingFor}
               city={city}
               state={state}
-              onBackClick={prev}
+              amount={amount}
+              hasTip={hasTip}
             />
             <WizardStep
               component={Medicaid}
               name="Medicaid"
               whoNeedsHelp={lookingFor}
-              onBackClick={prev}
+              hasTip={hasTip}
             />
             {!user &&
               <WizardStep
@@ -199,12 +194,15 @@ export default class AssessmentWizard extends Component {
                 signUpHeading={whatToDoNext === 'start' ?
                   'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
                   : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
+                signUpSubmitButtonText="Get Pricing"
+                signUpHasPassword={false}
               />
             }
             <WizardStep
               component={ResidentName}
               name="ResidentName"
               numberOfPeople={lookingFor === 'parents' || lookingFor === 'myself-and-spouse' ? 2 : 1}
+              hasTip={hasTip}
             />
             <WizardStep
               component={End}
@@ -212,6 +210,7 @@ export default class AssessmentWizard extends Component {
               agent={agent}
               hasNoAgent={hasNoAgent}
               community={community}
+              city={city}
             />
           </WizardSteps>
         )}

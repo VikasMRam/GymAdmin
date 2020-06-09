@@ -87,7 +87,6 @@ const DashboardCommunityDetailPageContainer = loadable(() => import(/* webpackCh
 // wizards
 const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/containers/AssessmentWizardPageContainer'));
 
-
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
 
@@ -307,7 +306,12 @@ const routes = [
     exact: true,
   },
   {
-    path: '/wizards/assessment/:id',
+    path: '/wizards/assesment/community/:communityId',
+    component: AssessmentWizardPageContainer,
+    exact: true,
+  },
+  {
+    path: '/wizards/assesment/location/:city/:state',
     component: AssessmentWizardPageContainer,
     exact: true,
   },

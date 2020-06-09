@@ -17,4 +17,12 @@ storiesOf('Wizards|Assesment/Steps/Feeling', module)
       onSkipClick={action('onSkipClick')}
       onBackClick={action('onBackClick')}
     />
+  ))
+  .add('without tip', () => (
+    <FeelingContainer
+      handleSubmit={withPreventDefault(action('form submitted'))}
+      onSkipClick={action('onSkipClick')}
+      onBackClick={action('onBackClick')}
+      hasTip={false}
+    />
   ));

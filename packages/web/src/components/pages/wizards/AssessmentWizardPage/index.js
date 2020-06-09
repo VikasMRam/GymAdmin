@@ -1,11 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { bool } from 'prop-types';
 
-import { community as communityPropType } from 'sly/web/propTypes/community';
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
-import AssessmentWizard from 'sly/web/containers/wizards/assessment';
+import AssesmentWizard from 'sly/web/containers/wizards/assesment';
 
 const StyledTemplateContent = styled(TemplateContent)`
   > * {
@@ -14,19 +12,13 @@ const StyledTemplateContent = styled(TemplateContent)`
   }
 `;
 
-
-const AssessmentWizardPage = ({ skipIntro, community }) => (
+const AssesmentWizardPage = props => (
   <>
     <TemplateHeader><HeaderContainer layout="wizards" /></TemplateHeader>
     <StyledTemplateContent>
-      <AssessmentWizard skipIntro={skipIntro} community={community} />
+      <AssesmentWizard {...props} />
     </StyledTemplateContent>
   </>
 );
 
-AssessmentWizardPage.propTypes = {
-  skipIntro: bool,
-  community: communityPropType,
-};
-
-export default AssessmentWizardPage;
+export default AssesmentWizardPage;

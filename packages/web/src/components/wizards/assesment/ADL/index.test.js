@@ -25,6 +25,16 @@ describe('Wizards|Assesment - Steps|ADL', () => {
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
 
+  it('renders without tip', () => {
+    const wrapper = wrap({
+      hasTip: false,
+    });
+
+    expect(wrapper.find('PaddedHeading').contains('Which activities do your parents need help with?')).toBeTruthy();
+    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('StyledTipBox')).toHaveLength(0);
+  });
+
   it('renders correct heading for myself-and-spouse', () => {
     const wrapper = wrap({
       whoNeedsHelp: 'myself-and-spouse',

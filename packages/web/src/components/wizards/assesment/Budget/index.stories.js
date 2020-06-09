@@ -22,6 +22,18 @@ storiesOf('Wizards|Assesment/Steps/Budget', module)
       amount={3000}
     />
   ))
+  .add('without tip', () => (
+    <BudgetContainer
+      handleSubmit={withPreventDefault(action('form submitted'))}
+      onSkipClick={action('onSkipClick')}
+      onBackClick={action('onBackClick')}
+      whoNeedsHelp="mom"
+      city="San Francisco"
+      state="California"
+      amount={3000}
+      hasTip={false}
+    />
+  ))
   .add('with myself-and-spouse selected', () => (
     <BudgetContainer
       handleSubmit={withPreventDefault(action('form submitted'))}

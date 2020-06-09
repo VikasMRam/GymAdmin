@@ -19,6 +19,15 @@ storiesOf('Wizards|Assesment/Steps/CurrentLiving', module)
       whoNeedsHelp="mom"
     />
   ))
+  .add('without tip', () => (
+    <CurrentLivingContainer
+      handleSubmit={withPreventDefault(action('form submitted'))}
+      onSkipClick={action('onSkipClick')}
+      onBackClick={action('onBackClick')}
+      whoNeedsHelp="mom"
+      hasTip={false}
+    />
+  ))
   .add('default myself-and-spouse selected', () => (
     <CurrentLivingContainer
       handleSubmit={withPreventDefault(action('form submitted'))}

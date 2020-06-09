@@ -17,6 +17,13 @@ storiesOf('Wizards|Assesment/Steps/ResidentName', module)
       onSkipClick={action('onSkipClick')}
     />
   ))
+  .add('without tip', () => (
+    <ResidentNameContainer
+      handleSubmit={withPreventDefault(action('form submitted'))}
+      onSkipClick={action('onSkipClick')}
+      hasTip={false}
+    />
+  ))
   .add('with numberOfPeople', () => (
     <ResidentNameContainer
       handleSubmit={withPreventDefault(action('form submitted'))}
