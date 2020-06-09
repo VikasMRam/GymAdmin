@@ -6,6 +6,7 @@ import { Intro } from 'sly/web/components/wizards/assessment';
 const handleSubmit = jest.fn();
 const defaultProps = {
   handleSubmit,
+  showSkipOption: true,
 };
 const wrap = (props = {}) => shallow(<Intro {...defaultProps} {...props} />);
 
