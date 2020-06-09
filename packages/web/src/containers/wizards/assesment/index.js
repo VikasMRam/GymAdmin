@@ -40,7 +40,6 @@ export default class AssesmentWizard extends Component {
     city: string,
     state: string,
     redirectTo: func.isRequired,
-    status: object,
   };
 
   state = {
@@ -109,14 +108,15 @@ export default class AssesmentWizard extends Component {
   render() {
     const { user, skipIntro, community } = this.props;
     let { city, state } = this.props;
+    let amount = 4000;
     const { agent, hasNoAgent } = this.state;
 
     if (community) {
-      ({ address: { city, state } } = community);
+      ({ address: { city, state }, startingRate: amount = 4000 } = community);
     }
 
     if (!city || !state) {
-      return throw Error('community or state and city is required');
+      throw Error('community or state and city is required');
     }
 
     return (
@@ -168,6 +168,7 @@ export default class AssesmentWizard extends Component {
               whoNeedsHelp={lookingFor}
               city={city}
               state={state}
+              amount={amount}
             />
             <WizardStep
               component={Medicaid}
