@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, bool, object } from 'prop-types';
+import { func, bool, object, string } from 'prop-types';
 
 import { community as communityPropType } from 'sly/web/propTypes/community';
 import { query, withUser } from 'sly/web/services/api';
@@ -37,7 +37,10 @@ export default class AssesmentWizard extends Component {
     ws: object,
     getAgent: func.isRequired,
     community: communityPropType,
+    city: string,
+    state: string,
     redirectTo: func.isRequired,
+    status: object,
   };
 
   state = {
@@ -105,13 +108,16 @@ export default class AssesmentWizard extends Component {
 
   render() {
     const { user, skipIntro, community } = this.props;
+    let { city, state } = this.props;
     const { agent, hasNoAgent } = this.state;
 
-    if (!community) {
-      return null;
+    if (community) {
+      ({ address: { city, state } } = community);
     }
 
-    const { address: { city, state } } = community;
+    if (!city || !state) {
+      return throw Error('community or state and city is required');
+    }
 
     return (
       <WizardController
