@@ -40,6 +40,11 @@ export default class AssesmentWizard extends Component {
     city: string,
     state: string,
     redirectTo: func.isRequired,
+    hasTip: bool,
+  };
+
+  static defaultProps = {
+    hasTip: true,
   };
 
   state = {
@@ -106,7 +111,7 @@ export default class AssesmentWizard extends Component {
   };
 
   render() {
-    const { user, skipIntro, community } = this.props;
+    const { user, skipIntro, community, hasTip } = this.props;
     let { city, state } = this.props;
     let amount = 4000;
     const { agent, hasNoAgent } = this.state;
@@ -138,29 +143,35 @@ export default class AssesmentWizard extends Component {
             <WizardStep
               component={Who}
               name="Who"
+              hasTip={hasTip}
             />
             <WizardStep
               component={Feeling}
               name="Feeling"
+              hasTip={hasTip}
             />
             <WizardStep
               component={ADL}
               name="ADL"
               whoNeedsHelp={lookingFor}
+              hasTip={hasTip}
             />
             <WizardStep
               component={Dementia}
               name="Dementia"
               whoNeedsHelp={lookingFor}
+              hasTip={hasTip}
             />
             <WizardStep
               component={Timing}
               name="Timing"
+              hasTip={hasTip}
             />
             <WizardStep
               component={CurrentLiving}
               name="CurrentLiving"
               whoNeedsHelp={lookingFor}
+              hasTip={hasTip}
             />
             <WizardStep
               component={Budget}
@@ -169,11 +180,13 @@ export default class AssesmentWizard extends Component {
               city={city}
               state={state}
               amount={amount}
+              hasTip={hasTip}
             />
             <WizardStep
               component={Medicaid}
               name="Medicaid"
               whoNeedsHelp={lookingFor}
+              hasTip={hasTip}
             />
             {!user &&
               <WizardStep
@@ -185,12 +198,15 @@ export default class AssesmentWizard extends Component {
                 signUpHeading={whatToDoNext === 'start' ?
                   'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
                   : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
+                signUpSubmitButtonText="Get Pricing"
+                signUpHasPassword={false}
               />
             }
             <WizardStep
               component={ResidentName}
               name="ResidentName"
               numberOfPeople={lookingFor === 'parents' || lookingFor === 'myself-and-spouse' ? 2 : 1}
+              hasTip={hasTip}
             />
             <WizardStep
               component={End}

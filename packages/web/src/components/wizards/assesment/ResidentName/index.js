@@ -27,9 +27,9 @@ const PaddedField = pad(Field);
 PaddedField.displayName = 'PaddedField';
 
 const ResidentName = ({
-  handleSubmit, onSkipClick, numberOfPeople, invalid, submitting,
+  handleSubmit, onSkipClick, numberOfPeople, invalid, submitting, hasTip,
 }) => (
-  <Wrapper hasSidebar>
+  <Wrapper hasSecondColumn={hasTip}>
     <Box>
       <PaddedHeading level="subtitle" weight="medium">Last question, what is the resident&apos;s name?</PaddedHeading>
       <form onSubmit={handleSubmit}>
@@ -52,9 +52,11 @@ const ResidentName = ({
         <Footer submitButtonText="Finish" onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
       </form>
     </Box>
-    <StyledTipBox heading="WHY THIS IS IMPORTANT:">
-      We help every family as if they are our own.
-    </StyledTipBox>
+    {hasTip &&
+      <StyledTipBox heading="WHY THIS IS IMPORTANT:">
+        We help every family as if they are our own.
+      </StyledTipBox>
+    }
   </Wrapper>
 );
 
@@ -64,10 +66,12 @@ ResidentName.propTypes = {
   numberOfPeople: number.isRequired,
   invalid: bool,
   submitting: bool,
+  hasTip: bool,
 };
 
 ResidentName.defaultProps = {
   numberOfPeople: 1,
+  hasTip: true,
 };
 
 export default ResidentName;

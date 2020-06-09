@@ -33,18 +33,33 @@ Login.displayName = 'Log in';
 const Provider = textAlign(StyledBlock2);
 Provider.displayName = 'Provider';
 
+const FieldsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: ${size('spacing.regular')}
+`;
+
 const SignupForm = ({
-  handleSubmit, submitting, error, onLoginClicked, onProviderClicked, heading,
+  handleSubmit, submitting, invalid, error, onLoginClicked, onProviderClicked, heading, submitButtonText, hasPassword,
 }) => (
   <form onSubmit={handleSubmit}>
     <StyledHeading size="subtitle">{heading}</StyledHeading>
-    <Field
-      name="name"
-      label="Full Name"
-      type="text"
-      placeholder="First and Last Name"
-      component={ReduxField}
-    />
+    <FieldsWrapper>
+      <Field
+        name="firstName"
+        label="First Name"
+        type="text"
+        placeholder="First Name"
+        component={ReduxField}
+      />
+      <Field
+        name="lastName"
+        label="Last Name"
+        type="text"
+        placeholder="Last Name"
+        component={ReduxField}
+      />
+    </FieldsWrapper>
     <Field
       name="email"
       label="Email Address"
@@ -60,15 +75,17 @@ const SignupForm = ({
       placeholder="(415) 555-5555"
       component={ReduxField}
     />
-    <Field
-      name="password"
-      label="Password"
-      type="password"
-      placeholder="Password"
-      component={ReduxField}
-    />
-    <StyledButton type="submit"  disabled={submitting}>
-      Sign Up
+    {hasPassword &&
+      <Field
+        name="password"
+        label="Password"
+        type="password"
+        placeholder="Password"
+        component={ReduxField}
+      />
+    }
+    <StyledButton type="submit"  disabled={submitting || invalid}>
+      {submitButtonText}
     </StyledButton>
     <StyledBlock error={error}>By continuing, you agree to Seniorly&apos;s Terms of Use and Privacy Policy.</StyledBlock>
     {error && <Block palette="danger">{error}</Block>}
@@ -86,14 +103,18 @@ const SignupForm = ({
 SignupForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
+  invalid: bool,
   error: string,
   onLoginClicked: func,
   onProviderClicked: func,
-  heading: string,
+  heading: string.isRequired,
+  submitButtonText: string.isRequired,
+  hasPassword: bool,
 };
 
 SignupForm.defaultProps = {
   heading: 'Sign Up',
+  submitButtonText: 'Sign Up',
 };
 
 export default SignupForm;

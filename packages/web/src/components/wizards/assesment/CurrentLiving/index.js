@@ -40,13 +40,13 @@ const generateHeading = (whoNeedsHelp) => {
 };
 
 const CurrentLiving = ({
-  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting,
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting, hasTip,
 }) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={8} currentStep={6} />
     </Wrapper>
-    <Wrapper hasSidebar>
+    <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
         <form onSubmit={handleSubmit}>
@@ -60,9 +60,11 @@ const CurrentLiving = ({
           <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
-      <StyledTipBox heading="DID YOU KNOW?">
-        If you are in an urgent situation, we know how best to accommodate your needs.
-      </StyledTipBox>
+      {hasTip &&
+        <StyledTipBox heading="DID YOU KNOW?">
+          If you are in an urgent situation, we know how best to accommodate your needs.
+        </StyledTipBox>
+      }
     </Wrapper>
   </div>
 );
@@ -74,6 +76,11 @@ CurrentLiving.propTypes = {
   onBackClick: func,
   invalid: bool,
   submitting: bool,
+  hasTip: bool,
+};
+
+CurrentLiving.propTypes = {
+  hasTip: true,
 };
 
 export default CurrentLiving;

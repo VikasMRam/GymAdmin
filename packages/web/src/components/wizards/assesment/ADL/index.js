@@ -42,13 +42,13 @@ const generateHeading = (whoNeedsHelp) => {
 };
 
 const ADL = ({
-  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting,
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting, hasTip,
 }) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={8} currentStep={3} />
     </Wrapper>
-    <Wrapper hasSidebar>
+    <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
         <form onSubmit={handleSubmit}>
@@ -63,9 +63,11 @@ const ADL = ({
           <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
-      <StyledTipBox heading="WHY THIS IS IMPORTANT:">
-        This helps us narrow down our recommendations to only those communities that can support your care needs.
-      </StyledTipBox>
+      {hasTip &&
+        <StyledTipBox heading="WHY THIS IS IMPORTANT:">
+          This helps us narrow down our recommendations to only those communities that can support your care needs.
+        </StyledTipBox>
+      }
     </Wrapper>
   </div>
 );
@@ -77,6 +79,11 @@ ADL.propTypes = {
   onBackClick: func,
   invalid: bool,
   submitting: bool,
+  hasTip: bool,
+};
+
+ADL.propTypes = {
+  hasTip: true,
 };
 
 export default ADL;

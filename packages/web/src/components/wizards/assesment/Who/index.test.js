@@ -23,6 +23,16 @@ describe('Wizards|Assesment - Steps|Who', () => {
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
 
+  it('renders without tip', () => {
+    const wrapper = wrap({
+      hasTip: false,
+    });
+
+    expect(wrapper.find('PaddedHeading')).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'select' })).toHaveLength(1);
+    expect(wrapper.find('StyledTipBox')).toHaveLength(0);
+  });
+
   it('handles submit', () => {
     const wrapper = wrap();
 

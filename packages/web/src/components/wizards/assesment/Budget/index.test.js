@@ -32,6 +32,16 @@ describe('Wizards|Assesment - Steps|Budget', () => {
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
 
+  it('renders without tip', () => {
+    const wrapper = wrap({
+      hasTip: false,
+    });
+
+    expect(wrapper.find('PaddedHeading').contains(`The average monthly cost of senior living in ${city}, ${state} is ${formattedAmount}. Does your ${whoNeedsHelp} have access to any of these benefits?`)).toBeTruthy();
+    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('StyledTipBox')).toHaveLength(0);
+  });
+
   it('renders correct heading for parents', () => {
     const wrapper = wrap({
       whoNeedsHelp: 'parents',

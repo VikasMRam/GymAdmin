@@ -39,6 +39,7 @@ export default class AssessmentWizardPageContainer extends Component {
       <AssesmentWizardPage
         community={community}
         skipIntro={qp.skipIntro}
+        hasTip={qp.hasTip !== 'false'}
         city={city}
         state={state}
       />

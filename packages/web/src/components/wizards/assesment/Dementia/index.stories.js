@@ -19,6 +19,15 @@ storiesOf('Wizards|Assesment/Steps/Dementia', module)
       whoNeedsHelp="mom"
     />
   ))
+  .add('without tip', () => (
+    <DementiaContainer
+      handleSubmit={withPreventDefault(action('form submitted'))}
+      onSkipClick={action('onSkipClick')}
+      onBackClick={action('onBackClick')}
+      whoNeedsHelp="mom"
+      hasTip={false}
+    />
+  ))
   .add('default male selected', () => (
     <DementiaContainer
       handleSubmit={withPreventDefault(action('form submitted'))}

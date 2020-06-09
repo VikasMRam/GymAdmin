@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, func, oneOf, string } from 'prop-types';
+import { object, func, oneOf, string, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
@@ -42,11 +42,14 @@ export default class AuthContainer extends Component {
     type: oneOf(['modal', 'inline']),
     initialStep: string,
     signUpHeading: string,
+    signUpSubmitButtonText: string,
+    signUpHasPassword: bool,
   };
 
   static defaultProps = {
     type: 'modal',
     initialStep: 'Login',
+    signUpHasPassword: true,
   };
 
   state = { isOpen: false };
@@ -79,7 +82,7 @@ export default class AuthContainer extends Component {
 
   render() {
     const { isOpen } = this.state;
-    const { authenticateCancel, authenticated, type, signUpHeading } = this.props;
+    const { authenticateCancel, authenticated, type, signUpHeading, signUpSubmitButtonText, signUpHasPassword } = this.props;
     let { initialStep } = this.props;
 
     if (authenticated.options && authenticated.options.register) {
@@ -120,6 +123,8 @@ export default class AuthContainer extends Component {
               onProviderClicked={() => goto('ProviderSignup')}
               onSubmit={() => goto('CustomerSignupConfirmation')}
               heading={signUpHeading}
+              submitButtonText={signUpSubmitButtonText}
+              hasPassword={signUpHasPassword}
             />
             <WizardStep
               component={CustomerSignupConfirmationContainer}

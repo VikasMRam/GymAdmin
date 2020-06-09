@@ -45,13 +45,13 @@ const generateHeading = (whoNeedsHelp) => {
 };
 
 const Medicaid = ({
-  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting,
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting, hasTip,
 }) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={8} currentStep={8} />
     </Wrapper>
-    <Wrapper hasSidebar>
+    <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
         <form onSubmit={handleSubmit}>
@@ -65,10 +65,12 @@ const Medicaid = ({
           <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
-      <StyledTipBox heading="YOU TYPICALLY QUALIFY IF:">
-        <PaddedIconItem icon="warning" iconPalette="slate" iconVariation="base">Asset limit in most states is $1,600 to $15,750.</PaddedIconItem>
-        <IconItem icon="warning" iconPalette="slate" iconVariation="base">Income limit is typically less than $2,360 per month (FBR).</IconItem>
-      </StyledTipBox>
+      {hasTip &&
+        <StyledTipBox heading="YOU TYPICALLY QUALIFY IF:">
+          <PaddedIconItem icon="warning" iconPalette="slate" iconVariation="base">Asset limit in most states is $1,600 to $15,750.</PaddedIconItem>
+          <IconItem icon="warning" iconPalette="slate" iconVariation="base">Income limit is typically less than $2,360 per month (FBR).</IconItem>
+        </StyledTipBox>
+      }
     </Wrapper>
   </div>
 );
@@ -80,6 +82,11 @@ Medicaid.propTypes = {
   onBackClick: func,
   invalid: bool,
   submitting: bool,
+  hasTip: bool,
+};
+
+Medicaid.propTypes = {
+  hasTip: true,
 };
 
 export default Medicaid;

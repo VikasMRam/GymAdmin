@@ -48,13 +48,13 @@ const generateHeading = (whoNeedsHelp, amount, city, state) => {
 };
 
 const Budget = ({
-  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting,
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip,
 }) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={8} currentStep={7} />
     </Wrapper>
-    <Wrapper hasSidebar>
+    <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp, amount, city, state)}</PaddedHeading>
         <PaddedBlock>Select all that apply.</PaddedBlock>
@@ -70,10 +70,12 @@ const Budget = ({
           <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
-      <StyledTipBox heading="DID YOU KNOW?">
-        <PaddedIconItem icon="favourite-light" iconPalette="slate" iconVariation="base">Senior living communities typically include an apartment or room, care and/or supervision, and 3-meals per day.</PaddedIconItem>
-        <IconItem icon="payment" iconPalette="slate" iconVariation="base">Although senior living is usually paid out of pocket, we are here to help you understand all of your options.</IconItem>
-      </StyledTipBox>
+      {hasTip &&
+        <StyledTipBox heading="DID YOU KNOW?">
+          <PaddedIconItem icon="favourite-light" iconPalette="slate" iconVariation="base">Senior living communities typically include an apartment or room, care and/or supervision, and 3-meals per day.</PaddedIconItem>
+          <IconItem icon="payment" iconPalette="slate" iconVariation="base">Although senior living is usually paid out of pocket, we are here to help you understand all of your options.</IconItem>
+        </StyledTipBox>
+      }
     </Wrapper>
   </div>
 );
@@ -88,6 +90,11 @@ Budget.propTypes = {
   onBackClick: func,
   invalid: bool,
   submitting: bool,
+  hasTip: bool,
+};
+
+Budget.propTypes = {
+  hasTip: true,
 };
 
 export default Budget;
