@@ -72,6 +72,11 @@ export default class DashboardCommunityContractForm extends Component {
                 parse={value => !value ? null : Number(value)}
               />
               <EditField
+              label="Contract Url"
+              name="rgsInfo.contract_info.url"
+              type="text"
+              />
+              <EditField
                 label="Notes"
                 name="rgsAux.rgsInfo.contract_info.notes"
                 type="textarea"

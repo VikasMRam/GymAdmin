@@ -56,6 +56,14 @@ export default class DashboardCommunityPricingForm extends Component {
         <FormScrollSection>
           <FormSection heading="Base Costs">
             <EditField
+              name="propInfo.ratesText"
+              label="Rates starting at"
+              type="text"
+              readOnly={!canEdit}
+              placeholder="Starting rates"
+              wideWidth
+            />
+            <EditField
               name="propInfo.sharedSuiteRate"
               label="Shared suite"
               type="text"
