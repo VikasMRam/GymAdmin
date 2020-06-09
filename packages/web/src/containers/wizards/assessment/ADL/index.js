@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 
 import { query } from 'sly/web/services/api';
 import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
-import { ADL } from 'sly/web/components/wizards/assesment';
+import { ADL } from 'sly/web/components/wizards/assessment';
 import { createValidator, required } from 'sly/web/services/validation';
 
 const validate = createValidator({
@@ -38,7 +38,7 @@ export default class ADLFormContainer extends Component {
         actionPage: pathname,
         actionInfo: {
           stepName: 'ADL',
-          wizardName: 'assesmentWizard',
+          wizardName: 'assessmentWizard',
           data,
         },
       },

@@ -12,7 +12,7 @@ export default function CommunityDetailsPageColumnContainer({ community }) {
         <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
       </Variant>
       <Variant name="AssessmentWizard">
-        <GetCommunityPricingAndAvailability community={community} buttonTo={`/wizards/assessment/${community.id}`} />
+        <GetCommunityPricingAndAvailability community={community} buttonTo={`/wizards/assessment/community/${community.id}`} />
       </Variant>
 
     </Experiment>

@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 
 import { query } from 'sly/web/services/api';
 import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
-import { ResidentName } from 'sly/web/components/wizards/assesment';
+import { ResidentName } from 'sly/web/components/wizards/assessment';
 
 const ReduxForm = reduxForm({
   form: 'ResidentNameForm',
@@ -32,7 +32,7 @@ export default class ResidentNameFormContainer extends Component {
         actionPage: pathname,
         actionInfo: {
           stepName: 'residentName',
-          wizardName: 'assesmentWizard',
+          wizardName: 'assessmentWizard',
           data,
         },
       },

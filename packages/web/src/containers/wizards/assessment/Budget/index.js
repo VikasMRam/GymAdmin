@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 
 import { query } from 'sly/web/services/api';
 import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
-import { Budget } from 'sly/web/components/wizards/assesment';
+import { Budget } from 'sly/web/components/wizards/assessment';
 import { createValidator, required } from 'sly/web/services/validation';
 
 const validate = createValidator({
@@ -38,7 +38,7 @@ export default class BudgetFormContainer extends Component {
         actionPage: pathname,
         actionInfo: {
           stepName: 'budget',
-          wizardName: 'assesmentWizard',
+          wizardName: 'assessmentWizard',
           data,
         },
       },

@@ -11,17 +11,17 @@ import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import AuthContainer from 'sly/web/services/auth/containers/AuthContainer';
 import userPropType from 'sly/web/propTypes/user';
 import SlyEvent from 'sly/web/services/helpers/events';
-import Intro from 'sly/web/containers/wizards/assesment/Intro';
-import Who from 'sly/web/containers/wizards/assesment/Who';
-import Feeling from 'sly/web/containers/wizards/assesment/Feeling';
-import ADL from 'sly/web/containers/wizards/assesment/ADL';
-import Budget from 'sly/web/containers/wizards/assesment/Budget';
-import CurrentLiving from 'sly/web/containers/wizards/assesment/CurrentLiving';
-import Dementia from 'sly/web/containers/wizards/assesment/Dementia';
-import End from 'sly/web/containers/wizards/assesment/End';
-import Medicaid from 'sly/web/containers/wizards/assesment/Medicaid';
-import ResidentName from 'sly/web/containers/wizards/assesment/ResidentName';
-import Timing from 'sly/web/containers/wizards/assesment/Timing';
+import Intro from 'sly/web/containers/wizards/assessment/Intro';
+import Who from 'sly/web/containers/wizards/assessment/Who';
+import Feeling from 'sly/web/containers/wizards/assessment/Feeling';
+import ADL from 'sly/web/containers/wizards/assessment/ADL';
+import Budget from 'sly/web/containers/wizards/assessment/Budget';
+import CurrentLiving from 'sly/web/containers/wizards/assessment/CurrentLiving';
+import Dementia from 'sly/web/containers/wizards/assessment/Dementia';
+import End from 'sly/web/containers/wizards/assessment/End';
+import Medicaid from 'sly/web/containers/wizards/assessment/Medicaid';
+import ResidentName from 'sly/web/containers/wizards/assessment/ResidentName';
+import Timing from 'sly/web/containers/wizards/assessment/Timing';
 
 @withWS
 @withUser
@@ -29,7 +29,8 @@ import Timing from 'sly/web/containers/wizards/assesment/Timing';
 @query('getAgent', 'getAgent')
 @query('createAction', 'createUuidAction')
 
-export default class AssesmentWizard extends Component {
+export default class AssessmentWizard extends Component {
+  static typeHydrationId = 'AssessmentWizardContainer';
   static propTypes = {
     createAction: func.isRequired,
     user: userPropType,

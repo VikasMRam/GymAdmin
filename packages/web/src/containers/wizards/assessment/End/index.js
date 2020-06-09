@@ -1,7 +1,7 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 
-import { End } from 'sly/web/components/wizards/assesment';
+import { End } from 'sly/web/components/wizards/assessment';
 
 const ReduxForm = reduxForm({
   form: 'EndForm',

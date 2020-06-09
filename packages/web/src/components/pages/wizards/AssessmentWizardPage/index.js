@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
-import AssesmentWizard from 'sly/web/containers/wizards/assesment';
+import AssessmentWizard from 'sly/web/containers/wizards/assessment';
 
 const StyledTemplateContent = styled(TemplateContent)`
   > * {
@@ -12,13 +12,13 @@ const StyledTemplateContent = styled(TemplateContent)`
   }
 `;
 
-const AssesmentWizardPage = props => (
+const AssessmentWizardPage = props => (
   <>
     <TemplateHeader><HeaderContainer layout="wizards" /></TemplateHeader>
     <StyledTemplateContent>
-      <AssesmentWizard {...props} />
+      <AssessmentWizard {...props} />
     </StyledTemplateContent>
   </>
 );
 
-export default AssesmentWizardPage;
+export default AssessmentWizardPage;
