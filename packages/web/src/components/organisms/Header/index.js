@@ -13,7 +13,7 @@ import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 const HeaderWrapper = styled.nav`
   display: flex;
   width: 100%;
-  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  border-bottom: ${size('border.regular')} solid ${palette('slate.lighter-90')};
   // To remove blue line caused by tabIndex
   outline: none;
   align-items: center;

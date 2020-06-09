@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import { string, func, object, arrayOf, bool, shape } from 'prop-types';
 import { generatePath } from 'react-router';
 
@@ -23,7 +22,6 @@ import {
 import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
 import communityPropType from 'sly/web/propTypes/community';
 import userPropType from 'sly/web/propTypes/user';
-import { size, palette } from 'sly/web/components/themes';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import { userIs } from 'sly/web/services/helpers/role';
 import Tabs from 'sly/web/components/molecules/Tabs';
@@ -236,32 +234,36 @@ export default class DashboardCommunityDetailsPage extends Component {
             {this.getTabsForUser()}
           </Tabs>
 
-          <Section noPadding={currentTab === EDITS}>
-            {currentTab === PROFILE && (
-              <DashboardCommunityDetailsFormContainer
-                notifyInfo={notifyInfo}
-                notifyError={notifyError}
-                community={community}
-                currentEdit={currentEdit}
-              />
-            )}
-            {currentTab === CARE_SERVICES && (
+          {currentTab === PROFILE && (
+            <DashboardCommunityDetailsFormContainer
+              notifyInfo={notifyInfo}
+              notifyError={notifyError}
+              community={community}
+              currentEdit={currentEdit}
+            />
+          )}
+          {currentTab === CARE_SERVICES && (
+            <Section>
               <DashboardCommunityCareServicesFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
                 currentEdit={currentEdit}
               />
-            )}
-            {currentTab === PRICING && (
+            </Section>
+          )}
+          {currentTab === PRICING && (
+            <Section>
               <DashboardCommunityPricingFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
                 currentEdit={currentEdit}
               />
-            )}
-            {currentTab === PHOTOS && (
+            </Section>
+          )}
+          {currentTab === PHOTOS && (
+            <Section>
               <DashboardCommunityPhotosFormContainer
                 showModal={showModal}
                 hideModal={hideModal}
@@ -270,24 +272,30 @@ export default class DashboardCommunityDetailsPage extends Component {
                 community={community}
                 currentEdit={currentEdit}
               />
-            )}
-            {currentTab === AMENITIES && (
+            </Section>
+          )}
+          {currentTab === AMENITIES && (
+            <Section>
               <DashboardCommunityAmenitiesFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
                 currentEdit={currentEdit}
               />
-            )}
-            {currentTab === SERVICES && (
+            </Section>
+          )}
+          {currentTab === SERVICES && (
+            <Section>
               <DashboardCommunityServicesFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
                 currentEdit={currentEdit}
               />
-            )}
-            {currentTab === CONTACTS && (
+            </Section>
+          )}
+          {currentTab === CONTACTS && (
+            <Section>
               <DashboardContactsSectionContainer
                 id="contacts"
                 sectionFilters={sectionFilters}
@@ -295,29 +303,37 @@ export default class DashboardCommunityDetailsPage extends Component {
                 entityId={community.id}
                 entityName={community.name}
               />
-            )}
-            {currentTab === CONTRACT && (
+            </Section>
+          )}
+          {currentTab === CONTRACT && (
+            <Section>
               <DashboardCommunityContractFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
                 currentEdit={currentEdit}
               />
-            )}
-            {currentTab === ADMIN && (
+            </Section>
+          )}
+          {currentTab === ADMIN && (
+            <Section>
               <DashboardCommunityAdminFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
                 currentEdit={currentEdit}
               />
-            )}
-            {currentTab === CLIENTS && (
+            </Section>
+          )}
+          {currentTab === CLIENTS && (
+            <Section>
               <DashboardAgentFamilyOverviewSectionContainer
                 sectionFilters={clientsSectionFilters}
               />
-            )}
-            {currentTab === EDITS && (
+            </Section>
+          )}
+          {currentTab === EDITS && (
+            <Section>
               <DashboardCommunityEditsContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
@@ -325,14 +341,12 @@ export default class DashboardCommunityDetailsPage extends Component {
                 currentEdit={currentEdit}
                 suggestedEdits={suggestedEdits}
               />
-            )}
-          </Section>
+            </Section>
+          )}
         </Right>
 
         <SummarySection className={currentTab === SUMMARY ? 'selected' : ''}>
-          <Section>
-            <DashboardCommunitySummary community={community} />
-          </Section>
+          <DashboardCommunitySummary community={community} />
         </SummarySection>
       </DashboardWithSummaryPageTemplate>
     );

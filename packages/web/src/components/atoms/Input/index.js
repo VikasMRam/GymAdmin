@@ -19,7 +19,7 @@ const borderColor = (p) => {
   if (p.warning) {
     return palette('warning', 'base');
   }
-  return p.invalid ? palette('danger', 'base') : palette('slate', 'stroke');
+  return p.invalid ? palette('danger', 'base') : palette('slate', 'lighter-90');
 };
 const focusBorderColor = (p) => {
   if (p.warning) {

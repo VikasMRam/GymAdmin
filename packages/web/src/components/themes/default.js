@@ -1,5 +1,5 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { makeColor, makeColorTable } from './color';
+import { makeColor } from './color';
 
 export { colorIndex } from './color';
 
@@ -13,19 +13,19 @@ const theme = {};
 // see below comments or in storybook
 // DO NOT MODIFY the following without asking Jared
 theme.palette = {
-  slate      : makeColor('#2a333f', ['dark', 'base', 'filler', 'stroke']),
-  primary    : makeColor('#186dc5', ['dark', 'base', 'filler', 'stroke', 'background']),
-  viridian   : makeColor('#1a7473', ['darker-30', 'darker-15', 'base', 'lighter-30', 'lighter-60', 'lighter-90', 'lighter-95']),
-  secondary  : makeColor('#56c4c2', ['darker-30', 'dark', 'base', 'filler', 'stroke', 'background']),
-  white      : makeColor('#ffffff', ['base']),
-  danger     : makeColor('#dc3133', ['dark', 'base', 'filler', 'stroke']),
-  warning    : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke']),
-  green      : makeColor('#4fb75f', ['dark', 'base', 'filler', 'stroke']),
-  grey       : makeColor('#70767E', ['dark', 'base', 'filler', 'stroke', 'background']),
-  yellow     : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke', 'background']),
-  magenta    : makeColor('#6d27ca', ['dark', 'base', 'filler', 'stroke', 'background']),
-  orange     : makeColor('#F99106', ['dark', 'base', 'filler', 'stroke', 'background']),
-  razzmatazz : makeColor('#F40767', ['dark', 'base', 'filler', 'stroke', 'background']),
+  slate      : makeColor('#2a333f'),
+  primary    : makeColor('#186dc5'),
+  viridian   : makeColor('#1a7473'),
+  secondary  : makeColor('#56c4c2'),
+  white      : makeColor('#ffffff'),
+  danger     : makeColor('#dc3133'),
+  warning    : makeColor('#f3c150'),
+  green      : makeColor('#4fb75f'),
+  grey       : makeColor('#70767E'),
+  yellow     : makeColor('#f3c150'),
+  magenta    : makeColor('#6d27ca'),
+  orange     : makeColor('#F99106'),
+  razzmatazz : makeColor('#F40767'),
 };
 
 theme.fonts = {

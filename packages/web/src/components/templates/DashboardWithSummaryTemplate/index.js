@@ -1,11 +1,12 @@
+import React from 'react';
+import { any, object, shape, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/web/components/themes';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
-import Box, { topSnap, bottomSnap } from 'sly/web/components/atoms/Box';
+import Box from 'sly/web/components/atoms/Box';
+import { topSnap, bottomSnap } from 'sly/web/components/helpers/snap'
 import { Block } from 'sly/web/components/atoms';
-import React from 'react';
-import { any, object, shape, string } from 'prop-types';
 import BackLink from 'sly/web/components/molecules/BackLink';
 
 export const Top = styled.div`
@@ -16,6 +17,7 @@ export const Top = styled.div`
 export const Left = styled(Box)`
   background: ${palette('white.base')};
   grid-area: left;
+  
   ${bottomSnap};
 `;
 
@@ -35,11 +37,21 @@ export const Section = styled(Box)`
   ${topSnap};
 `;
 
-export const SummarySection = styled.div`
-  // the rest are to fix the
-  // unusual behaviour of the summary section in laptop
+Section.defaultProps = {
+  padding: 'none',
+};
+
+export const SummarySection = styled(({ children, className, ...props }) => (
+  <div className={className}>
+    <Section padding="xLarge" {...props}>
+      {children}
+    </Section>
+  </div>
+))`
   display: none;
   grid-area: summary;
+
+  ${topSnap};
 
   @media (max-width: calc(${size('breakpoint.laptop')} - 1px)) {
     &.selected {
@@ -49,21 +61,31 @@ export const SummarySection = styled.div`
 
   @media (min-width: ${size('breakpoint.laptop')}) {
     display: block;
-    ${topSnap};
   }
 `;
 
-export const FormSection = styled.div`
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')};
-  padding-bottom: 0;
-  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+export const FormSection = ({ heading, children }) => (
+  <Block
+    padding="xLarge"
+  >
+    {heading && (
+      <Block
+        level="body"
+        weight="medium"
+        pad="large"
+      >
+        {heading}
+      </Block>
+    )}
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: ${size('spacing.xLarge')};
-    padding-bottom: 0;
-  }
-`;
+    {children}
+  </Block>
+);
 
+FormSection.propTypes = {
+  heading: string,
+  children: any,
+};
 
 const SectionHeaderWrapper = styled.div`
   display: flex;
@@ -99,6 +121,8 @@ SectionHeader.propTypes = {
   actions: any,
   children: any,
 };
+
+export const SectionActions = props => <Block padding="xLarge" align="right" borderTop="regular" {...props} />;
 
 export const DashboardWithSummaryPageTemplate = styled(DashboardPageTemplate)`
   display: block;

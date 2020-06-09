@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 
 import { size } from 'sly/web/components/themes';
+import { getCardinalValues } from 'sly/web/components/helpers/getCardinalValues';
 
 const spacing = (Component, { top = 'xLarge', bottom = 'xLarge', left = 'xLarge', right = 'xLarge' }) => styled(Component)`
   padding-top: ${size('spacing', top)};
@@ -9,71 +10,22 @@ const spacing = (Component, { top = 'xLarge', bottom = 'xLarge', left = 'xLarge'
   padding-right: ${size('spacing', right)};
 `;
 
-const getAutoValues = (ary, prefix) => {
-  if (!Array.isArray(ary)) {
-    ary = [ary];
+export const withPadding = ({ noPadding, ...props } = {}) => {
+  // TODO: padding="none" instead
+  if (noPadding) {
+    return css`padding: 0px;`;
   }
-  if (ary.length === 1) {
-    ary.push(ary[0]);
-    ary.push(ary[0]);
-    ary.push(ary[0]);
-  }
-  if (ary.length === 2) {
-    ary.push(ary[0]);
-    ary.push(ary[1]);
-  }
-  if (ary.length === 3) {
-    ary.push(ary[1]);
-  }
-  if (ary.length !== 4) {
-    throw new Error('something went wrong calculating padding or margins')
-  }
-  return [
-    'Top',
-    'Right',
-    'Bottom',
-    'Left',
-  ].reduce((acc, prop, i) => {
-    acc[`${prefix}${prop}`] = size('spacing', ary[i]);
-    return acc;
-  }, {});
+  return css(getCardinalValues(props, 'padding', 'spacing'));
 };
 
-const getValues = (props, prefix) => [
-  'Top',
-  'Right',
-  'Bottom',
-  'Left',
-].reduce((acc, prop) => {
-  const name = `${prefix}${prop}`;
-  const value = props[name];
-  if (value) {
-    acc[name] = size('spacing', value);
-  }
-  return acc;
-}, {});
-
-export const withPadding = ({ padding, ...props } = {}) => {
-  if (padding) {
-    return css(getAutoValues(padding, 'padding'));
-  }
-  return css(getValues(props, 'padding'));
-};
-
-export const withMargin = ({ margin, ...props } = {}) => {
-  if (margin) {
-    return css(getAutoValues(margin, 'margin'));
-  }
-  return css(getValues(props, 'margin'));
+export const withMargin = (props = {}) => {
+  return css(getCardinalValues(props, 'margin', 'spacing'));
 };
 
 export const withPad = ({ pad } = {}) => {
-  if (!pad) {
-    return null;
-  }
-  return css` 
-    margin-bottom: ${size('spacing', pad)};
-  `;
+  return pad && css({
+    marginBottom: size('spacing', pad),
+  });
 };
 
 export const withSpacing = () => css`

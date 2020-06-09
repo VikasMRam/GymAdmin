@@ -3,6 +3,9 @@ export const setDisplayName = (Component, displayName = 'Unknown') => {
   return Component;
 };
 
+export * from './snap';
+export * from './alignment';
+export * from './border';
 export * from './color';
 export * from './spacing';
 export * from './text';

@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import { sortableContainer } from 'react-sortable-hoc';
 
 import { size } from 'sly/web/components/themes';
-import pad from 'sly/web/components/helpers/pad';
-import { Button } from 'sly/web/components/atoms';
 import FormSection from 'sly/web/components/molecules/FormSection';
 import { imagePropType } from 'sly/web/propTypes/gallery';
 import MediaItem from 'sly/web/services/s3Uploader/components/MediaItem';
@@ -29,8 +27,6 @@ const genKey = ((cache = {}) => (image) => {
 })();
 
 const FormSectionSortable = sortableContainer(FormSection);
-
-const StyledButton = pad(Button, 'regular');
 
 const Heading = styled.div`
   display: flex;

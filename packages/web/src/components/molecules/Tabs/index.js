@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   text-transform: uppercase;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
+    border: ${size('border', 'regular')} solid ${palette('slate', 'lighter-90')};
     border-top-left-radius: ${size('border.xxLarge')};
     border-top-right-radius: ${size('border.xxLarge')};
     ${ifProp({ noBorder: true }, css`

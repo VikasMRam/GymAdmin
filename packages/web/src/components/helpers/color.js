@@ -3,7 +3,7 @@ import { ifProp } from 'styled-tools';
 
 import { palette } from 'sly/web/components/themes';
 
-const getColor = (color, variation) => {
+export const getColor = (color, variation) => {
   const args = [color];
   if (variation) {
     args.push(variation);
@@ -23,9 +23,15 @@ export const withColor = (props = {}) => css`
     color: ${getColor(props.palette, props.variation)}};
   `)}
   ${ifProp([
-    'bg',
-    'bgVariation',
+    'background',
+    'backgroundVariation',
   ], css`
     background: ${getColor(props.bg, props.bgVariation)};
+  `)}
+  ${ifProp([
+    'border',
+    'borderVariation',
+  ], css`
+    border-color: ${getColor(props.border, props.borderVariation)};
   `)}
 `;
