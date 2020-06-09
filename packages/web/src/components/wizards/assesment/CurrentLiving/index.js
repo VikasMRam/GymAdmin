@@ -79,7 +79,7 @@ CurrentLiving.propTypes = {
   hasTip: bool,
 };
 
-CurrentLiving.propTypes = {
+CurrentLiving.defaultProps = {
   hasTip: true,
 };
 

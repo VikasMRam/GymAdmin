@@ -82,7 +82,7 @@ ADL.propTypes = {
   hasTip: bool,
 };
 
-ADL.propTypes = {
+ADL.defaultProps = {
   hasTip: true,
 };
 

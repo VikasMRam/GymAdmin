@@ -90,9 +90,13 @@ export default class PostConversionAdTileContainer extends Component {
   render() {
     const { type, community } = this.props;
     const { isModalOpen, modalHeading, modalMessagePrompt, modalAction, modalMessagePlaceholder } = this.state;
-    const { address: {zip, city, state }} = community;
-    const isHCA = hcaAdEnabled({ zip });
-    const hcaAdTitle = `Home Care Assistance in ${city}, ${state}`;
+    let zip;
+    let isHCA = false;
+    if (community) {
+      ({ address: { zip } } = community);
+      (isHCA = hcaAdEnabled({ zip }));
+    }
+
     return (
       <>
         {type === 'getOffer' &&

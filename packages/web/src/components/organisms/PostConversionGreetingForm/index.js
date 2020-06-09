@@ -41,7 +41,7 @@ const PostConversionGreetingForm = ({
 
   const closeModal = () => setCurrentModal(null);
   const doReject = () => onSubmit({ interest: DO_NOT_REFER }).then(() => setCurrentModal(SURE_NOT_HELP));
-  const doDismiss = () => onSubmit({ redirectLink: community.url });
+  const doDismiss = () => onSubmit({ redirectLink: community ? community.url : '/' });
 
   return (
     <div className={className}>

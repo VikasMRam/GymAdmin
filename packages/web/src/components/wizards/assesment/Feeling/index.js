@@ -66,7 +66,7 @@ Feeling.propTypes = {
   hasTip: bool,
 };
 
-Feeling.propTypes = {
+Feeling.defaultProps = {
   hasTip: true,
 };
 

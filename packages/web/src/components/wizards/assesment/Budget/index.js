@@ -93,7 +93,7 @@ Budget.propTypes = {
   hasTip: bool,
 };
 
-Budget.propTypes = {
+Budget.defaultProps = {
   hasTip: true,
 };
 

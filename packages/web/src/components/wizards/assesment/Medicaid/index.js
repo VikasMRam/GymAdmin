@@ -85,7 +85,7 @@ Medicaid.propTypes = {
   hasTip: bool,
 };
 
-Medicaid.propTypes = {
+Medicaid.defaultProps = {
   hasTip: true,
 };
 

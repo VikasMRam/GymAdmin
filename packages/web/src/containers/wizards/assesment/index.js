@@ -43,10 +43,6 @@ export default class AssesmentWizard extends Component {
     hasTip: bool,
   };
 
-  static defaultProps = {
-    hasTip: true,
-  };
-
   state = {
     agent: null,
     hasNoAgent: false,
@@ -214,6 +210,7 @@ export default class AssesmentWizard extends Component {
               agent={agent}
               hasNoAgent={hasNoAgent}
               community={community}
+              city={city}
             />
           </WizardSteps>
         )}

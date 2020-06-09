@@ -82,7 +82,7 @@ Dementia.propTypes = {
   hasTip: bool,
 };
 
-Dementia.propTypes = {
+Dementia.defaultProps = {
   hasTip: true,
 };
 
