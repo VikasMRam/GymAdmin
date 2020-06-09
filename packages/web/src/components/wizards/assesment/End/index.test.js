@@ -26,6 +26,15 @@ describe('Wizards|Assesment - Steps|End', () => {
     expect(wrapper.find('SimilarCommunities')).toHaveLength(1);
   });
 
+  it('renders without community', () => {
+    const wrapper = wrap({
+      community: null,
+    });
+
+    expect(wrapper.find('MatchedAgent')).toHaveLength(1);
+    expect(wrapper.find('SimilarCommunities')).toHaveLength(0);
+  });
+
   it('renders with hasNoAgent', () => {
     const wrapper = wrap({
       hasNoAgent: true,

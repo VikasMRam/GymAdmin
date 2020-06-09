@@ -25,6 +25,16 @@ describe('Wizards|Assesment - Steps|Dementia', () => {
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
 
+  it('renders without tip', () => {
+    const wrapper = wrap({
+      hasTip: false,
+    });
+
+    expect(wrapper.find('PaddedHeading').contains('Are your parents forgetful?')).toBeTruthy();
+    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('StyledTipBox')).toHaveLength(0);
+  });
+
   it('renders correct heading for myself-and-spouse', () => {
     const wrapper = wrap({
       whoNeedsHelp: 'myself-and-spouse',

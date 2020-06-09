@@ -28,13 +28,13 @@ const StyledTipBox = styled(TipBox)`
 `;
 
 const Feeling = ({
-  handleSubmit, onBackClick, onSkipClick, invalid, submitting,
+  handleSubmit, onBackClick, onSkipClick, invalid, submitting, hasTip,
 }) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={8} currentStep={2} />
     </Wrapper>
-    <Wrapper hasSidebar>
+    <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">How are you feeling about finding a senior living community?</PaddedHeading>
         <form onSubmit={handleSubmit}>
@@ -48,9 +48,11 @@ const Feeling = ({
           <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
-      <StyledTipBox heading="DID YOU KNOW?">
-        We&apos;ve been through this with thousands of loved ones. You&apos;re in good hands!
-      </StyledTipBox>
+      {hasTip &&
+        <StyledTipBox heading="DID YOU KNOW?">
+          We&apos;ve been through this with thousands of loved ones. You&apos;re in good hands!
+        </StyledTipBox>
+      }
     </Wrapper>
   </div>
 );
@@ -61,6 +63,11 @@ Feeling.propTypes = {
   onBackClick: func,
   invalid: bool,
   submitting: bool,
+  hasTip: bool,
+};
+
+Feeling.defaultProps = {
+  hasTip: true,
 };
 
 export default Feeling;

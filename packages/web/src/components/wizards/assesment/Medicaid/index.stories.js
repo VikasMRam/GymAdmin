@@ -19,6 +19,15 @@ storiesOf('Wizards|Assesment/Steps/Medicaid', module)
       whoNeedsHelp="mom"
     />
   ))
+  .add('without tip', () => (
+    <MedicaidContainer
+      handleSubmit={withPreventDefault(action('form submitted'))}
+      onSkipClick={action('onSkipClick')}
+      onBackClick={action('onBackClick')}
+      whoNeedsHelp="mom"
+      hasTip={false}
+    />
+  ))
   .add('with parent selected', () => (
     <MedicaidContainer
       handleSubmit={withPreventDefault(action('form submitted'))}

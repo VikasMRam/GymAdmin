@@ -17,4 +17,12 @@ storiesOf('Wizards|Assesment/Steps/Timing', module)
       onSkipClick={action('onSkipClick')}
       onBackClick={action('onBackClick')}
     />
+  ))
+  .add('without tip', () => (
+    <TimingContainer
+      handleSubmit={withPreventDefault(action('form submitted'))}
+      onSkipClick={action('onSkipClick')}
+      onBackClick={action('onBackClick')}
+      hasTip={false}
+    />
   ));

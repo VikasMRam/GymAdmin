@@ -23,6 +23,16 @@ describe('Wizards|Assesment - Steps|ResidentName', () => {
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
 
+  it('renders without tip', () => {
+    const wrapper = wrap({
+      hasTip: false,
+    });
+
+    expect(wrapper.find('PaddedHeading').contains("Last question, what is the resident's name?")).toBeTruthy();
+    expect(wrapper.find('PaddedField').filter({ type: 'text' })).toHaveLength(2);
+    expect(wrapper.find('StyledTipBox')).toHaveLength(0);
+  });
+
   it('renders correct number of fields when numberOfPeople is passed', () => {
     const numberOfPeople = 3;
     const wrapper = wrap({

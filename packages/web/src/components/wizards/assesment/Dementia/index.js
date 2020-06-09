@@ -42,13 +42,13 @@ const generateHeading = (whoNeedsHelp) => {
 };
 
 const Dementia = ({
-  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting,
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting, hasTip,
 }) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={8} currentStep={4} />
     </Wrapper>
-    <Wrapper hasSidebar>
+    <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
         <form onSubmit={handleSubmit}>
@@ -63,9 +63,11 @@ const Dementia = ({
           <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
-      <StyledTipBox heading="WHY THIS IS IMPORTANT:">
-        We can help you find communities that offer additional support and specialized care.
-      </StyledTipBox>
+      {hasTip &&
+        <StyledTipBox heading="WHY THIS IS IMPORTANT:">
+          We can help you find communities that offer additional support and specialized care.
+        </StyledTipBox>
+      }
     </Wrapper>
   </div>
 );
@@ -77,6 +79,11 @@ Dementia.propTypes = {
   onBackClick: func,
   invalid: bool,
   submitting: bool,
+  hasTip: bool,
+};
+
+Dementia.defaultProps = {
+  hasTip: true,
 };
 
 export default Dementia;

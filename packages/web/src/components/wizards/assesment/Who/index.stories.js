@@ -11,4 +11,5 @@ const WhoContainer = reduxForm({
 })(Who);
 
 storiesOf('Wizards|Assesment/Steps/Who', module)
-  .add('default', () => <WhoContainer handleSubmit={withPreventDefault(action('form submitted'))} />);
+  .add('default', () => <WhoContainer handleSubmit={withPreventDefault(action('form submitted'))} />)
+  .add('without tip', () => <WhoContainer handleSubmit={withPreventDefault(action('form submitted'))} hasTip={false} />);

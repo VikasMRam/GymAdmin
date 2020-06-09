@@ -31,13 +31,13 @@ const StyledTipBox = styled(TipBox)`
 `;
 
 const Timing = ({
-  handleSubmit, onBackClick, onSkipClick, invalid, submitting,
+  handleSubmit, onBackClick, onSkipClick, invalid, submitting, hasTip,
 }) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={8} currentStep={5} />
     </Wrapper>
-    <Wrapper hasSidebar>
+    <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">Please tell us about where you are in your search.</PaddedHeading>
         <PaddedBlock>Select all that apply.</PaddedBlock>
@@ -53,9 +53,11 @@ const Timing = ({
           <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
-      <StyledTipBox heading="WHY THIS IS IMPORTANT:">
-        This will help us understand and support you wherever you are in your search.
-      </StyledTipBox>
+      {hasTip &&
+        <StyledTipBox heading="WHY THIS IS IMPORTANT:">
+          This will help us understand and support you wherever you are in your search.
+        </StyledTipBox>
+      }
     </Wrapper>
   </div>
 );
@@ -66,6 +68,11 @@ Timing.propTypes = {
   onBackClick: func,
   invalid: bool,
   submitting: bool,
+  hasTip: bool,
+};
+
+Timing.defaultProps = {
+  hasTip: true,
 };
 
 export default Timing;

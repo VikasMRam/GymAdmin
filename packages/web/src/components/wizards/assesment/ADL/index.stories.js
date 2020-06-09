@@ -18,4 +18,13 @@ storiesOf('Wizards|Assesment/Steps/ADL', module)
       onBackClick={action('onBackClick')}
       whoNeedsHelp="parents"
     />
+  ))
+  .add('without tip', () => (
+    <ADLContainer
+      handleSubmit={withPreventDefault(action('form submitted'))}
+      onSkipClick={action('onSkipClick')}
+      onBackClick={action('onBackClick')}
+      whoNeedsHelp="parents"
+      hasTip={false}
+    />
   ));

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, bool, object } from 'prop-types';
+import { func, bool, object, string } from 'prop-types';
 
 import { community as communityPropType } from 'sly/web/propTypes/community';
 import { query, withUser } from 'sly/web/services/api';
@@ -37,7 +37,10 @@ export default class AssesmentWizard extends Component {
     ws: object,
     getAgent: func.isRequired,
     community: communityPropType,
+    city: string,
+    state: string,
     redirectTo: func.isRequired,
+    hasTip: bool,
   };
 
   state = {
@@ -104,14 +107,18 @@ export default class AssesmentWizard extends Component {
   };
 
   render() {
-    const { user, skipIntro, community } = this.props;
+    const { user, skipIntro, community, hasTip } = this.props;
+    let { city, state } = this.props;
+    let amount = 4000;
     const { agent, hasNoAgent } = this.state;
 
-    if (!community) {
-      return null;
+    if (community) {
+      ({ address: { city, state }, startingRate: amount = 4000 } = community);
     }
 
-    const { address: { city, state } } = community;
+    if (!city || !state) {
+      throw Error('community or state and city is required');
+    }
 
     return (
       <WizardController
@@ -132,29 +139,35 @@ export default class AssesmentWizard extends Component {
             <WizardStep
               component={Who}
               name="Who"
+              hasTip={hasTip}
             />
             <WizardStep
               component={Feeling}
               name="Feeling"
+              hasTip={hasTip}
             />
             <WizardStep
               component={ADL}
               name="ADL"
               whoNeedsHelp={lookingFor}
+              hasTip={hasTip}
             />
             <WizardStep
               component={Dementia}
               name="Dementia"
               whoNeedsHelp={lookingFor}
+              hasTip={hasTip}
             />
             <WizardStep
               component={Timing}
               name="Timing"
+              hasTip={hasTip}
             />
             <WizardStep
               component={CurrentLiving}
               name="CurrentLiving"
               whoNeedsHelp={lookingFor}
+              hasTip={hasTip}
             />
             <WizardStep
               component={Budget}
@@ -162,11 +175,14 @@ export default class AssesmentWizard extends Component {
               whoNeedsHelp={lookingFor}
               city={city}
               state={state}
+              amount={amount}
+              hasTip={hasTip}
             />
             <WizardStep
               component={Medicaid}
               name="Medicaid"
               whoNeedsHelp={lookingFor}
+              hasTip={hasTip}
             />
             {!user &&
               <WizardStep
@@ -178,12 +194,15 @@ export default class AssesmentWizard extends Component {
                 signUpHeading={whatToDoNext === 'start' ?
                   'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
                   : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
+                signUpSubmitButtonText="Get Pricing"
+                signUpHasPassword={false}
               />
             }
             <WizardStep
               component={ResidentName}
               name="ResidentName"
               numberOfPeople={lookingFor === 'parents' || lookingFor === 'myself-and-spouse' ? 2 : 1}
+              hasTip={hasTip}
             />
             <WizardStep
               component={End}
@@ -191,6 +210,7 @@ export default class AssesmentWizard extends Component {
               agent={agent}
               hasNoAgent={hasNoAgent}
               community={community}
+              city={city}
             />
           </WizardSteps>
         )}
