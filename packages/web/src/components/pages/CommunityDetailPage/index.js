@@ -504,7 +504,7 @@ export default class CommunityDetailPage extends Component {
                 )}
                 {
                   <StyledHeadingBoxSection>
-                    <AssessmentWizardContainer community={community}/>
+                    <AssessmentWizardContainer community={community} hasTip={true}/>
                   </StyledHeadingBoxSection>
                 }
                 <StyledHeadingBoxSection heading={`How Seniorly Works in ${address.city}, ${address.state}`} hasNoBodyPadding>

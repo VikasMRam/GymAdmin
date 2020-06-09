@@ -1,5 +1,5 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { func,bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -19,7 +19,7 @@ const StyledIcon = textAlign(pad(Icon));
 StyledIcon.displayName = 'StyledIcon';
 
 const Intro = ({
-  handleSubmit,
+  handleSubmit, showSkipOption
 }) => (
   <Wrapper>
     <Box>
@@ -35,7 +35,7 @@ const Intro = ({
         >
           Start
         </Field>
-        <Field
+        {showSkipOption && <Field
           name="whatToDoNext"
           type="button"
           buttonType="submit"
@@ -45,6 +45,7 @@ const Intro = ({
         >
           No thanks, I just want pricing
         </Field>
+        }
       </StyledForm>
     </Box>
   </Wrapper>
@@ -52,6 +53,7 @@ const Intro = ({
 
 Intro.propTypes = {
   handleSubmit: func.isRequired,
+  showSkipOption: bool,
 };
 
 export default Intro;

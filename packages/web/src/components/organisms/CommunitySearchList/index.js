@@ -63,6 +63,12 @@ const ShadowCommunityTile = shadowOnHover(styled(CommunityTile)`
 
 const PaddedSearchResultsAdTileContainer = pad(SearchResultsAdTileContainer);
 
+const PaddedAssessmentWizardContainer = styled(pad(AssessmentWizardContainer))`
+   /** TODO: Layout Context and move to AWC
+    TBI
+    */ 
+`;
+
 const mostSearchedCities = [
   {
     to: '/assisted-living/california/san-francisco',
@@ -134,6 +140,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
   const start = present + 1;
   const end = (present + requestMeta['page-size']  > count ? count : present + requestMeta['page-size']);
   const locLabel = getLocationLabel(searchParams);
+  const { city, state }  = searchParams;
   const tocLabel = getTocLabel(searchParams.toc);
   // pagination pathname
   let params = {};
@@ -188,7 +195,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
             }
           {
             ((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
-            <AssessmentWizardContainer searchParams={searchParams}/>
+            <PaddedAssessmentWizardContainer showTip={true} city={city} state={state}/>
           }
         </>
       ))}

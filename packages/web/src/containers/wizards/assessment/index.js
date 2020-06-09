@@ -110,11 +110,13 @@ export default class AssessmentWizard extends Component {
   render() {
     const { user, skipIntro, community, hasTip } = this.props;
     let { city, state } = this.props;
+    let showSkipOption = false;
     let amount = 4000;
     const { agent, hasNoAgent } = this.state;
 
     if (community) {
       ({ address: { city, state }, startingRate: amount = 4000 } = community);
+      showSkipOption = true; // When a community is present this wizard offers a shortcut to skip to final step.
     }
 
     if (!city || !state) {
@@ -135,6 +137,7 @@ export default class AssessmentWizard extends Component {
               <WizardStep
                 component={Intro}
                 name="Intro"
+                showSkipOption={showSkipOption}
               />
             }
             <WizardStep
