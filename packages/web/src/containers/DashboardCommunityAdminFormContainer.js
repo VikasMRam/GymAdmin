@@ -3,10 +3,11 @@ import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
 import pick from 'lodash/pick';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 
 import clientPropType from 'sly/web/propTypes/client';
 import userProptype from 'sly/web/propTypes/user';
-import { query, prefetch } from 'sly/web/services/api';
+import { query, prefetch, getRelationship } from 'sly/web/services/api';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
@@ -19,6 +20,10 @@ const ReduxForm = reduxForm({
   form: formName,
 })(DashboardCommunityAdminForm);
 
+const mapStateToProps = (state, { status }) => ({
+  communityUser: getRelationship(state, status.community.result, 'user'),
+});
+
 @query('updateCommunity', 'updateCommunity')
 @withUser
 @withRouter
@@ -26,6 +31,7 @@ const ReduxForm = reduxForm({
   id: match.params.id,
   include: 'suggested-edits',
 }))
+@connect(mapStateToProps)
 
 export default class DashboardCommunityAdminFormContainer extends Component {
   static propTypes = {
@@ -36,15 +42,48 @@ export default class DashboardCommunityAdminFormContainer extends Component {
     community: clientPropType.isRequired,
     match: object.isRequired,
     status: object,
+    initialUser: object,
     currentEdit: object,
   };
 
+  state = {
+    communityUser: null,
+  };
+
+  componentDidMount() {
+    const { communityUser } = this.props;
+    const { attributes } = communityUser;
+    this.setState({ communityUser: {
+      value: communityUser.id,
+      label: attributes.name,
+    }});
+  }
+
+  onSelectChange = (option) => {
+    this.setState({communityUser: option});
+  };
+
+
   handleSubmit = (values) => {
+    console.log(values);
     const { match, updateCommunity, community, notifyError, notifyInfo } = this.props;
     const { id } = match.params;
+    const { communityUser } = this.state;
+
+    if (typeof values.status === 'string') {
+      values.status = parseInt(values.status)
+    }
 
     return updateCommunity({ id }, {
       attributes: values,
+      relationships: {
+        user: {
+          data: {
+            type: 'User',
+            id: communityUser.value,
+          }
+        },
+      },
     })
       .then(() => notifyInfo(`Details for ${community.name} saved correctly`))
       .catch(() => notifyError(`Details for ${community.name} could not be saved`));
@@ -60,14 +99,14 @@ export default class DashboardCommunityAdminFormContainer extends Component {
       status.community.result.attributes,
       [
         'propInfo.covidInfoTitle',
-      'propInfo.covidInfoDescription',
-      'propInfo.promoTitle',
-      'propInfo.promoDescription',
-      'propInfo.adminNotes',
-      'slyScore',
-      'status',
-      'propInfo.websiteTitle',
-      'propInfo.websiteMetaDescription'
+        'propInfo.covidInfoDescription',
+        'propInfo.promoTitle',
+        'propInfo.promoDescription',
+        'propInfo.adminNotes',
+        'slyScore',
+        'status',
+        'propInfo.websiteTitle',
+        'propInfo.websiteMetaDescription'
       ],
     );
 
@@ -80,6 +119,8 @@ export default class DashboardCommunityAdminFormContainer extends Component {
         community={community}
         user={user}
         canEdit={canEdit}
+        onSelectChange={this.onSelectChange}
+        propUser={this.state.communityUser}
         {...props}
       />
     );

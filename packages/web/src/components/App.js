@@ -306,12 +306,12 @@ const routes = [
     exact: true,
   },
   {
-    path: '/wizards/assesment/community/:communityId',
+    path: '/wizards/assessment/community/:communityId',
     component: AssessmentWizardPageContainer,
     exact: true,
   },
   {
-    path: '/wizards/assesment/location/:city/:state',
+    path: '/wizards/assessment/location/:city/:state',
     component: AssessmentWizardPageContainer,
     exact: true,
   },

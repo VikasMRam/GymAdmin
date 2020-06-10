@@ -38,6 +38,7 @@ export default class AuthContainer extends Component {
     authenticateCancel: func.isRequired,
     authenticateSuccess: func.isRequired,
     onAuthenticateSuccess: func,
+    onSignupSuccess: func,
     sendOtpCode: func.isRequired,
     type: oneOf(['modal', 'inline']),
     initialStep: string,
@@ -77,12 +78,18 @@ export default class AuthContainer extends Component {
   handleAuthenticateSuccess = () => {
     const { onAuthenticateSuccess, authenticateSuccess } = this.props;
 
-    return authenticateSuccess().then(onAuthenticateSuccess);
+    // authenticateSuccess is not a promise, hence call success event callback immediately
+    authenticateSuccess();
+    if (onAuthenticateSuccess) {
+      onAuthenticateSuccess();
+    }
   };
 
   render() {
     const { isOpen } = this.state;
-    const { authenticateCancel, authenticated, type, signUpHeading, signUpSubmitButtonText, signUpHasPassword } = this.props;
+    const {
+      authenticateCancel, authenticated, type, signUpHeading, signUpSubmitButtonText, signUpHasPassword, onSignupSuccess,
+    } = this.props;
     let { initialStep } = this.props;
 
     if (authenticated.options && authenticated.options.register) {
@@ -121,7 +128,7 @@ export default class AuthContainer extends Component {
               name="Signup"
               onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.register : true) && goto('Login'))}
               onProviderClicked={() => goto('ProviderSignup')}
-              onSubmit={() => goto('CustomerSignupConfirmation')}
+              onSubmit={() => onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation')}
               heading={signUpHeading}
               submitButtonText={signUpSubmitButtonText}
               hasPassword={signUpHasPassword}
