@@ -110,6 +110,8 @@ const AgentSummary = ({
   const {
     profileImageUrl, displayName, recentFamiliesHelped, citiesServed, slyPhone, parentCompany, imageCaption,
   } = info;
+  const hasNoImage = !profileImageUrl || profileImageUrl === "";
+  const defaultImageUrl = '';
   let ratingsSection = null;
   if (aggregateRating && aggregateRating.ratingValue > 0) {
     const { numRatings, ratingValue } = aggregateRating;
@@ -126,7 +128,8 @@ const AgentSummary = ({
   return (
     <Wrapper>
       <AgentImageWrapper>
-        <Image src={profileImageUrl} aspectRatio="1:1" />
+        {hasNoImage && <Icon icon="logo" size="xLarge"/>}
+        {!hasNoImage && <Image src={hasNoImage ? defaultImageUrl :profileImageUrl} aspectRatio="1:1" />}
         <Block size="caption">
           {imageCaption}
         </Block>
