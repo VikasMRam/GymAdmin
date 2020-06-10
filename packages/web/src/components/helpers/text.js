@@ -1,9 +1,8 @@
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
-import { string } from 'prop-types';
 
 import { setDisplayName } from 'sly/web/components/helpers/index';
-import { size } from 'sly/web/components/themes';
+import { getKey } from 'sly/web/components/themes';
 
 export const textAlign = (Component, which = 'center') => styled(Component)`
   text-align: ${which};
@@ -18,12 +17,19 @@ export const textTransform = (Component, transform = 'capitalize') => styled(Com
 `;
 
 // uses props size and weight
-const getSize = (type, prop = 'size') => p => size(type, p[prop]);
+const getSize = (type, prop = 'size') => (props) => {
+  const key = `sizes.${type}.${props[prop]}`;
+  return getKey(key) || props[prop];
+};
+
 export const withText = () => css`
   ${ifProp('size', css`
     font-size: ${getSize('text')};
     line-height: ${getSize('lineHeight')};
-  `)}  
+  `)}
+  ${ifProp('lineHeight', css`
+    line-height: ${getSize('lineHeight', 'lineHeight')};
+  `)}
   ${ifProp('weight', css`
     font-weight: ${getSize('weight', 'weight')};
   `)}

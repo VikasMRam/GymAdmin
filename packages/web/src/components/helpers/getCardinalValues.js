@@ -7,11 +7,12 @@ const getAutoValuesArray = (props, prefix) => {
     : ary;
 };
 
-export const getCardinalValues = (props, prefix, group) => {
-  const themeValues = getKey(`sizes.${group}`);
+const identity = x => x;
+export const getCardinalValues = (props, prefix, themeGroup = prefix, decorator = identity) => {
+  const themeValues = getKey(`sizes.${themeGroup}`);
   const ary = getAutoValuesArray(props, prefix);
   const acc = ary
-    ? { [prefix]: ary.map(value => themeValues[value] || value).join(' ') }
+    ? { [prefix]: ary.map(value => decorator(themeValues[value]) || value).join(' ') }
     : {};
   return [
     'Top',
@@ -22,7 +23,7 @@ export const getCardinalValues = (props, prefix, group) => {
     const name = `${prefix}${prop}`;
     const value = props[name];
     if (value) {
-      acc[name] = size(group, value);
+      acc[name] = decorator(themeValues[value]);
     }
     return acc;
   }, acc);

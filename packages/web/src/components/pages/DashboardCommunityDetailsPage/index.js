@@ -51,6 +51,7 @@ import DashboardCommunityEditsContainer from 'sly/web/containers/DashboardCommun
 import { PROPERTY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 import Link from 'sly/web/components/atoms/Link';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
+import Heading from 'sly/web/components/atoms/Heading';
 
 export default class DashboardCommunityDetailsPage extends Component {
   static propTypes = {
@@ -207,13 +208,14 @@ export default class DashboardCommunityDetailsPage extends Component {
         ),
       });
     }
+
     return (
       <DashboardWithSummaryPageTemplate activeMenuItem="Communities">
         <Top>
           <BreadCrumb items={breadCrumbItems} />
         </Top>
 
-        <Left>
+        <Left heading={community.name} to={community.url}>
           {(notifications.length || null) && (
             <LeftNotifications>
               {notifications.map(({ palette, content }) => (
@@ -226,7 +228,6 @@ export default class DashboardCommunityDetailsPage extends Component {
               ))}
             </LeftNotifications>
           )}
-          <DashboardCommunityNameAndStatus community={community} />
         </Left>
 
         <Right>

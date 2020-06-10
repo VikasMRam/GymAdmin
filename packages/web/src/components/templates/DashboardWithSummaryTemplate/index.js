@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { size, palette } from 'sly/web/components/themes';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import Box from 'sly/web/components/atoms/Box';
-import { topSnap, bottomSnap } from 'sly/web/components/helpers/snap'
-import { Block } from 'sly/web/components/atoms';
+import { topSnap, bottomSnap } from 'sly/web/components/helpers/snap';
+import { Block, Heading, Link } from 'sly/web/components/atoms';
 import BackLink from 'sly/web/components/molecules/BackLink';
 
 export const Top = styled.div`
@@ -14,12 +14,29 @@ export const Top = styled.div`
   padding: ${size('spacing.xLarge')} 0;
 `;
 
-export const Left = styled(Box)`
-  background: ${palette('white.base')};
+export const Left = styled(({ children, heading, to, ...props }) => (
+  <Box {...props}>
+    {children}
+    <Heading>{heading}</Heading>
+    {to && <Link to={to}>View profile</Link>}
+  </Box>
+))`
   grid-area: left;
+  display: grid;
   
-  ${bottomSnap};
+  ${Heading} {
+    
+  }
+  
+  ${Link} {
+  
+  }
 `;
+
+Left.defaultProps = {
+  snap: 'bottom',
+  background: 'white.base',
+};
 
 export const LeftNotifications = styled.div`
   margin: -${size('spacing.xLarge')};
@@ -38,7 +55,7 @@ export const Section = styled(Box)`
 `;
 
 Section.defaultProps = {
-  padding: 'none',
+  padding: '0',
 };
 
 export const SummarySection = styled(({ children, className, ...props }) => (
@@ -104,14 +121,11 @@ const SectionHeaderWrapper = styled.div`
     flex-grow: 0;
   }
 `;
-const Heading = styled(Block)`
-  line-height: 40px;
-`;
 
 export const SectionHeader = ({ actions, children }) => {
   return (
     <SectionHeaderWrapper>
-      <Heading size="subtitle">{children}</Heading>
+      <Block size="subtitle" lineHeight="40px">{children}</Block>
       {actions}
     </SectionHeaderWrapper>
   );
@@ -122,7 +136,16 @@ SectionHeader.propTypes = {
   children: any,
 };
 
-export const SectionActions = props => <Block padding="xLarge" align="right" borderTop="regular" {...props} />;
+export const SectionActions = props => (
+  <Block
+    padding="xLarge"
+    align="right"
+    borderTop="regular"
+    borderPalette="slate"
+    borderVariation="lighter-90"
+    {...props}
+  />
+);
 
 export const DashboardWithSummaryPageTemplate = styled(DashboardPageTemplate)`
   display: block;

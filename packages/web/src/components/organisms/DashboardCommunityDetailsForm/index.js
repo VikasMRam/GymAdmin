@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { func, bool, object } from 'prop-types';
-import styled from 'styled-components';
 
-import { size, columnWidth } from 'sly/web/components/themes';
-import { Block, Button } from 'sly/web/components/atoms';
+import { Button } from 'sly/web/components/atoms';
 import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
 import EditField from 'sly/web/components/form/EditField';
 import { states, sizeOfCommunity } from 'sly/web/constants/communities';
@@ -11,10 +9,6 @@ import { FormSection, Section, SectionActions } from 'sly/web/components/templat
 
 const statesOptions = states.map(s => <option key={s} value={s}>{s}</option>);
 const sizeOfCommunityOptions = sizeOfCommunity.map(s => <option key={s} value={s}>{s}</option>);
-
-const FormBottomSection = styled.div`
-  margin-top: ${size('spacing.xLarge')};
-`;
 
 export default class DashboardCommunityDetailsForm extends Component {
   static propTypes = {
