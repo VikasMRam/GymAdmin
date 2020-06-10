@@ -3,6 +3,7 @@ import { func, bool, object, string } from 'prop-types';
 
 import { community as communityPropType } from 'sly/web/propTypes/community';
 import { query, withUser } from 'sly/web/services/api';
+import { CONSULTATION_REQUESTED, PROFILE_CONTACTED, PRICING_REQUEST } from 'sly/web/services/api/constants';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import withWS from 'sly/web/services/ws/withWS';
 import { withRedirectTo } from 'sly/web/services/redirectTo';
@@ -127,6 +128,33 @@ export default class AssessmentWizard extends Component {
     });
   };
 
+  handleAuthSuccess = (data, next) => {
+    const { createAction, community, user } = this.props;
+    const actionType = community ? PROFILE_CONTACTED : CONSULTATION_REQUESTED;
+    let actionInfo = {};
+    if (community) {
+      actionInfo = {
+        contactType: PRICING_REQUEST,
+        slug: community.id,
+      };
+    }
+    actionInfo = {
+      ...actionInfo,
+      phone: user.phoneNumber,
+      name: user.name,
+      email: user.email,
+    };
+
+    createAction({
+      type: 'UUIDAction',
+      attributes: {
+        actionType,
+        actionInfo,
+      },
+    })
+      .then(next);
+  };
+
   render() {
     const { user, skipIntro, community, hasTip } = this.props;
     let { city, state } = this.props;
@@ -152,7 +180,7 @@ export default class AssessmentWizard extends Component {
         onNext={this.handleNext}
       >
         {({
-          data: { lookingFor, whatToDoNext }, next, previous, ...props
+          data, next, previous, ...props
         }) => (
           <WizardSteps {...props}>
             {!skipIntro &&
@@ -177,7 +205,7 @@ export default class AssessmentWizard extends Component {
             <WizardStep
               component={ADL}
               name="ADL"
-              whoNeedsHelp={lookingFor}
+              whoNeedsHelp={data.lookingFor}
               hasTip={hasTip}
               onSkipClick={next}
               onBackClick={previous}
@@ -185,7 +213,7 @@ export default class AssessmentWizard extends Component {
             <WizardStep
               component={Dementia}
               name="Dementia"
-              whoNeedsHelp={lookingFor}
+              whoNeedsHelp={data.lookingFor}
               hasTip={hasTip}
               onSkipClick={next}
               onBackClick={previous}
@@ -200,7 +228,7 @@ export default class AssessmentWizard extends Component {
             <WizardStep
               component={CurrentLiving}
               name="CurrentLiving"
-              whoNeedsHelp={lookingFor}
+              whoNeedsHelp={data.lookingFor}
               hasTip={hasTip}
               onSkipClick={next}
               onBackClick={previous}
@@ -208,7 +236,7 @@ export default class AssessmentWizard extends Component {
             <WizardStep
               component={Budget}
               name="Budget"
-              whoNeedsHelp={lookingFor}
+              whoNeedsHelp={data.lookingFor}
               city={city}
               state={state}
               amount={amount}
@@ -219,7 +247,7 @@ export default class AssessmentWizard extends Component {
             <WizardStep
               component={Medicaid}
               name="Medicaid"
-              whoNeedsHelp={lookingFor}
+              whoNeedsHelp={data.lookingFor}
               hasTip={hasTip}
               onSkipClick={next}
               onBackClick={previous}
@@ -229,9 +257,10 @@ export default class AssessmentWizard extends Component {
                 component={AuthContainer}
                 name="Auth"
                 type="inline"
-                onAuthenticateSuccess={next}
+                onAuthenticateSuccess={() => this.handleAuthSuccess(data, next)}
+                onSignupSuccess={() => this.handleAuthSuccess(data, next)}
                 initialStep="Signup"
-                signUpHeading={whatToDoNext === 'start' ?
+                signUpHeading={data.whatToDoNext === 'start' ?
                   'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
                   : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
                 signUpSubmitButtonText="Get Pricing"
@@ -241,7 +270,7 @@ export default class AssessmentWizard extends Component {
             <WizardStep
               component={ResidentName}
               name="ResidentName"
-              numberOfPeople={lookingFor === 'parents' || lookingFor === 'myself-and-spouse' ? 2 : 1}
+              numberOfPeople={data.lookingFor === 'parents' || data.lookingFor === 'myself-and-spouse' ? 2 : 1}
               hasTip={hasTip}
               onSkipClick={next}
             />
