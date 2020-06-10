@@ -107,6 +107,26 @@ export default class AssessmentWizard extends Component {
     });
   };
 
+  handleNext = ({ from, to }) => {
+    if (from !== 'Auth' && from !== 'Intro') {
+      SlyEvent.getInstance().sendEvent({
+        category: 'assesmentWizard',
+        action: 'step-skipped',
+        label: from,
+        value: to,
+      });
+    }
+  };
+
+  handlePrevious = ({ from, to }) => {
+    SlyEvent.getInstance().sendEvent({
+      category: 'assesmentWizard',
+      action: 'step-back',
+      label: from,
+      value: to,
+    });
+  };
+
   render() {
     const { user, skipIntro, community, hasTip } = this.props;
     let { city, state } = this.props;
@@ -128,6 +148,8 @@ export default class AssessmentWizard extends Component {
         formName="assesmentWizard"
         onComplete={this.handleComplete}
         onStepChange={this.handleStepChange}
+        onPrevious={this.handlePrevious}
+        onNext={this.handleNext}
       >
         {({
           data: { lookingFor, whatToDoNext }, next, previous, ...props
@@ -149,29 +171,39 @@ export default class AssessmentWizard extends Component {
               component={Feeling}
               name="Feeling"
               hasTip={hasTip}
+              onSkipClick={next}
+              onBackClick={previous}
             />
             <WizardStep
               component={ADL}
               name="ADL"
               whoNeedsHelp={lookingFor}
               hasTip={hasTip}
+              onSkipClick={next}
+              onBackClick={previous}
             />
             <WizardStep
               component={Dementia}
               name="Dementia"
               whoNeedsHelp={lookingFor}
               hasTip={hasTip}
+              onSkipClick={next}
+              onBackClick={previous}
             />
             <WizardStep
               component={Timing}
               name="Timing"
               hasTip={hasTip}
+              onSkipClick={next}
+              onBackClick={previous}
             />
             <WizardStep
               component={CurrentLiving}
               name="CurrentLiving"
               whoNeedsHelp={lookingFor}
               hasTip={hasTip}
+              onSkipClick={next}
+              onBackClick={previous}
             />
             <WizardStep
               component={Budget}
@@ -181,12 +213,16 @@ export default class AssessmentWizard extends Component {
               state={state}
               amount={amount}
               hasTip={hasTip}
+              onSkipClick={next}
+              onBackClick={previous}
             />
             <WizardStep
               component={Medicaid}
               name="Medicaid"
               whoNeedsHelp={lookingFor}
               hasTip={hasTip}
+              onSkipClick={next}
+              onBackClick={previous}
             />
             {!user &&
               <WizardStep
@@ -207,6 +243,7 @@ export default class AssessmentWizard extends Component {
               name="ResidentName"
               numberOfPeople={lookingFor === 'parents' || lookingFor === 'myself-and-spouse' ? 2 : 1}
               hasTip={hasTip}
+              onSkipClick={next}
             />
             <WizardStep
               component={End}

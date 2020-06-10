@@ -58,7 +58,7 @@ const config = {
   },
 
   development: {
-    muteReduxLogger: true,
+    muteReduxLogger: false,
     hideChatbox: process.env.HIDE_CHATBOX,
     loadAutoComplete: !process.env.OFFLINE_MODE,
   },
