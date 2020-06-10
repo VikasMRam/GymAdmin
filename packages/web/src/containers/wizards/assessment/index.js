@@ -43,6 +43,7 @@ export default class AssessmentWizard extends Component {
     state: string,
     redirectTo: func.isRequired,
     hasTip: bool,
+    status: object,
   };
 
   state = {
@@ -54,6 +55,12 @@ export default class AssessmentWizard extends Component {
     const { redirectTo } = this.props;
 
     return redirectTo(redirectLink);
+  };
+
+  onNoAgentMatch = () => {
+    this.setState({
+      hasNoAgent: true,
+    });
   };
 
   waitForAgentMatched = () => {
@@ -75,8 +82,8 @@ export default class AssessmentWizard extends Component {
 
     if (currentStep === 'Intro' && whatToDoNext === 'no-thanks') {
       if (user) {
-        goto('ResidentName');
-        return this.waitForAgentMatched();
+        this.waitForAgentMatched();
+        return goto('ResidentName');
       }
       return goto('Auth');
     }
@@ -102,12 +109,6 @@ export default class AssessmentWizard extends Component {
     }
   };
 
-  onNoAgentMatch = () => {
-    this.setState({
-      hasNoAgent: true,
-    });
-  };
-
   handleNext = ({ from, to }) => {
     if (from !== 'Auth' && from !== 'Intro') {
       SlyEvent.getInstance().sendEvent({
@@ -116,6 +117,9 @@ export default class AssessmentWizard extends Component {
         label: from,
         value: to,
       });
+    }
+    if (from === 'ResidentName') {
+      this.waitForAgentMatched();
     }
   };
 
@@ -156,12 +160,20 @@ export default class AssessmentWizard extends Component {
   };
 
   render() {
-    const { user, skipIntro, community, hasTip } = this.props;
+    const { user, skipIntro, community, hasTip, status } = this.props;
     let { city, state } = this.props;
     let showSkipOption = false;
     let amount = 4000;
     const { agent, hasNoAgent } = this.state;
+    const { hasFinished } = status.user;
 
+    if (!hasFinished && !this.userAlreadyLoaded) {
+      return null;
+    }
+    if (!this.userAlreadyLoaded && !user) {
+      this.userInitiallyUnauthenticated = true;
+    }
+    this.userAlreadyLoaded = true;
     if (community) {
       ({ address: { city, state }, startingRate: amount = 4000 } = community);
       showSkipOption = true; // When a community is present this wizard offers a shortcut to skip to final step.
@@ -252,7 +264,7 @@ export default class AssessmentWizard extends Component {
               onSkipClick={next}
               onBackClick={previous}
             />
-            {!user &&
+            {(!user || this.userInitiallyUnauthenticated) &&
               <WizardStep
                 component={AuthContainer}
                 name="Auth"
