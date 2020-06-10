@@ -5,7 +5,7 @@ import { branch } from 'recompose';
 import { community as communityPropType } from 'sly/web/propTypes/community';
 import { prefetch } from 'sly/web/services/api';
 import { parseURLQueryParams } from 'sly/web/services/helpers/url';
-import AssesmentWizardPage from 'sly/web/components/pages/wizards/AssesmentWizardPage';
+import AssessmentWizardPage from 'sly/web/components/pages/wizards/AssessmentWizardPage';
 
 @branch(
   ({ match }) => match.params.communityId,
@@ -36,7 +36,7 @@ export default class AssessmentWizardPageContainer extends Component {
     }
 
     return (
-      <AssesmentWizardPage
+      <AssessmentWizardPage
         community={community}
         skipIntro={qp.skipIntro}
         hasTip={qp.hasTip !== 'false'}
