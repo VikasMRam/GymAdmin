@@ -15,7 +15,6 @@ import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import CommunityFilterBar from 'sly/web/components/organisms/CommunityFilterBar';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import SearchResultsAdTileContainer from 'sly/web/containers/SearchResultsAdTileContainer';
-import AssessmentWizardContainer from 'sly/web/containers/wizards/assessment';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;
@@ -63,11 +62,13 @@ const ShadowCommunityTile = shadowOnHover(styled(CommunityTile)`
 
 const PaddedSearchResultsAdTileContainer = pad(SearchResultsAdTileContainer);
 
-const PaddedAssessmentWizardContainer = styled(pad(AssessmentWizardContainer))`
-   /** TODO: Layout Context and move to AWC
-    TBI
-    */ 
-`;
+// const PaddedAssessmentWizardContainer = styled(pad(AssessmentWizardContainer))`
+//   display: flex;
+//   align-items: center;
+// `;
+// const AWC = styled.div`
+//
+// `;
 
 const mostSearchedCities = [
   {
@@ -193,10 +194,6 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
           {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
             <PaddedSearchResultsAdTileContainer type="homeCare" locationLabel={locLabel} tocLabel={tocLabel} />
             }
-          {
-            ((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
-            <PaddedAssessmentWizardContainer showTip={true} city={city} state={state}/>
-          }
         </>
       ))}
       {communityList.length < 1 &&

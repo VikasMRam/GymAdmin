@@ -7,15 +7,17 @@ import GetCommunityPricingAndAvailability from 'sly/web/components/organisms/Get
 
 export default function CommunityDetailsPageColumnContainer({ community }) {
   return (
-    <Experiment name="MainProfileCTA">
-      <Variant name="PricingWizard">
-        <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
-      </Variant>
-      <Variant name="AssessmentWizard">
-        <GetCommunityPricingAndAvailability community={community} buttonTo={`/wizards/assessment/community/${community.id}`} />
-      </Variant>
-
-    </Experiment>
+    <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
+    // Temp Experiment disable
+    // <Experiment name="MainProfileCTA">
+    //   <Variant name="PricingWizard">
+    //     <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
+    //   </Variant>
+    //   <Variant name="AssessmentWizard">
+    //     <GetCommunityPricingAndAvailability community={community} buttonTo={`/wizards/assessment/community/${community.id}`} />
+    //   </Variant>
+    //
+    // </Experiment>
   );
 }
 
