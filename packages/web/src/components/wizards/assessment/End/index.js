@@ -56,6 +56,7 @@ const End = ({ handleSubmit, community, city, hasNoAgent, agent }) => (
         <MatchedAgent
           heading={agent ? `We've matched you with your Local Senior Living Expert, ${agent.name}. She will reach out shortly to assist you.` : ''}
           agent={agent}
+          prevLink={community ? community.url : '/'}
         />
       }
     </Wrapper>

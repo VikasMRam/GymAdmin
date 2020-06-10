@@ -48,7 +48,9 @@ const PostConversionGreetingForm = ({
       <Wrapper>
         <Heading level="subtitle">{heading}</Heading>
         {description && <PaddedBlock>{description}</PaddedBlock>}
-        <RejectButton palette="primary" onClick={doDismiss}>Return to Profile</RejectButton>
+        <RejectButton palette="primary" onClick={doDismiss} to={community ? community.url : '/'}>
+          Return to {community ? 'Profile' : 'Home'}
+        </RejectButton>
       </Wrapper>
       {currentModal === ASK_NOT_HELP && (
         <PostConversionAskNotHelpModal onReject={doReject} onClose={closeModal} />

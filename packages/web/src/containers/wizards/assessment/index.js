@@ -3,6 +3,7 @@ import { func, bool, object, string } from 'prop-types';
 
 import { community as communityPropType } from 'sly/web/propTypes/community';
 import { query, withUser } from 'sly/web/services/api';
+import { CONSULTATION_REQUESTED, PROFILE_CONTACTED, PRICING_REQUEST } from 'sly/web/services/api/constants';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import withWS from 'sly/web/services/ws/withWS';
 import { withRedirectTo } from 'sly/web/services/redirectTo';
@@ -42,6 +43,7 @@ export default class AssessmentWizard extends Component {
     state: string,
     redirectTo: func.isRequired,
     hasTip: bool,
+    status: object,
   };
 
   state = {
@@ -53,6 +55,12 @@ export default class AssessmentWizard extends Component {
     const { redirectTo } = this.props;
 
     return redirectTo(redirectLink);
+  };
+
+  onNoAgentMatch = () => {
+    this.setState({
+      hasNoAgent: true,
+    });
   };
 
   waitForAgentMatched = () => {
@@ -74,8 +82,8 @@ export default class AssessmentWizard extends Component {
 
     if (currentStep === 'Intro' && whatToDoNext === 'no-thanks') {
       if (user) {
-        goto('ResidentName');
-        return this.waitForAgentMatched();
+        this.waitForAgentMatched();
+        return goto('ResidentName');
       }
       return goto('Auth');
     }
@@ -101,19 +109,71 @@ export default class AssessmentWizard extends Component {
     }
   };
 
-  onNoAgentMatch = () => {
-    this.setState({
-      hasNoAgent: true,
+  handleNext = ({ from, to }) => {
+    if (from !== 'Auth' && from !== 'Intro') {
+      SlyEvent.getInstance().sendEvent({
+        category: 'assesmentWizard',
+        action: 'step-skipped',
+        label: from,
+        value: to,
+      });
+    }
+    if (from === 'ResidentName') {
+      this.waitForAgentMatched();
+    }
+  };
+
+  handlePrevious = ({ from, to }) => {
+    SlyEvent.getInstance().sendEvent({
+      category: 'assesmentWizard',
+      action: 'step-back',
+      label: from,
+      value: to,
     });
   };
 
+  handleAuthSuccess = (data, next) => {
+    const { createAction, community, user } = this.props;
+    const actionType = community ? PROFILE_CONTACTED : CONSULTATION_REQUESTED;
+    let actionInfo = {};
+    if (community) {
+      actionInfo = {
+        contactType: PRICING_REQUEST,
+        slug: community.id,
+      };
+    }
+    actionInfo = {
+      ...actionInfo,
+      phone: user.phoneNumber,
+      name: user.name,
+      email: user.email,
+    };
+
+    createAction({
+      type: 'UUIDAction',
+      attributes: {
+        actionType,
+        actionInfo,
+      },
+    })
+      .then(next);
+  };
+
   render() {
-    const { user, skipIntro, community, hasTip } = this.props;
+    const { user, skipIntro, community, hasTip, status } = this.props;
     let { city, state } = this.props;
     let showSkipOption = false;
     let amount = 4000;
     const { agent, hasNoAgent } = this.state;
+    const { hasFinished } = status.user;
 
+    if (!hasFinished && !this.userAlreadyLoaded) {
+      return null;
+    }
+    if (!this.userAlreadyLoaded && !user) {
+      this.userInitiallyUnauthenticated = true;
+    }
+    this.userAlreadyLoaded = true;
     if (community) {
       ({ address: { city, state }, startingRate: amount = 4000 } = community);
       showSkipOption = true; // When a community is present this wizard offers a shortcut to skip to final step.
@@ -128,9 +188,11 @@ export default class AssessmentWizard extends Component {
         formName="assesmentWizard"
         onComplete={this.handleComplete}
         onStepChange={this.handleStepChange}
+        onPrevious={this.handlePrevious}
+        onNext={this.handleNext}
       >
         {({
-          data: { lookingFor, whatToDoNext }, next, previous, ...props
+          data, next, previous, ...props
         }) => (
           <WizardSteps {...props}>
             {!skipIntro &&
@@ -149,53 +211,68 @@ export default class AssessmentWizard extends Component {
               component={Feeling}
               name="Feeling"
               hasTip={hasTip}
+              onSkipClick={next}
+              onBackClick={previous}
             />
             <WizardStep
               component={ADL}
               name="ADL"
-              whoNeedsHelp={lookingFor}
+              whoNeedsHelp={data.lookingFor}
               hasTip={hasTip}
+              onSkipClick={next}
+              onBackClick={previous}
             />
             <WizardStep
               component={Dementia}
               name="Dementia"
-              whoNeedsHelp={lookingFor}
+              whoNeedsHelp={data.lookingFor}
               hasTip={hasTip}
+              onSkipClick={next}
+              onBackClick={previous}
             />
             <WizardStep
               component={Timing}
               name="Timing"
               hasTip={hasTip}
+              onSkipClick={next}
+              onBackClick={previous}
             />
             <WizardStep
               component={CurrentLiving}
               name="CurrentLiving"
-              whoNeedsHelp={lookingFor}
+              whoNeedsHelp={data.lookingFor}
               hasTip={hasTip}
+              onSkipClick={next}
+              onBackClick={previous}
             />
             <WizardStep
               component={Budget}
               name="Budget"
-              whoNeedsHelp={lookingFor}
+              whoNeedsHelp={data.lookingFor}
               city={city}
               state={state}
               amount={amount}
               hasTip={hasTip}
+              onSkipClick={next}
+              onBackClick={previous}
             />
             <WizardStep
               component={Medicaid}
               name="Medicaid"
-              whoNeedsHelp={lookingFor}
+              whoNeedsHelp={data.lookingFor}
               hasTip={hasTip}
+              onSkipClick={next}
+              onBackClick={previous}
             />
-            {!user &&
+            {(!user || this.userInitiallyUnauthenticated) &&
               <WizardStep
                 component={AuthContainer}
                 name="Auth"
                 type="inline"
-                onAuthenticateSuccess={next}
+                onAuthenticateSuccess={() => this.handleAuthSuccess(data, next)}
+                onSignupSuccess={() => this.handleAuthSuccess(data, next)}
                 initialStep="Signup"
-                signUpHeading={whatToDoNext === 'start' ?
+                signUpHeading={data.whatToDoNext === 'start' ?
                   'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
                   : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
                 signUpSubmitButtonText="Get Pricing"
@@ -205,8 +282,9 @@ export default class AssessmentWizard extends Component {
             <WizardStep
               component={ResidentName}
               name="ResidentName"
-              numberOfPeople={lookingFor === 'parents' || lookingFor === 'myself-and-spouse' ? 2 : 1}
+              numberOfPeople={data.lookingFor === 'parents' || data.lookingFor === 'myself-and-spouse' ? 2 : 1}
               hasTip={hasTip}
+              onSkipClick={next}
             />
             <WizardStep
               component={End}
