@@ -150,7 +150,7 @@ const AgentSummary = ({
             <Span weight="regular">{parentCompany}</Span>
           </ParentCompanySection>
         }
-        {citiesServed.length > 0 &&
+        {citiesServed && citiesServed.length > 0 &&
           <AgentsCitiesSection>
             <Span weight="medium">{`${firstName}'s Cities: `}</Span>
             <CollapsibleBlock>{citiesServed.join(', ')}</CollapsibleBlock>
