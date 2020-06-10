@@ -64,9 +64,11 @@ const ShadowCommunityTile = shadowOnHover(styled(CommunityTile)`
 const PaddedSearchResultsAdTileContainer = pad(SearchResultsAdTileContainer);
 
 const PaddedAssessmentWizardContainer = styled(pad(AssessmentWizardContainer))`
-   /** TODO: Layout Context and move to AWC
-    TBI
-    */ 
+  display: flex;
+  align-items: center;
+`;
+const AWC = styled.div`
+
 `;
 
 const mostSearchedCities = [
@@ -195,7 +197,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
             }
           {
             ((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
-            <PaddedAssessmentWizardContainer showTip={true} city={city} state={state}/>
+            <AWC> <PaddedAssessmentWizardContainer city={city} state={state}/></AWC>
           }
         </>
       ))}

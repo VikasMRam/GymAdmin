@@ -129,6 +129,12 @@ const StyledCommunityExtraInfoSection = styled(CommunityExtraInfoSection)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
+const StyledAssessmentSection = styled(StyledSection)`
+  display: flex;
+  align-items: center;
+`;
+
+
 const StyledBannerNotification = pad(BannerNotification, 'large');
 
 const StyledButton = styled(Button)`
@@ -503,9 +509,9 @@ export default class CommunityDetailPage extends Component {
                   </StyledHeadingBoxSection>
                 )}
                 {
-                  <StyledHeadingBoxSection>
-                    <AssessmentWizardContainer community={community} hasTip={true}/>
-                  </StyledHeadingBoxSection>
+                  <StyledAssessmentSection>
+                    <AssessmentWizardContainer community={community} hasTip={false}/>
+                  </StyledAssessmentSection>
                 }
                 <StyledHeadingBoxSection heading={`How Seniorly Works in ${address.city}, ${address.state}`} hasNoBodyPadding>
                   <HowSlyWorksVideoContainer eventLabel={community.id} />
