@@ -153,3 +153,6 @@ export const MEDICAID_OPTIONS = [
   { label: 'No', value: 'no' },
   { label: "I'm not sure", value: 'not-sure' },
 ];
+
+export const ASSESSMENT_WIZARD_MATCHED_AGENT = 'assesmentWizardMatchedAgent';
+export const ASSESSMENT_WIZARD_COMPLETED = 'assesmentWizardCompleted';

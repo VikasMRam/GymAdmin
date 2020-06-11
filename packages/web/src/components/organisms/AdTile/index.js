@@ -94,7 +94,7 @@ const AdTile = ({
         {showSecondary &&
           <LargePaddedStyledButton layout={layout} buttonPosition={buttonPosition} {...buttonProps}>{buttonText}</LargePaddedStyledButton>}
         {showSecondary &&
-          <TextAlignBlock>or call our team at <Link {...linkProps}>{linkText}</Link>)</TextAlignBlock>
+          <TextAlignBlock>or call our team at <Link {...linkProps}>{linkText}</Link></TextAlignBlock>
         }
       </>
     )}

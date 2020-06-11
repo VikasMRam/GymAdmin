@@ -25,7 +25,16 @@ TextAlignCenteredBox.displayName = 'TextAlignCenteredBox';
 const Wrapper = styled.div`
   ${ifProp({ layout: 'fixed' }, css`
     max-width: ${size('layout.col5')};
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+  `)}
+`;
+
+const StyledHeading = styled(PaddedHeading)`
+  ${ifProp({ layout: 'fluid' }, css`
+    max-width: ${size('layout.col6')};
+    margin-left: auto;
+    margin-right: auto;
   `)}
 `;
 
@@ -33,7 +42,7 @@ const GetAssessmentBox = ({ palette, layout, buttonProps }) => (
   <TextAlignCenteredBox backgroundPalette={palette} backgroundVariation="background">
     <Wrapper layout={layout}>
       <StyledIcon icon="logo" palette="primary" size="xLarge" />
-      <Heading level="subtitle">Complete this 3-minute assessment tool to get personalized senior living and care options.</Heading>
+      <StyledHeading layout={layout} level="subtitle">Complete this 3-minute assessment tool to get personalized senior living and care options.</StyledHeading>
       <FullWidthButton {...buttonProps} palette={palette}>Start</FullWidthButton>
     </Wrapper>
   </TextAlignCenteredBox>

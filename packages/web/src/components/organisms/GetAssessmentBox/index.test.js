@@ -15,7 +15,7 @@ describe('GetAssessmentBox', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('StyledIcon')).toHaveLength(1);
-    expect(wrapper.find('Heading')).toHaveLength(1);
+    expect(wrapper.find('StyledHeading')).toHaveLength(1);
     expect(wrapper.find('FullWidthButton')).toHaveLength(1);
   });
 });

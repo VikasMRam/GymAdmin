@@ -7,6 +7,7 @@ import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wiza
 import withWS from 'sly/web/services/ws/withWS';
 import { withRedirectTo } from 'sly/web/services/redirectTo';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
+import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/constants/wizards/assessment';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SlyEvent from 'sly/web/services/helpers/events';
 import Intro from 'sly/web/containers/wizards/assessment/Intro';
@@ -27,7 +28,7 @@ import Auth from 'sly/web/containers/wizards/assessment/Auth';
 @query('getAgent', 'getAgent')
 
 export default class AssessmentWizard extends Component {
-  static typeHydrationId = 'AssessmentWizardContainer';
+  static typeHydrationId = 'AssessmentWizard';
   static propTypes = {
     skipIntro: bool,
     ws: object,
@@ -53,6 +54,8 @@ export default class AssessmentWizard extends Component {
   };
 
   onNoAgentMatch = () => {
+    localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
+
     this.setState({
       hasNoAgent: true,
     });
@@ -86,8 +89,10 @@ export default class AssessmentWizard extends Component {
   onMessage = ({ payload: { agentSlug } }) => {
     const { getAgent } = this.props;
     clearTimeout(this.agentMatchTimeout);
+    localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
 
     if (agentSlug) {
+      localStorage.setItem(ASSESSMENT_WIZARD_MATCHED_AGENT, agentSlug);
       getAgent({ id: agentSlug })
         .then((resp) => {
           const agent = normJsonApi(resp);
