@@ -237,6 +237,7 @@ export default class DashboardAgentDetailPage extends Component {
     const summaryPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: SUMMARY });
     const activitesPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: ACTIVITY });
     const agentDetailsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: AGENT_DETAILS });
+    const agentAdminPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: AGENT_DETAILS });
     const contactsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: CONTACTS });
     const messagesPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: MESSAGES });
     const photosPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: PHOTOS });
