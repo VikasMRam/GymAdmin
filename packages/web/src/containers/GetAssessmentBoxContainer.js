@@ -36,10 +36,6 @@ export default class GetAssessmentBoxContainer extends Component {
     modalOpened: false,
   };
 
-  componentDidMount() {
-    console.log('mounted');
-  }
-
   toggleModal = () => {
     const { modalOpened } = this.state;
     this.setState({

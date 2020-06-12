@@ -3,10 +3,8 @@ import styled from 'styled-components';
 import { object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { isBrowser } from 'sly/web/config';
 import { size, palette } from 'sly/web/components/themes';
 import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
-import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/constants/wizards/assessment';
 import {
   getBreadCrumbsForCommunity,
   getCitySearchUrl,
@@ -67,7 +65,7 @@ import UnhydratedPageEventsContainer from 'sly/web/containers/PageEventsContaine
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/web/containers/CommunityDetailsPageColumnContainer';
 import UnhydratedCommunityProfileAdTileContainer from 'sly/web/containers/communityProfile/AdTileContainer';
 import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
-import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
+import UnhydratedGetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
 import UnhydratedCommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
@@ -91,6 +89,7 @@ const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDet
 const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
 const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
 const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable);
+const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator);
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -209,7 +208,7 @@ const AdWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const PaddedGetAssessmentBoxContainer = pad(GetAssessmentBoxContainer);
+const PaddedGetAssessmentBoxContainerHydrator = pad(GetAssessmentBoxContainerHydrator);
 
 const Header = makeHeader();
 const TwoColumn = makeTwoColumn('div');
@@ -473,13 +472,9 @@ export default class CommunityDetailPage extends Component {
                     />
                   )}
                 </StyledHeadingBoxSection>
-                {isBrowser &&
-                  <PaddedGetAssessmentBoxContainer
-                    completedAssessment={!!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
-                    agentId={localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || ''}
-                    startLink={`/wizards/assessment/community/${community.id}`}
-                  />
-                }
+                <PaddedGetAssessmentBoxContainerHydrator
+                  startLink={`/wizards/assessment/community/${community.id}`}
+                />
                 {sortedEstimatedPrice.length > 0 && (
                   <StyledHeadingBoxSection heading={`Compare Costs for ${name}`}>
                     <CommunityPricingComparison community={community} />
