@@ -4,9 +4,14 @@ import { branch } from 'recompose';
 
 import { prefetch } from 'sly/web/services/api';
 import agentPropType from 'sly/web/propTypes/agent';
-import Modal from 'sly/web/components/atoms/NewModal';
+import pad from 'sly/web/components/helpers/pad';
+import { Link, Block } from 'sly/web/components/atoms';
+import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
 import GetAssessmentBox from 'sly/web/components/organisms/GetAssessmentBox';
 import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
+import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';
+
+const PaddedBlock = pad(Block, 'regular');
 
 @branch(
   ({ completedAssessment, agentId }) => completedAssessment && agentId,
@@ -31,6 +36,10 @@ export default class GetAssessmentBoxContainer extends Component {
     modalOpened: false,
   };
 
+  componentDidMount() {
+    console.log('mounted');
+  }
+
   toggleModal = () => {
     const { modalOpened } = this.state;
     this.setState({
@@ -41,7 +50,7 @@ export default class GetAssessmentBoxContainer extends Component {
   render() {
     const { status = {}, layout, agent, completedAssessment, startLink, className } = this.props;
     const { modalOpened } = this.state;
-    let hasFinished = true;console.log(completedAssessment);
+    let hasFinished = true;
     let buttonProps = {
       to: startLink,
     };
@@ -66,10 +75,31 @@ export default class GetAssessmentBoxContainer extends Component {
           buttonProps={buttonProps}
         />
         <Modal isOpen={modalOpened} onClose={this.toggleModal}>
-          <MatchedAgent
-            agent={agent}
-            heading={agent ? `Request sent! Your Local Senior Living Expert, ${agent.name} will get back to you with pricing information on this community.` : 'Request sent! One of our Local Senior Living Experts will reach out to assist you.'}
-          />
+          <HeaderWithClose onClose={this.toggleModal} />
+          <PaddedHeaderWithCloseBody>
+            {agent &&
+              <MatchedAgent
+                hasBox={false}
+                agent={agent}
+                heading={`Request sent! Your Local Senior Living Expert, ${agent.name} will get back to you with pricing information on this community.`}
+              />
+            }
+            {!agent &&
+              <PostConversionGreetingForm
+                hasBox={false}
+                onSubmit={_ => _}
+                heading="Request sent! One of our Local Senior Living Experts will reach out to assist you."
+                description="Questions? You can contact us by phone or email:"
+              >
+                <PaddedBlock>
+                  <Link href="mailto:emma@seniorly.com">emma@seniorly.com</Link>
+                </PaddedBlock>
+                <PaddedBlock>
+                  <Link href="tel:8558664515">(855) 866-4515</Link>
+                </PaddedBlock>
+              </PostConversionGreetingForm>
+            }
+          </PaddedHeaderWithCloseBody>
         </Modal>
       </div>
     );

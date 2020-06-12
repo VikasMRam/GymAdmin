@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { func, string } from 'prop-types';
-import styled from 'styled-components';
+import { func, string, node, bool } from 'prop-types';
+import styled, { css } from 'styled-components';
 
 import { size, palette } from 'sly/web/components/themes';
 import { Block, Box, Button, Heading } from 'sly/web/components/atoms';
@@ -13,7 +13,7 @@ const DO_NOT_REFER = 'do-not-refer';
 const ASK_NOT_HELP = 'AskNotHelp';
 const SURE_NOT_HELP = 'SureNotHelp';
 
-const Wrapper = styled(Box)`
+const wrapperStyles = css`
   padding: ${size('spacing.xxLarge')} ${size('spacing.xLarge')};
   > ${Heading} {
     margin-bottom: ${size('spacing.xLarge')};
@@ -26,7 +26,19 @@ const Wrapper = styled(Box)`
   }
 `;
 
-const PaddedBlock = pad(Block, 'xLarge');
+const BoxWrapper = styled(Box)`
+  ${wrapperStyles}
+`;
+
+const Wrapper = styled.div`
+  ${wrapperStyles}
+  padding: 0;
+  width: auto!important;
+`;
+
+const LargePaddedBlock = pad(Block, 'large');
+
+const PaddedBlock = pad(Block);
 
 const RejectButton = styled(Button)`
   border-color: ${palette('slate.stroke')};
@@ -35,9 +47,10 @@ const RejectButton = styled(Button)`
 `;
 
 const PostConversionGreetingForm = ({
-  onSubmit, community, heading, description, className,
+  onSubmit, community, heading, description, className, children, hasBox,
 }) => {
   const [currentModal, setCurrentModal] = useState(null);
+  const ContentWrapper = hasBox ? BoxWrapper : Wrapper;
 
   const closeModal = () => setCurrentModal(null);
   const doReject = () => onSubmit({ interest: DO_NOT_REFER }).then(() => setCurrentModal(SURE_NOT_HELP));
@@ -45,13 +58,14 @@ const PostConversionGreetingForm = ({
 
   return (
     <div className={className}>
-      <Wrapper>
+      <ContentWrapper>
         <Heading level="subtitle">{heading}</Heading>
-        {description && <PaddedBlock>{description}</PaddedBlock>}
+        {description && <LargePaddedBlock>{description}</LargePaddedBlock>}
+        {children && <PaddedBlock>{children}</PaddedBlock>}
         <RejectButton palette="primary" onClick={doDismiss} to={community ? community.url : '/'}>
           Return to {community ? 'Profile' : 'Home'}
         </RejectButton>
-      </Wrapper>
+      </ContentWrapper>
       {currentModal === ASK_NOT_HELP && (
         <PostConversionAskNotHelpModal onReject={doReject} onClose={closeModal} />
       )}
@@ -68,10 +82,13 @@ PostConversionGreetingForm.propTypes = {
   heading: string.isRequired,
   description: string,
   className: string,
+  children: node,
+  hasBox: bool,
 };
 
 PostConversionGreetingForm.defaultProps = {
   heading: "You're all set! A local senior living expert will reach out shortly.",
+  hasBox: true,
 };
 
 export default PostConversionGreetingForm;

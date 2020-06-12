@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
 import { isBrowser } from 'sly/web/config';
+import { size, palette } from 'sly/web/components/themes';
 import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
 import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/constants/wizards/assessment';
 import {
@@ -472,7 +472,7 @@ export default class CommunityDetailPage extends Component {
                       community={community}
                     />
                   )}
-                </StyledHeadingBoxSection>{isBrowser}
+                </StyledHeadingBoxSection>
                 {isBrowser &&
                   <PaddedGetAssessmentBoxContainer
                     completedAssessment={!!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
