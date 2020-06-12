@@ -1,5 +1,5 @@
 import React from 'react';
-import { func,bool } from 'prop-types';
+import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -19,7 +19,7 @@ const StyledIcon = textAlign(pad(Icon));
 StyledIcon.displayName = 'StyledIcon';
 
 const Intro = ({
-  handleSubmit, showSkipOption
+  handleSubmit, showSkipOption,
 }) => (
   <Wrapper>
     <Box>
@@ -35,16 +35,17 @@ const Intro = ({
         >
           Start
         </Field>
-        {showSkipOption && <Field
-          name="whatToDoNext"
-          type="button"
-          buttonType="submit"
-          component={ReduxField}
-          inputValue="no-thanks"
-          ghost
-        >
-          No thanks, I just want pricing
-        </Field>
+        {showSkipOption &&
+          <Field
+            name="whatToDoNext"
+            type="button"
+            buttonType="submit"
+            component={ReduxField}
+            inputValue="no-thanks"
+            ghost
+          >
+            No thanks, I just want pricing
+          </Field>
         }
       </StyledForm>
     </Box>

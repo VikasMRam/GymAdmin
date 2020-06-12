@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import { func, bool, object, string } from 'prop-types';
 
 import { community as communityPropType } from 'sly/web/propTypes/community';
-import { query, withUser } from 'sly/web/services/api';
-import { CONSULTATION_REQUESTED, PROFILE_CONTACTED, PRICING_REQUEST } from 'sly/web/services/api/constants';
+import { query } from 'sly/web/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import withWS from 'sly/web/services/ws/withWS';
 import { withRedirectTo } from 'sly/web/services/redirectTo';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
+import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/constants/wizards/assessment';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
-import AuthContainer from 'sly/web/services/auth/containers/AuthContainer';
-import userPropType from 'sly/web/propTypes/user';
 import SlyEvent from 'sly/web/services/helpers/events';
 import Intro from 'sly/web/containers/wizards/assessment/Intro';
 import Who from 'sly/web/containers/wizards/assessment/Who';
@@ -23,18 +21,15 @@ import End from 'sly/web/containers/wizards/assessment/End';
 import Medicaid from 'sly/web/containers/wizards/assessment/Medicaid';
 import ResidentName from 'sly/web/containers/wizards/assessment/ResidentName';
 import Timing from 'sly/web/containers/wizards/assessment/Timing';
+import Auth from 'sly/web/containers/wizards/assessment/Auth';
 
 @withWS
-@withUser
 @withRedirectTo
 @query('getAgent', 'getAgent')
-@query('createAction', 'createUuidAction')
 
 export default class AssessmentWizard extends Component {
-  static typeHydrationId = 'AssessmentWizardContainer';
+  static typeHydrationId = 'AssessmentWizard';
   static propTypes = {
-    createAction: func.isRequired,
-    user: userPropType,
     skipIntro: bool,
     ws: object,
     getAgent: func.isRequired,
@@ -59,6 +54,8 @@ export default class AssessmentWizard extends Component {
   };
 
   onNoAgentMatch = () => {
+    localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
+
     this.setState({
       hasNoAgent: true,
     });
@@ -73,8 +70,6 @@ export default class AssessmentWizard extends Component {
   };
 
   handleStepChange = ({ currentStep, goto, data: { whatToDoNext } }) => {
-    const { user } = this.props;
-
     SlyEvent.getInstance().sendEvent({
       category: 'assesmentWizard',
       action: 'step-completed',
@@ -82,24 +77,22 @@ export default class AssessmentWizard extends Component {
     });
 
     if (currentStep === 'Intro' && whatToDoNext === 'no-thanks') {
-      if (user) {
-        this.waitForAgentMatched();
-        return goto('ResidentName');
-      }
       return goto('Auth');
     }
-
     if (currentStep === 'ResidentName') {
       this.waitForAgentMatched();
     }
+
     return null;
   };
 
   onMessage = ({ payload: { agentSlug } }) => {
     const { getAgent } = this.props;
     clearTimeout(this.agentMatchTimeout);
+    localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
 
     if (agentSlug) {
+      localStorage.setItem(ASSESSMENT_WIZARD_MATCHED_AGENT, agentSlug);
       getAgent({ id: agentSlug })
         .then((resp) => {
           const agent = normJsonApi(resp);
@@ -133,48 +126,13 @@ export default class AssessmentWizard extends Component {
     });
   };
 
-  handleAuthSuccess = (data, next) => {
-    const { createAction, community, user } = this.props;
-    const actionType = community ? PROFILE_CONTACTED : CONSULTATION_REQUESTED;
-    let actionInfo = {};
-    if (community) {
-      actionInfo = {
-        contactType: PRICING_REQUEST,
-        slug: community.id,
-      };
-    }
-    actionInfo = {
-      ...actionInfo,
-      phone: user.phoneNumber,
-      name: user.name,
-      email: user.email,
-    };
-
-    createAction({
-      type: 'UUIDAction',
-      attributes: {
-        actionType,
-        actionInfo,
-      },
-    })
-      .then(next);
-  };
-
   render() {
-    const { user, skipIntro, community, hasTip, status, className } = this.props;
+    const { skipIntro, community, hasTip, className } = this.props;
     let { city, state } = this.props;
     let showSkipOption = false;
     let amount = 4000;
     const { agent, hasNoAgent } = this.state;
-    const { hasFinished } = status.user;
 
-    if (!hasFinished && !this.userAlreadyLoaded) {
-      return null;
-    }
-    if (!this.userAlreadyLoaded && !user) {
-      this.userInitiallyUnauthenticated = true;
-    }
-    this.userAlreadyLoaded = true;
     if (community) {
       ({ address: { city, state }, startingRate: amount = 4000 } = community);
       showSkipOption = true; // When a community is present this wizard offers a shortcut to skip to final step.
@@ -266,21 +224,15 @@ export default class AssessmentWizard extends Component {
                 onSkipClick={next}
                 onBackClick={previous}
               />
-              {(!user || this.userInitiallyUnauthenticated) &&
-                <WizardStep
-                  component={AuthContainer}
-                  name="Auth"
-                  type="inline"
-                  onAuthenticateSuccess={() => this.handleAuthSuccess(data, next)}
-                  onSignupSuccess={() => this.handleAuthSuccess(data, next)}
-                  initialStep="Signup"
-                  signUpHeading={data.whatToDoNext === 'start' ?
-                    'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
-                    : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
-                  signUpSubmitButtonText="Get Pricing"
-                  signUpHasPassword={false}
-                />
-              }
+              <WizardStep
+                component={Auth}
+                name="Auth"
+                signUpHeading={data.whatToDoNext === 'start' ?
+                  'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
+                  : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
+                onAuthSuccess={next}
+                community={community}
+              />
               <WizardStep
                 component={ResidentName}
                 name="ResidentName"
