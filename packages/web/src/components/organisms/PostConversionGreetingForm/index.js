@@ -47,7 +47,7 @@ const RejectButton = styled(Button)`
 `;
 
 const PostConversionGreetingForm = ({
-  onSubmit, community, heading, description, className, children, hasBox,
+  onSubmit, community, heading, description, className, children, hasBox, onReturnClick,
 }) => {
   const [currentModal, setCurrentModal] = useState(null);
   const ContentWrapper = hasBox ? BoxWrapper : Wrapper;
@@ -55,6 +55,7 @@ const PostConversionGreetingForm = ({
   const closeModal = () => setCurrentModal(null);
   const doReject = () => onSubmit({ interest: DO_NOT_REFER }).then(() => setCurrentModal(SURE_NOT_HELP));
   const doDismiss = () => onSubmit({ redirectLink: community ? community.url : '/' });
+  const toUrl = community ? community.url : '/';
 
   return (
     <div className={className}>
@@ -62,7 +63,7 @@ const PostConversionGreetingForm = ({
         <Heading level="subtitle">{heading}</Heading>
         {description && <LargePaddedBlock>{description}</LargePaddedBlock>}
         {children && <PaddedBlock>{children}</PaddedBlock>}
-        <RejectButton palette="primary" onClick={doDismiss} to={community ? community.url : '/'}>
+        <RejectButton palette="primary" onClick={onReturnClick || doDismiss} to={onReturnClick ? null : toUrl}>
           Return to {community ? 'Profile' : 'Home'}
         </RejectButton>
       </ContentWrapper>
@@ -78,17 +79,19 @@ const PostConversionGreetingForm = ({
 
 PostConversionGreetingForm.propTypes = {
   community: communityProptype,
-  onSubmit: func.isRequired,
+  onSubmit: func,
   heading: string.isRequired,
   description: string,
   className: string,
   children: node,
   hasBox: bool,
+  onReturnClick: func,
 };
 
 PostConversionGreetingForm.defaultProps = {
   heading: "You're all set! A local senior living expert will reach out shortly.",
   hasBox: true,
+  onSubmit: _ => _,
 };
 
 export default PostConversionGreetingForm;
