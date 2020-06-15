@@ -7,7 +7,7 @@ import { ifProp } from 'styled-tools';
 import { size } from 'sly/web/components/themes';
 import { Hr, Label } from 'sly/web/components/atoms';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
-import FormSection from 'sly/web/components/molecules/FormSection';
+import SectionForm from 'sly/web/components/molecules/SectionForm';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import pad from 'sly/web/components/helpers/pad';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
@@ -73,7 +73,7 @@ class DashboardProfileUserDetailsForm extends Component {
       ({ searchingCity } = initialValues);
     }
     return (
-      <FormSection heading={title} buttonText="Save Changes" {...this.props}>
+      <SectionForm heading={title} buttonText="Save Changes" {...this.props}>
         <Field
           name="name"
           label="Contact Name"
@@ -158,7 +158,7 @@ class DashboardProfileUserDetailsForm extends Component {
             wideWidth
           />
         </>}
-      </FormSection>
+      </SectionForm>
     );
   }
 }

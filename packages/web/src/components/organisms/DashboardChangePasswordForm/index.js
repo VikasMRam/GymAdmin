@@ -2,10 +2,10 @@ import React from 'react';
 import { Field } from 'redux-form';
 
 import ReduxField from 'sly/web/components/organisms/ReduxField';
-import FormSection from 'sly/web/components/molecules/FormSection';
+import SectionForm from 'sly/web/components/molecules/SectionForm';
 
 const DashboardChangePasswordForm = ({ ...props }) => (
-  <FormSection heading="Change Password" buttonText="Update Password" {...props}>
+  <SectionForm heading="Change Password" buttonText="Update Password" {...props}>
     <Field
       name="oldPassword"
       label="Old Password"
@@ -30,7 +30,7 @@ const DashboardChangePasswordForm = ({ ...props }) => (
       component={ReduxField}
       wideWidth
     />
-  </FormSection>
+  </SectionForm>
 );
 
 export default DashboardChangePasswordForm;

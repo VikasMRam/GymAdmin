@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { size, palette, columnWidth } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { Block, Button } from 'sly/web/components/atoms';
-import FormSection from 'sly/web/components/molecules/FormSection';
+import SectionForm from 'sly/web/components/molecules/SectionForm';
 import EditField from 'sly/web/components/form/EditField';
 import { textAlign } from 'sly/web/components/helpers/text';
 
@@ -54,7 +54,7 @@ export default class DashboardCommunityPricingForm extends Component {
     return (
       <Form onSubmit={handleSubmit}>
         <FormScrollSection>
-          <FormSection heading="Base Costs">
+          <SectionForm heading="Base Costs">
             <EditField
               name="propInfo.sharedSuiteRate"
               label="Shared suite"
@@ -95,9 +95,9 @@ export default class DashboardCommunityPricingForm extends Component {
               placeholder=""
               wideWidth
             />
-          </FormSection>
+          </SectionForm>
 
-          <FormSection heading="Additional Care Costs">
+          <SectionForm heading="Additional Care Costs">
             <EditField
               name="propInfo.isCareCostIncluded"
               type="boolean"
@@ -132,7 +132,7 @@ export default class DashboardCommunityPricingForm extends Component {
               readOnly={!canEdit}
               wideWidth
             />
-          </FormSection>
+          </SectionForm>
         </FormScrollSection>
 
         <FormBottomSection>

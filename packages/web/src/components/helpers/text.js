@@ -22,15 +22,35 @@ const getSize = (type, prop = 'size') => (props) => {
   return getKey(key) || props[prop];
 };
 
+const getWeight = (props) => {
+  if (!(props.weight || props.size)) return null;
+
+  if (props.weight) {
+    const key = `sizes.weight.${props.weight}`;
+    return css({
+      fontWeight: getKey(key) || props.weight,
+    });
+  }
+
+  if (['subtitle', 'title', 'hero', 'superHero'].includes(props.size)) {
+    const key = 'sizes.weight.medium';
+    return css({
+      fontWeight: getKey(key),
+    });
+  }
+
+  return null;
+};
+
 export const withText = () => css`
   ${ifProp('size', css`
     font-size: ${getSize('text')};
     line-height: ${getSize('lineHeight')};
   `)}
+  
   ${ifProp('lineHeight', css`
     line-height: ${getSize('lineHeight', 'lineHeight')};
   `)}
-  ${ifProp('weight', css`
-    font-weight: ${getSize('weight', 'weight')};
-  `)}
+  
+  ${getWeight};
 `;

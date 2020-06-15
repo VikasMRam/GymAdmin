@@ -1,13 +1,15 @@
 import React from 'react';
 import { any, object, shape, string } from 'prop-types';
 import styled from 'styled-components';
+import { sortableContainer } from 'react-sortable-hoc';
 
 import { size, palette } from 'sly/web/components/themes';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import Box from 'sly/web/components/atoms/Box';
-import { topSnap, bottomSnap } from 'sly/web/components/helpers/snap';
+import { topSnap } from 'sly/web/components/helpers/snap';
 import { Block, Heading, Link } from 'sly/web/components/atoms';
 import BackLink from 'sly/web/components/molecules/BackLink';
+import { withBorder } from 'sly/web/components/helpers';
 
 export const Top = styled.div`
   grid-area: top;
@@ -24,17 +26,12 @@ export const Left = styled(({ children, heading, to, ...props }) => (
   grid-area: left;
   display: grid;
   
-  ${Heading} {
-    
-  }
-  
-  ${Link} {
-  
-  }
+  ${withBorder}
 `;
 
 Left.defaultProps = {
   snap: 'bottom',
+  borderBottom: 'regular',
   background: 'white.base',
 };
 
@@ -50,12 +47,11 @@ export const Right = styled.div`
 
 export const Section = styled(Box)`
   background: ${palette('white.base')};
-
-  ${topSnap};
 `;
 
 Section.defaultProps = {
   padding: '0',
+  snap: 'top',
 };
 
 export const SummarySection = styled(({ children, className, ...props }) => (
@@ -81,7 +77,7 @@ export const SummarySection = styled(({ children, className, ...props }) => (
   }
 `;
 
-export const FormSection = ({ heading, children }) => (
+export const SectionForm = ({ heading, children }) => (
   <Block
     padding="xLarge"
   >
@@ -99,32 +95,38 @@ export const FormSection = ({ heading, children }) => (
   </Block>
 );
 
-FormSection.propTypes = {
+SectionForm.propTypes = {
   heading: string,
   children: any,
 };
 
-const SectionHeaderWrapper = styled.div`
+
+export const SectionSortable = sortableContainer(Block);
+
+SectionSortable.defaultProps = {
+  padding: 'xLarge',
+};
+
+const SectionHeaderWrapper = styled(Block)`
   display: flex;
-  padding:
-    ${size('spacing.large')}
-    ${size('spacing.xLarge')}
-    ${size('spacing.large')}
-    ${size('spacing.xLarge')};
+  
   > * {
+    flex-grow: 0;
+    margin-left: ${size('spacing.regular')};
+    
     &:first-child {
       flex-grow: 1;
       margin-left: 0;
     }
-    // margin: ${size('spacing.large')};
-    margin-left: ${size('spacing.regular')};
-    flex-grow: 0;
   }
 `;
 
 export const SectionHeader = ({ actions, children }) => {
   return (
-    <SectionHeaderWrapper>
+    <SectionHeaderWrapper
+      padding={['large', 'xLarge']}
+      borderBottom="regular"
+    >
       <Block size="subtitle" lineHeight="40px">{children}</Block>
       {actions}
     </SectionHeaderWrapper>

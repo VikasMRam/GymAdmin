@@ -79,7 +79,7 @@ const StyledFamiliesCountStatusBlock = styled(FamiliesCountStatusBlock)`
   border-bottom: none;
 `;
 
-const TwoColumn = pad(styled.div`
+const TwoColumn = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -87,7 +87,12 @@ const TwoColumn = pad(styled.div`
   ${Heading} {
     margin-bottom: 0;
   }
-`);
+`;
+
+TwoColumn.defaultProps = {
+  background: 'white',
+  padding: 'large',
+};
 
 const NoResultMessage = styled(textAlign(Block))`
   padding-top: ${size('spacing.xxxLarge')};
@@ -207,34 +212,8 @@ export default class DashboardAgentTasksSection extends Component {
       tasks, pagination, activeTab, isPageLoading, noBorder, meta, contextPath, location,
       datatable,
     } = this.props;
-    const beforeTabHeader = (
-      <TwoColumn>
-        <Heading level="subtitle">Tasks</Heading>
-        <IconButton icon="plus" hideTextInMobile onClick={this.handleAddTaskClick}>
-          Add task
-        </IconButton>
-      </TwoColumn>
-    );
-    let headerComponent = (
-      <Tabs activeTab={activeTab} beforeHeader={beforeTabHeader} tabsOnly>
-        {Object.entries(TabMap)
-          .map(([name, key]) => (
-            <Tab
-              id={key}
-              key={key}
-              to={getBasePath(key, location)}
-              onClick={() => onTabClick(name)}
-            >
-              {`${name} (${pagination[`${key}Count`] || '0'})`}
-            </Tab>
-          ))}
-      </Tabs>);
-    // Don't use tabs in context
-    if (contextPath) {
-      headerComponent = beforeTabHeader;
-    }
-    const noResultMessage = 'Nice! You are on top of all your tasks here.';
 
+    const noResultMessage = 'Nice! You are on top of all your tasks here.';
 
     const TableHeaderButtonComponent = noBorder ? StyledTableHeaderButtons : TableHeaderButtons;
     const SectionComponent = noBorder ? StyledSection : Section;
@@ -243,7 +222,29 @@ export default class DashboardAgentTasksSection extends Component {
 
     return (
       <>
-        {headerComponent}
+        <TwoColumn>
+          <Heading level="subtitle">Tasks</Heading>
+          <IconButton icon="plus" hideTextInMobile onClick={this.handleAddTaskClick}>
+            Add task
+          </IconButton>
+        </TwoColumn>
+
+        {!contextPath && (
+          <Tabs activeTab={activeTab} snap="top">
+            {Object.entries(TabMap)
+              .map(([name, key]) => (
+                <Tab
+                  id={key}
+                  key={key}
+                  to={getBasePath(key, location)}
+                  onClick={() => onTabClick(name)}
+                >
+                  {`${name} (${pagination[`${key}Count`] || '0'})`}
+                </Tab>
+              ))}
+          </Tabs>
+        )}
+
         <TableHeaderButtonComponent
           datatable={datatable}
           modelConfig={modelConfig}

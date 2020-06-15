@@ -264,16 +264,14 @@ export default class DashboardCommunityDetailsPage extends Component {
             </Section>
           )}
           {currentTab === PHOTOS && (
-            <Section>
-              <DashboardCommunityPhotosFormContainer
-                showModal={showModal}
-                hideModal={hideModal}
-                notifyInfo={notifyInfo}
-                notifyError={notifyError}
-                community={community}
-                currentEdit={currentEdit}
-              />
-            </Section>
+            <DashboardCommunityPhotosFormContainer
+              showModal={showModal}
+              hideModal={hideModal}
+              notifyInfo={notifyInfo}
+              notifyError={notifyError}
+              community={community}
+              currentEdit={currentEdit}
+            />
           )}
           {currentTab === AMENITIES && (
             <Section>

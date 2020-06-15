@@ -5,24 +5,11 @@ import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import { spacing as spacingPropType } from 'sly/web/propTypes/spacing';
 import { borderPropType, borderRadiusPropType } from 'sly/web/propTypes/border';
+import Block from 'sly/web/components/atoms/Block';
 
-import {
-  withColor,
-  withPadding,
-  withText,
-  withBorder,
-  withAlign,
-  withSnap,
-} from 'sly/web/components/helpers';
+const Box = styled(Block)``;
 
-const Box = styled.div`
-  ${withColor}
-  ${withText}
-  ${withPadding};
-  ${withSnap};
-  ${withBorder};
-  ${withAlign};
-`;
+Box.displayName = 'Box';
 
 Box.propTypes = {
   border: borderPropType,

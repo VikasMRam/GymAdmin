@@ -10,11 +10,23 @@ const border = (Component, borderSize = 'regular', borderPalette = 'grey', borde
   border: ${size('border', borderSize)} ${palette(borderPalette, borderPaletteVariation)} solid;
 `;
 
+const getBorderColor = (p, v) => getColor(p, v, 'slate.lighter-90');
+
 const borderDecorator = x => `${x} solid`;
-export const withBorder = props => css`
-  ${css(getCardinalValues(props, 'border', 'border', borderDecorator))};
-  ${ifProp('borderRadius', css`border-radius: ${size('spacing', props.borderRadius)}`)};
-  ${ifProp('borderPalette', css`border-color: ${getColor('borderPalette', 'borderVariation')}`)};
-`;
+export const withBorder = (props) => {
+  const values = getCardinalValues(props, 'border', 'border', borderDecorator);
+
+  if (props.borderPalette || Object.keys(values).length) {
+    values.borderColor = getBorderColor('borderPalette', 'borderVariation')(props);
+  }
+  if (props.borderRadius) {
+    values.borderRadius = size('spacing', props.borderRadius)();
+  }
+  if (Object.keys(values).length) {
+    return css(values);
+  }
+
+  return null;
+};
 
 export default border;

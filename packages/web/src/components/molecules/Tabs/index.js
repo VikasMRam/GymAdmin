@@ -1,31 +1,24 @@
 import React, { Component } from 'react';
 import { instanceOf, string, bool, node } from 'prop-types';
-import styled, { css } from 'styled-components';
-import { ifProp } from 'styled-tools';
+import styled from 'styled-components';
 
 import { size, palette } from 'sly/web/components/themes';
+import Box from 'sly/web/components/atoms/Box';
 
-const Wrapper = styled.div`
-  border-bottom: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
-  padding: ${size('spacing.large')};
-  padding-bottom: 0;
+const Wrapper = styled(Box)`
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
-  background: ${palette('white.base')};
   text-transform: uppercase;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    border: ${size('border', 'regular')} solid ${palette('slate', 'lighter-90')};
-    border-top-left-radius: ${size('border.xxLarge')};
-    border-top-right-radius: ${size('border.xxLarge')};
-    ${ifProp({ noBorder: true }, css`
-      border-left: none;
-      border-right: none;
-      border-top: none;
-    `)};
+  & > :last-child {
+    margin-right: 0;
   }
 `;
+
+Wrapper.defaultProps = {
+  background: 'white',
+  padding: ['large', 'large', 0],
+};
 
 const getDefaultActiveTab = (children) => {
   for (let i = 0; i < children.length; ++i) {
@@ -41,13 +34,7 @@ export default class Tabs extends Component {
     children: instanceOf(Array).isRequired,
     activeTab: string,
     className: string,
-    tabsOnly: bool.isRequired,
-    beforeHeader: node,
     noBorder: bool,
-  };
-
-  static defaultProps = {
-    tabsOnly: false,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -77,12 +64,11 @@ export default class Tabs extends Component {
   onClickTabItem = (id, callback) => this.setState({ activeTab: id }, callback);
 
   render() {
-    const { children, beforeHeader, ...props } = this.props;
+    const { children, ...props } = this.props;
     const { activeTab } = this.state;
 
     return (
       <Wrapper {...props}>
-        {beforeHeader}
         {children.map((child) => {
           const {
             id, onClick,

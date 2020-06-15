@@ -5,7 +5,12 @@ import { Button } from 'sly/web/components/atoms';
 import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
 import EditField from 'sly/web/components/form/EditField';
 import { states, sizeOfCommunity } from 'sly/web/constants/communities';
-import { FormSection, Section, SectionActions } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import {
+  SectionForm,
+  Section,
+  SectionActions,
+  SectionHeader,
+} from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 
 const statesOptions = states.map(s => <option key={s} value={s}>{s}</option>);
 const sizeOfCommunityOptions = sizeOfCommunity.map(s => <option key={s} value={s}>{s}</option>);
@@ -25,8 +30,14 @@ export default class DashboardCommunityDetailsForm extends Component {
     } = this.props;
 
     return (
-      <Section as="form" onSubmit={handleSubmit}>
-        <FormSection heading="Community details">
+      <Section
+        as="form"
+        onSubmit={handleSubmit}
+      >
+        <SectionHeader>
+          Details
+        </SectionHeader>
+        <SectionForm heading="Community details">
           <EditField
             name="name"
             label="Community name"
@@ -84,8 +95,8 @@ export default class DashboardCommunityDetailsForm extends Component {
             options={AVAILABLE_TAGS.map(value => ({ label: value, value }))}
             wideWidth
           />
-        </FormSection>
-        <FormSection heading="Respite care">
+        </SectionForm>
+        <SectionForm heading="Respite care">
           <EditField
             name="propInfo.respiteAllowed.checked"
             type="boolean"
@@ -102,8 +113,8 @@ export default class DashboardCommunityDetailsForm extends Component {
               parse={value => !value ? null : Number(value)}
             />
           }
-        </FormSection>
-        <FormSection heading="License number">
+        </SectionForm>
+        <SectionForm heading="License number">
           <EditField
             name="propInfo.licenseNumber"
             label="License number"
@@ -128,8 +139,8 @@ export default class DashboardCommunityDetailsForm extends Component {
             readOnly={!canEdit}
             wideWidth
           />
-        </FormSection>
-        <FormSection heading="Location">
+        </SectionForm>
+        <SectionForm heading="Location">
           <EditField
             name="address.line1"
             label="Line 1"
@@ -168,7 +179,7 @@ export default class DashboardCommunityDetailsForm extends Component {
             readOnly={!canEdit}
             wideWidth
           />
-        </FormSection>
+        </SectionForm>
         <SectionActions>
           <Button type="submit" disabled={!canEdit || invalid || submitting}>
             Save changes
