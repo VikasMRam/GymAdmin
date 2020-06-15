@@ -65,13 +65,16 @@ export default class DashboardCommunityAdminFormContainer extends Component {
 
 
   handleSubmit = (values) => {
-    console.log(values);
     const { match, updateCommunity, community, notifyError, notifyInfo } = this.props;
     const { id } = match.params;
     const { communityUser } = this.state;
 
     if (typeof values.status === 'string') {
       values.status = parseInt(values.status)
+    }
+
+    if (typeof values.slyScore === 'string') {
+      values.slyScore = parseInt(values.slyScore)
     }
 
     return updateCommunity({ id }, {
