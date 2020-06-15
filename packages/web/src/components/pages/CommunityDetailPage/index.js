@@ -4,6 +4,7 @@ import { object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/web/components/themes';
+import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
 import {
   getBreadCrumbsForCommunity,
   getCitySearchUrl,
@@ -59,12 +60,12 @@ import UnhydratedCommunityAddReviewButtonContainer from 'sly/web/containers/Comm
 import UnhydratedCommunityMorePicturesContainer from 'sly/web/containers/CommunityMorePicturesContainer';
 import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/web/containers/TrackedSimilarCommunitiesContainer';
 import UnhydratedPageViewActionContainer from 'sly/web/containers/PageViewActionContainer';
-import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/web/containers/PageEventsContainer';
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/web/containers/CommunityDetailsPageColumnContainer';
 import UnhydratedCommunityProfileAdTileContainer from 'sly/web/containers/communityProfile/AdTileContainer';
 import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
+import UnhydratedGetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
 import UnhydratedCommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
@@ -88,6 +89,8 @@ const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDet
 const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
 const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
 const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable);
+const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator);
+
 const BackToSearch = styled.div`
   text-align: center;
 `;
@@ -126,6 +129,7 @@ const StyledSection = styled(Section)`
 const StyledCommunityExtraInfoSection = styled(CommunityExtraInfoSection)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
+
 
 const StyledBannerNotification = pad(BannerNotification, 'large');
 
@@ -203,6 +207,8 @@ const CovidWrapper = styled.div`
 const AdWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
 `;
+
+const PaddedGetAssessmentBoxContainerHydrator = pad(GetAssessmentBoxContainerHydrator);
 
 const Header = makeHeader();
 const TwoColumn = makeTwoColumn('div');
@@ -466,6 +472,9 @@ export default class CommunityDetailPage extends Component {
                     />
                   )}
                 </StyledHeadingBoxSection>
+                <PaddedGetAssessmentBoxContainerHydrator
+                  startLink={`/wizards/assessment/community/${community.id}`}
+                />
                 {sortedEstimatedPrice.length > 0 && (
                   <StyledHeadingBoxSection heading={`Compare Costs for ${name}`}>
                     <CommunityPricingComparison community={community} />

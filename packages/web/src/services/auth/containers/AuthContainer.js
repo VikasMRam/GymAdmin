@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, func, oneOf } from 'prop-types';
+import { object, func, oneOf, string, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import spacing from 'sly/web/components/helpers/spacing';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import { Box } from 'sly/web/components/atoms';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
+import { Wrapper } from 'sly/web/services/auth/components/Template';
 import ResetPasswordFormContainer from 'sly/web/services/auth/containers/ResetPasswordFormContainer';
 import LoginFormContainer from 'sly/web/services/auth/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/web/services/auth/containers/SignupFormContainer';
@@ -36,12 +37,20 @@ export default class AuthContainer extends Component {
     authenticated: object,
     authenticateCancel: func.isRequired,
     authenticateSuccess: func.isRequired,
+    onAuthenticateSuccess: func,
+    onSignupSuccess: func,
     sendOtpCode: func.isRequired,
     type: oneOf(['modal', 'inline']),
+    initialStep: string,
+    signUpHeading: string,
+    signUpSubmitButtonText: string,
+    signUpHasPassword: bool,
   };
 
   static defaultProps = {
     type: 'modal',
+    initialStep: 'Login',
+    signUpHasPassword: true,
   };
 
   state = { isOpen: false };
@@ -66,11 +75,23 @@ export default class AuthContainer extends Component {
     }
   };
 
+  handleAuthenticateSuccess = () => {
+    const { onAuthenticateSuccess, authenticateSuccess } = this.props;
+
+    // authenticateSuccess is not a promise, hence call success event callback immediately
+    authenticateSuccess();
+    if (onAuthenticateSuccess) {
+      onAuthenticateSuccess();
+    }
+  };
+
   render() {
     const { isOpen } = this.state;
-    const { authenticateCancel, authenticateSuccess, authenticated, type } = this.props;
+    const {
+      authenticateCancel, authenticated, type, signUpHeading, signUpSubmitButtonText, signUpHasPassword, onSignupSuccess,
+    } = this.props;
+    let { initialStep } = this.props;
 
-    let initialStep = 'Login';
     if (authenticated.options && authenticated.options.register) {
       initialStep = 'Signup';
     }
@@ -83,7 +104,7 @@ export default class AuthContainer extends Component {
         formName="AuthForm"
         controllerKey="AuthFormControllerKey"
         initialStep={initialStep}
-        onComplete={authenticateSuccess}
+        onComplete={this.handleAuthenticateSuccess}
       >
         {({
           goto, next, ...props
@@ -94,7 +115,7 @@ export default class AuthContainer extends Component {
               name="Login"
               onRegisterClick={() => goto('Signup')}
               onResetPasswordClick={() => goto('ResetPassword')}
-              onSubmit={authenticateSuccess}
+              onSubmit={this.handleAuthenticateSuccess}
             />
             <WizardStep
               component={ResetPasswordFormContainer}
@@ -107,12 +128,15 @@ export default class AuthContainer extends Component {
               name="Signup"
               onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.register : true) && goto('Login'))}
               onProviderClicked={() => goto('ProviderSignup')}
-              onSubmit={() => goto('CustomerSignupConfirmation')}
+              onSubmit={() => onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation')}
+              heading={signUpHeading}
+              submitButtonText={signUpSubmitButtonText}
+              hasPassword={signUpHasPassword}
             />
             <WizardStep
               component={CustomerSignupConfirmationContainer}
               name="CustomerSignupConfirmation"
-              onSubmit={authenticateSuccess}
+              onSubmit={this.handleAuthenticateSuccess}
             />
             <WizardStep
               component={ProviderSignupFormContainer}
@@ -131,19 +155,19 @@ export default class AuthContainer extends Component {
               component={ProviderConfirmation}
               name="ProviderConfirmation"
               mode="Approved"
-              onSubmit={authenticateSuccess}
+              onSubmit={this.handleAuthenticateSuccess}
             />
             <WizardStep
               component={ProviderConfirmation}
               name="ProviderCommunityNotFound"
               mode="NotFound"
-              onSubmit={authenticateSuccess}
+              onSubmit={this.handleAuthenticateSuccess}
             />
             <WizardStep
               component={ProviderConfirmation}
               name="ProviderClaimNeedsApproval"
               mode="NeedApproval"
-              onSubmit={authenticateSuccess}
+              onSubmit={this.handleAuthenticateSuccess}
             />
           </WizardSteps>
         )}
@@ -152,9 +176,11 @@ export default class AuthContainer extends Component {
 
     if (type === 'inline') {
       return (
-        <Box>
-          {wizard}
-        </Box>
+        <Wrapper>
+          <Box>
+            {wizard}
+          </Box>
+        </Wrapper>
       );
     }
 
