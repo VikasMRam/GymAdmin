@@ -5,7 +5,7 @@ import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
+import { textAlign } from 'sly/web/components/helpers/text';
 import { Button, Box, ResponsiveImage, Block, Link } from 'sly/web/components/atoms';
 
 const StyledResponsiveImage = styled(ResponsiveImage)`

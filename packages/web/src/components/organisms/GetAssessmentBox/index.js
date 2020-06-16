@@ -6,7 +6,7 @@ import { oneOf, object } from 'prop-types';
 import { size } from 'sly/web/components/themes';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
+import { textAlign } from 'sly/web/components/helpers/text';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import { Heading, Box, Icon, Button } from 'sly/web/components/atoms';
 
