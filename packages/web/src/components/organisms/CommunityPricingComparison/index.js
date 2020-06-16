@@ -1,25 +1,58 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ifProp } from 'styled-tools';
 
 import { community as communityPropType } from 'sly/web/propTypes/community';
-import { size } from 'sly/web/components/themes';
+import { size, palette } from 'sly/web/components/themes';
 import { calculatePricing, findPercentage } from 'sly/web/services/helpers/pricing';
-import pad from 'sly/web/components/helpers/pad';
+import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { Block } from 'sly/web/components/atoms';
-import PriceBar from 'sly/web/components/molecules/PriceBar';
 
-const StyledPriceBar = styled(PriceBar)`
-  margin-bottom: ${ifProp('last', size('spacing.large'), size('spacing.regular'))};
+const StyledNumberFormat = styled.span`
+  font-weight: ${p => size(p.weight)};
+  color: ${p => palette(p.color, 'base')};
 `;
 
-const PaddedBlock = pad(Block, 'regular');
+const StyledTh = styled.th`
+  text-align: left;
+  font-weight: ${size('weight.medium')};
+  color:${palette('slate', 'base')};
+  background-color:${palette('grey', 'background')};
+  padding: ${size('spacing.regular')} ${size('spacing.xLarge')};
+  border-top: ${size('border.regular')} solid ${palette('grey', 'filler')};
+  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
+`;
+
+const Tr = styled.tr`
+  border-top: ${size('border.regular')} solid ${palette('grey', 'filler')};
+  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
+  padding: ${size('spacing.medium')} ${size('spacing.xLarge')};
+  background-color: ${p => palette(p.bgcolor, 'base')};
+  color: ${p => palette(p.color, 'base')};
+`;
+
+const StyledTd = styled.td`
+  border: none;
+  padding: ${size('spacing.regular')} ${size('spacing.xLarge')};
+`;
+
+const StyledTable = styled.table`
+  border-collapse: collapse;
+  width: 100%;
+  position: relative;
+  border-radius: ${size('spacing.small')};
+  border: ${size('border.regular')} solid ${palette('grey', 'filler')};
+`;
+
+const StyledBlockNp = styled(Block)`
+   padding-top: 0px;
+   padding-bottom: ${size('spacing.xLarge')};
+
+`;
 
 const CommunityPricingComparison = ({ community }) => {
-  const { rgsAux, name } = community;
+  const { rgsAux } = community;
   const { estimatedPrice } = rgsAux;
-  const allowed = ['providedAverage', 'estimatedAverage', 'cityAverage', 'homeCareMAverage', 'adultDayAverage'];
-  const bottomSection = ['homeCareMAverage', 'adultDayAverage'];
+  const allowed = ['providedAverage', 'estimatedAverage', 'cityAverage', 'stateAverage', 'nationalAverage'];
   const filteredEstimatedPrice = Object.keys(estimatedPrice)
     .filter(key => allowed.includes(key))
     .reduce((obj, key) => {
@@ -28,52 +61,43 @@ const CommunityPricingComparison = ({ community }) => {
       return nobj;
     }, {});
   const {
-    estimatedPriceLabelMap, sortedEstimatedPrice, maxPrice,
+    estimatedPriceLabelMap, sortedEstimatedPrice,
   } = calculatePricing(community, filteredEstimatedPrice);
-
-  const topSectionPrices = sortedEstimatedPrice
-    .filter(price => !bottomSection.includes(price[0]));
-  const bottomSectionPrices = sortedEstimatedPrice
-    .filter(price => bottomSection.includes(price[0]));
-  const hasAdultDayAverage = !!bottomSectionPrices.find(p => p[0] === 'adultDayAverage');
 
   return (
     <article>
-      {!topSectionPrices.length && !bottomSectionPrices.length && <div>No pricing info available.</div> }
-      {topSectionPrices.length > 0 &&
-        <>
-          {topSectionPrices.map((object, i) => (
-            <StyledPriceBar
-              width={findPercentage(object[1], maxPrice)}
-              price={object[1]}
-              key={object[1]}
-              palette={name === estimatedPriceLabelMap[object[0]] ? 'grey' : undefined}
-              variation={name === estimatedPriceLabelMap[object[0]] ? 'background' : undefined}
-              last={i === topSectionPrices.length - 1}
-            >
-              {estimatedPriceLabelMap[object[0]]}
-            </StyledPriceBar>
-          ))}
-        </>
+      {!sortedEstimatedPrice.length  && <div>No pricing info available.</div> }
+      {sortedEstimatedPrice.length > 0 &&
+        <StyledBlockNp>
+          <StyledTable>
+            <thead>
+            <tr>
+              <StyledTh colSpan={2} color="slate" bgcolor="grey">
+                Compare costs of assisted living
+              </StyledTh>
+            </tr>
+            </thead>
+            <tbody>
+            <Tr color="grey" bgcolor="white">
+              <StyledTd>Type</StyledTd>
+              <StyledTd>Average Monthly Cost*</StyledTd>
+            </Tr>
+            {sortedEstimatedPrice.map((object, i) => (
+              <Tr key={estimatedPriceLabelMap[object[0]]} color="slate" bgcolor="white">
+                <StyledTd>{estimatedPriceLabelMap[object[0]]}</StyledTd>
+                <StyledTd>
+                  <StyledNumberFormat weight="weight.regular" color="slate">
+                    {formatMoney(object[1])}
+                  </StyledNumberFormat>
+                </StyledTd>
+              </Tr>
+            ))}
+            </tbody>
+          </StyledTable>
+        </StyledBlockNp>
       }
-      {bottomSectionPrices.length > 0 &&
-        <>
-          <PaddedBlock size="body" weight="medium">Compare cost to other care options</PaddedBlock>
-          {bottomSectionPrices.map((object, i) => (
-            <StyledPriceBar
-              width={findPercentage(object[1], maxPrice)}
-              price={object[1]}
-              key={object[1]}
-              last={i === bottomSectionPrices.length - 1}
-            >
-              {estimatedPriceLabelMap[object[0]]}
-              {object[0] === 'adultDayAverage' && <sup>1</sup>}
-            </StyledPriceBar>
-          ))}
-          {hasAdultDayAverage && <Block size="tiny" palette="grey">1 The estimate above is based on data provided by Genworth&apos;s Cost of Care estimate. Home care assumes 44 hours per week, and Adult Day assumes 5 days per week.</Block>}
-        </>
-      }
-    </article>
+      </article>
+
   );
 };
 

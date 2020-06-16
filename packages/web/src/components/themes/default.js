@@ -14,8 +14,7 @@ const theme = {};
 // DO NOT MODIFY the following without asking Jared
 theme.palette = {
   slate      : makeColor('#2a333f'),
-  primary    : makeColor('#186dc5'),
-  viridian   : makeColor('#1a7473'),
+  primary   : makeColor('#1a7473'),
   secondary  : makeColor('#56c4c2'),
   white      : makeColor('#ffffff'),
   danger     : makeColor('#dc3133'),
@@ -182,17 +181,6 @@ theme.sizes = {
     massive : '4.500rem',   // 72px
   },
 
-  // icon: {
-  //   tiny   : '0.750rem',   // 12px
-  //   small  : '1.000rem',   // 16px
-  //   caption: '1.250rem',   // 20px for use with caption text
-  //   regular: '1.500rem',   // 24px
-  //   large  : '2.250rem',   // 36px
-  //   xLarge : '3.000rem',   // 48px
-  //   huge   : '4.000rem',   // 64px
-  //   xxLarge: '4.500rem',   // 72px
-  // },
-  //
   text: {
     micro     : '0.625rem',   // 10px
     tiny      : '0.750rem',   // 12px

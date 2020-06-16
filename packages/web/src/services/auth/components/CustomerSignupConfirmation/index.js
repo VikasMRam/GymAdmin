@@ -25,7 +25,7 @@ export default class CustomerSignupConfirmation extends Component {
     const { onSubmit, user } = this.props;
     return (
       <Wrapper>
-        <StyledIcon icon="round-checkmark" palette="secondary" variation="darker-30" size="large" />
+        <StyledIcon icon="round-checkmark" palette="primary" variation="base" size="large" />
         <StyledHeading> Welcome {user ? user.name : ''}</StyledHeading>
         <Paragraph> Your account is all set up </Paragraph>
         <LargePaddedFullWidthButton onClick={onSubmit}>Continue</LargePaddedFullWidthButton>

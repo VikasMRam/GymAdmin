@@ -11,7 +11,7 @@ import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { Heading, Button, Block, Link } from 'sly/web/components/atoms';
 import { textAlign } from 'sly/web/components/helpers/text';
 
-const StyledHeading = textAlign(pad(Heading));
+const StyledHeading = pad(Heading);
 StyledHeading.displayName = 'StyledHeading';
 
 const FullWidthButton = fullWidth(Button);

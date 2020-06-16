@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { arrayOf, bool, string, func, number, shape, oneOf } from 'prop-types';
+import { arrayOf, bool, string, func, number, shape, oneOf, object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
@@ -108,7 +108,7 @@ const ImageWrapper = styled.div`
 `;
 
 const MainWrapper = styled.article`
-  background-color: ${ifProp('plusCategory', palette('secondary', 'background'), palette('white', 'base'))};
+  background-color: ${ifProp('plusCategory', palette('primary', 'background'), palette('white', 'base'))};
 `;
 
 const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
@@ -121,7 +121,7 @@ const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
   layout, showFloorPlan, palette, showDescription, imageSize, showSeeMoreButtonOnHover,
-  canFavourite, lazyLoadImage,
+  canFavourite, lazyLoadImage, event,
 }) => {
   const {
     name, gallery = {}, communitySize, plusCategory,
@@ -129,7 +129,7 @@ const CommunityTile = ({
   const { images = [] } = gallery;
   const galleryImages = images.map((img, i) => ({ ...img, src: img.sd, alt: `${name} ${i + 1}` }));
   const icon = isFavourite ? 'favourite-dark' : 'favourite-empty';
-  const iconPalette = isFavourite ? 'secondary' : 'white';
+  const iconPalette = isFavourite ? 'primary' : 'white';
   const onIconClick = isFavourite ? onUnfavouriteClick : onFavouriteClick;
   const hasImages = galleryImages.length > 0;
   // one image only, don't show gallery
@@ -195,6 +195,7 @@ const CommunityTile = ({
             showFloorPlan={showFloorPlan}
             showDescription={showDescription}
             headerIsLink
+            event={event}
           />
           {buildActionButtons(actionButtons)}
           {(note || addNote) && <Hr />}
@@ -234,6 +235,7 @@ CommunityTile.propTypes = {
   showSeeMoreButtonOnHover: bool,
   imageSize: oneOf(Object.keys(getKey('sizes.tile'))),
   lazyLoadImage: bool.isRequired,
+  event: object,
 };
 
 CommunityTile.defaultProps = {

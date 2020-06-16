@@ -60,7 +60,7 @@ Icon.displayName = 'Icon';
 Icon.propTypes = {
   icon: string.isRequired,
   width: number,
-  size: oneOf(['tiny', 'small', 'regular', 'caption', 'large', 'xLarge', 'xxLarge']),
+  size: oneOf(['micro', 'tiny', 'caption', 'body', 'subtitle', 'title', 'hero', 'superHero']),
   palette: palettePropType,
   variation: variationPropType,
   stroke: string,

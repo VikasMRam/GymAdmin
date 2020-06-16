@@ -59,6 +59,12 @@ const PrevSlide = styled(StyledIcon)`
 const NextSlide = styled(StyledIcon)`
   right: ${size('spacing.regular')};
 `;
+const TopLeftWrapper = styled.span`
+  left: ${size('spacing.regular')};
+  top: ${size('spacing.regular')};
+  position: absolute;
+  z-index: 1;
+`;
 const TopRightWrapper = styled.span`
   right: ${size('spacing.regular')};
   top: ${size('spacing.regular')};
@@ -120,6 +126,7 @@ export default class MediaGallery extends Component {
     sizes: string,
     showThumbnails: bool,
     currentSlide: number,
+    topLeftSection: func,
     topRightSection: func,
     bottomLeftSection: func,
     bottomRightSection: func,
@@ -250,7 +257,7 @@ export default class MediaGallery extends Component {
 
   render() {
     const {
-      currentSlide, videos, images, topRightSection, bottomLeftSection, bottomRightSection, showThumbnails,
+      currentSlide, videos, images, topLeftSection, topRightSection, bottomLeftSection, bottomRightSection, showThumbnails,
     } = this.props;
     const { onSlideChange, onSlideClick, ...rest } = this.props;
     const thumbnails = [];
@@ -298,6 +305,11 @@ export default class MediaGallery extends Component {
               palette="white"
               onClick={this.prevSlide}
             />
+          }
+          {topLeftSection &&
+          <TopLeftWrapper>
+            {topLeftSection(this.allMedia[currentSlide])}
+          </TopLeftWrapper>
           }
           {topRightSection &&
             <TopRightWrapper>

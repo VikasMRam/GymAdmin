@@ -24,6 +24,7 @@ import LocationSearch from 'sly/web/components/molecules/LocationSearch';
 import DatepickerStyles from 'sly/web/components/themes/DatepickerStyles';
 import CommunityAutoComplete from 'sly/web/components/molecules/CommunityAutoComplete';
 import { textAlign } from 'sly/web/components/helpers/text';
+import UserAutoComplete from 'sly/web/components/molecules/UserAutoComplete';
 
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/web/components/atoms/Select'));
@@ -73,6 +74,8 @@ const getInputComponent = (type) => {
       return Autocomplete;
     case 'community':
       return CommunityAutoComplete;
+    case 'user':
+      return UserAutoComplete;
     case 'checkbox':
     case 'boolean':
       return CheckboxInput;
@@ -314,6 +317,7 @@ Field.propTypes = {
     'choice', // react-select
     'autocomplete',
     'community',
+    'user',
     'communitychoice',
     'singlechoice',
     'multiplechoice',

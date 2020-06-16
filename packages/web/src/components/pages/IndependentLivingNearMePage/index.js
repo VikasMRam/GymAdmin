@@ -501,31 +501,31 @@ const IndependentLivingNearMePage = ({
           </Paragraph>
 
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Gyms and exercise facilities
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Swimming pools and hot tubs
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Beauty salons and barber shops
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Dining facilities with chef-prepared meals
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               A full social activity schedule
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Transportation near the community
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Housekeeping, linen and/or laundry services
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iiconPalette="primary" iconVariation="base">
               24/7 security
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Religious services
             </ListItem>
           </ListWrapper>
@@ -742,34 +742,34 @@ const IndependentLivingNearMePage = ({
             Here are some suggestions of questions you might want to ask during your visit, just to get you started.
           </Paragraph>
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               What social and recreational activities are offered? How many residents actually participate in the activities you're interested in?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               What options are available if you need regular medical or personal care in your home? Are you allowed to bring in an in-home caregiver? Under what circumstances would you be asked to move to an Assisted Living community?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               What's included in the monthly fee? Is the monthly fee increased every year? If not, when is it increased? What happens if a resident has difficulty paying the monthly fee?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               What assistance will the Independent Living community provide to help you move and get settled there?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               What's the security like at the community? What emergency services are available?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Are any meals provided? If the answer is yes, how many meals are provided, and which ones? Are they included in the monthly fee? Are any accommodations available if you need to follow a restricted diet (gluten-free, vegetarian, kosher, etc.)?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Are visitors allowed? What about overnight visitors? Are children allowed to visit? Is there a curfew for visitors (or for any other activities)?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Does the community allow residents to have pets? Are there restrictions on the size or type of pets? Is it possible to make arrangements for pet care if you need to travel away from the community for any reason?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               What transportation is available at the community? Does the community provide any kind of shuttles or private transportation for medical appointments, errands, or entertainment?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Do residents of the Independent Living community get involved with the surrounding community? What's the relationship between the Independent Living community and the surrounding neighborhood like?
             </ListItem>
           </ListWrapper>

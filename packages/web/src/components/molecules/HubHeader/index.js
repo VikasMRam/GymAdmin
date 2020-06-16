@@ -13,7 +13,7 @@ import BannerNotificationAdContainer from 'sly/web/containers/BannerNotification
 const HeroWrapper = styled.div`
   position: relative;
   height: ${size('header.hub.heroImage.mobileHeight')};
-  background-color: ${palette('secondary', 'darker-30')};
+  background-color: ${palette('primary', 'base')};
   display: flex;
   flex-direction: column;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -182,10 +182,10 @@ HubHeader.propTypes = {
 
 HubHeader.defaultProps = {
   showSearch: true,
-  mobileBGGradientPalette: 'secondary',
-  mobileBGGradientVariation: 'darker-30',
-  laptopBBGradientPalette: 'secondary',
-  laptopBBGradientVariation: 'dark',
+  mobileBGGradientPalette: 'primary',
+  mobileBGGradientVariation: 'base',
+  laptopBBGradientPalette: 'primary',
+  laptopBBGradientVariation: 'base',
 };
 
 export default HubHeader;

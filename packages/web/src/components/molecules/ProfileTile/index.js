@@ -17,7 +17,7 @@ const Wrapper = styled(Link)`
 
   ${switchProp('layout', {
     regular: css`
-      border: ${size('border.regular')} solid ${palette('secondary', 'stroke')};
+      border: ${size('border.regular')} solid ${palette('primary', 'stroke')};
       padding: ${size('spacing.xLarge')};
       border-radius: ${size('spacing.small')};
       // TODO: @pranesh-seniorly this should be flexbox and should figure out sizes by itsef

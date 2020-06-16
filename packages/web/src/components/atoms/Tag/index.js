@@ -7,13 +7,13 @@ const Tag = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: ${palette('secondary', 'darker-30')};
+  background-color: ${palette('primary', 'base')};
   color: ${palette('white', 'base')};
   letter-spacing: ${size('spacing.nano')};
   line-height: ${size('spacing.large')};
   font-size: ${size('spacing.medium')};
   height: ${size('spacing.xLarge')};
-  border: ${size('spacing.nano')} solid ${palette('secondary', 'filler')};
+  border: ${size('spacing.nano')} solid ${palette('primary', 'filler')};
   border-radius: ${size('spacing.small')};
   padding: 0 ${size('spacing.regular')};
 `;

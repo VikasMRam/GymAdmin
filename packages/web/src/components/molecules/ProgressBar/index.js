@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 `;
 
 const Bar = styled.div`
-  background-color: ${palette('darker-30')};
+  background-color: ${palette('base')};
   height: ${size('spacing.small')};
   width: ${prop('width')}%;
   transition: width ${key('transitions.slow.inOut')};
@@ -42,7 +42,7 @@ ProgressBar.propTypes = {
 };
 
 ProgressBar.defaultProps = {
-  palette: 'secondary',
+  palette: 'primary',
   currentStep: 1,
 };
 

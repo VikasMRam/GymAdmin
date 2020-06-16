@@ -10,7 +10,7 @@ const StyledBadge = styled(Badge)`
   border-radius: ${size('border.xxLarge')};
   border-bottom-left-radius: ${p => p.fullWidth ? '0' : size('border.xxLarge')};
   border-bottom-right-radius: ${p => p.fullWidth ? '0' : size('border.xxLarge')};
-  background-color: ${palette('secondary', 'darker-30')};
+  background-color: ${palette('primary', 'base')};
   display: inline-flex;
   justify-content: ${p => p.fullWidth ? 'left' : 'center'};
   align-items: ${p => p.fullWidth ? 'left' : 'center'};

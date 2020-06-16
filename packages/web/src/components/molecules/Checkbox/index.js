@@ -24,7 +24,7 @@ Checkbox.propTypes = {
 
 Checkbox.defaultProps = {
   checked: false,
-  palette: 'secondary',
+  palette: 'primary',
   uncheckedPalette: 'white',
 };
 

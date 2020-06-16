@@ -218,7 +218,7 @@ const ClientName = ({ client, rawClient, backLinkHref, user, ...props }) => {
         <Icon icon="arrow-left" palette="primary" />
       </Link>
       <span>{name}</span>
-      {isReferralSent(client) && <StyledIconBadge badgePalette="secondary" badgeVariation="darker-30" palette="white" icon="checkmark-circle" text="R SENT" />}
+      {isReferralSent(client) && <StyledIconBadge badgePalette="primary" badgeVariation="base" palette="white" icon="checkmark-circle" text="R SENT" />}
       {(userIs(user, PLATFORM_ADMIN_ROLE) || (!isNew && !isProspects)) && <StyledStatusSelect client={client} rawClient={rawClient} user={user} {...props} />}
     </StyledClientNameBlock>
   );
@@ -574,7 +574,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     if (clientIsLoading) {
       return (
-        <StyledDashboardTwoColumnTemplate activeMenuItem="Families">
+        <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
           Loading...
         </StyledDashboardTwoColumnTemplate>
       );
@@ -596,7 +596,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         message = "Loading Family Details...";
       }
       return (
-        <DashboardPageTemplate activeMenuItem="Families">
+        <DashboardPageTemplate activeMenuItem="My Families">
           <TextAlignCenterBlock weight="medium" size="subtitle">{message}</TextAlignCenterBlock>
           <AlignCenterBackLinkWrapper>{backlink}</AlignCenterBackLinkWrapper>
         </DashboardPageTemplate>
@@ -719,7 +719,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     );
 
     return (
-      <StyledDashboardTwoColumnTemplate top={topSection} activeMenuItem="Families">
+      <StyledDashboardTwoColumnTemplate top={topSection} activeMenuItem="My Families">
         <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
           <BigScreenSummarySection>
             <Box snap="bottom">

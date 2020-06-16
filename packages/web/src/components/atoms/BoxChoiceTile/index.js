@@ -15,7 +15,7 @@ const StyledBox = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: ${prop('align')};
-  border-color: ${ifProp('highlighted', palette('darker-30'), palette('stroke'))}};
+  border-color: ${ifProp('highlighted', palette('base'), palette('stroke'))}};
   background-color: ${ifProp('highlighted', palette('background'), 'transparent')}};
   ${ifProp('highlighted', css`color: ${palette('base')}`)}
 `;
@@ -37,7 +37,7 @@ const BoxChoiceTile = ({
     onClick={onClick}
   >
     {!selected && hasCheckbox && <StyledIcon icon="checkbox-empty" palette={palette} variation="filler" />}
-    {selected && hasCheckbox && <StyledIcon icon="checkbox" palette={palette} variation="darker-30" />}
+    {selected && hasCheckbox && <StyledIcon icon="checkbox" palette={palette} variation="base" />}
     {children || label}
   </StyledBox>
 );

@@ -2,8 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import CommunitySummary from 'sly/web/components/organisms/CommunitySummary';
-import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';
-import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { Link } from 'sly/web/components/atoms';
 import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 import { CONTINUING_CARE_RETIREMENT_COMMUNITY } from 'sly/web/constants/tags';
@@ -38,7 +36,6 @@ const verify = (wrapper) => {
   } = address;
   const renderedAddress = wrapper.find('Heading').dive().render()
     .text();
-  const renderedWrapper = wrapper.find('Wrapper');
 
   expect(renderedAddress).toContain(line1);
   expect(renderedAddress).toContain(line2);
@@ -46,9 +43,6 @@ const verify = (wrapper) => {
   expect(renderedAddress).toContain(state);
   expect(renderedAddress).toContain(zip);
   expect(wrapper.find('StyledHeading').render().text()).toContain(name);
-  expect(wrapper.find(CommunityPricing)).toHaveLength(1);
-  expect(wrapper.find(CommunityRating)).toHaveLength(1);
-  expect(renderedWrapper.childAt(0).find(Link)).toHaveLength(1);
 };
 
 describe('CommunitySummary', () => {
@@ -57,52 +51,6 @@ describe('CommunitySummary', () => {
       community: RhodaGoldmanPlaza,
     });
     verify(wrapper);
-    expect(wrapper.find('Wrapper').childAt(1).find('StyledIconButton').find({ icon: 'favourite-empty' })).toHaveLength(1);
-  });
-
-  it('renders with favourited', () => {
-    const wrapper = wrap({
-      community: RhodaGoldmanPlaza,
-      isFavorited: true,
-    });
-    verify(wrapper);
-    expect(wrapper.find('Wrapper').childAt(1).find('StyledIconButton').find({ icon: 'favourite-light' })).toHaveLength(1);
-  });
-
-  it('onShareClick called', () => {
-    const onShareClick = jest.fn();
-    const wrapper = wrap({
-      community: RhodaGoldmanPlaza,
-      onShareClick,
-    });
-    wrapper.find('Wrapper').childAt(1).find('StyledIconButton').find({ icon: 'share' })
-      .simulate('click');
-    expect(onShareClick).toHaveBeenCalled();
-  });
-
-  it('onFavouriteClick called', () => {
-    const onFavouriteClick = jest.fn();
-    const wrapper = wrap({
-      community: RhodaGoldmanPlaza,
-      onFavouriteClick,
-    });
-    wrapper.find('Wrapper').childAt(1).find('StyledIconButton')
-      .at(1)
-      .simulate('click');
-    expect(onFavouriteClick).toHaveBeenCalled();
-  });
-
-  it('onFavouriteClick called when isFavourited', () => {
-    const onFavouriteClick = jest.fn();
-    const wrapper = wrap({
-      community: RhodaGoldmanPlaza,
-      isFavourited: true,
-      onFavouriteClick,
-    });
-    wrapper.find('Wrapper').childAt(1).find('StyledIconButton')
-      .at(1)
-      .simulate('click');
-    expect(onFavouriteClick).toHaveBeenCalled();
   });
 
   it('renders with isAdmin', () => {

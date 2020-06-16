@@ -22,7 +22,6 @@ const StyledButton = styled(Button)`
 const Continue = textAlign(Block);
 Continue.displayName = 'Continue';
 
-
 export default class ProviderFindCommunity extends Component {
   static propTypes = {
     handleSubmit: func.isRequired,

@@ -71,6 +71,7 @@ let instanceNumber = 0;
 // to update the Stages
 // FIXME: more than one modal are currently possible, we have to mimic the mechanism used in react-modal
 export default class NewModal extends Component {
+  static typeHydrationId = 'NewModal';
   overlayRef = React.createRef();
 
   constructor(props) {

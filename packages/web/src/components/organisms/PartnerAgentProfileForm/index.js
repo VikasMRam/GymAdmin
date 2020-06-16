@@ -205,6 +205,15 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
             options={[{ label: '', value: true }]}
           />
           <Field
+            name="canReceiveReferrals"
+            label="Referrals Enabled"
+            type="checkbox"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+            options={[{ label: '', value: true }]}
+          />
+          <Field
             name="email"
             label="Email"
             type="email"

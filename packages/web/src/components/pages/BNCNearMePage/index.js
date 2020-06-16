@@ -23,7 +23,7 @@ import {
   makeTable,
   makeOneColumnListWrapper,
 } from 'sly/web/components/templates/HubPageTemplate';
-import { ResponsiveImage, Heading, Paragraph, Link, Box } from 'sly/web/components/atoms';
+import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import { getTocSeoLabel } from 'sly/web/services/helpers/search';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
@@ -272,7 +272,7 @@ const MemoryCareNearMePage = ({
             <strong>Among the care services provided are:</strong>
           </Paragraph>
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               <div>
                 <strong>
                   Assistance with the Activities of Daily Living (ADLs)
@@ -281,7 +281,7 @@ const MemoryCareNearMePage = ({
                 grooming, eating, and transferring, depending on the needs of the resident.
               </div>.
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               <div>
                 <strong>
                   Medication Management
@@ -291,7 +291,7 @@ const MemoryCareNearMePage = ({
                 to give residents reminders to take their medications.
               </div>
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
 
               <div>
                 <strong>
@@ -302,7 +302,7 @@ const MemoryCareNearMePage = ({
                 They often plan menus based on the preferences of the residents.
               </div>
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               <div>
                 <strong>
                   Activities
@@ -312,7 +312,7 @@ const MemoryCareNearMePage = ({
                 take residents to nearby senior centers for activities.
               </div>
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               <div>
                 <strong>
                   Transportation
@@ -321,7 +321,7 @@ const MemoryCareNearMePage = ({
                 They may also provide transportation for errands and group outings.
               </div>
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               <div>
                 <strong>
                   Housekeeping
@@ -968,46 +968,46 @@ const MemoryCareNearMePage = ({
           </Paragraph>
 
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               How do you handle billing and payment? What happens if my loved one is unable to pay the fees any given month?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Are your staff permitted to administer medications? Or can they only store them?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iiconPalette="primary" iconVariation="base">
               How do you handle medical emergencies?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               What happens if the care needs of a resident should change? Are additional services available, or does the resident need to look for a new place to live?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               What happens if a resident is unhappy in the board and care home? Are any upfront fees refunded?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               How are residents' care needs assessed? Who participates in that assessment? Can family be part of any care plan decisions?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               What happens if a resident is temporarily hospitalized?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               How long have your staff members worked at the board and care home? What does the home's owner do to retain them?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               What training do the staff have? Is ongoing training required?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Are there visiting hours for family and friends? Can family or friends spend the night?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               What security measures are in place? How does the home handle residents with a tendency to wander?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               May residents bring their own furniture to the board and care home?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Can the kitchen accommodate special dietary needs?
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               What would cause you to discharge a resident?
             </ListItem>
           </ListWrapper>

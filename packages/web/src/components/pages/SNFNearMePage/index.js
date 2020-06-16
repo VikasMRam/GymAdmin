@@ -215,16 +215,16 @@ const NearMePage = ({
             facilities typically offer:
           </Paragraph>
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Physical, speech and occupational therapy services
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Mobility assistance
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Post-hospitalization rehabilitation services
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="darker-30">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               <div>
                 Custodial care to assist residents with{' '}
                 <Link href="https://www.seniorly.com/resources/articles/what-are-the-activities-of-daily-living-adls">

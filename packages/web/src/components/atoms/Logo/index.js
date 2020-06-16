@@ -18,8 +18,8 @@ Logo.propTypes = {
 };
 
 Logo.defaultProps = {
-  palette: 'secondary',
-  variation: 'darker-30',
+  palette: 'primary',
+  variation: 'base',
 };
 
 export default Logo;

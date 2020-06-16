@@ -4,6 +4,7 @@ import { object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/web/components/themes';
+import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
 import {
   getBreadCrumbsForCommunity,
   getCitySearchUrl,
@@ -46,7 +47,6 @@ import IconButton from 'sly/web/components/molecules/IconButton';
 import UnhydratedGetCurrentAvailabilityContainer from 'sly/web/containers/GetCurrentAvailabilityContainer';
 import UnhydratedHowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
-import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 import UnhydratedAskAgentQuestionButtonContainer from 'sly/web/containers/AskAgentQuestionButtonContainer';
 import UnhydratedGetCustomPricingButtonContainer from 'sly/web/containers/GetCustomPricingButtonContainer';
 import PlusBranding from 'sly/web/components/organisms/PlusBranding';
@@ -60,12 +60,13 @@ import UnhydratedCommunityAddReviewButtonContainer from 'sly/web/containers/Comm
 import UnhydratedCommunityMorePicturesContainer from 'sly/web/containers/CommunityMorePicturesContainer';
 import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/web/containers/TrackedSimilarCommunitiesContainer';
 import UnhydratedPageViewActionContainer from 'sly/web/containers/PageViewActionContainer';
-import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/web/containers/PageEventsContainer';
 import UnhydratedCommunityDetailsPageColumnContainer from 'sly/web/containers/CommunityDetailsPageColumnContainer';
 import UnhydratedCommunityProfileAdTileContainer from 'sly/web/containers/communityProfile/AdTileContainer';
-import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer'
+import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
+import UnhydratedGetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
+import UnhydratedCommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -87,6 +88,8 @@ const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
 const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
 const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
+const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable);
+const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator);
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -126,6 +129,7 @@ const StyledSection = styled(Section)`
 const StyledCommunityExtraInfoSection = styled(CommunityExtraInfoSection)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
+
 
 const StyledBannerNotification = pad(BannerNotification, 'large');
 
@@ -193,9 +197,9 @@ const CTABlock = styled(Block)`
 
 const CovidWrapper = styled.div`
   padding: ${size('spacing.large')};
-  background-color: ${palette('secondary', 'filler')};
+  background-color: ${palette('primary', 'filler')};
   border-radius: ${size('border.xLarge')};
-  border-top: 4px solid ${palette('secondary', 'darker-30')};
+  border-top: 4px solid ${palette('primary', 'base')};
   margin-bottom: ${size('spacing.xLarge')};
   text-align: center;
 `;
@@ -203,6 +207,8 @@ const CovidWrapper = styled.div`
 const AdWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
 `;
+
+const PaddedGetAssessmentBoxContainerHydrator = pad(GetAssessmentBoxContainerHydrator);
 
 const Header = makeHeader();
 const TwoColumn = makeTwoColumn('div');
@@ -382,8 +388,8 @@ export default class CommunityDetailPage extends Component {
                         <IconItemWrapper key={item}>
                           <IconItem
                             icon="check"
-                            iconPalette="secondary"
-                            iconVariation="darker-30"
+                            iconPalette="primary"
+                            iconVariation="base"
                             borderless={false}
                           >
                             {item}
@@ -399,8 +405,8 @@ export default class CommunityDetailPage extends Component {
                         <IconItemWrapper key={item}>
                           <IconItem
                             icon="check"
-                            iconPalette="secondary"
-                            iconVariation="darker-30"
+                            iconPalette="primary"
+                            iconVariation="base"
                             borderless={false}
                           >
                             {item}
@@ -457,23 +463,21 @@ export default class CommunityDetailPage extends Component {
                   )}
                   {!hasCCRC && !hasSNF && (
                     <CommunityPricingTable
-                      name={name}
                       pricesList={pricesList}
                       estimatedPriceList={estimatedPriceList}
-                      price={estimatedPriceBase}
-                      GetPricingButton={props => (
-                        <GetCustomPricingButtonContainer
-                          hasAlreadyRequestedPricing={isAlreadyPricingRequested}
-                          locTrack="pricing-table"
-                          {...props}
-                        />
-                      )}
-                      size={communitySize}
-                      showToolTip={address.state === 'TN'}
+                      isAlreadyPricingRequested={isAlreadyPricingRequested}
                       community={community}
                     />
                   )}
                 </StyledHeadingBoxSection>
+                <PaddedGetAssessmentBoxContainerHydrator
+                  startLink={`/wizards/assessment/community/${community.id}`}
+                />
+                {sortedEstimatedPrice.length > 0 && (
+                  <StyledHeadingBoxSection heading={`Compare Costs for ${name}`}>
+                    <CommunityPricingComparison community={community} />
+                  </StyledHeadingBoxSection>
+                )}
                 {/* TODO: ENABLE AFTER FIGURING OUT HYDRATION*/}
                 <AdWrapper>
                   <CommunityProfileAdTileContainer type="homeCare" community={community} />
@@ -550,11 +554,7 @@ export default class CommunityDetailPage extends Component {
                   <CommunityAmenities community={community} />
                   <StyledAskAgentButton type="amenities">Ask About Amenities</StyledAskAgentButton>
                 </StyledHeadingBoxSection>
-                {sortedEstimatedPrice.length > 0 && (
-                  <StyledHeadingBoxSection heading={`Compare Costs to Nearby ${typeOfCare} Communities`}>
-                    <CommunityPricingComparison community={community} />
-                  </StyledHeadingBoxSection>
-                )}
+
                 <StyledHeadingBoxSection
                   heading={`Reviews at ${name}`}
                   id="reviews"
@@ -571,7 +571,7 @@ export default class CommunityDetailPage extends Component {
                   <EventsWrapper>
                     {sampleEvents.map(item => (
                       <IconItemWrapper key={item}>
-                        <IconItem icon="check" iconPalette="secondary" iconVariation="darker-30" borderless={false}>{item}</IconItem>
+                        <IconItem icon="check" iconPalette="primary" iconVariation="base" borderless={false}>{item}</IconItem>
                       </IconItemWrapper>))
                     }
                   </EventsWrapper>
@@ -631,7 +631,7 @@ export default class CommunityDetailPage extends Component {
                   </StyledHeadingBoxSection>
                 )}
 
-                <CommunityStickyFooter isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack="sticky-footer"/>
+                <CommunityStickyFooter community={community} isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack="sticky-footer"/>
               </Body>
               <Column>
                 <StickToTop>

@@ -292,11 +292,9 @@ export default class HeaderContainer extends PureComponent {
       <ModalController>
         {({
           show,
-          hide,
         }) => (
           <NotificationController>
             {({
-              notifyInfo,
               messages,
               dismiss,
             }) => {
@@ -319,7 +317,7 @@ export default class HeaderContainer extends PureComponent {
                     onCurrentLocation={this.handleCurrentLocation}
                     hasSearchBox={layout !== 'wizards'}
                   />
-                  {layout !== 'wizards' && <AuthContainer notifyInfo={notifyInfo} showModal={show} hideModal={hide} />}
+                  {layout !== 'wizards' && <AuthContainer />}
                   <Notifications messages={messages} dismiss={dismiss} />
                 </>
               );

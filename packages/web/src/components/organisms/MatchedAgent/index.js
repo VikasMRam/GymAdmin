@@ -1,21 +1,28 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { string, node } from 'prop-types';
+import { string, node, bool } from 'prop-types';
 
 import { size, palette } from 'sly/web/components/themes';
 import agentPropType from 'sly/web/propTypes/agent';
 import pad from 'sly/web/components/helpers/pad';
-import shadow from 'sly/web/components/helpers/shadow';
-import { Heading, Box, Block, Link } from 'sly/web/components/atoms';
+import fullWidth from 'sly/web/components/helpers/fullWidth';
+import { Heading, Box, Block, Link, Button } from 'sly/web/components/atoms';
 import Avatar from 'sly/web/components/molecules/Avatar';
 import { textAlign } from 'sly/web/components/helpers/text';
+import IconItem from 'sly/web/components/molecules/IconItem';
 
 const AgentInfoWrapper = pad(styled.div``);
 
-const ShadowBox = shadow(textAlign(Box));
+const PaddedAvatar = pad(Avatar);
 
 const PaddedHeading = pad(Heading);
 PaddedHeading.displayName = 'PaddedHeading';
+
+const LargePaddedBlock = pad(Block, 'large');
+
+const TextAlignCenterBlock = textAlign(Block);
+
+const FullWidthButton = fullWidth(Button);
 
 const loading = keyframes`
   0% {
@@ -42,7 +49,7 @@ const AgentPlaceholder = pad(styled.div`
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: ${palette('secondary', 'base')};
+    background: ${palette('primary', 'base')};
     margin: -4px 0 0 -4px;
   }
   div:nth-child(1) {
@@ -113,34 +120,48 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const MatchedAgent = ({ heading, agent, children }) => (
-  <ShadowBox>
+const MainWrapper = ({ hasBox, ...props }) => hasBox ? <Box {...props} /> : <div {...props} />;
+
+MainWrapper.propTypes = {
+  hasBox: bool,
+};
+
+const MatchedAgent = ({ heading, agent, children, prevLink, hasBox }) => (
+  <MainWrapper hasBox={hasBox}>
     {agent &&
       <>
+        <TextAlignCenterBlock>
+          <PaddedAvatar size="xxLarge" user={{ name: agent.name, picture: { src: agent.info.profileImageUrl } }} />
+        </TextAlignCenterBlock>
         <PaddedHeading size="subtitle" weight="medium">{heading}</PaddedHeading>
+        <LargePaddedBlock>Questions? You can contact {agent.name.split(' ')[0]} by phone or email:</LargePaddedBlock>
         <AgentInfoWrapper>
-          <Avatar size="xxLarge" user={{ name: agent.name, picture: { src: agent.info.profileImageUrl } }} />
-          <Block weight="medium">{agent.name}</Block>
-          <Block>Local Senior Living Expert</Block>
-          <Link to={`mailto:${agent.info.email}`}>{agent.info.email}</Link><br />
-          <Link to={`tel:${agent.info.workPhone}`}>{agent.info.workPhone}</Link>
+          <IconItem icon="email" iconPalette="slate"><Link to={`mailto:${agent.info.email}`}>{agent.info.email}</Link></IconItem>
+          <IconItem icon="phone" iconPalette="slate"><Link to={`tel:${agent.info.workPhone}`}>{agent.info.workPhone}</Link></IconItem>
         </AgentInfoWrapper>
+        <FullWidthButton to={prevLink}>Return to Profile</FullWidthButton>
         {children}
       </>
     }
     {!agent &&
       <Wrapper>
-        <AgentPlaceholder><div/><div/><div/><div/><div/><div/><div/><div/></AgentPlaceholder>
-        <Block weight="medium" size="subtitle">Hold on, we are matching you with a local senior living expert...</Block>
+        <AgentPlaceholder><div /><div /><div /><div /><div /><div /><div /><div /></AgentPlaceholder>
+        <TextAlignCenterBlock weight="medium" size="subtitle">Hold on, we are matching you with a local senior living expert...</TextAlignCenterBlock>
       </Wrapper>
     }
-  </ShadowBox>
+  </MainWrapper>
 );
 
 MatchedAgent.propTypes = {
   heading: string,
   agent: agentPropType,
   children: node,
+  prevLink: string,
+  hasBox: bool,
+};
+
+MatchedAgent.defaultProps = {
+  hasBox: true,
 };
 
 export default MatchedAgent;

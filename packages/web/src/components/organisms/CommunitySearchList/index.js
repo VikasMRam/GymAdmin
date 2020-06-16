@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { object, arrayOf } from 'prop-types';
 import queryString from 'query-string';
 
+import { isBrowser } from 'sly/web/config';
 import { size, gridColumns } from 'sly/web/components/themes';
+import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/constants/wizards/assessment';
 import { getPaginationData } from 'sly/web/services/helpers/pagination';
 import pad from 'sly/web/components/helpers/pad';
 import { shadowOnHover } from 'sly/web/components/helpers/shadow';
-
 import { getTocLabel, getLocationLabel } from 'sly/web/services/helpers/search';
 import { Centered, Link, Block, Heading } from 'sly/web/components/atoms';
 import Pagination from 'sly/web/components/molecules/Pagination';
@@ -15,6 +16,7 @@ import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import CommunityFilterBar from 'sly/web/components/organisms/CommunityFilterBar';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import SearchResultsAdTileContainer from 'sly/web/containers/SearchResultsAdTileContainer';
+import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;
@@ -61,6 +63,8 @@ const ShadowCommunityTile = shadowOnHover(styled(CommunityTile)`
 `);
 
 const PaddedSearchResultsAdTileContainer = pad(SearchResultsAdTileContainer);
+
+const PaddedGetAssessmentBoxContainer = pad(GetAssessmentBoxContainer);
 
 const mostSearchedCities = [
   {
@@ -133,6 +137,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
   const start = present + 1;
   const end = (present + requestMeta['page-size']  > count ? count : present + requestMeta['page-size']);
   const locLabel = getLocationLabel(searchParams);
+  const { city, state }  = searchParams;
   const tocLabel = getTocLabel(searchParams.toc);
   // pagination pathname
   let params = {};
@@ -173,12 +178,26 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
               showDescription
               showSeeMoreButtonOnHover
               lazyLoadImage={index !== 0}
+              event={{
+                category: 'SearchPage',
+                action: 'communityClick',
+                label: index,
+                value: similarProperty.id,
+              }}
             />
             </StyledLink>
           </CommunityTileWrapper>
           {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
             <PaddedSearchResultsAdTileContainer type="homeCare" locationLabel={locLabel} tocLabel={tocLabel} />
-            }
+          }
+          {isBrowser && ((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
+            <PaddedGetAssessmentBoxContainer
+              completedAssessment={!!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
+              agentId={localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || ''}
+              startLink={`/wizards/assessment/location/${state}/${city}`}
+              layout="fixed"
+            />
+          }
         </>
       ))}
       {communityList.length < 1 &&

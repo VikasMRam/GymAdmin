@@ -80,12 +80,12 @@ const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkNa
 const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/web/containers/DashboardCallDetailsPageContainer'));
 const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/web/components/pages/DashboardAgentTasksPage'));
 const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/web/components/pages/DashboardAgentContactsPage'));
-const DashboardAgentsIndexPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndex" */ 'sly/web/containers/DashboardAgentsIndexPageContainer'));
+const DashboardAgentsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndex" */ 'sly/web/containers/dashboard/agents/DashboardAgentsIndexPageContainer'));
 const DashboardCommunityIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityIndex" */ 'sly/web/containers/DashboardCommunityIndexPageContainer'));
 const DashboardCommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityDetail" */ 'sly/web/containers/DashboardCommunityDetailsPageContainer'));
 
 // wizards
-const WizardAssesmentWizardPage = loadable(() => import(/* webpackChunkName: "chunkWizardAssesmentWizardPage" */ 'sly/web/components/pages/wizards/AssesmentWizardPage'));
+const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/containers/AssessmentWizardPageContainer'));
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -181,7 +181,7 @@ const routes = [
   },
   {
     path: ADMIN_DASHBOARD_AGENTS_PATH,
-    component: DashboardAgentsIndexPage,
+    component: DashboardAgentsIndexPageContainer,
     exact: true,
   },
   {
@@ -306,8 +306,13 @@ const routes = [
     exact: true,
   },
   {
-    path: '/wizards/assesment',
-    component: WizardAssesmentWizardPage,
+    path: '/wizards/assessment/community/:communityId',
+    component: AssessmentWizardPageContainer,
+    exact: true,
+  },
+  {
+    path: '/wizards/assessment/location/:city/:state',
+    component: AssessmentWizardPageContainer,
     exact: true,
   },
   {

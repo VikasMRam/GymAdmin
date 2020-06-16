@@ -15,7 +15,7 @@ const Wrapper = borderRadius(styled.div`
   padding: ${size('spacing.xLarge')};
 `, 'tiny');
 
-const BorderedWrapper = border(Wrapper, 'regular', 'secondary', 'stroke');
+const BorderedWrapper = border(Wrapper, 'regular', 'primary', 'stroke');
 
 const TextWrapper = textAlign(pad(styled.div``));
 

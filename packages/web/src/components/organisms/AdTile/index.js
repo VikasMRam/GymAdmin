@@ -5,6 +5,7 @@ import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
+import textAlign from 'sly/web/components/helpers/textAlign';
 import { Button, Box, ResponsiveImage, Block, Link } from 'sly/web/components/atoms';
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
@@ -23,6 +24,8 @@ const StyledButton = styled(Button)`
   }
 `;
 StyledButton.displayName = 'StyledButton';
+
+const LargePaddedStyledButton = pad(StyledButton, 'large');
 
 const Clearfix = styled.div`
   clear: both;
@@ -60,6 +63,8 @@ const ContentWrapper = styled.div`
 const PaddedBlock = pad(Block);
 PaddedBlock.displayName = 'PaddedBlock';
 
+const TextAlignBlock = textAlign(Block);
+
 const AdTile = ({
   image, imagePosition, title, children, buttonText, buttonPosition, buttonProps, layout, className, showSecondary, linkProps, linkText
 }) => (
@@ -84,13 +89,13 @@ const AdTile = ({
     </ContentWrapper>
     {layout === 'row' && (
       <>
-        <StyledButton layout={layout} buttonPosition={buttonPosition} {...buttonProps}>{buttonText}</StyledButton>
-        {showSecondary && (
-          <>
-          {' '}or call our team at{' '}
-          <Link {...linkProps}>{linkText}</Link>)
-          </>
-        )}
+        {!showSecondary &&
+          <StyledButton layout={layout} buttonPosition={buttonPosition} {...buttonProps}>{buttonText}</StyledButton>}
+        {showSecondary &&
+          <LargePaddedStyledButton layout={layout} buttonPosition={buttonPosition} {...buttonProps}>{buttonText}</LargePaddedStyledButton>}
+        {showSecondary &&
+          <TextAlignBlock>or call our team at <Link {...linkProps}>{linkText}</Link></TextAlignBlock>
+        }
       </>
     )}
     <Clearfix />
