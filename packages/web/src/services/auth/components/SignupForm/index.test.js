@@ -3,11 +3,8 @@ import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
 import SignupForm from 'sly/web/services/auth/components/SignupForm';
-import { Block } from 'sly/web/components/atoms/index';
-
 
 const error = 'Blah';
-
 const wrap = (props = {}) => shallow(<SignupForm {...props} />);
 
 describe('SignupForm', () => {
@@ -18,12 +15,20 @@ describe('SignupForm', () => {
     expect(wrapper.find('StyledButton')).toHaveLength(1);
   });
 
+  it('renders without provider signup', () => {
+    const handleSubmit = jest.fn();
+    const wrapper = wrap({ handleSubmit, hasProviderSignup: false });
+    const blocks = wrapper.find('Block');
+
+    expect(blocks).toHaveLength(1);
+  });
+
   it('render error when error is passed', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit, error });
-    const blocks = wrapper.find(Block);
+    const blocks = wrapper.find('Block');
 
-    expect(blocks).toHaveLength(1);
+    expect(blocks).toHaveLength(3);
     expect(blocks.at(0).dive().render().text()).toBe(error);
   });
 
