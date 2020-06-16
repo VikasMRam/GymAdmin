@@ -12,7 +12,7 @@ import Icon from 'sly/web/components/atoms/Icon';
 const getHoverBorderColour = ({ highlightedPalette }) => palette(highlightedPalette, 'base');
 
 const StyledBox = styled(Box)`
-  text-align: center;
+  text-align: ${prop('align')};
   cursor: pointer;
   display: flex;
   align-items: center;
