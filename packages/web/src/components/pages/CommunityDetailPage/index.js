@@ -473,7 +473,7 @@ export default class CommunityDetailPage extends Component {
                   )}
                 </StyledHeadingBoxSection>
                 <PaddedGetAssessmentBoxContainerHydrator
-                  startLink={`/wizards/assessment/community/${community.id}`}
+                  startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
                 />
                 {sortedEstimatedPrice.length > 0 && (
                   <StyledHeadingBoxSection heading={`Compare Costs for ${name}`}>

@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import { Budget } from 'sly/web/components/wizards/assessment';
 
 const handleSubmit = jest.fn();
+const change = jest.fn();
 const whoNeedsHelp = 'mom';
 const city = 'city name';
 const state = 'state name';
@@ -11,6 +12,7 @@ const amount = 2000;
 const formattedAmount = '$2,000';
 const defaultProps = {
   handleSubmit,
+  change,
   whoNeedsHelp,
   city,
   state,

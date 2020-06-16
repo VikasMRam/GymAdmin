@@ -148,6 +148,10 @@ export const BUDGET_OPTIONS = [
   { label: "I'm not sure", value: 'not-sure' },
 ];
 
+export const COEXISTING_BUDGET_OPTIONS = {
+  'dont-have': ['dont-have', 'not-sure'],
+};
+
 export const MEDICAID_OPTIONS = [
   { label: 'Yes', value: 'yes' },
   { label: 'No', value: 'no' },
