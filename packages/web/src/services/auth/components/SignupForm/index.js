@@ -23,24 +23,22 @@ const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const StyledBlock2 = styled(Block)`
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const Login = textAlign(StyledBlock2);
-Login.displayName = 'Log in';
-
-const Provider = textAlign(StyledBlock2);
-Provider.displayName = 'Provider';
+const BottomWrapper = textAlign(styled.div`
+  display: grid;
+  grid-gap: ${size('spacing.large')};
+  align-items: center;
+  justify-content: center;
+`);
 
 const FieldsWrapper = styled.div`
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-gap: ${size('spacing.regular')}
+  grid-gap: ${size('spacing.regular')};
 `;
 
 const SignupForm = ({
   handleSubmit, submitting, invalid, error, onLoginClicked, onProviderClicked, heading, submitButtonText, hasPassword,
+  hasProviderSignup,
 }) => (
   <form onSubmit={handleSubmit}>
     <StyledHeading size="subtitle">{heading}</StyledHeading>
@@ -84,20 +82,25 @@ const SignupForm = ({
     </StyledButton>
     <StyledBlock error={error}>By continuing, you agree to Seniorly&apos;s Terms of Use and Privacy Policy.</StyledBlock>
     {error && <Block palette="danger">{error}</Block>}
-    <Login size="caption">
-      Already have an account?{' '}
-      <Link onClick={onLoginClicked}>Log in</Link>
-    </Login>
-    <Provider size="caption">
-      Are you a community manager?{' '}
-      <Link onClick={onProviderClicked}>Click here</Link>
-    </Provider>
+    <BottomWrapper>
+      <Block size="caption">
+        Already have an account?{' '}
+        <Link onClick={onLoginClicked}>Log in</Link>
+      </Block>
+      {hasProviderSignup &&
+        <Block size="caption">
+          Are you a community manager?{' '}
+          <Link onClick={onProviderClicked}>Click here</Link>
+        </Block>
+      }
+    </BottomWrapper>
   </form>
 );
 
 SignupForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
+  hasProviderSignup: bool.isRequired,
   invalid: bool,
   error: string,
   onLoginClicked: func,
@@ -110,6 +113,7 @@ SignupForm.propTypes = {
 SignupForm.defaultProps = {
   heading: 'Sign Up',
   submitButtonText: 'Sign Up',
+  hasProviderSignup: true,
 };
 
 export default SignupForm;

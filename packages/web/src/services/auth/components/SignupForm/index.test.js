@@ -33,5 +33,4 @@ describe('SignupForm', () => {
     wrapper.find('form').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
-
 });
