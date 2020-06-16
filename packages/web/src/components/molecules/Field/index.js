@@ -25,6 +25,7 @@ import DatepickerStyles from 'sly/web/components/themes/DatepickerStyles';
 import CommunityAutoComplete from 'sly/web/components/molecules/CommunityAutoComplete';
 import { textAlign } from 'sly/web/components/helpers/text';
 import UserAutoComplete from 'sly/web/components/molecules/UserAutoComplete';
+import NumberInput from 'sly/web/components/molecules/NumberInput';
 
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/web/components/atoms/Select'));
@@ -85,6 +86,8 @@ const getInputComponent = (type) => {
       return RichTextArea;
     case 'button':
       return Button;
+    case 'number':
+      return NumberInput;
     default:
       return Input;
   }

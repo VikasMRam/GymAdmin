@@ -236,24 +236,20 @@ export default class DashboardCommunityDetailsPage extends Component {
             />
           )}
           {currentTab === SERVICES && (
-            <Section>
-              <DashboardCommunityServicesFormContainer
-                notifyInfo={notifyInfo}
-                notifyError={notifyError}
-                community={community}
-                currentEdit={currentEdit}
-              />
-            </Section>
+            <DashboardCommunityServicesFormContainer
+              notifyInfo={notifyInfo}
+              notifyError={notifyError}
+              community={community}
+              currentEdit={currentEdit}
+            />
           )}
           {currentTab === PRICING && (
-            <Section>
-              <DashboardCommunityPricingFormContainer
-                notifyInfo={notifyInfo}
-                notifyError={notifyError}
-                community={community}
-                currentEdit={currentEdit}
-              />
-            </Section>
+            <DashboardCommunityPricingFormContainer
+              notifyInfo={notifyInfo}
+              notifyError={notifyError}
+              community={community}
+              currentEdit={currentEdit}
+            />
           )}
           {currentTab === PHOTOS && (
             <DashboardCommunityPhotosFormContainer
@@ -266,53 +262,43 @@ export default class DashboardCommunityDetailsPage extends Component {
             />
           )}
           {currentTab === CONTACTS && (
-            <Section>
-              <DashboardContactsSectionContainer
-                id="contacts"
-                sectionFilters={sectionFilters}
-                entityType={PROPERTY_ENTITY_TYPE}
-                entityId={community.id}
-                entityName={community.name}
-              />
-            </Section>
+            <DashboardContactsSectionContainer
+              id="contacts"
+              sectionFilters={sectionFilters}
+              entityType={PROPERTY_ENTITY_TYPE}
+              entityId={community.id}
+              entityName={community.name}
+            />
           )}
           {currentTab === CONTRACT && (
-            <Section>
-              <DashboardCommunityContractFormContainer
-                notifyInfo={notifyInfo}
-                notifyError={notifyError}
-                community={community}
-                currentEdit={currentEdit}
-              />
-            </Section>
+            <DashboardCommunityContractFormContainer
+              notifyInfo={notifyInfo}
+              notifyError={notifyError}
+              community={community}
+              currentEdit={currentEdit}
+            />
           )}
           {currentTab === ADMIN && (
-            <Section>
-              <DashboardCommunityAdminFormContainer
-                notifyInfo={notifyInfo}
-                notifyError={notifyError}
-                community={community}
-                currentEdit={currentEdit}
-              />
-            </Section>
+            <DashboardCommunityAdminFormContainer
+              notifyInfo={notifyInfo}
+              notifyError={notifyError}
+              community={community}
+              currentEdit={currentEdit}
+            />
           )}
           {currentTab === CLIENTS && (
-            <Section>
-              <DashboardAgentFamilyOverviewSectionContainer
-                sectionFilters={clientsSectionFilters}
-              />
-            </Section>
+            <DashboardAgentFamilyOverviewSectionContainer
+              sectionFilters={clientsSectionFilters}
+            />
           )}
           {currentTab === EDITS && (
-            <Section>
-              <DashboardCommunityEditsContainer
-                notifyInfo={notifyInfo}
-                notifyError={notifyError}
-                community={community}
-                currentEdit={currentEdit}
-                suggestedEdits={suggestedEdits}
-              />
-            </Section>
+            <DashboardCommunityEditsContainer
+              notifyInfo={notifyInfo}
+              notifyError={notifyError}
+              community={community}
+              currentEdit={currentEdit}
+              suggestedEdits={suggestedEdits}
+            />
           )}
         </Right>
 

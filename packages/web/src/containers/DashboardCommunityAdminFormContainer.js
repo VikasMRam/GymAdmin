@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
-import { object, func } from 'prop-types';
+import { object, func, shape } from 'prop-types';
 import pick from 'lodash/pick';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
@@ -13,6 +13,8 @@ import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
 import DashboardCommunityAdminForm from 'sly/web/components/organisms/DashboardCommunityAdminForm';
 import { patchFormInitialValues } from 'sly/web/services/edits';
+import { rgsAuxAttributes } from 'sly/web/propTypes/community';
+import defaultsDeep from 'lodash/defaultsDeep';
 
 const formName = 'DashboardCommunityAdminForm';
 
@@ -21,7 +23,9 @@ const ReduxForm = reduxForm({
 })(DashboardCommunityAdminForm);
 
 const mapStateToProps = (state, { status }) => ({
+  rgsAux: getRelationship(state, status.community.result, 'rgsAux'),
   communityUser: getRelationship(state, status.community.result, 'user'),
+  currentValues: state.form[formName]?.values,
 });
 
 @query('updateCommunity', 'updateCommunity')
@@ -40,52 +44,34 @@ export default class DashboardCommunityAdminFormContainer extends Component {
     notifyError: func.isRequired,
     user: userProptype,
     community: clientPropType.isRequired,
+    communityUser: userProptype,
+    currentValues: object,
+    rgsAux: shape({
+      attributes: rgsAuxAttributes,
+    }),
     match: object.isRequired,
     status: object,
     initialUser: object,
     currentEdit: object,
   };
 
-  state = {
-    communityUser: null,
-  };
-
-  componentDidMount() {
-    const { communityUser } = this.props;
-    const { attributes } = communityUser;
-    this.setState({ communityUser: {
-      value: communityUser.id,
-      label: attributes.name,
-    }});
-  }
-
-  onSelectChange = (option) => {
-    this.setState({communityUser: option});
-  };
-
-
   handleSubmit = (values) => {
     const { match, updateCommunity, community, notifyError, notifyInfo } = this.props;
     const { id } = match.params;
-    const { communityUser } = this.state;
+    const { rgsAux, user, ...attributes } = values;
 
-    if (typeof values.status === 'string') {
-      values.status = parseInt(values.status)
-    }
-
-    if (typeof values.slyScore === 'string') {
-      values.slyScore = parseInt(values.slyScore)
-    }
+    console.log('attributes', attributes);
 
     return updateCommunity({ id }, {
-      attributes: values,
+      attributes,
       relationships: {
-        user: {
-          data: {
-            type: 'User',
-            id: communityUser.value,
-          }
-        },
+        user: { data: {
+          type: 'User',
+          id: user.value,
+        } },
+        rgsAux: { data: {
+          attributes: rgsAux,
+        } },
       },
     })
       .then(() => notifyInfo(`Details for ${community.name} saved correctly`))
@@ -93,7 +79,7 @@ export default class DashboardCommunityAdminFormContainer extends Component {
   };
 
   render() {
-    const { community, status, user, currentEdit, ...props } = this.props;
+    const { community, rgsAux, communityUser, status, user, currentValues, currentEdit, ...props } = this.props;
 
     const canEdit = !currentEdit?.isPendingForAdmin
       && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
@@ -109,21 +95,30 @@ export default class DashboardCommunityAdminFormContainer extends Component {
         'slyScore',
         'status',
         'propInfo.websiteTitle',
-        'propInfo.websiteMetaDescription'
+        'propInfo.websiteMetaDescription',
       ],
     );
 
+    initialValues.rgsAux = rgsAux.attributes;
+
     patchFormInitialValues(initialValues, currentEdit);
+
+    // passes by ref
+    defaultsDeep(initialValues, {
+      user: {
+        value: communityUser.id,
+        label: communityUser.attributes.name,
+      },
+    });
 
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}
         initialValues={initialValues}
         community={community}
+        currentValues={currentValues}
         user={user}
         canEdit={canEdit}
-        onSelectChange={this.onSelectChange}
-        propUser={this.state.communityUser}
         {...props}
       />
     );

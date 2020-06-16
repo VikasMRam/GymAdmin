@@ -35,18 +35,6 @@ export default class DashboardCommunitySummary extends React.Component {
     return (
       <>
         <ColumWrapper>
-          <Label palette="grey">Community name</Label>
-          <Block size="caption">{community.name}</Block>
-        </ColumWrapper>
-        { community.url &&
-          <ColumWrapper>
-            <Block size="caption">
-              <Link href={community.url} target="blank">Community Profile Link</Link>
-            </Block>
-          </ColumWrapper>
-        }
-
-        <ColumWrapper>
           <Label palette="grey">Address</Label>
           <Block size="caption">{address}</Block>
         </ColumWrapper>
@@ -56,7 +44,7 @@ export default class DashboardCommunitySummary extends React.Component {
         </ColumWrapper>
         <ColumWrapper>
           <Label palette="grey">Front Desk Number</Label>
-          <Block size="caption">{info.communityPhone}</Block>
+          <Block size="caption">{info.communityPhone }</Block>
         </ColumWrapper>
         <ColumWrapper>
           <Label palette="grey">Email</Label>

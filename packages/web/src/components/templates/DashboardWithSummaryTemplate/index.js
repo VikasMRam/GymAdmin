@@ -80,6 +80,7 @@ export const SummarySection = styled(({ children, className, ...props }) => (
 export const SectionForm = ({ heading, children }) => (
   <Block
     padding="xLarge"
+    borderBottom="regular"
   >
     {heading && (
       <Block
@@ -142,7 +143,6 @@ export const SectionActions = props => (
   <Block
     padding="xLarge"
     align="right"
-    borderTop="regular"
     borderPalette="slate"
     borderVariation="lighter-90"
     {...props}
@@ -154,7 +154,7 @@ export const DashboardWithSummaryPageTemplate = styled(DashboardPageTemplate)`
   padding: 0 ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: 0 ${size('spacing.xLarge')};
+    padding: 0 ${size('spacing.xLarge')} ${size('spacing.xLarge')}; 
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
