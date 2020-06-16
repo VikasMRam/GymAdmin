@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/web/components/themes';
-import { BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
+import { BUDGET_OPTIONS, COEXISTING_BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
@@ -48,7 +48,7 @@ const generateHeading = (whoNeedsHelp, amount, city, state) => {
 };
 
 const Budget = ({
-  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip,
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip, change,
 }) => (
   <div>
     <Wrapper>
@@ -57,7 +57,7 @@ const Budget = ({
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp, amount, city, state)}</PaddedHeading>
-        <PaddedBlock>Select all that apply.</PaddedBlock>
+        <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
           <StyledField
             multiChoice
@@ -66,6 +66,17 @@ const Budget = ({
             type="boxChoice"
             align="left"
             component={ReduxField}
+            onChange={(event, newValue) => {
+              let modifiedValue = newValue;
+              for (let i = 0; i < newValue.length; i++) {
+                const valuesThatCanExist = COEXISTING_BUDGET_OPTIONS[newValue[i]];
+                if (valuesThatCanExist) {
+                  modifiedValue = modifiedValue.filter(v => valuesThatCanExist.includes(v));
+                }
+              }
+              // delay this update to next tick so that it's always applied at last
+              setTimeout(() => change('budget', modifiedValue));
+            }}
           />
           <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
@@ -86,6 +97,7 @@ Budget.propTypes = {
   city: string.isRequired,
   state: string.isRequired,
   amount: number.isRequired,
+  change: func.isRequired,
   onSkipClick: func,
   onBackClick: func,
   invalid: bool,

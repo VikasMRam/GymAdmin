@@ -194,7 +194,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
             <PaddedGetAssessmentBoxContainer
               completedAssessment={!!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
               agentId={localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || ''}
-              startLink={`/wizards/assessment/location/${state}/${city}`}
+              startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
               layout="fixed"
             />
           }

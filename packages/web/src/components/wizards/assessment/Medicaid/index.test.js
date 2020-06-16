@@ -56,7 +56,7 @@ describe('Wizards|assessment - Steps|Medicaid', () => {
       whoNeedsHelp: 'mom',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Does your Mom qualify for Medicaid?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Does your mom qualify for Medicaid?')).toBeTruthy();
   });
 
   it('handles submit', () => {

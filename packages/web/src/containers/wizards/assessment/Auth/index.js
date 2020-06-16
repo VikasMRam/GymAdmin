@@ -70,6 +70,7 @@ export default class Auth extends Component {
         signUpHeading={signUpHeading}
         signUpSubmitButtonText="Get Pricing"
         signUpHasPassword={false}
+        hasProviderSignup={false}
       />
     );
   }
