@@ -15,9 +15,16 @@ const Wrapper = styled.li`
   background-color: ${palette('white', 'base')};
 
   ${p => p.active && css`
-    border-bottom: ${size('border', 'xxLarge')} solid ${palette('slate', 'base')};
+    border-bottom: ${size('border', 'xxLarge')} solid ${palette('primary', 'base')};
   `}
 `;
+
+const MaybeLink = ({ to, target, children }) => {
+  if (to) {
+    return <Link to={to} target={target}>{children}</Link>;
+  }
+  return children;
+};
 
 const Tab = ({
   onClick,
@@ -27,17 +34,9 @@ const Tab = ({
   children,
   className,
 }) => {
-  let spanPalette = 'slate';
-  let spanVariation = 'filler';
-  if (active) {
-    spanPalette = 'slate';
-    spanVariation = 'base';
-  }
-  const content = (
-    <Span weight="bold" size="tiny" palette={spanPalette} variation={spanVariation}>
-      {children}
-    </Span>
-  );
+  const palette = active
+    ? 'primary'
+    : 'slate.lighter-30';
 
   return (
     <Wrapper
@@ -45,8 +44,11 @@ const Tab = ({
       active={active}
       className={className}
     >
-      {to && <Link target={target} to={to}>{content}</Link>}
-      {!to && content}
+      <MaybeLink to={to} target={target}>
+        <Span weight="bold" size="tiny" palette={palette}>
+          {children}
+        </Span>
+      </MaybeLink>
     </Wrapper>
   );
 };

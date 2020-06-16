@@ -37,6 +37,7 @@ export default class DashboardCommunityDetailsForm extends Component {
         <SectionHeader>
           Details
         </SectionHeader>
+
         <SectionForm heading="Community details">
           <EditField
             name="name"

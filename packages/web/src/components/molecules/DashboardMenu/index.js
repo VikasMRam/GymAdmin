@@ -56,7 +56,7 @@ const DashboardMenu = ({ activeMenuItem }) => {
   const menuItemComponents = menuItems.map((item) => {
     const selected = item.label === activeMenuItem;
     const palette = selected
-      ? 'viridian'
+      ? 'primary'
       : 'grey';
     const weight = selected
       ? 'medium'

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { instanceOf, string, bool, node } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
 import Box from 'sly/web/components/atoms/Box';
+import { size } from 'sly/web/components/themes';
+import { topSnap } from 'sly/web/components/helpers';
 
 const Wrapper = styled(Box)`
   white-space: nowrap;
@@ -13,7 +14,12 @@ const Wrapper = styled(Box)`
   & > :last-child {
     margin-right: 0;
   }
+  
+  @media screen and (max-width: calc(${size('breakpoint.laptop')} - 1px)) {
+    ${topSnap} 
+  }
 `;
+
 
 Wrapper.defaultProps = {
   background: 'white',

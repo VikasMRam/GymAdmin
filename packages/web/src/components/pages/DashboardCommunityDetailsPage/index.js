@@ -7,9 +7,7 @@ import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   SUMMARY,
   PROFILE,
-  CARE_SERVICES,
   PRICING,
-  AMENITIES,
   SERVICES,
   CONTRACT,
   CONTACTS,
@@ -36,13 +34,10 @@ import {
   DashboardWithSummaryPageTemplate, LeftNotifications, Loading,
 } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import DashboardCommunitySummary from 'sly/web/components/organisms/DashboardCommunitySummary';
-import DashboardCommunityNameAndStatus from 'sly/web/components/organisms/DashboardCommunityNameAndStatus';
 import DashboardCommunityDetailsFormContainer from 'sly/web/containers/DashboardCommunityDetailsFormContainer';
-import DashboardCommunityCareServicesFormContainer from 'sly/web/containers/DashboardCommunityCareServicesFormContainer';
 import DashboardCommunityServicesFormContainer from 'sly/web/containers/DashboardCommunityServicesFormContainer';
 import DashboardCommunityPricingFormContainer from 'sly/web/containers/DashboardCommunityPricingFormContainer';
 import DashboardCommunityPhotosFormContainer from 'sly/web/containers/DashboardCommunityPhotosFormContainer';
-import DashboardCommunityAmenitiesFormContainer from 'sly/web/containers/DashboardCommunityAmenitiesFormContainer';
 import DashboardCommunityAdminFormContainer from 'sly/web/containers/DashboardCommunityAdminFormContainer';
 import DashboardCommunityContractFormContainer from 'sly/web/containers/DashboardCommunityContractFormContainer';
 import DashboardContactsSectionContainer from 'sly/web/containers/dashboard/DashboardContactsSectionContainer';
@@ -51,7 +46,6 @@ import DashboardCommunityEditsContainer from 'sly/web/containers/DashboardCommun
 import { PROPERTY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 import Link from 'sly/web/components/atoms/Link';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
-import Heading from 'sly/web/components/atoms/Heading';
 
 export default class DashboardCommunityDetailsPage extends Component {
   static propTypes = {
@@ -77,10 +71,8 @@ export default class DashboardCommunityDetailsPage extends Component {
 
     const tabs = {
       Profile: PROFILE,
-      'Care Services': CARE_SERVICES,
-      Pricing: PRICING,
       Photos: PHOTOS,
-      Amenities: AMENITIES,
+      Pricing: PRICING,
       Services: SERVICES,
       Admin: [ADMIN, PLATFORM_ADMIN_ROLE],
       Contacts: [CONTACTS, PLATFORM_ADMIN_ROLE],
@@ -243,9 +235,9 @@ export default class DashboardCommunityDetailsPage extends Component {
               currentEdit={currentEdit}
             />
           )}
-          {currentTab === CARE_SERVICES && (
+          {currentTab === SERVICES && (
             <Section>
-              <DashboardCommunityCareServicesFormContainer
+              <DashboardCommunityServicesFormContainer
                 notifyInfo={notifyInfo}
                 notifyError={notifyError}
                 community={community}
@@ -272,26 +264,6 @@ export default class DashboardCommunityDetailsPage extends Component {
               community={community}
               currentEdit={currentEdit}
             />
-          )}
-          {currentTab === AMENITIES && (
-            <Section>
-              <DashboardCommunityAmenitiesFormContainer
-                notifyInfo={notifyInfo}
-                notifyError={notifyError}
-                community={community}
-                currentEdit={currentEdit}
-              />
-            </Section>
-          )}
-          {currentTab === SERVICES && (
-            <Section>
-              <DashboardCommunityServicesFormContainer
-                notifyInfo={notifyInfo}
-                notifyError={notifyError}
-                community={community}
-                currentEdit={currentEdit}
-              />
-            </Section>
           )}
           {currentTab === CONTACTS && (
             <Section>
