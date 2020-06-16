@@ -49,14 +49,12 @@ const SignupForm = ({
         name="firstName"
         label="First Name"
         type="text"
-        placeholder="First Name"
         component={ReduxField}
       />
       <Field
         name="lastName"
         label="Last Name"
         type="text"
-        placeholder="Last Name"
         component={ReduxField}
       />
     </FieldsWrapper>
@@ -64,7 +62,6 @@ const SignupForm = ({
       name="email"
       label="Email Address"
       type="email"
-      placeholder="Email Address"
       component={ReduxField}
     />
     <Field
@@ -72,7 +69,6 @@ const SignupForm = ({
       label="Phone"
       type="phone"
       parens
-      placeholder="(415) 555-5555"
       component={ReduxField}
     />
     {hasPassword &&
@@ -80,7 +76,6 @@ const SignupForm = ({
         name="password"
         label="Password"
         type="password"
-        placeholder="Password"
         component={ReduxField}
       />
     }
