@@ -56,7 +56,7 @@ describe('Wizards|assessment - Steps|Dementia', () => {
       whoNeedsHelp: 'mom',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Is your Mom forgetful?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Is your mom forgetful?')).toBeTruthy();
   });
 
   it('handles submit', () => {
