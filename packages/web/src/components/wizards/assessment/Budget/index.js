@@ -57,7 +57,7 @@ const Budget = ({
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp, amount, city, state)}</PaddedHeading>
-        <PaddedBlock>Select all that apply.</PaddedBlock>
+        <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
           <StyledField
             multiChoice

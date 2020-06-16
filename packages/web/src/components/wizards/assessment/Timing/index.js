@@ -40,7 +40,7 @@ const Timing = ({
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">Please tell us about where you are in your search.</PaddedHeading>
-        <PaddedBlock>Select all that apply.</PaddedBlock>
+        <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
           <StyledField
             multiChoice
