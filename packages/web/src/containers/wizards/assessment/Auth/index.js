@@ -28,7 +28,7 @@ export default class Auth extends Component {
   }
 
   handleAuthSuccess = () => {
-    const { createAction, community, user, onAuthSuccess } = this.props;
+    const { createAction, location: { pathname }, community, user, onAuthSuccess } = this.props;
     const actionType = community ? PROFILE_CONTACTED : CONSULTATION_REQUESTED;
     let actionInfo = {};
     if (community) {
@@ -48,6 +48,7 @@ export default class Auth extends Component {
       type: 'UUIDAction',
       attributes: {
         actionType,
+        actionPage: pathname,
         actionInfo,
       },
     })
