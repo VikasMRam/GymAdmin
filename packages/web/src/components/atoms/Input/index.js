@@ -91,7 +91,7 @@ const StyledSelect = styled.select`
   ${styles};
   background: ${palette('white', 'base')};
   color: ${palette('slate', 'base')};
-  height: ${size('element', 'button')};
+  height: ${size('element.xLarge')};
 `;
 const StyledInput = styled.input`
   ${styles};
