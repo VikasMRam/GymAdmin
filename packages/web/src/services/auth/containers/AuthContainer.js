@@ -46,11 +46,13 @@ export default class AuthContainer extends Component {
     signUpSubmitButtonText: string,
     signUpHasPassword: bool.isRequired,
     hasProviderSignup: bool.isRequired,
+    formName: string.isRequired,
   };
 
   static defaultProps = {
     type: 'modal',
     initialStep: 'Login',
+    formName: 'AuthForm',
     signUpHasPassword: true,
     hasProviderSignup: true,
   };
@@ -91,7 +93,7 @@ export default class AuthContainer extends Component {
     const { isOpen } = this.state;
     const {
       authenticateCancel, authenticated, type, signUpHeading, signUpSubmitButtonText, signUpHasPassword, onSignupSuccess,
-      hasProviderSignup,
+      hasProviderSignup, formName,
     } = this.props;
     let { initialStep } = this.props;
 
@@ -104,8 +106,8 @@ export default class AuthContainer extends Component {
 
     const wizard = (
       <WizardController
-        formName="AuthForm"
-        controllerKey="AuthFormControllerKey"
+        formName={formName}
+        controllerKey={`${formName}ControllerKey`}
         initialStep={initialStep}
         onComplete={this.handleAuthenticateSuccess}
       >

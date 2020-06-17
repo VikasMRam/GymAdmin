@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { func, string } from 'prop-types';
+import { func, string, object } from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import { query, withUser } from 'sly/web/services/api';
 import { community as communityPropType } from 'sly/web/propTypes/community';
@@ -8,6 +9,7 @@ import AuthContainer from 'sly/web/services/auth/containers/AuthContainer';
 import userPropType from 'sly/web/propTypes/user';
 
 @withUser
+@withRouter
 @query('createAction', 'createUuidAction')
 
 export default class Auth extends Component {
@@ -17,6 +19,7 @@ export default class Auth extends Component {
     community: communityPropType,
     signUpHeading: string,
     onAuthSuccess: func,
+    location: object.isRequired,
   };
 
   componentDidMount() {
@@ -67,8 +70,9 @@ export default class Auth extends Component {
         type="inline"
         onAuthenticateSuccess={this.handleAuthSuccess}
         onSignupSuccess={this.handleAuthSuccess}
-        initialStep="Signup"
         signUpHeading={signUpHeading}
+        initialStep="Signup"
+        formName="AssessmentWizardAuthForm"
         signUpSubmitButtonText="Get Pricing"
         signUpHasPassword={false}
         hasProviderSignup={false}
