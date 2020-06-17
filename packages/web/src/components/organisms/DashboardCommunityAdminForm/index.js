@@ -24,12 +24,18 @@ export default class DashboardCommunityAdminForm extends Component {
     handleSubmit: func.isRequired,
     initialValues: object,
     onSelectChange: func,
+    currentValues: object,
   };
 
   render() {
     const {
-      handleSubmit, invalid, submitting, canEdit, currentValues, propUser,
+      handleSubmit, invalid, submitting, canEdit, currentValues,
     } = this.props;
+
+    const contractInfo = currentValues?.rgsAux?.rgsInfo?.contract_info || {};
+    const valueLabel = contractInfo.contractType === 'Percentage'
+      ? 'Value between 0.0 - 1.0'
+      : 'Value in dollars';
 
     return (
       <Section
@@ -121,6 +127,47 @@ export default class DashboardCommunityAdminForm extends Component {
             readOnly={!canEdit}
             wideWidth
           />
+        </SectionForm>
+        <SectionForm heading="Contract">
+          <EditField
+            name="rgsAux.rgsInfo.contract_info.hasContract"
+            label="Has contract"
+            type="boolean"
+            readOnly={!canEdit}
+          />
+          {contractInfo?.hasContract && (
+            <>
+              <EditField
+                label="Type of contract"
+                name="rgsAux.rgsInfo.contract_info.contractType"
+                type="choice"
+                options={[
+                  { value: 'Flat Rate', label: 'Flat rate' },
+                  { value: 'Percentage', label: 'Percentage' },
+                ]}
+                readOnly={!canEdit}
+              />
+              <EditField
+                label={valueLabel}
+                name="rgsAux.rgsInfo.contract_info.value"
+                type="number"
+                inputmode="numeric"
+                readOnly={!canEdit}
+                parse={value => !value ? null : Number(value)}
+              />
+              <EditField
+                label="Contract Url"
+                name="rgsInfo.contract_info.url"
+                type="text"
+              />
+              <EditField
+                label="Notes"
+                name="rgsAux.rgsInfo.contract_info.notes"
+                type="textarea"
+                readOnly={!canEdit}
+              />
+            </>
+          )}
         </SectionForm>
         <SectionActions>
           <Button type="submit" disabled={!canEdit || invalid || submitting}>

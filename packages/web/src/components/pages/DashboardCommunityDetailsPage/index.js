@@ -9,7 +9,6 @@ import {
   PROFILE,
   PRICING,
   SERVICES,
-  CONTRACT,
   CONTACTS,
   PHOTOS,
   CLIENTS,
@@ -29,7 +28,6 @@ import {
   Top,
   Right,
   Left,
-  Section,
   SummarySection,
   DashboardWithSummaryPageTemplate, LeftNotifications, Loading,
 } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
@@ -39,7 +37,6 @@ import DashboardCommunityServicesFormContainer from 'sly/web/containers/Dashboar
 import DashboardCommunityPricingFormContainer from 'sly/web/containers/DashboardCommunityPricingFormContainer';
 import DashboardCommunityPhotosFormContainer from 'sly/web/containers/DashboardCommunityPhotosFormContainer';
 import DashboardCommunityAdminFormContainer from 'sly/web/containers/DashboardCommunityAdminFormContainer';
-import DashboardCommunityContractFormContainer from 'sly/web/containers/DashboardCommunityContractFormContainer';
 import DashboardContactsSectionContainer from 'sly/web/containers/dashboard/DashboardContactsSectionContainer';
 import DashboardAgentFamilyOverviewSectionContainer from 'sly/web/containers/DashboardAgentFamilyOverviewSectionContainer';
 import DashboardCommunityEditsContainer from 'sly/web/containers/DashboardCommunityEditsContainer';
@@ -76,7 +73,6 @@ export default class DashboardCommunityDetailsPage extends Component {
       Services: SERVICES,
       Admin: [ADMIN, PLATFORM_ADMIN_ROLE],
       Contacts: [CONTACTS, PLATFORM_ADMIN_ROLE],
-      Contract: [CONTRACT, PLATFORM_ADMIN_ROLE],
       Clients: CLIENTS,
       Edits: EDITS,
       // ...
@@ -268,14 +264,6 @@ export default class DashboardCommunityDetailsPage extends Component {
               entityType={PROPERTY_ENTITY_TYPE}
               entityId={community.id}
               entityName={community.name}
-            />
-          )}
-          {currentTab === CONTRACT && (
-            <DashboardCommunityContractFormContainer
-              notifyInfo={notifyInfo}
-              notifyError={notifyError}
-              community={community}
-              currentEdit={currentEdit}
             />
           )}
           {currentTab === ADMIN && (

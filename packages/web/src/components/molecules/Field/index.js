@@ -238,7 +238,7 @@ const Field = ({
   ...props
 }) => {
   const inputProps = {
-    id: `${name}_${value || +new Date()}`,
+    id: name,
     name,
     value: hideValue ? null : value,
     type: getInputType(type),

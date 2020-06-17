@@ -99,17 +99,18 @@ export default class DashboardCommunityAdminFormContainer extends Component {
       ],
     );
 
-    initialValues.rgsAux = rgsAux.attributes;
-
-    patchFormInitialValues(initialValues, currentEdit);
-
     // passes by ref
     defaultsDeep(initialValues, {
       user: {
         value: communityUser.id,
         label: communityUser.attributes.name,
       },
+      rgsAux: rgsAux.attributes,
     });
+
+    patchFormInitialValues(initialValues, currentEdit);
+
+    console.log('render', { currentEdit, rgsAux, currentValues, initialValues });
 
     return (
       <ReduxForm

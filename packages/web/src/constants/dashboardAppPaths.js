@@ -59,7 +59,6 @@ export const PRICING = 'pricing';
 export const LISTINGS = 'listings';
 export const PHOTOS = 'photos';
 export const SERVICES = 'services';
-export const CONTRACT = 'contract';
 export const CLIENTS = 'clients';
 export const AGENT_DETAILS = 'agent-details';
 export const CONTACTS = 'contacts';
