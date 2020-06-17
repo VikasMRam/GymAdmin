@@ -9,8 +9,6 @@ import {
   NEWFAMILIES,
 } from 'sly/web/constants/dashboardAppPaths';
 
-global.generatePath = generatePath;
-
 const DashboardAgentFamilyOverviewPage = ({ match }) => {
   if (!match.params.clientType) {
     return (

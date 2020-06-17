@@ -48,7 +48,7 @@ export default class DashboardCommunityDetailsForm extends Component {
           />
           <EditField
             name="propInfo.communityPhone"
-            label="Front desk phone number"
+            label="Front desk phone"
             type="phone"
             readOnly={!canEdit}
             placeholder="(925) 555-5555"
@@ -81,10 +81,10 @@ export default class DashboardCommunityDetailsForm extends Component {
           />
           <EditField
             name="propInfo.parentCompany"
-            label="Name of Parent Company"
+            label="Name of parent company"
             type="text"
             readOnly={!canEdit}
-            placeholder="Name of Parent Company(if applicable)"
+            placeholder="Name of parent company(if applicable)"
             wideWidth
           />
           <EditField
@@ -125,7 +125,7 @@ export default class DashboardCommunityDetailsForm extends Component {
           />
           <EditField
             name="propInfo.communitySize"
-            label="Community Size"
+            label="Community size"
             type="select"
             wideWidth
             readOnly={!canEdit}
@@ -135,7 +135,7 @@ export default class DashboardCommunityDetailsForm extends Component {
           </EditField>
           <EditField
             name="propInfo.capacity"
-            label="Licensed Capacity"
+            label="Licensed capacity"
             type="number"
             readOnly={!canEdit}
             wideWidth

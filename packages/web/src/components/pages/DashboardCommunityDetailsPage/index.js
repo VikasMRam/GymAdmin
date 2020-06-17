@@ -290,9 +290,10 @@ export default class DashboardCommunityDetailsPage extends Component {
           )}
         </Right>
 
-        <SummarySection className={currentTab === SUMMARY ? 'selected' : ''}>
-          <DashboardCommunitySummary community={community} />
-        </SummarySection>
+        <DashboardCommunitySummary
+          className={currentTab === SUMMARY ? 'selected' : ''}
+          community={community}
+        />
       </DashboardWithSummaryPageTemplate>
     );
   }

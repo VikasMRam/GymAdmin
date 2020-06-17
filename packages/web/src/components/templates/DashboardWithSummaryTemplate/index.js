@@ -9,7 +9,7 @@ import Box from 'sly/web/components/atoms/Box';
 import { topSnap } from 'sly/web/components/helpers/snap';
 import { Block, Heading, Link } from 'sly/web/components/atoms';
 import BackLink from 'sly/web/components/molecules/BackLink';
-import { withBorder } from 'sly/web/components/helpers';
+import { withBorder, withText } from 'sly/web/components/helpers';
 
 export const Top = styled.div`
   grid-area: top;
@@ -45,26 +45,76 @@ export const Right = styled.div`
   grid-area: right;
 `;
 
-export const Section = styled(Box)`
-  background: ${palette('white.base')};
-`;
+export const Section = styled(Box)``;
 
 Section.defaultProps = {
+  background: 'white',
   padding: '0',
   snap: 'top',
 };
 
-export const SummarySection = styled(({ children, className, ...props }) => (
-  <div className={className}>
-    <Section padding="xLarge" {...props}>
-      {children}
+export const SectionHeader = styled(({ actions, children, className, ...props }) => (
+  <Block
+    padding={['large', 'xLarge']}
+    borderBottom="regular"
+    className={className}
+    {...props}
+  >
+    <Block size="subtitle" lineHeight="40px">{children}</Block>
+    {actions}
+  </Block>
+))`
+  display: flex;
+  
+  > * {
+    flex-grow: 0;
+    margin-left: ${size('spacing.regular')};
+    
+    &:first-child {
+      flex-grow: 1;
+      margin-left: 0;
+    }
+  }
+`;
+
+SectionHeader.propTypes = {
+  actions: any,
+  children: any,
+  className: string,
+};
+
+export const SummarySectionHeader = styled(Box)`
+  ${withBorder({ borderBottom: 'regular' })} 
+  
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    ${withText}
+    ${withBorder({ borderBottom: 0 })} 
+  }
+`;
+
+SummarySectionHeader.defaultProps = {
+  weight: 'medium',
+  padding: ['large', 'xLarge'],
+  snap: 'vertical',
+  size: 'subtitle',
+  lineHeight: '40px',
+  background: 'white',
+};
+
+export const SummarySection = styled(({ heading, className, children, ...props }) => (
+  <Block className={className}>
+    <SummarySectionHeader>
+      {heading}
+    </SummarySectionHeader>
+    <Section snap="top" {...props}>
+      <Block padding={['large', 'xLarge', 'xLarge']}>
+        {children}
+      </Block>
     </Section>
-  </div>
+  </Block>
 ))`
   display: none;
   grid-area: summary;
-
-  ${topSnap};
 
   @media (max-width: calc(${size('breakpoint.laptop')} - 1px)) {
     &.selected {
@@ -74,6 +124,10 @@ export const SummarySection = styled(({ children, className, ...props }) => (
 
   @media (min-width: ${size('breakpoint.laptop')}) {
     display: block;
+    
+    ${SectionHeader} {
+      display: none;
+    }
   }
 `;
 
@@ -106,37 +160,6 @@ export const SectionSortable = sortableContainer(Block);
 
 SectionSortable.defaultProps = {
   padding: 'xLarge',
-};
-
-const SectionHeaderWrapper = styled(Block)`
-  display: flex;
-  
-  > * {
-    flex-grow: 0;
-    margin-left: ${size('spacing.regular')};
-    
-    &:first-child {
-      flex-grow: 1;
-      margin-left: 0;
-    }
-  }
-`;
-
-export const SectionHeader = ({ actions, children }) => {
-  return (
-    <SectionHeaderWrapper
-      padding={['large', 'xLarge']}
-      borderBottom="regular"
-    >
-      <Block size="subtitle" lineHeight="40px">{children}</Block>
-      {actions}
-    </SectionHeaderWrapper>
-  );
-};
-
-SectionHeader.propTypes = {
-  actions: any,
-  children: any,
 };
 
 export const SectionActions = props => (

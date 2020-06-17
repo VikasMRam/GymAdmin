@@ -35,6 +35,10 @@ export const styles = css`
   display: block;
   width: 100%;
   margin: 0;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  
   font-size: ${size('text', 'caption')};
   // todo: non standard padding. remove afterwards if added to theme
   padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')});
@@ -85,6 +89,7 @@ export const styles = css`
 
 const StyledTextarea = styled.textarea`
   ${styles};
+  font-size: 14px;
 `;
 
 const StyledSelect = styled.select`
