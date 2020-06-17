@@ -42,6 +42,14 @@ const Wrapper = styled.div`
   ${StyledOption} {
     min-height: ${p => size('element', p.size)};
   }
+  
+  .react-select__multi-value {
+    background-color: ${palette('slate.lighter-90')};
+  }
+
+  .react-select__multi-value__label {
+    font-size: 100%;
+  }
 
   .react-select__control {
     border-color: ${palette('slate.stroke')};
@@ -185,8 +193,8 @@ GroupSection.propTypes = {
 const getTextSize = (size) => {
   switch (size) {
     case 'tiny': return 'micro';
-    case 'small':
-    case 'regular': return 'tiny';
+    case 'small': return 'tiny';
+    case 'regular': return 'caption';
     case 'large': return 'body';
     default: return 'caption';
   }
@@ -267,7 +275,7 @@ Select.propTypes = {
 };
 
 Select.defaultProps = {
-  size: 'regular',
+  size: 'button',
   async: false,
   options: [],
   components: {},

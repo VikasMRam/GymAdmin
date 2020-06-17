@@ -40,59 +40,6 @@ const DatePicker = props => (
   </>
 );
 
-const textTypeInputs = ['email', 'iconInput'];
-const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
-
-const getInputComponent = (type) => {
-  switch (type) {
-    case 'rating':
-      return RatingInput;
-    case 'singlechoice':
-    case 'multiplechoice':
-    case 'buttonlist':
-      return MultipleChoice;
-    case 'communitychoice':
-      return CommunityChoice;
-    case 'slider':
-      return Slider;
-    case 'boxChoice':
-      return BoxChoice;
-    case 'dateChoice':
-      return DateChoice;
-    case 'iconInput':
-      return IconInput;
-    case 'daterange':
-      return DateRange;
-    case 'date':
-      return DatePicker;
-    case 'select':
-      return Input;
-    case 'phone':
-      return PhoneInput;
-    case 'choice':
-      return Select;
-    case 'autocomplete':
-      return Autocomplete;
-    case 'community':
-      return CommunityAutoComplete;
-    case 'user':
-      return UserAutoComplete;
-    case 'checkbox':
-    case 'boolean':
-      return CheckboxInput;
-    case 'locationSearch':
-      return LocationSearch;
-    case 'richtextarea':
-      return RichTextArea;
-    case 'button':
-      return Button;
-    case 'number':
-      return NumberInput;
-    default:
-      return Input;
-  }
-};
-
 const Wrapper = styled.div`
   position: relative;
   margin-bottom: ${size('spacing.large')};
@@ -129,7 +76,6 @@ const CheckIcon = styled(Icon)`
 
 const LabelWrapper = styled.div`
   display: flex;
-  vertical-align: middle;
   justify-content: space-between;
   align-items: center;
   ${({ type, options }) => (type === 'checkbox' && !!options === true) && css`
@@ -138,6 +84,7 @@ const LabelWrapper = styled.div`
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${({ wideWidth }) => wideWidth && css`
+      vertical-align: middle;
       margin-right: ${size('tabletLayout.gutter')};
       flex: 0 0 ${size('tabletLayout.col2')};
       ${({ type, options }) => (type === 'checkbox' && !!options === true) && css`
@@ -215,6 +162,58 @@ const StyledLabel = styled(Label)`
     margin-right: ${size('spacing.regular')};
   `)};
 `;
+const textTypeInputs = ['email', 'iconInput'];
+const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
+
+const getInputComponent = (type) => {
+  switch (type) {
+    case 'rating':
+      return RatingInput;
+    case 'singlechoice':
+    case 'multiplechoice':
+    case 'buttonlist':
+      return MultipleChoice;
+    case 'communitychoice':
+      return CommunityChoice;
+    case 'slider':
+      return Slider;
+    case 'boxChoice':
+      return BoxChoice;
+    case 'dateChoice':
+      return DateChoice;
+    case 'iconInput':
+      return IconInput;
+    case 'daterange':
+      return DateRange;
+    case 'date':
+      return DatePicker;
+    case 'select':
+      return Input;
+    case 'phone':
+      return PhoneInput;
+    case 'choice':
+      return Select;
+    case 'autocomplete':
+      return Autocomplete;
+    case 'community':
+      return CommunityAutoComplete;
+    case 'user':
+      return UserAutoComplete;
+    case 'checkbox':
+    case 'boolean':
+      return CheckboxInput;
+    case 'locationSearch':
+      return LocationSearch;
+    case 'richtextarea':
+      return RichTextArea;
+    case 'button':
+      return Button;
+    case 'number':
+      return NumberInput;
+    default:
+      return Input;
+  }
+};
 
 const Field = ({
   message,

@@ -5,9 +5,12 @@ import isURL from 'validator/lib/isURL';
 import isMobilePhone from 'validator/lib/isMobilePhone';
 import isFloat from 'validator/lib/isFloat';
 import dayjs from 'dayjs';
+import get from 'lodash/get';
+import set from 'lodash/set';
 
 const isEmpty = value => value === undefined || value === null ||
   (value && value.trim ? value.trim() === '' : value === '');
+
 const join = rules => (value, data) =>
   rules.map((rule) => {
     const result = rule(value, data);
@@ -38,7 +41,9 @@ export const url = value => !isEmpty(value) && !isURL(value) && 'Invalid URL';
 export const required = value => isEmpty(value) && 'Required field';
 
 export const dependentRequired = (field, errorMessage = `Either this field or ${field} is required`) =>
-  (value, allValues = {}) => isEmpty(value) && isEmpty(allValues[field]) && errorMessage;
+  (value, allValues = {}) => {
+    return isEmpty(value) && isEmpty(get(allValues, field)) && errorMessage;
+  };
 
 export const isValidRating = value => (isNaN(value) || value === 0) && 'At least one star';
 
@@ -76,13 +81,13 @@ export const createValidator = (rules, messageObj) => (data = {}) => {
   const errors = {};
   Object.keys(rules).forEach((key) => {
     const rule = join([].concat(rules[key]));
-    const error = rule(data[key], data);
+    const error = rule(get(data, key), data);
     if (error) {
       if (messageObj && messageObj[key]) {
         const message = messageObj[key][error.ruleName];
-        errors[key] = message;
+        set(errors, key, message);
       } else {
-        errors[key] = error.result;
+        set(errors, key, error.result);
       }
     }
   });

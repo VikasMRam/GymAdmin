@@ -11,11 +11,23 @@ const spacing = (Component, { top = 'xLarge', bottom = 'xLarge', left = 'xLarge'
 `;
 
 export const withPadding = ({ noPadding, ...props } = {}) => {
-  // TODO: padding="none" instead
+  // TODO: padding="0" instead
   if (noPadding) {
     return css`padding: 0px;`;
   }
-  return css(getCardinalValues(props, 'padding', 'spacing'));
+  const values = getCardinalValues(props, 'padding', 'spacing');
+
+  // if there is padding-bottom, remove last's child margin
+  if (values.padding || values.paddingBottom) {
+    return css`
+      & > *:last-child {
+        margin-bottom: 0;
+      }
+      ${css(values)};
+    `;
+  }
+
+  return css(values);
 };
 
 export const withMargin = (props = {}) => {

@@ -8,7 +8,7 @@ const Label = styled.label`
   font-size: ${size('text.caption')};
   color: ${palette('base')};
   margin-bottom: ${size('spacing.small')};
-  line-height: ${size('lineHeight.title')};
+  line-height: ${size('lineHeight.caption')};
 `;
 
 Label.propTypes = {
