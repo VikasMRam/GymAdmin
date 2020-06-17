@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { size } from 'sly/web/components/themes';
 import { BUDGET_OPTIONS, COEXISTING_BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
+import { capitalize } from  'sly/web/services/helpers/utils';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
@@ -35,6 +36,8 @@ const StyledTipBox = styled(TipBox)`
 `;
 
 const generateHeading = (whoNeedsHelp, amount, city, state) => {
+  city = city.replace('-', ' ').split(' ').map(s => capitalize(s)).join(' ');
+  state = capitalize(state);
   switch (whoNeedsHelp) {
     case 'parents':
       return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Do your parents have access to any of these benefits?`;

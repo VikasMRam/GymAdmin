@@ -6,6 +6,7 @@ import { prop } from 'styled-tools';
 import { size } from 'sly/web/components/themes';
 import { community as communityProptype } from 'sly/web/propTypes/community';
 import agentPropType from 'sly/web/propTypes/agent';
+import { capitalize } from  'sly/web/services/helpers/utils';
 import { Wrapper } from 'sly/web/components/wizards/assessment/Template';
 import { Heading } from 'sly/web/components/atoms';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
@@ -48,7 +49,7 @@ const End = ({ handleSubmit, community, city, hasNoAgent, agent }) => (
           onSubmit={handleSubmit}
           heading={community ?
             `You're all set! One of our Local Senior Living Experts will reach out shortly to assist you with pricing for ${community.name}.` :
-            `You're all set! One of our Local Senior Living Experts will reach out shortly to assist you with your search in ${city}.`
+            `You're all set! One of our Local Senior Living Experts will reach out shortly to assist you with your search in ${city.replace('-', ' ').split(' ').map(s => capitalize(s)).join(' ')}.`
           }
         />
       }
@@ -60,10 +61,12 @@ const End = ({ handleSubmit, community, city, hasNoAgent, agent }) => (
         />
       }
     </Wrapper>
-    <Wrapper>
-      <PostConversionAdTileContainer type="homeCare" layout="row" community={community} />
-    </Wrapper>
-    {community &&
+    {(hasNoAgent || agent) &&
+      <Wrapper>
+        <PostConversionAdTileContainer type="homeCare" layout="row" community={community} />
+      </Wrapper>
+    }
+    {(hasNoAgent || agent) && community &&
       <SimilarCommunitiesContainer>
         <Heading size="subtitle">Explore Similar Assisted Living Communities in {community.address.city}</Heading>
         <SimilarCommunitiesWrapper numberOfItems={community.similarProperties ? community.similarProperties.length : 0}>
@@ -80,6 +83,10 @@ End.propTypes = {
   city: string,
   agent: agentPropType,
   hasNoAgent: bool,
+};
+
+End.defaultProps = {
+  city: '',
 };
 
 export default End;
