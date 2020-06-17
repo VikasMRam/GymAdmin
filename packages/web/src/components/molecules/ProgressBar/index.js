@@ -10,6 +10,7 @@ import Block from 'sly/web/components/atoms/Block';
 
 const Wrapper = styled.div`
   background-color: ${palette('filler')};
+  border-radius: ${size('spacing.xLarge')};
 `;
 
 const Bar = styled.div`
@@ -17,16 +18,17 @@ const Bar = styled.div`
   height: ${size('spacing.small')};
   width: ${prop('width')}%;
   transition: width ${key('transitions.slow.inOut')};
+  border-radius: ${size('spacing.xLarge')};
 `;
 
-const PaddedBlock = pad(Block, 'large');
+const PaddedBlock = pad(Block, 'medium');
 PaddedBlock.displayName = 'PaddedBlock';
 
 const getBarWidth = (current, limit) => (current / limit) * 100;
 
 const ProgressBar = ({ label, palette, totalSteps, currentStep, className }) => (
   <div className={className}>
-    {label && <PaddedBlock weight="bold" palette="grey">{currentStep} OF {totalSteps}</PaddedBlock>}
+    {label && <PaddedBlock size="tiny" weight="bold" palette="grey">{currentStep} OF {totalSteps}</PaddedBlock>}
     <Wrapper palette={palette}>
       <Bar palette={palette} width={getBarWidth(currentStep, totalSteps)} />
     </Wrapper>
