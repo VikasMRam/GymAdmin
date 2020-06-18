@@ -32,7 +32,8 @@ const ResidentName = ({
   <Wrapper hasSecondColumn={hasTip}>
     <Box>
       <PaddedHeading level="subtitle" weight="medium">
-        Last question, what is the resident&apos;s name{numberOfPeople > 1 ? 's' : ''}?
+        {numberOfPeople > 1 ? 'Last question, what are the residents\'s names?' : 'Last question, what is the' +
+          ' resident\'s name?'}
       </PaddedHeading>
       <form onSubmit={handleSubmit}>
         {Array(numberOfPeople).fill().map((_, i) => (

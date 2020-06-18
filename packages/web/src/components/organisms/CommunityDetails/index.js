@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { size, palette } from 'sly/web/components/themes';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
-import { Link, Paragraph, Heading } from 'sly/web/components/atoms';
+import { Link, Paragraph, Heading, Hr } from 'sly/web/components/atoms';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 
 const StyledHeading = styled(Heading)`
@@ -45,9 +45,14 @@ LegacyContent.defaultProps = {
 };
 
 const CommunityDetails = ({
-  id, communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription, ownerExperience, city, state, twilioNumber, guideUrl,
+  id, communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription, licensingInfo,
+                            ownerExperience, city, state, twilioNumber, guideUrl, communityUser,
 }) => {
   let phone = '8558664515';
+  let isClaimed = false;
+  if ( communityUser && communityUser.email && !communityUser.email.match(/@seniorly.com/) ) {
+    isClaimed = true;
+  }
   if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
     [phone] = twilioNumber.numbers;
   }
@@ -96,16 +101,6 @@ const CommunityDetails = ({
           }
         </StyledArticle>
       )}
-      {
-        <StyledArticle>
-          Manage this community?&nbsp;
-          <Link href={`/partners/communities?prop=${id}&sly_category=community-details&sly_action=cta_link&sly_label=claim`}>
-            Click here to claim this profile
-          </Link>
-
-        </StyledArticle>
-      }
-
       {guideUrl &&
         <StyledArticle>
           <Paragraph>
@@ -116,31 +111,26 @@ const CommunityDetails = ({
           </Paragraph>
         </StyledArticle>
       }
-      <StyledArticle>
-        <Paragraph>
-          Seniorly is not affiliated with the owner or operator(s) of {communityName}.
-          The information above has not been verified or approved by the owner or operator.
-          For exact details, connect to a Local Senior Living Expert in {city} by calling&nbsp;
-          <Link href={`tel:${phone}`}>
-            {phoneFormatter(phone, true)}
+      {licensingInfo && (
+        <StyledArticle>
+          <StyledHeading level="subtitle" size="subtitle">
+            Licensing for {communityName}
+          </StyledHeading>
+           {communityName} is licensed by the state of {state}. Visit the
+          <Link> state licensing website</Link> for more information.
+        </StyledArticle>
+      )}
+      { !isClaimed &&
+        <>
+          <Hr />
+          <StyledArticle>
+          Manage this community?&nbsp;
+          <Link href={`/partners/communities?prop=${id}&sly_category=community-details&sly_action=cta_link&sly_label=claim`}>
+          Click here to claim this profile
           </Link>
-          . There is no cost for this service. We are compensated by the community you select.
-        </Paragraph>
-      </StyledArticle>
-      <StyledArticle>
-        <StyledHeading level="subtitle" size="subtitle">
-          What is a Local Senior Living Expert in {city}, {state}?
-        </StyledHeading>
-        <Paragraph>
-          A senior living expert is a professional who knows
-          the {city}, {state} communities and specializes in helping you find the right fit for your
-          unique budget, location, care, social and other needs. This is a free service. To learn more,&nbsp;
-          <Link href="https://www.seniorly.com/agents?sly_category=summary&sly_action=cta_link&sly_label=agent_link" target="_blank">
-            click here to visit our Seniorly Partner Agent page.
-          </Link>
-        </Paragraph>
-        <Paragraph>&nbsp;</Paragraph>
-      </StyledArticle>
+          </StyledArticle>
+          </>
+      }
     </CollapsibleBlock>
   );
 };
@@ -157,6 +147,8 @@ CommunityDetails.propTypes = {
   city: PropTypes.string,
   state: PropTypes.string,
   twilioNumber: PropTypes.object,
+  communityUser: PropTypes.object,
+  licensingInfo: PropTypes.string,
 };
 
 export default CommunityDetails;

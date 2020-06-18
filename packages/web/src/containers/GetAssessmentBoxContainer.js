@@ -116,6 +116,7 @@ export default class GetAssessmentBoxContainer extends Component {
             {!agent &&
               <PostConversionGreetingForm
                 hasBox={false}
+                community={community}
                 onReturnClick={this.toggleModal}
                 heading="Request sent! One of our Local Senior Living Experts will reach out to assist you."
                 description="Questions? You can contact us by phone or email:"
