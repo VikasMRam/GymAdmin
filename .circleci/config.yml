@@ -26,9 +26,10 @@ jobs:
 
       - node/with-cache:
           cache-key: package-lock.json
-          cache-version: v4
+          cache-version: v5
           use-strict-cache: true
           include-branch-in-cache-key: false
+          dir: ~/project/packages/web/node_modules
           steps:
             - run:
                 name: Install deps

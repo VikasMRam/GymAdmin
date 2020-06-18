@@ -47,6 +47,11 @@ export default class AssessmentWizard extends Component {
     hasNoAgent: false,
   };
 
+  scrollToTop = () => {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  };
+
   handleComplete = (data, { redirectLink }) => {
     const { redirectTo } = this.props;
 
@@ -75,6 +80,7 @@ export default class AssessmentWizard extends Component {
       action: 'step-completed',
       label: currentStep,
     });
+    this.scrollToTop();
 
     if (currentStep === 'Intro' && whatToDoNext === 'no-thanks') {
       return goto('Auth');
@@ -115,6 +121,7 @@ export default class AssessmentWizard extends Component {
     if (from === 'ResidentName') {
       this.waitForAgentMatched();
     }
+    this.scrollToTop();
   };
 
   handlePrevious = ({ from, to }) => {
@@ -124,6 +131,7 @@ export default class AssessmentWizard extends Component {
       label: from,
       value: to,
     });
+    this.scrollToTop();
   };
 
   render() {

@@ -2,6 +2,8 @@
 # https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-configuration.html#eb-cli3-profile
 # https://github.com/aws-samples/eb-python-flask/blob/master/.elasticbeanstalk/config.global.yml
 branch-defaults:
+  default:
+    environment: slyreact-development
   master:
     environment: slyreact-development
 environment-defaults:
