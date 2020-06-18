@@ -634,7 +634,16 @@ export default class CommunityDetailPage extends Component {
                   </StyledHeadingBoxSection>
                 )}
                 <Experiment name="StickyFooterCTA">
-                  <Variant name="PricingWizard">
+                  <Variant name="PricingWizard1">
+                    <CommunityStickyFooter community={community} isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack="sticky-footer"/>
+                  </Variant>
+                  <Variant name="PricingWizard2">
+                    <CommunityStickyFooter community={community} isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack="sticky-footer"/>
+                  </Variant>
+                  <Variant name="PricingWizard3">
+                    <CommunityStickyFooter community={community} isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack="sticky-footer"/>
+                  </Variant>
+                  <Variant name="PricingWizard4">
                     <CommunityStickyFooter community={community} isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack="sticky-footer"/>
                   </Variant>
                   <Variant name="AssessmentWizard">

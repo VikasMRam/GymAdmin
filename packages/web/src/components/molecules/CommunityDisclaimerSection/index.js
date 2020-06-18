@@ -1,5 +1,5 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { string, bool, } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/web/components/themes';
@@ -16,14 +16,14 @@ const StyledBox = styled(Box)`
 `;
 
 const CommunityDisclaimerSection = ({
-  title, id, name, city, phone, isClaimed, className,
+  title, id, name, city, phone, isClaimed,
 }) => {
   let description = 'The information above has not been verified or approved by the owner or operator. ';
   if (isClaimed) {
-    description = 'A verified owner or operator has claimed this community.'
+    description = 'A verified owner or operator has claimed this community.';
   }
   return (
-    <StyledBox className={className}>
+    <StyledBox>
       <Section title={title} titleSize="subtitle" headingMargin="large">
         <DescriptionWrapper>
           Seniorly is not affiliated with the owner or operator(s) of {name}.
@@ -36,7 +36,7 @@ const CommunityDisclaimerSection = ({
         </DescriptionWrapper>
         {!isClaimed &&
         <>
-          <Hr/>
+          <Hr />
           Manage this community?&nbsp;
           <Link href={`/partners/communities?prop=${id}&sly_category=disclaimer&sly_action=cta_link&sly_label=claim`}>
             Click here to claim this profile
@@ -47,15 +47,16 @@ const CommunityDisclaimerSection = ({
       </Section>
     </StyledBox>
   );
-}
+};
 
 
 CommunityDisclaimerSection.propTypes = {
   title: string,
-  description: string,
-  url: string,
-  urlText: string,
-  className: string,
+  id: string,
+  name: string,
+  city: string,
+  isClaimed: bool,
+  phone: string,
 };
 
 CommunityDisclaimerSection.defaultProps = {

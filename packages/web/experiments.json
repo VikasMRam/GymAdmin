@@ -1,6 +1,6 @@
 {
   "Community_DetailPage_How_It_Works_Banner_Notification": ["With_Banner", "Without_Banner"],
   "SearchAdTile": ["Ask_Question", "Need_Live_Help","Custom_Options"],
-  "MainProfileCTA": ["PricingWizard","AssessmentWizard"],
-  "StickyFooterCTA": ["PricingWizard","AssessmentWizard"]
+  "MainProfileCTA": ["PricingWizard1","PricingWizard2","PricingWizard3","PricingWizard4","AssessmentWizard"],
+  "StickyFooterCTA": ["PricingWizard1","PricingWizard2","PricingWizard3","PricingWizard4","AssessmentWizard"]
 }

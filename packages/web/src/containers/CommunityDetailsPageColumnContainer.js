@@ -8,7 +8,16 @@ import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContai
 export default function CommunityDetailsPageColumnContainer({ community }) {
   return (
     <Experiment name="MainProfileCTA">
-      <Variant name="PricingWizard">
+      <Variant name="PricingWizard1">
+        <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
+      </Variant>
+      <Variant name="PricingWizard2">
+        <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
+      </Variant>
+      <Variant name="PricingWizard3">
+        <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
+      </Variant>
+      <Variant name="PricingWizard4">
         <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
       </Variant>
       <Variant name="AssessmentWizard">

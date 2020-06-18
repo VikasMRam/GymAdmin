@@ -151,11 +151,13 @@ export const BUDGET_OPTIONS = [
 export const COEXISTING_BUDGET_OPTIONS = {
   'dont-have': ['dont-have', 'not-sure'],
 };
+
 export const COEXISTING_DEMENTIA_OPTIONS = {
-  'dont-have': ['dont-have', 'not-sure'],
+  no: ['no', 'not-sure'],
 };
+
 export const COEXISTING_ADL_OPTIONS = {
-  'none': ['none'],
+  none: ['none'],
 };
 
 export const MEDICAID_OPTIONS = [
