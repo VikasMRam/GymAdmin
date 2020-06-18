@@ -67,6 +67,8 @@ import UnhydratedCommunityProfileAdTileContainer from 'sly/web/containers/commun
 import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
 import UnhydratedGetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
 import UnhydratedCommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
+import Experiment from '../../../services/experiments/components/Experiment';
+import Variant from '../../../services/experiments/components/Variant';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -632,8 +634,14 @@ export default class CommunityDetailPage extends Component {
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
-
-                <CommunityStickyFooter community={community} isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack="sticky-footer"/>
+                <Experiment name="StickyFooterCTA">
+                  <Variant name="PricingWizard">
+                    <CommunityStickyFooter community={community} isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack="sticky-footer"/>
+                  </Variant>
+                  <Variant name="AssessmentWizard">
+                    <GetAssessmentBoxContainerHydrator layout="footer" community={community} startLink={`/wizards/assessment/community/${community.id}`}/>
+                  </Variant>
+                </Experiment>
               </Body>
               <Column>
                 <StickToTop>

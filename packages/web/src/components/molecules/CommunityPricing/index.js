@@ -47,9 +47,9 @@ const CommunityPricing = ({ id, estimated, price, palette, variation, className,
   <StyledCommunityPricingWrapper className={className}>
     {estimated &&
       <DescriptionBlock size="caption">
-        <StyledParagraph>
+        <StyledParagraph data-tip data-for={tipId}>
           Seniorly Estimate
-          <StyledIcon palette="slate" icon="help" size="caption" data-tip data-for={tipId} />
+          <StyledIcon palette="slate" icon="help" size="caption"/>
         </StyledParagraph>
         {isBrowser && (
           <TooltipContent
