@@ -47,6 +47,13 @@ export default class AssessmentWizard extends Component {
     hasNoAgent: false,
   };
 
+  componentDidMount() {
+    SlyEvent.getInstance().sendEvent({
+      category: 'assessmentWizard',
+      action: 'open',
+    });
+  }
+
   scrollToTop = () => {
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
@@ -59,7 +66,9 @@ export default class AssessmentWizard extends Component {
   };
 
   onNoAgentMatch = () => {
-    localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
+    if (!this.skipped) {
+      localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
+    }
 
     this.setState({
       hasNoAgent: true,
@@ -76,13 +85,14 @@ export default class AssessmentWizard extends Component {
 
   handleStepChange = ({ currentStep, goto, data: { whatToDoNext } }) => {
     SlyEvent.getInstance().sendEvent({
-      category: 'assesmentWizard',
+      category: 'assessmentWizard',
       action: 'step-completed',
       label: currentStep,
     });
     this.scrollToTop();
 
     if (currentStep === 'Intro' && whatToDoNext === 'no-thanks') {
+      this.skipped = true;
       return goto('Auth');
     }
     if (currentStep === 'ResidentName') {
@@ -95,7 +105,10 @@ export default class AssessmentWizard extends Component {
   onMessage = ({ payload: { agentSlug } }) => {
     const { getAgent } = this.props;
     clearTimeout(this.agentMatchTimeout);
-    localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
+    if (!this.skipped) {
+      localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
+    }
+
 
     if (agentSlug) {
       localStorage.setItem(ASSESSMENT_WIZARD_MATCHED_AGENT, agentSlug);
@@ -112,7 +125,7 @@ export default class AssessmentWizard extends Component {
   handleNext = ({ from, to }) => {
     if (from !== 'Auth' && from !== 'Intro') {
       SlyEvent.getInstance().sendEvent({
-        category: 'assesmentWizard',
+        category: 'assessmentWizard',
         action: 'step-skipped',
         label: from,
         value: to,
@@ -126,7 +139,7 @@ export default class AssessmentWizard extends Component {
 
   handlePrevious = ({ from, to }) => {
     SlyEvent.getInstance().sendEvent({
-      category: 'assesmentWizard',
+      category: 'assessmentWizard',
       action: 'step-back',
       label: from,
       value: to,
@@ -153,7 +166,7 @@ export default class AssessmentWizard extends Component {
     return (
       <section className={className}>
         <WizardController
-          formName="assesmentWizard"
+          formName="assessmentWizard"
           onComplete={this.handleComplete}
           onStepChange={this.handleStepChange}
           onPrevious={this.handlePrevious}

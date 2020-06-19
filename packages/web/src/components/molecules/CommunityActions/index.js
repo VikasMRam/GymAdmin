@@ -10,12 +10,13 @@ const GetPricingButton = styled(GetCustomPricingButtonContainer)`
     margin-left: ${size('spacing.large')}
   `;
 
-const CommunityActions = ({ isAlreadyPricingRequested, locTrack }) => {
+const CommunityActions = ({ isAlreadyPricingRequested, locTrack, ...props }) => {
   return (
     <GetPricingButton
       hasAlreadyRequestedPricing={isAlreadyPricingRequested}
       locTrack={locTrack}
       ghost={isAlreadyPricingRequested}
+      {...props}
     >
       {isAlreadyPricingRequested ? 'Pricing requested' : 'Get Detailed Pricing'}
     </GetPricingButton>

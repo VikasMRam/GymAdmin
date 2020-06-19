@@ -27,10 +27,10 @@ const Wrapper = styled.div`
   }
 `;
 
-const CommunityStickyFooter = ({ community: { id, startingRate, rates}, isAlreadyPricingRequested, locTrack }) => (
+const CommunityStickyFooter = ({ community: { id, startingRate, rates}, isAlreadyPricingRequested, locTrack, ...props }) => (
   <Wrapper>
     {startingRate > 0 && <CommunityPricing size='subtitle' id={id} estimated={rates !=='Provided'} price={startingRate} tooltipPos="top" />}
-    <CommunityActions isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack={locTrack}/>
+    <CommunityActions isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack={locTrack} {...props} />
   </Wrapper>
 );
 CommunityStickyFooter.typeHydrationId = 'CommunityStickyFooter';
