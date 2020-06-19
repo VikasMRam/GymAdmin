@@ -21,7 +21,7 @@ export default function CommunityDetailsPageColumnContainer({ community }) {
         <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
       </Variant>
       <Variant name="AssessmentWizard">
-        <GetAssessmentBoxContainer community={community} layout="sidebar" />
+        <GetAssessmentBoxContainer community={community} startLink={`/wizards/assessment/community/${community.id}`} layout="sidebar" />
       </Variant>
 
     </Experiment>
