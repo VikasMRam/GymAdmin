@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, bool, } from 'prop-types';
+import { string, bool } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/web/components/themes';
@@ -48,7 +48,6 @@ const CommunityDisclaimerSection = ({
     </StyledBox>
   );
 };
-
 
 CommunityDisclaimerSection.propTypes = {
   title: string,
