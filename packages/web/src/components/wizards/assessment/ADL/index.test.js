@@ -4,10 +4,12 @@ import { shallow } from 'enzyme';
 import { ADL } from 'sly/web/components/wizards/assessment';
 
 const handleSubmit = jest.fn();
+const change= jest.fn();
 const whoNeedsHelp = 'parents';
 const defaultProps = {
   handleSubmit,
   whoNeedsHelp,
+  change,
 };
 const wrap = (props = {}) => shallow(<ADL {...defaultProps} {...props} />);
 
