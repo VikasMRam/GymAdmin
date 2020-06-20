@@ -43,7 +43,7 @@ export const COEXISTING_ADL_OPTIONS = {
   toileting: ['none'],
   eating: ['none'],
   'medication-management': ['none'],
-  none: ['bathing','dressing','transferring','toileting','eating','medication-management'],
+  none: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
 };
 
 export const DEMENTIA_FORGETFUL_OPTIONS = {
