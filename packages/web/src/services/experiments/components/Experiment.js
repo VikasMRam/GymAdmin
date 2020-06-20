@@ -73,11 +73,11 @@ export default class Experiment extends Component {
   }
 
   componentDidMount() {
-    this.sendExperimentEvent('view_experiment');
     const { uuidAux } = this.props;
     if (uuidAux) {
       this.setVariant(uuidAux.id);
     }
+    this.sendExperimentEvent('view_experiment');
   }
 
   componentDidUpdate({ disabled, uuidAux }) {
@@ -103,7 +103,7 @@ export default class Experiment extends Component {
     const { disabled, name } = this.props;
     if (!disabled) {
       const event = {
-        action, category: name, label: this.selectedVariant, value: 1, nonInteraction: true,
+        action, category: name, label: this.state.selected, value: 1, nonInteraction: true,
       };
       SlyEvent.getInstance().sendEvent(event);
     }

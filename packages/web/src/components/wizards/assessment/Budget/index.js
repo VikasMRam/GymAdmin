@@ -69,17 +69,6 @@ const Budget = ({
             type="boxChoice"
             align="left"
             component={ReduxField}
-            onChange={(event, newValue) => {
-              let modifiedValue = newValue;
-              for (let i = 0; i < newValue.length; i++) {
-                const valuesThatCanExist = COEXISTING_BUDGET_OPTIONS[newValue[i]];
-                if (valuesThatCanExist) {
-                  modifiedValue = modifiedValue.filter(v => valuesThatCanExist.includes(v));
-                }
-              }
-              // delay this update to next tick so that it's always applied at last
-              setTimeout(() => change('budget', modifiedValue));
-            }}
           />
           <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
