@@ -36,6 +36,16 @@ export const ADL_OPTIONS = [
   { label: "I'm not sure", value: 'im-not-sure' },
 ];
 
+export const COEXISTING_ADL_OPTIONS = {
+  bathing: ['none'],
+  dressing: ['none'],
+  transferring: ['none'],
+  toileting: ['none'],
+  eating: ['none'],
+  'medication-management': ['none'],
+  none: ['bathing','dressing','transferring','toileting','eating','medication-management'],
+};
+
 export const DEMENTIA_FORGETFUL_OPTIONS = {
   parents: [
     { label: 'Yes, they are also at risk of wandering', value: 'risk-of-wandering' },
@@ -154,10 +164,6 @@ export const COEXISTING_BUDGET_OPTIONS = {
 
 export const COEXISTING_DEMENTIA_OPTIONS = {
   no: ['no', 'not-sure'],
-};
-
-export const COEXISTING_ADL_OPTIONS = {
-  none: ['none'],
 };
 
 export const MEDICAID_OPTIONS = [

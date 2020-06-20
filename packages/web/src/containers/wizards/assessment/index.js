@@ -48,6 +48,7 @@ export default class AssessmentWizard extends Component {
   };
 
   componentDidMount() {
+
     SlyEvent.getInstance().sendEvent({
       category: 'assessmentWizard',
       action: 'open',

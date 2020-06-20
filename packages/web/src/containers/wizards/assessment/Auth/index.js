@@ -3,6 +3,7 @@ import { func, string, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import { query, withUser } from 'sly/web/services/api';
+import SlyEvent from 'sly/web/services/helpers/events';
 import { community as communityPropType } from 'sly/web/propTypes/community';
 import { CONSULTATION_REQUESTED, PROFILE_CONTACTED, PRICING_REQUEST } from 'sly/web/services/api/constants';
 import AuthContainer from 'sly/web/services/auth/containers/AuthContainer';
@@ -33,6 +34,10 @@ export default class Auth extends Component {
   handleAuthSuccess = () => {
     const { createAction, location: { pathname }, community, user, onAuthSuccess } = this.props;
     const actionType = community ? PROFILE_CONTACTED : CONSULTATION_REQUESTED;
+    SlyEvent.getInstance().sendEvent({
+      category: 'assessmentWizard',
+      action: actionType,
+    });
     let actionInfo = {};
     if (community) {
       actionInfo = {
