@@ -87,7 +87,9 @@ export const SummarySectionHeader = styled(Box)`
   ${withBorder({ borderBottom: 'regular' })} 
   
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    ${withText}
+    ${withText({
+      size: 'body',
+    })}
     ${withBorder({ borderBottom: 0 })} 
   }
 `;

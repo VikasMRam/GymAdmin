@@ -42,15 +42,15 @@ const getWeight = (props) => {
   return null;
 };
 
-export const withText = css`
-  ${ifProp('size', css`
-    font-size: ${getSize('text')};
-    line-height: ${getSize('lineHeight')};
-  `)}
+export const withText = props => css`
+  ${props.size && css`
+    font-size: ${getSize('text')(props)};
+    line-height: ${getSize('lineHeight')(props)};
+  `}
   
   ${ifProp('lineHeight', css`
-    line-height: ${getSize('lineHeight', 'lineHeight')};
+    line-height: ${getSize('lineHeight', 'lineHeight')(props)};
   `)}
   
-  ${getWeight};
+  ${getWeight(props)};
 `;

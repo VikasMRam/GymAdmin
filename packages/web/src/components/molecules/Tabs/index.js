@@ -7,13 +7,11 @@ import { size } from 'sly/web/components/themes';
 import { topSnap } from 'sly/web/components/helpers';
 
 const Wrapper = styled(Box)`
+  display: flex;
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
   text-transform: uppercase;
-  & > :last-child {
-    margin-right: 0;
-  }
   
   @media screen and (max-width: calc(${size('breakpoint.laptop')} - 1px)) {
     ${topSnap} 
@@ -23,7 +21,7 @@ const Wrapper = styled(Box)`
 
 Wrapper.defaultProps = {
   background: 'white',
-  padding: ['large', 'large', 0],
+  padding: [0, 0, 0, 'xLarge'],
 };
 
 const getDefaultActiveTab = (children) => {
