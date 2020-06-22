@@ -6,6 +6,12 @@ export const withAlign = (props) => {
       display: 'flex',
       justifyContent: 'flex-end',
     });
+  } else if (props.align === 'center') {
+    return css({
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    });
   }
   return null;
 };
