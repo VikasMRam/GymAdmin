@@ -7,6 +7,7 @@ import MediaItem from 'sly/web/services/s3Uploader/components/MediaItem';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import HelpBubble from 'sly/web/components/form/HelpBubble';
 import { Section, SectionHeader, SectionSortable } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import S3Uploader from 'sly/web/services/s3Uploader/components/S3Uploader';
 
 const genKey = ((cache = {}) => (image) => {
   // check if our key exists
@@ -29,7 +30,8 @@ export default class DashboardCommunityPhotosForm extends Component {
     invalid: bool,
     canEdit: bool,
     submitting: bool,
-    addImage: func.isRequired,
+    onUpload: func.isRequired,
+    onUploadError: func.isRequired,
     saveImage: func.isRequired,
     deleteImage: func.isRequired,
     onSortEnd: func.isRequired,
@@ -39,13 +41,20 @@ export default class DashboardCommunityPhotosForm extends Component {
 
   render() {
     const {
-      addImage, onSortEnd, saveImage, deleteImage, canEdit, images, changes,
+      onUpload, onUploadError, onSortEnd, saveImage, deleteImage, canEdit, images, changes,
     } = this.props;
 
+
     const actions = canEdit && (
-      <IconButton icon="add" onClick={addImage} hideTextInMobile>
-        Add Image
-      </IconButton>
+      <S3Uploader
+        uploadRequestHeaders={{}}
+        onFinish={onUpload}
+        onError={onUploadError}
+      >
+        <IconButton icon="add" hideTextInMobile>
+          Add Image
+        </IconButton>
+      </S3Uploader>
     );
 
     const deletedMessage = changes.deleted.length === 0
