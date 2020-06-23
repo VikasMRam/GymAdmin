@@ -48,10 +48,12 @@ const Thumbnail = styled.div`
 `;
 
 const ActionButton = styled(IconButton)`
-  width: ${size('element.regular')};
-  height: ${size('element.regular')};
-  margin: 0 ${size('spacing.large')};
+  margin-right: ${size('spacing.large')};
 `;
+
+ActionButton.defaultProps = {
+  iconSize: 'body',
+};
 
 export default class MediaItem extends React.Component {
   static propTypes = {
@@ -90,7 +92,7 @@ export default class MediaItem extends React.Component {
           </Link>
           {isNew && <HelpBubble>Pending approval</HelpBubble>}
         </Info>
-        <ActionButton icon="pencil" palette="slate.lighter-30" transparent onClick={() => editImage(image)} disabled={disabled} />
+        <ActionButton icon="edit" palette="slate.lighter-30" transparent onClick={() => editImage(image)} disabled={disabled} />
         <ActionButton icon="trash" palette="slate.lighter-30" transparent onClick={() => deleteImage(image)} disabled={disabled} />
       </Wrapper>
     );
