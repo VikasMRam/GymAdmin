@@ -1,6 +1,6 @@
 import React from 'react';
 import { object, bool, func, string } from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
 import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES, CONTINUING_CARE_RETIREMENT_COMMUNITY, CCRC } from 'sly/web/constants/tags';
@@ -9,11 +9,8 @@ import { community as communityPropType } from 'sly/web/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import { Link, Box, Heading, Hr, Icon, Tag, Block } from 'sly/web/components/atoms';
-import IconButton from 'sly/web/components/molecules/IconButton';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
-import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';
 import { isBrowser } from 'sly/web/config';
-import PlusBadge from 'sly/web/components/molecules/PlusBadge';
 import { tocPaths } from 'sly/web/services/helpers/url';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 
@@ -28,59 +25,25 @@ const StyledTag = styled(Tag)`
 
 StyledTag.displayName = 'StyledTag';
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  justify-content: space-between;
-  > *:first-child {
-    margin-bottom: ${size('spacing.medium')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    flex-direction: row;
-    align-items: center;
-    > *:first-child {
-      margin-bottom: 0;
-    }
-  }
-`;
-
-const StyledIconButton = styled(IconButton)`
-  margin-right: ${size('spacing.regular')};
-`;
-
 const StyledIcon = styled(Icon)`
   margin-left: ${size('spacing.small')};
   vertical-align: text-top;
 `;
 
 const TooltipContent = styled(ReactTooltip)`
-  padding: ${size('spacing.regular')};
-  color: ${palette('white', 'base')} !important;
-  background-color: ${palette('slate', 'base')} !important;
-  border-radius: ${size('spacing.tiny')};
-  font-size: ${size('text.caption')};
-
-  &.place-top {
-    &:after {
-      border-top-color: ${palette('slate', 'base')} !important;
-    }
-  }
+  padding: ${size('spacing.regular')}!important;
+  color: ${palette('slate', 'base')}!important;
+  background-color: ${palette('white', 'base')}!important;
+  box-shadow: 0 0 ${size('spacing', 'large')} ${palette('slate', 'filler')}80;
 `;
 
-
-const PricingRatingWrapper = mobileOnly(styled.div`
-  display: grid;
-`, css`
-  grid-template-rows: 1fr 1fr;
-  grid-gap: ${size('spacing.xLarge')};
-`, css`
-  grid-template-columns: min-content 1fr;
-  grid-gap: ${size('spacing.massive')};
+const RatingWrapper = mobileOnly(styled.div`
 `);
 
-const PaddedPricingRatingWrapper = pad(PricingRatingWrapper, 'large');
+const CareTypeWrapper = styled.div`
+  margin-bottom: ${size('spacing.regular')}; 
+`;
+
 
 const getCareTypes = (state, careTypes) => {
   const updatedCareTypes = [];
@@ -105,36 +68,19 @@ const getCareTypes = (state, careTypes) => {
   return updatedCareTypes;
 };
 
-const getPricingAndRating = (startingRate, reviewsValue, numReviews, goToReviews) => {
-  const Wrapper = startingRate > 0 ? PaddedPricingRatingWrapper : PricingRatingWrapper;
-  return (
-    <>
-      <Hr />
-      <Wrapper>
-        {startingRate > 0 && <CommunityPricing description="Estimated pricing starts at" price={startingRate} />}
-        {reviewsValue > 0 && <CommunityRating description="Average rating" numReviewsPalette="slate" numReviewsVariation="base" rating={reviewsValue} numReviews={numReviews} goToReviews={goToReviews} />}
-      </Wrapper>
-      {startingRate > 0 &&
-        <Block size="caption" palette="grey">
-          * Pricing varies depending on senior living room type and care service needs.
-        </Block>
-      }
-    </>
-  );
-};
 
 const CommunitySummary = ({
   community, innerRef, isAdmin, onConciergeNumberClicked, onCommunityNumberClicked, className,
-  onFavouriteClick, isFavorited, onShareClick, goToReviews, searchParams,
+  goToReviews, searchParams,
 }) => {
   const {
-    address, name, startingRate, propRatings, propInfo, twilioNumber, partnerAgents,
+    address, name, propRatings, propInfo, twilioNumber, partnerAgents,
   } = community;
   const {
     line1, line2, city, state, zip,
   } = address;
   const {
-    communityPhone, plusCommunity, plusCategory, typeCare, tier
+    communityPhone, typeCare, tier
   } = propInfo;
   const { reviewsValue, numReviews } = propRatings;
   const formattedAddress = `${line1}, ${line2}, ${city},
@@ -151,7 +97,6 @@ const CommunitySummary = ({
     conciergeNumber = '8558664515';
   }
 
-  const favIcon = isFavorited ? 'favourite-light' : 'favourite-empty';
   const careTypes = getCareTypes(state, typeCare);
 
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
@@ -162,7 +107,7 @@ const CommunitySummary = ({
         {name}
         {isAdmin &&
           <Link
-            to={`/mydashboard#/mydashboard/communities/${community.id}/about`}
+            to={`/dashboard/communities/${community.id}`}
           >
             &nbsp;(Edit)
           </Link>
@@ -170,72 +115,73 @@ const CommunitySummary = ({
       </StyledHeading>
       <Heading weight="regular" level="subtitle" size="body" palette="grey">{formattedAddress}</Heading>
 
-      {
-        careTypes.map(careType =>
-          (
-            <Link
-              key={careType.path}
-              to={`${careType.path}/${searchParams.state}/${searchParams.city}`}
-              target="_blank"
-              event={{
-                category: 'care-type-tags',
-                action: 'tag-click',
-                label: careType.tag,
-              }}
-            >
-              <StyledTag key={careType.tag}>{careType.tag}</StyledTag>
-            </Link>),
-        )
+      <CareTypeWrapper>
+        {
+
+          careTypes.map(careType =>
+            (
+              <Link
+                key={careType.path}
+                to={`${careType.path}/${searchParams.state}/${searchParams.city}`}
+                target="_blank"
+                event={{
+                  category: 'care-type-tags',
+                  action: 'tag-click',
+                  label: careType.tag,
+                }}
+              >
+                <StyledTag key={careType.tag}>{careType.tag}</StyledTag>
+              </Link>),
+          )
+        }
+      </CareTypeWrapper>
+
+      {reviewsValue > 0 &&
+        <RatingWrapper>
+          <CommunityRating
+            description=""
+            numReviewsPalette="slate"
+            numReviewsVariation="base"
+            rating={reviewsValue}
+            numReviews={numReviews}
+            goToReviews={goToReviews} />
+        </RatingWrapper>
       }
 
-      {plusCommunity &&
-        <PlusBadge plusCategory={plusCategory} />
-      }
       <Hr />
-      <Wrapper>
-        <div>
-          {
-            tier !== "4" && partnerAgent &&
-              <>
-                For pricing and availability, call&nbsp;
-                <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
-                  {phoneFormatter(conciergeNumber, true)}
-                </Link>
-                <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="conciergePhone" />
-                {isBrowser &&
-                <TooltipContent id="conciergePhone" place="top" effect="solid" multiline>
-                  This phone number will connect you to the concierge team at Seniorly.
-                </TooltipContent>
-                }
-              </>
-          }
-          {
-            (tier === "4" || !partnerAgent) &&
-              <>
-                To connect directly, call&nbsp;
-                <Link href={`tel:${communityPhone}`} onClick={onCommunityNumberClicked}>
-                  {phoneFormatter(communityPhone, true)}
-                </Link>
-                <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
-                {isBrowser &&
-                <TooltipContent id="phone" place="top" effect="solid" multiline>
-                  This phone number will connect you to the community.
-                </TooltipContent>
-                }
-              </>
-          }
-        </div>
+      {
+        tier !== "4" && partnerAgent &&
+          <>
+            Call for help with pricing and availability
+            <StyledIcon palette="slate" icon="help" size="caption" data-tip data-for="conciergePhone" />
+            {isBrowser &&
+            <TooltipContent id="conciergePhone" type="light" effect="solid" multiline>
+              This phone number will connect you to the concierge team at Seniorly.
+            </TooltipContent>
+            }
+            <br/>
+            <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
+              {phoneFormatter(conciergeNumber, true)}
+            </Link>
+          </>
+      }
+      {
+        (tier === "4" || !partnerAgent) &&
+          <>
+            Call to connect directly with the community
+            <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
+            {isBrowser &&
+            <TooltipContent id="phone" effect="solid" type="light" multiline>
+              This phone number will connect you to the community.
+            </TooltipContent>
+            }
+            <br/>
+            <Link href={`tel:${communityPhone}`} onClick={onCommunityNumberClicked}>
+              {phoneFormatter(communityPhone, true)}
+            </Link>
 
-        <div>
-          <StyledIconButton ghost transparent icon="share" onClick={onShareClick}>
-            Share
-          </StyledIconButton>
-          <StyledIconButton ghost transparent icon={favIcon} onClick={onFavouriteClick}>
-            Save
-          </StyledIconButton>
-        </div>
-      </Wrapper>
-      {(startingRate || reviewsValue) > 0 && getPricingAndRating(startingRate, reviewsValue, numReviews, goToReviews)}
+          </>
+      }
     </Box>
   );
 };
@@ -246,10 +192,7 @@ CommunitySummary.propTypes = {
   isAdmin: bool,
   onConciergeNumberClicked: func,
   className: string,
-  onFavouriteClick: func,
-  onShareClick: func,
   goToReviews: func,
-  isFavorited: bool,
   searchParams: object,
 };
 

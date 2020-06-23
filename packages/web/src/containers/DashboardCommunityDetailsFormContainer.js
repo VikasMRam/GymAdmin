@@ -16,8 +16,8 @@ import { patchFormInitialValues } from 'sly/web/services/edits';
 
 const validate = createValidator({
   name: [required],
-  phone: [usPhone, dependentRequired('email', 'Either Phone or Email is required')],
-  email: [email, dependentRequired('phone', 'Either Email or Phone is required')],
+  'propInfo.communityPhone': [usPhone, dependentRequired('propInfo.ownerEmail', 'Either Phone or Email is required')],
+  'propInfo.ownerEmail': [email, dependentRequired('propInfo.communityPhone', 'Either Email or Phone is required')],
 });
 
 const formName = 'DashboardCommunityDetailsForm';

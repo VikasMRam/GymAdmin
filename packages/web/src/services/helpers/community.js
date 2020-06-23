@@ -28,9 +28,7 @@ export const getIsSNF = (community) => {
   return false;
 };
 
-export const formatAddress = (community) => {
-  const { address } = community;
-
+export const formatAddress = (address) => {
   if (!address) return '';
 
   return [

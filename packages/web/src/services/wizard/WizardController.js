@@ -9,11 +9,13 @@ const mapStateToProps = (state, { controller, ...ownProps }) => {
   isValid(ownProps.formName)(state);
   const steps = controller.steps || [];
   const initialStepIndex = steps.findIndex(s => s === ownProps.initialStep);
+  const defaultInitialStepIndex = initialStepIndex > -1 ? initialStepIndex : 0;
 
   return {
     steps,
     progressPath: controller.progressPath || [0],
-    currentStepIndex: controller.currentStepIndex || (initialStepIndex > -1 ? initialStepIndex : 0),
+    // zero is equated to false, hence current step as first step along with initialStep prop won't work without number type check
+    currentStepIndex: Number.isInteger(controller.currentStepIndex) ? controller.currentStepIndex : defaultInitialStepIndex,
     data: selectFormData(state, ownProps.formName, {}),
     submitEnabled: isValid(ownProps.formName)(state) && !isSubmitting(ownProps.formName)(state),
   };
@@ -38,6 +40,8 @@ export default class WizardController extends Component {
     submitEnabled: bool,
     resetForm: func,
     onStepChange: func,
+    onNext: func,
+    onPrevious: func,
     formName: string.isRequired,
   };
 
@@ -100,24 +104,49 @@ export default class WizardController extends Component {
     });
   };
 
-  next = () => {
+  gotoNext = () => {
     const { currentStepIndex, steps } = this.props;
     const nextStep = steps[currentStepIndex + 1];
 
     this.goto(nextStep);
   };
 
+  next = () => {
+    const { currentStepIndex, steps, onNext } = this.props;
+    const nextStep = steps[currentStepIndex + 1];
+
+    this.gotoNext();
+    if (onNext) {
+      const args = {
+        from: steps[currentStepIndex],
+        to: nextStep,
+      };
+
+      onNext({ ...args });
+    }
+  };
+
   previous = () => {
-    const { set, progressPath, currentStepIndex } = this.props;
+    const { set, progressPath, currentStepIndex, onPrevious, steps } = this.props;
     let prevStepIndex = 0;
     if (currentStepIndex > 1) {
       prevStepIndex = progressPath.pop();
+      if (prevStepIndex > 1) {
+        prevStepIndex -= 1;
+      }
     }
 
     set({
       currentStepIndex: prevStepIndex,
       progressPath,
     });
+    if (onPrevious) {
+      const args = {
+        from: steps[currentStepIndex],
+        to: steps[prevStepIndex],
+      };
+      onPrevious({ ...args });
+    }
   };
 
   doSubmit = (params = {}) => {
@@ -167,7 +196,7 @@ export default class WizardController extends Component {
       return Promise.resolve(returnVal)
         .then(() => {
           if (!wasGotoCalled) {
-            return this.next();
+            return this.gotoNext();
           }
           return null;
         })
@@ -175,7 +204,7 @@ export default class WizardController extends Component {
           throw new SubmissionError({ _error: e.message });
         });
     }
-    this.next();
+    this.gotoNext();
 
     return null;
   };

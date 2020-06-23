@@ -2,20 +2,26 @@ import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { Link as RRLink } from 'react-router-dom';
 import { string, bool, object } from 'prop-types';
-import { ifNotProp, ifProp } from 'styled-tools';
+import { ifNotProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
+import { palette } from 'sly/web/components/themes';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { routes as routesPropType } from 'sly/web/propTypes/routes';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
-
-const getSize = type => p => size(type, p.size);
-const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
+import { withColor, withText, withSpacing, withDisplay, withBorder } from 'sly/web/components/helpers';
 
 export const styles = css`
-  color: ${getColor};
+  ${withDisplay}
+  ${withSpacing}
+  ${withText}
+  ${withBorder}
+  
+  &, &:active {
+    ${withColor} 
+  }
+  
   text-decoration: none;
 
   &:hover {
@@ -23,30 +29,18 @@ export const styles = css`
     cursor: pointer;
   }
 
-  &:active {
-    color: ${getColor};
-  }
-
+ 
   &:focus {
     outline: none;
   }
-  ${ifProp('size', css`
-    font-size: ${getSize('text')};
-  `)};
-
-  line-height: ${getSize('lineHeight')};
-
-  ${ifProp('weight', css`
-    font-weight: ${p => size('weight', p.weight)};
-  `)}
 `;
 
 // eslint-disable-next-line jsx-a11y/anchor-has-content
-export const Anchor = styled(({ noHoverColorChange, ...props }) => <a {...props} />)`
+export const Anchor = styled.a`
   ${styles};
 `;
 
-export const StyledLink = styled(({ noHoverColorChange, ...props }) => <RRLink {...props} />)`
+export const StyledLink = styled(RRLink)`
   ${styles};
 `;
 

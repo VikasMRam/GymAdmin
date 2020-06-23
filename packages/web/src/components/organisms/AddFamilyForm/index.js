@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import { size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { SOURCE_OPTIONS, TIME_TO_MOVE_OPTIONS, LOOKING_FOR_OPTIONS } from 'sly/web/constants/familyDetails';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import { Label, Hr, Span } from 'sly/web/components/atoms';
@@ -13,6 +12,7 @@ import ReduxField from 'sly/web/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const PaddedTwoColumnWrapper = pad(styled.div``, 'large');
 

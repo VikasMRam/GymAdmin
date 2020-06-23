@@ -2,14 +2,12 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { func } from 'prop-types';
+
 import HubHeader from 'sly/web/components/molecules/HubHeader';
 import PhoneCTAFooter from 'sly/web/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/web/components/molecules/NextSteps';
 import Tip from 'sly/web/components/molecules/Tip';
-
-
-import { getStateAbbr } from 'sly/web/services/helpers/url';
-import { size, palette, assetPath } from 'sly/web/components/themes';
+import { size } from 'sly/web/components/themes';
 import {
   HubPageTemplate,
   makeBody,
@@ -20,7 +18,7 @@ import {
   makeArticle,
   makeTable,
 } from 'sly/web/components/templates/HubPageTemplate';
-import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/web/components/atoms';
+import { Heading, Paragraph, Link } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 
 const StyledLink = styled(Link)`
@@ -37,10 +35,8 @@ const StyledArticle = makeArticle('article');
 const StyledTable = makeTable('table');
 
 const RespiteCareNearMePage = ({
-                              handleAnchor,
-                            }) => {
-
-
+  handleAnchor,
+}) => {
   const rcRef = React.createRef();
   const whyRef = React.createRef();
   const costRef = React.createRef();

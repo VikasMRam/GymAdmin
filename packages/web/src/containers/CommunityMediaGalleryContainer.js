@@ -1,11 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import loadable from '@loadable/component';
 
 import CommunityMediaGallery from 'sly/web/components/organisms/CommunityMediaGallery';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { prefetch } from 'sly/web/services/api';
 import { assetPath, getKey } from 'sly/web/components/themes';
+import withAuth from 'sly/web/services/api/withAuth';
+import withNotification from 'sly/web/controllers/withNotification';
+import withModal from 'sly/web/controllers/withModal';
+import {
+  NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED,
+  NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS,
+} from 'sly/web/constants/notifications';
+import { USER_SAVE_DELETE_STATUS } from 'sly/web/constants/userSave';
+import { COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
+
+
+const ShareCommunityFormContainer = loadable(() => import(/* webpackChunkName: "chunkShareCommunityFormContainer" */'sly/web/containers/ShareCommunityFormContainer'));
+const SaveCommunityContainer = loadable(() => import(/* webpackChunkName: "chunkSaveCommunityContainer" */'sly/web/containers/SaveCommunityContainer'));
+
+function getCommunityUserSave(community, userSaves) {
+  return (
+    userSaves &&
+    userSaves.find(
+      ({ entityType, entitySlug }) =>
+        entityType === COMMUNITY_ENTITY_TYPE && entitySlug === community.id
+    )
+  );
+}
+
+
+function isCommunityAlreadySaved(community, userSaves) {
+  const userSaveOfCommunity = getCommunityUserSave(community, userSaves);
+  return (
+    userSaveOfCommunity &&
+    userSaveOfCommunity.status !== USER_SAVE_DELETE_STATUS
+  );
+}
+
 
 // TODO: move this to common helper, used in multiple places
 const communityDefaultImages = {
@@ -41,14 +75,30 @@ function getImages({ gallery = {}, mainImage, propInfo = {} }) {
 }
 
 @withRouter
+@withAuth
+@withNotification
+@withModal
+
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.communitySlug,
   include: 'similar-communities,questions,agents',
 }))
+@prefetch('userSaves', 'getUserSaves', (req, { match }) =>
+  req({
+    'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
+    'filter[entity_slug]': match.params.communitySlug,
+  })
+)
 export default class CommunityMediaGalleryContainer extends React.Component {
   static typeHydrationId = 'CommunityMediaGalleryContainer';
   static propTypes = {
     community: PropTypes.object.isRequired,
+    userSaves: PropTypes.array,
+    ensureAuthenticated: PropTypes.func,
+    showModal: PropTypes.func,
+    hideModal: PropTypes.func,
+    notifyInfo: PropTypes.func,
+    notifyError: PropTypes.func,
   };
 
   state = {
@@ -100,8 +150,85 @@ export default class CommunityMediaGalleryContainer extends React.Component {
     });
   };
 
+  sendEvent = (action, category) =>
+    SlyEvent.getInstance().sendEvent({
+      action,
+      category,
+      label: this.props.community.id,
+    });
+
+  updateUserSave = (id, data) =>
+    this.props.ensureAuthenticated(
+      'Sign up to add to your favorites list',
+      api.updateOldUserSave.asAction({ id }, data)
+    );
+
+  handleFavouriteClick = () => {
+    const {
+      community,
+      showModal,
+      hideModal,
+      notifyInfo,
+      notifyError,
+      userSaves,
+    } = this.props;
+
+    if (isCommunityAlreadySaved(community, userSaves)) {
+      const userSaveToUpdate = getCommunityUserSave(community, userSaves);
+      this.updateUserSave(userSaveToUpdate.id, {
+        status: USER_SAVE_DELETE_STATUS,
+      })
+        .then(() => notifyInfo(NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS))
+        .catch(() =>
+          notifyError(NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED)
+        );
+
+      this.sendEvent('click', 'unsaveCommunity');
+    } else {
+      showModal(
+        <SaveCommunityContainer
+          slug={community.id}
+          onCancelClick={hideModal}
+          onDoneButtonClick={hideModal}
+          notifyInfo={notifyInfo}
+          notifyError={notifyError}
+        />,
+        null,
+        'letsmovetothismodaltypealltheothermodals',
+        false,
+      );
+
+      this.sendEvent('click', 'saveCommunity');
+    }
+  };
+
+  handleShareClick = () => {
+    const { showModal, hideModal, notifyInfo, community, user } = this.props;
+
+    const onSuccess = () => {
+      this.sendEvent('close-modal', 'shareCommunity');
+      hideModal();
+    };
+    const onClose = () => {
+      this.sendEvent('close-modal', 'shareCommunity');
+    };
+
+    showModal(
+      <ShareCommunityFormContainer
+        mainImage={community.mainImage}
+        fromEnabled={!user || !user.email}
+        communitySlug={community.id}
+        notifyInfo={notifyInfo}
+        onSuccess={onSuccess}
+      />,
+      onClose
+    );
+
+    this.sendEvent('click', 'shareCommunity');
+  };
+
   render() {
-    const { community } = this.props;
+    const { community, userSaves } = this.props;
     const { videoGallery = { videos: [] } } = community;
 
     const { isFullscreenActive, currentSlideIndex } = this.state;
@@ -119,6 +246,9 @@ export default class CommunityMediaGalleryContainer extends React.Component {
         isFullscreenMode={isFullscreenActive}
         onToggleFullscreenMode={this.handleToggleMediaGalleryFullscreen}
         typeCare={community.propInfo.typeCare}
+        isFavorited={isCommunityAlreadySaved(community, userSaves)}
+        onFavouriteClick={this.handleFavouriteClick}
+        onShareClick={this.handleShareClick}
       />
     );
   }

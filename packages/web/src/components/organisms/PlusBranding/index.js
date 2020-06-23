@@ -12,7 +12,7 @@ const TextWrapper = styled.div`
 `;
 
 const StyledHeading = styled(Heading)`
-  color: ${palette('secondary', 'dark35')};
+  color: ${palette('primary', 'base')};
   font-size: ${size('text.hero')};
   margin: ${size('spacing.large')};
   font-weight: ${size('weight.bold')};
@@ -102,7 +102,7 @@ export default class PlusBranding extends Component {
           </ImageWrapper>
           <TextWrapper>
             <StyledHeading>
-              <SeniorlyIcon icon="logo" palette="secondary" variation="dark35" size="xxLarge" />
+              <SeniorlyIcon icon="logo" palette="primary" variation="base" size="xxLarge" />
               <span>
                 &nbsp;seniorly&nbsp;<Italicize>plus</Italicize>
               </span>
@@ -113,13 +113,13 @@ export default class PlusBranding extends Component {
             </StyledText>
             <Paragraph>
               <IconItemWrapper>
-                <IconItem icon="verified" iconPalette="secondary" borderPalette="secondary" borderVariation="dark35" borderless={false}>Quality verified through in-person inspections</IconItem>
+                <IconItem icon="verified" iconPalette="primary" borderPalette="primary" borderVariation="base" borderless={false}>Quality verified through in-person inspections</IconItem>
               </IconItemWrapper>
               <IconItemWrapper>
-                <IconItem icon="house" iconPalette="secondary" borderPalette="secondary" borderVariation="dark35" borderless={false}>Access to thoughtfully designed suites and apartments</IconItem>
+                <IconItem icon="house" iconPalette="primary" borderPalette="primary" borderVariation="base" borderless={false}>Access to thoughtfully designed suites and apartments</IconItem>
               </IconItemWrapper>
               <IconItemWrapper>
-                <IconItem icon="phone" iconPalette="secondary" borderPalette="secondary" borderVariation="dark35" borderless={false}>Premium support during search and after the transition</IconItem>
+                <IconItem icon="phone" iconPalette="primary" borderPalette="primary" borderVariation="base" borderless={false}>Premium support during search and after the transition</IconItem>
               </IconItemWrapper>
             </Paragraph>
           </TextWrapper>

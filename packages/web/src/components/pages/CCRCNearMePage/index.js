@@ -267,10 +267,10 @@ const CCRCNearMePage = ({
           The Pros
         </Heading>
         <ListWrapper>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+          <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
             Social network and support from people with shared interests
           </ListItem>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+          <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
             All-inclusive maintenance-free living. Amenities vary, but often include:
           </ListItem>
           <ul>
@@ -317,16 +317,16 @@ const CCRCNearMePage = ({
               Lifelong learning programs
             </li>
           </ul>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+          <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
             Independent living
           </ListItem>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+          <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
             Easy access to medical services
           </ListItem>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+          <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
             Flexibility for spouses or partners who have differing care and medical needs
           </ListItem>
-          <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+          <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
             Peace of mind for families that family members are living a healthy, active life while being well cared for
           </ListItem>
         </ListWrapper>
@@ -335,22 +335,22 @@ const CCRCNearMePage = ({
           The Cons
         </Heading>
         <ListWrapper>
-          <ListItem icon="close" iconPalette="danger" iconVariation="dark35">
+          <ListItem icon="close" iconPalette="danger" iconVariation="dark">
             Many seniors don’t like showing the signs of aging and find it difficult to move on to other levels of care when needed
           </ListItem>
-          <ListItem icon="close" iconPalette="danger" iconVariation="dark35">
+          <ListItem icon="close" iconPalette="danger" iconVariation="dark">
             Getting adjusted to a new lifestyle in a new place
           </ListItem>
-          <ListItem icon="close" iconPalette="danger" iconVariation="dark35">
+          <ListItem icon="close" iconPalette="danger" iconVariation="dark">
             Stress that comes with making the big decision of going with a CCRC
           </ListItem>
-          <ListItem icon="close" iconPalette="danger" iconVariation="dark35">
+          <ListItem icon="close" iconPalette="danger" iconVariation="dark">
             The potential for financial risk and burden
           </ListItem>
-          <ListItem icon="close" iconPalette="danger" iconVariation="dark35">
+          <ListItem icon="close" iconPalette="danger" iconVariation="dark">
             High cost, entry fee, which can be problematic for older adults on a fixed income
           </ListItem>
-          <ListItem icon="close" iconPalette="danger" iconVariation="dark35">
+          <ListItem icon="close" iconPalette="danger" iconVariation="dark">
             The potential for dissatisfaction with amenities and services in the future
           </ListItem>
         </ListWrapper>

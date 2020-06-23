@@ -65,6 +65,7 @@ export default class DashboardCommunityPricingFormContainer extends Component {
     const initialValues = pick(
       status.community.result.attributes,
       [
+        'propInfo.ratesText',
         'propInfo.sharedSuiteRate',
         'propInfo.privateSuiteRate',
         'propInfo.studioApartmentRate',

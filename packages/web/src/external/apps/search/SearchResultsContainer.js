@@ -9,13 +9,13 @@ import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { prefetch } from 'sly/web/services/api';
 import { getPaginationData } from 'sly/web/services/helpers/pagination';
 import { getCitySearchUrl, getStateAbbr } from 'sly/web/services/helpers/url';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
 import pad from 'sly/web/components/helpers/pad';
 import shadow from 'sly/web/components/helpers/shadow';
 import { Block, Link, Button } from 'sly/web/components/atoms';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import Pagination from 'sly/web/components/molecules/Pagination';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const CenteredBlock = textAlign(Block);
 

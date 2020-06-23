@@ -50,7 +50,7 @@ const defaultProps = {
   status,
 };
 
-const title = 'My Profile';
+const title = 'Profile';
 const wrap = (props = {}) => shallow(<DashboardProfileUserDetailsForm handleSubmit={handleSubmit} title={title} {...defaultProps} {...props} />);
 
 describe('DashboardProfileUserDetailsForm', () => {

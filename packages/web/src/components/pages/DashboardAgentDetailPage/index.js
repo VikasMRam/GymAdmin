@@ -11,6 +11,7 @@ import {
   CONTACTS,
   ACTIVITY,
   MESSAGES,
+  PHOTOS,
   EMAILS,
 } from 'sly/web/constants/dashboardAppPaths';
 import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
@@ -21,7 +22,6 @@ import { size, palette } from 'sly/web/components/themes';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import pad from 'sly/web/components/helpers/pad';
 import { userIs } from 'sly/web/services/helpers/role';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/web/components/templates/DashboardTwoColumnTemplate';
 import { Box, Block, Icon, Link, Hr, Button } from 'sly/web/components/atoms';
@@ -33,6 +33,7 @@ import PartnerAgentProfileFormContainer from 'sly/web/containers/PartnerAgentPro
 import DashboardContactsSectionContainer from 'sly/web/containers/dashboard/DashboardContactsSectionContainer';
 import DashboardMyFamilyStickyFooterContainer from 'sly/web/containers/DashboardMyFamilyStickyFooterContainer';
 import DashboardMessagesContainer from 'sly/web/containers/DashboardMessagesContainer';
+import DashboardAgentPhotosFormContainer from 'sly/web/containers/dashboard/agents/DashboardAgentPhotosFormContainer';
 import ConversationMessagesContainer from 'sly/web/containers/ConversationMessagesContainer';
 import DashboardEmailsContainer from 'sly/web/containers/DashboardEmailsContainer';
 import AddNoteFormContainer from 'sly/web/containers/AddNoteFormContainer';
@@ -44,6 +45,7 @@ import withNotification from 'sly/web/controllers/withNotification';
 import SlyEvent from 'sly/web/services/helpers/events';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import conversationPropType from 'sly/web/propTypes/conversation/conversation';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const LargePaddingWrapper = styled.div`
   padding: ${size('spacing.large')};
@@ -235,8 +237,10 @@ export default class DashboardAgentDetailPage extends Component {
     const summaryPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: SUMMARY });
     const activitesPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: ACTIVITY });
     const agentDetailsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: AGENT_DETAILS });
+    const agentAdminPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: AGENT_DETAILS });
     const contactsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: CONTACTS });
     const messagesPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: MESSAGES });
+    const photosPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: PHOTOS });
     const emailsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: EMAILS });
 
     return {
@@ -245,6 +249,7 @@ export default class DashboardAgentDetailPage extends Component {
       agentDetailsPath,
       contactsPath,
       messagesPath,
+      photosPath,
       emailsPath,
     };
   };
@@ -257,6 +262,7 @@ export default class DashboardAgentDetailPage extends Component {
       agentDetailsPath,
       contactsPath,
       messagesPath,
+      photosPath,
       emailsPath,
     } = this.getTabPathsForUser();
 
@@ -278,6 +284,7 @@ export default class DashboardAgentDetailPage extends Component {
       { id: AGENT_DETAILS, to: agentDetailsPath, label: 'Agent Details' },
       { id: CONTACTS, to: contactsPath, label: 'Contacts' },
       { id: MESSAGES, to: messagesPath, label: 'Messages' },
+      { id: PHOTOS, to: photosPath, label: 'Photos' },
       { id: EMAILS, to: emailsPath, label: 'Emails' },
     ];
     let tabs = [summaryTab];
@@ -342,7 +349,8 @@ export default class DashboardAgentDetailPage extends Component {
   };
 
   render() {
-    const { agent, rawAgent, user, notes, currentTab, isLoading: agentIsLoading, selectedConversation, setSelectedConversation } = this.props;
+    const { agent, rawAgent, user, notes, currentTab, showModal, hideModal, notifyInfo, notifyError,
+      isLoading: agentIsLoading, selectedConversation, setSelectedConversation } = this.props;
     if (agentIsLoading) {
       return (
         <StyledDashboardTwoColumnTemplate activeMenuItem="Agents">
@@ -451,6 +459,15 @@ export default class DashboardAgentDetailPage extends Component {
               <LargePaddingWrapper>
                 <PartnerAgentProfileFormContainer title={agentName} user={user} agent={agent} rawAgent={rawAgent} isLoading={agentIsLoading} />
               </LargePaddingWrapper>
+            )}
+            {currentTab === PHOTOS && (
+              <DashboardAgentPhotosFormContainer
+                showModal={showModal}
+                hideModal={hideModal}
+                notifyInfo={notifyInfo}
+                notifyError={notifyError}
+                agent={agent}
+              />
             )}
 
             {currentTab === CONTACTS && (

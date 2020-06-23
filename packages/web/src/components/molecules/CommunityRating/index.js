@@ -75,9 +75,9 @@ CommunityRating.propTypes = {
 };
 
 CommunityRating.defaultProps = {
-  size: 'subtitle',
-  palette: 'secondary',
-  variation: 'dark35',
+  size: 'body',
+  palette: 'primary',
+  variation: 'base',
 };
 
 export default CommunityRating;

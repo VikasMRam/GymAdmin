@@ -3,15 +3,15 @@ import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import cursor from 'sly/web/components/helpers/cursor';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import { Heading, Button, Block, Span, Hr } from 'sly/web/components/atoms';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
+import { textAlign } from 'sly/web/components/helpers/text';
 
-const StyledHeading = pad(textAlign(Heading), 'regular');
+const StyledHeading = pad(Heading, 'regular');
 
-const Description = pad(textAlign(Block));
+const Description = pad(Block);
 
 const FullWidthButton = fullWidth(Button);
 FullWidthButton.displayName = 'FullWidthButton';

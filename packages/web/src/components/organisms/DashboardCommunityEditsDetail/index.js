@@ -5,7 +5,6 @@ import { generatePath } from 'react-router';
 
 import { size, palette, columnWidth } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import {
   Block,
   Button,
@@ -25,6 +24,7 @@ import {
 } from 'sly/web/constants/dashboardAppPaths';
 import communityPropType from 'sly/web/propTypes/community';
 import * as editConfig from 'sly/web/services/edits/constants/community';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';

@@ -1,24 +1,15 @@
 import styled, { css } from 'styled-components';
-import { ifProp } from 'styled-tools';
-import { string } from 'prop-types';
 
 import { size } from 'sly/web/components/themes';
 
-const spacing = ({ pad }) => size('spacing', pad);
-export const withPad = (Component) => {
-  const WithPad = styled(Component)`
-    ${ifProp('pad', css`
-      margin-bottom: ${spacing};
-    `)}
+export const withPad = ({ pad } = {}) => {
+  if (!pad) {
+    return null;
+  }
+
+  return css` 
+    margin-bottom: ${size('spacing', pad)};
   `;
-  WithPad.displayName = `withPad(${Component.displayName || Component.name})`;
-  WithPad.propTypes = {
-    pad: string,
-  };
-  WithPad.defaultProps = {
-    pad: null,
-  };
-  return WithPad;
 };
 
 const pad = (Component, which = 'xLarge') => styled(Component)`

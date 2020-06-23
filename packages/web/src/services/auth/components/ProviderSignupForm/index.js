@@ -5,12 +5,11 @@ import styled from 'styled-components';
 
 import { size, palette } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
-import { Heading, Button, Block, Hr, Link } from 'sly/web/components/atoms';
+import { textAlign } from 'sly/web/components/helpers/text';
+import { Heading, Button, Block, Link } from 'sly/web/components/atoms';
 
-
-const StyledHeading = textAlign(pad(Heading));
+const StyledHeading = pad(Heading);
 StyledHeading.displayName = 'StyledHeading';
 
 const StyledButton = styled(Button)`

@@ -11,7 +11,7 @@ const TipBox = ({
   heading, children, className,
 }) => (
   <Box palette="grey" backgroundPalette="grey" backgroundVariation="background" className={className}>
-    <PaddedBlock weight="bold" size="tiny" palette="secondary" variation="dark35">{heading}</PaddedBlock>
+    <PaddedBlock weight="bold" size="tiny" palette="primary" variation="base">{heading}</PaddedBlock>
     {children}
   </Box>
 );

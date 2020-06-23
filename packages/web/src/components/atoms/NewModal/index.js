@@ -6,8 +6,8 @@ import { any, func, bool } from 'prop-types';
 
 import { isBrowser } from 'sly/web/config';
 import { size, palette, key } from 'sly/web/components/themes';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import IconButton from 'sly/web/components/molecules/IconButton';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const Overlay = styled.div`
   display: ${ifProp('isOpen', 'flex', 'none')};
@@ -52,7 +52,6 @@ export const HeaderWithClose = ({ onClose }) => (
   <Head>
     <IconButton
       icon="close"
-      iconSize="regular"
       palette="slate"
       onClick={onClose}
       transparent
@@ -72,6 +71,7 @@ let instanceNumber = 0;
 // to update the Stages
 // FIXME: more than one modal are currently possible, we have to mimic the mechanism used in react-modal
 export default class NewModal extends Component {
+  static typeHydrationId = 'NewModal';
   overlayRef = React.createRef();
 
   constructor(props) {

@@ -75,7 +75,7 @@ const Rating = ({ palette, variation, fillVariation, value, innerRef, size, ...p
 );
 
 Rating.propTypes = {
-  size: oneOf(['small', 'regular']),
+  size: oneOf(['tiny', 'body']),
   innerRef: object,
   value: number.isRequired,
   palette: palettePropType,
@@ -84,7 +84,7 @@ Rating.propTypes = {
 };
 
 Rating.defaultProps = {
-  size: 'regular',
+  size: 'body',
   palette: 'primary',
   variation: 'base',
   fillVariation: 'filler',

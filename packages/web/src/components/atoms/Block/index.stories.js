@@ -18,4 +18,35 @@ storiesOf('Atoms|Block', module)
     <Block palette="primary" variation="filler">
       Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
     </Block>
+  ))
+  .add('sizes', () => (
+    <>
+      <Block size="micro">
+        Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+      </Block>
+      <Block size="tiny">
+        Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+      </Block>
+      <Block size="caption">
+        Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+      </Block>
+      <Block size="body">
+        Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+      </Block>
+      <Block size="body" weight="medium">
+        Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+      </Block>
+      <Block size="subtitle">
+        Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+      </Block>
+      <Block size="title">
+        Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+      </Block>
+      <Block size="hero">
+        Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+      </Block>
+      <Block size="superHero">
+        Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+      </Block>
+    </>
   ));

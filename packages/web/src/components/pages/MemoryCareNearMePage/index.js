@@ -11,9 +11,8 @@ import ADLChart from 'sly/web/components/molecules/ADLChart';
 import Tip from 'sly/web/components/molecules/Tip';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
 import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer'
-
 import { getStateAbbr } from 'sly/web/services/helpers/url';
-import { size, palette, assetPath } from 'sly/web/components/themes';
+import { size } from 'sly/web/components/themes';
 import {
   HubPageTemplate,
   makeBody,
@@ -25,7 +24,7 @@ import {
   makeTable,
   makeOneColumnListWrapper,
 } from 'sly/web/components/templates/HubPageTemplate';
-import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/web/components/atoms';
+import { ResponsiveImage, Heading, Paragraph, Link, Box } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import { getTocSeoLabel } from 'sly/web/services/helpers/search';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
@@ -402,28 +401,28 @@ const MemoryCareNearMePage = ({
             Senior residents in memory care typically receive the following types of services:
           </Paragraph>
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               All meals, either in their rooms or in a shared dining hall
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Housekeeping services to keep their living space clean and safe
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Social activities designed to stimulate their minds and keep them connected
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Transportation to doctor's offices and other appointments
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Comfortable rooms, which may be private or shared
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               All laundry services, including fresh linens
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Exercise programs and physical therapy when needed
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Cognitive therapy
             </ListItem>
           </ListWrapper>
@@ -566,25 +565,25 @@ const MemoryCareNearMePage = ({
             Among the issues covered in the written plan for any resident's medical care are typically:
           </Paragraph>
           <ListWrapper>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               A customized approach to expression of unmet needs
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
               Minimal use of psychotropic medications
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
           Flexible care based on the resident's personal sleeping and waking patterns
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
           Provision of care for optimal physical functioning
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
           Activities that promote quality of life and enjoyment
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
           Meeting of all nutrition and hydration needs
             </ListItem>
-            <ListItem icon="checkmark-circle" iconPalette="secondary" iconVariation="dark35">
+            <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
           Minimizing of any distress
             </ListItem>
           </ListWrapper>

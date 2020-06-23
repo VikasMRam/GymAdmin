@@ -73,7 +73,7 @@ export default class DashboardCallDetailsPage extends Component {
 
     if (!voiceCall) {
       return (
-        <DashboardTwoColumnTemplate activeMenuItem="My Families">
+        <DashboardTwoColumnTemplate activeMenuItem="Families">
           Loading...
         </DashboardTwoColumnTemplate>
       );

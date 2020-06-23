@@ -11,6 +11,8 @@ import { withPad } from 'sly/web/components/helpers/pad';
 const getSize = p => size('text', p.size);
 
 const Wrapper = styled.nav`
+  ${withPad}
+  
   ol {
     display: block;
     list-style-type: none;
@@ -30,7 +32,7 @@ const Wrapper = styled.nav`
   }
 `;
 
-const BreadCrumb = withPad(({ items, innerRef, size, ...props }) => (
+const BreadCrumb = ({ items, innerRef, size, ...props }) => (
   <Wrapper ref={innerRef} size={size} {...props}>
     <ol itemScope itemType="http://schema.org/BreadcrumbList">
       {
@@ -60,7 +62,7 @@ const BreadCrumb = withPad(({ items, innerRef, size, ...props }) => (
       }
     </ol>
   </Wrapper>
-));
+);
 
 BreadCrumb.propTypes = {
   items: arrayOf(shape({
@@ -70,12 +72,10 @@ BreadCrumb.propTypes = {
   })).isRequired,
   innerRef: object,
   size: textPropType,
-  pad: string,
 };
 
 BreadCrumb.defaultProps = {
   size: 'tiny',
-  pad: null,
 };
 
 export default BreadCrumb;

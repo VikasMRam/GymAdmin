@@ -8,11 +8,11 @@ import { assetPath } from 'sly/web/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
 import pad from 'sly/web/components/helpers/pad';
-import textDecoration from 'sly/web/components/helpers/textDecoration';
 import withNotification from 'sly/web/controllers/withNotification';
 import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
 import ImportantCovid19UpdatesStepContainer from 'sly/web/containers/ImportantCovid19UpdatesStepContainer';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
+import { textDecoration } from 'sly/web/components/helpers/text';
 
 const PaddedBannerNotification = pad(BannerNotification, 'large');
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { sortableElement, sortableHandle } from 'react-sortable-hoc';
+import { bool, func } from 'prop-types';
 
 import S3Uploader from './S3Uploader';
 
@@ -8,7 +9,6 @@ import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import { imagePropType } from 'sly/web/propTypes/gallery';
 import Icon from 'sly/web/components/atoms/Icon';
 import { size, palette } from 'sly/web/components/themes';
-import { bool, func } from 'prop-types';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import HelpBubble from 'sly/web/components/form/HelpBubble';
 
@@ -56,19 +56,6 @@ export default class MediaItem extends React.Component {
     disabled: bool,
   };
 
-  onFinish = (result, file) => {
-    const { image, saveImage } = this.props;
-    saveImage({
-      ...image,
-      attributes: {
-        ...image.attributes,
-        name: file.name,
-        path: result.path,
-      },
-      // original image
-    }, image);
-  };
-
   render() {
     const { image, isNew, deleteImage, saveImage, disabled, ...props } = this.props;
     const imgPath = image.attributes.path || 'react-assets/img-placeholder.png';
@@ -89,14 +76,6 @@ export default class MediaItem extends React.Component {
           {isNew && <HelpBubble>This image is new</HelpBubble>}
           {image.attributes.path &&
             image.attributes.name
-          }
-          {!image.attributes.path &&
-            <S3Uploader
-              uploadRequestHeaders={{}}
-              getSignedUrl={getSignedUrl}
-              onError={this.onError}
-              onFinish={this.onFinish}
-            />
           }
         </Info>
         <RemoveButton icon="trash" palette="grey" transparent onClick={() => deleteImage(image)} disabled={disabled} />

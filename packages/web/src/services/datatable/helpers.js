@@ -149,3 +149,8 @@ export const getCommunityAutocompleteValues =  items => items.map((item) => {
     label,
   };
 });
+
+export const getUserAutocompleteValues =  items => items.map(({ id, name }) => ({
+  label: name,
+  value: id,
+}));

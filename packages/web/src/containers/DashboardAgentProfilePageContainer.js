@@ -41,7 +41,7 @@ export default class DashboardAgentProfilePageContainer extends Component {
       ([agent] = agents);
       ([rawAgent] = result);
     }
-    return <DashboardAgentProfilePage user={user} agent={agent} rawAgent={rawAgent} isLoading={isLoading} title="My Profile" />;
+    return <DashboardAgentProfilePage user={user} agent={agent} rawAgent={rawAgent} isLoading={isLoading} title="Profile" />;
   }
 }
 

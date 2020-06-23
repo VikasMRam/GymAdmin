@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import { bool, string } from 'prop-types';
+import { bool, string, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
@@ -26,7 +26,7 @@ const StyledIcon = styled(Icon)`
 const Rate = styled(Block)`
   margin-right: ${size('spacing.large')};
   margin-bottom: 0;
-  line-height: ${size('lineHeight.minimal')};
+  line-height: ${size('lineHeight.micro')};
 `;
 
 const TopWrapper = styled(Block)`
@@ -65,6 +65,7 @@ export default class CommunityInfo extends Component {
     palette: palettePropType,
     className: string,
     headerIsLink: bool,
+    event: object,
   };
 
   static defaultProps = {
@@ -72,7 +73,7 @@ export default class CommunityInfo extends Component {
   };
 
   render() {
-    const { community, inverted, showFloorPlan, showDescription, palette, className, headerIsLink } = this.props;
+    const { community, inverted, showFloorPlan, showDescription, palette, className, headerIsLink, event } = this.props;
     const { webViewInfo, floorPlanString, propInfo = {}, propRatings, mainService } = community;
 
     const address = getAddress(community);
@@ -126,7 +127,7 @@ export default class CommunityInfo extends Component {
 
     const header = headerIsLink
       ? (
-        <Link href={community.url}>
+        <Link href={community.url} event={event}>
           {headerContent}
         </Link>
       ) : headerContent;
@@ -138,11 +139,11 @@ export default class CommunityInfo extends Component {
         {header}
         <TopWrapper>
           {community.startingRate ? (
-            <Rate palette={palette || (inverted ? 'white' : 'secondary')} variation={inverted ? 'base' : 'dark35'} weight="medium">
+            <Rate palette={palette || (inverted ? 'white' : 'primary')} variation="base" weight="medium">
               {`${community.estimated ? 'Estimated ' : ''}${communityStartingRate}/month`}
             </Rate>
           ) : null }
-          <CommunityRating rating={reviewsValue} numReviews={numReviews} palette={inverted ? 'white' : 'secondary'} variation={inverted ? 'base' : 'dark35'} numReviewsPalette={inverted ? 'white' : 'slate'} size={reviewsValue > 0 ? 'caption' : 'tiny'} />
+          <CommunityRating rating={reviewsValue} numReviews={numReviews} palette={inverted ? 'white' : 'primary'} variation="base" numReviewsPalette={inverted ? 'white' : 'slate'} size={reviewsValue > 0 ? 'caption' : 'tiny'} />
         </TopWrapper>
         {address && (
           <IconTextWrapper>

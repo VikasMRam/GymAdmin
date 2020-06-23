@@ -8,6 +8,12 @@ import FileField from 'sly/web/components/molecules/FileField';
 
 /* eslint-disable */
 
+const getSignedUrl = (file, callback) => {
+  return fetch(`/v0/platform/uploads/s3-signed-url?file=${encodeURIComponent(file.name)}`)
+    .then(result => result.json())
+    .then(callback);
+};
+
 // http://stackoverflow.com/a/24608023/194065
 function clearInputFile(f) {
   if (f.value) {
@@ -25,10 +31,9 @@ function clearInputFile(f) {
   }
 }
 
-export default class ReactS3Uploader extends React.Component {
+export default class S3Uploader extends React.Component {
   static propTypes = {
     signingUrl: PropTypes.string,
-    getSignedUrl: PropTypes.func,
     preprocess: PropTypes.func,
     onSignedUrl: PropTypes.func,
     onProgress: PropTypes.func,
@@ -103,7 +108,7 @@ export default class ReactS3Uploader extends React.Component {
     this.myUploader = new S3Upload({
       fileElement: this.ref.current,
       signingUrl: this.props.signingUrl,
-      getSignedUrl: this.props.getSignedUrl,
+      getSignedUrl,
       preprocess: this.preprocess,
       onSignedUrl: this.props.onSignedUrl,
       onProgress: this.progress,
@@ -131,7 +136,7 @@ export default class ReactS3Uploader extends React.Component {
 
   getInputProps = () => {
     // declare ref beforehand and filter out
-    // `inputRef` by `ReactS3Uploader.propTypes`
+    // `inputRef` by `S3Uploader.propTypes`
     const additional = {
       type: 'file',
       ref: this.ref,
@@ -144,7 +149,7 @@ export default class ReactS3Uploader extends React.Component {
     const temporaryProps = objectAssign({}, this.props, additional);
     const inputProps = {};
 
-    const invalidProps = Object.keys(ReactS3Uploader.propTypes);
+    const invalidProps = Object.keys(S3Uploader.propTypes);
 
     Object.keys(temporaryProps).forEach((key) => {
       if (invalidProps.indexOf(key) === -1) {
@@ -156,8 +161,14 @@ export default class ReactS3Uploader extends React.Component {
   };
 
   render = () => {
-    const { fileName, percent } = this.state;
-    return <FileField fileName={fileName} percent={percent} {...this.getInputProps()} />;
+    const { trigger, percent } = this.state;
+    return (
+      <FileField
+        trigger={trigger}
+        percent={percent}
+        {...this.getInputProps()}
+      />
+    );
   };
 }
 

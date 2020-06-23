@@ -6,13 +6,13 @@ import styled from 'styled-components';
 import { size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import cursor from 'sly/web/components/helpers/cursor';
 import HrWithText from 'sly/web/components/molecules/HrWithText';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { Heading, Button, Block, Icon } from 'sly/web/components/atoms';
 import { AGENT_ND_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const StyledHeading = textAlign(pad(Heading));
 

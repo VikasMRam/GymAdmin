@@ -40,8 +40,8 @@ const CommunityAddRatingForm = ({
         name="value"
         label=""
         type="rating"
-        palette="secondary"
-        variation="dark35"
+        palette="primary"
+        variation="base"
         component={ReduxField}
       />
       <Field

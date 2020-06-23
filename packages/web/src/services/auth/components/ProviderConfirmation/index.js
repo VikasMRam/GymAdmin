@@ -13,7 +13,6 @@ import {
 const Wrapper = styled.div`
   text-align: center;
 `;
-const StyledIcon = pad(Icon, 'large');
 const StyledHeading = pad(Heading, 'large');
 const FullWidthButton = fullWidth(Button);
 const LargePaddedFullWidthButton = pad(FullWidthButton, 'large');

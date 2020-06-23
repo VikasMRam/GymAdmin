@@ -27,7 +27,6 @@ import { newUuidAction } from 'sly/web/constants/payloads/uuidAction';
 import { CONVERSATION_MESSAGE_BUTTONLIST_BUTTON_CLICKED } from 'sly/web/services/api/constants';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import withWS from 'sly/web/services/ws/withWS';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import fullHeight from 'sly/web/components/helpers/fullHeight';
 import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
@@ -46,6 +45,7 @@ import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import BackLink from 'sly/web/components/molecules/BackLink';
 import SendMessageFormContainer from 'sly/web/containers/SendMessageFormContainer';
 import { getConversationName } from 'sly/web/services/helpers/conversation';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const categoryName = 'conversation-messages';
 

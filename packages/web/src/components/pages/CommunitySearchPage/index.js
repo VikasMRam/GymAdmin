@@ -166,8 +166,8 @@ const CommunitySearchPage = ({
                   ) : (
                     <>
                       <Image src={assetPath('images/map-placeholder.png')} />
-                      <IconButton icon="map" iconSize="regular" to={mapViewUrl} iconPalette="primary" ghost>
-                      View Map
+                      <IconButton icon="map" iconSize="body" to={mapViewUrl} iconPalette="primary" ghost>
+                        View Map
                       </IconButton>
                     </>
                 )}
@@ -202,7 +202,7 @@ const CommunitySearchPage = ({
             </IconButton>
           )}
           {!isMapView && (
-            <IconButton icon="map" iconSize="regular" ghost transparent to={mapViewUrl}>
+            <IconButton icon="map" iconSize="body" ghost transparent to={mapViewUrl}>
               View Map
             </IconButton>
           )}

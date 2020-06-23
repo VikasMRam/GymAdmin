@@ -51,10 +51,6 @@ const InfoContentWrapper = styled.div`
   }
 `;
 
-export const StyledIcon = styled(Icon)`
-  margin-right: ${size('spacing.xLarge')};
-`;
-
 const HeadingWrapper = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
 `;

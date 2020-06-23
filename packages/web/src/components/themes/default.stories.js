@@ -58,9 +58,10 @@ const Color = styled.div`
   }
 `;
 
-const types = ['dark35', 'dark', 'base', 'filler', 'stroke', 'background'];
+const types = ['darker-30', 'darker-15', 'base', 'lighter-30', 'lighter-60', 'lighter-90', 'lighter-95'];
 
 const pickColors = colors => types.reduce((cumul, type) => {
+  console.log('colors', colors);
   // eslint-disable-next-line no-param-reassign
   cumul[type] = colors[type];
   return cumul;

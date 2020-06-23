@@ -153,7 +153,7 @@ const StateSearchPage = ({
               {!isMapView &&
               <>
                 <StyledImage path="react-assets/map-placeholder.png" aspectRatio="16:9" />
-                <IconButton icon="map" iconSize="regular" to={mapViewUrl} iconPalette="primary" ghost>
+                <IconButton icon="map" iconSize="body" to={mapViewUrl} iconPalette="primary" ghost>
                   View Map
                 </IconButton>
               </>
@@ -176,7 +176,7 @@ const StateSearchPage = ({
             </IconButton>
           )}
           {!isMapView && (
-            <IconButton icon="map" iconSize="regular" ghost transparent to={mapViewUrl}>
+            <IconButton icon="map" iconSize="body" ghost transparent to={mapViewUrl}>
               View Map
             </IconButton>
           )}

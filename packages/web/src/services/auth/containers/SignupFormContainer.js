@@ -8,7 +8,7 @@ import { createValidator, required, email, minLength } from 'sly/web/services/va
 import SignupForm from 'sly/web/services/auth/components/SignupForm';
 
 const validate = createValidator({
-  name: [required],
+  firstName: [required],
   email: [required, email],
   password: [required, minLength(8)],
 });
@@ -36,19 +36,24 @@ export default class SignupFormContainer extends Component {
 
   handleSubmit = (data) => {
     const { registerUser, clearSubmitErrors, onSubmit } = this.props;
+    data = { ...data, name: `${data.firstName}${data.lastName ? ` ${data.lastName}` : ''}` };
+
     clearSubmitErrors();
     return registerUser(data)
       .then(onSubmit)
       .catch((data) => {
-      // TODO: Need to set a proper way to handle server side errors
-      const errorMessage = Object.values(data.body.errors).join('. ');
-      throw new SubmissionError({ _error: errorMessage });
-    });
+        // TODO: Need to set a proper way to handle server side errors
+        const errorMessage = Object.values(data.body.errors).join('. ');
+        throw new SubmissionError({ _error: errorMessage });
+      });
   };
 
   render() {
-    return <ReduxForm
-      {...this.props}
-      onSubmit={this.handleSubmit}  />;
+    return (
+      <ReduxForm
+        {...this.props}
+        onSubmit={this.handleSubmit}
+      />
+    );
   }
 }

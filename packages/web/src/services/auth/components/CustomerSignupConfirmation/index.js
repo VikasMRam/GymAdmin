@@ -18,15 +18,15 @@ const LargePaddedFullWidthButton = pad(FullWidthButton, 'large');
 export default class CustomerSignupConfirmation extends Component {
   static propTypes = {
     onSubmit: func,
-    user: object
+    user: object,
   };
 
   render() {
     const { onSubmit, user } = this.props;
     return (
       <Wrapper>
-         <StyledIcon icon="round-checkmark" palette="secondary" variation="dark35" size="large" />
-         <StyledHeading> Welcome {user ? user.name : ''}</StyledHeading>
+        <StyledIcon icon="round-checkmark" palette="primary" variation="base" size="large" />
+        <StyledHeading> Welcome {user ? user.name : ''}</StyledHeading>
         <Paragraph> Your account is all set up </Paragraph>
         <LargePaddedFullWidthButton onClick={onSubmit}>Continue</LargePaddedFullWidthButton>
       </Wrapper>

@@ -58,7 +58,7 @@ const StyledNameCell = styled(({ disabled, seniorlySourced, client, to, ...props
           </Link>
         </ClampedText>
         { disabled && <Icon icon="pause" palette="danger" size="caption" />}
-        { seniorlySourced && <Icon icon="logo" palette="secondary" size="caption" />}
+        { seniorlySourced && <Icon icon="logo" palette="primary" size="caption" />}
       </ClampedTextWrapper>
     </Td>
   );

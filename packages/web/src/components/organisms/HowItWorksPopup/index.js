@@ -5,11 +5,11 @@ import { func } from 'prop-types';
 import { size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { Button, Heading, Block, Link } from 'sly/web/components/atoms';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
 import ListItem from 'sly/web/components/molecules/ListItem';
 import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const PaddedHowSlyWorksVideo = pad(HowSlyWorksVideoContainer);
 PaddedHowSlyWorksVideo.displayName = 'PaddedHowSlyWorksVideo';

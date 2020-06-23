@@ -4,10 +4,10 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { size, assetPath, palette } from 'sly/web/components/themes';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { Button, Block, Heading } from 'sly/web/components/atoms';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const Wrapper = styled.div`
   display: grid;

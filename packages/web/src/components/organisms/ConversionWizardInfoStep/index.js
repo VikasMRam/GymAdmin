@@ -29,7 +29,7 @@ const ConversionWizardInfoStep = ({ heading, description, buttons, points }) => 
     <PaddedHeading size="subtitle" weight="medium">{heading}</PaddedHeading>
     <PaddedBlock weight="medium">{description}</PaddedBlock>
     <PointsWrapper>
-      {points.map(p => <ListItem iconPalette="secondary" iconVariation="dark" icon="checkmark-circle" key={p}>{p}</ListItem>)}
+      {points.map(p => <ListItem iconPalette="primary" iconVariation="base" icon="checkmark-circle" key={p}>{p}</ListItem>)}
     </PointsWrapper>
     <ButtonWrapper>
       {buttons.map(b => <Button {...b.props} ghost key={b.text}>{b.text}</Button>)}
