@@ -23,6 +23,11 @@ import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
 import { blacklist as editConfigBlacklist } from 'sly/web/services/edits/constants/community';
 import { EditContext } from 'sly/web/services/edits';
 
+const activityPath = id => generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, {
+  id,
+  tab: PROFILE,
+});
+
 @withNotification
 @withModal
 @withUser
@@ -133,13 +138,13 @@ export default class DashboardCommunityDetailsPageContainer extends Component {
       suggestedEdits,
     } = this.props;
 
+    if (!user) {
+      return null;
+    }
+
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && community && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
-      const activityPath = generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, {
-        id: community.id,
-        tab: PROFILE,
-      });
-      return <Redirect to={activityPath} />;
+      return <Redirect to={activityPath(community.id)} />;
     }
 
     const currentEdit = this.selectEdit();

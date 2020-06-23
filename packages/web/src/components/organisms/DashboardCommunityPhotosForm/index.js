@@ -8,6 +8,8 @@ import IconButton from 'sly/web/components/molecules/IconButton';
 import HelpBubble from 'sly/web/components/form/HelpBubble';
 import { Section, SectionHeader, SectionSortable } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import S3Uploader from 'sly/web/services/s3Uploader/components/S3Uploader';
+import NewModal from 'sly/web/components/atoms/NewModal';
+import EditImageModal from 'sly/web/services/s3Uploader/components/EditImageModal';
 
 const genKey = ((cache = {}) => (image) => {
   // check if our key exists
@@ -39,6 +41,22 @@ export default class DashboardCommunityPhotosForm extends Component {
     changes: object,
   };
 
+  state = {
+    editingImage: null,
+  };
+
+  editImage = (image) => {
+    this.setState({
+      editingImage: image,
+    });
+  };
+
+  stopEditing = () => {
+    this.setState({
+      editingImage: null,
+    });
+  }
+
   render() {
     const {
       onUpload, onUploadError, onSortEnd, saveImage, deleteImage, canEdit, images, changes,
@@ -65,31 +83,39 @@ export default class DashboardCommunityPhotosForm extends Component {
     const isNew = image => (changes?.newImages || []).includes(image);
 
     return (
-      <Section>
-        {deletedMessage && (
-          <HelpBubble
-            trigger="This images were deleted"
-          >
-            {deletedMessage}
-          </HelpBubble>
-        )}
-        <SectionHeader actions={actions}>
-          Images
-        </SectionHeader>
-        <SectionSortable useDragHandle onSortEnd={onSortEnd}>
-          {images && images.map((image, i) => (
-            <MediaItem
-              key={`item-${image.attributes?.path || genKey(image)}`}
-              saveImage={saveImage}
-              deleteImage={deleteImage}
-              image={image}
-              index={i}
-              isNew={isNew(image)}
-              disabled={!canEdit}
-            />
-          ))}
-        </SectionSortable>
-      </Section>
+      <>
+        <EditImageModal
+          image={this.state.editingImage}
+          saveImage={saveImage}
+          canEdit={canEdit}
+          onClose={this.stopEditing}
+        />
+        <Section>
+          {deletedMessage && (
+            <HelpBubble
+              trigger="This images were deleted"
+            >
+              {deletedMessage}
+            </HelpBubble>
+          )}
+          <SectionHeader actions={actions}>
+            Images
+          </SectionHeader>
+          <SectionSortable useDragHandle onSortEnd={onSortEnd}>
+            {images && images.map((image, i) => (
+              <MediaItem
+                key={`item-${image.attributes?.path || genKey(image)}`}
+                editImage={this.editImage}
+                deleteImage={deleteImage}
+                image={image}
+                index={i}
+                isNew={isNew(image)}
+                disabled={!canEdit}
+              />
+            ))}
+          </SectionSortable>
+        </Section>
+      </>
     );
   }
 }

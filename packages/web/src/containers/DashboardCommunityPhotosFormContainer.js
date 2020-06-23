@@ -206,7 +206,7 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
       image,
       ...images.slice(index + 1),
     ];
-    this.updateCommunityImages(newImages);
+    return this.updateCommunityImages(newImages);
   };
 
   deleteImage = (image) => {

@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import styled from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
-import { any, func, bool } from 'prop-types';
+import { any, func, bool, element } from 'prop-types';
 
 import { isBrowser } from 'sly/web/config';
 import { size, palette, key } from 'sly/web/components/themes';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import { textAlign } from 'sly/web/components/helpers/text';
+import Heading from 'sly/web/components/atoms/Heading';
+import Block from 'sly/web/components/atoms/Block';
 
 const Overlay = styled.div`
   display: ${ifProp('isOpen', 'flex', 'none')};
@@ -38,18 +40,27 @@ const Modal = styled.div`
   }
 `;
 
-const Head = textAlign(styled.div`
-  padding: ${size('spacing.large')};
-  padding-bottom: ${size('spacing.regular')};
-`, 'right');
+const Head = styled.div`
+  display: flex;
+  padding: ${size('spacing.xLarge')};
+  
+  ${Heading} {
+    margin: 0;
+    flex-grow: 1;
+  }
+  ${IconButton} {
+    flex-grow: 0;
+  }
+`;
 
 export const PaddedHeaderWithCloseBody = styled.div`
   padding: ${size('spacing.xxLarge')};
   padding-top: 0;
 `;
 
-export const HeaderWithClose = ({ onClose }) => (
+export const HeaderWithClose = ({ children, onClose }) => (
   <Head>
+    <Heading level="subtitle">{children}</Heading>
     <IconButton
       icon="close"
       palette="slate"
@@ -60,7 +71,23 @@ export const HeaderWithClose = ({ onClose }) => (
 );
 
 HeaderWithClose.propTypes = {
+  children: element,
   onClose: func,
+};
+
+export const ModalBody = styled(Block)``;
+ModalBody.defaultProps = {
+  padding: 'xLarge',
+};
+
+export const ModalActions = styled(Block)`
+  > * {
+    margin-left: ${size('spacing.large')};
+  }
+`;
+ModalActions.defaultProps = {
+  padding: [0, 'xLarge', 'xLarge'],
+  align: 'right',
 };
 
 const PORTAL_ELEMENT_CLASS = 'modal-portal';
