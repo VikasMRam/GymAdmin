@@ -42,7 +42,7 @@ describe('Review Community', () => {
 
       const commentText = `my comments ${randHash()}`;
 
-      portal('h2').contains(`Write a review for ${community.name}`).should('exist');
+      waitForHydration(portal('h2').contains(`Write a review for ${community.name}`).should('exist'));
       portal('.Rating.Star:nth-of-type(4)').click();
       portal('textarea[name="comments"]').type(commentText);
       portal('input[name="name"]').type('Fonz');
@@ -88,11 +88,20 @@ describe('Review Community', () => {
 
       portal('#close').click();
 
+      cy.wait(3000);
+
       cy.request('POST', '/v0/platform/auth/login', user)
         .then(() => cy.visit(`/rating/${ratedId}/approve`));
+ 
+      
+       cy.get('div[class*="AuthContainer__ModalBody"]').within(()=>{
+           cy.get('input[name="email"]').type("slytest+admin@seniorly.com");
+           cy.get('input[name="password"]').type("nopassword");
+           cy.get('button').contains("Log in").click();
+       });
 
+      
       cy.get('div').contains('Status: Success').should('exist');
-
       cy.request('DELETE', '/v0/platform/auth/logout');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
 
