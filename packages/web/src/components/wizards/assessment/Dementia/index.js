@@ -8,14 +8,14 @@ import { DEMENTIA_FORGETFUL_OPTIONS, DEMENTIA_FORGETFUL_DEFAULT_OPTIONS } from '
 import pad from 'sly/web/components/helpers/pad';
 import { getLabelForWhoPersonOption } from 'sly/web/components/wizards/assessment/helpers';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
-import { Heading, Box } from 'sly/web/components/atoms';
+import { Heading, Box, Block } from 'sly/web/components/atoms';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 
 const PaddedProgressBar = pad(ProgressBar);
 
-const PaddedHeading = pad(Heading);
+const PaddedHeading = pad(Heading, 'large');
 PaddedHeading.displayName = 'PaddedHeading';
 
 const StyledField = styled(Field)`
@@ -27,6 +27,9 @@ const StyledField = styled(Field)`
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
 `;
+
+const PaddedBlock = pad(Block);
+PaddedBlock.displayName = 'PaddedBlock';
 
 const generateHeading = (whoNeedsHelp) => {
   switch (whoNeedsHelp) {
@@ -51,6 +54,7 @@ const Dementia = ({
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
+        <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
           <StyledField
             multiChoice

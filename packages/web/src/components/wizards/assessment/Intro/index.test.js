@@ -21,7 +21,7 @@ describe('Wizards|assessment - Steps|Intro', () => {
 
     expect(wrapper.find('StyledIcon')).toHaveLength(1);
     expect(wrapper.find('PaddedHeading')).toHaveLength(1);
-    expect(wrapper.find('Field').filter({ type: 'button' })).toHaveLength(2);
+    expect(wrapper.find('StyledField').filter({ type: 'button' })).toHaveLength(2);
   });
 
   it('handles submit', () => {

@@ -12,4 +12,4 @@ export const NOTIFY_MESSAGE_NEW = 'notify.message.new';
 
 export const NOTIFY_AGENT_MATCHED = 'notify.client.match';
 
-export const NOTIFY_AGENT_MATCHED_TIMEOUT = 30000;
+export const NOTIFY_AGENT_MATCHED_TIMEOUT = 15000;

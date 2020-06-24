@@ -42,6 +42,7 @@ import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import UnhydratedOfferNotification from 'sly/web/components/molecules/OfferNotification';
 import CommunityCareService from 'sly/web/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/web/components/molecules/CommunityExtraInfoSection';
+import CommunityDisclaimerSection from 'sly/web/components/molecules/CommunityDisclaimerSection';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import UnhydratedGetCurrentAvailabilityContainer from 'sly/web/containers/GetCurrentAvailabilityContainer';
@@ -89,7 +90,7 @@ const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDet
 const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
 const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
 const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable);
-const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator);
+const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator, { alwaysHydrate: true });
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -271,6 +272,7 @@ export default class CommunityDetailPage extends Component {
       partnerAgents,
       twilioNumber,
       guideUrl,
+      user: communityUser,
     } = community;
 
     const {
@@ -306,6 +308,10 @@ export default class CommunityDetailPage extends Component {
     const bannerNotification = makeBanner(profileContacted);
     // FIXME: @fonz cleaning this up
     const isAlreadyPricingRequested = profileContacted.pricing;
+    let isClaimed = false;
+    if ( communityUser && communityUser.email && !communityUser.email.match(/@seniorly.com/) ) {
+      isClaimed = true;
+    }
 
     const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
@@ -471,7 +477,7 @@ export default class CommunityDetailPage extends Component {
                   )}
                 </StyledHeadingBoxSection>
                 <PaddedGetAssessmentBoxContainerHydrator
-                  startLink={`/wizards/assessment/community/${community.id}`}
+                  startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
                 />
                 {sortedEstimatedPrice.length > 0 && (
                   <StyledHeadingBoxSection heading={`Compare Costs for ${name}`}>
@@ -504,6 +510,8 @@ export default class CommunityDetailPage extends Component {
                       state={address.state}
                       twilioNumber={twilioNumber}
                       guideUrl={guideUrl}
+                      communityUser={community.user}
+                      licensingInfo={rgsAux.stateLicensingWebsite}
                     />
                   </StyledHeadingBoxSection>
                 )}
@@ -592,22 +600,13 @@ export default class CommunityDetailPage extends Component {
                   <StyledButton href={menuLink} onClick={clickEventHandler('menu', name)} target="_blank" ghost>Download Current Menu</StyledButton>
                 </StyledHeadingBoxSection>
                 }
-
-                {rgsAux.stateLicensingWebsite && (
-                  <StyledCommunityExtraInfoSection
-                    title={`${name} at ${address.city} State Licensing`}
-                    description={`${name} is licensed by the state of ${
-                      address.state
-                    }`}
-                    url={rgsAux.stateLicensingWebsite}
-                    urlText="Visit the state licensing website"
-                  />
-                )}
-                <StyledCommunityExtraInfoSection
+                <CommunityDisclaimerSection
                   title="Disclaimer"
-                  description="The information on this page has been created to the best of our abilities. To ensure accuracy, please confirm with your local Seniorly Seniorly Partner Agent or directly with the property. If this is your senior living community, we would welcome any updates you wish to provide."
-                  url={`/partners/communities?prop=${community.id}&sly_category=disclaimer&sly_action=cta_link&sly_label=claim`}
-                  urlText="Simply claim your profile by clicking here"
+                  phone={ (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) ? twilioNumber.numbers[0] : '8558664515' }
+                  isClaimed={isClaimed}
+                  id={community.id}
+                  city={address.city}
+                  name={name}
                 />
                 {!showSimilarEarlier && (
                   <StyledHeadingBoxSection
@@ -630,7 +629,6 @@ export default class CommunityDetailPage extends Component {
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
-
                 <CommunityStickyFooter community={community} isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack="sticky-footer"/>
               </Body>
               <Column>

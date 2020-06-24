@@ -36,6 +36,17 @@ export const ADL_OPTIONS = [
   { label: "I'm not sure", value: 'im-not-sure' },
 ];
 
+export const COEXISTING_ADL_OPTIONS = {
+  bathing: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
+  dressing: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
+  transferring: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
+  toileting: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
+  eating: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
+  'medication-management': ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
+  none: ['none'],
+  'im-not-sure': ['im-not-sure'],
+};
+
 export const DEMENTIA_FORGETFUL_OPTIONS = {
   parents: [
     { label: 'Yes, they are also at risk of wandering', value: 'risk-of-wandering' },
@@ -55,16 +66,16 @@ export const DEMENTIA_FORGETFUL_OPTIONS = {
 
 const maleDementiaForgetfulDefaultOptions = [
   { label: 'Yes, he is also at risk of wandering', value: 'risk-of-wandering' },
-  { label: 'Yes, he often forget the names of friends and family', value: 'forget-names' },
-  { label: 'Yes, he often forget to do things like take medicine', value: 'forget-to-do-things' },
+  { label: 'Yes, he often forgets the names of friends and family', value: 'forget-names' },
+  { label: 'Yes, he often forgets to do things like take medicine', value: 'forget-to-do-things' },
   { label: 'No', value: 'no' },
   { label: "I'm not sure", value: 'iam-not-sure' },
 ];
 
 const femaleDementiaForgetfulDefaultOptions = [
   { label: 'Yes, she is also at risk of wandering', value: 'risk-of-wandering' },
-  { label: 'Yes, she often forget the names of friends and family', value: 'forget-names' },
-  { label: 'Yes, she often forget to do things like take medicine', value: 'forget-to-do-things' },
+  { label: 'Yes, she often forgets the names of friends and family', value: 'forget-names' },
+  { label: 'Yes, she often forgets to do things like take medicine', value: 'forget-to-do-things' },
   { label: 'No', value: 'no' },
   { label: "I'm not sure", value: 'iam-not-sure' },
 ];
@@ -147,6 +158,14 @@ export const BUDGET_OPTIONS = [
   { label: "I don't have access to any of these benefits", value: 'dont-have' },
   { label: "I'm not sure", value: 'not-sure' },
 ];
+
+export const COEXISTING_BUDGET_OPTIONS = {
+  'dont-have': ['dont-have', 'not-sure'],
+};
+
+export const COEXISTING_DEMENTIA_OPTIONS = {
+  no: ['no', 'not-sure'],
+};
 
 export const MEDICAID_OPTIONS = [
   { label: 'Yes', value: 'yes' },

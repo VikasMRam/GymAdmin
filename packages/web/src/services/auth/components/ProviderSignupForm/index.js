@@ -42,7 +42,6 @@ const ProviderSignupForm = ({
       name="email"
       label="Email Address"
       type="email"
-      placeholder="Email Address"
       component={ReduxField}
     />
     <Field
@@ -50,14 +49,12 @@ const ProviderSignupForm = ({
       label="Phone"
       type="phone"
       parens
-      placeholder="(415) 555-5555"
       component={ReduxField}
     />
     <Field
       name="password"
       label="Password"
       type="password"
-      placeholder="Password"
       component={ReduxField}
     />
     <StyledButton type="submit"  disabled={submitting}>

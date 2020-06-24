@@ -4,10 +4,12 @@ import { shallow } from 'enzyme';
 import { ADL } from 'sly/web/components/wizards/assessment';
 
 const handleSubmit = jest.fn();
+const change= jest.fn();
 const whoNeedsHelp = 'parents';
 const defaultProps = {
   handleSubmit,
   whoNeedsHelp,
+  change,
 };
 const wrap = (props = {}) => shallow(<ADL {...defaultProps} {...props} />);
 
@@ -56,7 +58,7 @@ describe('Wizards|assessment - Steps|ADL', () => {
       whoNeedsHelp: 'mom',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Which activities below does your Mom need help with?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Which activities below does your mom need help with?')).toBeTruthy();
   });
 
   it('handles submit', () => {

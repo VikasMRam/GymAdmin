@@ -1,24 +1,16 @@
 import React from 'react';
 
-import { Experiment, Variant } from 'sly/web/services/experiments';
 import { community as communityPropType } from 'sly/web/propTypes/community';
-import AssessmentWizard from 'sly/web/containers/wizards/assessment';
 import GetCommunityPricingAndAvailability from 'sly/web/components/organisms/GetCommunityPricingAndAvailability';
+import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
 
 export default function CommunityDetailsPageColumnContainer({ community }) {
-  return (
-    <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
-    // Temp Experiment disable
-    // <Experiment name="MainProfileCTA">
-    //   <Variant name="PricingWizard">
-    //     <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
-    //   </Variant>
-    //   <Variant name="AssessmentWizard">
-    //     <GetCommunityPricingAndAvailability community={community} buttonTo={`/wizards/assessment/community/${community.id}`} />
-    //   </Variant>
-    //
-    // </Experiment>
-  );
+  const { address: { state }} = community;
+  if ( state === 'TX' || state === 'PA' || state === 'NJ') {
+    return <GetAssessmentBoxContainer community={community} startLink={`/wizards/assessment/community/${community.id}`} layout="sidebar" />
+  } else {
+    return <GetCommunityPricingAndAvailability community={community} buttonTo={`/custom-pricing/${community.id}`} />
+  }
 }
 
 CommunityDetailsPageColumnContainer.propTypes = {

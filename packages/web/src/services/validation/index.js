@@ -8,8 +8,13 @@ import dayjs from 'dayjs';
 import get from 'lodash/get';
 import set from 'lodash/set';
 
-const isEmpty = value => value === undefined || value === null ||
-  (value && value.trim ? value.trim() === '' : value === '');
+const isEmpty = value => {
+  if (Array.isArray(value)) {
+    return value.length < 1;
+  }
+  return value === undefined || value === null ||
+    (value && value.trim ? value.trim() === '' : value === '');
+};
 
 const join = rules => (value, data) =>
   rules.map((rule) => {

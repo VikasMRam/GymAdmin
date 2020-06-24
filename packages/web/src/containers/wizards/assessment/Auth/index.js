@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { func, string } from 'prop-types';
+import { func, string, object } from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import { query, withUser } from 'sly/web/services/api';
+import SlyEvent from 'sly/web/services/helpers/events';
 import { community as communityPropType } from 'sly/web/propTypes/community';
-import { CONSULTATION_REQUESTED, PROFILE_CONTACTED, PRICING_REQUEST } from 'sly/web/services/api/constants';
+import { CONSULTATION_REQUESTED, PROFILE_CONTACTED, PRICING_REQUEST, WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
 import AuthContainer from 'sly/web/services/auth/containers/AuthContainer';
 import userPropType from 'sly/web/propTypes/user';
 
 @withUser
+@withRouter
 @query('createAction', 'createUuidAction')
 
 export default class Auth extends Component {
@@ -17,19 +20,25 @@ export default class Auth extends Component {
     community: communityPropType,
     signUpHeading: string,
     onAuthSuccess: func,
+    location: object.isRequired,
   };
 
   componentDidMount() {
     const { user } = this.props;
 
     if (user) {
+
       this.handleAuthSuccess();
     }
   }
 
   handleAuthSuccess = () => {
-    const { createAction, community, user, onAuthSuccess } = this.props;
+    const { createAction, location: { pathname }, community, user, onAuthSuccess } = this.props;
     const actionType = community ? PROFILE_CONTACTED : CONSULTATION_REQUESTED;
+    SlyEvent.getInstance().sendEvent({
+      category: 'assessmentWizard',
+      action: actionType,
+    });
     let actionInfo = {};
     if (community) {
       actionInfo = {
@@ -48,9 +57,21 @@ export default class Auth extends Component {
       type: 'UUIDAction',
       attributes: {
         actionType,
+        actionPage: pathname,
         actionInfo,
       },
-    })
+    }).then(()=> createAction({
+          type: 'UUIDAction',
+          attributes: {
+            actionType: WIZARD_STEP_COMPLETED,
+            actionPage: pathname,
+            actionInfo: {
+              stepName: 'auth',
+              wizardName: 'assessmentWizard',
+              data: actionInfo,
+            },
+          },
+        }))
       .then(onAuthSuccess);
   };
 
@@ -66,10 +87,12 @@ export default class Auth extends Component {
         type="inline"
         onAuthenticateSuccess={this.handleAuthSuccess}
         onSignupSuccess={this.handleAuthSuccess}
-        initialStep="Signup"
         signUpHeading={signUpHeading}
+        initialStep="Signup"
+        formName="AssessmentWizardAuthForm"
         signUpSubmitButtonText="Get Pricing"
         signUpHasPassword={false}
+        hasProviderSignup={false}
       />
     );
   }

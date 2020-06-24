@@ -40,7 +40,7 @@ const Who = ({
             component={ReduxField}
             required
           >
-            <option>Select a person</option>
+            <option value="">Select a person</option>
             {WHO_PERSON_OPTIONS.map(o => <option value={o.value} key={o.value}>{o.label}</option>)}
           </Field>
           <Footer invalid={invalid} submitting={submitting} />

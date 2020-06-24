@@ -19,7 +19,7 @@ const StyledTipBox = styled(TipBox)`
 
 const FieldsWrapper = styled.div`
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: ${size('spacing.regular')}
 `;
 
@@ -31,7 +31,10 @@ const ResidentName = ({
 }) => (
   <Wrapper hasSecondColumn={hasTip}>
     <Box>
-      <PaddedHeading level="subtitle" weight="medium">Last question, what is the resident&apos;s name?</PaddedHeading>
+      <PaddedHeading level="subtitle" weight="medium">
+        {numberOfPeople > 1 ? 'Last question, what are the residents names?' : 'Last question, what is the' +
+          ' resident\'s name?'}
+      </PaddedHeading>
       <form onSubmit={handleSubmit}>
         {Array(numberOfPeople).fill().map((_, i) => (
           <FieldsWrapper key={i}>

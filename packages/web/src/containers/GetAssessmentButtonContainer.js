@@ -12,8 +12,6 @@ import GetAssessmentBox from 'sly/web/components/organisms/GetAssessmentBox';
 import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
 import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';
 import GetCommunityPricingAndAvailability from 'sly/web/components/organisms/GetCommunityPricingAndAvailability';
-import CommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
-import SlyEvent from 'sly/web/services/helpers/events';
 const PaddedBlock = pad(Block, 'regular');
 
 @branch(
@@ -30,14 +28,10 @@ export default class GetAssessmentBoxContainer extends Component {
     agent: agentPropType,
     community: communityPropType,
     status: object,
-    layout: string.isRequired,
-    boxLayout: string,
+    layout: string,
     startLink: string.isRequired,
     completedAssessment: bool,
     className: string,
-  };
-  static defaultProps = {
-    layout: 'box',
   };
 
   state = {
@@ -51,22 +45,12 @@ export default class GetAssessmentBoxContainer extends Component {
     });
   };
 
-  componentDidMount() {
-    const { layout } = this.props;
-    SlyEvent.getInstance().sendEvent({
-      category: 'assessmentWizard',
-      action: 'mounted',
-      label: layout,
-    });
-  }
-
   render() {
-    const { status = {}, layout, boxLayout, agent, community, completedAssessment, startLink, className } = this.props;
+    const { status = {}, layout, agent, community, completedAssessment, startLink, className } = this.props;
     const { modalOpened } = this.state;
     let hasFinished = true;
     let buttonProps = {
       to: startLink,
-      buttonTo: startLink,
     };
     if (completedAssessment) {
       buttonProps = {
@@ -83,52 +67,34 @@ export default class GetAssessmentBoxContainer extends Component {
 
     return (
       <div className={className}>
-        {layout === 'box' && !completedAssessment &&
-          <GetAssessmentBox
-            palette="primary"
-            layout={boxLayout}
-            buttonProps={buttonProps}
-          />
-        }
-        {layout === 'sidebar' &&
-          <GetCommunityPricingAndAvailability
-            community={community}
-            {...buttonProps}
-          />
-        }
-        {layout === 'footer' &&
-          <CommunityStickyFooter
-            community={community}
-            locTrack="sticky-footer"
-            isAlreadyPricingRequested={completedAssessment}
-            {...buttonProps}
-          />
-        }
+        <GetCommunityPricingAndAvailability
+          community={community}
+          buttonTo={`/wizards/assessment/community/${community.id}`}
+        />
         <Modal isOpen={modalOpened} onClose={this.toggleModal}>
           <HeaderWithClose onClose={this.toggleModal} />
           <PaddedHeaderWithCloseBody>
             {agent &&
-              <MatchedAgent
-                hasBox={false}
-                agent={agent}
-                heading={`Request sent! Your Local Senior Living Expert, ${agent.name} will get back to you with pricing information on this community.`}
-              />
+            <MatchedAgent
+              hasBox={false}
+              agent={agent}
+              heading={`Request sent! Your Local Senior Living Expert, ${agent.name} will get back to you with pricing information on this community.`}
+            />
             }
             {!agent &&
-              <PostConversionGreetingForm
-                hasBox={false}
-                community={community}
-                onReturnClick={this.toggleModal}
-                heading="Request sent! One of our Local Senior Living Experts will reach out to assist you."
-                description="Questions? You can contact us by phone or email:"
-              >
-                <PaddedBlock>
-                  <Link href="mailto:sharon@seniorly.com">sharon@seniorly.com</Link>
-                </PaddedBlock>
-                <PaddedBlock>
-                  <Link href="tel:8558664515">(855) 866-4515</Link>
-                </PaddedBlock>
-              </PostConversionGreetingForm>
+            <PostConversionGreetingForm
+              hasBox={false}
+              onReturnClick={this.toggleModal}
+              heading="Request sent! One of our Local Senior Living Experts will reach out to assist you."
+              description="Questions? You can contact us by phone or email:"
+            >
+              <PaddedBlock>
+                <Link href="mailto:emma@seniorly.com">emma@seniorly.com</Link>
+              </PaddedBlock>
+              <PaddedBlock>
+                <Link href="tel:8558664515">(855) 866-4515</Link>
+              </PaddedBlock>
+            </PostConversionGreetingForm>
             }
           </PaddedHeaderWithCloseBody>
         </Modal>

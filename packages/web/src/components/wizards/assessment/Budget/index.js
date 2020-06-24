@@ -4,8 +4,9 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/web/components/themes';
-import { BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
+import { BUDGET_OPTIONS, COEXISTING_BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
+import { capitalize } from  'sly/web/services/helpers/utils';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
@@ -35,6 +36,8 @@ const StyledTipBox = styled(TipBox)`
 `;
 
 const generateHeading = (whoNeedsHelp, amount, city, state) => {
+  city = city.replace('-', ' ').split(' ').map(s => capitalize(s)).join(' ');
+  state = capitalize(state);
   switch (whoNeedsHelp) {
     case 'parents':
       return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Do your parents have access to any of these benefits?`;
@@ -48,7 +51,7 @@ const generateHeading = (whoNeedsHelp, amount, city, state) => {
 };
 
 const Budget = ({
-  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip,
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip, change,
 }) => (
   <div>
     <Wrapper>
@@ -57,7 +60,7 @@ const Budget = ({
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp, amount, city, state)}</PaddedHeading>
-        <PaddedBlock>Select all that apply.</PaddedBlock>
+        <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
           <StyledField
             multiChoice
@@ -86,6 +89,7 @@ Budget.propTypes = {
   city: string.isRequired,
   state: string.isRequired,
   amount: number.isRequired,
+  change: func.isRequired,
   onSkipClick: func,
   onBackClick: func,
   invalid: bool,

@@ -6,6 +6,7 @@ import Button from 'sly/web/components/atoms/Button';
 
 export default function GetCustomPricingButtonContainer({ hasAlreadyRequestedPricing, locTrack, ...props }) {
   return (
+
     <GetCustomPricingContainer hasAlreadyRequestedPricing={hasAlreadyRequestedPricing} locTrack={locTrack}>
       {getCustomPricing => <Button onClick={getCustomPricing} {...props} />}
     </GetCustomPricingContainer>

@@ -18,6 +18,12 @@ PaddedHeading.displayName = 'PaddedHeading';
 const StyledIcon = textAlign(pad(Icon));
 StyledIcon.displayName = 'StyledIcon';
 
+const StyledField = styled(Field)`
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
 const Intro = ({
   handleSubmit, showSkipOption,
 }) => (
@@ -26,7 +32,7 @@ const Intro = ({
       <StyledForm onSubmit={handleSubmit}>
         <StyledIcon icon="logo" palette="primary" size="xLarge" />
         <PaddedHeading level="subtitle" weight="medium">Complete this 3-minute assessment tool to get personalized senior living and care options.</PaddedHeading>
-        <Field
+        <StyledField
           name="whatToDoNext"
           type="button"
           buttonType="submit"
@@ -34,9 +40,9 @@ const Intro = ({
           inputValue="start"
         >
           Start
-        </Field>
+        </StyledField>
         {showSkipOption &&
-          <Field
+          <StyledField
             name="whatToDoNext"
             type="button"
             buttonType="submit"
@@ -45,7 +51,7 @@ const Intro = ({
             ghost
           >
             No thanks, I just want pricing
-          </Field>
+          </StyledField>
         }
       </StyledForm>
     </Box>
