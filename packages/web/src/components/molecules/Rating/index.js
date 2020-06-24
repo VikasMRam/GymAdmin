@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { number, oneOf, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { palette, size } from 'sly/web/components/themes';
+import { getThemePropType, palette, size } from 'sly/web/components/themes';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 
@@ -75,7 +75,7 @@ const Rating = ({ palette, variation, fillVariation, value, innerRef, size, ...p
 );
 
 Rating.propTypes = {
-  size: oneOf(['tiny', 'body']),
+  size: getThemePropType('text'),
   innerRef: object,
   value: number.isRequired,
   palette: palettePropType,

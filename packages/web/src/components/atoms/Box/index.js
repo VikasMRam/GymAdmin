@@ -9,8 +9,6 @@ import Block from 'sly/web/components/atoms/Block';
 
 const Box = styled(Block)``;
 
-Box.displayName = 'Box';
-
 Box.propTypes = {
   border: borderPropType,
   borderRadius: borderRadiusPropType,

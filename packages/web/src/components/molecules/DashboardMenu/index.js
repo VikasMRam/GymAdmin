@@ -1,9 +1,7 @@
 import React from 'react';
-import { shape, arrayOf, string, number } from 'prop-types';
-import styled from 'styled-components';
+import { string } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import Role from 'sly/web/components/common/Role';
 import { Icon, Span, Link } from 'sly/web/components/atoms';
 import {
   ADMIN_DASHBOARD_AGENTS_PATH,
@@ -20,6 +18,7 @@ import {
   CUSTOMER_ROLE, PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE,
 } from 'sly/web/constants/roles';
 import Block from 'sly/web/components/atoms/Block';
+import Role from 'sly/web/components/common/Role';
 
 const menuItemFor = (menuItem) => {
   const { label } = menuItem;
@@ -38,7 +37,7 @@ const menuItemFor = (menuItem) => {
 };
 
 /* eslint-disable no-bitwise */
-const menuItems = [
+export const menuItems = [
   { label: 'Families', icon: 'users', href: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE },
   { label: 'Agents', icon: 'case', href: ADMIN_DASHBOARD_AGENTS_PATH, role: PLATFORM_ADMIN_ROLE },
   { label: 'Communities', icon: 'community-size-large', href: DASHBOARD_COMMUNITIES_PATH, role: PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE },
@@ -63,23 +62,23 @@ const DashboardMenu = ({ activeMenuItem }) => {
       : undefined;
 
     return (
-      // <Role is={item.role} key={item.label}>
-      <Link
-        size="caption"
-        to={item.href}
-        key={item.label}
-        palette={palette}
-        block
-        marginBottom="xLarge"
-      >
-        <Icon
+      <Role is={item.role} key={item.label}>
+        <Link
           size="caption"
-          icon={item.icon}
-          marginRight="medium"
-        />
-        <Span weight={weight}>{item.label}</Span>
-      </Link>
-      // </Role>
+          to={item.href}
+          key={item.label}
+          palette={palette}
+          block
+          marginBottom="xLarge"
+        >
+          <Icon
+            size="caption"
+            icon={item.icon}
+            marginRight="medium"
+          />
+          <Span weight={weight}>{item.label}</Span>
+        </Link>
+      </Role>
     );
   });
   return (

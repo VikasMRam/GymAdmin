@@ -56,7 +56,7 @@ const wrap = (props = {}) => shallow(<DashboardProfileUserDetailsForm handleSubm
 describe('DashboardProfileUserDetailsForm', () => {
   it('render DashboardProfileUserDetailsForm', () => {
     const wrapper = wrap({ });
-    expect(wrapper.find('FormSection')).toHaveLength(1);
+    expect(wrapper.find('SectionForm')).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phoneNumber' })).toHaveLength(1);
@@ -69,7 +69,7 @@ describe('DashboardProfileUserDetailsForm', () => {
 
   it('render DashboardProfileUserDetailsForm for Customer Role', () => {
     const wrapper = wrap({ hasCustomerRole: true });
-    expect(wrapper.find('FormSection')).toHaveLength(1);
+    expect(wrapper.find('SectionForm')).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phoneNumber' })).toHaveLength(1);

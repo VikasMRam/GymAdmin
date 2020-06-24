@@ -75,7 +75,7 @@ BreadCrumb.propTypes = {
 };
 
 BreadCrumb.defaultProps = {
-  size: 'tiny',
+  size: 'caption',
 };
 
 export default BreadCrumb;

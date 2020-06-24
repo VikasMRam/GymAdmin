@@ -3,9 +3,8 @@ import { func, bool, object } from 'prop-types';
 
 import { Button } from 'sly/web/components/atoms';
 import EditField from 'sly/web/components/form/EditField';
-import Field from 'sly/web/components/molecules/Field';
 import { statuses } from 'sly/web/constants/communities';
-import { PROVIDER_ROLE_PARAM } from 'sly/web/constants/roles'
+import { PROVIDER_ROLE_PARAM } from 'sly/web/constants/roles';
 
 import {
   Section,
@@ -53,20 +52,17 @@ export default class DashboardCommunityAdminForm extends Component {
             type="user"
             role={PROVIDER_ROLE_PARAM}
             readOnly={!canEdit}
-            wideWidth
           />
           <EditField
             name="slyScore"
             label="Sly Score"
             type="number"
             readOnly={!canEdit}
-            wideWidth
           />
           <EditField
             name="status"
             label="Status"
             type="select"
-            wideWidth
             readOnly={!canEdit}
           >
             <option>Select an option</option>
@@ -79,28 +75,24 @@ export default class DashboardCommunityAdminForm extends Component {
             label="Covid Title"
             type="text"
             readOnly={!canEdit}
-            wideWidth
           />
           <EditField
             name="propInfo.covidInfoDescription"
             label="Covid Description"
             type="textarea"
             readOnly={!canEdit}
-            wideWidth
           />
           <EditField
             name="propInfo.promoTitle"
             label="Promotions Title"
             type="text"
             readOnly={!canEdit}
-            wideWidth
           />
           <EditField
             name="propInfo.promoDescription"
             label="Promotions Description"
             type="textarea"
             readOnly={!canEdit}
-            wideWidth
           />
         </SectionForm>
         <SectionForm heading="Notes">
@@ -109,7 +101,6 @@ export default class DashboardCommunityAdminForm extends Component {
             label="Admin Notes"
             type="textarea"
             readOnly={!canEdit}
-            wideWidth
           />
         </SectionForm>
         <SectionForm heading="SEO">
@@ -118,14 +109,12 @@ export default class DashboardCommunityAdminForm extends Component {
             label="Website Title Tag"
             type="text"
             readOnly={!canEdit}
-            wideWidth
           />
           <EditField
             name="propInfo.websiteMetaDescription"
             label="Website Meta Desctiption"
             type="text"
             readOnly={!canEdit}
-            wideWidth
           />
         </SectionForm>
         <SectionForm heading="Contract">

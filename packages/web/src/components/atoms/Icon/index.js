@@ -1,15 +1,21 @@
 // https://github.com/diegohaz/arc/wiki/Example-components#icon
 import React from 'react';
-import { string, number, bool, oneOf } from 'prop-types';
+import { string, number, bool, oneOf, oneOfType } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { prop } from 'styled-tools';
 
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { size, key } from 'sly/web/components/themes';
+import { size, key, getThemePropType, getKey } from 'sly/web/components/themes';
 import { withBorder, withColor, withSpacing, withText } from 'sly/web/components/helpers';
 
-const iconSize = ({ size: s }) => css`calc(1em * ${size('lineHeight', s)});`;
+const iconSize = ({ size: s }) => {
+  const textSize = getKey(`sizes.text.${s}`);
+  const lineHeight = getKey(`sizes.lineHeight.${s}`);
+  return textSize
+    ? css`calc(${textSize} * ${lineHeight});`
+    : s;
+};
 const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)${flip ? ' scaleX(-1) scaleY(-1)' : ''}`;
 
 /**
@@ -60,7 +66,7 @@ Icon.displayName = 'Icon';
 Icon.propTypes = {
   icon: string.isRequired,
   width: number,
-  size: oneOf(['micro', 'tiny', 'caption', 'body', 'subtitle', 'title', 'hero', 'superHero']),
+  size: oneOfType([getThemePropType('text'), string]),
   palette: palettePropType,
   variation: variationPropType,
   stroke: string,

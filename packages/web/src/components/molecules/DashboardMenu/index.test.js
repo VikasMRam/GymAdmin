@@ -1,35 +1,28 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import DashboardMenu from 'sly/web/components/molecules/DashboardMenu';
+import DashboardMenu, { menuItems } from 'sly/web/components/molecules/DashboardMenu';
+import Role from 'sly/web/components/common/Role';
 
-const menuItems = [
-  {
-    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'base', active: true, role: 2,
-  },
-  {
-    label: 'Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', role: 23,
-  },
-];
-
-const wrap = (props = {}) => shallow(<DashboardMenu {...props} />);
+const defaultProps = { activeMenuItem: 'Families' };
+const wrap = (props = {}) => shallow(<DashboardMenu {...defaultProps} {...props} />);
 
 describe('DashboardMenu', () => {
   it('does not renders children when passed in', () => {
-    const wrapper = wrap({ menuItems, children: 'test' });
+    const wrapper = wrap({ activeMenuItem: 'Families', children: 'test' });
     expect(wrapper.contains('test')).toBe(false);
   });
 
   it('renders DashboardMenu', () => {
-    const wrapper = wrap({ menuItems });
-    const menuItemComponents = wrapper.find('MenuItemIcon');
-    expect(menuItemComponents).toHaveLength(menuItems.length);
+    const wrapper = wrap();
+    const menuItemComponents = wrapper.find('Link');
+    expect(menuItemComponents).toHaveLength(10);
   });
 
   it('correct roles are passed to menu items', () => {
-    const wrapper = wrap({ menuItems });
-    const roleComponents = wrapper.children().filter('.role');
-    expect(roleComponents).toHaveLength(menuItems.length);
+    const wrapper = wrap();
+    const roleComponents = wrapper.find(Role);
+    expect(roleComponents).toHaveLength(10);
     roleComponents.forEach((c, i) => {
       expect(c.prop('is')).toBe(menuItems[i].role);
     });
@@ -40,9 +33,8 @@ describe('DashboardMenu', () => {
     const newMenuItems = menuItems.slice();
     const menuItemOnClick = jest.fn();
     newMenuItems[index].onClick = menuItemOnClick;
-    const wrapper = wrap({ menuItems: newMenuItems });
-    const menuItemComponents = wrapper.find('ActiveMenuItem');
-    menuItemComponents.at(index).simulate('click');
-    expect(menuItemOnClick).toHaveBeenCalled();
+    const wrapper = wrap({ activeMenuItem: 'Calls' });
+    const menuItemComponent = wrapper.find({ palette: 'primary' });
+    expect(menuItemComponent.find('Span').contains('Calls'));
   });
 });

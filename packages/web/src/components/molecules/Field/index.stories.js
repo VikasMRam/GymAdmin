@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import { Block } from 'sly/web/components/atoms';
 import Field from 'sly/web/components/molecules/Field';
+import Box from 'sly/web/components/atoms/Box';
 
 const labelRight = (
   <Block palette="primary" size="caption">
@@ -19,23 +20,28 @@ storiesOf('Molecules|Field', module)
   ))
   .add('invalid', () => <Field name="field" label="Label" invalid />)
   .add('invalid with error message', () => (
-    <Field
-      name="field"
-      label="Label"
-      value="My input"
-      message="Invalid"
-      invalid
-    />
-  ))
-  .add('invalid with error message horizontal', () => (
-    <Field
-      name="field"
-      label="Label"
-      value="My input"
-      message="Invalid"
-      invalid
-      wideWidth
-    />
+    <>
+      <Box>
+        <Field
+          name="field"
+          label="Label"
+          value="My input"
+          message="Invalid"
+          invalid
+        />
+      </Box>
+      <Block>Horizontal</Block>
+      <Box>
+        <Field
+          name="field"
+          label="Label"
+          value="My input"
+          message="Invalid"
+          invalid
+          wideWidth
+        />
+      </Box>
+    </>
   ))
   .add('warning', () => <Field name="field" label="Label" warning />)
   .add('warning with error message', () => (

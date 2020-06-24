@@ -36,7 +36,7 @@ const CommunityRating = ({ rating, numReviews, description, size, palette, varia
             <RatingValue palette={palette} variation={variation} size={size} weight="medium">
               {formatRating(rating)}
             </RatingValue>
-            <StyledRating value={rating} palette={starPalette || palette} variation={starVariation || variation} size="small" />
+            <StyledRating value={rating} palette={starPalette || palette} variation={starVariation || variation} size={size} />
           </TwoColumn> : <RatingValue palette={palette} variation={variation} size={size} weight="medium">Not yet rated</RatingValue>
         }
         {numReviews > 0 &&

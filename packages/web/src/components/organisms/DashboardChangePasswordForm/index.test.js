@@ -13,6 +13,6 @@ describe('DashboardChangePasswordForm', () => {
     expect(wrapper.find(Field).filter({ name: 'oldPassword' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'newPassword' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'confirmPassword' })).toHaveLength(1);
-    expect(wrapper.find('FormSection')).toHaveLength(1);
+    expect(wrapper.find('SectionForm')).toHaveLength(1);
   });
 });

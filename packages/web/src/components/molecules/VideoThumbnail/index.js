@@ -51,7 +51,7 @@ export default class VideoThumbnail extends Component {
         <CenterContent onClick={onClick}>
           <Icon
             icon="play"
-            size="xxLarge"
+            size="72px"
             palette="white"
           />
           <Block size="subtitle" weight="medium" palette="white">

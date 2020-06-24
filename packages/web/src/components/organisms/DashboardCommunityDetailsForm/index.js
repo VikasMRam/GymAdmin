@@ -44,7 +44,6 @@ export default class DashboardCommunityDetailsForm extends Component {
             label="Community name"
             type="text"
             readOnly={!canEdit}
-            wideWidth
           />
           <EditField
             name="propInfo.communityPhone"
@@ -53,7 +52,6 @@ export default class DashboardCommunityDetailsForm extends Component {
             readOnly={!canEdit}
             placeholder="(925) 555-5555"
             parens
-            wideWidth
           />
           <EditField
             name="propInfo.ownerName"
@@ -61,7 +59,6 @@ export default class DashboardCommunityDetailsForm extends Component {
             type="text"
             readOnly={!canEdit}
             placeholder="John Doe"
-            wideWidth
           />
           <EditField
             name="propInfo.ownerEmail"
@@ -69,7 +66,6 @@ export default class DashboardCommunityDetailsForm extends Component {
             type="email"
             readOnly={!canEdit}
             placeholder="john@community.com"
-            wideWidth
           />
           <EditField
             name="propInfo.websiteUrl"
@@ -77,7 +73,6 @@ export default class DashboardCommunityDetailsForm extends Component {
             type="text"
             readOnly={!canEdit}
             placeholder="https://www.seniorly.com"
-            wideWidth
           />
           <EditField
             name="propInfo.parentCompany"
@@ -85,7 +80,6 @@ export default class DashboardCommunityDetailsForm extends Component {
             type="text"
             readOnly={!canEdit}
             placeholder="Name of parent company(if applicable)"
-            wideWidth
           />
           <EditField
             name="propInfo.typeCare"
@@ -94,7 +88,6 @@ export default class DashboardCommunityDetailsForm extends Component {
             readOnly={!canEdit}
             isMulti
             options={AVAILABLE_TAGS.map(value => ({ label: value, value }))}
-            wideWidth
           />
         </SectionForm>
         <SectionForm heading="Respite care">
@@ -110,7 +103,6 @@ export default class DashboardCommunityDetailsForm extends Component {
               label="Minimum stay length"
               type="number"
               readOnly={!canEdit}
-              wideWidth
               parse={value => !value ? null : Number(value)}
             />
           }
@@ -121,13 +113,11 @@ export default class DashboardCommunityDetailsForm extends Component {
             label="License number"
             type="text"
             readOnly={!canEdit}
-            wideWidth
           />
           <EditField
             name="propInfo.communitySize"
             label="Community size"
             type="select"
-            wideWidth
             readOnly={!canEdit}
           >
             <option>Select an option</option>
@@ -138,7 +128,6 @@ export default class DashboardCommunityDetailsForm extends Component {
             label="Licensed capacity"
             type="number"
             readOnly={!canEdit}
-            wideWidth
           />
         </SectionForm>
         <SectionForm heading="Location">
@@ -147,27 +136,23 @@ export default class DashboardCommunityDetailsForm extends Component {
             label="Line 1"
             type="text"
             readOnly={!canEdit}
-            wideWidth
           />
           <EditField
             name="address.line2"
             label="Line 2"
             type="text"
             readOnly={!canEdit}
-            wideWidth
           />
           <EditField
             name="address.city"
             label="City"
             type="text"
             readOnly={!canEdit}
-            wideWidth
           />
           <EditField
             name="address.state"
             label="State"
             type="select"
-            wideWidth
             readOnly={!canEdit}
           >
             <option>Select an option</option>
@@ -178,7 +163,6 @@ export default class DashboardCommunityDetailsForm extends Component {
             label="Zipcode"
             type="text"
             readOnly={!canEdit}
-            wideWidth
           />
         </SectionForm>
         <SectionActions>
