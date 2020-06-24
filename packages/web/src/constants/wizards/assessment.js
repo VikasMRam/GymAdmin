@@ -37,13 +37,14 @@ export const ADL_OPTIONS = [
 ];
 
 export const COEXISTING_ADL_OPTIONS = {
-  bathing: ['none'],
-  dressing: ['none'],
-  transferring: ['none'],
-  toileting: ['none'],
-  eating: ['none'],
-  'medication-management': ['none'],
-  none: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
+  bathing: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
+  dressing: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
+  transferring: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
+  toileting: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
+  eating: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
+  'medication-management': ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
+  none: ['none'],
+  'im-not-sure': ['im-not-sure'],
 };
 
 export const DEMENTIA_FORGETFUL_OPTIONS = {
