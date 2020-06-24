@@ -1,12 +1,10 @@
 import React from 'react';
 import { any, object, shape, string } from 'prop-types';
 import styled from 'styled-components';
-import { sortableContainer } from 'react-sortable-hoc';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size } from 'sly/web/components/themes';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import Box from 'sly/web/components/atoms/Box';
-import { topSnap } from 'sly/web/components/helpers/snap';
 import { Block, Heading, Link } from 'sly/web/components/atoms';
 import BackLink from 'sly/web/components/molecules/BackLink';
 import { withBorder, withText } from 'sly/web/components/helpers';
@@ -87,10 +85,8 @@ export const SummarySectionHeader = styled(Box)`
   ${withBorder({ borderBottom: 'regular' })} 
   
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    ${withText({
-      size: 'body',
-    })}
-    ${withBorder({ borderBottom: 0 })} 
+    ${withText({ size: 'body' })};
+    ${withBorder({ borderBottom: 0 })};
   }
 `;
 
@@ -157,12 +153,6 @@ SectionForm.propTypes = {
   children: any,
 };
 
-
-export const SectionSortable = sortableContainer(Block);
-
-SectionSortable.defaultProps = {
-  padding: 'xLarge',
-};
 
 export const SectionActions = props => (
   <Block

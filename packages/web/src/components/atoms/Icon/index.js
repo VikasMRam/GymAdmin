@@ -53,8 +53,7 @@ const Icon = styled(({ icon, size, ...props }) => {
   return (
     <Wrapper size={size} {...props} data-cy={icon} dangerouslySetInnerHTML={{ __html: svg }} />
   );
-})`
-`;
+})``;
 
 Icon.displayName = 'Icon';
 

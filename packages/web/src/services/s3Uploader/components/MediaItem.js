@@ -47,12 +47,13 @@ const Thumbnail = styled.div`
   width: 96px;
 `;
 
-const ActionButton = styled(IconButton)`
-  margin-right: ${size('spacing.large')};
-`;
+const ActionButton = styled(IconButton)``;
 
 ActionButton.defaultProps = {
   iconSize: 'body',
+  noPadding: true,
+  marginRight: 'large',
+  padding: 0,
 };
 
 export default class MediaItem extends React.Component {

@@ -223,7 +223,7 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
 
     return showModal((
       <ConfirmationDialog
-        heading={`Remove ${image.attributes.name}`}
+        heading={`Remove ${image.attributes.description || image.attributes.name}`}
         description={`Are you sure that you want to remove ${image.attributes.name}? This cannot be undone.`}
         onConfirmClick={doDelete}
         onCancelClick={hideModal}

@@ -8,6 +8,7 @@ import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import { size, palette } from 'sly/web/components/themes';
 import Link from 'sly/web/components/atoms/Link';
 import SlyEvent from 'sly/web/services/helpers/events';
+import { withSpacing } from 'sly/web/components/helpers';
 
 const backgroundColor = ({
   ghost, transparent, selected, secondary, disabled,
@@ -106,6 +107,7 @@ const lineHeight = ({ kind }) => {
 };
 
 export const styles = css`
+  ${withSpacing};
   display: inline-flex;
   align-items: center;
   justify-content: center;
