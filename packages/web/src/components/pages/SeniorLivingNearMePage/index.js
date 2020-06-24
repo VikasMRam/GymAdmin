@@ -210,7 +210,7 @@ const SeniorLivingNearMePage = ({
     return (
       <>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={slRef} >
+          <Heading level="title" size="title" ref={slRef} >
             What is Senior Living?
           </Heading>
           <Paragraph>
@@ -237,7 +237,7 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={costRef}>
+          <Heading level="title" size="title" ref={costRef}>
             How Much Does Senior Living Cost?
           </Heading>
           <Paragraph>
@@ -339,7 +339,7 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={chooseRef} >
+          <Heading level="title" size="title" ref={chooseRef} >
             The Benefits of Choosing a Senior Living Community
           </Heading>
 
@@ -389,7 +389,7 @@ const SeniorLivingNearMePage = ({
 
         <StyledArticle>
 
-          <Heading level="title" size="title" _ref={typesRef}>
+          <Heading level="title" size="title" ref={typesRef}>
             Senior Living: Independent Living
           </Heading>
           <Paragraph>
@@ -793,7 +793,7 @@ const SeniorLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={faqRef} >
+          <Heading level="title" size="title" ref={faqRef} >
             Senior Living FAQs
           </Heading>
           <Paragraph>
@@ -870,7 +870,7 @@ const SeniorLivingNearMePage = ({
             </Column>
             <Body>
             {SEOContent()}
-            <Heading level="title" size="title" _ref={nearRef}>
+            <Heading level="title" size="title" ref={nearRef}>
               {heading}
             </Heading>
             <StyledArticle>

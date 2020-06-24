@@ -122,7 +122,7 @@ const RespiteCareNearMePage = ({
     return (
       <>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={rcRef} >
+        <Heading level="title" size="title" ref={rcRef} >
           What is Respite Care Near You?
 
         </Heading>
@@ -144,7 +144,7 @@ const RespiteCareNearMePage = ({
         </Link>
       </StyledArticle>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={whyRef}>
+        <Heading level="title" size="title" ref={whyRef}>
           5 Common Reasons for Respite Care
         </Heading>
         <ol>
@@ -172,7 +172,7 @@ const RespiteCareNearMePage = ({
         </Link>
       </StyledArticle>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={costRef} >
+        <Heading level="title" size="title" ref={costRef} >
           How Much Does Respite Care Costs
         </Heading>
 
@@ -205,7 +205,7 @@ const RespiteCareNearMePage = ({
       </StyledArticle>
       <StyledArticle>
 
-        <Heading level="title" size="title" _ref={typesRef}>
+        <Heading level="title" size="title" ref={typesRef}>
           Types of Respite Care for Elderly
         </Heading>
         <Paragraph>
@@ -269,7 +269,7 @@ const RespiteCareNearMePage = ({
         </Link>
       </StyledArticle>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={articlesRef} >
+        <Heading level="title" size="title" ref={articlesRef} >
           Featured Articles on Respite Care
         </Heading>
 
@@ -316,7 +316,7 @@ const RespiteCareNearMePage = ({
       </StyledArticle>
 
       <StyledArticle>
-        <Heading level="title" size="title" _ref={seniorLivingRef} >
+        <Heading level="title" size="title" ref={seniorLivingRef} >
           Other Types of Senior Living
         </Heading>
         <Paragraph>

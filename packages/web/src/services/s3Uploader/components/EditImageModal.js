@@ -1,18 +1,19 @@
 import React from 'react';
+import { bool, func } from 'prop-types';
+import { Field, reduxForm } from 'redux-form';
 
 import Modal, { HeaderWithClose, ModalActions, ModalBody } from 'sly/web/components/atoms/NewModal';
-import { Field, reduxForm } from 'redux-form';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
-import { createValidator, dependentRequired, email, required, usPhone } from 'sly/web/services/validation';
+import { createValidator, required } from 'sly/web/services/validation';
 import { Button } from 'sly/web/components/atoms';
-import { SectionActions } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
+import { imagePropType } from 'sly/web/propTypes/gallery';
 
 const EditImageModalForm = ({ image, onClose, canEdit, handleSubmit, saveImage, invalid, submitting, ...props }) => {
   const imgPath = image?.attributes?.path;
   return (
     <Modal isOpen={!!image} {...props} onSubmit={handleSubmit}>
-      <HeaderWithClose onClose={onClose}>Add a caption</HeaderWithClose>
+      <HeaderWithClose icon="edit" onClose={onClose}>Add a caption</HeaderWithClose>
 
       {imgPath && (
         <ResponsiveImage
@@ -43,13 +44,22 @@ const EditImageModalForm = ({ image, onClose, canEdit, handleSubmit, saveImage, 
   );
 };
 
-const formName = 'EditImageForm';
+EditImageModalForm.propTypes = {
+  image: imagePropType,
+  canEdit: bool,
+  invalid: bool,
+  submitting: bool,
+  onClose: func,
+  handleSubmit: func,
+  saveImage: func,
+};
+
 const validate = createValidator({
   description: [required],
 });
 
 const ReduxForm = reduxForm({
-  form: formName,
+  form: 'EditImageForm',
   validate,
 })(EditImageModalForm);
 
@@ -75,4 +85,10 @@ export default function EditImageModal({ image, saveImage, onClose, ...props }) 
     />
   );
 }
+
+EditImageModal.propTypes = {
+  image: imagePropType,
+  saveImage: func,
+  onClose: func,
+};
 

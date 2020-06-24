@@ -27,7 +27,7 @@ const configs = [
 ];
 
 
-const waitForFile = (path, timeout = 100, max = 10) => new Promise((resolve, reject) => {
+const waitForFile = (path, timeout = 100, max = 100) => new Promise((resolve, reject) => {
   let counter = 0;
   const interval = setInterval(() => {
     if (fs.existsSync(path)) {
@@ -36,7 +36,9 @@ const waitForFile = (path, timeout = 100, max = 10) => new Promise((resolve, rej
     } else {
       counter++;
       if (counter >= max) {
-        reject(new Error(`file: ${path} not found`));
+        const error = new Error(`file: ${path} not found`);
+        console.error(error);
+        reject(error);
       }
     }
   }, timeout);

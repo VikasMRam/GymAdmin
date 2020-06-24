@@ -1,5 +1,5 @@
 import React from 'react';
-import { node, oneOf } from 'prop-types';
+import { node, number, oneOf, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { text as textPropType } from 'sly/web/propTypes/text';
@@ -13,15 +13,6 @@ const lineHeight = p => size('lineHeight', p.size || p.level);
 const fontWeight = p => size('weight', p.weight);
 const color = p => palette(p.palette, p.variation);
 
-const getTag = (level) => {
-  switch (level) {
-    case 'hero': return 1;
-    case 'title': return 2;
-    case 'subtitle': return 3;
-    default: return 1;
-  }
-};
-
 const getMarginBottom = (p) => {
   switch (p.size) {
     case 'hero': return '2.000rem';
@@ -31,19 +22,32 @@ const getMarginBottom = (p) => {
   }
 };
 
-const styles = css`
+const H1 = styled('h1')``;
+const H2 = styled('h2')``;
+const H3 = styled('h3')``;
+
+const getTag = (level) => {
+  switch (level) {
+    case 'hero': return H1;
+    case 'title': return H2;
+    case 'subtitle': return H3;
+    default: return H1;
+  }
+};
+
+const Heading = styled((props) => {
+  const HeadingTag = getTag(props.level);
+  return (
+    <HeadingTag
+      {...props}
+    />
+  );
+})`
   font-size: ${fontSize};
   line-height: ${lineHeight};
   font-weight: ${fontWeight};
   margin: 0 0 ${getMarginBottom} 0;
   color: ${color};
-`;
-
-const Heading = styled(({
-  level, children, palette, variation, theme, _ref, ...props
-}) =>
-  React.createElement(`h${getTag(level)}`, { ref: _ref, ...props }, children))`
-  ${styles};
 `;
 
 Heading.propTypes = {

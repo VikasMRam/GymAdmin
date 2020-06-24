@@ -160,7 +160,7 @@ const HomeCareNearMePage = ({
     return (
       <>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={hcRef} >
+          <Heading level="title" size="title" ref={hcRef} >
             What is Home Care Near You?
           </Heading>
           <Paragraph>
@@ -206,7 +206,7 @@ const HomeCareNearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={whyRef}>
+          <Heading level="title" size="title" ref={whyRef}>
             Why Choose Home Care?
           </Heading>
           <Paragraph>
@@ -254,7 +254,7 @@ const HomeCareNearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={servicesRef} >
+          <Heading level="title" size="title" ref={servicesRef} >
             What Services Are Provided by Home Care?
           </Heading>
 
@@ -305,7 +305,7 @@ const HomeCareNearMePage = ({
         </StyledArticle>
         <StyledArticle>
 
-          <Heading level="title" size="title" _ref={costRef}>
+          <Heading level="title" size="title" ref={costRef}>
             How Much Does Home Care Cost?
           </Heading>
           <Paragraph>
@@ -368,7 +368,7 @@ const HomeCareNearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={chooseRef} >
+          <Heading level="title" size="title" ref={chooseRef} >
             How to Decide If Home Care Is the Right Choice
           </Heading>
 
@@ -525,7 +525,7 @@ const HomeCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={hcvsalRef} >
+          <Heading level="title" size="title" ref={hcvsalRef} >
             Home Care vs. Assisted Living
           </Heading>
           <Paragraph>
@@ -551,7 +551,7 @@ const HomeCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={specializedRef} >
+          <Heading level="title" size="title" ref={specializedRef} >
             Specialized Home Care Options
           </Heading>
           <Paragraph>
@@ -610,7 +610,7 @@ const HomeCareNearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={companyRef} >
+          <Heading level="title" size="title" ref={companyRef} >
             Choosing the Right Home Care Company
           </Heading>
           <Paragraph>
@@ -659,7 +659,7 @@ const HomeCareNearMePage = ({
 
 
       <StyledArticle>
-        <Heading level="title" size="title" _ref={faqRef} >
+        <Heading level="title" size="title" ref={faqRef} >
           Home Care FAQs
         </Heading>
         <Paragraph>

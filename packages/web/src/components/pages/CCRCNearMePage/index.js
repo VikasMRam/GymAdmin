@@ -207,7 +207,7 @@ const CCRCNearMePage = ({
   const SEOContent = () => (
     <>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={ccrcRef} >
+        <Heading level="title" size="title" ref={ccrcRef} >
           What is a Continuing Care Retirement Community (CCRC)?
         </Heading>
         <Paragraph>
@@ -249,7 +249,7 @@ const CCRCNearMePage = ({
         </Link>
       </StyledArticle>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={proconRef}>
+        <Heading level="title" size="title" ref={proconRef}>
           The Pros and Cons of Senior Living in a CCRC
         </Heading>
         <Paragraph>
@@ -364,7 +364,7 @@ const CCRCNearMePage = ({
         </Link>
       </StyledArticle>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={careRef} >
+        <Heading level="title" size="title" ref={careRef} >
           Common Levels of Care in a CCRC
         </Heading>
         <Paragraph>
@@ -431,7 +431,7 @@ const CCRCNearMePage = ({
         <WhatIsPartnerAgent toc="CCRC" agents={agents}/>
       </StyledArticle>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={costRef}>
+        <Heading level="title" size="title" ref={costRef}>
           What Is The Cost of a CCRC?
         </Heading>
         <Paragraph>
@@ -465,7 +465,7 @@ const CCRCNearMePage = ({
         </Link>
       </StyledArticle>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={ccrcvsalRef} >
+        <Heading level="title" size="title" ref={ccrcvsalRef} >
           CCRC vs. Assisted Living
         </Heading>
 
@@ -610,7 +610,7 @@ const CCRCNearMePage = ({
         </Link>
       </StyledArticle>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={ccrcvshcRef} >
+        <Heading level="title" size="title" ref={ccrcvshcRef} >
           CCRC vs. Home Care
         </Heading>
         <Paragraph>
@@ -772,7 +772,7 @@ const CCRCNearMePage = ({
         </Link>
       </StyledArticle>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={chooseRef} >
+        <Heading level="title" size="title" ref={chooseRef} >
           Is a CCRC Right for Me or My Loved One?
         </Heading>
         <Paragraph>
@@ -799,7 +799,7 @@ const CCRCNearMePage = ({
         </Link>
       </StyledArticle>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={faqRef} >
+        <Heading level="title" size="title" ref={faqRef} >
           CCRC FAQs
         </Heading>
         <Paragraph>
@@ -877,7 +877,7 @@ const CCRCNearMePage = ({
             </Column>
             <Body>
             {SEOContent()}
-            <Heading level="title" size="title" _ref={nearRef}>
+            <Heading level="title" size="title" ref={nearRef}>
               {heading}
             </Heading>
             {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}

@@ -218,7 +218,7 @@ const IndependentLivingNearMePage = ({
     return (
       <>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={ilRef} >
+          <Heading level="title" size="title" ref={ilRef} >
             What Is Independent Living?
           </Heading>
           <Paragraph>
@@ -260,7 +260,7 @@ const IndependentLivingNearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={costRef}>
+          <Heading level="title" size="title" ref={costRef}>
             The Cost of Independent Living
           </Heading>
           <Paragraph>
@@ -311,7 +311,7 @@ const IndependentLivingNearMePage = ({
           </Paragraph>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={typesRef} >
+          <Heading level="title" size="title" ref={typesRef} >
             Types of Independent Living
           </Heading>
 
@@ -421,7 +421,7 @@ const IndependentLivingNearMePage = ({
 
         <StyledArticle>
 
-          <Heading level="title" size="title" _ref={alternativeRef}>
+          <Heading level="title" size="title" ref={alternativeRef}>
             Independent Living Alternatives
           </Heading>
           <Paragraph>
@@ -491,7 +491,7 @@ const IndependentLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={servicesRef} >
+          <Heading level="title" size="title" ref={servicesRef} >
             Services Provided in Independent Living
           </Heading>
 
@@ -581,7 +581,7 @@ const IndependentLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-            <Heading level="title" size="title" _ref={ilvsalRef} >
+            <Heading level="title" size="title" ref={ilvsalRef} >
               Independent Living vs. Assisted Living
             </Heading>
             <Paragraph>
@@ -718,7 +718,7 @@ const IndependentLivingNearMePage = ({
           </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={chooseRef} >
+          <Heading level="title" size="title" ref={chooseRef} >
             How to Choose the Right Independent Living Community
           </Heading>
 
@@ -791,7 +791,7 @@ const IndependentLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={faqRef} >
+          <Heading level="title" size="title" ref={faqRef} >
             Independent Living FAQs
           </Heading>
           <Paragraph>
@@ -872,7 +872,7 @@ const IndependentLivingNearMePage = ({
             </Column>
             <Body>
             {SEOContent()}
-            <Heading level="title" size="title" _ref={nearRef}>
+            <Heading level="title" size="title" ref={nearRef}>
               {heading}
             </Heading>
             {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}

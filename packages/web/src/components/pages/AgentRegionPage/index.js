@@ -117,7 +117,7 @@ export default class AgentRegionPage extends Component {
         <TemplateHeader><HeaderContainer /></TemplateHeader>
         <TemplateContent>
           <PageHeadingSection>
-            <TitleHeading level="hero" size="hero" _ref={(el) => { this.title = el; }}>{title}</TitleHeading>
+            <TitleHeading level="hero" size="hero" ref={(el) => { this.title = el; }}>{title}</TitleHeading>
             <FindLocalAgentLink
               palette="slate"
               onClick={() => {

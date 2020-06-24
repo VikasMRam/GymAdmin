@@ -20,7 +20,7 @@ export const withBorder = (props) => {
     values.borderColor = getBorderColor('borderPalette', 'borderVariation')(props);
   }
   if (props.borderRadius) {
-    values.borderRadius = size('spacing', props.borderRadius)();
+    values.borderRadius = size('spacing', props.borderRadius)(props);
   }
   if (Object.keys(values).length) {
     return css(values);
