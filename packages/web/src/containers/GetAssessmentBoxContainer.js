@@ -31,6 +31,7 @@ export default class GetAssessmentBoxContainer extends Component {
     community: communityPropType,
     status: object,
     layout: string.isRequired,
+    boxLayout: string,
     startLink: string.isRequired,
     completedAssessment: bool,
     className: string,
@@ -60,7 +61,7 @@ export default class GetAssessmentBoxContainer extends Component {
   }
 
   render() {
-    const { status = {}, layout, agent, community, completedAssessment, startLink, className } = this.props;
+    const { status = {}, layout, boxLayout, agent, community, completedAssessment, startLink, className } = this.props;
     const { modalOpened } = this.state;
     let hasFinished = true;
     let buttonProps = {
@@ -85,7 +86,7 @@ export default class GetAssessmentBoxContainer extends Component {
         {layout === 'box' && !completedAssessment &&
           <GetAssessmentBox
             palette="primary"
-            layout={layout}
+            layout={boxLayout}
             buttonProps={buttonProps}
           />
         }
@@ -96,12 +97,12 @@ export default class GetAssessmentBoxContainer extends Component {
           />
         }
         {layout === 'footer' &&
-        <CommunityStickyFooter
-          community={community}
-          locTrack="sticky-footer"
-          isAlreadyPricingRequested={completedAssessment}
-          {...buttonProps}
-        />
+          <CommunityStickyFooter
+            community={community}
+            locTrack="sticky-footer"
+            isAlreadyPricingRequested={completedAssessment}
+            {...buttonProps}
+          />
         }
         <Modal isOpen={modalOpened} onClose={this.toggleModal}>
           <HeaderWithClose onClose={this.toggleModal} />
