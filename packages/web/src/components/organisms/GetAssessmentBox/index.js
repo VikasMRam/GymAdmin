@@ -39,7 +39,7 @@ const StyledHeading = styled(PaddedHeading)`
 `;
 
 const GetAssessmentBox = ({ palette, layout, buttonProps }) => (
-  <TextAlignCenteredBox backgroundPalette={palette} backgroundVariation="background">
+  <TextAlignCenteredBox backgroundPalette={palette} backgroundVariation="stroke">
     <Wrapper layout={layout}>
       <StyledIcon icon="logo" palette="primary" size="xLarge" />
       <StyledHeading layout={layout} level="subtitle">Complete this 3-minute assessment tool to get personalized senior living and care options.</StyledHeading>
