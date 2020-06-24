@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { query, withUser } from 'sly/web/services/api';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { community as communityPropType } from 'sly/web/propTypes/community';
-import { CONSULTATION_REQUESTED, PROFILE_CONTACTED, PRICING_REQUEST } from 'sly/web/services/api/constants';
+import { CONSULTATION_REQUESTED, PROFILE_CONTACTED, PRICING_REQUEST, WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
 import AuthContainer from 'sly/web/services/auth/containers/AuthContainer';
 import userPropType from 'sly/web/propTypes/user';
 
@@ -27,6 +27,7 @@ export default class Auth extends Component {
     const { user } = this.props;
 
     if (user) {
+
       this.handleAuthSuccess();
     }
   }
@@ -59,7 +60,18 @@ export default class Auth extends Component {
         actionPage: pathname,
         actionInfo,
       },
-    })
+    }).then(()=> createAction({
+          type: 'UUIDAction',
+          attributes: {
+            actionType: WIZARD_STEP_COMPLETED,
+            actionPage: pathname,
+            actionInfo: {
+              stepName: 'auth',
+              wizardName: 'assessmentWizard',
+              data: actionInfo,
+            },
+          },
+        }))
       .then(onAuthSuccess);
   };
 

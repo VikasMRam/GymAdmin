@@ -190,12 +190,12 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
           {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
             <PaddedSearchResultsAdTileContainer type="homeCare" locationLabel={locLabel} tocLabel={tocLabel} />
           }
-          {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
+          {isBrowser && ((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
             <PaddedGetAssessmentBoxContainer
-              completedAssessment={false}
-              agentId={''}
+              completedAssessment={!!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
+              agentId={localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || ''}
               startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
-              layout="box"
+              layout="fixed"
             />
           }
         </>
