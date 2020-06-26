@@ -4,10 +4,9 @@ import { bool, string } from 'prop-types';
 
 import { community as communityPropType } from 'sly/web/propTypes/community';
 import { size, palette, key } from 'sly/web/components/themes';
-import pad from 'sly/web/components/helpers/pad';
+
 import CommunityActions from 'sly/web/components/molecules/CommunityActions';
 import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';
-import { Experiment, Variant } from 'sly/web/services/experiments';
 import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
 
 
