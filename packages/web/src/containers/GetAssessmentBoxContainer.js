@@ -14,6 +14,7 @@ import PostConversionGreetingForm from 'sly/web/components/organisms/PostConvers
 import GetCommunityPricingAndAvailability from 'sly/web/components/organisms/GetCommunityPricingAndAvailability';
 import CommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
 import SlyEvent from 'sly/web/services/helpers/events';
+
 const PaddedBlock = pad(Block, 'regular');
 
 @branch(
@@ -83,7 +84,7 @@ export default class GetAssessmentBoxContainer extends Component {
 
     return (
       <div className={className}>
-        {layout === 'box' && !completedAssessment &&
+        {layout === 'box' &&
           <GetAssessmentBox
             palette="primary"
             layout={boxLayout}

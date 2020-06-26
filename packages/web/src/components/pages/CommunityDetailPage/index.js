@@ -90,7 +90,7 @@ const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDet
 const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
 const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
 const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable);
-const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator);
+const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator, { alwaysHydrate: true });
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -480,6 +480,7 @@ export default class CommunityDetailPage extends Component {
                 </StyledHeadingBoxSection>
                 <PaddedGetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
+                  community={community}
                 />
                 {sortedEstimatedPrice.length > 0 && (
                   <StyledHeadingBoxSection heading={`Compare Costs for ${name}`}>
@@ -631,7 +632,20 @@ export default class CommunityDetailPage extends Component {
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
-                <CommunityStickyFooter community={community} isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack="sticky-footer"/>
+                {(address.state === 'TX' || address.state === 'PA' || address.state === 'NJ') &&
+                  <GetAssessmentBoxContainerHydrator
+                    startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
+                    community={community}
+                    layout="footer"
+                  />
+                }
+                {address.state !== 'TX' && address.state !== 'PA' && address.state !== 'NJ' &&
+                  <CommunityStickyFooter
+                    community={community}
+                    isAlreadyPricingRequested={isAlreadyPricingRequested}
+                    locTrack="sticky-footer"
+                  />
+                }
               </Body>
               <Column>
                 <StickToTop>
