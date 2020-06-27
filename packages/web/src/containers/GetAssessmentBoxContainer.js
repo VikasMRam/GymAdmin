@@ -5,7 +5,9 @@ import { branch } from 'recompose';
 import { prefetch } from 'sly/web/services/api';
 import agentPropType from 'sly/web/propTypes/agent';
 import communityPropType from 'sly/web/propTypes/community';
+import SlyEvent from 'sly/web/services/helpers/events';
 import pad from 'sly/web/components/helpers/pad';
+import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 import { Link, Block } from 'sly/web/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
 import GetAssessmentBox from 'sly/web/components/organisms/GetAssessmentBox';
@@ -13,7 +15,6 @@ import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
 import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';
 import GetCommunityPricingAndAvailability from 'sly/web/components/organisms/GetCommunityPricingAndAvailability';
 import CommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
-import SlyEvent from 'sly/web/services/helpers/events';
 
 const PaddedBlock = pad(Block, 'regular');
 
@@ -36,9 +37,11 @@ export default class GetAssessmentBoxContainer extends Component {
     startLink: string.isRequired,
     completedAssessment: bool,
     className: string,
+    extraProps: object.isRequired,
   };
   static defaultProps = {
     layout: 'box',
+    extraProps: {},
   };
 
   state = {
@@ -62,7 +65,9 @@ export default class GetAssessmentBoxContainer extends Component {
   }
 
   render() {
-    const { status = {}, layout, boxLayout, agent, community, completedAssessment, startLink, className } = this.props;
+    const {
+      status = {}, layout, boxLayout, agent, community, completedAssessment, startLink, className, extraProps,
+    } = this.props;
     const { modalOpened } = this.state;
     let hasFinished = true;
     let buttonProps = {
@@ -103,6 +108,14 @@ export default class GetAssessmentBoxContainer extends Component {
             locTrack="sticky-footer"
             isAlreadyPricingRequested={completedAssessment}
             {...buttonProps}
+          />
+        }
+        {layout === 'pricing-table' &&
+          <CommunityPricingTable
+            {...extraProps}
+            community={community}
+            isAlreadyPricingRequested={completedAssessment}
+            buttonProps={buttonProps}
           />
         }
         <Modal isOpen={modalOpened} onClose={this.toggleModal}>

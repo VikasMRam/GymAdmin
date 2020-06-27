@@ -9,7 +9,7 @@ export default class GetAssessmentBoxContainerHydrator extends Component {
 
   render() {
     if (!isBrowser) {
-      return null;
+      // return null;
     }
 
     return (

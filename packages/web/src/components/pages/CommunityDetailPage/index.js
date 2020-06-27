@@ -17,7 +17,6 @@ import {
 } from 'sly/web/services/helpers/pricing';
 import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
-import { getIsCCRC, getIsSNF } from 'sly/web/services/helpers/community';
 import { Button, Paragraph, Hr, Block, Link, Heading } from 'sly/web/components/atoms';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
@@ -41,7 +40,6 @@ import UnhydratedCommunityMediaGalleryContainer from 'sly/web/containers/Communi
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import UnhydratedOfferNotification from 'sly/web/components/molecules/OfferNotification';
 import CommunityCareService from 'sly/web/components/organisms/CommunityCareService';
-import CommunityExtraInfoSection from 'sly/web/components/molecules/CommunityExtraInfoSection';
 import CommunityDisclaimerSection from 'sly/web/components/molecules/CommunityDisclaimerSection';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import IconButton from 'sly/web/components/molecules/IconButton';
@@ -49,7 +47,6 @@ import UnhydratedGetCurrentAvailabilityContainer from 'sly/web/containers/GetCur
 import UnhydratedHowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import UnhydratedAskAgentQuestionButtonContainer from 'sly/web/containers/AskAgentQuestionButtonContainer';
-import UnhydratedGetCustomPricingButtonContainer from 'sly/web/containers/GetCustomPricingButtonContainer';
 import PlusBranding from 'sly/web/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
@@ -74,7 +71,6 @@ const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alway
 const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGalleryContainer);
 const CommunitySummaryContainer = withHydration(UnhydratedCommunitySummaryContainer);
 const OfferNotification = withHydration(UnhydratedOfferNotification);
-const GetCustomPricingButtonContainer = withHydration(UnhydratedGetCustomPricingButtonContainer);
 const TrackedSimilarCommunitiesContainer = withHydration(UnhydratedTrackedSimilarCommunitiesContainer);
 const GetCurrentAvailabilityContainer = withHydration(UnhydratedGetCurrentAvailabilityContainer);
 const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContainer);
@@ -89,7 +85,7 @@ const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
 const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
 const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
-const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable);
+const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable, { alwaysHydrate: true });
 const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator, { alwaysHydrate: true });
 
 const BackToSearch = styled.div`
@@ -126,11 +122,6 @@ const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true 
 const StyledSection = styled(Section)`
   margin-bottom: ${size('spacing.xxxLarge')}!important;
 `;
-
-const StyledCommunityExtraInfoSection = styled(CommunityExtraInfoSection)`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
-
 
 const StyledBannerNotification = pad(BannerNotification, 'large');
 
@@ -281,7 +272,6 @@ export default class CommunityDetailPage extends Component {
       promoTitle,
       covidInfoDescription,
       covidInfoTitle,
-      communitySize,
       communityInsights,
       plusCommunity,
       menuLink,
@@ -299,8 +289,6 @@ export default class CommunityDetailPage extends Component {
     } = propInfo;
 
     const typeOfCare = typeCares[0];
-    const hasCCRC = getIsCCRC(community);
-    const hasSNF = getIsSNF(community);
 
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
@@ -309,11 +297,11 @@ export default class CommunityDetailPage extends Component {
     // FIXME: @fonz cleaning this up
     const isAlreadyPricingRequested = profileContacted.pricing;
     let isClaimed = false;
-    if ( communityUser && communityUser.email && !communityUser.email.match(/@seniorly.com/) ) {
+    if (communityUser && communityUser.email && !communityUser.email.match(/@seniorly.com/)) {
       isClaimed = true;
     }
 
-    const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
+    const { sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
     const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 
@@ -447,36 +435,25 @@ export default class CommunityDetailPage extends Component {
                   heading={`${pricingTitle} at ${name}`}
                   id="pricing-and-floor-plans"
                 >
-                  {hasCCRC && (
-                    <>
-                      <Paragraph>
-                        Pricing for {name} may include both a one time buy-in
-                        fee and a monthly component. Connect directly with{' '}
-                        {name} to find out your pricing.
-                      </Paragraph>
-                      <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested} locTrack="ccrc-pricing-table">
-                      Get Detailed Pricing
-                      </GetCustomPricingButtonContainer>
-                    </>
-                  )}
-                  {!hasCCRC && hasSNF && (
-                    <>
-                      <Paragraph>
-                        90% of Skilled Nursing Facilities in the United States are Medicare-certified. Some also accept Medicaid. To learn about pricing at {name}, click the button below.
-                      </Paragraph>
-                      <GetCustomPricingButtonContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested} locTrack="snf-pricing-table">
-                        Get Pricing
-                      </GetCustomPricingButtonContainer>
-                    </>
-                  )}
-                  {!hasCCRC && !hasSNF && (
+                  {(address.state === 'TX' || address.state === 'PA' || address.state === 'NJ') &&
+                    <GetAssessmentBoxContainerHydrator
+                      startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
+                      community={community}
+                      layout="pricing-table"
+                      extraProps={{
+                        pricesList,
+                        estimatedPriceList,
+                      }}
+                    />
+                  }
+                  {address.state !== 'TX' && address.state !== 'PA' && address.state !== 'NJ' &&
                     <CommunityPricingTable
                       pricesList={pricesList}
                       estimatedPriceList={estimatedPriceList}
                       isAlreadyPricingRequested={isAlreadyPricingRequested}
                       community={community}
                     />
-                  )}
+                  }
                 </StyledHeadingBoxSection>
                 <PaddedGetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
@@ -487,7 +464,7 @@ export default class CommunityDetailPage extends Component {
                     <CommunityPricingComparison community={community} />
                   </StyledHeadingBoxSection>
                 )}
-                {/* TODO: ENABLE AFTER FIGURING OUT HYDRATION*/}
+                {/* TODO: ENABLE AFTER FIGURING OUT HYDRATION */}
                 <AdWrapper>
                   <CommunityProfileAdTileContainer type="homeCare" community={community} />
                 </AdWrapper>
@@ -649,7 +626,15 @@ export default class CommunityDetailPage extends Component {
               </Body>
               <Column>
                 <StickToTop>
-                  <CommunityDetailsPageColumnContainer community={community} />
+                  {(address.state === 'TX' || address.state === 'PA' || address.state === 'NJ') &&
+                    <GetAssessmentBoxContainerHydrator
+                      startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
+                      community={community}
+                      layout="sidebar"
+                    />
+                  }
+                  {address.state !== 'TX' && address.state !== 'PA' && address.state !== 'NJ' &&
+                    <CommunityDetailsPageColumnContainer community={community} />}
                 </StickToTop>
               </Column>
             </TwoColumn>
