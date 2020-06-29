@@ -407,7 +407,7 @@ theme.zIndexes = {
     overlay             : 10000,
     galleryLayoutHeading: 10001,
   },
-  stickySections     : 10000,
+  stickySections     : 1000,
   header             : 10001,
   searchSuggestions  : 10002,
   notifications      : 10003,

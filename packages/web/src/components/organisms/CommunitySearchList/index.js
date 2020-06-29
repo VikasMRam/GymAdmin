@@ -170,33 +170,35 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
                 value: similarProperty.id,
               }}
             >
-            <ShadowCommunityTile
-              community={similarProperty}
-              layout="column"
-              imageSize="regular"
-              noGallery
-              showDescription
-              showSeeMoreButtonOnHover
-              lazyLoadImage={index !== 0}
-              event={{
-                category: 'SearchPage',
-                action: 'communityClick',
-                label: index,
-                value: similarProperty.id,
-              }}
-            />
+              <ShadowCommunityTile
+                community={similarProperty}
+                layout="column"
+                imageSize="regular"
+                noGallery
+                showDescription
+                showSeeMoreButtonOnHover
+                lazyLoadImage={index !== 0}
+                event={{
+                  category: 'SearchPage',
+                  action: 'communityClick',
+                  label: index,
+                  value: similarProperty.id,
+                }}
+              />
             </StyledLink>
           </CommunityTileWrapper>
           {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
-            <PaddedSearchResultsAdTileContainer type="homeCare" locationLabel={locLabel} tocLabel={tocLabel} />
-          }
-          {isBrowser && ((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
-            <PaddedGetAssessmentBoxContainer
-              completedAssessment={!!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
-              agentId={localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || ''}
-              startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
-              boxLayout="fixed"
-            />
+            <div>
+              <PaddedSearchResultsAdTileContainer type="homeCare" locationLabel={locLabel} tocLabel={tocLabel} />
+              {isBrowser &&
+                <PaddedGetAssessmentBoxContainer
+                  completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
+                  agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
+                  startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
+                  boxLayout="fixed"
+                />
+              }
+            </div>
           }
         </>
       ))}
