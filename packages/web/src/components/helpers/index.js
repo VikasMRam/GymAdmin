@@ -10,3 +10,4 @@ export * from './color';
 export * from './spacing';
 export * from './text';
 export * from './display';
+export * from './zIndex';

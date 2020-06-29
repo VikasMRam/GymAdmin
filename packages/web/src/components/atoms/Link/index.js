@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Link as RRLink } from 'react-router-dom';
 import { string, bool, object } from 'prop-types';
 import { ifNotProp } from 'styled-tools';
@@ -10,13 +10,15 @@ import { routes as routesPropType } from 'sly/web/propTypes/routes';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
-import { withColor, withText, withSpacing, withDisplay, withBorder } from 'sly/web/components/helpers';
+import { withColor, withText, withSpacing, withDisplay, withBorder, withZIndex } from 'sly/web/components/helpers';
 
-export const styles = css`
+// eslint-disable-next-line jsx-a11y/anchor-has-content
+export const Anchor = styled.a`
   ${withDisplay}
   ${withSpacing}
   ${withText}
   ${withBorder}
+  ${withZIndex}
   
   &, &:active {
     ${withColor} 
@@ -33,15 +35,6 @@ export const styles = css`
   &:focus {
     outline: none;
   }
-`;
-
-// eslint-disable-next-line jsx-a11y/anchor-has-content
-export const Anchor = styled.a`
-  ${styles};
-`;
-
-export const StyledLink = styled(RRLink)`
-  ${styles};
 `;
 
 export default class Link extends Component {
@@ -79,7 +72,7 @@ export default class Link extends Component {
   render() {
     const props = this.checkPropsForLinks();
     if (props.to) {
-      return <StyledLink {...props} to={addEventToUrl(props.to, props.event)} />;
+      return <RRLink {...props} component={Anchor} to={addEventToUrl(props.to, props.event)} />;
     }
     const target = props.href && props.href.match(/https?:\/\//)
       ? { target: '_blank', rel: 'noopener' }
