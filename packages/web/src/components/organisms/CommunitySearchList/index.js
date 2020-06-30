@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object, arrayOf } from 'prop-types';
 import queryString from 'query-string';
@@ -24,18 +24,6 @@ const CommunityFilterBarWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
   }
-`;
-const CommunityTileWrapper = pad(styled.div`
-  position: relative;
-`, 'xLarge');
-
-const StyledLink = styled(Link)`
-  // position: absolute !important;
-  // top: 0 !important;
-  // right: 0 !important;
-  // bottom: 0 !important;
-  // left: 0 !important;
-  z-index: 10;
 `;
 
 const StyledHeading = styled(Heading)`
@@ -159,36 +147,37 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
         <CommunityFilterBar searchParams={searchParams} />
       </CommunityFilterBarWrapper>
       {communityList.map((similarProperty, index) => (
-        <>
-          <CommunityTileWrapper key={similarProperty.id}>
-            <StyledLink
-              to={similarProperty.url}
+        <Fragment  key={similarProperty.id}>
+          <Link
+            to={similarProperty.url}
+            event={{
+              category: 'SearchPage',
+              action: 'communityClick',
+              label: index,
+              value: similarProperty.id,
+            }}
+            marginBottom="xLarge"
+            block
+            zIndex={10}
+          >
+            <ShadowCommunityTile
+              community={similarProperty}
+              layout="column"
+              imageSize="regular"
+              noGallery
+              showDescription
+              showSeeMoreButtonOnHover
+              lazyLoadImage={index !== 0}
               event={{
                 category: 'SearchPage',
                 action: 'communityClick',
                 label: index,
                 value: similarProperty.id,
               }}
-            >
-              <ShadowCommunityTile
-                community={similarProperty}
-                layout="column"
-                imageSize="regular"
-                noGallery
-                showDescription
-                showSeeMoreButtonOnHover
-                lazyLoadImage={index !== 0}
-                event={{
-                  category: 'SearchPage',
-                  action: 'communityClick',
-                  label: index,
-                  value: similarProperty.id,
-                }}
-              />
-            </StyledLink>
-          </CommunityTileWrapper>
+            />
+          </Link>
           {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
-            <div>
+            <>
               <PaddedSearchResultsAdTileContainer type="homeCare" locationLabel={locLabel} tocLabel={tocLabel} />
               {isBrowser &&
                 <PaddedGetAssessmentBoxContainer
@@ -198,9 +187,9 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
                   boxLayout="fixed"
                 />
               }
-            </div>
+            </>
           }
-        </>
+        </Fragment>
       ))}
       {communityList.length < 1 &&
         <>

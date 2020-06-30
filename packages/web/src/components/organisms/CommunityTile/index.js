@@ -194,7 +194,6 @@ const CommunityTile = ({
             community={community}
             showFloorPlan={showFloorPlan}
             showDescription={showDescription}
-            headerIsLink
             event={event}
           />
           {buildActionButtons(actionButtons)}
