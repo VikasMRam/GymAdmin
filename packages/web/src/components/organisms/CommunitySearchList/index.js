@@ -179,14 +179,12 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
           {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
             <>
               <PaddedSearchResultsAdTileContainer type="homeCare" locationLabel={locLabel} tocLabel={tocLabel} />
-              {isBrowser &&
-                <PaddedGetAssessmentBoxContainer
-                  completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
-                  agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
-                  startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
-                  boxLayout="fixed"
-                />
-              }
+              <PaddedGetAssessmentBoxContainer
+                completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
+                agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
+                startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
+                boxLayout="fixed"
+              />
             </>
           }
         </Fragment>
