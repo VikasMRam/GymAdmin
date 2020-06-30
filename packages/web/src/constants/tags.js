@@ -5,7 +5,7 @@ export const AVAILABLE_TAGS = [
   'Board and Care Home',
   'Skilled Nursing Facility',
   'Continuing Care Retirement Community(CCRC)',
-  'Active Adult (55+)'
+  'Active Adult (55+)',
 ];
 export const PERSONAL_CARE_HOME_STATES = ['PA', 'GA', 'KY'];
 export const PERSONAL_CARE_HOME = 'Personal Care Home';
