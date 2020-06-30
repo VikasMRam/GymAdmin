@@ -3,7 +3,7 @@ import { object, bool, func, string } from 'prop-types';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
-import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES, CONTINUING_CARE_RETIREMENT_COMMUNITY, CCRC } from 'sly/web/constants/tags';
+import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES, CONTINUING_CARE_RETIREMENT_COMMUNITY, CCRC, ACTIVE_ADULT } from 'sly/web/constants/tags';
 import { size, palette } from 'sly/web/components/themes';
 import { community as communityPropType } from 'sly/web/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
@@ -13,6 +13,8 @@ import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { isBrowser } from 'sly/web/config';
 import { tocPaths } from 'sly/web/services/helpers/url';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
+import ListItem from 'sly/web/components/molecules/ListItem';
+
 
 const StyledHeading = pad(Heading, 'regular');
 StyledHeading.displayName = 'StyledHeading';
@@ -42,6 +44,19 @@ const RatingWrapper = mobileOnly(styled.div`
 
 const CareTypeWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')}; 
+`;
+
+const OverlayTwoColumnListWrapper = styled.div`
+  line-height: ${size('lineHeight.body')};
+  margin-bottom: ${size('spacing.large')};
+  display: grid;
+  grid-template-columns: 100%;
+  grid-row-gap: ${size('spacing.large')};
+
+@media screen and (min-width: ${size('breakpoint.laptop')}) {
+    grid-template-columns: 50% 50%;
+    grid-column-gap: ${size('layout.gutter')};
+  }
 `;
 
 
@@ -80,7 +95,7 @@ const CommunitySummary = ({
     line1, line2, city, state, zip,
   } = address;
   const {
-    communityPhone, typeCare, tier
+    communityPhone, typeCare, tier, typeOfHome, squareFeet, numBeds, numBaths, priceRange, garage,
   } = propInfo;
   const { reviewsValue, numReviews } = propRatings;
   const formattedAddress = `${line1}, ${line2}, ${city},
@@ -181,6 +196,68 @@ const CommunitySummary = ({
             </Link>
 
           </>
+      }
+
+      {typeCare.includes(ACTIVE_ADULT) &&
+        <>
+          <Hr />
+          <OverlayTwoColumnListWrapper>
+            {priceRange &&
+            <ListItem icon="money" iconPalette="grey" iconVariation="dark">
+              <div>
+                <strong> Price Range </strong>
+                <br/>
+                {priceRange}
+              </div>
+            </ListItem>
+            }
+            {typeOfHome &&
+            <ListItem icon="community" iconPalette="grey" iconVariation="dark">
+              <div>
+                <strong> Home Type </strong>
+                <br/>
+                {typeOfHome}
+              </div>
+            </ListItem>
+            }
+            {squareFeet &&
+            <ListItem icon="sq-ft" iconPalette="grey" iconVariation="dark">
+              <div>
+                <strong> Sq. Ft </strong>
+                <br/>
+                {squareFeet}
+              </div>
+            </ListItem>
+            }
+            {numBeds &&
+            <ListItem icon="bed" iconPalette="grey" iconVariation="dark">
+              <div>
+                <strong> No. of Beds </strong>
+                <br/>
+                {numBeds}
+              </div>
+            </ListItem>
+            }
+            {numBaths &&
+            <ListItem icon="bath" iconPalette="grey" iconVariation="dark">
+              <div>
+                <strong> No. of Baths </strong>
+                <br/>
+                {numBaths}
+              </div>
+            </ListItem>
+            }
+            {garage &&
+            <ListItem icon="garage" iconPalette="grey" iconVariation="dark">
+              <div>
+                <strong> Garage </strong>
+                <br/>
+                {garage}
+              </div>
+            </ListItem>
+            }
+          </OverlayTwoColumnListWrapper>
+        </>
       }
     </Box>
   );

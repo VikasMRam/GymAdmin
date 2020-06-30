@@ -98,6 +98,13 @@ export const tocs = [
     seoLabel: 'Continuing Care Retirement Communities',
   },
   {
+    label: 'Active Adult (55+)',
+    value: 'active-adult',
+    segment: 'active-adult',
+    searchLabel: 'ctive Adult (55+)',
+    seoLabel: 'Active Adult (55+)',
+  },
+  {
     label: 'Skilled Nursing Facilities',
     value: 'skilled-nursing-facility',
     segment: 'skilled-nursing-facility',
