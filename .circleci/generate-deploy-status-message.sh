@@ -2,7 +2,6 @@
 
 # replace ~ in path as shell won't automatically expand ~s
 CURRENT_WORKING_DIRECTORY="${CIRCLE_WORKING_DIRECTORY//\~/$HOME}"
-VERSION_FILE="$CURRENT_WORKING_DIRECTORY/VERSION"
 
 COMMIT_SHA_LINK=$CIRCLE_COMPARE_URL
 if [ -z "$COMMIT_SHA_LINK" ]; then
@@ -12,8 +11,8 @@ fi
 
 GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: <$COMMIT_SHA_LINK|%H>%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
 CURRENT_VERSION="unknown"
-if (test -a $VERSION_FILE); then
-  CURRENT_VERSION=$(cat $VERSION_FILE)
+if [ -n "$VERSION" ]; then
+  CURRENT_VERSION=$VERSION
 fi
 CURRENT_VERSION_DESC="Version: $CURRENT_VERSION"
 

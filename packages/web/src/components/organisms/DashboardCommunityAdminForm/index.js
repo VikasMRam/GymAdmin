@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, bool } from 'prop-types';
+import { func, bool, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette, columnWidth } from 'sly/web/components/themes';
@@ -7,7 +7,10 @@ import pad from 'sly/web/components/helpers/pad';
 import textAlign from 'sly/web/components/helpers/textAlign';
 import { Block, Button } from 'sly/web/components/atoms';
 import EditField from 'sly/web/components/form/EditField';
+import Field from 'sly/web/components/molecules/Field';
 import { statuses } from 'sly/web/constants/communities';
+import { PROVIDER_ROLE_PARAM } from 'sly/web/constants/roles'
+
 
 
 const statusOptions = statuses.map(s => <option key={s.label} value={s.value}>{s.label}</option>);
@@ -51,17 +54,20 @@ const FormBottomSection = styled.div`
 
 const FormSectionHeading = pad(Block, 'large');
 
+
 export default class DashboardCommunityAdminForm extends Component {
   static propTypes = {
     invalid: bool,
     canEdit: bool,
     submitting: bool,
     handleSubmit: func.isRequired,
+    initialValues: object,
+    onSelectChange: func,
   };
 
   render() {
     const {
-      handleSubmit, invalid, submitting, canEdit,
+      handleSubmit, invalid, submitting, canEdit, propUser, onSelectChange
     } = this.props;
 
     return (
@@ -69,6 +75,16 @@ export default class DashboardCommunityAdminForm extends Component {
         <FormScrollSection>
           <FormSection>
             <FormSectionHeading weight="medium">Meta Data</FormSectionHeading>
+            <Field
+              name="communityUser"
+              label="Primary User"
+              type="user"
+              role={PROVIDER_ROLE_PARAM}
+              readOnly={!canEdit}
+              wideWidth
+              value={propUser}
+              onChange={option =>  onSelectChange(option)}
+              />
             <EditField
               name="slyScore"
               label="Sly Score"

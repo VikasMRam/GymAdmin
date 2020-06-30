@@ -4,7 +4,7 @@ import communityPropType from 'sly/web/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
 import styled from 'styled-components';
 import { size } from 'sly/web/components/themes';
-import { Block, Label } from 'sly/web/components/atoms';
+import { Block, Label, Link } from 'sly/web/components/atoms';
 import { formatAddress } from 'sly/web/services/helpers/community';
 
 const ColumWrapper = pad(styled.div`
@@ -38,6 +38,14 @@ export default class DashboardCommunitySummary extends React.Component {
           <Label palette="grey">Community name</Label>
           <Block size="caption">{community.name}</Block>
         </ColumWrapper>
+        { community.url &&
+          <ColumWrapper>
+            <Block size="caption">
+              <Link href={community.url} target="blank">Community Profile Link</Link>
+            </Block>
+          </ColumWrapper>
+        }
+
         <ColumWrapper>
           <Label palette="grey">Address</Label>
           <Block size="caption">{address}</Block>

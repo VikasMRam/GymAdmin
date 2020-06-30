@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import { bool, string } from 'prop-types';
+import { bool, string, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
@@ -65,6 +65,7 @@ export default class CommunityInfo extends Component {
     palette: palettePropType,
     className: string,
     headerIsLink: bool,
+    event: object,
   };
 
   static defaultProps = {
@@ -72,7 +73,7 @@ export default class CommunityInfo extends Component {
   };
 
   render() {
-    const { community, inverted, showFloorPlan, showDescription, palette, className, headerIsLink } = this.props;
+    const { community, inverted, showFloorPlan, showDescription, palette, className, headerIsLink, event } = this.props;
     const { webViewInfo, floorPlanString, propInfo = {}, propRatings, mainService } = community;
 
     const address = getAddress(community);
@@ -126,7 +127,7 @@ export default class CommunityInfo extends Component {
 
     const header = headerIsLink
       ? (
-        <Link href={community.url}>
+        <Link href={community.url} event={event}>
           {headerContent}
         </Link>
       ) : headerContent;

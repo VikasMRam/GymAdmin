@@ -23,3 +23,5 @@ export const SLY_ENTITY_RESOURCE_TYPE = 'SlyEntity';
 export const COMMUNITY_RESOURCE_TYPE = 'Community';
 
 export const ADDRESS_RESOURCE_TYPE = 'Address';
+
+export const AGENT_RESOURCE_TYPE = 'Agent';

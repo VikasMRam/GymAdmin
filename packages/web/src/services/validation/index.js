@@ -6,8 +6,14 @@ import isMobilePhone from 'validator/lib/isMobilePhone';
 import isFloat from 'validator/lib/isFloat';
 import dayjs from 'dayjs';
 
-const isEmpty = value => value === undefined || value === null ||
-  (value && value.trim ? value.trim() === '' : value === '');
+const isEmpty = value => {
+  if (Array.isArray(value)) {
+    return value.length < 1;
+  }
+  return value === undefined || value === null ||
+    (value && value.trim ? value.trim() === '' : value === '');
+};
+
 const join = rules => (value, data) =>
   rules.map((rule) => {
     const result = rule(value, data);

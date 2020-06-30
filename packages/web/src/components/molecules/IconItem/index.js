@@ -1,6 +1,7 @@
 import React from 'react';
 import { string, node, bool } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/web/components/themes';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
@@ -17,7 +18,7 @@ const Wrapper = styled.div`
 const IconWrapper = styled.div`
   margin-right: ${getMarginRight};
   padding: calc(${size('spacing.regular')} - ${size('border.regular')});
-  padding-left: 0;
+  ${ifProp('borderless', css`padding-left: 0;`)}
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${p => (palette(p.borderPalette, p.borderVariation))};
   border-radius: ${size('border.xxLarge')};
 `;

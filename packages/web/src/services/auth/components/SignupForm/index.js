@@ -7,10 +7,9 @@ import { size, palette } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import textAlign from 'sly/web/components/helpers/textAlign';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
-import { Heading, Button, Block, Hr, Link } from 'sly/web/components/atoms';
+import { Heading, Button, Block, Link } from 'sly/web/components/atoms';
 
-
-const StyledHeading = textAlign(pad(Heading));
+const StyledHeading = pad(Heading);
 StyledHeading.displayName = 'StyledHeading';
 
 const StyledButton = styled(Button)`
@@ -24,33 +23,43 @@ const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const StyledBlock2 = styled(Block)`
-  margin-bottom: ${size('spacing.large')};
+const BottomWrapper = textAlign(styled.div`
+  display: grid;
+  grid-gap: ${size('spacing.large')};
+  align-items: center;
+  justify-content: center;
+`);
+
+const FieldsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: ${size('spacing.regular')};
 `;
 
-const Login = textAlign(StyledBlock2);
-Login.displayName = 'Log in';
-
-const Provider = textAlign(StyledBlock2);
-Provider.displayName = 'Provider';
-
 const SignupForm = ({
-                      handleSubmit, submitting, error, onLoginClicked, onProviderClicked,
-                    }) => (
+  handleSubmit, submitting, invalid, error, onLoginClicked, onProviderClicked, heading, submitButtonText, hasPassword,
+  hasProviderSignup,
+}) => (
   <form onSubmit={handleSubmit}>
-    <StyledHeading size="subtitle">Sign Up</StyledHeading>
-    <Field
-      name="name"
-      label="Full Name"
-      type="text"
-      placeholder="First and Last Name"
-      component={ReduxField}
-    />
+    <StyledHeading size="subtitle">{heading}</StyledHeading>
+    <FieldsWrapper>
+      <Field
+        name="firstName"
+        label="First Name"
+        type="text"
+        component={ReduxField}
+      />
+      <Field
+        name="lastName"
+        label="Last Name"
+        type="text"
+        component={ReduxField}
+      />
+    </FieldsWrapper>
     <Field
       name="email"
       label="Email Address"
       type="email"
-      placeholder="Email Address"
       component={ReduxField}
     />
     <Field
@@ -58,38 +67,53 @@ const SignupForm = ({
       label="Phone"
       type="phone"
       parens
-      placeholder="(415) 555-5555"
       component={ReduxField}
     />
-    <Field
-      name="password"
-      label="Password"
-      type="password"
-      placeholder="Password"
-      component={ReduxField}
-    />
-    <StyledButton type="submit"  disabled={submitting}>
-      Sign Up
+    {hasPassword &&
+      <Field
+        name="password"
+        label="Password"
+        type="password"
+        component={ReduxField}
+      />
+    }
+    <StyledButton type="submit"  disabled={submitting || invalid}>
+      {submitButtonText}
     </StyledButton>
     <StyledBlock error={error}>By continuing, you agree to Seniorly&apos;s Terms of Use and Privacy Policy.</StyledBlock>
     {error && <Block palette="danger">{error}</Block>}
-    <Login size="caption">
-      Already have an account?{' '}
-      <Link onClick={onLoginClicked}>Log in</Link>
-    </Login>
-    <Provider size="caption">
-      Are you a community manager?{' '}
-      <Link onClick={onProviderClicked}>Click here</Link>
-    </Provider>
+    <BottomWrapper>
+      <Block size="caption">
+        Already have an account?{' '}
+        <Link onClick={onLoginClicked}>Log in</Link>
+      </Block>
+      {hasProviderSignup &&
+        <Block size="caption">
+          Are you a community manager?{' '}
+          <Link onClick={onProviderClicked}>Click here</Link>
+        </Block>
+      }
+    </BottomWrapper>
   </form>
 );
 
 SignupForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
+  hasProviderSignup: bool.isRequired,
+  invalid: bool,
   error: string,
   onLoginClicked: func,
   onProviderClicked: func,
+  heading: string.isRequired,
+  submitButtonText: string.isRequired,
+  hasPassword: bool,
+};
+
+SignupForm.defaultProps = {
+  heading: 'Sign Up',
+  submitButtonText: 'Sign Up',
+  hasProviderSignup: true,
 };
 
 export default SignupForm;

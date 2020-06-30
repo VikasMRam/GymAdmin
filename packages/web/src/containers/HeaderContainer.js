@@ -228,7 +228,7 @@ export default class HeaderContainer extends PureComponent {
 
     const hItems = getDefaultHeaderItems(layout);
     const lhItems = layout !== 'wizards' ? loginHeaderItems(user) : [];
-    const menuItems = layout !== 'wizards' ? generateMenuItems(user) : [];
+    const menuItems = generateMenuItems(user);
 
     const logoutLeftMenuItem = menuItems.find(item => item.name === 'Log Out');
     if (logoutLeftMenuItem) {
@@ -292,11 +292,9 @@ export default class HeaderContainer extends PureComponent {
       <ModalController>
         {({
           show,
-          hide,
         }) => (
           <NotificationController>
             {({
-              notifyInfo,
               messages,
               dismiss,
             }) => {
@@ -314,12 +312,12 @@ export default class HeaderContainer extends PureComponent {
                     headerItems={headerItems}
                     hideMenuItemsInSmallScreen={layout !== 'wizards'}
                     menuItems={menuItems}
-                    smallScreenMenuItems={layout !== 'wizards' ? smallScreenMenuItems : []}
+                    smallScreenMenuItems={smallScreenMenuItems}
                     className={className}
                     onCurrentLocation={this.handleCurrentLocation}
                     hasSearchBox={layout !== 'wizards'}
                   />
-                  {layout !== 'wizards' && <AuthContainer notifyInfo={notifyInfo} showModal={show} hideModal={hide} />}
+                  <AuthContainer />
                   <Notifications messages={messages} dismiss={dismiss} />
                 </>
               );

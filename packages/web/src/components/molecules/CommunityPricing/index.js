@@ -47,9 +47,9 @@ const CommunityPricing = ({ id, estimated, price, palette, variation, className,
   <StyledCommunityPricingWrapper className={className}>
     {estimated &&
       <DescriptionBlock size="caption">
-        <StyledParagraph>
+        <StyledParagraph data-tip data-for={tipId}>
           Seniorly Estimate
-          <StyledIcon palette="slate" icon="help" size="caption" data-tip data-for={tipId} />
+          <StyledIcon palette="slate" icon="help" size="caption" />
         </StyledParagraph>
         {isBrowser && (
           <TooltipContent
@@ -65,12 +65,10 @@ const CommunityPricing = ({ id, estimated, price, palette, variation, className,
           >
             <Paragraph>
               <Span palette="primary">The Seniorly Estimate</Span>{' '}
-              estimated monthly pricing is based on the local average pricing of other communities in the area and what
-              typical communities of the same size offer in services.
+              is an estimated monthly price based on the local average costs at other communities in the area and what typical communities of the same size offer in services.
             </Paragraph>
             <Paragraph>
-              Please verify all information prior to making a decision. Seniorly is not responsible for any errors
-              regarding the information displayed on this website.
+              Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.
             </Paragraph>
             <Paragraph>
               If you manage the community and would like to update your pricing.{' '}

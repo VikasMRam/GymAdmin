@@ -52,6 +52,7 @@ export default {
   getAgent: { method: get, path: '/marketplace/agents/:id' },
   getAgents: { method: get, path: '/marketplace/agents' },
   updateAgent: { method: put, path: '/marketplace/agents/:id' },
+  createAgent: { method: post, path: '/marketplace/agents' },
 
   getSearchResources: { method: get, path: '/platform/search-resources' },
   getGeoGuides: { method: get, path: '/platform/geo-guides' },

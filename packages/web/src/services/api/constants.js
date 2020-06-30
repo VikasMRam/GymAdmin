@@ -11,6 +11,7 @@ export const AGENT_ASK_QUESTIONS = 'agentAskQuestions';
 export const FLOOR_PLAN_REQUESTED = 'floorPlanRequested';
 export const HOME_CARE_REQUESTED = 'homeCareRequested';
 export const CURTIANUP_SUBSCRIBE = 'curtainupSubscribe';
+export const WIZARD_STEP_COMPLETED = 'wizardStepCompleted';
 
 export const PRICING_REQUEST = 'pricingRequest';
 export const AVAILABILITY_REQUEST = 'availabilityRequest';

@@ -17,8 +17,10 @@ const Wrapper = styled.div`
   padding: ${size('spacing.large')};
   padding-bottom: 0;
   white-space: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
+  /*
+   overflow-x: auto;
+   overflow-y: hidden;
+  */
   background: ${palette('white.base')};
   text-transform: uppercase;
 

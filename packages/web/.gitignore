@@ -1,0 +1,10 @@
+node_modules
+coverage
+webpack/webpack-assets.json
+junit.xml
+e2e/node_modules
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

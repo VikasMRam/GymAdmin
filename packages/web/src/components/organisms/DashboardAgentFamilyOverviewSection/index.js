@@ -173,10 +173,9 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
         </Role>
       </TwoColumn>
     );
-
     return (
       <>
-        <Tabs activeTab={activeTab} beforeHeader={beforeTabHeader} tabsOnly>
+        <Tabs activeTab={activeTab} tabsOnly beforeHeader={beforeTabHeader}>
           {Object.entries(TabMap)
             .map(([name, key]) => (
               <Tab

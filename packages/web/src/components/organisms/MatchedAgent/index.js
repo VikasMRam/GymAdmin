@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { string, node } from 'prop-types';
+import { string, node, bool } from 'prop-types';
 
 import { size, palette } from 'sly/web/components/themes';
 import agentPropType from 'sly/web/propTypes/agent';
@@ -120,8 +120,14 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const MatchedAgent = ({ heading, agent, children, prevLink }) => (
-  <Box>
+const MainWrapper = ({ hasBox, ...props }) => hasBox ? <Box {...props} /> : <div {...props} />;
+
+MainWrapper.propTypes = {
+  hasBox: bool,
+};
+
+const MatchedAgent = ({ heading, agent, children, prevLink, hasBox }) => (
+  <MainWrapper hasBox={hasBox}>
     {agent &&
       <>
         <TextAlignCenterBlock>
@@ -143,7 +149,7 @@ const MatchedAgent = ({ heading, agent, children, prevLink }) => (
         <TextAlignCenterBlock weight="medium" size="subtitle">Hold on, we are matching you with a local senior living expert...</TextAlignCenterBlock>
       </Wrapper>
     }
-  </Box>
+  </MainWrapper>
 );
 
 MatchedAgent.propTypes = {
@@ -151,6 +157,11 @@ MatchedAgent.propTypes = {
   agent: agentPropType,
   children: node,
   prevLink: string,
+  hasBox: bool,
+};
+
+MatchedAgent.defaultProps = {
+  hasBox: true,
 };
 
 export default MatchedAgent;

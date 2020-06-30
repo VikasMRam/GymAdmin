@@ -7,10 +7,9 @@ import { size, palette } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import textAlign from 'sly/web/components/helpers/textAlign';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
-import { Heading, Button, Block, Hr, Link } from 'sly/web/components/atoms';
+import { Heading, Button, Block, Link } from 'sly/web/components/atoms';
 
-
-const StyledHeading = textAlign(pad(Heading));
+const StyledHeading = pad(Heading);
 StyledHeading.displayName = 'StyledHeading';
 
 const StyledButton = styled(Button)`
@@ -43,7 +42,6 @@ const ProviderSignupForm = ({
       name="email"
       label="Email Address"
       type="email"
-      placeholder="Email Address"
       component={ReduxField}
     />
     <Field
@@ -51,14 +49,12 @@ const ProviderSignupForm = ({
       label="Phone"
       type="phone"
       parens
-      placeholder="(415) 555-5555"
       component={ReduxField}
     />
     <Field
       name="password"
       label="Password"
       type="password"
-      placeholder="Password"
       component={ReduxField}
     />
     <StyledButton type="submit"  disabled={submitting}>
