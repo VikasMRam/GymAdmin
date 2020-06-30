@@ -14,6 +14,8 @@ import IndependentLivingNearMePage from 'sly/web/components/pages/IndependentLiv
 import HomeCareNearMePage from 'sly/web/components/pages/HomeCareNearMePage';
 import RespiteCareNearMePage from 'sly/web/components/pages/RespiteCareNearMePage';
 import VeteransBenefitAssistedLivingPage from 'sly/web/components/pages/VeteransBenefitAssistedLivingPage';
+import ActiveAdultNearMePage from 'sly/web/components/pages/ActiveAdultNearMePage';
+
 import { parseURLQueryParams, generateCityPathSearchUrl } from 'sly/web/services/helpers/url';
 import { prefetch } from 'sly/web/services/api';
 import { withProps } from 'sly/web/services/helpers/hocs';
@@ -224,6 +226,19 @@ export default class NearMePageContainer extends Component {
       return (
         <VeteransBenefitAssistedLivingPage
           handleAnchor={handleClick}
+        />
+      );
+    }
+    if (hub === 'active-adult') {
+      return (
+        <ActiveAdultNearMePage
+          onLocationSearch={this.handleOnLocationSearch}
+          requestMeta={status.communityList.meta || {}}
+          searchParams={searchParams}
+          communityList={communityList}
+          isFetchingResults={!status.communityList.hasFinished}
+          handleAnchor={handleClick}
+          location={location}
         />
       );
     }
