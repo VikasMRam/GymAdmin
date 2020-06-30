@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { instanceOf, string, bool, node } from 'prop-types';
+import { instanceOf, string, bool } from 'prop-types';
 import styled from 'styled-components';
 
 import Box from 'sly/web/components/atoms/Box';

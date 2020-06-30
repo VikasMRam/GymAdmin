@@ -343,7 +343,7 @@ const MemoryCareNearMePage = ({
             </Link>
           </Paragraph>
 
-          <StyledBox backgroundPalette="primary" backgroundVariation="stroke">
+          <StyledBox background="primary.lighter-90">
             <Heading level="subtitle" size="subtitle">
               Find Board and Care Home near you
             </Heading>

@@ -1,6 +1,6 @@
 /* eslint-disable no-mixed-operators */
 import React, { Fragment } from 'react';
-import { number, oneOf, object } from 'prop-types';
+import { number, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { getThemePropType, palette, size } from 'sly/web/components/themes';

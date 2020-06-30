@@ -1,8 +1,8 @@
 import React from 'react';
 import { string, func, bool, oneOf, any } from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size } from 'sly/web/components/themes';
 import Span from 'sly/web/components/atoms/Span';
 import Link from 'sly/web/components/atoms/Link';
 

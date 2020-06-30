@@ -307,12 +307,12 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
         <PaddedHeading weight="regular" palette="primary" variant="base">Want to Join the Show?</PaddedHeading>
         <XxxLargePaddedBlock>Performers subject to change</XxxLargePaddedBlock>
         <TwoCol6Columns>
-          <Box backgroundPalette="white">
+          <Box background="white">
             <LargePaddedBlock weight="medium" size="title">For Communities and Home Care</LargePaddedBlock>
             <PaddedBlock>We would love to work with senior living communities and home care agencies to feature your residents on Curtain Up! If you would like to join the show please complete the form below:</PaddedBlock>
             <Button href="" target="_blank">Join The Show As a Community</Button>
           </Box>
-          <Box backgroundPalette="white">
+          <Box background="white">
             <LargePaddedBlock weight="medium" size="title">For Performers</LargePaddedBlock>
             <PaddedBlock>We are looking for professional performers of the stage and screen to help us bring entertainment to the homes of seniors. To join the show please complete out our volunteer form:</PaddedBlock>
             <Button href="" target="_blank">Join The Show As a Performer</Button>

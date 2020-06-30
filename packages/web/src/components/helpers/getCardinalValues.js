@@ -1,4 +1,4 @@
-import { getKey, size } from 'sly/web/components/themes';
+import { getKey } from 'sly/web/components/themes';
 
 const getAutoValuesArray = (props, prefix) => {
   const ary = props[prefix];
@@ -22,7 +22,7 @@ export const getCardinalValues = (props, prefix, themeGroup = prefix, decorator 
     'Right',
     'Bottom',
     'Left',
-  ].reduce((acc, prop, i) => {
+  ].reduce((acc, prop) => {
     const name = `${prefix}${prop}`;
     const value = props[name];
     if (typeof value !== 'undefined') {

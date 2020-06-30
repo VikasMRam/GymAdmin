@@ -80,7 +80,7 @@ const CurtainupEventBox = ({ event: { liveAt }, performers, palette }) => {
           </>
         }
       </Header>
-      <StyledBox backgroundPalette="white">
+      <StyledBox background="white">
         {performerComponents}
       </StyledBox>
     </div>

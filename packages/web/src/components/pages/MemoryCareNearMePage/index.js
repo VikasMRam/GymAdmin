@@ -372,7 +372,7 @@ const MemoryCareNearMePage = ({
               Courtyard Terrace Memory Care, Sacramento, CA
             </Link>
           </Paragraph>
-          <StyledBox backgroundPalette="primary" backgroundVariation="stroke">
+          <StyledBox background="primary.lighter-90">
             <Heading level="subtitle" size="subtitle">
               Find Memory Care near you
             </Heading>

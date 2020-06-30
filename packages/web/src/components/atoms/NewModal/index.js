@@ -7,7 +7,6 @@ import { any, func, bool, element, string } from 'prop-types';
 import { isBrowser } from 'sly/web/config';
 import { size, palette, key } from 'sly/web/components/themes';
 import IconButton from 'sly/web/components/molecules/IconButton';
-import { textAlign } from 'sly/web/components/helpers/text';
 import Heading from 'sly/web/components/atoms/Heading';
 import Block from 'sly/web/components/atoms/Block';
 import Icon from 'sly/web/components/atoms/Icon';

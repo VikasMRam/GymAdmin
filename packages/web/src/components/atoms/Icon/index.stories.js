@@ -11,13 +11,12 @@ const getIcons = () => {
   const context = require.context('./icons/', false, /\.svg$/);
   return context
     .keys()
-    .map(icon => {
+    .map((icon) => {
       const result = icon.match(/^\.\/(.+)-regular\.svg$/);
-      console.log('result', result);
       return result?.[1];
     })
-    .filter(x=>x);
-}
+    .filter(x => x);
+};
 
 const Wrapper = styled.div`
   display: flex;

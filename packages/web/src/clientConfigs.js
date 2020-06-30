@@ -37,6 +37,7 @@ const waitForFile = (path, timeout = 100, max = 100) => new Promise((resolve, re
       counter++;
       if (counter >= max) {
         const error = new Error(`file: ${path} not found`);
+        // eslint-disable-next-line no-console
         console.error(error);
         reject(error);
       }

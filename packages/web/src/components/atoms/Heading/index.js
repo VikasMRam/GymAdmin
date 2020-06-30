@@ -1,6 +1,6 @@
 import React from 'react';
-import { node, number, oneOf, string } from 'prop-types';
-import styled, { css } from 'styled-components';
+import { node, oneOf } from 'prop-types';
+import styled from 'styled-components';
 
 import { text as textPropType } from 'sly/web/propTypes/text';
 import { weight as weightPropType } from 'sly/web/propTypes/weight';

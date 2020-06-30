@@ -1,12 +1,12 @@
 // https://github.com/diegohaz/arc/wiki/Example-components#icon
 import React from 'react';
-import { string, number, bool, oneOf, oneOfType } from 'prop-types';
+import { string, number, bool, oneOfType } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { prop } from 'styled-tools';
 
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { size, key, getThemePropType, getKey } from 'sly/web/components/themes';
+import { key, getThemePropType, getKey } from 'sly/web/components/themes';
 import { withBorder, withColor, withSpacing, withText } from 'sly/web/components/helpers';
 
 const iconSize = ({ size: s }) => {

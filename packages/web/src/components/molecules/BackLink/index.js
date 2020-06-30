@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, string, any, objectOf, object } from 'prop-types';
+import { func, string, any, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/web/components/themes';

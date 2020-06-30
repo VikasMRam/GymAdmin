@@ -68,7 +68,7 @@ const TextAlignBlock = textAlign(Block);
 const AdTile = ({
   image, imagePosition, title, children, buttonText, buttonPosition, buttonProps, layout, className, showSecondary, linkProps, linkText
 }) => (
-  <Box className={className} backgroundPalette="primary" backgroundVariation="stroke">
+  <Box className={className} background="primary.lighter-90">
     <ContentWrapper imagePosition={imagePosition} layout={layout}>
       <StyledResponsiveImage src={image} />
       <div>

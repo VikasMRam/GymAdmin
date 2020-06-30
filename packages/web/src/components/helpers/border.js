@@ -1,10 +1,9 @@
 import styled, { css } from 'styled-components';
-import { ifProp } from 'styled-tools';
+
+import { getColor } from './getColor';
 
 import { size, palette } from 'sly/web/components/themes';
 import { getCardinalValues } from 'sly/web/components/helpers/getCardinalValues';
-
-import { getColor } from './getColor';
 
 const border = (Component, borderSize = 'regular', borderPalette = 'grey', borderPaletteVariation = 'base') => styled(Component)`
   border: ${size('border', borderSize)} ${palette(borderPalette, borderPaletteVariation)} solid;
