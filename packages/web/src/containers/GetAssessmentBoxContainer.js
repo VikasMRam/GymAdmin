@@ -61,6 +61,7 @@ export default class GetAssessmentBoxContainer extends Component {
       category: 'assessmentWizard',
       action: 'mounted',
       label: layout,
+      nonInteraction: true,
     });
   }
 
