@@ -1,20 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import FormSection from 'sly/web/components/molecules/FormSection';
+import SectionForm from 'sly/web/components/molecules/SectionForm';
 
 const heading = 'My Profie';
 
-const wrap = (props = {}) => shallow(<FormSection heading={heading} {...props}>test</FormSection>);
+const wrap = (props = {}) => shallow(<SectionForm heading={heading} {...props}>test</SectionForm>);
 
-describe('FormSection', () => {
+describe('SectionForm', () => {
   it('does renders children when passed in', () => {
     const wrapper = wrap();
     expect(wrapper.contains('test')).toBeTruthy();
     expect(wrapper.find('HeadingBoxSection').prop('heading')).toBe(heading);
   });
 
-  it('renders FormSection with buttons', () => {
+  it('renders SectionForm with buttons', () => {
     const buttonText = 'Submit';
     const handleSubmit = jest.fn();
     const wrapper = wrap({ buttonText, handleSubmit });

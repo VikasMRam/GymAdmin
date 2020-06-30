@@ -121,7 +121,7 @@ const CareTypeGuidePage = ({
           <meta name="description" content={description} />
           <link rel="canonical" href={canonicalUrl} />
         </Helmet>
-        <BreadCrumb items={getBreadCrumbsForGuides(searchParams)} />
+        <BreadCrumb pad="large" items={getBreadCrumbsForGuides(searchParams)} />
         {guideList &&
           <Wrapper>
             <Paragraph>

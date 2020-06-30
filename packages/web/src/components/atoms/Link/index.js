@@ -1,21 +1,29 @@
 import React, { Component } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Link as RRLink } from 'react-router-dom';
 import { string, bool, object } from 'prop-types';
-import { ifNotProp, ifProp } from 'styled-tools';
+import { ifNotProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
+import { palette } from 'sly/web/components/themes';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { routes as routesPropType } from 'sly/web/propTypes/routes';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
+import { withColor, withText, withSpacing, withDisplay, withBorder, withZIndex } from 'sly/web/components/helpers';
 
-const getSize = type => p => size(type, p.size);
-const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
-
-export const styles = css`
-  color: ${getColor};
+// eslint-disable-next-line jsx-a11y/anchor-has-content
+export const Anchor = styled.a`
+  ${withDisplay}
+  ${withSpacing}
+  ${withText}
+  ${withBorder}
+  ${withZIndex}
+  
+  &, &:active {
+    ${withColor} 
+  }
+  
   text-decoration: none;
 
   &:hover {
@@ -23,31 +31,10 @@ export const styles = css`
     cursor: pointer;
   }
 
-  &:active {
-    color: ${getColor};
-  }
-
+ 
   &:focus {
     outline: none;
   }
-  ${ifProp('size', css`
-    font-size: ${getSize('text')};
-  `)};
-
-  line-height: ${getSize('lineHeight')};
-
-  ${ifProp('weight', css`
-    font-weight: ${p => size('weight', p.weight)};
-  `)}
-`;
-
-// eslint-disable-next-line jsx-a11y/anchor-has-content
-export const Anchor = styled(({ noHoverColorChange, ...props }) => <a {...props} />)`
-  ${styles};
-`;
-
-export const StyledLink = styled(({ noHoverColorChange, ...props }) => <RRLink {...props} />)`
-  ${styles};
 `;
 
 export default class Link extends Component {
@@ -85,7 +72,7 @@ export default class Link extends Component {
   render() {
     const props = this.checkPropsForLinks();
     if (props.to) {
-      return <StyledLink {...props} to={addEventToUrl(props.to, props.event)} />;
+      return <RRLink {...props} component={Anchor} to={addEventToUrl(props.to, props.event)} />;
     }
     const target = props.href && props.href.match(/https?:\/\//)
       ? { target: '_blank', rel: 'noopener' }

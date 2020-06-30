@@ -5,10 +5,10 @@ import { string, node, bool } from 'prop-types';
 import { size, palette } from 'sly/web/components/themes';
 import agentPropType from 'sly/web/propTypes/agent';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import { Heading, Box, Block, Link, Button } from 'sly/web/components/atoms';
 import Avatar from 'sly/web/components/molecules/Avatar';
+import { textAlign } from 'sly/web/components/helpers/text';
 import IconItem from 'sly/web/components/molecules/IconItem';
 
 const AgentInfoWrapper = pad(styled.div``);
@@ -145,7 +145,7 @@ const MatchedAgent = ({ heading, agent, children, prevLink, hasBox }) => (
     }
     {!agent &&
       <Wrapper>
-        <AgentPlaceholder><div/><div/><div/><div/><div/><div/><div/><div/></AgentPlaceholder>
+        <AgentPlaceholder><div /><div /><div /><div /><div /><div /><div /><div /></AgentPlaceholder>
         <TextAlignCenterBlock weight="medium" size="subtitle">Hold on, we are matching you with a local senior living expert...</TextAlignCenterBlock>
       </Wrapper>
     }

@@ -22,18 +22,17 @@ const Wrapper = mobileOnly(borderRadius(pad(Tr, 'large'), 'small'), css`
 `);
 
 const GetStatusStr  = (status) => {
-  console.log(status);
   switch (status) {
     case -2:
-      return "Deleted";
+      return 'Deleted';
     case -1:
-      return "Offline";
+      return 'Offline';
     case 0:
-      return "Initialized";
+      return 'Initialized';
     case 1:
-      return "Awaiting Approval";
+      return 'Awaiting Approval';
     case 2:
-      return "Approved";
+      return 'Approved';
   }
 };
 

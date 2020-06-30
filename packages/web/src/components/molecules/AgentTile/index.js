@@ -82,18 +82,18 @@ const AgentTile = ({
         <List>
           {phoneNumber &&
             <li>
-              <IconItem size="caption" icon="phone" iconSize="regular">{phoneNumber}</IconItem>
+              <IconItem size="caption" icon="phone" iconSize="body">{phoneNumber}</IconItem>
             </li>
           }
           {rating.numRatings > 0 &&
             <li>
-              <IconItem size="caption" icon="star" iconSize="regular">
+              <IconItem size="caption" icon="star" iconSize="body">
                 {rating.ratingValue} from <Link to={url}>{rating.numRatings} reviews</Link>
               </IconItem>
             </li>
           }
           <li>
-            <IconItem size="caption" icon="location" iconSize="regular">{address.city}, {address.state}</IconItem>
+            <IconItem size="caption" icon="location" iconSize="body">{address.city}, {address.state}</IconItem>
           </li>
         </List>
       </Box>

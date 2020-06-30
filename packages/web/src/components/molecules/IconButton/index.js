@@ -13,38 +13,6 @@ const fadeIn = keyframes`
   100% { display: block; opacity: 1; }
 `;
 
-const StyledButton = styled(({ noPadding, padRight, ...props }) => <Button {...props} />)`
-  ${ifProp('fullWidth', css`
-    width: 100%;
-    justify-content: left;
-    position: relative;`)}
-  ${ifProp('noPadding', css`padding: 0;`)}
-  ${ifProp(
-    'collapsed',
-    css`
-      overflow: hidden;
-      transition: max-width 250ms ease-in-out;
-      will-change: max-width;
-      & .text {
-        display: none;
-      }
-      & .icon {
-        margin-right: 0;
-      }
-      &:hover {
-        max-width: 100%;
-        & .text {
-          display: block;
-          animation: ${fadeIn} 250ms;
-        }
-        & .icon {
-          margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
-        }
-      }
-    `,
-  )};
-`;
-
 const StyledIcon = styled(({ padRight, fullWidth, ...props }) => <Icon {...props} />)`
   margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
   margin-top: -1px;
@@ -72,7 +40,7 @@ const Text = styled.span`
   `)}
 `;
 
-const IconButton = ({
+const IconButton = styled(({
   icon, iconSize, transparent, fill, children, hideTextInMobile, iconPalette, right, fullWidth, rotate, ...props
 }) => {
   const { palette } = props;
@@ -90,7 +58,7 @@ const IconButton = ({
   );
 
   return (
-    <StyledButton
+    <Button
       transparent={transparent}
       padRight={!!children && !right}
       noPadding={transparent && !children}
@@ -100,9 +68,36 @@ const IconButton = ({
       {right || iconElement}
       {children && <Text padRight={right} hideTextInMobile={hideTextInMobile} className="text">{children}</Text>}
       {right && iconElement}
-    </StyledButton>
+    </Button>
   );
-};
+})`
+  ${ifProp('fullWidth', css`
+    width: 100%;
+    justify-content: left;
+    position: relative;`)}
+  ${ifProp('noPadding', css`padding: 0;`)}
+  ${ifProp('collapsed', css`
+    overflow: hidden;
+    transition: max-width 250ms ease-in-out;
+    will-change: max-width;
+    & .text {
+      display: none;
+    }
+    & .icon {
+      margin-right: 0;
+    }
+    &:hover {
+      max-width: 100%;
+      & .text {
+        display: block;
+        animation: ${fadeIn} 250ms;
+      }
+      & .icon {
+        margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
+      }
+    }
+  `)};
+`;
 
 IconButton.propTypes = {
   fill: string,

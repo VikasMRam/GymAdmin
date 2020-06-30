@@ -16,7 +16,7 @@ const BottomButton = styled(Button)`
   margin-right: ${size('spacing.xLarge')};
 `;
 
-const FormSection = ({
+const SectionForm = ({
   heading, children, buttonText, error, handleSubmit, pristine, submitting, invalid,
   hasNoBodyPadding,
 }) => (
@@ -34,7 +34,7 @@ const FormSection = ({
   </form>
 );
 
-FormSection.propTypes = {
+SectionForm.propTypes = {
   heading: node.isRequired,
   children: node.isRequired,
   buttonText: string,
@@ -46,4 +46,4 @@ FormSection.propTypes = {
   hasNoBodyPadding: bool,
 };
 
-export default FormSection;
+export default SectionForm;

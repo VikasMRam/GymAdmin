@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { oneOf } from 'prop-types';
+import { func, oneOf } from 'prop-types';
 import loadable from '@loadable/component';
 
 import { getUserAutocompleteValues } from 'sly/web/services/datatable/helpers';
@@ -12,6 +12,8 @@ const UserFilterApiEndpoint = '/v0/platform/users?filter[role]=';
 export default class UserAutoComplete extends Component {
   static propTypes = {
     role: oneOf([CUSTOMER_ROLE_PARAM, PROVIDER_ROLE_PARAM, AGENT_ROLE_PARAM, ADMIN_ROLE_PARAM]),
+    onChange: func,
+    onBlur: func,
   };
 
   static defaultProps = {
@@ -30,12 +32,15 @@ export default class UserAutoComplete extends Component {
   };
 
   render() {
-    const { ...props } = this.props;
+    // taking onBlur out to avoid clearing on blur
+    const { onBlur, ...props } = this.props;
+
     return (
       <Select
         async
         isSearchable
         loadOptions={this.loadOptions}
+        onBlur={() => {}}
         {...props}
       />
     );

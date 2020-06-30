@@ -2,6 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
+
 import ListItem from 'sly/web/components/molecules/ListItem';
 import HubHeader from 'sly/web/components/molecules/HubHeader';
 import WhatIsPartnerAgent from 'sly/web/components/molecules/WhatIsPartnerAgent';
@@ -10,9 +11,8 @@ import NextSteps from 'sly/web/components/molecules/NextSteps';
 import Tip from 'sly/web/components/molecules/Tip';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
 import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer'
-
 import { getStateAbbr } from 'sly/web/services/helpers/url';
-import { size, palette, assetPath } from 'sly/web/components/themes';
+import { size } from 'sly/web/components/themes';
 import {
   HubPageTemplate,
   makeBody,
@@ -24,9 +24,8 @@ import {
   makeTable,
   makeOneColumnListWrapper,
 } from 'sly/web/components/templates/HubPageTemplate';
-import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/web/components/atoms';
+import { ResponsiveImage, Heading, Paragraph, Link } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
-import { ALSeoCities, ALSeoStates } from 'sly/web/services/helpers/homepage';
 import { getTocSeoLabel } from 'sly/web/services/helpers/search';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
 
@@ -219,7 +218,7 @@ const IndependentLivingNearMePage = ({
     return (
       <>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={ilRef} >
+          <Heading level="title" size="title" ref={ilRef} >
             What Is Independent Living?
           </Heading>
           <Paragraph>
@@ -261,7 +260,7 @@ const IndependentLivingNearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={costRef}>
+          <Heading level="title" size="title" ref={costRef}>
             The Cost of Independent Living
           </Heading>
           <Paragraph>
@@ -312,7 +311,7 @@ const IndependentLivingNearMePage = ({
           </Paragraph>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={typesRef} >
+          <Heading level="title" size="title" ref={typesRef} >
             Types of Independent Living
           </Heading>
 
@@ -422,7 +421,7 @@ const IndependentLivingNearMePage = ({
 
         <StyledArticle>
 
-          <Heading level="title" size="title" _ref={alternativeRef}>
+          <Heading level="title" size="title" ref={alternativeRef}>
             Independent Living Alternatives
           </Heading>
           <Paragraph>
@@ -492,7 +491,7 @@ const IndependentLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={servicesRef} >
+          <Heading level="title" size="title" ref={servicesRef} >
             Services Provided in Independent Living
           </Heading>
 
@@ -582,7 +581,7 @@ const IndependentLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-            <Heading level="title" size="title" _ref={ilvsalRef} >
+            <Heading level="title" size="title" ref={ilvsalRef} >
               Independent Living vs. Assisted Living
             </Heading>
             <Paragraph>
@@ -719,7 +718,7 @@ const IndependentLivingNearMePage = ({
           </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={chooseRef} >
+          <Heading level="title" size="title" ref={chooseRef} >
             How to Choose the Right Independent Living Community
           </Heading>
 
@@ -792,7 +791,7 @@ const IndependentLivingNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={faqRef} >
+          <Heading level="title" size="title" ref={faqRef} >
             Independent Living FAQs
           </Heading>
           <Paragraph>
@@ -873,7 +872,7 @@ const IndependentLivingNearMePage = ({
             </Column>
             <Body>
             {SEOContent()}
-            <Heading level="title" size="title" _ref={nearRef}>
+            <Heading level="title" size="title" ref={nearRef}>
               {heading}
             </Heading>
             {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}

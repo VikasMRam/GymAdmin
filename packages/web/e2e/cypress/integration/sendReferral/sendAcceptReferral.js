@@ -97,7 +97,7 @@ describe('Sending Referral to Agent', () => {
 
     it('Accepting Referral', () => {
       waitForHydration(cy.get('span[data-cy="menu"]')).click({ force: true });
-      cy.get('div[class*="Header__HeaderMenu"]').find('a[class*="Link__StyledLink"]').contains('My Families').click();
+      cy.get('div[class*="Header__HeaderMenu"]').find('a[class*="Link__StyledLink"]').contains('Families').click();
       cy.wait(1000);
       cy.reload();
 

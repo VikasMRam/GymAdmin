@@ -4,7 +4,6 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/web/components/themes';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import pad from 'sly/web/components/helpers/pad';
 import { Heading, Block, Button, Box } from 'sly/web/components/atoms';
@@ -14,6 +13,7 @@ import ReduxField from 'sly/web/components/organisms/ReduxField';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
 import Footer from 'sly/web/components/organisms/Footer';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const FullWidthButton = fullWidth(Button);
 
@@ -53,7 +53,7 @@ const PasswordResetPage = ({ handleSubmit, submitting, error, invalid, onClose }
       <Box>
         <StyledIconButton
           icon="close"
-          iconSize="regular"
+          iconSize="body"
           palette="slate"
           onClick={onClose}
           transparent

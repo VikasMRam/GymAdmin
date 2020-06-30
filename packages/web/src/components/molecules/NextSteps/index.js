@@ -44,7 +44,7 @@ const NextSteps = ({
   <>
     <NextStepsWrapper>
       <NextHeader>
-        <NextHeading level="title" size="title" _ref={nextRef} >
+        <NextHeading level="title" size="title" ref={nextRef} >
           Next Steps
         </NextHeading>
         <NextParagraph>

@@ -11,9 +11,8 @@ import ADLChart from 'sly/web/components/molecules/ADLChart';
 import Tip from 'sly/web/components/molecules/Tip';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
 import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer'
-
 import { getStateAbbr } from 'sly/web/services/helpers/url';
-import { size, palette, assetPath } from 'sly/web/components/themes';
+import { size } from 'sly/web/components/themes';
 import {
   HubPageTemplate,
   makeBody,
@@ -25,7 +24,7 @@ import {
   makeTable,
   makeOneColumnListWrapper,
 } from 'sly/web/components/templates/HubPageTemplate';
-import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/web/components/atoms';
+import { ResponsiveImage, Heading, Paragraph, Link, Box } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import { getTocSeoLabel } from 'sly/web/services/helpers/search';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
@@ -214,7 +213,7 @@ const MemoryCareNearMePage = ({
     return (
       <>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={mcRef} >
+          <Heading level="title" size="title" ref={mcRef} >
             What is Memory Care?
           </Heading>
           <Paragraph>
@@ -373,7 +372,7 @@ const MemoryCareNearMePage = ({
               Courtyard Terrace Memory Care, Sacramento, CA
             </Link>
           </Paragraph>
-          <StyledBox backgroundPalette="primary" backgroundVariation="stroke">
+          <StyledBox background="primary.lighter-90">
             <Heading level="subtitle" size="subtitle">
               Find Memory Care near you
             </Heading>
@@ -390,7 +389,7 @@ const MemoryCareNearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={careRef}>
+          <Heading level="title" size="title" ref={careRef}>
             Memory Care Services
           </Heading>
           <Paragraph>
@@ -457,7 +456,7 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={costRef} >
+          <Heading level="title" size="title" ref={costRef} >
             How To Pay for Memory Care
           </Heading>
 
@@ -534,7 +533,7 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
         <StyledArticle>
 
-          <Heading level="title" size="title" _ref={staffRef}>
+          <Heading level="title" size="title" ref={staffRef}>
             Medical Care and Staffing
           </Heading>
           <Paragraph>
@@ -598,7 +597,7 @@ const MemoryCareNearMePage = ({
 
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={mcvsalRef} >
+          <Heading level="title" size="title" ref={mcvsalRef} >
             How Does Memory Care Differ From Assisted Living?
           </Heading>
 
@@ -797,7 +796,7 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={chooseRef} >
+          <Heading level="title" size="title" ref={chooseRef} >
             Choosing a Memory Care Facility
           </Heading>
           <Paragraph>
@@ -852,7 +851,7 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={faqRef} >
+          <Heading level="title" size="title" ref={faqRef} >
             Memory Care FAQs
           </Heading>
           <Paragraph>
@@ -933,7 +932,7 @@ const MemoryCareNearMePage = ({
             </Column>
             <Body>
             {SEOContentMC()}
-            <Heading level="title" size="title" _ref={nearRef}>
+            <Heading level="title" size="title" ref={nearRef}>
               {heading}
             </Heading>
             <StyledArticle>

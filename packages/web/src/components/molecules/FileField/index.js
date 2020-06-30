@@ -1,61 +1,52 @@
 import React from 'react';
-import { number, string } from 'prop-types';
+import { element, number, string } from 'prop-types';
 import { prop } from 'styled-tools';
 import styled from 'styled-components';
 
-import Icon from 'sly/web/components/atoms/Icon';
-import { palette, size } from 'sly/web/components/themes';
+import { palette } from 'sly/web/components/themes';
 
 const Wrapper = styled.div`
   position: relative;
-  height: ${size('element.button')};
+  width: max-content;
 
   input[type="file"] {
-    opacity: 0;
+    opacity: 0; 
+    position: absolute; 
+    width: 100%;
+    height: 100%;
+    right: 0;
   }
 
   label {
+    width: max-content;
     background: linear-gradient(90deg, ${palette('primary', 'filler')} ${prop('percent')}%, #fff  ${prop('percent')}%);
-    padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')});
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-
-    ${Icon} {
-      margin-right: ${size('spacing.regular')};
-    }
   }
 `;
 
-const FileField = React.forwardRef(({ label: textLabel, fileName, name, percent, ...props }, ref) => {
+const FileField = React.forwardRef(({ children, name, percent, ...props }, ref) => {
   const id = `file-upload-${name}`;
   return (
     <Wrapper percent={percent}>
+      {/* eslint-disable-next-line jsx-a11y/label-has-for */}
+      <label htmlFor={id}>
+        {children}
+      </label>
       <input
         id={id}
         type="file"
         ref={ref}
+        name="uploadPhoto"
+        multiple
         {...props}
       />
-      {/* eslint-disable-next-line jsx-a11y/label-has-for */}
-      <label htmlFor={id}>
-        <>
-          <Icon icon="add-note" palette="primary" /> {fileName || textLabel}
-        </>
-      </label>
     </Wrapper>
   );
 });
 
 FileField.propTypes = {
-  label: string.isRequired,
   name: string.isRequired,
-  fileName: string,
   percent: number.isRequired,
+  children: element,
 };
 
 FileField.defaultProps = {

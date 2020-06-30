@@ -2,14 +2,12 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { func } from 'prop-types';
+
 import HubHeader from 'sly/web/components/molecules/HubHeader';
 import PhoneCTAFooter from 'sly/web/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/web/components/molecules/NextSteps';
 import Tip from 'sly/web/components/molecules/Tip';
-
-
-import { getStateAbbr } from 'sly/web/services/helpers/url';
-import { size, palette, assetPath } from 'sly/web/components/themes';
+import { size } from 'sly/web/components/themes';
 import {
   HubPageTemplate,
   makeBody,
@@ -20,7 +18,7 @@ import {
   makeArticle,
   makeTable,
 } from 'sly/web/components/templates/HubPageTemplate';
-import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image, Box } from 'sly/web/components/atoms';
+import { Heading, Paragraph, Link } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 
 const StyledLink = styled(Link)`
@@ -37,10 +35,8 @@ const StyledArticle = makeArticle('article');
 const StyledTable = makeTable('table');
 
 const RespiteCareNearMePage = ({
-                              handleAnchor,
-                            }) => {
-
-
+  handleAnchor,
+}) => {
   const rcRef = React.createRef();
   const whyRef = React.createRef();
   const costRef = React.createRef();
@@ -126,7 +122,7 @@ const RespiteCareNearMePage = ({
     return (
       <>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={rcRef} >
+        <Heading level="title" size="title" ref={rcRef} >
           What is Respite Care Near You?
 
         </Heading>
@@ -148,7 +144,7 @@ const RespiteCareNearMePage = ({
         </Link>
       </StyledArticle>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={whyRef}>
+        <Heading level="title" size="title" ref={whyRef}>
           5 Common Reasons for Respite Care
         </Heading>
         <ol>
@@ -176,7 +172,7 @@ const RespiteCareNearMePage = ({
         </Link>
       </StyledArticle>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={costRef} >
+        <Heading level="title" size="title" ref={costRef} >
           How Much Does Respite Care Costs
         </Heading>
 
@@ -209,7 +205,7 @@ const RespiteCareNearMePage = ({
       </StyledArticle>
       <StyledArticle>
 
-        <Heading level="title" size="title" _ref={typesRef}>
+        <Heading level="title" size="title" ref={typesRef}>
           Types of Respite Care for Elderly
         </Heading>
         <Paragraph>
@@ -273,7 +269,7 @@ const RespiteCareNearMePage = ({
         </Link>
       </StyledArticle>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={articlesRef} >
+        <Heading level="title" size="title" ref={articlesRef} >
           Featured Articles on Respite Care
         </Heading>
 
@@ -320,7 +316,7 @@ const RespiteCareNearMePage = ({
       </StyledArticle>
 
       <StyledArticle>
-        <Heading level="title" size="title" _ref={seniorLivingRef} >
+        <Heading level="title" size="title" ref={seniorLivingRef} >
           Other Types of Senior Living
         </Heading>
         <Paragraph>

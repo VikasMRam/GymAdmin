@@ -11,24 +11,21 @@ const theme = {};
 // dark is 15% more of black tint in the palette
 // not all of the variations should be used,
 // see below comments or in storybook
-// DO NOT MODIFY the following without asking Jared#
+// DO NOT MODIFY the following without asking Jared
 theme.palette = {
-  slate      : makeColor('#2a333f', ['dark', 'base', 'filler', 'stroke']),
-  primary    : makeColor('#387F7E', ['dark', 'base', 'filler', 'stroke', 'background']),
-  secondary  : makeColor('#186dc5', ['dark', 'base', 'filler', 'stroke', 'background']),
-  white      : makeColor('#ffffff', ['base']),
-  danger     : makeColor('#dc3133', ['dark', 'base', 'filler', 'stroke']),
-  warning    : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke']),
-  green      : makeColor('#4fb75f', ['dark', 'base', 'filler', 'stroke']),
-  grey       : makeColor('#70767E', ['dark', 'base', 'filler', 'stroke', 'background']),
-  yellow     : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke', 'background']),
-  pink       : makeColor('#9a268e', ['dark', 'base', 'filler', 'stroke', 'background']),
-  purple     : makeColor('#6d27ca', ['dark', 'base', 'filler', 'stroke', 'background']),
-  orange     : makeColor('#F99106', ['dark', 'base', 'filler', 'stroke', 'background']),
-  razzmatazz : makeColor('#F40767', ['dark', 'base', 'filler', 'stroke', 'background']),
+  slate      : makeColor('#2a333f'),
+  primary   : makeColor('#1a7473'),
+  secondary  : makeColor('#56c4c2'),
+  white      : makeColor('#ffffff'),
+  danger     : makeColor('#dc3133'),
+  warning    : makeColor('#f3c150'),
+  green      : makeColor('#4fb75f'),
+  grey       : makeColor('#70767E'),
+  yellow     : makeColor('#f3c150'),
+  magenta    : makeColor('#6d27ca'),
+  orange     : makeColor('#F99106'),
+  razzmatazz : makeColor('#F40767'),
 };
-
-// if (isDev && isBrowser && !isTest) console.table(makeColorTable(theme.palette));
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',
@@ -184,17 +181,6 @@ theme.sizes = {
     massive : '4.500rem',   // 72px
   },
 
-  icon: {
-    tiny   : '0.750rem',   // 12px
-    small  : '1.000rem',   // 16px
-    caption: '1.250rem',   // 20px for use with caption text
-    regular: '1.500rem',   // 24px
-    large  : '2.250rem',   // 36px
-    xLarge : '3.000rem',   // 48px
-    huge   : '4.000rem',   // 64px
-    xxLarge: '4.500rem',   // 72px
-  },
-
   text: {
     micro     : '0.625rem',   // 10px
     tiny      : '0.750rem',   // 12px
@@ -207,14 +193,14 @@ theme.sizes = {
   },
 
   lineHeight: {
-    micro    : '1.2',    // 12px/10px
-    tiny    : '1.167',
-    caption : '1.429',
-    body    : '1.5',
-    subtitle: '1.3',
-    title   : '1.28',
-    hero    : '1.33',
-    minimal : '1.125',
+    micro    : '1.2',    // 12px / 10px
+    tiny    : '1.167',   // 14px / 12px
+    caption : '1.429',   // 20px / 14px
+    body    : '1.5',     // 24px / 16px
+    subtitle: '1.3',     // 26px / 20px
+    title   : '1.29',    // 36px / 28px
+    hero    : '1.33',    // 48px / 36px
+    superHero:'1.33',    // 64px / 48px
   },
 
   weight: {

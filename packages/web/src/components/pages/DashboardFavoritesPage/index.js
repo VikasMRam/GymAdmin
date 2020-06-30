@@ -5,15 +5,15 @@ import styled from 'styled-components';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import shadow from 'sly/web/components/helpers/shadow';
 import Masonry from 'sly/web/components/common/Masonry';
 import { Heading, Paragraph, Hr, Link } from 'sly/web/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
-import FormSection from 'sly/web/components/molecules/FormSection';
+import SectionForm from 'sly/web/components/molecules/SectionForm';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import HowSlyWorksVideo from 'sly/web/components/organisms/HowSlyWorksVideo';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const columnCounts = [
   {
@@ -123,7 +123,7 @@ const DashboardFavoritesPage = ({
 
   return (
     <DashboardPageTemplate activeMenuItem="Favorites">
-      <FormSection heading="Favorites">
+      <SectionForm heading="Favorites">
         {isLoading && 'Loading...'}
         {!isLoading && communityTiles.length > 0 &&
           <Masonry columnCounts={columnCounts}>
@@ -151,7 +151,7 @@ const DashboardFavoritesPage = ({
             </Wrapper>
           </>
         }
-      </FormSection>
+      </SectionForm>
     </DashboardPageTemplate>
   );
 };

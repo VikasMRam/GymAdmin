@@ -217,7 +217,7 @@ const MemoryCareNearMePage = ({
     return (
       <>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={bncRef} >
+          <Heading level="title" size="title" ref={bncRef} >
             What is a Board and Care Home Near You?
           </Heading>
           <Paragraph>
@@ -258,7 +258,7 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={servicesRef}>
+          <Heading level="title" size="title" ref={servicesRef}>
             What Services are Provided at a Board and Care Home?
           </Heading>
           <Paragraph>
@@ -343,7 +343,7 @@ const MemoryCareNearMePage = ({
             </Link>
           </Paragraph>
 
-          <StyledBox backgroundPalette="primary" backgroundVariation="stroke">
+          <StyledBox background="primary.lighter-90">
             <Heading level="subtitle" size="subtitle">
               Find Board and Care Home near you
             </Heading>
@@ -363,7 +363,7 @@ const MemoryCareNearMePage = ({
 
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={costRef}>
+          <Heading level="title" size="title" ref={costRef}>
             How Much Does a Board and Care Home Cost?
           </Heading>
           <Paragraph>
@@ -416,7 +416,7 @@ const MemoryCareNearMePage = ({
 
         <StyledArticle>
 
-          <Heading level="title" size="title" _ref={otherRef}>
+          <Heading level="title" size="title" ref={otherRef}>
             Board and Care Homes vs. Other Types of Senior Housing
           </Heading>
           <Paragraph>
@@ -440,7 +440,7 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={otherRef} >
+          <Heading level="title" size="title" ref={otherRef} >
             Board and Care Homes vs. Assisted Living
           </Heading>
           <StyledTable>
@@ -954,7 +954,7 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={touringRef}>
+          <Heading level="title" size="title" ref={touringRef}>
             What Questions to Ask When Touring a Board and Care Home
           </Heading>
           <Paragraph>
@@ -1027,7 +1027,7 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={faqRef} >
+          <Heading level="title" size="title" ref={faqRef} >
             Board and Care Home FAQs
           </Heading>
           <Paragraph>
@@ -1108,7 +1108,7 @@ const MemoryCareNearMePage = ({
             </Column>
             <Body>
             {SEOContent()}
-            <Heading level="title" size="title" _ref={nearRef}>
+            <Heading level="title" size="title" ref={nearRef}>
               {heading}
             </Heading>
             {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}

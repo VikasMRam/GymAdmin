@@ -7,21 +7,13 @@ import diff from 'deep-diff';
 import HelpBubble from 'sly/web/components/form/HelpBubble';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { EditContext } from 'sly/web/services/edits';
-
-const commaAnd = (list) => {
-  if (list.length > 1) {
-    return `${list.slice(0, -1)} and ${list[list.length - 1]}`;
-  } else if (list.length === 1) {
-    return list[0];
-  }
-  return 'empty';
-};
+import { commaAnd } from 'sly/web/services/helpers/strings';
 
 const formatChange = (change) => {
   if (typeof change === 'string') {
     return change;
   } else if (Array.isArray(change)) {
-    return commaAnd(change);
+    return commaAnd(change) || 'empty';
   }
   if (change === null || typeof change === 'undefined') {
     return 'blank';
@@ -41,7 +33,7 @@ const getChange = (editChange, props = {}) => {
 };
 
 function Bubble(props) {
-  const { currentEdit } = useContext(EditContext);
+  const currentEdit = useContext(EditContext);
 
   if (!currentEdit) {
     return null;
@@ -62,6 +54,7 @@ export default function EditField(props) {
       <Bubble {...props} />
       <Field
         {...props}
+        wideWidth
         component={ReduxField}
       />
     </>

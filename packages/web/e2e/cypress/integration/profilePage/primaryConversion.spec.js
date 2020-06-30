@@ -51,7 +51,7 @@
 //       cy.url().should('include', `/custom-pricing/${community.id}`);
 //
 //       select('.Header.Link').contains('My Seniorly').click();
-//       select('.HeaderMenu.HeaderMenuItem').contains('My Profile').click();
+//       select('.HeaderMenu.HeaderMenuItem').contains('Profile').click();
 //
 //       cy.url().should('include', '/dashboard/family/my-profile');
 //

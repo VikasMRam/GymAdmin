@@ -7,7 +7,6 @@ import isBoolean from 'lodash/isBoolean';
 import { size } from 'sly/web/components/themes';
 import clientPropType from 'sly/web/propTypes/client';
 import { priceFormatter } from 'sly/web/services/helpers/pricing';
-import textTransform from 'sly/web/components/helpers/textTransform';
 import pad from 'sly/web/components/helpers/pad';
 import cursor from 'sly/web/components/helpers/cursor';
 import {
@@ -18,6 +17,7 @@ import {
   FAMILY_STATUS_LONG_TERM,
 } from 'sly/web/constants/familyDetails';
 import { Box, Block } from 'sly/web/components/atoms';
+import { textTransform } from 'sly/web/components/helpers/text';
 
 const Wrapper = styled.div`
   display: grid;
