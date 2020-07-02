@@ -181,7 +181,7 @@ const CommunitySummary = ({
           </>
       }
       {
-        (tier === "4" || !partnerAgent) &&
+        (tier === "4" || !partnerAgent) && communityPhone &&
           <>
             Call to connect directly with the community
             <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
