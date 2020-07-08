@@ -13,6 +13,7 @@ import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 const HeaderWrapper = styled.nav`
   display: flex;
   width: 100%;
+  height: 80px;
   border-bottom: ${size('border.regular')} solid ${palette('slate.lighter-90')};
   // To remove blue line caused by tabIndex
   outline: none;
@@ -100,10 +101,16 @@ const MarginnedHR = styled(Hr)`
 `;
 
 const HeaderItems = styled.div`
+  height: 80px;
   display: flex;
   align-items: center;
   margin-left: auto;
-
+  padding-left: 1.5rem;
+  
+  > * {
+    white-space: nowrap;
+  }
+  
   ${ifProp('hideInSmallScreen', css`display: none;`)};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
