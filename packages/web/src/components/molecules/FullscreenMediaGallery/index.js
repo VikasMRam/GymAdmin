@@ -38,7 +38,7 @@ const FullscreenMediaGallery = ({
     }
     return (
       <CopyrightWrapper>
-        This image maybe subject to copyright
+        This image may be subject to copyright
       </CopyrightWrapper>
     );
   };

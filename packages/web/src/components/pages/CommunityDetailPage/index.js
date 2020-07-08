@@ -394,23 +394,6 @@ export default class CommunityDetailPage extends Component {
                       ))}
                     </StyledHeadingBoxSection>
                   )}
-                {!communityInsights &&
-                  autoHighlights && (
-                    <StyledHeadingBoxSection heading={`Community Highlights at ${name}`}>
-                      {autoHighlights.map(item => (
-                        <IconItemWrapper key={item}>
-                          <IconItem
-                            icon="check"
-                            iconPalette="primary"
-                            iconVariation="base"
-                            borderless={false}
-                          >
-                            {item}
-                          </IconItem>
-                        </IconItemWrapper>
-                      ))}
-                    </StyledHeadingBoxSection>
-                  )}
                 {showSimilarEarlier && (
                   <StyledHeadingBoxSection
                     heading={`Similar ${typeOfCare} Communities`}
@@ -455,11 +438,14 @@ export default class CommunityDetailPage extends Component {
                     />
                   }
                 </StyledHeadingBoxSection>
+                {!isActiveAdult &&
                 <PaddedGetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
                   community={community}
                 />
-                {sortedEstimatedPrice.length > 0 && (
+                }
+
+                {!isActiveAdult && sortedEstimatedPrice.length > 0 && (
                   <StyledHeadingBoxSection heading={`Compare Costs for ${name}`}>
                     <CommunityPricingComparison community={community} />
                   </StyledHeadingBoxSection>

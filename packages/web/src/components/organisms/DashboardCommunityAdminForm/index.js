@@ -112,7 +112,7 @@ export default class DashboardCommunityAdminForm extends Component {
           />
           <EditField
             name="propInfo.websiteMetaDescription"
-            label="Website Meta Desctiption"
+            label="Website Meta Description"
             type="text"
             readOnly={!canEdit}
           />
@@ -146,7 +146,7 @@ export default class DashboardCommunityAdminForm extends Component {
               />
               <EditField
                 label="Contract Url"
-                name="rgsInfo.contract_info.url"
+                name="rgsAux.rgsInfo.contract_info.url"
                 type="text"
               />
               <EditField

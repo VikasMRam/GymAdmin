@@ -321,7 +321,7 @@ export default class UpdateFamilyStageForm extends Component {
           <Field
             name="preferredLocation"
             type="locationSearch"
-            label="Preferred location"
+            label="Family's Preferred location"
             address={preferredLocation}
             component={ReduxField}
             required
