@@ -60,8 +60,6 @@ export default class DashboardCommunityAdminFormContainer extends Component {
     const { id } = match.params;
     const { rgsAux, user, ...attributes } = values;
 
-    console.log('attributes', attributes);
-
     return updateCommunity({ id }, {
       attributes,
       relationships: {
@@ -109,8 +107,6 @@ export default class DashboardCommunityAdminFormContainer extends Component {
     });
 
     patchFormInitialValues(initialValues, currentEdit);
-
-    console.log('render', { currentEdit, rgsAux, currentValues, initialValues });
 
     return (
       <ReduxForm

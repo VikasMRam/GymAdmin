@@ -57,26 +57,30 @@ export default class Link extends Component {
   };
 
   checkPropsForLinks() {
-    const { to, ...props } = this.props;
+    const { to, href: hrefprop, event, ...props } = this.props;
     const { routes } = this.context;
-    if (to && !isPathInRoutes(routes, to)) {
+
+    if (to && isPathInRoutes(routes, to)) {
       return {
-        href: to,
         ...props,
+        as: RRLink,
+        to: addEventToUrl(to, event),
       };
     }
 
-    return this.props;
+    const href = to || hrefprop;
+    const target = href && href.match(/https?:\/\//)
+      ? { target: '_blank', rel: 'noopener' }
+      : {};
+    return {
+      ...props,
+      ...target,
+      href: addEventToUrl(href, event),
+    };
   }
 
   render() {
     const props = this.checkPropsForLinks();
-    if (props.to) {
-      return <RRLink {...props} component={Anchor} to={addEventToUrl(props.to, props.event)} />;
-    }
-    const target = props.href && props.href.match(/https?:\/\//)
-      ? { target: '_blank', rel: 'noopener' }
-      : {};
-    return <Anchor {...target} {...props} href={addEventToUrl(props.href, props.event)} />;
+    return <Anchor {...props} />;
   }
 }
