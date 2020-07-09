@@ -55,15 +55,15 @@ export default class GetAssessmentBoxContainer extends Component {
     });
   };
 
-  componentDidMount() {
-    const { layout } = this.props;
-    SlyEvent.getInstance().sendEvent({
-      category: 'assessmentWizard',
-      action: 'mounted',
-      label: layout,
-      nonInteraction: true,
-    });
-  }
+  // componentDidMount() {
+  //   const { layout } = this.props;
+  //   SlyEvent.getInstance().sendEvent({
+  //     category: 'assessmentWizard',
+  //     action: 'mounted',
+  //     label: layout,
+  //     nonInteraction: true,
+  //   });
+  // }
 
   render() {
     const {

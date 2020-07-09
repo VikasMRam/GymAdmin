@@ -18,9 +18,9 @@ const StyledBox = styled(Box)`
 const CommunityDisclaimerSection = ({
   title, id, name, city, phone, isClaimed,
 }) => {
-  let description = 'The information above has not been verified or approved by the owner or operator. ';
+  let description = ' The information above has not been verified or approved by the owner or operator. ';
   if (isClaimed) {
-    description = 'A verified owner or operator has claimed this community.';
+    description = ' A verified owner or operator has claimed this community. ';
   }
   return (
     <StyledBox>
