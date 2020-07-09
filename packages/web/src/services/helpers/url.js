@@ -34,11 +34,13 @@ export const tocPaths = (toc) => {
           label: 'Memory Care',
         };
       case 'Board and Care Home':
+      case 'Board And Care Home':
         return {
           path: '/board-and-care-home',
           label: 'Board and Care Home',
         };
       case 'Continuing Care Retirement Community(CCRC)':
+      case 'Continuing Care Retirement Community':
         return {
           path: '/continuing-care-retirement-community',
           label: 'Continuing Care Retirement Community(CCRC)',
@@ -47,6 +49,12 @@ export const tocPaths = (toc) => {
         return {
           path: '/skilled-nursing-facility',
           label: 'Skilled Nursing Facility',
+        };
+      case 'Active Adult (55+)':
+      case 'Active Adult':
+        return {
+          path: '/active-adult',
+          label: 'Active Adult (55+)',
         };
       default:
         return {

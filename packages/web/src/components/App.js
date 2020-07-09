@@ -226,7 +226,7 @@ const routes = [
     exact: true,
   },
   {
-    path: '/agents/partners',
+    path: '/partners/agents',
     component: PartnersPage,
     exact: true,
   },

@@ -4,7 +4,7 @@ import { string, bool } from 'prop-types';
 
 
 import { size, getKey, assetPath } from 'sly/web/components/themes';
-import { Heading, Block, Icon } from 'sly/web/components/atoms';
+import { Heading, Block } from 'sly/web/components/atoms';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 
 const Wrapper = styled.div`
@@ -49,10 +49,6 @@ const InfoContentWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     order: ${p => p.invert ? 0 : 1};
   }
-`;
-
-export const StyledIcon = styled(Icon)`
-  margin-right: ${size('spacing.xLarge')};
 `;
 
 const HeadingWrapper = styled(Heading)`

@@ -109,6 +109,10 @@ describe('Sending Referral to Agent', () => {
       waitForHydration(cy.get('form input[name="email"]')).type('sushanthr+2020tier1a@seniorly.com');
       waitForHydration(cy.get('form input[name="password"]')).type('tier1aagent');
       waitForHydration(cy.get('button').contains('Log in')).click();
+
+      waitForHydration(cy.get('span[data-cy="menu"]')).click({ force: true });
+      cy.get('div[class*="Header__HeaderMenu"]').find('a[class*="Link__StyledLink"]').contains('Families').click();
+
       cy.wait(1000);
       cy.reload();
 

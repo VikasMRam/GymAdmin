@@ -1,13 +1,8 @@
 import React, { Component, useContext } from 'react';
 import { arrayOf, object } from 'prop-types';
-import styled from 'styled-components';
 
-import { size, palette, columnWidth } from 'sly/web/components/themes';
-import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import {
   Block,
-  Button,
   Table,
   TBody,
   Td,
@@ -18,47 +13,7 @@ import Th from 'sly/web/components/molecules/Th';
 import CommunityEditRowCard
   from 'sly/web/components/organisms/CommunityEditRowCard';
 import communityPropType from 'sly/web/propTypes/community';
-
-const StyledButton = pad(Button, 'regular');
-StyledButton.displayName = 'StyledButton';
-
-const Warning = pad(styled(Block)`
-  background-color: ${palette('warning.filler')};
-  border-radius: ${size('border.xxLarge')};
-  text-align: center;
-  padding: ${size('spacing.large')};
-`, 'xLarge');
-Warning.displayName = 'Warning';
-
-const FormScrollSection = styled.div`
-  // max-height: calc(100vh - 240px);
-`;
-
-const IntroInfo = textAlign(styled(Block)`
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    margin-right: ${size('tabletLayout.gutter')};
-    flex: 0 0 ${columnWidth(3, size('layout.gutter'))};
-  }
-`, 'left');
-IntroInfo.displayName = 'IntroInfo';
-
-const FormSection = styled.div`
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')};
-  padding-bottom: 0;
-  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: ${size('spacing.xLarge')};
-    padding-bottom: 0;
-  }
-`;
-
-const NoResultMessage = styled(textAlign(Block))`
-  padding-top: ${size('spacing.xxxLarge')};
-  padding-bottom: ${size('spacing.xxxLarge')};
-`;
-
-const FormSectionHeading = pad(Block, 'large');
+import { Section, SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 
 const TABLE_HEADINGS = [
   'Last change submitted',
@@ -68,10 +23,10 @@ const TABLE_HEADINGS = [
 
 export default function DashboardCommunityEditsList({ suggestedEdits, community }) {
   return (
-    <FormScrollSection>
-      <FormSection>
-        <FormSectionHeading weight="medium">Metadata</FormSectionHeading>
-      </FormSection>
+    <Section>
+      <SectionHeader>
+        Images
+      </SectionHeader>
       <Table snap="all">
         <THead>
           <Tr>
@@ -89,13 +44,18 @@ export default function DashboardCommunityEditsList({ suggestedEdits, community 
           {suggestedEdits.length === 0 && (
             <Tr>
               <Td colSpan={TABLE_HEADINGS.length}>
-                <NoResultMessage>There are no edits</NoResultMessage>
+                <Block
+                  padding="xxxLarge"
+                  align="center"
+                >
+                  There are no edits
+                </Block>
               </Td>
             </Tr>
           )}
         </TBody>
       </Table>
-    </FormScrollSection>
+    </Section>
   );
 }
 

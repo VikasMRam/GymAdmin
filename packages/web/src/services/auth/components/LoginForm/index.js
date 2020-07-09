@@ -6,10 +6,10 @@ import styled from 'styled-components';
 import { size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import cursor from 'sly/web/components/helpers/cursor';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { Heading, Button, Block, Link } from 'sly/web/components/atoms';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const StyledHeading = pad(Heading);
 StyledHeading.displayName = 'StyledHeading';

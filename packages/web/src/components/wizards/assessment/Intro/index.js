@@ -4,10 +4,10 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { Wrapper } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Icon } from 'sly/web/components/atoms';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const StyledForm = textAlign(styled.form``);
 StyledForm.displayName = 'StyledForm';

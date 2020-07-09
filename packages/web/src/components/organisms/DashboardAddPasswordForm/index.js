@@ -3,13 +3,13 @@ import { func, string, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 
 import ReduxField from 'sly/web/components/organisms/ReduxField';
-import FormSection from 'sly/web/components/molecules/FormSection';
+import SectionForm from 'sly/web/components/molecules/SectionForm';
 
 const noPasswordWarning = 'Create a password so you can discover and keep track of your favorite communities.';
 
 const DashboardAddPasswordForm = ({ pristine, ...props }) => {
   return (
-    <FormSection heading="Add Your Password" buttonText="Create Password" {...props}>
+    <SectionForm heading="Add Your Password" buttonText="Create Password" {...props}>
       <Field
         name="newPassword"
         label="New Password"
@@ -29,7 +29,7 @@ const DashboardAddPasswordForm = ({ pristine, ...props }) => {
         wideWidth
         warning={pristine}
       />
-    </FormSection>
+    </SectionForm>
   );
 };
 

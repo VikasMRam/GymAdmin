@@ -9,7 +9,6 @@ import pad from 'sly/web/components/helpers/pad';
 import SlyEvent from 'sly/web/services/helpers/events';
 import taskPropType from 'sly/web/propTypes/task';
 import clientPropType from 'sly/web/propTypes/client';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { Box, Table, THead, TBody, Tr, Td, Heading, Block } from 'sly/web/components/atoms';
 import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons';
 import Pagination from 'sly/web/components/molecules/Pagination';
@@ -23,6 +22,7 @@ import {
   AGENT_DASHBOARD_TASKS_PATH, AGENT_DASHBOARD_CONTEXT_TASKS_PATH, TODAY, OVERDUE, UPCOMING, COMPLETED,
 } from 'sly/web/constants/dashboardAppPaths';
 import { stripPageNumber } from 'sly/web/services/helpers/appPaths';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 
 const TABLE_HEADINGS = [
@@ -79,7 +79,7 @@ const StyledFamiliesCountStatusBlock = styled(FamiliesCountStatusBlock)`
   border-bottom: none;
 `;
 
-const TwoColumn = pad(styled.div`
+const TwoColumn = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -87,7 +87,12 @@ const TwoColumn = pad(styled.div`
   ${Heading} {
     margin-bottom: 0;
   }
-`);
+`;
+
+TwoColumn.defaultProps = {
+  background: 'white',
+  padding: 'large',
+};
 
 const NoResultMessage = styled(textAlign(Block))`
   padding-top: ${size('spacing.xxxLarge')};
@@ -207,34 +212,8 @@ export default class DashboardAgentTasksSection extends Component {
       tasks, pagination, activeTab, isPageLoading, noBorder, meta, contextPath, location,
       datatable,
     } = this.props;
-    const beforeTabHeader = (
-      <TwoColumn>
-        <Heading level="subtitle">Tasks</Heading>
-        <IconButton icon="plus" hideTextInMobile onClick={this.handleAddTaskClick}>
-          Add task
-        </IconButton>
-      </TwoColumn>
-    );
-    let headerComponent = (
-      <Tabs activeTab={activeTab} beforeHeader={beforeTabHeader} tabsOnly>
-        {Object.entries(TabMap)
-          .map(([name, key]) => (
-            <Tab
-              id={key}
-              key={key}
-              to={getBasePath(key, location)}
-              onClick={() => onTabClick(name)}
-            >
-              {`${name} (${pagination[`${key}Count`] || '0'})`}
-            </Tab>
-          ))}
-      </Tabs>);
-    // Don't use tabs in context
-    if (contextPath) {
-      headerComponent = beforeTabHeader;
-    }
-    const noResultMessage = 'Nice! You are on top of all your tasks here.';
 
+    const noResultMessage = 'Nice! You are on top of all your tasks here.';
 
     const TableHeaderButtonComponent = noBorder ? StyledTableHeaderButtons : TableHeaderButtons;
     const SectionComponent = noBorder ? StyledSection : Section;
@@ -243,7 +222,29 @@ export default class DashboardAgentTasksSection extends Component {
 
     return (
       <>
-        {headerComponent}
+        <TwoColumn>
+          <Heading level="subtitle">Tasks</Heading>
+          <IconButton icon="plus" hideTextInMobile onClick={this.handleAddTaskClick}>
+            Add task
+          </IconButton>
+        </TwoColumn>
+
+        {!contextPath && (
+          <Tabs activeTab={activeTab} snap="top">
+            {Object.entries(TabMap)
+              .map(([name, key]) => (
+                <Tab
+                  id={key}
+                  key={key}
+                  to={getBasePath(key, location)}
+                  onClick={() => onTabClick(name)}
+                >
+                  {`${name} (${pagination[`${key}Count`] || '0'})`}
+                </Tab>
+              ))}
+          </Tabs>
+        )}
+
         <TableHeaderButtonComponent
           datatable={datatable}
           modelConfig={modelConfig}

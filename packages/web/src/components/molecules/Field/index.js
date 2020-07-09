@@ -7,7 +7,6 @@ import Helmet from 'react-helmet';
 
 import { size } from 'sly/web/components/themes';
 import { Label, Input, Icon, Block, Span, Button } from 'sly/web/components/atoms';
-import textAlign from 'sly/web/components/helpers/textAlign';
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/web/components/molecules/MultipleChoice';
 import CommunityChoice from 'sly/web/components/molecules/CommunityChoice';
@@ -24,7 +23,9 @@ import CheckboxInput from 'sly/web/components/molecules/CheckboxInput';
 import LocationSearch from 'sly/web/components/molecules/LocationSearch';
 import DatepickerStyles from 'sly/web/components/themes/DatepickerStyles';
 import CommunityAutoComplete from 'sly/web/components/molecules/CommunityAutoComplete';
+import { textAlign } from 'sly/web/components/helpers/text';
 import UserAutoComplete from 'sly/web/components/molecules/UserAutoComplete';
+import NumberInput from 'sly/web/components/molecules/NumberInput';
 
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/web/components/atoms/Select'));
@@ -38,57 +39,6 @@ const DatePicker = props => (
     <DatePickerLoadable {...props} />
   </>
 );
-
-const textTypeInputs = ['email', 'iconInput'];
-const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
-
-const getInputComponent = (type) => {
-  switch (type) {
-    case 'rating':
-      return RatingInput;
-    case 'singlechoice':
-    case 'multiplechoice':
-    case 'buttonlist':
-      return MultipleChoice;
-    case 'communitychoice':
-      return CommunityChoice;
-    case 'slider':
-      return Slider;
-    case 'boxChoice':
-      return BoxChoice;
-    case 'dateChoice':
-      return DateChoice;
-    case 'iconInput':
-      return IconInput;
-    case 'daterange':
-      return DateRange;
-    case 'date':
-      return DatePicker;
-    case 'select':
-      return Input;
-    case 'phone':
-      return PhoneInput;
-    case 'choice':
-      return Select;
-    case 'autocomplete':
-      return Autocomplete;
-    case 'community':
-      return CommunityAutoComplete;
-    case 'user':
-      return UserAutoComplete;
-    case 'checkbox':
-    case 'boolean':
-      return CheckboxInput;
-    case 'locationSearch':
-      return LocationSearch;
-    case 'richtextarea':
-      return RichTextArea;
-    case 'button':
-      return Button;
-    default:
-      return Input;
-  }
-};
 
 const Wrapper = styled.div`
   position: relative;
@@ -126,7 +76,6 @@ const CheckIcon = styled(Icon)`
 
 const LabelWrapper = styled.div`
   display: flex;
-  vertical-align: middle;
   justify-content: space-between;
   align-items: center;
   ${({ type, options }) => (type === 'checkbox' && !!options === true) && css`
@@ -135,6 +84,7 @@ const LabelWrapper = styled.div`
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${({ wideWidth }) => wideWidth && css`
+      vertical-align: middle;
       margin-right: ${size('tabletLayout.gutter')};
       flex: 0 0 ${size('tabletLayout.col2')};
       ${({ type, options }) => (type === 'checkbox' && !!options === true) && css`
@@ -212,6 +162,58 @@ const StyledLabel = styled(Label)`
     margin-right: ${size('spacing.regular')};
   `)};
 `;
+const textTypeInputs = ['email', 'iconInput'];
+const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
+
+const getInputComponent = (type) => {
+  switch (type) {
+    case 'rating':
+      return RatingInput;
+    case 'singlechoice':
+    case 'multiplechoice':
+    case 'buttonlist':
+      return MultipleChoice;
+    case 'communitychoice':
+      return CommunityChoice;
+    case 'slider':
+      return Slider;
+    case 'boxChoice':
+      return BoxChoice;
+    case 'dateChoice':
+      return DateChoice;
+    case 'iconInput':
+      return IconInput;
+    case 'daterange':
+      return DateRange;
+    case 'date':
+      return DatePicker;
+    case 'select':
+      return Input;
+    case 'phone':
+      return PhoneInput;
+    case 'choice':
+      return Select;
+    case 'autocomplete':
+      return Autocomplete;
+    case 'community':
+      return CommunityAutoComplete;
+    case 'user':
+      return UserAutoComplete;
+    case 'checkbox':
+    case 'boolean':
+      return CheckboxInput;
+    case 'locationSearch':
+      return LocationSearch;
+    case 'richtextarea':
+      return RichTextArea;
+    case 'button':
+      return Button;
+    case 'number':
+      return NumberInput;
+    default:
+      return Input;
+  }
+};
 
 const Field = ({
   message,
@@ -235,7 +237,7 @@ const Field = ({
   ...props
 }) => {
   const inputProps = {
-    id: `${name}_${value || +new Date()}`,
+    id: name,
     name,
     value: hideValue ? null : value,
     type: getInputType(type),
@@ -283,7 +285,7 @@ const Field = ({
         <StyledInputMessage name={`${name}Warning`} icon="warning" palette="warning" message={message} wideWidth={wideWidth} renderInputFirst={renderInputFirst} />
       )}
       {success &&
-        <CheckIcon icon="check" size="regular" palette="green" />
+        <CheckIcon icon="check" palette="green" />
       }
       {showCharacterCount && inputProps.maxLength &&
         <CharCount size="tiny" palette={((valueLength / inputProps.maxLength) * 100) > 90 ? 'danger' : 'slate'}>{valueLength}/{inputProps.maxLength}</CharCount>

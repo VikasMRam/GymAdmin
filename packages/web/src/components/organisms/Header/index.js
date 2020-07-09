@@ -13,7 +13,8 @@ import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 const HeaderWrapper = styled.nav`
   display: flex;
   width: 100%;
-  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  height: 80px;
+  border-bottom: ${size('border.regular')} solid ${palette('slate.lighter-90')};
   // To remove blue line caused by tabIndex
   outline: none;
   align-items: center;
@@ -100,11 +101,17 @@ const MarginnedHR = styled(Hr)`
 `;
 
 const HeaderItems = styled.div`
+  height: 80px;
   display: flex;
   align-items: center;
   margin-left: auto;
-
-  ${ifProp('hideInSmallScreen', css`display: none;`)}
+  padding-left: 1.5rem;
+  
+  > * {
+    white-space: nowrap;
+  }
+  
+  ${ifProp('hideInSmallScreen', css`display: none;`)};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: flex;
@@ -244,15 +251,14 @@ const Header = ({
           <Link palette="primary" variation="base" to="/"><Icon icon="logo" size="large" /></Link>
         </OnlyInMobile>
       </SeniorlyIconMenu>
-      {hasSearchBox &&
+      {hasSearchBox && (
         <StyledSearchBoxContainer
           onCurrentLocation={onCurrentLocation}
           menuOpen={menuOpen}
-          hasShadow
           layout="header"
           onLocationSearch={onLocationSearch}
         />
-      }
+      )}
       <HeaderItems hideInSmallScreen={hideMenuItemsInSmallScreen}>
         {headerItemComponents}
       </HeaderItems>

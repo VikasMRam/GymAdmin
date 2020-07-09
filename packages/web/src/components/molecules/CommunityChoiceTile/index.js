@@ -124,7 +124,7 @@ const CommunityChoiceTile = ({
             <Deskrate> per month</Deskrate>
           </div>
           <ReviewsWrapper>
-            <Rating value={reviewsValue} size="small" />
+            <Rating value={reviewsValue} size="caption" />
             <NumberReviews>{numReviews}</NumberReviews>
           </ReviewsWrapper>
         </Data>

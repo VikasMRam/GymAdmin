@@ -205,7 +205,7 @@ const NearMePage = ({
     return (
       <>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={nhRef}>
+          <Heading level="title" size="title" ref={nhRef}>
             How to Find the Best Nursing Home Near Me
           </Heading>
           <Paragraph>
@@ -240,7 +240,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={servicesRef} >
+          <Heading level="title" size="title" ref={servicesRef} >
             What Services are Offered by Nursing Homes Near Me?
           </Heading>
           <Paragraph>
@@ -286,7 +286,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={payingRef}>
+          <Heading level="title" size="title" ref={payingRef}>
             Paying for a Nursing Home
           </Heading>
           <Paragraph>
@@ -354,7 +354,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={howRef}>
+          <Heading level="title" size="title" ref={howRef}>
             Choosing a Nursing Home: Your Nursing Home Comparison Checklist
           </Heading>
           <Paragraph>
@@ -480,7 +480,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={snfRef} >
+          <Heading level="title" size="title" ref={snfRef} >
             What Type of Care is Offered at a Skilled Nursing Facility?
           </Heading>
           <Paragraph>
@@ -516,7 +516,7 @@ const NearMePage = ({
           </Heading>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="subtitle" size="subtitle" _ref={ilRef}>
+          <Heading level="subtitle" size="subtitle" ref={ilRef}>
             Independent Living
           </Heading>
           <Paragraph>
@@ -638,7 +638,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="subtitle" size="subtitle" _ref={alRef}>
+          <Heading level="subtitle" size="subtitle" ref={alRef}>
             Assisted Living
           </Heading>
           <Paragraph>
@@ -758,7 +758,7 @@ const NearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="subtitle" size="subtitle" _ref={mcRef} >
+          <Heading level="subtitle" size="subtitle" ref={mcRef} >
             Memory Care
           </Heading>
           <Paragraph>
@@ -874,7 +874,7 @@ const NearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="subtitle" size="subtitle" _ref={bncRef} >
+          <Heading level="subtitle" size="subtitle" ref={bncRef} >
             Board and Care Home
           </Heading>
           <Paragraph>
@@ -994,7 +994,7 @@ const NearMePage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="subtitle" size="subtitle" _ref={hospiceRef}>
+          <Heading level="subtitle" size="subtitle" ref={hospiceRef}>
             Hospice
           </Heading>
           <Paragraph>
@@ -1154,7 +1154,7 @@ const NearMePage = ({
           </ul>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={faqRef} >
+          <Heading level="title" size="title" ref={faqRef} >
             Nursing Home FAQs
           </Heading>
           <Paragraph>

@@ -106,7 +106,7 @@ const CareTypeRegionGuidePage = ({
   const BreadCrumbContent = () => {
     searchParams.regionName = `${geoGuide.city}, ${geoGuide.state}`;
     return (
-      <BreadCrumb items={getBreadCrumbsForGuides(searchParams)} />
+      <BreadCrumb pad="large" items={getBreadCrumbsForGuides(searchParams)} />
     );
   };
 

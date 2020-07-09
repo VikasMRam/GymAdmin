@@ -6,11 +6,11 @@ import { withRouter } from 'react-router';
 import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
 import { size, palette } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import Heading from 'sly/web/components/atoms/Heading';
 import Link from 'sly/web/components/atoms/Link';
 import Footer from 'sly/web/components/organisms/Footer';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const Wrapper = textAlign(styled.div`
   position: relative;

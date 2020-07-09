@@ -26,7 +26,7 @@ const StyledIcon = styled(Icon)`
 const Rate = styled(Block)`
   margin-right: ${size('spacing.large')};
   margin-bottom: 0;
-  line-height: ${size('lineHeight.minimal')};
+  line-height: ${size('lineHeight.micro')};
 `;
 
 const TopWrapper = styled(Block)`

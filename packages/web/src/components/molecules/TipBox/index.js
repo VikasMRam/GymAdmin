@@ -10,7 +10,7 @@ PaddedBlock.displayName = 'PaddedBlock';
 const TipBox = ({
   heading, children, className,
 }) => (
-  <Box palette="grey" backgroundPalette="grey" backgroundVariation="background" className={className}>
+  <Box palette="grey" background="slate.lighter-90" className={className}>
     <PaddedBlock weight="bold" size="tiny" palette="primary" variation="base">{heading}</PaddedBlock>
     {children}
   </Box>

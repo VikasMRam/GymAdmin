@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { func, bool, object, arrayOf } from 'prop-types';
-import styled from 'styled-components';
-import { sortableContainer } from 'react-sortable-hoc';
+import { SortableContainer } from 'react-sortable-hoc';
 
-import { size } from 'sly/web/components/themes';
-import pad from 'sly/web/components/helpers/pad';
-import { Button } from 'sly/web/components/atoms';
-import FormSection from 'sly/web/components/molecules/FormSection';
 import { imagePropType } from 'sly/web/propTypes/gallery';
 import MediaItem from 'sly/web/services/s3Uploader/components/MediaItem';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import HelpBubble from 'sly/web/components/form/HelpBubble';
+import { Section, SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import S3Uploader from 'sly/web/services/s3Uploader/components/S3Uploader';
+import NewModal from 'sly/web/components/atoms/NewModal';
+import EditImageModal from 'sly/web/services/s3Uploader/components/EditImageModal';
+import Block from 'sly/web/components/atoms/Block';
 
 const genKey = ((cache = {}) => (image) => {
   // check if our key exists
@@ -28,32 +28,35 @@ const genKey = ((cache = {}) => (image) => {
   return key;
 })();
 
-const FormSectionSortable = sortableContainer(FormSection);
-
-const StyledButton = pad(Button, 'regular');
-
-const Heading = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: -${size('spacing.large')} 0;
-`;
-
-const HeadingText = styled.div`
-  padding-top: ${size('spacing.regular')};
-`;
-
-const FormScrollSection = styled.div`
-  // max-height: calc(100vh - 240px);
-`;
-
-const makeIsNew = images => image => images.some(l => image.attributes.path && l.id === image.id);
+const SectionSortable = SortableContainer(({
+  images,
+  editImage,
+  deleteImage,
+  isNew,
+  canEdit,
+}) => (
+  <Block padding="xLarge">
+    {images && images.map((image, i) => (
+      <MediaItem
+        key={`item-${image.attributes?.path || genKey(image)}`}
+        editImage={editImage}
+        deleteImage={deleteImage}
+        image={image}
+        index={i}
+        isNew={isNew(image)}
+        disabled={!canEdit}
+      />
+    ))}
+  </Block>
+));
 
 export default class DashboardCommunityPhotosForm extends Component {
   static propTypes = {
     invalid: bool,
     canEdit: bool,
     submitting: bool,
-    addImage: func.isRequired,
+    onUpload: func.isRequired,
+    onUploadError: func.isRequired,
     saveImage: func.isRequired,
     deleteImage: func.isRequired,
     onSortEnd: func.isRequired,
@@ -61,20 +64,38 @@ export default class DashboardCommunityPhotosForm extends Component {
     changes: object,
   };
 
+  state = {
+    editingImage: null,
+  };
+
+  editImage = (image) => {
+    this.setState({
+      editingImage: image,
+    });
+  };
+
+  stopEditing = () => {
+    this.setState({
+      editingImage: null,
+    });
+  }
+
   render() {
     const {
-      addImage, onSortEnd, saveImage, deleteImage, canEdit, images, changes,
+      onUpload, onUploadError, onSortEnd, saveImage, deleteImage, canEdit, images, changes,
     } = this.props;
 
-    const heading = (
-      <Heading>
-        <HeadingText>Images</HeadingText>
-        {canEdit && (
-          <IconButton icon="add" onClick={addImage} hideTextInMobile>
-            Add Image
-          </IconButton>
-        )}
-      </Heading>
+
+    const actions = canEdit && (
+      <S3Uploader
+        uploadRequestHeaders={{}}
+        onFinish={onUpload}
+        onError={onUploadError}
+      >
+        <IconButton icon="add" hideTextInMobile>
+          Add Image
+        </IconButton>
+      </S3Uploader>
     );
 
     const deletedMessage = changes.deleted.length === 0
@@ -85,28 +106,32 @@ export default class DashboardCommunityPhotosForm extends Component {
     const isNew = image => (changes?.newImages || []).includes(image);
 
     return (
-      <FormScrollSection>
-        {deletedMessage && (
-          <HelpBubble
-            trigger="This images were deleted"
-          >
-            {deletedMessage}
-          </HelpBubble>
-        )}
-        <FormSectionSortable heading={heading} useDragHandle onSortEnd={onSortEnd}>
-          {images && images.map((image, i) => (
-            <MediaItem
-              key={`item-${image.attributes?.path || genKey(image)}`}
-              saveImage={saveImage}
-              deleteImage={deleteImage}
-              image={image}
-              index={i}
-              isNew={isNew(image)}
-              disabled={!canEdit}
-            />
-          ))}
-        </FormSectionSortable>
-      </FormScrollSection>
+      <>
+        <EditImageModal
+          image={this.state.editingImage}
+          saveImage={saveImage}
+          canEdit={canEdit}
+          onClose={this.stopEditing}
+        />
+        <Section>
+          {deletedMessage && (
+            <HelpBubble
+              trigger="This images were deleted"
+            >
+              {deletedMessage}
+            </HelpBubble>
+          )}
+          <SectionHeader actions={actions}>
+            Images
+          </SectionHeader>
+          <SectionSortable
+            useDragHandle
+            onSortEnd={onSortEnd}
+            images={images}
+            editImage={this.editImage}
+            deleteImage={deleteImage} isNew={isNew} canEdit={canEdit} />
+        </Section>
+      </>
     );
   }
 }

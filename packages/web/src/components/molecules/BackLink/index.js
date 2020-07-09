@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, string, any } from 'prop-types';
+import { func, string, any, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/web/components/themes';
@@ -19,9 +19,9 @@ const StyledLink = styled(Link)`
 `;
 
 const BackLink = ({
-  to, onClick, linkText, children, className,
+  to, onClick, linkText, children, className, event,
 }) => (
-  <StyledLink to={to} onClick={onClick} className={className}>
+  <StyledLink to={to} onClick={onClick} className={className} event={event}>
     <Wrapper>
       <BackArrorIcon icon="arrow-left" size="small" palette="primary" />
       <Span size="caption" palette="primary">{linkText || children}</Span>
@@ -32,6 +32,7 @@ const BackLink = ({
 BackLink.propTypes = {
   className: string,
   to: string.isRequired,
+  event: object,
   onClick: func,
   linkText: string,
   children: any,

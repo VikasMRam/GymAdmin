@@ -9,8 +9,6 @@ import {
   NEWFAMILIES,
 } from 'sly/web/constants/dashboardAppPaths';
 
-global.generatePath = generatePath;
-
 const DashboardAgentFamilyOverviewPage = ({ match }) => {
   if (!match.params.clientType) {
     return (
@@ -27,7 +25,7 @@ const DashboardAgentFamilyOverviewPage = ({ match }) => {
   };
 
   return (
-    <DashboardPageTemplate activeMenuItem="My Families">
+    <DashboardPageTemplate activeMenuItem="Families">
       <DashboardAgentFamilyOverviewSectionContainer sectionFilters={sectionFilters} />
     </DashboardPageTemplate>
   );

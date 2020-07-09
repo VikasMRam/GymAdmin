@@ -1,72 +1,30 @@
-import styled, { css } from 'styled-components';
-import { oneOf, bool } from 'prop-types';
-import { ifProp, switchProp } from 'styled-tools';
+import styled from 'styled-components';
+import { oneOf } from 'prop-types';
 
-import { size, palette } from 'sly/web/components/themes';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import { spacing as spacingPropType } from 'sly/web/propTypes/spacing';
-import { weight as weightPropType } from 'sly/web/propTypes/weight';
-import { text as textPropType } from 'sly/web/propTypes/text';
+import { borderPropType, borderRadiusPropType } from 'sly/web/propTypes/border';
+import Block from 'sly/web/components/atoms/Block';
 
-const padding = ({ padding }) => size('spacing', padding);
-
-const fontSize = ({ size: sizeProp }) => size('text', sizeProp);
-
-const borderColour = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
-
-const fontWeight = ({ weight }) => size('weight', weight);
-
-export const topSnap = css`
-  border-top: 0;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-`;
-
-export const bottomSnap = css`
-  border-bottom: 0;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-`;
-
-const backgroundColour = ({ backgroundPalette, backgroundVariation }) => backgroundPalette ? palette(backgroundPalette, backgroundVariation) : 'transparent';
-
-const Box = styled.div`
-  background: ${backgroundColour};
-  border: ${size('border.regular')} solid ${borderColour};
-  border-radius: ${ifProp('noBorderRadius', 0, size('spacing.small'))};
-  padding: ${ifProp('noPadding', 0, padding)};
-  font-size: ${fontSize};
-  font-weight: ${fontWeight};
-
-  ${switchProp('snap', {
-    top: topSnap,
-    bottom: bottomSnap,
-    vertical: `${topSnap} ${bottomSnap}`,
-  })};
-`;
+const Box = styled(Block)``;
 
 Box.propTypes = {
-  palette: palettePropType,
-  variation: variationPropType,
-  backgroundPalette: palettePropType,
-  backgroundVariation: variationPropType,
+  border: borderPropType,
+  borderRadius: borderRadiusPropType,
+  borderPalette: palettePropType,
+  borderVariation: variationPropType,
   padding: spacingPropType,
-  weight: weightPropType,
   snap: oneOf(['none', 'top', 'bottom', 'vertical']),
-  noBorderRadius: bool,
-  noPadding: bool,
-  size: textPropType,
 };
 
 Box.defaultProps = {
-  palette: 'slate',
-  variation: 'stroke',
+  border: 'regular',
+  borderRadius: 'small',
+  borderPalette: 'slate',
+  borderVariation: 'lighter-90',
   padding: 'xLarge',
   snap: 'none',
-  size: 'body',
-  backgroundVariation: 'base',
-  weight: 'regular',
 };
 
 export default Box;

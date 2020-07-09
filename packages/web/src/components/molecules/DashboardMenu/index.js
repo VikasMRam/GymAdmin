@@ -1,94 +1,95 @@
 import React from 'react';
-import { shape, arrayOf, string, number } from 'prop-types';
-import styled from 'styled-components';
+import { string } from 'prop-types';
+import { generatePath } from 'react-router';
 
-import { size, palette } from 'sly/web/components/themes';
-import Role from 'sly/web/components/common/Role';
 import { Icon, Span, Link } from 'sly/web/components/atoms';
-import pad from 'sly/web/components/helpers/pad';
+import {
+  ADMIN_DASHBOARD_AGENTS_PATH,
+  ADMIN_DASHBOARD_CALLS_PATH,
+  AGENT_DASHBOARD_CONTACTS_PATH,
+  AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_MESSAGES_PATH,
+  AGENT_DASHBOARD_PROFILE_PATH, AGENT_DASHBOARD_TASKS_PATH,
+  DASHBOARD_ACCOUNT_PATH, DASHBOARD_COMMUNITIES_PATH,
+  FAMILY_DASHBOARD_FAVORITES_PATH,
+} from 'sly/web/constants/dashboardAppPaths';
+import {
+  AGENT_ADMIN_ROLE,
+  AGENT_ND_ROLE,
+  CUSTOMER_ROLE, PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE,
+} from 'sly/web/constants/roles';
+import Block from 'sly/web/components/atoms/Block';
+import Role from 'sly/web/components/common/Role';
 
-const Wrapper = styled.div`
-  display: flex;
-  padding: ${size('spacing.large')};
-  padding-bottom: 0;
-  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+const menuItemFor = (menuItem) => {
+  const { label } = menuItem;
+  const event = {
+    category: 'DashboardMenuItem',
+    action: 'click',
+    label,
+  };
+  return {
+    iconSize: 'regular',
+    palette: 'slate',
+    variation: 'filler',
+    event,
+    ...menuItem,
+  };
+};
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: block;
-    padding: 0;
-    padding-top: ${size('spacing.xxLarge')};
-    border-right: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-    border-bottom: 0;
-  }
-`;
+/* eslint-disable no-bitwise */
+export const menuItems = [
+  { label: 'Families', icon: 'users', href: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE },
+  { label: 'Agents', icon: 'case', href: ADMIN_DASHBOARD_AGENTS_PATH, role: PLATFORM_ADMIN_ROLE },
+  { label: 'Communities', icon: 'community-size-large', href: DASHBOARD_COMMUNITIES_PATH, role: PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE },
+  { label: 'Tasks', icon: 'checkmark-circle', href: generatePath(AGENT_DASHBOARD_TASKS_PATH), role: AGENT_ADMIN_ROLE },
+  { label: 'Contacts', icon: 'contacts', href: AGENT_DASHBOARD_CONTACTS_PATH, role: AGENT_ADMIN_ROLE },
+  { label: 'Calls', icon: 'phone', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE },
+  { label: 'Messages', icon: 'message', href: AGENT_DASHBOARD_MESSAGES_PATH, role: PLATFORM_ADMIN_ROLE },
+  { label: 'Favorites', icon: 'favourite-light', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE },
+  { label: 'Profile', icon: 'user', href: AGENT_DASHBOARD_PROFILE_PATH, role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE },
+  { label: 'Account', icon: 'settings', href: DASHBOARD_ACCOUNT_PATH, role: CUSTOMER_ROLE | PROVIDER_OD_ROLE | AGENT_ND_ROLE },
+].map(menuItemFor);
+/* eslint-enable no-bitwise */
 
-const MenuItem = styled(Link)`
-  align-items: center;
-  cursor: pointer;
-  margin-right: ${size('spacing.large')};
-  padding-bottom: ${size('spacing.large')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: flex;
-    border-left: none;
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    flex-direction: column;
-    margin-bottom: ${size('spacing.xxLarge')};
-    margin-right: 0;
-    padding: 0;
-  }
-`;
-
-const ActiveMenuItem = styled(MenuItem)`
-  display: block;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    border-bottom: ${size('border.xxLarge')} solid ${palette('slate', 'base')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    border-bottom: none;
-  }
-`;
-
-const NotActiveMenuItem = styled(MenuItem)`
-  display: none;
-`;
-
-const MenuItemIcon = pad(Icon, 'small');
-MenuItemIcon.displayName = 'MenuItemIcon';
-
-const DashboardMenu = ({ menuItems }) => {
+const DashboardMenu = ({ activeMenuItem }) => {
   const menuItemComponents = menuItems.map((item) => {
-    const ItemComponent = item.active ? ActiveMenuItem : NotActiveMenuItem;
+    const selected = item.label === activeMenuItem;
+    const palette = selected
+      ? 'primary'
+      : 'grey';
+    const weight = selected
+      ? 'medium'
+      : undefined;
+
     return (
-      <Role className="role" is={item.role} key={item.label}>
-        <ItemComponent onClick={() => item.onClick(item)} to={item.href}>
-          <MenuItemIcon icon={item.icon} size={item.iconSize} palette={item.active ? 'primary' : item.palette} variation={item.variation} />
-          <Span weight="medium" size="caption" palette={item.active ? 'primary' : item.palette} variation={item.variation}>{item.label}</Span>
-        </ItemComponent>
+      <Role is={item.role} key={item.label}>
+        <Link
+          size="caption"
+          to={item.href}
+          key={item.label}
+          palette={palette}
+          block
+          marginBottom="xLarge"
+        >
+          <Icon
+            size="caption"
+            icon={item.icon}
+            marginRight="medium"
+          />
+          <Span weight={weight}>{item.label}</Span>
+        </Link>
       </Role>
     );
   });
   return (
-    <Wrapper>
+    <Block padding="xLarge">
       {menuItemComponents}
-    </Wrapper>
+    </Block>
   );
 };
 
 DashboardMenu.propTypes = {
-  menuItems: arrayOf(shape({
-    label: string.isRequired,
-    icon: string.isRequired,
-    iconSize: string.isRequired,
-    palette: string.isRequired,
-    variation: string.isRequired,
-    role: number.isRequired,
-    href: string,
-  })).isRequired,
+  activeMenuItem: string.isRequired,
 };
 
 export default DashboardMenu;

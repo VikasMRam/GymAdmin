@@ -18,11 +18,15 @@ import DashboardCommunityDetailsPage from 'sly/web/components/pages/DashboardCom
 import withBreakpoint from 'sly/web/components/helpers/breakpoint';
 import withNotification from 'sly/web/controllers/withNotification';
 import withModal from 'sly/web/controllers/withModal';
-import { EditContext } from 'sly/web/services/edits';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { blacklist as editConfigBlacklist } from 'sly/web/services/edits/constants/community';
+import { EditContext } from 'sly/web/services/edits';
 
-const editEntities = require('sly/web/services/edits/constants');
+const activityPath = id => generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, {
+  id,
+  tab: PROFILE,
+});
 
 @withNotification
 @withModal
@@ -52,20 +56,7 @@ export default class DashboardCommunityDetailsPageContainer extends Component {
     suggestedEdits: arrayOf(object),
   };
 
-  currentEdit(config) {
-
-
-    const { suggestedEdits, user } = this.props;
-
-    if (!suggestedEdits.length || suggestedEdits[0].attributes.status !== 'Initialized') {
-      return null;
-    }
-
-    return this.processEdit(suggestedEdits[0], config, user);
-
-  }
-
-  selectEdit(config) {
+  selectEdit() {
     const { suggestedEdits, user, location } = this.props;
     // eslint-disable-next-line no-bitwise
     const editMatch = matchPath(location.pathname, {
@@ -74,29 +65,27 @@ export default class DashboardCommunityDetailsPageContainer extends Component {
       strict: true,
     });
 
-
     // if we have an editId param, the show that migration,
     // otherwise the last one of the user, so this works for
     // the community form and for the view in the edits tab
-    let filteredEdits;
-    if (!userIs(user, PLATFORM_ADMIN_ROLE)) {
-      const filter = editMatch?.params?.editId
-        ? edit => edit.id === editMatch.params.editId
-        : edit => edit.relationships.createdBy.data.id === user.id;
-      filteredEdits = suggestedEdits.filter(filter);
+    let filter;
+    const editId = editMatch?.params?.editId;
+    if (editId) {
+      filter = edit => edit.id === editId;
+    } else if (!userIs(user, PLATFORM_ADMIN_ROLE)) {
+      filter = edit => edit.relationships.createdBy.data.id === user.id
+        && edit.attributes.status === 'Initialized';
     } else {
-      filteredEdits = suggestedEdits;
+      filter = edit => edit.attributes.status === 'Initialized';
     }
 
-    if (!filteredEdits.length) {
+    const selectedEdit = suggestedEdits.filter(filter)[0];
+    if (!selectedEdit) {
       return null;
     }
 
-    return this.processEdit(suggestedEdits[0], config, user);
-  }
-
-  processEdit(selectedEdit, config, user) {
-    const isPendingForAdmin = userIs(user, PLATFORM_ADMIN_ROLE) && selectedEdit.attributes.status === 'Initialized';
+    const isPending = selectedEdit.attributes.status === 'Initialized';
+    const isPendingForAdmin = isPending && userIs(user, PLATFORM_ADMIN_ROLE);
 
     // we don't want array inspection, so we bail
     const prefilter = path => Array
@@ -106,7 +95,7 @@ export default class DashboardCommunityDetailsPageContainer extends Component {
       selectedEdit.attributes?.preChange,
       selectedEdit.attributes?.change,
       prefilter,
-  ) || [];
+    ) || [];
 
     // the values of the diff (lhs, rhs) are used when viewing the
     // edit in the edits tab, the keys of the diff (path in changes[path])
@@ -114,10 +103,12 @@ export default class DashboardCommunityDetailsPageContainer extends Component {
     return {
       id: selectedEdit.id,
       ...selectedEdit.attributes,
+      isPending,
       isPendingForAdmin,
+      nChanges: changes.length,
       changes: changes.reduce((changes, change) => {
         const path = change.path.join('.');
-        if (config.blacklist.includes(path)) {
+        if (editConfigBlacklist.includes(path)) {
           return changes;
         }
         changes[path] = {
@@ -147,32 +138,23 @@ export default class DashboardCommunityDetailsPageContainer extends Component {
       suggestedEdits,
     } = this.props;
 
-    const currentTab = match.params.tab || SUMMARY;
-    if (breakpoint && community && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
-      const activityPath = generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, {
-        id: community.id,
-        tab: PROFILE,
-      });
-      return <Redirect to={activityPath} />;
+    if (!user) {
+      return null;
     }
 
-    const entityType = 'community';
-    const editConfig = editEntities[entityType];
-    const currentEdit = this.currentEdit(editConfig);
-    const selectedEdit = this.selectEdit(editConfig);
-    const editContext = {
-      suggestedEdits,
-      entityType,
-      currentEdit,
-      selectedEdit,
-      editConfig,
-    };
+    const currentTab = match.params.tab || SUMMARY;
+    if (breakpoint && community && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
+      return <Redirect to={activityPath(community.id)} />;
+    }
+
+    const currentEdit = this.selectEdit();
 
     const { hasFinished: communityHasFinished } = status.community;
     // since it's using conditional prefetch, in initial stage communities key won't be there
     return (
-      <EditContext.Provider value={editContext}>
+      <EditContext.Provider value={currentEdit}>
         <DashboardCommunityDetailsPage
+          match={match}
           notifyError={notifyError}
           notifyInfo={notifyInfo}
           community={community}

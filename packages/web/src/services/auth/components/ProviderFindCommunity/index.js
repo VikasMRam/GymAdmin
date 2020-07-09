@@ -6,9 +6,9 @@ import { size } from 'sly/web/components/themes';
 import { getAutocompleteValues } from 'sly/web/services/datatable/helpers';
 import { normalizeResponse } from 'sly/web/services/api';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { Heading, Button, Block, Link } from 'sly/web/components/atoms';
 import Field from 'sly/web/components/molecules/Field';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 
 const StyledHeading = textAlign(pad(Heading));

@@ -165,7 +165,7 @@ const NearMePage = ({
     return (
       <>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={snfRef} >
+          <Heading level="title" size="title" ref={snfRef} >
             What is a Skilled Nursing Facility?
           </Heading>
           <Paragraph>
@@ -186,7 +186,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={costRef} >
+          <Heading level="title" size="title" ref={costRef} >
             What is The Cost of a Skilled Nursing Facility?
           </Heading>
           <Paragraph>
@@ -206,7 +206,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={servicesRef}>
+          <Heading level="title" size="title" ref={servicesRef}>
             What Services are Provided in a Skilled Nursing Facility?
           </Heading>
           <Paragraph>
@@ -245,7 +245,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={otherRef}>
+          <Heading level="title" size="title" ref={otherRef}>
             Skilled Nursing Facility vs Other Care Types
           </Heading>
           <Heading level="subtitle" size="subtitle">
@@ -375,7 +375,7 @@ const NearMePage = ({
         </StyledArticle>
         <StyledArticle>
           <Paragraph innerR/>
-          <Heading level="title" size="title" _ref={nextRef}>
+          <Heading level="title" size="title" ref={nextRef}>
             How to Choose a Skilled Nursing Facility Near Me
           </Heading>
           <Paragraph>
@@ -448,7 +448,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={medicareRef}>
+          <Heading level="title" size="title" ref={medicareRef}>
             Does Medicare Pay for Hospice in a Skilled Nursing Facility?
           </Heading>
           <Paragraph>
@@ -489,7 +489,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={paymentRef}>
+          <Heading level="title" size="title" ref={paymentRef}>
             Other Payment Options
           </Heading>
           <Paragraph>
@@ -538,7 +538,7 @@ const NearMePage = ({
           </Link>
         </StyledArticle>
       <StyledArticle>
-        <Heading level="title" size="title" _ref={faqRef} >
+        <Heading level="title" size="title" ref={faqRef} >
           Skilled Nursing Facility FAQs
         </Heading>
         <Paragraph>
@@ -557,7 +557,7 @@ const NearMePage = ({
         ))}
       </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={moreRef}>
+          <Heading level="title" size="title" ref={moreRef}>
             More Information
           </Heading>
           <Paragraph>

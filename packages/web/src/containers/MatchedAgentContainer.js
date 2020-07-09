@@ -25,7 +25,7 @@ export default class MatchedAgentContainer extends Component {
       return (
         <div>
           <PaddedPostConversionGreetingForm heading={`You're all set! One of our Local Senior Living Experts will reach out shortly to assist you with pricing for ${community.name}.`} community={community} onSubmit={onSubmit} />
-          <PostConversionAdTileContainer type="homeCare" layout="row" community={community} />
+          {/*<PostConversionAdTileContainer type="homeCare" layout="row" community={community} />*/}
         </div>
       );
     }

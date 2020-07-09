@@ -10,7 +10,9 @@ import {
 import clients from 'sly/web/../private/storybook/sample-data/clients.json';
 import { FAMILY_STATUS_ON_PAUSE } from 'sly/web/constants/familyDetails';
 
+const resName = 'Res Name';
 const activeClient = clients[1];
+activeClient.residentName = resName;
 const createdDate = dayjs(activeClient.createdAt).format('MM/DD/YYYY');
 
 const wrap = (props = { client: activeClient }) => shallow(<ClientRowCard  {...props} />);
@@ -19,13 +21,13 @@ describe('ClientRowCard', () => {
   it('should render ClientRowCard', () => {
     const wrapper = wrap();
     const {
-      clientInfo: { name }, uuidAux: { uuidInfo: { residentInfo: { fullName  } } }, stage,
+      clientInfo: { name }, stage,
     } = activeClient;
     const nameCell = wrapper.find('NameCell');
 
     expect(nameCell).toHaveLength(1);
     expect(nameCell.render().text()).toContain(name);
-    expect(wrapper.find('ResidentCell').contains(fullName)).toBeTruthy();
+    expect(wrapper.find('ResidentCell').contains(resName)).toBeTruthy();
     expect(wrapper.find('Stage').prop('stage')).toBe(stage);
     expect(wrapper.find('NoteCell')).toHaveLength(1);
 

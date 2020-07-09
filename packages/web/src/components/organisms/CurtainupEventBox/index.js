@@ -8,9 +8,9 @@ import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import eventPropType from 'sly/web/propTypes/event';
 import performerPropType from 'sly/web/propTypes/performer';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { Box, Block } from 'sly/web/components/atoms';
 import Avatar from 'sly/web/components/molecules/Avatar';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const Header = textAlign(styled.div`
   padding: ${size('spacing.regular')} ${size('spacing.xxLarge')};
@@ -80,7 +80,7 @@ const CurtainupEventBox = ({ event: { liveAt }, performers, palette }) => {
           </>
         }
       </Header>
-      <StyledBox backgroundPalette="white">
+      <StyledBox background="white">
         {performerComponents}
       </StyledBox>
     </div>

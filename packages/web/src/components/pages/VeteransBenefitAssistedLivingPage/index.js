@@ -166,7 +166,7 @@ const VeteransBenefitAssistedLivingPage = ({
     return (
       <>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={alRef} >What is Assisted Living for Veterans?</Heading>
+          <Heading level="title" size="title" ref={alRef} >What is Assisted Living for Veterans?</Heading>
           <Paragraph marginBottom="xxLarge">Long-term care costs quickly add up, but for Veterans and their surviving spouses,
             assistance may be available to help with these costs. Unfortunately, it’s hard to know what help is available,
             if you qualify, and how to apply. In fact, many Veterans and their families struggle through the application
@@ -217,7 +217,7 @@ const VeteransBenefitAssistedLivingPage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={sccRef}>Service-Connected Compensation</Heading>
+          <Heading level="title" size="title" ref={sccRef}>Service-Connected Compensation</Heading>
           <Paragraph marginBottom="xxLarge">
             This is a monthly payment made to a Veteran who suffered an injury while on active duty or had a pre-existing
             condition aggravated by his/her service. The severity of the disability is given a specific percentage rating.
@@ -276,7 +276,7 @@ const VeteransBenefitAssistedLivingPage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={dicssRef} >
+          <Heading level="title" size="title" ref={dicssRef} >
             Dependency and Indemnity Compensation (DIC)/Surviving Spouses
           </Heading>
 
@@ -317,7 +317,7 @@ const VeteransBenefitAssistedLivingPage = ({
         </StyledArticle>
         <StyledArticle>
 
-          <Heading level="title" size="title" _ref={whossRef}>
+          <Heading level="title" size="title" ref={whossRef}>
             Who is a Surviving Spouse?
           </Heading>
 
@@ -346,7 +346,7 @@ const VeteransBenefitAssistedLivingPage = ({
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Heading level="title" size="title" _ref={vetpnRef} >
+          <Heading level="title" size="title" ref={vetpnRef} >
             Veteran Pension/Survivor Pension — Used to be called Non-Service-Connected Basic Pension
           </Heading>
 
@@ -416,7 +416,7 @@ const VeteransBenefitAssistedLivingPage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={aarRef} >
+          <Heading level="title" size="title" ref={aarRef} >
             Aid and Attendance Rates 2019
           </Heading>
 
@@ -465,7 +465,7 @@ const VeteransBenefitAssistedLivingPage = ({
         </StyledArticle>
 
         <StyledArticle>
-          <Heading level="title" size="title" _ref={mlRef} >
+          <Heading level="title" size="title" ref={mlRef} >
             Military Time
           </Heading>
 

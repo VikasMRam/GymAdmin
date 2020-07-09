@@ -1,55 +1,64 @@
 import React from 'react';
 import { string, func, bool, oneOf, any } from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size } from 'sly/web/components/themes';
 import Span from 'sly/web/components/atoms/Span';
 import Link from 'sly/web/components/atoms/Link';
 
-const Wrapper = styled.li`
-  cursor: pointer;
-  display: inline-block;
-  list-style: none;
-  padding-bottom: calc(${size('spacing.large')} - ${size('border.xxLarge')});
-  margin-right: ${size('spacing.xLarge')};
-  background-color: ${palette('white', 'base')};
+const MaybeLink = ({ to, target, children, ...props }) => {
+  if (to) {
+    return <Link to={to} target={target} {...props}>{children}</Link>;
+  }
+  return <Span {...props}>{children}</Span>;
+};
 
-  ${p => p.active && css`
-    border-bottom: ${size('border', 'xxLarge')} solid ${palette('slate', 'base')};
-  `}
-`;
+MaybeLink.propTypes = {
+  to: string,
+  target: string,
+  children: any,
+};
 
-const Tab = ({
+const Tab = styled(({
   onClick,
   to,
   target,
   active,
   children,
-  className,
+  ...props
 }) => {
-  let spanPalette = 'slate';
-  let spanVariation = 'filler';
-  if (active) {
-    spanPalette = 'slate';
-    spanVariation = 'base';
-  }
-  const content = (
-    <Span weight="bold" size="tiny" palette={spanPalette} variation={spanVariation}>
-      {children}
-    </Span>
-  );
+  const palette = active
+    ? 'primary'
+    : 'slate.lighter-30';
+
+  const borderBottom = active
+    ? 'xxLarge'
+    : 0;
+
+  const paddingBottom = active
+    ? '11px'
+    : '15px';
 
   return (
-    <Wrapper
+    <MaybeLink
+      to={to}
+      target={target}
       onClick={onClick}
       active={active}
-      className={className}
+      palette={palette}
+      borderBottom={borderBottom}
+      paddingBottom={paddingBottom}
+      {...props}
     >
-      {to && <Link target={target} to={to}>{content}</Link>}
-      {!to && content}
-    </Wrapper>
+      {children}
+    </MaybeLink>
   );
-};
+})`
+  cursor: pointer;
+  display: block;
+  list-style: none;
+  letter-spacing: 1px;
+`;
 
 Tab.propTypes = {
   to: string,
@@ -58,19 +67,24 @@ Tab.propTypes = {
   active: bool.isRequired,
   children: any.isRequired,
   onClick: func.isRequired,
-  className: string,
 };
 
 Tab.defaultProps = {
   type: 'tab',
   active: false,
+  paddingTop: 'large',
+  marginRight: 'xLarge',
+  lineHeight: '16px',
+  weight: 'bold',
+  size: 'tiny',
+  borderPalette: 'primary',
 };
-
-export default Tab;
 
 export const MobileTab = styled(Tab)`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
   }
 `;
+
+export default Tab;
 

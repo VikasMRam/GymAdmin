@@ -6,7 +6,6 @@ import { size, palette, assetPath } from 'sly/web/components/themes';
 import eventPropType from 'sly/web/propTypes/event';
 import performerPropType from 'sly/web/propTypes/performer';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import CurtainupSubscribeFormContainer from 'sly/web/containers/CurtainupSubscribeFormContainer';
@@ -16,6 +15,7 @@ import Avatar from 'sly/web/components/molecules/Avatar';
 import ContentOverImage, { MiddleContent } from 'sly/web/components/molecules/ContentOverImage';
 import Footer from 'sly/web/components/organisms/Footer';
 import CurtainupEventBox from 'sly/web/components/organisms/CurtainupEventBox';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const PaddedResponsiveImage = pad(ResponsiveImage);
 
@@ -307,12 +307,12 @@ const CurtainUpPage = ({ events, performers, eventsIsLoading, performersIsLoadin
         <PaddedHeading weight="regular" palette="primary" variant="base">Want to Join the Show?</PaddedHeading>
         <XxxLargePaddedBlock>Performers subject to change</XxxLargePaddedBlock>
         <TwoCol6Columns>
-          <Box backgroundPalette="white">
+          <Box background="white">
             <LargePaddedBlock weight="medium" size="title">For Communities and Home Care</LargePaddedBlock>
             <PaddedBlock>We would love to work with senior living communities and home care agencies to feature your residents on Curtain Up! If you would like to join the show please complete the form below:</PaddedBlock>
             <Button href="" target="_blank">Join The Show As a Community</Button>
           </Box>
-          <Box backgroundPalette="white">
+          <Box background="white">
             <LargePaddedBlock weight="medium" size="title">For Performers</LargePaddedBlock>
             <PaddedBlock>We are looking for professional performers of the stage and screen to help us bring entertainment to the homes of seniors. To join the show please complete out our volunteer form:</PaddedBlock>
             <Button href="" target="_blank">Join The Show As a Performer</Button>

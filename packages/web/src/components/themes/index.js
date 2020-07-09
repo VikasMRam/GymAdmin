@@ -5,6 +5,7 @@ import { prop } from 'styled-tools';
 import theme, { colorIndex } from './default';
 
 import { publicPath } from 'sly/web/config';
+import { oneOf } from 'prop-types';
 
 export { key, font } from 'styled-theme';
 
@@ -48,4 +49,8 @@ export function palette(...args) {
 
 export function remToPx(rem) {
   return rem.replace('rem', '') * 16;
+}
+
+export function getThemePropType(path) {
+  return oneOf(Object.keys(getKey(`sizes.${path}`)));
 }

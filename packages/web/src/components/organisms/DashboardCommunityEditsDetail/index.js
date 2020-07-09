@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { bool, func, object } from 'prop-types';
 import styled from 'styled-components';
+import { generatePath } from 'react-router';
 
 import { size, palette, columnWidth } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import {
   Block,
   Button,
@@ -16,15 +16,15 @@ import {
 } from 'sly/web/components/atoms';
 import Th from 'sly/web/components/molecules/Th';
 import { CardRow, CellWithLabel } from 'sly/web/components/atoms/TableCard';
-import { EditContext } from 'sly/web/services/edits';
-import { FormSection, SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import { SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import Link from 'sly/web/components/atoms/Link';
 import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   PHOTOS,
 } from 'sly/web/constants/dashboardAppPaths';
-import { generatePath } from 'react-router';
 import communityPropType from 'sly/web/propTypes/community';
+import * as editConfig from 'sly/web/services/edits/constants/community';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -54,7 +54,6 @@ const TABLE_HEADINGS = [
 
 const formatValue = value => typeof value === 'string' ? value : JSON.stringify(value);
 const ChangeRow = ({ change, pathFor }) => {
-  const { editConfig } = useContext(EditContext);
   const { sectionMap, fieldNames } = editConfig;
   return (
     <CardRow>
@@ -88,10 +87,9 @@ ChangeRow.propTypes = {
   pathFor: func,
 };
 
-export default function DashboardCommunityEditsDetail({ community, canEdit, approveEdit, rejectEdit }) {
-  const { selectedEdit } = useContext(EditContext);
-  const { id } = selectedEdit;
-  const disabled = selectedEdit.status !== 'Initialized';
+export default function DashboardCommunityEditsDetail({ community, canEdit, approveEdit, rejectEdit, currentEdit }) {
+  const { id } = currentEdit;
+  const disabled = currentEdit.status !== 'Initialized';
   const approve = () => approveEdit({ id }, {});
   const reject = () => rejectEdit({ id }, {});
   const actions = canEdit ? (
@@ -111,14 +109,14 @@ export default function DashboardCommunityEditsDetail({ community, canEdit, appr
       <SectionHeader actions={actions}>
         Metadata
       </SectionHeader>
-      <Table>
+      <Table sticky>
         <THead>
           <Tr>
             {TABLE_HEADINGS.map(text => <Th key={text}>{text}</Th>)}
           </Tr>
         </THead>
         <TBody>
-          {Object.values(selectedEdit.changes).map((change) => {
+          {Object.values(currentEdit.changes).map((change) => {
             return (
               <ChangeRow
                 key={change.path}
@@ -134,6 +132,7 @@ export default function DashboardCommunityEditsDetail({ community, canEdit, appr
 }
 
 DashboardCommunityEditsDetail.propTypes = {
+  currentEdit: object,
   approveEdit: func,
   rejectEdit: func,
   canEdit: bool,

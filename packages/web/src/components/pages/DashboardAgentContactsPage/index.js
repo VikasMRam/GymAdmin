@@ -10,13 +10,14 @@ const DashboardAgentContactsPage = () => {
     'filter[entity_type]': `eq:${PROPERTY_ENTITY_TYPE}`,
   };
   return (
-    <DashboardPageTemplate activeMenuItem="My Contacts">
+    <DashboardPageTemplate activeMenuItem="Contacts">
       <DashboardContactsSectionContainer
         id="contacts"
         sectionFilters={sectionFilters}
         entityType={PROPERTY_ENTITY_TYPE}
       />
-    </DashboardPageTemplate>);
+    </DashboardPageTemplate>
+  );
 };
 
 export default DashboardAgentContactsPage;

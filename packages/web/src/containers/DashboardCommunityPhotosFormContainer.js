@@ -126,6 +126,7 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
     return {
       images,
       changes,
+      savePromise: Promise.resolve(),
     };
   };
 
@@ -151,32 +152,50 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
     //  3. reload the state with the single source of truth (the response from the server)
     return this.reloadImages(images)
       .then(() => updateCommunity({ id }, community))
-      .then(() => notifyInfo(`Details for ${community.name} saved correctly`))
-      .catch(() => notifyError(`Details for ${community.name} could not be saved`))
+      .then(() => notifyInfo(`Details for ${community.attributes.name} saved correctly`))
+      .catch(() => notifyError(`Details for ${community.attributes.name} could not be saved`))
       .then(this.reloadImages);
   };
 
-  addImage = () => {
-    // this adds a image template with the relationship and sortOrder
-    // the rest of the attributes of the image are added in MediaItem
-    const { status } = this.props;
-    const { images } = this.state;
-    const newImage = {
-      type: 'Image',
-      relationships: {
-        gallery: status.community.result.relationships.gallery,
-      },
-      attributes: {
-        sortOrder: images.length,
-      },
-    };
+  addImage = ({ name, path }) => {
+    const { savePromise } = this.state;
 
     this.setState({
-      images: [
-        ...images,
-        newImage,
-      ],
+      savePromise: savePromise.then(() => {
+        const { status } = this.props;
+        const { images } = this.state;
+        const newImage = {
+          type: 'Image',
+          relationships: {
+            gallery: status.community.result.relationships.gallery,
+          },
+          attributes: {
+            sortOrder: images.length,
+            name,
+            path,
+          },
+        };
+
+        const newImages = [
+          ...images,
+          newImage,
+        ];
+
+        return this.updateCommunityImages(newImages);
+      }),
     });
+  };
+
+  onUpload = (result, file) => {
+    this.addImage({
+      name: file.name,
+      path: result.path,
+    });
+  };
+
+  onUploadError = (error) => {
+    const { notifyError, community } = this.props;
+    notifyError(`Photos for ${community.name} could not be uploaded to the CDN`);
   };
 
   saveImage = (image, original) => {
@@ -187,7 +206,7 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
       image,
       ...images.slice(index + 1),
     ];
-    this.updateCommunityImages(newImages);
+    return this.updateCommunityImages(newImages);
   };
 
   deleteImage = (image) => {
@@ -204,7 +223,7 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
 
     return showModal((
       <ConfirmationDialog
-        heading={`Remove ${image.attributes.name}`}
+        heading={`Remove ${image.attributes.description || image.attributes.name}`}
         description={`Are you sure that you want to remove ${image.attributes.name}? This cannot be undone.`}
         onConfirmClick={doDelete}
         onCancelClick={hideModal}
@@ -237,7 +256,8 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
     return (
       <DashboardCommunityPhotosForm
         {...props}
-        addImage={this.addImage}
+        onUpload={this.onUpload}
+        onUploadError={this.onUploadError}
         saveImage={this.saveImage}
         deleteImage={this.deleteImage}
         initialValues={initialValues}

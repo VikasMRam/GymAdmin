@@ -127,20 +127,20 @@ const onClientClick = (clientName, to) => {
 const genFamilyDetailsPath = (id, extraPathParams = {}) => generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, ...extraPathParams });
 const ClientRowCard = ({ client }) => {
   const {
-    clientInfo, uuidAux, stage, status, createdAt, notes,
+    clientInfo, residentName, stage, status, createdAt, lastNote,
   } = client;
   const { referralSource } = clientInfo || {};
   const seniorlySourced = referralSource === 'Seniorly';
-  const { uuidInfo } = uuidAux;
-  let residentName = '';
-  if (uuidInfo) {
-    const { residentInfo } = uuidInfo;
-    const { fullName } = residentInfo;
-    residentName = fullName;
-  }
+  // const { uuidInfo } = uuidAux;
+  // let residentName = '';
+  // if (uuidInfo) {
+  //   // const { residentInfo } = uuidInfo;
+  //   // const { fullName } = residentInfo;
+  //   residentName = fullName;
+  // }
   const createdAtStr = dayjs(createdAt).format('MM/DD/YYYY');
   const disabled = status === FAMILY_STATUS_ON_PAUSE;
-  const lastNote = notes[0];
+  // const lastNote = notes[0];
   const to = genFamilyDetailsPath(client.id, { tab: SUMMARY });
 
   return (

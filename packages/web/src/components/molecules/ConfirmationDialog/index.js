@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { Heading, Block, Button } from 'sly/web/components/atoms';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const Wrapper = textAlign(styled.div``, 'center');
 

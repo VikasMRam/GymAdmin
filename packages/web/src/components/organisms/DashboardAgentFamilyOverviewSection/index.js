@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
-import { arrayOf, shape, object, string, bool, func } from 'prop-types';
+import { arrayOf, object, string, bool, func } from 'prop-types';
 import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/web/components/themes';
@@ -68,7 +68,7 @@ const FamiliesCountStatusBlock = pad(styled(Box)`
   background-color: ${palette('white.base')};
 `, 'large');
 
-const TwoColumn = pad(styled.div`
+const TwoColumn = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -76,7 +76,13 @@ const TwoColumn = pad(styled.div`
   ${Heading} {
     margin-bottom: 0;
   }
-`);
+`;
+
+TwoColumn.defaultProps = {
+  background: 'white',
+  padding: 'large',
+};
+
 const TabMap = {
   New: NEWFAMILIES,
   Prospects: PROSPECTING,
@@ -162,20 +168,21 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
       meta,
       location,
     } = this.props;
+
     const modelConfig = { name: 'Client', defaultSearchField: 'name' };
-    const beforeTabHeader = (
-      <TwoColumn>
-        <Heading level="subtitle">My Families</Heading>
-        <Role className="addFamily" is={PLATFORM_ADMIN_ROLE | AGENT_ADMIN_ROLE}>
-          <IconButton icon="user-add" onClick={this.handleAddFamilyClick} hideTextInMobile>
-            Add family
-          </IconButton>
-        </Role>
-      </TwoColumn>
-    );
+
     return (
       <>
-        <Tabs activeTab={activeTab} tabsOnly beforeHeader={beforeTabHeader}>
+        <TwoColumn>
+          <Heading level="subtitle">Families</Heading>
+          <Role className="addFamily" is={PLATFORM_ADMIN_ROLE | AGENT_ADMIN_ROLE}>
+            <IconButton icon="user-add" onClick={this.handleAddFamilyClick} hideTextInMobile>
+              Add family
+            </IconButton>
+          </Role>
+        </TwoColumn>
+
+        <Tabs activeTab={activeTab} snap="top">
           {Object.entries(TabMap)
             .map(([name, key]) => (
               <Tab
@@ -188,6 +195,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
               </Tab>
             ))}
         </Tabs>
+
         <TableHeaderButtons
           datatable={datatable}
           meta={meta}

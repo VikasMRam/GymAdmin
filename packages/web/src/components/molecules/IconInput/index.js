@@ -62,7 +62,7 @@ const IconInput = ({
   <Wrapper warning={warning} invalid={invalid}>
     <StyledInput {...props} warning={warning} invalid={invalid} disabled={disabled} />
     <IconWrapper warning={warning} invalid={invalid} disabled={disabled}>
-      <Icon icon={icon} size="small" palette="slate" />
+      <Icon icon={icon} size="caption" palette="slate" />
     </IconWrapper>
   </Wrapper>
 );

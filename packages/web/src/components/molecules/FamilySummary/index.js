@@ -52,7 +52,12 @@ SeeMore.displayName = 'SeeMore';
 const FamilySummary = ({
   client, isAgentUser, isOfDifferentOrg, snap, to, className, noHeading,
 }) => (
-  <Box snap={snap} className={className} palette={isOfDifferentOrg ? 'warning' : undefined} variation={isOfDifferentOrg ? 'dark' : undefined}>
+  <Box
+    snap={snap}
+    className={className}
+    borderPalette={isOfDifferentOrg ? 'warning' : undefined}
+    borderVariation={isOfDifferentOrg ? 'dark' : undefined}
+  >
     {!noHeading && <PaddedHeading size="body">Summary</PaddedHeading>}
     <OuterColumWrapper>
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.residentInfo.fullName &&

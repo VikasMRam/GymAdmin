@@ -8,7 +8,6 @@ import { size, palette, columnWidth } from 'sly/web/components/themes';
 import userPropType from 'sly/web/propTypes/user';
 import clientPropType from 'sly/web/propTypes/client';
 import pad from 'sly/web/components/helpers/pad';
-import textAlign from 'sly/web/components/helpers/textAlign';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import Role from 'sly/web/components/common/Role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE, AGENT_ADMIN_ROLE } from 'sly/web/constants/roles';
@@ -24,6 +23,7 @@ import { Block, Button, Label } from 'sly/web/components/atoms';
 import FamilyMetaDataSummaryBox from 'sly/web/components/molecules/FamilyMetaDataSummaryBox';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
+import { textAlign } from 'sly/web/components/helpers/text';
 
 const showSummaryStages = [FAMILY_STAGE_WON, FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST];
 const showSummaryStatuses = [FAMILY_STATUS_ON_PAUSE, FAMILY_STATUS_LONG_TERM];

@@ -1,1 +1,3 @@
-<svg viewBox="0 0 24 24"><defs><path id="plus-regular-a" d="M15.833 10.833h-5v5H9.167v-5h-5V9.167h5v-5h1.666v5h5z"/></defs><g fill="none" fill-rule="evenodd"><mask id="plus-regular-b" fill="currentColor"><use xlink:href="#plus-regular-a"/></mask><use fill="#000" transform="rotate(-180 10 10)" xlink:href="#plus-regular-a"/><g fill="currentColor" fill-rule="nonzero" mask="url(#plus-regular-b)"><path d="M20 20H0V0h20z"/></g></g></svg>
+<svg viewBox="0 0 24 24">
+  <path fill="currentColor" d="M18,13 L13,13 L13,18 C13,18.55 12.55,19 12,19 C11.45,19 11,18.55 11,18 L11,13 L6,13 C5.45,13 5,12.55 5,12 C5,11.45 5.45,11 6,11 L11,11 L11,6 C11,5.45 11.45,5 12,5 C12.55,5 13,5.45 13,6 L13,11 L18,11 C18.55,11 19,11.45 19,12 C19,12.55 18.55,13 18,13 Z" />
+</svg>

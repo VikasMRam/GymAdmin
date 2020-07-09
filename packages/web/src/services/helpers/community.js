@@ -28,9 +28,18 @@ export const getIsSNF = (community) => {
   return false;
 };
 
-export const formatAddress = (community) => {
-  const { address } = community;
+export const getIsActiveAdult = (community) => {
+  const { propInfo } = community;
+  if (propInfo) {
+    const { typeCare: typeCares } = propInfo;
+    if (typeCares) {
+      return typeCares.length === 1 && typeCares.includes('Active Adult (55+)');
+    }
+  }
+  return false;
+};
 
+export const formatAddress = (address) => {
   if (!address) return '';
 
   return [
