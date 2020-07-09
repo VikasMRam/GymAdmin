@@ -92,15 +92,15 @@ describe('Review Community', () => {
 
       cy.request('POST', '/v0/platform/auth/login', user)
         .then(() => cy.visit(`/rating/${ratedId}/approve`));
- 
-      
-       cy.get('div[class*="AuthContainer__ModalBody"]').within(()=>{
-           cy.get('input[name="email"]').type("slytest+admin@seniorly.com");
-           cy.get('input[name="password"]').type("nopassword");
-           cy.get('button').contains("Log in").click();
-       });
 
-      
+
+      cy.get('div[class*="AuthContainer__ModalBody"]').within(() => {
+        cy.get('input[name="email"]').type('slytest+admin@seniorly.com');
+        cy.get('input[name="password"]').type('nopassword');
+        cy.get('button').contains('Log in').click();
+      });
+
+
       cy.get('div').contains('Status: Success').should('exist');
       cy.request('DELETE', '/v0/platform/auth/logout');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);

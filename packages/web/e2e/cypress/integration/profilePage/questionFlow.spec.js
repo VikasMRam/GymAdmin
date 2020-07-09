@@ -41,14 +41,14 @@ describe('Ask Question Community', () => {
 
     cy.wait('@postUuidActions');
 
-   // waitForHydration(cy.get('button').contains('Ask a Question')).click();
+    // waitForHydration(cy.get('button').contains('Ask a Question')).click();
 
-   waitForHydration(cy.get('button[class*="CommunityQuestionAnswers__StyledButton"]').contains('Ask a Question').click());
+    waitForHydration(cy.get('button[class*="CommunityQuestionAnswers__StyledButton"]').contains('Ask a Question').click());
 
     const questionText = `my comments ${randHash()}`;
     let questionId;
-  
-    //portal('h3').contains(`Ask your Local Senior Living Expert about services provided at ${community.name}`).should('exist');
+
+    // portal('h3').contains(`Ask your Local Senior Living Expert about services provided at ${community.name}`).should('exist');
     portal('h3').contains(`Ask our experts about ${community.name}`).should('exist');
     portal('textarea[name="question"]').type(questionText);
     portal('input[name="name"]').type('Fonz');
@@ -89,20 +89,20 @@ describe('Ask Question Community', () => {
     portal('.Modal.Body .Thankyou').contains('A Seniorly Guide will reach out to you with local expertise and support to ensure you find the right fit for your needs. There is no cost to you!').should('exist');
 
     portal('.Modal__Head button').click();
-    
+
     cy.wait(30000);
 
     cy.request('POST', '/v0/platform/auth/login', user)
       .then(() => cy.visit(`/content/${questionId}/approve`));
 
 
-    cy.get('div[class*="AuthContainer__ModalBody"]').within(()=>{
-           cy.get('input[name="email"]').type("slytest+admin@seniorly.com");
-           cy.get('input[name="password"]').type("nopassword");
-           cy.get('button').contains("Log in").click();
+    cy.get('div[class*="AuthContainer__ModalBody"]').within(() => {
+      cy.get('input[name="email"]').type('slytest+admin@seniorly.com');
+      cy.get('input[name="password"]').type('nopassword');
+      cy.get('button').contains('Log in').click();
     });
 
-   
+
     cy.get('div').contains('Status: Success').should('exist');
 
     cy.request('DELETE', '/v0/platform/auth/logout');

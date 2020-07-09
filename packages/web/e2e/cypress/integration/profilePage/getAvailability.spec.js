@@ -9,7 +9,6 @@ import randomUser from '../../helpers/randomUser';
 
 describe('Marketplace Profile Page', () => {
   responsive(() => {
-
     it('tests Get Availability Flow for Assisited Living Community - Talk to Advisor Flow', () => {
       const communitySlug = TEST_COMMUNITY;
       const { name, phone, email } = randomUser();

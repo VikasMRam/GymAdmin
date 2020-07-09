@@ -1,4 +1,6 @@
 
+import randomUser from 'e2e/helpers/randomUser';
+
 import {
   doCustomPricingTalkToAdvisorFlow,
   doCustomPricingExploreAffordableOptionsFlow,
@@ -7,7 +9,6 @@ import { assertUserActionsForCustomPricing } from '../../helpers/userActions';
 import { responsive, waitForHydration } from '../../helpers/tests';
 import { TEST_COMMUNITY } from '../../constants/community';
 
-import randomUser from 'e2e/helpers/randomUser';
 
 describe('Marketplace Profile Page', () => {
   responsive((viewport) => {
@@ -46,7 +47,7 @@ describe('Marketplace Profile Page', () => {
       });
     });
 
-    
+
     it.skip('tests Pricing Wizard for Assisited Living Community in Mobile - Affordable Options Flow', () => {
       const { name, phone } = randomUser();
 

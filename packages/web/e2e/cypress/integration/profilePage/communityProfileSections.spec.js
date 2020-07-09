@@ -1,10 +1,11 @@
 
+import { formatMoney } from 'sly/web/services/helpers/numbers';
+import { normalizeResponse } from 'sly/web/services/api';
+
 import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
 import { TEST_COMMUNITY } from '../../constants/community';
 
-import { formatMoney } from 'sly/web/services/helpers/numbers';
-import { normalizeResponse } from 'sly/web/services/api';
 
 const randHash = () => Math.random().toString(36).substring(7);
 
@@ -74,11 +75,11 @@ describe('Community Profile Sections', () => {
       //   expect($div.text().replace(/[^\d]/g, '')).to.equal(number.toString());
       // });
 
-      //select('.CommunitySummary__PricingRatingWrapper').should('contain', formatMoney(community.startingRate));
+      // select('.CommunitySummary__PricingRatingWrapper').should('contain', formatMoney(community.startingRate));
       select('.CommunityPricing__StyledCommunityPricingWrapper').should('contain', formatMoney(community.startingRate));
 
       const rating = community.propRatings.reviewsValue.toFixed(1).replace(/\.0+$/, '');
-      //select('.CommunitySummary__PricingRatingWrapper').should('contain', rating);
+      // select('.CommunitySummary__PricingRatingWrapper').should('contain', rating);
       select('.CommunityPricing__StyledCommunityPricingWrapper').should('contain', 5);
     });
 
@@ -88,7 +89,7 @@ describe('Community Profile Sections', () => {
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
 
-      waitForHydration(cy.get('button').contains('Share')).click({force:true});
+      waitForHydration(cy.get('button').contains('Share')).click({ force: true });
       select('.ReactModal').contains('Share this community').should('exist');
 
       cy.get('form input[name="to"]').type('fonz@seniorly.com');
@@ -120,16 +121,16 @@ describe('Community Profile Sections', () => {
       cy.route('PATCH', '**/user-saves/*').as('patchUserSaves');
 
       cy.registerWithEmail(`fonz+e2e+${randHash()}@seniorly.com`, 'nopassword');
-  
+
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
 
-      waitForHydration(cy.get('button').contains('Favorite')).click({force:true});
+      waitForHydration(cy.get('button').contains('Favorite')).click({ force: true });
 
-      cy.get('div[class*="AuthContainer__ModalBody"]').within(()=>{
-           cy.get('input[name="email"]').type("slytest+admin@seniorly.com");
-           cy.get('input[name="password"]').type("nopassword");
-           cy.get('button').contains("Log in").click();
-       });
+      cy.get('div[class*="AuthContainer__ModalBody"]').within(() => {
+        cy.get('input[name="email"]').type('slytest+admin@seniorly.com');
+        cy.get('input[name="password"]').type('nopassword');
+        cy.get('button').contains('Log in').click();
+      });
 
       cy.reload();
 
@@ -231,9 +232,9 @@ describe('Community Profile Sections', () => {
       cy.wait('@postUuidActions');
 
       const careContent = select('h3').contains(`Amenities at ${community.name}`).parent().next();
- 
 
-      [ 
+
+      [
         ...community.propInfo.personalSpace,
         ...community.propInfo.nonCareServices,
       ].forEach((service) => {
