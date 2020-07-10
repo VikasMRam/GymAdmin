@@ -86,7 +86,7 @@ const CloseButton = styled(mobileOnly(ButtonLink, css`
   align-items: center;
 `, css`
   margin: 0 ${size('spacing.large')} 0 0;
-  width: ${size('icon.regular')};
+  width: ${size('text.body')};
 `))`
   flex-grow: 0;
   flex-shrink: 0;
