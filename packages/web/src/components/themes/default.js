@@ -190,6 +190,7 @@ theme.sizes = {
     title     : '1.750rem',   // 28px
     hero      : '2.250rem',   // 36px
     superHero : '3.000rem',   // 48px
+    xxLarge   : '4.500rem',      // 72px
   },
 
   lineHeight: {
@@ -201,6 +202,8 @@ theme.sizes = {
     title   : '1.29',    // 36px / 28px
     hero    : '1.33',    // 48px / 36px
     superHero:'1.33',    // 64px / 48px
+    xxLarge  : '1.0',      // 72px / 72px
+
   },
 
   weight: {

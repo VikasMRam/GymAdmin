@@ -117,7 +117,7 @@ const AgentSummary = ({
     const { numRatings, ratingValue } = aggregateRating;
     ratingsSection = (
       <ReviewValueSection>
-        <Icon icon="star" size="regular" palette="primary" variation="base" />
+        <Icon icon="star" size="title" palette="primary" variation="base" />
         <Span size="subtitle" weight="medium"> {formatRating(ratingValue)} </Span>
         {numRatings && <Span size="caption" palette="grey">from {numRatings} {numRatings > 1 ? 'reviews' : 'review'}</Span>}
       </ReviewValueSection>
@@ -128,7 +128,7 @@ const AgentSummary = ({
   return (
     <Wrapper>
       <AgentImageWrapper>
-        {hasNoImage && <Icon icon="logo" size="xLarge" />}
+        {hasNoImage && <Icon icon="logo" size="superHero" />}
         {!hasNoImage && <Image src={hasNoImage ? defaultImageUrl : profileImageUrl} aspectRatio="1:1" />}
         <Block size="caption">
           {imageCaption}
@@ -164,7 +164,7 @@ const AgentSummary = ({
             <AskQuestionButton onClick={onButtonClick} href={buttonHref}>Ask a Question</AskQuestionButton>
             {slyPhone &&
               <PhoneSection>
-                <Icon icon="phone" size="regular" palette="primary" />
+                <Icon icon="phone" size="title" palette="primary" />
                 <Link href={`tel:${slyPhone}`} onClick={onPhoneClick}>
                   <Span size="subtitle" weight="medium" palette="primary">
                     {phoneFormatter(slyPhone, true)}

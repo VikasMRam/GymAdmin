@@ -30,8 +30,8 @@ const CategoryBlock = styled(Block)`
 `;
 const PlusBadge = ({ plusCategory, fullWidth }) => (
   <StyledBadge fullWidth={fullWidth}>
-    <StyledIcon icon="logo" palette="white" size="small" />
-    <PlusBlock  palette="white" size="small">
+    <StyledIcon icon="logo" palette="white" size="body" />
+    <PlusBlock  palette="white" size="body">
       plus
     </PlusBlock>
     {plusCategory &&
@@ -40,7 +40,7 @@ const PlusBadge = ({ plusCategory, fullWidth }) => (
     </Block>
     }
     {plusCategory &&
-    <CategoryBlock palette="white" size="small">
+    <CategoryBlock palette="white" size="body">
       {plusCategory}
     </CategoryBlock>
     }

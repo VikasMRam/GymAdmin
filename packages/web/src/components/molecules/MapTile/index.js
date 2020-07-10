@@ -82,7 +82,7 @@ const MapTile = ({ tileInfo, onClick, borderless }) => {
             <Dotdotdot clamp={1}>${startingRate} per month</Dotdotdot>
           </PriceRatingDiv>
           <RatingDiv>
-            <Rating value={reviewsValue} size="regular" />
+            <Rating value={reviewsValue} size="title" />
             {numReviews > 0 && (
               <NumberReviewDiv>
                 {numReviews}

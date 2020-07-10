@@ -125,7 +125,7 @@ export default class CollapsibleBlock extends Component {
                 <Block size="caption" palette="primary">
                   {collapsed ? collapsedLabel : notCollapsedLabel}
                 </Block>
-                <Icon icon="chevron" palette="primary" size="small" flip={!collapsed} />
+                <Icon icon="chevron" palette="primary" size="body" flip={!collapsed} />
               </ReadMoreComponent>
             }
             {expandTo === 'bottom' && getContent(measureRef)}

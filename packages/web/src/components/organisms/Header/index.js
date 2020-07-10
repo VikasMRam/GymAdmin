@@ -87,6 +87,7 @@ export const HeaderMenuItem = styled(Link)`
   justify-content: space-between;
   align-items: center;
   padding: ${size('spacing.large')} 0;
+  background: ${palette('white', 'base')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: ${size('spacing.large')};
@@ -245,10 +246,10 @@ const Header = ({
           </>
         )}
         <OnlyInTablet>
-          <Link palette="primary" variation="base" to="/"><Icon icon="logo" size="xLarge" /></Link>
+          <Link palette="primary" variation="base" to="/"><Icon icon="logo" size="hero" /></Link>
         </OnlyInTablet>
         <OnlyInMobile>
-          <Link palette="primary" variation="base" to="/"><Icon icon="logo" size="large" /></Link>
+          <Link palette="primary" variation="base" to="/"><Icon icon="logo" size="hero" /></Link>
         </OnlyInMobile>
       </SeniorlyIconMenu>
       {hasSearchBox && (

@@ -50,7 +50,7 @@ const OfferNotification = ({
   <Wrapper palette={paletteProp} className={className}>
     <LoyaltyIcon
       icon="baseline-loyalty"
-      size="large"
+      size="hero"
       palette={paletteProp}
       variation="dark"
     />

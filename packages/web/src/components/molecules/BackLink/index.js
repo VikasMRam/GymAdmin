@@ -23,7 +23,7 @@ const BackLink = ({
 }) => (
   <StyledLink to={to} onClick={onClick} className={className} event={event}>
     <Wrapper>
-      <BackArrorIcon icon="arrow-left" size="small" palette="primary" />
+      <BackArrorIcon icon="arrow-left" size="body" palette="primary" />
       <Span size="caption" palette="primary">{linkText || children}</Span>
     </Wrapper>
   </StyledLink>

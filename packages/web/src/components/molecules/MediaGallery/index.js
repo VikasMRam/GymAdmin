@@ -301,7 +301,7 @@ export default class MediaGallery extends Component {
               className="media-carousel-control-prev"
               icon="chevron"
               rotate={1}
-              size="xLarge"
+              size="superHero"
               palette="white"
               onClick={this.prevSlide}
             />
@@ -331,7 +331,7 @@ export default class MediaGallery extends Component {
               className="media-carousel-control-next"
               icon="chevron"
               rotate={-1}
-              size="xLarge"
+              size="superHero"
               palette="white"
               onClick={this.nextSlide}
             />
