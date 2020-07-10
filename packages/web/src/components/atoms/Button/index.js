@@ -125,6 +125,7 @@ export const styles = css`
   color: ${foregroundColor};
   user-select: none;
   pointer-events: ${ifProp('disabled', 'none', 'auto')};
+  white-space: nowrap;
   ${switchProp('kind', {
     tab: css`
       padding: ${size('spacing', 'regular')} ${size('spacing', 'large')};`,

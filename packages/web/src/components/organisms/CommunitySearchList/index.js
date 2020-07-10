@@ -163,7 +163,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
             <ShadowCommunityTile
               community={similarProperty}
               layout="column"
-              imageSize="regular"
+              imagesize="title"
               noGallery
               showDescription
               showSeeMoreButtonOnHover

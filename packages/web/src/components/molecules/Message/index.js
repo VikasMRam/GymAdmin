@@ -120,7 +120,7 @@ const Message = ({
   }
   return (
     <Wrapper className={className}>
-      {user && <StyledAvatar size="small" user={user} />}
+      {user && <StyledAvatar size="body" user={user} />}
       {textMessageTypes.includes(message.data.type) && (
         <StyledBox padding="large" dark={dark}>
           {!isHtmlMessage(message) && <PaddedBlock size="caption">{getValue(message)}</PaddedBlock>}

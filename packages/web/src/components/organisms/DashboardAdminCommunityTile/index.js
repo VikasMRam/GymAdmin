@@ -94,7 +94,7 @@ export default class DashboardAdminCommunityTile extends Component {
           {!hasContract && <StyledIconBadge badgePalette="danger" palette="white" icon="checkmark-circle" text="NO CONTRACT" /> }
           {hasCCRC && <StyledIconBadge badgePalette="warning" palette="white" icon="checkmark-circle" text="CCRC" />}
           {hasSNF && <StyledIconBadge badgePalette="warning" palette="white" icon="checkmark-circle" text="SNF" />}
-          {lastViewedSecondsAgo > -1 && <StyledBadge textPalette="grey" ><Icon icon="note" size="small" /> Last Viewed: {lastViewedSecondsAgo} s ago</StyledBadge> }
+          {lastViewedSecondsAgo > -1 && <StyledBadge textPalette="grey" ><Icon icon="note" size="body" /> Last Viewed: {lastViewedSecondsAgo} s ago</StyledBadge> }
         </Header>
         <CommunityInfoWrapper>
           <>

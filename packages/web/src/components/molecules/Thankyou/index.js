@@ -53,7 +53,7 @@ const Thankyou = ({
 
   return (
     <Wrapper>
-      <StyledIcon icon="logo" size="xLarge" />
+      <StyledIcon icon="logo" size="superHero" />
       <StyledHeading>{heading}</StyledHeading>
       <StyledBlock>{subheading}</StyledBlock>
       {backToSearch}

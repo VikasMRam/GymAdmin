@@ -11,7 +11,7 @@ storiesOf('Molecules|CollapsibleSection', module)
     </CollapsibleSection>
   ))
   .add('small', () => (
-    <CollapsibleSection size="small" title="Section title">
+    <CollapsibleSection size="body" title="Section title">
       { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
     </CollapsibleSection>
   ))

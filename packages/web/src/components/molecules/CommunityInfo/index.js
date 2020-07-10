@@ -99,7 +99,7 @@ export default class CommunityInfo extends Component {
       const roomTypes = floorPlan.split(',');
       floorPlanComponent = (
         <IconTextWrapper>
-          <StyledIcon icon="bed" palette={inverted ? 'white' : 'grey'} size="small" />
+          <StyledIcon icon="bed" palette={inverted ? 'white' : 'grey'} size="body" />
           <Info title={roomTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
             {roomTypes.map((roomType, i) =>
               <Fragment key={roomType}>{!!i && <>, </>}{roomType}</Fragment>)}
@@ -110,7 +110,7 @@ export default class CommunityInfo extends Component {
     if (livingTypes && livingTypes.length) {
       livingTypeComponent = (
         <IconTextWrapper>
-          <StyledIcon icon="hospital" palette={inverted ? 'white' : 'grey'} size="small" />
+          <StyledIcon icon="hospital" palette={inverted ? 'white' : 'grey'} size="body" />
           <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
             {livingTypes.map((livingType, i) =>
               <Fragment key={livingType}>{!!i && <>{i === livingTypes.length - 1 ? ' & ' : ', '}</>}{livingType}</Fragment>)}
@@ -147,7 +147,7 @@ export default class CommunityInfo extends Component {
         </TopWrapper>
         {address && (
           <IconTextWrapper>
-            <StyledIcon icon="location" palette={inverted ? 'white' : 'grey'} size="small" />
+            <StyledIcon icon="location" palette={inverted ? 'white' : 'grey'} size="body" />
             <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
               {address}
             </Info>

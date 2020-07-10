@@ -107,7 +107,7 @@ const CommunityAgentSection = ({
       </AgentInfoSection>
       {chosenReview &&
         <AgentReviewSection>
-          <StyledIcon icon="quote" size="xLarge" variation="filler" />
+          <StyledIcon icon="quote" size="superHero" variation="filler" />
           <ReviewSection>
             <ReviewBlock>{chosenReview}</ReviewBlock>
             <Block size="caption" palette="grey">- {reviewedBy}</Block>

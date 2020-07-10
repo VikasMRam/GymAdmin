@@ -26,7 +26,7 @@ const IconBadge = ({
   className, palette, badgePalette, badgeVariation, text, icon, borderRadius,
 }) => (
   <StyledBadge className={className} palette={badgePalette} variation={badgeVariation} textPalette={palette} borderRadius={borderRadius}>
-    <StyledIcon icon={icon} palette={palette} size="small" />
+    <StyledIcon icon={icon} palette={palette} size="body" />
     <Block weight="bold" palette={palette} size="micro">
       {text}
     </Block>

@@ -53,7 +53,7 @@ storiesOf('Atoms|Select', module)
   .add('sizes', () => (
     <MultiWrapper>
       <Field type="choice" size="tiny" options={options} value={options[1].value} menuIsOpen />
-      <Field type="choice" size="small" options={options} value={options[1].value} menuIsOpen />
+      <Field type="choice" size="body" options={options} value={options[1].value} menuIsOpen />
       <Field type="choice" options={options} value={options[1].value} menuIsOpen />
       <Field type="choice" size="button" options={options} value={options[1].value} menuIsOpen />
       <Field type="choice" size="large" options={groupedOptions} value={groupedOptions[1].options[1].value} menuIsOpen />
@@ -64,7 +64,7 @@ storiesOf('Atoms|Select', module)
       <Field
         type="choice"
         options={groupedOptions}
-        size="small"
+        size="body"
         isMulti
         menuIsOpen
       />
@@ -75,7 +75,7 @@ storiesOf('Atoms|Select', module)
       <Field
         type="choice"
         options={groupedOptions}
-        size="small"
+        size="body"
         isMulti
         menuIsOpen
       />

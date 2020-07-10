@@ -30,6 +30,7 @@ const StyledIcon = styled(({ padRight, fullWidth, ...props }) => <Icon {...props
 `;
 
 const Text = styled.span`
+  white-space: nowrap;
   margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
   ${ifProp('hideTextInMobile', css`
     display: none;
