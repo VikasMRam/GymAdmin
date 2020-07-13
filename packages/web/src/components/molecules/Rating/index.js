@@ -13,7 +13,7 @@ const iconSize = props => size('icon', props.size);
 const color = p => palette(p.palette, p.variation);
 
 const Wrapper = styled.div`
-  display: flex;
+  white-space: nowrap;
   line-height: 1;
 `;
 

@@ -154,12 +154,12 @@ const CommunitySummary = ({
       {reviewsValue > 0 &&
         <RatingWrapper>
           <CommunityRating
-            description=""
             numReviewsPalette="slate"
             numReviewsVariation="base"
             rating={reviewsValue}
             numReviews={numReviews}
-            goToReviews={goToReviews} />
+            goToReviews={goToReviews}
+          />
         </RatingWrapper>
       }
 

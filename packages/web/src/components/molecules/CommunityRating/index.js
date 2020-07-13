@@ -7,14 +7,11 @@ import { text as textPropType } from 'sly/web/propTypes/text';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import { formatRating } from 'sly/web/services/helpers/rating';
-import pad from 'sly/web/components/helpers/pad';
 import { Block, Link } from 'sly/web/components/atoms';
 import Rating from 'sly/web/components/molecules/Rating';
 
-const DescriptionBlock = pad(Block, 'regular');
-
 const RatingValue = styled(Block)`
-  margin-right: ${size('spacing.regular')};
+  margin-right: ${size('spacing.small')};
 `;
 
 const StyledRating = styled(Rating)`
@@ -26,37 +23,31 @@ const TwoColumn = styled.div`
   align-items: center;
 `;
 
-const CommunityRating = ({ rating, numReviews, description, size, palette, variation, numReviewsPalette, numReviewsVariation, starPalette, starVariation, goToReviews, className }) => {
-  const content = (
-    <>
-      {description && <DescriptionBlock size="caption">{description}</DescriptionBlock>}
-      <TwoColumn>
-        {rating > 0 ?
-          <TwoColumn>
-            <RatingValue palette={palette} variation={variation} size={size} weight="medium">
-              {formatRating(rating)}
-            </RatingValue>
-            <StyledRating value={rating} palette={starPalette || palette} variation={starVariation || variation} size={size} />
-          </TwoColumn> : <RatingValue palette={palette} variation={variation} size={size} weight="medium">Not yet rated</RatingValue>
-        }
-        {numReviews > 0 &&
-          <Block size="caption" palette={numReviewsPalette || palette} variation={numReviewsVariation || variation} >
-            ({numReviews})
-          </Block>
-        }
-      </TwoColumn>
-    </>
+const CommunityRating = ({ rating, numReviews, description, size, palette, variation, goToReviews, ...props }) => {
+  const linkProps = goToReviews
+    ? { href: '#reviews', onClick: goToReviews, as: Link }
+    : {};
+
+  return (
+    <TwoColumn {...linkProps} {...props}>
+      <RatingValue palette={palette} variation={variation} weight="medium">
+        {rating > 0 ? formatRating(rating) : 'Not yet rated'}
+      </RatingValue>
+      {rating > 0 &&
+        <StyledRating
+          value={rating}
+          palette={palette}
+          variation={variation}
+          size={size}
+        />
+      }
+      {numReviews > 0 &&
+        <Block size="caption" palette={palette} variation={variation}>
+          ({numReviews})
+        </Block>
+      }
+    </TwoColumn>
   );
-
-  if (goToReviews) {
-    return (
-      <Link href="#reviews" onClick={goToReviews} className={className}>
-        {content}
-      </Link>
-    );
-  }
-
-  return <div className={className}>{content}</div>;
 };
 
 CommunityRating.propTypes = {
@@ -67,17 +58,12 @@ CommunityRating.propTypes = {
   size: textPropType,
   palette: palettePropType,
   variation: variationPropType,
-  numReviewsPalette: palettePropType,
-  numReviewsVariation: variationPropType,
-  starPalette: palettePropType,
-  starVariation: variationPropType,
   className: string,
 };
 
 CommunityRating.defaultProps = {
   size: 'body',
-  palette: 'primary',
-  variation: 'base',
+  palette: 'primary.base',
 };
 
 export default CommunityRating;

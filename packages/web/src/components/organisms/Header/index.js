@@ -70,7 +70,7 @@ export const HeaderMenu = styled.div`
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    height: inherit;
+    height: unset;
     padding: ${size('spacing.large')} 0;
     width: ${size('header.menu.width')};
     left: auto;
@@ -107,11 +107,11 @@ const HeaderItems = styled.div`
   align-items: center;
   margin-left: auto;
   padding-left: 1.5rem;
-  
+
   > * {
     white-space: nowrap;
   }
-  
+
   ${ifProp('hideInSmallScreen', css`display: none;`)};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {

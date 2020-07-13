@@ -12,6 +12,8 @@ import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 import { withColor, withText, withSpacing, withDisplay, withBorder, withZIndex } from 'sly/web/components/helpers';
 
+const A = styled.a``;
+
 // eslint-disable-next-line jsx-a11y/anchor-has-content
 export const Anchor = styled.a`
   ${withDisplay}
@@ -63,7 +65,9 @@ export default class Link extends Component {
     if (to && isPathInRoutes(routes, to)) {
       return {
         ...props,
+        // flip the order on which we present the components
         as: RRLink,
+        component: A,
         to: addEventToUrl(to, event),
       };
     }
