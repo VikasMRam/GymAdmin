@@ -165,7 +165,7 @@ const CommunitySummary = ({
 
       <Hr />
       {
-        tier !== "4" && partnerAgent &&
+        partnerAgent &&
           <>
             Call for help with pricing and availability
             <StyledIcon palette="slate" icon="help" size="caption" data-tip data-for="conciergePhone" />
@@ -181,7 +181,7 @@ const CommunitySummary = ({
           </>
       }
       {
-        (tier === "4" || !partnerAgent) && communityPhone &&
+        tier === "4" && !partnerAgent && communityPhone &&
           <>
             Call to connect directly with the community
             <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />

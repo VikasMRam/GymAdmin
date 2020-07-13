@@ -150,7 +150,7 @@ export default class DashboardCommunityAdminForm extends Component {
                 type="text"
               />
               <EditField
-                label="Notes"
+                label="Contract Notes"
                 name="rgsAux.rgsInfo.contract_info.notes"
                 type="textarea"
                 readOnly={!canEdit}
