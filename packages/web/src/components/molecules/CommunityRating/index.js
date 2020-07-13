@@ -31,7 +31,7 @@ const CommunityRating = ({ rating, numReviews, description, size, palette, varia
   return (
     <TwoColumn {...linkProps} {...props}>
       <RatingValue palette={palette} variation={variation} weight="medium">
-        {formatRating(rating)}
+        {rating > 0 ? formatRating(rating) : 'Not rated yet'}
       </RatingValue>
       {rating > 0 &&
         <StyledRating
