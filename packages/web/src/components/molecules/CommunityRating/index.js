@@ -11,7 +11,7 @@ import { Block, Link } from 'sly/web/components/atoms';
 import Rating from 'sly/web/components/molecules/Rating';
 
 const RatingValue = styled(Block)`
-  margin-right: ${size('spacing.regular')};
+  margin-right: ${size('spacing.small')};
 `;
 
 const StyledRating = styled(Rating)`
