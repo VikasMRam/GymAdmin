@@ -143,7 +143,12 @@ export default class CommunityInfo extends Component {
               {`${community.estimated ? 'Estimated ' : ''}${communityStartingRate}/month`}
             </Rate>
           ) : null }
-          <CommunityRating rating={reviewsValue} numReviews={numReviews} palette={inverted ? 'white' : 'primary'} variation="base" numReviewsPalette={inverted ? 'white' : 'slate'} size={reviewsValue > 0 ? 'caption' : 'tiny'} />
+          <CommunityRating
+            rating={reviewsValue}
+            numReviews={numReviews}
+            palette={inverted ? 'white' : 'primary'}
+            size={reviewsValue > 0 ? 'caption' : 'tiny'}
+          />
         </TopWrapper>
         {address && (
           <IconTextWrapper>

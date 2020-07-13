@@ -1,5 +1,5 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { makeColor } from './color';
+import { makeColor, makeColorTable } from './color';
 
 export { colorIndex } from './color';
 
@@ -26,6 +26,8 @@ theme.palette = {
   orange     : makeColor('#F99106'),
   razzmatazz : makeColor('#F40767'),
 };
+
+// console.table(makeColorTable(theme.palette));
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',

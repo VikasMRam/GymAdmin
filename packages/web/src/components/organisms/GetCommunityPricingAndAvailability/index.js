@@ -22,7 +22,7 @@ const GetCommunityPricingAndAvailability = ({ community: { id, startingRate, rat
   <Box>
     <PaddedHeading level="title" size="subtitle">Get Pricing and Availability</PaddedHeading>
     {startingRate > 0 && <PaddedCommunityPricing id={id} estimated={rates !== 'Provided'} price={startingRate} />}
-    {reviewsValue > 0 && <PaddedCommunityRating description="" numReviewsPalette="slate" rating={reviewsValue} numReviews={numReviews} />}
+    {reviewsValue > 0 && <PaddedCommunityRating rating={reviewsValue} numReviews={numReviews} />}
     <StyledButton to={buttonTo} onClick={onClick} event={onClickEvent(id)}>
       Get Detailed Pricing
     </StyledButton>

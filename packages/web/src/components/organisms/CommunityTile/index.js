@@ -52,11 +52,14 @@ const StyledImage = styled(borderRadius(ResponsiveImage))`
   img {
     border-radius: ${size('spacing.small')};
   }
-  ${ifProp({ layout: 'column' }, css`
-    @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      height: 100%;
-    }
-  `)}
+  
+  Button {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 const TopRightWrapper = styled.span`
@@ -92,22 +95,8 @@ const Wrapper = borderRadius(border(styled.div`
   }
 `, 'regular', 'grey', 'stroke'));
 
-const ImageWrapper = styled.div`
-  position: relative;
-  height: 100%;
-
-  // because we are passing aspectRatio prop, we have a relative position
-  // in the Image so we can use here absolute
-  Button {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-`;
-
 const MainWrapper = styled.article`
+  position: relative;
   background-color: ${ifProp('plusCategory', palette('primary', 'background'), palette('white', 'base'))};
 `;
 
@@ -169,18 +158,17 @@ const CommunityTile = ({
         }
         {noGallery &&
           <>
-            <ImageWrapper>
-              <StyledImage
-                layout={layout}
-                path={imagePath}
-                src={imageSrc}
-                placeholder={placeholder}
-                sizes={mediaSizes}
-                aspectRatio={layout === 'column' ? '3:2' : '16:9'}
-                loading={loading}
-              />
+            <StyledImage
+              layout={layout}
+              path={imagePath}
+              src={imageSrc}
+              placeholder={placeholder}
+              sizes={mediaSizes}
+              aspectRatio={layout === 'column' ? '4:3' : '16:9'}
+              loading={loading}
+            >
               {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
-            </ImageWrapper>
+            </StyledImage>
             {topRightSection && (
               <TopRightWrapper>
                 {topRightSection()}

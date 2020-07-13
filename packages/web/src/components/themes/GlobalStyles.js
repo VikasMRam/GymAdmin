@@ -33,6 +33,7 @@ export default `
   }
 
   html, body {
+    background: white;
     color: ${baseColor};
     font-size: 16px;
     font-weight: 400;
