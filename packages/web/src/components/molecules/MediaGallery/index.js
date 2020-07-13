@@ -46,8 +46,7 @@ const StyledIcon = styled(Icon)`
   position: absolute;
   z-index: 1;
   top: 50%;
-  bottom: 0;
-  margin-top: calc(-${size('icon.xLarge')} / 2);
+  margin-top: calc(-${size('text.superHero')} / 2);
 
   :hover {
     cursor: pointer;
