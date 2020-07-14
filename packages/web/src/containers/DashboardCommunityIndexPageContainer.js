@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { parse } from 'query-string';
-import { object, func } from 'prop-types';
-import { withRouter, generatePath } from 'react-router';
+import { object, func, arrayOf } from 'prop-types';
+import { generatePath } from 'react-router';
 
 
-import DashboardCommunityIndexPage from 'sly/web/components/pages/DashboardCommunityIndexPage';
 import AddCommunityFormContainer from 'sly/web/containers/dashboard/AddCommunityFormContainer'
 import withNotification from 'sly/web/controllers/withNotification';
 import withModal from 'sly/web/controllers/withModal';
@@ -13,18 +11,30 @@ import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   PROFILE,
 } from 'sly/web/constants/dashboardAppPaths';
+import withDatatable from 'sly/web/services/datatable/components/withDatatable';
+import { prefetch, withUser } from 'sly/web/services/api';
+import DashboardCommunityIndexPage from 'sly/web/components/pages/DashboardCommunityIndexPage';
+import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
+import communityPropType from 'sly/web/propTypes/community';
 
+@withDatatable('communities')
 @withNotification
 @withModal
-@withRouter
+@withUser
+@prefetch('communities', 'getCommunities', (req, { datatable }) => {
+  return req(datatable.query);
+})
 
 export default class DashboardCommunityIndexPageContainer extends Component {
   static propTypes = {
     location: object,
+    communities: arrayOf(communityPropType),
     showModal: func.isRequired,
     hideModal: func.isRequired,
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
+    status: object,
+    datatable: object,
     history: object,
   };
 
@@ -33,7 +43,6 @@ export default class DashboardCommunityIndexPageContainer extends Component {
     const { id } = resp;
     const path = generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, { id: id, tab: PROFILE });
     history.push(path);
-
   };
 
   handleAddCommunity = () => {
@@ -59,20 +68,26 @@ export default class DashboardCommunityIndexPageContainer extends Component {
       />
     ), null, 'noPadding', false);
   };
+
   render() {
-    const { location } = this.props;
-    const { 'page-number': pageNumber, ...filters } = parse(location.search);
-    const sectionFilters = {
-      'page-number': pageNumber,
-    };
+    const { communities, status, location, datatable, notifyInfo, notifyError, ...props } = this.props;
+    const { error, meta, hasFinished } = status.communities;
+
+    if (error) {
+      throw new Error(JSON.stringify(error));
+    }
+
     return (
       <DashboardCommunityIndexPage
-        sectionFilters={sectionFilters}
-        filters={filters}
-        onAddCommunity={this.handleAddCommunity}>
-      </DashboardCommunityIndexPage>);
+        {...props}
+        isPageLoading={!hasFinished || !datatable.hasFinished}
+        datatable={datatable}
+        communities={communities}
+        onAddCommunity={this.handleAddCommunity}
+        meta={meta || {}}
+        pagination={getDetailedPaginationData(status.communities, 'communities')}
+      />
+    );
   }
-
-
 };
 

@@ -129,7 +129,10 @@ export default class DashboardCommunityPhotosForm extends Component {
             onSortEnd={onSortEnd}
             images={images}
             editImage={this.editImage}
-            deleteImage={deleteImage} isNew={isNew} canEdit={canEdit} />
+            deleteImage={deleteImage}
+            isNew={isNew}
+            canEdit={canEdit}
+          />
         </Section>
       </>
     );

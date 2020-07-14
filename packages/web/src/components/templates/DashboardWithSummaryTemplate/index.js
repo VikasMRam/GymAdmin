@@ -55,6 +55,7 @@ export const SectionHeader = styled(({ actions, children, className, ...props })
   <Block
     padding={['large', 'xLarge']}
     borderBottom="regular"
+    background="white"
     className={className}
     {...props}
   >

@@ -1,76 +1,188 @@
-import React from 'react';
-import { object, func } from 'prop-types';
+import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
+import { arrayOf, object, bool, func } from 'prop-types';
 
 import { size, palette } from 'sly/web/components/themes';
-import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
-import DashboardCommunityIndexSectionContainer from 'sly/web/containers/DashboardCommunityIndexSectionContainer';
-import { Datatable } from 'sly/web/services/datatable';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
-import Role from 'sly/web/components/common/Role';
-import IconButton from 'sly/web/components/molecules/IconButton';
-import { Heading, Hr } from 'sly/web/components/atoms';
+import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
+import SlyEvent from 'sly/web/services/helpers/events';
+import communityPropType from 'sly/web/propTypes/community';
+import { Box, Table, THead, TBody, Tr, Td, Block, Heading } from 'sly/web/components/atoms';
+import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons';
+import Pagination from 'sly/web/components/molecules/Pagination';
+import Th from 'sly/web/components/molecules/Th';
+import CommunityRowCard from 'sly/web/components/organisms/CommunityRowCard';
+import { textAlign } from 'sly/web/components/helpers/text';
+import { Loading, SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
+import Role from 'sly/web/components/common/Role';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import IconButton from 'sly/web/components/molecules/IconButton';
 
-const Wrapper = styled.div`
-  border-bottom: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
+const TABLE_HEADINGS = [
+  { text: 'Name' },
+  { text: 'Address' },
+  { text: 'Status' },
+];
+
+const Section = styled.section`
+  background-color: ${palette('grey.background')};
   padding: ${size('spacing.large')};
-  padding-bottom: 0;
-  white-space: nowrap;
-  /*
-   overflow-x: auto;
-   overflow-y: hidden;
-  */
-  background: ${palette('white.base')};
-  text-transform: uppercase;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
-    border-top-left-radius: ${size('border.xxLarge')};
-    border-top-right-radius: ${size('border.xxLarge')};
+    padding: 0;
+    background-color: ${palette('white.base')};
+    border: ${size('border.regular')} solid ${palette('slate.stroke')};
+    border-top: 0;
+    border-bottom: 0;
   }
 `;
 
-const TwoColumn = pad(styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-transform: capitalize;
-  ${Heading} {
-    margin-bottom: 0;
+const StyledTable = styled(Table)`
+  border-right: 0;
+  border-left: 0;
+`;
+
+const CenteredPagination = styled(Pagination)`
+  padding: ${size('spacing.large')};
+  justify-content: center;
+`;
+
+const StyledPagination = styled(mobileOnly(CenteredPagination, css`
+  position: sticky;
+`))`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    border-bottom: ${size('border.regular')} solid ${palette('slate.stroke')};
   }
-`);
+`;
 
-const DashboardCommunityIndexPage = ({ sectionFilters, filters, onAddCommunity}) => {
-  return (
-    <DashboardPageTemplate activeMenuItem="Communities">
-      <Wrapper>
-        <TwoColumn>
-          <Heading level="subtitle">Communities</Heading>
-          <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
-            <IconButton icon="plus" onClick={onAddCommunity} hideTextInMobile>
-              Add Community
-            </IconButton>
-          </Role>
-        </TwoColumn>
-      </Wrapper>
-      <Datatable
-        id="communities"
-        sectionFilters={sectionFilters}
-        filters={filters}
-      >
-        {datatable => (
-          <DashboardCommunityIndexSectionContainer datatable={datatable} />
-        )}
-      </Datatable>
+const FamiliesCountStatusBlock = pad(styled(Box)`
+  border-radius: 0;
+  padding-left: ${size('spacing.regular')};
+  padding-left: ${size('spacing.large')};
+  background-color: ${palette('white.base')};
+`, 'large');
 
-    </DashboardPageTemplate>);
-};
+const StyledFamiliesCountStatusBlock = styled(FamiliesCountStatusBlock)`
+  margin-bottom: 0;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+`;
 
-DashboardCommunityIndexPage.propTypes = {
-  sectionFilters: object,
-  filters: object,
-  onAddCommunity: func,
-};
+const NoResultMessage = styled(textAlign(Block))`
+  padding-top: ${size('spacing.xxxLarge')};
+  padding-bottom: ${size('spacing.xxxLarge')};
+`;
 
-export default DashboardCommunityIndexPage;
+const StyledTableHeaderButtons = styled(TableHeaderButtons)`
+  border: none;
+`;
+
+const StyledSection = styled(Section)`
+  border: none;
+`;
+
+export default class DashboardCommunityIndexPage extends Component {
+  static propTypes = {
+    datatable: object,
+    communities: arrayOf(communityPropType),
+    pagination: object,
+    isPageLoading: bool,
+    onAddCommunity: func,
+    meta: object,
+    noBorder: bool,
+  };
+
+  handleCommunityClick = (community) => {
+    const event = {
+      category: 'AdminDashboardCommunities',
+      action: 'click',
+      label: 'viewCommunity',
+      value: community.id,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+  };
+
+  render() {
+    const {
+      communities, pagination, isPageLoading, onAddCommunity, noBorder, meta, datatable,
+    } = this.props;
+    const noResultMessage = 'Click Add Community on the top right corner to add a new community';
+    const TableHeaderButtonComponent = noBorder ? StyledTableHeaderButtons : TableHeaderButtons;
+    const SectionComponent = noBorder ? StyledSection : Section;
+    const StatusBlock = noBorder ? StyledFamiliesCountStatusBlock : FamiliesCountStatusBlock;
+    const modelConfig = { name: 'Community', defaultSearchField: 'name' };
+
+    if (isPageLoading) {
+      return (
+        <Loading activeMenuItem="Communities">
+          Loading...
+        </Loading>
+      );
+    }
+
+    const actions = (
+      <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
+        <IconButton icon="plus" onClick={onAddCommunity} hideTextInMobile>
+          Add Community
+        </IconButton>
+      </Role>
+    );
+
+    return (
+      <DashboardPageTemplate activeMenuItem="Communities">
+        <SectionHeader actions={actions}>
+          Communities
+        </SectionHeader>
+
+        <TableHeaderButtonComponent
+          datatable={datatable}
+          modelConfig={modelConfig}
+          meta={meta}
+        />
+
+        <SectionComponent>
+          {!isPageLoading && (
+            <>
+              <StyledTable>
+                <THead>
+                  <Tr>
+                    {TABLE_HEADINGS.map(({ text }) => <Th key={text}>{text}</Th>)}
+                  </Tr>
+                </THead>
+                <TBody>
+                  {communities.map(community => (
+                    <CommunityRowCard key={community.id} community={community} onCommunityClick={() => this.handleCommunityClick(community)} />
+                  ))}
+                  {communities.length === 0 &&
+                    <Tr>
+                      <Td colSpan={TABLE_HEADINGS.length} borderless={noBorder}>
+                        <NoResultMessage>{noResultMessage}</NoResultMessage>
+                      </Td>
+                    </Tr>
+                  }
+                </TBody>
+              </StyledTable>
+              {pagination.show && (
+                <StyledPagination
+                  current={pagination.current}
+                  total={pagination.total}
+                  range={1}
+                  basePath={datatable.basePath}
+                  pageParam="page-number"
+                />
+              )}
+            </>
+          )}
+        </SectionComponent>
+
+        {!isPageLoading && communities.length > 0 &&
+          <StatusBlock padding="regular" size="caption" snap="top">
+            {pagination.text}
+          </StatusBlock>
+        }
+      </DashboardPageTemplate>
+    );
+  }
+}
