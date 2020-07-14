@@ -1,12 +1,12 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { bool, string, oneOf, object } from 'prop-types';
+import { bool, string, oneOf } from 'prop-types';
 import { ifProp, switchProp } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import { size, palette } from 'sly/web/components/themes';
-import Link from 'sly/web/components/atoms/Link';
+import Link, { LinkAnchor } from 'sly/web/components/atoms/Link';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { withSpacing } from 'sly/web/components/helpers';
 
@@ -106,9 +106,12 @@ const lineHeight = ({ kind }) => {
   }
 };
 
-export const styles = css`
+const StyledButton = styled.button`
   ${withSpacing};
-  display: inline-flex;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
@@ -125,7 +128,6 @@ export const styles = css`
   color: ${foregroundColor};
   user-select: none;
   pointer-events: ${ifProp('disabled', 'none', 'auto')};
-  white-space: nowrap;
   ${switchProp('kind', {
     tab: css`
       padding: ${size('spacing', 'regular')} ${size('spacing', 'large')};`,
@@ -154,21 +156,8 @@ export const styles = css`
   }
 `;
 
-const StyledLink = styled(({
-  disabled, ghost, transparent, foregroundPalette, palette, height, theme, ...props
-}) => (
-  <Link noHoverColorChange {...props} />
-))`
-  ${styles};
-`;
-
-const StyledButton = styled.button`
-  ${styles};
-`;
-
 const withSendEvent = ({ onClick, event, ...props }) => {
   return {
-    ...props,
     onClick: event ? (e) => {
       SlyEvent.getInstance().sendEvent(event);
       return onClick(e);
@@ -176,12 +165,20 @@ const withSendEvent = ({ onClick, event, ...props }) => {
   };
 };
 
-const Button = ({ type, kind, measureRef, ...props }) => {
-  // rename type to kind to avoid collision with html button type
-  if (props.to || props.href) {
-    return <StyledLink kind={kind} {...props} />;
-  }
-  return <StyledButton ref={measureRef} {...withSendEvent(props)} kind={kind} type={type} />;
+const Button = (props) => {
+  const linkProps = props.to || props.href
+    ? {
+      as: LinkAnchor,
+      noHoverColorChange: !!(props.to || props.href),
+    }
+    : {};
+  return (
+    <StyledButton
+      {...props}
+      {...withSendEvent(props)}
+      {...linkProps}
+    />
+  );
 };
 
 Button.propTypes = {
@@ -193,12 +190,11 @@ Button.propTypes = {
   foregroundPalette: palettePropType,
   borderPalette: palettePropType,
   borderVariation: variationPropType,
-  kind: oneOf(['jumbo', 'regular', 'tab', 'plain']),
+  kind: oneOf(['jumbo', 'regular', 'tab', 'label', 'plain']),
   selected: bool,
   type: string,
   to: string,
   href: string,
-  measureRef: object,
 };
 
 Button.defaultProps = {
