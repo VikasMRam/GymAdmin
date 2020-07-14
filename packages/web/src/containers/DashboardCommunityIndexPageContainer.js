@@ -58,7 +58,9 @@ export default class DashboardCommunityIndexPageContainer extends Component {
       action: 'click',
       label: 'addCommunity',
     };
+
     SlyEvent.getInstance().sendEvent(event);
+
     showModal((
       <AddCommunityFormContainer
         notifyInfo={notifyInfo}

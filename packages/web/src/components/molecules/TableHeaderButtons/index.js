@@ -9,9 +9,10 @@ import IconButton from 'sly/web/components/molecules/IconButton';
 import DatatableFilters from 'sly/web/components/organisms/DatatableFilters';
 import PopoverPortal from 'sly/web/components/molecules/PopoverPortal';
 import ButtonLink from 'sly/web/components/molecules/ButtonLink';
+import Box from 'sly/web/components/atoms/Box';
 
 const border = css`${size('border.regular')} solid ${palette('slate.stroke')}`;
-const Wrappper = styled.div`
+const Wrappper = styled(Box)`
   display: flex;
   padding: ${size('spacing.large')};
   border-bottom: ${border};
@@ -59,6 +60,10 @@ const isFilterable = datatable => datatable && datatable.columns.some(column => 
 
 // eslint-disable-next-line react/prop-types
 const Filters = ({ datatable, meta = {} }) => { /* eslint-disable react/prop-types */
+  if (!isFilterable(datatable)) {
+    return null;
+  }
+
   const autocompleteFilters = meta.autocomplete_filters || {};
   const filteredCount = meta.filtered_count || 0;
   const filtered = datatable.numberOfFilters > 0;
@@ -74,6 +79,7 @@ const Filters = ({ datatable, meta = {} }) => { /* eslint-disable react/prop-typ
       Clear filters
     </ButtonLink>
   );
+
   const filterButton = (
     <FilterButton
       icon="filter"
@@ -89,13 +95,9 @@ const Filters = ({ datatable, meta = {} }) => { /* eslint-disable react/prop-typ
   );
 
   return (
-    <>
-      {isFilterable(datatable) && (
-        <PopoverPortal headerButton={clearButton} title={filterTitle} subtitle={filterSubtitle} button={filterButton}>
-          <DatatableFilters datatable={datatable} autocompleteFilters={autocompleteFilters} />
-        </PopoverPortal>
-      )}
-    </>
+    <PopoverPortal headerButton={clearButton} title={filterTitle} subtitle={filterSubtitle} button={filterButton}>
+      <DatatableFilters datatable={datatable} autocompleteFilters={autocompleteFilters} />
+    </PopoverPortal>
   );
 };
 

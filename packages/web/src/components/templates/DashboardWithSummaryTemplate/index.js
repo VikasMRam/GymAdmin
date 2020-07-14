@@ -105,7 +105,7 @@ export const SummarySection = styled(({ heading, className, children, ...props }
     <SummarySectionHeader>
       {heading}
     </SummarySectionHeader>
-    <Section snap="top" {...props}>
+    <Section {...props}>
       <Block padding={['large', 'xLarge', 'xLarge']}>
         {children}
       </Block>
