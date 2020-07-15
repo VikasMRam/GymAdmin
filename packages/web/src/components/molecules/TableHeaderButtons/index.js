@@ -17,6 +17,7 @@ const Wrapper = styled(Block)`
 Wrapper.defaultProps = {
   padding: 'large',
   borderBottom: 'regular',
+  background: 'white',
 };
 
 const SearchTextInput = styled(Input)`
