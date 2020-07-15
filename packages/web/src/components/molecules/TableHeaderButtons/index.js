@@ -4,26 +4,21 @@ import { object, string, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/web/components/themes';
-import Input from 'sly/web/components/atoms/Input';
+import { Input, Block } from 'sly/web/components/atoms';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import DatatableFilters from 'sly/web/components/organisms/DatatableFilters';
 import PopoverPortal from 'sly/web/components/molecules/PopoverPortal';
 import ButtonLink from 'sly/web/components/molecules/ButtonLink';
 
-const border = css`${size('border.regular')} solid ${palette('slate.stroke')}`;
-const Wrappper = styled.div`
+const Wrapper = styled(Block)`
   display: flex;
-  padding: ${size('spacing.large')};
-  border-bottom: ${border};
-  background-color: ${palette('white.base')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    border-top: none;
-    border-bottom: none;
-    border-left: ${border};
-    border-right: ${border};
-  }
 `;
+
+Wrapper.defaultProps = {
+  padding: 'large',
+  borderBottom: 'regular',
+  background: 'white',
+};
 
 const SearchTextInput = styled(Input)`
   margin-right: ${size('spacing.large')};
@@ -59,6 +54,10 @@ const isFilterable = datatable => datatable && datatable.columns.some(column => 
 
 // eslint-disable-next-line react/prop-types
 const Filters = ({ datatable, meta = {} }) => { /* eslint-disable react/prop-types */
+  if (!isFilterable(datatable)) {
+    return null;
+  }
+
   const autocompleteFilters = meta.autocomplete_filters || {};
   const filteredCount = meta.filtered_count || 0;
   const filtered = datatable.numberOfFilters > 0;
@@ -74,6 +73,7 @@ const Filters = ({ datatable, meta = {} }) => { /* eslint-disable react/prop-typ
       Clear filters
     </ButtonLink>
   );
+
   const filterButton = (
     <FilterButton
       icon="filter"
@@ -89,20 +89,16 @@ const Filters = ({ datatable, meta = {} }) => { /* eslint-disable react/prop-typ
   );
 
   return (
-    <>
-      {isFilterable(datatable) && (
-        <PopoverPortal headerButton={clearButton} title={filterTitle} subtitle={filterSubtitle} button={filterButton}>
-          <DatatableFilters datatable={datatable} autocompleteFilters={autocompleteFilters} />
-        </PopoverPortal>
-      )}
-    </>
+    <PopoverPortal headerButton={clearButton} title={filterTitle} subtitle={filterSubtitle} button={filterButton}>
+      <DatatableFilters datatable={datatable} autocompleteFilters={autocompleteFilters} />
+    </PopoverPortal>
   );
 };
 
 const TableHeaderButtons = ({
   onColumnButtonClick, onSearchTextKeyUp, onSortButtonClick, datatable, className, meta, value, modelConfig,
 }) => (
-  <Wrappper className={className}>
+  <Wrapper className={className}>
     {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
     {datatable
       ? (
@@ -119,7 +115,7 @@ const TableHeaderButtons = ({
     {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
     {datatable && <Filters datatable={datatable} meta={meta} />}
     {onColumnButtonClick && <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>}
-  </Wrappper>
+  </Wrapper>
 );
 
 TableHeaderButtons.propTypes = {

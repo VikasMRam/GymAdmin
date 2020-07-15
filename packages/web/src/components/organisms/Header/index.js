@@ -149,7 +149,9 @@ const StyledSearchBoxContainer = styled(SearchBoxContainer)`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: ${size('spacing.large')} 0;
     visibility: visible;
-    width: ${size('header.SearchBox.width')};
+    flex-grow: 1;
+    width: unset;
+    max-width: ${size('header.SearchBox.width')};
   }
 `;
 

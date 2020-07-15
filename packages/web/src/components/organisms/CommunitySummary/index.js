@@ -14,6 +14,7 @@ import { isBrowser } from 'sly/web/config';
 import { tocPaths } from 'sly/web/services/helpers/url';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 import ListItem from 'sly/web/components/molecules/ListItem';
+import { startingWith, upTo } from 'sly/web/components/helpers';
 
 
 const StyledHeading = pad(Heading, 'regular');
@@ -39,9 +40,6 @@ const TooltipContent = styled(ReactTooltip)`
   box-shadow: 0 0 ${size('spacing', 'large')} ${palette('slate', 'filler')}80;
 `;
 
-const RatingWrapper = mobileOnly(styled.div`
-`);
-
 const CareTypeWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')}; 
 `;
@@ -59,6 +57,11 @@ const OverlayTwoColumnListWrapper = styled.div`
   }
 `;
 
+const MobileCommunityRating = styled(CommunityRating)`
+  ${startingWith('laptop')} {
+    display: none;
+  }
+`;
 
 const getCareTypes = (state, careTypes) => {
   const updatedCareTypes = [];
@@ -150,17 +153,12 @@ const CommunitySummary = ({
           )
         }
       </CareTypeWrapper>
-
       {reviewsValue > 0 &&
-        <RatingWrapper>
-          <CommunityRating
-            numReviewsPalette="slate"
-            numReviewsVariation="base"
-            rating={reviewsValue}
-            numReviews={numReviews}
-            goToReviews={goToReviews}
-          />
-        </RatingWrapper>
+        <MobileCommunityRating
+          rating={reviewsValue}
+          numReviews={numReviews}
+          goToReviews={goToReviews}
+        />
       }
 
       <Hr />

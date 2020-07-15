@@ -14,6 +14,9 @@ export default class DashboardMyAccountPageContainer extends Component {
 
   render() {
     const { user } = this.props;
+    if (!user) {
+      return null;
+    }
     const { email, hasPasswordSet } = user;
     const showIncompleteWarning = !email || !hasPasswordSet;
     let warningMessage = null;

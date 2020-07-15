@@ -18,7 +18,7 @@ const getTitlePalette = variant => p => palette(p.titlePalette, variant);
 
 const Wrapper = styled.div`
   border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
 `;
 
 const SectionsWrapper = styled.div`

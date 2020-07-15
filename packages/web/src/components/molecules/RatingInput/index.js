@@ -91,7 +91,7 @@ export default class RatingInput extends Component {
     const { defaultValue, value: discardValue, ...props } = this.props;
     return (
       <Rating
-        innerRef={this.innerRef}
+        ref={this.innerRef}
         value={value}
         onClick={this.onClick}
         onMouseOver={this.onMouseOver}

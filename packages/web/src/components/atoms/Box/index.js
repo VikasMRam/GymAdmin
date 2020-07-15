@@ -15,7 +15,7 @@ Box.propTypes = {
   borderPalette: palettePropType,
   borderVariation: variationPropType,
   padding: spacingPropType,
-  snap: oneOf(['none', 'top', 'bottom', 'vertical']),
+  snap: oneOf(['none', 'top', 'bottom', 'vertical', 'left', 'right', 'horizontal', 'all']),
 };
 
 Box.defaultProps = {

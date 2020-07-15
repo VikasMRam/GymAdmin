@@ -121,10 +121,22 @@ const RemoveButton = styled(IconButton)`
 const ContactRowCard = ({ contact, entity, editContactUrl, onContactClick, deleteContact }) => {
   return (
     <Wrapper>
-      <NameCell contact={contact} to={editContactUrl} onClick={() => onContactClick(contact)} />
+      <NameCell
+        contact={contact}
+        to={editContactUrl}
+        onClick={() => onContactClick(contact)}
+      />
       <CommunityCell>
         <span>Community</span>
-        {entity && <Link to={getAppPathForEntity(entity)}>{entity.label}</Link>}
+        {entity && (
+          <Link
+            to={getAppPathForEntity(entity)}
+            block
+            clamped
+          >
+            {entity.label}
+          </Link>
+        )}
       </CommunityCell>
       <EmailCell>
         <span>Email</span>

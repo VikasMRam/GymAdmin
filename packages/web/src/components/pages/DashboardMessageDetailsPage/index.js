@@ -8,7 +8,7 @@ import ConversationMessagesContainer from 'sly/web/containers/ConversationMessag
 
 const StyledConversationMessagesContainer = styled(ConversationMessagesContainer)`
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('border.xLarge')};
+  border-radius: ${size('spacing.small')};
 `;
 
 const StyledPageTemplate = styled(DashboardPageTemplate)`

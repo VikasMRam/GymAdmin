@@ -11,7 +11,7 @@ const backgroundColour = ({ palette: paletteProp, variation }) => palette(palett
 const Bar = styled.div`
   background-color: ${backgroundColour};
   border: ${size('border.regular')} solid ${palette('grey', 'filler')};
-  border-radius: ${size('border.xLarge')};
+  border-radius: ${size('spacing.small')};
   height: ${size('element.small')};
   width: ${prop('width')}%;
 `;
