@@ -3,7 +3,6 @@ import { instanceOf, string, bool } from 'prop-types';
 import styled from 'styled-components';
 
 import Box from 'sly/web/components/atoms/Box';
-import { size } from 'sly/web/components/themes';
 import { topSnap, upTo } from 'sly/web/components/helpers';
 
 const Wrapper = styled(Box)`

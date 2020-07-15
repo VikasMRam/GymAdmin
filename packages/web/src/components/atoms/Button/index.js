@@ -6,7 +6,7 @@ import { ifProp, switchProp } from 'styled-tools';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import { size, palette } from 'sly/web/components/themes';
-import Link, { LinkAnchor } from 'sly/web/components/atoms/Link';
+import { LinkAnchor } from 'sly/web/components/atoms/Link';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { withSpacing } from 'sly/web/components/helpers';
 
@@ -156,7 +156,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const withSendEvent = ({ onClick, event, ...props }) => {
+const withSendEvent = ({ onClick, event }) => {
   return {
     onClick: event ? (e) => {
       SlyEvent.getInstance().sendEvent(event);

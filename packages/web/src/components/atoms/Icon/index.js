@@ -1,6 +1,6 @@
 // https://github.com/diegohaz/arc/wiki/Example-components#icon
 import React from 'react';
-import { string, number, bool, oneOf, oneOfType } from 'prop-types';
+import { string, number, bool, oneOfType } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { prop } from 'styled-tools';
 
