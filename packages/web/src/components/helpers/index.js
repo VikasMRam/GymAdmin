@@ -12,3 +12,4 @@ export * from './text';
 export * from './display';
 export * from './zIndex';
 export * from './media';
+export * from './clamp';

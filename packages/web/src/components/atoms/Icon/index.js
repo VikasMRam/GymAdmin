@@ -1,6 +1,6 @@
 // https://github.com/diegohaz/arc/wiki/Example-components#icon
 import React from 'react';
-import { string, number, bool, oneOfType } from 'prop-types';
+import { string, number, bool, oneOf, oneOfType } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { prop } from 'styled-tools';
 
@@ -16,7 +16,6 @@ const iconSize = ({ size: s }) => {
     ? css`calc(${textSize} * ${lineHeight});`
     : s;
 };
-
 const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)${flip ? ' scaleX(-1) scaleY(-1)' : ''}`;
 
 /**
@@ -29,15 +28,20 @@ const Wrapper = styled.span`
   ${withText}
   ${withBorder}
   
-  ${getTransform};
-  transition: transform ${key('transitions.fast')};
-  
+  display: inline-flex;
+  // sizes relative to set font-size
+  vertical-align: top;
+
   width: max-content;
   height: max-content;
-  
+  text-align: center;
+  ${getTransform};
+  transition: transform ${key('transitions.fast')};
   & > svg {
+    align-self: center;
     height: ${iconSize};
     min-width: ${iconSize};
+    display: block;
     fill: currentColor;
     stroke: ${prop('stroke', 'none')};
   }

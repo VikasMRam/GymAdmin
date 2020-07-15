@@ -10,7 +10,7 @@ import { routes as routesPropType } from 'sly/web/propTypes/routes';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
-import { withColor, withText, withSpacing, withDisplay, withBorder, withZIndex } from 'sly/web/components/helpers';
+import { withColor, withText, withSpacing, withDisplay, withBorder, withZIndex, withClamping } from 'sly/web/components/helpers';
 
 // eslint-disable-next-line jsx-a11y/anchor-has-content
 export const Anchor = styled.a`
@@ -19,6 +19,7 @@ export const Anchor = styled.a`
   ${withText}
   ${withBorder}
   ${withZIndex}
+  ${withClamping}
   
   &, &:active {
     ${withColor} 

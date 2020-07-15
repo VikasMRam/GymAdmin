@@ -7,8 +7,8 @@ export const topSnap = css`
   border-top-right-radius: 0;
 `;
 
+// won't remove border
 export const bottomSnap = css`
-  border-bottom: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 `;
@@ -19,8 +19,8 @@ export const leftSnap = css`
   border-bottom-left-radius: 0;
 `;
 
+// won't remove border
 export const rightSnap = css`
-  border-right: 0;
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
 `;

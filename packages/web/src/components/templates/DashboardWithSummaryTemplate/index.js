@@ -29,7 +29,6 @@ export const Left = styled(({ children, heading, to, ...props }) => (
 
 Left.defaultProps = {
   snap: 'bottom',
-  borderBottom: 'regular',
   background: 'white.base',
 };
 
@@ -44,7 +43,7 @@ export const Right = styled.div`
 `;
 
 export const Section = styled(Box)`
-  ${upTo('tablet')} {
+  ${upTo('laptop')} {
     border: none; 
   }
 `;

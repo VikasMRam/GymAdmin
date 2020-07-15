@@ -63,6 +63,8 @@ const ImageButtonWrapper = pad(styled.div`
   position: relative;
   text-align: center;
 
+  height: 108px;
+  
   img {
     width: 100%;
     max-width: 100%;
