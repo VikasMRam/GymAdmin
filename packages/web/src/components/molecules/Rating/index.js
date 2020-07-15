@@ -74,6 +74,8 @@ const Rating = React.forwardRef(({ palette, variation, value, size, ...props }, 
   </Wrapper>
 ));
 
+Rating.displayName = 'Rating';
+
 Rating.propTypes = {
   size: getThemePropType('text'),
   innerRef: object,
