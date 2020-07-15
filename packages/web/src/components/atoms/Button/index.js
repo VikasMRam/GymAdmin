@@ -121,7 +121,7 @@ const StyledButton = styled.button`
   border: ${size('border.regular')} solid ${borderColor};
   cursor: ${ifProp('disabled', 'default', 'pointer')};
   appearance: none;
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
   transition: background-color 250ms ease-out, color 250ms ease-out,
     border-color 250ms ease-out;
   background-color: ${backgroundColor};

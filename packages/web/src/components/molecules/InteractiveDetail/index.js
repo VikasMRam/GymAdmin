@@ -13,7 +13,7 @@ Label.displayName = 'Label';
 const Value = styled(Block)`
   background: ${palette('primary.stroke')};
   padding: ${size('spacing.large')};
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
 `;
 
 const InteractiveDetail = ({

@@ -36,7 +36,7 @@ Form.displayName = 'Form';
 
 const Warning = pad(styled(Block)`
   background-color: ${palette('warning.filler')};
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
   text-align: center;
   padding: ${size('spacing.large')};
 `, 'xLarge');

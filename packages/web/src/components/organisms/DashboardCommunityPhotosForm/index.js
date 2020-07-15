@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { func, bool, object, arrayOf } from 'prop-types';
-import { SortableContainer } from 'react-sortable-hoc';
+import { sortableContainer } from 'react-sortable-hoc';
 
 import { imagePropType } from 'sly/web/propTypes/gallery';
 import MediaItem from 'sly/web/services/s3Uploader/components/MediaItem';
@@ -28,7 +28,7 @@ const genKey = ((cache = {}) => (image) => {
   return key;
 })();
 
-const SectionSortable = SortableContainer(({
+const SectionSortable = sortableContainer(({
   images,
   editImage,
   deleteImage,

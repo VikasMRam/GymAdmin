@@ -57,7 +57,7 @@ const PercentageDiv = styled.div`
 const TwoColumnGrid = styled.div`
   padding: ${size('spacing', 'xLarge')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
   display: grid;
   grid-template-columns: minmax(min-content, max-content) minmax(min-content, max-content);
   grid-column-gap: ${size('spacing', 'xLarge')};

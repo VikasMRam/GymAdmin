@@ -18,7 +18,7 @@ const Bar = styled.div`
   height: ${size('spacing.small')};
   width: ${prop('width')}%;
   transition: width ${key('transitions.slow.inOut')};
-  border-radius: ${size('spacing.xLarge')};
+  border-radius: ${size('spacing.small')};
 `;
 
 const PaddedBlock = pad(Block, 'medium');
