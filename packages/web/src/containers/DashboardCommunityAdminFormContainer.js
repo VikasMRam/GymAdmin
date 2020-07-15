@@ -58,7 +58,9 @@ export default class DashboardCommunityAdminFormContainer extends Component {
   handleSubmit = (values) => {
     const { match, updateCommunity, community, notifyError, notifyInfo } = this.props;
     const { id } = match.params;
-    const { rgsAux, user, ...attributes } = values;
+    const { rgsAux, user, status, ...attributes } = values;
+
+    attributes.status = parseFloat(status);
 
     return updateCommunity({ id }, {
       attributes,
