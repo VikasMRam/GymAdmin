@@ -1,25 +1,16 @@
 // https://github.com/diegohaz/arc/wiki/Example-components#icon
 import React from 'react';
-import styled from 'styled-components';
-import { string } from 'prop-types';
 
-import Icon from 'sly/web/components/atoms/Icon';
+import Block from 'sly/web/components/atoms/Block';
 
-const LogoIcon = styled(Icon)`
-  width: auto;
-  height: auto;
-`;
+// eslint-disable-next-line import/no-webpack-loader-syntax,import/no-unresolved
+const svg = require('!raw-loader!./svg/seniorlyLogo-regular.svg').default;
 
-const Logo = ({ palette, variation }) => <LogoIcon icon="seniorlyLogo" palette={palette} variation={variation} size="xxLarge" />;
-
-Logo.propTypes = {
-  palette: string,
-  variation: string,
-};
-
-Logo.defaultProps = {
-  palette: 'primary',
-  variation: 'base',
-};
+const Logo = props => (
+  <Block
+    dangerouslySetInnerHTML={{ __html: svg }}
+    {...props}
+  />
+);
 
 export default Logo;

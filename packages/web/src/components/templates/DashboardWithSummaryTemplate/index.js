@@ -7,7 +7,7 @@ import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTem
 import Box from 'sly/web/components/atoms/Box';
 import { Block, Heading, Link } from 'sly/web/components/atoms';
 import BackLink from 'sly/web/components/molecules/BackLink';
-import { withBorder, withText } from 'sly/web/components/helpers';
+import { upTo, withBorder, withText } from 'sly/web/components/helpers';
 
 export const Top = styled.div`
   grid-area: top;
@@ -43,7 +43,11 @@ export const Right = styled.div`
   grid-area: right;
 `;
 
-export const Section = styled(Box)``;
+export const Section = styled(Box)`
+  ${upTo('tablet')} {
+    border: none; 
+  }
+`;
 
 Section.defaultProps = {
   background: 'white',
@@ -55,7 +59,6 @@ export const SectionHeader = styled(({ actions, children, className, ...props })
   <Block
     padding={['large', 'xLarge']}
     borderBottom="regular"
-    background="white"
     className={className}
     {...props}
   >

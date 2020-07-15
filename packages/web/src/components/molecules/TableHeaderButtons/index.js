@@ -4,27 +4,20 @@ import { object, string, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/web/components/themes';
-import Input from 'sly/web/components/atoms/Input';
+import { Input, Block } from 'sly/web/components/atoms';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import DatatableFilters from 'sly/web/components/organisms/DatatableFilters';
 import PopoverPortal from 'sly/web/components/molecules/PopoverPortal';
 import ButtonLink from 'sly/web/components/molecules/ButtonLink';
-import Box from 'sly/web/components/atoms/Box';
 
-const border = css`${size('border.regular')} solid ${palette('slate.stroke')}`;
-const Wrappper = styled(Box)`
+const Wrapper = styled(Block)`
   display: flex;
-  padding: ${size('spacing.large')};
-  border-bottom: ${border};
-  background-color: ${palette('white.base')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    border-top: none;
-    border-bottom: none;
-    border-left: ${border};
-    border-right: ${border};
-  }
 `;
+
+Wrapper.defaultProps = {
+  padding: 'large',
+  borderBottom: 'regular',
+};
 
 const SearchTextInput = styled(Input)`
   margin-right: ${size('spacing.large')};
@@ -104,7 +97,7 @@ const Filters = ({ datatable, meta = {} }) => { /* eslint-disable react/prop-typ
 const TableHeaderButtons = ({
   onColumnButtonClick, onSearchTextKeyUp, onSortButtonClick, datatable, className, meta, value, modelConfig,
 }) => (
-  <Wrappper className={className}>
+  <Wrapper className={className}>
     {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
     {datatable
       ? (
@@ -121,7 +114,7 @@ const TableHeaderButtons = ({
     {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
     {datatable && <Filters datatable={datatable} meta={meta} />}
     {onColumnButtonClick && <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>}
-  </Wrappper>
+  </Wrapper>
 );
 
 TableHeaderButtons.propTypes = {
