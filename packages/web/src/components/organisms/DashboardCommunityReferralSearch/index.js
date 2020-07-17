@@ -8,7 +8,7 @@ import { Block, Hr } from 'sly/web/components/atoms';
 import DashboardCommunityAgentSearchBox from 'sly/web/components/organisms/DashboardCommunityAgentSearchBox';
 import DashboardAdminReferralCommunityTile from 'sly/web/components/organisms/DashboardAdminReferralCommunityTile';
 import DashboardAdminCommunityAgentList from 'sly/web/components/organisms/DashboardAdminCommunityAgentList';
-import { adminCommunityPropType } from 'sly/web/propTypes/community';
+import { adminCommunityPropType } from 'sly/common/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
 import cursor from 'sly/web/components/helpers/cursor';
 import { FAMILIES_INTERESTED_COMMUNITY_TITLE } from 'sly/web/constants/referrals';

@@ -11,7 +11,7 @@ import AdTile from 'sly/web/components/organisms/AdTile';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
 import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
-import { community as communityProptype } from 'sly/web/propTypes/community';
+import { community as communityProptype } from 'sly/common/propTypes/community';
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
   vertical-align: middle;

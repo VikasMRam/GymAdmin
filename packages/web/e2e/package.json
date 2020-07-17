@@ -1,13 +1,11 @@
 {
-  "name": "e2e",
+  "name": "@sly-react/web-e2e",
   "version": "1.0.0",
-  "description": "",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "test": "cypress run"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^4.1.1",
     "cypress": "^3.7.0",

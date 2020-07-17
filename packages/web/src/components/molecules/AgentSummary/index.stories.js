@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { size } from 'sly/web/components/themes';
 import AgentSummary from 'sly/web/components/molecules/AgentSummary';
-import LindaIwamota from 'sly/web/../private/storybook/sample-data/agent-linda-iwamota.json';
+import LindaIwamota from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 
 const Wrapper = styled.div`
   margin: ${size('spacing.large')};

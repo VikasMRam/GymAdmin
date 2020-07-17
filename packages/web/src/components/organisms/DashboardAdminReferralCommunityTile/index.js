@@ -5,7 +5,7 @@ import { ifProp, ifNotProp } from 'styled-tools';
 
 import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
 import { size, palette } from 'sly/web/components/themes';
-import { adminCommunityPropType } from 'sly/web/propTypes/community';
+import { adminCommunityPropType } from 'sly/common/propTypes/community';
 import { getHasContract, getIsCCRC, getIsSNF } from 'sly/web/services/helpers/community';
 import { buildAddressDisplay, getReferralSentTimeText } from 'sly/web/services/helpers/communityReferral';
 import { Heading, Block, Span, Button, Link } from 'sly/web/components/atoms';

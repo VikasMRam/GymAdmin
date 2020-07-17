@@ -5,8 +5,8 @@ import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/web/components/themes';
-import messagePropType from 'sly/web/propTypes/conversation/conversationMessage';
-import participantPropType from 'sly/web/propTypes/conversation/conversationParticipant';
+import messagePropType from 'sly/common/propTypes/conversation/conversationMessage';
+import participantPropType from 'sly/common/propTypes/conversation/conversationParticipant';
 import pad from 'sly/web/components/helpers/pad';
 import { isAfter, isSameDay } from 'sly/web/services/helpers/date';
 import HrWithText from 'sly/web/components/molecules/HrWithText';

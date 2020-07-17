@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
 
 import { prefetch } from 'sly/web/services/api';
-import voiceCallsPropType from 'sly/web/propTypes/calls';
+import voiceCallsPropType from 'sly/common/propTypes/calls';
 import { ADMIN_DASHBOARD_CALL_DETAILS_PATH } from 'sly/web/constants/dashboardAppPaths';
 import DashboardCallsIndexPage from 'sly/web/components/pages/DashboardCallsIndexPage';
 

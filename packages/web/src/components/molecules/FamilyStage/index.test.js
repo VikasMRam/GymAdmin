@@ -3,8 +3,8 @@ import { shallow } from 'enzyme';
 
 import FamilyStage from 'sly/web/components/molecules/FamilyStage';
 import { FAMILY_STAGE_ORDERED } from 'sly/web/constants/familyDetails';
-import AmalFrancis from 'sly/web/../private/storybook/sample-data/user-amal-francis.json';
-import PraneshKumar from 'sly/web/../private/storybook/sample-data/client-pranesh-kumar.json';
+import AmalFrancis from 'sly/storybook/sample-data/user-amal-francis.json';
+import PraneshKumar from 'sly/storybook/sample-data/client-pranesh-kumar.json';
 
 const stageGroups = Object.keys(FAMILY_STAGE_ORDERED);
 const newStage = FAMILY_STAGE_ORDERED[stageGroups[0]][0];

@@ -5,9 +5,9 @@ import { string, bool, func, object } from 'prop-types';
 import { ifNotProp } from 'styled-tools';
 
 import { palette } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { routes as routesPropType } from 'sly/web/propTypes/routes';
-import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { routes as routesPropType } from 'sly/common/propTypes/routes';
+import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 import { withColor, withText, withSpacing, withDisplay, withBorder, withZIndex, withClamping } from 'sly/web/components/helpers';

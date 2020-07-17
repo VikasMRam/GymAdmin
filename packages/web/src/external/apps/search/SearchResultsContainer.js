@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 import { size } from 'sly/web/components/themes';
 import { NUMBER_OF_RESULTS_PER_PAGE } from 'sly/web/external/constants/search';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { prefetch } from 'sly/web/services/api';
 import { getPaginationData } from 'sly/web/services/helpers/pagination';
 import { getCitySearchUrl, getStateAbbr } from 'sly/web/services/helpers/url';

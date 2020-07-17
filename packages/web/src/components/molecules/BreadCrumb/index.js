@@ -4,7 +4,7 @@ import { arrayOf, shape, string, object } from 'prop-types';
 
 
 import { size } from 'sly/web/components/themes';
-import { text as textPropType } from 'sly/web/propTypes/text';
+import { text as textPropType } from 'sly/common/propTypes/text';
 import { Link, Span } from 'sly/web/components/atoms';
 import { withPad } from 'sly/web/components/helpers/pad';
 

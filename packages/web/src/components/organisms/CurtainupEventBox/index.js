@@ -4,9 +4,9 @@ import { arrayOf } from 'prop-types';
 import dayjs from 'dayjs';
 
 import { size, palette } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import eventPropType from 'sly/web/propTypes/event';
-import performerPropType from 'sly/web/propTypes/performer';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import eventPropType from 'sly/common/propTypes/event';
+import performerPropType from 'sly/common/propTypes/performer';
 import pad from 'sly/web/components/helpers/pad';
 import { Box, Block } from 'sly/web/components/atoms';
 import Avatar from 'sly/web/components/molecules/Avatar';

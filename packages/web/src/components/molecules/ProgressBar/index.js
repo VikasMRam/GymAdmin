@@ -4,7 +4,7 @@ import { bool, number, string } from 'prop-types';
 import { prop } from 'styled-tools';
 
 import { size, palette, key } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import pad from 'sly/web/components/helpers/pad';
 import Block from 'sly/web/components/atoms/Block';
 

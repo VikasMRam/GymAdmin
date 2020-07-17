@@ -4,8 +4,8 @@ import { func, object, string } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
-import userPropType from 'sly/web/propTypes/user';
-import clientPropType from 'sly/web/propTypes/client';
+import userPropType from 'sly/common/propTypes/user';
+import clientPropType from 'sly/common/propTypes/client';
 import { size } from 'sly/web/components/themes';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
 import Field from 'sly/web/components/molecules/Field';

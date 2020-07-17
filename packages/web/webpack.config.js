@@ -93,8 +93,10 @@ console.info(
   ),
 );
 
-const sourcePath = path.join(process.cwd(), SOURCE);
-const outputPath = path.join(process.cwd(), 'dist');
+// use __dirname as this file can be included from root package
+const sourcePath = path.join(__dirname, SOURCE);
+const rootPath = path.join(__dirname, '..', '..');
+const outputPath = path.join(__dirname, 'dist');
 const serverEntryPath = path.join(sourcePath, 'server.js');
 // external scripts and assets
 const externalSourcePath = path.join(sourcePath, 'external');
@@ -112,16 +114,6 @@ const clientCommunityDetailNodeEntryPath = path.join(sourcePath, 'client-communi
 const mode = (context, { merge }) =>
   merge({
     mode: NODE_ENV,
-  });
-
-const resolveModules = modules => (context, { merge }) =>
-  merge({
-    resolve: {
-      alias: {
-        'sly/web': modules,
-      },
-      modules: [].concat(modules, 'node_modules'),
-    },
   });
 
 const assets = (context, { merge }) =>
@@ -179,9 +171,9 @@ const base = group([
     // },
   }),
 
-  match(['*.js', '!*node_modules*'], [babel()]),
-
-  resolveModules(sourcePath),
+  match(['*.js', '!*node_modules*'], [babel({
+    rootMode: 'upward',
+  })]),
 
   // addPlugins([new webpack.ProgressPlugin()]),
 ]);
@@ -205,7 +197,9 @@ const devCORS = group([
 const node = (context, { merge }) =>
   merge({
     target: 'node',
-    externals: [nodeExternals()],
+    externals: [nodeExternals({
+      modulesDir: path.join(rootPath, 'node_modules'),
+    })],
     stats: 'errors-only',
   });
 
@@ -318,14 +312,14 @@ const client = (target, entries) => {
     //   }),
     // ]),
 
-    // when(false && isWeb, [
-    //   addPlugins([
-    //     new BundleAnalyzerPlugin({
-    //       analyzerMode: 'disabled',
-    //       generateStatsFile: 'true',
-    //     }),
-    //   ]),
-    // ]),
+    /*
+    addPlugins([
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'disabled',
+        generateStatsFile: 'true',
+      }),
+    ]),
+    */
 
     // eslint-disable-next-line no-prototype-builtins
     when(entries.hasOwnProperty('external'), [externalWidget]),

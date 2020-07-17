@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 import { size, palette } from 'sly/web/components/themes';
 import { Block, Box, Button, Heading } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
-import { community as communityProptype } from 'sly/web/propTypes/community';
+import { community as communityProptype } from 'sly/common/propTypes/community';
 import PostConversionAskNotHelpModal from 'sly/web/components/organisms/PostConversionAskNotHelpModal';
 import PostConversionSureNotHelpModal from 'sly/web/components/organisms/PostConversionSureNotHelpModal';
 

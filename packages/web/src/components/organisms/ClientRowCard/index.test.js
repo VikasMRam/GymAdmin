@@ -7,7 +7,7 @@ import ClientRowCard from './index';
 import {
   Icon,
 } from 'sly/web/components/atoms';
-import clients from 'sly/web/../private/storybook/sample-data/clients.json';
+import clients from 'sly/storybook/sample-data/clients.json';
 import { FAMILY_STATUS_ON_PAUSE } from 'sly/web/constants/familyDetails';
 
 const resName = 'Res Name';

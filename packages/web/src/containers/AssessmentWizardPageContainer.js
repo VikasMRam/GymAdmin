@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { object } from 'prop-types';
 import { branch } from 'recompose';
 
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import { prefetch } from 'sly/web/services/api';
 import { parseURLQueryParams } from 'sly/web/services/helpers/url';
 import AssessmentWizardPage from 'sly/web/components/pages/wizards/AssessmentWizardPage';

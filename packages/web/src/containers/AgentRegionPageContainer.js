@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { arrayOf, object, func } from 'prop-types';
 
-import agentPropType from 'sly/web/propTypes/agent';
+import agentPropType from 'sly/common/propTypes/agent';
 import { titleize } from 'sly/web/services/helpers/strings';
 import { getAgentUrl } from 'sly/web/services/helpers/url';
 import withNotification from 'sly/web/controllers/withNotification';

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { size } from 'sly/web/components/themes';
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import { Paragraph } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';

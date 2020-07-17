@@ -6,8 +6,8 @@ import get from 'lodash/get';
 import diff from 'deep-diff';
 
 import { getRelationship, prefetch, query, withUser } from 'sly/web/services/api';
-import userPropType from 'sly/web/propTypes/user';
-import communityPropType from 'sly/web/propTypes/community';
+import userPropType from 'sly/common/propTypes/user';
+import communityPropType from 'sly/common/propTypes/community';
 import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   SUMMARY,

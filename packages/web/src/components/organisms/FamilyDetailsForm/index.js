@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette, columnWidth } from 'sly/web/components/themes';
-import userPropType from 'sly/web/propTypes/user';
-import clientPropType from 'sly/web/propTypes/client';
+import userPropType from 'sly/common/propTypes/user';
+import clientPropType from 'sly/common/propTypes/client';
 import pad from 'sly/web/components/helpers/pad';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import Role from 'sly/web/components/common/Role';

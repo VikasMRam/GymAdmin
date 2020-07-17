@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, arrayOf, func } from 'prop-types';
 
-import { content as contentPropType } from 'sly/web/propTypes/content';
+import { content as contentPropType } from 'sly/common/propTypes/content';
 import { size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import cursor from 'sly/web/components/helpers/cursor';

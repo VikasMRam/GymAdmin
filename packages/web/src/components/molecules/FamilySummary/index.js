@@ -5,7 +5,7 @@ import { string, bool } from 'prop-types';
 import pad from 'sly/web/components/helpers/pad';
 import cursor from 'sly/web/components/helpers/cursor';
 import { size } from 'sly/web/components/themes';
-import clientPropType from 'sly/web/propTypes/client';
+import clientPropType from 'sly/common/propTypes/client';
 import { Box, Heading, Label, Block, Link, Hr } from 'sly/web/components/atoms';
 import Role from 'sly/web/components/common/Role';
 import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';

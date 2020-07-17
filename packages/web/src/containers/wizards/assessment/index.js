@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { func, bool, object, string } from 'prop-types';
 
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import { query } from 'sly/web/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import withWS from 'sly/web/services/ws/withWS';

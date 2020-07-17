@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import Button from 'sly/web/components/atoms/Button';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
-import userPropType from 'sly/web/propTypes/user';
+import userPropType from 'sly/common/propTypes/user';
 import { palette, size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { Block } from 'sly/web/components/atoms';

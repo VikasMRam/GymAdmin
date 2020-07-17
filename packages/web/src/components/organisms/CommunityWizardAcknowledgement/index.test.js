@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import CommunityWizardAcknowledgement from 'sly/web/components/organisms/CommunityWizardAcknowledgement';
-import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const { similarProperties } = RhodaGoldmanPlaza;
 

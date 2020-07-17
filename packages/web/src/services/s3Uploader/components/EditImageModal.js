@@ -7,7 +7,7 @@ import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { createValidator, required } from 'sly/web/services/validation';
 import { Button } from 'sly/web/components/atoms';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
-import { imagePropType } from 'sly/web/propTypes/gallery';
+import { imagePropType } from 'sly/common/propTypes/gallery';
 
 const EditImageModalForm = ({ image, onClose, canEdit, handleSubmit, saveImage, invalid, submitting, ...props }) => {
   const imgPath = image?.attributes?.path;

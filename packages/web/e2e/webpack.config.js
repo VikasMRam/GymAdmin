@@ -5,8 +5,9 @@ const SOURCE = 'src';
 module.exports = {
   resolve: {
     alias: {
-      e2e: path.resolve(process.cwd(), 'cypress'),
-      'sly/web': path.join(path.resolve(process.cwd(), '..'), SOURCE),
+      e2e: path.resolve(__dirname, 'cypress'),
+      'sly/common': path.join(path.resolve(__dirname, '..', '..', 'common'), SOURCE),
+      'sly/web': path.join(path.resolve(__dirname, '..'), SOURCE),
     },
   },
   module: {
@@ -17,7 +18,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            configFile: path.resolve(process.cwd(), '../.babelrc'),
+            rootMode: 'upward',
           },
         },
       },

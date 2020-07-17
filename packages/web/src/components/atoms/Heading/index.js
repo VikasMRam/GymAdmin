@@ -2,10 +2,10 @@ import React from 'react';
 import { node, oneOf } from 'prop-types';
 import styled from 'styled-components';
 
-import { text as textPropType } from 'sly/web/propTypes/text';
-import { weight as weightPropType } from 'sly/web/propTypes/weight';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { text as textPropType } from 'sly/common/propTypes/text';
+import { weight as weightPropType } from 'sly/common/propTypes/weight';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { size, palette } from 'sly/web/components/themes';
 
 const fontSize = p => size('text', p.size || p.level);

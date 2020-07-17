@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import GetCommunityPricingAndAvailability from 'sly/web/components/organisms/GetCommunityPricingAndAvailability';
 
 export default function CommunityDetailsPageColumnContainer({ community }) {

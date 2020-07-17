@@ -14,7 +14,7 @@ import {
   isValidRating,
 } from 'sly/web/services/validation';
 
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import CommunityAddRatingForm from 'sly/web/components/organisms/CommunityAddRatingForm';
 import Thankyou from 'sly/web/components/molecules/Thankyou';
 import { PROFILE_RATING } from 'sly/web/services/api/constants';

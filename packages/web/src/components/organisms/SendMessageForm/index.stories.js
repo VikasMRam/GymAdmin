@@ -5,7 +5,7 @@ import { reduxForm } from 'redux-form';
 
 import SendMessageForm from 'sly/web/components/organisms/SendMessageForm';
 import { withPreventDefault } from 'sly/web/services/helpers/forms';
-import participant2 from 'sly/web/../private/storybook/sample-data/conversation-participant-2.json';
+import participant2 from 'sly/storybook/sample-data/conversation-participant-2.json';
 
 const SendMessageFormContainer = reduxForm({
   form: 'SendMessageForm',

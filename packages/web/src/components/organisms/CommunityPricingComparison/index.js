@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import { size, palette } from 'sly/web/components/themes';
 import { calculatePricing, findPercentage } from 'sly/web/services/helpers/pricing';
 import { formatMoney } from 'sly/web/services/helpers/numbers';

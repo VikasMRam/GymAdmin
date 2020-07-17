@@ -5,8 +5,8 @@ import pick from 'lodash/pick';
 import { withRouter } from 'react-router';
 import defaultsDeep from 'lodash/defaultsDeep';
 
-import clientPropType from 'sly/web/propTypes/client';
-import userProptype from 'sly/web/propTypes/user';
+import clientPropType from 'sly/common/propTypes/client';
+import userProptype from 'sly/common/propTypes/user';
 import { query, prefetch } from 'sly/web/services/api';
 import DashboardCommunityServicesForm from 'sly/web/components/organisms/DashboardCommunityServicesForm';
 import withUser from 'sly/web/services/api/withUser';

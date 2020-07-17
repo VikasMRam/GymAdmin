@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    "@loadable/babel-plugin"
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "react-hot-loader/babel"
+      ]
+    }
+  }
+}
