@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 
-import { withText, withColor, withSpacing, withBorder, withAlign, withSnap } from 'sly/web/components/helpers';
+import {
+  withText,
+  withColor,
+  withSpacing,
+  withBorder,
+  withAlign,
+  withSnap,
+  withClamping,
+} from 'sly/web/components/helpers';
 
 const Block = styled.div`
   ${withSpacing}
@@ -9,6 +17,7 @@ const Block = styled.div`
   ${withBorder}
   ${withSnap}
   ${withAlign}
+  ${withClamping}
 `;
 
 export default Block;

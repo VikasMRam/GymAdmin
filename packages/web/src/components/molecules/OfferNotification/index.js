@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   padding: ${size('spacing.large')};
   display: flex;
   background-color: ${getColor};
-  border-radius: ${size('border.xLarge')};
+  border-radius: ${size('spacing.small')};
 `;
 
 const LoyaltyIcon = styled(Icon)`

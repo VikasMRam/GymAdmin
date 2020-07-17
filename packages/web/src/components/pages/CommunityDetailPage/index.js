@@ -191,7 +191,7 @@ const CTABlock = styled(Block)`
 const CovidWrapper = styled.div`
   padding: ${size('spacing.large')};
   background-color: ${palette('primary', 'filler')};
-  border-radius: ${size('border.xLarge')};
+  border-radius: ${size('spacing.small')};
   border-top: 4px solid ${palette('primary', 'base')};
   margin-bottom: ${size('spacing.xLarge')};
   text-align: center;

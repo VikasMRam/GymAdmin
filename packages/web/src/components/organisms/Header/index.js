@@ -70,7 +70,7 @@ export const HeaderMenu = styled.div`
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    height: inherit;
+    height: unset;
     padding: ${size('spacing.large')} 0;
     width: ${size('header.menu.width')};
     left: auto;
@@ -107,11 +107,11 @@ const HeaderItems = styled.div`
   align-items: center;
   margin-left: auto;
   padding-left: 1.5rem;
-  
+
   > * {
     white-space: nowrap;
   }
-  
+
   ${ifProp('hideInSmallScreen', css`display: none;`)};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -149,7 +149,9 @@ const StyledSearchBoxContainer = styled(SearchBoxContainer)`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: ${size('spacing.large')} 0;
     visibility: visible;
-    width: ${size('header.SearchBox.width')};
+    flex-grow: 1;
+    width: unset;
+    max-width: ${size('header.SearchBox.width')};
   }
 `;
 

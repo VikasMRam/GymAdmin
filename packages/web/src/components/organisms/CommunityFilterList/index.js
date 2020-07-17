@@ -83,16 +83,16 @@ const CommunityFilterList = ({
 
   return (
     <>
-      <CollapsibleSection size="body" title="Type of care" borderless>
+      <CollapsibleSection size="small" title="Type of care" borderless>
         {tocFields}
       </CollapsibleSection>
-      <CollapsibleSection size="body" title="Budget" collapsedDefault borderless>
+      <CollapsibleSection size="small" title="Budget" collapsedDefault borderless>
         {budgetFields}
       </CollapsibleSection>
-      <CollapsibleSection size="body" title="Size" collapsedDefault borderless>
+      <CollapsibleSection size="small" title="Size" collapsedDefault borderless>
         {sizeFields}
       </CollapsibleSection>
-      <CollapsibleSection size="body" title="Sort" collapsedDefault borderless>
+      <CollapsibleSection size="small" title="Sort" collapsedDefault borderless>
         <Field
           name="Sort"
           type="select"
@@ -106,7 +106,7 @@ const CommunityFilterList = ({
         </Field>
       </CollapsibleSection>
       { geoGuideList && geoGuideList.length > 0 &&
-        <CollapsibleSection size="body" title="Guides" borderless>
+        <CollapsibleSection size="small" title="Guides" borderless>
           {geoGuideList.map(elem => <StyledLink href={elem.to} key={elem.to} >{elem.title}</StyledLink>)}
         </CollapsibleSection>
       }

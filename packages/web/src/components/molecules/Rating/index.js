@@ -3,17 +3,17 @@ import React, { Fragment } from 'react';
 import { number, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { getThemePropType, palette, size } from 'sly/web/components/themes';
+import { getThemePropType, size } from 'sly/web/components/themes';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { withColor } from 'sly/web/components/helpers';
 
 const times = (nr, fn) => Array.from(Array(nr).keys()).map((_, i) => fn(i));
 
 const iconSize = props => size('icon', props.size);
-const color = p => palette(p.palette, p.variation);
 
 const Wrapper = styled.div`
-  display: flex;
+  white-space: nowrap;
   line-height: 1;
 `;
 
@@ -23,7 +23,7 @@ const StyledStar = styled.svg`
 `;
 
 const BaseStarPath = styled.path`
-  color: ${color};
+  ${withColor};
 `;
 
 const StarPath = props => (
@@ -36,7 +36,7 @@ const StarPath = props => (
 );
 
 const StarFillPath = styled(StarPath)`
-  color: ${color};
+  ${withColor};
 `;
 
 const randHash = () =>
@@ -59,20 +59,22 @@ const MaskedStar = ({ value, ...props }) => {
   );
 };
 
-const Rating = ({ palette, variation, fillVariation, value, innerRef, size, ...props }) => (
+const Rating = React.forwardRef(({ palette, variation, value, size, ...props }, ref) => (
   <Wrapper {...props}>
-    <StyledStar ref={innerRef} size={size} viewBox="0 0 120 24">
+    <StyledStar ref={ref} size={size} viewBox="0 0 120 24">
       {times(5, i => (
         <Fragment key={`star${i}`}>
           {value >= i + 1 && <StarPath palette={palette} variation={variation} transform={`translate(${i * 24}, 0)`} />}
-          {value < i + 1 && <StarFillPath palette={palette} variation={fillVariation} transform={`translate(${i * 24}, 0)`} />}
+          {value < i + 1 && <StarFillPath palette={palette} variation={variation} transform={`translate(${i * 24}, 0)`} />}
           {value > i &&
             value < i + 1 && <MaskedStar palette={palette} variation={variation} value={value} transform={`translate(${i * 24}, 0)`} />}
         </Fragment>
       ))}
     </StyledStar>
   </Wrapper>
-);
+));
+
+Rating.displayName = 'Rating';
 
 Rating.propTypes = {
   size: getThemePropType('text'),
@@ -80,14 +82,12 @@ Rating.propTypes = {
   value: number.isRequired,
   palette: palettePropType,
   variation: variationPropType,
-  fillVariation: variationPropType,
 };
 
 Rating.defaultProps = {
   size: 'body',
   palette: 'primary',
   variation: 'base',
-  fillVariation: 'filler',
 };
 
 export default Rating;

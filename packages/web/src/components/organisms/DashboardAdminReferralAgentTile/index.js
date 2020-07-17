@@ -69,7 +69,7 @@ const BigScreenSlyScorebadge = styled.div`
     padding: ${size('spacing.small')} calc(${size('spacing', 'regular')} + ${size('spacing', 'small')}) ;
     background-color: ${palette('grey', 'stroke')};
     border: ${size('border.regular')} solid ${palette('grey', 'filler')};
-    border-radius: ${size('border.xxLarge')};
+    border-radius: ${size('spacing.small')};
     margin-right: ${size('spacing.large')};
   }
 `;

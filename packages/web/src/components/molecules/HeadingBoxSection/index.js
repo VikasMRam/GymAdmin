@@ -16,7 +16,7 @@ const filterProps = Component => ({
 
 const StyledSection = filterProps(styled.section`
   border: ${size('border.regular')} ${ifProp('hasNoBorder', 'none', 'solid')} ${palette('slate', 'stroke')};
-  border-radius: ${ifProp('hasNoBorder', null, size('border.xLarge'))};
+  border-radius: ${ifProp('hasNoBorder', null, size('spacing.small'))};
   background-color: ${palette('white.base')};
   padding: ${size('spacing.xLarge')};
   padding-left: ${ifProp('hasNoBodyPadding', 0, null)};

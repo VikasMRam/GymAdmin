@@ -13,7 +13,6 @@ const Tag = styled.div`
   line-height: ${size('spacing.large')};
   font-size: ${size('spacing.medium')};
   height: ${size('spacing.xLarge')};
-  border: ${size('spacing.nano')} solid ${palette('primary', 'filler')};
   border-radius: ${size('spacing.small')};
   padding: 0 ${size('spacing.regular')};
 `;

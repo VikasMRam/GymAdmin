@@ -17,7 +17,7 @@ const StyledBlock = styled(Block)`
 
 const Wrapper = styled.div`
   background: ${palette('white', 'base')}E6;
-  border-radius: ${size('border.xLarge')};
+  border-radius: ${size('spacing.small')};
   padding: ${size('spacing.xxxLarge')};
   width: 100%;
 `;

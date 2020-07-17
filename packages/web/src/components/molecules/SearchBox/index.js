@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 const searchTextBoxStyles = css`
   background-color: ${palette('white', 'base')}!important;
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
   ${switchProp('layout', {
     header: css`
       height: auto;`,
