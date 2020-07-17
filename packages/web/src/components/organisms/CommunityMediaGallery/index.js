@@ -16,7 +16,7 @@ const BottomRightWrapper = styled.span`
 
 const StyledIconButton = styled(IconButton)`
   margin-left:${size('spacing.regular')};
-  display: inline-block;
+  display: inline-block!important;
 `;
 
 export default class CommunityMediaGallery extends Component {
