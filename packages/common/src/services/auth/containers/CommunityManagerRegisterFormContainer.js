@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 
 import { createValidator, required, email } from 'sly/web/services/validation';
 import { withAuth } from 'sly/web/services/api';
-import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/web/constants/loginProviders';
+import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/common/constants/loginProviders';
 import loadFB from 'sly/web/services/helpers/facebookSDK';
-import CommunityManagerRegisterForm from 'sly/web/services/auth/components/CommunityManagerRegisterForm';
+import CommunityManagerRegisterForm from 'sly/common/services/auth/components/CommunityManagerRegisterForm';
 
 const validate = createValidator({
   emailOrPhone: [required], // todo: add email or phone validation

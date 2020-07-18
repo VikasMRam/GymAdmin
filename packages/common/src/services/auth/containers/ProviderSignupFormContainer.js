@@ -3,10 +3,10 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { connect } from 'react-redux';
 import { func, bool } from 'prop-types';
 
-import { PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import { PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
 import { withAuth } from 'sly/web/services/api';
 import { createValidator, required, email, minLength, usPhone } from 'sly/web/services/validation';
-import ProviderSignupForm from 'sly/web/services/auth/components/ProviderSignupForm';
+import ProviderSignupForm from 'sly/common/services/auth/components/ProviderSignupForm';
 
 const validate = createValidator({
   name: [required],

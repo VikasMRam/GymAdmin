@@ -15,7 +15,7 @@ import {
   WAITLISTED,
   ESTIMATED_MOVE_IN,
 } from 'sly/web/constants/familyDetails';
-import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/common/constants/roles';
 import Role from 'sly/web/components/common/Role';
 import pad from 'sly/web/components/helpers/pad';
 import { priceFormatter, priceParser } from 'sly/web/services/helpers/pricing';

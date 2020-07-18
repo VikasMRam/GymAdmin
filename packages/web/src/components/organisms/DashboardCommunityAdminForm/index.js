@@ -4,7 +4,7 @@ import { func, bool, object } from 'prop-types';
 import { Button } from 'sly/web/components/atoms';
 import EditField from 'sly/web/components/form/EditField';
 import { statuses } from 'sly/web/constants/communities';
-import { PROVIDER_ROLE_PARAM } from 'sly/web/constants/roles';
+import { PROVIDER_ROLE_PARAM } from 'sly/common/constants/roles';
 
 import {
   Section,

@@ -16,7 +16,7 @@ import { textAlign } from 'sly/web/components/helpers/text';
 import { Loading, Section, SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import Role from 'sly/web/components/common/Role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
 import IconButton from 'sly/web/components/molecules/IconButton';
 
 const TABLE_HEADINGS = [

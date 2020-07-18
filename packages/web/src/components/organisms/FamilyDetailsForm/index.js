@@ -10,7 +10,7 @@ import clientPropType from 'sly/common/propTypes/client';
 import pad from 'sly/web/components/helpers/pad';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import Role from 'sly/web/components/common/Role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE, AGENT_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE, AGENT_ADMIN_ROLE } from 'sly/common/constants/roles';
 import {
   SOURCE_OPTIONS,
   FAMILY_STAGE_WON,

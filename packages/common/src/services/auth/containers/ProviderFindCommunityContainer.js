@@ -5,7 +5,7 @@ import { func, object } from 'prop-types';
 
 import { withAuth, normalizeResponse, query } from 'sly/web/services/api';
 import { createValidator, required } from 'sly/web/services/validation';
-import ProviderFindCommunity from 'sly/web/services/auth/components/ProviderFindCommunity';
+import ProviderFindCommunity from 'sly/common/services/auth/components/ProviderFindCommunity';
 
 const validate = createValidator({
   community: [required],

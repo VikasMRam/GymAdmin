@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { func, object } from 'prop-types';
 
 import { withUser } from 'sly/web/services/api';
-import CustomerSingupConfirmation from 'sly/web/services/auth/components/CustomerSignupConfirmation'
+import CustomerSingupConfirmation from 'sly/common/services/auth/components/CustomerSignupConfirmation'
 
 @withUser
 export default class CustomerSignupConfirmationContainer extends Component {

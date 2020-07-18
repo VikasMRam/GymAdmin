@@ -3,12 +3,12 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
-import EmailPassLoginForm from 'sly/web/services/auth/components/EmailPassLoginForm';
 import { createValidator, required, email } from 'sly/web/services/validation';
 import { withAuth } from 'sly/web/services/api';
 import withNotification from 'sly/web/controllers/withNotification';
+import PartnerAgentLoginForm from 'sly/common/services/auth/components/PartnerAgentLoginForm';
 
-const formName = 'EmailPassLoginForm';
+const formName = 'PartnerAgentLoginForm';
 
 const validate = createValidator({
   email: [email, required],
@@ -18,7 +18,7 @@ const validate = createValidator({
 const ReduxForm = reduxForm({
   form: formName,
   validate,
-})(EmailPassLoginForm);
+})(PartnerAgentLoginForm);
 
 const mapDispatchToProps = {
   clearSubmitErrors: (name = formName) => clearSubmitErrors(name),
@@ -28,7 +28,7 @@ const mapDispatchToProps = {
 @withNotification
 @connect(null, mapDispatchToProps)
 
-export default class EmailPassLoginFormContainer extends Component {
+export default class PartnerAgentLoginFormContainer extends Component {
   static propTypes = {
     resendOtpCode: func.isRequired,
     loginUser: func.isRequired,

@@ -14,7 +14,7 @@ import {
   PHOTOS,
   EMAILS,
 } from 'sly/web/constants/dashboardAppPaths';
-import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import { adminAgentPropType } from 'sly/common/propTypes/agent';
 import userPropType from 'sly/common/propTypes/user';
 import notePropType from 'sly/common/propTypes/note';

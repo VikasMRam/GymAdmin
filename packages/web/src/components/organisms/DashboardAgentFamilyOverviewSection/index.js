@@ -19,7 +19,7 @@ import IconButton from 'sly/web/components/molecules/IconButton';
 import ClientRowCard from 'sly/web/components/organisms/ClientRowCard';
 import Role from 'sly/web/components/common/Role';
 import AddFamilyFormContainer from 'sly/web/containers/dashboard/AddFamilyFormContainer';
-import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/common/constants/roles';
 import { stripPageNumber } from 'sly/web/services/helpers/appPaths';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [

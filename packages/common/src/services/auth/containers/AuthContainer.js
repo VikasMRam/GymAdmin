@@ -10,14 +10,14 @@ import spacing from 'sly/web/components/helpers/spacing';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import { Box } from 'sly/web/components/atoms';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
-import { Wrapper } from 'sly/web/services/auth/components/Template';
-import ResetPasswordFormContainer from 'sly/web/services/auth/containers/ResetPasswordFormContainer';
-import LoginFormContainer from 'sly/web/services/auth/containers/LoginFormContainer';
-import SignupFormContainer from 'sly/web/services/auth/containers/SignupFormContainer';
-import ProviderSignupFormContainer from 'sly/web/services/auth/containers/ProviderSignupFormContainer';
-import CustomerSignupConfirmationContainer from 'sly/web/services/auth/containers/CustomerSignupConfirmationContainer';
-import ProviderFindCommunityContainer  from 'sly/web/services/auth/containers/ProviderFindCommunityContainer';
-import ProviderConfirmation from 'sly/web/services/auth/components/ProviderConfirmation';
+import { Wrapper } from 'sly/common/services/auth/components/Template';
+import ResetPasswordFormContainer from 'sly/common/services/auth/containers/ResetPasswordFormContainer';
+import LoginFormContainer from 'sly/common/services/auth/containers/LoginFormContainer';
+import SignupFormContainer from 'sly/common/services/auth/containers/SignupFormContainer';
+import ProviderSignupFormContainer from 'sly/common/services/auth/containers/ProviderSignupFormContainer';
+import CustomerSignupConfirmationContainer from 'sly/common/services/auth/containers/CustomerSignupConfirmationContainer';
+import ProviderFindCommunityContainer  from 'sly/common/services/auth/containers/ProviderFindCommunityContainer';
+import ProviderConfirmation from 'sly/common/services/auth/components/ProviderConfirmation';
 
 const ModalBody = spacing(styled.div``, { top: null });
 

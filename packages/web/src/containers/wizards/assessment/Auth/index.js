@@ -6,7 +6,7 @@ import { query, withUser } from 'sly/web/services/api';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { CONSULTATION_REQUESTED, PROFILE_CONTACTED, PRICING_REQUEST, WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
-import AuthContainer from 'sly/web/services/auth/containers/AuthContainer';
+import AuthContainer from 'sly/common/services/auth/containers/AuthContainer';
 import userPropType from 'sly/common/propTypes/user';
 
 @withUser

@@ -19,7 +19,7 @@ import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/web/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/web/constants/notes';
 import { CLIENT_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 import { FAMILY_STAGE_NEW, FAMILY_STAGE_REJECTED } from 'sly/web/constants/familyDetails';
-import { AGENT_ND_ROLE, AGENT_ADMIN_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { AGENT_ND_ROLE, AGENT_ADMIN_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import clientPropType, { meta as clientMetaPropType } from 'sly/common/propTypes/client';
 import notePropType from 'sly/common/propTypes/note';
 import userPropType from 'sly/common/propTypes/user';
