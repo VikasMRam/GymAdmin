@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import get from 'lodash/get';
 import diff from 'deep-diff';
 
-import { getRelationship, prefetch, query, withUser } from 'sly/web/services/api';
+import { getRelationship, prefetch, withUser } from 'sly/web/services/api';
 import userPropType from 'sly/common/propTypes/user';
 import communityPropType from 'sly/common/propTypes/community';
 import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   SUMMARY,
   PROFILE,
-  DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH, ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
+  DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
 import DashboardCommunityDetailsPage from 'sly/web/components/pages/DashboardCommunityDetailsPage';
 import withBreakpoint from 'sly/web/components/helpers/breakpoint';

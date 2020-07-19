@@ -2,12 +2,13 @@ import { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { getColor } from './getColor';
+
 /**
  *
  * @param props
  * @returns {[]|string|string|*}
  */
-export const withColor = () => css` 
+export const withColor = () => css`
   ${ifProp('palette', css`
     color: ${getColor('palette', 'variation')}};
   `)}

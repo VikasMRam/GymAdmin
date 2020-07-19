@@ -6,8 +6,8 @@ import { prop } from 'styled-tools';
 
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { withBorder, withColor, withSpacing, withText } from 'sly/common/components/helpers';
 import { key, getThemePropType, getKey } from 'sly/web/components/themes';
-import { withBorder, withColor, withSpacing, withText } from 'sly/web/components/helpers';
 
 const iconSize = ({ size: s }) => {
   const textSize = getKey(`sizes.text.${s}`);
@@ -23,11 +23,11 @@ const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)
  * deprecated icon size
  */
 const Wrapper = styled.span`
-  ${withSpacing} 
+  ${withSpacing}
   ${withColor}
   ${withText}
   ${withBorder}
-  
+
   display: inline-flex;
   // sizes relative to set font-size
   vertical-align: top;

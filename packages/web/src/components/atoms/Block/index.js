@@ -8,7 +8,7 @@ import {
   withAlign,
   withSnap,
   withClamping,
-} from 'sly/web/components/helpers';
+} from 'sly/common/components/helpers';
 
 const Block = styled.div`
   ${withSpacing}

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { getThemePropType, size } from 'sly/web/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
-import { withColor } from 'sly/web/components/helpers';
+import { withColor } from 'sly/common/components/helpers';
 
 const times = (nr, fn) => Array.from(Array(nr).keys()).map((_, i) => fn(i));
 
