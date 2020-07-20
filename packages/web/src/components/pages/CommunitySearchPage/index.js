@@ -62,26 +62,6 @@ const FilterColumnWrapper = styled(Box)`
 const ImageButtonWrapper = pad(styled.div`
   position: relative;
   text-align: center;
-
-  height: 108px;
-  
-  img {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  a {
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  }
-
-  ${ifProp('isMapView', '', `
-    a {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  `)};
 `, 'large');
 
 const LegacyContent = pad(styled.div`
@@ -160,20 +140,17 @@ const CommunitySearchPage = ({
           <>
           <FilterColumnWrapper>
             <>
-              <ImageButtonWrapper isMapView={isMapView}>
-                {isMapView ? (
-                  <IconButton icon="list" to={listViewUrl} iconPalette="primary" ghost>
-                    View List
+              {isMapView ? (
+                <IconButton icon="list" to={listViewUrl} iconPalette="primary" ghost>
+                  View List
+                </IconButton>
+              ) : (
+                <Image lazy={false} src={assetPath('images/map-placeholder.png')} aspectRatio="16:9">
+                  <IconButton icon="map" to={mapViewUrl} iconPalette="primary" ghost>
+                    View Map
                   </IconButton>
-                  ) : (
-                    <>
-                      <Image src={assetPath('images/map-placeholder.png')} />
-                      <IconButton icon="map" iconSize="body" to={mapViewUrl} iconPalette="primary" ghost>
-                        View Map
-                      </IconButton>
-                    </>
-                )}
-              </ImageButtonWrapper>
+                </Image>
+              )}
               <StyledHr />
             </>
             <ResponsiveSidebar isOpen={areFiltersOpen} onCloseRequested={toggleFiltersOpen}>
