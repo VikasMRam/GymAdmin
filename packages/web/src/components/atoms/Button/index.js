@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
-import { bool, string, oneOf } from 'prop-types';
+import { bool, string, oneOf, object } from 'prop-types';
 import { ifProp, switchProp } from 'styled-tools';
+import { Link as RRLink } from 'react-router-dom';
 
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import { size, palette } from 'sly/web/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { withSpacing } from 'sly/web/components/helpers';
-import { Link } from 'sly/web/components/atoms';
+import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
+import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
+import { createRRAnchor } from 'sly/web/components/helpers/router';
+import { routes as routesPropType } from 'sly/web/propTypes/routes';
 
 const backgroundColor = ({
   ghost, transparent, selected, secondary, disabled,
@@ -156,52 +160,92 @@ const StyledButton = styled.button`
   }
 `;
 
-const withSendEvent = ({ onClick, event }) => {
+const RRLinkButton = createRRAnchor(StyledButton);
+
+const withSendEvent = (event, { onClick }) => {
   return {
     onClick: event ? (e) => {
       SlyEvent.getInstance().sendEvent(event);
-      return onClick(e);
+      return onClick && onClick(e);
     } : onClick,
   };
 };
 
-const Button = (props) => {
-  const linkProps = props.to || props.href
-    ? {
-      as: Link,
-      noHoverColorChange: !!(props.to || props.href),
+const getTarget = (href) => {
+  if (!href.match(/https?:\/\//)) {
+    return {};
+  }
+
+  return {
+    target: '_blank',
+    rel: 'noopener',
+  };
+};
+
+export default class Button extends Component {
+  static propTypes = {
+    disabled: bool,
+    ghost: bool,
+    secondary: bool,
+    transparent: bool,
+    palette: palettePropType,
+    foregroundPalette: palettePropType,
+    borderPalette: palettePropType,
+    borderVariation: variationPropType,
+    kind: oneOf(['jumbo', 'regular', 'tab', 'label', 'plain']),
+    selected: bool,
+    type: string,
+    to: string,
+    event: object,
+    href: string,
+  };
+
+  static defaultProps = {
+    palette: 'primary',
+    kind: 'regular',
+    type: 'button',
+    borderVariation: 'stroke',
+  };
+
+  static contextTypes = {
+    routes: routesPropType,
+  };
+
+  getProps() {
+    const { to, href: hrefprop, event, ...props } = this.props;
+    const { routes } = this.context;
+
+    if (to && isPathInRoutes(routes, to)) {
+      return {
+        ButtonComponent: RRLink,
+        ...props,
+        // flip the order on which we present the components
+        component: RRLinkButton,
+        to: addEventToUrl(to, event),
+      };
     }
-    : {};
-  return (
-    <StyledButton
-      {...props}
-      {...withSendEvent(props)}
-      {...linkProps}
-    />
-  );
-};
 
-Button.propTypes = {
-  disabled: bool,
-  ghost: bool,
-  secondary: bool,
-  transparent: bool,
-  palette: palettePropType,
-  foregroundPalette: palettePropType,
-  borderPalette: palettePropType,
-  borderVariation: variationPropType,
-  kind: oneOf(['jumbo', 'regular', 'tab', 'label', 'plain']),
-  selected: bool,
-  type: string,
-  to: string,
-  href: string,
-};
+    const href = to || hrefprop;
 
-Button.defaultProps = {
-  palette: 'primary',
-  kind: 'regular',
-  type: 'button',
-  borderVariation: 'stroke',
-};
+    if (href) {
+      return {
+        ButtonComponent: StyledButton,
+        ...props,
+        as: 'a',
+        href: addEventToUrl(href, event),
+        ...getTarget(href),
+      };
+    }
 
-export default Button;
+    return {
+      ButtonComponent: StyledButton,
+      ...props,
+      ...withSendEvent(event, props),
+    };
+  }
+
+  render() {
+    const { ButtonComponent, ...props } = this.getProps();
+    return <ButtonComponent {...props} />;
+  }
+}
