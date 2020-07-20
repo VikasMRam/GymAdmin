@@ -38,7 +38,7 @@ describe('BreadCrumb', () => {
 
     expect(ol).toHaveLength(1);
     expect(li).toHaveLength(items.length);
-    expect(link).toHaveLength(items.length);
+    expect(link).toHaveLength(items.length - 1);
   });
 
   it('renders with one item', () => {
@@ -50,6 +50,6 @@ describe('BreadCrumb', () => {
 
     expect(ol).toHaveLength(1);
     expect(li).toHaveLength(splicedItems.length);
-    expect(link).toHaveLength(splicedItems.length);
+    expect(link).toHaveLength(splicedItems.length - 1);
   });
 });
