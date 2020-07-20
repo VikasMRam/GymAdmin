@@ -5,7 +5,7 @@ import { string, bool, func } from 'prop-types';
 import { AGENT_STATUS_NAME_MAP } from 'sly/web/constants/agents';
 import { size, palette } from 'sly/web/components/themes';
 import cursor from 'sly/web/components/helpers/cursor';
-import { adminAgentPropType } from 'sly/web/propTypes/agent';
+import { adminAgentPropType } from 'sly/common/propTypes/agent';
 import pad from 'sly/web/components/helpers/pad';
 import { getReferralSentTimeText } from 'sly/web/services/helpers/communityReferral';
 import { copyToClipboard } from 'sly/web/services/helpers/utils';

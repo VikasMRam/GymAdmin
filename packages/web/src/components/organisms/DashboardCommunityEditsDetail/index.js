@@ -22,7 +22,7 @@ import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   PHOTOS,
 } from 'sly/web/constants/dashboardAppPaths';
-import communityPropType from 'sly/web/propTypes/community';
+import communityPropType from 'sly/common/propTypes/community';
 import * as editConfig from 'sly/web/services/edits/constants/community';
 import { textAlign } from 'sly/web/components/helpers/text';
 

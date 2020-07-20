@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import { createValidator, email, required } from 'sly/web/services/validation';
-import userPropType from 'sly/web/propTypes/user';
+import userPropType from 'sly/common/propTypes/user';
 import { EXIT_INTENT_ASK_QUESTIONS } from 'sly/web/services/api/constants';
 import ExitIntentQuestionForm from 'sly/web/components/organisms/ExitIntentQuestionForm';
 import Thankyou from 'sly/web/components/molecules/Thankyou';

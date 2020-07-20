@@ -3,8 +3,8 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/web/components/themes';
-import { variation as variationPropType } from 'sly/web/propTypes/variation';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { variation as variationPropType } from 'sly/common/propTypes/variation';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
 
 const getSize = type => p => size(type, p.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);

@@ -2,7 +2,7 @@ import React from 'react';
 import { bool, object } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import {
   createBooleanValidator,
   email,

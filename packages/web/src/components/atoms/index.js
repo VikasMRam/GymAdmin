@@ -20,6 +20,6 @@ export Map from './Map';
 export ClampedText from './ClampedText';
 export BoxChoiceTile from './BoxChoiceTile';
 export Logo from './Logo';
-export Badge from './Badge';
+export { Badge } from 'sly/common/components/atoms';
 export StickyFooter from './StickyFooter';
 export RichTextArea from './RichTextArea';

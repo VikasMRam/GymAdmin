@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { bool, func } from 'prop-types';
 
-import agentPropType from 'sly/web/propTypes/agent';
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import agentPropType from 'sly/common/propTypes/agent';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
 import PostConversionAdTileContainer from 'sly/web/containers/postConversion/AdTileContainer';
 import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';

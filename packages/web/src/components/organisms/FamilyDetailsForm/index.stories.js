@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 
 import FamilyDetailsForm from 'sly/web/components/organisms/FamilyDetailsForm';
-import AmalFrancis from 'sly/web/../private/storybook/sample-data/user-amal-francis.json';
-import SushanthRamakrishna from 'sly/web/../private/storybook/sample-data/user-sushanth-ramakrishna.json';
+import AmalFrancis from 'sly/storybook/sample-data/user-amal-francis.json';
+import SushanthRamakrishna from 'sly/storybook/sample-data/user-sushanth-ramakrishna.json';
 
 const timeToMove = [
   'Immediately',

@@ -12,7 +12,7 @@ import { Box, Table, THead, TBody, Tr, Heading } from 'sly/web/components/atoms'
 import Pagination from 'sly/web/components/molecules/Pagination';
 import Tabs from 'sly/web/components/molecules/Tabs';
 import Tab from 'sly/web/components/molecules/Tab';
-import clientPropType, { meta as clientMetaPropType } from 'sly/web/propTypes/client';
+import clientPropType, { meta as clientMetaPropType } from 'sly/common/propTypes/client';
 import { AGENT_DASHBOARD_FAMILIES_PATH, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED, WON } from 'sly/web/constants/dashboardAppPaths';
 import Th from 'sly/web/components/molecules/Th';
 import IconButton from 'sly/web/components/molecules/IconButton';

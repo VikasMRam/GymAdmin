@@ -4,7 +4,7 @@ import { ifProp } from 'styled-tools';
 import { oneOf, object } from 'prop-types';
 
 import { size } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import pad from 'sly/web/components/helpers/pad';
 import { textAlign } from 'sly/web/components/helpers/text';
 import fullWidth from 'sly/web/components/helpers/fullWidth';

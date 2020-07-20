@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/web/components/themes';
-import { adminCommunityPropType } from 'sly/web/propTypes/community';
+import { adminCommunityPropType } from 'sly/common/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/web/constants/dashboardAppPaths';
 import { Block, Button } from 'sly/web/components/atoms';

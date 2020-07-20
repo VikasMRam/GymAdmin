@@ -7,3 +7,13 @@ dist
 *.log
 node_modules
 coverage
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+junit.xml
+**/junit.xml
+test-results.xml
+**/test-results.xml

@@ -5,7 +5,7 @@ import { reduxForm } from 'redux-form';
 
 import { withPreventDefault } from 'sly/web/services/helpers/forms';
 import PartnerAgentProfileForm from 'sly/web/components/organisms/PartnerAgentProfileForm';
-import agent from 'sly/web/../private/storybook/sample-data/agent-linda-iwamota.json';
+import agent from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 
 const { info, status } = agent;
 const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;

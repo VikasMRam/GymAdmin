@@ -15,7 +15,7 @@ import { hideChatbox } from 'sly/web/config';
 import theme from 'sly/web/components/themes/default';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
 import { assetPath } from 'sly/web/components/themes';
-import { routes as routesPropType } from 'sly/web/propTypes/routes';
+import { routes as routesPropType } from 'sly/common/propTypes/routes';
 import Router from 'sly/web/components/molecules/Router';
 import ChatBoxContainer from 'sly/web/containers/ChatBoxContainer';
 import {

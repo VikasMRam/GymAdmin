@@ -10,7 +10,7 @@ import ConciergeController, {
 } from './ConciergeController';
 
 import { CONCIERGE } from 'sly/web/constants/modalType';
-import user from 'sly/web/../private/storybook/sample-data/client-pranesh-kumar.json';
+import user from 'sly/storybook/sample-data/client-pranesh-kumar.json';
 
 const { uuidAux } = user;
 

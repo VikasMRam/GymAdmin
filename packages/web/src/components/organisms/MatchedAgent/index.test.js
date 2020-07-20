@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
-import LindaIwamota from 'sly/web/../private/storybook/sample-data/agent-linda-iwamota.json';
+import LindaIwamota from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 
 const defaultProps = {
   agent: LindaIwamota,

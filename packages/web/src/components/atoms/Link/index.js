@@ -5,9 +5,9 @@ import { string, bool, func, object } from 'prop-types';
 import { ifNotProp } from 'styled-tools';
 
 import { palette } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { routes as routesPropType } from 'sly/web/propTypes/routes';
-import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { routes as routesPropType } from 'sly/common/propTypes/routes';
+import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 import { withColor, withText, withSpacing, withDisplay, withBorder, withZIndex, withClamping } from 'sly/web/components/helpers';
@@ -42,10 +42,7 @@ function isModifiedEvent(event) {
   return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 }
 
-// hack to avoid non html props passed down
-const A = styled.a``;
-
-export const LinkAnchor = React.forwardRef(({ navigate, onClick, ...rest }, ref) => {
+export const RRLinkAnchor = React.forwardRef(({ navigate, onClick, ...rest }, ref) => {
   const { target } = rest;
 
   const props = {
@@ -70,10 +67,10 @@ export const LinkAnchor = React.forwardRef(({ navigate, onClick, ...rest }, ref)
     },
   };
 
-  return <A ref={ref} {...props} />;
+  return <Anchor ref={ref} {...props} />;
 });
 
-LinkAnchor.propTypes = {
+RRLinkAnchor.propTypes = {
   navigate: func,
   onClick: func,
 };
@@ -105,8 +102,8 @@ export default class Link extends Component {
       return {
         ...props,
         // flip the order on which we present the components
-        as: RRLink,
-        component: LinkAnchor,
+        LinkComponent: RRLink,
+        component: RRLinkAnchor,
         to: addEventToUrl(to, event),
       };
     }
@@ -116,6 +113,7 @@ export default class Link extends Component {
       ? { target: '_blank', rel: 'noopener' }
       : {};
     return {
+      LinkComponent: Anchor,
       ...props,
       ...target,
       href: addEventToUrl(href, event),
@@ -123,7 +121,7 @@ export default class Link extends Component {
   }
 
   render() {
-    const props = this.checkPropsForLinks();
-    return <Anchor {...props} />;
+    const { LinkComponent, ...props } = this.checkPropsForLinks();
+    return <LinkComponent {...props} />;
   }
 }

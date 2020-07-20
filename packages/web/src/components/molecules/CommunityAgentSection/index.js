@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { func } from 'prop-types';
 
 import { size } from 'sly/web/components/themes';
-import agentPropType from 'sly/web/propTypes/agent';
+import agentPropType from 'sly/common/propTypes/agent';
 import { getAgentUrl } from 'sly/web/services/helpers/url';
 import { Icon, Block, Image, Link } from 'sly/web/components/atoms';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';

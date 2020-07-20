@@ -3,9 +3,9 @@ import { arrayOf, string, object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 
 import { prefetch, query, withUser } from 'sly/web/services/api';
-import clientPropType from 'sly/web/propTypes/client';
-import userPropType from 'sly/web/propTypes/user';
-import taskPropType from 'sly/web/propTypes/task';
+import clientPropType from 'sly/common/propTypes/client';
+import userPropType from 'sly/common/propTypes/user';
+import taskPropType from 'sly/common/propTypes/task';
 import { createValidator, required } from 'sly/web/services/validation';
 import { TASK_RELATED_ENTITY_TYPE, TASK_STATUS_NOT_STARTED } from 'sly/web/constants/tasks';
 import { TASK_RESOURCE_TYPE, USER_RESOURCE_TYPE, CLIENT_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';

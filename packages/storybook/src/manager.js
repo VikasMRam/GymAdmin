@@ -1,0 +1,15 @@
+import { addons } from '@storybook/addons';
+
+addons.setConfig({
+  /**
+   * display panel that shows addon configurations
+   * @type {Boolean}
+   */
+  showPanel: true,
+
+  /**
+   * where to show the addon panel
+   * @type {('bottom'|'right')}
+   */
+  panelPosition: 'bottom',
+});

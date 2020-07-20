@@ -4,8 +4,8 @@ import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 
 import { Box } from 'sly/web/components/atoms';
-import filterPropType from 'sly/web/propTypes/datatableFilter';
-import datatableColumnsPropType from 'sly/web/propTypes/datatableColumns';
+import filterPropType from 'sly/common/propTypes/datatableFilter';
+import datatableColumnsPropType from 'sly/common/propTypes/datatableColumns';
 import ButtonLink from 'sly/web/components/molecules/ButtonLink';
 import Field from 'sly/web/components/molecules/Field';
 import {

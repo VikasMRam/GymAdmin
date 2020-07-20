@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/web/services/validation';
-import userProptype from 'sly/web/propTypes/user';
+import userProptype from 'sly/common/propTypes/user';
 import { query, prefetch, getRelationship } from 'sly/web/services/api';
 import DashboardCommunityDetailsForm from 'sly/web/components/organisms/DashboardCommunityDetailsForm';
 import withUser from 'sly/web/services/api/withUser';

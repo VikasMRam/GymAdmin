@@ -4,7 +4,7 @@ import styled, { css, keyframes } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { Icon, Button } from 'sly/web/components/atoms';
 
 const fadeIn = keyframes`

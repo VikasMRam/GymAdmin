@@ -4,7 +4,7 @@ import { func, string } from 'prop-types';
 import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/web/components/themes';
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import borderRadius from 'sly/web/components/helpers/borderRadius';

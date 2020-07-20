@@ -4,7 +4,7 @@ import { func, string } from 'prop-types';
 import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/web/components/themes';
-import taskPropType from 'sly/web/propTypes/agent';
+import taskPropType from 'sly/common/propTypes/agent';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import borderRadius from 'sly/web/components/helpers/borderRadius';

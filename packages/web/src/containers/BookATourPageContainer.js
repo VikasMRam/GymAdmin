@@ -3,7 +3,7 @@ import { object, func, string, shape } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 
 import { prefetch, query, withAuth } from 'sly/web/services/api';
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import SlyEvent from 'sly/web/services/helpers/events';
 import BookATourPage from 'sly/web/components/pages/BookATourPage';
 import { TOUR_BOOKED } from 'sly/web/services/api/constants';

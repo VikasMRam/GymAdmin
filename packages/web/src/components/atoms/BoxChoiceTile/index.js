@@ -4,8 +4,8 @@ import styled, { css } from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
 
 import { palette, size } from 'sly/web/components/themes';
-import { spacing as spacingPropType } from 'sly/web/propTypes/spacing';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { spacing as spacingPropType } from 'sly/common/propTypes/spacing';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import Box from 'sly/web/components/atoms/Box';
 import Icon from 'sly/web/components/atoms/Icon';
 

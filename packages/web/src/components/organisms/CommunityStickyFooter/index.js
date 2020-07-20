@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { bool, string } from 'prop-types';
 
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import { size, palette, key } from 'sly/web/components/themes';
 import CommunityActions from 'sly/web/components/molecules/CommunityActions';
 import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';

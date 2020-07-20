@@ -6,7 +6,7 @@ import { bool, string, node, oneOf, object } from 'prop-types';
 
 import { size, key, palette } from 'sly/web/components/themes';
 import { Icon, ClampedText, Heading } from 'sly/web/components/atoms';
-import { weight as weightPropType } from 'sly/web/propTypes/weight';
+import { weight as weightPropType } from 'sly/common/propTypes/weight';
 
 const Section = styled.section`
   transition: padding-bottom ${key('transitions.default')};

@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import CommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
 import CommunityActions from 'sly/web/components/molecules/CommunityActions';
-import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 
 jest.mock('sly/web/containers/AskAgentQuestionContainer');

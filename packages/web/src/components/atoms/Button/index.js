@@ -3,12 +3,12 @@ import styled, { css } from 'styled-components';
 import { bool, string, oneOf } from 'prop-types';
 import { ifProp, switchProp } from 'styled-tools';
 
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { size, palette } from 'sly/web/components/themes';
-import { LinkAnchor } from 'sly/web/components/atoms/Link';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { withSpacing } from 'sly/web/components/helpers';
+import { Link } from 'sly/web/components/atoms';
 
 const backgroundColor = ({
   ghost, transparent, selected, secondary, disabled,
@@ -168,7 +168,7 @@ const withSendEvent = ({ onClick, event }) => {
 const Button = (props) => {
   const linkProps = props.to || props.href
     ? {
-      as: LinkAnchor,
+      as: Link,
       noHoverColorChange: !!(props.to || props.href),
     }
     : {};

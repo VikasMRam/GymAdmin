@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { oneOf, string } from 'prop-types';
-import { community as communityProptype } from 'sly/web/propTypes/community';
+import { community as communityProptype } from 'sly/common/propTypes/community';
 import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/web/components/themes';

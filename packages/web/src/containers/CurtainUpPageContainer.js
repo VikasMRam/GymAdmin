@@ -3,8 +3,8 @@ import dayjs from 'dayjs';
 import { arrayOf, object } from 'prop-types';
 
 import { prefetch } from 'sly/web/services/api';
-import eventPropType from 'sly/web/propTypes/event';
-import performerPropType from 'sly/web/propTypes/performer';
+import eventPropType from 'sly/common/propTypes/event';
+import performerPropType from 'sly/common/propTypes/performer';
 import CurtainUpPage from 'sly/web/components/pages/CurtainUpPage';
 
 @prefetch('events', 'getEvents', (req) => {

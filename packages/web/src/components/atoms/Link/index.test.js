@@ -4,7 +4,7 @@ import { Link as RRLink, Router, BrowserRouter } from 'react-router-dom';
 
 import Link, { Anchor } from 'sly/web/components/atoms/Link';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
-import { routes as routesPropType } from 'sly/web/propTypes/routes';
+import { routes as routesPropType } from 'sly/common/propTypes/routes';
 
 const { history } = new BrowserRouter();
 const context = { routes: [{ path: '/test', component: () => null }] };

@@ -6,8 +6,8 @@ import debounce from 'lodash/debounce';
 import { withRouter } from 'react-router';
 
 import { prefetch, withUser } from 'sly/web/services/api';
-import clientPropType from 'sly/web/propTypes/client';
-import taskPropType from 'sly/web/propTypes/task';
+import clientPropType from 'sly/common/propTypes/client';
+import taskPropType from 'sly/common/propTypes/task';
 import { TASK_STATUS_NOT_STARTED_CODE, TASK_STATUS_IN_PROGRESS_CODE } from 'sly/web/constants/tasks';
 import { getSearchParams } from 'sly/web/services/helpers/search';
 import RefreshRedirect from 'sly/web/components/common/RefreshRedirect';

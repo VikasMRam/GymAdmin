@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
 
 import { Block, Button } from 'sly/web/components/atoms';
 import DiscoverHomeTile, { StyledHeading }
@@ -11,7 +10,7 @@ const image =
 const title = 'test title';
 const description = 'test description';
 const buttonText = 'test buttonText';
-const onButtonClick = sinon.spy();
+const onButtonClick = jest.fn();
 
 const wrap = (props = {}) => shallow(<DiscoverHomeTile {...props} />);
 
@@ -55,6 +54,6 @@ describe('DiscoverHomeTile', () => {
       image, title, description, buttonText, onButtonClick,
     });
     wrapper.find(Button).simulate('click');
-    expect(onButtonClick.getCalls()).toHaveLength(1);
+    expect(onButtonClick).toHaveBeenCalled();
   });
 });

@@ -3,7 +3,7 @@ import { object, func } from 'prop-types';
 import get from 'lodash/get';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
-import userPropType, { uuidAux as uuidAuxPropType } from 'sly/web/propTypes/user';
+import userPropType, { uuidAux as uuidAuxPropType } from 'sly/common/propTypes/user';
 import { query } from 'sly/web/services/api';
 import prefetch from 'sly/web/services/api/prefetch';
 

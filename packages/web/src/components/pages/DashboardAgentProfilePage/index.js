@@ -3,8 +3,8 @@ import { string, bool, object } from 'prop-types';
 
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import PartnerAgentProfileFormContainer from 'sly/web/containers/PartnerAgentProfileFormContainer';
-import userPropType from 'sly/web/propTypes/user';
-import { adminAgentPropType } from 'sly/web/propTypes/agent';
+import userPropType from 'sly/common/propTypes/user';
+import { adminAgentPropType } from 'sly/common/propTypes/agent';
 
 const DashboardAgentProfilePage = ({ title, user, agent, rawAgent, isLoading }) => {
   return (

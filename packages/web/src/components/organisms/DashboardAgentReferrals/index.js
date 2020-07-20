@@ -6,7 +6,7 @@ import { generatePath } from 'react-router';
 import { size, palette } from 'sly/web/components/themes';
 import { Heading, Block, Button } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
-import clientPropType from 'sly/web/propTypes/client';
+import clientPropType from 'sly/common/propTypes/client';
 import DashboardAdminReferralAgentTile from 'sly/web/components/organisms/DashboardAdminReferralAgentTile';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/web/constants/dashboardAppPaths';
 

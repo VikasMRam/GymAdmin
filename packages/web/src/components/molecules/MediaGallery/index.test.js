@@ -4,7 +4,7 @@ import SwipeableViews from 'react-swipeable-views';
 
 import ThumbnailScroller from 'sly/web/components/molecules/ThumbnailScroller';
 import MediaGallery from 'sly/web/components/molecules/MediaGallery';
-import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => mount(<MediaGallery {...props} />);
 

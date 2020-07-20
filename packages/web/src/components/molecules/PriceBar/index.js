@@ -5,8 +5,8 @@ import isString from 'lodash/isString';
 
 import { size } from 'sly/web/components/themes';
 import { Bar, Block, ClampedText } from 'sly/web/components/atoms';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 
 const StyledBlock = styled(Block)`

@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { func, string, bool, object } from 'prop-types';
 
 import { size, palette } from 'sly/web/components/themes';
-import taskPropType from 'sly/web/propTypes/task';
+import taskPropType from 'sly/common/propTypes/task';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
