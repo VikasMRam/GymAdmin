@@ -42,10 +42,7 @@ function isModifiedEvent(event) {
   return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 }
 
-// hack to avoid non html props passed down
-const A = styled.a``;
-
-export const LinkAnchor = React.forwardRef(({ navigate, onClick, ...rest }, ref) => {
+export const RRLinkAnchor = React.forwardRef(({ navigate, onClick, ...rest }, ref) => {
   const { target } = rest;
 
   const props = {
@@ -70,10 +67,10 @@ export const LinkAnchor = React.forwardRef(({ navigate, onClick, ...rest }, ref)
     },
   };
 
-  return <A ref={ref} {...props} />;
+  return <Anchor ref={ref} {...props} />;
 });
 
-LinkAnchor.propTypes = {
+RRLinkAnchor.propTypes = {
   navigate: func,
   onClick: func,
 };
@@ -105,8 +102,8 @@ export default class Link extends Component {
       return {
         ...props,
         // flip the order on which we present the components
-        as: RRLink,
-        component: LinkAnchor,
+        LinkComponent: RRLink,
+        component: RRLinkAnchor,
         to: addEventToUrl(to, event),
       };
     }
@@ -116,6 +113,7 @@ export default class Link extends Component {
       ? { target: '_blank', rel: 'noopener' }
       : {};
     return {
+      LinkComponent: Anchor,
       ...props,
       ...target,
       href: addEventToUrl(href, event),
@@ -123,7 +121,7 @@ export default class Link extends Component {
   }
 
   render() {
-    const props = this.checkPropsForLinks();
-    return <Anchor {...props} />;
+    const { LinkComponent, ...props } = this.checkPropsForLinks();
+    return <LinkComponent {...props} />;
   }
 }
