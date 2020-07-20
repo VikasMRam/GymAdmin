@@ -8,7 +8,7 @@ import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import { size, palette } from 'sly/web/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { withSpacing } from 'sly/web/components/helpers';
-import Link from '../Link';
+import { Link } from 'sly/web/components/atoms';
 
 const backgroundColor = ({
   ghost, transparent, selected, secondary, disabled,
