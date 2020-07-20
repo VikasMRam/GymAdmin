@@ -25,7 +25,7 @@ const StyledNameCell = ({
   disabled, task, to, ...props
 }) => (
   <Td disabled={disabled} {...props}>
-    <ClampedText size={size('weight.medium')}>
+    <ClampedText>
       <Link to={to} {...props}>
         {task.title}
       </Link>
