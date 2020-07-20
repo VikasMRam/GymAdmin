@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import Button from 'sly/web/components/atoms/Button';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { LinkAnchor } from 'sly/web/components/atoms/Link';
+import { Link } from 'sly/web/components/atoms';
 
 const wrap = (props = {}) => shallow(<Button {...props} />);
 
@@ -40,13 +40,12 @@ describe('Button', () => {
 
   it('renders Link when href is passed in', () => {
     const wrapper = wrap({ href: 'test' });
-    expect(wrapper.prop('as')).toBe(LinkAnchor);
+    expect(wrapper.prop('as')).toBe(Link);
   });
 
   it('renders Link when to is passed in', () => {
     const wrapper = wrap({ to: 'test' });
-    console.log(wrapper.debug());
-    expect(wrapper.prop('as')).toBe(LinkAnchor);
+    expect(wrapper.prop('as')).toBe(Link);
   });
 
   it('sends event on click when one is provided', () => {
