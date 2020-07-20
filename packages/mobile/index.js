@@ -1,11 +1,8 @@
 import { AppRegistry } from 'react-native';
 
 import { name as appName } from './app.json';
+import App from './src/App';
 
-const RootComponent = __DEV__ && process.env.IS_STORYBOOK ?
-  // eslint-disable-next-line import/order
-  require('sly/storybook/mobile').default :
-  // eslint-disable-next-line import/order
-  require('./src/App').default;
+import StorybookApp from 'sly/storybook/mobile';
 
-AppRegistry.registerComponent(appName, () => RootComponent);
+AppRegistry.registerComponent(appName, () => __DEV__ && process.env.IS_STORYBOOK ? StorybookApp : App);

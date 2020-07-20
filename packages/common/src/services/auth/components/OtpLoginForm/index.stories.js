@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import OtpLoginForm from 'sly/web/services/auth/components/OtpLoginForm/index';
+import OtpLoginForm from 'sly/common/services/auth/components/OtpLoginForm/index';
 import { withPreventDefault } from 'sly/web/services/helpers/forms';
 
 const OtpLoginFormContainer = reduxForm({

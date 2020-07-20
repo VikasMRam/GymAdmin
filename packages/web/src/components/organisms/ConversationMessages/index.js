@@ -83,8 +83,8 @@ const ConversationMessages = ({
       if (!addedNewMarker && isAfter(message.createdAt, lastMessageReadAt) && ((nextMessage &&
         isAfter(nextMessage.createdAt, lastMessageReadAt)) || messages.length === 1)) {
         hrProps.badgeText = 'New';
-        hrProps.palette = 'warning';
-        hrProps.variation = 'base';
+        hrProps.background = 'warning';
+        hrProps.backgroundVariation = 'base';
         hrProps.hrRef = newMessageRef;
         addedNewMarker = true;
       }
@@ -93,8 +93,8 @@ const ConversationMessages = ({
     if (lastMessageReadAt && !addedNewMarker && isAfter(message.createdAt, lastMessageReadAt)) {
       const hrProps = {
         badgeText: 'New',
-        palette: 'warning',
-        variation: 'base',
+        background: 'warning',
+        backgroundVariation: 'base',
         hrRef: newMessageRef,
       };
       addedNewMarker = true;

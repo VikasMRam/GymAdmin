@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import ResetPasswordForm from 'sly/web/services/auth/components/ResetPasswordForm/index';
+import ResetPasswordForm from 'sly/common/services/auth/components/ResetPasswordForm/index';
 import { withPreventDefault } from 'sly/web/services/helpers/forms';
 
 const ResetPasswordFormContainer = reduxForm({

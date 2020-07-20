@@ -84,14 +84,14 @@ const AssignedToCell = pad(mobileOnly(StyledTd, css`
 `), 'regular');
 AssignedToCell.displayName = 'AssignedToCell';
 
-const getColor = ({ priority }) => {
-  switch(priority) {
-    case "Urgent":
-      return palette('danger','base');
-    case "High":
-      return palette('warning','base');
+const getBadgeBackground = (priority) => {
+  switch (priority) {
+    case 'Urgent':
+      return 'danger';
+    case 'High':
+      return 'warning';
     default:
-      return palette('slate','base');
+      return 'slate';
   }
 };
 
@@ -101,12 +101,6 @@ const PriorityCell = pad(mobileOnly(StyledTd, css`
 `), 'regular');
 
 PriorityCell.displayName = 'PriorityCell';
-
-const StyledBadge = styled(Badge)`
-  text-transform: uppercase;
-  color: ${palette('white','base')};
-  background-color: ${ props => getColor(props)};
-`;
 
 const TaskRowCard = ({ task, onTaskClick }) => {
   const {
@@ -133,7 +127,7 @@ const TaskRowCard = ({ task, onTaskClick }) => {
       </StageCell>
       <PriorityCell>
         <span>Priority</span>
-        <StyledBadge badgePalette="warning" palette="white" priority={priority}>{priority}</StyledBadge>
+        <Badge background={getBadgeBackground(priority)} palette="white">{priority.toUpperCase()}</Badge>
       </PriorityCell>
       <AssignedToCell>
         <span>Assigned to</span>

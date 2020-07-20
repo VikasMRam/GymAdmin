@@ -7,7 +7,7 @@ import fullWidth from 'sly/web/components/helpers/fullWidth';
 import cursor from 'sly/web/components/helpers/cursor';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { Heading, Button, Block } from 'sly/web/components/atoms';
-import { roleNames } from 'sly/web/constants/roles';
+import { roleNames } from 'sly/common/constants/roles';
 import { textAlign } from 'sly/web/components/helpers/text';
 
 const StyledHeading = textAlign(pad(Heading));

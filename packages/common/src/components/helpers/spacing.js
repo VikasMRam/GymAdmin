@@ -34,10 +34,8 @@ export const withPad = ({ pad } = {}) => {
   });
 };
 
-const withSpacing = () => css`
+export const withSpacing = () => css`
   ${withPadding}
   ${withMargin}
   ${withPad}
 `;
-
-export default withSpacing;
