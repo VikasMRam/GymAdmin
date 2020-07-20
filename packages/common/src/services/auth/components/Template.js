@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 
 export const Wrapper = styled.section`
   width: 100%;

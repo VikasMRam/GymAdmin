@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import AgentSummary from 'sly/web/components/molecules/AgentSummary';
 import LindaIwamota from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 

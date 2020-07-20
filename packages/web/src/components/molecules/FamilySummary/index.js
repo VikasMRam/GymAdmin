@@ -4,7 +4,7 @@ import { string, bool } from 'prop-types';
 
 import pad from 'sly/web/components/helpers/pad';
 import cursor from 'sly/web/components/helpers/cursor';
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import clientPropType from 'sly/common/propTypes/client';
 import { Box, Heading, Label, Block, Link, Hr } from 'sly/web/components/atoms';
 import Role from 'sly/web/components/common/Role';

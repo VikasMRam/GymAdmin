@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { func, string, node, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Block, Box, Button, Heading } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
 import { community as communityProptype } from 'sly/common/propTypes/community';

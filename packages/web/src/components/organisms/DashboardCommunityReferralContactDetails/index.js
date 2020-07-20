@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { func, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Block, Hr, Button } from 'sly/web/components/atoms';
 import DashboardAdminReferralCommunityTile from 'sly/web/components/organisms/DashboardAdminReferralCommunityTile';
 import pad from 'sly/web/components/helpers/pad';

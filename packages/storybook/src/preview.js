@@ -9,8 +9,8 @@ import { ThemeProvider } from 'styled-components';
 
 import { addAppWrapper } from './preview.common';
 
+import theme from 'sly/common/components/themes/default';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
-import theme from 'sly/web/components/themes/default';
 
 const decoratedAddAppWrapper = story => addAppWrapper(story, (
   <Helmet>

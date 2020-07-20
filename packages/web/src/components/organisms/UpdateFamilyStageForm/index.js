@@ -3,7 +3,7 @@ import { func, string, arrayOf, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { palette, size } from 'sly/web/components/themes';
+import { palette, size } from 'sly/common/components/themes';
 import {
   FAMILY_STAGE_ORDERED,
   FAMILY_STAGE_WON,

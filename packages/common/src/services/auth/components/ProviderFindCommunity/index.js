@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { func, bool, string, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
-import { getAutocompleteValues } from 'sly/web/services/datatable/helpers';
-import { normalizeResponse } from 'sly/web/services/api';
+import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { Heading, Button, Block, Link } from 'sly/web/components/atoms';
 import Field from 'sly/web/components/molecules/Field';

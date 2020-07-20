@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { bool, func } from 'prop-types';
-import { prop, ifProp } from 'styled-tools';
+import { ifProp } from 'styled-tools';
 
-import { size, palette, columnWidth } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { adminAgentPropType } from 'sly/common/propTypes/agent';
 import { Heading, Badge, Button, Span } from 'sly/web/components/atoms';
 

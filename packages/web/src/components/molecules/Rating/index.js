@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { number, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { getThemePropType, size } from 'sly/web/components/themes';
+import { getThemePropType, size } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { withColor } from 'sly/common/components/helpers';

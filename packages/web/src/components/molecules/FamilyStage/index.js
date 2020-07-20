@@ -4,7 +4,7 @@ import { func, string, bool } from 'prop-types';
 
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import clientPropType from 'sly/common/propTypes/client';
 import userPropType from 'sly/common/propTypes/user';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';

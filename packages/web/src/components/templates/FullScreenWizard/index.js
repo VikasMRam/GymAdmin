@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import classes from 'classnames';
 import { string } from 'prop-types';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 
 export const FullScreenWizard = styled.div`

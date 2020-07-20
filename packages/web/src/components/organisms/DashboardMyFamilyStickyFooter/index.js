@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { arrayOf, bool, string, func, object } from 'prop-types';
 import { ifNotProp } from 'styled-tools';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Button, StickyFooter } from 'sly/web/components/atoms';
 import Stage from 'sly/web/components/molecules/Stage';
 

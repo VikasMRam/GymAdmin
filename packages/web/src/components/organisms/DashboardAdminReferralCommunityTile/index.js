@@ -4,7 +4,7 @@ import { string, func, bool } from 'prop-types';
 import { ifProp, ifNotProp } from 'styled-tools';
 
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { adminCommunityPropType } from 'sly/common/propTypes/community';
 import { getHasContract, getIsCCRC, getIsSNF } from 'sly/web/services/helpers/community';
 import { buildAddressDisplay, getReferralSentTimeText } from 'sly/web/services/helpers/communityReferral';

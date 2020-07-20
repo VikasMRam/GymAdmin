@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import { func, string, bool } from 'prop-types';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import taskPropType from 'sly/common/propTypes/task';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';

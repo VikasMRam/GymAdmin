@@ -1,11 +1,7 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { makeColor } from './color';
-
-export { colorIndex } from './color';
+import { makeColor } from 'sly/common/components/themes/color';
 
 const theme = {};
-
-// tood: convert all to numbers
 
 // Color variations are:
 // whole filler stroke background of white tint
@@ -13,54 +9,26 @@ const theme = {};
 // dark is 15% more of black tint in the palette
 // not all of the variations should be used,
 // see below comments or in storybook
-// DO NOT MODIFY the following without asking Jared#
+// DO NOT MODIFY the following without asking Jared
 theme.palette = {
-  slate      : makeColor('#2a333f', ['dark', 'base', 'filler', 'stroke']),
-  primary    : makeColor('#387F7E', ['dark', 'base', 'filler', 'stroke', 'background']),
-  secondary  : makeColor('#186dc5', ['dark', 'base', 'filler', 'stroke', 'background']),
-  white      : makeColor('#ffffff', ['base']),
-  danger     : makeColor('#dc3133', ['dark', 'base', 'filler', 'stroke']),
-  warning    : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke']),
-  green      : makeColor('#4fb75f', ['dark', 'base', 'filler', 'stroke']),
-  grey       : makeColor('#70767E', ['dark', 'base', 'filler', 'stroke', 'background']),
-  yellow     : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke', 'background']),
-  pink       : makeColor('#9a268e', ['dark', 'base', 'filler', 'stroke', 'background']),
-  purple     : makeColor('#6d27ca', ['dark', 'base', 'filler', 'stroke', 'background']),
-  orange     : makeColor('#F99106', ['dark', 'base', 'filler', 'stroke', 'background']),
-  razzmatazz : makeColor('#F40767', ['dark', 'base', 'filler', 'stroke', 'background']),
+  slate      : makeColor('#2a333f'),
+  primary    : makeColor('#1a7473'),
+  secondary  : makeColor('#56c4c2'),
+  white      : makeColor('#ffffff'),
+  danger     : makeColor('#dc3133'),
+  warning    : makeColor('#f3c150'),
+  green      : makeColor('#4fb75f'),
+  grey       : makeColor('#70767E'),
+  yellow     : makeColor('#f3c150'),
+  magenta    : makeColor('#6d27ca'),
+  orange     : makeColor('#F99106'),
+  razzmatazz : makeColor('#F40767'),
 };
-
-// if (isDev && isBrowser && !isTest) console.table(makeColorTable(theme.palette));
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',
   pre    : 'Consolas, Liberation Mono, Menlo, Courier, monospace',
   quote  : 'Georgia, serif',
-};
-
-theme.defaultImageSources = [
-  320,
-  375,
-  416,  // our mobile
-  768,  // our tablet
-  1080, // our tablet
-  1200, // our max
-];
-
-const addImageSource = (source) => {
-  const srcs = [...theme.defaultImageSources];
-  let index = srcs.findIndex(x => x > source);
-  if (index === -1) index = srcs.length;
-  srcs.splice(index, 0, source);
-  return srcs;
-};
-
-theme.imageFormats = {
-  heroGallery: { sizes: '(max-width: 1079px) 100vw, 680px', sources: addImageSource(680) },
-  fullscreenGallery: { sizes: '(max-width: 1199px) 100vw, 1200px' },
-  thumbGallery: { sizes: '129px', sources: [[129, 86], [258, 172]] },
-  searchResults: { sizes: '(max-width: 767px) calc(100vw - 1.5rem), 270px', sources: addImageSource(270) },
-  howItWorks: { sizes: '(max-width: 549px) calc(100vw - 2rem), calc(550px - 2rem)', sources: addImageSource(550) },
 };
 
 theme.sizes = {
@@ -74,13 +42,8 @@ theme.sizes = {
     mobile           : '416px',
     tablet           : '768px',
     laptop           : '1080px',
-    desktop           : '1280px',
+    desktop          : '1280px',
   },
-
-  // images: {
-  //   hero: { width: 1080, height: 512 },
-  //   column: { width: }
-  // },
 
   // only for tablet and wider
   layout: {
@@ -166,57 +129,48 @@ theme.sizes = {
   },
 
   border: {
-    regular: '1px',   // 1px
-    large  : '2px',   // 2px
-    xLarge : '3px',   // 3px
-    xxLarge: '4px',   // 4px
+    regular: '0.062rem',   // 1px
+    large  : '0.125rem',   // 2px
+    xLarge : '0.1875rem',  // 3px
+    xxLarge: '0.250rem',   // 4px
   },
 
   spacing: {
-    nano    : '1px',   //  1px
-    tiny    : '2px',   //  2px
-    small   : '4px',   //  4px
-    regular : '8px',   //  8px
-    medium  : '12px',  // 12px
-    large   : '16px',  // 16px
-    xLarge  : '24px',  // 24px
-    xxLarge : '32px',  // 32px
-    xxxLarge: '48px',  // 48px
-    huge    : '64px',  // 64px
-    massive : '72px',  // 72px
-  },
-
-  icon: {
-    tiny   : '0.750rem',   // 12px
-    small  : '1.000rem',   // 16px
-    caption: '1.250rem',   // 20px for use with caption text
-    regular: '1.500rem',   // 24px
-    large  : '2.250rem',   // 36px
-    xLarge : '3.000rem',   // 48px
-    huge   : '4.000rem',   // 64px
-    xxLarge: '4.500rem',   // 72px
+    nano    : '0.062rem',   //  1px
+    tiny    : '0.125rem',   //  2px
+    small   : '0.250rem',   //  4px
+    regular : '0.500rem',   //  8px
+    medium  : '0.750rem',   // 12px
+    large   : '1.000rem',   // 16px
+    xLarge  : '1.500rem',   // 24px
+    xxLarge : '2.000rem',   // 32px
+    xxxLarge: '3.000rem',   // 48px
+    huge    : '4.000rem',   // 64px
+    massive : '4.500rem',   // 72px
   },
 
   text: {
-    micro     : '10px',   // 10px
-    tiny      : '12px',   // 12px
-    caption   : '14px',   // 14px
-    body      : '16px',   // 16px
-    subtitle  : '20px',   // 20px
-    title     : '28px',   // 28px
-    hero      : '36px',   // 36px
-    superHero : '48px',   // 48px
+    micro     : '0.625rem',   // 10px
+    tiny      : '0.750rem',   // 12px
+    caption   : '0.875rem',   // 14px
+    body      : '1.000rem',   // 16px
+    subtitle  : '1.250rem',   // 20px
+    title     : '1.750rem',   // 28px
+    hero      : '2.250rem',   // 36px
+    superHero : '3.000rem',   // 48px
+    xxLarge   : '4.500rem',      // 72px
   },
 
   lineHeight: {
-    micro    : '1.2',    // 12px/10px
-    tiny    : '1.167',
-    caption : '1.429',
-    body    : '1.5',
-    subtitle: '1.3',
-    title   : '1.28',
-    hero    : '1.33',
-    minimal : '1.125',
+    micro    : '1.2',    // 12px / 10px
+    tiny     : '1.167',  // 14px / 12px
+    caption  : '1.429',  // 20px / 14px
+    body     : '1.5',    // 24px / 16px
+    subtitle : '1.3',    // 26px / 20px
+    title    : '1.29',   // 36px / 28px
+    hero     : '1.33',   // 48px / 36px
+    superHero:'1.33',    // 64px / 48px
+    xxLarge  : '1.0',    // 72px / 72px
   },
 
   weight: {
@@ -268,13 +222,6 @@ theme.sizes = {
         height: '30rem', // 480px
       },
     },
-  },
-
-  home: {
-    companiesWeTrust: {
-      width: '33.625rem',   // 538px
-    },
-    introMargin: '4.8125rem', // 77px
   },
 
   filtersMenu: {
@@ -353,46 +300,6 @@ theme.sizes = {
     },
   },
 
-  map: {
-    propertyDetail: {
-      small: {
-        width : '343px',   // 343px
-        height: '198px',   // 198px
-      },
-      regular: {
-        width : '696px',   // 696px
-        height: '401px',   // 401px
-      },
-      large: {
-        width : '1056px',   // 1056px
-        height: '607px',    // 607px
-      },
-    },
-    search: {
-      tiny: {
-        width : '13.375rem',   // 214px
-        height: '7rem',        // 112px
-      },
-      small: {
-        width : '343px',   // 343px
-        height: '198px',   // 198px
-      },
-      regular: {
-        width : '696px',   // 696px
-        height: '800px',   // 800px
-      },
-      large: {
-        width : '1056px',   // 1056px
-        height: '1056px',   // 1056px
-      },
-    },
-  },
-
-  carousel: {
-    mobile: '15.625rem',   // 250px
-    tablet: '28.750rem',   // 460px
-  },
-
   thumbnail: {
     width : '8.0625rem',   // 129px
     height: '5.375rem',    // 86px
@@ -401,33 +308,6 @@ theme.sizes = {
   dashboard: {
     actionFooterBottomMargin: '3.0rem',
   },
-};
-
-theme.transitions = {
-  fast   : '0.1s ease-out',
-  default: '0.2s ease-out',
-  slow   : {
-    in   : '.4s ease-in',
-    out  : '.4s ease-out',
-    inOut: '.4s ease-in-out',
-  },
-};
-
-theme.animations = {
-  default: '0.2s',
-  slow   : '0.4s',
-};
-
-theme.zIndexes = {
-  modal: {
-    overlay             : 10000,
-    galleryLayoutHeading: 10001,
-  },
-  stickySections     : 10000,
-  header             : 10001,
-  searchSuggestions  : 10002,
-  notifications      : 10003,
-  savedCommunityPopup: 10005,
 };
 
 export default theme;

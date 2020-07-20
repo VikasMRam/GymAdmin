@@ -3,7 +3,7 @@ import { string, bool, node, number } from 'prop-types';
 import styled, { css, keyframes } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { Icon, Button } from 'sly/web/components/atoms';
 

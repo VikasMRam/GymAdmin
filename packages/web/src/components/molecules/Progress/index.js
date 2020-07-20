@@ -3,7 +3,7 @@ import { arrayOf, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Block } from 'sly/web/components/atoms';
 import { textAlign } from 'sly/web/components/helpers/text';
 

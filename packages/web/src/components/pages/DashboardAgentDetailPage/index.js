@@ -18,7 +18,7 @@ import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import { adminAgentPropType } from 'sly/common/propTypes/agent';
 import userPropType from 'sly/common/propTypes/user';
 import notePropType from 'sly/common/propTypes/note';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import pad from 'sly/web/components/helpers/pad';
 import { userIs } from 'sly/web/services/helpers/role';

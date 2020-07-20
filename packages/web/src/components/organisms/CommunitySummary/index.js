@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
 import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES, CONTINUING_CARE_RETIREMENT_COMMUNITY, CCRC, ACTIVE_ADULT } from 'sly/web/constants/tags';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { startingWith } from 'sly/common/components/helpers';
 import pad from 'sly/web/components/helpers/pad';

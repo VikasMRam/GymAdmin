@@ -8,7 +8,7 @@ import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { routes as routesPropType } from 'sly/common/propTypes/routes';
 import { withSpacing } from 'sly/common/components/helpers';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';

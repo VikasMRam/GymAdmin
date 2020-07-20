@@ -2,8 +2,7 @@ import { css } from 'styled-components';
 
 import commonStyles from './styles.common';
 
-// todo: all these sly/common
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 
 export default css`
   ${commonStyles}

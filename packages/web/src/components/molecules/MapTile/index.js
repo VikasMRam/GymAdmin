@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette, key } from 'sly/web/components/themes';
+import { size, palette, key } from 'sly/common/components/themes';
 import { Link, ClampedText } from 'sly/web/components/atoms';
 import Rating from 'sly/web/components/molecules/Rating';
 

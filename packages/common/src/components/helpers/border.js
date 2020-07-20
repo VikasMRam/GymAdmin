@@ -3,7 +3,7 @@ import { css } from 'styled-components';
 import { getColor } from './getColor';
 import { getCardinalValues } from './getCardinalValues';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 
 const getBorderColor = (p, v) => getColor(p, v, 'slate.lighter-90');
 

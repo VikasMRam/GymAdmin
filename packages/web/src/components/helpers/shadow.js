@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { setDisplayName } from 'sly/web/components/helpers';
 import transition from 'sly/web/components/helpers/transition';
 

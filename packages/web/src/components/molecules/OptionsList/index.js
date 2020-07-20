@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, shape, string, func } from 'prop-types';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Hr, Link } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 

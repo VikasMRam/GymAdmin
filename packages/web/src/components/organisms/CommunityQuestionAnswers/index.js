@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { string, arrayOf, func } from 'prop-types';
 
 import { content as contentPropType } from 'sly/common/propTypes/content';
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import cursor from 'sly/web/components/helpers/cursor';
 import { Hr, Block } from 'sly/web/components/atoms';
@@ -28,7 +28,7 @@ CursorBlock.displayName = 'CursorBlock';
 const PaddedBlock = pad(Block);
 
 const StyledButton = styled(Button)`
-  margin-top: ${size('spacing.xLarge')};  
+  margin-top: ${size('spacing.xLarge')};
   width: 100%;
 `;
 

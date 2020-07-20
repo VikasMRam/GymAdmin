@@ -4,13 +4,14 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette, columnWidth } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
+import { columnWidth } from 'sly/web/components/themes';
 import userPropType from 'sly/common/propTypes/user';
 import clientPropType from 'sly/common/propTypes/client';
 import pad from 'sly/web/components/helpers/pad';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import Role from 'sly/web/components/common/Role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE, AGENT_ADMIN_ROLE } from 'sly/common/constants/roles';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import {
   SOURCE_OPTIONS,
   FAMILY_STAGE_WON,

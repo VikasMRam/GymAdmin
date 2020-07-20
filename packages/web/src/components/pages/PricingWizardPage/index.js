@@ -8,7 +8,7 @@ import { Redirect } from 'react-router-dom';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import userPropType from 'sly/common/propTypes/user';
 import agentPropType from 'sly/common/propTypes/agent';
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import {
   FullScreenWizard,

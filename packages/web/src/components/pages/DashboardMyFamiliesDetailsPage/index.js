@@ -24,7 +24,7 @@ import clientPropType, { meta as clientMetaPropType } from 'sly/common/propTypes
 import notePropType from 'sly/common/propTypes/note';
 import userPropType from 'sly/common/propTypes/user';
 import conversationPropType from 'sly/common/propTypes/conversation/conversation';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { getStageDetails } from 'sly/web/services/helpers/stage';
 import { isReferralSent } from 'sly/web/services/helpers/client';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';

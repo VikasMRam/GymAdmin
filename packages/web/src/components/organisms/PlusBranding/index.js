@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { size, palette, assetPath } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Heading, ResponsiveImage, Icon, Paragraph } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import PlusBadge from 'sly/web/components/molecules/PlusBadge';

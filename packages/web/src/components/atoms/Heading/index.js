@@ -6,7 +6,7 @@ import { text as textPropType } from 'sly/common/propTypes/text';
 import { weight as weightPropType } from 'sly/common/propTypes/weight';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 
 const fontSize = p => size('text', p.size || p.level);
 const lineHeight = p => size('lineHeight', p.size || p.level);

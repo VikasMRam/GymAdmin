@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { getKey } from 'sly/web/components/themes';
+import { getKey } from 'sly/common/components/themes';
 
 // uses props size and weight
 const getSize = (type, prop = 'size') => (props) => {

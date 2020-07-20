@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import messagePropType from 'sly/common/propTypes/conversation/conversationMessage';
 import participantPropType from 'sly/common/propTypes/conversation/conversationParticipant';
 import pad from 'sly/web/components/helpers/pad';

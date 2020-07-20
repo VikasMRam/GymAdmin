@@ -23,7 +23,7 @@ const clear = color => color || '';
 const names = gradients.map(({ variant }) => variant);
 
 // eslint-disable-next-line no-return-assign
-export const colorIndex = names.reduce((c, name, i) => (c[name] = i, c), {});
+export const colorIndex = names.reduce((c, name, i) => ((c[name] = i, c)), {});
 
 export function makeColor(base) {
   const color = Color(base);
@@ -38,7 +38,7 @@ export function makeColorTable(palette) {
   return Object.entries(palette)
     .reduce((cumul, [name, colors]) => {
       // eslint-disable-next-line no-return-assign
-      cumul[name] = names.reduce((c, name) => (c[name] = clear(colors[name]), c), {});
+      cumul[name] = names.reduce((c, name) => (c[name] = (clear(colors[name]), c)), {});
       return cumul;
     }, {});
 }

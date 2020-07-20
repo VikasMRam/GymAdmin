@@ -2,7 +2,7 @@ import { css } from 'styled-components';
 
 import { getCardinalValues } from './getCardinalValues';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 
 export const withPadding = ({ noPadding, ...props } = {}) => {
   // TODO: padding="0" instead

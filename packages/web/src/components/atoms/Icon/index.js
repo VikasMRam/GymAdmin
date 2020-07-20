@@ -6,8 +6,8 @@ import { prop } from 'styled-tools';
 
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { key, getThemePropType, getKey } from 'sly/common/components/themes';
 import { withBorder, withColor, withSpacing, withText } from 'sly/common/components/helpers';
-import { key, getThemePropType, getKey } from 'sly/web/components/themes';
 
 const iconSize = ({ size: s }) => {
   const textSize = getKey(`sizes.text.${s}`);

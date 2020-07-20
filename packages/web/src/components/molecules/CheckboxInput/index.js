@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { string, func, oneOfType, bool, arrayOf, object } from 'prop-types';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import Checkbox from 'sly/web/components/molecules/Checkbox';
 import { Span } from 'sly/web/components/atoms';
 import cursor from 'sly/web/components/helpers/cursor';

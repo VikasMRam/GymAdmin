@@ -1,15 +1,15 @@
 import React from 'react';
 import { object, func } from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import DashboardAgentsIndexSectionContainer from 'sly/web/containers/dashboard/agents/DashboardAgentsIndexSectionContainer';
 import { Datatable } from 'sly/web/services/datatable';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import Role from 'sly/web/components/common/Role';
 import IconButton from 'sly/web/components/molecules/IconButton';
-import { Heading, Hr } from 'sly/web/components/atoms';
+import { Heading } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
 
 const Wrapper = styled.div`

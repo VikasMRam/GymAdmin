@@ -3,7 +3,7 @@ import { bool, func, arrayOf, shape, string, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette, key } from 'sly/web/components/themes';
+import { size, palette, key } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import cursor from 'sly/web/components/helpers/cursor';
 import { Icon, Hr, Link, Button } from 'sly/web/components/atoms';

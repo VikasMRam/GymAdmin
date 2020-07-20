@@ -3,7 +3,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { string, func, shape, arrayOf, oneOf } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, key } from 'sly/web/components/themes';
+import { size, key } from 'sly/common/components/themes';
 import Notification from 'sly/web/components/molecules/Notification';
 
 const transitionName = 'slide';

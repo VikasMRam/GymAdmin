@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { sortableElement, sortableHandle } from 'react-sortable-hoc';
 import { bool, func } from 'prop-types';
 
+import { size, palette } from 'sly/common/components/themes';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import { imagePropType } from 'sly/common/propTypes/gallery';
 import Icon from 'sly/web/components/atoms/Icon';
-import { size, palette } from 'sly/web/components/themes';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import HelpBubble from 'sly/web/components/form/HelpBubble';
 import Link from 'sly/web/components/atoms/Link';
@@ -19,15 +19,15 @@ const DragHandle = sortableHandle(styled(Icon)`
 
 const Wrapper = sortableElement(styled.div`
   pointer-events: auto !important;
-  
+
   & > .drag-handle:hover {
     cursor: grab;
   }
-  
+
   body > & > .drag-handle:hover {
     cursor: grabbing;
   }
-  
+
   display: flex;
   align-items: center;
   height: 4rem;

@@ -2,7 +2,7 @@ import React from 'react';
 import { any, object, shape, string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { upTo, withBorder, withText } from 'sly/common/components/helpers';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import Box from 'sly/web/components/atoms/Box';

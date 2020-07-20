@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
 import { host } from 'sly/web/config';
-import { size, palette, gridColumns, assetPath, getKey } from 'sly/web/components/themes';
+import { size, palette, getKey } from 'sly/common/components/themes';
+import { gridColumns, assetPath } from 'sly/web/components/themes';
 import { ALSeoCities, ALSeoStates } from 'sly/web/services/helpers/homepage';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';

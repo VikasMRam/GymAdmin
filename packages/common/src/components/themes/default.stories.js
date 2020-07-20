@@ -2,10 +2,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
+import { prop } from 'styled-tools';
 
-import { key } from 'sly/web/components/themes';
+import { key } from 'sly/common/components/themes';
+import theme from 'sly/common/components/themes/default';
+// todo: common heading after the atom is refactored
 import { Heading } from 'sly/web/components/atoms';
-import theme from 'sly/web/components/themes/default';
 
 const oldPalette = {
   slate    : ['#384c57'],
@@ -41,7 +43,7 @@ const Colors = styled(({ colors, className }) => (
 `;
 
 const Color = styled.div`
-  background: ${p => p.color};
+  background: ${prop('color')};
   width: 3rem;
   height: 3rem;
   margin-right: 1rem;
@@ -61,7 +63,6 @@ const Color = styled.div`
 const types = ['darker-30', 'darker-15', 'base', 'lighter-30', 'lighter-60', 'lighter-90', 'lighter-95'];
 
 const pickColors = colors => types.reduce((cumul, type) => {
-  console.log('colors', colors);
   // eslint-disable-next-line no-param-reassign
   cumul[type] = colors[type];
   return cumul;
@@ -91,6 +92,7 @@ storiesOf('Theme', module)
         .map(([key, colors]) => (
           <>
             <Heading level="subtitle">{key}</Heading>
+            {/* eslint-disable-next-line no-return-assign, no-sequences */}
             <Colors colors={colors.reduce((c, v, i) => (c[i] = v, c), {})} />
           </>
         ))

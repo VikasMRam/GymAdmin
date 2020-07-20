@@ -4,7 +4,8 @@ import { object, arrayOf } from 'prop-types';
 import queryString from 'query-string';
 
 import { isBrowser } from 'sly/web/config';
-import { size, gridColumns } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
+import { gridColumns } from 'sly/web/components/themes';
 import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/constants/wizards/assessment';
 import { getPaginationData } from 'sly/web/services/helpers/pagination';
 import pad from 'sly/web/components/helpers/pad';

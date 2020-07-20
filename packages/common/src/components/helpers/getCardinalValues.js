@@ -1,4 +1,4 @@
-import { getKey } from 'sly/web/components/themes';
+import { getKey } from 'sly/common/components/themes';
 
 const getAutoValuesArray = (props, prefix) => {
   const ary = props[prefix];

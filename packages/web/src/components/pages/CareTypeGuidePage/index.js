@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { array, func, object } from 'prop-types';
 
 import { host } from 'sly/web/config';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { getBreadCrumbsForGuides } from 'sly/web/services/helpers/url';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';

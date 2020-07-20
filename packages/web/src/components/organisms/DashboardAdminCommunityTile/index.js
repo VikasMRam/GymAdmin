@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { parseDate, durationInS } from 'sly/web/services/helpers/date';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 import { buildPriceList } from 'sly/web/services/helpers/pricing';
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { adminCommunityPropType } from 'sly/common/propTypes/community';
 import { Heading, Link, Span } from 'sly/web/components/atoms';
 import { getHasContract, getIsCCRC, getIsSNF } from 'sly/web/services/helpers/community';
