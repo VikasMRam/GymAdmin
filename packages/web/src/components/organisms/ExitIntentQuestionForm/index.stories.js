@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import ExitIntentQuestionForm from './index';
+import ExitIntentQuestionForm from '.';
 
 import Modal from 'sly/web/components/molecules/Modal';
 import { withPreventDefault } from 'sly/common/services/helpers/forms';

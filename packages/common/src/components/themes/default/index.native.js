@@ -4,9 +4,9 @@ import theme from './index.common';
 import { remToPx } from 'sly/common/components/themes';
 import { objectMap } from 'sly/common/services/helpers/utils';
 
-const convertValueToRem = val =>
-  typeof val === 'object' ? objectMap(val, convertValueToRem) : remToPx(val);
+const convertValueToPx = val =>
+  typeof val === 'object' ? objectMap(val, convertValueToPx) : `${remToPx(val)}px`;
 
-theme.sizes = objectMap(theme.sizes, convertValueToRem);
+theme.sizes = objectMap(theme.sizes, convertValueToPx);
 
 export default theme;

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import SignupForm from './';
+import SignupForm from '.';
 
 import { withPreventDefault } from 'sly/common/services/helpers/forms';
 

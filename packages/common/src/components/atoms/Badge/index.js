@@ -1,13 +1,16 @@
+
 import styled from 'styled-components';
 
-import styles  from './styles';
-import props  from './props';
+import props from './props';
 
-const Badge = styled.div`
-  ${styles}
+import { size } from 'sly/common/components/themes';
+import { Block } from 'sly/common/components/atoms';
+
+const Badge = styled(Block)`
+  display: inline-flex;
+  align-items: center;
+  padding: ${size('spacing.tiny')} ${size('spacing.regular')};
 `;
-
-Badge.propTypes = props.propTypes;
 
 Badge.defaultProps = props.defaultProps;
 

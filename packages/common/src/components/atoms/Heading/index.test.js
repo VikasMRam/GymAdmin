@@ -1,9 +1,9 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
-import Heading from 'sly/web/components/atoms/Heading';
+import Heading from '.';
 
-const wrap = (props = {}) => mount(<Heading {...props} />);
+const wrap = (props = {}) => shallow(<Heading {...props} />);
 
 it('renders children when passed in', () => {
   const wrapper = wrap({ children: 'test' });

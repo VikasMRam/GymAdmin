@@ -4,3 +4,5 @@ export const objectMap = (obj, fn) =>
       ([k, v], i) => [k, fn(v, k, i)],
     ),
   );
+
+export const isString = str => typeof str === 'string' || str instanceof String;

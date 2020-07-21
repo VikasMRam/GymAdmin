@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityManagerRegisterForm from 'sly/web/services/auth/components/CommunityManagerRegisterForm/index';
+import CommunityManagerRegisterForm from '.';
 
 const handleSubmit = jest.fn();
 const defaultProps = {

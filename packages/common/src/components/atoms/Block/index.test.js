@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Block from 'sly/web/components/atoms/Block';
+import Block from '.';
 
 const wrap = (props = {}) => shallow(<Block {...props} />);
 
-describe('Block', () => {
+describe('Block|Web', () => {
   it('renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBe(true);

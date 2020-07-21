@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Block from 'sly/web/components/atoms/Block';
+import Block from '.';
 
-storiesOf('Atoms|Block', module)
+storiesOf('Common/Atoms/Block', module)
   .add('default', () => (
     <Block>
       Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.

@@ -1,21 +1,17 @@
-import React from 'react';
 import styled from 'styled-components/native';
 
-import styles  from './styles';
-import { textStyles } from './styles.common';
 import props  from './props';
 
-const StyledView = styled.View`
-  ${styles}
+import { size } from 'sly/common/components/themes';
+import { Block } from 'sly/common/components/atoms';
+
+const Badge = styled(Block)`
+  alignSelf: flex-start;
+  paddingTop: ${size('spacing.tiny')};
+  paddingBottom: ${size('spacing.tiny')};
+  paddingRight: ${size('spacing.regular')};
+  paddingLeft: ${size('spacing.regular')};
 `;
-
-const StyledText = styled.Text`
-  ${textStyles}
-`;
-
-const Badge = props => <StyledView {...props}><StyledText {...props} /></StyledView>;
-
-Badge.propTypes = props.propTypes;
 
 Badge.defaultProps = props.defaultProps;
 

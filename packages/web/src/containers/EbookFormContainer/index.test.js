@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import { BrowserRouter } from 'react-router-dom';
 
-import EbookFormContainer from './index';
+import EbookFormContainer from '.';
 
 import api from 'sly/web/services/api/apiInstance';
 

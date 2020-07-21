@@ -7,12 +7,15 @@ import theme from './default';
 
 export { key, font } from 'styled-theme';
 
-export const size = (...args) => styledThemeKey(['sizes', ...args].join('.'));
+export function size(...args) {
+  return styledThemeKey(['sizes', ...args].join('.'));
+}
 
-export const remToPx = (rem, suffix = '') =>
-  rem.includes('px') ? rem : `${rem.replace('rem', '') * 16}${suffix}`;
+export function remToPx(rem) {
+  return rem.includes('px') || rem.includes('%') ? rem : rem.replace('rem', '') * 16;
+}
 
-export const palette = (...args) => {
+export function palette(...args) {
   if (args.length === 1 && typeof args[0] === 'string') {
     // eslint-disable-next-line no-param-reassign
     args = args[0].split('.');
@@ -22,13 +25,15 @@ export const palette = (...args) => {
     last = colorIndex[last];
   }
   return styledPalette(...[...args, last]);
-};
+}
 
-export const getKey = key =>
+export function getKey(key) {
   // https://github.com/diegohaz/styled-tools/blob/master/src/prop.js#L11 -
   // this internally uses lodash get(https://lodash.com/docs#get) which is to getting
   // object keys by specified path
-  prop(key)(theme);
+  return prop(key)(theme);
+}
 
-export const getThemePropType = path =>
-  oneOf(Object.keys(getKey(`sizes.${path}`)));
+export function getThemePropType(path) {
+  return oneOf(Object.keys(getKey(`sizes.${path}`)));
+}

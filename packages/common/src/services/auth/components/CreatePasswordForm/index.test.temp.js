@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import CreatePasswordForm from 'sly/web/services/auth/components/CreatePasswordForm/index';
+import CreatePasswordForm from '.';
 
 const handleSubmit = jest.fn();
 const defaultProps = {

@@ -5,7 +5,7 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import RetentionPopup from './index';
+import RetentionPopup from '.';
 
 const showModal = jest.fn();
 const mockStore = configureStore([]);

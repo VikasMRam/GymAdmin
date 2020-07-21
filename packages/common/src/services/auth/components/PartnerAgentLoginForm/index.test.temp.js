@@ -1,16 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import LoginForm from 'sly/web/services/auth/components/LoginForm/index';
+import PartnerAgentLoginForm from '.';
 
 const handleSubmit = jest.fn();
 const defaultProps = {
   handleSubmit,
 };
 
-const wrap = (props = {}) => shallow(<LoginForm {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<PartnerAgentLoginForm {...defaultProps} {...props} />);
 
-describe('LoginForm', () => {
+describe('PartnerAgentLoginForm', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ childred: 'test' });
     expect(wrapper.contains('test')).toBe(false);
@@ -47,7 +47,7 @@ describe('LoginForm', () => {
     const onRegisterClick = jest.fn();
     const wrapper = wrap({ onRegisterClick });
 
-    wrapper.find('Link').simulate('click');
+    wrapper.find('Register').simulate('click');
     expect(onRegisterClick).toHaveBeenCalled();
   });
 });
