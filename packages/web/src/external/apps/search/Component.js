@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { func, shape, string } from 'prop-types';
 
 import { size } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import pad from 'sly/web/components/helpers/pad';
 import { Heading, Hr } from 'sly/web/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';

@@ -3,8 +3,8 @@ import { string, shape } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { prop } from 'styled-tools';
 
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { element as elementPropType } from 'sly/web/propTypes/element';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { element as elementPropType } from 'sly/common/propTypes/element';
 import { size, palette } from 'sly/web/components/themes';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 

@@ -22,7 +22,7 @@ import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   PHOTOS,
 } from 'sly/web/constants/dashboardAppPaths';
-import communityPropType from 'sly/web/propTypes/community';
+import communityPropType from 'sly/common/propTypes/community';
 import * as editConfig from 'sly/web/services/edits/constants/community';
 import { textAlign } from 'sly/web/components/helpers/text';
 
@@ -31,7 +31,7 @@ StyledButton.displayName = 'StyledButton';
 
 const Warning = pad(styled(Block)`
   background-color: ${palette('warning.filler')};
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
   text-align: center;
   padding: ${size('spacing.large')};
 `, 'xLarge');

@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { string, node, bool } from 'prop-types';
 
 import { size, palette } from 'sly/web/components/themes';
-import agentPropType from 'sly/web/propTypes/agent';
+import agentPropType from 'sly/common/propTypes/agent';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import { Heading, Box, Block, Link, Button } from 'sly/web/components/atoms';

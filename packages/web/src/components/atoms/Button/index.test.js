@@ -1,10 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Link } from 'react-router-dom';
 
 import Button from 'sly/web/components/atoms/Button';
 import SlyEvent from 'sly/web/services/helpers/events';
 
-const wrap = (props = {}) => shallow(<Button {...props} />);
+const wrap = (props = {}, context) => shallow(<Button {...props} />, context);
 
 describe('Button', () => {
   const originalSendEvent = SlyEvent.getInstance().sendEvent;
@@ -39,12 +40,15 @@ describe('Button', () => {
 
   it('renders Link when href is passed in', () => {
     const wrapper = wrap({ href: 'test' });
-    expect(wrapper.find('StyledLink')).toHaveLength(1);
+    expect(wrapper.prop('as')).toBe('a');
   });
 
   it('renders Link when to is passed in', () => {
-    const wrapper = wrap({ to: 'test' });
-    expect(wrapper.find('StyledLink')).toHaveLength(1);
+    const wrapper = wrap({ to: '/test' }, { context: { routes: [{
+      component: () => {},
+      path: '/test',
+    }] } });
+    expect(wrapper.type()).toBe(Link);
   });
 
   it('sends event on click when one is provided', () => {

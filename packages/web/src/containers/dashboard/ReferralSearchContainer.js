@@ -4,10 +4,10 @@ import pick from 'lodash/pick';
 import { arrayOf, func, oneOf, object } from 'prop-types';
 
 import { normalizeResponse, query } from 'sly/web/services/api';
-import { adminCommunityPropType } from 'sly/web/propTypes/community';
-import { adminAgentPropType } from 'sly/web/propTypes/agent';
-import userPropType from 'sly/web/propTypes/user';
-import clientPropType from 'sly/web/propTypes/client';
+import { adminCommunityPropType } from 'sly/common/propTypes/community';
+import { adminAgentPropType } from 'sly/common/propTypes/agent';
+import userPropType from 'sly/common/propTypes/user';
+import clientPropType from 'sly/common/propTypes/client';
 import { newProvider, newParentClient, newContact, newSlyEntity } from 'sly/web/constants/payloads/client';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import DashboardCommunityReferrals from 'sly/web/components/organisms/DashboardCommunityReferrals';

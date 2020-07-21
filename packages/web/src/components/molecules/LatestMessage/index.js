@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
 
-import messagePropType from 'sly/web/propTypes/conversation/conversationMessage';
+import messagePropType from 'sly/common/propTypes/conversation/conversationMessage';
 import { palette } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { Box, Block, ClampedText } from 'sly/web/components/atoms';

@@ -16,4 +16,4 @@ storiesOf('Molecules|Avatar', module)
   .add('with picturePath', () => <Avatar user={{ name, picture: picturePath }} />)
   .add('with no picture', () => <Avatar user={{ name }} />)
   .add('with no picture and palette', () => <Avatar user={{ name }} palette="slate" />)
-  .add('with no picture and size', () => <Avatar user={{ name }} size="small" />);
+  .add('with no picture and size', () => <Avatar user={{ name }} size="body" />);

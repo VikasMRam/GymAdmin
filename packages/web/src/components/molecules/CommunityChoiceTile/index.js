@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { bool, func } from 'prop-types';
 
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import { size, palette } from 'sly/web/components/themes';
 import { Heading } from 'sly/web/components/atoms';
 import Rating from 'sly/web/components/molecules/Rating';

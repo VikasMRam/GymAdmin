@@ -1,20 +1,16 @@
 # CircleCI 2.1 Config Overview: https://discuss.circleci.com/t/circleci-2-1-config-overview/26057
-# Node orb: https://circleci.com/orbs/registry/orb/circleci/node
 version: 2.1
-
-orbs:
-  node: circleci/node@1.1.2
-  cypress: cypress-io/cypress@1
 
 jobs:
   build:
     docker:
-      - image: circleci/node:8.12 # though we use 8.9 only 8.12 has npm that supports npm ci
+      - image: circleci/node:12.16.3
 
-    working_directory: ~/project/packages/web
+    working_directory: ~/project
 
     environment:
-      TEST_RESULTS: test-results
+      - TEST_RESULTS_DIR: test-results
+      - PACKAGES_NODE_MODULES_CACHE_DIR: packages-node_modules
 
     steps:
       - checkout:
@@ -22,63 +18,95 @@ jobs:
 
       - run:
           name: Setup dirs
-          command: mkdir -p $TEST_RESULTS
+          command: mkdir -p $TEST_RESULTS_DIR
 
-      - node/with-cache:
-          cache-key: package-lock.json
-          cache-version: v5
-          use-strict-cache: true
-          include-branch-in-cache-key: false
-          dir: ~/project/packages/web/node_modules
-          steps:
-            - run:
-                name: Install deps
-                command: |
-                  if [ ! -d node_modules ]; then
-                    npm ci
-                  else
-                    echo "node_modules from cache exist. So skipping install."
-                  fi
+      - run:
+          name: Generate packages lock files cache key
+          command: cat packages/*/package-lock.json package-lock.json >> packages-lock-cache-key.txt
 
-            - run:
-                name: Packages security audit
-                command: |
-                  if [[ -z "$CI_PULL_REQUEST" ]]; then
-                    echo "Doing audit..."
-                    if [[ -n $(npm audit | grep -E "(High | Critical)" -B3 -A10) ]]; then
-                      exit 1
-                    fi
-                  else
-                    echo "Not a commit build skipping audit"
-                  fi
+      - restore_cache:
+          key: cache-v7-{{ arch }}-{{ .Branch }}-{{ checksum "packages-lock-cache-key.txt" }}
 
-            - run:
-                name: JavaScript Linter
-                command: npm run lint -- --format junit -o "$TEST_RESULTS/lint/js-lint-results.xml"
+      - run:
+          name: Restore packages node_modules
+          command: |
+            if [ -d "$PACKAGES_NODE_MODULES_CACHE_DIR" ]; then
+              for p in $(ls "$PACKAGES_NODE_MODULES_CACHE_DIR"); do
+                FROM="$PACKAGES_NODE_MODULES_CACHE_DIR/$p/node_modules"
+                TO="packages/$p"
 
-            - run:
-                name: JS Test Suite
-                command: |
-                  export JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml"
-                  npm test -- --ci --maxWorkers=6
+                if [ -d "$FROM" ]; then
+                  echo "Copying $p node_modules"
+                  cp -R $FROM $TO
+                fi
+              done
+            fi
 
-      # - persist_to_workspace:
-      #     root: /home/circleci
-      #     paths:
-      #       - project
-      #       - .cache
+      - run:
+          name: Install deps
+          command: |
+            if [ ! -d node_modules ]; then
+              npm ci
+            else
+              echo "node_modules from cache exist. So skipping install."
+            fi
+
+      - run:
+          name: Packages security audit
+          command: |
+            if [[ -z "$CI_PULL_REQUEST" ]]; then
+              echo "Doing audit..."
+              if [[ -n $(npm audit | grep -E "(High | Critical)" -B3 -A10) ]]; then
+                exit 1
+              fi
+            else
+              echo "Not a commit build skipping audit"
+            fi
+
+      - run:
+          name: JavaScript Linter
+          command: npm run lint
+
+      - run:
+          name: JS Test Suite
+          command: |
+            export JEST_JUNIT_OUTPUT_DIR="$PWD/$TEST_RESULTS_DIR/junit"
+            npm test -- -- -- --ci -w=4
+
+      - run:
+          name: Prepare packages node_modules for caching
+          command: |
+            mkdir -p $PACKAGES_NODE_MODULES_CACHE_DIR
+            for p in $(ls packages); do
+              FROM="packages/$p/node_modules"
+              TO="$PACKAGES_NODE_MODULES_CACHE_DIR/$p"
+
+              if [ -d "$FROM" ]; then
+                echo "Copying $p node_modules"
+                mkdir -p $TO
+                cp -R $FROM $TO
+              fi
+            done
+
+      - save_cache:
+          key: cache-v7-{{ arch }}-{{ .Branch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+            - ~/project/node_modules
+            - ~/project/packages-node_modules
 
       - store_test_results:
-          path: test-results
+          path: ~/project/test-results
 
       - store_artifacts:
-          path: test-results
+          path: ~/project/test-results
 
   deploy:
     docker:
       - image: circleci/python:2.7
 
-    working_directory: ~/project/packages/web
+    working_directory: ~/project
 
     steps:
       - run:
@@ -88,8 +116,6 @@ jobs:
               echo "Skipping Deployment since this is not a Sly Master Build"
               circleci step halt
             fi
-            # remove checkout dir as the first step is not checkout the dir path will be created
-            rm -rf ~/project
 
       - checkout:
           path: ~/project
@@ -153,13 +179,23 @@ jobs:
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#66d3e4"
 
       - run:
+          name: Remove packages that are not required
+          command: |
+            export not_required=("mobile")
+
+            for i in "${not_required[@]}"; do
+              if [ -d "packages/$i" ]; then
+                echo "Removing packages/$i"
+                rm -rf "packages/$i"
+              fi
+            done
+
+      - run:
           name: Deploy to EB
           command: |
             echo "Deploying $VERSION to $EB_ENV"
-            # do an eb init as now eb config is in projet's sub folder
-            eb init
             eb use $EB_ENV
-            export DEPLOY_FAILED=$(eb deploy $EB_ENV --timeout 60 -v --staged -l $VERSION | tee /dev/tty | grep -c "ERROR")
+            export DEPLOY_FAILED=$(eb deploy $EB_ENV --timeout 60 -v -l $VERSION | tee /dev/tty | grep -c "ERROR")
 
             if [ "$DEPLOY_FAILED" -gt 0 ]; then
               exit 1
@@ -187,7 +223,7 @@ jobs:
 
   e2e:
     docker:
-      - image: circleci/node:8.12 # though we use 8.9 only 8.12 has npm that supports npm ci
+      - image: circleci/node:12.16.3
       - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-db:latest
         environment:
           POSTGRES_DB: slydev
@@ -230,11 +266,26 @@ jobs:
           ## this enables colors in the output
           TERM: xterm
 
-    working_directory: ~/project/packages/web
+    environment:
+      - PACKAGES_NODE_MODULES_CACHE_DIR: packages-node_modules
+
+    working_directory: ~/project
 
     steps:
       - checkout:
           path: ~/project
+
+      - run:
+          name: Remove packages that are not required
+          command: |
+            export not_required=("mobile")
+
+            for i in "${not_required[@]}"; do
+              if [ -d "packages/$i" ]; then
+                echo "Removing packages/$i"
+                rm -rf "packages/$i"
+              fi
+            done
 
       # - run:
       #     name: Clone SlyApi
@@ -262,82 +313,89 @@ jobs:
           working_directory: ~/project/packages/web/e2e
           background: true
 
-      - node/with-cache:
-          cache-key: package-lock.json
-          cache-version: v4
-          use-strict-cache: true
-          include-branch-in-cache-key: false
-          steps:
-            - run:
-                name: Install deps
-                command: |
-                  if [ ! -d node_modules ]; then
-                    npm ci
-                  else
-                    echo "node_modules from cache exist. So skipping install."
-                  fi
+      - run:
+          name: Generate packages lock files cache key
+          command: cat packages/*/package-lock.json packages/web/e2e/package-lock.json package-lock.json >> packages-lock-cache-key.txt
 
-            - run:
-                name: npm run dev
-                command: |
-                  npm run dev
-                background: true
+      - restore_cache:
+          key: e2e-cache-v7-{{ arch }}-{{ .Branch }}-{{ checksum "packages-lock-cache-key.txt" }}
 
-            # - run:
-            #     command: npx cypress verify
+      - run:
+          name: Restore packages node_modules
+          command: |
+            if [ -d "$PACKAGES_NODE_MODULES_CACHE_DIR" ]; then
+              for p in $(ls "$PACKAGES_NODE_MODULES_CACHE_DIR"); do
+                FROM="$PACKAGES_NODE_MODULES_CACHE_DIR/$p/node_modules"
+                TO="packages/$p"
 
-            - restore_cache:
-                working_directory: ~/project/packages/web/e2e
-                key: cache-v2-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
+                if [ -d "$FROM" ]; then
+                  echo "Copying $p node_modules"
+                  cp -R $FROM $TO
+                fi
+              done
+            fi
 
-            - run:
-                name: Installing Cypress deps
-                command: sudo apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+      - run:
+          name: Install deps
+          command: |
+            if [ ! -d node_modules ]; then
+              npm ci
+            else
+              echo "node_modules from cache exist. So skipping install."
+            fi
 
-            - run:
-                name: Install e2e deps
-                working_directory: ~/project/packages/web/e2e
-                command: |
-                  if [ ! -d node_modules ]; then
-                    npm ci
-                  else
-                    echo "node_modules from cache exist. So skipping install."
-                  fi
+      - run:
+          name: npm run dev
+          command: npm run start:web
+          background: true
 
-            - run:
-                name: Waiting for Local Go to be up and running
-                command: npx wait-on http-get://localhost:8080/v0/ping
+      - run:
+          name: Installing Cypress deps
+          command: sudo apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 
-            - run:
-                name: Curl whether API is accessible
-                command: curl http://www.lvh.me/v0/ping
+      - run:
+          name: Install e2e deps
+          working_directory: ~/project/packages/web/e2e
+          command: |
+            if [ ! -d node_modules ]; then
+              npm ci
+            else
+              echo "node_modules from cache exist. So skipping install."
+            fi
 
-            - run:
-                name: Waiting for Local React to be up and running
-                command: npx wait-on http://localhost:8000
+      - run:
+          name: Waiting for Local Go to be up and running
+          command: npx wait-on http-get://localhost:8080/v0/ping
 
-            - save_cache:
-                working_directory: ~/project/packages/web/e2e
-                key: cache-v2-{{ arch }}-{{ .Branch }}-{{ checksum "package-lock.json" }}
-                paths:
-                  - ~/.npm
-                  - ~/.cache
-                  - ~/project/packages/web/e2e/node_modules
+      - run:
+          name: Curl whether API is accessible
+          command: curl http://www.lvh.me/v0/ping
 
-            - run:
-                name: Run Cypress tests
-                working_directory: ~/project/packages/web/e2e
-                command: |
-                  npx cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec "cypress/integration/**/*"
+      - run:
+          name: Waiting for Local React to be up and running
+          command: npx wait-on http://localhost:8000
 
-            - store_test_results:
-                path: e2e/cypress/results
+      - run:
+          name: Run Cypress tests
+          working_directory: ~/project/packages/web/e2e
+          command: npx cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec "cypress/integration/**/*"
 
-            - store_artifacts:
-                path: e2e/cypress/videos
+      - save_cache:
+          key: e2e-cache-v7-{{ arch }}-{{ .Branch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+            - ~/project/node_modules
+            - ~/project/packages-node_modules
 
-            - store_artifacts:
-                path: e2e/cypress/screenshots
+      - store_test_results:
+          path: ~/project/packages/web/e2e/cypress/results
+
+      - store_artifacts:
+          path: ~/project/packages/web/e2e/cypress/videos
+
+      - store_artifacts:
+          path: ~/project/packages/web/e2e/cypress/screenshots
 
 # REFERENCE CODE for OPENVPN
 

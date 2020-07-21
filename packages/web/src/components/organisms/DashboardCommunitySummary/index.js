@@ -1,6 +1,6 @@
 import React from 'react';
 
-import communityPropType from 'sly/web/propTypes/community';
+import communityPropType from 'sly/common/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
 import styled from 'styled-components';
 import { size } from 'sly/web/components/themes';

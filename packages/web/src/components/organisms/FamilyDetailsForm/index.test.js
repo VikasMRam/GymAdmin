@@ -3,9 +3,9 @@ import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
 import FamilyDetailsForm from 'sly/web/components/organisms/FamilyDetailsForm';
-import AmalFrancis from 'sly/web/../private/storybook/sample-data/user-amal-francis.json';
-import SushanthRamakrishna from 'sly/web/../private/storybook/sample-data/user-sushanth-ramakrishna.json';
-import PraneshKumar from 'sly/web/../private/storybook/sample-data/client-pranesh-kumar.json';
+import AmalFrancis from 'sly/storybook/sample-data/user-amal-francis.json';
+import SushanthRamakrishna from 'sly/storybook/sample-data/user-sushanth-ramakrishna.json';
+import PraneshKumar from 'sly/storybook/sample-data/client-pranesh-kumar.json';
 
 const timeToMove = [
   'Immediately',

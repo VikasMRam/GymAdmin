@@ -26,7 +26,7 @@ import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionF
 
 const Warning = pad(styled(Block)`
   background-color: ${palette('warning.filler')};
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
   padding: ${size('spacing.large')};
 `, 'xLarge');
 Warning.displayName = 'Warning';

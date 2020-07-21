@@ -31,7 +31,7 @@ const Notification = ({
     {closeable &&
       <IconButton
         icon="close"
-        iconSize="small"
+        iconsize="body"
         transparent
         onClick={onClose}
         palette={closeButtonPalette}

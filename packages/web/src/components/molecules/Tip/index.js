@@ -3,8 +3,8 @@ import { string, node } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { Icon, Block } from 'sly/web/components/atoms';
 
 

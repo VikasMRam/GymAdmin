@@ -3,8 +3,8 @@ import { object, arrayOf, func, string } from 'prop-types';
 import { generatePath } from 'react-router';
 import { branch } from 'recompose';
 
-import conversationPropType from 'sly/web/propTypes/conversation/conversation';
-import userPropType from 'sly/web/propTypes/user';
+import conversationPropType from 'sly/common/propTypes/conversation/conversation';
+import userPropType from 'sly/common/propTypes/user';
 import { CONVERSATION_PARTICIPANT_TYPE_USER } from 'sly/web/constants/conversations';
 import { prefetch, withUser } from 'sly/web/services/api';
 import { FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH, DASHBOARD_ACCOUNT_PATH } from 'sly/web/constants/dashboardAppPaths';

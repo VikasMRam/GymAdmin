@@ -9,7 +9,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import { getExperiment } from 'sly/web/store/selectors';
 import { ExperimentContext } from 'sly/web/services/experiments/components/Context';
 import withUser from 'sly/web/services/api/withUser';
-import { uuidAux as uuidAuxPropType } from 'sly/web/propTypes/user';
+import { uuidAux as uuidAuxPropType } from 'sly/common/propTypes/user';
 
 const mapStateToProps = (state, ownProps) => {
   const { name } = ownProps;

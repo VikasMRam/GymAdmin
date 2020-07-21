@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import AgentLinda from 'sly/web/../private/storybook/sample-data/agent-linda-iwamota.json';
+import AgentLinda from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 import DashboardAdminReferralAgentTile from 'sly/web/components/organisms/DashboardAdminReferralAgentTile';
 
 const bottomActionOnClick = action('bottomActionOnClick');

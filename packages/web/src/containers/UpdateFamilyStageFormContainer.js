@@ -8,8 +8,8 @@ import dayjs from 'dayjs';
 import isBoolean from 'lodash/isBoolean';
 
 import { query, getRelationship, invalidateRequests, withUser } from 'sly/web/services/api';
-import clientPropType from 'sly/web/propTypes/client';
-import userPropType from 'sly/web/propTypes/user';
+import clientPropType from 'sly/common/propTypes/client';
+import userPropType from 'sly/common/propTypes/user';
 import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
 import {
   FAMILY_STATUS_ACTIVE,

@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link as RRLink } from 'react-router-dom';
-import { string, bool, object } from 'prop-types';
-import { ifNotProp } from 'styled-tools';
+import { string, object } from 'prop-types';
 
-import { palette } from 'sly/web/components/themes';
 import { palette as palettePropType } from 'sly/web/propTypes/palette';
 import { routes as routesPropType } from 'sly/web/propTypes/routes';
 import { variation as variationPropType } from 'sly/web/propTypes/variation';
 import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
-import { withColor, withText, withSpacing, withDisplay, withBorder, withZIndex } from 'sly/web/components/helpers';
+import { withColor, withText, withSpacing, withDisplay, withBorder, withZIndex, withClamping } from 'sly/web/components/helpers';
+import { createRRAnchor } from 'sly/web/components/helpers/router';
 
 // eslint-disable-next-line jsx-a11y/anchor-has-content
 export const Anchor = styled.a`
@@ -19,6 +18,7 @@ export const Anchor = styled.a`
   ${withText}
   ${withBorder}
   ${withZIndex}
+  ${withClamping}
   
   &, &:active {
     ${withColor} 
@@ -27,15 +27,15 @@ export const Anchor = styled.a`
   text-decoration: none;
 
   &:hover {
-    color: ${ifNotProp('noHoverColorChange', palette('filler'))};
     cursor: pointer;
   }
 
- 
   &:focus {
     outline: none;
   }
 `;
+
+export const RRLinkAnchor = createRRAnchor(Anchor);
 
 export default class Link extends Component {
   static propTypes = {
@@ -43,7 +43,6 @@ export default class Link extends Component {
     href: string,
     palette: palettePropType,
     variation: variationPropType,
-    noHoverColorChange: bool,
     event: object,
   };
 
@@ -63,7 +62,9 @@ export default class Link extends Component {
     if (to && isPathInRoutes(routes, to)) {
       return {
         ...props,
-        as: RRLink,
+        // flip the order on which we present the components
+        LinkComponent: RRLink,
+        component: RRLinkAnchor,
         to: addEventToUrl(to, event),
       };
     }
@@ -73,6 +74,7 @@ export default class Link extends Component {
       ? { target: '_blank', rel: 'noopener' }
       : {};
     return {
+      LinkComponent: Anchor,
       ...props,
       ...target,
       href: addEventToUrl(href, event),
@@ -80,7 +82,7 @@ export default class Link extends Component {
   }
 
   render() {
-    const props = this.checkPropsForLinks();
-    return <Anchor {...props} />;
+    const { LinkComponent, ...props } = this.checkPropsForLinks();
+    return <LinkComponent {...props} />;
   }
 }

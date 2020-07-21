@@ -191,7 +191,7 @@ const CTABlock = styled(Block)`
 const CovidWrapper = styled.div`
   padding: ${size('spacing.large')};
   background-color: ${palette('primary', 'filler')};
-  border-radius: ${size('border.xLarge')};
+  border-radius: ${size('spacing.small')};
   border-top: 4px solid ${palette('primary', 'base')};
   margin-bottom: ${size('spacing.xLarge')};
   text-align: center;
@@ -418,33 +418,16 @@ export default class CommunityDetailPage extends Component {
                   heading={`${pricingTitle} at ${name}`}
                   id="pricing-and-floor-plans"
                 >
-                  {(address.state === 'TX' || address.state === 'PA' || address.state === 'NJ') &&
-                    <GetAssessmentBoxContainerHydrator
-                      startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
-                      community={community}
-                      layout="pricing-table"
-                      extraProps={{
-                        pricesList,
-                        estimatedPriceList,
-                      }}
-                    />
-                  }
-                  {address.state !== 'TX' && address.state !== 'PA' && address.state !== 'NJ' &&
-                    <CommunityPricingTable
-                      pricesList={pricesList}
-                      estimatedPriceList={estimatedPriceList}
-                      isAlreadyPricingRequested={isAlreadyPricingRequested}
-                      community={community}
-                    />
-                  }
+                  <GetAssessmentBoxContainerHydrator
+                    startLink={`/wizards/assessment/community/${community.id}`}
+                    community={community}
+                    layout="pricing-table"
+                    extraProps={{
+                      pricesList,
+                      estimatedPriceList,
+                    }}
+                  />
                 </StyledHeadingBoxSection>
-                {!isActiveAdult &&
-                <PaddedGetAssessmentBoxContainerHydrator
-                  startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
-                  community={community}
-                />
-                }
-
                 {!isActiveAdult && sortedEstimatedPrice.length > 0 && (
                   <StyledHeadingBoxSection heading={`Compare Costs for ${name}`}>
                     <CommunityPricingComparison community={community} />
@@ -497,6 +480,12 @@ export default class CommunityDetailPage extends Component {
                     <StyledAskAgentButton type="services">Ask a Question</StyledAskAgentButton>
                   </StyledHeadingBoxSection>
                 )}
+                {!isActiveAdult &&
+                <PaddedGetAssessmentBoxContainerHydrator
+                  startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
+                  community={community}
+                />
+                }
                 {rgsAux.rgsInfo && rgsAux.rgsInfo.resourceLinks && rgsAux.rgsInfo.resourceLinks.length > 0 && (
                   <StyledHeadingBoxSection
                     heading={`Helpful ${typeOfCare} Resources`}
@@ -603,32 +592,19 @@ export default class CommunityDetailPage extends Component {
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
-                {(address.state === 'TX' || address.state === 'PA' || address.state === 'NJ') &&
-                  <GetAssessmentBoxContainerHydrator
-                    startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
-                    community={community}
-                    layout="footer"
-                  />
-                }
-                {address.state !== 'TX' && address.state !== 'PA' && address.state !== 'NJ' &&
-                  <CommunityStickyFooter
-                    community={community}
-                    isAlreadyPricingRequested={isAlreadyPricingRequested}
-                    locTrack="sticky-footer"
-                  />
-                }
+                <GetAssessmentBoxContainerHydrator
+                  startLink={`/wizards/assessment/community/${community.id}`}
+                  community={community}
+                  layout="footer"
+                />
               </Body>
               <Column>
                 <StickToTop>
-                  {(address.state === 'TX' || address.state === 'PA' || address.state === 'NJ') &&
-                    <GetAssessmentBoxContainerHydrator
-                      startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
-                      community={community}
-                      layout="sidebar"
-                    />
-                  }
-                  {address.state !== 'TX' && address.state !== 'PA' && address.state !== 'NJ' &&
-                    <CommunityDetailsPageColumnContainer community={community} />}
+                  <GetAssessmentBoxContainerHydrator
+                    startLink={`/wizards/assessment/community/${community.id}`}
+                    community={community}
+                    layout="sidebar"
+                  />
                 </StickToTop>
               </Column>
             </TwoColumn>

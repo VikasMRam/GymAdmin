@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette, columnWidth } from 'sly/web/components/themes';
-import userPropType from 'sly/web/propTypes/user';
-import clientPropType from 'sly/web/propTypes/client';
+import userPropType from 'sly/common/propTypes/user';
+import clientPropType from 'sly/common/propTypes/client';
 import pad from 'sly/web/components/helpers/pad';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import Role from 'sly/web/components/common/Role';
@@ -36,7 +36,7 @@ Form.displayName = 'Form';
 
 const Warning = pad(styled(Block)`
   background-color: ${palette('warning.filler')};
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
   text-align: center;
   padding: ${size('spacing.large')};
 `, 'xLarge');

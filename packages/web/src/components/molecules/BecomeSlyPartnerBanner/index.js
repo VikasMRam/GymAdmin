@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { Block, Logo, Button } from 'sly/web/components/atoms';
 import { size, palette } from 'sly/web/components/themes';
 

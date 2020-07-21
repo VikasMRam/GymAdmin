@@ -4,7 +4,7 @@ import { arrayOf, shape, string, object } from 'prop-types';
 
 
 import { size } from 'sly/web/components/themes';
-import { text as textPropType } from 'sly/web/propTypes/text';
+import { text as textPropType } from 'sly/common/propTypes/text';
 import { Link, Span } from 'sly/web/components/atoms';
 import { withPad } from 'sly/web/components/helpers/pad';
 
@@ -25,7 +25,7 @@ const Wrapper = styled.nav`
       text-transform: capitalize;
       font-size: ${getSize};
 
-      > span:not(:first-child) {
+      .separator {
         margin: 0 ${size('spacing.regular')};
       }
     }
@@ -44,6 +44,13 @@ const BreadCrumb = ({ items, innerRef, size, ...props }) => (
             ? 'slate'
             : 'primary';
 
+          const content = (
+            <>
+              <meta itemProp="position" content={index + 1} />
+              <Span itemProp="name" palette={palette} size={size}>{label}</Span>
+            </>
+          );
+
           return (
             <li
               key={path}
@@ -51,11 +58,13 @@ const BreadCrumb = ({ items, innerRef, size, ...props }) => (
               itemScope
               itemType="http://schema.org/ListItem"
             >
-              <Link itemProp="item" to={path} event={event}>
-                <meta itemProp="position" content={index + 1} />
-                <Span itemProp="name" palette={palette} size={size}>{label}</Span>
-              </Link>
-              {!isLast ? <Span size={size}>/</Span> : null}
+              {!isLast &&
+                <Link itemProp="item" to={path} event={event}>
+                  {content}
+                </Link>
+              }
+              {isLast && content}
+              {!isLast && <Span className="separator" size={size}>/</Span>}
             </li>
           );
         })

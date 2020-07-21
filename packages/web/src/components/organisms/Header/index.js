@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette, key } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import cursor from 'sly/web/components/helpers/cursor';
 import { Icon, Hr, Link, Button } from 'sly/web/components/atoms';
 import Logo from 'sly/web/components/atoms/Logo';
@@ -38,7 +38,7 @@ const SeniorlyLogoWrapper = styled.div`
   }
 `;
 
-export const SeniorlyIconMenu = styled.div`
+const SeniorlyIconMenu = styled.div`
   display: flex;
   align-items: center;
   margin-right: ${size('spacing.large')};
@@ -54,7 +54,7 @@ const MenuIcon = cursor(styled(Icon)`
 `);
 MenuIcon.displayName = 'MenuIcon';
 
-export const HeaderMenu = styled.div`
+const HeaderMenu = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
@@ -70,7 +70,7 @@ export const HeaderMenu = styled.div`
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    height: inherit;
+    height: unset;
     padding: ${size('spacing.large')} 0;
     width: ${size('header.menu.width')};
     left: auto;
@@ -82,11 +82,12 @@ export const HeaderMenu = styled.div`
   }
 `;
 
-export const HeaderMenuItem = styled(Link)`
+const HeaderMenuItem = styled(Link)`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: ${size('spacing.large')} 0;
+  background: ${palette('white', 'base')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: ${size('spacing.large')};
@@ -106,11 +107,11 @@ const HeaderItems = styled.div`
   align-items: center;
   margin-left: auto;
   padding-left: 1.5rem;
-  
+
   > * {
     white-space: nowrap;
   }
-  
+
   ${ifProp('hideInSmallScreen', css`display: none;`)};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -148,7 +149,9 @@ const StyledSearchBoxContainer = styled(SearchBoxContainer)`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: ${size('spacing.large')} 0;
     visibility: visible;
-    width: ${size('header.SearchBox.width')};
+    flex-grow: 1;
+    width: unset;
+    max-width: ${size('header.SearchBox.width')};
   }
 `;
 
@@ -245,10 +248,10 @@ const Header = ({
           </>
         )}
         <OnlyInTablet>
-          <Link palette="primary" variation="base" to="/"><Icon icon="logo" size="xLarge" /></Link>
+          <Link palette="primary" variation="base" to="/"><Icon icon="logo" size="hero" /></Link>
         </OnlyInTablet>
         <OnlyInMobile>
-          <Link palette="primary" variation="base" to="/"><Icon icon="logo" size="large" /></Link>
+          <Link palette="primary" variation="base" to="/"><Icon icon="logo" size="hero" /></Link>
         </OnlyInMobile>
       </SeniorlyIconMenu>
       {hasSearchBox && (
@@ -263,7 +266,7 @@ const Header = ({
         {headerItemComponents}
       </HeaderItems>
       {menuOpen &&
-        <HeaderMenu innerRef={headerMenuRef} onClick={onMenuItemClick}>
+        <HeaderMenu ref={headerMenuRef} onClick={onMenuItemClick}>
           {smallScreenMenuItemComponents.length > 0 &&
             <OnlyInSmallScreen>
               {smallScreenMenuItemComponents}

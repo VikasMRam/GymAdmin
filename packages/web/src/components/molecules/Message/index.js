@@ -4,8 +4,8 @@ import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
 
-import messagePropType from 'sly/web/propTypes/conversation/conversationMessage';
-import participantPropType from 'sly/web/propTypes/conversation/conversationParticipant';
+import messagePropType from 'sly/common/propTypes/conversation/conversationMessage';
+import participantPropType from 'sly/common/propTypes/conversation/conversationParticipant';
 import { size, palette } from 'sly/web/components/themes';
 import {
   CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST,
@@ -120,7 +120,7 @@ const Message = ({
   }
   return (
     <Wrapper className={className}>
-      {user && <StyledAvatar size="small" user={user} />}
+      {user && <StyledAvatar size="body" user={user} />}
       {textMessageTypes.includes(message.data.type) && (
         <StyledBox padding="large" dark={dark}>
           {!isHtmlMessage(message) && <PaddedBlock size="caption">{getValue(message)}</PaddedBlock>}

@@ -5,7 +5,7 @@ import { reduxForm } from 'redux-form';
 
 import DuplicateFamilies from 'sly/web/components/organisms/DuplicateFamilies';
 import { withPreventDefault } from 'sly/web/services/helpers/forms';
-import clients from 'sly/web/../private/storybook/sample-data/clients.json';
+import clients from 'sly/storybook/sample-data/clients.json';
 
 const DuplicateFamiliesContainer = reduxForm({
   form: 'DuplicateFamilies',

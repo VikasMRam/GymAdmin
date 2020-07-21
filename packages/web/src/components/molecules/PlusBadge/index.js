@@ -7,7 +7,7 @@ import { Badge, Icon, Block } from 'sly/web/components/atoms';
 
 const StyledBadge = styled(Badge)`
   width: ${p => p.fullWidth ? '100%' : 'auto'};
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
   border-bottom-left-radius: ${p => p.fullWidth ? '0' : size('border.xxLarge')};
   border-bottom-right-radius: ${p => p.fullWidth ? '0' : size('border.xxLarge')};
   background-color: ${palette('primary', 'base')};
@@ -30,8 +30,8 @@ const CategoryBlock = styled(Block)`
 `;
 const PlusBadge = ({ plusCategory, fullWidth }) => (
   <StyledBadge fullWidth={fullWidth}>
-    <StyledIcon icon="logo" palette="white" size="small" />
-    <PlusBlock  palette="white" size="small">
+    <StyledIcon icon="logo" palette="white" size="body" />
+    <PlusBlock  palette="white" size="body">
       plus
     </PlusBlock>
     {plusCategory &&
@@ -40,7 +40,7 @@ const PlusBadge = ({ plusCategory, fullWidth }) => (
     </Block>
     }
     {plusCategory &&
-    <CategoryBlock palette="white" size="small">
+    <CategoryBlock palette="white" size="body">
       {plusCategory}
     </CategoryBlock>
     }

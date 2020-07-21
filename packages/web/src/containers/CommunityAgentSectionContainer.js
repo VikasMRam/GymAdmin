@@ -4,7 +4,7 @@ import loadable from '@loadable/component';
 
 import withModal from 'sly/web/controllers/withModal';
 import CommunityAgentSection from 'sly/web/components/molecules/CommunityAgentSection';
-import agentPropType from 'sly/web/propTypes/agent';
+import agentPropType from 'sly/common/propTypes/agent';
 
 const AdvisorHelpPopup = loadable(() => import(/* webpackChunkName: "chunkAdvisorHelpPopup" */ 'sly/web/components/molecules/AdvisorHelpPopup'));
 

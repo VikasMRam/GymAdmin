@@ -5,7 +5,7 @@ import WSContext from 'sly/web/services/ws/WSContext';
 import Pubsub from 'sly/web/services/ws/Pubsub';
 import { apiUrl } from 'sly/web/config';
 import withUser from 'sly/web/services/api/withUser';
-import userPropType from 'sly/web/propTypes/user';
+import userPropType from 'sly/common/propTypes/user';
 
 let _instantiated_ = false;
 

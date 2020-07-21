@@ -3,8 +3,8 @@ import { string, object, bool } from 'prop-types';
 import { branch } from 'recompose';
 
 import { prefetch } from 'sly/web/services/api';
-import agentPropType from 'sly/web/propTypes/agent';
-import communityPropType from 'sly/web/propTypes/community';
+import agentPropType from 'sly/common/propTypes/agent';
+import communityPropType from 'sly/common/propTypes/community';
 import SlyEvent from 'sly/web/services/helpers/events';
 import pad from 'sly/web/components/helpers/pad';
 import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
@@ -55,15 +55,15 @@ export default class GetAssessmentBoxContainer extends Component {
     });
   };
 
-  componentDidMount() {
-    const { layout } = this.props;
-    SlyEvent.getInstance().sendEvent({
-      category: 'assessmentWizard',
-      action: 'mounted',
-      label: layout,
-      nonInteraction: true,
-    });
-  }
+  // componentDidMount() {
+  //   const { layout } = this.props;
+  //   SlyEvent.getInstance().sendEvent({
+  //     category: 'assessmentWizard',
+  //     action: 'mounted',
+  //     label: layout,
+  //     nonInteraction: true,
+  //   });
+  // }
 
   render() {
     const {

@@ -7,7 +7,7 @@ import { size, palette } from 'sly/web/components/themes';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import SlyEvent from 'sly/web/services/helpers/events';
-import contactPropType from 'sly/web/propTypes/contact';
+import contactPropType from 'sly/common/propTypes/contact';
 import { Box, Table, THead, TBody, Tr, Td, Heading, Block } from 'sly/web/components/atoms';
 import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons';
 import Pagination from 'sly/web/components/molecules/Pagination';
@@ -18,6 +18,7 @@ import AddOrEditContactFormContainer from 'sly/web/containers/AddOrEditContactFo
 import IconButton from 'sly/web/components/molecules/IconButton';
 import { ENTITY_LABEL_MAP } from 'sly/web/constants/entityTypes';
 import { textAlign } from 'sly/web/components/helpers/text';
+import { SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 
 const TABLE_HEADINGS = [{ text: 'Contact name' }, { text: 'Entity' }, { text: 'Email' }, { text: 'Phone number' }, { text: 'Delete' }];
 
@@ -73,19 +74,6 @@ const StyledFamiliesCountStatusBlock = styled(FamiliesCountStatusBlock)`
   border-right: none;
   border-bottom: none;
 `;
-
-const TwoColumn = pad(styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-transform: capitalize;
-  padding: ${size('spacing.large')};
-  margin-bottom: 0;
-
-  ${Heading} {
-    margin-bottom: 0;
-  }
-`);
 
 const NoResultMessage = styled(textAlign(Block))`
   padding-top: ${size('spacing.xxxLarge')};
@@ -170,12 +158,23 @@ export default class DashboardAgentContactsSection extends Component {
     if (entityLabel) {
       TABLE_HEADINGS[1] =  { text: entityLabel };
     }
+    const actions = entityId && entityType && entityName && (
+      <IconButton
+        icon="plus"
+        hideTextInMobile
+        to={`${match.url}/new`}
+        onClick={this.handleAddContactClick}
+      >
+        Add contact
+      </IconButton>
+    );
+
     return (
-      <>
-        <TwoColumn>
-          <Heading level="subtitle">Contacts</Heading>
-          {entityId && entityType && entityName && <IconButton icon="plus" hideTextInMobile to={`${match.url}/new`} onClick={this.handleAddContactClick}>Add contact</IconButton>}
-        </TwoColumn>
+      <Section>
+        <SectionHeader actions={actions}>
+          Contacts
+        </SectionHeader>
+
         <StyledTableHeaderButtons
           datatable={datatable}
           modelConfig={{ name: 'Contact', defaultSearchField: 'name' }}
@@ -309,7 +308,7 @@ export default class DashboardAgentContactsSection extends Component {
             }}
           </Route>
         )}
-      </>
+      </Section>
     );
   }
 }

@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { priceFormatter } from 'sly/web/services/helpers/pricing';
 import FamilyMetaDataSummaryBox from 'sly/web/components/molecules/FamilyMetaDataSummaryBox';
 import { FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST } from 'sly/web/constants/familyDetails';
-import PraneshKumar from 'sly/web/../private/storybook/sample-data/client-pranesh-kumar.json';
+import PraneshKumar from 'sly/storybook/sample-data/client-pranesh-kumar.json';
 
 // For deep cloning object
 const clientWithRejectedStage = JSON.parse(JSON.stringify(PraneshKumar));

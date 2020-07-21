@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import CommunitySummary from 'sly/web/components/organisms/CommunitySummary';
 import { Link } from 'sly/web/components/atoms';
-import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 import { CONTINUING_CARE_RETIREMENT_COMMUNITY } from 'sly/web/constants/tags';
 
 const searchParams = {

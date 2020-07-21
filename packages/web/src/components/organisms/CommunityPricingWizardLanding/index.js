@@ -3,7 +3,7 @@ import { func, string } from 'prop-types';
 
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import userPropType from 'sly/web/propTypes/user';
+import userPropType from 'sly/common/propTypes/user';
 import { Heading, Block, Button } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 

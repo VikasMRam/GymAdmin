@@ -119,7 +119,7 @@ const StateSearchPage = ({
 
   const openCityListModal = () => {
     showModal((
-      <CollapsibleSection size="small" title="Cities" borderless>
+      <CollapsibleSection size="body" title="Cities" borderless>
         {seoLinks.map(seoLink => (
           <StyledLink
             to={seoLink.to}

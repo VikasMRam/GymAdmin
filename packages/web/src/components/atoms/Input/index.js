@@ -46,7 +46,7 @@ export const styles = css`
   color: ${color};
   background-color: ${backgroundColor};
   border: ${size('border.regular')} solid ${borderColor};
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
   min-width: ${ifProp({ type: 'textarea' }, '100%', 'initial')};
   max-width: ${ifProp({ type: 'textarea' }, '100%', 'initial')};
 

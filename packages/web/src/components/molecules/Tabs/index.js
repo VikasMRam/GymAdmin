@@ -3,8 +3,7 @@ import { instanceOf, string, bool } from 'prop-types';
 import styled from 'styled-components';
 
 import Box from 'sly/web/components/atoms/Box';
-import { size } from 'sly/web/components/themes';
-import { topSnap } from 'sly/web/components/helpers';
+import { topSnap, upTo } from 'sly/web/components/helpers';
 
 const Wrapper = styled(Box)`
   display: flex;
@@ -13,8 +12,9 @@ const Wrapper = styled(Box)`
   overflow-y: hidden;
   text-transform: uppercase;
   
-  @media screen and (max-width: calc(${size('breakpoint.laptop')} - 1px)) {
+  ${upTo('laptop')} {
     ${topSnap} 
+    border-radius: 0;
   }
 `;
 
@@ -22,6 +22,7 @@ const Wrapper = styled(Box)`
 Wrapper.defaultProps = {
   background: 'white',
   padding: [0, 0, 0, 'xLarge'],
+  snap: 'bottom',
 };
 
 const getDefaultActiveTab = (children) => {

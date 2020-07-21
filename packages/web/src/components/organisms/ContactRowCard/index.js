@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { func, string, bool, object } from 'prop-types';
 
 import { size, palette } from 'sly/web/components/themes';
-import contactPropType from 'sly/web/propTypes/contact';
+import contactPropType from 'sly/common/propTypes/contact';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
@@ -121,10 +121,22 @@ const RemoveButton = styled(IconButton)`
 const ContactRowCard = ({ contact, entity, editContactUrl, onContactClick, deleteContact }) => {
   return (
     <Wrapper>
-      <NameCell contact={contact} to={editContactUrl} onClick={() => onContactClick(contact)} />
+      <NameCell
+        contact={contact}
+        to={editContactUrl}
+        onClick={() => onContactClick(contact)}
+      />
       <CommunityCell>
         <span>Community</span>
-        {entity && <Link to={getAppPathForEntity(entity)}>{entity.label}</Link>}
+        {entity && (
+          <Link
+            to={getAppPathForEntity(entity)}
+            block
+            clamped
+          >
+            {entity.label}
+          </Link>
+        )}
       </CommunityCell>
       <EmailCell>
         <span>Email</span>

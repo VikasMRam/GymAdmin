@@ -8,7 +8,7 @@ import Button from 'sly/web/components/atoms/Button';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import { palette, size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 
 const PaddedHeading = pad(Heading);
 

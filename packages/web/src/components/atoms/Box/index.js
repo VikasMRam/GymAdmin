@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { oneOf } from 'prop-types';
 
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { variation as variationPropType } from 'sly/web/propTypes/variation';
-import { spacing as spacingPropType } from 'sly/web/propTypes/spacing';
-import { borderPropType, borderRadiusPropType } from 'sly/web/propTypes/border';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { variation as variationPropType } from 'sly/common/propTypes/variation';
+import { spacing as spacingPropType } from 'sly/common/propTypes/spacing';
+import { borderPropType, borderRadiusPropType } from 'sly/common/propTypes/border';
 import Block from 'sly/web/components/atoms/Block';
 
 const Box = styled(Block)``;
@@ -15,7 +15,7 @@ Box.propTypes = {
   borderPalette: palettePropType,
   borderVariation: variationPropType,
   padding: spacingPropType,
-  snap: oneOf(['none', 'top', 'bottom', 'vertical']),
+  snap: oneOf(['none', 'top', 'bottom', 'vertical', 'left', 'right', 'horizontal', 'all']),
 };
 
 Box.defaultProps = {

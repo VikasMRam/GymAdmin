@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import '@babel/polyfill';
 import 'isomorphic-fetch';
 import 'react-hot-loader/patch';
 

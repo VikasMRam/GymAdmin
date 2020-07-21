@@ -5,7 +5,7 @@ import ReactTooltip from 'react-tooltip';
 
 import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES, CONTINUING_CARE_RETIREMENT_COMMUNITY, CCRC, ACTIVE_ADULT } from 'sly/web/constants/tags';
 import { size, palette } from 'sly/web/components/themes';
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import { Link, Box, Heading, Hr, Icon, Tag, Block } from 'sly/web/components/atoms';
@@ -14,6 +14,7 @@ import { isBrowser } from 'sly/web/config';
 import { tocPaths } from 'sly/web/services/helpers/url';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 import ListItem from 'sly/web/components/molecules/ListItem';
+import { startingWith, upTo } from 'sly/web/components/helpers';
 
 
 const StyledHeading = pad(Heading, 'regular');
@@ -39,9 +40,6 @@ const TooltipContent = styled(ReactTooltip)`
   box-shadow: 0 0 ${size('spacing', 'large')} ${palette('slate', 'filler')}80;
 `;
 
-const RatingWrapper = mobileOnly(styled.div`
-`);
-
 const CareTypeWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')}; 
 `;
@@ -59,6 +57,11 @@ const OverlayTwoColumnListWrapper = styled.div`
   }
 `;
 
+const MobileCommunityRating = styled(CommunityRating)`
+  ${startingWith('laptop')} {
+    display: none;
+  }
+`;
 
 const getCareTypes = (state, careTypes) => {
   const updatedCareTypes = [];
@@ -150,22 +153,17 @@ const CommunitySummary = ({
           )
         }
       </CareTypeWrapper>
-
       {reviewsValue > 0 &&
-        <RatingWrapper>
-          <CommunityRating
-            description=""
-            numReviewsPalette="slate"
-            numReviewsVariation="base"
-            rating={reviewsValue}
-            numReviews={numReviews}
-            goToReviews={goToReviews} />
-        </RatingWrapper>
+        <MobileCommunityRating
+          rating={reviewsValue}
+          numReviews={numReviews}
+          goToReviews={goToReviews}
+        />
       }
 
       <Hr />
       {
-        tier !== "4" && partnerAgent &&
+        partnerAgent &&
           <>
             Call for help with pricing and availability
             <StyledIcon palette="slate" icon="help" size="caption" data-tip data-for="conciergePhone" />
@@ -181,7 +179,7 @@ const CommunitySummary = ({
           </>
       }
       {
-        (tier === "4" || !partnerAgent) && communityPhone &&
+        tier === "4" && !partnerAgent && communityPhone &&
           <>
             Call to connect directly with the community
             <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />

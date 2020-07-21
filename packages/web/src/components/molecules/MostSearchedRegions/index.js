@@ -45,7 +45,7 @@ const MostSearchedRegions = ({ mostSearchedRegions }) => (
   <Wrapper>
     {mostSearchedRegions.map(mostSearchedRegion => (
       <StyledLink key={mostSearchedRegion.title} to={mostSearchedRegion.to}>
-        <StyledImageOverlayContentTile size="small" image={mostSearchedRegion.image}>
+        <StyledImageOverlayContentTile size="body" image={mostSearchedRegion.image}>
           <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedRegion.title}</Heading>
           <Block palette="white">
             <strong> Includes: </strong>

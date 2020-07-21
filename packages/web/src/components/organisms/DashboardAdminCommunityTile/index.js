@@ -6,7 +6,7 @@ import { parseDate, durationInS } from 'sly/web/services/helpers/date';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 import { buildPriceList } from 'sly/web/services/helpers/pricing';
 import { size, palette, columnWidth } from 'sly/web/components/themes';
-import { adminCommunityPropType } from 'sly/web/propTypes/community';
+import { adminCommunityPropType } from 'sly/common/propTypes/community';
 import { Heading, Badge, Link, Block, Icon, Span } from 'sly/web/components/atoms';
 import { getHasContract, getIsCCRC, getIsSNF } from 'sly/web/services/helpers/community';
 import  IconBadge from 'sly/web/components/molecules/IconBadge';
@@ -94,7 +94,7 @@ export default class DashboardAdminCommunityTile extends Component {
           {!hasContract && <StyledIconBadge badgePalette="danger" palette="white" icon="checkmark-circle" text="NO CONTRACT" /> }
           {hasCCRC && <StyledIconBadge badgePalette="warning" palette="white" icon="checkmark-circle" text="CCRC" />}
           {hasSNF && <StyledIconBadge badgePalette="warning" palette="white" icon="checkmark-circle" text="SNF" />}
-          {lastViewedSecondsAgo > -1 && <StyledBadge textPalette="grey" ><Icon icon="note" size="small" /> Last Viewed: {lastViewedSecondsAgo} s ago</StyledBadge> }
+          {lastViewedSecondsAgo > -1 && <StyledBadge textPalette="grey" ><Icon icon="note" size="body" /> Last Viewed: {lastViewedSecondsAgo} s ago</StyledBadge> }
         </Header>
         <CommunityInfoWrapper>
           <>

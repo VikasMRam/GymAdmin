@@ -5,15 +5,15 @@ import pick from 'lodash/pick';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
-import clientPropType from 'sly/web/propTypes/client';
-import userProptype from 'sly/web/propTypes/user';
+import clientPropType from 'sly/common/propTypes/client';
+import userProptype from 'sly/common/propTypes/user';
 import { query, prefetch, getRelationship } from 'sly/web/services/api';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
 import DashboardCommunityAdminForm from 'sly/web/components/organisms/DashboardCommunityAdminForm';
 import { patchFormInitialValues } from 'sly/web/services/edits';
-import { rgsAuxAttributes } from 'sly/web/propTypes/community';
+import { rgsAuxAttributes } from 'sly/common/propTypes/community';
 import defaultsDeep from 'lodash/defaultsDeep';
 
 const formName = 'DashboardCommunityAdminForm';
@@ -58,7 +58,9 @@ export default class DashboardCommunityAdminFormContainer extends Component {
   handleSubmit = (values) => {
     const { match, updateCommunity, community, notifyError, notifyInfo } = this.props;
     const { id } = match.params;
-    const { rgsAux, user, ...attributes } = values;
+    const { rgsAux, user, status, ...attributes } = values;
+
+    attributes.status = parseFloat(status);
 
     return updateCommunity({ id }, {
       attributes,

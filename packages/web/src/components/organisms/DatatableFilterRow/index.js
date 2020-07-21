@@ -4,8 +4,8 @@ import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 
 import { Box } from 'sly/web/components/atoms';
-import filterPropType from 'sly/web/propTypes/datatableFilter';
-import datatableColumnsPropType from 'sly/web/propTypes/datatableColumns';
+import filterPropType from 'sly/common/propTypes/datatableFilter';
+import datatableColumnsPropType from 'sly/common/propTypes/datatableColumns';
 import ButtonLink from 'sly/web/components/molecules/ButtonLink';
 import Field from 'sly/web/components/molecules/Field';
 import {
@@ -86,7 +86,7 @@ const CloseButton = styled(mobileOnly(ButtonLink, css`
   align-items: center;
 `, css`
   margin: 0 ${size('spacing.large')} 0 0;
-  width: ${size('icon.regular')};
+  width: ${size('text.body')};
 `))`
   flex-grow: 0;
   flex-shrink: 0;
@@ -266,7 +266,7 @@ export default class DatatableFilterRow extends Component {
 
         {index === 1 && (
           <WhereField
-            size="small"
+            size="body"
             name="logicalOperator"
             type="choice"
             value={logicalOperator}
@@ -283,7 +283,7 @@ export default class DatatableFilterRow extends Component {
         )}
 
         <GrowField
-          size="small"
+          size="body"
           name="column"
           value={filter.column}
           type="choice"
@@ -296,7 +296,7 @@ export default class DatatableFilterRow extends Component {
           <>
             <SplitFlex />
             <GrowField
-              size="small"
+              size="body"
               name="operator"
               value={filter.operator}
               type="choice"
@@ -309,7 +309,7 @@ export default class DatatableFilterRow extends Component {
         {filter.operator && !noValueOperators.includes(filter.operator) && (
           <GrowField
             name={`${filter.column}:${filter.operator}`}
-            size="small"
+            size="body"
             column={columns[filter.column]}
             {...this.getValuePropsFor(filter)}
           />

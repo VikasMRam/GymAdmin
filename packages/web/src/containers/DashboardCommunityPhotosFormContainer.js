@@ -6,8 +6,8 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { set } from 'object-path-immutable';
 
-import userPropType from 'sly/web/propTypes/user';
-import { galleryPropType, imagePropType } from 'sly/web/propTypes/gallery';
+import userPropType from 'sly/common/propTypes/user';
+import { galleryPropType, imagePropType } from 'sly/common/propTypes/gallery';
 import { query, prefetch, getRelationship } from 'sly/web/services/api';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';

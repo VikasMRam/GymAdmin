@@ -4,7 +4,7 @@ import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 
 import CommunityQuestionAnswers from 'sly/web/components/organisms/CommunityQuestionAnswers';
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import SlyEvent from 'sly/web/services/helpers/events';
 import withModal from 'sly/web/controllers/withModal';
 import { prefetch } from 'sly/web/services/api';

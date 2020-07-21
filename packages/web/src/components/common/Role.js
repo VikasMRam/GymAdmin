@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { number, node } from 'prop-types';
 
 import { withUser } from 'sly/web/services/api';
-import userPropType from 'sly/web/propTypes/user';
+import userPropType from 'sly/common/propTypes/user';
 import { userIs } from 'sly/web/services/helpers/role';
 
 @withUser

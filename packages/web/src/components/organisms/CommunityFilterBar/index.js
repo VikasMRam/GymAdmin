@@ -42,7 +42,7 @@ const CommunityFilterBar = ({ searchParams, generateFilterLinkPath }) => {
         <FilterButton
           right
           icon="close"
-          iconSize="small"
+          iconsize="body"
           palette="slate"
           ghost
           transparent
@@ -55,7 +55,7 @@ const CommunityFilterBar = ({ searchParams, generateFilterLinkPath }) => {
         <FilterButton
           right
           icon="close"
-          iconSize="small"
+          iconsize="body"
           palette="slate"
           ghost
           transparent
@@ -68,7 +68,7 @@ const CommunityFilterBar = ({ searchParams, generateFilterLinkPath }) => {
         <FilterButton
           right
           icon="close"
-          iconSize="small"
+          iconsize="body"
           palette="slate"
           ghost
           transparent
