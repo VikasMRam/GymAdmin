@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import props from './props';
 
 import { size } from 'sly/common/components/themes';
-import { Block } from 'sly/common/components/atoms';
+import Block from 'sly/common/components/atoms/Block';
 
 const Badge = styled(Block)`
   display: inline-flex;

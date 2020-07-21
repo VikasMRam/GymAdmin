@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+import { storiesOf } from '@storybook/react-native';
 
 import Heading from '.';
 
@@ -24,11 +24,6 @@ storiesOf('Common/Atoms/Heading', module)
   ))
   .add('level subtitle', () => (
     <Heading level="subtitle">
-      Id tempor duis non esse commodo fugiat excepteur nostrud.
-    </Heading>
-  ))
-  .add('size subtitle', () => (
-    <Heading size="subtitle">
       Id tempor duis non esse commodo fugiat excepteur nostrud.
     </Heading>
   ));

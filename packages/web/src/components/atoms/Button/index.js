@@ -6,7 +6,7 @@ import { Link as RRLink } from 'react-router-dom';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
-import { routes as routesPropType } from 'sly/common/propTypes/routes';
+import { routes as routesPropType } from 'sly/web/propTypes/routes';
 import { withSpacing } from 'sly/common/components/helpers';
 import { size, palette } from 'sly/common/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';

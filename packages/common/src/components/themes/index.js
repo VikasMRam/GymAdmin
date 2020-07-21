@@ -11,8 +11,12 @@ export function size(...args) {
   return styledThemeKey(['sizes', ...args].join('.'));
 }
 
-export function remToPx(rem) {
-  return rem.includes('px') || rem.includes('%') ? rem : rem.replace('rem', '') * 16;
+export function remToPx(rem, units) {
+  if (rem.includes('px') || rem.includes('%') || !rem.includes('rem')) {
+    return rem;
+  }
+  const converted = rem.replace('rem', '') * 16;
+  return units ? `${converted}px` : converted;
 }
 
 export function palette(...args) {

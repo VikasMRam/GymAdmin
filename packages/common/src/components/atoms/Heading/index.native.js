@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
+import { Text } from 'react-native';
+import styled from 'styled-components/native';
 
 import props from './props';
-import getTag from './getTag';
 import getMarginBottom from './getMarginBottom';
 
 import {
@@ -10,15 +10,12 @@ import {
   withColor,
 } from 'sly/common/components/helpers';
 
-const Heading = styled((props) => {
-  const HeadingTag = getTag(props.level);
-  return (
-    <HeadingTag
-      size={props.size || props.level}
-      {...props}
-    />
-  );
-})`
+const Heading = styled(props => (
+  <Text
+    size={props.size || props.level}
+    {...props}
+  />
+))`
   margin-bottom: ${getMarginBottom};
   ${withText}
   ${withColor}

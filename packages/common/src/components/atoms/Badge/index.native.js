@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import props  from './props';
 
 import { size } from 'sly/common/components/themes';
-import { Block } from 'sly/common/components/atoms';
+import Block from 'sly/common/components/atoms/Block';
 
 const Badge = styled(Block)`
   alignSelf: flex-start;

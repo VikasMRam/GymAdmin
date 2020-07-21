@@ -1,15 +1,14 @@
 import { css } from 'styled-components';
-import { ifProp } from 'styled-tools';
 
 import { getKey } from 'sly/common/components/themes';
 
 // uses props size and weight
-const getSize = (type, prop = 'size') => (props) => {
+export const getSize = (type, prop = 'size') => (props) => {
   const key = `sizes.${type}.${props[prop]}`;
   return getKey(key) || props[prop];
 };
 
-const getWeight = (props) => {
+export const getWeight = (props) => {
   if (!(props.weight || props.size)) return null;
 
   if (props.weight) {
@@ -28,16 +27,3 @@ const getWeight = (props) => {
 
   return null;
 };
-
-export const withText = props => css`
-  ${props.size && css`
-    font-size: ${getSize('text')(props)};
-    line-height: ${getSize('lineHeight')(props)};
-  `}
-
-  ${ifProp('lineHeight', css`
-    line-height: ${getSize('lineHeight', 'lineHeight')(props)};
-  `)}
-
-  ${getWeight(props)};
-`;
