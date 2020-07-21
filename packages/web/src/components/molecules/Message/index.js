@@ -118,7 +118,7 @@ const Message = ({
     const element = sentToArray[i];
     sentToString += `${element.type} ${element.status} to ${element.name}. `;
   }
-  console.log('message', message, user)
+
   return (
     <Wrapper className={className}>
       {user && <StyledAvatar size="regular" user={user} />}
