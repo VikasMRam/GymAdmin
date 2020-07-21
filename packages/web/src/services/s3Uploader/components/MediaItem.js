@@ -91,6 +91,7 @@ export default class MediaItem extends React.Component {
           <Link
             onClick={() => editImage(image)}
             palette="slate.lighter-30"
+            clamped
           >
             {descriptionText}
           </Link>

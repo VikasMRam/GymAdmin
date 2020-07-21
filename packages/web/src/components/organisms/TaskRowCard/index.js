@@ -8,10 +8,10 @@ import taskPropType from 'sly/common/propTypes/task';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
-import { Badge, Link, ClampedText } from 'sly/web/components/atoms';
+import { Badge, Link } from 'sly/web/components/atoms';
 import { Td, Tr } from 'sly/web/components/atoms/Table';
-import Stage from 'sly/web/components/molecules/Stage';
 import { getAppPathForEntity } from 'sly/web/services/helpers/appPaths';
+import Block from 'sly/web/components/atoms/Block';
 
 const Wrapper = mobileOnly(borderRadius(pad(Tr, 'large'), 'small'), css`
   display: flex;
@@ -25,11 +25,9 @@ const StyledNameCell = ({
   disabled, task, to, ...props
 }) => (
   <Td disabled={disabled} {...props}>
-    <ClampedText>
-      <Link to={to} {...props}>
-        {task.title}
-      </Link>
-    </ClampedText>
+    <Link block clamped to={to} {...props}>
+      {task.title}
+    </Link>
   </Td>
 );
 
@@ -122,7 +120,7 @@ const TaskRowCard = ({ task, onTaskClick }) => {
         {relatedEntities && relatedEntities[0] &&
           <Link to={getAppPathForEntity(relatedEntities[0])}>
             <span>Related to: </span>
-            <span>{relatedEntities[0].label}</span>
+            <Block clamped>{relatedEntities[0].label}</Block>
           </Link>
         }
       </RelatedToCell>
@@ -139,7 +137,7 @@ const TaskRowCard = ({ task, onTaskClick }) => {
       </PriorityCell>
       <AssignedToCell>
         <span>Assigned to</span>
-        <span>{owner && owner.name}</span>
+        <Block clamped>{owner && owner.name}</Block>
       </AssignedToCell>
     </Wrapper>
   );

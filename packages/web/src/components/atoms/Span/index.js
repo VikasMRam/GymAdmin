@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { withColor, withText } from 'sly/web/components/helpers';
+import { withClamping, withColor, withText } from 'sly/web/components/helpers';
 
 const Span = styled.span`
   ${withText}

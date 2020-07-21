@@ -87,11 +87,15 @@ const AgentRowCard = ({ agent, onAgentClick }) => {
       <NameCell agent={agent} to={agentDetailsPath} onClick={() => onAgentClick(agent)} />
       <DisplayNameCell>
         <span>Display Name</span>
-        <span>{displayName}</span>
+        <ClampedText>
+          <span>{displayName}</span>
+        </ClampedText>
       </DisplayNameCell>
       <AddressCell>
         <span>Address</span>
-        <span>{buildAddressDisplay(agent)}</span>
+        <ClampedText>
+          <span>{buildAddressDisplay(agent)}</span>
+        </ClampedText>
       </AddressCell>
       <StatusCell>
         <span>Status</span>

@@ -140,11 +140,15 @@ const ContactRowCard = ({ contact, entity, editContactUrl, onContactClick, delet
       </CommunityCell>
       <EmailCell>
         <span>Email</span>
-        {contact.email}
+        <ClampedText>
+          {contact.email}
+        </ClampedText>
       </EmailCell>
       <PhoneCell>
         <span>Phone number</span>
-        {contact.mobilePhone && phoneFormatter(contact.mobilePhone)}
+        <ClampedText>
+          {contact.mobilePhone && phoneFormatter(contact.mobilePhone)}
+        </ClampedText>
       </PhoneCell>
       <DeleteCell>
         <span>Delete</span>
