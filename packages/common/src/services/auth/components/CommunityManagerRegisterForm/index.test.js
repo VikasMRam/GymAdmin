@@ -7,13 +7,12 @@ const handleSubmit = jest.fn();
 const defaultProps = {
   handleSubmit,
 };
-
 const wrap = (props = {}) => shallow(<CommunityManagerRegisterForm {...defaultProps} {...props} />);
 
 describe('CommunityManagerRegisterForm', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ childred: 'test' });
-    expect(wrapper.contains('test')).toBe(false);
+    expect(wrapper.contains('test')).toBeFalsy();
   });
 
   it('renders', () => {

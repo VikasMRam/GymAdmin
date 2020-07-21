@@ -7,13 +7,12 @@ const handleSubmit = jest.fn();
 const defaultProps = {
   handleSubmit,
 };
-
 const wrap = (props = {}) => shallow(<PartnerAgentLoginForm {...defaultProps} {...props} />);
 
 describe('PartnerAgentLoginForm', () => {
   it('does not render children when passed in', () => {
-    const wrapper = wrap({ childred: 'test' });
-    expect(wrapper.contains('test')).toBe(false);
+    const wrapper = wrap({ children: 'test' });
+    expect(wrapper.contains('test')).toBeFalsy();
   });
 
   it('renders', () => {

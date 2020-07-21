@@ -8,3 +8,5 @@ export const spacing = (Component, { top = 'xLarge', bottom = 'xLarge', left = '
   padding-left: ${size('spacing', left)};
   padding-right: ${size('spacing', right)};
 `;
+
+export default spacing;
