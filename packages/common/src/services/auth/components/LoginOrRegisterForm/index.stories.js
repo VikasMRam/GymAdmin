@@ -3,8 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import LoginOrRegisterForm from 'sly/common/services/auth/components/LoginOrRegisterForm/index';
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import LoginOrRegisterForm from './';
+
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const LoginOrRegisterFormContainer = reduxForm({
   form: 'LoginOrRegisterForm',

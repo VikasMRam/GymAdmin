@@ -3,8 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import OtpLoginForm from 'sly/common/services/auth/components/OtpLoginForm/index';
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import OtpLoginForm from './';
+
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const OtpLoginFormContainer = reduxForm({
   form: 'OtpLoginForm',

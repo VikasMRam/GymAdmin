@@ -6,7 +6,7 @@ import { reduxForm } from 'redux-form';
 import ExitIntentQuestionForm from './index';
 
 import Modal from 'sly/web/components/molecules/Modal';
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const ExitIntentQuestionFormContainer = reduxForm({
   form: 'ExitIntentQuestionForm',

@@ -3,8 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import CommunityManagerRegisterForm from 'sly/common/services/auth/components/CommunityManagerRegisterForm/index';
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import CommunityManagerRegisterForm from './';
+
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const CommunityManagerRegisterFormContainer = reduxForm({
   form: 'CommunityManagerRegisterForm',

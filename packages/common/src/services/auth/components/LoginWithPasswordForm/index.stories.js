@@ -3,8 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import LoginWithPasswordForm from 'sly/common/services/auth/components/LoginWithPasswordForm/index';
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import LoginWithPasswordForm from './';
+
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const LoginWithPasswordFormContainer = reduxForm({
   form: 'LoginWithPasswordForm',

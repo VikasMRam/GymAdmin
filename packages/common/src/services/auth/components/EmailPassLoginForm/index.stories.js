@@ -3,8 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import EmailPassLoginForm from 'sly/common/services/auth/components/EmailPassLoginForm/index';
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import EmailPassLoginForm from './';
+
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const EmailPassLoginFormContainer = reduxForm({
   form: 'EmailPassLoginForm',

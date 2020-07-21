@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 import { Dementia } from 'sly/web/components/wizards/assessment';
 
 const DementiaContainer = reduxForm({
