@@ -13,7 +13,7 @@ const validate = createValidator({
   emailOrPhone: [required], // todo: add email or phone validation
 });
 
-const formName = 'LoginOrRegisterForm';
+const formName = 'CommunityManagerRegisterForm';
 
 const ReduxForm = reduxForm({
   form: formName,
