@@ -8,7 +8,6 @@ import { Heading, Button, Block, Link } from 'sly/web/components/atoms';
 import Field from 'sly/web/components/molecules/Field';
 import { textAlign } from 'sly/web/components/helpers/text';
 
-
 const StyledHeading = textAlign(pad(Heading));
 StyledHeading.displayName = 'StyledHeading';
 
@@ -48,7 +47,7 @@ export default class ProviderFindCommunity extends Component {
         </StyledButton>
         {error && <Block palette="danger">{error}</Block>}
         <Continue size="caption">
-          <Link onClick={onNotFound}>Can't find my community?</Link>
+          <Link onClick={onNotFound}>Can&apos;t find my community?</Link>
         </Continue>
       </form>
     );

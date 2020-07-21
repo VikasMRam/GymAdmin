@@ -3,7 +3,7 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { connect } from 'react-redux';
 import { func, object } from 'prop-types';
 
-import { withAuth, normalizeResponse, query } from 'sly/web/services/api';
+import { withAuth, query } from 'sly/web/services/api';
 import { createValidator, required } from 'sly/web/services/validation';
 import ProviderFindCommunity from 'sly/common/services/auth/components/ProviderFindCommunity';
 
@@ -28,6 +28,8 @@ export default class ProviderFindCommunityContainer extends Component {
   static propTypes = {
     authenticated: object,
     claimCommunity: func,
+    onClaimApproved: func,
+    onApprovalNeeded: func,
   };
 
   state = {
@@ -41,16 +43,16 @@ export default class ProviderFindCommunityContainer extends Component {
     }
   }
 
-  handleSubmit = (data) => {
+  handleSubmit = () => {
     const { authenticated, claimCommunity, onClaimApproved, onApprovalNeeded } = this.props;
     const { community } = this.state;
     clearSubmitErrors();
 
     // send claim request
-    return claimCommunity({id: community.value})
+    return claimCommunity({ id: community.value })
       .then((resp) => {
         authenticated.options.community = community;
-        resp.status === 200 ? onClaimApproved() : onApprovalNeeded()
+        resp.status === 200 ? onClaimApproved() : onApprovalNeeded();
       })
       .catch((data) => {
         // TODO: Need to set a proper way to handle server side errors
@@ -60,15 +62,17 @@ export default class ProviderFindCommunityContainer extends Component {
   };
 
   onSelectChange = (option) => {
-    this.setState({community: option});
+    this.setState({ community: option });
   };
 
   render() {
-    return <ReduxForm
-      {...this.props}
-      onSubmit={this.handleSubmit}
-      onSelectChange={this.onSelectChange}
-      community={this.state.community}
-    />;
+    return (
+      <ReduxForm
+        {...this.props}
+        onSubmit={this.handleSubmit}
+        onSelectChange={this.onSelectChange}
+        community={this.state.community}
+      />
+    );
   }
 }

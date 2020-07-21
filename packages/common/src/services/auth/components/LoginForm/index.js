@@ -23,7 +23,6 @@ LargePaddedFullWidthButton.displayName = 'LargePaddedFullWidthButton';
 const PaddedFullWidthButton = pad(FullWidthButton);
 PaddedFullWidthButton.displayName = 'PaddedFullWidthButton';
 
-
 const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.large')};
 `;
@@ -62,7 +61,7 @@ const LoginForm = ({
       Reset password
     </ResetPassword>
     <Register size="caption" >
-      Don't have an account?{' '}
+      Don&apos;t have an account?{' '}
       <Link onClick={onRegisterClick}>Sign up</Link>
     </Register>
   </form>

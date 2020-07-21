@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { string, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { Icon, Heading, Button, Paragraph } from 'sly/web/components/atoms';
+import { Heading, Button, Paragraph } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import {
   DASHBOARD_COMMUNITIES_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
-
 
 const Wrapper = styled.div`
   text-align: center;
@@ -30,7 +29,7 @@ export default class CustomerSignupConfirmation extends Component {
         {mode === 'Approved' &&
           <Wrapper>
             <StyledHeading> Our team will contact you to verify your details to complete the process.</StyledHeading>
-            <Paragraph> In the meantime you can begin editing this community's details. Please note: any details will only become public after being approved by Seniorly</Paragraph>
+            <Paragraph> In the meantime you can begin editing this community&apos;s details. Please note: any details will only become public after being approved by Seniorly</Paragraph>
             <LargePaddedFullWidthButton href={DASHBOARD_COMMUNITIES_PATH}>Finish</LargePaddedFullWidthButton>
 
           </Wrapper>
