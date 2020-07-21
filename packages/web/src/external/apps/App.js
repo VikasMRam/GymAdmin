@@ -6,7 +6,7 @@ import Helmet from 'react-helmet';
 import loadable from '@loadable/component';
 
 import theme from 'sly/web/components/themes/default';
-import { routes as routesPropType } from 'sly/common/propTypes/routes';
+import { routes as routesPropType } from 'sly/web/propTypes/routes';
 import { WIZARD_PATH, SEARCH_PATH } from 'sly/web/external/constants/paths';
 import ErrorPage from 'sly/web/external/apps/ErrorPage';
 import ExternalGlobalStyles from 'sly/web/external/apps/ExternalGlobalStyles';
