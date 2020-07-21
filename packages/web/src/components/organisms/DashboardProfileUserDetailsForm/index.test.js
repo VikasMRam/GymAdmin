@@ -32,22 +32,14 @@ const monthlyBudget = [
   '$5K+',
 ];
 
-const meta = {
+const uuidAuxMeta = {
   timeToMove,
   lookingFor,
   monthlyBudget,
 };
 
-const uuidAux = {
-  meta,
-};
-
-const status = {
-  uuidAux,
-};
-
 const defaultProps = {
-  status,
+  uuidAuxMeta,
 };
 
 const title = 'Profile';
