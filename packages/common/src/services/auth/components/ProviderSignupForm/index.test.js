@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 
 import ProviderSignupForm from '.';
 
-import { Block } from 'sly/web/components/atoms';
+import { Block } from 'sly/common/components/atoms';
 
 const handleSubmit = jest.fn();
 const defaultProps = {

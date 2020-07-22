@@ -3,7 +3,9 @@ import { string, node } from 'prop-types';
 
 import wrapperProps from './wrapperProps';
 
-import { Icon, Block } from 'sly/web/components/atoms';
+// todo: common after migration
+import { Icon } from 'sly/web/components/atoms';
+import { Block } from 'sly/common/components/atoms';
 
 const ButtonLink = ({ icon, palette, size, children, ...props }) => (
   <Block palette={palette} size={size} {...props} {...wrapperProps}>

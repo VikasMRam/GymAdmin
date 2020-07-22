@@ -9,3 +9,5 @@ export * from './snap';
 export * from './media';
 export * from './text';
 export * from './cursor';
+export * from './shadow';
+export * from './transition';

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { instanceOf, string, bool } from 'prop-types';
 import styled from 'styled-components';
 
-import Box from 'sly/web/components/atoms/Box';
+import { Box } from 'sly/web/components/atoms';
 import { topSnap, upTo } from 'sly/common/components/helpers';
 
 const Wrapper = styled(Box)`

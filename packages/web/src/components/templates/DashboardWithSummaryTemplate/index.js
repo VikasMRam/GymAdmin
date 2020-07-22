@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import { size } from 'sly/common/components/themes';
 import { upTo, withBorder, withText } from 'sly/common/components/helpers';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
-import Box from 'sly/web/components/atoms/Box';
-import { Block, Heading, Link } from 'sly/web/components/atoms';
+import { Block, Box, Heading, Link } from 'sly/web/components/atoms';
 import BackLink from 'sly/web/components/molecules/BackLink';
 
 export const Top = styled.div`

@@ -6,8 +6,7 @@ import { prop } from 'styled-tools';
 
 import { key } from 'sly/common/components/themes';
 import theme from 'sly/common/components/themes/default';
-// todo: common heading after the atom is refactored
-import { Heading } from 'sly/web/components/atoms';
+import { Heading } from 'sly/common/components/atoms';
 
 const oldPalette = {
   slate    : ['#384c57'],
