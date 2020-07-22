@@ -6,3 +6,5 @@ export const objectMap = (obj, fn) =>
   );
 
 export const isString = str => typeof str === 'string' || str instanceof String;
+
+export const isBoolean = val => typeof val === 'boolean';
