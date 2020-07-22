@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import styled from 'styled-components/native';
 
 import {
+  withDisplay,
   withText,
   withColor,
   withSpacing,
@@ -15,6 +16,7 @@ import { isString } from 'sly/common/services/helpers/utils';
 
 const Block = styled(props =>
   isString(props.children) ? <Text {...props} /> : <View {...props} />)`
+  ${withDisplay}
   ${withSpacing}
   ${withText}
   ${withColor}

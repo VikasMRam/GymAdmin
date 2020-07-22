@@ -1,15 +1,12 @@
 import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
-import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import cursor from 'sly/web/components/helpers/cursor';
+import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
-import { Heading, Button, Block, Link } from 'sly/web/components/atoms';
-import { textAlign } from 'sly/web/components/helpers/text';
+import { Heading, Button, Block } from 'sly/web/components/atoms';
 
 const StyledHeading = pad(Heading);
 StyledHeading.displayName = 'StyledHeading';
@@ -22,15 +19,6 @@ LargePaddedFullWidthButton.displayName = 'LargePaddedFullWidthButton';
 
 const PaddedFullWidthButton = pad(FullWidthButton);
 PaddedFullWidthButton.displayName = 'PaddedFullWidthButton';
-
-const StyledBlock = styled(Block)`
-  margin-bottom: ${size('spacing.large')};
-`;
-const ResetPassword = cursor(textAlign(StyledBlock));
-ResetPassword.displayName = 'ResetPassword';
-
-const Register = textAlign(Block);
-Register.displayName = 'Register';
 
 const Error = pad(Block);
 Error.displayName = 'Error';
@@ -57,13 +45,13 @@ const LoginForm = ({
     />
     {getSubmitButton(error, { children: 'Log in', type: 'submit', disabled: submitting || invalid })}
     {error && <Error palette="danger" size="caption">{error}</Error>}
-    <ResetPassword palette="primary" size="caption"  onClick={onResetPasswordClick}>
+    <ButtonLink pad="large" align="center" palette="primary" size="caption" onClick={onResetPasswordClick}>
       Reset password
-    </ResetPassword>
-    <Register size="caption" >
-      Don&apos;t have an account?{' '}
-      <Link onClick={onRegisterClick}>Sign up</Link>
-    </Register>
+    </ButtonLink>
+    <Block align="center" size="caption" >
+      Don&apos;t have an account?&nbsp;&nbsp;
+      <ButtonLink palette="primary" onClick={onRegisterClick}>Sign up</ButtonLink>
+    </Block>
   </form>
 );
 

@@ -8,7 +8,7 @@ import { Input, Block } from 'sly/web/components/atoms';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import DatatableFilters from 'sly/web/components/organisms/DatatableFilters';
 import PopoverPortal from 'sly/web/components/molecules/PopoverPortal';
-import ButtonLink from 'sly/web/components/molecules/ButtonLink';
+import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 
 const Wrapper = styled(Block)`
   display: flex;

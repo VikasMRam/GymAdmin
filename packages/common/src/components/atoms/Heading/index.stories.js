@@ -31,4 +31,9 @@ storiesOf('Common/Atoms/Heading', module)
     <Heading size="subtitle">
       Id tempor duis non esse commodo fugiat excepteur nostrud.
     </Heading>
+  ))
+  .add('align center', () => (
+    <Heading align="center">
+      Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+    </Heading>
   ));

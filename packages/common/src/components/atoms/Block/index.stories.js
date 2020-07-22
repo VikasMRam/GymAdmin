@@ -49,4 +49,27 @@ storiesOf('Common/Atoms/Block', module)
         Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
       </Block>
     </>
+  ))
+  .add('pad', () => (
+    <>
+      <Block pad="large">
+        Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+      </Block>
+      <div>content below</div>
+    </>
+  ))
+  .add('aligns', () => (
+    <>
+      <Block align="right">
+        Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+      </Block>
+      <Block align="center">
+        Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+      </Block>
+    </>
+  ))
+  .add('cursor', () => (
+    <Block cursor="pointer">
+      Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+    </Block>
   ));

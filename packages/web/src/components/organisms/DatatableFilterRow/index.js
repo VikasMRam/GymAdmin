@@ -7,7 +7,7 @@ import { size, palette } from 'sly/common/components/themes';
 import { Box } from 'sly/web/components/atoms';
 import filterPropType from 'sly/common/propTypes/datatableFilter';
 import datatableColumnsPropType from 'sly/common/propTypes/datatableColumns';
-import ButtonLink from 'sly/web/components/molecules/ButtonLink';
+import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import Field from 'sly/web/components/molecules/Field';
 import {
   noValueOperators,

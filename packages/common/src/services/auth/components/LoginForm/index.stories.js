@@ -3,17 +3,17 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import PartnerAgentLoginForm from '.';
+import LoginForm from '.';
 
 import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
-const PartnerAgentLoginFormContainer = reduxForm({
-  form: 'PartnerAgentLoginForm',
-})(PartnerAgentLoginForm);
+const LoginFormContainer = reduxForm({
+  form: 'LoginForm',
+})(LoginForm);
 
-storiesOf('Organisms|PartnerAgentLoginForm', module)
+storiesOf('Organisms|LoginForm', module)
   .add('default', () => (
-    <PartnerAgentLoginFormContainer
+    <LoginFormContainer
       handleSubmit={withPreventDefault(action('form submitted'))}
       onResetPasswordClick={action('reset password clicked')}
       onRegisterClick={action('register clicked')}

@@ -8,3 +8,4 @@ export * from './alignment';
 export * from './snap';
 export * from './media';
 export * from './text';
+export * from './cursor';

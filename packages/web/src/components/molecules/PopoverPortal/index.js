@@ -6,7 +6,7 @@ import Measure from 'react-measure';
 
 import { Block } from 'sly/web/components/atoms';
 import { size, palette } from 'sly/common/components/themes';
-import ButtonLink from 'sly/web/components/molecules/ButtonLink';
+import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import withBreakpoint from 'sly/web/components/helpers/breakpoint';
 import theme from 'sly/common/components/themes/default';
 

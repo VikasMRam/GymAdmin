@@ -1,9 +1,9 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+import { storiesOf } from '@storybook/react-native';
 
 import ButtonLink from '.';
 
-storiesOf('Atoms|ButtonLink', module)
+storiesOf('Common/Atoms/ButtonLink', module)
   .add('default', () => <ButtonLink>Hello</ButtonLink>)
   .add('with icon', () => <ButtonLink icon="add">Hello</ButtonLink>)
   .add('palette', () => <ButtonLink icon="add" palette="slate">Hello</ButtonLink>)

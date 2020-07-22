@@ -21,7 +21,7 @@ describe('LoginForm', () => {
     expect(wrapper.find('Field').filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find('Field').filter({ name: 'password' })).toHaveLength(1);
     expect(wrapper.find('PaddedFullWidthButton')).toHaveLength(1);
-    expect(wrapper.find('Register')).toHaveLength(1);
+    expect(wrapper.find('Block')).toHaveLength(1);
   });
 
   it('renders error', () => {
@@ -46,7 +46,7 @@ describe('LoginForm', () => {
     const onRegisterClick = jest.fn();
     const wrapper = wrap({ onRegisterClick });
 
-    wrapper.find('Link').simulate('click');
+    wrapper.find('Block').find('ButtonLink').simulate('click');
     expect(onRegisterClick).toHaveBeenCalled();
   });
 });
