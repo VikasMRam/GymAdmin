@@ -2,35 +2,19 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
-import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { Heading, Button, Block } from 'sly/web/components/atoms';
 
-const StyledHeading = pad(Heading);
-StyledHeading.displayName = 'StyledHeading';
-
 const FullWidthButton = fullWidth(Button);
 FullWidthButton.displayName = 'FullWidthButton';
-
-const LargePaddedFullWidthButton = pad(FullWidthButton, 'large');
-LargePaddedFullWidthButton.displayName = 'LargePaddedFullWidthButton';
-
-const PaddedFullWidthButton = pad(FullWidthButton);
-PaddedFullWidthButton.displayName = 'PaddedFullWidthButton';
-
-const Error = pad(Block);
-Error.displayName = 'Error';
-
-const getSubmitButton = (error, props = {}) =>
-  error ? <LargePaddedFullWidthButton {...props} /> : <PaddedFullWidthButton {...props} />;
 
 const LoginForm = ({
   handleSubmit, submitting, invalid, error, onResetPasswordClick, onRegisterClick,
 }) => (
   <form onSubmit={handleSubmit}>
-    <StyledHeading size="subtitle">Log in</StyledHeading>
+    <Heading pad="xLarge" size="subtitle">Log in</Heading>
     <Field
       name="email"
       label="Email"
@@ -43,8 +27,14 @@ const LoginForm = ({
       type="password"
       component={ReduxField}
     />
-    {getSubmitButton(error, { children: 'Log in', type: 'submit', disabled: submitting || invalid })}
-    {error && <Error palette="danger" size="caption">{error}</Error>}
+    <FullWidthButton
+      type="submit"
+      pad={error ? 'large' : 'xLarge'}
+      disabled={submitting || invalid}
+    >
+      Log in
+    </FullWidthButton>
+    {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
     <ButtonLink pad="large" align="center" palette="primary" size="caption" onClick={onResetPasswordClick}>
       Reset password
     </ButtonLink>

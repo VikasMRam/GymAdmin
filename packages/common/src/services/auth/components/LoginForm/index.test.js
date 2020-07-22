@@ -20,18 +20,17 @@ describe('LoginForm', () => {
 
     expect(wrapper.find('Field').filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find('Field').filter({ name: 'password' })).toHaveLength(1);
-    expect(wrapper.find('PaddedFullWidthButton')).toHaveLength(1);
+    expect(wrapper.find('FullWidthButton')).toHaveLength(1);
     expect(wrapper.find('Block')).toHaveLength(1);
   });
 
   it('renders error', () => {
     const error = 'error';
     const wrapper = wrap({ error });
-    const errors = wrapper.find('Error');
+    const errors = wrapper.find('Block').first();
 
-    expect(wrapper.find('LargePaddedFullWidthButton')).toHaveLength(1);
-    expect(errors).toHaveLength(1);
-    expect(errors.at(0).dive().render().text()).toBe(error);
+    expect(wrapper.find('FullWidthButton')).toHaveLength(1);
+    expect(errors.contains(error)).toBeTruthy();
   });
 
   it('handles submit', () => {
