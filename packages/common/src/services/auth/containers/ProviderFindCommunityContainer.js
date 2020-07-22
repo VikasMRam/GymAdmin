@@ -36,11 +36,16 @@ export default class ProviderFindCommunityContainer extends Component {
     community: null,
   };
 
-  componentDidMount() {
-    const { authenticated } = this.props;
-    if (authenticated && authenticated.options && authenticated.options.community) {
-      this.setState({ community: authenticated.options.community });
+  // todo: test if it works
+  static getDerivedStateFromProps({ authenticated }, { community }) {
+    if (!community && authenticated &&
+      authenticated.options && authenticated.options.community) {
+      return {
+        community: authenticated.options.community,
+      };
     }
+
+    return null;
   }
 
   handleSubmit = () => {

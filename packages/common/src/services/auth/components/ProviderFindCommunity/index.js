@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import { Heading, Button, Block, Link } from 'sly/web/components/atoms';
+import { Heading, Button, Block } from 'sly/web/components/atoms';
+import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import Field from 'sly/web/components/molecules/Field';
 import { textAlign } from 'sly/web/components/helpers/text';
 
@@ -47,7 +48,7 @@ export default class ProviderFindCommunity extends Component {
         </StyledButton>
         {error && <Block palette="danger">{error}</Block>}
         <Continue size="caption">
-          <Link onClick={onNotFound}>Can&apos;t find my community?</Link>
+          <ButtonLink palette="primary" onClick={onNotFound}>Can&apos;t find my community?</ButtonLink>
         </Continue>
       </form>
     );

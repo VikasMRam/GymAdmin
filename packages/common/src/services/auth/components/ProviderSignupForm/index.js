@@ -7,7 +7,8 @@ import { size, palette } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { textAlign } from 'sly/web/components/helpers/text';
-import { Heading, Button, Block, Link } from 'sly/web/components/atoms';
+import { Heading, Button, Block } from 'sly/web/components/atoms';
+import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 
 const StyledHeading = pad(Heading);
 StyledHeading.displayName = 'StyledHeading';
@@ -64,7 +65,7 @@ const ProviderSignupForm = ({
     {error && <Block palette="danger">{error}</Block>}
     <Login size="caption">
       Already have an account?{' '}
-      <Link onClick={onLoginClicked}>Log in</Link>
+      <ButtonLink palette="primary" onClick={onLoginClicked}>Log in</ButtonLink>
     </Login>
   </form>
 );
