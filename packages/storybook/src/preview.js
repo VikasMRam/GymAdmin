@@ -12,12 +12,6 @@ import { addAppWrapper } from './preview.common';
 import theme from 'sly/common/components/themes/default';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
 
-const decoratedAddAppWrapper = story => addAppWrapper(story, (
-  <Helmet>
-    <style type="text/css">{GlobalStyles}</style>
-  </Helmet>
-));
-
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
 
@@ -29,4 +23,13 @@ addDecorator(story => (
   </ThemeProvider>
 ));
 
-addDecorator(decoratedAddAppWrapper);
+addDecorator(addAppWrapper);
+
+addDecorator(story => (
+  <>
+    {story()}
+    <Helmet>
+      <style type="text/css">{GlobalStyles}</style>
+    </Helmet>
+  </>
+));

@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 import { getStorybookUI, addDecorator, configure } from '@storybook/react-native';
 import { ThemeProvider } from 'styled-components/native';
 
@@ -16,16 +17,20 @@ configure(() => {
 
 addDecorator(addAppWrapper);
 
+// add some margin to prevent overlap with mobile header
 addDecorator(story => (
-  <ThemeProvider theme={theme}>
-    {story()}
-  </ThemeProvider>
+  <View style={{ marginTop: 50 }}>
+    <ThemeProvider theme={theme}>
+      {story()}
+    </ThemeProvider>
+  </View>
 ));
 
 // Refer to https://github.com/storybookjs/storybook/tree/master/app/react-native#start-command-parameters
 // To find allowed options for getStorybookUI
 const StorybookUIRoot = getStorybookUI({
   asyncStorage: null,
+  shouldPersistSelection: false,
 });
 
 export default StorybookUIRoot;

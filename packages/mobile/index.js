@@ -5,4 +5,9 @@ import App from './src/App';
 
 import StorybookApp from 'sly/storybook/mobile';
 
-AppRegistry.registerComponent(appName, () => __DEV__ && process.env.IS_STORYBOOK ? StorybookApp : App);
+if (__DEV__ && process.env.IS_STORYBOOK) {
+  console.log('Storybook enabled. Launching that instead of main app.');
+  AppRegistry.registerComponent(appName, () => StorybookApp);
+} else {
+  AppRegistry.registerComponent(appName, () => App);
+}

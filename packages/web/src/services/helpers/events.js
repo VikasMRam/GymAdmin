@@ -2,14 +2,12 @@ import ReactGA from 'react-ga';
 import { Cookies } from 'react-cookie';
 import { stringify } from 'query-string';
 import { v4 } from 'uuid';
-import { domain } from 'sly/web/config';
-import crypto from 'crypto';
 
+import makeSid from './makeSid';
 
-import { isServer, isTest, gAnalyticsKey, eventServerUrl, isDev, gaEnv } from 'sly/web/config';
+import { domain, isServer, isTest, gAnalyticsKey, eventServerUrl, isDev, gaEnv } from 'sly/web/config';
 
 const cookie = new Cookies();
-const makeSid = () => crypto.randomBytes(16).toString('hex');
 
 const getUUID = () => {
   const slyUuid = v4();

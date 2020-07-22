@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { object, func, oneOf, string, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import styled from 'styled-components';
 
 import { authenticateCancel, authenticateSuccess } from 'sly/web/store/authenticated/actions';
 import { withAuth } from 'sly/web/services/api';
-import spacing from 'sly/web/components/helpers/spacing';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
-import { Box } from 'sly/web/components/atoms';
+import { Box, Block } from 'sly/common/components/atoms';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
 import { Wrapper } from 'sly/common/services/auth/components/Template';
 import ResetPasswordFormContainer from 'sly/common/services/auth/containers/ResetPasswordFormContainer';
@@ -18,8 +16,6 @@ import ProviderSignupFormContainer from 'sly/common/services/auth/containers/Pro
 import CustomerSignupConfirmationContainer from 'sly/common/services/auth/containers/CustomerSignupConfirmationContainer';
 import ProviderFindCommunityContainer  from 'sly/common/services/auth/containers/ProviderFindCommunityContainer';
 import ProviderConfirmation from 'sly/common/services/auth/components/ProviderConfirmation';
-
-const ModalBody = spacing(styled.div``, { top: null });
 
 const mapStateToProps = state => ({
   authenticated: state.authenticated,
@@ -196,9 +192,9 @@ export default class AuthContainer extends Component {
         onClose={authenticateCancel}
       >
         <HeaderWithClose onClose={authenticateCancel} />
-        <ModalBody>
+        <Block paddingLeft="xLarge" paddingRight="xLarge" paddingBottom="xLarge">
           {wizard}
-        </ModalBody>
+        </Block>
       </Modal>
     );
   }
