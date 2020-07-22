@@ -1,4 +1,5 @@
 import React from 'react';
+import { Text } from 'react-native';
 
 import ButtonLink from '.';
 
@@ -8,7 +9,7 @@ const wrap = (props = {}) => renderWithTheme(<ButtonLink {...props} />);
 
 describe('ButtonLink|Mobile', () => {
   it('renders children when passed in', () => {
-    const wrapper = wrap({ children: 'test' });
+    const wrapper = wrap({ children: <Text>test</Text> });
     expect(wrapper.queryByText('test')).toBeTruthy();
   });
 
@@ -19,6 +20,6 @@ describe('ButtonLink|Mobile', () => {
 
   it('renders icon passed in', () => {
     const wrapper = wrap({ icon: 'foo' });
-    expect(wrapper.queryByTestID('Icon')).toBeTruthy();
+    expect(wrapper.getByTestId('Icon')).toBeTruthy();
   });
 });

@@ -47,7 +47,7 @@ describe('ProviderSignupForm', () => {
     const onLoginClicked = jest.fn();
     const wrapper = wrap({ handleSubmit, onLoginClicked });
 
-    wrapper.find('Link').simulate('click');
+    wrapper.find('ButtonLink').simulate('click');
     expect(onLoginClicked).toHaveBeenCalled();
   });
 });
