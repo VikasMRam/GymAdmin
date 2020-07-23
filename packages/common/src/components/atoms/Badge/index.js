@@ -1,17 +1,21 @@
 
 import styled from 'styled-components';
 
-import props from './props';
-
-import { size } from 'sly/common/components/themes';
 import Block from 'sly/common/components/atoms/Block';
 
 const Badge = styled(Block)`
-  display: inline-flex;
   align-items: center;
-  padding: ${size('spacing.tiny')} ${size('spacing.regular')};
 `;
 
-Badge.defaultProps = props.defaultProps;
+Badge.defaultProps = {
+  display: 'inline-flex',
+  padding: ['tiny', 'regular'],
+  background: 'warning',
+  backgroundVariation: 'base',
+  palette: 'slate',
+  size: 'tiny',
+  weight: 'medium',
+  borderRadius: 'large',
+};
 
 export default Badge;

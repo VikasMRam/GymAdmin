@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import Root from './Root';
+
 import {
   withDisplay,
   withText,
@@ -12,7 +14,7 @@ import {
   withCursor,
 } from 'sly/common/components/helpers';
 
-const Block = styled.div`
+const Block = styled(Root)`
   ${withDisplay}
   ${withSpacing}
   ${withText}

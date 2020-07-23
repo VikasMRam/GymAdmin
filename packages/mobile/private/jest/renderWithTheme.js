@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components/native';
+import { ThemeProvider } from 'styled-components';
 import { render } from 'react-native-testing-library';
 
 import theme from 'sly/common/components/themes/default';
