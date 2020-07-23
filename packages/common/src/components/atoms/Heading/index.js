@@ -1,31 +1,45 @@
 import React from 'react';
 import styled from 'styled-components';
+import { oneOf } from 'prop-types';
 
-import props from './props';
-import getTag from './getTag';
-import getMarginBottom from './getMarginBottom';
+import Root from './Root';
 
 import {
   withText,
   withColor,
+  withSpacing,
 } from 'sly/common/components/helpers';
 
-const Heading = styled((props) => {
-  const HeadingTag = getTag(props.level);
-  return (
-    <HeadingTag
-      size={props.size || props.level}
-      {...props}
-    />
-  );
-})`
-  margin-bottom: ${getMarginBottom};
+const getPad = (size) => {
+  switch (size) {
+    case 'hero': return 'xxLarge';
+    case 'title': return 'xLarge';
+    case 'subtitle': return 'large';
+    default: return 'large';
+  }
+};
+
+const Heading = styled(props => (
+  <Root
+    size={props.size || props.level}
+    pad={getPad(props.size)}
+    {...props}
+  />
+))`
+  ${withSpacing}
   ${withText}
   ${withColor}
 `;
 
-Heading.propTypes = props.propTypes;
+Heading.propTypes = {
+  level: oneOf(['hero', 'title', 'subtitle']).isRequired,
+};
 
-Heading.defaultProps = props.defaultProps;
+Heading.defaultProps = {
+  level: 'title',
+  palette: 'slate',
+  variation: 'base',
+  weight: 'medium',
+};
 
 export default Heading;

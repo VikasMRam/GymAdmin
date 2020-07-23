@@ -1,12 +1,10 @@
 import React from 'react';
 import { string, node } from 'prop-types';
 
-import wrapperProps from './wrapperProps';
-
 import { Block, Icon } from 'sly/common/components/atoms';
 
 const ButtonLink = ({ icon, palette, size, children, ...props }) => (
-  <Block palette={palette} size={size} {...props} {...wrapperProps}>
+  <Block palette={palette} size={size} {...props}>
     {icon && <Icon testID="Icon" icon={icon} palette={palette} size={size} />}
     {children}
   </Block>
@@ -20,6 +18,7 @@ ButtonLink.propTypes = {
 };
 
 ButtonLink.defaultProps = {
+  display: 'inline-flex',
   palette: 'secondary',
   cursor: 'pointer',
 };
