@@ -3,10 +3,10 @@ import { View } from 'react-native';
 import { func, bool, string } from 'prop-types';
 
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
-import { Heading, Block } from 'sly/web/components/atoms';
+import { Heading, Block } from 'sly/common/components/atoms';
 
 const LoginForm = ({
-  handleSubmit, submitting, invalid, error, onResetPasswordClick, onRegisterClick,
+  handleSubmit, error, onResetPasswordClick, onRegisterClick,
 }) => (
   <View onSubmit={handleSubmit}>
     <Heading pad="xLarge" size="subtitle">Log in</Heading>
