@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 import redirectTo from './redirectTo';
 
-import { routes as routesPropType } from 'sly/common/propTypes/routes';
+import { routes as routesPropType } from 'sly/web/propTypes/routes';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName

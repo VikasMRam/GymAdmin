@@ -118,9 +118,10 @@ const Message = ({
     const element = sentToArray[i];
     sentToString += `${element.type} ${element.status} to ${element.name}. `;
   }
+
   return (
     <Wrapper className={className}>
-      {user && <StyledAvatar size="body" user={user} />}
+      {user && <StyledAvatar size="regular" user={user} />}
       {textMessageTypes.includes(message.data.type) && (
         <StyledBox padding="large" dark={dark}>
           {!isHtmlMessage(message) && <PaddedBlock size="caption">{getValue(message)}</PaddedBlock>}

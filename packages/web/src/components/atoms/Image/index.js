@@ -49,7 +49,7 @@ const ResponsiveWrapper = styled.div`
   }
 `;
 
-const LazyResponsiveWrapper = (props) => (
+const LazyResponsiveWrapper = props => (
   <Lazy ltIE9>
     <ResponsiveWrapper {...props} />
   </Lazy>

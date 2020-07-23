@@ -8,10 +8,11 @@ import { community as communityPropType } from 'sly/common/propTypes/community';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
-import { Link, ClampedText } from 'sly/web/components/atoms';
+import { Link } from 'sly/web/components/atoms';
 import { Td, Tr } from 'sly/web/components/atoms/Table';
 import { buildAddressDisplay } from 'sly/web/services/helpers/communityReferral';
 import { DASHBOARD_COMMUNITIES_DETAIL_PATH } from 'sly/web/constants/dashboardAppPaths';
+import Block from 'sly/web/components/atoms/Block';
 
 const Wrapper = mobileOnly(borderRadius(pad(Tr, 'large'), 'small'), css`
   display: flex;
@@ -40,11 +41,9 @@ const StyledNameCell = ({
   community, to, ...props
 }) => (
   <Td {...props}>
-    <ClampedText>
-      <Link to={to} {...props}>
-        {community.name}
-      </Link>
-    </ClampedText>
+    <Link block clamped to={to} {...props}>
+      {community.name}
+    </Link>
   </Td>
 );
 
@@ -92,7 +91,7 @@ const CommunityRowCard = ({ community, onCommunityClick }) => {
       <NameCell community={community} to={communityDetailsPath} onClick={() => onCommunityClick(community)} />
       <AddressCell>
         <span>Address</span>
-        <span>{buildAddressDisplay(community)}</span>
+        <Block clamped>{buildAddressDisplay(community)}</Block>
       </AddressCell>
       <StatusCell status={status} />
     </Wrapper>

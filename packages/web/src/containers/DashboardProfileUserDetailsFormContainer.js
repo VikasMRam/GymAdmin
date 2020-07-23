@@ -127,7 +127,7 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
       });
   };
   render() {
-    const { user, uuidAux, ...props } = this.props;
+    const { user, uuidAux, status, ...props } = this.props;
     const initialValues = convertUserToProfileFormValues(user, uuidAux);
     let emailWarning = null;
     const hasCustomerRole = userIs(user, CUSTOMER_ROLE);
@@ -142,6 +142,13 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
     const warn = createValidator({
       email: [required],
     }, messageObj);
+
+    const uuidAuxMeta = status.uuidAux.meta || {
+      lookingFor: [],
+      monthlyBudget: [],
+      timeToMove: [],
+    };
+
     return (
       <ReduxForm
         initialValues={initialValues}
@@ -149,6 +156,7 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
         hasCustomerRole={hasCustomerRole}
         user={user}
         warn={warn}
+        uuidAuxMeta={uuidAuxMeta}
         {...props}
       />
     );
