@@ -3,7 +3,7 @@ import { Cookies } from 'react-cookie';
 import { stringify } from 'query-string';
 import { v4 } from 'uuid';
 
-import makeSid from './makeSid';
+import { randomHexNumber } from './utils';
 
 import { domain, isServer, isTest, gAnalyticsKey, eventServerUrl, isDev, gaEnv } from 'sly/web/config';
 
@@ -16,7 +16,7 @@ const getUUID = () => {
 };
 
 const getSID = () => {
-  const sid = makeSid();
+  const sid = randomHexNumber();
   cookie.set('sly_sid', sid, { domain, path: '/', maxAge: 3600 });
   return sid;
 };
