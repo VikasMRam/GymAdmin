@@ -3,7 +3,7 @@ import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { getKey, size } from 'sly/web/components/themes';
+import { getKey, size } from 'sly/common/components/themes';
 import { Block, Button } from 'sly/web/components/atoms';
 import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
 import IconButton from 'sly/web/components/molecules/IconButton';

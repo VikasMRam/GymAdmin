@@ -5,7 +5,7 @@ import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
 import Helmet from 'react-helmet';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Label, Input, Icon, Block, Span, Button } from 'sly/web/components/atoms';
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/web/components/molecules/MultipleChoice';

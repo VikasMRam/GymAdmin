@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, func, arrayOf, object } from 'prop-types';
 
-import { size, assetPath, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
-import { Image, Link, Block, Heading, Hr } from 'sly/web/components/atoms';
+import { Link, Block, Heading, Hr } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import HowItWorksInfoTile from 'sly/web/components/molecules/HowItWorksInfoTile';
 import IconInfoTile from 'sly/web/components/molecules/IconInfoTile';

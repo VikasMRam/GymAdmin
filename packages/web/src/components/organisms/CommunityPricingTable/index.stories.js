@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 
 const Box = styled.div`

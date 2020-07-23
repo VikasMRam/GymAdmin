@@ -2,7 +2,7 @@ import { bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 

@@ -1,10 +1,11 @@
 import React from 'react';
-import { string, func, bool } from 'prop-types';
+import { string, func } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { Field } from 'redux-form';
 
-import { size, gridColumns } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
+import { gridColumns } from 'sly/web/components/themes';
 import { TIME_OPTIONS, MEDICAID_OPTIONS } from 'sly/web/constants/bookingForm';
 import { Heading, Block } from 'sly/web/components/atoms';
 import ReduxField from 'sly/web/components/organisms/ReduxField';

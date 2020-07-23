@@ -1,8 +1,16 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Badge from 'sly/common/components/atoms/Badge';
+import Badge from '.';
 
 storiesOf('Common/Atoms/Badge', module)
   .add('default', () => <Badge>New</Badge>)
-  .add('with palette', () => <Badge palette="danger" textPalette="white">New</Badge>);
+  .add('size and weight', () => <Badge size="subtitle" weight="bold">New</Badge>)
+  .add('borderRadius', () => <Badge borderRadius="small">New</Badge>)
+  .add('palette', () => <Badge palette="danger">New</Badge>)
+  .add('background and palette', () => <Badge background="danger" palette="white">New</Badge>)
+  .add('background, variation and palette', () => (
+    <Badge background="danger" backgroundVariation="filler" palette="grey">
+      New
+    </Badge>
+  ));

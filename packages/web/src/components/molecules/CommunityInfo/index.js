@@ -3,7 +3,7 @@ import { bool, string, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { Link, Block, Icon, Heading, ClampedText } from 'sly/web/components/atoms';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';

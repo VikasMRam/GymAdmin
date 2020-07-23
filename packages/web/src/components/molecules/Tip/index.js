@@ -2,7 +2,7 @@ import React from 'react';
 import { string, node } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { Icon, Block } from 'sly/web/components/atoms';

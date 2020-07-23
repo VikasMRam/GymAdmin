@@ -17,7 +17,7 @@ import DashboardAgentReferralSearch from 'sly/web/components/organisms/Dashboard
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import DashboardCommunityReferralContactDetailsContainer from 'sly/web/containers/DashboardCommunityReferralContactDetailsContainer';
 import DashboardAgentReferralContactDetailsContainer from 'sly/web/containers/DashboardAgentReferralContactDetailsContainer';
-import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import { userIs } from 'sly/web/services/helpers/role';
 
 @query('getCommunities', 'getCommunities')

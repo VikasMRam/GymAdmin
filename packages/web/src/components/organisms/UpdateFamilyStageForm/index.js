@@ -3,7 +3,7 @@ import { func, string, arrayOf, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { palette, size } from 'sly/web/components/themes';
+import { palette, size } from 'sly/common/components/themes';
 import {
   FAMILY_STAGE_ORDERED,
   FAMILY_STAGE_WON,
@@ -15,7 +15,7 @@ import {
   WAITLISTED,
   ESTIMATED_MOVE_IN,
 } from 'sly/web/constants/familyDetails';
-import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/common/constants/roles';
 import Role from 'sly/web/components/common/Role';
 import pad from 'sly/web/components/helpers/pad';
 import { priceFormatter, priceParser } from 'sly/web/services/helpers/pricing';

@@ -2,7 +2,7 @@ import React from 'react';
 import { string, bool } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Icon, Input } from 'sly/web/components/atoms';
 
 const borderColor = (p) => {

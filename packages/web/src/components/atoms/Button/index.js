@@ -6,13 +6,13 @@ import { Link as RRLink } from 'react-router-dom';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
-import { size, palette } from 'sly/web/components/themes';
+import { routes as routesPropType } from 'sly/web/propTypes/routes';
+import { withSpacing } from 'sly/common/components/helpers';
+import { size, palette } from 'sly/common/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { withSpacing } from 'sly/web/components/helpers';
 import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 import { createRRAnchor } from 'sly/web/components/helpers/router';
-import { routes as routesPropType } from 'sly/web/propTypes/routes';
 
 const backgroundColor = ({
   ghost, transparent, selected, secondary, disabled,

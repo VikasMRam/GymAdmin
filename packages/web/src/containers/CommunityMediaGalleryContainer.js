@@ -6,7 +6,7 @@ import loadable from '@loadable/component';
 import CommunityMediaGallery from 'sly/web/components/organisms/CommunityMediaGallery';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { prefetch } from 'sly/web/services/api';
-import { assetPath, getKey } from 'sly/web/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import withAuth from 'sly/web/services/api/withAuth';
 import withNotification from 'sly/web/controllers/withNotification';
 import withModal from 'sly/web/controllers/withModal';

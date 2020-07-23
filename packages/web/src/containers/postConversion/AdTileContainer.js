@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { func, oneOf, string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, assetPath } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { hcaAdEnabled } from 'sly/web/services/helpers/tileAds';
 import { HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';

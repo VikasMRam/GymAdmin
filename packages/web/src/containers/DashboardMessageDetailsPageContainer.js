@@ -6,7 +6,7 @@ import DashboardMessageDetailsPage from 'sly/web/components/pages/DashboardMessa
 import { FAMILY_DASHBOARD_MESSAGES_PATH, AGENT_DASHBOARD_MESSAGES_PATH } from 'sly/web/constants/dashboardAppPaths';
 import userPropType from 'sly/common/propTypes/user';
 import { userIs } from 'sly/web/services/helpers/role';
-import { CUSTOMER_ROLE, AGENT_ND_ROLE } from 'sly/web/constants/roles';
+import { CUSTOMER_ROLE, AGENT_ND_ROLE } from 'sly/common/constants/roles';
 
 @withUser
 export default class DashboardMessageDetailsPageContainer extends Component {

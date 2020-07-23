@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { func, string, bool } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Button } from 'sly/web/components/atoms';
 import IconButton from 'sly/web/components/molecules/IconButton';
 

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { number } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { palette } from 'sly/web/components/themes';
+import { palette } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { STEP_INPUT_FIELD_NAMES } from 'sly/web/external/constants/steps';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';

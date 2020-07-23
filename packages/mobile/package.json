@@ -8,7 +8,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "env:storybook": "../../node_modules/.bin/cross-env-shell IS_STORYBOOK=true NODE_BINARY=$(which node)",
+    "env:storybook": "../../node_modules/.bin/cross-env-shell IS_STORYBOOK=true",
     "android:storybook": "npm run env:storybook -- npm run android",
     "ios:storybook": "npm run env:storybook -- npm run ios",
     "test": "../../node_modules/.bin/jest --passWithNoTests",

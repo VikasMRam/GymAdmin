@@ -5,11 +5,10 @@ import ReactModal from 'react-modal';
 import { ifProp, switchProp } from 'styled-tools';
 import Helmet from 'react-helmet';
 
-import { size, palette, key } from 'sly/web/components/themes';
+import { size, palette, key } from 'sly/common/components/themes';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import NewModal from 'sly/web/components/atoms/NewModal';
 import ModalGlobalStyles from 'sly/web/components/molecules/Modal/ModalGlobalStyles';
-
 
 const closeButtonOutsideLayouts = ['gallery', 'fullScreen'];
 const bottomCloseButtonLayouts = ['bottomDrawer'];

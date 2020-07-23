@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 import loadable from '@loadable/component';
-import { ifProp } from 'styled-tools';
 
-import { size, palette, assetPath } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import { titleize } from 'sly/web/services/helpers/strings';
 import { getTocSeoLabel } from 'sly/web/services/helpers/search';
 import { getHelmetForSearchPage } from 'sly/web/services/helpers/html_headers';
@@ -58,11 +58,6 @@ const FilterColumnWrapper = styled(Box)`
   width: ${size('layout.col3')};
   margin-bottom: ${size('spacing.xLarge')}
 `;
-
-const ImageButtonWrapper = pad(styled.div`
-  position: relative;
-  text-align: center;
-`, 'large');
 
 const LegacyContent = pad(styled.div`
   a {

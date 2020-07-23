@@ -6,7 +6,7 @@ import { ifProp } from 'styled-tools';
 
 import messagePropType from 'sly/common/propTypes/conversation/conversationMessage';
 import participantPropType from 'sly/common/propTypes/conversation/conversationParticipant';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import {
   CONVERSATION_MESSAGE_DATA_TYPE_BUTTONLIST,
   CONVERSATION_MESSAGE_DATA_TYPE_TEXT,

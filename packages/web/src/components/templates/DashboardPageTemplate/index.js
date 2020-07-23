@@ -1,8 +1,8 @@
 import React from 'react';
-import { node, string, bool } from 'prop-types';
+import { node, string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 import DashboardMenu from 'sly/web/components/molecules/DashboardMenu';

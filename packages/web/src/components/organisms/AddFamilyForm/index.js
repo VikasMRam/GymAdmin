@@ -3,7 +3,7 @@ import { func, object, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { SOURCE_OPTIONS, TIME_TO_MOVE_OPTIONS, LOOKING_FOR_OPTIONS } from 'sly/web/constants/familyDetails';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';

@@ -11,7 +11,7 @@ import { galleryPropType, imagePropType } from 'sly/common/propTypes/gallery';
 import { query, prefetch, getRelationship } from 'sly/web/services/api';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
 import DashboardCommunityPhotosForm from 'sly/web/components/organisms/DashboardCommunityPhotosForm';
 import { purgeFromRelationships, invalidateRequests } from 'sly/web/services/api/actions';
 import ConfirmationDialog from 'sly/web/components/molecules/ConfirmationDialog';

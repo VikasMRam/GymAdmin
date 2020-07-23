@@ -6,8 +6,8 @@ import pick from 'lodash/pick';
 
 import userPropType from 'sly/common/propTypes/user';
 import clientPropType from 'sly/common/propTypes/client';
-import { size } from 'sly/web/components/themes';
-import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { size } from 'sly/common/components/themes';
+import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import Field from 'sly/web/components/molecules/Field';
 import {
   FAMILY_STATUS_ACTIVE,

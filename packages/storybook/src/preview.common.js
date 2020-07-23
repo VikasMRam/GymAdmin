@@ -7,9 +7,8 @@ import configureStore from 'sly/web/store/configure';
 
 const store = configureStore();
 
-export const addAppWrapper = (story, rest = {}) => (
+export const addAppWrapper = story => (
   <Provider store={store}>
     {story()}
-    {rest}
   </Provider>
 );

@@ -1,9 +1,6 @@
 export Bar from './Bar';
-export Block from './Block';
-export Box from './Box';
 export Button from './Button';
 export Centered from './Centered';
-export Heading from './Heading';
 export Hr from './Hr';
 export Icon from './Icon';
 export Image from './Image';
@@ -19,7 +16,6 @@ export Thumbnail from './Thumbnail';
 export Map from './Map';
 export ClampedText from './ClampedText';
 export BoxChoiceTile from './BoxChoiceTile';
-export Logo from './Logo';
-export { Badge } from 'sly/common/components/atoms';
+export { Badge, Block, Box, Heading, Logo } from 'sly/common/components/atoms';
 export StickyFooter from './StickyFooter';
 export RichTextArea from './RichTextArea';

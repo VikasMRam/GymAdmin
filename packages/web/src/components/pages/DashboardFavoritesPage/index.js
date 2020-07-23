@@ -2,8 +2,8 @@ import React from 'react';
 import { arrayOf, object, func, bool, shape } from 'prop-types';
 import styled from 'styled-components';
 
+import { size } from 'sly/common/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import shadow from 'sly/web/components/helpers/shadow';
 import Masonry from 'sly/web/components/common/Masonry';

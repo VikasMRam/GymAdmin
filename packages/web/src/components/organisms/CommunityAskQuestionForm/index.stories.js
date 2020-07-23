@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
 import CommunityAskQuestionForm from 'sly/web/components/organisms/CommunityAskQuestionForm';
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const CommunityAskQuestionFormContainer = reduxForm({
   form: 'CommunityAskQuestionForm',

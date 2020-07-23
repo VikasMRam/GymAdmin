@@ -3,11 +3,11 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 
+import { size } from 'sly/common/components/themes';
 import HubHeader from 'sly/web/components/molecules/HubHeader';
 import PhoneCTAFooter from 'sly/web/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/web/components/molecules/NextSteps';
 import Tip from 'sly/web/components/molecules/Tip';
-import { size } from 'sly/web/components/themes';
 import {
   HubPageTemplate,
   makeBody,

@@ -2,7 +2,7 @@ import React from 'react';
 import { number, func, string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { text as textPropType } from 'sly/common/propTypes/text';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';

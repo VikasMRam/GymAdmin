@@ -1,3 +1,5 @@
+const path = require('path');
+
 const commonConfig = require('../../jest.config.js');
 
 module.exports = {
@@ -14,4 +16,7 @@ module.exports = {
     ...commonConfig.moduleNameMapper,
     '^react-native$': '<rootDir>/node_modules/react-native',
   },
+  setupFiles: [
+    path.join(__dirname, 'private/jest/setupTests.js'),
+  ],
 };

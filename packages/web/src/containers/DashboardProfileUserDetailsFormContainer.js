@@ -9,7 +9,7 @@ import { createValidator, required, email, usPhone } from 'sly/web/services/vali
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/common/propTypes/user';
 import { withUser, query } from 'sly/web/services/api';
 import { userIs } from 'sly/web/services/helpers/role';
-import { CUSTOMER_ROLE } from 'sly/web/constants/roles';
+import { CUSTOMER_ROLE } from 'sly/common/constants/roles';
 
 const validate = createValidator({
   name: [required],

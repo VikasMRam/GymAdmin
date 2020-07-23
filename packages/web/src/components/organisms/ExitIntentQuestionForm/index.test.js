@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import ExitIntentQuestionForm from './index';
+import ExitIntentQuestionForm from '.';
 
 const handleSubmit = jest.fn();
 const title = 'Wait! Get support from a Local Senior Living Expert. This is a free service.';

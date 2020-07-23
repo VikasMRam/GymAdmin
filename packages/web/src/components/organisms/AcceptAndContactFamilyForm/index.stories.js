@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
 import AcceptAndContactFamilyForm from 'sly/web/components/organisms/AcceptAndContactFamilyForm';
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const AcceptAndContactFamilyFormContainer = reduxForm({
   form: 'AcceptAndContactFamilyForm',

@@ -8,7 +8,7 @@ import DatatableFilters from '.';
 import datatableClient from 'sly/storybook/sample-data/datatable-client.json';
 import { makeQuerystringFilters, parseQuerystringFilters, simpleQSParse } from 'sly/web/services/datatable/helpers';
 import PopoverPortal from 'sly/web/components/molecules/PopoverPortal';
-import ButtonLink from 'sly/web/components/molecules/ButtonLink';
+import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import Button from 'sly/web/components/atoms/Button';
 
 const StyledInput = styled.input`

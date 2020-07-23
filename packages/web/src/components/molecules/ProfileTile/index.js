@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { switchProp } from 'styled-tools';
 import { string, shape, oneOf, func } from 'prop-types';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Image, Link } from 'sly/web/components/atoms';
 
 const Wrapper = styled(Link)`

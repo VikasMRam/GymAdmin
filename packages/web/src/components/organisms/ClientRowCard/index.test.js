@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import dayjs from 'dayjs';
 
-import ClientRowCard from './index';
+import ClientRowCard from '.';
 
 import {
   Icon,

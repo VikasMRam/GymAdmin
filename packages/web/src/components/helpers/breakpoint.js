@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { isBrowser } from 'sly/web/config';
-import theme from 'sly/web/components/themes/default';
+import theme from 'sly/common/components/themes/default';
 
 export const MOBILE = 'mobile';
 export const TABLET = 'tablet';

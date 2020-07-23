@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
-
-import { size, palette, getKey } from 'sly/web/components/themes';
+import { size, palette, getKey } from 'sly/common/components/themes';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 
 const StyledImg = styled(ResponsiveImage)`

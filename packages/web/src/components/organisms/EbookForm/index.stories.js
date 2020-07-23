@@ -3,10 +3,10 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import EbookForm from './index';
+import EbookForm from '.';
 
 import Modal from 'sly/web/components/molecules/Modal';
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const EbookFormContainer = reduxForm({
   form: 'EbookForm',

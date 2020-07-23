@@ -3,15 +3,15 @@ import { element, number, string } from 'prop-types';
 import { prop } from 'styled-tools';
 import styled from 'styled-components';
 
-import { palette } from 'sly/web/components/themes';
+import { palette } from 'sly/common/components/themes';
 
 const Wrapper = styled.div`
   position: relative;
   width: max-content;
 
   input[type="file"] {
-    opacity: 0; 
-    position: absolute; 
+    opacity: 0;
+    position: absolute;
     width: 100%;
     height: 100%;
     right: 0;

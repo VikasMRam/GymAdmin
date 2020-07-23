@@ -11,7 +11,7 @@ import userPropType, { uuidAux as uuidAuxProps } from 'sly/common/propTypes/user
 import { withUser, query } from 'sly/web/services/api';
 import { adminAgentPropType } from 'sly/common/propTypes/agent';
 import { userIs } from 'sly/web/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import withNotification from 'sly/web/controllers/withNotification';
 
 const validate = createValidator({

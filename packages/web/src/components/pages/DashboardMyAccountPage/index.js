@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import DashboardProfileUserDetailsFormContainer from 'sly/web/containers/DashboardProfileUserDetailsFormContainer';
 import DashboardAddPasswordFormContainer from 'sly/web/containers/DashboardAddPasswordFormContainer';

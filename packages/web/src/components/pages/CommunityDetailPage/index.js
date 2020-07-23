@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
 import {
   getBreadCrumbsForCommunity,
