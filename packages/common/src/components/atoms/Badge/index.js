@@ -1,11 +1,8 @@
-
-import styled from 'styled-components';
+import React from 'react';
 
 import Block from 'sly/common/components/atoms/Block';
 
-const Badge = styled(Block)`
-  align-items: center;
-`;
+const Badge = props => <Block {...props} />;
 
 Badge.defaultProps = {
   display: 'inline-flex',
@@ -16,6 +13,7 @@ Badge.defaultProps = {
   size: 'tiny',
   weight: 'medium',
   borderRadius: 'large',
+  align: 'center',
 };
 
 export default Badge;

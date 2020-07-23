@@ -15,7 +15,6 @@ import {
 } from 'sly/common/components/helpers';
 
 const Block = styled(Root)`
-  ${withDisplay}
   ${withSpacing}
   ${withText}
   ${withColor}
@@ -24,6 +23,8 @@ const Block = styled(Root)`
   ${withAlign}
   ${withClamping}
   ${withCursor}
+  ${withDisplay}
 `;
+// put withDisplay last to make sure that this display styles are always first priority
 
 export default Block;

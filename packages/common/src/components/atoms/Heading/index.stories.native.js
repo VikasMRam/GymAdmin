@@ -29,6 +29,6 @@ storiesOf('Common/Atoms/Heading', module)
   ))
   .add('align center', () => (
     <Heading align="center">
-      Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+      Officia aliqua reprehenderit.
     </Heading>
   ));

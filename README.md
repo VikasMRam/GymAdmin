@@ -4,7 +4,7 @@ Individual folders in packages folder will have different projects or packages(e
 
 ## Setup
 
-To setup do ```npm install``` in root folder. 
+To setup do ```npm install``` in root folder.
 
 ## Usage
 
@@ -20,12 +20,17 @@ Scripts supported by root package:
 
   eg:
 
-      - ```npm run lint -- --scope=@sly-react/common``` - run only in common package
-      - ```npm run lint -- --scope={@sly-react/common,@sly-react/mobile}``` - run in common and mobile package
+      - run only in common package:
+          npm run lint -- --scope=@sly-react/common
+
+      - run in common and mobile package:
+          npm run lint -- --scope={@sly-react/common,@sly-react/mobile}
 
 * ```npm run test``` - This runs tests in all packages. To do only in specific packages use scope option.
 
   eg:
   
-      - ```npm run test -- --scope=@sly-react/common``` - run only in common package
-      - ```npm run test -- --scope={@sly-react/common,@sly-react/mobile}``` - run in common and mobile package
+      - run only in common package:
+          npm run test -- --scope=@sly-react/common
+      - run in common and mobile package
+          npm run test -- --scope={@sly-react/common,@sly-react/mobile}

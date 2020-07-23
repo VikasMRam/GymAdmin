@@ -62,10 +62,10 @@ storiesOf('Common/Atoms/Block', module)
   .add('aligns', () => (
     <>
       <Block align="right">
-        Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+        Officia aliqua reprehenderit.
       </Block>
       <Block align="center">
-        Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+        fugiat occaecat quis non eiusmod.
       </Block>
     </>
   ));

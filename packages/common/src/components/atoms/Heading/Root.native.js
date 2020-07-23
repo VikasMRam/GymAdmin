@@ -1,8 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 
-const Text = styled.Text``;
+import Block from 'sly/common/components/atoms/Block';
 
-const getTag = props => <Text {...props} />;
+const getTag = props => <Block {...props} />;
 
 export default getTag;

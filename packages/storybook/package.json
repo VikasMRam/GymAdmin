@@ -8,15 +8,19 @@
     "test": "../../node_modules/.bin/jest --passWithNoTests",
     "prestart:mobile:android": "rnstl",
     "prestart:mobile:ios": "rnstl",
-    "start": "start-storybook -s ../web/public -p 9001 -c src",
-    "start:mobile:android": "cd ../mobile && npm run android:storybook",
-    "start:mobile:ios": "cd ../mobile && npm run ios:storybook"
+    "start": "../../node_modules/@storybook/react/bin/index.js start-storybook -s ../web/public -p 9001 -c src",
+    "start:mobile": "start-storybook -c src/mobile",
+    "context:mobile:storybook:android": "cd ../mobile && npm run android:storybook",
+    "context:mobile:storybook:ios": "cd ../mobile && npm run ios:storybook",
+    "start:mobile:android": "../../node_modules/.bin/npm-run-all -p start:mobile context:mobile:storybook:android",
+    "start:mobile:ios": "../../node_modules/.bin/npm-run-all -p start:mobile context:mobile:storybook:ios"
   },
   "devDependencies": {
     "@storybook/addon-actions": "5.3.19",
     "@storybook/addons": "5.3.19",
     "@storybook/react": "5.3.19",
     "@storybook/react-native": "5.3.19",
+    "@storybook/react-native-server": "5.3.19",
     "@storybook/addon-ondevice-actions": "5.3.19",
     "react-native-storybook-loader": "2.0.1"
   },

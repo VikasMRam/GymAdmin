@@ -1,8 +1,9 @@
 import { css } from 'styled-components';
 
-import { getCardinalValues } from './getCardinalValues';
+import padBottomStyle from './padBottomStyle';
 
 import { size } from 'sly/common/components/themes';
+import { getCardinalValues } from 'sly/common/components/helpers/getCardinalValues';
 
 export const withPadding = ({ noPadding, ...props } = {}) => {
   // TODO: padding="0" instead
@@ -14,9 +15,7 @@ export const withPadding = ({ noPadding, ...props } = {}) => {
   // if there is padding-bottom, remove last's child margin
   if (values.padding || values.paddingBottom) {
     return css`
-      & > *:last-child {
-        margin-bottom: 0;
-      }
+      ${padBottomStyle}
       ${css(values)};
     `;
   }

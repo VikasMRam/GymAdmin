@@ -21,7 +21,6 @@ module.exports = {
    * Ensure any imports inside the shared 'components' folder resolve to the local node_modules folder
    */
   resolver: {
-    resolverMainFields: ['react-native', 'main'],
     extraNodeModules: new Proxy(
       {},
       {
