@@ -3,7 +3,13 @@
     "target": "es6",
     "allowSyntheticDefaultImports": false,
     "experimentalDecorators": true,
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "paths": {
+      "sly/web/*": ["./packages/web/src/*"],
+      "sly/common/*": ["./packages/common/src/*"],
+      "sly/mobile/*": ["./packages/mobile/src/*"],
+      "sly/storybook/*": ["./packages/storybook/src/*"]
+    }
   },
   "exclude": ["node_modules", "dist"]
 }

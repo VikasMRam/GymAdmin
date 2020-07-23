@@ -10,7 +10,7 @@ import { ResponsiveImage } from 'sly/web/components/atoms';
 
 const dimensionToTextSizeMap = {
   small: 'tiny',
-  regular: 'tiny',
+  regular: 'body',
   large: 'subtitle',
   xLarge: 'subtitle',
   xxLarge: 'title',
