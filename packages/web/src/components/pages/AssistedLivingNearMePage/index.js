@@ -890,9 +890,11 @@ const NearMePage = ({
             </Column>
             <Body>
               {SEOContentAL()}
-              <Heading level="title" size="title">
-                {heading}
-              </Heading>
+              {!isFetchingResults &&
+                <Heading level="title" size="title">
+                  {heading}
+                </Heading>
+              }
               {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
               {!isFetchingResults && (
                 <CommunitySearchList
