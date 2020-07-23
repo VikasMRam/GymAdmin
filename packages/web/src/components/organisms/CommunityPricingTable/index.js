@@ -135,7 +135,7 @@ const CommunityPricingTable = ({
         )}
         {isActiveAdult && (
           <Paragraph>
-            Pricing for {name} may require a purchuce or a monthly component. Connect directly with{' '}
+            Pricing for {name} may require a purchase or a monthly component. Connect directly with{' '}
             {name} to find out your pricing.
           </Paragraph>
         )}

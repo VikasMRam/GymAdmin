@@ -102,6 +102,7 @@ const CommunitySummary = ({
   const formattedAddress = `${line1}, ${line2}, ${city},
     ${state}
     ${zip}`
+    .replace(/, null,/g, ',')
     .replace(/\s/g, ' ')
     .replace(/, ,/g, ', ');
   let conciergeNumber = communityPhone;
@@ -196,7 +197,7 @@ const CommunitySummary = ({
 
       {typeCare.includes(ACTIVE_ADULT) &&
         <>
-          <Hr />
+          {tier === "4" && communityPhone && <Hr/>}
           <OverlayTwoColumnListWrapper>
             {priceRange &&
             <ListItem icon="money" iconPalette="grey" iconVariation="dark">
