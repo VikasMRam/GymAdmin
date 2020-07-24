@@ -63,7 +63,7 @@ const PostConversionGreetingForm = ({
         <Heading level="subtitle">{heading}</Heading>
         {description && <LargePaddedBlock>{description}</LargePaddedBlock>}
         {children && <PaddedBlock>{children}</PaddedBlock>}
-        <RejectButton palette="primary" onClick={onReturnClick || doDismiss} to={onReturnClick ? null : toUrl}>
+        <RejectButton onClick={onReturnClick || doDismiss} to={onReturnClick ? null : toUrl}>
           Return to {community ? 'Profile' : 'Home'}
         </RejectButton>
       </ContentWrapper>

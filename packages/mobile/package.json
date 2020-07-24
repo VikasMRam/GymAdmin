@@ -17,7 +17,8 @@
     "clean-build:ios": "rm -rf ios/build && react-native link && cd ios && pod install"
   },
   "dependencies": {
-    "react-native": "0.63.0"
+    "react-native": "0.63.0",
+    "react-router-native": "5.2.0"
   },
   "devDependencies": {
     "@react-native-community/cli-platform-ios": "4.10.1",

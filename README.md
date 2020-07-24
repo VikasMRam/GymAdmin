@@ -29,7 +29,7 @@ Scripts supported by root package:
 * ```npm run test``` - This runs tests in all packages. To do only in specific packages use scope option.
 
   eg:
-  
+
       - run only in common package:
           npm run test -- --scope=@sly-react/common
       - run in common and mobile package

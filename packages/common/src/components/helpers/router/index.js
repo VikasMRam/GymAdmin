@@ -1,9 +1,7 @@
 import React from 'react';
 import { func } from 'prop-types';
 
-function isModifiedEvent(event) {
-  return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
-}
+import { isModifiedEvent } from './helper';
 
 export const createRRAnchor = (Anchor) => {
   const RRLinkAnchor = React.forwardRef(({ navigate, onClick, ...rest }, ref) => {

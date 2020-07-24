@@ -1,4 +1,4 @@
-import { matchPath } from 'react-router-dom';
+import { matchPath } from 'react-router';
 
 export default function isPathInRoutes(routes, path) {
   if (!routes) return false;

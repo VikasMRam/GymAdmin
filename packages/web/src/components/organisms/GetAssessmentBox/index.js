@@ -43,7 +43,7 @@ const GetAssessmentBox = ({ palette, layout, buttonProps }) => (
     <Wrapper layout={layout}>
       <StyledIcon icon="logo" palette="primary" size="hero" />
       <StyledHeading layout={layout} level="subtitle">Complete this 3-minute assessment tool to get personalized senior living and care options.</StyledHeading>
-      <FullWidthButton {...buttonProps} palette={palette}>Start</FullWidthButton>
+      <FullWidthButton {...buttonProps} background={palette}>Start</FullWidthButton>
     </Wrapper>
   </TextAlignCenteredBox>
 );

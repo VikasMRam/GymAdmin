@@ -1,7 +1,7 @@
 import React from 'react';
-import { object, string } from 'prop-types';
+import { string } from 'prop-types';
 
-import Button from 'sly/web/components/atoms/Button';
+import { Button } from 'sly/web/components/atoms';
 import AskAgentQuestionContainer from 'sly/web/containers/AskAgentQuestionContainer';
 
 export default function AskAgentQuestionButtonContainer({

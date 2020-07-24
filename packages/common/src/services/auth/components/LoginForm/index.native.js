@@ -8,7 +8,7 @@ import { Heading, Block } from 'sly/common/components/atoms';
 const LoginForm = ({
   handleSubmit, error, onResetPasswordClick, onRegisterClick,
 }) => (
-  <View onSubmit={handleSubmit}>
+  <View style={{ flex: 1 }} onSubmit={handleSubmit}>
     <Heading pad="xLarge" size="subtitle">Log in</Heading>
     {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
     <ButtonLink pad="large" align="center" palette="primary" size="caption" onClick={onResetPasswordClick}>
