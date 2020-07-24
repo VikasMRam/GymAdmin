@@ -8,6 +8,7 @@ import {
   withText,
   withColor,
   withSpacing,
+  withAlign,
 } from 'sly/common/components/helpers';
 
 const getPad = (size) => {
@@ -29,6 +30,7 @@ const Heading = styled(props => (
   ${withSpacing}
   ${withText}
   ${withColor}
+  ${withAlign}
 `;
 
 Heading.propTypes = {

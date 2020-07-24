@@ -3,6 +3,7 @@ import { css } from 'styled-components';
 export const withDisplay = ({ display }) => {
   if (display === 'inline-block' || display === 'inline' || display === 'inline-flex') {
     return css({
+      display: 'flex',
       alignSelf: 'flex-start',
     });
   }
