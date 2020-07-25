@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text } from 'react-native';
 import { storiesOf } from '@storybook/react-native';
 
 import Block from '.';
 
-storiesOf('Common/Atoms/Block', module)
+import { Text } from 'sly/mobile/components/atoms';
+
+storiesOf('Common|Atoms/Block', module)
   .add('default', () => (
     <Block>
       Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
@@ -68,4 +69,14 @@ storiesOf('Common/Atoms/Block', module)
         fugiat occaecat quis non eiusmod.
       </Block>
     </>
+  ))
+  .add('width as value', () => (
+    <Block width="50%">
+      Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+    </Block>
+  ))
+  .add('width as theme layout', () => (
+    <Block width="col2">
+      Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+    </Block>
   ));

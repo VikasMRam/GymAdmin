@@ -67,7 +67,7 @@ const pickColors = colors => types.reduce((cumul, type) => {
   return cumul;
 }, {});
 
-storiesOf('Theme', module)
+storiesOf('Theme|Default', module)
   .add('palette', () => (
     <Wrapper>
       <Heading level="title">New Palete</Heading>

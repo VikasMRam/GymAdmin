@@ -3,13 +3,21 @@ import { View } from 'react-native';
 import { func, bool, string } from 'prop-types';
 
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
-import { Heading, Block } from 'sly/common/components/atoms';
+import { Heading, Block, Button } from 'sly/common/components/atoms';
 
 const LoginForm = ({
-  handleSubmit, error, onResetPasswordClick, onRegisterClick,
+  handleSubmit, submitting, invalid, error, onResetPasswordClick, onRegisterClick,
 }) => (
-  <View style={{ flex: 1 }} onSubmit={handleSubmit}>
+  <View style={{ width: '100%' }} onSubmit={handleSubmit}>
     <Heading pad="xLarge" size="subtitle">Log in</Heading>
+    <Button
+      type="submit"
+      pad={error ? 'large' : 'xLarge'}
+      disabled={submitting || invalid}
+      width="100%"
+    >
+      Log in
+    </Button>
     {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
     <ButtonLink pad="large" align="center" palette="primary" size="caption" onClick={onResetPasswordClick}>
       Reset password

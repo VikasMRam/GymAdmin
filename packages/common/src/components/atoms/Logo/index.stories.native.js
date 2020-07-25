@@ -3,5 +3,5 @@ import { storiesOf } from '@storybook/react-native';
 
 import Logo from '.';
 
-storiesOf('Common/Atoms/Logo', module)
+storiesOf('Common|Atoms/Logo', module)
   .add('default', () => <Logo />);

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import Block from '.';
 
-storiesOf('Common/Atoms/Block', module)
+storiesOf('Common|Atoms/Block', module)
   .add('default', () => (
     <Block>
       Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
@@ -70,6 +70,16 @@ storiesOf('Common/Atoms/Block', module)
   ))
   .add('cursor', () => (
     <Block cursor="pointer">
+      Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+    </Block>
+  ))
+  .add('width as value', () => (
+    <Block width="50%">
+      Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+    </Block>
+  ))
+  .add('width as theme layout', () => (
+    <Block width="col2">
       Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
     </Block>
   ));

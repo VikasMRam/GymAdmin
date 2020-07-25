@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react-native';
 
 import ButtonLink from '.';
 
-storiesOf('Common/Molecules/ButtonLink', module)
+storiesOf('Common|Molecules/ButtonLink', module)
   .add('default', () => <ButtonLink>Hello</ButtonLink>)
   .add('icon', () => <ButtonLink icon="add">Hello</ButtonLink>)
   .add('palette', () => <ButtonLink icon="add" palette="slate">Hello</ButtonLink>)

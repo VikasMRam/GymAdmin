@@ -6,10 +6,11 @@ import styled from 'styled-components';
 import styles, { textStyles } from './styles';
 
 import { getKey } from 'sly/common/components/themes';
+import { Text } from 'sly/mobile/components/atoms';
 
 export const defaultBorderProp = 'large';
 
-const StyledText = styled.Text`
+const StyledText = styled(Text)`
   ${textStyles}
   background: transparent;
   text-align: center;

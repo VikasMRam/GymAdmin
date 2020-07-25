@@ -12,6 +12,7 @@ import {
   withSnap,
   withClamping,
   withCursor,
+  withWidth,
 } from 'sly/common/components/helpers';
 
 const Block = styled(Root)`
@@ -23,6 +24,7 @@ const Block = styled(Root)`
   ${withAlign}
   ${withClamping}
   ${withCursor}
+  ${withWidth}
   ${withDisplay}
 `;
 // put withDisplay last to make sure that this display styles are always first priority

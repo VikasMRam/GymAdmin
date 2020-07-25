@@ -8,6 +8,7 @@ import {
   withDisplay,
   withText,
   withColor,
+  withWidth,
 } from 'sly/common/components/helpers';
 
 export const textStyles = css`
@@ -22,6 +23,7 @@ export default css`
   ${withColor}
   ${withBorder}
   ${withSpacing}
+  ${withWidth}
   display: flex;
   align-items: center;
   justify-content: center;

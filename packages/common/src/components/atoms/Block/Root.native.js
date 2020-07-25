@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { node, any } from 'prop-types';
 
 import { isString } from 'sly/common/services/helpers/utils';
+import { Text } from 'sly/mobile/components/atoms';
 
-const Text = styled.Text``;
 const View = styled.View`
   flex-direction: row;
   align-content: center;

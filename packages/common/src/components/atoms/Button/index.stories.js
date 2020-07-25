@@ -10,7 +10,7 @@ const defaultProps = {
 
 const Button = props => <ButtonComponent {...defaultProps} {...props} />;
 
-storiesOf('Common/Atoms/Button', module)
+storiesOf('Common|Atoms/Button', module)
   .add('default', () => <Button>Hello</Button>)
   .add('disabled', () => <Button disabled>Hello</Button>)
   .add('secondary', () => <Button secondary>Hello</Button>)
@@ -45,4 +45,10 @@ storiesOf('Common/Atoms/Button', module)
   ))
   .add('link and target', () => (
     <Button href="https://github.com/diegohaz/arc" target="_blank">ARc repository</Button>
+  ))
+  .add('width as value', () => (
+    <Button width="100%">Hello</Button>
+  ))
+  .add('width as theme layout', () => (
+    <Button width="col2">Hello</Button>
   ));

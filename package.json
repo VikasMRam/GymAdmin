@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "clean": "lerna clean --yes",
+    "create:package": "./scripts/new-package.sh",
     "bootstrap": "npm run clean && lerna bootstrap --hoist",
     "bootstrap:web": "npm run clean && npm run bootstrap -- --scope={@sly-react/common,@sly-react/web}",
     "bootstrap:mobile": "npm run clean && npm run bootstrap -- --scope={@sly-react/common,@sly-react/mobile}",

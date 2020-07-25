@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import Badge from '.';
 
-storiesOf('Common/Atoms/Badge', module)
+storiesOf('Common|Atoms/Badge', module)
   .add('default', () => <Badge>New</Badge>)
   .add('size and weight', () => <Badge size="subtitle" weight="bold">New</Badge>)
   .add('borderRadius', () => <Badge borderRadius="small">New</Badge>)
