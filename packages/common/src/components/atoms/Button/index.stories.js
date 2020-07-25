@@ -1,7 +1,14 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
-import Button from '.';
+import ButtonComponent from '.';
+
+const defaultProps = {
+  onClick: action('Button pressed'),
+};
+
+const Button = props => <ButtonComponent {...defaultProps} {...props} />;
 
 storiesOf('Common/Atoms/Button', module)
   .add('default', () => <Button>Hello</Button>)

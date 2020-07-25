@@ -10,21 +10,24 @@ import {
   withColor,
 } from 'sly/common/components/helpers';
 
-const styles = css`
-  ${withSpacing};
-  ${withBorder}
+export const textStyles = css`
   ${withText}
   ${withColor}
   font-weight: ${size('weight.medium')};
+  text-decoration: none;
+`;
+
+export default css`
+  ${textStyles}
+  ${withColor}
+  ${withBorder}
+  ${withSpacing}
   display: flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
   ${ifProp({ kind: 'label' }, css`
     height: ${size('element.regular')};
   `)};
   ${withDisplay}
 `;
 // put withDisplay last to make sure that this display styles are always first priority
-
-export default styles;

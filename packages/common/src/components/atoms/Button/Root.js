@@ -5,6 +5,8 @@ import styles from './styles';
 
 import { palette, key } from 'sly/common/components/themes';
 
+export const defaultBorderProp = 'regular';
+
 const hoverBackgroundColor = ({
   disabled, ghost, transparent, secondary, background,
 }) => secondary && !ghost ? palette('grey', 'stroke') :

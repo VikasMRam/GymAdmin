@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bool, string, oneOf, object } from 'prop-types';
 
 import RRLink from './RRLink';
-import Root from './Root';
+import Root, { defaultBorderProp } from './Root';
 import withSendEvent from './withSendEvent';
 
 import { routes as routesPropType } from 'sly/web/propTypes/routes';
@@ -48,7 +48,7 @@ export default class Button extends Component {
     background: 'primary',
     kind: 'regular',
     type: 'button',
-    border: 'regular',
+    border: defaultBorderProp,
     borderPalette: 'transparent',
     borderVariation: 'stroke',
     borderRadius: 'small',
@@ -112,7 +112,7 @@ export default class Button extends Component {
         props.variation = backgroundVariation;
       }
     } else if (transparent && paletteProp === 'white') {
-      props.palette = 'none';
+      props.palette = 'slate';
     } else if (secondary) {
       props.palette = 'slate';
       props.variation = disabled ? 'filler' : 'base';
