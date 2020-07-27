@@ -25,7 +25,7 @@ const getTarget = (href) => {
 };
 
 const withSendEvent = (event, props) => {
-  const clickHandler = navigator?.product === 'ReactNative';
+  const clickHandler = navigator?.product === 'ReactNative' ? 'onPress' : 'onClick';
   const clickHandlerFunc = props[clickHandler];
   const handlerFunc = (e) => {
     SlyEvent.getInstance().sendEvent(event);
