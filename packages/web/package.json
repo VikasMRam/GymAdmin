@@ -30,9 +30,7 @@
     "test": "../../node_modules/.bin/jest --passWithNoTests",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
-    "lint": "../../node_modules/.bin/eslint src/*.js src/external src/controllers src/components/common src/components/helpers src/components/atoms src/components/molecules src/constants private webpack.config.js e2e",
-    "format": "prettier-eslint --print-width 120 --write",
-    "format-all": "npm run format -- \"src/**/*.js\""
+    "lint": "../../node_modules/.bin/eslint src/*.js src/external src/controllers src/components/common src/components/helpers src/components/atoms src/components/molecules src/constants private webpack.config.js e2e"
   },
   "devDependencies": {
     "@loadable/babel-plugin": "5.12.0",
@@ -45,7 +43,6 @@
     "hoist-non-react-statics": "3.3.2",
     "jest-websocket-mock": "2.0.2",
     "mock-socket": "9.0.3",
-    "prettier-eslint-cli": "5.0.0",
     "raw-loader": "4.0.0",
     "react-hot-loader": "4.12.20",
     "redbox-react": "1.6.0",
