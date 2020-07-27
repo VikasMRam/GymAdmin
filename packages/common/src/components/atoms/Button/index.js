@@ -3,12 +3,13 @@ import { bool, string, oneOf, object } from 'prop-types';
 
 import RRLink from './RRLink';
 import Root, { defaultBorderProp } from './Root';
-import withSendEvent from './withSendEvent';
 
 import { routes as routesPropType } from 'sly/web/propTypes/routes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { createRRAnchor } from 'sly/common/components/helpers';
+// todo: most probably should be common in future
+import SlyEvent from 'sly/web/services/helpers/events';
 import isPathInRoutes from 'sly/common/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
@@ -21,6 +22,19 @@ const getTarget = (href) => {
     target: '_blank',
     rel: 'noopener',
   };
+};
+
+const withSendEvent = (event, props) => {
+  const clickHandler = typeof navigator !== 'undefined' && navigator.product === 'ReactNative' ? 'onPress' : 'onClick';
+  const clickHandlerFunc = props[clickHandler];
+  const handlerFunc = (e) => {
+    SlyEvent.getInstance().sendEvent(event);
+    return clickHandlerFunc && clickHandlerFunc(e);
+  };
+  const ret = {};
+  ret[clickHandler] = event ? handlerFunc : clickHandlerFunc;
+
+  return ret;
 };
 
 const RRLinkButton = createRRAnchor(Root);
