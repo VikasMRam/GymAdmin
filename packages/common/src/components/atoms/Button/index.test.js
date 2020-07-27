@@ -2,13 +2,15 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Link } from 'react-router-dom';
 
-import Button from 'sly/web/components/atoms/Button';
+import Button from '.';
+
 import SlyEvent from 'sly/web/services/helpers/events';
 
 const wrap = (props = {}, context) => shallow(<Button {...props} />, context);
 
 describe('Button', () => {
   const originalSendEvent = SlyEvent.getInstance().sendEvent;
+
   beforeEach(() => {
     SlyEvent.getInstance().sendEvent = jest.fn();
   });
@@ -25,7 +27,7 @@ describe('Button', () => {
 
   it('renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
-    expect(wrapper.contains('test')).toBe(true);
+    expect(wrapper.contains('test')).toBeTruthy();
   });
 
   it('renders props when passed in', () => {

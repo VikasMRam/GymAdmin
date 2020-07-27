@@ -11,3 +11,5 @@ export * from './text';
 export * from './cursor';
 export * from './shadow';
 export * from './transition';
+export * from './router';
+export * from './width';

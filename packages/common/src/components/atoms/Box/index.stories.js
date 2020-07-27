@@ -5,7 +5,7 @@ import Box from '.';
 
 import Badge from 'sly/common/components/atoms/Badge';
 
-storiesOf('Common/Atoms/Box', module)
+storiesOf('Common|Atoms/Box', module)
   .add('default', () => <Box>test content</Box>)
   .add('non text content', () => (
     <Box>

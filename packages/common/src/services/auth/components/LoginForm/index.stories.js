@@ -11,7 +11,7 @@ const LoginFormContainer = reduxForm({
   form: 'LoginForm',
 })(LoginForm);
 
-storiesOf('Common/Services/Auth/LoginForm', module)
+storiesOf('Common|Services/Auth/LoginForm', module)
   .add('default', () => (
     <LoginFormContainer
       handleSubmit={withPreventDefault(action('form submitted'))}

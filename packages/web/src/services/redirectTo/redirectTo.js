@@ -1,4 +1,4 @@
-import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
+import isPathInRoutes from 'sly/common/services/helpers/isPathInRoutes';
 
 export default (routes, history) => (path, replace) =>  {
   if (isPathInRoutes(routes, path)) {

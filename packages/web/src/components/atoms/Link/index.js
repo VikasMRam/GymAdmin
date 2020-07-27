@@ -14,10 +14,10 @@ import {
   withBorder,
   withZIndex,
   withClamping,
+  createRRAnchor,
 } from 'sly/common/components/helpers';
-import isPathInRoutes from 'sly/web/services/helpers/isPathInRoutes';
+import isPathInRoutes from 'sly/common/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
-import { createRRAnchor } from 'sly/web/components/helpers/router';
 
 // eslint-disable-next-line jsx-a11y/anchor-has-content
 export const Anchor = styled.a`

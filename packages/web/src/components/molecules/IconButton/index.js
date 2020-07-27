@@ -118,7 +118,7 @@ IconButton.propTypes = {
 
 IconButton.defaultProps = {
   iconSize: 'caption',
-  palette: 'primary',
+  background: 'primary',
   iconPalette: 'white',
 };
 

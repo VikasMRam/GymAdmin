@@ -17,4 +17,4 @@ const keys = Object.keys(paletteData);
 export const palette = oneOf(keys.reduce((acc, key) => {
   acc.push(...valueKeys.map(valueKey => `${key}.${valueKey}`));
   return acc;
-}, [...keys]));
+}, [...keys, 'transparent', 'currentColor']));

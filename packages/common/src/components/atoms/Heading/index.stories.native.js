@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react-native';
 
 import Heading from '.';
 
-storiesOf('Common/Atoms/Heading', module)
+storiesOf('Common|Atoms/Heading', module)
   .add('default', () => (
     <Heading>Id tempor duis non esse commodo fugiat excepteur nostrud.</Heading>
   ))

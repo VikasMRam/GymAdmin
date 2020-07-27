@@ -51,7 +51,7 @@ const ProgressButtonsWrapper = styled.div`
 
 export const Footer = ({ onBackClick, onSkipClick, submitButtonText, invalid, submitting }) => (
   <ButtonWrapper>
-    {onBackClick && <StyledIconButton transparent icon="chevron-left" onClick={onBackClick} foregroundPalette="primary">Back</StyledIconButton>}
+    {onBackClick && <StyledIconButton transparent icon="chevron-left" onClick={onBackClick} palette="primary">Back</StyledIconButton>}
     {!onBackClick && <div />}
     <ProgressButtonsWrapper hasTwoButtons={!!onSkipClick}>
       {onSkipClick && <Button ghost palette="slate" borderPalette="grey" borderVariation="filler" onClick={onSkipClick}>Skip</Button>}

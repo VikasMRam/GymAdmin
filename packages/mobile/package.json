@@ -14,10 +14,14 @@
     "ios:storybook": "npm run env:storybook -- npm run ios",
     "test": "../../node_modules/.bin/jest --passWithNoTests",
     "lint": "../../node_modules/.bin/eslint .",
-    "clean-build:ios": "rm -rf ios/build && react-native link && cd ios && pod install"
+    "link": "react-native link",
+    "clean-build:android": "cd android && ./gradlew --stop && ./gradlew clean && ./gradlew cleanBuildCache",
+    "clean-build:ios": "rm -rf ios/build && cd ios && pod install",
+    "debug:logs:android": "NOW=$(date +\"%m-%d %H:%M:%S.000\") adb logcat \"*:W\" -T \"$NOW\""
   },
   "dependencies": {
-    "react-native": "0.63.0"
+    "react-native": "0.63.0",
+    "react-router-native": "5.2.0"
   },
   "devDependencies": {
     "@react-native-community/cli-platform-ios": "4.10.1",

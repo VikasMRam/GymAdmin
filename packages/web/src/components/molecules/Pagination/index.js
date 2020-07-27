@@ -36,7 +36,6 @@ const ChevronLink = styled(({ flip, ...props }) => (
 `;
 
 const PageLink = styled(Button)`
-  background-color: ${ifProp('selected', palette('background'))};
   margin-right: ${size('spacing.regular')};
   &:last-of-type {
     margin-right: 0;

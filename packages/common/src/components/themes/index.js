@@ -31,7 +31,8 @@ export function palette(...args) {
   return styledPalette(...[...args, last]);
 }
 
-export function getKey(key) {
+export function getKey(...args) {
+  const key = args.length > 1 ? args.join('.') : args.pop();
   // https://github.com/diegohaz/styled-tools/blob/master/src/prop.js#L11 -
   // this internally uses lodash get(https://lodash.com/docs#get) which is to getting
   // object keys by specified path

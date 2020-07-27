@@ -20,7 +20,7 @@ describe('LoginForm', () => {
 
     expect(wrapper.find('Field').filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find('Field').filter({ name: 'password' })).toHaveLength(1);
-    expect(wrapper.find('FullWidthButton')).toHaveLength(1);
+    expect(wrapper.find('Button')).toHaveLength(1);
     expect(wrapper.find('Block')).toHaveLength(1);
   });
 
@@ -29,7 +29,7 @@ describe('LoginForm', () => {
     const wrapper = wrap({ error });
     const errors = wrapper.find('Block').first();
 
-    expect(wrapper.find('FullWidthButton')).toHaveLength(1);
+    expect(wrapper.find('Button')).toHaveLength(1);
     expect(errors.contains(error)).toBeTruthy();
   });
 
