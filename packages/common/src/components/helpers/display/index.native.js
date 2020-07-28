@@ -7,6 +7,11 @@ export const withDisplay = ({ display }) => {
       alignSelf: 'flex-start',
     });
   }
+  if (display === 'block') {
+    return css({
+      display: 'flex',
+    });
+  }
   if (display) {
     return css({
       display,

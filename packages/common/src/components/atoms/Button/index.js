@@ -4,6 +4,7 @@ import { bool, string, oneOf, object } from 'prop-types';
 import RRLink from './RRLink';
 import Root, { defaultBorderProp } from './Root';
 
+import { isReactNative } from 'sly/common/constants/utils';
 import { routes as routesPropType } from 'sly/web/propTypes/routes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
@@ -25,7 +26,7 @@ const getTarget = (href) => {
 };
 
 const withSendEvent = (event, props) => {
-  const clickHandler = navigator?.product === 'ReactNative' ? 'onPress' : 'onClick';
+  const clickHandler = isReactNative ? 'onPress' : 'onClick';
   const clickHandlerFunc = props[clickHandler];
   const handlerFunc = (e) => {
     SlyEvent.getInstance().sendEvent(event);

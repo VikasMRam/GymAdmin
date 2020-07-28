@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Heading, Link, Label } from 'sly/web/components/atoms';
+import { Heading, Label } from 'sly/common/components/atoms';
+import { Link } from 'sly/web/components/atoms';
 import { size, palette } from 'sly/common/components/themes';
 
 const StyledHeading = styled(Heading)`

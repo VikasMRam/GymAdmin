@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Label from 'sly/web/components/atoms/Label';
+import Label from '.';
 
-storiesOf('Atoms|Label', module)
+storiesOf('Common|Atoms/Label', module)
   .add('default', () => <Label>Hello</Label>);
