@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Icon } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { textAlign } from 'sly/web/components/helpers/text';
 
 const StyledForm = textAlign(styled.form``);

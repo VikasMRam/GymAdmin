@@ -9,7 +9,7 @@ import { SOURCE_OPTIONS, TIME_TO_MOVE_OPTIONS, LOOKING_FOR_OPTIONS } from 'sly/w
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import { Label } from 'sly/common/components/atoms';
 import { Hr, Span } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';

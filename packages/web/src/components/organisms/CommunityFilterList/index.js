@@ -5,7 +5,7 @@ import { object, func, array } from 'prop-types';
 import { size, palette } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import CollapsibleSection from 'sly/web/components/molecules/CollapsibleSection';
-import Field from 'sly/web/components/molecules/Field';
+import Field from 'sly/common/components/molecules/Field';
 import Radio from 'sly/web/components/molecules/Radio';
 import { Link, Button } from 'sly/web/components/atoms';
 import {

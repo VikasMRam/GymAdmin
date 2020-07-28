@@ -6,7 +6,7 @@ import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { Heading, Button, Block } from 'sly/web/components/atoms';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
-import Field from 'sly/web/components/molecules/Field';
+import Field from 'sly/common/components/molecules/Field';
 import { textAlign } from 'sly/web/components/helpers/text';
 
 const StyledHeading = textAlign(pad(Heading));

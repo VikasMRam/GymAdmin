@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { CARETYPE_OPTIONS, MEDICAID_OPTIONS, MOVETIMELINE_OPTIONS } from 'sly/web/constants/pricingForm';
 import { Heading, Block } from 'sly/web/components/atoms';
 import HelpBubble from 'sly/web/components/molecules/HelpBubble';
