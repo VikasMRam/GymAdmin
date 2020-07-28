@@ -26,7 +26,7 @@ jobs:
           command: cat packages/*/package-lock.json package-lock.json >> packages-lock-cache-key.txt
 
       - restore_cache:
-          key: cache-v7-{{ arch }}-{{ .Branch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: cache-v7-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
 
       - run:
           name: Restore packages node_modules
@@ -92,7 +92,7 @@ jobs:
             done
 
       - save_cache:
-          key: cache-v7-{{ arch }}-{{ .Branch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: cache-v7-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
           paths:
             - ~/.npm
             - ~/.cache
@@ -322,7 +322,7 @@ jobs:
           command: cat packages/*/package-lock.json packages/web/e2e/package-lock.json package-lock.json >> packages-lock-cache-key.txt
 
       - restore_cache:
-          key: e2e-cache-v7-{{ arch }}-{{ .Branch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: e2e-cache-v7-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
 
       - run:
           name: Restore packages node_modules
@@ -385,7 +385,7 @@ jobs:
           command: npx cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec "cypress/integration/**/*"
 
       - save_cache:
-          key: e2e-cache-v7-{{ arch }}-{{ .Branch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: e2e-cache-v7-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
           paths:
             - ~/.npm
             - ~/.cache
@@ -448,7 +448,7 @@ jobs:
       #     command: curl http://www.lvh.me/v0/ping
 
       # - save_cache:
-      #     key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+      #     key: cache-v1-{{ arch }}-{{ checksum "package.json" }}
       #     paths:
       #       - ~/.npm
       #       - ~/.cache

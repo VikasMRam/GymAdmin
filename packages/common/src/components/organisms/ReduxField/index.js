@@ -33,4 +33,8 @@ ReduxField.propTypes = {
   message: string,
 };
 
+ReduxField.defaultProps = {
+  meta: {},
+};
+
 export default ReduxField;
