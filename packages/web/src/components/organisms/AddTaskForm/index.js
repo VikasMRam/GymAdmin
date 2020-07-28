@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 
 import { size } from 'sly/common/components/themes';
 import userPropType from 'sly/common/propTypes/user';
-import { Label } from 'sly/web/components/atoms';
+import { Label } from 'sly/common/components/atoms';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
 

@@ -20,7 +20,7 @@ import {
   FAMILY_STATUS_ON_PAUSE,
   FAMILY_STATUS_LONG_TERM,
 } from 'sly/web/constants/familyDetails';
-import { Block, Button, Label } from 'sly/web/components/atoms';
+import { Block, Button, Label } from 'sly/common/components/atoms';
 import FamilyMetaDataSummaryBox from 'sly/web/components/molecules/FamilyMetaDataSummaryBox';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';

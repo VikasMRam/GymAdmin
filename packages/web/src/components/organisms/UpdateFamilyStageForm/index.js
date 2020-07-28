@@ -20,7 +20,8 @@ import Role from 'sly/web/components/common/Role';
 import pad from 'sly/web/components/helpers/pad';
 import { priceFormatter, priceParser } from 'sly/web/services/helpers/pricing';
 import { isBeforeNow, isAfterNow  } from 'sly/web/services/validation';
-import { Block, Span, Label } from 'sly/web/components/atoms';
+import { Block, Label } from 'sly/common/components/atoms';
+import { Span } from 'sly/web/components/atoms';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
 
