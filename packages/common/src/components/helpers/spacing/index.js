@@ -20,18 +20,19 @@ export const withPadding = ({ noPadding, ...props } = {}) => {
     `;
   }
 
-  return css(values);
+  if (Object.keys(values).length) {
+    return css(values);
+  }
+
+  return null;
 };
 
-export const withMargin = (props = {}) => {
-  return css(getCardinalValues(props, 'margin', 'spacing'));
-};
+export const withMargin = (props = {}) =>
+  css(getCardinalValues(props, 'margin', 'spacing'));
 
-export const withPad = ({ pad } = {}) => {
-  return pad && css({
-    marginBottom: size('spacing', pad),
-  });
-};
+export const withPad = ({ pad } = {}) => pad && css({
+  marginBottom: size('spacing', pad),
+});
 
 export const withSpacing = () => css`
   ${withPadding}
