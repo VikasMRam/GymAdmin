@@ -8,7 +8,7 @@ import { normalizeResponse } from 'sly/web/services/api';
 import { CUSTOMER_ROLE_PARAM, PROVIDER_ROLE_PARAM, AGENT_ROLE_PARAM, ADMIN_ROLE_PARAM } from 'sly/common/constants/roles';
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/web/components/atoms/Select'));
-const UserFilterApiEndpoint = '/v0/platform/users?filter[role]=';
+const UserFilterApiEndpoint = '/platform/users?filter[role]=';
 
 export default class UserAutoComplete extends Component {
   static propTypes = {
