@@ -19,4 +19,8 @@ const StyledSvg = styled(Svg)`
 
 const Logo = props => <StyledSvg {...props} />;
 
+Logo.defaultProps = {
+  palette: 'primary',
+};
+
 export default Logo;

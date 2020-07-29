@@ -12,4 +12,8 @@ const Logo = props => (
   />
 );
 
+Logo.defaultProps = {
+  palette: 'primary',
+};
+
 export default Logo;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { bool, string, oneOf, number } from 'prop-types';
+import { bool, string, oneOf, number, any } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -12,14 +12,23 @@ import {
   withSpacing,
   withBorder,
 } from 'sly/common/components/helpers';
+import { View } from 'sly/mobile/components/atoms';
 
-const StyledView = styled.View`
+// skip padding prop from being passed down. padding is a valid react native prop
+// but our string padding used in css styles is different. Hence skip that prop.
+const TextInputComponent = styled.TextInput``;
+const TextInputC = ({ padding, ...props }) => <TextInputComponent {...props} />;
+TextInputC.propTypes = {
+  padding: any,
+};
+
+const StyledView = styled(View)`
   ${withColor}
   ${withBorder}
   overflow: hidden;
 `;
 
-const StyledTextInput = styled.TextInput`
+const StyledTextInput = styled(TextInputC)`
   ${withSpacing}
   ${withText}
   ${withColor}

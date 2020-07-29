@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { node, any } from 'prop-types';
 
 import { isString } from 'sly/common/services/helpers/utils';
-import { Text } from 'sly/mobile/components/atoms';
+import { Text, View } from 'sly/mobile/components/atoms';
 
-const View = styled.View`
+const StyledView = styled(View)`
   flex-direction: row;
   align-content: center;
 `;
@@ -17,13 +17,13 @@ const Root = (props) => {
   // wrap all string children with Text
   if (Array.isArray(props.children)) {
     return (
-      <View style={props.style}>
+      <StyledView style={props.style}>
         {props.children.map(c => c && isString(c) ? <Text key={c}>{c}</Text> : c)}
-      </View>
+      </StyledView>
     );
   }
 
-  return <View {...props} />;
+  return <StyledView {...props} />;
 };
 
 Root.propTypes = {
