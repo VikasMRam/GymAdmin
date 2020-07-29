@@ -15,7 +15,7 @@ import withDatatable from 'sly/web/services/datatable/components/withDatatable';
 import { prefetch, withUser } from 'sly/web/services/api';
 import DashboardCommunityIndexPage from 'sly/web/components/pages/DashboardCommunityIndexPage';
 import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
-import communityPropType from 'sly/web/propTypes/community';
+import communityPropType from 'sly/common/propTypes/community';
 
 @withDatatable('communities')
 @withNotification

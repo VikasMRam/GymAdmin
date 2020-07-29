@@ -2,10 +2,11 @@ import React, { PureComponent } from 'react';
 import { func, object, string } from 'prop-types';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
+
+import { size } from 'sly/common/components/themes';
 import { prefetch } from 'sly/web/services/api';
 import { Heading } from 'sly/web/components/atoms';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
-import { size } from 'sly/web/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { textAlign } from 'sly/web/components/helpers/text';
 

@@ -3,9 +3,9 @@ import { number, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { size, palette } from 'sly/common/components/themes';
 import { Button, Icon } from 'sly/web/components/atoms';
-import { size, palette } from 'sly/web/components/themes';
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,7 +36,6 @@ const ChevronLink = styled(({ flip, ...props }) => (
 `;
 
 const PageLink = styled(Button)`
-  background-color: ${ifProp('selected', palette('background'))};
   margin-right: ${size('spacing.regular')};
   &:last-of-type {
     margin-right: 0;

@@ -2,9 +2,9 @@ import React from 'react';
 import { func, string, bool } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { formatRating } from 'sly/web/services/helpers/rating';
-import agentPropType from 'sly/web/propTypes/agent';
+import agentPropType from 'sly/common/propTypes/agent';
 import { Image, Icon, Block, Button, Span, Hr, Link } from 'sly/web/components/atoms';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import pad from 'sly/web/components/helpers/pad';

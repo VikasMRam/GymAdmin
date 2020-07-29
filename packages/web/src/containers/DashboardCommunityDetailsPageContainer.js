@@ -5,21 +5,21 @@ import { connect } from 'react-redux';
 import get from 'lodash/get';
 import diff from 'deep-diff';
 
-import { getRelationship, prefetch, query, withUser } from 'sly/web/services/api';
-import userPropType from 'sly/web/propTypes/user';
-import communityPropType from 'sly/web/propTypes/community';
+import { getRelationship, prefetch, withUser } from 'sly/web/services/api';
+import userPropType from 'sly/common/propTypes/user';
+import communityPropType from 'sly/common/propTypes/community';
 import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   SUMMARY,
   PROFILE,
-  DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH, ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
+  DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
 import DashboardCommunityDetailsPage from 'sly/web/components/pages/DashboardCommunityDetailsPage';
 import withBreakpoint from 'sly/web/components/helpers/breakpoint';
 import withNotification from 'sly/web/controllers/withNotification';
 import withModal from 'sly/web/controllers/withModal';
 import { userIs } from 'sly/web/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import { blacklist as editConfigBlacklist } from 'sly/web/services/edits/constants/community';
 import { EditContext } from 'sly/web/services/edits';
 

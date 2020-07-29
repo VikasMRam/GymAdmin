@@ -1,6 +1,5 @@
-import styles from './default';
-
 import { publicPath } from 'sly/web/config';
+import styles from 'sly/common/components/themes/default';
 
 const baseColor = styles.palette.slate.base;
 

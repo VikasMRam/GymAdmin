@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, func } from 'prop-types';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { ClampedText } from 'sly/web/components/atoms';
-
 
 const Wrapper = styled.div`
   padding: ${size('spacing.regular')};

@@ -2,6 +2,8 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
+
+import { size } from 'sly/common/components/themes';
 import ListItem from 'sly/web/components/molecules/ListItem';
 import HubHeader from 'sly/web/components/molecules/HubHeader';
 import WhatIsPartnerAgent from 'sly/web/components/molecules/WhatIsPartnerAgent';
@@ -10,9 +12,8 @@ import NextSteps from 'sly/web/components/molecules/NextSteps';
 import ADLChart from 'sly/web/components/molecules/ADLChart';
 import Tip from 'sly/web/components/molecules/Tip';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
-import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer'
+import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 import { getStateAbbr } from 'sly/web/services/helpers/url';
-import { size } from 'sly/web/components/themes';
 import {
   HubPageTemplate,
   makeBody,

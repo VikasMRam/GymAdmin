@@ -14,11 +14,11 @@ import {
   PHOTOS,
   EMAILS,
 } from 'sly/web/constants/dashboardAppPaths';
-import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
-import { adminAgentPropType } from 'sly/web/propTypes/agent';
-import userPropType from 'sly/web/propTypes/user';
-import notePropType from 'sly/web/propTypes/note';
-import { size, palette } from 'sly/web/components/themes';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
+import { adminAgentPropType } from 'sly/common/propTypes/agent';
+import userPropType from 'sly/common/propTypes/user';
+import notePropType from 'sly/common/propTypes/note';
+import { size, palette } from 'sly/common/components/themes';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import pad from 'sly/web/components/helpers/pad';
 import { userIs } from 'sly/web/services/helpers/role';
@@ -44,7 +44,7 @@ import withModal from 'sly/web/controllers/withModal';
 import withNotification from 'sly/web/controllers/withNotification';
 import SlyEvent from 'sly/web/services/helpers/events';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import conversationPropType from 'sly/web/propTypes/conversation/conversation';
+import conversationPropType from 'sly/common/propTypes/conversation/conversation';
 import { textAlign } from 'sly/web/components/helpers/text';
 
 const LargePaddingWrapper = styled.div`

@@ -9,7 +9,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import { STEP_ORDERS, DEFAULT_STEP_ORDER, STEP_INPUT_FIELD_NAMES } from 'sly/web/external/constants/steps';
 import { connectController } from 'sly/web/controllers';
 import { createValidator } from 'sly/web/services/validation';
-import { selectFormData } from 'sly/web/services/helpers/forms';
+import { selectFormData } from 'sly/common/services/helpers/forms';
 import { CARE_ASSESSMENT } from 'sly/web/services/api/constants';
 import CareAssessmentComponent from 'sly/web/external/apps/wizards/careAssessment/Component';
 import {

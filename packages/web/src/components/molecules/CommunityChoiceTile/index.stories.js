@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import CommunityChoiceTile from 'sly/web/components/molecules/CommunityChoiceTile';
-import parentCommunity from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import parentCommunity from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const { similarProperties: { 0: community } } = parentCommunity;
 

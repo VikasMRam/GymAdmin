@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { func, bool, object, arrayOf } from 'prop-types';
 import { sortableContainer } from 'react-sortable-hoc';
 
-import { imagePropType } from 'sly/web/propTypes/gallery';
+import { imagePropType } from 'sly/common/propTypes/gallery';
 import MediaItem from 'sly/web/services/s3Uploader/components/MediaItem';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import HelpBubble from 'sly/web/components/form/HelpBubble';

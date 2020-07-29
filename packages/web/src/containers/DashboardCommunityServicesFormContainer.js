@@ -5,13 +5,13 @@ import pick from 'lodash/pick';
 import { withRouter } from 'react-router';
 import defaultsDeep from 'lodash/defaultsDeep';
 
-import clientPropType from 'sly/web/propTypes/client';
-import userProptype from 'sly/web/propTypes/user';
+import clientPropType from 'sly/common/propTypes/client';
+import userProptype from 'sly/common/propTypes/user';
 import { query, prefetch } from 'sly/web/services/api';
 import DashboardCommunityServicesForm from 'sly/web/components/organisms/DashboardCommunityServicesForm';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
 import { patchFormInitialValues } from 'sly/web/services/edits';
 
 const formName = 'DashboardCommunityServicesForm';

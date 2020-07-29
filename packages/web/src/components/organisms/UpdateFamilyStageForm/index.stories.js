@@ -9,7 +9,7 @@ import {
   DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS,
   PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
 } from 'sly/web/constants/familyDetails';
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 import UpdateFamilyStageForm from 'sly/web/components/organisms/UpdateFamilyStageForm';
 
 const groups = Object.keys(FAMILY_STAGE_ORDERED);

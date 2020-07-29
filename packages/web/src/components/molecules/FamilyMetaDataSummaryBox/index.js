@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { string, func, oneOf } from 'prop-types';
-import isBoolean from 'lodash/isBoolean';
 
-import { size } from 'sly/web/components/themes';
-import clientPropType from 'sly/web/propTypes/client';
+import { size } from 'sly/common/components/themes';
+import clientPropType from 'sly/common/propTypes/client';
+import { isBoolean } from 'sly/common/services/helpers/utils';
 import { priceFormatter } from 'sly/web/services/helpers/pricing';
 import pad from 'sly/web/components/helpers/pad';
 import cursor from 'sly/web/components/helpers/cursor';

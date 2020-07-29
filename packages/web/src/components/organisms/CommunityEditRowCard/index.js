@@ -11,7 +11,7 @@ import {
 } from 'sly/web/components/atoms/TableCard';
 import { usDate } from 'sly/web/services/helpers/date';
 import { getRelationship } from 'sly/web/services/api';
-import communityPropType from 'sly/web/propTypes/community';
+import communityPropType from 'sly/common/propTypes/community';
 
 const CommunityEditRowCard = ({ community, suggestedEdit }) => {
   const user = useSelector(state => getRelationship(state, suggestedEdit, 'createdBy'));

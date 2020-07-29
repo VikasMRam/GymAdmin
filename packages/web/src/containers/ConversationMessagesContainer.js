@@ -7,13 +7,13 @@ import { connect } from 'react-redux';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { prefetch, withUser, query, invalidateRequests } from 'sly/web/services/api';
-import userPropType from 'sly/web/propTypes/user';
-import messagePropType from 'sly/web/propTypes/conversation/conversationMessage';
-import conversationPropType from 'sly/web/propTypes/conversation/conversation';
-import matchPropType from 'sly/web/propTypes/match';
-import conversationParticipantPropType from 'sly/web/propTypes/conversation/conversationParticipant';
+import userPropType from 'sly/common/propTypes/user';
+import messagePropType from 'sly/common/propTypes/conversation/conversationMessage';
+import conversationPropType from 'sly/common/propTypes/conversation/conversation';
+import matchPropType from 'sly/common/propTypes/match';
+import conversationParticipantPropType from 'sly/common/propTypes/conversation/conversationParticipant';
 import {
   MESSAGES_UPDATE_LAST_READ_TIMEOUT,
   CONVERSATION_PARTICIPANT_TYPE_USER,

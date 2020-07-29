@@ -3,16 +3,17 @@ import styled, { css } from 'styled-components';
 import { arrayOf, bool, string, func, number, shape, oneOf, object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { size, assetPath, getKey, palette } from 'sly/web/components/themes';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { size, getKey, palette } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import cursor from 'sly/web/components/helpers/cursor';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
 import border from 'sly/web/components/helpers/border';
 import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
-import { Button, Hr, Span, Image } from 'sly/web/components/atoms';
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { Button, Hr, Span } from 'sly/web/components/atoms';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
 import MediaGallery from 'sly/web/components/molecules/MediaGallery';
 import IconButton from 'sly/web/components/molecules/IconButton';
@@ -52,7 +53,7 @@ const StyledImage = styled(borderRadius(ResponsiveImage))`
   img {
     border-radius: ${size('spacing.small')};
   }
-  
+
   Button {
     display: none;
     position: absolute;

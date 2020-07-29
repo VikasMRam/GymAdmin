@@ -2,7 +2,7 @@ import React from 'react';
 import { string, bool } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Box, Link, Hr } from 'sly/web/components/atoms';
 import Section from 'sly/web/components/molecules/Section';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';

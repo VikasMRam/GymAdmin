@@ -4,7 +4,8 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, assetPath, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { Button, Block, Heading } from 'sly/web/components/atoms';
 import { textAlign } from 'sly/web/components/helpers/text';

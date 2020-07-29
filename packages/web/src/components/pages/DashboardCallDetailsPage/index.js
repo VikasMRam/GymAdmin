@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { object, string, shape, func } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import voiceCallPropType from 'sly/web/propTypes/calls';
-import { palette, size } from 'sly/web/components/themes';
+import voiceCallPropType from 'sly/common/propTypes/calls';
+import { palette, size } from 'sly/common/components/themes';
 import { Box } from 'sly/web/components/atoms';
 import DashboardTwoColumnTemplate from 'sly/web/components/templates/DashboardTwoColumnTemplate';
 import DashboardCallCommunitiesContainer from 'sly/web/containers/dashboard/DashboardCallCommunitiesContainer';

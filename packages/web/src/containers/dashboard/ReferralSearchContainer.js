@@ -4,10 +4,10 @@ import pick from 'lodash/pick';
 import { arrayOf, func, oneOf, object } from 'prop-types';
 
 import { normalizeResponse, query } from 'sly/web/services/api';
-import { adminCommunityPropType } from 'sly/web/propTypes/community';
-import { adminAgentPropType } from 'sly/web/propTypes/agent';
-import userPropType from 'sly/web/propTypes/user';
-import clientPropType from 'sly/web/propTypes/client';
+import { adminCommunityPropType } from 'sly/common/propTypes/community';
+import { adminAgentPropType } from 'sly/common/propTypes/agent';
+import userPropType from 'sly/common/propTypes/user';
+import clientPropType from 'sly/common/propTypes/client';
 import { newProvider, newParentClient, newContact, newSlyEntity } from 'sly/web/constants/payloads/client';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import DashboardCommunityReferrals from 'sly/web/components/organisms/DashboardCommunityReferrals';
@@ -17,7 +17,7 @@ import DashboardAgentReferralSearch from 'sly/web/components/organisms/Dashboard
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import DashboardCommunityReferralContactDetailsContainer from 'sly/web/containers/DashboardCommunityReferralContactDetailsContainer';
 import DashboardAgentReferralContactDetailsContainer from 'sly/web/containers/DashboardAgentReferralContactDetailsContainer';
-import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import { userIs } from 'sly/web/services/helpers/role';
 
 @query('getCommunities', 'getCommunities')

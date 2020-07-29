@@ -5,7 +5,7 @@ import loadable from '@loadable/component';
 import { apiUrl } from 'sly/web/config';
 import { getUserAutocompleteValues } from 'sly/web/services/datatable/helpers';
 import { normalizeResponse } from 'sly/web/services/api';
-import { CUSTOMER_ROLE_PARAM, PROVIDER_ROLE_PARAM, AGENT_ROLE_PARAM, ADMIN_ROLE_PARAM } from 'sly/web/constants/roles';
+import { CUSTOMER_ROLE_PARAM, PROVIDER_ROLE_PARAM, AGENT_ROLE_PARAM, ADMIN_ROLE_PARAM } from 'sly/common/constants/roles';
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/web/components/atoms/Select'));
 const UserFilterApiEndpoint = '/v0/platform/users?filter[role]=';

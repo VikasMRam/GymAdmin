@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import '@babel/polyfill';
 import 'isomorphic-fetch';
 import 'react-hot-loader/patch';
 
@@ -10,7 +9,7 @@ import Modal from 'react-modal';
 import { ThemeProvider } from 'styled-components';
 
 import configureStore from 'sly/web/store/configure';
-import theme from 'sly/web/components/themes/default';
+import theme from 'sly/common/components/themes/default';
 import { hydrateComponents } from 'sly/web/services/partialHydration';
 
 export default function partiallyHydrateClient(componentsToHydrate, routePath, root) {

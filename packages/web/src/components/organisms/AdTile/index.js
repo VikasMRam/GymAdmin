@@ -3,7 +3,7 @@ import { string, node, oneOf, object, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { textAlign } from 'sly/web/components/helpers/text';
 import { Button, Box, ResponsiveImage, Block, Link } from 'sly/web/components/atoms';

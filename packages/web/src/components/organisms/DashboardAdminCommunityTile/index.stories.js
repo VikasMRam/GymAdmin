@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
 
 import DashboardAdminCommunityTile from 'sly/web/components/organisms/DashboardAdminCommunityTile';
-import community from 'sly/web/../private/storybook/sample-data/admin-property-rhoda-goldman-plaza';
+import community from 'sly/storybook/sample-data/admin-property-rhoda-goldman-plaza.json';
 
 const Wrapper = styled.div`
   width: 800px;

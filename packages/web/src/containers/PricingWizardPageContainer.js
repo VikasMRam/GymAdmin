@@ -3,7 +3,7 @@ import { object, func } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 import { parse } from 'query-string';
 
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import SlyEvent from 'sly/web/services/helpers/events';
 import PricingWizardPage from 'sly/web/components/pages/PricingWizardPage';
 import { medicareToBool } from 'sly/web/services/helpers/userDetails';

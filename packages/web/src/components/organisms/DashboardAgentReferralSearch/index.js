@@ -3,11 +3,11 @@ import { func, arrayOf, object, shape, string } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Block, Hr } from 'sly/web/components/atoms';
 import DashboardCommunityAgentSearchBox from 'sly/web/components/organisms/DashboardCommunityAgentSearchBox';
 import DashboardAdminReferralAgentTile from 'sly/web/components/organisms/DashboardAdminReferralAgentTile';
-import { adminCommunityPropType } from 'sly/web/propTypes/community';
+import { adminCommunityPropType } from 'sly/common/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
 import cursor from 'sly/web/components/helpers/cursor';
 

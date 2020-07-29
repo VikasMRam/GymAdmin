@@ -3,9 +3,7 @@ import { string } from 'prop-types';
 import styled from 'styled-components';
 import classes from 'classnames';
 
-import { size, palette } from 'sly/web/components/themes';
-import { withHydration } from 'sly/web/services/partialHydration';
-import { TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
+import { size, palette } from 'sly/common/components/themes';
 
 export const HubPageTemplate = styled.main`
   .overlayWrapper {
@@ -80,7 +78,7 @@ export const HubPageTemplate = styled.main`
       grid-column: 2 / 2;
     }
   }
-  
+
   .overlayStickToTop {
     background-color: ${palette('white', 'base')};
     padding: ${size('spacing.xLarge')} ${size('spacing.xLarge')} ${size('spacing.regular')} ${size('spacing.xLarge')};
@@ -94,11 +92,11 @@ export const HubPageTemplate = styled.main`
       margin-top: calc(2 * -${size('spacing.huge')});
     }
   }
-  
+
   .overlayArticle {
     margin-bottom: ${size('spacing.xLarge')};
   }
-  
+
   .overlayTable {
     border-collapse: collapse;
     width: 100%;
@@ -119,7 +117,7 @@ export const HubPageTemplate = styled.main`
       border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
       font-weight: normal;
       text-align: left;
-  
+
     };
     table-layout: fixed;
     font-size: ${size('text.tiny')};
@@ -127,7 +125,7 @@ export const HubPageTemplate = styled.main`
       font-size: ${size('text.body')};
     }
   }
-  
+
   .overlayOneColumnListWrapper {
     padding: ${size('spacing.xLarge')} ${size('spacing.xLarge')};
     line-height: ${size('lineHeight.body')};
@@ -138,7 +136,7 @@ export const HubPageTemplate = styled.main`
     grid-template-columns: 100%;
     grid-row-gap: ${size('spacing.large')};
   }
-  
+
   .overlayTwoColumnListWrapper {
     padding: ${size('spacing.xLarge')} ${size('spacing.xLarge')};
     line-height: ${size('lineHeight.body')};
@@ -148,7 +146,7 @@ export const HubPageTemplate = styled.main`
     display: grid;
     grid-template-columns: 100%;
     grid-row-gap: ${size('spacing.large')};
-  
+
     @media screen and (min-width: ${size('breakpoint.laptop')}) {
       grid-template-columns: 50% 50%;
       grid-column-gap: ${size('layout.gutter')};

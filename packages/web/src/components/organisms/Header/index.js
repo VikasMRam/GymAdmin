@@ -3,11 +3,10 @@ import { bool, func, arrayOf, shape, string, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette, key } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { size, palette, key } from 'sly/common/components/themes';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import cursor from 'sly/web/components/helpers/cursor';
-import { Icon, Hr, Link, Button } from 'sly/web/components/atoms';
-import Logo from 'sly/web/components/atoms/Logo';
+import { Icon, Hr, Link, Button, Logo } from 'sly/web/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 
 const HeaderWrapper = styled.nav`
@@ -38,7 +37,7 @@ const SeniorlyLogoWrapper = styled.div`
   }
 `;
 
-export const SeniorlyIconMenu = styled.div`
+const SeniorlyIconMenu = styled.div`
   display: flex;
   align-items: center;
   margin-right: ${size('spacing.large')};
@@ -54,7 +53,7 @@ const MenuIcon = cursor(styled(Icon)`
 `);
 MenuIcon.displayName = 'MenuIcon';
 
-export const HeaderMenu = styled.div`
+const HeaderMenu = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
@@ -82,7 +81,7 @@ export const HeaderMenu = styled.div`
   }
 `;
 
-export const HeaderMenuItem = styled(Link)`
+const HeaderMenuItem = styled(Link)`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -266,7 +265,7 @@ const Header = ({
         {headerItemComponents}
       </HeaderItems>
       {menuOpen &&
-        <HeaderMenu innerRef={headerMenuRef} onClick={onMenuItemClick}>
+        <HeaderMenu ref={headerMenuRef} onClick={onMenuItemClick}>
           {smallScreenMenuItemComponents.length > 0 &&
             <OnlyInSmallScreen>
               {smallScreenMenuItemComponents}

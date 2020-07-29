@@ -5,12 +5,12 @@ import pick from 'lodash/pick';
 import defaultsDeep from 'lodash/defaultsDeep';
 import { withRouter } from 'react-router';
 
-import clientPropType from 'sly/web/propTypes/client';
-import userProptype from 'sly/web/propTypes/user';
+import clientPropType from 'sly/common/propTypes/client';
+import userProptype from 'sly/common/propTypes/user';
 import { query, prefetch } from 'sly/web/services/api';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
 import DashboardCommunityPricingForm from 'sly/web/components/organisms/DashboardCommunityPricingForm';
 import { connect } from 'react-redux';
 import { patchFormInitialValues } from 'sly/web/services/edits';

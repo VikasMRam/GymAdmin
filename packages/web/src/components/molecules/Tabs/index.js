@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { instanceOf, string, bool } from 'prop-types';
 import styled from 'styled-components';
 
-import Box from 'sly/web/components/atoms/Box';
-import { topSnap, upTo } from 'sly/web/components/helpers';
+import { Box } from 'sly/web/components/atoms';
+import { topSnap, upTo } from 'sly/common/components/helpers';
 
 const Wrapper = styled(Box)`
   display: flex;
@@ -11,9 +11,9 @@ const Wrapper = styled(Box)`
   overflow-x: auto;
   overflow-y: hidden;
   text-transform: uppercase;
-  
+
   ${upTo('laptop')} {
-    ${topSnap} 
+    ${topSnap}
     border-radius: 0;
   }
 `;

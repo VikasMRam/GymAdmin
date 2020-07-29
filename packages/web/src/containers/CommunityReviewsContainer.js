@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 
 import EntityReviews from 'sly/web/components/organisms/EntityReviews';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import { prefetch } from 'sly/web/services/api';
 
 @withRouter

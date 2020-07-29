@@ -3,23 +3,22 @@ import { func, object, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import Button from 'sly/web/components/atoms/Button';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
-import userPropType from 'sly/web/propTypes/user';
-import { palette, size } from 'sly/web/components/themes';
+import userPropType from 'sly/common/propTypes/user';
+import { palette, size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import { Block } from 'sly/web/components/atoms';
+import { Block, Button } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   position: absolute;
   height: 100%;
-  width: 100%; 
-  
+  width: 100%;
+
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  
+
   background: ${palette('primary.background')};
 `;
 
@@ -27,11 +26,11 @@ const Form = styled.form`
   background: white;
   border: 1px solid ${palette('slate.stroke')};
   border-radius: ${size('spacing.small')};
-  
+
   margin: ${size('spacing.large')};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.col6')}; 
+    width: ${size('layout.col6')};
   }
 `;
 

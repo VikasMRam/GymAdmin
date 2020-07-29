@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { AGENT_STATUS_NAME_MAP } from 'sly/web/constants/agents';
 import { getReferralSentTimeText } from 'sly/web/services/helpers/communityReferral';
 import DashboardAdminReferralAgentTile from 'sly/web/components/organisms/DashboardAdminReferralAgentTile';
-import AgentLinda from 'sly/web/../private/storybook/sample-data/agent-linda-iwamota.json';
+import AgentLinda from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 
 const handleSubmit = jest.fn();
 

@@ -2,14 +2,13 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, arrayOf, func } from 'prop-types';
 
-import { content as contentPropType } from 'sly/web/propTypes/content';
-import { size } from 'sly/web/components/themes';
+import { content as contentPropType } from 'sly/common/propTypes/content';
+import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import cursor from 'sly/web/components/helpers/cursor';
-import { Hr, Block } from 'sly/web/components/atoms';
+import { Hr, Block, Button } from 'sly/web/components/atoms';
 import CommunityQuestion from 'sly/web/components/molecules/CommunityQuestion';
 import CommunityAnswer from 'sly/web/components/molecules/CommunityAnswer';
-import Button from 'sly/web/components/atoms/Button';
 
 const AnswersDiv = pad(styled.div`
   margin-left: ${size('spacing.huge')};
@@ -28,7 +27,7 @@ CursorBlock.displayName = 'CursorBlock';
 const PaddedBlock = pad(Block);
 
 const StyledButton = styled(Button)`
-  margin-top: ${size('spacing.xLarge')};  
+  margin-top: ${size('spacing.xLarge')};
   width: 100%;
 `;
 

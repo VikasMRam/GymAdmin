@@ -2,13 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 
+import { size } from 'sly/common/components/themes';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
-import Heading from 'sly/web/components/atoms/Heading';
-import Button from 'sly/web/components/atoms/Button';
+import { Heading, Button } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
-import { palette, size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 
 const PaddedHeading = pad(Heading);
 

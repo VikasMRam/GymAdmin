@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { node } from 'prop-types';
 
-import clientPropType from 'sly/web/propTypes/client';
+import clientPropType from 'sly/common/propTypes/client';
 import { STATUS_PALETTE_MAP, STATUS_ICON_MAP } from 'sly/web/constants/familyDetails';
 import pad from 'sly/web/components/helpers/pad';
 import { Box, Block } from 'sly/web/components/atoms';
@@ -29,7 +29,7 @@ const FamilyEntry = ({ client, children }) => {
       <StyledBox padding="large">
         <InfoWrapperComponent>
           <Block palette="primary" weight="medium">{client.clientInfo.name}</Block>
-          <IconBadge palette={STATUS_PALETTE_MAP[client.status]} icon={STATUS_ICON_MAP[client.status]} text={client.status} />
+          <IconBadge background={STATUS_PALETTE_MAP[client.status]} icon={STATUS_ICON_MAP[client.status]} text={client.status} />
         </InfoWrapperComponent>
         <div>
           {children}

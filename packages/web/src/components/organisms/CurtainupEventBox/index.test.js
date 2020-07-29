@@ -2,9 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import dayjs from 'dayjs';
 
-import Performer1 from 'sly/web/../private/storybook/sample-data/performer-1.json';
-import Performer2 from 'sly/web/../private/storybook/sample-data/performer-2.json';
-import Event1 from 'sly/web/../private/storybook/sample-data/event-1.json';
+import Performer1 from 'sly/storybook/sample-data/performer-1.json';
+import Performer2 from 'sly/storybook/sample-data/performer-2.json';
+import Event1 from 'sly/storybook/sample-data/event-1.json';
 import CurtainupEventBox from 'sly/web/components/organisms/CurtainupEventBox';
 
 const performers = [

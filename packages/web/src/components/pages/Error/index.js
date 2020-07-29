@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router';
 
 import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import Heading from 'sly/web/components/atoms/Heading';

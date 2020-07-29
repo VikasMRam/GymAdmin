@@ -2,8 +2,8 @@ import React from 'react';
 import { func, string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { size } from 'sly/common/components/themes';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import { getCitySearchUrl } from 'sly/web/services/helpers/url';
 import { Button, Block, Icon, Heading } from 'sly/web/components/atoms';
 

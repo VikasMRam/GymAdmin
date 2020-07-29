@@ -1,7 +1,7 @@
 import React from 'react';
 import { string, func } from 'prop-types';
 
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import { Button, Heading, Box } from 'sly/web/components/atoms';

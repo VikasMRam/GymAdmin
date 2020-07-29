@@ -3,7 +3,7 @@ import { string, number, oneOf, oneOfType } from 'prop-types';
 import styled from 'styled-components';
 import { prop, ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import Block from 'sly/web/components/atoms/Block';
 import { getStageDetails } from 'sly/web/services/helpers/stage';
 import { getTaskStatusDetails } from 'sly/web/services/helpers/task';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 import MediaGallery from 'sly/web/components/molecules/MediaGallery';
 import FullscreenMediaGallery from 'sly/web/components/molecules/FullscreenMediaGallery';
 import CommunityMediaGallery from 'sly/web/components/organisms/CommunityMediaGallery';

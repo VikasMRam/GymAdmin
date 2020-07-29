@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, bool, func } from 'prop-types';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
-import pad from 'sly/web/components/helpers/pad';
 import SlyEvent from 'sly/web/services/helpers/events';
-import communityPropType from 'sly/web/propTypes/community';
-import { Box, Table, THead, TBody, Tr, Td, Block, Heading } from 'sly/web/components/atoms';
+import communityPropType from 'sly/common/propTypes/community';
+import { Box, Table, THead, TBody, Tr, Td, Block } from 'sly/web/components/atoms';
 import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import Th from 'sly/web/components/molecules/Th';
@@ -16,7 +15,7 @@ import { textAlign } from 'sly/web/components/helpers/text';
 import { Loading, Section, SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import Role from 'sly/web/components/common/Role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
 import IconButton from 'sly/web/components/molecules/IconButton';
 
 const TABLE_HEADINGS = [

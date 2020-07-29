@@ -14,4 +14,3 @@ export const routes = arrayOf(shape({
   ]).isRequired,
   exact: bool,
 }));
-

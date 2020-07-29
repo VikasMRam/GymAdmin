@@ -5,7 +5,7 @@ import { ifProp, prop } from 'styled-tools';
 import { any, func, bool, element, string } from 'prop-types';
 
 import { isBrowser } from 'sly/web/config';
-import { size, palette, key } from 'sly/web/components/themes';
+import { size, palette, key } from 'sly/common/components/themes';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import Heading from 'sly/web/components/atoms/Heading';
 import Block from 'sly/web/components/atoms/Block';

@@ -1,14 +1,15 @@
 import React from 'react';
-
-import communityPropType from 'sly/web/propTypes/community';
-import pad from 'sly/web/components/helpers/pad';
 import styled from 'styled-components';
-import { size } from 'sly/web/components/themes';
-import { Block, Label, Link } from 'sly/web/components/atoms';
-import { formatAddress } from 'sly/web/services/helpers/community';
 import { string } from 'prop-types';
-import { Section, SectionHeader, SummarySection } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import { generatePath } from 'react-router';
+
+import communityPropType from 'sly/common/propTypes/community';
+import pad from 'sly/web/components/helpers/pad';
+import { size } from 'sly/common/components/themes';
+import { Block, Label } from 'sly/common/components/atoms';
+import { Link } from 'sly/web/components/atoms';
+import { formatAddress } from 'sly/web/services/helpers/community';
+import { SummarySection } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import { DASHBOARD_COMMUNITIES_DETAIL_PATH, PROFILE } from 'sly/web/constants/dashboardAppPaths';
 
 const ColumWrapper = pad(styled.div`
