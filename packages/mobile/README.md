@@ -38,3 +38,4 @@ You should be able to sort the app's logs by reffering to activity name; for eg:
 * For android if you get build errors try ```npm run clean-build:android``` and build again.
   - still doesn't work and seeing soLoader errors or the apps crashes with so file errors try running ```rm -rf $HOME/.gradle/caches```
     and build your app again.
+* For react native android builder you should have ANDROID_HOME env set to your android sdk installation root folder.
