@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import loadable from '@loadable/component';
 
-import { apiUrl } from 'sly/web/config'
+import { apiUrl } from 'sly/web/config';
 import { getCommunityAutocompleteValues } from 'sly/web/services/datatable/helpers';
 import { normalizeResponse } from 'sly/web/services/api';
 

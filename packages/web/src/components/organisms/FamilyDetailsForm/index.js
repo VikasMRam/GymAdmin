@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { apiUrl } from 'sly/web/config'
+import { apiUrl } from 'sly/web/config';
 import { size, palette, columnWidth } from 'sly/web/components/themes';
 import userPropType from 'sly/web/propTypes/user';
 import clientPropType from 'sly/web/propTypes/client';

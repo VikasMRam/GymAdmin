@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import S3Upload from 'react-s3-uploader/s3upload';
 import objectAssign from 'object-assign';
-import { apiUrl } from 'sly/web/config'
+import { apiUrl } from 'sly/web/config';
 import FileField from 'sly/web/components/molecules/FileField';
 
 /* eslint-disable */
