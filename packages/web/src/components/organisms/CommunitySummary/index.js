@@ -98,7 +98,7 @@ const CommunitySummary = ({
     line1, line2, city, state, zip,
   } = address;
   const {
-    communityPhone, typeCare, tier, typeOfHome, squareFeet, numBeds, numBaths, priceRange, garage,
+    communityPhone, typeCare, typeOfHome, squareFeet, numBeds, numBaths, priceRange, garage,
   } = propInfo;
   const { reviewsValue, numReviews } = propRatings;
   const formattedAddress = `${line1}, ${line2}, ${city},
@@ -180,7 +180,7 @@ const CommunitySummary = ({
           </>
       }
       {
-        tier === "4" && !partnerAgent && communityPhone &&
+        !partnerAgent && communityPhone &&
           <>
             Call to connect directly with the community
             <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
@@ -199,7 +199,7 @@ const CommunitySummary = ({
 
       {typeCare.includes(ACTIVE_ADULT) &&
         <>
-          {tier === "4" && communityPhone && <Hr/>}
+          {communityPhone && <Hr/>}
           <OverlayTwoColumnListWrapper>
             {priceRange &&
             <ListItem icon="money" iconPalette="grey" iconVariation="dark">
