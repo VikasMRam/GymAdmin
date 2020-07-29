@@ -4,6 +4,7 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
+import { apiUrl } from 'sly/web/config';
 import { size, palette } from 'sly/common/components/themes';
 import { columnWidth } from 'sly/web/components/themes';
 import userPropType from 'sly/common/propTypes/user';
@@ -194,7 +195,7 @@ class FamilyDetailsForm extends Component {
     const adls = careServices.map(i => ({ value: i, label: i }));
     const communityCareTypeOptions = communityTypes.map(i => ({ value: i, label: i }));
     const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
-    const tagColumn = { typeInfo: { api: '/v0/platform/tags?filter[name]=' }, value: 'tag.name' };
+    const tagColumn = { typeInfo: { api: `${apiUrl}/v0/platform/tags?filter[name]=` }, value: 'tag.name' };
     const medicaidOptions = [{ label: '', value: true }];
     const sourceOptions = SOURCE_OPTIONS.map(s => <option key={s} value={s}>{s}</option>);
     const showStageSummary = showSummaryStages.includes(stage);
