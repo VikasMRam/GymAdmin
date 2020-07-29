@@ -10,7 +10,7 @@ import FileField from 'sly/web/components/molecules/FileField';
 
 const getSignedUrl = (file, callback) => {
   return fetch(`${apiUrl}/v0/platform/uploads/s3-signed-url?file=${encodeURIComponent(file.name)}`, {
-    credentials: 'include'
+    credentials: 'include',
   })
     .then(result => result.json())
     .then(callback);

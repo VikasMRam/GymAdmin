@@ -15,7 +15,7 @@ export default class Autocomplete extends Component {
   loadOptions = (inputValue) => {
     const { column } = this.props;
     return fetch(`${column.typeInfo.api}${inputValue}`, {
-      credentials: 'include'
+      credentials: 'include',
     })
       .then(r => r.json())
       .then(normalizeResponse)
