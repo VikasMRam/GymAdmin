@@ -10,7 +10,9 @@ const CommunityFilterApiEndpoint = '/v0/marketplace/communities/find?fields=name
 
 export default class CommunityAutoComplete extends Component {
   loadOptions = (inputValue) => {
-    return fetch(`${apiUrl}${CommunityFilterApiEndpoint}${inputValue}`)
+    return fetch(`${apiUrl}${CommunityFilterApiEndpoint}${inputValue}`, {
+      credentials: 'include'
+    })
       .then(r => r.json())
       .then(normalizeResponse)
       .then(getCommunityAutocompleteValues)

@@ -23,7 +23,9 @@ export default class UserAutoComplete extends Component {
 
   loadOptions = (inputValue) => {
     const { role } = this.props;
-    return fetch(`${apiUrl}${UserFilterApiEndpoint}${role}&filter[name]=${inputValue}`)
+    return fetch(`${apiUrl}${UserFilterApiEndpoint}${role}&filter[name]=${inputValue}`, {
+      credentials: 'include'
+    })
       .then(r => r.json())
       .then(normalizeResponse)
       .then(getUserAutocompleteValues)
