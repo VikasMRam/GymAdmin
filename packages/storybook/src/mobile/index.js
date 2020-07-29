@@ -30,6 +30,7 @@ addDecorator(story => (
 // To find allowed options for getStorybookUI
 const StorybookUIRoot = getStorybookUI({
   asyncStorage: null,
+  port: 9002,
   shouldPersistSelection: false,
   onDeviceUI: false, // todo: this has bug. For now till they fix it use browser ui for controls.
 });
