@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { func, oneOf } from 'prop-types';
 import loadable from '@loadable/component';
 
+import { apiUrl } from 'sly/web/config'
 import { getUserAutocompleteValues } from 'sly/web/services/datatable/helpers';
 import { normalizeResponse } from 'sly/web/services/api';
 import { CUSTOMER_ROLE_PARAM, PROVIDER_ROLE_PARAM, AGENT_ROLE_PARAM, ADMIN_ROLE_PARAM } from 'sly/web/constants/roles';
@@ -22,7 +23,7 @@ export default class UserAutoComplete extends Component {
 
   loadOptions = (inputValue) => {
     const { role } = this.props;
-    return fetch(`${UserFilterApiEndpoint}${role}&filter[name]=${inputValue}`)
+    return fetch(`${apiUrl}${UserFilterApiEndpoint}${role}&filter[name]=${inputValue}`)
       .then(r => r.json())
       .then(normalizeResponse)
       .then(getUserAutocompleteValues)
