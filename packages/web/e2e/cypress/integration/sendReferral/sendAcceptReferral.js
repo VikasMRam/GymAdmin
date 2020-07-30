@@ -1,7 +1,6 @@
 import { responsive, waitForHydration } from '../../helpers/tests';
 import { TEST_COMMUNITY } from '../../constants/community';
 
-
 describe('Sending Referral to Agent', () => {
   responsive(() => {
     it('Creating Lead - Lead Conversion on Get Pricing flow', () => {
@@ -42,22 +41,25 @@ describe('Sending Referral to Agent', () => {
 
     it('Logging in to Admin Account', () => {
       cy.visit('/dashboard/agent/my-families/new');
-      waitForHydration(cy.get('form input[name="emailOrPhone"]')).type('julene@seniorly.com');
-      waitForHydration(cy.get('button').contains('Continue')).click();
-
-      waitForHydration(cy.get('form input[type="password"]')).type('julene123');
+      waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');
+      waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
       waitForHydration(cy.get('button').contains('Log in')).click();
+
       cy.wait(1000);
+      cy.reload();
 
       waitForHydration(cy.get('table').find('tbody').find('tr a[class*="Link__StyledLink"]').first()).click();
       cy.get('div[class*="Tabs__Wrapper"]').find('li a[class*="Link__StyledLink"]').contains('Agents').click();
+
 
       cy.get('button').then(($a) => {
         if ($a.text().includes('Search for agents')) {
           cy.contains('Search for agents')
             .click({ force: true });
-          waitForHydration(cy.get('div input[placeholder="Search by name"]')).type('Tier 1 Agent A');
-          waitForHydration(cy.get('div button[type="submit"]')).click();
+          cy.get('form[name="CommunityAgentSearchForm"]').within(() => {
+            waitForHydration(cy.get('div input[placeholder="Search by name"]')).type('Tier 1 Agent A');
+            waitForHydration(cy.get('[data-cy="search"]')).click();
+          });
           waitForHydration(cy.get('div[class*="DashboardAgentReferralSearch__StyledDashboardAdminReferralAgentTile"]').first()).click('right');
           waitForHydration(cy.get('form').find('textarea')).type('This is a message');
           waitForHydration(cy.get('button').contains('Send Referral')).click();
@@ -65,8 +67,12 @@ describe('Sending Referral to Agent', () => {
         } else if ($a.text().includes('Send a new referral')) {
           cy.contains('Send a new referral')
             .click({ force: true });
-          waitForHydration(cy.get('div input[placeholder="Search by name"]')).type('Tier 1 Agent A');
-          waitForHydration(cy.get('div button[type="submit"]')).click();
+
+          cy.get('form[name="CommunityAgentSearchForm"]').within(() => {
+            waitForHydration(cy.get('div input[placeholder="Search by name"]')).type('Tier 1 Agent A');
+            waitForHydration(cy.get('[data-cy="search"]')).click();
+          });
+
           waitForHydration(cy.get('div[class*="DashboardAgentReferralSearch__StyledDashboardAdminReferralAgentTile"]').first()).click('right');
           waitForHydration(cy.get('form').find('textarea')).type('This is a message');
           waitForHydration(cy.get('button').contains('Send Referral')).click();
@@ -74,7 +80,10 @@ describe('Sending Referral to Agent', () => {
         }
       });
     });
+
+
     it('Logging in to Agent Account', () => {
+      cy.visit('/dashboard/agent/my-families/new');
       waitForHydration(cy.get('div[class*="Header__SeniorlyIconMenu"]')
         .find('div[class*="Header__OnlyInTablet"]')
         .find('a span[data-cy="logo"]')
@@ -82,31 +91,34 @@ describe('Sending Referral to Agent', () => {
         .click({ force: true });
 
       waitForHydration(cy.get('span[data-cy="menu"]')).click({ force: true });
-      waitForHydration(cy.get('a').contains('Log Out')).click();
+      waitForHydration(cy.get('div[class*="Header__HeaderMenu"]').find('a[class*="Link__Anchor"]').contains('Log Out')).click();
       cy.wait(1000);
 
       waitForHydration(cy.get('span[data-cy="menu"]')).click({ force: true });
-      waitForHydration(cy.get('div[class*="Header__HeaderMenu"]').find('a[class*="Link__Anchor"]').contains('Sign in')).click();
+      waitForHydration(cy.get('div[class*="Header__HeaderMenu"]').find('a[class*="Link__Anchor"]').contains('Log In')).click();
 
-      waitForHydration(cy.get('form input[name="emailOrPhone"]')).type('sushanthr+2020tier1a@seniorly.com');
-      waitForHydration(cy.get('button').contains('Continue')).click();
-      waitForHydration(cy.get('form input[type="password"]')).type('tier1aagent');
+      waitForHydration(cy.get('form input[name="email"]')).type('sushanthr+2020tier1a@seniorly.com');
+      waitForHydration(cy.get('form input[name="password"]')).type('tier1aagent');
       waitForHydration(cy.get('button').contains('Log in')).click();
       cy.wait(1000);
     });
 
     it('Accepting Referral', () => {
+      cy.visit('/dashboard/agent/my-families/new');
+
+      waitForHydration(cy.get('form input[name="email"]')).type('sushanthr+2020tier1a@seniorly.com');
+      waitForHydration(cy.get('form input[name="password"]')).type('tier1aagent');
+      waitForHydration(cy.get('button').contains('Log in')).click();
+
       waitForHydration(cy.get('span[data-cy="menu"]')).click({ force: true });
       cy.get('div[class*="Header__HeaderMenu"]').find('a[class*="Link__StyledLink"]').contains('Families').click();
+
       cy.wait(1000);
       cy.reload();
 
-      waitForHydration(cy.get('form input[name="emailOrPhone"]')).type('sushanthr+2020tier1a@seniorly.com');
-      waitForHydration(cy.get('button').contains('Continue')).click();
-      waitForHydration(cy.get('form input[type="password"]')).type('tier1aagent');
-      waitForHydration(cy.get('button').contains('Log in')).click();
       waitForHydration(cy.get('table').find('tbody').get('tr a[class*="Link__StyledLink"]').first()).click();
-      waitForHydration(cy.get('button[class*="Button__StyledButton"]').contains('Accept and contact this family')).click({ force: true });
+
+      waitForHydration(cy.get('div[class*="DashboardMyFamilyStickyFooter__FooterWrapper"]').contains('Accept and contact this family')).click();
       cy.wait(1000);
       waitForHydration(cy.get('button[class*="Button__StyledButton"]').contains('Continue to family details')).click({ force: true });
       cy.wait(1000);
