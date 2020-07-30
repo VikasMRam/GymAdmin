@@ -90,7 +90,7 @@ describe('Community survey', () => {
     });
 
     it('WHO - Verify header', () => {
-      waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Who are you looking for?')).should('exist');
+      waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Who are you looking for?')).should('exist');
       waitForHydration(cy.get('select[id*=lookingFor]').contains('Select a person')).should('exist');
     });
 
