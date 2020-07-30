@@ -476,7 +476,7 @@ describe('Community survey', () => {
               actionInfo: {
                 contactType: 'pricingRequest',
                 email: 'slytest+admin@seniorly.com',
-                phone: '4155554444',
+                name: 'Sly Test Admin Fonz',
                 slug: 'almavia-of-san-francisco',
               },
               actionPage: `/wizards/assessment/community/${community.id}`,
@@ -497,7 +497,7 @@ describe('Community survey', () => {
                 data: {
                   contactType: 'pricingRequest',
                   email: 'slytest+admin@seniorly.com',
-                  phone: '4155554444',
+                  name: 'Sly Test Admin Fonz',
                   slug: 'almavia-of-san-francisco',
                 },
               },
