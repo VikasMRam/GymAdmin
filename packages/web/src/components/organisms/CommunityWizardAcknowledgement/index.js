@@ -2,7 +2,7 @@ import React from 'react';
 import { string, bool, func, array } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';

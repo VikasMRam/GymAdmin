@@ -5,10 +5,10 @@ import { ifProp } from 'styled-tools';
 import Measure from 'react-measure';
 
 import { Block } from 'sly/web/components/atoms';
-import { size, palette } from 'sly/web/components/themes';
-import ButtonLink from 'sly/web/components/molecules/ButtonLink';
+import { size, palette } from 'sly/common/components/themes';
+import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import withBreakpoint from 'sly/web/components/helpers/breakpoint';
-import theme from 'sly/web/components/themes/default';
+import theme from 'sly/common/components/themes/default';
 
 const gutter = parseFloat(theme.sizes.layout.gutter) * 16;
 

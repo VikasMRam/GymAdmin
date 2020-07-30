@@ -3,7 +3,6 @@ import { func, object, string } from 'prop-types';
 import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 
-import { assetPath } from 'sly/web/components/themes';
 import { generateAskAgentQuestionContents } from 'sly/web/services/helpers/agents';
 import SlyEvent from 'sly/web/services/helpers/events';
 import withModal from 'sly/web/controllers/withModal';

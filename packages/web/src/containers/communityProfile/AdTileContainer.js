@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import { oneOf, string } from 'prop-types';
-import { community as communityProptype } from 'sly/common/propTypes/community';
 import styled from 'styled-components';
 
-import { size, assetPath } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
+import { community as communityProptype } from 'sly/common/propTypes/community';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { hcaAdEnabled } from 'sly/web/services/helpers/tileAds';
-
 import AdTile from 'sly/web/components/organisms/AdTile';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
 import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
 import withNotification from 'sly/web/controllers/withNotification';
-
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
   vertical-align: middle;

@@ -10,7 +10,7 @@ import userProptype from 'sly/common/propTypes/user';
 import { query, prefetch } from 'sly/web/services/api';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
 import DashboardCommunityPricingForm from 'sly/web/components/organisms/DashboardCommunityPricingForm';
 import { connect } from 'react-redux';
 import { patchFormInitialValues } from 'sly/web/services/edits';

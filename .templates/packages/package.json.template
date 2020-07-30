@@ -1,0 +1,10 @@
+{
+  "name": "@sly-react/${name}",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm i --package-lock-only",
+    "lint": "../../node_modules/.bin/eslint .",
+    "test": "../../node_modules/.bin/jest --passWithNoTests"
+  }
+}

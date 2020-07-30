@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 
 import config from 'sly/web/config';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Icon, Link, Hr } from 'sly/web/components/atoms';
 import Block from 'sly/web/components/atoms/Block';
 

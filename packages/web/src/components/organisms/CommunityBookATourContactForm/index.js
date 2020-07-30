@@ -3,8 +3,8 @@ import { string, object, func } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
-import { size } from 'sly/web/components/themes';
+import { phoneFormatter } from 'sly/web/services/helpers/phone';
+import { size } from 'sly/common/components/themes';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { Heading, Block } from 'sly/web/components/atoms';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';

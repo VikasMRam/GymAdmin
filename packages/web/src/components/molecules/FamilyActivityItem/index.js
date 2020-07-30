@@ -4,7 +4,7 @@ import { string, bool, func } from 'prop-types';
 import dayjs from 'dayjs';
 
 import pad from 'sly/web/components/helpers/pad';
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import cursor from 'sly/web/components/helpers/cursor';
 import { Box, Block, Icon, Span } from 'sly/web/components/atoms';
 import {

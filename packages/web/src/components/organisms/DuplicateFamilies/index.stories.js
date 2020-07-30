@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
 import DuplicateFamilies from 'sly/web/components/organisms/DuplicateFamilies';
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 import clients from 'sly/storybook/sample-data/clients.json';
 
 const DuplicateFamiliesContainer = reduxForm({

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 import PartnerAgentProfileForm from 'sly/web/components/organisms/PartnerAgentProfileForm';
 import agent from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 

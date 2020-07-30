@@ -3,7 +3,7 @@ import { bool, func, any } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { palette, size } from 'sly/web/components/themes';
+import { palette, size } from 'sly/common/components/themes';
 
 const bodyClassName = 'ReactModal__Body--open';
 

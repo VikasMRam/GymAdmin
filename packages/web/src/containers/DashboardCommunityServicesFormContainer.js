@@ -11,7 +11,7 @@ import { query, prefetch } from 'sly/web/services/api';
 import DashboardCommunityServicesForm from 'sly/web/components/organisms/DashboardCommunityServicesForm';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
 import { patchFormInitialValues } from 'sly/web/services/edits';
 
 const formName = 'DashboardCommunityServicesForm';

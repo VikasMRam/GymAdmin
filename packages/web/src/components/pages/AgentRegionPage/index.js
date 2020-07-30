@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 
 import { getHelmetForAgentsRegionPage } from 'sly/web/services/helpers/html_headers';
 import agentPropType from 'sly/common/propTypes/agent';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { CONSULTATION_REQUESTED } from 'sly/web/services/api/constants';
 import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';

@@ -3,7 +3,7 @@ import { bool, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { palette, size } from 'sly/web/components/themes';
+import { palette, size } from 'sly/common/components/themes';
 import { Button } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`

@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { prop, switchProp, ifProp } from 'styled-tools';
 import omit from 'lodash/omit';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 
 const thumbColor = ({ disabled }) => palette(disabled ? 2 : 0);
 

@@ -3,7 +3,7 @@ import { func, array } from 'prop-types';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Block, Box } from 'sly/web/components/atoms';
 import shadow from 'sly/web/components/helpers/shadow';
 import ReduxField from 'sly/web/components/organisms/ReduxField/index';

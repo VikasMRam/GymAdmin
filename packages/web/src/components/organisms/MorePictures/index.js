@@ -2,7 +2,7 @@ import React from 'react';
 import { arrayOf, shape, string, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, getKey } from 'sly/web/components/themes';
+import { size, getKey } from 'sly/common/components/themes';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`

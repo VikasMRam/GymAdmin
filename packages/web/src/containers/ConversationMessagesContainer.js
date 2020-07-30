@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { prefetch, withUser, query, invalidateRequests } from 'sly/web/services/api';
 import userPropType from 'sly/common/propTypes/user';
 import messagePropType from 'sly/common/propTypes/conversation/conversationMessage';

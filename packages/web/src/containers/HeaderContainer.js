@@ -6,7 +6,7 @@ import {
   CUSTOMER_ROLE,
   PROVIDER_OD_ROLE,
   AGENT_ND_ROLE,
-} from 'sly/web/constants/roles';
+} from 'sly/common/constants/roles';
 import {
   DASHBOARD_ACCOUNT_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH,
@@ -19,7 +19,7 @@ import { withRedirectTo } from 'sly/web/services/redirectTo';
 import { withProps } from 'sly/web/services/helpers/hocs';
 import { generateSearchUrl, parseURLQueryParams } from 'sly/web/services/helpers/url';
 import SlyEvent from 'sly/web/services/helpers/events';
-import AuthContainer from 'sly/web/services/auth/containers/AuthContainer';
+import AuthContainer from 'sly/common/services/auth/containers/AuthContainer';
 import NotificationController from 'sly/web/controllers/NotificationController';
 import Notifications from 'sly/web/components/organisms/Notifications';
 import Header from 'sly/web/components/organisms/Header';

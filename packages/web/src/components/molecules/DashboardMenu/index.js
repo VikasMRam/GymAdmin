@@ -16,7 +16,7 @@ import {
   AGENT_ADMIN_ROLE,
   AGENT_ND_ROLE,
   CUSTOMER_ROLE, PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE,
-} from 'sly/web/constants/roles';
+} from 'sly/common/constants/roles';
 import Block from 'sly/web/components/atoms/Block';
 import Role from 'sly/web/components/common/Role';
 

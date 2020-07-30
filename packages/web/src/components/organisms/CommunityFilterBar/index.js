@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { object, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
-import IconButton from 'sly/web/components/molecules/IconButton';
-import Button from 'sly/web/components/atoms/Button';
+import { size, palette } from 'sly/common/components/themes';
 import { budgets, sizes, getFiltersApplied, tocs } from 'sly/web/services/helpers/search';
 import withGenerateFilterLinkPath from 'sly/web/services/search/withGenerateFilterLinkPath';
+import IconButton from 'sly/web/components/molecules/IconButton';
+import { Button } from 'sly/web/components/atoms';
 
 const SectionWrapper = styled.div`
   display: flex;

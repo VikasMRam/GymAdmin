@@ -3,10 +3,11 @@ import { func, number, object, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 
+import { size, palette } from 'sly/common/components/themes';
 import { Box } from 'sly/web/components/atoms';
 import filterPropType from 'sly/common/propTypes/datatableFilter';
 import datatableColumnsPropType from 'sly/common/propTypes/datatableColumns';
-import ButtonLink from 'sly/web/components/molecules/ButtonLink';
+import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import Field from 'sly/web/components/molecules/Field';
 import {
   noValueOperators,
@@ -16,7 +17,6 @@ import {
   getAutocompleteValues, operatorNamesForDate,
 } from 'sly/web/services/datatable/helpers';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
-import { size, palette } from 'sly/web/components/themes';
 
 const AUTOCOMPLETE = 'MultiSelectDynamicList';
 const SELECT = 'MultiSelectStaticList';

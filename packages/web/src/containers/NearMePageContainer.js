@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { object, number, array, bool, func } from 'prop-types';
+import { object, func } from 'prop-types';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/web/services/helpers/search';
-import ErrorPage from 'sly/web/components/pages/Error';
 import AssistedLivingNearMePage from 'sly/web/components/pages/AssistedLivingNearMePage';
 import MemoryCareNearMePage from 'sly/web/components/pages/MemoryCareNearMePage';
 import SeniorLivingNearMePage from 'sly/web/components/pages/SeniorLivingNearMePage';
@@ -17,7 +16,7 @@ import VeteransBenefitAssistedLivingPage from 'sly/web/components/pages/Veterans
 import ActiveAdultNearMePage from 'sly/web/components/pages/ActiveAdultNearMePage';
 
 import { parseURLQueryParams, generateCityPathSearchUrl } from 'sly/web/services/helpers/url';
-import { prefetch } from 'sly/web/services/api';
+import { query, normalizeResponse } from 'sly/web/services/api';
 import { withProps } from 'sly/web/services/helpers/hocs';
 
 const handleClick = (e, sectionRef) => {
@@ -55,21 +54,39 @@ const handleClick = (e, sectionRef) => {
   };
 })
 
-@prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
+@query('searchCommunities', 'getSearchResources')
 
 export default class NearMePageContainer extends Component {
   static propTypes = {
     setLocation: func,
     searchParams: object.isRequired,
     history: object.isRequired,
-    communityList: array.isRequired,
-    requestMeta: object.isRequired,
-    errorCode: number,
-    isFetchingResults: bool,
+    searchCommunities: func,
     location: object.isRequired,
-    status: object,
     redirectTo: func.isRequired,
   };
+
+  state = {
+    communityList: [],
+    isFetchingResults: true,
+    requestMeta: {}
+
+  };
+
+  componentDidMount() {
+    const { searchCommunities, searchParams } = this.props;
+
+    searchCommunities(searchParams).then(({ body: result }) => {
+      const communities = normalizeResponse(result);
+      this.setState({ isFetchingResults: false, requestMeta: result.meta, communityList: communities });
+    }).catch((err) => {
+      // todo: use correct method for surfacing errors
+      // eslint-disable-next-line no-console
+      this.setState({ isFetchingResults: false });
+
+    });
+
+  }
 
   handleOnLocationSearch = (result) => {
     const { searchParams } = this.props;
@@ -102,18 +119,17 @@ export default class NearMePageContainer extends Component {
   render() {
     const {
       searchParams,
-      communityList,
-      status,
       location,
-      history,
       match,
     } = this.props;
 
-    if (status.communityList.error) {
-      const error = status.communityList.error.errors[0];
-      const errorCode = error.status || 500;
-      return <ErrorPage errorCode={errorCode} history={history} />;
-    }
+    const {
+      communityList,
+      isFetchingResults,
+      requestMeta,
+    } = this.state;
+
+    console.log(this.state);
     const { params } = match;
     const { hub } = params;
 
@@ -121,10 +137,10 @@ export default class NearMePageContainer extends Component {
       return (
         <NursingHomesNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={status.communityList.meta || {}}
+          requestMeta={requestMeta}
           searchParams={searchParams}
           communityList={communityList}
-          isFetchingResults={!status.communityList.hasFinished}
+          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
           location={location}
         />
@@ -134,10 +150,10 @@ export default class NearMePageContainer extends Component {
       return (
         <SNFNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={status.communityList.meta || {}}
+          requestMeta={requestMeta}
           searchParams={searchParams}
           communityList={communityList}
-          isFetchingResults={!status.communityList.hasFinished}
+          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
           location={location}
         />
@@ -147,10 +163,10 @@ export default class NearMePageContainer extends Component {
       return (
         <MemoryCareNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={status.communityList.meta || {}}
+          requestMeta={requestMeta}
           searchParams={searchParams}
           communityList={communityList}
-          isFetchingResults={!status.communityList.hasFinished}
+          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
           location={location}
         />
@@ -160,10 +176,10 @@ export default class NearMePageContainer extends Component {
       return (
         <IndependentLivingNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={status.communityList.meta || {}}
+          requestMeta={requestMeta}
           searchParams={searchParams}
           communityList={communityList}
-          isFetchingResults={!status.communityList.hasFinished}
+          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
           location={location}
         />
@@ -173,10 +189,10 @@ export default class NearMePageContainer extends Component {
       return (
         <SeniorLivingNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={status.communityList.meta || {}}
+          requestMeta={requestMeta}
           searchParams={searchParams}
           communityList={communityList}
-          isFetchingResults={!status.communityList.hasFinished}
+          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
           location={location}
         />
@@ -186,10 +202,10 @@ export default class NearMePageContainer extends Component {
       return (
         <BNCNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={status.communityList.meta || {}}
+          requestMeta={requestMeta}
           searchParams={searchParams}
           communityList={communityList}
-          isFetchingResults={!status.communityList.hasFinished}
+          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
           location={location}
         />
@@ -199,10 +215,10 @@ export default class NearMePageContainer extends Component {
       return (
         <CCRCNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={status.communityList.meta || {}}
+          requestMeta={requestMeta}
           searchParams={searchParams}
           communityList={communityList}
-          isFetchingResults={!status.communityList.hasFinished}
+          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
           location={location}
         />
@@ -233,10 +249,10 @@ export default class NearMePageContainer extends Component {
       return (
         <ActiveAdultNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={status.communityList.meta || {}}
+          requestMeta={requestMeta}
           searchParams={searchParams}
           communityList={communityList}
-          isFetchingResults={!status.communityList.hasFinished}
+          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
           location={location}
         />
@@ -245,10 +261,10 @@ export default class NearMePageContainer extends Component {
     return (
       <AssistedLivingNearMePage
         onLocationSearch={this.handleOnLocationSearch}
-        requestMeta={status.communityList.meta || {}}
+        requestMeta={requestMeta}
         searchParams={searchParams}
         communityList={communityList}
-        isFetchingResults={!status.communityList.hasFinished}
+        isFetchingResults={isFetchingResults}
         handleAnchor={handleClick}
         location={location}
         onCurrentLocation={this.handleCurrentLocation}

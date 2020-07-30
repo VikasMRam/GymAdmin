@@ -3,11 +3,10 @@ import { bool, func, arrayOf, shape, string, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette, key } from 'sly/web/components/themes';
+import { size, palette, key } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import cursor from 'sly/web/components/helpers/cursor';
-import { Icon, Hr, Link, Button } from 'sly/web/components/atoms';
-import Logo from 'sly/web/components/atoms/Logo';
+import { Icon, Hr, Link, Button, Logo } from 'sly/web/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 
 const HeaderWrapper = styled.nav`

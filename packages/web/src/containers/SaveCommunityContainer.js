@@ -5,7 +5,7 @@ import { SubmissionError, clearSubmitErrors } from 'redux-form';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import { USER_SAVE_INIT_STATUS } from 'sly/web/constants/userSave';

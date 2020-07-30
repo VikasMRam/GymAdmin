@@ -3,10 +3,10 @@ import { node, string, bool, func, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
 
-import { palette, size } from 'sly/web/components/themes';
+import { palette, size } from 'sly/common/components/themes';
 import { spacing as spacingPropType } from 'sly/common/propTypes/spacing';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import Box from 'sly/web/components/atoms/Box';
+import Box from 'sly/common/components/atoms/Box';
 import Icon from 'sly/web/components/atoms/Icon';
 
 const getHoverBorderColour = ({ highlightedPalette }) => palette(highlightedPalette, 'base');

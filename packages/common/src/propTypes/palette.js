@@ -1,7 +1,6 @@
 import { oneOf } from 'prop-types';
 
-import { getKey } from 'sly/web/components/themes';
-
+import { getKey } from 'sly/common/components/themes';
 
 const valueKeys = [
   'darker-30',
@@ -18,4 +17,4 @@ const keys = Object.keys(paletteData);
 export const palette = oneOf(keys.reduce((acc, key) => {
   acc.push(...valueKeys.map(valueKey => `${key}.${valueKey}`));
   return acc;
-}, [...keys]));
+}, [...keys, 'transparent', 'currentColor']));

@@ -4,7 +4,7 @@ import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
 import ImportantCovid19UpdatesStep from 'sly/web/components/organisms/ImportantCovid19UpdatesStep';
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const cityName = 'San Francsico';
 const buttons = [

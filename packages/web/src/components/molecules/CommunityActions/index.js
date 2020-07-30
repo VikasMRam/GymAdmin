@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { bool, string } from 'prop-types';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import GetCustomPricingButtonContainer from 'sly/web/containers/GetCustomPricingButtonContainer';
 
 const GetPricingButton = styled(GetCustomPricingButtonContainer)`

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { bool, number, string } from 'prop-types';
 import { prop } from 'styled-tools';
 
-import { size, palette, key } from 'sly/web/components/themes';
+import { size, palette, key } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import pad from 'sly/web/components/helpers/pad';
 import Block from 'sly/web/components/atoms/Block';

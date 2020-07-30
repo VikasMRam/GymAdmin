@@ -2,17 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, shape, string, object } from 'prop-types';
 
-
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { text as textPropType } from 'sly/common/propTypes/text';
+import { withPad } from 'sly/common/components/helpers';
 import { Link, Span } from 'sly/web/components/atoms';
-import { withPad } from 'sly/web/components/helpers/pad';
 
 const getSize = p => size('text', p.size);
 
 const Wrapper = styled.nav`
   ${withPad}
-  
+
   ol {
     display: block;
     list-style-type: none;

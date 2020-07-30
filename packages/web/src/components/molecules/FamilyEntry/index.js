@@ -29,7 +29,7 @@ const FamilyEntry = ({ client, children }) => {
       <StyledBox padding="large">
         <InfoWrapperComponent>
           <Block palette="primary" weight="medium">{client.clientInfo.name}</Block>
-          <IconBadge palette={STATUS_PALETTE_MAP[client.status]} icon={STATUS_ICON_MAP[client.status]} text={client.status} />
+          <IconBadge background={STATUS_PALETTE_MAP[client.status]} icon={STATUS_ICON_MAP[client.status]} text={client.status} />
         </InfoWrapperComponent>
         <div>
           {children}
