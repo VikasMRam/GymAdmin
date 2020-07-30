@@ -1,10 +1,11 @@
 
-import { formatMoney } from 'sly/web/services/helpers/numbers';
-import { normalizeResponse } from 'sly/web/services/api';
-
 import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
 import { TEST_COMMUNITY } from '../../constants/community';
+
+import { formatMoney } from 'sly/web/services/helpers/numbers';
+import { normalizeResponse } from 'sly/web/services/api';
+
 
 
 const randHash = () => Math.random().toString(36).substring(7);
@@ -78,9 +79,9 @@ describe('Community Profile Sections', () => {
       // select('.CommunitySummary__PricingRatingWrapper').should('contain', formatMoney(community.startingRate));
       select('.CommunityPricing__StyledCommunityPricingWrapper').should('contain', formatMoney(community.startingRate));
 
-      const rating = community.propRatings.reviewsValue.toFixed(1).replace(/\.0+$/, '');
+      // const rating = community.propRatings.reviewsValue.toFixed(1).replace(/\.0+$/, '');
       // select('.CommunitySummary__PricingRatingWrapper').should('contain', rating);
-      select('.CommunityPricing__StyledCommunityPricingWrapper').should('contain', 5);
+        select('.CommunityPricing__StyledCommunityPricingWrapper').should('contain', 5);
     });
 
 
