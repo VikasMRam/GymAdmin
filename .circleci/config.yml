@@ -223,7 +223,6 @@ jobs:
 
   e2e:
     docker:
-      - image: buildpack-deps:trusty
       - image: circleci/node:12.16.3
       - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-db:latest
         environment:
