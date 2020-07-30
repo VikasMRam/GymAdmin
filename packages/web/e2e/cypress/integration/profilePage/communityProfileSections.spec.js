@@ -177,10 +177,8 @@ describe('Community Profile Sections', () => {
       buildEstimatedPriceList(community).forEach(({ label, value }) => {
         pricingContent.get('tbody td').contains(label).next().should('contain', formatMoney(value));
       });
-      
       cy.get('section[id*="pricing-and-floor-plans"]').contains('Get Detailed Pricing')
         .click();
-      
       cy.url().should('include', `wizards/assessment/community/${community.id}`);
     });
 
