@@ -267,6 +267,7 @@ describe('Community survey', () => {
     });
 
     it('DEMENTIA - Verify header', () => {
+       if (`${LOOKING_FOR}` === 'Myself') {
         waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Are you forgetful?')).should('exist');
       } else if (`${LOOKING_FOR}` === 'Parents') { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Are your parents forgetful?')).should('exist'); } else if (`${LOOKING_FOR}` === 'Myself and spouse') { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Are you and your spouse forgetful?')).should('exist'); } else { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains(`Is your ${whoObj[0].value} forgetful?`)).should('exist'); }
     });
