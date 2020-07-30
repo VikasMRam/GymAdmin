@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, bool } from 'prop-types';
 
-import { size, palette, assetPath } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import eventPropType from 'sly/common/propTypes/event';
 import performerPropType from 'sly/common/propTypes/performer';
 import pad from 'sly/web/components/helpers/pad';

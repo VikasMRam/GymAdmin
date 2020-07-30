@@ -6,7 +6,7 @@ import { withUser, prefetch } from 'sly/web/services/api';
 import userPropType from 'sly/common/propTypes/user';
 import { adminAgentPropType } from 'sly/common/propTypes/agent';
 import { userIs } from 'sly/web/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 
 @withUser
 @prefetch('agents', 'getAgents', (req, { user }) => {

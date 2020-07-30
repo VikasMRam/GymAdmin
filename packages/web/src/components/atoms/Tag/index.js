@@ -1,7 +1,7 @@
 import { string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 
 const Tag = styled.div`
   display: inline-flex;

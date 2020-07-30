@@ -5,7 +5,7 @@ import { func, string, arrayOf, object, bool, node, oneOf, oneOfType } from 'pro
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette, getKey } from 'sly/web/components/themes';
+import { size, palette, getKey } from 'sly/common/components/themes';
 import Icon from 'sly/web/components/atoms/Icon';
 import Hr from 'sly/web/components/atoms/Hr';
 
@@ -42,7 +42,7 @@ const Wrapper = styled.div`
   ${StyledOption} {
     min-height: ${p => size('element', p.size)};
   }
-  
+
   .react-select__multi-value {
     background-color: ${palette('slate.lighter-90')};
   }

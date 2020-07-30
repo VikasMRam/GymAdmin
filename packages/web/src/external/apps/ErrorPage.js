@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { textAlign } from 'sly/web/components/helpers/text';
 
 const Wrapper = textAlign(styled.div`

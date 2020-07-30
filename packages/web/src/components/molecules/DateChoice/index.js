@@ -3,7 +3,7 @@ import { arrayOf, oneOfType, string, number, func, bool } from 'prop-types';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { LATER_DATE } from 'sly/web/constants/date';
 import { BoxChoiceTile } from 'sly/web/components/atoms';
 import DateChoiceTile from 'sly/web/components/molecules/DateChoiceTile';

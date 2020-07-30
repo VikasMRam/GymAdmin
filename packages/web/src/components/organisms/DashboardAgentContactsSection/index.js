@@ -3,12 +3,12 @@ import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
 import { Route } from 'react-router';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import SlyEvent from 'sly/web/services/helpers/events';
 import contactPropType from 'sly/common/propTypes/contact';
-import { Box, Table, THead, TBody, Tr, Td, Heading, Block } from 'sly/web/components/atoms';
+import { Box, Table, THead, TBody, Tr, Td, Block } from 'sly/web/components/atoms';
 import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import Th from 'sly/web/components/molecules/Th';

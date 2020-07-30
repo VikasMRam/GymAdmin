@@ -2,7 +2,7 @@ import React from 'react';
 import { func, string, any, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Link, Span, Icon } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`

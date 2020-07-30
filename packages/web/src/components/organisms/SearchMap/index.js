@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce';
 import { withRouter } from 'react-router-dom';
 
 import { isServer } from 'sly/web/config';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import Checkbox from 'sly/web/components/molecules/Checkbox';
 import Map from 'sly/web/components/atoms/Map';
 import MapTile from 'sly/web/components/molecules/MapTile';

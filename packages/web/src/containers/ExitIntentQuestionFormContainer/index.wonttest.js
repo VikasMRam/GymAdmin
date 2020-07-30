@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import { BrowserRouter } from 'react-router-dom';
 
-import ExitIntentQuestionFormContainer from './index';
+import ExitIntentQuestionFormContainer from '.';
 
 const showModal = jest.fn();
 const hideModal = jest.fn();

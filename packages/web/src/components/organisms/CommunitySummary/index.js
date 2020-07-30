@@ -4,18 +4,16 @@ import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
 import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES, CONTINUING_CARE_RETIREMENT_COMMUNITY, CCRC, ACTIVE_ADULT } from 'sly/web/constants/tags';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
+import { startingWith } from 'sly/common/components/helpers';
 import pad from 'sly/web/components/helpers/pad';
-import mobileOnly from 'sly/web/components/helpers/mobileOnly';
-import { Link, Box, Heading, Hr, Icon, Tag, Block } from 'sly/web/components/atoms';
+import { Link, Box, Heading, Hr, Icon, Tag } from 'sly/web/components/atoms';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { isBrowser } from 'sly/web/config';
 import { tocPaths } from 'sly/web/services/helpers/url';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 import ListItem from 'sly/web/components/molecules/ListItem';
-import { startingWith, upTo } from 'sly/web/components/helpers';
-
 
 const StyledHeading = pad(Heading, 'regular');
 StyledHeading.displayName = 'StyledHeading';
@@ -41,7 +39,7 @@ const TooltipContent = styled(ReactTooltip)`
 `;
 
 const CareTypeWrapper = styled.div`
-  margin-bottom: ${size('spacing.regular')}; 
+  margin-bottom: ${size('spacing.regular')};
 `;
 
 const OverlayTwoColumnListWrapper = styled.div`
@@ -98,12 +96,13 @@ const CommunitySummary = ({
     line1, line2, city, state, zip,
   } = address;
   const {
-    communityPhone, typeCare, tier, typeOfHome, squareFeet, numBeds, numBaths, priceRange, garage,
+    communityPhone, typeCare, typeOfHome, squareFeet, numBeds, numBaths, priceRange, garage,
   } = propInfo;
   const { reviewsValue, numReviews } = propRatings;
   const formattedAddress = `${line1}, ${line2}, ${city},
     ${state}
     ${zip}`
+    .replace(/, null,/g, ',')
     .replace(/\s/g, ' ')
     .replace(/, ,/g, ', ');
   let conciergeNumber = communityPhone;
@@ -179,7 +178,7 @@ const CommunitySummary = ({
           </>
       }
       {
-        tier === "4" && !partnerAgent && communityPhone &&
+        !partnerAgent && communityPhone &&
           <>
             Call to connect directly with the community
             <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
@@ -198,7 +197,7 @@ const CommunitySummary = ({
 
       {typeCare.includes(ACTIVE_ADULT) &&
         <>
-          <Hr />
+          {communityPhone && <Hr/>}
           <OverlayTwoColumnListWrapper>
             {priceRange &&
             <ListItem icon="money" iconPalette="grey" iconVariation="dark">

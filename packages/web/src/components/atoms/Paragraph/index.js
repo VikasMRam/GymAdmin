@@ -2,7 +2,7 @@ import React from 'react';
 import { string, node } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { text as textPropType } from 'sly/common/propTypes/text';
 
 const Paragraph = ({ children, ...props }) => {

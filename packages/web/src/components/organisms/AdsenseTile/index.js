@@ -1,11 +1,10 @@
 import React from 'react';
-
 import { bool, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
-import { size } from 'sly/web/components/themes';
 
 import { gadsClient, gadSlots } from 'sly/web/config';
+import { size } from 'sly/common/components/themes';
 
 const AdWrapper = styled.div`
   ${ifProp({ isMobileOnly: true }, css`

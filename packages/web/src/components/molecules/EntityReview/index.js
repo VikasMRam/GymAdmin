@@ -3,7 +3,7 @@ import { string, number } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import Rating from 'sly/web/components/molecules/Rating';
 import { Hr, Block } from 'sly/web/components/atoms';
 

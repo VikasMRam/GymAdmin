@@ -90,7 +90,7 @@ describe('Community survey', () => {
     });
 
     it('WHO - Verify header', () => {
-      waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Who are you looking for?')).should('exist');
+      waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Who are you looking for?')).should('exist');
       waitForHydration(cy.get('select[id*=lookingFor]').contains('Select a person')).should('exist');
     });
 
@@ -119,7 +119,7 @@ describe('Community survey', () => {
     });
 
     it('FEELING - Verify header', () => {
-      waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('How are you feeling about finding a senior living community?')).should('exist');
+      waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('How are you feeling about finding a senior living community?')).should('exist');
     });
 
     it('FEELING - single selection', () => {
@@ -232,8 +232,8 @@ describe('Community survey', () => {
 
     it('ADL - Verify header', () => {
       if (`${LOOKING_FOR}` === 'Myself') {
-        waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Which activities do you need help with?')).should('exist');
-      } else if (`${LOOKING_FOR}` === 'Myself and spouse') { waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Which activities do you and your spouse need help with?')).should('exist'); } else if (`${LOOKING_FOR}` === 'Parents') { waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Which activities do your parents need help with?')).should('exist'); } else { waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains(`Which activities below does your ${whoObj[0].value} need help with?`)).should('exist'); }
+        waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Which activities do you need help with?')).should('exist');
+      } else if (`${LOOKING_FOR}` === 'Myself and spouse') { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Which activities do you and your spouse need help with?')).should('exist'); } else if (`${LOOKING_FOR}` === 'Parents') { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Which activities do your parents need help with?')).should('exist'); } else { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains(`Which activities below does your ${whoObj[0].value} need help with?`)).should('exist'); }
     });
 
     it('ADL - Multiple selection', () => {
@@ -268,8 +268,8 @@ describe('Community survey', () => {
 
     it('DEMENTIA - Verify header', () => {
       if (`${LOOKING_FOR}` === 'Myself') {
-        waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Are you forgetful?')).should('exist');
-      } else if (`${LOOKING_FOR}` === 'Parents') { waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Are your parents forgetful?')).should('exist'); } else if (`${LOOKING_FOR}` === 'Myself and spouse') { waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Are you and your spouse forgetful?')).should('exist'); } else { waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains(`Is your ${whoObj[0].value} forgetful?`)).should('exist'); }
+        waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Are you forgetful?')).should('exist');
+      } else if (`${LOOKING_FOR}` === 'Parents') { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Are your parents forgetful?')).should('exist'); } else if (`${LOOKING_FOR}` === 'Myself and spouse') { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Are you and your spouse forgetful?')).should('exist'); } else { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains(`Is your ${whoObj[0].value} forgetful?`)).should('exist'); }
     });
 
     it('DEMENTIA - multiple selection', () => {
@@ -304,7 +304,7 @@ describe('Community survey', () => {
     });
 
     it('TIMING- Verify header', () => {
-      waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Please tell us about where you are in your search.')).should('exist');
+      waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Please tell us about where you are in your search.')).should('exist');
     });
 
     it('TIMING - multiple selection', () => {
@@ -341,10 +341,10 @@ describe('Community survey', () => {
 
     it('CURRENTLIVING - Verify header', () => {
       if (`${LOOKING_FOR}` === 'Myself') {
-        waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Please tell us about your current living situation')).should('exist');
+        waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Please tell us about your current living situation')).should('exist');
       } else if (`${LOOKING_FOR}` === 'Parents') {
-        waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Please tell us about your parents\'s current living situation.')).should('exist');
-      } else if (`${LOOKING_FOR}` === 'Myself and spouse') { waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Please tell us about you and your spouse\'s current living situation.')).should('exist'); } else { waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains(`Please tell us about your ${whoObj[0].value}'s current living situation.`)).should('exist'); }
+        waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Please tell us about your parents\'s current living situation.')).should('exist');
+      } else if (`${LOOKING_FOR}` === 'Myself and spouse') { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Please tell us about you and your spouse\'s current living situation.')).should('exist'); } else { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains(`Please tell us about your ${whoObj[0].value}'s current living situation.`)).should('exist'); }
     });
 
     it('CURRENTLIVING - multiple selection', () => {
@@ -380,10 +380,10 @@ describe('Community survey', () => {
 
     it('BUDGET - Verify header', () => {
       if (`${LOOKING_FOR}` === 'Myself') {
-        waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Do you have access to any of these benefits?')).should('exist');
+        waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Do you have access to any of these benefits?')).should('exist');
       } else if (`${LOOKING_FOR}` === 'Parents') {
-        waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Do your parents have access to any of these benefits?')).should('exist');
-      } else if (`${LOOKING_FOR}` === 'Myself and spouse') { waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Do you and your spouse have access to any of these benefits?')).should('exist'); } else { waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains(`Does your ${whoObj[0].value} have access to any of these benefits?`)).should('exist'); }
+        waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Do your parents have access to any of these benefits?')).should('exist');
+      } else if (`${LOOKING_FOR}` === 'Myself and spouse') { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Do you and your spouse have access to any of these benefits?')).should('exist'); } else { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains(`Does your ${whoObj[0].value} have access to any of these benefits?`)).should('exist'); }
     });
 
     it('BUDGET - multiple selection', () => {
@@ -422,10 +422,10 @@ describe('Community survey', () => {
 
     it('MEDICAID - Verify header', () => {
       if (`${LOOKING_FOR}` === 'Myself') {
-        waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Do you qualify for Medicaid?')).should('exist');
+        waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Do you qualify for Medicaid?')).should('exist');
       } else if (`${LOOKING_FOR}` === 'Parents') {
-        waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Do your parents qualify for Medicaid?')).should('exist');
-      } else if (`${LOOKING_FOR}` === 'Myself and spouse') { waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Do you or your spouse qualify for Medicaid?')).should('exist'); } else { waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains(`Does your ${whoObj[0].value} qualify for Medicaid?`)).should('exist'); }
+        waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Do your parents qualify for Medicaid?')).should('exist');
+      } else if (`${LOOKING_FOR}` === 'Myself and spouse') { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Do you or your spouse qualify for Medicaid?')).should('exist'); } else { waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains(`Does your ${whoObj[0].value} qualify for Medicaid?`)).should('exist'); }
     });
 
     it('MEDICAID - single selection', () => {
@@ -462,7 +462,7 @@ describe('Community survey', () => {
     });
 
     it('Submit End wizard form - Login to existing account', () => {
-      waitForHydration(cy.get('div[class*=Box-sc]').find('h2').contains('Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.')).should('exist');
+      waitForHydration(cy.get('div[class*=Box]').first().find('h2').contains('Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.')).should('exist');
       waitForHydration(cy.get('div[class*=SignupForm__BottomWrapper]').contains('Log in')).click();
       waitForHydration(cy.get('form div[type=email]').contains('Email')).type('slytest+admin@seniorly.com');
       waitForHydration(cy.get('form div[type=password]').contains('Password')).type('nopassword');
@@ -476,7 +476,7 @@ describe('Community survey', () => {
               actionInfo: {
                 contactType: 'pricingRequest',
                 email: 'slytest+admin@seniorly.com',
-                phone: '4155554444',
+                name: 'Sly Test Admin Fonz',
                 slug: 'almavia-of-san-francisco',
               },
               actionPage: `/wizards/assessment/community/${community.id}`,
@@ -497,7 +497,7 @@ describe('Community survey', () => {
                 data: {
                   contactType: 'pricingRequest',
                   email: 'slytest+admin@seniorly.com',
-                  phone: '4155554444',
+                  name: 'Sly Test Admin Fonz',
                   slug: 'almavia-of-san-francisco',
                 },
               },
@@ -511,7 +511,7 @@ describe('Community survey', () => {
       // 1. ENTER RESIDENTS DETAILS
       // Enter 2 residents for parents and myself and spouse
       if (`${LOOKING_FOR}` === 'Parents' || `${LOOKING_FOR}` === 'Myself and spouse') {
-        waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Last question, what are the residents\' names?')).should('exist');
+        waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Last question, what are the residents\' names?')).should('exist');
         waitForHydration(cy.get('input[name=firstName1]').should('exist')).type('test+inchara+fname1');
         waitForHydration(cy.get('input[name=lastName1]').should('exist')).type('test+raj+lname1');
         waitForHydration(cy.get('input[name=firstName2]').should('exist')).type('test+inchara+fname2');
@@ -549,7 +549,7 @@ describe('Community survey', () => {
           });
         });
       } else {
-        waitForHydration(cy.get('div[class*=Box-sc]').find('h3').contains('Last question, what is the resident\'s name?')).should('exist');
+        waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains('Last question, what is the resident\'s name?')).should('exist');
         waitForHydration(cy.get('input[name=firstName]').should('exist')).type('test+inchara');
         waitForHydration(cy.get('input[name=lastName]').should('exist')).type('test+raj');
 

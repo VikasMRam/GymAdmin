@@ -4,7 +4,7 @@ import { string, bool, arrayOf, shape, number, func } from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Icon, ResponsiveImage } from 'sly/web/components/atoms';
 import ThumbnailScroller from 'sly/web/components/molecules/ThumbnailScroller';
 import VideoThumbnail from 'sly/web/components/molecules/VideoThumbnail';

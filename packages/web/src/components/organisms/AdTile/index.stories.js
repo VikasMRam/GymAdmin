@@ -3,8 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 
+import { size } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import AdTile from 'sly/web/components/organisms/AdTile';
-import { size, assetPath } from 'sly/web/components/themes';
 import { Image } from 'sly/web/components/atoms';
 
 const StyledImage = styled(Image)`

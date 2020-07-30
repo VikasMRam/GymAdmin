@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import SlyEvent from 'sly/web/services/helpers/events';
@@ -19,7 +19,7 @@ import IconButton from 'sly/web/components/molecules/IconButton';
 import ClientRowCard from 'sly/web/components/organisms/ClientRowCard';
 import Role from 'sly/web/components/common/Role';
 import AddFamilyFormContainer from 'sly/web/containers/dashboard/AddFamilyFormContainer';
-import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/common/constants/roles';
 import { stripPageNumber } from 'sly/web/services/helpers/appPaths';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import AddContactForm from './index';
+import AddContactForm from '.';
 
 const defaultValues = {
   handleSubmit: jest.fn(),

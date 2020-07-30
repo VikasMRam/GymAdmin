@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 
 const mobileOnly = (Component, css, otherwiseCss = '') => styled(Component)`
   @media screen and (max-width: calc(${size('breakpoint.tablet')} - 1px)) {

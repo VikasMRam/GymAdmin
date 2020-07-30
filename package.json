@@ -10,12 +10,14 @@
   ],
   "scripts": {
     "clean": "lerna clean --yes",
+    "create:package": "./scripts/new-package.sh",
     "bootstrap": "npm run clean && lerna bootstrap --hoist",
     "bootstrap:web": "npm run clean && npm run bootstrap -- --scope={@sly-react/common,@sly-react/web}",
     "bootstrap:mobile": "npm run clean && npm run bootstrap -- --scope={@sly-react/common,@sly-react/mobile}",
     "postinstall": "npm run bootstrap",
     "lint": "lerna run --stream lint",
     "test": "lerna run --stream test",
+    "format": "prettier-eslint --print-width 120 --ignore **/node_modules/** \"$PWD/packages/*/src/**/*.js\"",
     "start:web": "npm --prefix=packages/web run ${SLY_ENV:-dev}",
     "start:mobile": "npm --prefix=packages/mobile run ${PLATFORM:-ios}",
     "start:storybook": "npm --prefix=packages/storybook start",
@@ -29,6 +31,7 @@
     "eslint-import-resolver-babel-module": "5.1.2",
     "eslint-plugin-jsx-a11y": "6.3.1",
     "eslint-plugin-react": "7.20.3",
+    "prettier-eslint-cli": "5.0.0",
     "@babel/core": "7.9.0",
     "@babel/plugin-proposal-decorators": "7.8.3",
     "@babel/plugin-proposal-class-properties": "7.8.3",
@@ -59,9 +62,11 @@
     "react": "16.13.1",
     "react-redux": "7.2.0",
     "redux": "4.0.5",
+    "react-router": "5.2.0",
     "styled-components": "5.1.1",
     "styled-theme": "0.3.3",
     "styled-tools": "1.7.1",
-    "cross-env": "7.0.2"
+    "cross-env": "7.0.2",
+    "npm-run-all": "4.1.5"
   }
 }

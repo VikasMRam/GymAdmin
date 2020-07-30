@@ -4,8 +4,9 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/web/components/themes';
-import { Hr, Label } from 'sly/web/components/atoms';
+import { size } from 'sly/common/components/themes';
+import { Label } from 'sly/common/components/atoms';
+import { Hr } from 'sly/web/components/atoms';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import SectionForm from 'sly/web/components/molecules/SectionForm';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
