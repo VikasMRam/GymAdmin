@@ -6,8 +6,6 @@ import { TEST_COMMUNITY } from '../../constants/community';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { normalizeResponse } from 'sly/web/services/api';
 
-
-
 const randHash = () => Math.random().toString(36).substring(7);
 
 export const buildEstimatedPriceList = (community) => {
@@ -81,7 +79,7 @@ describe('Community Profile Sections', () => {
 
       // const rating = community.propRatings.reviewsValue.toFixed(1).replace(/\.0+$/, '');
       // select('.CommunitySummary__PricingRatingWrapper').should('contain', rating);
-        select('.CommunityPricing__StyledCommunityPricingWrapper').should('contain', 5);
+      select('.CommunityPricing__StyledCommunityPricingWrapper').should('contain', 5);
     });
 
 
