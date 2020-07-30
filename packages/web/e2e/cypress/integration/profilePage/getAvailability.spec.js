@@ -24,7 +24,6 @@ describe('Marketplace Profile Page', () => {
       const data = {
         communitySlug, name, phone, moveTimeline, typeOfCare, medicaid, email,
       };
-
       doCustomPricingTalkToAdvisorFlow(cy, data);
 
       cy.getUser().then((userData) => {
@@ -32,7 +31,7 @@ describe('Marketplace Profile Page', () => {
       });
     });
 
-    it('tests Get Availability Flow for Assisited Living Community - Affordable Options Flow', () => {
+    it.skip('tests Get Availability Flow for Assisited Living Community - Affordable Options Flow', () => {
       const communitySlug = TEST_COMMUNITY;
       const { name, phone, email } = randomUser();
       const moveTimeline = 'Immediately';

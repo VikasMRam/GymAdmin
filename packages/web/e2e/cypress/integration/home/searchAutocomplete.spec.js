@@ -12,7 +12,7 @@ describe('Marketplace Home Page', () => {
 
     cy.get('div[class*=SearchBox__SearchSuggestion]')
       .should('have.length', 2)
-      .first()
+      .contains('San Francisco')
       .click();
 
     cy.url().should('have.string', '/assisted-living/california/san-francisco');
