@@ -3,16 +3,17 @@ import styled, { css } from 'styled-components';
 import { arrayOf, bool, string, func, number, shape, oneOf, object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { size, assetPath, getKey, palette } from 'sly/web/components/themes';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { size, getKey, palette } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import cursor from 'sly/web/components/helpers/cursor';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
 import border from 'sly/web/components/helpers/border';
 import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
-import { Button, Hr, Span, Image } from 'sly/web/components/atoms';
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { Button, Hr, Span } from 'sly/web/components/atoms';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
 import MediaGallery from 'sly/web/components/molecules/MediaGallery';
 import IconButton from 'sly/web/components/molecules/IconButton';
@@ -52,11 +53,14 @@ const StyledImage = styled(borderRadius(ResponsiveImage))`
   img {
     border-radius: ${size('spacing.small')};
   }
-  ${ifProp({ layout: 'column' }, css`
-    @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      height: 100%;
-    }
-  `)}
+
+  Button {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 const TopRightWrapper = styled.span`
@@ -92,22 +96,8 @@ const Wrapper = borderRadius(border(styled.div`
   }
 `, 'regular', 'grey', 'stroke'));
 
-const ImageWrapper = styled.div`
-  position: relative;
-  height: 100%;
-
-  // because we are passing aspectRatio prop, we have a relative position
-  // in the Image so we can use here absolute
-  Button {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-`;
-
 const MainWrapper = styled.article`
+  position: relative;
   background-color: ${ifProp('plusCategory', palette('primary', 'background'), palette('white', 'base'))};
 `;
 
@@ -169,18 +159,17 @@ const CommunityTile = ({
         }
         {noGallery &&
           <>
-            <ImageWrapper>
-              <StyledImage
-                layout={layout}
-                path={imagePath}
-                src={imageSrc}
-                placeholder={placeholder}
-                sizes={mediaSizes}
-                aspectRatio={layout === 'column' ? '3:2' : '16:9'}
-                loading={loading}
-              />
+            <StyledImage
+              layout={layout}
+              path={imagePath}
+              src={imageSrc}
+              placeholder={placeholder}
+              sizes={mediaSizes}
+              aspectRatio={layout === 'column' ? '4:3' : '16:9'}
+              loading={loading}
+            >
               {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
-            </ImageWrapper>
+            </StyledImage>
             {topRightSection && (
               <TopRightWrapper>
                 {topRightSection()}

@@ -9,7 +9,7 @@ import {
   SectionForm,
   SectionHeader,
 } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
-import communityPropType from 'sly/web/propTypes/community';
+import communityPropType from 'sly/common/propTypes/community';
 
 const nonCareServicesOptions = [
   { value: 'Community Operated Transportation', label: 'Community operated transportation' },

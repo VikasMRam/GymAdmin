@@ -3,10 +3,9 @@ import { number, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { Link, Icon } from 'sly/web/components/atoms';
-import { styles as buttonStyles } from 'sly/web/components/atoms/Button';
-import { size, palette } from 'sly/web/components/themes';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { size, palette } from 'sly/common/components/themes';
+import { Button, Icon } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,31 +15,27 @@ const Wrapper = styled.div`
 const marginLeftNext = css`
   margin-left: calc(${size('spacing.large')} - ${size('spacing.regular')});
 `;
-const StyledLink = styled(({ borderPalette, ghost, ...props }) => <Link {...props} />)`
-  ${buttonStyles};
-`;
 const ChevronLink = styled(({ flip, ...props }) => (
-  <StyledLink
+  <Button
     ghost
+    kind="label"
     palette="slate"
     borderPalette="slate"
-    kind="label"
     {...props}
   >
     <Icon
       rotate={flip ? -1 : 1}
       icon="chevron"
-      size="small"
+      size="caption"
       palette="slate"
     />
-  </StyledLink>
+  </Button>
 ))`
   margin-right: ${ifProp('flip', 0, size('spacing.large'))};
   ${ifProp('flip', marginLeftNext, 0)};
 `;
 
-const PageLink = styled(StyledLink)`
-  background-color: ${ifProp('selected', palette('background'))};
+const PageLink = styled(Button)`
   margin-right: ${size('spacing.regular')};
   &:last-of-type {
     margin-right: 0;
@@ -48,7 +43,9 @@ const PageLink = styled(StyledLink)`
 `;
 
 const BreakView = styled.span`
-  ${buttonStyles};
+  display: inline-flex;
+  align-items: center;
+  height: ${size('element.regular')};
   color: ${palette('slate', 'base')};
   border-color: ${palette('white', 'base')};
   cursor: default;
@@ -114,7 +111,6 @@ export default class Pagination extends Component {
   ellipsis = index => (
     <BreakView
       ghost
-      kind="label"
       palette="slate"
       key={index}
     >

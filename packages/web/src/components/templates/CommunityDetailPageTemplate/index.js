@@ -3,7 +3,7 @@ import { string } from 'prop-types';
 import styled from 'styled-components';
 import classes from 'classnames';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { withHydration } from 'sly/web/services/partialHydration';
 import BaseHeaderContainer from 'sly/web/containers/HeaderContainer';
 import { TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';

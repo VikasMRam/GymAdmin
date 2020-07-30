@@ -3,7 +3,7 @@ import { string, bool, func } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Heading, BoxChoiceTile } from 'sly/web/components/atoms';
 
 const StyledBoxChoiceTile = styled(BoxChoiceTile)`

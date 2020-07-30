@@ -3,35 +3,37 @@ import styled from 'styled-components';
 import { sortableElement, sortableHandle } from 'react-sortable-hoc';
 import { bool, func } from 'prop-types';
 
-import S3Uploader from './S3Uploader';
-
+import { size, palette } from 'sly/common/components/themes';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
-import { imagePropType } from 'sly/web/propTypes/gallery';
+import { imagePropType } from 'sly/common/propTypes/gallery';
 import Icon from 'sly/web/components/atoms/Icon';
-import { size, palette } from 'sly/web/components/themes';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import HelpBubble from 'sly/web/components/form/HelpBubble';
 import Link from 'sly/web/components/atoms/Link';
 import Block from 'sly/web/components/atoms/Block';
 
-const getSignedUrl = (file, callback) => {
-  return fetch(`/v0/platform/uploads/s3-signed-url?file=${encodeURIComponent(file.name)}`)
-    .then(result => result.json())
-    .then(callback);
-};
+const DragHandle = sortableHandle(styled(Icon)`
+  flex-grow: 0;
+  margin: 0 ${size('spacing.large')};
+`);
 
 const Wrapper = sortableElement(styled.div`
+  pointer-events: auto !important;
+
+  & > .drag-handle:hover {
+    cursor: grab;
+  }
+
+  body > & > .drag-handle:hover {
+    cursor: grabbing;
+  }
+
   display: flex;
   align-items: center;
   height: 4rem;
   margin-bottom: ${size('spacing.regular')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('border.xxLarge')};
-`);
-
-const DragHandle = sortableHandle(styled(Icon)`
-  flex-grow: 0;
-  margin: 0 ${size('spacing.large')};
+  border-radius: ${size('spacing.small')};
 `);
 
 const Info = styled(Block)`
@@ -76,6 +78,7 @@ export default class MediaItem extends React.Component {
         <DragHandle
           palette="grey"
           icon="drag"
+          className="drag-handle"
         />
         <Thumbnail>
           <ResponsiveImage
@@ -88,6 +91,7 @@ export default class MediaItem extends React.Component {
           <Link
             onClick={() => editImage(image)}
             palette="slate.lighter-30"
+            clamped
           >
             {descriptionText}
           </Link>

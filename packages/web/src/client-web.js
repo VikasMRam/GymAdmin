@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 import 'intersection-observer';
-import '@babel/polyfill';
 import 'react-hot-loader/patch';
 import 'isomorphic-fetch';
 

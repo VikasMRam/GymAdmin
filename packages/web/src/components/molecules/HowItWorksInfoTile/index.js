@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, bool } from 'prop-types';
 
-
-import { size, getKey, assetPath } from 'sly/web/components/themes';
+import { size, getKey } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import { Heading, Block } from 'sly/web/components/atoms';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 

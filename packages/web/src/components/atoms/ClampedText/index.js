@@ -1,34 +1,11 @@
-import { string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
-import { text as textPropType } from 'sly/web/propTypes/text';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { weight as weightPropType } from 'sly/web/propTypes/weight';
+import Block from 'sly/web/components/atoms/Block';
 
-const textSize = ({ size: sizeProp }) => size('text', sizeProp);
-
-const ClampedText = styled.div`
-  display: block;
+const ClampedText = styled(Block)`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: ${textSize};
-  color: ${palette('base')};
-  font-weight: ${p => size('weight', p.weight)};
 `;
-
-ClampedText.propTypes = {
-  size: textPropType,
-  palette: palettePropType,
-  weight: weightPropType,
-  title: string,
-};
-
-ClampedText.defaultProps = {
-  size: 'body',
-  palette: 'slate',
-  weight: 'regular',
-};
 
 export default ClampedText;

@@ -3,7 +3,7 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { func, string, bool } from 'prop-types';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import { Block, Button } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
@@ -17,7 +17,7 @@ const Form = styled.form`
 
 const Warning = pad(styled(Block)`
   background-color: ${palette('warning.filler')};
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
   text-align: center;
   padding: ${size('spacing.large')};
 `, 'xLarge');

@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { bool, number, string, oneOfType, oneOf, node } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
+import { remToPx, size, key, getKey } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { size, key, getKey, remToPx } from 'sly/web/components/themes';
 import { Link, Icon, Block } from 'sly/web/components/atoms';
 
 export const blockCapHeight = (props) => {
@@ -125,7 +125,7 @@ export default class CollapsibleBlock extends Component {
                 <Block size="caption" palette="primary">
                   {collapsed ? collapsedLabel : notCollapsedLabel}
                 </Block>
-                <Icon icon="chevron" palette="primary" size="small" flip={!collapsed} />
+                <Icon icon="chevron" palette="primary" size="body" flip={!collapsed} />
               </ReadMoreComponent>
             }
             {expandTo === 'bottom' && getContent(measureRef)}

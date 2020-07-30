@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 import loadable from '@loadable/component';
-import { ifProp } from 'styled-tools';
 
-import { size, palette, assetPath } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import { titleize } from 'sly/web/services/helpers/strings';
 import { getTocSeoLabel } from 'sly/web/services/helpers/search';
 import { getHelmetForSearchPage } from 'sly/web/services/helpers/html_headers';
@@ -58,29 +58,6 @@ const FilterColumnWrapper = styled(Box)`
   width: ${size('layout.col3')};
   margin-bottom: ${size('spacing.xLarge')}
 `;
-
-const ImageButtonWrapper = pad(styled.div`
-  position: relative;
-  text-align: center;
-
-  img {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  a {
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  }
-
-  ${ifProp('isMapView', '', `
-    a {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  `)};
-`, 'large');
 
 const LegacyContent = pad(styled.div`
   a {
@@ -158,20 +135,17 @@ const CommunitySearchPage = ({
           <>
           <FilterColumnWrapper>
             <>
-              <ImageButtonWrapper isMapView={isMapView}>
-                {isMapView ? (
-                  <IconButton icon="list" to={listViewUrl} iconPalette="primary" ghost>
-                    View List
+              {isMapView ? (
+                <IconButton icon="list" to={listViewUrl} iconPalette="primary" ghost>
+                  View List
+                </IconButton>
+              ) : (
+                <Image lazy={false} src={assetPath('images/map-placeholder.png')} aspectRatio="16:9">
+                  <IconButton icon="map" to={mapViewUrl} iconPalette="primary" ghost>
+                    View Map
                   </IconButton>
-                  ) : (
-                    <>
-                      <Image src={assetPath('images/map-placeholder.png')} />
-                      <IconButton icon="map" iconSize="body" to={mapViewUrl} iconPalette="primary" ghost>
-                        View Map
-                      </IconButton>
-                    </>
-                )}
-              </ImageButtonWrapper>
+                </Image>
+              )}
               <StyledHr />
             </>
             <ResponsiveSidebar isOpen={areFiltersOpen} onCloseRequested={toggleFiltersOpen}>

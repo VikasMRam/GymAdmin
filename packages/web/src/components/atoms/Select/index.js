@@ -5,7 +5,7 @@ import { func, string, arrayOf, object, bool, node, oneOf, oneOfType } from 'pro
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette, getKey } from 'sly/web/components/themes';
+import { size, palette, getKey } from 'sly/common/components/themes';
 import Icon from 'sly/web/components/atoms/Icon';
 import Hr from 'sly/web/components/atoms/Hr';
 
@@ -42,7 +42,7 @@ const Wrapper = styled.div`
   ${StyledOption} {
     min-height: ${p => size('element', p.size)};
   }
-  
+
   .react-select__multi-value {
     background-color: ${palette('slate.lighter-90')};
   }
@@ -79,7 +79,7 @@ const Wrapper = styled.div`
     margin-left: 0;
     display: flex;
     align-items: center;
-    padding-left: ${size('icon.large')};
+    padding-left: ${size('text.hero')};
     background: transparent;
 
     &--is-selected  {
@@ -106,7 +106,7 @@ const StyledIcon = styled(Icon)`
   justify-content: center;
   margin-right: ${size('spacing.small')};
   align-self: baseline;
-  width: ${size('icon.large')};
+  width: ${size('text.hero')};
 `;
 
 const StyledHr = styled(Hr)`
@@ -149,7 +149,7 @@ const StyledSingleValue = styled(SingleValue)`
   &.react-select__single-value {
     padding-left: 0;
     ${StyledIcon} {
-      width: ${size('icon.regular')};
+      width: ${size('text.hero')};
       justify-content: flex-start;
       margin-left: ${size('spacing.tiny')};
     }

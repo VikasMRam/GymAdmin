@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { Field } from 'redux-form';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/web/components/themes';
-import userPropType from 'sly/web/propTypes/user';
+import { size } from 'sly/common/components/themes';
+import userPropType from 'sly/common/propTypes/user';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';

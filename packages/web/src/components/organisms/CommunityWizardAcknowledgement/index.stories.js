@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 
 import CommunityWizardAcknowledgement from 'sly/web/components/organisms/CommunityWizardAcknowledgement';
 import Modal from 'sly/web/components/molecules/Modal';
-import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const { similarProperties } = RhodaGoldmanPlaza;
 

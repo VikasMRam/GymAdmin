@@ -10,7 +10,7 @@ import { CLIENT_RESOURCE_TYPE, UUIDAUX_RESOURCE_TYPE } from 'sly/web/constants/r
 import { newClient } from 'sly/web/constants/payloads/client';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import { FAMILY_STAGE_NEW } from 'sly/web/constants/familyDetails';
-import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import DuplicateFamilies from 'sly/web/components/organisms/DuplicateFamilies';
 import AddFamilyForm from 'sly/web/components/organisms/AddFamilyForm';
 

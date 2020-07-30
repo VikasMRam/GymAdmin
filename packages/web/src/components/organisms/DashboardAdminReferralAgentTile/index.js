@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { string, bool, func } from 'prop-types';
 
 import { AGENT_STATUS_NAME_MAP } from 'sly/web/constants/agents';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import cursor from 'sly/web/components/helpers/cursor';
-import { adminAgentPropType } from 'sly/web/propTypes/agent';
+import { adminAgentPropType } from 'sly/common/propTypes/agent';
 import pad from 'sly/web/components/helpers/pad';
 import { getReferralSentTimeText } from 'sly/web/services/helpers/communityReferral';
 import { copyToClipboard } from 'sly/web/services/helpers/utils';
@@ -69,7 +69,7 @@ const BigScreenSlyScorebadge = styled.div`
     padding: ${size('spacing.small')} calc(${size('spacing', 'regular')} + ${size('spacing', 'small')}) ;
     background-color: ${palette('grey', 'stroke')};
     border: ${size('border.regular')} solid ${palette('grey', 'filler')};
-    border-radius: ${size('border.xxLarge')};
+    border-radius: ${size('spacing.small')};
     margin-right: ${size('spacing.large')};
   }
 `;

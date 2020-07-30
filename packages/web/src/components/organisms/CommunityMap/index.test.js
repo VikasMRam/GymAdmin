@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { Marker, InfoWindow } from 'react-google-maps';
 
 import CommunityMap from 'sly/web/components/organisms/CommunityMap';
-import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 import Map from 'sly/web/components/atoms/Map';
 
 const wrap = (props = {}) => shallow(<CommunityMap {...props} />);

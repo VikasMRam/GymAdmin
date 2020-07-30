@@ -1,0 +1,35 @@
+{
+  "name": "@sly-react/mobile",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm i --package-lock-only",
+    "config": "react-native config",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "start:storybook": "npm run env:storybook -- npm start",
+    "env:storybook": "../../node_modules/.bin/cross-env-shell IS_STORYBOOK=true",
+    "android:storybook": "npm run env:storybook -- npm run android",
+    "ios:storybook": "npm run env:storybook -- npm run ios",
+    "test": "../../node_modules/.bin/jest --passWithNoTests",
+    "lint": "../../node_modules/.bin/eslint .",
+    "link": "react-native link",
+    "clean-build:android": "cd android && ./gradlew --stop && ./gradlew clean && ./gradlew cleanBuildCache",
+    "clean-build:ios": "rm -rf ios/build && cd ios && pod install",
+    "debug:logs:android": "NOW=$(date +\"%m-%d %H:%M:%S.000\") adb logcat \"*:W\" -T \"$NOW\""
+  },
+  "dependencies": {
+    "react-native": "0.63.0",
+    "react-router-native": "5.2.0"
+  },
+  "devDependencies": {
+    "@react-native-community/cli-platform-ios": "4.10.1",
+    "@react-native-community/cli-platform-android": "4.10.1",
+    "@babel/runtime": "7.6.2",
+    "metro-react-native-babel-preset": "0.59.0",
+    "babel-plugin-transform-inline-environment-variables": "0.4.3",
+    "react-native-testing-library": "2.1.0",
+    "react-test-renderer": "16.13.1"
+  }
+}

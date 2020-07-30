@@ -1,8 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import sinon from 'sinon';
+import { shallow, mount } from 'enzyme';
 
-import Header, { HeaderMenu, HeaderMenuItem, SeniorlyIconMenu } from 'sly/web/components/organisms/Header';
+import Header from 'sly/web/components/organisms/Header';
 
 const headerItems = [
   { name: 'List on Seniorly', href: '#' },
@@ -22,7 +21,18 @@ const menuItems = [
   { name: 'Sign Out', href: '#' },
 ];
 
-const wrap = (props = {}) => shallow(<Header headerItems={headerItems} menuItems={menuItems} {...props} />);
+const wrap = (props = {}, useMount) => {
+  const component = (
+    <Header headerItems={headerItems} menuItems={menuItems} {...props} />
+  );
+
+  // mount is requied for some tests that want event bubbling, blur etc
+  if (useMount) {
+    return mount(component);
+  }
+
+  return shallow(component);
+};
 
 const assignOnClick = (items, onClick) => {
   items.forEach((item) => {
@@ -32,9 +42,9 @@ const assignOnClick = (items, onClick) => {
 };
 
 describe('Header', () => {
-  it('renders children when passed in', () => {
+  it('does not renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
-    expect(wrapper.contains('test')).toBe(false);
+    expect(wrapper.contains('test')).toBeFalsy();
   });
 
   it('does not render menu when flag is not set ', () => {
@@ -42,7 +52,7 @@ describe('Header', () => {
       menuOpen: false,
     };
     const wrapper = wrap(props);
-    expect(wrapper.find(HeaderMenu)).toHaveLength(0);
+    expect(wrapper.find('HeaderMenu')).toHaveLength(0);
   });
 
   it('renders menu when flag is set', () => {
@@ -50,24 +60,24 @@ describe('Header', () => {
       menuOpen: true,
     };
     const wrapper = wrap(props);
-    expect(wrapper.find(HeaderMenu)).toHaveLength(1);
-    expect(wrapper.find(HeaderMenuItem)).toHaveLength(menuItems.length);
+    expect(wrapper.find('HeaderMenu')).toHaveLength(1);
+    expect(wrapper.find('HeaderMenuItem')).toHaveLength(menuItems.length);
   });
 
   it('toggles menu when clicked on Menu Icon', () => {
-    const onMenuIconClick = sinon.spy();
+    const onMenuIconClick = jest.fn();
     const props = {
       onMenuIconClick,
     };
     const wrapper = wrap(props);
-    const iconMenu = wrapper.find(SeniorlyIconMenu);
+    const iconMenu = wrapper.find('MenuIcon');
 
     iconMenu.simulate('click');
-    expect(onMenuIconClick.calledOnce);
+    expect(onMenuIconClick).toHaveBeenCalled();
   });
 
   it('closes menu when clicked on menu item', () => {
-    const onMenuItemClick = sinon.spy();
+    const onMenuItemClick = jest.fn();
     const onClick = jest.fn();
     const items = assignOnClick(menuItems, onClick);
     const props = {
@@ -75,24 +85,25 @@ describe('Header', () => {
       onMenuItemClick,
       menuItems: items,
     };
-    const wrapper = wrap(props);
-    const menuItem = wrapper.find(HeaderMenuItem).first();
+    // use mount here as this is testing event bubbling
+    const wrapper = wrap(props, true);
+    const menuItem = wrapper.find('HeaderMenuItem').first();
 
     menuItem.simulate('click');
-    expect(onMenuItemClick.calledOnce);
-    expect(onClick.calledOnce);
+    expect(onMenuItemClick).toHaveBeenCalled();
+    expect(onClick).toHaveBeenCalled();
   });
 
   it('closes menu when focus changes to element outside dropdown', () => {
-    const onHeaderBlur = sinon.spy();
+    const onHeaderBlur = jest.fn();
     const props = {
       menuOpen: true,
       onHeaderBlur,
     };
-    const wrapper = wrap(props);
-    const headerItems = wrapper.find('HeaderItems');
+    // use mount here as this is testing blur
+    const wrapper = wrap(props, true);
 
-    headerItems.simulate('click');
-    expect(onHeaderBlur.calledOnce);
+    wrapper.simulate('blur');
+    expect(onHeaderBlur).toHaveBeenCalled();
   });
 });

@@ -3,7 +3,7 @@ import { oneOf, node, func, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp, switchProp } from 'styled-tools';
 
-import { size, palette, key } from 'sly/web/components/themes';
+import { size, palette, key } from 'sly/common/components/themes';
 import IconButton from 'sly/web/components/molecules/IconButton';
 
 const Wrapper = styled.div`
@@ -31,7 +31,7 @@ const Notification = ({
     {closeable &&
       <IconButton
         icon="close"
-        iconSize="small"
+        iconsize="body"
         transparent
         onClick={onClose}
         palette={closeButtonPalette}

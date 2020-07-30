@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import { formatRating } from 'sly/web/services/helpers/rating';
 import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
-import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => shallow(<CommunityInfo community={RhodaGoldmanPlaza} {...props} />);
 

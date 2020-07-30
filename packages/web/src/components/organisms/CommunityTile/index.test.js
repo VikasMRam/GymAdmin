@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
-import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const note = 'note test';
 const defaultProps = {

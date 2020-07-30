@@ -1,6 +1,5 @@
-import styles from './default';
-
 import { publicPath } from 'sly/web/config';
+import styles from 'sly/common/components/themes/default';
 
 const baseColor = styles.palette.slate.base;
 
@@ -33,6 +32,7 @@ export default `
   }
 
   html, body {
+    background: white;
     color: ${baseColor};
     font-size: 16px;
     font-weight: 400;

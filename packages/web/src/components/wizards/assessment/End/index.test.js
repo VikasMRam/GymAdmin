@@ -2,8 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { End } from 'sly/web/components/wizards/assessment';
-import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-import LindaIwamota from 'sly/web/../private/storybook/sample-data/agent-linda-iwamota.json';
+import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import LindaIwamota from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 
 const handleSubmit = jest.fn();
 const defaultProps = {

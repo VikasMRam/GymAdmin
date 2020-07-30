@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { func, object } from 'prop-types';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
 import { Hr } from 'sly/web/components/atoms';
 import { getHelmetForAgentsPage } from 'sly/web/services/helpers/html_headers';

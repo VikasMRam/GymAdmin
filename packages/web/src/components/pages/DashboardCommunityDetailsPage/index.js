@@ -16,9 +16,9 @@ import {
   ADMIN,
   DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
-import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
-import communityPropType from 'sly/web/propTypes/community';
-import userPropType from 'sly/web/propTypes/user';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
+import communityPropType from 'sly/common/propTypes/community';
+import userPropType from 'sly/common/propTypes/user';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import { userIs } from 'sly/web/services/helpers/role';
 import Tabs from 'sly/web/components/molecules/Tabs';

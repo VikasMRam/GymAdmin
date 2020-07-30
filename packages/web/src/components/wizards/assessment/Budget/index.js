@@ -3,8 +3,8 @@ import { func, string, number, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
-import { BUDGET_OPTIONS, COEXISTING_BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
+import { size } from 'sly/common/components/themes';
+import { BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { capitalize } from  'sly/web/services/helpers/utils';
 import pad from 'sly/web/components/helpers/pad';

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { func, string, node, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Block, Box, Button, Heading } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
-import { community as communityProptype } from 'sly/web/propTypes/community';
+import { community as communityProptype } from 'sly/common/propTypes/community';
 import PostConversionAskNotHelpModal from 'sly/web/components/organisms/PostConversionAskNotHelpModal';
 import PostConversionSureNotHelpModal from 'sly/web/components/organisms/PostConversionSureNotHelpModal';
 
@@ -63,7 +63,7 @@ const PostConversionGreetingForm = ({
         <Heading level="subtitle">{heading}</Heading>
         {description && <LargePaddedBlock>{description}</LargePaddedBlock>}
         {children && <PaddedBlock>{children}</PaddedBlock>}
-        <RejectButton palette="primary" onClick={onReturnClick || doDismiss} to={onReturnClick ? null : toUrl}>
+        <RejectButton onClick={onReturnClick || doDismiss} to={onReturnClick ? null : toUrl}>
           Return to {community ? 'Profile' : 'Home'}
         </RejectButton>
       </ContentWrapper>

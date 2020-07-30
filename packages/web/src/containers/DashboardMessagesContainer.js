@@ -3,11 +3,11 @@ import { arrayOf, object, func, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import { withUser, query, prefetch } from 'sly/web/services/api';
-import conversationPropType from 'sly/web/propTypes/conversation/conversation';
-import userPropType from 'sly/web/propTypes/user';
+import conversationPropType from 'sly/common/propTypes/conversation/conversation';
+import userPropType from 'sly/common/propTypes/user';
 import withWS from 'sly/web/services/ws/withWS';
 import { NOTIFY_MESSAGE_NEW } from 'sly/web/constants/notifications';
 import { Heading, Box } from 'sly/web/components/atoms';

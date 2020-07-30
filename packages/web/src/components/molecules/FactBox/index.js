@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Box, Paragraph, Block } from 'sly/web/components/atoms';
 
 const StyledBlock = styled(Block)`

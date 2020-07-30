@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { bool, number, string } from 'prop-types';
 import { prop } from 'styled-tools';
 
-import { size, palette, key } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { size, palette, key } from 'sly/common/components/themes';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import pad from 'sly/web/components/helpers/pad';
 import Block from 'sly/web/components/atoms/Block';
 
@@ -18,7 +18,7 @@ const Bar = styled.div`
   height: ${size('spacing.small')};
   width: ${prop('width')}%;
   transition: width ${key('transitions.slow.inOut')};
-  border-radius: ${size('spacing.xLarge')};
+  border-radius: ${size('spacing.small')};
 `;
 
 const PaddedBlock = pad(Block, 'medium');

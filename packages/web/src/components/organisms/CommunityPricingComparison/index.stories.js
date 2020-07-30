@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import CommunityPricingComparison from 'sly/web/components/organisms/CommunityPricingComparison';
-import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const { address } = RhodaGoldmanPlaza;
 // TODO: mock as USA until country becomes available

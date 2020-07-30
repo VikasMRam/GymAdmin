@@ -2,16 +2,16 @@ import { number } from 'prop-types';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { size, palette } from 'sly/common/components/themes';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { variation as variationPropType } from 'sly/common/propTypes/variation';
 
 const backgroundColour = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 
 const Bar = styled.div`
   background-color: ${backgroundColour};
   border: ${size('border.regular')} solid ${palette('grey', 'filler')};
-  border-radius: ${size('border.xLarge')};
+  border-radius: ${size('spacing.small')};
   height: ${size('element.small')};
   width: ${prop('width')}%;
 `;

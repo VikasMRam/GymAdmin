@@ -6,10 +6,10 @@ import pick from 'lodash/pick';
 
 import DashboardProfileUserDetailsForm from 'sly/web/components/organisms/DashboardProfileUserDetailsForm';
 import { createValidator, required, email, usPhone } from 'sly/web/services/validation';
-import userPropType, { uuidAux as uuidAuxProps } from 'sly/web/propTypes/user';
+import userPropType, { uuidAux as uuidAuxProps } from 'sly/common/propTypes/user';
 import { withUser, query } from 'sly/web/services/api';
 import { userIs } from 'sly/web/services/helpers/role';
-import { CUSTOMER_ROLE } from 'sly/web/constants/roles';
+import { CUSTOMER_ROLE } from 'sly/common/constants/roles';
 
 const validate = createValidator({
   name: [required],
@@ -127,7 +127,7 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
       });
   };
   render() {
-    const { user, uuidAux, ...props } = this.props;
+    const { user, uuidAux, status, ...props } = this.props;
     const initialValues = convertUserToProfileFormValues(user, uuidAux);
     let emailWarning = null;
     const hasCustomerRole = userIs(user, CUSTOMER_ROLE);
@@ -142,6 +142,13 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
     const warn = createValidator({
       email: [required],
     }, messageObj);
+
+    const uuidAuxMeta = status.uuidAux.meta || {
+      lookingFor: [],
+      monthlyBudget: [],
+      timeToMove: [],
+    };
+
     return (
       <ReduxForm
         initialValues={initialValues}
@@ -149,6 +156,7 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
         hasCustomerRole={hasCustomerRole}
         user={user}
         warn={warn}
+        uuidAuxMeta={uuidAuxMeta}
         {...props}
       />
     );

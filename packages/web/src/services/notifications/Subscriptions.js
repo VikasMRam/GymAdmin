@@ -3,8 +3,8 @@ import { node, shape, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { assetPath } from 'sly/web/components/themes';
-import userPropType from 'sly/web/propTypes/user';
-import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import userPropType from 'sly/common/propTypes/user';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import { userIs } from 'sly/web/services/helpers/role';
 import { Link } from 'sly/web/components/atoms';
 import WSContext from 'sly/web/services/ws/WSContext';

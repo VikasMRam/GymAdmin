@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import MapTile from 'sly/web/components/molecules/MapTile';
-import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 storiesOf('Molecules|MapTile', module).add('default', () => (
   <MapTile

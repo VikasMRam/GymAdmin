@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Field } from 'redux-form';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Heading, Button, Block } from 'sly/web/components/atoms';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 

@@ -3,8 +3,8 @@ import { string, bool, node, number } from 'prop-types';
 import styled, { css, keyframes } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { size } from 'sly/common/components/themes';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { Icon, Button } from 'sly/web/components/atoms';
 
 const fadeIn = keyframes`
@@ -30,6 +30,7 @@ const StyledIcon = styled(({ padRight, fullWidth, ...props }) => <Icon {...props
 `;
 
 const Text = styled.span`
+  white-space: nowrap;
   margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
   ${ifProp('hideTextInMobile', css`
     display: none;
@@ -117,7 +118,7 @@ IconButton.propTypes = {
 
 IconButton.defaultProps = {
   iconSize: 'caption',
-  palette: 'primary',
+  background: 'primary',
   iconPalette: 'white',
 };
 

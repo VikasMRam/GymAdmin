@@ -1,6 +1,14 @@
 {
+  "version": "1.0.0",
   "packages": [
     "packages/*"
   ],
-  "version": "1.0.0"
+  "command": {
+    "bootstrap": {
+      "nohoist": [
+        "**/react-native",
+        "**/@react-native-community/*"
+      ]
+    }
+  }
 }

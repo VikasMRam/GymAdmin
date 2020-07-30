@@ -6,13 +6,13 @@ import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/web/services/validation';
-import clientPropType from 'sly/web/propTypes/client';
-import userPropType from 'sly/web/propTypes/user';
+import clientPropType from 'sly/common/propTypes/client';
+import userPropType from 'sly/common/propTypes/user';
 import { USER_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
 import { query, getRelationship } from 'sly/web/services/api';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { validateAM } from 'sly/web/services/helpers/client';
-import { selectFormData, trimFormData } from 'sly/web/services/helpers/forms';
+import { selectFormData, trimFormData } from 'sly/common/services/helpers/forms';
 import FamilyDetailsForm from 'sly/web/components/organisms/FamilyDetailsForm';
 
 const validate = createValidator({

@@ -3,10 +3,11 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 
+import { size, palette } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import HubHeader from 'sly/web/components/molecules/HubHeader';
 import PhoneCTAFooter from 'sly/web/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/web/components/molecules/NextSteps';
-import { size, palette, assetPath } from 'sly/web/components/themes';
 import {
   HubPageTemplate,
   makeBody,
@@ -57,7 +58,7 @@ const PercentageDiv = styled.div`
 const TwoColumnGrid = styled.div`
   padding: ${size('spacing', 'xLarge')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
   display: grid;
   grid-template-columns: minmax(min-content, max-content) minmax(min-content, max-content);
   grid-column-gap: ${size('spacing', 'xLarge')};

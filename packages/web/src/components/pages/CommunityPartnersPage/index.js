@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 
-
-import { size, gridColumns, assetPath } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
+import { gridColumns, assetPath } from 'sly/web/components/themes';
 import { getHelmetForCommunityPartnersPage } from 'sly/web/services/helpers/html_headers';
 import { partnerCommunityFAQs } from 'sly/web/constants/communities';
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';

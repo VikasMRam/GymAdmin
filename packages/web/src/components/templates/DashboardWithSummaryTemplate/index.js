@@ -2,12 +2,11 @@ import React from 'react';
 import { any, object, shape, string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
+import { upTo, withBorder, withText } from 'sly/common/components/helpers';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
-import Box from 'sly/web/components/atoms/Box';
-import { Block, Heading, Link } from 'sly/web/components/atoms';
+import { Block, Box, Heading, Link } from 'sly/web/components/atoms';
 import BackLink from 'sly/web/components/molecules/BackLink';
-import { withBorder, withText } from 'sly/web/components/helpers';
 
 export const Top = styled.div`
   grid-area: top;
@@ -23,13 +22,12 @@ export const Left = styled(({ children, heading, to, ...props }) => (
 ))`
   grid-area: left;
   display: grid;
-  
+
   ${withBorder}
 `;
 
 Left.defaultProps = {
   snap: 'bottom',
-  borderBottom: 'regular',
   background: 'white.base',
 };
 
@@ -43,7 +41,11 @@ export const Right = styled.div`
   grid-area: right;
 `;
 
-export const Section = styled(Box)``;
+export const Section = styled(Box)`
+  ${upTo('laptop')} {
+    border: none;
+  }
+`;
 
 Section.defaultProps = {
   background: 'white',
@@ -63,11 +65,11 @@ export const SectionHeader = styled(({ actions, children, className, ...props })
   </Block>
 ))`
   display: flex;
-  
+
   > * {
     flex-grow: 0;
     margin-left: ${size('spacing.regular')};
-    
+
     &:first-child {
       flex-grow: 1;
       margin-left: 0;
@@ -82,8 +84,8 @@ SectionHeader.propTypes = {
 };
 
 export const SummarySectionHeader = styled(Box)`
-  ${withBorder({ borderBottom: 'regular' })} 
-  
+  ${withBorder({ borderBottom: 'regular' })}
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     ${withText({ size: 'body' })};
     ${withBorder({ borderBottom: 0 })};
@@ -104,7 +106,7 @@ export const SummarySection = styled(({ heading, className, children, ...props }
     <SummarySectionHeader>
       {heading}
     </SummarySectionHeader>
-    <Section snap="top" {...props}>
+    <Section {...props}>
       <Block padding={['large', 'xLarge', 'xLarge']}>
         {children}
       </Block>
@@ -122,7 +124,7 @@ export const SummarySection = styled(({ heading, className, children, ...props }
 
   @media (min-width: ${size('breakpoint.laptop')}) {
     display: block;
-    
+
     ${SectionHeader} {
       display: none;
     }
@@ -169,7 +171,7 @@ export const DashboardWithSummaryPageTemplate = styled(DashboardPageTemplate)`
   padding: 0 ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: 0 ${size('spacing.xLarge')} ${size('spacing.xLarge')}; 
+    padding: 0 ${size('spacing.xLarge')} ${size('spacing.xLarge')};
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {

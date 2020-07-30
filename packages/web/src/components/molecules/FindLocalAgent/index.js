@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Block, Heading } from 'sly/web/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 
@@ -17,7 +17,7 @@ const StyledBlock = styled(Block)`
 
 const Wrapper = styled.div`
   background: ${palette('white', 'base')}E6;
-  border-radius: ${size('border.xLarge')};
+  border-radius: ${size('spacing.small')};
   padding: ${size('spacing.xxxLarge')};
   width: 100%;
 `;

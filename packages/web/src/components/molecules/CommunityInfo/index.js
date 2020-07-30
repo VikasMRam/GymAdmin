@@ -2,9 +2,9 @@ import React, { Fragment, Component } from 'react';
 import { bool, string, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { size } from 'sly/web/components/themes';
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { size } from 'sly/common/components/themes';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import { Link, Block, Icon, Heading, ClampedText } from 'sly/web/components/atoms';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
@@ -99,7 +99,7 @@ export default class CommunityInfo extends Component {
       const roomTypes = floorPlan.split(',');
       floorPlanComponent = (
         <IconTextWrapper>
-          <StyledIcon icon="bed" palette={inverted ? 'white' : 'grey'} size="small" />
+          <StyledIcon icon="bed" palette={inverted ? 'white' : 'grey'} size="body" />
           <Info title={roomTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
             {roomTypes.map((roomType, i) =>
               <Fragment key={roomType}>{!!i && <>, </>}{roomType}</Fragment>)}
@@ -110,7 +110,7 @@ export default class CommunityInfo extends Component {
     if (livingTypes && livingTypes.length) {
       livingTypeComponent = (
         <IconTextWrapper>
-          <StyledIcon icon="hospital" palette={inverted ? 'white' : 'grey'} size="small" />
+          <StyledIcon icon="hospital" palette={inverted ? 'white' : 'grey'} size="body" />
           <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
             {livingTypes.map((livingType, i) =>
               <Fragment key={livingType}>{!!i && <>{i === livingTypes.length - 1 ? ' & ' : ', '}</>}{livingType}</Fragment>)}
@@ -143,11 +143,16 @@ export default class CommunityInfo extends Component {
               {`${community.estimated ? 'Estimated ' : ''}${communityStartingRate}/month`}
             </Rate>
           ) : null }
-          <CommunityRating rating={reviewsValue} numReviews={numReviews} palette={inverted ? 'white' : 'primary'} variation="base" numReviewsPalette={inverted ? 'white' : 'slate'} size={reviewsValue > 0 ? 'caption' : 'tiny'} />
+          <CommunityRating
+            rating={reviewsValue}
+            numReviews={numReviews}
+            palette={inverted ? 'white' : 'primary'}
+            size={reviewsValue > 0 ? 'caption' : 'tiny'}
+          />
         </TopWrapper>
         {address && (
           <IconTextWrapper>
-            <StyledIcon icon="location" palette={inverted ? 'white' : 'grey'} size="small" />
+            <StyledIcon icon="location" palette={inverted ? 'white' : 'grey'} size="body" />
             <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
               {address}
             </Info>

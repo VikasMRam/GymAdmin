@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 
 import config from 'sly/web/config';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Icon, Link, Hr } from 'sly/web/components/atoms';
 import Block from 'sly/web/components/atoms/Block';
 
@@ -228,11 +228,11 @@ class Footer extends PureComponent {
               Join Our Community
             </Join>
             <SocialIcons>
-              <Link href="https://www.facebook.com/seniorly/posts"><FooterIcon icon="facebook" size="large" palette="white" /></Link>
-              <Link href="https://twitter.com/Seniorly"><FooterIcon icon="twitter" size="large" palette="white" /></Link>
-              <Link href="https://www.linkedin.com/company/seniorly"><FooterIcon icon="linkedin" size="large" palette="white" /></Link>
-              <Link href="https://www.instagram.com/seniorlyinc"><FooterIcon icon="instagram" size="large" palette="white" /></Link>
-              <Link href="https://www.pinterest.com/seniorly"><FooterIcon icon="pinterest" size="large" palette="white" /></Link>
+              <Link href="https://www.facebook.com/seniorly/posts"><FooterIcon icon="facebook" size="hero" palette="white" /></Link>
+              <Link href="https://twitter.com/Seniorly"><FooterIcon icon="twitter" size="hero" palette="white" /></Link>
+              <Link href="https://www.linkedin.com/company/seniorly"><FooterIcon icon="linkedin" size="hero" palette="white" /></Link>
+              <Link href="https://www.instagram.com/seniorlyinc"><FooterIcon icon="instagram" size="hero" palette="white" /></Link>
+              <Link href="https://www.pinterest.com/seniorly"><FooterIcon icon="pinterest" size="hero" palette="white" /></Link>
             </SocialIcons>
           </RightWrapper>
         </FooterBottomWrapper>

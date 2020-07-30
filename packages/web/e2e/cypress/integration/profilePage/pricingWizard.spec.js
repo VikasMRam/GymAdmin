@@ -1,6 +1,4 @@
-
 import randomUser from 'e2e/helpers/randomUser';
-
 import {
   doCustomPricingTalkToAdvisorFlow,
   doCustomPricingExploreAffordableOptionsFlow,

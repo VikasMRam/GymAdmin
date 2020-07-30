@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 
 import DashboardAdminCommunityAgentList from 'sly/web/components/organisms/DashboardAdminCommunityAgentList';
-import communityWithAgents from 'sly/web/../private/storybook/sample-data/admin-property-rhoda-goldman-plaza';
+import communityWithAgents from 'sly/storybook/sample-data/admin-property-rhoda-goldman-plaza.json';
 
 const Wrapper = styled.div`
   width: 800px;

@@ -4,9 +4,9 @@ import { Redirect, generatePath } from 'react-router-dom';
 import { reduxForm } from 'redux-form';
 
 import { domain } from 'sly/web/config';
-import clientPropType from 'sly/web/propTypes/client';
-import conversationPropType from 'sly/web/propTypes/conversation/conversation';
-import userPropType from 'sly/web/propTypes/user';
+import clientPropType from 'sly/common/propTypes/client';
+import conversationPropType from 'sly/common/propTypes/conversation/conversation';
+import userPropType from 'sly/common/propTypes/user';
 import {
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   FAMILY_DETAILS,

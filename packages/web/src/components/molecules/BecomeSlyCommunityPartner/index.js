@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { size, palette } from 'sly/common/components/themes';
 import { Block, Logo, Button } from 'sly/web/components/atoms';
-import { size, palette } from 'sly/web/components/themes';
 
 const getBackground = ({ type }) => palette(type, 'base');
 

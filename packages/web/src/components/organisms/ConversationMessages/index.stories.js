@@ -2,15 +2,15 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import ConversationMessages from 'sly/web/components/organisms/ConversationMessages';
-import message1 from 'sly/web/../private/storybook/sample-data/conversation-message-1.json';
-import message2 from 'sly/web/../private/storybook/sample-data/conversation-message-2.json';
-import message3 from 'sly/web/../private/storybook/sample-data/conversation-message-3.json';
-import message4 from 'sly/web/../private/storybook/sample-data/conversation-message-4.json';
-import message5 from 'sly/web/../private/storybook/sample-data/conversation-message-5.json';
-import participant1 from 'sly/web/../private/storybook/sample-data/conversation-participant-1.json';
-import participant2 from 'sly/web/../private/storybook/sample-data/conversation-participant-2.json';
-import PraneshKumar from 'sly/web/../private/storybook/sample-data/client-pranesh-kumar.json';
-import AmalFrancis from 'sly/web/../private/storybook/sample-data/user-amal-francis.json';
+import message1 from 'sly/storybook/sample-data/conversation-message-1.json';
+import message2 from 'sly/storybook/sample-data/conversation-message-2.json';
+import message3 from 'sly/storybook/sample-data/conversation-message-3.json';
+import message4 from 'sly/storybook/sample-data/conversation-message-4.json';
+import message5 from 'sly/storybook/sample-data/conversation-message-5.json';
+import participant1 from 'sly/storybook/sample-data/conversation-participant-1.json';
+import participant2 from 'sly/storybook/sample-data/conversation-participant-2.json';
+import PraneshKumar from 'sly/storybook/sample-data/client-pranesh-kumar.json';
+import AmalFrancis from 'sly/storybook/sample-data/user-amal-francis.json';
 
 const messages = [
   message1,

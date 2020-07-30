@@ -5,9 +5,9 @@ import pick from 'lodash/pick';
 
 import DashboardAgentDetailPage from 'sly/web/components/pages/DashboardAgentDetailPage';
 import { withUser, prefetch, query } from 'sly/web/services/api';
-import userPropType from 'sly/web/propTypes/user';
-import { adminAgentPropType } from 'sly/web/propTypes/agent';
-import notePropType from 'sly/web/propTypes/note';
+import userPropType from 'sly/common/propTypes/user';
+import { adminAgentPropType } from 'sly/common/propTypes/agent';
+import notePropType from 'sly/common/propTypes/note';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { AGENT_DETAILS } from 'sly/web/constants/dashboardAppPaths';
 import { NOTE_COMMENTABLE_TYPE_AGENT } from 'sly/web/constants/notes';

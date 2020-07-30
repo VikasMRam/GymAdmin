@@ -2,9 +2,9 @@ import React from 'react';
 import { func, string, bool } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { formatRating } from 'sly/web/services/helpers/rating';
-import agentPropType from 'sly/web/propTypes/agent';
+import agentPropType from 'sly/common/propTypes/agent';
 import { Image, Icon, Block, Button, Span, Hr, Link } from 'sly/web/components/atoms';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import pad from 'sly/web/components/helpers/pad';
@@ -32,7 +32,7 @@ const AgentImageWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex: 1;
     img {
-      border-radius: ${size('border.xxLarge')};
+      border-radius: ${size('spacing.small')};
     }
   }
 `;
@@ -117,7 +117,7 @@ const AgentSummary = ({
     const { numRatings, ratingValue } = aggregateRating;
     ratingsSection = (
       <ReviewValueSection>
-        <Icon icon="star" size="regular" palette="primary" variation="base" />
+        <Icon icon="star" size="title" palette="primary" variation="base" />
         <Span size="subtitle" weight="medium"> {formatRating(ratingValue)} </Span>
         {numRatings && <Span size="caption" palette="grey">from {numRatings} {numRatings > 1 ? 'reviews' : 'review'}</Span>}
       </ReviewValueSection>
@@ -128,7 +128,7 @@ const AgentSummary = ({
   return (
     <Wrapper>
       <AgentImageWrapper>
-        {hasNoImage && <Icon icon="logo" size="xLarge" />}
+        {hasNoImage && <Icon icon="logo" size="superHero" />}
         {!hasNoImage && <Image src={hasNoImage ? defaultImageUrl : profileImageUrl} aspectRatio="1:1" />}
         <Block size="caption">
           {imageCaption}
@@ -164,7 +164,7 @@ const AgentSummary = ({
             <AskQuestionButton onClick={onButtonClick} href={buttonHref}>Ask a Question</AskQuestionButton>
             {slyPhone &&
               <PhoneSection>
-                <Icon icon="phone" size="regular" palette="primary" />
+                <Icon icon="phone" size="title" palette="primary" />
                 <Link href={`tel:${slyPhone}`} onClick={onPhoneClick}>
                   <Span size="subtitle" weight="medium" palette="primary">
                     {phoneFormatter(slyPhone, true)}

@@ -14,7 +14,7 @@ storiesOf('Molecules|DiscoverHomeTile', module)
   ))
   .add('xLarge size', () => (
     <DiscoverHomeTile
-      size="xLarge"
+      size="superHero"
       image="https://d1qiigpe5txw4q.cloudfront.net/uploads/3a2008ef77a20485e5924b0fcc34c123/Buena_Vista_logo-11_sd.jpg"
       title="Independent Living"
       description="200 properties starting from $4,000"

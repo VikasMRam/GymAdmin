@@ -3,9 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
-import RhodaGoldmanPlaza from 'sly/web/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-import LindaIwamota from 'sly/web/../private/storybook/sample-data/agent-linda-iwamota.json';
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import LindaIwamota from 'sly/storybook/sample-data/agent-linda-iwamota.json';
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 import { End } from 'sly/web/components/wizards/assessment';
 
 const EndContainer = reduxForm({

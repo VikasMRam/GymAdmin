@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { string, node, bool } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Heading, Hr } from 'sly/web/components/atoms';
 
 const filterProps = Component => ({
@@ -16,7 +16,7 @@ const filterProps = Component => ({
 
 const StyledSection = filterProps(styled.section`
   border: ${size('border.regular')} ${ifProp('hasNoBorder', 'none', 'solid')} ${palette('slate', 'stroke')};
-  border-radius: ${ifProp('hasNoBorder', null, size('border.xLarge'))};
+  border-radius: ${ifProp('hasNoBorder', null, size('spacing.small'))};
   background-color: ${palette('white.base')};
   padding: ${size('spacing.xLarge')};
   padding-left: ${ifProp('hasNoBodyPadding', 0, null)};

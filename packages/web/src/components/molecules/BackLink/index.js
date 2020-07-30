@@ -2,7 +2,7 @@ import React from 'react';
 import { func, string, any, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Link, Span, Icon } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
@@ -23,7 +23,7 @@ const BackLink = ({
 }) => (
   <StyledLink to={to} onClick={onClick} className={className} event={event}>
     <Wrapper>
-      <BackArrorIcon icon="arrow-left" size="small" palette="primary" />
+      <BackArrorIcon icon="arrow-left" size="body" palette="primary" />
       <Span size="caption" palette="primary">{linkText || children}</Span>
     </Wrapper>
   </StyledLink>

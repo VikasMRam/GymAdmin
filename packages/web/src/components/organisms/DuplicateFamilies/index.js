@@ -3,8 +3,8 @@ import { func, arrayOf, string, bool } from 'prop-types';
 import styled from 'styled-components';
 import { generatePath } from 'react-router';
 
-import { size } from 'sly/web/components/themes';
-import clientPropType from 'sly/web/propTypes/client';
+import { size } from 'sly/common/components/themes';
+import clientPropType from 'sly/common/propTypes/client';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 import { Link, Block } from 'sly/web/components/atoms';

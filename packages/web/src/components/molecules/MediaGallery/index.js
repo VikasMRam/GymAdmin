@@ -4,7 +4,7 @@ import { string, bool, arrayOf, shape, number, func } from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Icon, ResponsiveImage } from 'sly/web/components/atoms';
 import ThumbnailScroller from 'sly/web/components/molecules/ThumbnailScroller';
 import VideoThumbnail from 'sly/web/components/molecules/VideoThumbnail';
@@ -46,8 +46,7 @@ const StyledIcon = styled(Icon)`
   position: absolute;
   z-index: 1;
   top: 50%;
-  bottom: 0;
-  margin-top: calc(-${size('icon.xLarge')} / 2);
+  margin-top: calc(-${size('text.superHero')} / 2);
 
   :hover {
     cursor: pointer;
@@ -301,7 +300,7 @@ export default class MediaGallery extends Component {
               className="media-carousel-control-prev"
               icon="chevron"
               rotate={1}
-              size="xLarge"
+              size="superHero"
               palette="white"
               onClick={this.prevSlide}
             />
@@ -331,7 +330,7 @@ export default class MediaGallery extends Component {
               className="media-carousel-control-next"
               icon="chevron"
               rotate={-1}
-              size="xLarge"
+              size="superHero"
               palette="white"
               onClick={this.nextSlide}
             />

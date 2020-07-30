@@ -3,13 +3,13 @@ import { arrayOf, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Block } from 'sly/web/components/atoms';
 import { textAlign } from 'sly/web/components/helpers/text';
 
 const Bubble = styled.div`
-  height: ${size('icon.tiny')};
-  width: ${size('icon.tiny')};
+  height: ${size('text.tiny')};
+  width: ${size('text.tiny')};
   background-color: ${ifProp(['checked', 'filled'], palette('slate', 'base'), palette('white', 'base'))};
   border: ${size('border.large')} solid ${ifProp('checked', palette('slate', 'base'), palette('grey', 'filler'))};
   border-radius: 50%;
@@ -23,8 +23,8 @@ const Bubble = styled.div`
         display: block;
         width: ${size('element.xHuge')};
         height: ${size('border.large')};
-        margin-top: calc(${size('icon.tiny')}/4);
-        margin-left: calc(${size('icon.tiny')} - ${size('border.large')});
+        margin-top: calc(${size('text.tiny')}/4);
+        margin-left: calc(${size('text.tiny')} - ${size('border.large')});
         background-color: ${ifProp('pathHighlighted', palette('slate', 'base'), palette('grey', 'filler'))};
       }
     `,

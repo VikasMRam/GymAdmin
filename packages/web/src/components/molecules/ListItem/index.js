@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes, { string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { size } from 'sly/common/components/themes';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import pad from 'sly/web/components/helpers/pad';
 import { Icon } from 'sly/web/components/atoms';
 

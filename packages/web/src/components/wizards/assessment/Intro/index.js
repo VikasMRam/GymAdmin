@@ -30,7 +30,7 @@ const Intro = ({
   <Wrapper>
     <Box>
       <StyledForm onSubmit={handleSubmit}>
-        <StyledIcon icon="logo" palette="primary" size="xLarge" />
+        <StyledIcon icon="logo" palette="primary" size="superHero" />
         <PaddedHeading level="subtitle" weight="medium">Complete this 3-minute assessment tool to get personalized senior living and care options.</PaddedHeading>
         <StyledField
           name="whatToDoNext"

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { getHelmetForPartnersPage } from 'sly/web/services/helpers/html_headers';
 import { partnerFAQs } from 'sly/web/constants/agents';
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';

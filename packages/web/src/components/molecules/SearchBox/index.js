@@ -4,8 +4,9 @@ import styled, { css } from 'styled-components';
 import { switchProp, ifProp } from 'styled-tools';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
+import { size, palette, key } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import shadow from 'sly/web/components/helpers/shadow';
-import { size, assetPath, palette, key } from 'sly/web/components/themes';
 import { Input, Image, Icon } from 'sly/web/components/atoms';
 import LoadGoogleMaps from 'sly/web/services/search/LoadGoogleMaps';
 
@@ -15,7 +16,7 @@ const Wrapper = styled.div`
 const searchTextBoxStyles = css`
   background-color: ${palette('white', 'base')}!important;
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
   ${switchProp('layout', {
     header: css`
       height: auto;`,

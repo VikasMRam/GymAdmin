@@ -1,14 +1,5 @@
-import styled from 'styled-components';
+// todo: temp file till migration is complete. Remove after changes
 
-import { withText, withColor, withSpacing, withBorder, withAlign, withSnap } from 'sly/web/components/helpers';
-
-const Block = styled.div`
-  ${withSpacing}
-  ${withText}
-  ${withColor}
-  ${withBorder}
-  ${withSnap}
-  ${withAlign}
-`;
+import { Block } from 'sly/common/components/atoms';
 
 export default Block;

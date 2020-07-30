@@ -5,6 +5,7 @@ import { object } from 'prop-types';
 import { ifProp, ifNotProp } from 'styled-tools';
 import { generatePath } from 'react-router';
 
+import { size, palette } from 'sly/common/components/themes';
 import {
   Block,
   Link,
@@ -20,9 +21,8 @@ import {
 import Stage from 'sly/web/components/molecules/Stage';
 import { FAMILY_STATUS_ON_PAUSE } from 'sly/web/constants/familyDetails';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/web/constants/dashboardAppPaths';
-import clientPropType from 'sly/web/propTypes/client';
+import clientPropType from 'sly/common/propTypes/client';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
-import { size, palette } from 'sly/web/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 
 const Wrapper = mobileOnly(Tr, css`

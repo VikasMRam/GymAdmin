@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import { Block } from 'sly/web/components/atoms';
 import SendMessageForm from 'sly/web/components/organisms/SendMessageForm';
-import participant2 from 'sly/web/../private/storybook/sample-data/conversation-participant-2.json';
+import participant2 from 'sly/storybook/sample-data/conversation-participant-2.json';
 
 const error = 'Blah';
 const defaultProps = {

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, shape, string } from 'prop-types';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Block, Box } from 'sly/web/components/atoms';
 import CollapsibleSection, { MainSection } from 'sly/web/components/molecules/CollapsibleSection';
 

@@ -3,7 +3,7 @@ import { func, node, string, bool, arrayOf, shape } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifNotProp, ifProp, prop } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import { Heading, Hr, Button, Block, Icon } from 'sly/web/components/atoms';

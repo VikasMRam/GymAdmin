@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import Icon from 'sly/web/components/atoms/Icon';
 import Block from 'sly/web/components/atoms/Block';
-import { palette } from 'sly/web/components/themes';
+import { palette } from 'sly/common/components/themes';
 
 const getIcons = () => {
   const context = require.context('./icons/', false, /\.svg$/);

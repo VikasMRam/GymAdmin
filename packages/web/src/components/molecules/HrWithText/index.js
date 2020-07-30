@@ -2,9 +2,9 @@ import React from 'react';
 import { string, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { size, palette } from 'sly/common/components/themes';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { Hr, Span, Badge } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   height: calc(2 * ${size('spacing.xLarge')});
   padding-top: ${size('spacing.xLarge')};
   hr {
-    margin: 0; 
+    margin: 0;
   }
 `;
 
@@ -22,11 +22,11 @@ const TextBlock = styled.div`
   top: 0;
   width: 100%;
   height: 100%;
-  
+
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   span {
     background: ${palette('white', 'base')};
     padding: 0 ${size('spacing.large')};
@@ -35,7 +35,7 @@ const TextBlock = styled.div`
 
 const StyledBadge = styled(Badge)`
   position: absolute;
-  top: ${size('spacing.medium')};
+  top: ${size('spacing.large')};
   right: ${size('spacing.large')};
 `;
 
@@ -45,7 +45,7 @@ const HrWithText = ({
   <Wrapper className={className} ref={hrRef}>
     <Hr palette={palette} variation={variation} />
     {text && <TextBlock size="caption" weight="medium"><Span>{text}</Span></TextBlock>}
-    {badgeText && <StyledBadge palette={palette} variation={variation} textPalette={badgeTextpalette}>{badgeText}</StyledBadge>}
+    {badgeText && <StyledBadge background={palette} backgroundVariation={variation} palette={badgeTextpalette}>{badgeText}</StyledBadge>}
   </Wrapper>
 );
 

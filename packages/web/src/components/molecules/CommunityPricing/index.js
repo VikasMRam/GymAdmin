@@ -3,10 +3,10 @@ import { number, string, bool } from 'prop-types';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
-import { size, palette } from 'sly/web/components/themes';
-import { text as textPropType } from 'sly/web/propTypes/text';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { size, palette } from 'sly/common/components/themes';
+import { text as textPropType } from 'sly/common/propTypes/text';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import pad from 'sly/web/components/helpers/pad';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { Block, Icon, Paragraph, Link, Span } from 'sly/web/components/atoms';

@@ -1,9 +1,10 @@
 import React from 'react';
 import { string, oneOf, node, bool } from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Lazy } from 'react-lazy';
 
-import { size, assetPath } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 
 const CUSHION = '500px';
 
@@ -20,11 +21,14 @@ const StyledLazy = styled(Lazy)`
 
 const paddingTop = ({ aspectRatio }) => size('picture.ratios', aspectRatio);
 
-const responsiveImageStyles = css`
+const ResponsiveWrapper = styled.div`
   position: relative;
   height: 0;
   width: 100%;
   padding-top: ${paddingTop};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   > img {
     object-fit: cover;
@@ -34,17 +38,23 @@ const responsiveImageStyles = css`
     width: 100%;
     height: 100%;
   }
+  > img + div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
-const ResponsiveLazyWrapper = styled(({ aspectRatio, ...props }) => <Lazy cushion={CUSHION} {...props} />)`
-  ${responsiveImageStyles};
-`;
-
-const ResponsiveActiveWrapper = styled.div`
-  ${responsiveImageStyles};
-`;
-
-const ltIE9 = true;
+const LazyResponsiveWrapper = props => (
+  <Lazy ltIE9>
+    <ResponsiveWrapper {...props} />
+  </Lazy>
+);
 
 // TODO: a note for the future if we do the resampling of the images with lambda,
 // <Image /> should accept formatting props so we can manipulate the url to get the right size.
@@ -110,19 +120,22 @@ export default class Image extends React.Component {
     };
 
     if (aspectRatio) {
-      const ResponsiveComponent = lazy
-        ? ResponsiveLazyWrapper
-        : ResponsiveActiveWrapper;
+      let ResponsiveWrapperComponent = ResponsiveWrapper;
 
-      const responsiveProps = lazy
-        ? { ltIE9, ...props }
-        : props;
+      if (lazy) {
+        ResponsiveWrapperComponent = LazyResponsiveWrapper;
+      }
 
       return (
-        <ResponsiveComponent aspectRatio={aspectRatio} {...responsiveProps}>
+        <ResponsiveWrapperComponent
+          aspectRatio={aspectRatio}
+          {...props}
+        >
           <StyledImage {...imageProps} />
-          {children}
-        </ResponsiveComponent>
+          <div>
+            {children}
+          </div>
+        </ResponsiveWrapperComponent>
       );
     }
 

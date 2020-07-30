@@ -6,10 +6,10 @@ import { connect } from 'react-redux';
 import { Redirect, generatePath } from 'react-router';
 
 import { withUser, prefetch, query, invalidateRequests } from 'sly/web/services/api';
-import userPropType from 'sly/web/propTypes/user';
-import conversationPropType from 'sly/web/propTypes/conversation/conversation';
-import clientPropType from 'sly/web/propTypes/client';
-import notePropType from 'sly/web/propTypes/note';
+import userPropType from 'sly/common/propTypes/user';
+import conversationPropType from 'sly/common/propTypes/conversation/conversation';
+import clientPropType from 'sly/common/propTypes/client';
+import notePropType from 'sly/common/propTypes/note';
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,

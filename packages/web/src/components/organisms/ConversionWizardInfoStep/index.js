@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, arrayOf, shape, object } from 'prop-types';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import shadow from 'sly/web/components/helpers/shadow';
 import { Heading, Button, Block, Box } from 'sly/web/components/atoms';

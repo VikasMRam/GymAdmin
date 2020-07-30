@@ -5,7 +5,7 @@ import { reduxForm } from 'redux-form';
 
 import ConfirmReasonForm from '.';
 
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const ConfirmReasonFormContainer = reduxForm({
   form: 'PlaceFamilyOnPauseForm',

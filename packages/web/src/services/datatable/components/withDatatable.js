@@ -19,8 +19,11 @@ export default function withDatatable(id) {
       static displayName = `withDatatable(${getDisplayName(InnerComponent)})`;
       static WrappedComponent = InnerComponent;
       static propTypes = {
-        sectionFilters: object.isRequired,
+        sectionFilters: object,
         location: object,
+      };
+      static defaultPropTypes = {
+        sectionFilters: {},
       };
 
       render() {

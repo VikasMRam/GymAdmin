@@ -8,7 +8,7 @@ import { CONVERSATION_MESSAGE_DATA_TYPE_TEXT, CONVERSATION_MEDIUM_INAPP, CONVERS
 import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE, CONVERSTION_MESSAGE_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
 import SendMessageForm from 'sly/web/components/organisms/SendMessageForm';
 import { createValidator, required } from 'sly/web/services/validation';
-import conversationPropType from 'sly/web/propTypes/conversation/conversation';
+import conversationPropType from 'sly/common/propTypes/conversation/conversation';
 
 const formName = 'SendMessageForm';
 

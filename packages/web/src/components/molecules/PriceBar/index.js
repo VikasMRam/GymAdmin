@@ -1,12 +1,12 @@
 import React from 'react';
 import { number, string, node } from 'prop-types';
 import styled from 'styled-components';
-import isString from 'lodash/isString';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Bar, Block, ClampedText } from 'sly/web/components/atoms';
-import { palette as palettePropType } from 'sly/web/propTypes/palette';
-import { variation as variationPropType } from 'sly/web/propTypes/variation';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
+import { variation as variationPropType } from 'sly/common/propTypes/variation';
+import { isString } from 'sly/common/services/helpers/utils';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 
 const StyledBlock = styled(Block)`

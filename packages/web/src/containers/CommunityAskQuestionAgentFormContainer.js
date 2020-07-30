@@ -12,9 +12,9 @@ import {
   usPhone,
   email,
 } from 'sly/web/services/validation';
-import userPropType from 'sly/web/propTypes/user';
-import matchPropType from 'sly/web/propTypes/match';
-import { community as communityPropType } from 'sly/web/propTypes/community';
+import userPropType from 'sly/common/propTypes/user';
+import matchPropType from 'sly/common/propTypes/match';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 import CommunityAskQuestionAgentForm from 'sly/web/components/organisms/CommunityAskQuestionAgentForm';
 import { AGENT_ASK_QUESTIONS } from 'sly/web/services/api/constants';
 

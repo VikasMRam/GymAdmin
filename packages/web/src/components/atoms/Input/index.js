@@ -4,7 +4,8 @@ import { bool, oneOf, func } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette, assetPath } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 
 const backgroundColor = (p) => {
   if (p.disabled || p.readOnly) {
@@ -38,7 +39,7 @@ export const styles = css`
   font-size: inherit;
   font-family: inherit;
   font-weight: inherit;
-  
+
   font-size: ${size('text', 'caption')};
   // todo: non standard padding. remove afterwards if added to theme
   padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')});
@@ -46,7 +47,7 @@ export const styles = css`
   color: ${color};
   background-color: ${backgroundColor};
   border: ${size('border.regular')} solid ${borderColor};
-  border-radius: ${size('border.xxLarge')};
+  border-radius: ${size('spacing.small')};
   min-width: ${ifProp({ type: 'textarea' }, '100%', 'initial')};
   max-width: ${ifProp({ type: 'textarea' }, '100%', 'initial')};
 

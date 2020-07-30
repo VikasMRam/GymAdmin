@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { func, string, bool, object } from 'prop-types';
+import { func, string, bool, object, shape, arrayOf } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/web/components/themes';
-import { Hr, Label } from 'sly/web/components/atoms';
+import { size } from 'sly/common/components/themes';
+import { Label } from 'sly/common/components/atoms';
+import { Hr } from 'sly/web/components/atoms';
 import ReduxField from 'sly/web/components/organisms/ReduxField';
 import SectionForm from 'sly/web/components/molecules/SectionForm';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
@@ -55,11 +56,11 @@ class DashboardProfileUserDetailsForm extends Component {
     }
   };
   render() {
-    const { initialValues, status, hasCustomerRole, title } = this.props;
-    const { meta } = status.uuidAux;
+    const { initialValues, hasCustomerRole, title, uuidAuxMeta } = this.props;
+
     const {
       lookingFor, monthlyBudget, timeToMove,
-    } = meta;
+    } = uuidAuxMeta;
     // const lookingForOptions = lookingFor.map(i => ({ label: i, value: i }));
     // const timeToMoveOptions = timeToMove.map(i => ({ label: i, value: i }));
     // const monthlyBudgetOptions = monthlyBudget.map(i => ({ label: i, value: i }));
@@ -174,6 +175,11 @@ DashboardProfileUserDetailsForm.propTypes = {
   initialValues: object,
   status: object,
   title: string.isRequired,
+  meta: shape({
+    lookingFor: arrayOf(string),
+    monthlyBudget: arrayOf(string),
+    timeToMove: arrayOf(string),
+  }),
 };
 
 export default DashboardProfileUserDetailsForm;

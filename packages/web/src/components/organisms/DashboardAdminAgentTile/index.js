@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { bool, func } from 'prop-types';
-import { prop, ifProp } from 'styled-tools';
+import { ifProp } from 'styled-tools';
 
-import { size, palette, columnWidth } from 'sly/web/components/themes';
-import { adminAgentPropType } from 'sly/web/propTypes/agent';
+import { size, palette } from 'sly/common/components/themes';
+import { adminAgentPropType } from 'sly/common/propTypes/agent';
 import { Heading, Badge, Button, Span } from 'sly/web/components/atoms';
 
 const Header = styled.div`
   display: flex;
   align-items: center;
-  > * { 
+  > * {
     margin-right: ${size('spacing.regular')};
   }
 `;
@@ -41,7 +41,7 @@ const AgentInfoWrapper = styled.div`
   grid-template-columns: max-content auto;
   grid-column-gap: ${size('spacing.large')};
   grid-row-gap: ${size('spacing.regular')};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-left: auto;
     padding: ${size('spacing.regular')};
@@ -87,7 +87,7 @@ export default class DashboardAdminAgentTile extends Component {
         <Header>
           <SlyScore>{agent.info.slyScore}</SlyScore>
           <Heading level="subtitle"> { agent.name } </Heading>
-          {isRecommended && <StyledBadge textPalette="white">Recommended</StyledBadge> }
+          {isRecommended && <StyledBadge palette="white">Recommended</StyledBadge> }
         </Header>
         <AgentInfoWrapper size="caption" rows={infoRowsNumber}>
           {Object.entries(agentPropsMap)

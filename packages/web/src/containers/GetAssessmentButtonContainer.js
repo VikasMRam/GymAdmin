@@ -3,8 +3,8 @@ import { string, object, bool } from 'prop-types';
 import { branch } from 'recompose';
 
 import { prefetch } from 'sly/web/services/api';
-import agentPropType from 'sly/web/propTypes/agent';
-import communityPropType from 'sly/web/propTypes/community';
+import agentPropType from 'sly/common/propTypes/agent';
+import communityPropType from 'sly/common/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
 import { Link, Block } from 'sly/web/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';

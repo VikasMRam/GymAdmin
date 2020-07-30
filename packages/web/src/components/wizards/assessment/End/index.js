@@ -3,9 +3,9 @@ import { func, bool, string } from 'prop-types';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
 
-import { size } from 'sly/web/components/themes';
-import { community as communityProptype } from 'sly/web/propTypes/community';
-import agentPropType from 'sly/web/propTypes/agent';
+import { size } from 'sly/common/components/themes';
+import { community as communityProptype } from 'sly/common/propTypes/community';
+import agentPropType from 'sly/common/propTypes/agent';
 import { capitalize } from  'sly/web/services/helpers/utils';
 import { Wrapper } from 'sly/web/components/wizards/assessment/Template';
 import { Heading } from 'sly/web/components/atoms';
@@ -55,7 +55,7 @@ const End = ({ handleSubmit, community, city, hasNoAgent, agent }) => (
       }
       {!hasNoAgent &&
         <MatchedAgent
-          heading={agent ? `We've matched you with your Local Senior Living Expert, ${agent.name}. She will reach out shortly to assist you.` : ''}
+          heading={agent ? `We've matched you with your Local Senior Living Expert, ${agent.name}. They will reach out shortly to assist you.` : ''}
           agent={agent}
           prevLink={community ? community.url : '/'}
         />

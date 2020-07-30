@@ -3,7 +3,7 @@ import { func, string } from 'prop-types';
 import { reduxForm } from 'redux-form';
 
 import { query, withUser } from 'sly/web/services/api';
-import contactPropType from 'sly/web/propTypes/contact';
+import contactPropType from 'sly/common/propTypes/contact';
 import { createValidator, email, required, usPhone } from 'sly/web/services/validation';
 import AddContactForm from 'sly/web/components/organisms/AddContactForm';
 import withNotification from 'sly/web/controllers/withNotification';
