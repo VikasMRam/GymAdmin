@@ -165,7 +165,7 @@ describe('Community Profile Sections', () => {
 
 
     it('should request pricing from section', () => {
-      // the pricing wizard is tested on it's own test,
+      // the assessment wizard is tested on it's own test,
       // so we just check that we get there
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
@@ -177,9 +177,11 @@ describe('Community Profile Sections', () => {
       buildEstimatedPriceList(community).forEach(({ label, value }) => {
         pricingContent.get('tbody td').contains(label).next().should('contain', formatMoney(value));
       });
-
-      waitForHydration(pricingContent.get('button').contains('Get Detailed Pricing')).click();
-      cy.url().should('include', `/custom-pricing/${community.id}`);
+      
+      cy.get('section[id*="pricing-and-floor-plans"]').contains('Get Detailed Pricing')
+        .click();
+      
+      cy.url().should('include', `wizards/assessment/community/${community.id}`);
     });
 
     it('should show and request care services', () => {
