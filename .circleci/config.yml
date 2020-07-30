@@ -307,7 +307,7 @@ jobs:
           name: Installing CUrl and HAproxy
           command: |
             sudo apt-get update
-            sudo apt-get install curl haproxy
+            sudo apt-get -y install haproxy
 
       - run:
           name: Running HAProxy
