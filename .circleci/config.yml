@@ -38,12 +38,11 @@ jobs:
 
                 if [ -d "$FROM" ]; then
                   echo "Copying $p node_modules"
-                  cp -R $FROM $TO
+                  mv $FROM $TO
                 fi
               done
 
-              echo "export HAD_CACHE=true" >> ~/new_env_vars
-              source ~/new_env_vars
+              echo "export HAD_CACHE=true" >> $BASH_ENV
             fi
 
       - run:
@@ -92,7 +91,7 @@ jobs:
                 if [ -d "$FROM" ]; then
                   echo "Copying $p node_modules"
                   mkdir -p $TO
-                  cp -R $FROM $TO
+                  mv $FROM $TO
                 fi
               done
             fi
@@ -170,6 +169,7 @@ jobs:
               fi
             fi
 
+            cat ~/new_env_vars >> $BASH_ENV
             source ~/new_env_vars
 
             echo "VERSION=$VERSION"
@@ -328,7 +328,7 @@ jobs:
 
                 if [ -d "$FROM" ]; then
                   echo "Copying $p node_modules"
-                  cp -R $FROM $TO
+                  mv $FROM $TO
                 fi
               done
             fi
