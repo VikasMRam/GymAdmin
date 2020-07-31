@@ -10,7 +10,7 @@ import cursor from 'sly/web/components/helpers/cursor';
 import HrWithText from 'sly/web/components/molecules/HrWithText';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
-import { Heading, Button, Block, Icon } from 'sly/web/components/atoms';
+import { Heading, Button, Block, Icon } from 'sly/common/components/atoms';
 import { textAlign } from 'sly/web/components/helpers/text';
 
 const StyledHeading = textAlign(pad(Heading));

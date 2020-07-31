@@ -3,7 +3,7 @@ import { bool } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
-import { Icon, Block } from 'sly/web/components/atoms';
+import { Icon, Block } from 'sly/common/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;

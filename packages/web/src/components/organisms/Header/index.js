@@ -6,7 +6,8 @@ import { ifProp } from 'styled-tools';
 import { size, palette, key } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import cursor from 'sly/web/components/helpers/cursor';
-import { Icon, Hr, Link, Button, Logo } from 'sly/web/components/atoms';
+import { Icon, Button, Logo } from 'sly/common/components/atoms';
+import { Hr, Link } from 'sly/web/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 
 const HeaderWrapper = styled.nav`

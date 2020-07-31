@@ -1,11 +1,11 @@
-// https://github.com/diegohaz/arc/wiki/Example-components#icon
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 
-import Icon from 'sly/web/components/atoms/Icon';
-import Block from 'sly/web/components/atoms/Block';
+import Icon from '.';
+
 import { palette } from 'sly/common/components/themes';
+import Block from 'sly/web/components/atoms/Block';
 
 const getIcons = () => {
   const context = require.context('./icons/', false, /\.svg$/);
@@ -64,5 +64,5 @@ function Icons() {
   );
 }
 
-storiesOf('Atoms|Icon', module)
+storiesOf('Common|Atoms/Icon', module)
   .add('default', () => <Icons />);

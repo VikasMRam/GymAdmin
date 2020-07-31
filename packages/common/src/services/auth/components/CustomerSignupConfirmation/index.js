@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { func, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { Icon, Heading, Button, Paragraph } from 'sly/web/components/atoms';
+import { Icon, Heading, Button } from 'sly/common/components/atoms';
+import { Paragraph } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-
 
 const Wrapper = styled.div`
   text-align: center;

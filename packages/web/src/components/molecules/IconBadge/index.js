@@ -6,7 +6,7 @@ import { size, palette } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { text as textPropType } from 'sly/common/propTypes/text';
-import { Badge, Icon, Block } from 'sly/web/components/atoms';
+import { Badge, Icon, Block } from 'sly/common/components/atoms';
 
 const StyledBadge = styled(Badge)`
   border: ${size('border.regular')} solid ${palette('slate.stroke')};
