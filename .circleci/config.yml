@@ -26,7 +26,7 @@ jobs:
           command: cat packages/*/package-lock.json package-lock.json >> packages-lock-cache-key.txt
 
       - restore_cache:
-          key: cache-v8-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: cache-v9-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
 
       - run:
           name: Restore packages node_modules
@@ -50,7 +50,7 @@ jobs:
           name: Install deps
           command: |
             if [ ! -d node_modules ]; then
-              PI_OPTS="-- --ignore={@sly-react/storybook}" npm ci
+              npm ci
             else
               echo "node_modules from cache exist. So skipping install."
             fi
@@ -82,7 +82,7 @@ jobs:
       - run:
           name: Prepare packages node_modules for caching
           command: |
-            if [[ -n "$HAD_CACHE" ]]; then
+            if [[ -z "$HAD_CACHE" ]]; then
               mkdir -p $PACKAGES_NODE_MODULES_CACHE_DIR
               for p in $(ls packages); do
                 FROM="packages/$p/node_modules"
@@ -97,7 +97,7 @@ jobs:
             fi
 
       - save_cache:
-          key: cache-v8-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: cache-v9-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
           paths:
             - ~/.npm
             - ~/.cache
@@ -276,6 +276,7 @@ jobs:
 
     environment:
       - PACKAGES_NODE_MODULES_CACHE_DIR: packages-node_modules
+      - IGNORE_PACKAGES: "{@sly-react/storybook,@sly-react/mobile}"
 
     working_directory: ~/project
 
@@ -314,7 +315,7 @@ jobs:
           command: cat packages/*/package-lock.json packages/web/e2e/package-lock.json package-lock.json >> packages-lock-cache-key.txt
 
       - restore_cache:
-          key: e2e-cache-v8-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: e2e-cache-v9-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
 
       - run:
           name: Restore packages node_modules
@@ -335,7 +336,7 @@ jobs:
           name: Install deps
           command: |
             if [ ! -d node_modules ]; then
-              PI_OPTS="-- --ignore={@sly-react/storybook,@sly-react/mobile}" npm ci
+              PI_OPTS="-- --ignore=$IGNORE_PACKAGES" npm ci
             else
               echo "node_modules from cache exist. So skipping install."
             fi
@@ -377,7 +378,7 @@ jobs:
           command: npx cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec "cypress/integration/**/*"
 
       - save_cache:
-          key: e2e-cache-v8-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: e2e-cache-v9-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
           paths:
             - ~/.npm
             - ~/.cache

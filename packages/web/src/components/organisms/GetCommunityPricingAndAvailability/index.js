@@ -2,6 +2,7 @@ import React from 'react';
 import { string, func, bool } from 'prop-types';
 import styled from 'styled-components';
 
+import { size } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';

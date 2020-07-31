@@ -5,7 +5,7 @@ import { prop } from 'styled-tools';
 
 import getIcon from './getIcon';
 
-import { key, getThemePropType, getKey } from 'sly/common/components/themes';
+import { getThemePropType, getKey } from 'sly/common/components/themes';
 import { Block } from 'sly/common/components/atoms';
 
 const iconSize = ({ size }) => {
