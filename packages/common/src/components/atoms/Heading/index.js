@@ -1,15 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
-import { oneOf } from 'prop-types';
+import { oneOf, string } from 'prop-types';
 
 import Root from './Root';
-
-import {
-  withText,
-  withColor,
-  withSpacing,
-  withAlign,
-} from 'sly/common/components/helpers';
 
 const getPad = (size) => {
   switch (size) {
@@ -20,21 +12,17 @@ const getPad = (size) => {
   }
 };
 
-const Heading = styled(props => (
+const Heading = props => (
   <Root
     size={props.size || props.level}
     pad={getPad(props.size)}
     {...props}
   />
-))`
-  ${withSpacing}
-  ${withText}
-  ${withColor}
-  ${withAlign}
-`;
+);
 
 Heading.propTypes = {
   level: oneOf(['hero', 'title', 'subtitle']).isRequired,
+  size: string,
 };
 
 Heading.defaultProps = {

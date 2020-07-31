@@ -82,6 +82,7 @@ jobs:
       - run:
           name: Prepare packages node_modules for caching
           command: |
+            echo "$HAD_CACHE"
             if [[ -z "$HAD_CACHE" ]]; then
               mkdir -p $PACKAGES_NODE_MODULES_CACHE_DIR
               for p in $(ls packages); do

@@ -2,11 +2,19 @@ import React from 'react';
 import { string } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { withSpacing } from 'sly/common/components/helpers';
+import {
+  withText,
+  withColor,
+  withSpacing,
+  withAlign,
+} from 'sly/common/components/helpers';
 
 const styles = css`
   margin: 0;
   ${withSpacing}
+  ${withText}
+  ${withColor}
+  ${withAlign}
 `;
 
 const H1 = styled.h1`${styles}`;
