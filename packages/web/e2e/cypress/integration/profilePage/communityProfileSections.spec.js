@@ -1,4 +1,3 @@
-
 import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
 import { TEST_COMMUNITY } from '../../constants/community';
