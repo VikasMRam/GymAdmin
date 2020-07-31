@@ -5,6 +5,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:12.16.3
+    resource_class: xlarge
 
     working_directory: ~/project
 
@@ -71,7 +72,7 @@ jobs:
           name: JS Test Suite
           command: |
             export JEST_JUNIT_OUTPUT_DIR="$PWD/$TEST_RESULTS_DIR/junit"
-            npm test -- -- -- --ci -w=4
+            npm test -- -- -- --ci -w=12
 
       - run:
           name: Prepare packages node_modules for caching
@@ -105,6 +106,7 @@ jobs:
   deploy:
     docker:
       - image: circleci/python:2.7
+    resource_class: xlarge
 
     working_directory: ~/project
 
