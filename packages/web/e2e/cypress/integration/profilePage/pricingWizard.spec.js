@@ -1,4 +1,4 @@
-import randomUser from 'e2e/helpers/randomUser';
+import randomUser from '../../helpers/randomUser';
 import {
   doCustomPricingTalkToAdvisorFlow,
   doCustomPricingExploreAffordableOptionsFlow,

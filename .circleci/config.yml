@@ -74,7 +74,7 @@ jobs:
           name: JS Test Suite
           command: |
             export JEST_JUNIT_OUTPUT_DIR="$PWD/$TEST_RESULTS_DIR/junit"
-            npm test -- -- -- --ci -w=12
+            npm test -- -- -- --ci -w=20
 
       - run:
           name: Prepare packages node_modules for caching
