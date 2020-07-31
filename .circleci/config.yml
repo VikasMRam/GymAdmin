@@ -26,7 +26,7 @@ jobs:
           command: cat packages/*/package-lock.json package-lock.json >> packages-lock-cache-key.txt
 
       - restore_cache:
-          key: cache-v9-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: cache-v10-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
 
       - run:
           name: Restore packages node_modules
@@ -37,7 +37,7 @@ jobs:
                 TO="packages/$p"
 
                 if [ -d "$FROM" ]; then
-                  echo "Copying $p node_modules"
+                  echo "Moving $p node_modules"
                   mv $FROM $TO
                 fi
               done
@@ -81,7 +81,6 @@ jobs:
       - run:
           name: Prepare packages node_modules for caching
           command: |
-            echo "$HAD_CACHE"
             if [[ -z "$HAD_CACHE" ]]; then
               mkdir -p $PACKAGES_NODE_MODULES_CACHE_DIR
               for p in $(ls packages); do
@@ -89,7 +88,7 @@ jobs:
                 TO="$PACKAGES_NODE_MODULES_CACHE_DIR/$p"
 
                 if [ -d "$FROM" ]; then
-                  echo "Copying $p node_modules"
+                  echo "Moving $p node_modules"
                   mkdir -p $TO
                   mv $FROM $TO
                 fi
@@ -97,7 +96,7 @@ jobs:
             fi
 
       - save_cache:
-          key: cache-v9-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: cache-v10-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
           paths:
             - ~/.npm
             - ~/.cache
@@ -316,7 +315,7 @@ jobs:
           command: cat packages/*/package-lock.json packages/web/e2e/package-lock.json package-lock.json >> packages-lock-cache-key.txt
 
       - restore_cache:
-          key: e2e-cache-v9-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: e2e-cache-v10-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
 
       - run:
           name: Restore packages node_modules
@@ -327,7 +326,7 @@ jobs:
                 TO="packages/$p"
 
                 if [ -d "$FROM" ]; then
-                  echo "Copying $p node_modules"
+                  echo "Moving $p node_modules"
                   mv $FROM $TO
                 fi
               done
@@ -378,8 +377,25 @@ jobs:
           working_directory: ~/project/packages/web/e2e
           command: npx cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec "cypress/integration/**/*"
 
+      - run:
+          name: Prepare packages node_modules for caching
+          command: |
+            if [[ -z "$HAD_CACHE" ]]; then
+              mkdir -p $PACKAGES_NODE_MODULES_CACHE_DIR
+              for p in $(ls packages); do
+                FROM="packages/$p/node_modules"
+                TO="$PACKAGES_NODE_MODULES_CACHE_DIR/$p"
+
+                if [ -d "$FROM" ]; then
+                  echo "Moving $p node_modules"
+                  mkdir -p $TO
+                  mv $FROM $TO
+                fi
+              done
+            fi
+
       - save_cache:
-          key: e2e-cache-v9-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: e2e-cache-v10-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
           paths:
             - ~/.npm
             - ~/.cache
