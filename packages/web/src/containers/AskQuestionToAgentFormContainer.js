@@ -16,7 +16,8 @@ import SlyEvent from 'sly/web/services/helpers/events';
 const form = 'AskQuestionToAgentForm';
 const validate = createValidator({
   location: [required],
-  name: [required],
+  firstName: [required],
+  lastName: [required],
   email: [required, email],
   phone: [required, usPhone],
   message: [required],

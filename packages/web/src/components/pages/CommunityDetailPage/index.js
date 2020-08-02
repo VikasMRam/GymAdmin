@@ -18,7 +18,7 @@ import {
 import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { getIsActiveAdult } from 'sly/web/services/helpers/community';
-import { Button, Paragraph, Hr, Block, Link, Heading } from 'sly/web/components/atoms';
+import { Box, Button, Paragraph, Hr, Block, Link, Heading } from 'sly/web/components/atoms';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
 import {
@@ -592,19 +592,37 @@ export default class CommunityDetailPage extends Component {
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
+                {!isActiveAdult &&
                 <GetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}`}
                   community={community}
                   layout="footer"
+                />}
+                {isActiveAdult &&
+                <CommunityStickyFooter
+                  community={community}
+                  locTrack="sticky-footer"
+                  isActiveAdult={true}
                 />
+                }
               </Body>
               <Column>
                 <StickToTop>
+                  {!isActiveAdult &&
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
                     layout="sidebar"
-                  />
+                  />}
+
+                  {isActiveAdult &&
+                  <Box>
+                    <Heading level="title" size="subtitle">Is selling your home part of your senior living plan?</Heading>
+                    We can connect you with the top selling agents.
+                    <StyledAskAgentButton type="aa-sidebar">Request Info</StyledAskAgentButton>
+                  </Box>
+                  }
+
                 </StickToTop>
               </Column>
             </TwoColumn>

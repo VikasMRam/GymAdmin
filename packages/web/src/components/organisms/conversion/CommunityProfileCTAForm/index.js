@@ -32,13 +32,6 @@ const StyledResponsiveImage = pad(textAlign(styled(ResponsiveImage)`
   max-width: calc(${size('layout.col2')} + ${size('layout.gutter')});
 `));
 
-const FieldsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 50% 50%;
-  grid-gap: ${size('spacing.regular')};
-`;
-
-
 export default class TalkToAgentForm extends Component {
   static propTypes = {
     handleSubmit: func.isRequired,
@@ -95,31 +88,23 @@ export default class TalkToAgentForm extends Component {
         <form onSubmit={handleSubmit}>
           {showMessageFieldFirst && !hideMessage && messageField}
           {hasLocation &&
-            <Field
-              name="location"
-              label="Where are you searching for homes?"
-              type="locationSearch"
-              placeholder="Search By City, State"
-              component={ReduxField}
-              required
-            />
+          <Field
+            name="location"
+            label="Where are you searching for homes?"
+            type="locationSearch"
+            placeholder="Search By City, State"
+            component={ReduxField}
+            required
+          />
           }
           {!(user && user.name) &&
-          <FieldsWrapper>
-            <Field
-              name="firstName"
-              label="First Name"
-              type="text"
-              component={ReduxField}
-            />
-            <Field
-              name="lastName"
-              label="Last Name"
-              type="text"
-              component={ReduxField}
-            />
-          </FieldsWrapper>
-
+          <Field
+            name="name"
+            label="Full name"
+            type="text"
+            component={ReduxField}
+            required
+          />
           }
           {!(user && user.phoneNumber) &&
           <Field
@@ -133,13 +118,13 @@ export default class TalkToAgentForm extends Component {
           />
           }
           {!(user && user.email) && hasEmail &&
-            <Field
-              name="email"
-              label="Email"
-              type="email"
-              component={ReduxField}
-              required
-            />
+          <Field
+            name="email"
+            label="Email"
+            type="email"
+            component={ReduxField}
+            required
+          />
           }
           {!showMessageFieldFirst && !hideMessage && messageField}
           <StyledButton hasMarginBottom={error || showTos} type="submit" kind={buttonKind} disabled={invalid || submitting}>

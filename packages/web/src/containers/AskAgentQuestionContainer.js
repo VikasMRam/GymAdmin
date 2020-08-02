@@ -90,7 +90,26 @@ export default class AskAgentQuestionContainer extends Component {
         type,
       };
       showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
-    } else {
+    } else if (type === "aa-sidebar" || type === "aa-footer") {
+      const postSubmit = () => {
+        notifyInfo('Request sent successfully');
+        toggleAskAgentQuestionModal();
+      };
+      let initialValues = {};
+
+      const modalComponentProps = {
+        heading: "We understand selling your home is a big deal",
+        initialValues,
+        entityId: community.id,
+        category: 'community',
+        hideMessage: false,
+        postSubmit,
+        type,
+      };
+      showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
+    }
+
+    else {
       const { heading, description, placeholder, question } = generateAskAgentQuestionContents(
         community.name,
         community.address.city,
