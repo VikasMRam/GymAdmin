@@ -69,7 +69,7 @@ export default class StatusSelect extends Component {
 
   componentDidUpdate({ status }) {
     const { status: newStatus } = this.props;
-    if (newStatus && status !== newStatus) {
+    if (status && newStatus && status !== newStatus) {
       this.onChange({ value: newStatus });
     }
   }
@@ -101,7 +101,6 @@ export default class StatusSelect extends Component {
     label: 'Expected resume date',
   });
 
-  // FIXME: Because I am an idiot and am not clever in the slightest
   optionsForUser = () => {
     const { user } = this.props;
     const { roleID } = user;
