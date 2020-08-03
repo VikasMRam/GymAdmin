@@ -7,7 +7,11 @@ import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wiza
 import withWS from 'sly/web/services/ws/withWS';
 import { withRedirectTo } from 'sly/web/services/redirectTo';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
-import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/constants/wizards/assessment';
+import {
+  ASSESSMENT_WIZARD_MATCHED_AGENT,
+  ASSESSMENT_WIZARD_COMPLETED,
+  ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES,
+} from 'sly/web/constants/wizards/assessment';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SlyEvent from 'sly/web/services/helpers/events';
 import Intro from 'sly/web/containers/wizards/assessment/Intro';
@@ -48,7 +52,6 @@ export default class AssessmentWizard extends Component {
   };
 
   componentDidMount() {
-
     SlyEvent.getInstance().sendEvent({
       category: 'assessmentWizard',
       action: 'open',
@@ -67,8 +70,19 @@ export default class AssessmentWizard extends Component {
   };
 
   onNoAgentMatch = () => {
+    const { community } = this.props;
+
     if (!this.skipped) {
       localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
+      if (community) {
+        const existingCompletedCommunities = localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES);
+        if (existingCompletedCommunities) {
+          localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES,
+            `${existingCompletedCommunities},${community.id}`);
+        } else {
+          localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES, community.id);
+        }
+      }
     }
 
     this.setState({
@@ -104,12 +118,20 @@ export default class AssessmentWizard extends Component {
   };
 
   onMessage = ({ payload: { agentSlug } }) => {
-    const { getAgent } = this.props;
+    const { getAgent, community } = this.props;
     clearTimeout(this.agentMatchTimeout);
     if (!this.skipped) {
       localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
+      if (community) {
+        const existingCompletedCommunities = localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES);
+        if (existingCompletedCommunities) {
+          localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES,
+            `${existingCompletedCommunities},${community.id}`);
+        } else {
+          localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES, community.id);
+        }
+      }
     }
-
 
     if (agentSlug) {
       localStorage.setItem(ASSESSMENT_WIZARD_MATCHED_AGENT, agentSlug);
