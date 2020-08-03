@@ -23,7 +23,7 @@ import {
 } from 'sly/web/constants/familyDetails';
 import { Block, Button, Label } from 'sly/common/components/atoms';
 import FamilyMetaDataSummaryBox from 'sly/web/components/molecules/FamilyMetaDataSummaryBox';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import { textAlign } from 'sly/web/components/helpers/text';
 

@@ -25,7 +25,8 @@ import {
   makeTwoColumnListWrapper,
   makeOneColumnListWrapper,
 } from 'sly/web/components/templates/HubPageTemplate';
-import { ResponsiveImage, Heading, Paragraph, Link, Icon } from 'sly/web/components/atoms';
+import { Heading, Icon } from 'sly/common/components/atoms';
+import { ResponsiveImage, Paragraph, Link } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import { ALSeoCities, ALSeoStates } from 'sly/web/services/helpers/homepage';

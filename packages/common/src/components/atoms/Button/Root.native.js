@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Platform } from 'react-native';
+import { Platform, TouchableNativeFeedback } from 'react-native';
 import { string, bool } from 'prop-types';
 import styled from 'styled-components';
 
 import styles, { textStyles } from './styles';
 
 import { getKey } from 'sly/common/components/themes';
-import { Text } from 'sly/mobile/components/atoms';
+import { Text, View } from 'sly/mobile/components/atoms';
 
 export const defaultBorderProp = 'large';
 
@@ -16,7 +16,7 @@ const StyledText = styled(Text)`
   text-align: center;
 `;
 
-const StyledTouchableNativeFeedback = styled.TouchableNativeFeedback`
+const StyledTouchableNativeFeedbackView = styled(View)`
   ${styles}
 `;
 
@@ -83,14 +83,15 @@ export default class Root extends Component {
     }
 
     return (
-      <StyledTouchableNativeFeedback
-        {...props}
-        {...touchableProps}
-        accessibilityLabel={props.children}
-        accessibilityRole="button"
-      >
-        <StyledText {...props} />
-      </StyledTouchableNativeFeedback>
+      <StyledTouchableNativeFeedbackView {...props}>
+        <TouchableNativeFeedback
+          {...touchableProps}
+          accessibilityLabel={props.children}
+          accessibilityRole="button"
+        >
+          <StyledText {...props} />
+        </TouchableNativeFeedback>
+      </StyledTouchableNativeFeedbackView>
     );
   }
 }

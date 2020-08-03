@@ -3,7 +3,8 @@ import { arrayOf, shape, string, number, func, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
-import { Icon, Span } from 'sly/web/components/atoms';
+import { Icon } from 'sly/common/components/atoms';
+import { Span } from 'sly/web/components/atoms';
 import EntityReview from 'sly/web/components/molecules/EntityReview';
 import GatheredReviewRatings from 'sly/web/components/molecules/GatheredReviewRatings';
 import { formatRating } from 'sly/web/services/helpers/rating';

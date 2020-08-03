@@ -6,12 +6,8 @@ import { ifProp, ifNotProp } from 'styled-tools';
 import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/common/components/themes';
-import {
-  Block,
-  Link,
-  Icon,
-  ClampedText,
-} from 'sly/web/components/atoms';
+import { Block, Icon } from 'sly/common/components/atoms';
+import { Link, ClampedText } from 'sly/web/components/atoms';
 import {
   DoubleLineTd,
   Td,

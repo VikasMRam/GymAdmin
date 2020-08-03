@@ -26,7 +26,7 @@ jobs:
           command: cat packages/*/package-lock.json package-lock.json >> packages-lock-cache-key.txt
 
       - restore_cache:
-          key: cache-v7-{{ arch }}-{{ .Branch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: cache-v10-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
 
       - run:
           name: Restore packages node_modules
@@ -37,10 +37,12 @@ jobs:
                 TO="packages/$p"
 
                 if [ -d "$FROM" ]; then
-                  echo "Copying $p node_modules"
-                  cp -R $FROM $TO
+                  echo "Moving $p node_modules"
+                  mv $FROM $TO
                 fi
               done
+
+              echo "export HAD_CACHE=true" >> $BASH_ENV
             fi
 
       - run:
@@ -74,25 +76,27 @@ jobs:
           name: JS Test Suite
           command: |
             export JEST_JUNIT_OUTPUT_DIR="$PWD/$TEST_RESULTS_DIR/junit"
-            npm test -- -- -- --ci -w=20
+            npm test -- -- -- --ci -w=30
 
       - run:
           name: Prepare packages node_modules for caching
           command: |
-            mkdir -p $PACKAGES_NODE_MODULES_CACHE_DIR
-            for p in $(ls packages); do
-              FROM="packages/$p/node_modules"
-              TO="$PACKAGES_NODE_MODULES_CACHE_DIR/$p"
+            if [[ -z "$HAD_CACHE" ]]; then
+              mkdir -p $PACKAGES_NODE_MODULES_CACHE_DIR
+              for p in $(ls packages); do
+                FROM="packages/$p/node_modules"
+                TO="$PACKAGES_NODE_MODULES_CACHE_DIR/$p"
 
-              if [ -d "$FROM" ]; then
-                echo "Copying $p node_modules"
-                mkdir -p $TO
-                cp -R $FROM $TO
-              fi
-            done
+                if [ -d "$FROM" ]; then
+                  echo "Moving $p node_modules"
+                  mkdir -p $TO
+                  mv $FROM $TO
+                fi
+              done
+            fi
 
       - save_cache:
-          key: cache-v7-{{ arch }}-{{ .Branch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: cache-v10-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
           paths:
             - ~/.npm
             - ~/.cache
@@ -165,7 +169,7 @@ jobs:
             fi
 
             cat ~/new_env_vars >> $BASH_ENV
-            source $BASH_ENV
+            source ~/new_env_vars
 
             echo "VERSION=$VERSION"
             echo "EB_ENV=$EB_ENV"
@@ -272,24 +276,13 @@ jobs:
 
     environment:
       - PACKAGES_NODE_MODULES_CACHE_DIR: packages-node_modules
+      - IGNORE_PACKAGES: "{@sly-react/storybook,@sly-react/mobile}"
 
     working_directory: ~/project
 
     steps:
       - checkout:
           path: ~/project
-
-      - run:
-          name: Remove packages that are not required
-          command: |
-            export not_required=("mobile")
-
-            for i in "${not_required[@]}"; do
-              if [ -d "packages/$i" ]; then
-                echo "Removing packages/$i"
-                rm -rf "packages/$i"
-              fi
-            done
 
       # - run:
       #     name: Clone SlyApi
@@ -322,7 +315,7 @@ jobs:
           command: cat packages/*/package-lock.json packages/web/e2e/package-lock.json package-lock.json >> packages-lock-cache-key.txt
 
       - restore_cache:
-          key: e2e-cache-v7-{{ arch }}-{{ .Branch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: e2e-cache-v10-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
 
       - run:
           name: Restore packages node_modules
@@ -333,8 +326,8 @@ jobs:
                 TO="packages/$p"
 
                 if [ -d "$FROM" ]; then
-                  echo "Copying $p node_modules"
-                  cp -R $FROM $TO
+                  echo "Moving $p node_modules"
+                  mv $FROM $TO
                 fi
               done
             fi
@@ -343,7 +336,7 @@ jobs:
           name: Install deps
           command: |
             if [ ! -d node_modules ]; then
-              npm ci
+              PI_OPTS="-- --ignore=$IGNORE_PACKAGES" npm ci
             else
               echo "node_modules from cache exist. So skipping install."
             fi
@@ -384,8 +377,25 @@ jobs:
           working_directory: ~/project/packages/web/e2e
           command: npx cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec "cypress/integration/**/*"
 
+      - run:
+          name: Prepare packages node_modules for caching
+          command: |
+            if [[ -z "$HAD_CACHE" ]]; then
+              mkdir -p $PACKAGES_NODE_MODULES_CACHE_DIR
+              for p in $(ls packages); do
+                FROM="packages/$p/node_modules"
+                TO="$PACKAGES_NODE_MODULES_CACHE_DIR/$p"
+
+                if [ -d "$FROM" ]; then
+                  echo "Moving $p node_modules"
+                  mkdir -p $TO
+                  mv $FROM $TO
+                fi
+              done
+            fi
+
       - save_cache:
-          key: e2e-cache-v7-{{ arch }}-{{ .Branch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: e2e-cache-v10-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
           paths:
             - ~/.npm
             - ~/.cache
@@ -448,7 +458,7 @@ jobs:
       #     command: curl http://www.lvh.me/v0/ping
 
       # - save_cache:
-      #     key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+      #     key: cache-v1-{{ arch }}-{{ checksum "package.json" }}
       #     paths:
       #       - ~/.npm
       #       - ~/.cache

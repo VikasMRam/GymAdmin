@@ -6,7 +6,8 @@ import { ifNotProp, ifProp, prop } from 'styled-tools';
 import { size, palette } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import { Heading, Hr, Button, Block, Icon } from 'sly/web/components/atoms';
+import { Heading, Button, Block, Icon } from 'sly/common/components/atoms';
+import { Hr } from 'sly/web/components/atoms';
 import cursor from 'sly/web/components/helpers/cursor';
 
 const Head = styled.div`

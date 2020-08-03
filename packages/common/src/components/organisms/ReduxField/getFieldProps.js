@@ -1,8 +1,3 @@
-import React from 'react';
-import { shape, string, bool, func } from 'prop-types';
-
-import Field from 'sly/web/components/molecules/Field';
-
 const getReactSelectValue = (value, { value: oldValue }) => {
   if (Array.isArray(value)) {
     return value.map(({ value }) => value);
@@ -13,16 +8,8 @@ const getReactSelectValue = (value, { value: oldValue }) => {
   return value?.value;
 };
 
-const ReduxField = ({
-  meta, input, warning, message, ...props
-}) => {
-  const fieldProps = {
-    ...props,
-    ...input,
-    invalid: meta.touched && !!meta.error,
-    message: message || meta.error || meta.warning,
-    warning: !!meta.warning || warning,
-  };
+const getFieldProps = (input, meta, props = {}) => {
+  const fieldProps = { ...props };
 
   if (fieldProps.type === 'date') {
     const oldBlur = fieldProps.onBlur;
@@ -44,21 +31,7 @@ const ReduxField = ({
     fieldProps.onClick = () => input.onChange(fieldProps.inputValue);
   }
 
-  return <Field {...fieldProps} />;
+  return fieldProps;
 };
 
-ReduxField.propTypes = {
-  onChange: func,
-  meta: shape({
-    touched: bool,
-    error: string,
-  }).isRequired,
-  input: shape({
-    name: string.isRequired,
-  }).isRequired,
-  warning: bool,
-  message: string,
-};
-
-export default ReduxField;
-
+export default getFieldProps;

@@ -5,18 +5,12 @@ import { oneOf } from 'prop-types';
 import { colorIndex } from './color';
 import theme from './default';
 
+export { remToPx } from './helpers';
+
 export { key, font } from 'styled-theme';
 
 export function size(...args) {
   return styledThemeKey(['sizes', ...args].join('.'));
-}
-
-export function remToPx(rem, units) {
-  if (rem.includes('px') || rem.includes('%') || !rem.includes('rem')) {
-    return rem;
-  }
-  const converted = rem.replace('rem', '') * 16;
-  return units ? `${converted}px` : converted;
 }
 
 export function palette(...args) {

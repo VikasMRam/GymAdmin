@@ -3,7 +3,8 @@ import { func, string, any, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
-import { Link, Span, Icon } from 'sly/web/components/atoms';
+import { Icon } from 'sly/common/components/atoms';
+import { Link, Span } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;

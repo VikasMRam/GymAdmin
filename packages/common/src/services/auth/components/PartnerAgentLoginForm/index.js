@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import cursor from 'sly/web/components/helpers/cursor';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { Heading, Button, Block } from 'sly/web/components/atoms';
 import { textAlign } from 'sly/web/components/helpers/text';
 

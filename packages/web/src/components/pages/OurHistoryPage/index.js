@@ -4,7 +4,8 @@ import { object } from 'prop-types';
 import Helmet from 'react-helmet';
 
 import { size, palette } from 'sly/common/components/themes';
-import { Heading, Icon, Hr } from 'sly/web/components/atoms';
+import { Heading, Icon } from 'sly/common/components/atoms';
+import { Hr } from 'sly/web/components/atoms';
 import PressTile from 'sly/web/components/molecules/PressTile';
 import OverlappingSectionsTemplate from 'sly/web/components/templates/OverlappingSectionsTemplate';
 import Footer from 'sly/web/components/organisms/Footer';

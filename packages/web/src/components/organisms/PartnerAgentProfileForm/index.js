@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { func, string, bool } from 'prop-types';
 
 import { size, palette } from 'sly/common/components/themes';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { Block, Button } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
 

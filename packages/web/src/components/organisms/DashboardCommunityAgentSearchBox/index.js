@@ -5,7 +5,7 @@ import { reduxForm, Field } from 'redux-form';
 
 import { size } from 'sly/common/components/themes';
 import IconButton from 'sly/web/components/molecules/IconButton';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { createValidator, dependentRequired } from 'sly/web/services/validation';
 
 const Form = styled.form`

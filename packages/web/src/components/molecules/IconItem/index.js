@@ -6,7 +6,7 @@ import { ifProp } from 'styled-tools';
 import { size, palette } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
-import { Icon, Block } from 'sly/web/components/atoms';
+import { Icon, Block } from 'sly/common/components/atoms';
 
 const getMarginRight = p => p.borderless ? size('spacing', p.iconRightMarginSpacing) : size('spacing.large');
 

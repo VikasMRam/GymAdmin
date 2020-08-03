@@ -8,7 +8,7 @@ import pad from 'sly/web/components/helpers/pad';
 import { Block } from 'sly/web/components/atoms';
 import IconButton from 'sly/web/components/molecules/IconButton';
 import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const StyledIconButton = styled(IconButton)`
   margin-right: ${size('spacing.regular')};

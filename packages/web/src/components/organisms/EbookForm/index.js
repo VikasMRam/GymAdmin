@@ -6,7 +6,7 @@ import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { Button, Block, Heading } from 'sly/web/components/atoms';
 import { textAlign } from 'sly/web/components/helpers/text';
 

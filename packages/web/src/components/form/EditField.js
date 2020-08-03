@@ -5,7 +5,7 @@ import { string } from 'prop-types';
 import diff from 'deep-diff';
 
 import HelpBubble from 'sly/web/components/form/HelpBubble';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { EditContext } from 'sly/web/services/edits';
 import { commaAnd } from 'sly/web/services/helpers/strings';
 

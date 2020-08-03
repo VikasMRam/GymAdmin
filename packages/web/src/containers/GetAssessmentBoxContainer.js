@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { string, object, bool } from 'prop-types';
 import { branch } from 'recompose';
 
+import { isBrowser } from 'sly/web/config';
 import { prefetch } from 'sly/web/services/api';
 import agentPropType from 'sly/common/propTypes/agent';
 import communityPropType from 'sly/common/propTypes/community';
@@ -90,7 +91,7 @@ export default class GetAssessmentBoxContainer extends Component {
 
     return (
       <div className={className}>
-        {layout === 'box' &&
+        {layout === 'box' && !completedAssessment && isBrowser &&
           <GetAssessmentBox
             palette="primary"
             layout={boxLayout}
@@ -100,6 +101,7 @@ export default class GetAssessmentBoxContainer extends Component {
         {layout === 'sidebar' &&
           <GetCommunityPricingAndAvailability
             community={community}
+            completedAssessment={completedAssessment}
             {...buttonProps}
           />
         }

@@ -3,7 +3,7 @@ import { func, object, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import userPropType from 'sly/common/propTypes/user';
 import { palette, size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';

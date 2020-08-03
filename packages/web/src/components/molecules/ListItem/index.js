@@ -6,7 +6,7 @@ import { size } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import pad from 'sly/web/components/helpers/pad';
-import { Icon } from 'sly/web/components/atoms';
+import { Icon } from 'sly/common/components/atoms';
 
 const ListItemWrapper = pad(styled.li`
   display: flex;

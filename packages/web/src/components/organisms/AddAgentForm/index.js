@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { size, palette } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { Block, Button } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { states } from 'sly/web/constants/communities';
 
 const statesOptions = states.map(s => <option key={s} value={s}>{s}</option>);

@@ -2,7 +2,7 @@ import React from 'react';
 import { func, string, object } from 'prop-types';
 import { Field } from 'redux-form';
 
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
 import { phoneFormatter, phoneParser } from 'sly/web/services/helpers/phone';
 import { ENTITY_LABEL_MAP } from 'sly/web/constants/entityTypes';

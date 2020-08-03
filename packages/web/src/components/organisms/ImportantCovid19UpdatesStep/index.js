@@ -3,7 +3,7 @@ import { Field } from 'redux-form';
 import { arrayOf, string, shape, func } from 'prop-types';
 
 import { Heading } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { textAlign } from 'sly/web/components/helpers/text';
 
 const TextAlignCenterHeading = textAlign(Heading);

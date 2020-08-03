@@ -2,7 +2,7 @@ import React from 'react';
 import { func, string, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import SectionForm from 'sly/web/components/molecules/SectionForm';
 
 const noPasswordWarning = 'Create a password so you can discover and keep track of your favorite communities.';

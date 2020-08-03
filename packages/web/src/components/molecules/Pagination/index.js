@@ -5,7 +5,7 @@ import { ifProp } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { size, palette } from 'sly/common/components/themes';
-import { Button, Icon } from 'sly/web/components/atoms';
+import { Button, Icon } from 'sly/common/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
