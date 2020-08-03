@@ -1,17 +1,17 @@
 import React from 'react';
-import { string, number, bool, oneOfType } from 'prop-types';
+import { Image } from 'react-native';
+import { string, number, bool } from 'prop-types';
 import styled from 'styled-components';
-import { prop } from 'styled-tools';
 
-import getIcon from './getIcon';
+import iconPaths from './iconPaths';
 
-import { getThemePropType, getKey } from 'sly/common/components/themes';
-import { Block } from 'sly/common/components/atoms';
+import { getKey, palette } from 'sly/common/components/themes';
+import Block from 'sly/common/components/atoms/Block';
 
 const iconSize = ({ size }) => {
   const textSize = getKey(`sizes.text.${size}`);
   const lineHeight = getKey(`sizes.lineHeight.${size}`);
-  return textSize ? textSize * lineHeight : size;
+  return textSize ? `${textSize.replace('px', '') * lineHeight}px` : size;
 };
 const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)${flip ? ' scaleX(-1) scaleY(-1)' : ''}`;
 
@@ -21,27 +21,26 @@ const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)
  */
 // sizes relative to set font-size
 const Wrapper = styled(Block)`
-  justify-content: center;
   ${getTransform};
+  min-width: ${iconSize};
+  height: ${iconSize};
 `;
 
-const Icon = styled(({ icon, size, ...props }) => {
-  let Svg = getIcon(icon);
-  if (!Svg) {
-    // eslint-disable-next-line no-console
-    console.error('Icon not found:', `${icon}-regular`);
-  } else {
-    Svg = styled(Svg)`
-      align-self: center;
-      height: ${iconSize};
-      min-width: ${iconSize};
-      fill: currentColor;
-      stroke: ${prop('stroke', 'none')};
-    `;
+const StyledImage = styled(Image)`
+  align-self: center;
+  tintColor: ${palette('base')};
+`;
+
+const Icon = styled(({ icon, palette, ...props }) => {
+  const source = iconPaths[icon];
+
+  if (!source) {
+    return <Block palette="danger">Icon not found</Block>;
   }
+
   return (
-    <Wrapper size={size} {...props} data-cy={icon}>
-      <Svg />
+    <Wrapper {...props} data-cy={icon}>
+      <StyledImage palette={palette} source={source} />
     </Wrapper>
   );
 })``;
@@ -50,8 +49,6 @@ Icon.displayName = 'Icon';
 
 Icon.propTypes = {
   icon: string.isRequired,
-  size: oneOfType([getThemePropType('text'), string]),
-  stroke: string,
   flip: bool,
   rotate: number,
 };
@@ -60,8 +57,8 @@ Icon.defaultProps = {
   flip: false,
   rotate: 0,
   size: 'body',
-  display: 'inline-flex',
   align: 'center',
+  palette: 'slate',
 };
 
 export default Icon;

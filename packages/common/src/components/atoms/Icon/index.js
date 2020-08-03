@@ -1,7 +1,6 @@
 import React from 'react';
 import { string, number, bool, oneOfType } from 'prop-types';
 import styled, { css } from 'styled-components';
-import { prop } from 'styled-tools';
 
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
@@ -30,6 +29,7 @@ const Wrapper = styled.span`
   display: inline-flex;
   // sizes relative to set font-size
   vertical-align: top;
+  align-self: center;
 
   width: max-content;
   height: max-content;
@@ -41,8 +41,6 @@ const Wrapper = styled.span`
     height: ${iconSize};
     min-width: ${iconSize};
     display: block;
-    fill: currentColor;
-    stroke: ${prop('stroke', 'none')};
   }
 `;
 
@@ -68,7 +66,6 @@ Icon.propTypes = {
   size: oneOfType([getThemePropType('text'), string]),
   palette: palettePropType,
   variation: variationPropType,
-  stroke: string,
   flip: bool,
   rotate: number,
 };

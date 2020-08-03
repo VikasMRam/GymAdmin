@@ -1,23 +1,32 @@
 import React from 'react';
+import { Image } from 'react-native';
 import styled from 'styled-components';
 
-import Svg from './svg/seniorlyLogo-regular.svg';
-
+import { palette } from 'sly/common/components/themes';
+import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import {
   withDisplay,
   withText,
-  withColor,
 } from 'sly/common/components/helpers';
 
 // style inheritance from parent won't work as in web.
 // Hence apply styles like color directly
-const StyledSvg = styled(Svg)`
+const StyledSvg = styled(Image)`
   ${withText}
-  ${withColor}
+  tintColor: ${palette('base')};
   ${withDisplay}
 `;
 
-const Logo = props => <StyledSvg {...props} />;
+const Logo = props => (
+  <StyledSvg
+    {...props}
+    source={require('./svg/seniorlyLogo-regular.svg')}
+  />
+);
+
+Logo.propTypes = {
+  palette: palettePropType,
+};
 
 Logo.defaultProps = {
   palette: 'primary',

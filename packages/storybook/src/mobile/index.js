@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { getStorybookUI, addDecorator, configure } from '@storybook/react-native';
 import { ThemeProvider } from 'styled-components/native';
 
@@ -19,11 +19,11 @@ addDecorator(addAppWrapper);
 
 // add some margin to prevent overlap with mobile header
 addDecorator(story => (
-  <View style={{ marginTop: 50, marginLeft: 5, marginRight: 5 }}>
+  <ScrollView style={{ marginTop: 50, marginLeft: 5, marginRight: 5 }}>
     <ThemeProvider theme={theme}>
       {story()}
     </ThemeProvider>
-  </View>
+  </ScrollView>
 ));
 
 // Refer to https://github.com/storybookjs/storybook/tree/master/app/react-native#start-command-parameters

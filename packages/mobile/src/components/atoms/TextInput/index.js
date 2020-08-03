@@ -12,7 +12,7 @@ import {
   withSpacing,
   withBorder,
 } from 'sly/common/components/helpers';
-import { View } from 'sly/mobile/components/atoms';
+import View from 'sly/mobile/components/atoms/View';
 
 // skip padding prop from being passed down. padding is a valid react native prop
 // but our string padding used in css styles is different. Hence skip that prop.
