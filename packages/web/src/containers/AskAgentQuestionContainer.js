@@ -4,6 +4,7 @@ import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 
 import { generateAskAgentQuestionContents } from 'sly/web/services/helpers/agents';
+import Thankyou from 'sly/web/components/molecules/Thankyou';
 import SlyEvent from 'sly/web/services/helpers/events';
 import withModal from 'sly/web/controllers/withModal';
 import withNotification from 'sly/web/controllers/withNotification';
@@ -90,10 +91,12 @@ export default class AskAgentQuestionContainer extends Component {
         type,
       };
       showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
-    } else if (type === "aa-sidebar" || type === "aa-footer") {
+    } else if (type === 'aa-sidebar' || type === 'aa-footer') {
       const postSubmit = () => {
-        notifyInfo('Request sent successfully');
+        // notifyInfo('Request sent successfully');
         toggleAskAgentQuestionModal();
+        showModal(<Thankyou heading={"Success!"} subheading={'Your request has been sent and we will connect with' +
+        ' you shortly'} onClose={hideModal} doneText='Finish'/>);
       };
       let initialValues = {};
 
@@ -102,7 +105,7 @@ export default class AskAgentQuestionContainer extends Component {
         initialValues,
         entityId: community.id,
         category: 'community',
-        hideMessage: false,
+        hideMessage: true,
         postSubmit,
         type,
       };

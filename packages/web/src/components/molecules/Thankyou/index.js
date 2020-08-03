@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { size } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { getCitySearchUrl } from 'sly/web/services/helpers/url';
-import { Button, Block, Icon, Heading } from 'sly/web/components/atoms';
+import { Button, Block, Icon, Heading, Hr } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
@@ -55,6 +55,7 @@ const Thankyou = ({
     <Wrapper>
       <StyledIcon icon="logo" size="superHero" />
       <StyledHeading>{heading}</StyledHeading>
+      <Hr/>
       <StyledBlock>{subheading}</StyledBlock>
       {backToSearch}
       {onClose && <Button onClick={onClose} kind="jumbo">Done</Button>}
@@ -67,11 +68,13 @@ Thankyou.propTypes = {
   onClose: func,
   heading: string,
   subheading: string,
+  doneText: string,
 };
 
 Thankyou.defaultProps = {
   heading: 'Thank you!',
   subheading: 'A Seniorly Guide will reach out to you with local expertise and support to ensure you find the right fit for your needs. There is no cost to you!',
+  doneText: 'Done',
 };
 
 export default Thankyou;

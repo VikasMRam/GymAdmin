@@ -436,7 +436,7 @@ export default class CommunityDetailPage extends Component {
 
                 {/* Disable home care AD*/}
                 {/*<AdWrapper>*/}
-                  {/*<CommunityProfileAdTileContainer type="homeCare" community={community} />*/}
+                  {/*<CommunityProfileAdTileContainer type="getOffer" community={community} />*/}
                 {/*</AdWrapper>*/}
                 {!isActiveAdult &&
                   <StyledHeadingBoxSection
