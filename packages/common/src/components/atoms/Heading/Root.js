@@ -10,7 +10,6 @@ import {
 } from 'sly/common/components/helpers';
 
 const styles = css`
-  margin: 0;
   ${withSpacing}
   ${withText}
   ${withColor}
