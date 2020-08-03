@@ -19,9 +19,9 @@ describe('InputMessage', () => {
     expect(wrapper.contains('test')).toBeFalsy();
   });
 
-  it('renders InputMessage', () => {
+  it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('StyledIcon')).toHaveLength(1);
+    expect(wrapper.find('Icon')).toHaveLength(1);
     expect(wrapper.contains(defaultProps.message)).toBeTruthy();
   });
 });
