@@ -1,6 +1,9 @@
 # CircleCI 2.1 Config Overview: https://discuss.circleci.com/t/circleci-2-1-config-overview/26057
 version: 2.1
 
+aliases:
+  - &packages_node_modules_cache_dir packages-node_modules
+
 jobs:
   build:
     docker:
@@ -11,7 +14,7 @@ jobs:
 
     environment:
       - TEST_RESULTS_DIR: test-results
-      - PACKAGES_NODE_MODULES_CACHE_DIR: packages-node_modules
+      - PACKAGES_NODE_MODULES_CACHE_DIR: *packages_node_modules_cache_dir
 
     steps:
       - checkout:
@@ -276,7 +279,7 @@ jobs:
     resource_class: xlarge
 
     environment:
-      - PACKAGES_NODE_MODULES_CACHE_DIR: packages-node_modules
+      - PACKAGES_NODE_MODULES_CACHE_DIR: *packages_node_modules_cache_dir
       - IGNORE_PACKAGES: "{@sly-react/storybook,@sly-react/mobile}"
 
     working_directory: ~/project
@@ -501,8 +504,6 @@ jobs:
 
 
 workflows:
-  version: 2
-
   build:
     jobs:
       # run build (unit tests, linting, quality checks etc etc) for PRs
