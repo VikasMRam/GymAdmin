@@ -273,6 +273,7 @@ jobs:
         environment:
           ## this enables colors in the output
           TERM: xterm
+    resource_class: xlarge
 
     environment:
       - PACKAGES_NODE_MODULES_CACHE_DIR: packages-node_modules
