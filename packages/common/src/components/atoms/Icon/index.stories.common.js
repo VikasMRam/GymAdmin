@@ -16,7 +16,6 @@ const Card = styled(Block)`
   background: ${palette('grey', 'background')};
   border: ${size('border.regular')} solid ${palette('grey', 'base')};
   border-radius: ${size('border.xLarge')};
-  flex-direction: column;
   width: ${size('element.xHuge')};
   height: ${size('element.xHuge')};
   margin: ${size('spacing.medium')};
@@ -37,9 +36,9 @@ export function Icons({ icons, ...props }) {
   return (
     <Wrapper>
       {icons.map(icon => (
-        <Card align="center" title={icon} key={icon}>
+        <Card direction="column" align="center" title={icon} key={icon}>
           <StyledIcon icon={icon} size="title" {...props} />
-          <StyledBlock size="caption" numberOfLines={1}>{icon}</StyledBlock>
+          <StyledBlock align="center" size="caption" numberOfLines={1}>{icon}</StyledBlock>
         </Card>
       ))}
     </Wrapper>

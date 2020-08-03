@@ -1,28 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
 import { string } from 'prop-types';
 
-import { size } from 'sly/common/components/themes';
 import { Icon, Block } from 'sly/common/components/atoms';
-
-const ErrorWrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-`;
-
-const StyledIcon = styled(Icon)`
-  margin-right: ${size('spacing.regular')};
-`;
 
 const InputMessage = ({
   name, icon, iconSize, palette, message, className,
 }) => (
-  <ErrorWrapper className={className}>
-    <StyledIcon icon={icon} size={iconSize} palette={palette} />
+  <Block verticalAlign="middle" className={className}>
+    <Icon marginRight="regular" icon={icon} size={iconSize} palette={palette} />
     <Block id={name} role="alert" palette={palette} size="caption">
       {message}
     </Block>
-  </ErrorWrapper>
+  </Block>
 );
 
 InputMessage.propTypes = {

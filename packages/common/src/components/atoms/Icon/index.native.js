@@ -21,17 +21,17 @@ const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)
  */
 // sizes relative to set font-size
 const Wrapper = styled(Block)`
-  ${getTransform};
   min-width: ${iconSize};
   height: ${iconSize};
 `;
 
 const StyledImage = styled(Image)`
+  ${getTransform};
   align-self: center;
   tintColor: ${palette('base')};
 `;
 
-const Icon = styled(({ icon, palette, ...props }) => {
+const Icon = styled(({ icon, palette, flip, rotate, ...props }) => {
   const source = iconPaths[icon];
 
   if (!source) {
@@ -40,7 +40,7 @@ const Icon = styled(({ icon, palette, ...props }) => {
 
   return (
     <Wrapper {...props} data-cy={icon}>
-      <StyledImage palette={palette} source={source} />
+      <StyledImage flip={flip} rotate={rotate} palette={palette} source={source} />
     </Wrapper>
   );
 })``;
