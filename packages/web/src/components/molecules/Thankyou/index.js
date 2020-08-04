@@ -16,6 +16,7 @@ const Wrapper = styled.div`
 
 const StyledIcon = styled(Icon)`
   margin-bottom: ${size('spacing.regular')};
+  margin-right: ${size('spacing.regular')};
 `;
 
 const StyledHeading = styled(Heading)`
@@ -33,7 +34,7 @@ const BackToSearch = styled.div`
 `;
 
 const Thankyou = ({
-  community, heading, subheading, onClose,
+  community, heading, subheading, doneText, onClose,
 }) => {
   let backToSearch = null;
   if (community) {
@@ -53,12 +54,11 @@ const Thankyou = ({
 
   return (
     <Wrapper>
-      <StyledIcon icon="logo" size="superHero" />
-      <StyledHeading>{heading}</StyledHeading>
-      <Hr/>
+      <StyledHeading><StyledIcon icon="round-checkmark" palette="primary" size="title" />{heading}</StyledHeading>
+      <Hr noMargin={true}/>
       <StyledBlock>{subheading}</StyledBlock>
       {backToSearch}
-      {onClose && <Button onClick={onClose} kind="jumbo">Done</Button>}
+      {onClose && <Button onClick={onClose} kind="jumbo">{doneText}</Button>}
     </Wrapper>
   );
 };
@@ -73,7 +73,8 @@ Thankyou.propTypes = {
 
 Thankyou.defaultProps = {
   heading: 'Thank you!',
-  subheading: 'A Seniorly Guide will reach out to you with local expertise and support to ensure you find the right fit for your needs. There is no cost to you!',
+  subheading: 'A Local Expert will reach out to you with local expertise and support to ensure you find the' +
+  ' right fit for your needs. There is no cost to you!',
   doneText: 'Done',
 };
 

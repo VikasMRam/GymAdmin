@@ -62,6 +62,7 @@ export default class AskAgentQuestionContainer extends Component {
 
   openAskAgentQuestionModal = (subType) => {
     const { type, community, showModal, hideModal, notifyInfo } = this.props;
+
     const toggleAskAgentQuestionModal = () => {
       this.handleToggleAskAgentQuestionModal(true, subType);
       hideModal();
@@ -69,12 +70,18 @@ export default class AskAgentQuestionContainer extends Component {
     const onClose = () => {
       this.handleToggleAskAgentQuestionModal(true, subType);
     };
+    const postSubmit = () => {
+      // notifyInfo('Request sent successfully');
+      toggleAskAgentQuestionModal();
+      showModal(<Thankyou heading={"Success!"} subheading={'Your request has been sent and we will connect with' +
+      ' you shortly'} onClose={hideModal} doneText='Finish'/>);
+    };
 
     if (type === 'how-it-works-banner-notification' || type === 'side-column-get-help-now') {
-      const postSubmit = () => {
-        notifyInfo('Question sent successfully');
-        toggleAskAgentQuestionModal();
-      };
+      // const postSubmit = () => {
+      //   notifyInfo('Question sent successfully');
+      //   toggleAskAgentQuestionModal();
+      // };
       let initialValues = {};
       if (type === 'how-it-works-banner-notification') {
         initialValues = {
@@ -92,12 +99,6 @@ export default class AskAgentQuestionContainer extends Component {
       };
       showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
     } else if (type === 'aa-sidebar' || type === 'aa-footer') {
-      const postSubmit = () => {
-        // notifyInfo('Request sent successfully');
-        toggleAskAgentQuestionModal();
-        showModal(<Thankyou heading={"Success!"} subheading={'Your request has been sent and we will connect with' +
-        ' you shortly'} onClose={hideModal} doneText='Finish'/>);
-      };
       let initialValues = {};
 
       const modalComponentProps = {
@@ -124,12 +125,14 @@ export default class AskAgentQuestionContainer extends Component {
         community,
         heading,
         description,
+        entityId: community.id,
+        category: 'community',
         placeholder,
         question,
         type,
+        postSubmit,
       };
-
-      showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />, onClose);
+      showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
     }
 
     this.handleToggleAskAgentQuestionModal(false, subType);

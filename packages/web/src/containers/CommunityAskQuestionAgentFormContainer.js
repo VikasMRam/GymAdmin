@@ -102,9 +102,13 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
       question,
     };
     if (user) {
+
+      [firstName, lastName] = user.name ? user.name.split(" ") : ["",""];
       initialValues = {
         ...initialValues,
         full_name: user.name,
+        firstName,
+        lastName,
         phone: user.phoneNumber,
       };
     }

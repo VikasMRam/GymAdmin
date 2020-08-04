@@ -52,7 +52,7 @@ export default class TalkToAgentForm extends Component {
     hasLocation: bool,
     image: string,
     hasEmail: bool,
-    firstName: string.isRequired,
+    agentFirstName: string.isRequired,
     messagePrompt: string,
     showMessageFieldFirst: bool,
     hideMessage: bool,
@@ -62,19 +62,19 @@ export default class TalkToAgentForm extends Component {
 
   static defaultProps = {
     heading: 'Talk to a local senior living expert',
-    firstName: 'we',
+    agentFirstName: 'we',
     messagePrompt: '',
     buttonKind: 'jumbo',
-    messagePlaceholder: 'Type your question here. NO JOB INQUIRIES',
+    messagePlaceholder: 'Type your question here. ',
     hideMessage: false,
   };
 
   render() {
     const {
       invalid, submitting, handleSubmit, error, heading, user, hasLocation, hasEmail,
-      firstName, messagePrompt, showMessageFieldFirst, hideMessage, image, buttonKind, messagePlaceholder,
+      agentFirstName, messagePrompt, showMessageFieldFirst, hideMessage, image, buttonKind, messagePlaceholder,
     } = this.props;
-    const messageLabel = (messagePrompt === '') ? `What can ${firstName} help you with?` : messagePrompt;
+    const messageLabel = (messagePrompt === '') ? `What can ${agentFirstName} help you with?` : messagePrompt;
     const showTos = !user;
     const messageField = (
       <Field
