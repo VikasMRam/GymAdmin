@@ -5,6 +5,7 @@ import { bool, string } from 'prop-types';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { size, palette, key } from 'sly/common/components/themes';
 import CommunityActions from 'sly/web/components/molecules/CommunityActions';
+import AskAgentQuestionButtonContainer from 'sly/web/containers/AskAgentQuestionButtonContainer';
 import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';
 
 const Wrapper = styled.div`
@@ -24,15 +25,33 @@ const Wrapper = styled.div`
     display: none;
   }
 `;
+const InnerWrapper = styled.div`
+  display: block;
+`;
+const StyledAskAgentButton = styled(AskAgentQuestionButtonContainer)`
+  width: 100%;
+  margin-top: ${size('spacing.small')};
+`;
 
-const CommunityStickyFooter = ({ community, isAlreadyPricingRequested, locTrack, ...props }) => {
+const CommunityStickyFooter = ({ community, isAlreadyPricingRequested, locTrack, isActiveAdult, ...props }) => {
   const { id, startingRate, rates } = community;
-  return (
-    <Wrapper>
-      {startingRate > 0 && <CommunityPricing size="subtitle" id={id} estimated={rates !== 'Provided'} price={startingRate} tooltipPos="top" />}
-      <CommunityActions isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack={locTrack} {...props} />
-    </Wrapper>
-  );
+  if (isActiveAdult) {
+    return (<Wrapper>
+      <InnerWrapper>
+      <strong>Is selling your home part of your senior living plan?</strong>
+        <div>We can connect you with the top selling agents.</div>
+      <StyledAskAgentButton type="aa-footer">Request Info</StyledAskAgentButton>
+      </InnerWrapper>
+    </Wrapper>)
+  } else {
+    return (
+      <Wrapper>
+        {startingRate > 0 && <CommunityPricing size="subtitle" id={id} estimated={rates !== 'Provided'} price={startingRate} tooltipPos="top" />}
+        <CommunityActions isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack={locTrack} {...props} />
+      </Wrapper>
+    );
+  }
+
 };
 
 CommunityStickyFooter.typeHydrationId = 'CommunityStickyFooter';
@@ -40,6 +59,7 @@ CommunityStickyFooter.propTypes = {
   community: communityPropType,
   isAlreadyPricingRequested: bool,
   locTrack: string,
+  isActiveAdult: bool,
 };
 
 export default CommunityStickyFooter;

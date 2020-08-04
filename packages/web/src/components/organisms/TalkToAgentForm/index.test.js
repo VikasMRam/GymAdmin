@@ -11,7 +11,7 @@ describe('TalkToAgentForm', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
 
-    expect(wrapper.find(Field)).toHaveLength(3);
+    expect(wrapper.find(Field)).toHaveLength(4);
     expect(wrapper.find('StyledButton')).toHaveLength(1);
   });
 
@@ -19,7 +19,7 @@ describe('TalkToAgentForm', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit, hasEmail: true });
 
-    expect(wrapper.find(Field)).toHaveLength(4);
+    expect(wrapper.find(Field)).toHaveLength(5);
     expect(wrapper.find('StyledButton')).toHaveLength(1);
   });
 
@@ -27,7 +27,7 @@ describe('TalkToAgentForm', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit, fromEnabled: false });
 
-    expect(wrapper.find(Field)).toHaveLength(3);
+    expect(wrapper.find(Field)).toHaveLength(4);
     expect(wrapper.find('StyledButton')).toHaveLength(1);
   });
 

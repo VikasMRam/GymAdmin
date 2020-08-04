@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { size } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { getCitySearchUrl } from 'sly/web/services/helpers/url';
-import { Button, Block, Icon, Heading } from 'sly/common/components/atoms';
+import { Button, Block, Icon, Heading, Hr } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,6 +16,7 @@ const Wrapper = styled.div`
 
 const StyledIcon = styled(Icon)`
   margin-bottom: ${size('spacing.regular')};
+  margin-right: ${size('spacing.regular')};
 `;
 
 const StyledHeading = styled(Heading)`
@@ -33,7 +34,7 @@ const BackToSearch = styled.div`
 `;
 
 const Thankyou = ({
-  community, heading, subheading, onClose,
+  community, heading, subheading, doneText, onClose,
 }) => {
   let backToSearch = null;
   if (community) {
@@ -53,11 +54,11 @@ const Thankyou = ({
 
   return (
     <Wrapper>
-      <StyledIcon icon="logo" size="superHero" />
-      <StyledHeading>{heading}</StyledHeading>
+      <StyledHeading><StyledIcon icon="round-checkmark" palette="primary" size="title" />{heading}</StyledHeading>
+      <Hr noMargin />
       <StyledBlock>{subheading}</StyledBlock>
       {backToSearch}
-      {onClose && <Button onClick={onClose} kind="jumbo">Done</Button>}
+      {onClose && <Button onClick={onClose} kind="jumbo">{doneText}</Button>}
     </Wrapper>
   );
 };
@@ -67,11 +68,14 @@ Thankyou.propTypes = {
   onClose: func,
   heading: string,
   subheading: string,
+  doneText: string,
 };
 
 Thankyou.defaultProps = {
   heading: 'Thank you!',
-  subheading: 'A Seniorly Guide will reach out to you with local expertise and support to ensure you find the right fit for your needs. There is no cost to you!',
+  subheading: 'A Local Expert will reach out to you with local expertise and support to ensure you find the' +
+  ' right fit for your needs. There is no cost to you!',
+  doneText: 'Done',
 };
 
 export default Thankyou;

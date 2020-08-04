@@ -573,7 +573,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     const { organization } = user;
 
-    if (clientIsLoading) {
+    if (clientIsLoading || !user) {
       return (
         <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
           Loading...

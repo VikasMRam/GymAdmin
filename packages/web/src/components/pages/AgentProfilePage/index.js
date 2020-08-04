@@ -158,7 +158,7 @@ class AgentProfilePage extends Component {
                 hasEmail
                 entityId={id}
                 heading={`Ask ${firstName} a question`}
-                firstName={firstName}
+                agentFirstName={firstName}
                 type="agent-profile-page"
                 postSubmit={() => {
                   onConsultationRequested();

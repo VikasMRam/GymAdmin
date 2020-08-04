@@ -16,7 +16,8 @@ import SlyEvent from 'sly/web/services/helpers/events';
 const form = 'AskQuestionToAgentForm';
 const validate = createValidator({
   location: [required],
-  name: [required],
+  firstName: [required],
+  lastName: [required],
   email: [required, email],
   phone: [required, usPhone],
   message: [required],
@@ -64,7 +65,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
       entityId, postSubmit, createAction, createOrUpdateUser, updateUuidAux, match,
       user, category, type, status, actionType,
     } = this.props;
-
+    data = { ...data, name: `${data.firstName}${data.lastName ? ` ${data.lastName}` : ''}` };
     const rawUuidAux = status.uuidAux.result;
     const { message, location } = data;
     let { phone, email, name } = data;
@@ -128,9 +129,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
         const event = {
           action: 'ask_question', category: c, label: entityId || match.url,
         };
-
         SlyEvent.getInstance().sendEvent(event);
-
         if (postSubmit) {
           postSubmit();
         }
@@ -138,8 +137,16 @@ export default class AskQuestionToAgentFormContainer extends Component {
   };
 
   render() {
+    // change user.name to first name and last name
+    const { user } = this.props;
+    let firstName,lastName = "";
+    if (user && user.name) {
+      [firstName,lastName] = user.name ? user.name.split(" ") : ["",""]
+    }
     return (
       <ReduxForm
+        firstName
+        lastName
         {...this.props}
         onSubmit={this.handleSubmit}
       />

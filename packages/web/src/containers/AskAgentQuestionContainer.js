@@ -4,6 +4,7 @@ import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 
 import { generateAskAgentQuestionContents } from 'sly/web/services/helpers/agents';
+import Thankyou from 'sly/web/components/molecules/Thankyou';
 import SlyEvent from 'sly/web/services/helpers/events';
 import withModal from 'sly/web/controllers/withModal';
 import withNotification from 'sly/web/controllers/withNotification';
@@ -61,6 +62,7 @@ export default class AskAgentQuestionContainer extends Component {
 
   openAskAgentQuestionModal = (subType) => {
     const { type, community, showModal, hideModal, notifyInfo } = this.props;
+
     const toggleAskAgentQuestionModal = () => {
       this.handleToggleAskAgentQuestionModal(true, subType);
       hideModal();
@@ -68,12 +70,18 @@ export default class AskAgentQuestionContainer extends Component {
     const onClose = () => {
       this.handleToggleAskAgentQuestionModal(true, subType);
     };
+    const postSubmit = () => {
+      // notifyInfo('Request sent successfully');
+      toggleAskAgentQuestionModal();
+      showModal(<Thankyou heading={"Success!"} subheading={'Your request has been sent and we will connect with' +
+      ' you shortly'} onClose={hideModal} doneText='Finish'/>);
+    };
 
     if (type === 'how-it-works-banner-notification' || type === 'side-column-get-help-now') {
-      const postSubmit = () => {
-        notifyInfo('Question sent successfully');
-        toggleAskAgentQuestionModal();
-      };
+      // const postSubmit = () => {
+      //   notifyInfo('Question sent successfully');
+      //   toggleAskAgentQuestionModal();
+      // };
       let initialValues = {};
       if (type === 'how-it-works-banner-notification') {
         initialValues = {
@@ -90,7 +98,22 @@ export default class AskAgentQuestionContainer extends Component {
         type,
       };
       showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
-    } else {
+    } else if (type === 'aa-sidebar' || type === 'aa-footer') {
+      let initialValues = {};
+
+      const modalComponentProps = {
+        heading: "We understand selling your home is a big deal",
+        initialValues,
+        entityId: community.id,
+        category: 'community',
+        hideMessage: true,
+        postSubmit,
+        type,
+      };
+      showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
+    }
+
+    else {
       const { heading, description, placeholder, question } = generateAskAgentQuestionContents(
         community.name,
         community.address.city,
@@ -102,12 +125,14 @@ export default class AskAgentQuestionContainer extends Component {
         community,
         heading,
         description,
+        entityId: community.id,
+        category: 'community',
         placeholder,
         question,
         type,
+        postSubmit,
       };
-
-      showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />, onClose);
+      showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
     }
 
     this.handleToggleAskAgentQuestionModal(false, subType);
