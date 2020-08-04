@@ -17,7 +17,7 @@ export const Left = styled(({ children, heading, to, ...props }) => (
   <Box {...props}>
     {children}
     <Heading>{heading}</Heading>
-    {to && <Link to={to}>View profile</Link>}
+    {to && <Link to={to} target='_blank'>View profile</Link>}
   </Box>
 ))`
   grid-area: left;
