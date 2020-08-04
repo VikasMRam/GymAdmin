@@ -126,7 +126,7 @@ export default class DashboardCommunityDetailsForm extends Component {
           <EditField
             name="propInfo.capacity"
             label="Licensed capacity"
-            type="number"
+            type="text"
             readOnly={!canEdit}
           />
         </SectionForm>
