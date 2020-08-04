@@ -6,7 +6,7 @@ import { Field } from 'redux-form';
 import { size } from 'sly/common/components/themes';
 import { Block, Box } from 'sly/web/components/atoms';
 import shadow from 'sly/web/components/helpers/shadow';
-import ReduxField from 'sly/web/components/organisms/ReduxField/index';
+import ReduxField from 'sly/common/components/organisms/ReduxField/index';
 
 const Wrapper = shadow(styled(Box)`
   margin: 0 auto;

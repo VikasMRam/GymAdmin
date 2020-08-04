@@ -4,4 +4,5 @@ import { storiesOf } from '@storybook/react';
 import Logo from '.';
 
 storiesOf('Common|Atoms/Logo', module)
-  .add('default', () => <Logo />);
+  .add('default', () => <Logo />)
+  .add('palette', () => <Logo palette="danger" />);

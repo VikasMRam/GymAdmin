@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { string } from 'prop-types';
 
 import { size } from 'sly/common/components/themes';
-import { Icon, Block } from 'sly/web/components/atoms';
+import { Icon, Block } from 'sly/common/components/atoms';
 
 const ErrorWrapper = styled.div`
   display: flex;

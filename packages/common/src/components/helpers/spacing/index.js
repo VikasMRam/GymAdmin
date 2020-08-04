@@ -16,7 +16,7 @@ export const withPadding = ({ noPadding, ...props } = {}) => {
   if (values.padding || values.paddingBottom) {
     return css`
       ${padBottomStyle}
-      ${css(values)};
+      ${css(values)}
     `;
   }
 

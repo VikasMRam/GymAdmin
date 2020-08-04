@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import Field from '.';
+
 import MultipleChoice from 'sly/web/components/molecules/MultipleChoice';
-import Field from 'sly/web/components/molecules/Field';
 
 const wrap = (props = {}) => shallow(<Field name="name" {...props} />);
 
@@ -19,12 +20,12 @@ describe('Field', () => {
 
   it('renders label when passed in', () => {
     const wrapper = wrap({ label: 'foo label' });
-    expect(wrapper.contains('foo label')).toBe(true);
+    expect(wrapper.contains('foo label')).toBeTruthy();
   });
 
   it('does not render error when passed in without invalid', () => {
     const wrapper = wrap({ message: 'foo error' });
-    expect(wrapper.contains('foo error')).toBe(false);
+    expect(wrapper.contains('foo error')).toBeFalsy();
   });
 
   it('renders error when passed in along with invalid', () => {

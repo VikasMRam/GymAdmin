@@ -9,7 +9,8 @@ import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import pad from 'sly/web/components/helpers/pad';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
-import { Block, Icon, Paragraph, Link, Span } from 'sly/web/components/atoms';
+import { Block, Icon } from 'sly/common/components/atoms';
+import { Paragraph, Link, Span } from 'sly/web/components/atoms';
 import { isBrowser } from 'sly/web/config';
 
 const overridePosition = ({ left, top }) => ({

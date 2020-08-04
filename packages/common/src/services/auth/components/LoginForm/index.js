@@ -3,7 +3,7 @@ import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { Heading, Button, Block } from 'sly/web/components/atoms';
 
 const LoginForm = ({

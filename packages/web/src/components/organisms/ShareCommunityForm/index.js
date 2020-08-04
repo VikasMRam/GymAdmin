@@ -6,7 +6,7 @@ import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/common/components/themes';
 import { Heading, Button, Block } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')}

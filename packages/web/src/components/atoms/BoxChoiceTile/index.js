@@ -7,7 +7,7 @@ import { palette, size } from 'sly/common/components/themes';
 import { spacing as spacingPropType } from 'sly/common/propTypes/spacing';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import Box from 'sly/common/components/atoms/Box';
-import Icon from 'sly/web/components/atoms/Icon';
+import Icon from 'sly/common/components/atoms/Icon';
 
 const getHoverBorderColour = ({ highlightedPalette }) => palette(highlightedPalette, 'base');
 

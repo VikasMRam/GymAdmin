@@ -1,8 +1,9 @@
 import React from 'react';
 
-import svg from './getSvg';
-
 import Block from 'sly/common/components/atoms/Block';
+
+// eslint-disable-next-line import/no-webpack-loader-syntax,import/no-unresolved
+const svg = require('!raw-loader!./svg/seniorlyLogo-regular.svg').default;
 
 const Logo = props => (
   <Block
@@ -10,5 +11,9 @@ const Logo = props => (
     {...props}
   />
 );
+
+Logo.defaultProps = {
+  palette: 'primary',
+};
 
 export default Logo;

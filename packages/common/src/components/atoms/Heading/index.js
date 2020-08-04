@@ -1,15 +1,8 @@
 import React from 'react';
+import { oneOf, string } from 'prop-types';
 import styled from 'styled-components';
-import { oneOf } from 'prop-types';
 
 import Root from './Root';
-
-import {
-  withText,
-  withColor,
-  withSpacing,
-  withAlign,
-} from 'sly/common/components/helpers';
 
 const getPad = (size) => {
   switch (size) {
@@ -20,21 +13,18 @@ const getPad = (size) => {
   }
 };
 
+// styled wrapper is required to allow this component to be reffered in css tyles like ${Heading}: {}
 const Heading = styled(props => (
   <Root
     size={props.size || props.level}
     pad={getPad(props.size)}
     {...props}
   />
-))`
-  ${withSpacing}
-  ${withText}
-  ${withColor}
-  ${withAlign}
-`;
+))``;
 
 Heading.propTypes = {
   level: oneOf(['hero', 'title', 'subtitle']).isRequired,
+  size: string,
 };
 
 Heading.defaultProps = {

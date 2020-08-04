@@ -8,7 +8,7 @@ import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import pad from 'sly/web/components/helpers/pad';
 import { textAlign } from 'sly/web/components/helpers/text';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import { Heading, Box, Icon, Button } from 'sly/web/components/atoms';
+import { Heading, Box, Icon, Button } from 'sly/common/components/atoms';
 
 const PaddedHeading = pad(Heading, 'large');
 PaddedHeading.displayName = 'PaddedHeading';

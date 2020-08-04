@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette, getKey } from 'sly/common/components/themes';
-import Icon from 'sly/web/components/atoms/Icon';
+import Icon from 'sly/common/components/atoms/Icon';
 import Hr from 'sly/web/components/atoms/Hr';
 
 const { Option, Group, SingleValue } = components;

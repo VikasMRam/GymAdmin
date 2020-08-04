@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
-import ReduxField from 'sly/web/components/organisms/ReduxField/index';
+import ReduxField from 'sly/common/components/organisms/ReduxField/index';
 import { Heading, Block, Button } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
 import { community as communityPropType } from 'sly/common/propTypes/community';

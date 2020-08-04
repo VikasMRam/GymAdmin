@@ -2,7 +2,8 @@ import React from 'react';
 import { string } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { Icon, Span, Link } from 'sly/web/components/atoms';
+import { Icon } from 'sly/common/components/atoms';
+import { Span, Link } from 'sly/web/components/atoms';
 import {
   ADMIN_DASHBOARD_AGENTS_PATH,
   ADMIN_DASHBOARD_CALLS_PATH,

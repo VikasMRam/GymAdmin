@@ -1,5 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
+
+import { View } from 'sly/mobile/components/atoms';
 
 const Form = props => <View {...props} />;
 
