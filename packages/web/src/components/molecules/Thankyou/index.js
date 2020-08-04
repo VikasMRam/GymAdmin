@@ -55,7 +55,7 @@ const Thankyou = ({
   return (
     <Wrapper>
       <StyledHeading><StyledIcon icon="round-checkmark" palette="primary" size="title" />{heading}</StyledHeading>
-      <Hr noMargin={true}/>
+      <Hr noMargin />
       <StyledBlock>{subheading}</StyledBlock>
       {backToSearch}
       {onClose && <Button onClick={onClose} kind="jumbo">{doneText}</Button>}
