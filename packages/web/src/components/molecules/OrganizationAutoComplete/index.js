@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { func, oneOf } from 'prop-types';
+import { func } from 'prop-types';
 import loadable from '@loadable/component';
 
 import { apiUrl } from 'sly/web/config';
 import { getUserAutocompleteValues } from 'sly/web/services/datatable/helpers'; // Org and users work the same way
 import { normalizeResponse } from 'sly/web/services/api';
-import { CUSTOMER_ROLE_PARAM, PROVIDER_ROLE_PARAM, AGENT_ROLE_PARAM, ADMIN_ROLE_PARAM } from 'sly/common/constants/roles';
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/web/components/atoms/Select'));
 const OrgFilterApiEndpoint = '/platform/organizations?';
