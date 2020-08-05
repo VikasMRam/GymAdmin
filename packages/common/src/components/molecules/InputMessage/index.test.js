@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import InputMessage from 'sly/web/components/molecules/InputMessage/index';
+import InputMessage from '.';
 
 const defaultProps = {
   icon: 'favourite-light',
@@ -16,12 +16,12 @@ const wrap = (props = {}) =>
 describe('InputMessage', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
-    expect(wrapper.contains('test')).toBe(false);
+    expect(wrapper.contains('test')).toBeFalsy();
   });
 
-  it('renders InputMessage', () => {
+  it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('StyledIcon')).toHaveLength(1);
+    expect(wrapper.find('Icon')).toHaveLength(1);
     expect(wrapper.contains(defaultProps.message)).toBeTruthy();
   });
 });

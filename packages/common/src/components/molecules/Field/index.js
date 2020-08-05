@@ -8,7 +8,7 @@ import getInputComponent from './getInputComponent';
 import { size } from 'sly/common/components/themes';
 import { Label, Block, Icon } from 'sly/common/components/atoms';
 import { Input, Span } from 'sly/web/components/atoms';
-import InputMessage from 'sly/web/components/molecules/InputMessage';
+import InputMessage from 'sly/common/components/molecules/InputMessage';
 import { textAlign } from 'sly/web/components/helpers/text';
 
 const Wrapper = styled.div`

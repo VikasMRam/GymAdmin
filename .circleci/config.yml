@@ -1,39 +1,46 @@
 # CircleCI 2.1 Config Overview: https://discuss.circleci.com/t/circleci-2-1-config-overview/26057
 version: 2.1
 
-jobs:
-  build:
-    docker:
-      - image: circleci/node:12.16.3
-    resource_class: xlarge
+aliases:
+  - &packages_node_modules_cache_dir packages-node_modules
+  - &cache_version v11
 
-    working_directory: ~/project
-
-    environment:
-      - TEST_RESULTS_DIR: test-results
-      - PACKAGES_NODE_MODULES_CACHE_DIR: packages-node_modules
+commands:
+  prepare_workspace:
+    parameters:
+      lock_files:
+        type: string
+        default: "packages/*/package-lock.json package-lock.json"
+      packages_node_modules_cache_dir:
+        type: string
+        default: *packages_node_modules_cache_dir
+      cache_version:
+        type: string
+        default: *cache_version
+      cache_prefix:
+          type: string
+          default: ""
+      skip_deps:
+        type: string
+        default: ""
 
     steps:
       - checkout:
           path: ~/project
 
       - run:
-          name: Setup dirs
-          command: mkdir -p $TEST_RESULTS_DIR
-
-      - run:
           name: Generate packages lock files cache key
-          command: cat packages/*/package-lock.json package-lock.json >> packages-lock-cache-key.txt
+          command: cat << parameters.lock_files >> >> packages-lock-cache-key.txt
 
       - restore_cache:
-          key: cache-v10-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          key: << parameters.cache_prefix >>cache-<< parameters.cache_version >>-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
 
       - run:
           name: Restore packages node_modules
           command: |
-            if [ -d "$PACKAGES_NODE_MODULES_CACHE_DIR" ]; then
-              for p in $(ls "$PACKAGES_NODE_MODULES_CACHE_DIR"); do
-                FROM="$PACKAGES_NODE_MODULES_CACHE_DIR/$p/node_modules"
+            if [ -d "<< parameters.packages_node_modules_cache_dir >>" ]; then
+              for p in $(ls "<< parameters.packages_node_modules_cache_dir >>"); do
+                FROM="<< parameters.packages_node_modules_cache_dir >>/$p/node_modules"
                 TO="packages/$p"
 
                 if [ -d "$FROM" ]; then
@@ -49,10 +56,65 @@ jobs:
           name: Install deps
           command: |
             if [ ! -d node_modules ]; then
-              npm ci
+              PI_OPTS="-- --ignore=<< parameters.skip_deps >>" npm ci
             else
               echo "node_modules from cache exist. So skipping install."
             fi
+
+  cache_deps:
+    parameters:
+      packages_node_modules_cache_dir:
+        type: string
+        default: *packages_node_modules_cache_dir
+      cache_version:
+        type: string
+        default: *cache_version
+      cache_prefix:
+        type: string
+        default: ""
+    steps:
+      - run:
+          name: Prepare packages node_modules for caching
+          command: |
+            if [[ -z "$HAD_CACHE" ]]; then
+              mkdir -p << parameters.packages_node_modules_cache_dir >>
+              for p in $(ls packages); do
+                FROM="packages/$p/node_modules"
+                TO="<< parameters.packages_node_modules_cache_dir >>/$p"
+
+                if [ -d "$FROM" ]; then
+                  echo "Moving $p node_modules"
+                  mkdir -p $TO
+                  mv $FROM $TO
+                fi
+              done
+            fi
+
+      - save_cache:
+          key: << parameters.cache_prefix >>cache-<< parameters.cache_version >>-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+            - ~/project/node_modules
+            - ~/project/packages-node_modules
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:12.16.3
+    resource_class: xlarge
+
+    working_directory: ~/project
+
+    environment:
+      - TEST_RESULTS_DIR: test-results
+
+    steps:
+      - prepare_workspace
+
+      - run:
+          name: Setup dirs
+          command: mkdir -p $TEST_RESULTS_DIR
 
       - run:
           name: Packages security audit
@@ -78,30 +140,7 @@ jobs:
             export JEST_JUNIT_OUTPUT_DIR="$PWD/$TEST_RESULTS_DIR/junit"
             npm test -- -- -- --ci -w=30
 
-      - run:
-          name: Prepare packages node_modules for caching
-          command: |
-            if [[ -z "$HAD_CACHE" ]]; then
-              mkdir -p $PACKAGES_NODE_MODULES_CACHE_DIR
-              for p in $(ls packages); do
-                FROM="packages/$p/node_modules"
-                TO="$PACKAGES_NODE_MODULES_CACHE_DIR/$p"
-
-                if [ -d "$FROM" ]; then
-                  echo "Moving $p node_modules"
-                  mkdir -p $TO
-                  mv $FROM $TO
-                fi
-              done
-            fi
-
-      - save_cache:
-          key: cache-v10-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
-          paths:
-            - ~/.npm
-            - ~/.cache
-            - ~/project/node_modules
-            - ~/project/packages-node_modules
+      - cache_deps
 
       - store_test_results:
           path: ~/project/test-results
@@ -273,16 +312,15 @@ jobs:
         environment:
           ## this enables colors in the output
           TERM: xterm
-
-    environment:
-      - PACKAGES_NODE_MODULES_CACHE_DIR: packages-node_modules
-      - IGNORE_PACKAGES: "{@sly-react/storybook,@sly-react/mobile}"
+    resource_class: xlarge
 
     working_directory: ~/project
 
     steps:
-      - checkout:
-          path: ~/project
+      - prepare_workspace:
+          lock_files: packages/*/package-lock.json packages/web/e2e/package-lock.json package-lock.json
+          cache_prefix: e2e-
+          skip_deps: "{@sly-react/storybook,@sly-react/mobile}"
 
       # - run:
       #     name: Clone SlyApi
@@ -309,37 +347,6 @@ jobs:
           command: sudo haproxy -f haproxy.conf
           working_directory: ~/project/packages/web/e2e
           background: true
-
-      - run:
-          name: Generate packages lock files cache key
-          command: cat packages/*/package-lock.json packages/web/e2e/package-lock.json package-lock.json >> packages-lock-cache-key.txt
-
-      - restore_cache:
-          key: e2e-cache-v10-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
-
-      - run:
-          name: Restore packages node_modules
-          command: |
-            if [ -d "$PACKAGES_NODE_MODULES_CACHE_DIR" ]; then
-              for p in $(ls "$PACKAGES_NODE_MODULES_CACHE_DIR"); do
-                FROM="$PACKAGES_NODE_MODULES_CACHE_DIR/$p/node_modules"
-                TO="packages/$p"
-
-                if [ -d "$FROM" ]; then
-                  echo "Moving $p node_modules"
-                  mv $FROM $TO
-                fi
-              done
-            fi
-
-      - run:
-          name: Install deps
-          command: |
-            if [ ! -d node_modules ]; then
-              PI_OPTS="-- --ignore=$IGNORE_PACKAGES" npm ci
-            else
-              echo "node_modules from cache exist. So skipping install."
-            fi
 
       - run:
           name: npm run dev
@@ -377,30 +384,8 @@ jobs:
           working_directory: ~/project/packages/web/e2e
           command: npx cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec "cypress/integration/**/*"
 
-      - run:
-          name: Prepare packages node_modules for caching
-          command: |
-            if [[ -z "$HAD_CACHE" ]]; then
-              mkdir -p $PACKAGES_NODE_MODULES_CACHE_DIR
-              for p in $(ls packages); do
-                FROM="packages/$p/node_modules"
-                TO="$PACKAGES_NODE_MODULES_CACHE_DIR/$p"
-
-                if [ -d "$FROM" ]; then
-                  echo "Moving $p node_modules"
-                  mkdir -p $TO
-                  mv $FROM $TO
-                fi
-              done
-            fi
-
-      - save_cache:
-          key: e2e-cache-v10-{{ arch }}-{{ checksum "packages-lock-cache-key.txt" }}
-          paths:
-            - ~/.npm
-            - ~/.cache
-            - ~/project/node_modules
-            - ~/project/packages-node_modules
+      - cache_deps:
+          cache_prefix: e2e-
 
       - store_test_results:
           path: ~/project/packages/web/e2e/cypress/results
@@ -498,10 +483,7 @@ jobs:
       #           -tl "$CIRCLE_BUILD_URL" -m "<!channel> $DESC_MSG" -c "#ed5c5c"
       #       fi
 
-
 workflows:
-  version: 2
-
   build:
     jobs:
       # run build (unit tests, linting, quality checks etc etc) for PRs

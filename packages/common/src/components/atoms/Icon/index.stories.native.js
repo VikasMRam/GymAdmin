@@ -11,7 +11,7 @@ const getIcons = () => Object.keys(iconPaths);
 storiesOf('Common|Atoms/Icon', module)
   .add('default', () => <Icons icons={getIcons()} />)
   .add('flip', () => <Icons icons={getIcons()} flip />)
-  .add('rotate', () => <Icons icons={getIcons()} rotate={45} />)
+  .add('rotate', () => <Icons icons={getIcons()} rotate={0.5} />)
   .add('size', () => <Icons icons={getIcons()} size="hero" />)
   .add('palette', () => <Icons icons={getIcons()} palette="danger" />)
   .add('not existing', () => <Icon icon="nosdnfjsdfs" />);
