@@ -26,6 +26,7 @@ const StyledView = styled(View)`
   ${withColor}
   ${withBorder}
   overflow: hidden;
+  ${withDisplay}
 `;
 
 const StyledTextInput = styled(TextInputC)`
@@ -35,7 +36,6 @@ const StyledTextInput = styled(TextInputC)`
   height: ${ifProp({ type: 'textarea' }, size('element.huge'), ({ height }) => size('element', height))};
   ${ifProp({ type: 'textarea' }, css`min-width: 100%;`)}
   ${ifProp({ type: 'textarea' }, css`max-width: 100%;`)}
-  ${withDisplay}
 `;
 
 const TextInput = ({
@@ -77,6 +77,7 @@ const TextInput = ({
     borderPalette,
     borderVariation,
     borderRadius,
+    ...props,
   };
 
   // border radius style is not supported by TextInput.

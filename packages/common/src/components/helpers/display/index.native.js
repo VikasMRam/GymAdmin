@@ -1,10 +1,9 @@
 import { css } from 'styled-components';
 
 export const withDisplay = ({
-  display, flex, flexGrow, flexShrink, flexBasis, flexWrap, flexOrder,
+  display, flex, flexGrow, flexShrink, flexBasis, flexWrap,
 }) => {
   let styles = {
-    order: flexOrder,
     flex,
   };
 

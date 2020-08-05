@@ -1,10 +1,10 @@
-import { useWindowDimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import { css } from 'styled-components';
 
 import { getKey } from 'sly/common/components/themes';
 
 export const upTo = (device, styles) => {
-  const windowWidth = useWindowDimensions().width;
+  const windowWidth = Dimensions.get('window').width;
   const deviceBreakpoint = getKey('sizes', 'breakpoint', device);
 
   if (windowWidth < deviceBreakpoint.replace('px', '')) {
@@ -17,7 +17,7 @@ export const upTo = (device, styles) => {
 };
 
 export const startingWith = (device, styles) => {
-  const windowWidth = useWindowDimensions().width;
+  const windowWidth = Dimensions.get('window').width;
   const deviceBreakpoint = getKey('sizes', 'breakpoint', device);
 
   if (windowWidth >= deviceBreakpoint.replace('px', '')) {

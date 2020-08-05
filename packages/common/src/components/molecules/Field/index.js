@@ -101,17 +101,9 @@ const Field = ({
     inputProps.type = inputProps.buttonType;
   }
 
-  return (
-    <Wrapper
-      pad="large"
-      display="flex"
-      position="relative"
-      direction={renderInputFirst ? 'row' : 'column'}
-      className={className}
-      wideWidth={wideWidth}
-      type={type}
-      options={options}
-    >
+  showCharacterCount = showCharacterCount && inputProps.maxLength;
+  const labelSection = (
+    <>
       {(type !== 'boolean' && (label || labelRight)) &&
         <LabelWrapper
           display="flex"
@@ -124,7 +116,6 @@ const Field = ({
           flexGrow={0}
           flexShrink={0}
           flexBasis={wideWidth ? getKey('sizes.tabletLayout.col2') : undefined}
-          flexOrder={renderInputFirst ? 2 : 1}
         >
           {label &&
             <Label
@@ -140,11 +131,25 @@ const Field = ({
           }
         </LabelWrapper>
       }
+    </>
+  );
+
+  return (
+    <Wrapper
+      pad="large"
+      display="flex"
+      position="relative"
+      direction={renderInputFirst ? 'row' : 'column'}
+      className={className}
+      wideWidth={wideWidth}
+      type={type}
+      options={options}
+    >
+      {!renderInputFirst && labelSection}
       <InputBlock
         position="relative"
         pad={!hideErrors && message && (invalid || warning) && !renderInputFirst ? 'regular' : 0}
         wideWidth={wideWidth}
-        flexOrder={renderInputFirst ? 1 : 2}
         display="flex"
         flexGrow={0}
         flexShrink={0}
@@ -155,8 +160,8 @@ const Field = ({
           display="flex"
           flexWrap="wrap"
           width="100%"
-          align={showCharacterCount && inputProps.maxLength ? 'right' : undefined}
-          direction={type === 'boxChoice' ? 'column' : 'row'}
+          align={showCharacterCount ? 'right' : undefined}
+          direction={type === 'boxChoice' || showCharacterCount ? 'column' : 'row'}
         >
           <InputComponent
             {...inputProps}
@@ -165,7 +170,7 @@ const Field = ({
             lastChildProps={{ pad: 0 }}
             flex={1}
           />
-          {showCharacterCount && inputProps.maxLength &&
+          {showCharacterCount &&
             <Block
               size="tiny"
               palette={((valueLength / inputProps.maxLength) * 100) > 90 ? 'danger' : 'slate'}
@@ -186,11 +191,11 @@ const Field = ({
           />
         }
       </InputBlock>
+      {renderInputFirst && labelSection}
       {labelRight && wideWidth &&
         <LabelRightWideWidth
           marginLeft="large"
           verticalAlign="middle"
-          flexOrder={3}
         >
           {labelRight}
         </LabelRightWideWidth>
@@ -203,7 +208,6 @@ const Field = ({
           message={message}
           wideWidth={wideWidth}
           marginLeft={wideWidth ? 'large' : 0}
-          flexOrder={4}
         />
       )}
     </Wrapper>
