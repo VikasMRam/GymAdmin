@@ -6,6 +6,7 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette, getKey } from 'sly/common/components/themes';
+import Block from 'sly/common/components/atoms/Block';
 import Icon from 'sly/common/components/atoms/Icon';
 import Hr from 'sly/web/components/atoms/Hr';
 
@@ -18,7 +19,7 @@ const StyledOption = styled(Option)`
   }
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled(Block)`
   .react-select-container {
     ${ifProp('textSize', ({ textSize, lineHeight }) => css`
       font-size: ${size('text', textSize)};
@@ -243,7 +244,7 @@ const Select = ({
   const textSize = getTextSize(size);
 
   return (
-    <Wrapper textSize={textSize} size={size} >
+    <Wrapper textSize={textSize} size={size} {...props}>
       <SelectComponent
         className="react-select-container"
         classNamePrefix="react-select"

@@ -5,134 +5,53 @@ import { ifProp } from 'styled-tools';
 
 import getInputComponent from './getInputComponent';
 
-import { size } from 'sly/common/components/themes';
+import { size, getKey } from 'sly/common/components/themes';
+import { isReactNative } from 'sly/common/constants/utils';
+import { startingWith, upTo } from 'sly/common/components/helpers';
 import { Label, Block, Icon } from 'sly/common/components/atoms';
-import { Input, Span } from 'sly/web/components/atoms';
 import InputMessage from 'sly/common/components/molecules/InputMessage';
-import { textAlign } from 'sly/web/components/helpers/text';
 
-const Wrapper = styled.div`
-  position: relative;
-  margin-bottom: ${size('spacing.large')};
+const wrapperWebStyles = !isReactNative ? css`
   > input[type='checkbox'],
   > input[type='radio'] {
     margin-right: ${size('spacing.regular')};
   }
-  display: flex;
-  flex-direction: column;
-  align-items: initial;
-
-  ${ifProp('row', css`
-    flex-direction: row;
-    align-items: baseline;
-  `)};
-
   .react-datepicker__input-container {
     display: block;
   }
+` : null;
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    flex-direction: ${ifProp({ wideWidth: true }, 'row')};
-    ${({ type, options }) => (type === 'checkbox' && !!options === true) && css`
+const Wrapper = styled(Block)`
+  ${wrapperWebStyles}
+
+  ${startingWith('tablet', css`
+    flex-direction: ${ifProp('wideWidth', 'row')};
+    ${ifProp({ type: 'checkbox' }, ifProp('options', css`
       align-items: flex-start;
-    `};
-  }
+    `))};
+  `)}
 `;
 
-const CheckIcon = styled(Icon)`
-  position: absolute;
-  right: ${size('spacing.regular')};
-  bottom: ${size('spacing.regular')};
+const LabelWrapper = styled(Block)`
+  ${upTo('tablet', 'flex-basis: auto;')}
+  ${startingWith('tablet', ifProp('wideWidth', css`
+    margin-right: ${size('spacing.xLarge')};
+  `))}
 `;
 
-const LabelWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  ${({ type, options }) => (type === 'checkbox' && !!options === true) && css`
-    margin-bottom: ${size('spacing.regular')};
-  `};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    ${({ wideWidth }) => wideWidth && css`
-      vertical-align: middle;
-      margin-right: ${size('tabletLayout.gutter')};
-      flex: 0 0 ${size('tabletLayout.col2')};
-      ${({ type, options }) => (type === 'checkbox' && !!options === true) && css`
-        margin-bottom: 0;
-      `};
-    `}
-  }
+const InputBlock = styled(Block)`
+  ${upTo('tablet', 'flex-basis: auto;')}
+  ${ifProp('wideWidth', startingWith('tablet', 'margin-bottom: 0;'))}
 `;
 
-/* Input checkbox 2 columns
-  display: grid;
-  grid-gap: ${size('spacing.large')};
-  grid-template-columns: auto auto;
-*/
-
-/* Input checkbox 3 rows auto flow columns
-  display: grid;
-  grid-gap: ${size('spacing.large')};
-  grid-template-rows: auto auto auto;
-  grid-auto-flow: column;
-*/
-
-const InputWrapper = styled.div`
-  ${({ type, options }) => (type === 'checkbox' && !!options === true) && css`
-    > * {
-      margin-bottom: ${size('spacing.large')};
-      :last-child {
-        margin-bottom: 0;
-      }
-    }
-  `};
-  @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    ${({ type, options }) => (type === 'checkbox' && !!options === true) && css`
-      > * {
-        margin-bottom: 0;
-      }
-      display: grid;
-      grid-gap: ${size('spacing.large')};
-      grid-template-columns: auto auto;
-    `};
-  }
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    ${({ wideWidth, widthSpacing }) => wideWidth && css`
-      margin-right: ${size('spacing.large')};
-      flex: 0 0 ${size(widthSpacing)};
-    `}
-  }
-`;
-
-const InputBeforeLabelWrapper = styled.div`
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    margin-left: ${ifProp({ wideWidth: true }, size('tabletLayout.col2'))};
-  }
-`;
-
-// donot use pad to add margin bottom on input as it well lead to
-// rerender on key stroke that will loose focus
 const StyledInputMessage = styled(InputMessage)`
-  margin-top: ${ifProp({ renderInputFirst: false }, size('spacing.regular'))};
+  ${upTo('tablet', 'margin-left: 0;')}
+`;
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    margin-top: ${ifProp({ wideWidth: true }, 0)};
-  }
+const LabelRightWideWidth = styled(Block)`
+  ${upTo('tablet', 'margin-left: 0;')}
 `;
-// donot use pad to add margin bottom on input as it well lead to
-// rerender on key stroke that will loose focus
-const CharCount = styled(textAlign(Block, 'right'))`
-  margin-top: ${size('spacing.regular')};
-`;
-CharCount.displayName = 'CharCount';
 
-const StyledLabel = styled(Label)`
-  ${ifProp('renderInputFirst', css`
-    margin-bottom: 0;
-    margin-right: ${size('spacing.regular')};
-  `)};
-`;
 const textTypeInputs = ['email', 'iconInput'];
 const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
 
@@ -171,46 +90,122 @@ const Field = ({
     ...props,
   };
   const InputComponent = getInputComponent(type);
-  const renderInputFirst = (type === 'checkbox' && !options) || type === 'radio' || type === 'file';
+  const renderInputFirst =
+    (type === 'checkbox' && !options) || type === 'radio' || type === 'file' || type === 'boxChoice';
   const valueLength = inputProps.value ? inputProps.value.length : 0;
   if (type === 'date') {
     inputProps.selected = inputProps.value;
     inputProps.placeholderText = inputProps.placeholder;
-    inputProps.customInput = <Input size={props.size} autocomplete="off" />;
   }
   if (type === 'button' && inputProps.buttonType) {
     inputProps.type = inputProps.buttonType;
   }
 
   return (
-    <Wrapper className={className} wideWidth={wideWidth} type={type} options={options} row={renderInputFirst}>
-      {renderInputFirst && (wideWidth ? <InputBeforeLabelWrapper wideWidth={wideWidth}><InputComponent {...inputProps} /></InputBeforeLabelWrapper> : <InputComponent {...inputProps} />)}
+    <Wrapper
+      pad="large"
+      display="flex"
+      position="relative"
+      direction={renderInputFirst ? 'row' : 'column'}
+      className={className}
+      wideWidth={wideWidth}
+      type={type}
+      options={options}
+    >
       {(type !== 'boolean' && (label || labelRight)) &&
-        <LabelWrapper wideWidth={wideWidth} type={type} options={options}>
+        <LabelWrapper
+          display="flex"
+          align="space-between"
+          verticalAlign="middle"
+          wideWidth={wideWidth}
+          type={type}
+          options={options}
+          pad={type === 'checkbox' && !!options === true ? 'regular' : undefined}
+          flexGrow={0}
+          flexShrink={0}
+          flexBasis={wideWidth ? getKey('sizes.tabletLayout.col2') : undefined}
+          flexOrder={renderInputFirst ? 2 : 1}
+        >
           {label &&
-            <StyledLabel htmlFor={inputProps.id} renderInputFirst={renderInputFirst}>
+            <Label
+              htmlFor={inputProps.id}
+              pad={renderInputFirst ? null : undefined}
+            >
               {label}
-              {required && <Span palette="danger">*</Span>}
-            </StyledLabel>
+              {required && <Block display="inline" palette="danger">*</Block>}
+            </Label>
           }
-          {labelRight &&
-            <span>{labelRight}</span>
+          {labelRight && !wideWidth &&
+            <Block display="inline">{labelRight}</Block>
           }
         </LabelWrapper>
       }
-      {renderInputFirst || (wideWidth ? <InputWrapper wideWidth={wideWidth} widthSpacing={widthSpacing} type={type} options={options}><InputComponent {...inputProps} /></InputWrapper> : <InputComponent {...inputProps} />)}
-      {invalid && !hideErrors && message && (
-        <StyledInputMessage name={`${name}Error`} icon="close" palette="danger" message={message} wideWidth={wideWidth} renderInputFirst={renderInputFirst} />
-      )}
-      {warning && !hideErrors && message && (
-        <StyledInputMessage name={`${name}Warning`} icon="warning" palette="warning" message={message} wideWidth={wideWidth} renderInputFirst={renderInputFirst} />
-      )}
-      {success &&
-        <CheckIcon icon="check" palette="green" />
+      <InputBlock
+        position="relative"
+        pad={!hideErrors && message && (invalid || warning) && !renderInputFirst ? 'regular' : 0}
+        wideWidth={wideWidth}
+        flexOrder={renderInputFirst ? 1 : 2}
+        display="flex"
+        flexGrow={0}
+        flexShrink={0}
+        flexBasis={wideWidth ? getKey('sizes', widthSpacing) : undefined}
+        flex={!wideWidth && type !== 'radio' ? 1 : undefined}
+      >
+        <Block
+          display="flex"
+          flexWrap="wrap"
+          width="100%"
+          align={showCharacterCount && inputProps.maxLength ? 'right' : undefined}
+          direction={type === 'boxChoice' ? 'column' : 'row'}
+        >
+          <InputComponent
+            {...inputProps}
+            margin={type === 'checkbox' && !!options === true ? [0, 'large'] : 0}
+            pad={type === 'boxChoice' ? 'large' : 0}
+            lastChildProps={{ pad: 0 }}
+            flex={1}
+          />
+          {showCharacterCount && inputProps.maxLength &&
+            <Block
+              size="tiny"
+              palette={((valueLength / inputProps.maxLength) * 100) > 90 ? 'danger' : 'slate'}
+              align="right"
+              marginTop="regular"
+            >
+              {valueLength}/{inputProps.maxLength}
+            </Block>
+          }
+        </Block>
+        {success &&
+          <Icon
+            icon="check"
+            palette="green"
+            position="absolute"
+            right="regular"
+            bottom="regular"
+          />
+        }
+      </InputBlock>
+      {labelRight && wideWidth &&
+        <LabelRightWideWidth
+          marginLeft="large"
+          verticalAlign="middle"
+          flexOrder={3}
+        >
+          {labelRight}
+        </LabelRightWideWidth>
       }
-      {showCharacterCount && inputProps.maxLength &&
-        <CharCount size="tiny" palette={((valueLength / inputProps.maxLength) * 100) > 90 ? 'danger' : 'slate'}>{valueLength}/{inputProps.maxLength}</CharCount>
-      }
+      {!hideErrors && message && (invalid || warning) && (
+        <StyledInputMessage
+          name={`${name}${invalid ? 'Error' : 'Warning'}`}
+          icon={invalid ? 'close' : 'warning'}
+          palette={invalid ? 'danger' : 'warning'}
+          message={message}
+          wideWidth={wideWidth}
+          marginLeft={wideWidth ? 'large' : 0}
+          flexOrder={4}
+        />
+      )}
     </Wrapper>
   );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import { string } from 'prop-types';
 import loadable from '@loadable/component';
 import Helmet from 'react-helmet';
 
@@ -31,9 +32,16 @@ const DatePicker = props => (
     <Helmet>
       <style type="text/css">{DatepickerStyles}</style>
     </Helmet>
-    <DatePickerLoadable {...props} />
+    <DatePickerLoadable
+      {...props}
+      customInput={<Input size={props.size} autocomplete="off" />}
+    />
   </>
 );
+
+DatePicker.propTypes = {
+  size: string,
+};
 
 const getInputComponent = (type) => {
   switch (type) {

@@ -57,9 +57,7 @@ const OverlayTwoColumnListWrapper = styled.div`
 `;
 
 const MobileCommunityRating = styled(CommunityRating)`
-  ${startingWith('laptop')} {
-    display: none;
-  }
+  ${startingWith('laptop', 'display: none;')}
 `;
 
 const getCareTypes = (state, careTypes) => {

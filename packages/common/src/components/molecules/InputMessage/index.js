@@ -4,9 +4,9 @@ import { string } from 'prop-types';
 import { Icon, Block } from 'sly/common/components/atoms';
 
 const InputMessage = ({
-  name, icon, iconSize, palette, message, className,
+  name, icon, iconSize, palette, message, ...props
 }) => (
-  <Block verticalAlign="middle" className={className}>
+  <Block verticalAlign="middle" {...props}>
     <Icon marginRight="regular" icon={icon} size={iconSize} palette={palette} />
     <Block id={name} role="alert" palette={palette} size="caption">
       {message}
@@ -20,7 +20,6 @@ InputMessage.propTypes = {
   iconSize: string,
   palette: string.isRequired,
   message: string.isRequired,
-  className: string,
 };
 
 export default InputMessage;

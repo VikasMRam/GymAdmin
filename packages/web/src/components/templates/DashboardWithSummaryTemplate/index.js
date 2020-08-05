@@ -42,9 +42,7 @@ export const Right = styled.div`
 `;
 
 export const Section = styled(Box)`
-  ${upTo('laptop')} {
-    border: none;
-  }
+  ${upTo('laptop', 'border: none;')}
 `;
 
 Section.defaultProps = {

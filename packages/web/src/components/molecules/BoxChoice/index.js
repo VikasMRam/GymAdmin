@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { arrayOf, oneOfType, string, func, bool, shape, number } from 'prop-types';
+import { arrayOf, oneOfType, string, func, bool, shape, number, object } from 'prop-types';
 
 import { BoxChoiceTile } from 'sly/web/components/atoms';
 
@@ -19,10 +19,12 @@ export default class BoxChoice extends Component {
       arrayOf(oneOfType([string, number])),
     ]).isRequired,
     onChange: func.isRequired,
+    lastChildProps: object.isRequired,
   };
 
   static defaultProps = {
     value: [],
+    lastChildProps: {},
   };
 
   onClick(option) {
@@ -43,22 +45,27 @@ export default class BoxChoice extends Component {
 
   render() {
     const {
-      value, options, multiChoice, ...props
+      value, options, multiChoice, lastChildProps, ...props
     } = this.props;
 
     return (
       <>
-        {options.map(option => (
-          <BoxChoiceTile
-            /* allow hiding checkbox using props, hence put this before expanding props */
-            hasCheckbox={multiChoice}
-            {...props}
-            key={option.value}
-            selected={isSelected(multiChoice, value, option.value)}
-            onClick={() => this.onClick(option.value)}
-            label={option.label}
-          />
-        ))}
+        {options.map((option, i) => {
+          const extraProps = i === options.length - 1 ? lastChildProps : {};
+
+          return (
+            <BoxChoiceTile
+              /* allow hiding checkbox using props, hence put this before expanding props */
+              hasCheckbox={multiChoice}
+              {...props}
+              {...extraProps}
+              key={option.value}
+              selected={isSelected(multiChoice, value, option.value)}
+              onClick={() => this.onClick(option.value)}
+              label={option.label}
+            />
+          );
+        })}
       </>
     );
   }
