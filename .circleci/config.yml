@@ -96,7 +96,7 @@ commands:
             - ~/.npm
             - ~/.cache
             - ~/project/node_modules
-            - ~/project/packages-node_modules
+            - ~/project/<< parameters.packages_node_modules_cache_dir >>
 
 jobs:
   build:

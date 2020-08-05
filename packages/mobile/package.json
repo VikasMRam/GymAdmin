@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "preinstall": "echo \"Don't run install here. Do it in root of the repo. Please check README files for more info.\" && exit 1",
     "postinstall": "npm i --package-lock-only",
     "config": "react-native config",
     "android": "react-native run-android",
