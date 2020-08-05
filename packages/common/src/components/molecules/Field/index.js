@@ -176,6 +176,7 @@ const Field = ({
               palette={((valueLength / inputProps.maxLength) * 100) > 90 ? 'danger' : 'slate'}
               align="right"
               marginTop="regular"
+              data-testid="CharCount"
             >
               {valueLength}/{inputProps.maxLength}
             </Block>

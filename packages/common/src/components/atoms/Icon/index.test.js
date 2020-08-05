@@ -12,6 +12,6 @@ describe('Icon', () => {
 
   it('renders props when passed in', () => {
     const wrapper = wrap({ id: 'foo' });
-    expect(wrapper.dive().dive().find('span[id="foo"]')).toHaveLength(1);
+    expect(wrapper.dive().dive().find('div[id="foo"]')).toHaveLength(1);
   });
 });
