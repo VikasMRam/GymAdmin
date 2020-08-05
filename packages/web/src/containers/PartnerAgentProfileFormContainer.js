@@ -10,6 +10,7 @@ import { phoneParser } from 'sly/web/services/helpers/phone';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/common/propTypes/user';
 import { withUser, query } from 'sly/web/services/api';
 import { adminAgentPropType } from 'sly/common/propTypes/agent';
+import { ORGANIZATION_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import withNotification from 'sly/web/controllers/withNotification';
@@ -50,7 +51,8 @@ export default class PartnerAgentProfileFormContainer extends Component {
     // FIXME: Checkbox issues: the true value comes along in the second element sometimes (browser specific? )
     const isProVal = ( values.isPro.length > 0 ? values.isPro[0] || values.isPro[1] : false);
     const canReceiveReferrals = ( values.canReceiveReferrals.length > 0 ? values.canReceiveReferrals[0] || values.canReceiveReferrals[1] : false);
-    let agent = immutable.wrap(pick(rawAgent, ['id', 'type', 'attributes.status', 'attributes.info', 'attributes.info.serviceArea']))
+    let agent = immutable.wrap(pick(rawAgent, ['id', 'type', 'attributes.status', 'attributes.name', 'attributes.info', 'attributes.info.serviceArea']))
+      .set('attributes.name', values.name)
       .set('attributes.info.bio', values.bio)
       .set('attributes.info.parentCompany', values.parentCompany)
       .set('attributes.info.displayName', values.displayName)
@@ -73,6 +75,14 @@ export default class PartnerAgentProfileFormContainer extends Component {
       agent = agent.set('attributes.info.vacationStart', values.vacation[0])
         .set('attributes.info.vacationEnd', values.vacation[1]);
     }
+    if (values.organization && values.organization.value) {
+
+      agent.set('relationships.organization.data', {
+        type: ORGANIZATION_RESOURCE_TYPE,
+        id: values.organization.value,
+      });
+
+    }
     agent = agent.value();
 
     const agentPromise = () => updateAgent({ id }, agent);
@@ -94,7 +104,12 @@ export default class PartnerAgentProfileFormContainer extends Component {
       if (!agent) {
         return <div>Partner Agent Record Not Found...</div>;
       }
-      const { info, status } = agent;
+      const { info, status, name, organization:org } = agent;
+
+      const organization = {
+        value: org.id,
+        label: org.name,
+      };
       const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;
       const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore, isPro, canReceiveReferrals, cellPhone, email, timeZone, smsFormat } = info;
       let zipcodesServed = null;
@@ -105,7 +120,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
       if (vacationStart && vacationEnd) {
         vacation = [new Date(vacationStart), new Date(vacationEnd)];
       }
-      const initialValues = { bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation, adminRegion,
+      const initialValues = { name, organization, bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation, adminRegion,
         zipcodesServed, status, adminNotes, slyScore, isPro: [isPro], canReceiveReferrals: [canReceiveReferrals], cellPhone, email, timeZone, smsFormat };
       const isSlyAdmin = userIs(user, PLATFORM_ADMIN_ROLE);
       return (

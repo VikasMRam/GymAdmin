@@ -34,7 +34,7 @@ const StyledResponsiveImage = pad(textAlign(styled(ResponsiveImage)`
 
 const FieldsWrapper = styled.div`
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 50% 48%;
   grid-gap: ${size('spacing.regular')};
 `;
 

@@ -3,10 +3,13 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { func, string, bool } from 'prop-types';
 
+import { AGENT_ROLE_PARAM } from 'sly/common/constants/roles';
 import { size, palette } from 'sly/common/components/themes';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
+import EditField from 'sly/web/components/form/EditField';
 import { Block, Button } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
+
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -151,6 +154,19 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
       {isSlyAdmin && (
         <FormSection>
           <FormSectionHeading weight="medium">Admin</FormSectionHeading>
+          <Field
+            name="name"
+            label="Agent Name"
+            type="text"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+          <EditField
+            name="organization"
+            label="Primary Users Organization"
+            type="organization"
+          />
           <Field
             name="adminRegion"
             label="Region"

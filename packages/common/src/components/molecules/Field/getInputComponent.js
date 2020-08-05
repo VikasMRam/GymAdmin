@@ -15,6 +15,7 @@ import BoxChoice from 'sly/web/components/molecules/BoxChoice';
 import PhoneInput from 'sly/web/components/molecules/PhoneInput';
 import IconInput from 'sly/web/components/molecules/IconInput';
 import UserAutoComplete from 'sly/web/components/molecules/UserAutoComplete';
+import OrganizationAutoComplete from 'sly/web/components/molecules/OrganizationAutoComplete';
 import NumberInput from 'sly/web/components/molecules/NumberInput';
 import Autocomplete from 'sly/web/components/molecules/Autocomplete';
 import CheckboxInput from 'sly/web/components/molecules/CheckboxInput';
@@ -68,6 +69,8 @@ const getInputComponent = (type) => {
       return CommunityAutoComplete;
     case 'user':
       return UserAutoComplete;
+    case 'organization':
+      return OrganizationAutoComplete;
     case 'checkbox':
     case 'boolean':
       return CheckboxInput;
