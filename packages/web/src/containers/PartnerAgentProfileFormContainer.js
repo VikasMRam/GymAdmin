@@ -50,7 +50,8 @@ export default class PartnerAgentProfileFormContainer extends Component {
     // FIXME: Checkbox issues: the true value comes along in the second element sometimes (browser specific? )
     const isProVal = ( values.isPro.length > 0 ? values.isPro[0] || values.isPro[1] : false);
     const canReceiveReferrals = ( values.canReceiveReferrals.length > 0 ? values.canReceiveReferrals[0] || values.canReceiveReferrals[1] : false);
-    let agent = immutable.wrap(pick(rawAgent, ['id', 'type', 'attributes.status', 'attributes.info', 'attributes.info.serviceArea']))
+    let agent = immutable.wrap(pick(rawAgent, ['id', 'type', 'attributes.status','attributes.name', 'attributes.info', 'attributes.info.serviceArea']))
+      .set('attributes.name', values.name)
       .set('attributes.info.bio', values.bio)
       .set('attributes.info.parentCompany', values.parentCompany)
       .set('attributes.info.displayName', values.displayName)
@@ -94,7 +95,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
       if (!agent) {
         return <div>Partner Agent Record Not Found...</div>;
       }
-      const { info, status } = agent;
+      const { info, status, name } = agent;
       const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;
       const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore, isPro, canReceiveReferrals, cellPhone, email, timeZone, smsFormat } = info;
       let zipcodesServed = null;
@@ -105,7 +106,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
       if (vacationStart && vacationEnd) {
         vacation = [new Date(vacationStart), new Date(vacationEnd)];
       }
-      const initialValues = { bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation, adminRegion,
+      const initialValues = { name, bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation, adminRegion,
         zipcodesServed, status, adminNotes, slyScore, isPro: [isPro], canReceiveReferrals: [canReceiveReferrals], cellPhone, email, timeZone, smsFormat };
       const isSlyAdmin = userIs(user, PLATFORM_ADMIN_ROLE);
       return (

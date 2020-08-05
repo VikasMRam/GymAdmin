@@ -152,6 +152,14 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
         <FormSection>
           <FormSectionHeading weight="medium">Admin</FormSectionHeading>
           <Field
+            name="name"
+            label="Agent Name"
+            type="text"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
             name="adminRegion"
             label="Region"
             type="select"
