@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "lerna clean --yes",
     "create:package": "./scripts/new-package.sh",
-    "bootstrap": "npm run clean && lerna bootstrap --hoist",
+    "bootstrap": "npm run clean && IS_SLY_SETUP=true lerna bootstrap --hoist",
     "postinstall": "npm run bootstrap $PI_OPTS",
     "lint": "lerna run --stream lint",
     "test": "lerna run --stream test",

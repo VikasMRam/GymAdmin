@@ -5,7 +5,7 @@
   "main": "dist/server",
   "sideEffects": false,
   "scripts": {
-    "preinstall": "echo \"Don't run install here. Do it in root of the repo. Please check README files for more info.\" && exit 1",
+    "preinstall": "../../scripts/check-install-allowed.sh",
     "postinstall": "npm i --package-lock-only",
     "start": "node .",
     "start:prod": "npm run env:prod -- node .",
