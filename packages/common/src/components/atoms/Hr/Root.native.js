@@ -1,4 +1,5 @@
 import React from 'react';
+import { node } from 'prop-types';
 import styled from 'styled-components';
 
 import {
@@ -28,6 +29,11 @@ const StyledView = styled(View)`
   border-right-width: 0;
 `;
 
-const Root = props => <StyledView {...props} />;
+// hr is not supposed to render content, hence don't pass children prop
+const Root = ({ children, ...props }) => <StyledView {...props} />;
+
+Root.propTypes = {
+  children: node,
+};
 
 export default Root;
