@@ -28,6 +28,7 @@ Radio.propTypes = {
 Radio.defaultProps = {
   checked: false,
   palette: 'primary',
+  marginRight: 'small',
 };
 
 export default Radio;
