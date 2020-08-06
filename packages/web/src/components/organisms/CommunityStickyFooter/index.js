@@ -40,7 +40,7 @@ const CommunityStickyFooter = ({ community, isAlreadyPricingRequested, locTrack,
       <InnerWrapper>
       <strong>Is selling your home part of your senior living plan?</strong>
         <div>We can connect you with the top selling agents.</div>
-      <StyledAskAgentButton type="aa-footer">Request Info</StyledAskAgentButton>
+      <StyledAskAgentButton ackCTA community={community} type="aa-footer" ctaText={"Request Info"} />
       </InnerWrapper>
     </Wrapper>)
   } else {

@@ -2,6 +2,7 @@ export const PROFILE_VIEWED = 'profileViewed';
 export const PROFILE_CONTACTED = 'profileContacted';
 export const CONSULTATION_REQUESTED = 'consultationRequested';
 export const PROFILE_ASK_QUESTION = 'profileAskQuestion';
+export const AA_CONSULTATION_REQUESTED = 'activeAdultConsultationRequested';
 export const CARE_ASSESSMENT = 'careAssessmentProgress';
 export const PROFILE_RATING = 'profileRating';
 export const USER_SAVE = 'userSave';

@@ -153,9 +153,9 @@ const CommunityPricingTable = ({
           {...buttonProps}
           hasAlreadyRequestedPricing={isAlreadyPricingRequested}
           locTrack={locTrack}
-        >
-          Get Detailed Pricing
-        </StyledGetPricingButton>
+          community={community}
+          ctaText={'Get Pricing and Availability'}
+        />
       </Block>
     </>
   );

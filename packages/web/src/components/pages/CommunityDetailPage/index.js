@@ -414,6 +414,7 @@ export default class CommunityDetailPage extends Component {
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
+                {!isActiveAdult &&
                 <StyledHeadingBoxSection
                   heading={`${pricingTitle} at ${name}`}
                   id="pricing-and-floor-plans"
@@ -428,13 +429,14 @@ export default class CommunityDetailPage extends Component {
                     }}
                   />
                 </StyledHeadingBoxSection>
+                }
                 {!isActiveAdult && sortedEstimatedPrice.length > 0 && (
                   <StyledHeadingBoxSection heading={`Compare Costs for ${name}`}>
                     <CommunityPricingComparison community={community} />
                   </StyledHeadingBoxSection>
                 )}
 
-                {/* Disable home care AD*/}
+                {/* Disable home care AD and availability only */}
                 {/*<AdWrapper>*/}
                   {/*<CommunityProfileAdTileContainer type="getOffer" community={community} />*/}
                 {/*</AdWrapper>*/}
@@ -477,7 +479,7 @@ export default class CommunityDetailPage extends Component {
                 {partnerAgent && !isActiveAdult && (
                   <StyledHeadingBoxSection heading={`Your Local Senior Living Expert for ${name}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} />
-                    <StyledAskAgentButton type="services">Ask a Question</StyledAskAgentButton>
+                    <StyledAskAgentButton community={community} type="services" ctaText={'Ask a Question'} />
                   </StyledHeadingBoxSection>
                 )}
                 {!isActiveAdult &&
@@ -517,12 +519,14 @@ export default class CommunityDetailPage extends Component {
                   careServices.length > 0 && (
                     <StyledHeadingBoxSection heading={`Care Services at ${name}`}>
                       <CommunityCareService careServices={careServices} />
-                      {!isActiveAdult && <StyledAskAgentButton type="services">Ask About Care Services</StyledAskAgentButton>}
+                      {!isActiveAdult && <StyledAskAgentButton community={community} type="services" ctaText={'Ask' +
+                      ' About Care Services'} />}
                     </StyledHeadingBoxSection>
                   )}
                 <StyledHeadingBoxSection heading={`Amenities at ${name}`}>
                   <CommunityAmenities community={community} />
-                  {!isActiveAdult && <StyledAskAgentButton type="amenities">Ask About Amenities</StyledAskAgentButton>}
+                  {!isActiveAdult && <StyledAskAgentButton community={community} type="amenities" ctaText={'Ask' +
+                  ' About Amenities'} />}
 
                 </StyledHeadingBoxSection>
 
@@ -619,7 +623,7 @@ export default class CommunityDetailPage extends Component {
                   <Box>
                     <Heading level="title" size="subtitle">Is selling your home part of your senior living plan?</Heading>
                     We can connect you with the top selling agents.
-                    <StyledAskAgentButton type="aa-sidebar">Request Info</StyledAskAgentButton>
+                    <StyledAskAgentButton ackCTA community={community} type="aa-sidebar" ctaText={"Request Info"} />
                   </Box>
                   }
 

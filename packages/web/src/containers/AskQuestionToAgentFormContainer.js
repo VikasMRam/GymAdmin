@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import * as immutable from 'object-path-immutable';
 
 import { prefetch, query, withAuth, withUser } from 'sly/web/services/api';
-import { AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
+import { AA_CONSULTATION_REQUESTED, PROFILE_ASK_QUESTION, AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
 import { capitalize } from  'sly/web/services/helpers/utils';
 import matchPropType from 'sly/common/propTypes/match';
 import userPropType from 'sly/common/propTypes/user';
@@ -38,6 +38,7 @@ const ReduxForm = reduxForm({
 @withUser
 @prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 @query('createAction', 'createUuidAction')
+@query('createQuestion', 'createQuestion')
 @query('updateUuidAux', 'updateUuidAux')
 
 export default class AskQuestionToAgentFormContainer extends Component {
@@ -50,7 +51,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
     createAction: func.isRequired,
     category: oneOf(['agent', 'community']),
     type: string,
-    actionType: oneOf([AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED, HOME_CARE_REQUESTED]),
+    actionType: oneOf([PROFILE_ASK_QUESTION, AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED, HOME_CARE_REQUESTED]),
     status: object.isRequired,
     updateUuidAux: func.isRequired,
   };
@@ -62,7 +63,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
 
   handleSubmit = (data) => {
     const {
-      entityId, postSubmit, createAction, createOrUpdateUser, updateUuidAux, match,
+      entityId, postSubmit, createAction, createOrUpdateUser, createQuestion, updateUuidAux, match,
       user, category, type, status, actionType,
     } = this.props;
     data = { ...data, name: `${data.firstName}${data.lastName ? ` ${data.lastName}` : ''}` };
@@ -93,19 +94,29 @@ export default class AskQuestionToAgentFormContainer extends Component {
     }
     let actionInfo = {
       slug: entityId,
-      question: message,
       entityType: capitalize(category),
       name,
       email,
       phone,
+      question: message,
     };
-    if (actionType === CONSULTATION_REQUESTED || actionType === HOME_CARE_REQUESTED) {
+    if (actionType === CONSULTATION_REQUESTED || actionType === HOME_CARE_REQUESTED || actionType === AA_CONSULTATION_REQUESTED) {
       actionInfo = {
         phone,
         name,
         email,
         message,
       };
+    }
+    if (actionType === PROFILE_ASK_QUESTION) { // Also create a content item
+      const payload = {
+        communitySlug: entityId,
+        question: message,
+        name,
+        email,
+      };
+      actionInfo.questionText = message; // API expects key
+      createQuestion(payload) // FIXME: Dont care about failure?
     }
 
     return Promise.all([
@@ -134,6 +145,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
           postSubmit();
         }
       });
+
   };
 
   render() {
