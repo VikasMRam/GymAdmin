@@ -3,6 +3,7 @@ import { func, string } from 'prop-types';
 
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import LoginFormContainer from 'sly/common/services/auth/containers/LoginFormContainer';
+import ResetPasswordFormContainer from 'sly/common/services/auth/containers/ResetPasswordFormContainer';
 
 const Wizard = ({ formName, initialStep, handleAuthenticateSuccess }) => (
   <WizardController
@@ -23,13 +24,11 @@ const Wizard = ({ formName, initialStep, handleAuthenticateSuccess }) => (
           onSubmit={handleAuthenticateSuccess}
         />
         <WizardStep
-          component={LoginFormContainer}
+          component={ResetPasswordFormContainer}
           name="ResetPassword"
-          onRegisterClick={() => goto('Signup')}
-          onResetPasswordClick={() => goto('ResetPassword')}
-          onSubmit={handleAuthenticateSuccess}
+          onLoginClick={() => goto('Login')}
+          onSubmit={() => goto('Login')}
         />
-        {!!handleAuthenticateSuccess && false}
       </WizardSteps>
     )}
   </WizardController>

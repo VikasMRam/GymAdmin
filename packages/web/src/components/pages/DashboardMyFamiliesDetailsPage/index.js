@@ -39,8 +39,8 @@ import DashboardTwoColumnTemplate from 'sly/web/components/templates/DashboardTw
 import FamilyDetailsFormContainer from 'sly/web/containers/FamilyDetailsFormContainer';
 import UpdateFamilyStageFormContainer from 'sly/web/containers/UpdateFamilyStageFormContainer';
 import AddNoteFormContainer from 'sly/web/containers/AddNoteFormContainer';
-import { Box, Block, Icon } from 'sly/common/components/atoms';
-import { Link, Hr, Span } from 'sly/web/components/atoms';
+import { Box, Block, Icon, Hr } from 'sly/common/components/atoms';
+import { Link, Span } from 'sly/web/components/atoms';
 import Tabs from 'sly/web/components/molecules/Tabs';
 import FamilyStage from 'sly/web/components/molecules/FamilyStage';
 import FamilySummary from 'sly/web/components/molecules/FamilySummary';
@@ -727,7 +727,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               {backlink}
               {clientName}
             </Box>
-            <Hr noMargin />
+            <Hr margin="0" />
             <FamilyStage
               noBorderRadius
               snap="top"

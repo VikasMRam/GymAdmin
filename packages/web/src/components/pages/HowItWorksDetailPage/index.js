@@ -86,20 +86,6 @@ const BottomWrapper = styled.div`
   }
 `;
 
-const FAQHr = styled(Hr)`
-  margin: ${size('spacing.xxxLarge')} 0;
-`;
-
-// const TabsWrapper = styled.div`
-//   position: absolute;
-//   bottom: 0;
-//   width: inherit;
-
-//   display: flex;
-//   border: ${size('border.regular')} solid ${palette('secondary', 'stroke)};
-//   border-radius: ${size('spacing.small')};
-// `;
-
 const Tab = styled(Link)`
   background-color: ${p => p.active ? palette('white', 'base') : palette('grey', 'stroke')};
   padding: ${size('spacing.xLarge')} 0;
@@ -129,9 +115,6 @@ const Header = ({ heroImageUrl, heading, subheading }) => (
           </HeroSubheading>
         </FixedWidthContainer>
       </HeroTextWrapper>
-      {/* <TabsWrapper>
-        {children}
-      </TabsWrapper> */}
     </HeroWrapper>
   </>
 );
@@ -150,10 +133,6 @@ const ForFamiliesComponents = ({ contents }) => contents
       {...content}
     />
   ));
-
-const StyledHr = styled(Hr)`
-  margin-bottom: ${size('spacing.xxxLarge')};
-`;
 
 const CardsSection = styled.div`
   display: flex;
@@ -193,7 +172,7 @@ const Bottom = () => {
             <Fragment key={item.question}>
               <FAQTile {...item} />
               {index !== FAQ.length - 1 &&
-                <FAQHr />
+                <Hr size="xxxLarge" />
               }
             </Fragment>
           ))}
@@ -231,7 +210,7 @@ const HowItWorksDetailPage = ({
       <TemplateHeader>{header}</TemplateHeader>
       <TemplateContent>
         <ForFamiliesComponents contents={contents} />
-        <StyledHr />
+        <Hr pad="xxxLarge" />
         <CardsSection>
           <StyledHeading>Why Use Seniorly</StyledHeading>
           <CardTiles>

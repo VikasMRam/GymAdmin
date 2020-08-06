@@ -71,13 +71,13 @@ const TextInput = ({
   textInputProps.height = size;
 
   const viewProps = {
+    ...props,
     background: textInputProps.background,
     backgroundVariation: textInputProps.backgroundVariation,
     border,
     borderPalette,
     borderVariation,
     borderRadius,
-    ...props,
   };
 
   // border radius style is not supported by TextInput.

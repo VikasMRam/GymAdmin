@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Pressable } from 'react-native';
 import styled from 'styled-components';
-import { node, any } from 'prop-types';
+import { node, any, func } from 'prop-types';
 
 import { isString } from 'sly/common/services/helpers/utils';
 import { Text, View } from 'sly/mobile/components/atoms';
@@ -13,25 +14,43 @@ const StyledView = styled(View)`
 const shouldWrapWithText = c =>
   isString(c) || Number.isFinite(c);
 
-const Root = (props) => {
-  if (shouldWrapWithText(props.children)) {
-    return <Text {...props} />;
+export default class Root extends Component {
+  static propTypes = {
+    children: node,
+    style: any,
+    onClick: func,
+  };
+
+  withPressable(content) {
+    const { onClick } = this.props;
+
+    if (onClick) {
+      // in mobiles onPress is equivalent of onClick
+      return (
+        <Pressable onPress={onClick}>
+          {content}
+        </Pressable>
+      );
+    }
+
+    return content;
   }
-  // wrap all children with Text, if required
-  if (Array.isArray(props.children)) {
-    return (
-      <StyledView style={props.style}>
-        {props.children.map(c => shouldWrapWithText(c) ? <Text key={c}>{c}</Text> : c)}
-      </StyledView>
-    );
+
+  render() {
+    const { children, style } = this.props;
+
+    if (shouldWrapWithText(children)) {
+      return this.withPressable(<Text {...this.props} />);
+    }
+    // wrap all children with Text, if required
+    if (Array.isArray(children)) {
+      return this.withPressable(
+        <StyledView style={style}>
+          {children.map(c => shouldWrapWithText(c) ? <Text key={c}>{c}</Text> : c)}
+        </StyledView>,
+      );
+    }
+
+    return this.withPressable(<StyledView {...this.props} />);
   }
-
-  return <StyledView {...props} />;
-};
-
-Root.propTypes = {
-  children: node,
-  style: any,
-};
-
-export default Root;
+}

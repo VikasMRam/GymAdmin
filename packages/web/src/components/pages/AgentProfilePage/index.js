@@ -9,18 +9,14 @@ import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/Ba
 import Footer from 'sly/web/components/organisms/Footer';
 import AgentSummary from 'sly/web/components/molecules/AgentSummary';
 import Section from 'sly/web/components/molecules/Section';
-import { Hr, Paragraph } from 'sly/web/components/atoms';
+import { Hr } from 'sly/common/components/atoms';
+import { Paragraph } from 'sly/web/components/atoms';
 import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
 import EntityReviews from 'sly/web/components/organisms/EntityReviews';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import { getBreadCrumbsForAgent } from 'sly/web/services/helpers/url';
 import { formatDate } from 'sly/web/services/helpers/date';
-
-const StyledHr = styled(Hr)`
-  margin-top: ${size('spacing.huge')};
-  margin-bottom: ${size('spacing.huge')};
-`;
 
 const StyledSection = styled(Section)`
   margin: 0 ${size('spacing.regular')};
@@ -124,7 +120,7 @@ class AgentProfilePage extends Component {
             />
           </AgentSummaryWrapper>
 
-          <StyledHr fullWidth />
+          <Hr size="huge" fullWidth />
 
           {cv && <LegacyContent dangerouslySetInnerHTML={{ __html: cv }} />}
           {cv &&  updatedAt &&
@@ -132,14 +128,14 @@ class AgentProfilePage extends Component {
               This page was updated on {formatDate(updatedAt)}
             </Paragraph>
           }
-          {cv && <StyledHr fullWidth />}
+          {cv && <Hr size="huge" fullWidth />}
 
           {communities &&
             <>
               <Section title={`Assisted Living Communities in ${city}, ${state}`}>
                 <SimilarCommunities communities={communities} communityStyle={similarCommunityStyle} />
               </Section>
-              <StyledHr fullWidth />
+              <Hr size="huge" fullWidth />
             </>
           }
 

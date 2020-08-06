@@ -6,17 +6,13 @@ import { content as contentPropType } from 'sly/common/propTypes/content';
 import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import cursor from 'sly/web/components/helpers/cursor';
-import { Hr, Block, Button } from 'sly/web/components/atoms';
+import { Hr, Block, Button } from 'sly/common/components/atoms';
 import CommunityQuestion from 'sly/web/components/molecules/CommunityQuestion';
 import CommunityAnswer from 'sly/web/components/molecules/CommunityAnswer';
 
 const AnswersDiv = pad(styled.div`
   margin-left: ${size('spacing.huge')};
 `, 'large');
-
-const StyledHr = styled(Hr)`
-  margin: ${size('spacing.xLarge')} 0;
-`;
 
 const PaddedCommunityQuestion = pad(CommunityQuestion, 'large');
 PaddedCommunityQuestion.displayName = 'PaddedCommunityQuestion';
@@ -42,7 +38,7 @@ const CommunityQuestionAnswers = ({
     const answersComponents = contents.sort(sortByCreatedAt).map((answer, i) => (
       <Fragment key={answer.id}>
         <CommunityAnswer answer={answer} />
-        {i < contents.length - 1 && <StyledHr />}
+        {i < contents.length - 1 && <Hr />}
       </Fragment>
     ));
     const firstAnswerComponent = answersComponents[0];
@@ -58,7 +54,7 @@ const CommunityQuestionAnswers = ({
           {answersComponents}
         </AnswersDiv>
         <CursorBlock palette="primary" weight="medium" onClick={() => onLeaveAnswerClick(question)}>Leave an Answer</CursorBlock>
-        {i < questions.length - 1 && <StyledHr />}
+        {i < questions.length - 1 && <Hr />}
       </Fragment>
     );
   });
@@ -67,7 +63,7 @@ const CommunityQuestionAnswers = ({
     <Fragment key={communityFaQ.id}>
       <PaddedCommunityQuestion question={communityFaQ} />
       <CursorBlock palette="primary" weight="medium" onClick={() => onAskQuestionClick(communityFaQ)}>Be the first to ask this question</CursorBlock>
-      {i < communityFaQs.length - 1 && <StyledHr />}
+      {i < communityFaQs.length - 1 && <Hr />}
     </Fragment>
   ));
 
@@ -77,7 +73,7 @@ const CommunityQuestionAnswers = ({
       {questionsComponent.length === 0 && <>What would you like to know about senior living options at {communityName}? To ask a question, click the button below.</>}
       {communityFaQsComponent.length > 0 &&
         <>
-          <StyledHr />
+          <Hr />
           <PaddedBlock size="subtitle" weight="medium">Other questions to consider</PaddedBlock>
           {communityFaQsComponent}
         </>

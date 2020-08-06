@@ -2,8 +2,9 @@ import React from 'react';
 import { string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
-import { Image, Paragraph, Hr, Block } from 'sly/web/components/atoms';
+import { size, getKey } from 'sly/common/components/themes';
+import { Hr, Block } from 'sly/common/components/atoms';
+import { Image, Paragraph } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,13 +25,6 @@ const ImageWrapper = styled.div`
   }
 `;
 
-const StyledHr = styled(Hr)`
-  border-width: ${size('border.large')};
-  width: ${size('element.large')};
-  margin-top: 0;
-  margin-bottom: ${size('spacing.large')};
-`;
-
 const PartnerReview = ({
   image, review, name, location,
 }) => (
@@ -40,7 +34,13 @@ const PartnerReview = ({
     </ImageWrapper>
     <div>
       <Paragraph>&quot;{review}&quot;</Paragraph>
-      <StyledHr palette="primary" variation="base" />
+      <Hr
+        palette="primary"
+        borderTop="large"
+        marginTop="0"
+        marginBottom="large"
+        width={getKey('sizes.element.large')}
+      />
       <Block weight="medium">{name}</Block>
       <Block palette="grey">{location}</Block>
     </div>

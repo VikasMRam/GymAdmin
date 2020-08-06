@@ -16,7 +16,7 @@ describe('CommunitySaved', () => {
     expect(wrapper.find('StyledHeading')).toHaveLength(2);
     expect(wrapper.find('StyledBlock')).toHaveLength(1);
     expect(wrapper.find('ButtonsWrapper')).toHaveLength(1);
-    expect(wrapper.find('StyledHr')).toHaveLength(1);
+    expect(wrapper.find('Hr')).toHaveLength(1);
     expect(wrapper.find('SimilarCommunities')).toHaveLength(1);
   });
 
