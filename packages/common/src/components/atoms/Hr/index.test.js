@@ -8,6 +8,6 @@ const wrap = (props = {}) => shallow(<Hr {...props} />);
 describe('Hr|Web', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
-    expect(wrapper.contains('test')).toBeFalsy();
+    expect(wrapper.dive().dive().contains('test')).toBeFalsy();
   });
 });

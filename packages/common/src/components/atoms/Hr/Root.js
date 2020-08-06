@@ -1,4 +1,5 @@
 import React from 'react';
+import { node } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -38,6 +39,11 @@ const Hr = styled.hr`
   `)};
 `;
 
-const Root = props => <Hr {...props} />;
+// hr tag in HTML is void tag, hence don't pass children prop
+const Root = ({ children, ...props }) => <Hr {...props} />;
+
+Root.propTypes = {
+  children: node,
+};
 
 export default Root;
