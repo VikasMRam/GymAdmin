@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "lerna clean --yes",
     "create:package": "./scripts/new-package.sh",
-    "bootstrap": "npm run clean && lerna bootstrap --hoist",
+    "bootstrap": "npm run clean && IS_SLY_SETUP=true lerna bootstrap --hoist",
     "postinstall": "npm run bootstrap $PI_OPTS",
     "lint": "lerna run --stream lint",
     "test": "lerna run --stream test",
@@ -60,6 +60,7 @@
     "react": "16.13.1",
     "react-redux": "7.2.0",
     "redux": "4.0.5",
+    "redux-form": "8.3.6",
     "react-router": "5.2.0",
     "styled-components": "5.1.1",
     "styled-theme": "0.3.3",

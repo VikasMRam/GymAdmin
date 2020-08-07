@@ -29,6 +29,16 @@ const activeBackgroundColor = ({ disabled, ghost, transparent, background }) =>
 
 const systemButtonOpacity = 0.2;
 
+const touchablePropsToPreserve = [
+  'onPress',
+  'onPressIn',
+  'onPressOut',
+  'onLongPress',
+  'delayPressIn',
+  'delayPressOut',
+  'delayLongPress',
+];
+
 export default class Root extends Component {
   static propTypes = {
     children: string,
@@ -40,12 +50,24 @@ export default class Root extends Component {
     selectable: false,
   };
 
+  initialTouchableProps = {};
+
+  constructor(props) {
+    super(props);
+
+    Object.keys(props).forEach((p) => {
+      if (touchablePropsToPreserve.includes(p)) {
+        this.initialTouchableProps[p] = props[p];
+      }
+    });
+  }
+
   computeActiveOpacity() {
     return this.props.disabled ? 1 : systemButtonOpacity;
   }
 
-  render() {
-    const { disabled, selectable, ...props } = this.props;
+  getTouchableProps() {
+    const { disabled } = this.props;
     const touchableProps = {
       activeOpacity: this.computeActiveOpacity(),
     };
@@ -58,7 +80,18 @@ export default class Root extends Component {
       touchableProps.delayPressIn = null;
       touchableProps.delayPressOut = null;
       touchableProps.delayLongPress = null;
+    } else {
+      Object.keys(this.initialTouchableProps).forEach((p) => {
+        touchableProps[p] = this.initialTouchableProps[p];
+      });
     }
+
+    return touchableProps;
+  }
+
+  render() {
+    const { selectable, ...props } = this.props;
+    const touchableProps = this.getTouchableProps();
 
     // currentcolor is not supported by native, so replace it with
     // palette which is the current text colour

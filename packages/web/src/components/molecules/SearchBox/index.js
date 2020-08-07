@@ -7,13 +7,10 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 import { size, palette, key } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
 import shadow from 'sly/web/components/helpers/shadow';
-import { Icon } from 'sly/common/components/atoms';
+import { Icon, Block } from 'sly/common/components/atoms';
 import { Input, Image } from 'sly/web/components/atoms';
 import LoadGoogleMaps from 'sly/web/services/search/LoadGoogleMaps';
 
-const Wrapper = styled.div`
-  position: relative;
-`;
 const searchTextBoxStyles = css`
   background-color: ${palette('white', 'base')}!important;
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
@@ -96,7 +93,7 @@ const SearchBox = ({
   const SearchBox = hasShadow ? ShadowedSearchTextBox : SearchTextBox;
 
   return (
-    <Wrapper layout={layout} {...props}>
+    <Block position="relative" {...props}>
       <LoadGoogleMaps>
         {(googleCallbackName, loadMaps) => (
           <PlacesAutocomplete
@@ -139,7 +136,7 @@ const SearchBox = ({
           </PlacesAutocomplete>
         )}
       </LoadGoogleMaps>
-    </Wrapper>
+    </Block>
   );
 };
 

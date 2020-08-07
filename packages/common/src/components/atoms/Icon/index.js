@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { key, getThemePropType, getKey } from 'sly/common/components/themes';
-import { withBorder, withColor, withSpacing, withText } from 'sly/common/components/helpers';
+import Block from 'sly/common/components/atoms/Block';
 
 const iconSize = ({ size: s }) => {
   const textSize = getKey(`sizes.text.${s}`);
@@ -20,13 +20,7 @@ const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)
  * To make Icon compatible with text sizes, but backward compatible with the
  * deprecated icon size
  */
-const Wrapper = styled.span`
-  ${withSpacing}
-  ${withColor}
-  ${withText}
-  ${withBorder}
-
-  display: inline-flex;
+const Wrapper = styled(Block)`
   // sizes relative to set font-size
   vertical-align: top;
   align-self: center;
@@ -74,6 +68,7 @@ Icon.defaultProps = {
   flip: false,
   rotate: 0,
   size: 'body',
+  display: 'inline-flex',
 };
 
 export default Icon;

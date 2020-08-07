@@ -37,7 +37,7 @@ describe('LoginForm', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
 
-    wrapper.find('form').simulate('submit');
+    wrapper.find('Form').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
 

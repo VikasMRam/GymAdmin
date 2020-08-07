@@ -6,3 +6,4 @@ export Box from './Box';
 export Icon from './Icon';
 export Button from './Button';
 export Label from './Label';
+export Form from './Form';

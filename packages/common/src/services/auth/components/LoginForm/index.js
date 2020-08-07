@@ -2,14 +2,14 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
+import { Heading, Block, Button, Form } from 'sly/common/components/atoms';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
-import { Heading, Button, Block } from 'sly/web/components/atoms';
 
 const LoginForm = ({
   handleSubmit, submitting, invalid, error, onResetPasswordClick, onRegisterClick,
 }) => (
-  <form onSubmit={handleSubmit}>
+  <Form onSubmit={handleSubmit}>
     <Heading pad="xLarge" size="subtitle">Log in</Heading>
     <Field
       name="email"
@@ -35,11 +35,11 @@ const LoginForm = ({
     <ButtonLink pad="large" align="center" palette="primary" size="caption" onClick={onResetPasswordClick}>
       Reset password
     </ButtonLink>
-    <Block align="center" size="caption" >
+    <Block align="center" size="caption">
       Don&apos;t have an account?&nbsp;&nbsp;
       <ButtonLink palette="primary" onClick={onRegisterClick}>Sign up</ButtonLink>
     </Block>
-  </form>
+  </Form>
 );
 
 LoginForm.propTypes = {

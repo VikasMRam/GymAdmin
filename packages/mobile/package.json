@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "preinstall": "../../scripts/check-install-allowed.sh",
     "postinstall": "npm i --package-lock-only",
     "config": "react-native config",
     "android": "react-native run-android",

@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import { object, func, oneOf, string, bool } from 'prop-types';
 import { connect } from 'react-redux';
 
+import Wizard from './Wizard';
+
 import { authenticateCancel, authenticateSuccess } from 'sly/web/store/authenticated/actions';
 import { withAuth } from 'sly/web/services/api';
-import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import { Box, Block } from 'sly/common/components/atoms';
 import { Wrapper } from 'sly/common/services/auth/components/Template';
-import LoginFormContainer from 'sly/common/services/auth/containers/LoginFormContainer';
 
 const mapStateToProps = state => ({
   authenticated: state.authenticated,
@@ -89,41 +89,15 @@ export default class AuthContainer extends Component {
       initialStep = 'ProviderSignup';
     }
 
-    const wizard = (
-      <WizardController
-        formName={formName}
-        controllerKey={`${formName}ControllerKey`}
-        initialStep={initialStep}
-        onComplete={this.handleAuthenticateSuccess}
-      >
-        {({
-          goto, next, ...props
-        }) => (
-          <WizardSteps {...props}>
-            <WizardStep
-              component={LoginFormContainer}
-              name="Login"
-              onRegisterClick={() => goto('Signup')}
-              onResetPasswordClick={() => goto('ResetPassword')}
-              onSubmit={this.handleAuthenticateSuccess}
-            />
-            <WizardStep
-              component={LoginFormContainer}
-              name="ResetPassword"
-              onRegisterClick={() => goto('Signup')}
-              onResetPasswordClick={() => goto('ResetPassword')}
-              onSubmit={this.handleAuthenticateSuccess}
-            />
-          </WizardSteps>
-        )}
-      </WizardController>
-    );
-
     if (type === 'inline') {
       return (
         <Wrapper>
           <Box>
-            {wizard}
+            <Wizard
+              initialStep={initialStep}
+              formName={formName}
+              handleAuthenticateSuccess={this.handleAuthenticateSuccess}
+            />
           </Box>
         </Wrapper>
       );
@@ -131,7 +105,11 @@ export default class AuthContainer extends Component {
 
     return (
       <Block paddingLeft="xLarge" paddingRight="xLarge" paddingBottom="xLarge">
-        {wizard}
+        <Wizard
+          initialStep={initialStep}
+          formName={formName}
+          handleAuthenticateSuccess={this.handleAuthenticateSuccess}
+        />
       </Block>
     );
   }

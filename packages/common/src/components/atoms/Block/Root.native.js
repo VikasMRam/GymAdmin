@@ -10,15 +10,18 @@ const StyledView = styled(View)`
   align-content: center;
 `;
 
+const shouldWrapWithText = c =>
+  isString(c) || Number.isFinite(c);
+
 const Root = (props) => {
-  if (isString(props.children)) {
+  if (shouldWrapWithText(props.children)) {
     return <Text {...props} />;
   }
-  // wrap all string children with Text
+  // wrap all children with Text, if required
   if (Array.isArray(props.children)) {
     return (
       <StyledView style={props.style}>
-        {props.children.map(c => c && isString(c) ? <Text key={c}>{c}</Text> : c)}
+        {props.children.map(c => shouldWrapWithText(c) ? <Text key={c}>{c}</Text> : c)}
       </StyledView>
     );
   }
