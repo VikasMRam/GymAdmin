@@ -21,14 +21,14 @@ export default class GetAssessmentBoxContainerHydrator extends Component {
       // return null;
     }
     const { community } = this.props;
-    const completedAssessment = isBrowser &&
-      (community ? !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES)?.includes(community.id) :
-        !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED));
+    const completedAssessment = isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED);
+    const completedPricing = isBrowser && (community ? !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES)?.includes(community.id) : false);
 
     return (
       <GetAssessmentBoxContainer
         {...this.props}
         completedAssessment={completedAssessment}
+        completedPricing={completedPricing}
         agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
       />
     );

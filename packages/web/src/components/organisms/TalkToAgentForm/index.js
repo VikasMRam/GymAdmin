@@ -18,6 +18,11 @@ const StyledHeading = textAlign(pad(Heading));
 
 const CenteredTosAndPrivacy = textAlign(TosAndPrivacy);
 
+const StyledDesc = styled.div`
+margin-top: ${size('spacing.regular')};
+margin-bottom: ${size('spacing.regular')};
+`;
+
 const StyledButton = styled(fullWidth(Button))`
   margin-bottom: ${ifProp('hasMarginBottom', size('spacing.large'), 0)};
 `;
@@ -48,6 +53,7 @@ export default class TalkToAgentForm extends Component {
     change: func,
     onLocationChange: func,
     heading: string.isRequired,
+    description: string,
     user: userPropType,
     hasLocation: bool,
     image: string,
@@ -71,10 +77,11 @@ export default class TalkToAgentForm extends Component {
 
   render() {
     const {
-      invalid, submitting, handleSubmit, error, heading, user, hasLocation, hasEmail,
+      invalid, submitting, handleSubmit, error, heading, description, user, hasLocation, hasEmail,
       agentFirstName, messagePrompt, showMessageFieldFirst, hideMessage, image, buttonKind, messagePlaceholder,
     } = this.props;
     const messageLabel = (messagePrompt === '') ? `What can ${agentFirstName} help you with?` : messagePrompt;
+    const showDesc = description !== '' ;
     const showTos = !user;
     const messageField = (
       <Field
@@ -92,6 +99,7 @@ export default class TalkToAgentForm extends Component {
       <section>
         {image && <ImageWrapper><StyledResponsiveImage src={image} /></ImageWrapper>}
         <StyledHeading size="subtitle">{heading}</StyledHeading>
+        {showDesc && <StyledDesc>{description}</StyledDesc>}
         <form onSubmit={handleSubmit}>
           {showMessageFieldFirst && !hideMessage && messageField}
           {hasLocation &&

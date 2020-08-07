@@ -6,6 +6,7 @@ import { query } from 'sly/web/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import withWS from 'sly/web/services/ws/withWS';
 import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
 import {
   ASSESSMENT_WIZARD_MATCHED_AGENT,
@@ -74,15 +75,9 @@ export default class AssessmentWizard extends Component {
 
     if (!this.skipped) {
       localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
-      if (community) {
-        const existingCompletedCommunities = localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES);
-        if (existingCompletedCommunities) {
-          localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES,
-            `${existingCompletedCommunities},${community.id}`);
-        } else {
-          localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES, community.id);
-        }
-      }
+    }
+    if (community) {
+      recordEntityCta(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES, community.id);
     }
 
     this.setState({
@@ -110,6 +105,7 @@ export default class AssessmentWizard extends Component {
       this.skipped = true;
       return goto('Auth');
     }
+    
     if (currentStep === 'ResidentName') {
       this.waitForAgentMatched();
     }
@@ -122,15 +118,9 @@ export default class AssessmentWizard extends Component {
     clearTimeout(this.agentMatchTimeout);
     if (!this.skipped) {
       localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
-      if (community) {
-        const existingCompletedCommunities = localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES);
-        if (existingCompletedCommunities) {
-          localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES,
-            `${existingCompletedCommunities},${community.id}`);
-        } else {
-          localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES, community.id);
-        }
-      }
+    }
+    if (community) {
+      recordEntityCta(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES,community.id);
     }
 
     if (agentSlug) {

@@ -4,11 +4,13 @@ import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 
 import { generateAskAgentQuestionContents } from 'sly/web/services/helpers/agents';
+import { AA_CONSULTATION_REQUESTED } from 'sly/web/services/api/constants';
 import Thankyou from 'sly/web/components/molecules/Thankyou';
 import SlyEvent from 'sly/web/services/helpers/events';
 import withModal from 'sly/web/controllers/withModal';
 import withNotification from 'sly/web/controllers/withNotification';
 import { prefetch } from 'sly/web/services/api';
+import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 
 const CommunityAskQuestionAgentFormContainer = loadable(() =>
   import(/* webpackChunkName: "chunkCommunityAskQuestionAgentFormContainer" */ 'sly/web/containers/CommunityAskQuestionAgentFormContainer'),
@@ -73,6 +75,9 @@ export default class AskAgentQuestionContainer extends Component {
     const postSubmit = () => {
       // notifyInfo('Request sent successfully');
       toggleAskAgentQuestionModal();
+      if (community) {
+        recordEntityCta(type,community.id);
+      }
       showModal(<Thankyou heading={"Success!"} subheading={'Your request has been sent and we will connect with' +
       ' you shortly'} onClose={hideModal} doneText='Finish'/>);
     };
@@ -103,6 +108,7 @@ export default class AskAgentQuestionContainer extends Component {
 
       const modalComponentProps = {
         heading: "We understand selling your home is a big deal",
+        description: "Tell us how to connect you with a local expert to help you in the process",
         initialValues,
         entityId: community.id,
         category: 'community',
@@ -110,7 +116,7 @@ export default class AskAgentQuestionContainer extends Component {
         postSubmit,
         type,
       };
-      showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
+      showModal(<AskQuestionToAgentFormContainer actionType={AA_CONSULTATION_REQUESTED} {...modalComponentProps} />, onClose);
     }
 
     else {
@@ -122,11 +128,10 @@ export default class AskAgentQuestionContainer extends Component {
       const modalComponentProps = {
         toggleAskAgentQuestionModal,
         notifyInfo,
-        community,
-        heading,
-        description,
         entityId: community.id,
         category: 'community',
+        heading,
+        description,
         placeholder,
         question,
         type,

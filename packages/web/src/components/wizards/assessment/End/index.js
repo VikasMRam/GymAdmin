@@ -61,11 +61,11 @@ const End = ({ handleSubmit, community, city, hasNoAgent, agent }) => (
         />
       }
     </Wrapper>
-    {(hasNoAgent || agent) &&
-      <Wrapper>
-        <PostConversionAdTileContainer type="homeCare" layout="row" community={community} />
-      </Wrapper>
-    }
+    {/*{(hasNoAgent || agent) &&*/}
+      {/*<Wrapper>*/}
+        {/*<PostConversionAdTileContainer type="homeCare" layout="row" community={community} />*/}
+      {/*</Wrapper>*/}
+    {/*}*/}
     {(hasNoAgent || agent) && community &&
       <SimilarCommunitiesContainer>
         <Heading size="subtitle">Explore Similar Assisted Living Communities in {community.address.city}</Heading>

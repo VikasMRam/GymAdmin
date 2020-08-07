@@ -31,7 +31,7 @@ const GetCommunityPricingAndAvailability = ({ completedAssessment, community: { 
     {reviewsValue > 0 && <PaddedCommunityRating rating={reviewsValue} numReviews={numReviews} />}
     <StyledButton to={buttonTo} onClick={onClick} event={onClickEvent(id)}>
       {completedAssessment && <Icon icon="tick" />}
-      {completedAssessment ? 'Pricing Requested' : 'Get Detailed Pricing'}
+      {completedAssessment ? 'Pricing Requested' : 'Get Pricing and Availability'}
     </StyledButton>
   </Box>
 );
