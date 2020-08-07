@@ -62,7 +62,7 @@ export const showFafNumber= (address)  => {
   return address.zipcode.cityTier === '1'
 };
 
-export const getFafNumber = (communityPhone,tier)  => {
+export const getFafNumber = (communityPhone='',tier)  => {
   // Hard coded business logic ( only for tier 1
   const tier1Nums = ['4153004354','6506845456'];
   let fafn = tier1Nums[0];

@@ -126,9 +126,7 @@ const CommunitySummary = ({
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 
   const showFriendsFamilyNumber = showFafNumber(address);
-
   const fafn = getFafNumber(conciergeNumber,'1');
-
 
   return (
     <Box ref={innerRef} className={className}>
