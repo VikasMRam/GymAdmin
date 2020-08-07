@@ -1,11 +1,15 @@
 import React from 'react';
-import { func, string } from 'prop-types';
+import { func, string, object, bool } from 'prop-types';
 
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import LoginFormContainer from 'sly/common/services/auth/containers/LoginFormContainer';
 import ResetPasswordFormContainer from 'sly/common/services/auth/containers/ResetPasswordFormContainer';
+import SignupFormContainer from 'sly/common/services/auth/containers/SignupFormContainer';
 
-const Wizard = ({ formName, initialStep, handleAuthenticateSuccess }) => (
+const Wizard = ({
+  formName, initialStep, handleAuthenticateSuccess, authenticated, onSignupSuccess,
+  signUpHeading, signUpSubmitButtonText, signUpHasPassword, hasProviderSignup,
+}) => (
   <WizardController
     formName={formName}
     controllerKey={`${formName}ControllerKey`}
@@ -29,6 +33,17 @@ const Wizard = ({ formName, initialStep, handleAuthenticateSuccess }) => (
           onLoginClick={() => goto('Login')}
           onSubmit={() => goto('Login')}
         />
+        <WizardStep
+          component={SignupFormContainer}
+          name="Signup"
+          onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.register : true) && goto('Login'))}
+          onProviderClicked={() => goto('ProviderSignup')}
+          onSubmit={() => onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation')}
+          heading={signUpHeading}
+          submitButtonText={signUpSubmitButtonText}
+          hasPassword={signUpHasPassword}
+          hasProviderSignup={hasProviderSignup}
+        />
       </WizardSteps>
     )}
   </WizardController>
@@ -38,6 +53,12 @@ Wizard.propTypes = {
   formName: string.isRequired,
   initialStep: string.isRequired,
   handleAuthenticateSuccess: func.isRequired,
+  authenticated: object,
+  onSignupSuccess: func,
+  signUpHeading: string,
+  signUpSubmitButtonText: string,
+  signUpHasPassword: bool,
+  hasProviderSignup: bool,
 };
 
 export default Wizard;

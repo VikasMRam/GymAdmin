@@ -78,7 +78,9 @@ export default class AuthContainer extends Component {
   };
 
   render() {
-    const { authenticated, type, formName,
+    const {
+      authenticated, type, signUpHeading, signUpSubmitButtonText, signUpHasPassword, onSignupSuccess,
+      hasProviderSignup, formName,
     } = this.props;
     let { initialStep } = this.props;
 
@@ -97,6 +99,12 @@ export default class AuthContainer extends Component {
               initialStep={initialStep}
               formName={formName}
               handleAuthenticateSuccess={this.handleAuthenticateSuccess}
+              authenticated={authenticated}
+              onSignupSuccess={onSignupSuccess}
+              signUpHeading={signUpHeading}
+              signUpSubmitButtonText={signUpSubmitButtonText}
+              signUpHasPassword={signUpHasPassword}
+              hasProviderSignup={hasProviderSignup}
             />
           </Box>
         </Wrapper>
@@ -109,6 +117,12 @@ export default class AuthContainer extends Component {
           initialStep={initialStep}
           formName={formName}
           handleAuthenticateSuccess={this.handleAuthenticateSuccess}
+          authenticated={authenticated}
+          onSignupSuccess={onSignupSuccess}
+          signUpHeading={signUpHeading}
+          signUpSubmitButtonText={signUpSubmitButtonText}
+          signUpHasPassword={signUpHasPassword}
+          hasProviderSignup={hasProviderSignup}
         />
       </Block>
     );

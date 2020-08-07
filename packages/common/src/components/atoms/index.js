@@ -8,3 +8,4 @@ export Button from './Button';
 export Label from './Label';
 export Form from './Form';
 export Hr from './Hr';
+export Grid from './Grid';

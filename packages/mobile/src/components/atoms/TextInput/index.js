@@ -90,7 +90,7 @@ const TextInput = ({
 };
 
 TextInput.propTypes = {
-  type: oneOf(['search', 'textarea', 'text', 'email', 'password', 'number', 'locationSearch']),
+  type: oneOf(['search', 'textarea', 'text', 'email', 'password', 'phone', 'number', 'locationSearch']),
   size: elementPropType,
   rows: number,
   disabled: bool,
