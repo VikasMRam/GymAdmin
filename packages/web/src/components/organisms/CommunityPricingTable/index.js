@@ -7,7 +7,7 @@ import { palette, size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import { getIsCCRC, getIsSNF, getIsActiveAdult } from 'sly/web/services/helpers/community';
-import { Block, Paragraph } from 'sly/web/components/atoms';
+import { Block, Paragraph } from 'sly/common/components/atoms';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';
 import GetCustomPricingButtonContainer from 'sly/web/containers/GetCustomPricingButtonContainer';

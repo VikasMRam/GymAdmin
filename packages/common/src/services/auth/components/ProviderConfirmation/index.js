@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { string, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { Heading, Button, Paragraph } from 'sly/web/components/atoms';
+import { Heading, Button, Paragraph } from 'sly/common/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import {

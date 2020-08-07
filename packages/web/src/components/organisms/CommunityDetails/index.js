@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/common/components/themes';
-import { Heading, Hr } from 'sly/common/components/atoms';
-import { Link, Paragraph } from 'sly/web/components/atoms';
+import { Heading, Hr, Paragraph } from 'sly/common/components/atoms';
+import { Link } from 'sly/web/components/atoms';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 
 const StyledHeading = styled(Heading)`

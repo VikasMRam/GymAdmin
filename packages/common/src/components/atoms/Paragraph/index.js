@@ -1,0 +1,30 @@
+import React from 'react';
+import styled from 'styled-components';
+
+import {
+  withDisplay,
+  withText,
+  withColor,
+  withSpacing,
+  withCursor,
+} from 'sly/common/components/helpers';
+
+const StyledP = styled.p`
+  ${withColor}
+  ${withText}
+  ${withSpacing}
+  ${withCursor}
+  ${withDisplay}
+`;
+
+const Paragraph = props => <StyledP {...props} />;
+
+Paragraph.defaultProps = {
+  palette: 'slate',
+  size: 'body',
+  lineHeight: '1.5',
+  margin: '0',
+  pad: 'large',
+};
+
+export default Paragraph;

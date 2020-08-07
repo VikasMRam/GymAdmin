@@ -5,6 +5,7 @@ import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wiza
 import LoginFormContainer from 'sly/common/services/auth/containers/LoginFormContainer';
 import ResetPasswordFormContainer from 'sly/common/services/auth/containers/ResetPasswordFormContainer';
 import SignupFormContainer from 'sly/common/services/auth/containers/SignupFormContainer';
+import CustomerSignupConfirmationContainer from 'sly/common/services/auth/containers/CustomerSignupConfirmationContainer';
 
 const Wizard = ({
   formName, initialStep, handleAuthenticateSuccess, authenticated, onSignupSuccess,
@@ -43,6 +44,11 @@ const Wizard = ({
           submitButtonText={signUpSubmitButtonText}
           hasPassword={signUpHasPassword}
           hasProviderSignup={hasProviderSignup}
+        />
+        <WizardStep
+          component={CustomerSignupConfirmationContainer}
+          name="CustomerSignupConfirmation"
+          onSubmit={handleAuthenticateSuccess}
         />
       </WizardSteps>
     )}

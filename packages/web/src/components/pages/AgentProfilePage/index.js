@@ -9,8 +9,7 @@ import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/Ba
 import Footer from 'sly/web/components/organisms/Footer';
 import AgentSummary from 'sly/web/components/molecules/AgentSummary';
 import Section from 'sly/web/components/molecules/Section';
-import { Hr } from 'sly/common/components/atoms';
-import { Paragraph } from 'sly/web/components/atoms';
+import { Hr, Paragraph } from 'sly/common/components/atoms';
 import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
 import EntityReviews from 'sly/web/components/organisms/EntityReviews';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';

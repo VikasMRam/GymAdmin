@@ -13,5 +13,9 @@ export const withText = props => css`
     line-height: ${getSize('lineHeight', 'lineHeight')(props)};
   `)}
 
+  ${ifProp('textDecoration', css`
+    text-decoration: ${props.textDecoration};
+  `)}
+
   ${getWeight(props)};
 `;

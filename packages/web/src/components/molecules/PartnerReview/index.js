@@ -3,8 +3,8 @@ import { string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, getKey } from 'sly/common/components/themes';
-import { Hr, Block } from 'sly/common/components/atoms';
-import { Image, Paragraph } from 'sly/web/components/atoms';
+import { Hr, Block, Paragraph } from 'sly/common/components/atoms';
+import { Image } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
