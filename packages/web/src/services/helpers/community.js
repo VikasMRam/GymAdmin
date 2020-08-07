@@ -1,3 +1,5 @@
+import { areaCode } from './phone';
+
 export const getIsCCRC = (community) => {
   const { propInfo } = community;
   if (propInfo) {
@@ -52,4 +54,21 @@ export const formatAddress = (address) => {
     }
     return acc;
   }, []).join(', ');
+};
+
+// Faf = Friends and Family
+export const showFafNumber= (address)  => {
+  if (!address || !address.zipcode || !address.zipcode.cityTier) return false;
+  return address.zipcode.cityTier === '1'
+};
+
+export const getFafNumber = (communityPhone,tier)  => {
+  // Hard coded business logic ( only for tier 1
+  const tier1Nums = ['4153004354','6506845456'];
+  let fafn = tier1Nums[0];
+  let foundNum = tier1Nums.find((num)=> areaCode(num) === areaCode(communityPhone));
+  if (!!foundNum) {
+    fafn = foundNum;
+  }
+  return fafn;
 };

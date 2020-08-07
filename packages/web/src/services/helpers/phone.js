@@ -21,3 +21,6 @@ export const phoneFormatter = (value, parens = false, ...args) => {
   return `${parens ? '(' : ''}${onlyNums.slice(0, 3)}${parens ? ') ' : '-'}${onlyNums.slice(3, 6)}-${onlyNums.slice(6)}`;
 };
 
+export const areaCode = str => {
+  return phoneParser(str).slice(0,3);
+};

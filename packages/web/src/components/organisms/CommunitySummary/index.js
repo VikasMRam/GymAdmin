@@ -13,7 +13,8 @@ import { Link, Hr, Tag } from 'sly/web/components/atoms';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { isBrowser } from 'sly/web/config';
 import { tocPaths } from 'sly/web/services/helpers/url';
-import { phoneFormatter } from 'sly/web/services/helpers/phone';
+import { phoneFormatter, areaCode } from 'sly/web/services/helpers/phone';
+import { showFafNumber, getFafNumber } from 'sly/web/services/helpers/community';
 import ListItem from 'sly/web/components/molecules/ListItem';
 
 const StyledHeading = pad(Heading, 'regular');
@@ -55,6 +56,11 @@ const OverlayTwoColumnListWrapper = styled.div`
     grid-column-gap: ${size('layout.gutter')};
   }
 `;
+const PhoneNumWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: ${size('spacing.regular')};
+`;
 
 const MobileCommunityRating = styled(CommunityRating)`
   ${startingWith('laptop')} {
@@ -94,7 +100,7 @@ const CommunitySummary = ({
     address, name, propRatings, propInfo, twilioNumber, partnerAgents,
   } = community;
   const {
-    line1, line2, city, state, zip,
+    line1, line2, city, state, zip, zipcode
   } = address;
   const {
     communityPhone, typeCare, typeOfHome, squareFeet, numBeds, numBaths, priceRange, garage,
@@ -118,6 +124,11 @@ const CommunitySummary = ({
   const careTypes = getCareTypes(state, typeCare);
 
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
+
+  const showFriendsFamilyNumber = showFafNumber(address);
+
+  const fafn = getFafNumber(conciergeNumber,'1');
+
 
   return (
     <Box ref={innerRef} className={className}>
@@ -162,22 +173,43 @@ const CommunitySummary = ({
       }
 
       <Hr />
-      {
-        partnerAgent &&
-          <>
-            Call for help with pricing and availability
-            <StyledIcon palette="slate" icon="help" size="caption" data-tip data-for="conciergePhone" />
+      <PhoneNumWrapper>
+        {
+          partnerAgent &&
+            <div>
+              For pricing & Availability
+              <StyledIcon palette="slate" icon="help" size="caption" data-tip data-for="conciergePhone" />
+              {isBrowser &&
+              <TooltipContent id="conciergePhone" type="light" effect="solid" multiline>
+                This phone number will connect you to the concierge team at Seniorly.
+              </TooltipContent>
+              }
+              <br/>
+              <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
+                {phoneFormatter(conciergeNumber, true)}
+              </Link>
+            </div>
+
+        }
+        {
+          showFriendsFamilyNumber &&
+          <div>
+            For Friends & Family
+            <StyledIcon palette="slate" icon="help" size="caption" data-tip data-for="fafPhone" />
             {isBrowser &&
-            <TooltipContent id="conciergePhone" type="light" effect="solid" multiline>
-              This phone number will connect you to the concierge team at Seniorly.
+            <TooltipContent id="fafPhone" type="light" effect="solid" multiline>
+              This phone number may connect you to the community front desk.
             </TooltipContent>
             }
             <br/>
-            <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
-              {phoneFormatter(conciergeNumber, true)}
+            <Link href={`tel:${fafn}`} onClick={onConciergeNumberClicked}>
+              {phoneFormatter(fafn, true)}
             </Link>
-          </>
-      }
+          </div>
+
+        }
+
+      </PhoneNumWrapper>
       {
         !partnerAgent && communityPhone &&
           <>
