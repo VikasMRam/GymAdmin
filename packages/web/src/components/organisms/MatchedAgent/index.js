@@ -146,7 +146,7 @@ const MatchedAgent = ({ heading, agent, children, prevLink, hasBox }) => (
     {!agent &&
       <Wrapper>
         <AgentPlaceholder><div /><div /><div /><div /><div /><div /><div /><div /></AgentPlaceholder>
-        <TextAlignCenterBlock weight="medium" size="subtitle">Hold on, we are matching you with a local senior living expert...</TextAlignCenterBlock>
+        <TextAlignCenterBlock weight="medium" size="subtitle">Hold on, we are matching you to a Local Senior Living Expert...</TextAlignCenterBlock>
       </Wrapper>
     }
   </MainWrapper>

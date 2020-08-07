@@ -8,14 +8,16 @@ import { Button } from 'sly/web/components/atoms';
 export default function GetCustomPricingButtonContainer({ hasAlreadyRequestedPricing, locTrack, ctaText, community, ...props }) {
 
   ctaText = "Request Pricing and Availability";
+  let ghost=false;
   if (community && isCtaRecorded(locTrack, community.id)) {
     //check if cta was already made
     ctaText = "Pricing requested";
+    ghost=true;
   }
 
   return (
     <GetCustomPricingContainer hasAlreadyRequestedPricing={hasAlreadyRequestedPricing} locTrack={locTrack}>
-      {getCustomPricing => <Button onClick={getCustomPricing} {...props}>{ctaText}</Button>}
+      {getCustomPricing => <Button ghost={ghost} onClick={getCustomPricing} {...props}>{ctaText}</Button>}
     </GetCustomPricingContainer>
   );
 }

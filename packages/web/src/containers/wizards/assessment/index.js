@@ -105,9 +105,7 @@ export default class AssessmentWizard extends Component {
       this.skipped = true;
       return goto('Auth');
     }
-    if (currentStep === 'Auth' && this.skipped) {
-      return goto('End'); // Skip residentname
-    }
+    
     if (currentStep === 'ResidentName') {
       this.waitForAgentMatched();
     }
