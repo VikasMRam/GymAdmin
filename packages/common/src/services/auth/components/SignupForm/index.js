@@ -56,12 +56,12 @@ const SignupForm = ({
     </Block>
     {error && <Block palette="danger" size="caption">{error}</Block>}
     <Grid flow="row" gap="large" verticalAlign="middle">
-      <Block align="center" size="caption">
+      <Block align="center" direction="row" size="caption">
         Already have an account?&nbsp;&nbsp;
         <ButtonLink palette="primary" onClick={onLoginClicked}>Log in</ButtonLink>
       </Block>
       {hasProviderSignup &&
-        <Block align="center" size="caption">
+        <Block align="center" direction="row" size="caption">
           Are you a community manager?&nbsp;&nbsp;
           <ButtonLink palette="primary" onClick={onProviderClicked}>Click here</ButtonLink>
         </Block>

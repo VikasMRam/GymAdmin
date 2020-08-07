@@ -20,6 +20,7 @@ ButtonLink.propTypes = {
 ButtonLink.defaultProps = {
   palette: 'secondary',
   cursor: 'pointer',
+  direction: 'row',
 };
 
 export default ButtonLink;

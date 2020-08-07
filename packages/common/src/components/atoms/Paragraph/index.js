@@ -7,6 +7,7 @@ import {
   withColor,
   withSpacing,
   withCursor,
+  withAlign,
 } from 'sly/common/components/helpers';
 
 const StyledP = styled.p`
@@ -14,6 +15,7 @@ const StyledP = styled.p`
   ${withText}
   ${withSpacing}
   ${withCursor}
+  ${withAlign}
   ${withDisplay}
 `;
 

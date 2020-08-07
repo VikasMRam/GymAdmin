@@ -3,12 +3,15 @@ import { css } from 'styled-components';
 import { size } from 'sly/common/components/themes';
 import { isString } from 'sly/common/services/helpers/utils';
 
-// when flex-direction is column(default is row) align and verticalAlign can be swapped.
-// verticalAlign becomes horizontal and align becomes vertical.
 export const withAlign = ({
-  children, direction = 'row', align, verticalAlign, position,
-  top, bottom, left, right,
+  children, direction, align, verticalAlign, position,
+  top, bottom, left, right, display,
 }) => {
+  // when only align is given without display flex
+  // treat children like block elements, like normal divs
+  if (!direction) {
+    direction = align && display !== 'flex' ? 'column' : 'row';
+  }
   let textStyles = {};
   let styles = {
     flexDirection: direction,
@@ -51,41 +54,80 @@ export const withAlign = ({
     };
   }
 
-  if (align === 'right') {
+  // when flex-direction is row - align-items vertical, justify-content horizontal
+  // when flex-direction is column - align-items horizontal, justify-content vertical
+  if (align) {
     styles = {
       ...styles,
       ...textStyles,
       display: 'flex',
-      justifyContent: 'flex-end',
     };
-  } else if (align === 'center') {
-    styles = {
-      ...styles,
-      ...textStyles,
-      display: 'flex',
-      justifyContent: 'center',
-    };
-  }  else if (align === 'space-between') {
-    styles = {
-      ...styles,
-      ...textStyles,
-      display: 'flex',
-      justifyContent: 'space-between',
-    };
+
+    if (align === 'right') {
+      if (direction === 'row' || direction === 'row-reverse') {
+        styles.justifyContent = 'flex-end';
+        if (isString(children)) {
+          styles.justifySelf = 'flex-end';
+        }
+      } else {
+        styles.alignItems = 'flex-end';
+        if (isString(children)) {
+          styles.alignSelf = 'flex-end';
+        }
+      }
+    } else if (align === 'center') {
+      if (direction === 'row' || direction === 'row-reverse') {
+        styles.justifyContent = 'center';
+        if (isString(children)) {
+          styles.justifySelf = 'center';
+        }
+      } else {
+        styles.alignItems = 'center';
+        if (isString(children)) {
+          styles.alignSelf = 'center';
+        }
+      }
+    }  else if (align === 'space-between') {
+      if (direction === 'row' || direction === 'row-reverse') {
+        styles.justifyContent = 'space-between';
+      } else {
+        styles.alignItems = 'space-between';
+      }
+    }
   }
 
-  if (verticalAlign === 'middle') {
+  if (verticalAlign) {
     styles = {
       ...styles,
+      ...textStyles,
       display: 'flex',
-      alignItems: 'center',
     };
-  } else if (verticalAlign === 'bottom') {
-    styles = {
-      ...styles,
-      display: 'flex',
-      alignItems: 'flex-end',
-    };
+
+    if (verticalAlign === 'middle') {
+      if (direction === 'row' || direction === 'row-reverse') {
+        styles.alignItems = 'center';
+        if (isString(children)) {
+          styles.alignSelf = 'center';
+        }
+      } else {
+        styles.justifyContent = 'center';
+        if (isString(children)) {
+          styles.justifySelf = 'center';
+        }
+      }
+    } else if (verticalAlign === 'bottom') {
+      if (direction === 'row' || direction === 'row-reverse') {
+        styles.alignItems = 'flex-end';
+        if (isString(children)) {
+          styles.alignSelf = 'flex-end';
+        }
+      } else {
+        styles.justifyContent = 'flex-end';
+        if (isString(children)) {
+          styles.justifySelf = 'flex-end';
+        }
+      }
+    }
   }
 
   if (Object.keys(styles).length) {

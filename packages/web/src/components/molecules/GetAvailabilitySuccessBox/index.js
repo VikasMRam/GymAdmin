@@ -21,7 +21,7 @@ const GetAvailabilitySuccessBox = ({ hasAllUserData }) => {
 
   return (
     <Wrapper>
-      <Icon icon="round-checkmark" />
+      <Icon icon="checkmark-circle" />
       <Block weight="bold">{availabilityDoneText}</Block>
     </Wrapper>
   );

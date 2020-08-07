@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Children } from 'react';
 import { Pressable } from 'react-native';
 import styled from 'styled-components';
 import { node, any, func } from 'prop-types';
@@ -38,9 +38,18 @@ export default class Root extends Component {
 
   render() {
     const { children, style } = this.props;
+    const allChildrenText =
+      Children.toArray(children).reduce((acc, c) => acc && shouldWrapWithText(c), true);
 
-    if (shouldWrapWithText(children)) {
-      return this.withPressable(<Text {...this.props} />);
+    if (shouldWrapWithText(children) || allChildrenText) {
+      let newChildren = children;
+
+      // if all children are Text, concat into one
+      if (allChildrenText) {
+        newChildren = Children.toArray(children).join('');
+      }
+
+      return this.withPressable(<Text {...this.props}>{newChildren}</Text>);
     }
     // wrap all children with Text, if required
     if (Array.isArray(children)) {

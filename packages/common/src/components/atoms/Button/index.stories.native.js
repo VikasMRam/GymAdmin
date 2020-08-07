@@ -47,7 +47,7 @@ storiesOf('Common|Atoms/Button', module)
     <Button href="https://github.com/diegohaz/arc" target="_blank">ARc repository</Button>
   ))
   .add('width as value', () => (
-    <Button width="100%">Hello</Button>
+    <Button width="90%">Hello</Button>
   ))
   .add('width as theme layout', () => (
     <Button width="col2">Hello</Button>

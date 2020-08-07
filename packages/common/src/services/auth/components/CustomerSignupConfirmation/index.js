@@ -1,30 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { func, object } from 'prop-types';
 
 import { Icon, Heading, Button, Paragraph, Block } from 'sly/common/components/atoms';
-import pad from 'sly/web/components/helpers/pad';
-import fullWidth from 'sly/web/components/helpers/fullWidth';
 
-const StyledIcon = pad(Icon, 'large');
-const StyledHeading = pad(Heading, 'large');
-const FullWidthButton = fullWidth(Button);
-const LargePaddedFullWidthButton = pad(FullWidthButton, 'large');
+const CustomerSignupConfirmation = ({ onSubmit, user }) => (
+  <Block align="center">
+    <Icon icon="checkmark-circle" palette="primary" variation="base" size="hero" pad="large" />
+    <Heading pad="large">Welcome {user ? user.name : '?'}</Heading>
+    <Paragraph>Your account is all set up</Paragraph>
+    <Button pad="large" width="100%" onClick={onSubmit}>Continue</Button>
+  </Block>
+);
 
-export default class CustomerSignupConfirmation extends Component {
-  static propTypes = {
-    onSubmit: func.isRequired,
-    user: object.isRequired,
-  };
+CustomerSignupConfirmation.propTypes = {
+  onSubmit: func.isRequired,
+  user: object.isRequired,
+};
 
-  render() {
-    const { onSubmit, user } = this.props;
-    return (
-      <Block align="center">
-        <StyledIcon icon="round-checkmark" palette="primary" variation="base" size="hero" />
-        <StyledHeading> Welcome {user ? user.name : '?'}</StyledHeading>
-        <Paragraph>Your account is all set up</Paragraph>
-        <LargePaddedFullWidthButton onClick={onSubmit}>Continue</LargePaddedFullWidthButton>
-      </Block>
-    );
-  }
-}
+export default CustomerSignupConfirmation;

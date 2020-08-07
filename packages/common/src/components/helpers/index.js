@@ -13,3 +13,4 @@ export * from './shadow';
 export * from './transition';
 export * from './router';
 export * from './width';
+export * from './height';

@@ -79,7 +79,6 @@ export default {
   quote: require('./icons/quote-regular.svg'),
   radio: require('./icons/radio-regular.svg'),
   room: require('./icons/room-regular.svg'),
-  'round-checkmark': require('./icons/round-checkmark-regular.svg'),
   schedule: require('./icons/schedule-regular.svg'),
   search: require('./icons/search-regular.svg'),
   send: require('./icons/send-regular.svg'),

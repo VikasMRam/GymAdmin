@@ -54,7 +54,7 @@ const Thankyou = ({
 
   return (
     <Wrapper>
-      <StyledHeading><StyledIcon icon="round-checkmark" palette="primary" size="title" />{heading}</StyledHeading>
+      <StyledHeading><StyledIcon icon="checkmark-circle" palette="primary" size="title" />{heading}</StyledHeading>
       <Hr margin="0" />
       <StyledBlock>{subheading}</StyledBlock>
       {backToSearch}
