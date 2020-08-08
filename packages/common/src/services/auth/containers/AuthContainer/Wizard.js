@@ -8,6 +8,7 @@ import SignupFormContainer from 'sly/common/services/auth/containers/SignupFormC
 import CustomerSignupConfirmationContainer from 'sly/common/services/auth/containers/CustomerSignupConfirmationContainer';
 import ProviderSignupFormContainer from 'sly/common/services/auth/containers/ProviderSignupFormContainer';
 import ProviderFindCommunityContainer from 'sly/common/services/auth/containers/ProviderFindCommunityContainer';
+import ProviderConfirmation from 'sly/common/services/auth/components/ProviderConfirmation';
 
 const Wizard = ({
   formName, initialStep, handleAuthenticateSuccess, authenticated, onSignupSuccess,
@@ -66,6 +67,12 @@ const Wizard = ({
           onClaimApproved={() => goto('ProviderConfirmation')}
           onApprovalNeeded={() => goto('ProviderClaimNeedsApproval')}
           onNotFound={() => goto('ProviderCommunityNotFound')}
+        />
+        <WizardStep
+          component={ProviderConfirmation}
+          name="ProviderConfirmation"
+          mode="Approved"
+          onSubmit={handleAuthenticateSuccess}
         />
       </WizardSteps>
     )}
