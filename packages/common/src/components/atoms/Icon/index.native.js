@@ -29,9 +29,11 @@ const StyledImage = styled(Image)`
   ${getTransform};
   align-self: center;
   tintColor: ${palette('base')};
+  min-width: ${iconSize};
+  height: ${iconSize};
 `;
 
-const Icon = styled(({ icon, palette, flip, rotate, ...props }) => {
+const Icon = styled(({ icon, palette, flip, rotate, size, ...props }) => {
   const source = iconPaths[icon];
 
   if (!source) {
@@ -39,8 +41,8 @@ const Icon = styled(({ icon, palette, flip, rotate, ...props }) => {
   }
 
   return (
-    <Wrapper {...props} data-cy={icon}>
-      <StyledImage flip={flip} rotate={rotate} palette={palette} source={source} />
+    <Wrapper {...props} size={size} data-cy={icon}>
+      <StyledImage flip={flip} rotate={rotate} palette={palette} source={source} size={size} />
     </Wrapper>
   );
 })``;

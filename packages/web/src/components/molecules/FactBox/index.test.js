@@ -15,6 +15,6 @@ describe('FactBox', () => {
       description,
     });
     expect(wrapper.find('Block').text()).toContain(title);
-    expect(wrapper.find('Paragraph').text()).toContain(description);
+    expect(wrapper.find('Paragraph').dive().text()).toContain(description);
   });
 });
