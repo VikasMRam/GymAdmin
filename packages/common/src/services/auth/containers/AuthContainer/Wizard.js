@@ -6,6 +6,7 @@ import LoginFormContainer from 'sly/common/services/auth/containers/LoginFormCon
 import ResetPasswordFormContainer from 'sly/common/services/auth/containers/ResetPasswordFormContainer';
 import SignupFormContainer from 'sly/common/services/auth/containers/SignupFormContainer';
 import CustomerSignupConfirmationContainer from 'sly/common/services/auth/containers/CustomerSignupConfirmationContainer';
+import ProviderSignupFormContainer from 'sly/common/services/auth/containers/ProviderSignupFormContainer';
 
 const Wizard = ({
   formName, initialStep, handleAuthenticateSuccess, authenticated, onSignupSuccess,
@@ -37,7 +38,8 @@ const Wizard = ({
         <WizardStep
           component={SignupFormContainer}
           name="Signup"
-          onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.register : true) && goto('Login'))}
+          onLoginClicked={() =>
+            ((authenticated && authenticated.options ? delete authenticated.options.register : true) && goto('Login'))}
           onProviderClicked={() => goto('ProviderSignup')}
           onSubmit={() => onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation')}
           heading={signUpHeading}
@@ -49,6 +51,13 @@ const Wizard = ({
           component={CustomerSignupConfirmationContainer}
           name="CustomerSignupConfirmation"
           onSubmit={handleAuthenticateSuccess}
+        />
+        <WizardStep
+          component={ProviderSignupFormContainer}
+          name="ProviderSignup"
+          onLoginClicked={() =>
+            ((authenticated && authenticated.options ? delete authenticated.options.provider : true) && goto('Login'))}
+          onSubmit={() => (goto('ProviderFindCommunity'))}
         />
       </WizardSteps>
     )}

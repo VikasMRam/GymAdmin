@@ -1,37 +1,16 @@
 import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
-import styled from 'styled-components';
 
-import { size, palette } from 'sly/common/components/themes';
-import pad from 'sly/web/components/helpers/pad';
-import ReduxField from 'sly/common/components/organisms/ReduxField';
-import { textAlign } from 'sly/web/components/helpers/text';
-import { Heading, Button, Block } from 'sly/web/components/atoms';
+import { Heading, Button, Block, Form } from 'sly/common/components/atoms';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
-
-const StyledHeading = pad(Heading);
-StyledHeading.displayName = 'StyledHeading';
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  margin-bottom: ${size('spacing.small')};
-`;
-
-const StyledBlock = styled(Block)`
-  color: ${palette('slate', 'filler')};
-  font-size: ${size('text.tiny')};
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const Login = textAlign(Block);
-Login.displayName = 'Log in';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const ProviderSignupForm = ({
-  handleSubmit, submitting, error, onLoginClicked,
+  handleSubmit, submitting, invalid, error, onLoginClicked,
 }) => (
-  <form onSubmit={handleSubmit}>
-    <StyledHeading size="subtitle">Create a community manager account</StyledHeading>
+  <Form onSubmit={handleSubmit}>
+    <Heading size="subtitle" pad="xLarge">Create a community manager account</Heading>
     <Field
       name="name"
       label="Full Name"
@@ -49,8 +28,8 @@ const ProviderSignupForm = ({
       name="phone_number"
       label="Phone"
       type="phone"
-      parens
       component={ReduxField}
+      parens
     />
     <Field
       name="password"
@@ -58,21 +37,30 @@ const ProviderSignupForm = ({
       type="password"
       component={ReduxField}
     />
-    <StyledButton type="submit"  disabled={submitting}>
+    <Button
+      type="submit"
+      disabled={submitting || invalid}
+      width="100%"
+      pad="regular"
+    >
       Continue
-    </StyledButton>
-    <StyledBlock error={error}>By continuing, you agree to Seniorly&apos;s Terms of Use and Privacy Policy.</StyledBlock>
-    {error && <Block palette="danger">{error}</Block>}
-    <Login size="caption">
-      Already have an account?{' '}
+    </Button>
+    {/* TODO: this should reuse Tos and privacy molecule after Link is migrated for mobile */}
+    <Block pad="large" size="tiny" palette="slate" variation="filler">
+      By continuing, you agree to Seniorly&apos;s Terms of Use and Privacy Policy.
+    </Block>
+    {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
+    <Block size="caption" align="center" direction="row">
+      Already have an account?&nbsp;&nbsp;
       <ButtonLink palette="primary" onClick={onLoginClicked}>Log in</ButtonLink>
-    </Login>
-  </form>
+    </Block>
+  </Form>
 );
 
 ProviderSignupForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
+  invalid: bool,
   error: string,
   onLoginClicked: func,
 };
