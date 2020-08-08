@@ -56,10 +56,16 @@ const OverlayTwoColumnListWrapper = styled.div`
     grid-column-gap: ${size('layout.gutter')};
   }
 `;
+
 const PhoneNumWrapper = styled.div`
   display: grid;
   grid-template-columns: 50% 50%;
   grid-gap: ${size('spacing.regular')};
+  
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    grid-template-columns: 100%;
+    grid-column-gap: ${size('spacing.regular')};
+  }
 `;
 
 const MobileCommunityRating = styled(CommunityRating)`
@@ -175,7 +181,7 @@ const CommunitySummary = ({
         {
           partnerAgent &&
             <div>
-              For pricing & Availability
+              For Pricing & Availability
               <StyledIcon palette="slate" icon="help" size="caption" data-tip data-for="conciergePhone" />
               {isBrowser &&
               <TooltipContent id="conciergePhone" type="light" effect="solid" multiline>
