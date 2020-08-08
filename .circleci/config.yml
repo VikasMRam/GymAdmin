@@ -226,18 +226,6 @@ jobs:
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#66d3e4"
 
       - run:
-          name: Remove packages that are not required
-          command: |
-            export not_required=("mobile")
-
-            for i in "${not_required[@]}"; do
-              if [ -d "packages/$i" ]; then
-                echo "Removing packages/$i"
-                rm -rf "packages/$i"
-              fi
-            done
-
-      - run:
           name: Deploy to EB
           command: |
             echo "Deploying $VERSION to $EB_ENV"
