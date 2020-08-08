@@ -79,7 +79,7 @@ export default class AskAgentQuestionContainer extends Component {
         recordEntityCta(type,community.id);
       }
       showModal(<Thankyou heading={"Success!"} subheading={'Your request has been sent and we will connect with' +
-      ' you shortly'} onClose={hideModal} doneText='Finish'/>);
+      ' you shortly.'} onClose={hideModal} doneText='Finish'/>);
     };
 
     if (type === 'how-it-works-banner-notification' || type === 'side-column-get-help-now') {
@@ -107,8 +107,8 @@ export default class AskAgentQuestionContainer extends Component {
       let initialValues = {};
 
       const modalComponentProps = {
-        heading: "We understand selling your home is a big deal",
-        description: "Tell us how to connect you with a local expert to help you in the process",
+        heading: "We understand selling your home is a big deal.",
+        description: "Tell us how to connect with you and our team will reach out to share how we work with real estate agents.",
         initialValues,
         entityId: community.id,
         category: 'community',
