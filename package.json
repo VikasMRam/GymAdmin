@@ -17,6 +17,7 @@
     "test": "lerna run --stream test",
     "format": "prettier-eslint --print-width 120 --ignore **/node_modules/** \"$PWD/packages/*/src/**/*.js\"",
     "start:web": "npm --prefix=packages/web run ${SLY_ENV:-dev}",
+    "production": "npm --prefix=packages/web run ${SLY_ENV:-dev}",
     "start:mobile": "npm --prefix=packages/mobile run ${PLATFORM:-ios}",
     "start:storybook": "npm --prefix=packages/storybook start",
     "start:storybook:mobile": "npm --prefix=packages/storybook run start:mobile:${PLATFORM:-ios}"
