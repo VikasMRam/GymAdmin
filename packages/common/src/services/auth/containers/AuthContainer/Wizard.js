@@ -7,6 +7,7 @@ import ResetPasswordFormContainer from 'sly/common/services/auth/containers/Rese
 import SignupFormContainer from 'sly/common/services/auth/containers/SignupFormContainer';
 import CustomerSignupConfirmationContainer from 'sly/common/services/auth/containers/CustomerSignupConfirmationContainer';
 import ProviderSignupFormContainer from 'sly/common/services/auth/containers/ProviderSignupFormContainer';
+import ProviderFindCommunityContainer from 'sly/common/services/auth/containers/ProviderFindCommunityContainer';
 
 const Wizard = ({
   formName, initialStep, handleAuthenticateSuccess, authenticated, onSignupSuccess,
@@ -57,7 +58,14 @@ const Wizard = ({
           name="ProviderSignup"
           onLoginClicked={() =>
             ((authenticated && authenticated.options ? delete authenticated.options.provider : true) && goto('Login'))}
-          onSubmit={() => (goto('ProviderFindCommunity'))}
+          onSubmit={() => goto('ProviderFindCommunity')}
+        />
+        <WizardStep
+          component={ProviderFindCommunityContainer}
+          name="ProviderFindCommunity"
+          onClaimApproved={() => goto('ProviderConfirmation')}
+          onApprovalNeeded={() => goto('ProviderClaimNeedsApproval')}
+          onNotFound={() => goto('ProviderCommunityNotFound')}
         />
       </WizardSteps>
     )}
