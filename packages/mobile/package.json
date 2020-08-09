@@ -18,7 +18,7 @@
     "link": "react-native link",
     "clean-build:android": "cd android && ./gradlew --stop && ./gradlew clean && ./gradlew cleanBuildCache",
     "clean-build:ios": "rm -rf ios/build && cd ios && pod install",
-    "debug:logs:android": "react-native log-android",
+    "debug:logs:android": "NOW=$(date +\"%m-%d %H:%M:%S.000\"); adb logcat \"*:E\" -T \"$NOW\"",
     "debug:logs:ios": "react-native log-ios",
     "react-devtools": "react-devtools"
   },
