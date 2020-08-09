@@ -17,7 +17,7 @@
     "start:mobile:android": "../../node_modules/.bin/npm-run-all -p start:mobile context:mobile:storybook:android",
     "start:mobile:ios": "../../node_modules/.bin/npm-run-all -p start:mobile context:mobile:storybook:ios"
   },
-  "devDependencies": {
+  "dependencies": {
     "@storybook/addon-actions": "5.3.19",
     "@storybook/addons": "5.3.19",
     "@storybook/react": "5.3.19",
