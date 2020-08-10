@@ -12,20 +12,20 @@ const ProviderConfirmation = ({ mode, onSubmit }) => (
         <Paragraph>
           In the meantime you can begin editing this community&apos;s details. Please note: any details will only become public after being approved by Seniorly
         </Paragraph>
-        <Button pad="large" width="100%" href={DASHBOARD_COMMUNITIES_PATH}>Finish</Button>
+        <Button width="100%" href={DASHBOARD_COMMUNITIES_PATH}>Finish</Button>
       </Block>
     }
     {mode === 'NotFound' &&
       <Block align="center">
         <Heading pad="large">You can add the community in your dashboard.</Heading>
         <Paragraph>Please note: any details will only become public after being approved by Seniorly</Paragraph>
-        <Button pad="large" width="100%" href={DASHBOARD_COMMUNITIES_PATH}>Continue</Button>
+        <Button width="100%" href={DASHBOARD_COMMUNITIES_PATH}>Continue</Button>
       </Block>
     }
     {mode === 'NeedApproval' &&
       <Block align="center">
         <Heading pad="large">Thank you. Our team will contact you to verify your details to complete the process.</Heading>
-        <Button pad="large" width="100%" onClick={onSubmit}>Finish</Button>
+        <Button width="100%" onClick={onSubmit}>Finish</Button>
       </Block>
     }
   </>

@@ -1,11 +1,18 @@
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import styles from './styles';
-
 import { palette, key } from 'sly/common/components/themes';
-
-export const defaultBorderProp = 'regular';
+import {
+  withSpacing,
+  withBorder,
+  withDisplay,
+  withText,
+  withColor,
+  withWidth,
+  withHeight,
+  withClamping,
+  withCursor,
+} from 'sly/common/components/helpers';
 
 const hoverBackgroundColor = ({
   disabled, ghost, transparent, secondary, background,
@@ -28,14 +35,21 @@ const activeForegroundColor = ({ disabled, ghost }) =>
   !disabled && ghost && palette('filler');
 
 const StyledButton = styled.button`
-  ${styles}
+  ${withText}
+  ${withColor}
+  ${withBorder}
+  ${withSpacing}
+  ${withWidth}
+  ${withHeight}
+  ${withClamping}
+  ${withCursor}
+  display: inline-block;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
   appearance: none;
   user-select: none;
   pointer-events: ${ifProp('disabled', 'none', 'auto')};
-  cursor: ${ifProp('disabled', 'default', 'pointer')};
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   transition: background ${key('transitions.default')}, color ${key('transitions.default')},
     border-color ${key('transitions.default')};
 
@@ -52,6 +66,8 @@ const StyledButton = styled.button`
   &:focus {
     outline: none;
   }
+  ${withDisplay}
 `;
+// put withDisplay last to make sure that this display styles are always first priority
 
 export default StyledButton;

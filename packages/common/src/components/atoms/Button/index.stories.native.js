@@ -30,6 +30,8 @@ storiesOf('Common|Atoms/Button', module)
     </Button>
   ))
   .add('jumbo', () => <Button kind="jumbo">Hello</Button>)
+  .add('label', () => <Button kind="label">Hello</Button>)
+  .add('clamping of long text', () => <Button>HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello HelloHelloHello</Button>)
   .add('another background', () => <Button background="danger">Hello</Button>)
   .add('another background and disabled', () => <Button disabled background="danger">Hello</Button>)
   .add('another palette', () => <Button palette="danger">Hello</Button>)

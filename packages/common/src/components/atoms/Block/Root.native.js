@@ -3,7 +3,7 @@ import { Pressable } from 'react-native';
 import styled from 'styled-components';
 import { node, any, func } from 'prop-types';
 
-import { isString } from 'sly/common/services/helpers/utils';
+import { isString, objectFilter } from 'sly/common/services/helpers/utils';
 import { Text, View } from 'sly/mobile/components/atoms';
 
 const StyledView = styled(View)`
@@ -14,6 +14,14 @@ const StyledView = styled(View)`
 const shouldWrapWithText = c =>
   isString(c) || Number.isFinite(c);
 
+const pressableProps = [
+  'onPress',
+  'onPressIn',
+  'onPressOut',
+  'onLongPress',
+  'delayLongPress',
+];
+
 export default class Root extends Component {
   static propTypes = {
     children: node,
@@ -23,11 +31,12 @@ export default class Root extends Component {
 
   withPressable(content) {
     const { onClick } = this.props;
+    const providedPressableProps = objectFilter(this.props, pressableProps);
 
-    if (onClick) {
+    if (onClick || Object.keys(providedPressableProps).length) {
       // in mobiles onPress is equivalent of onClick
       return (
-        <Pressable onPress={onClick}>
+        <Pressable onPress={onClick} {...providedPressableProps}>
           {content}
         </Pressable>
       );

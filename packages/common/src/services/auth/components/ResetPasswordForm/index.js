@@ -20,7 +20,7 @@ const ResetPasswordForm = ({
     />
     <Button
       type="submit"
-      pad={error ? 'large' : 'xLarge'}
+      pad={error ? 'large' : null}
       disabled={submitting || invalid}
       width="100%"
     >
