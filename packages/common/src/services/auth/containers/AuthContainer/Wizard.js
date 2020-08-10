@@ -74,6 +74,18 @@ const Wizard = ({
           mode="Approved"
           onSubmit={handleAuthenticateSuccess}
         />
+        <WizardStep
+          component={ProviderConfirmation}
+          name="ProviderCommunityNotFound"
+          mode="NotFound"
+          onSubmit={handleAuthenticateSuccess}
+        />
+        <WizardStep
+          component={ProviderConfirmation}
+          name="ProviderClaimNeedsApproval"
+          mode="NeedApproval"
+          onSubmit={handleAuthenticateSuccess}
+        />
       </WizardSteps>
     )}
   </WizardController>
