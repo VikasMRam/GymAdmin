@@ -105,7 +105,7 @@ export default class AssessmentWizard extends Component {
       this.skipped = true;
       return goto('Auth');
     }
-    
+
     if (currentStep === 'ResidentName') {
       this.waitForAgentMatched();
     }
@@ -120,7 +120,7 @@ export default class AssessmentWizard extends Component {
       localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
     }
     if (community) {
-      recordEntityCta(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES,community.id);
+      recordEntityCta(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES, community.id);
     }
 
     if (agentSlug) {
@@ -273,6 +273,7 @@ export default class AssessmentWizard extends Component {
                 numberOfPeople={data.lookingFor === 'parents' || data.lookingFor === 'myself-and-spouse' ? 2 : 1}
                 hasTip={hasTip}
                 onSkipClick={next}
+                whatToDoNext={data.whatToDoNext}
               />
               <WizardStep
                 component={End}
