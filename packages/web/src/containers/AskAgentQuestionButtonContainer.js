@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { string, bool, object } from 'prop-types';
+import { string, bool, node } from 'prop-types';
+
 import communityPropType from 'sly/common/propTypes/community';
 import { isBrowser } from 'sly/web/config';
 import { Button } from 'sly/web/components/atoms';
@@ -13,10 +14,11 @@ export default class AskAgentQuestionButtonContainer extends Component {
     type: string,
     ctaText: string,
     ackCTA: bool,
+    children: node,
   };
 
   render() {
-    const { ackCTA, community={}, type } = this.props;
+    const { ackCTA, community = {}, type, children } = this.props;
     let { ctaText } = this.props;
     if (!isBrowser) {
 
@@ -32,7 +34,11 @@ export default class AskAgentQuestionButtonContainer extends Component {
 
     return (
       <AskAgentQuestionContainer type={type} entityId={community.id}>
-        {askAgent => <Button {...this.props} onClick={askAgent} ghost={requestSent} disabled={requestSent}>{ctaText}</Button>}
+        {askAgent => (
+          <Button {...this.props} onClick={askAgent} ghost={requestSent} disabled={requestSent}>
+            {ctaText || children}
+          </Button>
+        )}
       </AskAgentQuestionContainer>
     );
   }
