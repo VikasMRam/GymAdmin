@@ -9,7 +9,7 @@ const defaultProps = {
 };
 const wrap = (props = {}) => shallow(<ResetPasswordForm {...defaultProps} {...props} />);
 
-describe('ResetPasswordForm', () => {
+describe('ResetPasswordForm|Web', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ childred: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();

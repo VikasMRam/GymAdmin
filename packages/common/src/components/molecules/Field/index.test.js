@@ -7,7 +7,7 @@ import MultipleChoice from 'sly/web/components/molecules/MultipleChoice';
 
 const wrap = (props = {}) => shallow(<Field name="name" {...props} />);
 
-describe('Field', () => {
+describe('Field|Web', () => {
   it('renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBeTruthy();

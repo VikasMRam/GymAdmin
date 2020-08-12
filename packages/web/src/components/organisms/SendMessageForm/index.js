@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { getKey, size } from 'sly/common/components/themes';
 import { Block, Button } from 'sly/web/components/atoms';
 import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const TwoColumWrapper = styled.div`

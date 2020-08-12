@@ -56,7 +56,7 @@ describe('ConversationMessages', () => {
     });
     expect(renderedHrs).toHaveLength(dateHrs.length);
     renderedHrs.forEach((hr, i) => {
-      expect(hr.prop('text')).toBe(dateHrs[i]);
+      expect(hr.prop('children')).toBe(dateHrs[i]);
     });
   });
 });

@@ -6,8 +6,8 @@ import { ifProp } from 'styled-tools';
 import { size, palette } from 'sly/common/components/themes';
 import { budgets, sizes, getFiltersApplied, tocs } from 'sly/web/services/helpers/search';
 import withGenerateFilterLinkPath from 'sly/web/services/search/withGenerateFilterLinkPath';
-import IconButton from 'sly/web/components/molecules/IconButton';
-import { Button } from 'sly/web/components/atoms';
+import { Button } from 'sly/common/components/atoms';
+import IconButton from 'sly/common/components/molecules/IconButton';
 
 const SectionWrapper = styled.div`
   display: flex;

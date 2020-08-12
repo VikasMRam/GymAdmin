@@ -8,8 +8,8 @@ import { spacing as spacingPropType } from 'sly/common/propTypes/spacing';
 import { size, palette } from 'sly/common/components/themes';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import { Block } from 'sly/web/components/atoms';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import { Block } from 'sly/common/components/atoms';
+import IconButton from 'sly/common/components/molecules/IconButton';
 
 const background = ({ type }) => palette(type, 'base');
 

@@ -8,8 +8,8 @@ import DashboardAgentsIndexSectionContainer from 'sly/web/containers/dashboard/a
 import { Datatable } from 'sly/web/services/datatable';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import Role from 'sly/web/components/common/Role';
-import IconButton from 'sly/web/components/molecules/IconButton';
-import { Heading } from 'sly/web/components/atoms';
+import { Heading } from 'sly/common/components/atoms';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import pad from 'sly/web/components/helpers/pad';
 
 const Wrapper = styled.div`

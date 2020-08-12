@@ -5,8 +5,8 @@ import { Field } from 'redux-form';
 
 import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import { Block } from 'sly/web/components/atoms';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import { Block } from 'sly/common/components/atoms';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 

@@ -14,7 +14,7 @@ const phoneFormatted = '(234) 567-8901';
 
 const wrap = (props = {}) => shallow(<LoginWithPasswordForm {...defaultProps} {...props} />);
 
-describe('LoginWithPasswordForm', () => {
+describe('LoginWithPasswordForm|Web', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ childred: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();
