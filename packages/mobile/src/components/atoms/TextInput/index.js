@@ -71,13 +71,13 @@ const TextInput = ({
   textInputProps.height = size;
 
   const viewProps = {
+    ...props,
     background: textInputProps.background,
     backgroundVariation: textInputProps.backgroundVariation,
     border,
     borderPalette,
     borderVariation,
     borderRadius,
-    ...props,
   };
 
   // border radius style is not supported by TextInput.
@@ -90,7 +90,7 @@ const TextInput = ({
 };
 
 TextInput.propTypes = {
-  type: oneOf(['search', 'textarea', 'text', 'email', 'password', 'number', 'locationSearch']),
+  type: oneOf(['search', 'textarea', 'text', 'email', 'password', 'phone', 'number', 'locationSearch']),
   size: elementPropType,
   rows: number,
   disabled: bool,

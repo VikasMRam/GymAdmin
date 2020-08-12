@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
-import { Paragraph } from 'sly/web/components/atoms';
+import { Paragraph } from 'sly/common/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 

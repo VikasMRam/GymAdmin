@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 
 import { size } from 'sly/common/components/themes';
+import { Hr, Block } from 'sly/common/components/atoms';
 import Rating from 'sly/web/components/molecules/Rating';
-import { Hr, Block } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;

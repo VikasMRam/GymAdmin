@@ -97,10 +97,6 @@ const HeaderMenuItem = styled(Link)`
   }
 `;
 
-const MarginnedHR = styled(Hr)`
-  margin: ${size('spacing.regular')} 0;
-`;
-
 const HeaderItems = styled.div`
   height: 80px;
   display: flex;
@@ -207,7 +203,7 @@ const Header = ({
           {mi}
         </OnlyInSmallScreen>
       ) : mi;
-      const hr = prevSection !== item.section && <MarginnedHR />;
+      const hr = prevSection !== item.section && <Hr size="regular" />;
       prevSection = item.section;
 
       return (
@@ -270,7 +266,7 @@ const Header = ({
           {smallScreenMenuItemComponents.length > 0 &&
             <OnlyInSmallScreen>
               {smallScreenMenuItemComponents}
-              <MarginnedHR />
+              <Hr size="regular" />
             </OnlyInSmallScreen>
           }
           {headerMenuItemComponents}

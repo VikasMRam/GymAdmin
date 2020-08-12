@@ -18,7 +18,8 @@ import {
 import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { getIsActiveAdult } from 'sly/web/services/helpers/community';
-import { Box, Button, Paragraph, Hr, Block, Link, Heading } from 'sly/web/components/atoms';
+import { Box, Button, Hr, Block, Heading } from 'sly/common/components/atoms';
+import { Paragraph, Link } from 'sly/web/components/atoms';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
 import {
@@ -159,11 +160,6 @@ const StickToTop = styled.div`
 const StyledIconButton = styled(IconButton)`
   font-weight: bold;
   margin-bottom: ${size('spacing.large')};
-`;
-
-const StyledHr = styled(Hr)`
-  margin-top: ${size('spacing.regular')};;
-  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const TextBlock = styled(Block)`
@@ -505,7 +501,7 @@ export default class CommunityDetailPage extends Component {
                       </StyledIconButton>)
                     )}
 
-                    <StyledHr />
+                    <Hr marginTop="regular" />
                     <TextBlock size="body">Didn't find what you are looking for? Our Senior Living Experts can help.</TextBlock>
                     <CTAWrapper>
                       <CTAButton type="resources">Ask a Question</CTAButton>

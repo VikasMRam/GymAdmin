@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { size } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { getCitySearchUrl } from 'sly/web/services/helpers/url';
-import { Button, Block, Icon, Heading, Hr } from 'sly/web/components/atoms';
+import { Button, Block, Icon, Heading, Hr } from 'sly/common/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
@@ -54,8 +54,8 @@ const Thankyou = ({
 
   return (
     <Wrapper>
-      <StyledHeading><StyledIcon icon="round-checkmark" palette="primary" size="title" />{heading}</StyledHeading>
-      <Hr noMargin />
+      <StyledHeading><StyledIcon icon="checkmark-circle" palette="primary" size="title" />{heading}</StyledHeading>
+      <Hr margin="0" />
       <StyledBlock>{subheading}</StyledBlock>
       {backToSearch}
       {onClose && <Button onClick={onClose} kind="jumbo">{doneText}</Button>}

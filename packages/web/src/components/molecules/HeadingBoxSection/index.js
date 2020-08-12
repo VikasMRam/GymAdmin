@@ -4,7 +4,7 @@ import { string, node, bool } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/common/components/themes';
-import { Heading, Hr } from 'sly/web/components/atoms';
+import { Heading, Hr } from 'sly/common/components/atoms';
 
 const filterProps = Component => ({
   hasNoBodyPadding,

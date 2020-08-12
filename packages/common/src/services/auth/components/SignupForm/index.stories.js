@@ -9,13 +9,33 @@ import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const SignupFormContainer = reduxForm({
   form: 'SignupForm',
-  destroyOnUnmount: false,
 })(SignupForm);
 
-storiesOf('Organisms|SignupForm', module)
+storiesOf('Common|Services/Auth/SignupForm', module)
   .add('default', () => (
     <SignupFormContainer
       handleSubmit={withPreventDefault(action('form submitted'))}
       onLoginClicked={withPreventDefault(action('login clicked'))}
+    />
+  ))
+  .add('hasProviderSignup', () => (
+    <SignupFormContainer
+      handleSubmit={withPreventDefault(action('form submitted'))}
+      onLoginClicked={withPreventDefault(action('login clicked'))}
+      hasProviderSignup={false}
+    />
+  ))
+  .add('heading', () => (
+    <SignupFormContainer
+      handleSubmit={withPreventDefault(action('form submitted'))}
+      onLoginClicked={withPreventDefault(action('login clicked'))}
+      heading="Custom Heading"
+    />
+  ))
+  .add('submitButtonText', () => (
+    <SignupFormContainer
+      handleSubmit={withPreventDefault(action('form submitted'))}
+      onLoginClicked={withPreventDefault(action('login clicked'))}
+      submitButtonText="Custom button text"
     />
   ));

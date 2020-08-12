@@ -5,6 +5,13 @@ export const objectMap = (obj, fn) =>
     ),
   );
 
+export const objectFilter = (obj, allowed = []) => Object.keys(obj)
+  .filter(key => Array.isArray(allowed) ? allowed.includes(key) : allowed === key)
+  .reduce((acc, key) => {
+    acc[key] = obj[key];
+    return acc;
+  }, {});
+
 export const isString = str => typeof str === 'string' || str instanceof String;
 
 export const isBoolean = val => typeof val === 'boolean';

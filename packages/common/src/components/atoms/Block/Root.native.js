@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component, Children } from 'react';
+import { Pressable } from 'react-native';
 import styled from 'styled-components';
-import { node, any } from 'prop-types';
+import { node, any, func } from 'prop-types';
 
-import { isString } from 'sly/common/services/helpers/utils';
+import { isString, objectFilter } from 'sly/common/services/helpers/utils';
 import { Text, View } from 'sly/mobile/components/atoms';
 
 const StyledView = styled(View)`
@@ -13,25 +14,61 @@ const StyledView = styled(View)`
 const shouldWrapWithText = c =>
   isString(c) || Number.isFinite(c);
 
-const Root = (props) => {
-  if (shouldWrapWithText(props.children)) {
-    return <Text {...props} />;
+const pressableProps = [
+  'onPress',
+  'onPressIn',
+  'onPressOut',
+  'onLongPress',
+  'delayLongPress',
+];
+
+export default class Root extends Component {
+  static propTypes = {
+    children: node,
+    style: any,
+    onClick: func,
+  };
+
+  withPressable(content) {
+    const { onClick } = this.props;
+    const providedPressableProps = objectFilter(this.props, pressableProps);
+
+    if (onClick || Object.keys(providedPressableProps).length) {
+      // in mobiles onPress is equivalent of onClick
+      return (
+        <Pressable onPress={onClick} {...providedPressableProps}>
+          {content}
+        </Pressable>
+      );
+    }
+
+    return content;
   }
-  // wrap all children with Text, if required
-  if (Array.isArray(props.children)) {
-    return (
-      <StyledView style={props.style}>
-        {props.children.map(c => shouldWrapWithText(c) ? <Text key={c}>{c}</Text> : c)}
-      </StyledView>
-    );
+
+  render() {
+    const { children, style } = this.props;
+    const allChildrenText =
+      Children.toArray(children).reduce((acc, c) => acc && shouldWrapWithText(c), true);
+
+    if (shouldWrapWithText(children) || allChildrenText) {
+      let newChildren = children;
+
+      // if all children are Text, concat into one
+      if (allChildrenText) {
+        newChildren = Children.toArray(children).join('');
+      }
+
+      return this.withPressable(<Text {...this.props}>{newChildren}</Text>);
+    }
+    // wrap all children with Text, if required
+    if (Array.isArray(children)) {
+      return this.withPressable(
+        <StyledView style={style}>
+          {children.map(c => shouldWrapWithText(c) ? <Text key={c}>{c}</Text> : c)}
+        </StyledView>,
+      );
+    }
+
+    return this.withPressable(<StyledView {...this.props} />);
   }
-
-  return <StyledView {...props} />;
-};
-
-Root.propTypes = {
-  children: node,
-  style: any,
-};
-
-export default Root;
+}

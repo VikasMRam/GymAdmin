@@ -1,10 +1,11 @@
 import React from 'react';
 import { string, number, bool, oneOfType } from 'prop-types';
 import styled, { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 
+import { key, palette, getThemePropType, getKey } from 'sly/common/components/themes';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { key, getThemePropType, getKey } from 'sly/common/components/themes';
 import Block from 'sly/common/components/atoms/Block';
 
 const iconSize = ({ size: s }) => {
@@ -35,6 +36,9 @@ const Wrapper = styled(Block)`
     height: ${iconSize};
     min-width: ${iconSize};
     display: block;
+    ${ifProp('palette', css`
+      fill: ${palette('base')};
+    `)}
   }
 `;
 

@@ -118,10 +118,7 @@ const Field = ({
           flexBasis={wideWidth ? getKey('sizes.tabletLayout.col2') : undefined}
         >
           {label &&
-            <Label
-              htmlFor={inputProps.id}
-              pad={renderInputFirst ? null : undefined}
-            >
+            <Label htmlFor={inputProps.id}>
               {label}
               {required && <Block display="inline" palette="danger">*</Block>}
             </Label>
@@ -148,7 +145,7 @@ const Field = ({
       {!renderInputFirst && labelSection}
       <InputBlock
         position="relative"
-        pad={!hideErrors && message && (invalid || warning) && !renderInputFirst ? 'regular' : 0}
+        pad={!hideErrors && message && (invalid || warning) && !renderInputFirst ? 'regular' : undefined}
         wideWidth={wideWidth}
         display="flex"
         flexGrow={0}
@@ -165,8 +162,8 @@ const Field = ({
         >
           <InputComponent
             {...inputProps}
-            margin={type === 'checkbox' && !!options === true ? [0, 'large'] : 0}
-            pad={type === 'boxChoice' ? 'large' : 0}
+            margin={type === 'checkbox' && !!options === true ? [0, 'large'] : undefined}
+            pad={type === 'boxChoice' ? 'large' : undefined}
             lastChildProps={{ pad: 0 }}
             flex={1}
           />
@@ -208,7 +205,7 @@ const Field = ({
           palette={invalid ? 'danger' : 'warning'}
           message={message}
           wideWidth={wideWidth}
-          marginLeft={wideWidth ? 'large' : 0}
+          marginLeft={wideWidth ? 'large' : undefined}
         />
       )}
     </Wrapper>

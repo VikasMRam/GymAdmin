@@ -6,10 +6,9 @@
   "command": {
     "bootstrap": {
       "nohoist": [
-        "**/*react-native*",
-        "**/*react-native*/**",
-        "**/*metro*",
-        "**/*metro*/**"
+        "*react-native*",
+        "@storybook/react-native*",
+        "*metro*"
       ]
     }
   }

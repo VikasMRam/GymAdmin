@@ -35,7 +35,7 @@ const LoginForm = ({
     <ButtonLink pad="large" align="center" palette="primary" size="caption" onClick={onResetPasswordClick}>
       Reset password
     </ButtonLink>
-    <Block align="center" size="caption">
+    <Block align="center" direction="row" size="caption">
       Don&apos;t have an account?&nbsp;&nbsp;
       <ButtonLink palette="primary" onClick={onRegisterClick}>Sign up</ButtonLink>
     </Block>

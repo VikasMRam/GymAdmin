@@ -1,41 +1,15 @@
 import React, { Component } from 'react';
-import { Platform, TouchableNativeFeedback } from 'react-native';
 import { string, bool } from 'prop-types';
-import styled from 'styled-components';
 
-import styles, { textStyles } from './styles';
+import { Block } from 'sly/common/components/atoms';
 
-import { getKey } from 'sly/common/components/themes';
-import { Text, View } from 'sly/mobile/components/atoms';
+const systemButtonOpacity = 0.7;
 
-export const defaultBorderProp = 'large';
-
-const StyledText = styled(Text)`
-  ${textStyles}
-  background: transparent;
-  text-align: center;
-`;
-
-const StyledTouchableNativeFeedbackView = styled(View)`
-  ${styles}
-`;
-
-const StyledTouchableHighlight = styled.TouchableHighlight`
-  ${styles}
-`;
-
-const activeBackgroundColor = ({ disabled, ghost, transparent, background }) =>
-  !disabled && !ghost && !transparent && getKey('palette', background, 'filler');
-
-const systemButtonOpacity = 0.2;
-
-const touchablePropsToPreserve = [
+const pressablePropsToPreserve = [
   'onPress',
   'onPressIn',
   'onPressOut',
   'onLongPress',
-  'delayPressIn',
-  'delayPressOut',
   'delayLongPress',
 ];
 
@@ -44,87 +18,79 @@ export default class Root extends Component {
     children: string,
     disabled: bool,
     selectable: bool,
+    palette: string,
+    variation: string,
+    clamped: bool,
   };
 
   static defaultProps = {
     selectable: false,
   };
 
-  initialTouchableProps = {};
+  initialPressableProps = {};
 
   constructor(props) {
     super(props);
 
     Object.keys(props).forEach((p) => {
-      if (touchablePropsToPreserve.includes(p)) {
-        this.initialTouchableProps[p] = props[p];
+      if (pressablePropsToPreserve.includes(p)) {
+        this.initialPressableProps[p] = props[p];
       }
     });
   }
 
-  computeActiveOpacity() {
-    return this.props.disabled ? 1 : systemButtonOpacity;
+  computeOpacity() {
+    return this.props.disabled ? systemButtonOpacity : 1;
   }
 
-  getTouchableProps() {
+  getPressableProps() {
     const { disabled } = this.props;
-    const touchableProps = {
-      activeOpacity: this.computeActiveOpacity(),
+    const pressableProps = {
+      opacity: this.computeOpacity(),
     };
 
     if (disabled) {
-      touchableProps.onPress = null;
-      touchableProps.onPressIn = null;
-      touchableProps.onPressOut = null;
-      touchableProps.onLongPress = null;
-      touchableProps.delayPressIn = null;
-      touchableProps.delayPressOut = null;
-      touchableProps.delayLongPress = null;
+      pressableProps.onPress = null;
+      pressableProps.onPressIn = null;
+      pressableProps.onPressOut = null;
+      pressableProps.onLongPress = null;
+      pressableProps.delayLongPress = null;
     } else {
-      Object.keys(this.initialTouchableProps).forEach((p) => {
-        touchableProps[p] = this.initialTouchableProps[p];
+      Object.keys(this.initialPressableProps).forEach((p) => {
+        pressableProps[p] = this.initialPressableProps[p];
       });
     }
 
-    return touchableProps;
+    return pressableProps;
   }
 
   render() {
-    const { selectable, ...props } = this.props;
-    const touchableProps = this.getTouchableProps();
+    const {
+      selectable,
+      palette,
+      variation,
+      children,
+      clamped,
+      ...props
+    } = this.props;
+    const pressableProps = this.getPressableProps();
 
-    // currentcolor is not supported by native, so replace it with
-    // palette which is the current text colour
-    if (props.borderPalette === 'currentcolor') {
-      props.borderPalette = props.palette;
-    }
     props.selectable = selectable;
 
-    if (Platform.OS === 'ios') {
-      touchableProps.underlayColor = activeBackgroundColor(props);
-
-      return (
-        <StyledTouchableHighlight
-          {...props}
-          {...touchableProps}
-          accessibilityLabel={props.children}
-          accessibilityRole="button"
-        >
-          <StyledText {...props} />
-        </StyledTouchableHighlight>
-      );
-    }
-
     return (
-      <StyledTouchableNativeFeedbackView {...props}>
-        <TouchableNativeFeedback
-          {...touchableProps}
-          accessibilityLabel={props.children}
-          accessibilityRole="button"
-        >
-          <StyledText {...props} />
-        </TouchableNativeFeedback>
-      </StyledTouchableNativeFeedbackView>
+      <Block
+        width="100%"
+        {...props}
+        {...pressableProps}
+        // currentcolor is not supported by native, so replace it with
+        // palette which is the current text colour
+        borderPalette={props.borderPalette === 'currentcolor' ? palette : props.borderPalette}
+        borderVariation={props.borderPalette === 'currentcolor' ? variation : props.borderVariation}
+      >
+        <Block numberOfLines={1} width="100%" align="center" palette={palette} variation={variation}>
+          {children}
+        </Block>
+      </Block>
     );
   }
 }

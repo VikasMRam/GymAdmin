@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { object, string, arrayOf } from 'prop-types';
 
 import { size, palette } from 'sly/common/components/themes';
-import { Heading, Link, Paragraph } from 'sly/web/components/atoms';
+import { Heading, Paragraph } from 'sly/common/components/atoms';
+import { Link } from 'sly/web/components/atoms';
 import IconButton from 'sly/web/components/molecules/IconButton';
 
 const StyledIconButton = styled(IconButton)`
@@ -26,10 +27,6 @@ const NextHeader = styled.div`
   padding: ${size('spacing.large')};
 `;
 
-const NextParagraph = styled(Paragraph)`
-    color: ${palette('white', 'base')};
-`;
-
 const NextHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
   color: ${palette('white', 'base')};
@@ -47,9 +44,9 @@ const NextSteps = ({
         <NextHeading level="title" size="title" ref={nextRef} >
           Next Steps
         </NextHeading>
-        <NextParagraph>
+        <Paragraph palette="white">
           {label}
-        </NextParagraph>
+        </Paragraph>
       </NextHeader>
       {links.map(p => (
         <StyledIconButton

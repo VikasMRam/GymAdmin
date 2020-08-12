@@ -3,11 +3,7 @@ import styled from 'styled-components';
 import { string } from 'prop-types';
 
 import { size } from 'sly/common/components/themes';
-import { Box, Paragraph, Block } from 'sly/web/components/atoms';
-
-const StyledBlock = styled(Block)`
-  margin-bottom: ${size('spacing.regular')};
-`;
+import { Box, Paragraph, Block } from 'sly/common/components/atoms';
 
 const StyledBox = styled(Box)`
   padding:  ${size('spacing.xLarge')};
@@ -19,7 +15,7 @@ const StyledBox = styled(Box)`
 
 const FactBox = ({ title, description }) => (
   <StyledBox>
-    <StyledBlock size="hero" palette="primary" variation="base">{title}</StyledBlock>
+    <Block size="hero" palette="primary" variation="base" pad="regular">{title}</Block>
     <Paragraph>{description}</Paragraph>
   </StyledBox>
 );

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { bool, string, oneOf, object } from 'prop-types';
 
 import RRLink from './RRLink';
-import Root, { defaultBorderProp } from './Root';
+import Root from './Root';
 
+import { getKey } from 'sly/common/components/themes';
 import { isReactNative } from 'sly/common/constants/utils';
 import { routes as routesPropType } from 'sly/web/propTypes/routes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
@@ -63,13 +64,17 @@ export default class Button extends Component {
     background: 'primary',
     kind: 'regular',
     type: 'button',
-    border: defaultBorderProp,
+    border: 'regular',
     borderPalette: 'transparent',
     borderVariation: 'stroke',
     borderRadius: 'small',
     size: 'caption',
     lineHeight: 'title',
     padding: ['medium', 'large'],
+    weight: 'medium',
+    textDecoration: 'none',
+    cursor: 'pointer',
+    clamped: true,
   };
 
   static contextTypes = {
@@ -114,6 +119,7 @@ export default class Button extends Component {
       props.padding = ['regular', 'large'];
     } else if (kind === 'label') {
       props.padding = ['0', 'large'];
+      props.height = getKey('sizes.element.regular');
     }
     if (ghost) {
       if (secondary) {
@@ -151,6 +157,10 @@ export default class Button extends Component {
       props.backgroundVariation = 'background';
     } else if (disabled) {
       props.backgroundVariation = 'filler';
+    }
+
+    if (disabled) {
+      props.cursor = 'not-allowed';
     }
 
     return props;

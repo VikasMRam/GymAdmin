@@ -20,7 +20,8 @@ import {
   makeArticle,
   makeTable,
 } from 'sly/web/components/templates/HubPageTemplate';
-import { Heading, Paragraph, Link } from 'sly/web/components/atoms';
+import { Heading, Paragraph } from 'sly/common/components/atoms';
+import { Link } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 
 const StyledLink = styled(Link)`

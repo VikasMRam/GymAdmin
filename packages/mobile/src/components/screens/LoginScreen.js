@@ -14,6 +14,7 @@ export default class LoginScreen extends Component {
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
           <ScrollView
+            style={{ margin: 10 }}
             contentInsetAdjustmentBehavior="automatic"
           >
             <AuthContainer

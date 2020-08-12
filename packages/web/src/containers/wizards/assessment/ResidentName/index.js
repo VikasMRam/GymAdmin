@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
-import { func, object } from 'prop-types';
+import { func, object, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { query } from 'sly/web/services/api';
@@ -20,7 +20,17 @@ export default class ResidentNameFormContainer extends Component {
     createAction: func.isRequired,
     location: object.isRequired,
     onSubmit: func.isRequired,
+    whatToDoNext: string,
+    onSkipClick: func.isRequired,
   };
+
+  componentDidMount() {
+    const { whatToDoNext, onSkipClick } = this.props;
+
+    if (whatToDoNext === 'no-thanks') {
+      onSkipClick();
+    }
+  }
 
   handleSubmit = (data) => {
     const { createAction, location: { pathname }, onSubmit } = this.props;
