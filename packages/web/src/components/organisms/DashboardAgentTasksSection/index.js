@@ -15,7 +15,7 @@ import Pagination from 'sly/web/components/molecules/Pagination';
 import Tabs from 'sly/web/components/molecules/Tabs';
 import Tab from 'sly/web/components/molecules/Tab';
 import Th from 'sly/web/components/molecules/Th';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import TaskRowCard from 'sly/web/components/organisms/TaskRowCard';
 import AddOrEditTaskFormContainer from 'sly/web/containers/AddOrEditTaskFormContainer';
 import {

@@ -9,7 +9,7 @@ import messagePropType from 'sly/common/propTypes/conversation/conversationMessa
 import participantPropType from 'sly/common/propTypes/conversation/conversationParticipant';
 import pad from 'sly/web/components/helpers/pad';
 import { isAfter, isSameDay } from 'sly/web/services/helpers/date';
-import HrWithText from 'sly/web/components/molecules/HrWithText';
+import HrWithText from 'sly/common/components/molecules/HrWithText';
 import Message from 'sly/web/components/molecules/Message';
 
 const Wrapper = styled.div`
@@ -77,9 +77,7 @@ const ConversationMessages = ({
     if ((prevMessage && !isSameDay(prevMessage.createdAt, message.createdAt)) ||
       !prevMessage) {
       const dayName = getDateText(message.createdAt);
-      const hrProps = {
-        text: dayName,
-      };
+      const hrProps = {};
       if (!addedNewMarker && isAfter(message.createdAt, lastMessageReadAt) && ((nextMessage &&
         isAfter(nextMessage.createdAt, lastMessageReadAt)) || messages.length === 1)) {
         hrProps.badgeText = 'New';
@@ -88,7 +86,7 @@ const ConversationMessages = ({
         hrProps.hrRef = newMessageRef;
         addedNewMarker = true;
       }
-      messageComponents.push(<PaddedHrWithText key={`hr-${message.id}`} {...hrProps} />);
+      messageComponents.push(<PaddedHrWithText key={`hr-${message.id}`} {...hrProps}>{dayName}</PaddedHrWithText>);
     }
     if (lastMessageReadAt && !addedNewMarker && isAfter(message.createdAt, lastMessageReadAt)) {
       const hrProps = {

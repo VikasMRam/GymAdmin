@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, bool } from 'prop-types';
+import { string, bool, node } from 'prop-types';
 
 import { Block } from 'sly/common/components/atoms';
 
@@ -15,7 +15,7 @@ const pressablePropsToPreserve = [
 
 export default class Root extends Component {
   static propTypes = {
-    children: string,
+    children: node,
     disabled: bool,
     selectable: bool,
     palette: string,

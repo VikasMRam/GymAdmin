@@ -1,12 +1,15 @@
 import React from 'react';
 import { Image } from 'react-native';
 import { string, number, bool } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import iconPaths from './iconPaths';
 
 import { getKey, palette } from 'sly/common/components/themes';
 import Block from 'sly/common/components/atoms/Block';
+
+const iconsWithoutPalette = ['facebook-f', 'google'];
 
 const iconSize = ({ size }) => {
   const textSize = getKey(`sizes.text.${size}`);
@@ -28,9 +31,12 @@ const Wrapper = styled(Block)`
 const StyledImage = styled(Image)`
   ${getTransform};
   align-self: center;
-  tintColor: ${palette('base')};
   min-width: ${iconSize};
-  height: ${iconSize};
+  min-height: ${iconSize};
+
+  ${ifProp('palette', css`
+    tintColor: ${palette('base')};
+  `)}
 `;
 
 const Icon = styled(({ icon, palette, flip, rotate, size, ...props }) => {
@@ -42,7 +48,13 @@ const Icon = styled(({ icon, palette, flip, rotate, size, ...props }) => {
 
   return (
     <Wrapper {...props} size={size} data-cy={icon}>
-      <StyledImage flip={flip} rotate={rotate} palette={palette} source={source} size={size} />
+      <StyledImage
+        flip={flip}
+        rotate={rotate}
+        palette={iconsWithoutPalette.includes(icon) ? null : palette}
+        source={source}
+        size={size}
+      />
     </Wrapper>
   );
 })``;
@@ -60,7 +72,6 @@ Icon.defaultProps = {
   rotate: 0,
   size: 'body',
   align: 'center',
-  palette: 'slate',
 };
 
 export default Icon;

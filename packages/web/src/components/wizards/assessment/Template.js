@@ -4,8 +4,8 @@ import { func, string, bool } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/common/components/themes';
-import { Button } from 'sly/web/components/atoms';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import { Button } from 'sly/common/components/atoms';
+import IconButton from 'sly/common/components/molecules/IconButton';
 
 export const Wrapper = styled.section`
   margin: auto;

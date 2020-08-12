@@ -15,7 +15,7 @@ import Tab from 'sly/web/components/molecules/Tab';
 import clientPropType, { meta as clientMetaPropType } from 'sly/common/propTypes/client';
 import { AGENT_DASHBOARD_FAMILIES_PATH, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED, WON } from 'sly/web/constants/dashboardAppPaths';
 import Th from 'sly/web/components/molecules/Th';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import ClientRowCard from 'sly/web/components/organisms/ClientRowCard';
 import Role from 'sly/web/components/common/Role';
 import AddFamilyFormContainer from 'sly/web/containers/dashboard/AddFamilyFormContainer';

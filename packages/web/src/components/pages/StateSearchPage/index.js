@@ -13,7 +13,7 @@ import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchLis
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import { getTocSeoLabel } from 'sly/web/services/helpers/search';
 import SearchMap from 'sly/web/components/organisms/SearchMap';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import CollapsibleSection from 'sly/web/components/molecules/CollapsibleSection';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';

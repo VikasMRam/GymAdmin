@@ -40,7 +40,7 @@ import {
 import { Block, Button, Link } from 'sly/web/components/atoms';
 import ConversationMessages from 'sly/web/components/organisms/ConversationMessages';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import BackLink from 'sly/web/components/molecules/BackLink';
 import SendMessageFormContainer from 'sly/web/containers/SendMessageFormContainer';

@@ -1,50 +1,20 @@
 import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
-import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
-import pad from 'sly/web/components/helpers/pad';
-import fullWidth from 'sly/web/components/helpers/fullWidth';
-import cursor from 'sly/web/components/helpers/cursor';
-import HrWithText from 'sly/web/components/molecules/HrWithText';
-import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
+import { Heading, Button, Block, Form } from 'sly/common/components/atoms';
+import HrWithText from 'sly/common/components/molecules/HrWithText';
+// import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
-import { Heading, Button, Block, Icon } from 'sly/common/components/atoms';
-import { textAlign } from 'sly/web/components/helpers/text';
-
-const StyledHeading = textAlign(pad(Heading));
-
-const FullWidthButton = fullWidth(Button);
-FullWidthButton.displayName = 'FullWidthButton';
-
-const LargePaddedFullWidthButton = pad(FullWidthButton, 'large');
-LargePaddedFullWidthButton.displayName = 'LargePaddedFullWidthButton';
-
-const StyledIcon = styled(Icon)`
-  margin-right: ${size('spacing.regular')};
-`;
-
-const SocialLoginError = pad(Block, 'large');
-SocialLoginError.displayName = 'SocialLoginError';
-
-const LoginWithPassword = cursor(textAlign(Block));
-LoginWithPassword.displayName = 'LoginWithPassword';
-
-const Error = pad(Block);
-Error.displayName = 'Error';
-
-const PaddedTosAndPrivacy = pad(textAlign(TosAndPrivacy), 'xxLarge');
-
-const getSubmitButton = (error, props = {}) =>
-  error ? <LargePaddedFullWidthButton {...props} /> : <FullWidthButton {...props} />;
+import ButtonLink from 'sly/common/components/molecules/ButtonLink';
+import IconButton from 'sly/common/components/molecules/IconButton';
 
 const CommunityManagerRegisterForm = ({
   handleSubmit, submitting, invalid, error, onFacebookSigninClick, onGoogleSigninClick,
-  socialLoginError, heading,
+  socialLoginError, heading, onEmailPassLoginClick,
 }) => (
-  <form onSubmit={handleSubmit}>
-    <StyledHeading size="subtitle">{heading}</StyledHeading>
+  <Form onSubmit={handleSubmit}>
+    <Heading pad="xLarge" align="center" size="subtitle">{heading}</Heading>
     <Field
       name="name"
       type="text"
@@ -57,19 +27,46 @@ const CommunityManagerRegisterForm = ({
       placeholder="Enter your email"
       component={ReduxField}
     />
-    {getSubmitButton(error, { children: 'Continue', type: 'submit', disabled: submitting || invalid })}
-    {error && <Error palette="danger" size="caption">{error}</Error>}
-    <HrWithText text="or" />
-    <LargePaddedFullWidthButton ghost palette="slate" borderPalette="grey" onClick={onFacebookSigninClick}>
-      <StyledIcon icon="facebook-f" size="caption" /> Continue with Facebook
-    </LargePaddedFullWidthButton>
-    <LargePaddedFullWidthButton ghost palette="slate" borderPalette="grey" onClick={onGoogleSigninClick}>
-      <StyledIcon icon="google" size="caption" /> Continue with Google
-    </LargePaddedFullWidthButton>
-    {socialLoginError && <SocialLoginError palette="danger" size="caption">{socialLoginError}</SocialLoginError>}
-    <PaddedTosAndPrivacy />
-    <LoginWithPassword onClick={() => {}} palette="primary" size="caption" weight="medium">Log in instead</LoginWithPassword>
-  </form>
+    <Button
+      type="submit"
+      pad={error ? 'large' : undefined}
+      disabled={submitting || invalid}
+      width="100%"
+    >
+      Continue
+    </Button>
+    {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
+    <HrWithText>or</HrWithText>
+    <IconButton
+      icon="facebook-f"
+      width="100%"
+      pad="large"
+      borderPalette="grey"
+      palette="slate"
+      onClick={onFacebookSigninClick}
+      ghost
+      noSpaceBetween
+    >
+      Continue with Facebook
+    </IconButton>
+    <IconButton
+      icon="google"
+      width="100%"
+      pad="large"
+      borderPalette="grey"
+      palette="slate"
+      onClick={onGoogleSigninClick}
+      ghost
+      noSpaceBetween
+    >
+      Continue with Google
+    </IconButton>
+    {socialLoginError && <Block pad="large" palette="danger" size="caption">{socialLoginError}</Block>}
+    {/* <TosAndPrivacy pad="xxLarge" align="center" /> */}
+    <ButtonLink onClick={onEmailPassLoginClick} align="center" palette="primary" size="caption" weight="medium">
+      Log in instead
+    </ButtonLink>
+  </Form>
 );
 
 CommunityManagerRegisterForm.propTypes = {

@@ -1,10 +1,9 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
-import IconButton from 'sly/web/components/molecules/IconButton';
 import Notification from 'sly/web/components/molecules/Notification';
 
-const wrap = (props = {}) => mount(<Notification {...props} />);
+const wrap = (props = {}) => shallow(<Notification {...props} />);
 
 describe('Notification', () => {
   it('renders with default status', () => {
@@ -19,13 +18,13 @@ describe('Notification', () => {
 
   it('does not render close button for not closeable', () => {
     const wrapper = wrap({ status: 'default', closeable: false, children: 'test children' });
-    expect(wrapper.find(IconButton)).toHaveLength(0);
+    expect(wrapper.find('IconButton')).toHaveLength(0);
   });
 
   it('onClose is called', () => {
     const onCloseSpy = jest.fn();
     const wrapper = wrap({ status: 'default', children: '', onClose: onCloseSpy });
-    wrapper.find(IconButton).simulate('click');
+    wrapper.find('IconButton').simulate('click');
     expect(onCloseSpy).toHaveBeenCalled();
   });
 });
