@@ -10,7 +10,7 @@ const defaultProps = {
 
 const wrap = (props = {}) => shallow(<HrWithText {...defaultProps} {...props} />);
 
-describe('HrWithText', () => {
+describe('HrWithText|Web', () => {
   it('renders', () => {
     const wrapper = wrap();
 

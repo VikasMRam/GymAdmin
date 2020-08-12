@@ -8,7 +8,7 @@ let input;
 const wrap = (props = {}) =>
   shallow(<ReduxField {...{ meta, input, ...props }} />);
 
-describe('ReduxField', () => {
+describe('ReduxField|Web', () => {
   beforeEach(() => {
     meta = {
       touched: false,

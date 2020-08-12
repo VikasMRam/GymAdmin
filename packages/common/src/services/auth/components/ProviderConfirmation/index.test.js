@@ -8,7 +8,7 @@ const defaultProps = {
 };
 const wrap = (props = {}) => shallow(<ProviderConfirmation {...defaultProps} {...props} />);
 
-describe('ProviderConfirmation', () => {
+describe('ProviderConfirmation|Web', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ childred: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();

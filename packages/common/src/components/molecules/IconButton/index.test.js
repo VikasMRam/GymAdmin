@@ -5,7 +5,7 @@ import IconButton from '.';
 
 const wrap = (props = {}) => shallow(<IconButton icon="github" {...props} />);
 
-describe('IconButton', () => {
+describe('IconButton|Web', () => {
   it('mounts with different combination of props', () => {
     shallow(<IconButton icon="github">test</IconButton>);
     shallow(<IconButton icon="github" right>test</IconButton>);
