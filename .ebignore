@@ -1,4 +1,5 @@
 packages/mobile
+packages/storybook
 .git
 node_modules
 .circleci

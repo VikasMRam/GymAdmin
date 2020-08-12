@@ -13,7 +13,6 @@
     "predev": "npm run prebuild",
     "dev": "npm run env:dev -- webpack-dev-server",
     "dev:https": "HOST=https://www.lvh.me API_URL=https://www.lvh.me/v0 NODE_TLS_REJECT_UNAUTHORIZED=0 npm run dev -- --https",
-    "dev:eb": "../../node_modules/.bin/npm-run-all -p dev storybook",
     "prestaging": "npm run prebuild",
     "preprod": "npm run prebuild",
     "staging": "npm run build:staging && npm run start:staging",
