@@ -59,11 +59,11 @@ const OverlayTwoColumnListWrapper = styled.div`
 
 const PhoneNumWrapper = styled.div`
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 100%;
   grid-gap: ${size('spacing.regular')};
   
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-template-columns: 100%;
+    grid-template-columns: 50% 50%;  
     grid-column-gap: ${size('spacing.regular')};
   }
 `;
