@@ -8,7 +8,7 @@ import { Box } from 'sly/web/components/atoms';
 import filterPropType from 'sly/common/propTypes/datatableFilter';
 import datatableColumnsPropType from 'sly/common/propTypes/datatableColumns';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
-import Field from 'sly/web/components/molecules/Field';
+import Field from 'sly/common/components/molecules/Field';
 import {
   noValueOperators,
   listValueOperators,

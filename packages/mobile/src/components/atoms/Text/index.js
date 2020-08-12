@@ -1,4 +1,5 @@
 import React from 'react';
+import { any } from 'prop-types';
 import styled from 'styled-components';
 
 import styles from 'sly/common/components/themes/default';
@@ -13,6 +14,11 @@ const StyledText = styled.Text`
   line-height: 24px;
 `;
 
-const Text = props => <StyledText {...props} />;
+// skip padding prop from being passed down. padding is a valid react native prop
+// but our string padding used in css styles is different. Hence skip that prop.
+const Text = ({ padding, ...props }) => <StyledText {...props} />;
+Text.propTypes = {
+  padding: any,
+};
 
 export default Text;

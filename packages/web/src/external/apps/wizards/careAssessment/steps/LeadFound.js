@@ -8,7 +8,7 @@ import pad from 'sly/web/components/helpers/pad';
 import { STEP_INPUT_FIELD_NAMES } from 'sly/web/external/constants/steps';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import { Heading } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 
 const PaddedHeading = pad(Heading, 'regular');

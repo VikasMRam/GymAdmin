@@ -1,2 +1,7 @@
 packages/mobile
 .git
+node_modules
+.circleci
+.templates
+.vscode
+image-handler-lambda

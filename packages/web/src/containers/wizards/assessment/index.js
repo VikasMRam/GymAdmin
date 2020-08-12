@@ -6,8 +6,13 @@ import { query } from 'sly/web/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import withWS from 'sly/web/services/ws/withWS';
 import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
-import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/constants/wizards/assessment';
+import {
+  ASSESSMENT_WIZARD_MATCHED_AGENT,
+  ASSESSMENT_WIZARD_COMPLETED,
+  ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES,
+} from 'sly/web/constants/wizards/assessment';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SlyEvent from 'sly/web/services/helpers/events';
 import Intro from 'sly/web/containers/wizards/assessment/Intro';
@@ -48,7 +53,6 @@ export default class AssessmentWizard extends Component {
   };
 
   componentDidMount() {
-
     SlyEvent.getInstance().sendEvent({
       category: 'assessmentWizard',
       action: 'open',
@@ -67,8 +71,13 @@ export default class AssessmentWizard extends Component {
   };
 
   onNoAgentMatch = () => {
+    const { community } = this.props;
+
     if (!this.skipped) {
       localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
+    }
+    if (community) {
+      recordEntityCta(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES, community.id);
     }
 
     this.setState({
@@ -96,6 +105,7 @@ export default class AssessmentWizard extends Component {
       this.skipped = true;
       return goto('Auth');
     }
+
     if (currentStep === 'ResidentName') {
       this.waitForAgentMatched();
     }
@@ -104,12 +114,14 @@ export default class AssessmentWizard extends Component {
   };
 
   onMessage = ({ payload: { agentSlug } }) => {
-    const { getAgent } = this.props;
+    const { getAgent, community } = this.props;
     clearTimeout(this.agentMatchTimeout);
     if (!this.skipped) {
       localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
     }
-
+    if (community) {
+      recordEntityCta(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES, community.id);
+    }
 
     if (agentSlug) {
       localStorage.setItem(ASSESSMENT_WIZARD_MATCHED_AGENT, agentSlug);
@@ -261,6 +273,7 @@ export default class AssessmentWizard extends Component {
                 numberOfPeople={data.lookingFor === 'parents' || data.lookingFor === 'myself-and-spouse' ? 2 : 1}
                 hasTip={hasTip}
                 onSkipClick={next}
+                whatToDoNext={data.whatToDoNext}
               />
               <WizardStep
                 component={End}

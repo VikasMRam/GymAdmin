@@ -8,7 +8,7 @@ import { size } from 'sly/common/components/themes';
 import { gridColumns } from 'sly/web/components/themes';
 import { TIME_OPTIONS, MEDICAID_OPTIONS } from 'sly/web/constants/bookingForm';
 import { Heading, Block } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import HelpBubble from 'sly/web/components/molecules/HelpBubble';
 
 const HeadingSection = styled(Heading)`

@@ -1,56 +1,45 @@
-import React, { Component } from 'react';
-import { func, bool, string, object } from 'prop-types';
-import styled from 'styled-components';
+import React from 'react';
+import { func, bool, string } from 'prop-types';
 
-import { size } from 'sly/common/components/themes';
-import pad from 'sly/web/components/helpers/pad';
-import { Heading, Button, Block } from 'sly/web/components/atoms';
+import { community as communityPropType } from 'sly/common/propTypes/community';
+import { Heading, Button, Block, Form } from 'sly/common/components/atoms';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
-import Field from 'sly/web/components/molecules/Field';
-import { textAlign } from 'sly/web/components/helpers/text';
+import Field from 'sly/common/components/molecules/Field';
 
-const StyledHeading = textAlign(pad(Heading));
-StyledHeading.displayName = 'StyledHeading';
+const ProviderFindCommunity = ({
+  handleSubmit, submitting, invalid, error, onNotFound, onSelectChange, community,
+}) => (
+  <Form onSubmit={handleSubmit}>
+    <Heading pad="xLarge" size="subtitle">What is the name of the community you want to manage?</Heading>
+    <Field
+      name="community"
+      label="Community Name"
+      type="community"
+      placeholder="Enter Community Name"
+      value={community}
+      onChange={option => onSelectChange(option)}
+    />
+    <Button
+      type="submit"
+      pad={error ? 'large' : 'xLarge'}
+      disabled={submitting || invalid}
+      width="100%"
+    >
+      Continue
+    </Button>
+    {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
+    <ButtonLink align="center" size="caption" palette="primary" onClick={onNotFound}>Can&apos;t find my community?</ButtonLink>
+  </Form>
+);
 
-const StyledButton = styled(Button)`
-  width: 100%;
-  margin-bottom: ${size('spacing.large')};
-`;
+ProviderFindCommunity.propTypes = {
+  handleSubmit: func.isRequired,
+  submitting: bool,
+  invalid: bool,
+  error: string,
+  onNotFound: func,
+  onSelectChange: func,
+  community: communityPropType,
+};
 
-const Continue = textAlign(Block);
-Continue.displayName = 'Continue';
-
-export default class ProviderFindCommunity extends Component {
-  static propTypes = {
-    handleSubmit: func.isRequired,
-    submitting: bool,
-    error: string,
-    onNotFound: func,
-    onSelectChange: func,
-    community: object,
-  };
-
-  render() {
-    const { handleSubmit, submitting, error, onNotFound, onSelectChange, community } = this.props;
-    return (
-      <form onSubmit={handleSubmit}>
-        <StyledHeading size="subtitle">What is the name of the community you want to manage?</StyledHeading>
-        <Field
-          name="community"
-          label="Community Name"
-          type="community"
-          placeholder="Enter Community Name"
-          value={community}
-          onChange={option =>  onSelectChange(option)}
-        />
-        <StyledButton type="submit" disabled={submitting}>
-          Continue
-        </StyledButton>
-        {error && <Block palette="danger">{error}</Block>}
-        <Continue size="caption">
-          <ButtonLink palette="primary" onClick={onNotFound}>Can&apos;t find my community?</ButtonLink>
-        </Continue>
-      </form>
-    );
-  }
-}
+export default ProviderFindCommunity;

@@ -6,8 +6,9 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette, getKey } from 'sly/common/components/themes';
-import Icon from 'sly/web/components/atoms/Icon';
-import Hr from 'sly/web/components/atoms/Hr';
+import Block from 'sly/common/components/atoms/Block';
+import Icon from 'sly/common/components/atoms/Icon';
+import Hr from 'sly/common/components/atoms/Hr';
 
 const { Option, Group, SingleValue } = components;
 
@@ -18,7 +19,7 @@ const StyledOption = styled(Option)`
   }
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled(Block)`
   .react-select-container {
     ${ifProp('textSize', ({ textSize, lineHeight }) => css`
       font-size: ${size('text', textSize)};
@@ -109,11 +110,6 @@ const StyledIcon = styled(Icon)`
   width: ${size('text.hero')};
 `;
 
-const StyledHr = styled(Hr)`
-  margin-top: ${size('spacing.regular')};
-  margin-bottom: 0;
-`;
-
 SyncSelect.displayName = 'Select';
 AsyncSelect.displayName = 'AsyncSelect';
 
@@ -179,7 +175,7 @@ const GroupSection = (props) => {
   return (
     <Group {...props}>
       {props.children}
-      {props.label !== lastGroupLabel && <StyledHr />}
+      {props.label !== lastGroupLabel && <Hr marginTop="regular" />}
     </Group>
   );
 };
@@ -243,7 +239,7 @@ const Select = ({
   const textSize = getTextSize(size);
 
   return (
-    <Wrapper textSize={textSize} size={size} >
+    <Wrapper textSize={textSize} size={size} {...props}>
       <SelectComponent
         className="react-select-container"
         classNamePrefix="react-select"

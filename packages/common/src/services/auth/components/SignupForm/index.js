@@ -1,49 +1,18 @@
 import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
-import styled from 'styled-components';
 
-import { size, palette } from 'sly/common/components/themes';
-import pad from 'sly/web/components/helpers/pad';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
-import { textAlign } from 'sly/web/components/helpers/text';
-import { Heading, Button, Block } from 'sly/web/components/atoms';
+import { Heading, Block, Button, Form, Grid } from 'sly/common/components/atoms';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
-
-const StyledHeading = pad(Heading);
-StyledHeading.displayName = 'StyledHeading';
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  margin-bottom: ${size('spacing.small')};
-`;
-
-const StyledBlock = styled(Block)`
-  color: ${palette('slate', 'filler')};
-  font-size: ${size('text.tiny')};
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const BottomWrapper = textAlign(styled.div`
-  display: grid;
-  grid-gap: ${size('spacing.large')};
-  align-items: center;
-  justify-content: center;
-`);
-
-const FieldsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 50% 50%;
-  grid-gap: ${size('spacing.regular')};
-`;
 
 const SignupForm = ({
   handleSubmit, submitting, invalid, error, onLoginClicked, onProviderClicked, heading, submitButtonText, hasPassword,
   hasProviderSignup,
 }) => (
-  <form onSubmit={handleSubmit}>
-    <StyledHeading size="subtitle">{heading}</StyledHeading>
-    <FieldsWrapper>
+  <Form onSubmit={handleSubmit}>
+    <Heading pad="xLarge" size="subtitle">{heading}</Heading>
+    <Grid gap="regular">
       <Field
         name="firstName"
         label="First Name"
@@ -56,7 +25,7 @@ const SignupForm = ({
         type="text"
         component={ReduxField}
       />
-    </FieldsWrapper>
+    </Grid>
     <Field
       name="email"
       label="Email Address"
@@ -67,8 +36,8 @@ const SignupForm = ({
       name="phone_number"
       label="Phone"
       type="phone"
-      parens
       component={ReduxField}
+      parens
     />
     {hasPassword &&
       <Field
@@ -78,24 +47,27 @@ const SignupForm = ({
         component={ReduxField}
       />
     }
-    <StyledButton type="submit"  disabled={submitting || invalid}>
+    <Button type="submit" width="100%" pad="regular" disabled={submitting || invalid}>
       {submitButtonText}
-    </StyledButton>
-    <StyledBlock error={error}>By continuing, you agree to Seniorly&apos;s Terms of Use and Privacy Policy.</StyledBlock>
-    {error && <Block palette="danger">{error}</Block>}
-    <BottomWrapper>
-      <Block size="caption">
-        Already have an account?{' '}
+    </Button>
+    {/* TODO: this should reuse Tos and privacy molecule after Link is migrated for mobile */}
+    <Block pad="large" size="tiny" palette="slate" variation="filler">
+      By continuing, you agree to Seniorly&apos;s Terms of Use and Privacy Policy.
+    </Block>
+    {error && <Block palette="danger" size="caption">{error}</Block>}
+    <Grid flow="row" gap="large" verticalAlign="middle">
+      <Block align="center" direction="row" size="caption">
+        Already have an account?&nbsp;&nbsp;
         <ButtonLink palette="primary" onClick={onLoginClicked}>Log in</ButtonLink>
       </Block>
       {hasProviderSignup &&
-        <Block size="caption">
-          Are you a community manager?{' '}
+        <Block align="center" direction="row" size="caption">
+          Are you a community manager?&nbsp;&nbsp;
           <ButtonLink palette="primary" onClick={onProviderClicked}>Click here</ButtonLink>
         </Block>
       }
-    </BottomWrapper>
-  </form>
+    </Grid>
+  </Form>
 );
 
 SignupForm.propTypes = {

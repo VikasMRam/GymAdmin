@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { string, object, bool } from 'prop-types';
 import { branch } from 'recompose';
 
+import { isBrowser } from 'sly/web/config';
 import { prefetch } from 'sly/web/services/api';
 import agentPropType from 'sly/common/propTypes/agent';
 import communityPropType from 'sly/common/propTypes/community';
@@ -36,6 +37,7 @@ export default class GetAssessmentBoxContainer extends Component {
     boxLayout: string,
     startLink: string.isRequired,
     completedAssessment: bool,
+    completedPricing: bool,
     className: string,
     extraProps: object.isRequired,
   };
@@ -67,7 +69,7 @@ export default class GetAssessmentBoxContainer extends Component {
 
   render() {
     const {
-      status = {}, layout, boxLayout, agent, community, completedAssessment, startLink, className, extraProps,
+      status = {}, layout, boxLayout, agent, community, completedAssessment, completedPricing, startLink, className, extraProps,
     } = this.props;
     const { modalOpened } = this.state;
     let hasFinished = true;
@@ -75,7 +77,8 @@ export default class GetAssessmentBoxContainer extends Component {
       to: startLink,
       buttonTo: startLink,
     };
-    if (completedAssessment) {
+
+    if (completedAssessment || completedPricing) {
       buttonProps = {
         onClick: this.toggleModal,
       };
@@ -90,7 +93,7 @@ export default class GetAssessmentBoxContainer extends Component {
 
     return (
       <div className={className}>
-        {layout === 'box' &&
+        {layout === 'box' && !completedAssessment && isBrowser &&
           <GetAssessmentBox
             palette="primary"
             layout={boxLayout}
@@ -100,6 +103,7 @@ export default class GetAssessmentBoxContainer extends Component {
         {layout === 'sidebar' &&
           <GetCommunityPricingAndAvailability
             community={community}
+            completedAssessment={completedPricing}
             {...buttonProps}
           />
         }
@@ -107,7 +111,7 @@ export default class GetAssessmentBoxContainer extends Component {
           <CommunityStickyFooter
             community={community}
             locTrack="sticky-footer"
-            isAlreadyPricingRequested={completedAssessment}
+            isAlreadyPricingRequested={completedPricing}
             {...buttonProps}
           />
         }
@@ -115,7 +119,7 @@ export default class GetAssessmentBoxContainer extends Component {
           <CommunityPricingTable
             {...extraProps}
             community={community}
-            isAlreadyPricingRequested={completedAssessment}
+            isAlreadyPricingRequested={completedPricing}
             buttonProps={buttonProps}
           />
         }

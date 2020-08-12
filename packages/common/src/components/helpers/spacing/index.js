@@ -16,7 +16,7 @@ export const withPadding = ({ noPadding, ...props } = {}) => {
   if (values.padding || values.paddingBottom) {
     return css`
       ${padBottomStyle}
-      ${css(values)};
+      ${css(values)}
     `;
   }
 
@@ -30,8 +30,9 @@ export const withPadding = ({ noPadding, ...props } = {}) => {
 export const withMargin = (props = {}) =>
   css(getCardinalValues(props, 'margin', 'spacing'));
 
-export const withPad = ({ pad } = {}) => pad && css({
-  marginBottom: size('spacing', pad),
+// allow pad={0} or pad="0"
+export const withPad = ({ pad } = {}) => pad !== undefined && pad !== null && css({
+  marginBottom: parseInt(pad, 10) === 0 ? '0px' : size('spacing', pad),
 });
 
 export const withSpacing = () => css`

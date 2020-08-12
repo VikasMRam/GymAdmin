@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "preinstall": "../../scripts/check-install-allowed.sh",
     "postinstall": "npm i --package-lock-only",
     "config": "react-native config",
     "android": "react-native run-android",
@@ -15,21 +16,23 @@
     "test": "../../node_modules/.bin/jest --passWithNoTests",
     "lint": "../../node_modules/.bin/eslint .",
     "link": "react-native link",
-    "clean-build:android": "cd android && ./gradlew --stop && ./gradlew clean && ./gradlew cleanBuildCache",
+    "clean-build:android": "rm -rf android/app/build && cd android && ./gradlew --stop && ./gradlew clean && ./gradlew cleanBuildCache",
     "clean-build:ios": "rm -rf ios/build && cd ios && pod install",
-    "debug:logs:android": "NOW=$(date +\"%m-%d %H:%M:%S.000\") adb logcat \"*:W\" -T \"$NOW\""
+    "debug:logs:android": "NOW=$(date +\"%m-%d %H:%M:%S.000\"); adb logcat \"*:E\" -T \"$NOW\"",
+    "debug:logs:ios": "react-native log-ios",
+    "react-devtools": "react-devtools"
   },
   "dependencies": {
-    "react-native": "0.63.0",
+    "react-native": "0.63.2",
     "react-router-native": "5.2.0"
   },
   "devDependencies": {
-    "@react-native-community/cli-platform-ios": "4.10.1",
-    "@react-native-community/cli-platform-android": "4.10.1",
     "@babel/runtime": "7.6.2",
+    "react-native-svg-asset-plugin": "0.5.0",
     "metro-react-native-babel-preset": "0.59.0",
     "babel-plugin-transform-inline-environment-variables": "0.4.3",
     "react-native-testing-library": "2.1.0",
-    "react-test-renderer": "16.13.1"
+    "react-test-renderer": "16.13.1",
+    "react-devtools": "4.8.2"
   }
 }

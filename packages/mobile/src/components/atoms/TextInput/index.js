@@ -1,5 +1,5 @@
 import React from 'react';
-import { bool, string, oneOf, number } from 'prop-types';
+import { bool, string, oneOf, number, any } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -12,21 +12,30 @@ import {
   withSpacing,
   withBorder,
 } from 'sly/common/components/helpers';
+import View from 'sly/mobile/components/atoms/View';
 
-const StyledView = styled.View`
+// skip padding prop from being passed down. padding is a valid react native prop
+// but our string padding used in css styles is different. Hence skip that prop.
+const TextInputComponent = styled.TextInput``;
+const TextInputC = ({ padding, ...props }) => <TextInputComponent {...props} />;
+TextInputC.propTypes = {
+  padding: any,
+};
+
+const StyledView = styled(View)`
   ${withColor}
   ${withBorder}
   overflow: hidden;
+  ${withDisplay}
 `;
 
-const StyledTextInput = styled.TextInput`
+const StyledTextInput = styled(TextInputC)`
   ${withSpacing}
   ${withText}
   ${withColor}
   height: ${ifProp({ type: 'textarea' }, size('element.huge'), ({ height }) => size('element', height))};
   ${ifProp({ type: 'textarea' }, css`min-width: 100%;`)}
   ${ifProp({ type: 'textarea' }, css`max-width: 100%;`)}
-  ${withDisplay}
 `;
 
 const TextInput = ({
@@ -62,6 +71,7 @@ const TextInput = ({
   textInputProps.height = size;
 
   const viewProps = {
+    ...props,
     background: textInputProps.background,
     backgroundVariation: textInputProps.backgroundVariation,
     border,
@@ -80,7 +90,7 @@ const TextInput = ({
 };
 
 TextInput.propTypes = {
-  type: oneOf(['search', 'textarea', 'text', 'password', 'number', 'locationSearch']),
+  type: oneOf(['search', 'textarea', 'text', 'email', 'password', 'phone', 'number', 'locationSearch']),
   size: elementPropType,
   rows: number,
   disabled: bool,

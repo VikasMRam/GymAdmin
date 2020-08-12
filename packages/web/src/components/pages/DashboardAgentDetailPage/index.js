@@ -24,7 +24,8 @@ import pad from 'sly/web/components/helpers/pad';
 import { userIs } from 'sly/web/services/helpers/role';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/web/components/templates/DashboardTwoColumnTemplate';
-import { Box, Block, Icon, Link, Hr, Button } from 'sly/web/components/atoms';
+import { Box, Block, Icon, Button, Hr } from 'sly/common/components/atoms';
+import { Link } from 'sly/web/components/atoms';
 import Tabs from 'sly/web/components/molecules/Tabs';
 import Tab from 'sly/web/components/molecules/Tab';
 import AgentSummary from 'sly/web/components/molecules/AgentSummary';
@@ -418,7 +419,7 @@ export default class DashboardAgentDetailPage extends Component {
               {backlink}
               {agentName}
             </Box>
-            <Hr noMargin />
+            <Hr margin="0" />
             <LargePaddingWrapper>
               <AgentSummary agent={agent} showAskQuestionButton={false} />
             </LargePaddingWrapper>

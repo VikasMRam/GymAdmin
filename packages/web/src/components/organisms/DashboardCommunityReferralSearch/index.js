@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/common/components/themes';
-import { Block, Hr } from 'sly/web/components/atoms';
+import { Block, Hr } from 'sly/common/components/atoms';
 import DashboardCommunityAgentSearchBox from 'sly/web/components/organisms/DashboardCommunityAgentSearchBox';
 import DashboardAdminReferralCommunityTile from 'sly/web/components/organisms/DashboardAdminReferralCommunityTile';
 import DashboardAdminCommunityAgentList from 'sly/web/components/organisms/DashboardAdminCommunityAgentList';

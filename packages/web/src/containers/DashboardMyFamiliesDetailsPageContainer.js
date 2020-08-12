@@ -79,31 +79,40 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   componentDidUpdate() {
-    if (this.props.client && this.state.clientsWithSameContacts === null) {
+    if (!this.checkDuplicatesInProgress && this.props.client && this.state.clientsWithSameContacts === null) {
       const { client, getClients } = this.props;
       const params = {
         exp: 'or',
         'filter[email]': client.clientInfo.email,
         'filter[phone]': client.clientInfo.phoneNumber,
       };
+      this.checkDuplicatesInProgress = true;
       getClients(params)
         .then(resp => normJsonApi(resp))
-        .then(data => this.setState({ clientsWithSameContacts: data }));
+        .then(data => {
+          this.setState({ clientsWithSameContacts: data });
+          this.checkDuplicatesInProgress = false;
+        });
     }
-    if (this.props.client && this.state.notes === null) {
+    if (!this.getNotesInProgress && this.props.client && this.state.notes === null) {
       this.getNotes();
     }
   }
 
   getNotes = () => {
+
     const { client, getNotes } = this.props;
     const params = {
       'filter[client]': client.id,
     };
+    this.getNotesInProgress = true;
     return getNotes(params)
       .then((data) => { this.setState({ rawNotes: data.body.data }); return data; })
       .then(resp => normJsonApi(resp))
-      .then(data => this.setState({ notes: data }));
+      .then(data => {
+        this.setState({ notes: data });
+        this.getNotesInProgress = false;
+      });
   };
 
   onRejectSuccess = (hide) => {

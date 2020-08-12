@@ -175,3 +175,4 @@ export const MEDICAID_OPTIONS = [
 
 export const ASSESSMENT_WIZARD_MATCHED_AGENT = 'assesmentWizardMatchedAgent';
 export const ASSESSMENT_WIZARD_COMPLETED = 'assesmentWizardCompleted';
+export const ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES = 'assesmentWizardCompletedCommunities';

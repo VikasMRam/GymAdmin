@@ -6,7 +6,8 @@ import dayjs from 'dayjs';
 import pad from 'sly/web/components/helpers/pad';
 import { size } from 'sly/common/components/themes';
 import cursor from 'sly/web/components/helpers/cursor';
-import { Box, Block, Icon, Span } from 'sly/web/components/atoms';
+import { Box, Block, Icon } from 'sly/common/components/atoms';
+import { Span } from 'sly/web/components/atoms';
 import {
   NOTE_CTYPE_NOTE,
   NOTE_CTYPE_ACTIVITY,

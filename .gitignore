@@ -17,3 +17,6 @@ junit.xml
 **/junit.xml
 test-results.xml
 **/test-results.xml
+
+# Svg format transformer temp files
+**/.png-cache

@@ -2,6 +2,11 @@
 
 Individual folders in packages folder will have different projects or packages(eg: web, mobile).
 
+> :warning: **Important note** \
+Never delete package-lock.json files. Update package.json file and let npm manage generation of new lock files during installation. \
+As we use lerna hoist which moves packages to root node_modules, some packages like mobile have dependency of dependency packages \
+present only in lock files that come from project init tools.
+
 ## Setup
 
 To setup do ```npm i``` in root folder.

@@ -6,7 +6,8 @@ import { ifProp } from 'styled-tools';
 import { size, palette, key } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import cursor from 'sly/web/components/helpers/cursor';
-import { Icon, Hr, Link, Button, Logo } from 'sly/web/components/atoms';
+import { Icon, Button, Logo } from 'sly/common/components/atoms';
+import { Hr, Link } from 'sly/web/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 
 const HeaderWrapper = styled.nav`
@@ -94,10 +95,6 @@ const HeaderMenuItem = styled(Link)`
       background-color: ${palette('primary', 'background')};
     }
   }
-`;
-
-const MarginnedHR = styled(Hr)`
-  margin: ${size('spacing.regular')} 0;
 `;
 
 const HeaderItems = styled.div`
@@ -206,7 +203,7 @@ const Header = ({
           {mi}
         </OnlyInSmallScreen>
       ) : mi;
-      const hr = prevSection !== item.section && <MarginnedHR />;
+      const hr = prevSection !== item.section && <Hr size="regular" />;
       prevSection = item.section;
 
       return (
@@ -269,7 +266,7 @@ const Header = ({
           {smallScreenMenuItemComponents.length > 0 &&
             <OnlyInSmallScreen>
               {smallScreenMenuItemComponents}
-              <MarginnedHR />
+              <Hr size="regular" />
             </OnlyInSmallScreen>
           }
           {headerMenuItemComponents}

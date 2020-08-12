@@ -1,7 +1,7 @@
 /* eslint-disable key-spacing,no-multi-spaces */
 import theme from './index.common';
 
-import { remToPx } from 'sly/common/components/themes';
+import { remToPx } from 'sly/common/components/themes/helpers';
 import { objectMap } from 'sly/common/services/helpers/utils';
 
 const convertValueToPx = val =>

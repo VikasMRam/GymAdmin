@@ -1,22 +1,17 @@
 import React from 'react';
 import { node, string, bool, func, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
-import { ifProp, prop } from 'styled-tools';
+import { ifProp } from 'styled-tools';
 
 import { palette, size } from 'sly/common/components/themes';
 import { spacing as spacingPropType } from 'sly/common/propTypes/spacing';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import Box from 'sly/common/components/atoms/Box';
-import Icon from 'sly/web/components/atoms/Icon';
+import Icon from 'sly/common/components/atoms/Icon';
 
 const getHoverBorderColour = ({ highlightedPalette }) => palette(highlightedPalette, 'base');
 
 const StyledBox = styled(Box)`
-  text-align: ${prop('align')};
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: ${prop('align')};
   border-color: ${ifProp('highlighted', palette('base'), palette('stroke'))}};
   background-color: ${ifProp('highlighted', palette('background'), 'transparent')}};
   ${ifProp('highlighted', css`
@@ -67,6 +62,8 @@ BoxChoiceTile.defaultProps = {
   padding: 'large',
   align: 'center',
   palette: 'primary',
+  cursor: 'pointer',
+  direction: 'row',
 };
 
 export default BoxChoiceTile;

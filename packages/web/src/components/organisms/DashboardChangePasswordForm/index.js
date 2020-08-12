@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'redux-form';
 
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import SectionForm from 'sly/web/components/molecules/SectionForm';
 
 const DashboardChangePasswordForm = ({ ...props }) => (

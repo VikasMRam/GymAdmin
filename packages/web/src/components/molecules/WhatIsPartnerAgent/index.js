@@ -4,7 +4,8 @@ import { object, string, arrayOf } from 'prop-types';
 
 import { size, palette } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
-import { Heading, Link, Paragraph, Hr, Image } from 'sly/web/components/atoms';
+import { Heading, Hr, Paragraph } from 'sly/common/components/atoms';
+import { Link, Image } from 'sly/web/components/atoms';
 
 const AgentWrapper = styled.div`
   padding: ${size('spacing.large')};

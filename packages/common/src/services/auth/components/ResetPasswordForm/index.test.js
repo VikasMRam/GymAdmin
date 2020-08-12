@@ -19,25 +19,25 @@ describe('ResetPasswordForm', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('Field').filter({ name: 'email' })).toHaveLength(1);
-    expect(wrapper.find('FullWidthButton')).toHaveLength(1);
-    expect(wrapper.find('LoginWithPassword')).toHaveLength(1);
+    expect(wrapper.find('Button')).toHaveLength(1);
+    expect(wrapper.find('Block').find('ButtonLink')).toHaveLength(1);
   });
 
   it('renders error', () => {
     const error = 'error';
     const wrapper = wrap({ error });
+    const errors = wrapper.find('Block').at(1);
 
     expect(wrapper.find('Field').filter({ name: 'email' })).toHaveLength(1);
-    expect(wrapper.find('LargePaddedFullWidthButton')).toHaveLength(1);
-    expect(wrapper.find('Block')).toHaveLength(1);
-    expect(wrapper.find('LoginWithPassword')).toHaveLength(1);
+    expect(wrapper.find('Button')).toHaveLength(1);
+    expect(errors.contains(error)).toBeTruthy();
   });
 
   it('handles submit', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
 
-    wrapper.find('form').simulate('submit');
+    wrapper.find('Form').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
 
@@ -45,7 +45,7 @@ describe('ResetPasswordForm', () => {
     const onLoginClick = jest.fn();
     const wrapper = wrap({ onLoginClick });
 
-    wrapper.find('LoginWithPassword').simulate('click');
+    wrapper.find('Block').find('ButtonLink').simulate('click');
     expect(onLoginClick).toHaveBeenCalled();
   });
 });
