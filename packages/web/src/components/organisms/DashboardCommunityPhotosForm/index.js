@@ -4,7 +4,7 @@ import { sortableContainer } from 'react-sortable-hoc';
 
 import { imagePropType } from 'sly/common/propTypes/gallery';
 import MediaItem from 'sly/web/services/s3Uploader/components/MediaItem';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import HelpBubble from 'sly/web/components/form/HelpBubble';
 import { Section, SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import S3Uploader from 'sly/web/services/s3Uploader/components/S3Uploader';

@@ -17,7 +17,7 @@ import { Span } from 'sly/web/components/atoms';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
 import MediaGallery from 'sly/web/components/molecules/MediaGallery';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import PlusBadge from 'sly/web/components/molecules/PlusBadge';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 

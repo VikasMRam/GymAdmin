@@ -5,7 +5,7 @@ import Icon from '.';
 
 const wrap = (props = {}) => shallow(<Icon icon="star" {...props} />);
 
-describe('Icon', () => {
+describe('Icon|Web', () => {
   it('renders with different combination of props', () => {
     wrap({ height: 40 });
   });

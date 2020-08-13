@@ -14,7 +14,7 @@ import { Heading, Button, Hr, Box } from 'sly/common/components/atoms';
 import { Image } from 'sly/web/components/atoms';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/web/components/organisms/CommunityFilterList';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import pad from 'sly/web/components/helpers/pad';

@@ -9,7 +9,7 @@ const defaultProps = {
 };
 const wrap = (props = {}) => shallow(<PartnerAgentLoginForm {...defaultProps} {...props} />);
 
-describe('PartnerAgentLoginForm', () => {
+describe('PartnerAgentLoginForm|Web', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();

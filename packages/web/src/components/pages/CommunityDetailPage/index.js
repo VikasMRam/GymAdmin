@@ -44,7 +44,7 @@ import UnhydratedOfferNotification from 'sly/web/components/molecules/OfferNotif
 import CommunityCareService from 'sly/web/components/organisms/CommunityCareService';
 import CommunityDisclaimerSection from 'sly/web/components/molecules/CommunityDisclaimerSection';
 import IconItem from 'sly/web/components/molecules/IconItem';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import UnhydratedGetCurrentAvailabilityContainer from 'sly/web/containers/GetCurrentAvailabilityContainer';
 import UnhydratedHowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';

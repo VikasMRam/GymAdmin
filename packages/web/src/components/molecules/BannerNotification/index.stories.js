@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
-import { Block } from 'sly/web/components/atoms';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import { Block } from 'sly/common/components/atoms';
+import IconButton from 'sly/common/components/molecules/IconButton';
 
 const SmallScreen = displayOnlyIn(styled(Block)`
   > * {

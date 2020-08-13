@@ -8,7 +8,7 @@ import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import { imagePropType } from 'sly/common/propTypes/gallery';
 import { Icon, Block } from 'sly/common/components/atoms';
 import { Link } from 'sly/web/components/atoms';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import HelpBubble from 'sly/web/components/form/HelpBubble';
 
 const DragHandle = sortableHandle(styled(Icon)`

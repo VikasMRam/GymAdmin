@@ -9,7 +9,7 @@ const defaultProps = {
 };
 const wrap = (props = {}) => shallow(<LoginForm {...defaultProps} {...props} />);
 
-describe('LoginForm', () => {
+describe('LoginForm|Web', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ childred: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();

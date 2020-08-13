@@ -11,7 +11,7 @@ import { Link, ClampedText } from 'sly/web/components/atoms';
 import { Td, Tr } from 'sly/web/components/atoms/Table';
 import { getAppPathForEntity } from 'sly/web/services/helpers/appPaths';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 
 const Wrapper = mobileOnly(
   borderRadius(pad(Tr, 'large'), 'small'),

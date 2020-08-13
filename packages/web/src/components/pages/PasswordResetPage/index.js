@@ -8,7 +8,7 @@ import fullWidth from 'sly/web/components/helpers/fullWidth';
 import pad from 'sly/web/components/helpers/pad';
 import { Heading, Block, Button, Box } from 'sly/web/components/atoms';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';

@@ -13,7 +13,7 @@ const defaultProps = {
 const wrap = (props = {}) =>
   shallow(<InputMessage {...defaultProps} {...props} />);
 
-describe('InputMessage', () => {
+describe('InputMessage|Web', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();

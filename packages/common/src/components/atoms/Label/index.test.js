@@ -5,7 +5,7 @@ import Label from '.';
 
 const wrap = (props = {}) => shallow(<Label {...props} />);
 
-describe('Label', () => {
+describe('Label|Web', () => {
   it('renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBeTruthy();

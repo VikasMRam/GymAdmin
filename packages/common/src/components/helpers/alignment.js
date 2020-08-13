@@ -1,6 +1,7 @@
 import { css } from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
+import { isReactNative } from 'sly/common/constants/utils';
 import { isString } from 'sly/common/services/helpers/utils';
 
 export const withAlign = ({
@@ -56,6 +57,7 @@ export const withAlign = ({
 
   // when flex-direction is row - align-items vertical, justify-content horizontal
   // when flex-direction is column - align-items horizontal, justify-content vertical
+  // justifySelf is not present in react native; so don't apply that for mobiles
   if (align) {
     styles = {
       ...styles,
@@ -66,7 +68,7 @@ export const withAlign = ({
     if (align === 'right') {
       if (direction === 'row' || direction === 'row-reverse') {
         styles.justifyContent = 'flex-end';
-        if (isString(children)) {
+        if (isString(children) && !isReactNative) {
           styles.justifySelf = 'flex-end';
         }
       } else {
@@ -78,7 +80,7 @@ export const withAlign = ({
     } else if (align === 'center') {
       if (direction === 'row' || direction === 'row-reverse') {
         styles.justifyContent = 'center';
-        if (isString(children)) {
+        if (isString(children) && !isReactNative) {
           styles.justifySelf = 'center';
         }
       } else {
@@ -91,7 +93,7 @@ export const withAlign = ({
       if (direction === 'row' || direction === 'row-reverse') {
         styles.justifyContent = 'space-between';
       } else {
-        styles.alignItems = 'space-between';
+        styles.alignContent = 'space-between';
       }
     }
   }
@@ -111,7 +113,7 @@ export const withAlign = ({
         }
       } else {
         styles.justifyContent = 'center';
-        if (isString(children)) {
+        if (isString(children) && !isReactNative) {
           styles.justifySelf = 'center';
         }
       }
@@ -123,7 +125,7 @@ export const withAlign = ({
         }
       } else {
         styles.justifyContent = 'flex-end';
-        if (isString(children)) {
+        if (isString(children) && !isReactNative) {
           styles.justifySelf = 'flex-end';
         }
       }

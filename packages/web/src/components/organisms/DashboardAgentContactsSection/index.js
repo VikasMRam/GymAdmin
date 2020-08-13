@@ -15,7 +15,7 @@ import Th from 'sly/web/components/molecules/Th';
 import ContactRowCard from 'sly/web/components/organisms/ContactRowCard';
 import Modal from 'sly/web/components/molecules/Modal';
 import AddOrEditContactFormContainer from 'sly/web/containers/AddOrEditContactFormContainer';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import { ENTITY_LABEL_MAP } from 'sly/web/constants/entityTypes';
 import { textAlign } from 'sly/web/components/helpers/text';
 import { SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';

@@ -8,7 +8,7 @@ import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import { Box } from 'sly/web/components/atoms';
 import DatatableFilterRow from 'sly/web/components/organisms/DatatableFilterRow';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 
 const Wrapper = styled(mobileOnly(Box,
   css`

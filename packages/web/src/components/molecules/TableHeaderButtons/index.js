@@ -5,7 +5,7 @@ import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/common/components/themes';
 import { Input, Block } from 'sly/web/components/atoms';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import DatatableFilters from 'sly/web/components/organisms/DatatableFilters';
 import PopoverPortal from 'sly/web/components/molecules/PopoverPortal';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';

@@ -8,7 +8,7 @@ import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import cursor from 'sly/web/components/helpers/cursor';
 import { Heading, Button, Block } from 'sly/web/components/atoms';
-import HrWithText from 'sly/web/components/molecules/HrWithText';
+import HrWithText from 'sly/common/components/molecules/HrWithText';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { textAlign } from 'sly/web/components/helpers/text';
 
@@ -43,7 +43,7 @@ const LoginWithPasswordForm = ({
     />
     {getButton(error, { type: 'submit', disabled: submitting || invalid, children: 'Log in' })}
     {error && <Block palette="danger" size="caption">{error}</Block>}
-    <HrWithText text="or" />
+    <HrWithText>or</HrWithText>
     <PaddedBlock>Use a one time password for easy log in for your account<br />{!email(emailOrPhone) ? emailOrPhone : phoneFormatter(emailOrPhone, true)}</PaddedBlock>
     <FullWidthButton ghost onClick={onLoginWithOtpClick}>Log in with a one-time password</FullWidthButton>
   </form>

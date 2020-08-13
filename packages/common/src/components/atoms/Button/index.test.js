@@ -8,7 +8,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 
 const wrap = (props = {}, context) => shallow(<Button {...props} />, context);
 
-describe('Button', () => {
+describe('Button|Web', () => {
   const originalSendEvent = SlyEvent.getInstance().sendEvent;
 
   beforeEach(() => {
