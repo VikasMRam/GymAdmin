@@ -6,7 +6,6 @@
   "sideEffects": false,
   "scripts": {
     "preinstall": "../../scripts/check-install-allowed.sh",
-    "postinstall": "npm i --package-lock-only",
     "start": "node .",
     "start:prod": "npm run env:prod -- node .",
     "start:staging": "npm run env:staging -- node .",

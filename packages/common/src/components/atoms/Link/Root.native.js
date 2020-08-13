@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Linking } from 'react-native';
 import { string } from 'prop-types';
 
-import { Block } from 'sly/common/components/atoms';
+import Block from 'sly/common/components/atoms/Block';
 
 export default class Root extends Component {
   static propTypes = {
