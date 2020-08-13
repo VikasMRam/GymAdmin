@@ -4,7 +4,12 @@ import styled from 'styled-components';
 import { node, any, func } from 'prop-types';
 
 import { isString, objectFilter } from 'sly/common/services/helpers/utils';
+import { withWidth } from 'sly/common/components/helpers';
 import { Text, View } from 'sly/mobile/components/atoms';
+
+const StyledPressable = styled(Pressable)`
+  ${withWidth}
+`;
 
 const StyledView = styled(View)`
   flex-direction: row;
@@ -27,18 +32,21 @@ export default class Root extends Component {
     children: node,
     style: any,
     onClick: func,
+    flex: any,
+    width: any,
   };
 
   withPressable(content) {
-    const { onClick } = this.props;
+    const { onClick, flex, width } = this.props;
     const providedPressableProps = objectFilter(this.props, pressableProps);
 
     if (onClick || Object.keys(providedPressableProps).length) {
       // in mobiles onPress is equivalent of onClick
       return (
-        <Pressable onPress={onClick} {...providedPressableProps}>
+        // apply dimension props like flex, width as passed
+        <StyledPressable onPress={onClick} flex={flex} width={width} {...providedPressableProps}>
           {content}
-        </Pressable>
+        </StyledPressable>
       );
     }
 

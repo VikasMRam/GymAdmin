@@ -10,3 +10,4 @@ export Form from './Form';
 export Hr from './Hr';
 export Grid from './Grid';
 export Paragraph from './Paragraph';
+export Link from './Link';

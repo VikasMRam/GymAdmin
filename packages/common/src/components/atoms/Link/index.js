@@ -1,49 +1,16 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-import { Link as RRLink } from 'react-router-dom';
 import { string, object } from 'prop-types';
+
+import Root from './Root';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { routes as routesPropType } from 'sly/web/propTypes/routes';
-import {
-  withColor,
-  withText,
-  withSpacing,
-  withDisplay,
-  withBorder,
-  withZIndex,
-  withClamping,
-  createRRAnchor,
-} from 'sly/common/components/helpers';
+import { createRRAnchor, RRLink } from 'sly/common/components/helpers';
 import isPathInRoutes from 'sly/common/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
-// eslint-disable-next-line jsx-a11y/anchor-has-content
-export const Anchor = styled.a`
-  ${withDisplay}
-  ${withSpacing}
-  ${withText}
-  ${withBorder}
-  ${withZIndex}
-  ${withClamping}
-
-  &, &:active {
-    ${withColor}
-  }
-
-  text-decoration: none;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-export const RRLinkAnchor = createRRAnchor(Anchor);
+const RRLinkAnchor = createRRAnchor(Root);
 
 export default class Link extends Component {
   static propTypes = {
@@ -57,6 +24,8 @@ export default class Link extends Component {
   static defaultProps = {
     palette: 'primary',
     variation: 'base',
+    textDecoration: 'none',
+    cursor: 'pointer',
   };
 
   static contextTypes = {
@@ -82,7 +51,7 @@ export default class Link extends Component {
       ? { target: '_blank', rel: 'noopener' }
       : {};
     return {
-      LinkComponent: Anchor,
+      LinkComponent: Root,
       ...props,
       ...target,
       href: addEventToUrl(href, event),

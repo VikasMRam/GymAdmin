@@ -7,7 +7,7 @@ import pad from 'sly/web/components/helpers/pad';
 import CollapsibleSection from 'sly/web/components/molecules/CollapsibleSection';
 import Field from 'sly/common/components/molecules/Field';
 import Radio from 'sly/web/components/molecules/Radio';
-import { Link, Button } from 'sly/web/components/atoms';
+import { Link, Button } from 'sly/common/components/atoms';
 import {
   tocs,
   budgets,

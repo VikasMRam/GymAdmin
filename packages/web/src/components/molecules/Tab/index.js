@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
 import Span from 'sly/web/components/atoms/Span';
-import Link from 'sly/web/components/atoms/Link';
+import Link from 'sly/common/components/atoms/Link';
 
 const MaybeLink = ({ to, target, children, ...props }) => {
   if (to) {

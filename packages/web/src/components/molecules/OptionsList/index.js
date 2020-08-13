@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import { arrayOf, shape, string, func } from 'prop-types';
 
 import { size } from 'sly/common/components/themes';
-import { Hr } from 'sly/common/components/atoms';
-import { Link } from 'sly/web/components/atoms';
+import { Hr, Link } from 'sly/common/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 
 const getMarginRight = p => p.borderless ? size('spacing', p.iconRightMarginSpacing) : size('spacing.large');

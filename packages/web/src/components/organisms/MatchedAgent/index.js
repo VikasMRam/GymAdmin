@@ -6,7 +6,7 @@ import { size, palette } from 'sly/common/components/themes';
 import agentPropType from 'sly/common/propTypes/agent';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import { Heading, Box, Block, Link, Button } from 'sly/web/components/atoms';
+import { Heading, Box, Block, Link, Button } from 'sly/common/components/atoms';
 import Avatar from 'sly/web/components/molecules/Avatar';
 import { textAlign } from 'sly/web/components/helpers/text';
 import IconItem from 'sly/web/components/molecules/IconItem';

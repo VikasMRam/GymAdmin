@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import { object, string, arrayOf } from 'prop-types';
 
 import { size, palette } from 'sly/common/components/themes';
-import { Heading, Paragraph } from 'sly/common/components/atoms';
-import { Link } from 'sly/web/components/atoms';
+import { Heading, Paragraph, Link } from 'sly/common/components/atoms';
 import IconButton from 'sly/common/components/molecules/IconButton';
 
 const StyledIconButton = styled(IconButton)`

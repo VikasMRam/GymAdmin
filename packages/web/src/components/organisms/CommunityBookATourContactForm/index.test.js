@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
 import CommunityBookATourContactForm from 'sly/web/components/organisms/CommunityBookATourContactForm';
-import { Link, Block } from 'sly/web/components/atoms';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy/index';
 
 const onAdvisorHelpClick = jest.fn();
@@ -22,7 +21,7 @@ describe('CommunityBookATourContactForm', () => {
     expect(wrapper.contains(heading)).toBe(true);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
-    expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
+    expect(wrapper.find('Block').filter({ palette: 'danger' })).toHaveLength(0);
   });
 
   it('does not render name, phone and contactByTextMsg when user is passed', () => {
@@ -32,7 +31,7 @@ describe('CommunityBookATourContactForm', () => {
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(0);
 
     expect(wrapper.find('StyledField')).toHaveLength(0);
-    expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
+    expect(wrapper.find('Block').filter({ palette: 'danger' })).toHaveLength(0);
     expect(wrapper.find(TosAndPrivacy)).toHaveLength(0);
   });
 
@@ -43,7 +42,7 @@ describe('CommunityBookATourContactForm', () => {
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
     // expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
 
-    expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
+    expect(wrapper.find('Block').filter({ palette: 'danger' })).toHaveLength(0);
     expect(wrapper.find(TosAndPrivacy)).toHaveLength(0);
   });
 
@@ -52,7 +51,7 @@ describe('CommunityBookATourContactForm', () => {
     expect(wrapper.contains(heading)).toBe(true);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(0);
-    expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
+    expect(wrapper.find('Block').filter({ palette: 'danger' })).toHaveLength(0);
     expect(wrapper.find(TosAndPrivacy)).toHaveLength(0);
   });
 
@@ -61,7 +60,7 @@ describe('CommunityBookATourContactForm', () => {
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
 
-    expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(1);
+    expect(wrapper.find('Block').filter({ palette: 'danger' })).toHaveLength(1);
     expect(wrapper.find(TosAndPrivacy)).toHaveLength(1);
   });
 

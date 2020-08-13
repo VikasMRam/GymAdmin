@@ -8,7 +8,7 @@ import { titleize } from 'sly/web/services/helpers/strings';
 import { getHelmetForSearchPage } from 'sly/web/services/helpers/html_headers';
 import { getBreadCrumbsForLocation } from 'sly/web/services/helpers/url';
 import CommunitySearchPageTemplate from 'sly/web/components/templates/CommunitySearchPageTemplate';
-import { Box, Heading, Link } from 'sly/web/components/atoms';
+import { Box, Heading, Link } from 'sly/common/components/atoms';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import { getTocSeoLabel } from 'sly/web/services/helpers/search';

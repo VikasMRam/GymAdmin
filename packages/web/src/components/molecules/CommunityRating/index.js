@@ -7,7 +7,7 @@ import { text as textPropType } from 'sly/common/propTypes/text';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { formatRating } from 'sly/web/services/helpers/rating';
-import { Block, Link } from 'sly/web/components/atoms';
+import { Block, Link } from 'sly/common/components/atoms';
 import Rating from 'sly/web/components/molecules/Rating';
 
 const RatingValue = styled(Block)`

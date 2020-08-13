@@ -4,8 +4,8 @@ import { node, bool, string, arrayOf, oneOfType, oneOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/common/components/themes';
-import Link from 'sly/web/components/atoms/Link';
-import Block from 'sly/web/components/atoms/Block';
+import Link from 'sly/common/components/atoms/Link';
+import Block from 'sly/common/components/atoms/Block';
 
 const TableWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {

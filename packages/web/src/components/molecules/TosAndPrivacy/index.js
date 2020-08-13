@@ -1,7 +1,7 @@
 import React from 'react';
 import { bool, string } from 'prop-types';
 
-import { Block, Link } from 'sly/web/components/atoms';
+import { Block, Link } from 'sly/common/components/atoms';
 
 const getTosLink = isNewTab => <Link weight="medium" size="tiny" href="/tos" target={isNewTab ? '_blank' : null}>Terms of Use</Link>;
 

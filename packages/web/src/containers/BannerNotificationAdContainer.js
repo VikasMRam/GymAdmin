@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { oneOf, func, string, bool } from 'prop-types';
 
 import SlyEvent from 'sly/web/services/helpers/events';
-import { Link } from 'sly/web/components/atoms';
+import { Link } from 'sly/common/components/atoms';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import { assetPath } from 'sly/web/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';

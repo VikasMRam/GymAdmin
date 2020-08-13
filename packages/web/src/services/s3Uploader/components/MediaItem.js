@@ -6,8 +6,7 @@ import { bool, func } from 'prop-types';
 import { size, palette } from 'sly/common/components/themes';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import { imagePropType } from 'sly/common/propTypes/gallery';
-import { Icon, Block } from 'sly/common/components/atoms';
-import { Link } from 'sly/web/components/atoms';
+import { Icon, Block, Link } from 'sly/common/components/atoms';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import HelpBubble from 'sly/web/components/form/HelpBubble';
 
