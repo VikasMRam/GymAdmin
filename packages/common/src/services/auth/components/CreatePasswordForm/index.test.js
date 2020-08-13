@@ -20,14 +20,14 @@ describe('CreatePasswordForm|Web', () => {
     const wrapper = wrap();
 
     expect(wrapper.find(Field).filter({ name: 'password' })).toHaveLength(1);
-    expect(wrapper.find('LargePaddedFullWidthButton')).toHaveLength(1);
+    expect(wrapper.find('Button')).toHaveLength(1);
   });
 
   it('submits form', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
 
-    wrapper.find('form').simulate('submit');
+    wrapper.find('Form').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
 });
