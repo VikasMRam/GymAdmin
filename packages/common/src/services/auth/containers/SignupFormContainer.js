@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { func, bool } from 'prop-types';
 
 import { withAuth } from 'sly/web/services/api';
-import { createValidator, required, email, minLength } from 'sly/web/services/validation';
+import { createValidator, required, email, usPhone, minLength } from 'sly/web/services/validation';
 import SignupForm from 'sly/common/services/auth/components/SignupForm';
 
 const validate = createValidator({
   firstName: [required],
   email: [required, email],
+  phone: [required, usPhone],
   password: [required, minLength(8)],
 });
 

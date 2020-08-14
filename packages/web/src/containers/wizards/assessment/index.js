@@ -189,13 +189,6 @@ export default class AssessmentWizard extends Component {
             data, next, previous, ...props
           }) => (
             <WizardSteps {...props}>
-              {!skipIntro &&
-                <WizardStep
-                  component={Intro}
-                  name="Intro"
-                  showSkipOption={showSkipOption}
-                />
-              }
               <WizardStep
                 component={Who}
                 name="Who"
