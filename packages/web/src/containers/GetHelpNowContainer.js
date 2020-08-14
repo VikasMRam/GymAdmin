@@ -3,7 +3,7 @@ import { reduxForm } from 'redux-form';
 import { string, func } from 'prop-types';
 
 import { createValidator, required } from 'sly/web/services/validation';
-import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
 import SlyEvent from 'sly/web/services/helpers/events';
 import GetHelpNow from 'sly/web/components/organisms/GetHelpNow';
 

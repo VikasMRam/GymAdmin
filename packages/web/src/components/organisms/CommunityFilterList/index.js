@@ -15,7 +15,7 @@ import {
   filterLinkPath,
   getFiltersApplied,
 } from 'sly/web/services/helpers/search';
-import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
 import withGenerateFilterLinkPath from 'sly/web/services/search/withGenerateFilterLinkPath';
 
 const StyledLink = pad(styled(Link)`

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { func } from 'prop-types';
 
 // todo: should go to common
-import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
 import AuthContainer from 'sly/common/services/auth/containers/AuthContainer';
 
 @withRedirectTo
