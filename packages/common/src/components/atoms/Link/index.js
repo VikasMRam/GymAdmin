@@ -5,7 +5,7 @@ import Root from './Root';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
-import { routes as routesPropType } from 'sly/web/propTypes/routes';
+import { routes as routesPropType } from 'sly/common/propTypes/routes';
 import { createRRAnchor, RRLink } from 'sly/common/components/helpers';
 import isPathInRoutes from 'sly/common/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';

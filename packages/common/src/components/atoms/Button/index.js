@@ -5,7 +5,7 @@ import Root from './Root';
 
 import { getKey } from 'sly/common/components/themes';
 import { isReactNative } from 'sly/common/constants/utils';
-import { routes as routesPropType } from 'sly/web/propTypes/routes';
+import { routes as routesPropType } from 'sly/common/propTypes/routes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { createRRAnchor, RRLink } from 'sly/common/components/helpers';
