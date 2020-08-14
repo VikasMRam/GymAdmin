@@ -16,6 +16,7 @@ module.exports = {
     ...commonConfig.moduleNameMapper,
     '^react-native$': '<rootDir>/node_modules/react-native',
     '^styled-components$': 'styled-components/native',
+    '^react-native-webview$': '<rootDir>/node_modules/react-native-webview',
   },
   setupFiles: [
     path.join(__dirname, 'private/jest/setupTests.js'),
