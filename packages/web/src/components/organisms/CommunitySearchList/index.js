@@ -9,7 +9,7 @@ import { gridColumns } from 'sly/web/components/themes';
 import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/constants/wizards/assessment';
 import { getPaginationData } from 'sly/web/services/helpers/pagination';
 import { getTocLabel, getLocationLabel } from 'sly/web/services/helpers/search';
-import { showShowZillowAd } from 'sly/web/services/helpers/adtiles';
+import { shouldShowZillowSearchAd } from 'sly/web/services/helpers/adtiles';
 import pad from 'sly/web/components/helpers/pad';
 import { Centered, Link, Block, Heading } from 'sly/web/components/atoms';
 import Pagination from 'sly/web/components/molecules/Pagination';
@@ -124,7 +124,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
   const { city, state, toc }  = searchParams;
   const locLabel = getLocationLabel(searchParams);
   const tocLabel = getTocLabel(searchParams.toc);
-  const showZillowSearchAd = toc === 'Active Adult';
+  const showZillowSearchAd = shouldShowZillowSearchAd(toc,city);
 
   // pagination pathname
   let params = {};

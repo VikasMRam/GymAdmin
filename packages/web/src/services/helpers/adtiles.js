@@ -1,13 +1,28 @@
 import { tocs } from './search';
+import { tocPaths, urlize } from './url';
 
-export const showShowZillowAd = (toc, city ) => {
+export const shouldShowZillowSearchAd = (toc, city ) => {
+  return shouldShowZillowAd(toc,city);
+};
 
+export const shouldShowZillowProfileAd = (community) => {
+  if (!community || !community.propInfo || !community.propInfo.typeCare ) {
+    return false;
+  }
+  const { propInfo:{ typeCare: careList }, address:{ city: cityLabel} } = community;
+  const toc = tocPaths(careList);
+  const city = urlize(cityLabel);
+  return shouldShowZillowAd(toc,city);
+};
+
+export const shouldShowZillowAd = (toc, city) => {
   const zillowCities = ["portland", "sacramento", "riverside", "los-angeles", "san-diego",
     "las-vegas", "phoenix", "tucson", "fort-collins", "denver", "colorado-springs",
     "minneapolis", "dallas", "austin", "san-antonio", "houston", "atlanta", "nashville",
     "raleigh", "charlotte", "tampa", "orlando", "miami"];
-  const validTocs =  tocs.filter(e =>
+  const validTocs = tocs.filter(e =>
     e.value.match(/active-adult|independent-living|continuing-care-retirement-community/)).map(e => e.value);
+  return validTocs.indexOf(toc) > -1 && zillowCities.indexOf(city) > -1;
+};
 
-  return validTocs.indexOf(toc) > -1 && zillowCities.indexOf(city) > -1
-}
+
