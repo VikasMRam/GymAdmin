@@ -34,6 +34,12 @@ export default class Root extends Component {
     onClick: func,
     flex: any,
     width: any,
+    size: any,
+    weight: any,
+    textDecoration: any,
+    lineHeight: any,
+    palette: any,
+    variation: any,
   };
 
   withPressable(content) {
@@ -70,9 +76,19 @@ export default class Root extends Component {
     }
     // wrap all children with Text, if required
     if (Array.isArray(children)) {
+      // only pass text related styles to chil Text wrapper as unlike web styles
+      // won't be inherited from parent
+      const textProps = {};
+      textProps.size = this.props.size;
+      textProps.weight = this.props.weight;
+      textProps.textDecoration = this.props.textDecoration;
+      textProps.lineHeight = this.props.lineHeight;
+      textProps.palette = this.props.palette;
+      textProps.variation = this.props.variation;
+
       return this.withPressable(
         <StyledView style={style}>
-          {children.map(c => shouldWrapWithText(c) ? <Text {...this.props} key={c}>{c}</Text> : c)}
+          {children.map(c => shouldWrapWithText(c) ? <Text {...textProps} key={c}>{c}</Text> : c)}
         </StyledView>,
       );
     }
