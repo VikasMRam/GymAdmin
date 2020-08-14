@@ -30,7 +30,7 @@ const ResetPasswordForm = ({
     <Hr />
     <Block align="center" direction="row" size="caption">
       Remember your password?&nbsp;&nbsp;
-      <ButtonLink palette="primary" onClick={onLoginClick}>Sign in</ButtonLink>
+      <ButtonLink palette="primary" size="caption" onClick={onLoginClick}>Sign in</ButtonLink>
     </Block>
   </Form>
 );

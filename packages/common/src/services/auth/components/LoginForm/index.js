@@ -37,7 +37,7 @@ const LoginForm = ({
     </ButtonLink>
     <Block align="center" direction="row" size="caption">
       Don&apos;t have an account?&nbsp;&nbsp;
-      <ButtonLink palette="primary" onClick={onRegisterClick}>Sign up</ButtonLink>
+      <ButtonLink palette="primary" size="caption" onClick={onRegisterClick}>Sign up</ButtonLink>
     </Block>
   </Form>
 );

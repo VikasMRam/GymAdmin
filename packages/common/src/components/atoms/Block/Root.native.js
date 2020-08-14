@@ -72,7 +72,7 @@ export default class Root extends Component {
     if (Array.isArray(children)) {
       return this.withPressable(
         <StyledView style={style}>
-          {children.map(c => shouldWrapWithText(c) ? <Text key={c}>{c}</Text> : c)}
+          {children.map(c => shouldWrapWithText(c) ? <Text {...this.props} key={c}>{c}</Text> : c)}
         </StyledView>,
       );
     }

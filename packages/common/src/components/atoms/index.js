@@ -11,3 +11,4 @@ export Hr from './Hr';
 export Grid from './Grid';
 export Paragraph from './Paragraph';
 export Link from './Link';
+export Iframe from './Iframe';

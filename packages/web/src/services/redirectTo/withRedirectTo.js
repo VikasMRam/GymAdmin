@@ -1,7 +1,7 @@
 import React from 'react';
 import { object } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import redirectTo from './redirectTo';
 
