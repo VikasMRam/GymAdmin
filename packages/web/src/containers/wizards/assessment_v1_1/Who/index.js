@@ -5,23 +5,23 @@ import { withRouter } from 'react-router';
 
 import { query } from 'sly/web/services/api';
 import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
-import { ADL } from 'sly/web/components/wizards/assessment';
+import { Who } from 'sly/web/components/wizards/assessment';
 import { createValidator, required } from 'sly/web/services/validation';
 
 const validate = createValidator({
-  adl: [required],
+  lookingFor: [required],
 });
 
 const ReduxForm = reduxForm({
-  form: 'ADLForm',
+  form: 'WhoForm',
   destroyOnUnmount: false,
   validate,
-})(ADL);
+})(Who);
 
 @withRouter
 @query('createAction', 'createUuidAction')
 
-export default class ADLFormContainer extends Component {
+export default class WhoFormContainer extends Component {
   static propTypes = {
     createAction: func.isRequired,
     location: object.isRequired,
@@ -37,7 +37,7 @@ export default class ADLFormContainer extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'step-8:ADL',
+          stepName: 'step-3:who',
           wizardName: 'assessmentWizard',
           data,
         },

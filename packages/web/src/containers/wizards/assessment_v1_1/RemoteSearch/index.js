@@ -5,23 +5,23 @@ import { withRouter } from 'react-router';
 
 import { query } from 'sly/web/services/api';
 import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
-import { ADL } from 'sly/web/components/wizards/assessment';
+import { CurrentLiving } from 'sly/web/components/wizards/assessment';
 import { createValidator, required } from 'sly/web/services/validation';
 
 const validate = createValidator({
-  adl: [required],
+  currentLiving: [required],
 });
 
 const ReduxForm = reduxForm({
-  form: 'ADLForm',
+  form: 'RemoteSearch',
   destroyOnUnmount: false,
   validate,
-})(ADL);
+})(CurrentLiving);
 
 @withRouter
 @query('createAction', 'createUuidAction')
 
-export default class ADLFormContainer extends Component {
+export default class RemoteSearch extends Component {
   static propTypes = {
     createAction: func.isRequired,
     location: object.isRequired,
@@ -37,7 +37,7 @@ export default class ADLFormContainer extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'step-8:ADL',
+          stepName: 'step-7:RemoteSearch',
           wizardName: 'assessmentWizard',
           data,
         },

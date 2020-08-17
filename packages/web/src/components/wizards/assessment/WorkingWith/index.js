@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
-import { TIMING_OPTIONS } from 'sly/web/constants/wizards/assessment';
+import { WORKING_WITH_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
@@ -30,21 +30,21 @@ const StyledTipBox = styled(TipBox)`
   height: fit-content;
 `;
 
-const Timing = ({
+const WorkingWith = ({
   handleSubmit, onBackClick, onSkipClick, invalid, submitting, hasTip,
 }) => (
   <div>
     <Wrapper>
-      <PaddedProgressBar label totalSteps={10} currentStep={1} />
+      <PaddedProgressBar label totalSteps={10} currentStep={2} />
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
-        <PaddedHeading level="subtitle" weight="medium">Where are you in your senior living search?</PaddedHeading>
+        <PaddedHeading level="subtitle" weight="medium">Do any of these apply to you?</PaddedHeading>
         <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
           <StyledField
-            singleChoice
-            options={TIMING_OPTIONS}
+            multipleChoice
+            options={WORKING_WITH_OPTIONS}
             name="timing"
             type="boxChoice"
             align="left"
@@ -55,14 +55,14 @@ const Timing = ({
       </Box>
       {hasTip &&
         <StyledTipBox heading="WHY THIS IS IMPORTANT:">
-          We've helped thousands of loved ones. You're in good hands.
+          This will help our team better understand and support you wherever you are in your search.
         </StyledTipBox>
       }
     </Wrapper>
   </div>
 );
 
-Timing.propTypes = {
+WorkingWith.propTypes = {
   handleSubmit: func.isRequired,
   onSkipClick: func,
   onBackClick: func,
@@ -71,8 +71,8 @@ Timing.propTypes = {
   hasTip: bool,
 };
 
-Timing.defaultProps = {
+WorkingWith.defaultProps = {
   hasTip: true,
 };
 
-export default Timing;
+export default WorkingWith;

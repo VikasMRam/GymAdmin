@@ -3,11 +3,10 @@ import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { WHO_PERSON_OPTIONS } from 'sly/web/constants/wizards/assessment';
+import { AGE_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box } from 'sly/web/components/atoms';
-import IconItem from 'sly/web/components/molecules/IconItem';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
@@ -17,40 +16,52 @@ const PaddedProgressBar = pad(ProgressBar);
 const PaddedHeading = pad(Heading);
 PaddedHeading.displayName = 'PaddedHeading';
 
-const PaddedIconItem = pad(IconItem, 'large');
 
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
 `;
 
-const Who = ({
-  handleSubmit, invalid, submitting, hasTip,
-}) => (
+const generateHeading = (whoNeedsHelp) => {
+  switch (whoNeedsHelp) {
+    case 'parents':
+      return 'How old is your parent(s)?';
+    case 'myself-and-spouse':
+      return 'How old are you and your spouse?';
+    case 'myself':
+      return 'How old are you?';
+    case 'friend':
+      return 'How old is your friend?';
+    default:
+      return 'How old is the person(s) you are searching for?';
+  }
+};
+
+const Age = ({
+               handleSubmit, invalid, submitting, hasTip, whoNeedsHelp
+             }) => (
   <div>
     <Wrapper>
-      <PaddedProgressBar label totalSteps={10} currentStep={3} />
+      <PaddedProgressBar label totalSteps={10} currentStep={4} />
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
-        <PaddedHeading level="subtitle" weight="medium">Who are you looking for?</PaddedHeading>
+        <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
         <form onSubmit={handleSubmit}>
           <Field
-            name="lookingFor"
-            type="select"
+            name="age"
+            type="boxChoice"
             component={ReduxField}
+            singleChoice
+            options={AGE_OPTIONS}
             required
-          >
-            <option value="">Select a person</option>
-            {WHO_PERSON_OPTIONS.map(o => <option value={o.value} key={o.value}>{o.label}</option>)}
-          </Field>
+          />
           <Footer invalid={invalid} submitting={submitting} />
         </form>
       </Box>
       {hasTip &&
-        <StyledTipBox heading="WHY THIS IS IMPORTANT:">
-          <PaddedIconItem icon="favourite-light" iconPalette="slate" iconVariation="base">Getting to know you helps us personalize how we assist you.</PaddedIconItem>
-          <IconItem icon="lock" iconPalette="slate" iconVariation="base">Any information you share with us is private and secure.</IconItem>
-        </StyledTipBox>
+      <StyledTipBox heading="WHY THIS IS IMPORTANT:">
+        Some communities have age restrictions
+      </StyledTipBox>
       }
     </Wrapper>
   </div>

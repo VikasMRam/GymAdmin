@@ -1,32 +1,36 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
-import { func, object } from 'prop-types';
+import { func, object, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { query } from 'sly/web/services/api';
 import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
-import { ADL } from 'sly/web/components/wizards/assessment';
-import { createValidator, required } from 'sly/web/services/validation';
-
-const validate = createValidator({
-  adl: [required],
-});
+import { ResidentName } from 'sly/web/components/wizards/assessment';
 
 const ReduxForm = reduxForm({
-  form: 'ADLForm',
+  form: 'ResidentNameForm',
   destroyOnUnmount: false,
-  validate,
-})(ADL);
+})(ResidentName);
 
 @withRouter
 @query('createAction', 'createUuidAction')
 
-export default class ADLFormContainer extends Component {
+export default class ResidentNameFormContainer extends Component {
   static propTypes = {
     createAction: func.isRequired,
     location: object.isRequired,
     onSubmit: func.isRequired,
+    whatToDoNext: string,
+    onSkipClick: func.isRequired,
   };
+
+  componentDidMount() {
+    // const { whatToDoNext, onSkipClick } = this.props;
+    //
+    // if (whatToDoNext === 'no-thanks') {
+    //   onSkipClick();
+    // }
+  }
 
   handleSubmit = (data) => {
     const { createAction, location: { pathname }, onSubmit } = this.props;
@@ -37,7 +41,7 @@ export default class ADLFormContainer extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'step-8:ADL',
+          stepName: 'step-13:ResidentName',
           wizardName: 'assessmentWizard',
           data,
         },

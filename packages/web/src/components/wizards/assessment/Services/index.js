@@ -3,76 +3,68 @@ import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
-import { TIMING_OPTIONS } from 'sly/web/constants/wizards/assessment';
+import { SERVICES_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
-import { Heading, Box, Block } from 'sly/web/components/atoms';
+import { Block, Heading, Box } from 'sly/web/components/atoms';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const PaddedProgressBar = pad(ProgressBar);
 
-const PaddedHeading = pad(Heading, 'large');
+const PaddedHeading = pad(Heading);
 PaddedHeading.displayName = 'PaddedHeading';
 
 const PaddedBlock = pad(Block);
 PaddedBlock.displayName = 'PaddedBlock';
 
-const StyledField = styled(Field)`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
-`;
 
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
 `;
 
-const Timing = ({
-  handleSubmit, onBackClick, onSkipClick, invalid, submitting, hasTip,
-}) => (
+const Services = ({
+               handleSubmit, invalid, submitting, hasTip,
+             }) => (
   <div>
     <Wrapper>
-      <PaddedProgressBar label totalSteps={10} currentStep={1} />
+      <PaddedProgressBar label totalSteps={10} currentStep={5} />
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
-        <PaddedHeading level="subtitle" weight="medium">Where are you in your senior living search?</PaddedHeading>
+        <PaddedHeading level="subtitle" weight="medium">Please tell us if you are interested in these other services</PaddedHeading>
         <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
-          <StyledField
-            singleChoice
-            options={TIMING_OPTIONS}
-            name="timing"
+          <Field
+            name="services"
             type="boxChoice"
-            align="left"
             component={ReduxField}
+            singleChoice
+            options={SERVICES_OPTIONS}
+            required
           />
-          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
+          <Footer invalid={invalid} submitting={submitting} />
         </form>
       </Box>
       {hasTip &&
-        <StyledTipBox heading="WHY THIS IS IMPORTANT:">
-          We've helped thousands of loved ones. You're in good hands.
-        </StyledTipBox>
+      <StyledTipBox heading="WHY THIS IS IMPORTANT:">
+        Families just like you use these services often. We will connect you directly with the service providers you are interested in.
+      </StyledTipBox>
       }
     </Wrapper>
   </div>
 );
 
-Timing.propTypes = {
+Services.propTypes = {
   handleSubmit: func.isRequired,
-  onSkipClick: func,
-  onBackClick: func,
   invalid: bool,
   submitting: bool,
   hasTip: bool,
 };
 
-Timing.defaultProps = {
+Services.defaultProps = {
   hasTip: true,
 };
 
-export default Timing;
+export default Services;
