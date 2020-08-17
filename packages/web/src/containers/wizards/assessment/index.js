@@ -7,6 +7,7 @@ import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wiza
 import withWS from 'sly/web/services/ws/withWS';
 import { withRedirectTo } from 'sly/web/services/redirectTo';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
+import { getWizardEndAd } from 'sly/web/services/helpers/adtiles';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
 import {
   ASSESSMENT_WIZARD_MATCHED_AGENT,
@@ -162,7 +163,7 @@ export default class AssessmentWizard extends Component {
 
   render() {
     const { skipIntro, community, hasTip, className } = this.props;
-    let { city, state } = this.props;
+    let { city, state, toc, } = this.props;
     let showSkipOption = false;
     let amount = 4000;
     const { agent, hasNoAgent } = this.state;
@@ -175,6 +176,7 @@ export default class AssessmentWizard extends Component {
     if (!city || !state) {
       throw Error('community or state and city is required');
     }
+    const adTile = getWizardEndAd({ community, toc, city});
 
     return (
       <section className={className}>
@@ -275,6 +277,7 @@ export default class AssessmentWizard extends Component {
                 hasNoAgent={hasNoAgent}
                 community={community}
                 city={city}
+                adTile={adTile}
               />
             </WizardSteps>
           )}

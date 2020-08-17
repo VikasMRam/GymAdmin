@@ -46,6 +46,7 @@ export default class AssessmentWizard extends Component {
     community: communityPropType,
     city: string,
     state: string,
+    toc: string,
     redirectTo: func.isRequired,
     hasTip: bool,
     status: object,
@@ -167,7 +168,7 @@ export default class AssessmentWizard extends Component {
 
   render() {
     const { skipIntro, community, hasTip, className } = this.props;
-    let { city, state, toc='assisted-living' } = this.props;
+    let { city, state, toc, } = this.props;
     let showSkipOption = false;
 
     let amount = 4000;
@@ -175,7 +176,7 @@ export default class AssessmentWizard extends Component {
 
     if (community) {
       ({ address: { city, state }, startingRate: amount = 4000 } = community);
-      showSkipOption = true; // When a community is present this wizard offers a shortcut to skip to final step.
+      // showSkipOption = true; // When a community is present this wizard offers a shortcut to skip to final step.
     }
 
     if (!city || !state) {
