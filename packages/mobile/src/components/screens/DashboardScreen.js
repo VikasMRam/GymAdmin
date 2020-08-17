@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
 
+import { host } from 'sly/common/config';
 import { Iframe } from 'sly/common/components/atoms';
 import { View } from 'sly/mobile/components/atoms';
 
@@ -8,7 +9,7 @@ const { height } = Dimensions.get('window');
 
 const DashboardScreen = () => (
   <View style={{ width: '100%', height }}>
-    <Iframe src="https://seniorly.com" />
+    <Iframe src={host} />
   </View>
 );
 
