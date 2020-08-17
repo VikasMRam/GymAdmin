@@ -26,42 +26,42 @@ export const WHO_PERSON_OPTIONS = [
 ];
 
 export const AGE_OPTIONS = [
-  { label: 'Below 40', 'value': 'below-40'},
-  { label: '40-49', 'value': '40-49'},
-  { label: '50-59', 'value': '50-59'},
-  { label: '60-69', 'value': '60-69'},
-  { label: '70+', 'value': '70+'},
+  { label: 'Below 40', value: 'below-40' },
+  { label: '40-49', value: '40-49' },
+  { label: '50-59', value: '50-59' },
+  { label: '60-69', value: '60-69' },
+  { label: '70+', value: '70+' },
 ];
 
 export const LIVE_SEARCH_STATE = [
-  { label: 'Yes', 'value': 'yes'},
-  { label: 'No', 'value': 'no'},
+  { label: 'Yes', value: 'yes' },
+  { label: 'No', value: 'no' },
 ];
 
 export const LOCAL_EXPERT_INTEREST = [
-  { label: 'Yes definitely', 'value': 'yes'},
-  { label: 'I might be', 'value': 'maybe'},
-  { label: 'Not now', 'value': 'no'}
+  { label: 'Yes definitely', value: 'yes' },
+  { label: 'I might be', value: 'maybe' },
+  { label: 'Not now', value: 'no' },
 ];
 
 export const SERVICES_OPTIONS = [
-  { label: 'Power of Attorney, wills, or other legal help', 'value': 'legal'},
-  { label: 'Moving, packing, and/or estate sales', 'value': 'moving'},
-  { label: 'Private caregiving services at home', 'value': 'private-caregiving'},
-  { label: 'Making an existing home more accessible', 'value': 'home-accessibility'},
-  { label: 'Selling an existing home', 'value': 'home-sale'},
-  { label: 'Reverse mortgages on an existing home', 'value': 'reverse-mortgage'},
-  { label: 'Not interested in any of these services at this time', 'value': 'none'},
+  { label: 'Power of Attorney, wills, or other legal help', value: 'legal' },
+  { label: 'Moving, packing, and/or estate sales', value: 'moving' },
+  { label: 'Private caregiving services at home', value: 'private-caregiving' },
+  { label: 'Making an existing home more accessible', value: 'home-accessibility' },
+  { label: 'Selling an existing home', value: 'home-sale' },
+  { label: 'Reverse mortgages on an existing home', value: 'reverse-mortgage' },
+  { label: 'Not interested in any of these services at this time', value: 'none' },
 ];
 
 export const PRODUCTS_OPTIONS = [
-  { label: 'Furniture packages for your new apartment', 'value': 'furniture'},
-  { label: 'Accessory Dwelling Units to install in your existing home', 'value': 'dwelling-units'},
-  { label: 'Medicare Advantage plans', 'value': 'medicare-advantage'},
-  { label: 'Subscription service for adult diapers', 'value': 'subscriptions-diapers'},
-  { label: 'Subscription service for Life Alert monitoring', 'value': 'subscriptions-lifealert'},
-  { label: 'Cell phone or tablet designed for seniors', 'value': 'celltab-seniors'},
-  { label: 'Not interested in any of these services at this time', 'value': 'none'},
+  { label: 'Furniture packages for your new apartment', value: 'furniture' },
+  { label: 'Accessory Dwelling Units to install in your existing home', value: 'dwelling-units' },
+  { label: 'Medicare Advantage plans', value: 'medicare-advantage' },
+  { label: 'Subscription service for adult diapers', value: 'subscriptions-diapers' },
+  { label: 'Subscription service for Life Alert monitoring', value: 'subscriptions-lifealert' },
+  { label: 'Cell phone or tablet designed for seniors', value: 'celltab-seniors' },
+  { label: 'Not interested in any of these services at this time', value: 'none' },
 ];
 
 export const FEELING_OPTIONS = [
