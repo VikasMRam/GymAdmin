@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { ADL } from 'sly/web/components/wizards/assessment';
+import ADL from '.';
 
 const handleSubmit = jest.fn();
 const change = jest.fn();

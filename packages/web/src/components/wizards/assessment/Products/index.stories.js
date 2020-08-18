@@ -3,8 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
+import Products from '.';
+
 import { withPreventDefault } from 'sly/common/services/helpers/forms';
-import { Products } from 'sly/web/components/wizards/assessment';
 
 const ProductsContainer = reduxForm({
   form: 'Products',

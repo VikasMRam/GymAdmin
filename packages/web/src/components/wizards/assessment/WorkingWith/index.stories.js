@@ -3,14 +3,15 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
+import WorkingWith from '.';
+
 import { withPreventDefault } from 'sly/common/services/helpers/forms';
-import { WorkingWith } from 'sly/web/components/wizards/assessment';
 
 const WorkingWithContainer = reduxForm({
-  form: 'WorkingWithContainer',
+  form: 'WorkingWith',
 })(WorkingWith);
 
-storiesOf('Wizards|assessment/Steps/Timing', module)
+storiesOf('Wizards|assessment/Steps/WorkingWith', module)
   .add('default', () => (
     <WorkingWithContainer
       handleSubmit={withPreventDefault(action('form submitted'))}

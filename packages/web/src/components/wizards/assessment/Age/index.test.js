@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Age } from 'sly/web/components/wizards/assessment';
+import Age from '.';
 
 const handleSubmit = jest.fn();
 const whoNeedsHelp = 'parents';

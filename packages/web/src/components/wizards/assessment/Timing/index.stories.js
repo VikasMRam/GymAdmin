@@ -3,8 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
+import Timing from '.';
+
 import { withPreventDefault } from 'sly/common/services/helpers/forms';
-import { Timing } from 'sly/web/components/wizards/assessment';
 
 const TimingContainer = reduxForm({
   form: 'Timing',

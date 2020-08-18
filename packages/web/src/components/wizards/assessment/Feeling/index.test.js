@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Feeling } from 'sly/web/components/wizards/assessment';
+import Feeling from '.';
 
 const handleSubmit = jest.fn();
 const defaultProps = {

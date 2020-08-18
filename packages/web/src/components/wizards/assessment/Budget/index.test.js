@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Budget } from 'sly/web/components/wizards/assessment';
+import Budget from '.';
 
 const handleSubmit = jest.fn();
 const change = jest.fn();
