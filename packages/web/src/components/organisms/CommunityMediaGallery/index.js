@@ -3,8 +3,7 @@ import { string, object, arrayOf, shape, bool, number, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette, getKey } from 'sly/common/components/themes';
-import { Button } from 'sly/common/components/atoms';
-import { Link } from 'sly/web/components/atoms';
+import { Button, Link } from 'sly/common/components/atoms';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import MediaGallery from 'sly/web/components/molecules/MediaGallery';
 import FullscreenMediaGallery from 'sly/web/components/molecules/FullscreenMediaGallery';

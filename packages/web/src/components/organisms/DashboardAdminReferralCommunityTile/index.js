@@ -8,7 +8,8 @@ import { size, palette } from 'sly/common/components/themes';
 import { adminCommunityPropType } from 'sly/common/propTypes/community';
 import { getHasContract, getIsCCRC, getIsSNF } from 'sly/web/services/helpers/community';
 import { buildAddressDisplay, getReferralSentTimeText } from 'sly/web/services/helpers/communityReferral';
-import { Heading, Block, Span, Button, Link } from 'sly/web/components/atoms';
+import { Heading, Block, Button, Link } from 'sly/common/components/atoms';
+import { Span } from 'sly/web/components/atoms';
 import Role from 'sly/web/components/common/Role'
 import Stage from 'sly/web/components/molecules/Stage';
 // import cursor from 'sly/web/components/helpers/cursor';

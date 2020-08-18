@@ -2,8 +2,9 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Link as RRLink, Router, BrowserRouter } from 'react-router-dom';
 
-import { routes as routesPropType } from 'sly/web/propTypes/routes';
-import Link, { Anchor } from 'sly/web/components/atoms/Link';
+import Link from '.';
+
+import { routes as routesPropType } from 'sly/common/propTypes/routes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
 const { history } = new BrowserRouter();
@@ -13,15 +14,15 @@ const childContextTypes = {
 };
 const wrap = (props = {}) => mount(<Router history={history}><Link {...props} /></Router>, { context, childContextTypes });
 
-describe('Link', () => {
+describe('Link|Web', () => {
   it('renders anchor with href', () => {
     const wrapper = wrap({ href: 'http://google.com', children: 'Hey' });
-    expect(wrapper.find(Anchor)).toHaveLength(1);
+    expect(wrapper.find('Root')).toHaveLength(1);
   });
 
   it('renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
-    expect(wrapper.contains('test')).toBe(true);
+    expect(wrapper.contains('test')).toBeTruthy();
   });
 
   it('renders props when passed in', () => {
@@ -31,7 +32,7 @@ describe('Link', () => {
 
   it('renders Anchor by default', () => {
     const wrapper = wrap();
-    expect(wrapper.find(Anchor)).toHaveLength(1);
+    expect(wrapper.find('Root')).toHaveLength(1);
   });
 
   it('renders Link when to is passed in', () => {

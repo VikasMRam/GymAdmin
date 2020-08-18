@@ -12,7 +12,7 @@ import { getCitySearchUrl, getStateAbbr } from 'sly/web/services/helpers/url';
 import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
 import pad from 'sly/web/components/helpers/pad';
 import shadow from 'sly/web/components/helpers/shadow';
-import { Block, Link, Button } from 'sly/web/components/atoms';
+import { Block, Link, Button } from 'sly/common/components/atoms';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import { textAlign } from 'sly/web/components/helpers/text';

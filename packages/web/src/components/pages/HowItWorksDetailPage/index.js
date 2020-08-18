@@ -5,7 +5,7 @@ import { string, func, arrayOf, object } from 'prop-types';
 import { size, palette } from 'sly/common/components/themes';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
-import { Link, Block, Heading, Hr } from 'sly/web/components/atoms';
+import { Link, Block, Heading, Hr } from 'sly/common/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import HowItWorksInfoTile from 'sly/web/components/molecules/HowItWorksInfoTile';
 import IconInfoTile from 'sly/web/components/molecules/IconInfoTile';

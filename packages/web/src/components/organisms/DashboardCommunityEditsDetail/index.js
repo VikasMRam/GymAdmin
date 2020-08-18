@@ -17,7 +17,7 @@ import {
 import Th from 'sly/web/components/molecules/Th';
 import { CardRow, CellWithLabel } from 'sly/web/components/atoms/TableCard';
 import { SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
-import Link from 'sly/web/components/atoms/Link';
+import { Link } from 'sly/common/components/atoms';
 import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   PHOTOS,

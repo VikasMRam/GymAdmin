@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "preinstall": "../../scripts/check-install-allowed.sh",
-    "postinstall": "npm i --package-lock-only",
     "config": "react-native config",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -24,9 +23,13 @@
   },
   "dependencies": {
     "react-native": "0.63.2",
-    "react-router-native": "5.2.0"
+    "react-router-native": "5.2.0",
+    "@react-native-community/cookies": "4.0.1",
+    "react-native-webview": "10.4.1"
   },
   "devDependencies": {
+    "@react-native-community/cli-platform-android": "4.11.0",
+    "@react-native-community/cli-platform-ios": "4.11.0",
     "@babel/runtime": "7.6.2",
     "react-native-svg-asset-plugin": "0.5.0",
     "metro-react-native-babel-preset": "0.59.0",

@@ -8,8 +8,8 @@ import { size, palette } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { startingWith } from 'sly/common/components/helpers';
 import pad from 'sly/web/components/helpers/pad';
-import { Box, Heading, Icon, Hr } from 'sly/common/components/atoms';
-import { Link, Tag } from 'sly/web/components/atoms';
+import { Box, Heading, Icon, Hr, Link } from 'sly/common/components/atoms';
+import { Tag } from 'sly/web/components/atoms';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { isBrowser } from 'sly/web/config';
 import { tocPaths } from 'sly/web/services/helpers/url';
@@ -61,7 +61,7 @@ const PhoneNumWrapper = styled.div`
   display: grid;
   grid-template-columns: 100%;
   grid-gap: ${size('spacing.regular')};
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     grid-template-columns: 50% 50%;  
     grid-column-gap: ${size('spacing.regular')};

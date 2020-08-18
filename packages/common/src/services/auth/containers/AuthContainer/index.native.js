@@ -2,9 +2,11 @@
 import React, { Component } from 'react';
 import { object, func, oneOf, string, bool } from 'prop-types';
 import { connect } from 'react-redux';
+import CookieManager from '@react-native-community/cookies';
 
 import Wizard from './Wizard';
 
+import { apiUrl } from 'sly/common/config';
 import { authenticateCancel, authenticateSuccess } from 'sly/web/store/authenticated/actions';
 import { withAuth } from 'sly/web/services/api';
 import { Box, Block } from 'sly/common/components/atoms';
@@ -67,8 +69,17 @@ export default class AuthContainer extends Component {
     }
   };
 
-  handleAuthenticateSuccess = () => {
+  handleAuthenticateSuccess = ({ headers }) => {
     const { onAuthenticateSuccess, authenticateSuccess } = this.props;
+
+    if (headers['set-cookie']) {
+      CookieManager.setFromResponse(
+        apiUrl,
+        headers['set-cookie'])
+        .catch((error) => {
+          console.log('Failed to set cookie.', error);
+        });
+    }
 
     // authenticateSuccess is not a promise, hence call success event callback immediately
     authenticateSuccess();

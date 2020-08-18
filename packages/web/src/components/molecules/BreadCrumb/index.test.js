@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Link } from 'sly/web/components/atoms';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 
 const items = [
@@ -34,7 +33,7 @@ describe('BreadCrumb', () => {
     const wrapper = wrap({ items });
     const ol = wrapper.find('ol');
     const li = ol.find('li');
-    const link = li.find(Link);
+    const link = li.find('Link');
 
     expect(ol).toHaveLength(1);
     expect(li).toHaveLength(items.length);
@@ -46,7 +45,7 @@ describe('BreadCrumb', () => {
     const wrapper = wrap({ items: splicedItems });
     const ol = wrapper.find('ol');
     const li = ol.find('li');
-    const link = li.find(Link);
+    const link = li.find('Link');
 
     expect(ol).toHaveLength(1);
     expect(li).toHaveLength(splicedItems.length);

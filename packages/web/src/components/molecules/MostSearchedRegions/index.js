@@ -3,7 +3,7 @@ import { arrayOf, shape } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
-import { Link, Heading, Block } from 'sly/web/components/atoms';
+import { Link, Heading, Block } from 'sly/common/components/atoms';
 import ImageOverlayContentTile from 'sly/web/components/molecules/ImageOverlayContentTile';
 
 const StyledLink = styled(Link)`

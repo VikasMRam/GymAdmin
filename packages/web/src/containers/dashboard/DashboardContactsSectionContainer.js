@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { prefetch, withUser, query } from 'sly/web/services/api';
 import contactPropType from 'sly/common/propTypes/contact';
 import DashboardAgentContactsSection from 'sly/web/components/organisms/DashboardAgentContactsSection';
-import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { withDatatable } from 'sly/web/services/datatable';
 import withModal from 'sly/web/controllers/withModal';
 import withNotification from 'sly/web/controllers/withNotification';

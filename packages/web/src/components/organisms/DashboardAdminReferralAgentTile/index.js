@@ -9,7 +9,8 @@ import { adminAgentPropType } from 'sly/common/propTypes/agent';
 import pad from 'sly/web/components/helpers/pad';
 import { getReferralSentTimeText } from 'sly/web/services/helpers/communityReferral';
 import { copyToClipboard } from 'sly/web/services/helpers/utils';
-import { Heading, Badge, Block, Span, Box, Button, Link } from 'sly/web/components/atoms';
+import { Heading, Badge, Block, Box, Button, Link } from 'sly/common/components/atoms';
+import { Span } from 'sly/web/components/atoms';
 import IconBadge from 'sly/web/components/molecules/IconBadge';
 import Stage from 'sly/web/components/molecules/Stage';
 

@@ -9,8 +9,8 @@ import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import pad from 'sly/web/components/helpers/pad';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
-import { Block, Icon, Paragraph } from 'sly/common/components/atoms';
-import { Link, Span } from 'sly/web/components/atoms';
+import { Block, Icon, Paragraph, Link } from 'sly/common/components/atoms';
+import { Span } from 'sly/web/components/atoms';
 import { isBrowser } from 'sly/web/config';
 
 const overridePosition = ({ left, top }) => ({
@@ -40,7 +40,7 @@ const CommunityPricing = ({ id, estimated, price, palette, variation, className,
   <StyledCommunityPricingWrapper className={className}>
     {estimated &&
       <DescriptionBlock size="caption">
-        <Paragraph
+        <Block
           cursor="pointer"
           size="caption"
           palette="slate"
@@ -51,7 +51,7 @@ const CommunityPricing = ({ id, estimated, price, palette, variation, className,
         >
           Seniorly Estimate
           <StyledIcon palette="slate" icon="help" size="caption" />
-        </Paragraph>
+        </Block>
         {isBrowser && (
           <TooltipContent
             id={tipId}

@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import CommunitySummary from 'sly/web/components/organisms/CommunitySummary';
-import { Link } from 'sly/web/components/atoms';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 import { CONTINUING_CARE_RETIREMENT_COMMUNITY } from 'sly/web/constants/tags';
 
@@ -59,7 +58,7 @@ describe('CommunitySummary', () => {
       isAdmin: true,
     });
     verify(wrapper);
-    expect(wrapper.find('StyledHeading').dive().find(Link)).toHaveLength(1);
+    expect(wrapper.find('StyledHeading').dive().find('Link')).toHaveLength(1);
   });
 
   it('Should render the care types tags for state Delaware', () => {

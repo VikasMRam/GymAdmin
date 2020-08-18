@@ -7,7 +7,7 @@ import {
 } from 'prop-types';
 
 import { size, palette } from 'sly/common/components/themes';
-import Link from 'sly/web/components/atoms/Link';
+import Link from 'sly/common/components/atoms/Link';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
 import pad from 'sly/web/components/helpers/pad';

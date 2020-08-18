@@ -18,8 +18,7 @@ import {
 import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { getIsActiveAdult } from 'sly/web/services/helpers/community';
-import { Box, Button, Hr, Block, Heading } from 'sly/common/components/atoms';
-import { Paragraph, Link } from 'sly/web/components/atoms';
+import { Box, Button, Hr, Block, Heading, Paragraph, Link } from 'sly/common/components/atoms';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
 import {

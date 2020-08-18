@@ -5,7 +5,7 @@ import { arrayOf, func, object } from 'prop-types';
 import pad from 'sly/web/components/helpers/pad';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
-import { Link } from 'sly/web/components/atoms';
+import { Link } from 'sly/common/components/atoms';
 
 const PaddedLink = pad(styled(Link)`
   display: block;

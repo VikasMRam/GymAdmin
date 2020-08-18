@@ -41,7 +41,7 @@ import DashboardContactsSectionContainer from 'sly/web/containers/dashboard/Dash
 import DashboardAgentFamilyOverviewSectionContainer from 'sly/web/containers/DashboardAgentFamilyOverviewSectionContainer';
 import DashboardCommunityEditsContainer from 'sly/web/containers/DashboardCommunityEditsContainer';
 import { PROPERTY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
-import Link from 'sly/web/components/atoms/Link';
+import { Link } from 'sly/web/components/atoms';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 
 export default class DashboardCommunityDetailsPage extends Component {

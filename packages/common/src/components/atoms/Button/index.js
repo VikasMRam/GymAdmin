@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { bool, string, oneOf, object } from 'prop-types';
 
-import RRLink from './RRLink';
 import Root from './Root';
 
 import { getKey } from 'sly/common/components/themes';
 import { isReactNative } from 'sly/common/constants/utils';
-import { routes as routesPropType } from 'sly/web/propTypes/routes';
+import { routes as routesPropType } from 'sly/common/propTypes/routes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
-import { createRRAnchor } from 'sly/common/components/helpers';
+import { createRRAnchor, RRLink } from 'sly/common/components/helpers';
 // todo: most probably should be common in future
 import SlyEvent from 'sly/web/services/helpers/events';
 import isPathInRoutes from 'sly/common/services/helpers/isPathInRoutes';
@@ -187,11 +186,13 @@ export default class Button extends Component {
     const href = to || hrefprop;
 
     if (href) {
+      if (!isReactNative) {
+        props.as = 'a';
+      }
       return {
         ButtonComponent: Root,
         ...props,
         ...styleProps,
-        as: 'a',
         href: addEventToUrl(href, event),
         ...getTarget(href),
       };

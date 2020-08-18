@@ -22,7 +22,7 @@ import { Heading, Paragraph } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import { getTocSeoLabel } from 'sly/web/services/helpers/search';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
-import Link from 'sly/web/components/atoms/Link';
+import { Link } from 'sly/common/components/atoms';
 import ListItem from 'sly/web/components/molecules/ListItem';
 
 const StyledLink = styled(Link)`

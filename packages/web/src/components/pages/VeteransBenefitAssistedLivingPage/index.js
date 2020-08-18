@@ -20,7 +20,8 @@ import {
   makeOneColumnListWrapper,
 } from 'sly/web/components/templates/HubPageTemplate';
 import ListItem from 'sly/web/components/molecules/ListItem';
-import { Heading, Paragraph, Link, ResponsiveImage, Span, Image, Block } from 'sly/web/components/atoms';
+import { Heading, Paragraph, Link, Block } from 'sly/common/components/atoms';
+import { ResponsiveImage, Span, Image } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 
 const StyledLink = styled(Link)`

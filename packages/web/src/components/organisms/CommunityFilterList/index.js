@@ -7,7 +7,7 @@ import pad from 'sly/web/components/helpers/pad';
 import CollapsibleSection from 'sly/web/components/molecules/CollapsibleSection';
 import Field from 'sly/common/components/molecules/Field';
 import Radio from 'sly/web/components/molecules/Radio';
-import { Link, Button } from 'sly/web/components/atoms';
+import { Link, Button } from 'sly/common/components/atoms';
 import {
   tocs,
   budgets,
@@ -15,7 +15,7 @@ import {
   filterLinkPath,
   getFiltersApplied,
 } from 'sly/web/services/helpers/search';
-import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
 import withGenerateFilterLinkPath from 'sly/web/services/search/withGenerateFilterLinkPath';
 
 const StyledLink = pad(styled(Link)`

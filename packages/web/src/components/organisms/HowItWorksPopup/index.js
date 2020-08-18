@@ -5,7 +5,7 @@ import { func } from 'prop-types';
 import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import { Button, Heading, Block, Link } from 'sly/web/components/atoms';
+import { Button, Heading, Block, Link } from 'sly/common/components/atoms';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
 import ListItem from 'sly/web/components/molecules/ListItem';
 import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';

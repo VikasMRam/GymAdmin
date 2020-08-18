@@ -8,7 +8,7 @@ import { community as communityPropType } from 'sly/common/propTypes/community';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
-import { Link } from 'sly/web/components/atoms';
+import { Link } from 'sly/common/components/atoms';
 import { Td, Tr } from 'sly/web/components/atoms/Table';
 import { buildAddressDisplay } from 'sly/web/services/helpers/communityReferral';
 import { DASHBOARD_COMMUNITIES_DETAIL_PATH } from 'sly/web/constants/dashboardAppPaths';

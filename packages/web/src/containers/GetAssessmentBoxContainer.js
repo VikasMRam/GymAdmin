@@ -12,7 +12,7 @@ import { shouldShowZillowProfileAd } from 'sly/web/services/helpers/adtiles';
 
 import pad from 'sly/web/components/helpers/pad';
 import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
-import { Link, Block } from 'sly/web/components/atoms';
+import { Link, Block } from 'sly/common/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
 import GetAssessmentBox from 'sly/web/components/organisms/GetAssessmentBox';
 import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
