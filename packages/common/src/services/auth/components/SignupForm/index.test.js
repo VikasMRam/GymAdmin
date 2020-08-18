@@ -18,7 +18,7 @@ describe('SignupForm|Web', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('Field')).toHaveLength(4);
+    expect(wrapper.find('Field')).toHaveLength(5);
     expect(wrapper.find('Button')).toHaveLength(1);
   });
 
