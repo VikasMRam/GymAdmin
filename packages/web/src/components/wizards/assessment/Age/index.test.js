@@ -21,7 +21,6 @@ describe('Wizards|assessment - Steps|Age', () => {
 
   it('renders', () => {
     const wrapper = wrap();
-
     expect(wrapper.find('PaddedHeading').contains('How old is your parent(s)?')).toBeTruthy();
     expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
@@ -31,7 +30,6 @@ describe('Wizards|assessment - Steps|Age', () => {
     const wrapper = wrap({
       hasTip: false,
     });
-
     expect(wrapper.find('PaddedHeading').contains('How old is your parent(s)?')).toBeTruthy();
     expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);

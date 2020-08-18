@@ -11,7 +11,7 @@ const defaultProps = {
   whoNeedsHelp,
   change,
 };
-const wrap = (props = {}) => shallow(<ADL {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<Services {...defaultProps} {...props} />);
 
 describe('Wizards|assessment - Steps|Services', () => {
   it('does not render children when passed in', () => {
