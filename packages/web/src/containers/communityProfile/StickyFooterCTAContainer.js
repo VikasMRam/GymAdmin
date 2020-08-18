@@ -11,7 +11,7 @@ import CommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyF
 import GetSellerAgentInfo from 'sly/web/components/organisms/GetSellerAgentInfo';
 
 export default class StickyFooterCTAContainer extends Component {
-  // static typeHydrationId = 'SidebarCTAContainer';
+  static typeHydrationId = 'StickyCTAContainer';
   static propTypes = {
     community: communityPropType,
     buttonProps: object,
@@ -24,7 +24,7 @@ export default class StickyFooterCTAContainer extends Component {
     if (!isBrowser) {
     }
     const showZillowProfileAd = shouldShowZillowProfileAd(community);
-    const isSellerAgentCtaCommunity = getIsSellerAgentCTA(community);
+    const isSellerAgentCtaCommunity = getIsActiveAdult(community);
 
     // let requestSent = false;
     // if (ackCTA && community) {
@@ -42,20 +42,19 @@ export default class StickyFooterCTAContainer extends Component {
       };
       const title = "Selling a home to pay the cost of senior living?";
       const subtitle = "Our partner Zillow will make you an instant offer.";
-      return <div>Sticjy Fuooter</div>;
-      // (<GetSellerAgentInfo {...buttonProps} community={community} title={title} subtitle={subtitle} isZillowAd={true} />) ;
+      return (<GetSellerAgentInfo {...buttonProps} community={community} title={title} subtitle={subtitle} isZillowAd={true} />) ;
 
     } else if (isSellerAgentCtaCommunity) {
       isActiveAdult=true;
     }
-    return <div>Some thing here</div>;
-    // return (<CommunityStickyFooter
-    //   community={community}
-    //   locTrack="sticky-footer"
-    //   isAlreadyPricingRequested={completedCTA}
-    //   isActiveAdult={isActiveAdult}
-    //   {...buttonProps}
-    // />);
+
+    return (<CommunityStickyFooter
+      community={community}
+      locTrack="sticky-footer"
+      isAlreadyPricingRequested={completedCTA}
+      isActiveAdult={isActiveAdult}
+      {...buttonProps}
+    />);
 
   }
 }

@@ -9,7 +9,7 @@ import { WorkingWith } from 'sly/web/components/wizards/assessment';
 import { createValidator, required } from 'sly/web/services/validation';
 
 const validate = createValidator({
-  timing: [required],
+  workingWith: [required],
 });
 
 const ReduxForm = reduxForm({

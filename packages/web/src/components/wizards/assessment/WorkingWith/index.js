@@ -45,7 +45,7 @@ const WorkingWith = ({
           <StyledField
             multipleChoice
             options={WORKING_WITH_OPTIONS}
-            name="timing"
+            name="workingWith"
             type="boxChoice"
             align="left"
             component={ReduxField}

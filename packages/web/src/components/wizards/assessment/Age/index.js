@@ -67,15 +67,15 @@ const Age = ({
   </div>
 );
 
-Who.propTypes = {
+Age.propTypes = {
   handleSubmit: func.isRequired,
   invalid: bool,
   submitting: bool,
   hasTip: bool,
 };
 
-Who.defaultProps = {
+Age.defaultProps = {
   hasTip: true,
 };
 
-export default Who;
+export default Age;

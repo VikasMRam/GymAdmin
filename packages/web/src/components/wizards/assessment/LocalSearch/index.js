@@ -27,7 +27,7 @@ const StyledTipBox = styled(TipBox)`
   height: fit-content;
 `;
 
-const Feeling = ({
+const LocalSearch = ({
   handleSubmit, onBackClick, onSkipClick, invalid, submitting, hasTip,
 }) => (
   <div>
@@ -40,7 +40,7 @@ const Feeling = ({
         <form onSubmit={handleSubmit}>
           <StyledField
             options={LIVE_SEARCH_STATE}
-            name="liveInSearchState"
+            name="localSearch"
             type="boxChoice"
             align="left"
             component={ReduxField}
@@ -57,7 +57,7 @@ const Feeling = ({
   </div>
 );
 
-Feeling.propTypes = {
+LocalSearch.propTypes = {
   handleSubmit: func.isRequired,
   onSkipClick: func,
   onBackClick: func,
@@ -66,8 +66,8 @@ Feeling.propTypes = {
   hasTip: bool,
 };
 
-Feeling.defaultProps = {
+LocalSearch.defaultProps = {
   hasTip: true,
 };
 
-export default Feeling;
+export default LocalSearch;

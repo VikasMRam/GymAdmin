@@ -5,23 +5,23 @@ import { withRouter } from 'react-router';
 
 import { query } from 'sly/web/services/api';
 import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
-import { CurrentLiving } from 'sly/web/components/wizards/assessment';
+import { LocalSearch } from 'sly/web/components/wizards/assessment';
 import { createValidator, required } from 'sly/web/services/validation';
 
 const validate = createValidator({
-  currentLiving: [required],
+  localSearch: [required],
 });
 
 const ReduxForm = reduxForm({
-  form: 'RemoteSearch',
+  form: 'LocalSearch',
   destroyOnUnmount: false,
   validate,
-})(CurrentLiving);
+})(LocalSearch);
 
 @withRouter
 @query('createAction', 'createUuidAction')
 
-export default class RemoteSearch extends Component {
+export default class LocalSearchFormContainer extends Component {
   static propTypes = {
     createAction: func.isRequired,
     location: object.isRequired,
@@ -37,7 +37,7 @@ export default class RemoteSearch extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'step-7:RemoteSearch',
+          stepName: 'step-7:LocalSearch',
           wizardName: 'assessmentWizard',
           data,
         },

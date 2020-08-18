@@ -9,7 +9,7 @@ import { Age } from 'sly/web/components/wizards/assessment';
 import { createValidator, required } from 'sly/web/services/validation';
 
 const validate = createValidator({
-  timing: [required],
+  age: [required],
 });
 
 const ReduxForm = reduxForm({
@@ -21,7 +21,7 @@ const ReduxForm = reduxForm({
 @withRouter
 @query('createAction', 'createUuidAction')
 
-export default class WorkingWithFormContainer extends Component {
+export default class AgeFormContainer extends Component {
   static propTypes = {
     createAction: func.isRequired,
     location: object.isRequired,

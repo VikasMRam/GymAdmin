@@ -5,23 +5,23 @@ import { withRouter } from 'react-router';
 
 import { query } from 'sly/web/services/api';
 import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
-import { CurrentLiving } from 'sly/web/components/wizards/assessment';
+import { Services } from 'sly/web/components/wizards/assessment';
 import { createValidator, required } from 'sly/web/services/validation';
 
 const validate = createValidator({
-  currentLiving: [required],
+  services: [required],
 });
 
 const ReduxForm = reduxForm({
   form: 'Services',
   destroyOnUnmount: false,
   validate,
-})(CurrentLiving);
+})(Services);
 
 @withRouter
 @query('createAction', 'createUuidAction')
 
-export default class Services extends Component {
+export default class ServicesFormContainer extends Component {
   static propTypes = {
     createAction: func.isRequired,
     location: object.isRequired,

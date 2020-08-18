@@ -71,12 +71,14 @@ export const FEELING_OPTIONS = [
 ];
 
 export const ADL_OPTIONS = [
+  { label: 'Memory Care', value: 'memory-care' },
   { label: 'Bathing', value: 'bathing' },
   { label: 'Dressing', value: 'dressing' },
   { label: 'Transferring', value: 'transferring' },
   { label: 'Toileting', value: 'toileting' },
   { label: 'Eating', value: 'eating' },
   { label: 'Medication management', value: 'medication-management' },
+  { label: 'Other', value: 'other' },
   { label: 'None', value: 'none' },
   { label: "I'm not sure", value: 'im-not-sure' },
 ];

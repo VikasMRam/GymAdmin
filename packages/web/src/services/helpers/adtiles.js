@@ -6,7 +6,7 @@ export const shouldShowZillowSearchAd = (toc, city ) => {
 };
 
 export const shouldShowZillowProfileAd = (community) => {
-  return true;
+  // return true;
   if (!community || !community.propInfo || !community.propInfo.typeCare ) {
     return false;
   }
@@ -27,7 +27,7 @@ export const shouldShowZillowPostConversionAd = (community) => {
 };
 
 export const shouldShowZillowAd = (toc, city) => {
-  return true;
+  // return true;
   const zillowCities = ["portland", "sacramento", "riverside", "los-angeles", "san-diego",
     "las-vegas", "phoenix", "tucson", "fort-collins", "denver", "colorado-springs",
     "minneapolis", "dallas", "austin", "san-antonio", "houston", "atlanta", "nashville",

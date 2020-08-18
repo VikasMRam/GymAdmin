@@ -5,23 +5,23 @@ import { withRouter } from 'react-router';
 
 import { query } from 'sly/web/services/api';
 import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
-import { CurrentLiving } from 'sly/web/components/wizards/assessment';
+import { LocalExpert } from 'sly/web/components/wizards/assessment';
 import { createValidator, required } from 'sly/web/services/validation';
 
 const validate = createValidator({
-  currentLiving: [required],
+  localExpert: [required],
 });
 
 const ReduxForm = reduxForm({
-  form: 'CurrentLivingForm',
+  form: 'LocalExpertForm',
   destroyOnUnmount: false,
   validate,
-})(CurrentLiving);
+})(LocalExpert);
 
 @withRouter
 @query('createAction', 'createUuidAction')
 
-export default class LocalExpert extends Component {
+export default class LocalExpertFormContainer extends Component {
   static propTypes = {
     createAction: func.isRequired,
     location: object.isRequired,

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { func, bool, object, string } from 'prop-types';
+import * as immutable from 'object-path-immutable';
 
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { query } from 'sly/web/services/api';
@@ -8,6 +9,7 @@ import withWS from 'sly/web/services/ws/withWS';
 import { withRedirectTo } from 'sly/web/services/redirectTo';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import { getWizardEndAd } from 'sly/web/services/helpers/adtiles';
+import { medicareToBool } from 'sly/web/services/helpers/userDetails';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
 import {
   ASSESSMENT_WIZARD_MATCHED_AGENT,
@@ -24,7 +26,7 @@ import Who from 'sly/web/containers/wizards/assessment_v1_1/Who';
 import Age from 'sly/web/containers/wizards/assessment_v1_1/Age';
 import Products from 'sly/web/containers/wizards/assessment_v1_1/Products';
 import Services from 'sly/web/containers/wizards/assessment_v1_1/Services';
-import RemoteSearch from 'sly/web/containers/wizards/assessment_v1_1/RemoteSearch';
+import LocalSearch from 'sly/web/containers/wizards/assessment_v1_1/LocalSearch';
 import ADL from 'sly/web/containers/wizards/assessment_v1_1/ADL';
 import Budget from 'sly/web/containers/wizards/assessment_v1_1/Budget';
 import Medicaid from 'sly/web/containers/wizards/assessment_v1_1/Medicaid';
@@ -37,8 +39,8 @@ import End from 'sly/web/containers/wizards/assessment_v1_1/End';
 @withRedirectTo
 @query('getAgent', 'getAgent')
 
-export default class AssessmentWizard extends Component {
-  static typeHydrationId = 'AssessmentWizard';
+export default class AssessmentWizard_V1_1 extends Component {
+  static typeHydrationId = 'AssessmentWizard_V1_1';
   static propTypes = {
     skipIntro: bool,
     ws: object,
@@ -117,6 +119,41 @@ export default class AssessmentWizard extends Component {
     }
 
     return null;
+  };
+
+  updateUuidAux = (data) => {
+    const {
+      status,
+      updateUuidAux,
+    } = this.props;
+
+    const rawUuidAux = status.uuidAux.result;
+    const uuidAux = immutable.wrap(rawUuidAux);
+
+    if (data.roomType) {
+      uuidAux.set('attributes.uuidInfo.housingInfo.roomPreference', data.roomType);
+    }
+
+    if (data.moveTimeline) {
+      uuidAux.set('attributes.uuidInfo.housingInfo.moveTimeline', data.moveTimeline);
+    }
+
+    if (data.careType) {
+      uuidAux.set('attributes.uuidInfo.careInfo.adls', data.careType);
+    }
+
+    if (data.interest) {
+      uuidAux.set('attributes.uuidInfo.residentInfo.interest', data.interest);
+    }
+
+    if (data.medicaidCoverage) {
+      uuidAux.set('attributes.uuidInfo.financialInfo.medicaid', medicareToBool(data.medicaidCoverage));
+    }
+    if (data.budget) {
+      uuidAux.set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', data.budget);
+    }
+
+    return updateUuidAux({ id: rawUuidAux.id }, uuidAux.value());
   };
 
   onMessage = ({ payload: { agentSlug } }) => {
@@ -215,98 +252,100 @@ export default class AssessmentWizard extends Component {
                 onSkipClick={next}
                 onBackClick={previous}
               />
-              <WizardStep
-                component={Age}
-                name="Age"
-                whoNeedsHelp={data.lookingFor}
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={Services}
-                name="Services"
-                whoNeedsHelp={data.lookingFor}
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={Products}
-                name="Products"
-                whoNeedsHelp={data.lookingFor}
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={RemoteSearch}
-                name="RemoteSearch"
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={ADL}
-                name="ADL"
-                whoNeedsHelp={data.lookingFor}
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={Budget}
-                name="Budget"
-                whoNeedsHelp={data.lookingFor}
-                city={city}
-                state={state}
-                amount={amount}
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={Medicaid}
-                name="Medicaid"
-                whoNeedsHelp={data.lookingFor}
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={Auth}
-                name="Auth"
-                signUpHeading={data.whatToDoNext === 'start' ?
-                  'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
-                  : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
-                onAuthSuccess={next}
-                community={community}
-              />
-              <WizardStep
-                component={ResidentName}
-                name="ResidentName"
-                numberOfPeople={data.lookingFor === 'parents' || data.lookingFor === 'myself-and-spouse' ? 2 : 1}
-                hasTip={hasTip}
-                onSkipClick={next}
-                whatToDoNext={data.whatToDoNext}
-              />
-              <WizardStep
-                component={LocalExpert}
-                name="LocalExpert"
-                agent={agent}
-                hasNoAgent={hasNoAgent}
-                community={community}
-                city={city}
-              />
-              <WizardStep
-                component={End}
-                name="End"
-                agent={agent}
-                hasNoAgent={hasNoAgent}
-                community={community}
-                city={city}
-                adTile={adTile}
-              />
+              {/*<WizardStep*/}
+                {/*component={Age}*/}
+                {/*name="Age"*/}
+                {/*whoNeedsHelp={data.lookingFor}*/}
+                {/*hasTip={hasTip}*/}
+                {/*onSkipClick={next}*/}
+                {/*onBackClick={previous}*/}
+              {/*/>*/}
+              {/*<WizardStep*/}
+                {/*component={Services}*/}
+                {/*name="Services"*/}
+                {/*whoNeedsHelp={data.lookingFor}*/}
+                {/*hasTip={hasTip}*/}
+                {/*onSkipClick={next}*/}
+                {/*onBackClick={previous}*/}
+              {/*/>*/}
+              {/*<WizardStep*/}
+                {/*component={Products}*/}
+                {/*name="Products"*/}
+                {/*whoNeedsHelp={data.lookingFor}*/}
+                {/*hasTip={hasTip}*/}
+                {/*onSkipClick={next}*/}
+                {/*onBackClick={previous}*/}
+              {/*/>*/}
+              {/*<WizardStep*/}
+                {/*component={LocalSearch}*/}
+                {/*name="LocalSearch"*/}
+                {/*hasTip={hasTip}*/}
+                {/*onSkipClick={next}*/}
+                {/*onBackClick={previous}*/}
+              {/*/>*/}
+              {/*<WizardStep*/}
+                {/*component={ADL}*/}
+                {/*name="ADL"*/}
+                {/*whoNeedsHelp={data.lookingFor}*/}
+                {/*hasTip={hasTip}*/}
+                {/*onSkipClick={next}*/}
+                {/*onBackClick={previous}*/}
+              {/*/>*/}
+              {/*<WizardStep*/}
+                {/*component={Budget}*/}
+                {/*name="Budget"*/}
+                {/*whoNeedsHelp={data.lookingFor}*/}
+                {/*city={city}*/}
+                {/*state={state}*/}
+                {/*amount={amount}*/}
+                {/*hasTip={hasTip}*/}
+                {/*onSkipClick={next}*/}
+                {/*onBackClick={previous}*/}
+              {/*/>*/}
+              {/*<WizardStep*/}
+                {/*component={Medicaid}*/}
+                {/*name="Medicaid"*/}
+                {/*whoNeedsHelp={data.lookingFor}*/}
+                {/*hasTip={hasTip}*/}
+                {/*onSkipClick={next}*/}
+                {/*onBackClick={previous}*/}
+                {/*updateUuidAux={this.updateUuidAux}*/}
+              {/*/>*/}
+              {/*<WizardStep*/}
+                {/*component={Auth}*/}
+                {/*name="Auth"*/}
+                {/*signUpHeading={data.whatToDoNext === 'start' ?*/}
+                  {/*'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'*/}
+                  {/*: 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}*/}
+                {/*onAuthSuccess={next}*/}
+                {/*community={community}*/}
+                {/*updateUuidAux={this.updateUuidAux}*/}
+              {/*/>*/}
+              {/*<WizardStep*/}
+                {/*component={ResidentName}*/}
+                {/*name="ResidentName"*/}
+                {/*numberOfPeople={data.lookingFor === 'parents' || data.lookingFor === 'myself-and-spouse' ? 2 : 1}*/}
+                {/*hasTip={hasTip}*/}
+                {/*onSkipClick={next}*/}
+                {/*whatToDoNext={data.whatToDoNext}*/}
+              {/*/>*/}
+              {/*<WizardStep*/}
+                {/*component={LocalExpert}*/}
+                {/*name="LocalExpert"*/}
+                {/*agent={agent}*/}
+                {/*hasNoAgent={hasNoAgent}*/}
+                {/*community={community}*/}
+                {/*city={city}*/}
+              {/*/>*/}
+              {/*<WizardStep*/}
+                {/*component={End}*/}
+                {/*name="End"*/}
+                {/*agent={agent}*/}
+                {/*hasNoAgent={hasNoAgent}*/}
+                {/*community={community}*/}
+                {/*city={city}*/}
+                {/*adTile={adTile}*/}
+              {/*/>*/}
             </WizardSteps>
           )}
         </WizardController>

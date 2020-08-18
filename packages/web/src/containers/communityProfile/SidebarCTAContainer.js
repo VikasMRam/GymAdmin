@@ -11,7 +11,7 @@ import GetCommunityPricingAndAvailability from 'sly/web/components/organisms/Get
 import GetSellerAgentInfo from 'sly/web/components/organisms/GetSellerAgentInfo';
 
 export default class SidebarCTAContainer extends Component {
-  // static typeHydrationId = 'SidebarCTAContainer';
+  static typeHydrationId = 'SidebarCTAContainer';
   static propTypes = {
     community: communityPropType,
     buttonProps: object,
