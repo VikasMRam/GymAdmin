@@ -16,14 +16,6 @@ import ImportantCovid19UpdatesStepContainer from 'sly/web/containers/ImportantCo
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
 import { textDecoration } from 'sly/web/components/helpers/text';
 
-const FixedBannerComponent = styled(BannerNotification)`
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  z-index: ${key('zIndexes.stickySections')};
-`;
-
 const PaddedBannerNotification = pad(BannerNotification, 'large');
 
 const DecoratedLink = textDecoration(Link);
@@ -50,6 +42,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
     modalAction: CONSULTATION_REQUESTED,
     modalMessagePrompt: 'What can we help you with?',
     modalHeading: 'Our Local Senior Living Experts can help you with your search.',
+    showBanner: true,
   };
 
   componentDidMount() {
@@ -148,6 +141,12 @@ export default class BannerNotificationAdContainer extends PureComponent {
     this.handleClose();
   };
 
+  handleCloseBanner = () => {
+    this.setState({
+      showBanner: false,
+    });
+  };
+
   render() {
     const { type, noMarginBottom, community } = this.props;
     const {
@@ -156,6 +155,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
       modalMessagePrompt,
       modalAction,
       modalMessagePlaceholder,
+      showBanner,
     } = this.state;
     const BannerComponent = noMarginBottom ? BannerNotification : PaddedBannerNotification;
 
@@ -183,13 +183,13 @@ export default class BannerNotificationAdContainer extends PureComponent {
             </DecoratedLink>
           </BannerComponent>
         }
-        {type.includes('wizardCommunity') &&
-          <FixedBannerComponent palette="warning" childrenPalette="slate">
+        {type.includes('wizardCommunity') && showBanner &&
+          <BannerComponent palette="warning" childrenPalette="slate" onCloseClick={this.handleCloseBanner} >
             Does your loved one need care urgently?
             <DecoratedLink onClick={this.handleWizardCommunityClick} to={`/wizards/assessment/community/${community.id}`} target="_blank">
               Click here to get help from a local expert.
             </DecoratedLink>
-          </FixedBannerComponent>
+          </BannerComponent>
         }
         {isModalOpen &&
           <Modal onClose={this.handleClose}>

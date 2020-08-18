@@ -330,16 +330,15 @@ export default class CommunityDetailPage extends Component {
         {getHelmetForCommunityPage(community, location)}
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
         <PageEventsContainer />
+        <Header noBottomMargin={!isActiveAdult && (bannerNotification || partnerAgent)} />
         {!bannerNotification && !isActiveAdult && partnerAgent && (
           <BannerNotificationAdContainer community={community} type="wizardCommunity" />
         )}
-        <Header noBottomMargin={!isActiveAdult && (bannerNotification || partnerAgent)} />
         {bannerNotification && (
           <StyledBannerNotification>
             {bannerNotification}
           </StyledBannerNotification>
         )}
-
         <CommunityDetailPageTemplate>
           <Wrapper>
             <BreadCrumb pad="large" items={getBreadCrumbsForCommunity({ name, propInfo, address })} />
@@ -433,9 +432,9 @@ export default class CommunityDetailPage extends Component {
                 )}
 
                 {/* Disable home care AD and availability only */}
-                {/*<AdWrapper>*/}
-                  {/*<CommunityProfileAdTileContainer type="getOffer" community={community} />*/}
-                {/*</AdWrapper>*/}
+                {/* <AdWrapper> */}
+                {/* <CommunityProfileAdTileContainer type="getOffer" community={community} /> */}
+                {/* </AdWrapper> */}
                 {!isActiveAdult &&
                   <StyledHeadingBoxSection
                     heading={`Get Availability at ${name}`}
@@ -475,7 +474,7 @@ export default class CommunityDetailPage extends Component {
                 {partnerAgent && !isActiveAdult && (
                   <StyledHeadingBoxSection heading={`Your Local Senior Living Expert for ${name}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} />
-                    <StyledAskAgentButton community={community} type="services" ctaText={'Ask a Question'} />
+                    <StyledAskAgentButton community={community} type="services" ctaText="Ask a Question" />
                   </StyledHeadingBoxSection>
                 )}
                 {!isActiveAdult &&
@@ -489,16 +488,17 @@ export default class CommunityDetailPage extends Component {
                     heading={`Helpful ${typeOfCare} Resources`}
                   >
                     {rgsAux.rgsInfo.resourceLinks.map(item => (
-                      <StyledIconButton to={item.to}
-                                        icon="chevron"
-                                        right
-                                        fullWidth
-                                        ghost
-                                        transparent
-                                        borderPalette="slate"
-                                        rotate={-1}
+                      <StyledIconButton
+                        to={item.to}
+                        icon="chevron"
+                        right
+                        fullWidth
+                        ghost
+                        transparent
+                        borderPalette="slate"
+                        rotate={-1}
                       >{item.title}
-                      </StyledIconButton>)
+                      </StyledIconButton>),
                     )}
 
                     <Hr marginTop="regular" />
@@ -515,14 +515,22 @@ export default class CommunityDetailPage extends Component {
                   careServices.length > 0 && (
                     <StyledHeadingBoxSection heading={`Care Services at ${name}`}>
                       <CommunityCareService careServices={careServices} />
-                      {!isActiveAdult && <StyledAskAgentButton community={community} type="services" ctaText={'Ask' +
-                      ' About Care Services'} />}
+                      {!isActiveAdult && <StyledAskAgentButton
+                        community={community}
+                        type="services"
+                        ctaText={'Ask' +
+                      ' About Care Services'}
+                      />}
                     </StyledHeadingBoxSection>
                   )}
                 <StyledHeadingBoxSection heading={`Amenities at ${name}`}>
                   <CommunityAmenities community={community} />
-                  {!isActiveAdult && <StyledAskAgentButton community={community} type="amenities" ctaText={'Ask' +
-                  ' About Amenities'} />}
+                  {!isActiveAdult && <StyledAskAgentButton
+                    community={community}
+                    type="amenities"
+                    ctaText={'Ask' +
+                  ' About Amenities'}
+                  />}
 
                 </StyledHeadingBoxSection>
 
@@ -565,7 +573,7 @@ export default class CommunityDetailPage extends Component {
                 }
                 <CommunityDisclaimerSection
                   title="Disclaimer"
-                  phone={ (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) ? twilioNumber.numbers[0] : '8558664515' }
+                  phone={(twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) ? twilioNumber.numbers[0] : '8558664515'}
                   isClaimed={isClaimed}
                   id={community.id}
                   city={address.city}
@@ -597,13 +605,13 @@ export default class CommunityDetailPage extends Component {
                   community={community}
                   layout="footer"
                 />
-                {/*{isActiveAdult &&*/}
-                {/*<CommunityStickyFooter*/}
-                  {/*community={community}*/}
-                  {/*locTrack="sticky-footer"*/}
-                  {/*isActiveAdult={true}*/}
-                {/*/>*/}
-                {/*}*/}
+                {/* {isActiveAdult && */}
+                {/* <CommunityStickyFooter */}
+                {/* community={community} */}
+                {/* locTrack="sticky-footer" */}
+                {/* isActiveAdult={true} */}
+                {/* /> */}
+                {/* } */}
               </Body>
               <Column>
                 <StickToTop>
@@ -614,13 +622,13 @@ export default class CommunityDetailPage extends Component {
                     layout="sidebar"
                   />
 
-                  {/*{isActiveAdult &&*/}
-                  {/*<Box>*/}
-                    {/*<Heading level="title" size="subtitle">Is selling your home part of your senior living plan?</Heading>*/}
-                    {/*We can connect you with the top selling agents.*/}
-                    {/*<StyledAskAgentButton ackCTA community={community} type="aa-sidebar" ctaText={"Request Info"} />*/}
-                  {/*</Box>*/}
-                  {/*}*/}
+                  {/* {isActiveAdult && */}
+                  {/* <Box> */}
+                  {/* <Heading level="title" size="subtitle">Is selling your home part of your senior living plan?</Heading> */}
+                  {/* We can connect you with the top selling agents. */}
+                  {/* <StyledAskAgentButton ackCTA community={community} type="aa-sidebar" ctaText={"Request Info"} /> */}
+                  {/* </Box> */}
+                  {/* } */}
 
                 </StickToTop>
               </Column>
