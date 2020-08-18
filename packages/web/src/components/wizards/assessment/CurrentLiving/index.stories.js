@@ -3,8 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
+import CurrentLiving from '.';
+
 import { withPreventDefault } from 'sly/common/services/helpers/forms';
-import { CurrentLiving } from 'sly/web/components/wizards/assessment';
 
 const CurrentLivingContainer = reduxForm({
   form: 'CurrentLiving',

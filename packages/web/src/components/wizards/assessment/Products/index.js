@@ -24,8 +24,8 @@ const StyledTipBox = styled(TipBox)`
 `;
 
 const Products = ({
-               handleSubmit, invalid, submitting, hasTip,
-             }) => (
+  handleSubmit, invalid, submitting, hasTip,
+}) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={10} currentStep={6} />

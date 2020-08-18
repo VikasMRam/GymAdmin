@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { LocalExpert } from 'sly/web/components/wizards/assessment';
+import LocalExpert from '.';
 
 const handleSubmit = jest.fn();
 const defaultProps = {

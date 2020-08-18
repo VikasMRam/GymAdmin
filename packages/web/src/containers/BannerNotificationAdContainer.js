@@ -2,10 +2,11 @@ import React, { PureComponent } from 'react';
 import { oneOf, func, string, bool, object } from 'prop-types';
 import styled from 'styled-components';
 
+import { key } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { Link } from 'sly/common/components/atoms';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
-import { assetPath } from 'sly/web/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
 import pad from 'sly/web/components/helpers/pad';
@@ -95,12 +96,11 @@ export default class BannerNotificationAdContainer extends PureComponent {
     });
   };
 
-  handleWizardCommunityClick = ({}) => {
+  handleWizardCommunityClick = () => {
     SlyEvent.getInstance().sendEvent({
       action: 'click-wizardCommunity-button',
       category: 'BannerNotificationAd',
     });
-
   };
 
   handleAdmissionPoliciesContact = () => {
@@ -184,12 +184,12 @@ export default class BannerNotificationAdContainer extends PureComponent {
           </BannerComponent>
         }
         {type.includes('wizardCommunity') &&
-        <StyledBannerComponent palette="warning" childrenPalette="slate">
-          Does your loved one need care urgently?
-          <DecoratedLink onClick={this.handleWizardCommunityClick} to={`/wizards/assessment/community/${community.id}`} target="_blank">
-            Click here to get help from a local expert.
-          </DecoratedLink>
-        </StyledBannerComponent>
+          <FixedBannerComponent palette="warning" childrenPalette="slate">
+            Does your loved one need care urgently?
+            <DecoratedLink onClick={this.handleWizardCommunityClick} to={`/wizards/assessment/community/${community.id}`} target="_blank">
+              Click here to get help from a local expert.
+            </DecoratedLink>
+          </FixedBannerComponent>
         }
         {isModalOpen &&
           <Modal onClose={this.handleClose}>

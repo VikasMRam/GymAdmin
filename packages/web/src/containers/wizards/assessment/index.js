@@ -10,7 +10,6 @@ import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import { getWizardEndAd } from 'sly/web/services/helpers/adtiles';
 import { medicareToBool } from 'sly/web/services/helpers/userDetails';
-
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
 import {
   ASSESSMENT_WIZARD_MATCHED_AGENT,
@@ -19,7 +18,7 @@ import {
 } from 'sly/web/constants/wizards/assessment';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SlyEvent from 'sly/web/services/helpers/events';
-import Intro from 'sly/web/containers/wizards/assessment/Intro';
+// import Intro from 'sly/web/containers/wizards/assessment/Intro';
 import Who from 'sly/web/containers/wizards/assessment/Who';
 import Feeling from 'sly/web/containers/wizards/assessment/Feeling';
 import ADL from 'sly/web/containers/wizards/assessment/ADL';
@@ -35,6 +34,7 @@ import Auth from 'sly/web/containers/wizards/assessment/Auth';
 @withWS
 @withRedirectTo
 @query('getAgent', 'getAgent')
+@query('updateUuidAux', 'updateUuidAux')
 
 export default class AssessmentWizard extends Component {
   static typeHydrationId = 'AssessmentWizard';
@@ -45,7 +45,9 @@ export default class AssessmentWizard extends Component {
     community: communityPropType,
     city: string,
     state: string,
+    toc: string,
     redirectTo: func.isRequired,
+    updateUuidAux: func.isRequired,
     hasTip: bool,
     status: object,
     className: string,
@@ -200,21 +202,19 @@ export default class AssessmentWizard extends Component {
   };
 
   render() {
-    const { skipIntro, community, hasTip, className } = this.props;
-    let { city, state, toc, } = this.props;
-    let showSkipOption = false;
+    const { community, hasTip, className, toc } = this.props;
+    let { city, state } = this.props;
     let amount = 4000;
     const { agent, hasNoAgent } = this.state;
 
     if (community) {
       ({ address: { city, state }, startingRate: amount = 4000 } = community);
-      showSkipOption = true; // When a community is present this wizard offers a shortcut to skip to final step.
     }
 
     if (!city || !state) {
       throw Error('community or state and city is required');
     }
-    const adTile = getWizardEndAd({ community, toc, city});
+    const adTile = getWizardEndAd({ community, toc, city });
 
     return (
       <section className={className}>

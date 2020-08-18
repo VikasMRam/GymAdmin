@@ -3,10 +3,10 @@ import { func, bool, object, string } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 
 import { community as communityPropType } from 'sly/common/propTypes/community';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { query } from 'sly/web/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import withWS from 'sly/web/services/ws/withWS';
-import { withRedirectTo } from 'sly/web/services/redirectTo';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import { getWizardEndAd } from 'sly/web/services/helpers/adtiles';
 import { medicareToBool } from 'sly/web/services/helpers/userDetails';
@@ -18,7 +18,6 @@ import {
 } from 'sly/web/constants/wizards/assessment';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SlyEvent from 'sly/web/services/helpers/events';
-
 /* Wizard Step Imports */
 import Timing from 'sly/web/containers/wizards/assessment_v1_1/Timing';
 import WorkingWith from 'sly/web/containers/wizards/assessment_v1_1/WorkingWith';
@@ -38,13 +37,15 @@ import End from 'sly/web/containers/wizards/assessment_v1_1/End';
 @withWS
 @withRedirectTo
 @query('getAgent', 'getAgent')
+@query('updateUuidAux', 'updateUuidAux')
 
-export default class AssessmentWizard_V1_1 extends Component {
+export default class AssessmentWizardV11 extends Component {
   static typeHydrationId = 'AssessmentWizard_V1_1';
   static propTypes = {
     skipIntro: bool,
     ws: object,
     getAgent: func.isRequired,
+    updateUuidAux: func.isRequired,
     community: communityPropType,
     city: string,
     state: string,
@@ -204,9 +205,9 @@ export default class AssessmentWizard_V1_1 extends Component {
   };
 
   render() {
-    const { skipIntro, community, hasTip, className } = this.props;
-    let { city, state, toc, } = this.props;
-    let showSkipOption = false;
+    const { community, hasTip, className, toc } = this.props;
+    let { city, state } = this.props;
+    // let showSkipOption = false;
 
     let amount = 4000;
     const { agent, hasNoAgent } = this.state;
@@ -219,7 +220,7 @@ export default class AssessmentWizard_V1_1 extends Component {
     if (!city || !state) {
       throw Error('community or state and city is required');
     }
-    const adTile = getWizardEndAd({ community, toc, city});
+    const adTile = getWizardEndAd({ community, toc, city });
     return (
       <section className={className}>
         <WizardController

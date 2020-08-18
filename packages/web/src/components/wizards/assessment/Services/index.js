@@ -19,14 +19,13 @@ PaddedHeading.displayName = 'PaddedHeading';
 const PaddedBlock = pad(Block);
 PaddedBlock.displayName = 'PaddedBlock';
 
-
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
 `;
 
 const Services = ({
-               handleSubmit, invalid, submitting, hasTip,
-             }) => (
+  handleSubmit, invalid, submitting, hasTip,
+}) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={10} currentStep={5} />

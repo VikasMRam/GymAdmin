@@ -26,11 +26,10 @@ export default class MedicaidFormContainer extends Component {
     createAction: func.isRequired,
     location: object.isRequired,
     onSubmit: func.isRequired,
-    updateUuidAux: func,
   };
 
   handleSubmit = (data) => {
-    const { createAction, location: { pathname }, onSubmit, updateUuidAux } = this.props;
+    const { createAction, location: { pathname }, onSubmit } = this.props;
 
     return createAction({
       type: 'UUIDAction',

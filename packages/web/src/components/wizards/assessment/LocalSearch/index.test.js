@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { LocalSearch } from 'sly/web/components/wizards/assessment';
+import LocalSearch from '.';
 
 const handleSubmit = jest.fn();
 const defaultProps = {
@@ -63,6 +63,5 @@ describe('Wizards|assessment - Steps|LocalSearch', () => {
     wrapper.find('Footer').dive().find('StyledIconButton')
       .simulate('click');
     expect(onBackClick).toHaveBeenCalled();
-
   });
 });

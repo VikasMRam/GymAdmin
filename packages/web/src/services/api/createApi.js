@@ -1,4 +1,5 @@
-import { apiUrl } from 'sly/common/config';
+import apiUrl from './apiUrl';
+
 import apiEndpoints from 'sly/web/services/api/endpoints';
 import buildApi from 'sly/web/services/api/buildApi';
 

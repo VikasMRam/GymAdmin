@@ -51,7 +51,7 @@ const generateHeading = (whoNeedsHelp, amount, city, state) => {
 };
 
 const Budget = ({
-  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip, change,
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip,
 }) => (
   <div>
     <Wrapper>
@@ -89,7 +89,6 @@ Budget.propTypes = {
   city: string.isRequired,
   state: string.isRequired,
   amount: number.isRequired,
-  change: func.isRequired,
   onSkipClick: func,
   onBackClick: func,
   invalid: bool,

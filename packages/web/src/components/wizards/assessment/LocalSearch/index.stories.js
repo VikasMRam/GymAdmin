@@ -3,14 +3,15 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
+import LocalSearch from '.';
+
 import { withPreventDefault } from 'sly/common/services/helpers/forms';
-import { LocalSearch } from 'sly/web/components/wizards/assessment';
 
 const LocalSearchContainer = reduxForm({
-  form: 'Feeling',
+  form: 'LocalSearch',
 })(LocalSearch);
 
-storiesOf('Wizards|assessment/Steps/Feeling', module)
+storiesOf('Wizards|assessment/Steps/LocalSearch', module)
   .add('default', () => (
     <LocalSearchContainer
       handleSubmit={withPreventDefault(action('form submitted'))}

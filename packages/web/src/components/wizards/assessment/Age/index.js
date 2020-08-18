@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, bool } from 'prop-types';
+import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -37,8 +37,8 @@ const generateHeading = (whoNeedsHelp) => {
 };
 
 const Age = ({
-               handleSubmit, invalid, submitting, hasTip, whoNeedsHelp
-             }) => (
+  handleSubmit, invalid, submitting, hasTip, whoNeedsHelp,
+}) => (
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={10} currentStep={4} />
@@ -72,6 +72,7 @@ Age.propTypes = {
   invalid: bool,
   submitting: bool,
   hasTip: bool,
+  whoNeedsHelp: string.isRequired,
 };
 
 Age.defaultProps = {

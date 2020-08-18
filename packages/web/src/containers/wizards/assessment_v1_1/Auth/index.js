@@ -27,7 +27,6 @@ export default class Auth extends Component {
     const { user } = this.props;
 
     if (user) {
-
       this.handleAuthSuccess();
     }
   }
@@ -65,18 +64,19 @@ export default class Auth extends Component {
         actionPage: pathname,
         actionInfo,
       },
-    }).then(()=> createAction({
-          type: 'UUIDAction',
-          attributes: {
-            actionType: WIZARD_STEP_COMPLETED,
-            actionPage: pathname,
-            actionInfo: {
-              stepName: 'step-11:Auth',
-              wizardName: 'assessmentWizard',
-              data: actionInfo,
-            },
+    })
+      .then(() => createAction({
+        type: 'UUIDAction',
+        attributes: {
+          actionType: WIZARD_STEP_COMPLETED,
+          actionPage: pathname,
+          actionInfo: {
+            stepName: 'step-11:Auth',
+            wizardName: 'assessmentWizard',
+            data: actionInfo,
           },
-        }))
+        },
+      }))
       .then(onAuthSuccess);
   };
 
