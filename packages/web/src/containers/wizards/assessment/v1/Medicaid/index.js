@@ -34,17 +34,17 @@ export default class MedicaidFormContainer extends Component {
 
     return Promise.all(
       [createAction({
-      type: 'UUIDAction',
-      attributes: {
-        actionType: WIZARD_STEP_COMPLETED,
-        actionPage: pathname,
-        actionInfo: {
-          stepName: 'medicaid',
-          wizardName: 'assessmentWizard',
-          data,
+        type: 'UUIDAction',
+        attributes: {
+          actionType: WIZARD_STEP_COMPLETED,
+          actionPage: pathname,
+          actionInfo: {
+            stepName: 'medicaid',
+            wizardName: 'assessmentWizard',
+            data,
+          },
         },
-      },
-    })])
+      })])
       .then(onSubmit);
   };
 

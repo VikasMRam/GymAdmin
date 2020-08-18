@@ -39,7 +39,7 @@ import End from 'sly/web/containers/wizards/assessment/v1_1/End';
 @query('getAgent', 'getAgent')
 
 export default class AssessmentWizardV11 extends Component {
-  static typeHydrationId = 'AssessmentWizard_V1_1';
+  static typeHydrationId = 'AssessmentWizard_V11';
   static propTypes = {
     skipIntro: bool,
     ws: object,
@@ -207,7 +207,7 @@ export default class AssessmentWizardV11 extends Component {
     const { community, hasTip, className, toc, status } = this.props;
     let { city, state } = this.props;
     // let showSkipOption = false;
-    console.log('DEBUG Seeing status',status );
+    console.log('DEBUG Seeing status', status);
     let amount = 4000;
     const { agent, hasNoAgent } = this.state;
 
