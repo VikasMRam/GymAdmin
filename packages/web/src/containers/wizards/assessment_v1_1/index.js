@@ -3,10 +3,10 @@ import { func, bool, object, string } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 
 import { community as communityPropType } from 'sly/common/propTypes/community';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { query } from 'sly/web/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import withWS from 'sly/web/services/ws/withWS';
-import { withRedirectTo } from 'sly/web/services/redirectTo';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import { getWizardEndAd } from 'sly/web/services/helpers/adtiles';
 import { medicareToBool } from 'sly/web/services/helpers/userDetails';
@@ -18,7 +18,6 @@ import {
 } from 'sly/web/constants/wizards/assessment';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SlyEvent from 'sly/web/services/helpers/events';
-
 /* Wizard Step Imports */
 import Timing from 'sly/web/containers/wizards/assessment_v1_1/Timing';
 import WorkingWith from 'sly/web/containers/wizards/assessment_v1_1/WorkingWith';
