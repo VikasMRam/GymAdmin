@@ -4,49 +4,42 @@ import { Field } from 'redux-form';
 
 import { email } from 'sly/web/services/validation';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
-import pad from 'sly/web/components/helpers/pad';
-import fullWidth from 'sly/web/components/helpers/fullWidth';
-import cursor from 'sly/web/components/helpers/cursor';
-import { Heading, Button, Block } from 'sly/web/components/atoms';
+import { Heading, Button, Block, Form } from 'sly/common/components/atoms';
 import HrWithText from 'sly/common/components/molecules/HrWithText';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
-import { textAlign } from 'sly/web/components/helpers/text';
-
-const StyledHeading = textAlign(pad(Heading));
-
-const FullWidthButton = fullWidth(Button);
-FullWidthButton.displayName = 'FullWidthButton';
-
-const LargePaddedFullWidthButton = pad(FullWidthButton, 'large');
-LargePaddedFullWidthButton.displayName = 'LargePaddedFullWidthButton';
-
-const PaddedBlock = textAlign(pad(Block));
-PaddedBlock.displayName = 'PaddedBlock';
-
-const ResetPassword = cursor(Block);
-
-const getButton = (error, props) =>
-  error ? <LargePaddedFullWidthButton {...props} /> : <FullWidthButton {...props} />;
 
 const LoginWithPasswordForm = ({
   handleSubmit, submitting, invalid, error, emailOrPhone, onLoginWithOtpClick, onResetPasswordClick,
 }) => (
-  <form onSubmit={handleSubmit}>
-    <StyledHeading size="subtitle">Welcome back!<br />Enter your password</StyledHeading>
+  <Form onSubmit={handleSubmit}>
+    <Heading size="subtitle" pad="0" align="center">Welcome back!</Heading>
+    <Heading size="subtitle" pad="xLarge" align="center">Enter your password</Heading>
     <Field
       name="password"
       label="Password"
-      labelRight={<ResetPassword palette="primary" size="caption" onClick={onResetPasswordClick}>Reset password</ResetPassword>}
+      labelRight={<Block cursor="pointer" palette="primary" size="caption" onClick={onResetPasswordClick}>Reset password</Block>}
       type="password"
       placeholder="Password"
       component={ReduxField}
     />
-    {getButton(error, { type: 'submit', disabled: submitting || invalid, children: 'Log in' })}
+    <Button
+      type="submit"
+      width="100%"
+      disabled={submitting || invalid}
+      pad={error ? 'large' : 'regular'}
+    >
+      Log in
+    </Button>
     {error && <Block palette="danger" size="caption">{error}</Block>}
     <HrWithText>or</HrWithText>
-    <PaddedBlock>Use a one time password for easy log in for your account<br />{!email(emailOrPhone) ? emailOrPhone : phoneFormatter(emailOrPhone, true)}</PaddedBlock>
-    <FullWidthButton ghost onClick={onLoginWithOtpClick}>Log in with a one-time password</FullWidthButton>
-  </form>
+    <Block align="center">
+      Use a one time password for easy log in for your account
+    </Block>
+    <Block pad="xLarge" align="center">
+      {!email(emailOrPhone) ? emailOrPhone : phoneFormatter(emailOrPhone, true)}
+    </Block>
+    <Button ghost width="100%" onClick={onLoginWithOtpClick}>Log in with a one-time password</Button>
+  </Form>
 );
 
 LoginWithPasswordForm.propTypes = {

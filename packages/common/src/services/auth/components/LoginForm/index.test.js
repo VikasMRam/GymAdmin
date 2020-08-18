@@ -21,7 +21,7 @@ describe('LoginForm|Web', () => {
     expect(wrapper.find('Field').filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find('Field').filter({ name: 'password' })).toHaveLength(1);
     expect(wrapper.find('Button')).toHaveLength(1);
-    expect(wrapper.find('Block')).toHaveLength(1);
+    expect(wrapper.find('Block[direction="row"]')).toHaveLength(1);
   });
 
   it('renders error', () => {

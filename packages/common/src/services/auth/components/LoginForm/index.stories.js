@@ -5,6 +5,7 @@ import { reduxForm } from 'redux-form';
 
 import LoginForm from '.';
 
+import { AGENT_ND_ROLE } from 'sly/common/constants/roles';
 import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const LoginFormContainer = reduxForm({
@@ -17,5 +18,13 @@ storiesOf('Common|Services/Auth/LoginForm', module)
       handleSubmit={withPreventDefault(action('form submitted'))}
       onResetPasswordClick={action('reset password clicked')}
       onRegisterClick={action('register clicked')}
+    />
+  ))
+  .add('role partner agent', () => (
+    <LoginFormContainer
+      handleSubmit={withPreventDefault(action('form submitted'))}
+      onResetPasswordClick={action('reset password clicked')}
+      onRegisterClick={action('register clicked')}
+      role={AGENT_ND_ROLE}
     />
   ));

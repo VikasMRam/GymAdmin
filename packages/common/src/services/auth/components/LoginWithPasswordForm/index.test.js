@@ -22,10 +22,10 @@ describe('LoginWithPasswordForm|Web', () => {
 
   it('renders', () => {
     const wrapper = wrap();
-    const otpBlock = wrapper.find('PaddedBlock');
+    const otpBlock = wrapper.find('Block').at(1);
 
     expect(wrapper.find('Field').filter({ name: 'password' })).toHaveLength(1);
-    expect(wrapper.find('FullWidthButton')).toHaveLength(2);
+    expect(wrapper.find('Button')).toHaveLength(2);
     expect(otpBlock).toHaveLength(1);
     expect(otpBlock.contains(emailOrPhone)).toBeTruthy();
   });
@@ -34,10 +34,10 @@ describe('LoginWithPasswordForm|Web', () => {
     const wrapper = wrap({
       emailOrPhone: phone,
     });
-    const otpBlock = wrapper.find('PaddedBlock');
+    const otpBlock = wrapper.find('Block').at(1);
 
     expect(wrapper.find('Field').filter({ name: 'password' })).toHaveLength(1);
-    expect(wrapper.find('FullWidthButton')).toHaveLength(2);
+    expect(wrapper.find('Button')).toHaveLength(2);
     expect(otpBlock).toHaveLength(1);
     expect(otpBlock.contains(phoneFormatted)).toBeTruthy();
   });
@@ -45,18 +45,17 @@ describe('LoginWithPasswordForm|Web', () => {
   it('renders error', () => {
     const error = 'error';
     const wrapper = wrap({ error });
-    const errors = wrapper.find('Block');
+    const errors = wrapper.find('Block').first();
 
-    expect(wrapper.find('LargePaddedFullWidthButton')).toHaveLength(1);
-    expect(errors).toHaveLength(1);
-    expect(errors.at(0).dive().render().text()).toBe(error);
+    expect(wrapper.find('Button')).toHaveLength(2);
+    expect(errors.contains(error)).toBeTruthy();
   });
 
   it('handles submit', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
 
-    wrapper.find('form').simulate('submit');
+    wrapper.find('Form').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
 
@@ -64,7 +63,7 @@ describe('LoginWithPasswordForm|Web', () => {
     const onLoginWithOtpClick = jest.fn();
     const wrapper = wrap({ onLoginWithOtpClick });
 
-    wrapper.find('FullWidthButton').at(1).simulate('click');
+    wrapper.find('Button').at(1).simulate('click');
     expect(onLoginWithOtpClick).toHaveBeenCalled();
   });
 });

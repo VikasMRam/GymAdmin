@@ -24,8 +24,8 @@ describe('OtpLoginForm|Web', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('Field').filter({ name: 'code' })).toHaveLength(1);
-    expect(wrapper.find('FullWidthButton')).toHaveLength(1);
-    expect(wrapper.find('StyledHeading').contains(emailOrPhone)).toBeTruthy();
+    expect(wrapper.find('Button')).toHaveLength(1);
+    expect(wrapper.find('Heading').contains(emailOrPhone)).toBeTruthy();
   });
 
   it('renders with phone', () => {
@@ -34,8 +34,8 @@ describe('OtpLoginForm|Web', () => {
     });
 
     expect(wrapper.find('Field').filter({ name: 'code' })).toHaveLength(1);
-    expect(wrapper.find('FullWidthButton')).toHaveLength(1);
-    expect(wrapper.find('StyledHeading').contains(phoneFormatted)).toBeTruthy();
+    expect(wrapper.find('Button')).toHaveLength(1);
+    expect(wrapper.find('Heading').contains(phoneFormatted)).toBeTruthy();
   });
 
   it('renders error', () => {
@@ -43,7 +43,7 @@ describe('OtpLoginForm|Web', () => {
     const wrapper = wrap({ error });
     const errors = wrapper.find('Block');
 
-    expect(wrapper.find('LargePaddedFullWidthButton')).toHaveLength(1);
+    expect(wrapper.find('Button')).toHaveLength(1);
     expect(errors).toHaveLength(1);
     expect(errors.at(0).dive().render().text()).toBe(error);
   });
@@ -52,7 +52,7 @@ describe('OtpLoginForm|Web', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
 
-    wrapper.find('form').simulate('submit');
+    wrapper.find('Form').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
 });
