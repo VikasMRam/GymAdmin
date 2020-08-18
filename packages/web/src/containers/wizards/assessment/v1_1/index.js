@@ -19,25 +19,24 @@ import {
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SlyEvent from 'sly/web/services/helpers/events';
 /* Wizard Step Imports */
-import Timing from 'sly/web/containers/wizards/assessment_v1_1/Timing';
-import WorkingWith from 'sly/web/containers/wizards/assessment_v1_1/WorkingWith';
-import Who from 'sly/web/containers/wizards/assessment_v1_1/Who';
-import Age from 'sly/web/containers/wizards/assessment_v1_1/Age';
-import Products from 'sly/web/containers/wizards/assessment_v1_1/Products';
-import Services from 'sly/web/containers/wizards/assessment_v1_1/Services';
-import LocalSearch from 'sly/web/containers/wizards/assessment_v1_1/LocalSearch';
-import ADL from 'sly/web/containers/wizards/assessment_v1_1/ADL';
-import Budget from 'sly/web/containers/wizards/assessment_v1_1/Budget';
-import Medicaid from 'sly/web/containers/wizards/assessment_v1_1/Medicaid';
-import Auth from 'sly/web/containers/wizards/assessment_v1_1/Auth';
-import LocalExpert from 'sly/web/containers/wizards/assessment_v1_1/LocalExpert';
-import ResidentName from 'sly/web/containers/wizards/assessment_v1_1/ResidentName';
-import End from 'sly/web/containers/wizards/assessment_v1_1/End';
+import Timing from 'sly/web/containers/wizards/assessment/v1_1/Timing';
+import WorkingWith from 'sly/web/containers/wizards/assessment/v1_1/WorkingWith';
+import Who from 'sly/web/containers/wizards/assessment/v1_1/Who';
+import Age from 'sly/web/containers/wizards/assessment/v1_1/Age';
+import Products from 'sly/web/containers/wizards/assessment/v1_1/Products';
+import Services from 'sly/web/containers/wizards/assessment/v1_1/Services';
+import LocalSearch from 'sly/web/containers/wizards/assessment/v1_1/LocalSearch';
+import ADL from 'sly/web/containers/wizards/assessment/v1_1/ADL';
+import Budget from 'sly/web/containers/wizards/assessment/v1_1/Budget';
+import Medicaid from 'sly/web/containers/wizards/assessment/v1_1/Medicaid';
+import Auth from 'sly/web/containers/wizards/assessment/v1_1/Auth';
+import LocalExpert from 'sly/web/containers/wizards/assessment/v1_1/LocalExpert';
+import ResidentName from 'sly/web/containers/wizards/assessment/v1_1/ResidentName';
+import End from 'sly/web/containers/wizards/assessment/v1_1/End';
 
 @withWS
 @withRedirectTo
 @query('getAgent', 'getAgent')
-@query('updateUuidAux', 'updateUuidAux')
 
 export default class AssessmentWizardV11 extends Component {
   static typeHydrationId = 'AssessmentWizard_V1_1';
@@ -205,10 +204,10 @@ export default class AssessmentWizardV11 extends Component {
   };
 
   render() {
-    const { community, hasTip, className, toc } = this.props;
+    const { community, hasTip, className, toc, status } = this.props;
     let { city, state } = this.props;
     // let showSkipOption = false;
-
+    console.log('DEBUG Seeing status',status );
     let amount = 4000;
     const { agent, hasNoAgent } = this.state;
 

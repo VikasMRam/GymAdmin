@@ -8,7 +8,7 @@ import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 
 const SignupForm = ({
   handleSubmit, submitting, invalid, error, onLoginClicked, onProviderClicked, heading, submitButtonText, hasPassword,
-  hasProviderSignup,
+  hasPreference, hasProviderSignup,
 }) => (
   <Form onSubmit={handleSubmit}>
     <Heading pad="xLarge" size="subtitle">{heading}</Heading>
@@ -47,6 +47,16 @@ const SignupForm = ({
         component={ReduxField}
       />
     }
+    {hasPreference &&
+    <Field
+      name="phonePreference"
+      fullWidth
+      type="checkbox"
+      component={ReduxField}
+      options={[{ value: 'text', label: 'I prefer text over calls' }]}
+    />
+
+    }
     <Button type="submit" width="100%" pad="regular" disabled={submitting || invalid}>
       {submitButtonText}
     </Button>
@@ -81,12 +91,14 @@ SignupForm.propTypes = {
   heading: string.isRequired,
   submitButtonText: string.isRequired,
   hasPassword: bool,
+  hasPreference: bool,
 };
 
 SignupForm.defaultProps = {
   heading: 'Sign Up',
   submitButtonText: 'Sign Up',
   hasProviderSignup: true,
+  hasPreference: true,
 };
 
 export default SignupForm;

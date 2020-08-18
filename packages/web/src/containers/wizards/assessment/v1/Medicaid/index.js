@@ -20,6 +20,7 @@ const ReduxForm = reduxForm({
 
 @withRouter
 @query('createAction', 'createUuidAction')
+@query('updateUuidAux', 'updateUuidAux')
 
 export default class MedicaidFormContainer extends Component {
   static propTypes = {
@@ -31,18 +32,19 @@ export default class MedicaidFormContainer extends Component {
   handleSubmit = (data) => {
     const { createAction, location: { pathname }, onSubmit } = this.props;
 
-    return createAction({
+    return Promise.all(
+      [createAction({
       type: 'UUIDAction',
       attributes: {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'step-10:Medicaid',
+          stepName: 'medicaid',
           wizardName: 'assessmentWizard',
           data,
         },
       },
-    })
+    })])
       .then(onSubmit);
   };
 
