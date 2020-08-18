@@ -35,7 +35,8 @@ const Timing = ({
 }) => (
   <div>
     <Wrapper>
-      <PaddedProgressBar label totalSteps={10} currentStep={1} />
+      {/*<PaddedProgressBar label totalSteps={10} currentStep={1} />*/}
+      <PaddedProgressBar label totalSteps={8} currentStep={5} />
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
@@ -55,7 +56,8 @@ const Timing = ({
       </Box>
       {hasTip &&
         <StyledTipBox heading="WHY THIS IS IMPORTANT:">
-          We've helped thousands of loved ones. You're in good hands.
+          This will help us understand and support you wherever you are in your search.
+          {/*We've helped thousands of loved ones. You're in good hands.*/}
         </StyledTipBox>
       }
     </Wrapper>

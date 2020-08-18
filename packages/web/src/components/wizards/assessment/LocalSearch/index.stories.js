@@ -4,22 +4,22 @@ import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
 import { withPreventDefault } from 'sly/common/services/helpers/forms';
-import { Feeling } from 'sly/web/components/wizards/assessment';
+import { LocalSearch } from 'sly/web/components/wizards/assessment';
 
-const FeelingContainer = reduxForm({
+const LocalSearchContainer = reduxForm({
   form: 'Feeling',
-})(Feeling);
+})(LocalSearch);
 
 storiesOf('Wizards|assessment/Steps/Feeling', module)
   .add('default', () => (
-    <FeelingContainer
+    <LocalSearchContainer
       handleSubmit={withPreventDefault(action('form submitted'))}
       onSkipClick={action('onSkipClick')}
       onBackClick={action('onBackClick')}
     />
   ))
   .add('without tip', () => (
-    <FeelingContainer
+    <LocalSearchContainer
       handleSubmit={withPreventDefault(action('form submitted'))}
       onSkipClick={action('onSkipClick')}
       onBackClick={action('onBackClick')}

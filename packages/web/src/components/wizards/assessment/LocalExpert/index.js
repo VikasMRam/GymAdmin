@@ -36,7 +36,7 @@ const LocalExpert = ({
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
-        <PaddedHeading level="subtitle" weight="medium">Do you live in the state you’re searching in?</PaddedHeading>
+        <PaddedHeading level="subtitle" weight="medium">Are you interested in working with a Local Senior Living Expert? They can help you find senior living options that fit your budget and care needs.</PaddedHeading>
         <form onSubmit={handleSubmit}>
           <StyledField
             options={LOCAL_EXPERT_OPTIONS}

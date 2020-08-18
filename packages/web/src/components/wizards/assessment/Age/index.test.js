@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { ADL } from 'sly/web/components/wizards/assessment';
+import { Age } from 'sly/web/components/wizards/assessment';
 
 const handleSubmit = jest.fn();
 const change= jest.fn();
@@ -11,9 +11,9 @@ const defaultProps = {
   whoNeedsHelp,
   change,
 };
-const wrap = (props = {}) => shallow(<ADL {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<Age {...defaultProps} {...props} />);
 
-describe('Wizards|assessment - Steps|ADL', () => {
+describe('Wizards|assessment - Steps|Age', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();
@@ -22,7 +22,7 @@ describe('Wizards|assessment - Steps|ADL', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('PaddedHeading').contains('Which activities do your parents need help with?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('How old is your parent(s)?')).toBeTruthy();
     expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
@@ -32,11 +32,12 @@ describe('Wizards|assessment - Steps|ADL', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Which activities do your parents need help with?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('How old is your parent(s)?')).toBeTruthy();
     expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);
   });
-
+  /** Fix after options are good */
+  /*
   it('renders correct heading for myself-and-spouse', () => {
     const wrapper = wrap({
       whoNeedsHelp: 'myself-and-spouse',
@@ -60,6 +61,7 @@ describe('Wizards|assessment - Steps|ADL', () => {
 
     expect(wrapper.find('PaddedHeading').contains('Which activities below does your mom need help with?')).toBeTruthy();
   });
+  */
 
   it('handles submit', () => {
     const wrapper = wrap();

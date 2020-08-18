@@ -4,15 +4,15 @@ import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
 import { withPreventDefault } from 'sly/common/services/helpers/forms';
-import { ADL } from 'sly/web/components/wizards/assessment';
+import { Products } from 'sly/web/components/wizards/assessment';
 
-const ADLContainer = reduxForm({
-  form: 'ADL',
-})(ADL);
+const ProductsContainer = reduxForm({
+  form: 'Products',
+})(Products);
 
-storiesOf('Wizards|assessment/Steps/ADL', module)
+storiesOf('Wizards|assessment/Steps/Products', module)
   .add('default', () => (
-    <ADLContainer
+    <ProductsContainer
       handleSubmit={withPreventDefault(action('form submitted'))}
       onSkipClick={action('onSkipClick')}
       onBackClick={action('onBackClick')}
@@ -20,7 +20,7 @@ storiesOf('Wizards|assessment/Steps/ADL', module)
     />
   ))
   .add('without tip', () => (
-    <ADLContainer
+    <ProductsContainer
       handleSubmit={withPreventDefault(action('form submitted'))}
       onSkipClick={action('onSkipClick')}
       onBackClick={action('onBackClick')}

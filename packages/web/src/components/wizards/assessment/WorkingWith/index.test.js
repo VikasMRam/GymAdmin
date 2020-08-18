@@ -1,15 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Timing } from 'sly/web/components/wizards/assessment';
+import { WorkingWith } from 'sly/web/components/wizards/assessment';
 
 const handleSubmit = jest.fn();
 const defaultProps = {
   handleSubmit,
 };
-const wrap = (props = {}) => shallow(<Timing {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<WorkingWith {...defaultProps} {...props} />);
 
-describe('Wizards|assessment - Steps|Timing', () => {
+describe('Wizards|assessment - Steps|WorkingWith', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();

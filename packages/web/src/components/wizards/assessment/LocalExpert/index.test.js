@@ -1,13 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Feeling } from 'sly/web/components/wizards/assessment';
+import { LocalExpert } from 'sly/web/components/wizards/assessment';
 
 const handleSubmit = jest.fn();
 const defaultProps = {
   handleSubmit,
 };
-const wrap = (props = {}) => shallow(<Feeling {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<LocalExpert {...defaultProps} {...props} />);
 
 describe('Wizards|assessment - Steps|Feeling', () => {
   it('does not render children when passed in', () => {
@@ -19,6 +19,7 @@ describe('Wizards|assessment - Steps|Feeling', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('PaddedHeading')).toHaveLength(1);
+    expect(wrapper.find('PaddedHeading').contains('Are you interested in working with a Local Senior Living Expert? They can help you find senior living options that fit your budget and care needs.')).toBeTruthy();
     expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
@@ -29,6 +30,7 @@ describe('Wizards|assessment - Steps|Feeling', () => {
     });
 
     expect(wrapper.find('PaddedHeading')).toHaveLength(1);
+    expect(wrapper.find('PaddedHeading').contains('Are you interested in working with a Local Senior Living Expert? They can help you find senior living options that fit your budget and care needs.')).toBeTruthy();
     expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);
   });

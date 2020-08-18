@@ -54,7 +54,8 @@ const ADL = ({
   return (
     <div>
       <Wrapper>
-        <PaddedProgressBar label totalSteps={10} currentStep={3} />
+        {/* <PaddedProgressBar label totalSteps={10} currentStep={3} /> */}
+        <PaddedProgressBar label totalSteps={8} currentStep={3} />
       </Wrapper>
       <Wrapper hasSecondColumn={hasTip}>
         <Box>

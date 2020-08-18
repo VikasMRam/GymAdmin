@@ -43,16 +43,16 @@ export const getIsActiveAdult = (community) => {
 };
 
 export const getIsSellerAgentCTA = (community) => {
-  const validTocLabels =  tocs.filter(e =>
-    e.value.match(/active-adult|independent-living|continuing-care-retirement-community/)).map(e => e.label);
-  const { propInfo } = community;
-  if (propInfo) {
-    const { typeCare: typeCares } = propInfo;
-    if (typeCares) {
-      return typeCares.length === 1 && validTocLabels.includes(typeCares[0]);
-    }
-  }
-  return false;
+  // const validTocLabels =  tocs.filter(e =>
+  //   e.value.match(/active-adult|independent-living|continuing-care-retirement-community/)).map(e => e.label);
+  // const { propInfo } = community;
+  // if (propInfo) {
+  //   const { typeCare: typeCares } = propInfo;
+  //   if (typeCares) {
+  //     return typeCares.length === 1 && validTocLabels.includes(typeCares[0]);
+  //   }
+  // }
+  return getIsActiveAdult(community);
 };
 
 

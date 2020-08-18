@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { ADL } from 'sly/web/components/wizards/assessment';
+import { Services } from 'sly/web/components/wizards/assessment';
 
 const handleSubmit = jest.fn();
 const change= jest.fn();
@@ -13,7 +13,7 @@ const defaultProps = {
 };
 const wrap = (props = {}) => shallow(<ADL {...defaultProps} {...props} />);
 
-describe('Wizards|assessment - Steps|ADL', () => {
+describe('Wizards|assessment - Steps|Services', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();
@@ -22,7 +22,7 @@ describe('Wizards|assessment - Steps|ADL', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('PaddedHeading').contains('Which activities do your parents need help with?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Please tell us if you are interested in these other services')).toBeTruthy();
     expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
@@ -32,33 +32,9 @@ describe('Wizards|assessment - Steps|ADL', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Which activities do your parents need help with?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Please tell us if you are interested in these other services')).toBeTruthy();
     expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);
-  });
-
-  it('renders correct heading for myself-and-spouse', () => {
-    const wrapper = wrap({
-      whoNeedsHelp: 'myself-and-spouse',
-    });
-
-    expect(wrapper.find('PaddedHeading').contains('Which activities do you and your spouse need help with?')).toBeTruthy();
-  });
-
-  it('renders correct heading for myself', () => {
-    const wrapper = wrap({
-      whoNeedsHelp: 'myself',
-    });
-
-    expect(wrapper.find('PaddedHeading').contains('Which activities do you need help with?')).toBeTruthy();
-  });
-
-  it('renders correct heading for other options', () => {
-    const wrapper = wrap({
-      whoNeedsHelp: 'mom',
-    });
-
-    expect(wrapper.find('PaddedHeading').contains('Which activities below does your mom need help with?')).toBeTruthy();
   });
 
   it('handles submit', () => {
