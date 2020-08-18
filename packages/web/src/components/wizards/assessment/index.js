@@ -9,3 +9,12 @@ export Budget from './Budget';
 export Medicaid from './Medicaid';
 export ResidentName from './ResidentName';
 export End from './End';
+/* Start v1.1 steps */
+export Age from './Age';
+export LocalExpert from './LocalExpert';
+export LocalSearch from './LocalSearch';
+export Products from './Products';
+export Services from './Services';
+export WorkingWith from './WorkingWith';
+/* End v1.1 steps */
+

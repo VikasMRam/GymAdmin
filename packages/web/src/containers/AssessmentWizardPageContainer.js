@@ -24,11 +24,11 @@ export default class AssessmentWizardPageContainer extends Component {
   };
 
   render() {
-    const { community, location: { search }, status, match: { params: { city, state } } } = this.props;
+    const { community, location: { search }, status, match: { params: { city, state, toc, } } } = this.props;
     let hasFinished = true;
     const qp = parseURLQueryParams(search);
     const skipIntro = qp.skipIntro && qp.skipIntro !== 'false' ? !!qp.skipIntro : false;
-
+    const version= !!qp.newVersion;
     if (status) {
       ({ hasFinished } = status.community);
     }
@@ -43,6 +43,8 @@ export default class AssessmentWizardPageContainer extends Component {
         hasTip={qp.hasTip !== 'false'}
         city={city}
         state={state}
+        toc={toc}
+        version={version}
       />
     );
   }

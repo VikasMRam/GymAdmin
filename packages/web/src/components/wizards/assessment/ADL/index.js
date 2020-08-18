@@ -46,45 +46,52 @@ const generateHeading = (whoNeedsHelp) => {
 
 const ADL = ({
   handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting, hasTip, change,
-}) => (
-  <div>
-    <Wrapper>
-      <PaddedProgressBar label totalSteps={8} currentStep={3} />
-    </Wrapper>
-    <Wrapper hasSecondColumn={hasTip}>
-      <Box>
-        <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
-        <PaddedBlock>Please select all that apply.</PaddedBlock>
-        <form onSubmit={handleSubmit}>
-          <StyledField
-            multiChoice
-            options={ADL_OPTIONS}
-            name="adl"
-            type="boxChoice"
-            align="left"
-            component={ReduxField}
-            onChange={(event, newValue, previousValue, name) => {
-              // we know that last element is the newly added value
-              let newlyAddedValue = newValue[newValue.length - 1];
-              const valuesThatCanExist = COEXISTING_ADL_OPTIONS[newlyAddedValue];
-              if (valuesThatCanExist) {
-                newValue = newValue.filter(v => valuesThatCanExist.includes(v));
-              }
-              // delay this update to next tick so that it's always applied at last
-              setTimeout(() => change(name, newValue));
-            }}
-          />
-          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
-        </form>
-      </Box>
-      {hasTip &&
+}) => {
+  let opts = ADL_OPTIONS;
+  if (whoNeedsHelp && whoNeedsHelp.match(/myself/)) {
+    opts = opts.filter((e) => !e.value.match(/memory-care/));
+  }
+  return (
+    <div>
+      <Wrapper>
+        {/* <PaddedProgressBar label totalSteps={10} currentStep={3} /> */}
+        <PaddedProgressBar label totalSteps={8} currentStep={3} />
+      </Wrapper>
+      <Wrapper hasSecondColumn={hasTip}>
+        <Box>
+          <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
+          <PaddedBlock>Please select all that apply.</PaddedBlock>
+          <form onSubmit={handleSubmit}>
+            <StyledField
+              multiChoice
+              options={opts}
+              name="adl"
+              type="boxChoice"
+              align="left"
+              component={ReduxField}
+              onChange={(event, newValue, previousValue, name) => {
+                // we know that last element is the newly added value
+                let newlyAddedValue = newValue[newValue.length - 1];
+                const valuesThatCanExist = COEXISTING_ADL_OPTIONS[newlyAddedValue];
+                if (valuesThatCanExist) {
+                  newValue = newValue.filter(v => valuesThatCanExist.includes(v));
+                }
+                // delay this update to next tick so that it's always applied at last
+                setTimeout(() => change(name, newValue));
+              }}
+            />
+            <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
+          </form>
+        </Box>
+        {hasTip &&
         <StyledTipBox heading="WHY THIS IS IMPORTANT:">
           This helps us narrow down our recommendations to only those communities that can support your care needs.
         </StyledTipBox>
-      }
-    </Wrapper>
-  </div>
-);
+        }
+      </Wrapper>
+    </div>
+  );
+}
 
 ADL.propTypes = {
   handleSubmit: func.isRequired,

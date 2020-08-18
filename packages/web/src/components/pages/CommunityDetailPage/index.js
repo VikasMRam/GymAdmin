@@ -330,15 +330,16 @@ export default class CommunityDetailPage extends Component {
         {getHelmetForCommunityPage(community, location)}
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
         <PageEventsContainer />
+        {!bannerNotification && !isActiveAdult && partnerAgent && (
+          <BannerNotificationAdContainer community={community} type="wizardCommunity" />
+        )}
         <Header noBottomMargin={!isActiveAdult && (bannerNotification || partnerAgent)} />
         {bannerNotification && (
           <StyledBannerNotification>
             {bannerNotification}
           </StyledBannerNotification>
         )}
-        {!bannerNotification && !isActiveAdult && partnerAgent && (
-          <BannerNotificationAdContainer type="covid-19-community" />
-        )}
+
         <CommunityDetailPageTemplate>
           <Wrapper>
             <BreadCrumb pad="large" items={getBreadCrumbsForCommunity({ name, propInfo, address })} />

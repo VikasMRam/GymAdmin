@@ -1,8 +1,14 @@
 export const WHO_PERSON_OPTIONS = [
+  // { label: 'Parent(s)', value: 'parents' },
+  // { label: 'Myself', value: 'myself' },
+  // { label: 'Spouse', value: 'spouse' },
+  // { label: 'Myself and spouse', value: 'myself-and-spouse' },
+  // { label: 'Other Relative(s)', value: 'other-relatives' },
+  // { label: 'Friend(s)', value: 'friend' },
+  // { label: 'Other', value: 'other' },
+  // v1 OPTIONS BELOW:
   { label: 'Mom', value: 'mom' },
   { label: 'Dad', value: 'dad' },
-  { label: 'Parents', value: 'parents' },
-  { label: 'Myself and spouse', value: 'myself-and-spouse' },
   { label: 'Wife', value: 'wife' },
   { label: 'Husband', value: 'husband' },
   { label: 'Grandmother', value: 'grandmother' },
@@ -13,10 +19,48 @@ export const WHO_PERSON_OPTIONS = [
   { label: 'Uncle', value: 'uncle' },
   { label: 'Brother', value: 'brother' },
   { label: 'Sister', value: 'sister' },
-  { label: 'Friend', value: 'friend' },
   { label: 'Client', value: 'client' },
   { label: 'Patient', value: 'patient' },
   { label: 'Myself', value: 'myself' },
+];
+
+export const AGE_OPTIONS = [
+  { label: 'Below 40', value: 'below-40' },
+  { label: '40-49', value: '40-49' },
+  { label: '50-59', value: '50-59' },
+  { label: '60-69', value: '60-69' },
+  { label: '70+', value: '70+' },
+];
+
+export const LIVE_SEARCH_STATE = [
+  { label: 'Yes', value: 'yes' },
+  { label: 'No', value: 'no' },
+];
+
+export const LOCAL_EXPERT_INTEREST = [
+  { label: 'Yes definitely', value: 'yes' },
+  { label: 'I might be', value: 'maybe' },
+  { label: 'Not now', value: 'no' },
+];
+
+export const SERVICES_OPTIONS = [
+  { label: 'Power of Attorney, wills, or other legal help', value: 'legal' },
+  { label: 'Moving, packing, and/or estate sales', value: 'moving' },
+  { label: 'Private caregiving services at home', value: 'private-caregiving' },
+  { label: 'Making an existing home more accessible', value: 'home-accessibility' },
+  { label: 'Selling an existing home', value: 'home-sale' },
+  { label: 'Reverse mortgages on an existing home', value: 'reverse-mortgage' },
+  { label: 'Not interested in any of these services at this time', value: 'none' },
+];
+
+export const PRODUCTS_OPTIONS = [
+  { label: 'Furniture packages for your new apartment', value: 'furniture' },
+  { label: 'Accessory Dwelling Units to install in your existing home', value: 'dwelling-units' },
+  { label: 'Medicare Advantage plans', value: 'medicare-advantage' },
+  { label: 'Subscription service for adult diapers', value: 'subscriptions-diapers' },
+  { label: 'Subscription service for Life Alert monitoring', value: 'subscriptions-lifealert' },
+  { label: 'Cell phone or tablet designed for seniors', value: 'celltab-seniors' },
+  { label: 'Not interested in any of these services at this time', value: 'none' },
 ];
 
 export const FEELING_OPTIONS = [
@@ -26,12 +70,14 @@ export const FEELING_OPTIONS = [
 ];
 
 export const ADL_OPTIONS = [
+  // { label: 'Memory Care', value: 'memory-care' },
   { label: 'Bathing', value: 'bathing' },
   { label: 'Dressing', value: 'dressing' },
   { label: 'Transferring', value: 'transferring' },
   { label: 'Toileting', value: 'toileting' },
   { label: 'Eating', value: 'eating' },
   { label: 'Medication management', value: 'medication-management' },
+  { label: 'Other', value: 'other' },
   { label: 'None', value: 'none' },
   { label: "I'm not sure", value: 'im-not-sure' },
 ];
@@ -119,6 +165,17 @@ export const TIMING_OPTIONS = [
   { label: 'Inquired directly to communities', value: 'inquired' },
   { label: 'Toured one or more communities', value: 'toured' },
   { label: 'Already chosen a community and am just comparing', value: 'already-chosen' },
+  // v2 options below
+  // { label: 'Need to find a community as soon as possible', value: 'asap' },
+  // { label: 'Just starting to research communities', value: 'researching' },
+  // { label: 'I\'m in the process of planning for the future', value: 'planning' },
+];
+
+export const WORKING_WITH_OPTIONS = [
+  { label: 'Working with a senior living advisor', value: 'working' },
+  { label: 'Inquired directly to communities', value: 'inquired' },
+  { label: 'Toured one or more communities', value: 'toured' },
+  { label: 'None of these apply', value: 'none-apply' },
 ];
 
 export const CURRENT_LIVING_OPTIONS = {

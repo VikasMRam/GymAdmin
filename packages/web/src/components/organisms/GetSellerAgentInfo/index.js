@@ -3,6 +3,7 @@ import { string, func, bool, } from 'prop-types';
 import styled from 'styled-components';
 
 import { community as communityPropType } from 'sly/common/propTypes/community';
+import { assetPath } from 'sly/web/components/themes';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
 import { size, palette } from 'sly/common/components/themes';
@@ -21,22 +22,26 @@ const StyledResponsiveImage = styled(ResponsiveImage)`
   margin-right: ${size('spacing.regular')};
 `;
 
+const MarginedDiv = styled.div`
+  margin-bottom: ${size('spacing.regular')};
+`;
+
 const onClickEvent = id => ({ action: 'click-seller-agent', category: 'SidebarCTA', label: id });
 
 const ZillowComp = ( { buttonTo, onClick, communityId }) => (
   <>
-    <div>
+    <MarginedDiv>
       Our partner <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> will make an instant offer.
-    </div>
-    <StyledButton to={buttonTo} onClick={onClick} event={onClickEvent(communityId)}> Learn More</StyledButton>;
+    </MarginedDiv>
+    <StyledButton target='_blank' to={buttonTo} onClick={onClick} event={onClickEvent(communityId)}> Learn More</StyledButton>
   </>
 );
 
 const GetSellerAgentInfo = ({ title, subtitle, isZillowAd, community: { id }, buttonTo, onClick }) => (
   <Box>
     <PaddedHeading level="title" size="subtitle">{title}</PaddedHeading>
-    {isZillowAd && <ZillowComp communityId={id} to={buttonTo} onClick={onClick}/> }
-    {!isZillowAd && <div>{subtitle}</div> }
+    {isZillowAd && <ZillowComp communityId={id} buttonTo={buttonTo} onClick={onClick}/> }
+    {!isZillowAd && <MarginedDiv>{subtitle}</MarginedDiv> }
     {!isZillowAd && <StyledRequestInfo to={buttonTo} onClick={onClick} event={onClickEvent(id)} ackCTA={true}>
       Request Info
     </StyledRequestInfo>

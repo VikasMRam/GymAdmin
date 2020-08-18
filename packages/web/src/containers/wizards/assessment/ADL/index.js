@@ -37,7 +37,7 @@ export default class ADLFormContainer extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'ADL',
+          stepName: 'step-8:ADL',
           wizardName: 'assessmentWizard',
           data,
         },

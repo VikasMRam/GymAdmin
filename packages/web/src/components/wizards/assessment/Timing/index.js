@@ -35,15 +35,16 @@ const Timing = ({
 }) => (
   <div>
     <Wrapper>
+      {/*<PaddedProgressBar label totalSteps={10} currentStep={1} />*/}
       <PaddedProgressBar label totalSteps={8} currentStep={5} />
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
-        <PaddedHeading level="subtitle" weight="medium">Please tell us about where you are in your search.</PaddedHeading>
+        <PaddedHeading level="subtitle" weight="medium">Where are you in your senior living search?</PaddedHeading>
         <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
           <StyledField
-            multiChoice
+            singleChoice
             options={TIMING_OPTIONS}
             name="timing"
             type="boxChoice"
@@ -56,6 +57,7 @@ const Timing = ({
       {hasTip &&
         <StyledTipBox heading="WHY THIS IS IMPORTANT:">
           This will help us understand and support you wherever you are in your search.
+          {/*We've helped thousands of loved ones. You're in good hands.*/}
         </StyledTipBox>
       }
     </Wrapper>

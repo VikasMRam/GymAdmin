@@ -31,6 +31,8 @@ import CommunityProfileAdTileContainer from 'sly/web/containers/communityProfile
 import BannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
 import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 import GetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
+import SidebarCTAContainer from 'sly/web/containers/communityProfile/SidebarCTAContainer';
+import StickyFooterCTAContainer from 'sly/web/containers/communityProfile/StickyFooterCTAContainer';
 
 // For Lazy loading images, used in ResponsiveImage
 require('sly/web/services/yall');
@@ -67,6 +69,8 @@ partiallyHydrateClient(
     BannerNotificationAdContainer,
     CommunityPricingTable,
     GetAssessmentBoxContainerHydrator,
+    SidebarCTAContainer,
+    StickyFooterCTAContainer,
   ],
   `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
   root,
