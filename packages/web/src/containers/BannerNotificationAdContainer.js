@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import { oneOf, func, string, bool } from 'prop-types';
+import { oneOf, func, string, bool, object } from 'prop-types';
+import styled from 'styled-components';
 
 import SlyEvent from 'sly/web/services/helpers/events';
 import { Link } from 'sly/web/components/atoms';
@@ -14,6 +15,14 @@ import ImportantCovid19UpdatesStepContainer from 'sly/web/containers/ImportantCo
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
 import { textDecoration } from 'sly/web/components/helpers/text';
 
+const FixedBannerComponent = styled(BannerNotification)`
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: ${key('zIndexes.stickySections')};
+`;
+
 const PaddedBannerNotification = pad(BannerNotification, 'large');
 
 const DecoratedLink = textDecoration(Link);
@@ -24,10 +33,11 @@ export default class BannerNotificationAdContainer extends PureComponent {
   static typeHydrationId = 'BannerNotificationAdContainer';
 
   static propTypes = {
-    type: oneOf(['askAgent', 'getOffer', 'homeCare', 'covid-19', 'covid-19-community']).isRequired,
+    type: oneOf(['askAgent', 'getOffer', 'homeCare', 'covid-19', 'covid-19-community','wizardCommunity']).isRequired,
     notifyInfo: func.isRequired,
     profileId: string,
     noMarginBottom: bool,
+    community: object,
   };
 
   static defaultProps = {
@@ -85,6 +95,14 @@ export default class BannerNotificationAdContainer extends PureComponent {
     });
   };
 
+  handleWizardCommunityClick = ({}) => {
+    SlyEvent.getInstance().sendEvent({
+      action: 'click-wizardCommunity-button',
+      category: 'BannerNotificationAd',
+    });
+
+  };
+
   handleAdmissionPoliciesContact = () => {
     SlyEvent.getInstance().sendEvent({
       action: 'click-covid19-admission-policies-button',
@@ -131,7 +149,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
   };
 
   render() {
-    const { type, noMarginBottom } = this.props;
+    const { type, noMarginBottom, community } = this.props;
     const {
       isModalOpen,
       modalHeading,
@@ -164,6 +182,14 @@ export default class BannerNotificationAdContainer extends PureComponent {
               Click here to learn more.
             </DecoratedLink>
           </BannerComponent>
+        }
+        {type.includes('wizardCommunity') &&
+        <StyledBannerComponent palette="warning" childrenPalette="slate">
+          Does your loved one need care urgently?
+          <DecoratedLink onClick={this.handleWizardCommunityClick} to={`/wizards/assessment/community/${community.id}`} target="_blank">
+            Click here to get help from a local expert.
+          </DecoratedLink>
+        </StyledBannerComponent>
         }
         {isModalOpen &&
           <Modal onClose={this.handleClose}>
