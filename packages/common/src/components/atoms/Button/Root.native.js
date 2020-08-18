@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { string, bool, node } from 'prop-types';
 
-import { Block } from 'sly/common/components/atoms';
+import Block from 'sly/common/components/atoms/Block';
+import Link from 'sly/common/components/atoms/Link';
 
 const systemButtonOpacity = 0.7;
 
@@ -21,6 +22,7 @@ export default class Root extends Component {
     palette: string,
     variation: string,
     clamped: bool,
+    href: string,
   };
 
   static defaultProps = {
@@ -71,11 +73,14 @@ export default class Root extends Component {
       variation,
       children,
       clamped,
+      href,
       ...props
     } = this.props;
     const pressableProps = this.getPressableProps();
 
     props.selectable = selectable;
+
+    const TextComponent = href ? Link : Block;
 
     return (
       <Block
@@ -87,9 +92,9 @@ export default class Root extends Component {
         borderPalette={props.borderPalette === 'currentcolor' ? palette : props.borderPalette}
         borderVariation={props.borderPalette === 'currentcolor' ? variation : props.borderVariation}
       >
-        <Block numberOfLines={1} width="100%" align="center" palette={palette} variation={variation}>
+        <TextComponent href={href} numberOfLines={1} width="100%" align="center" palette={palette} variation={variation}>
           {children}
-        </Block>
+        </TextComponent>
       </Block>
     );
   }

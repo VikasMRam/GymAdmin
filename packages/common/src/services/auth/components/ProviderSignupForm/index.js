@@ -52,7 +52,7 @@ const ProviderSignupForm = ({
     {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
     <Block size="caption" align="center" direction="row">
       Already have an account?&nbsp;&nbsp;
-      <ButtonLink palette="primary" onClick={onLoginClicked}>Log in</ButtonLink>
+      <ButtonLink palette="primary" size="caption" onClick={onLoginClicked}>Log in</ButtonLink>
     </Block>
   </Form>
 );

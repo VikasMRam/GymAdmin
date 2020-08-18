@@ -6,7 +6,8 @@ import { ifProp } from 'styled-tools';
 import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { textAlign } from 'sly/web/components/helpers/text';
-import { Button, Box, ResponsiveImage, Block, Link } from 'sly/web/components/atoms';
+import { Button, Box, Block, Link } from 'sly/common/components/atoms';
+import { ResponsiveImage } from 'sly/web/components/atoms';
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
   max-width: calc(${size('layout.col2')} + ${size('layout.gutter')});

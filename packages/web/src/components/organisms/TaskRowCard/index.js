@@ -8,7 +8,7 @@ import taskPropType from 'sly/common/propTypes/task';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
-import { Badge, Link } from 'sly/web/components/atoms';
+import { Badge, Link } from 'sly/common/components/atoms';
 import { Td, Tr } from 'sly/web/components/atoms/Table';
 import { getAppPathForEntity } from 'sly/web/services/helpers/appPaths';
 import Block from 'sly/web/components/atoms/Block';

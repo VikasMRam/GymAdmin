@@ -37,7 +37,7 @@ import {
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   SUMMARY,
 } from 'sly/web/constants/dashboardAppPaths';
-import { Block, Button, Link } from 'sly/web/components/atoms';
+import { Block, Button, Link } from 'sly/common/components/atoms';
 import ConversationMessages from 'sly/web/components/organisms/ConversationMessages';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import IconButton from 'sly/common/components/molecules/IconButton';

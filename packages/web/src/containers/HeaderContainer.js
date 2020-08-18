@@ -15,7 +15,7 @@ import {
   AGENT_DASHBOARD_PROFILE_PATH, DASHBOARD_COMMUNITIES_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
 import { withAuth, normalizeResponse, query } from 'sly/web/services/api';
-import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { withProps } from 'sly/web/services/helpers/hocs';
 import { generateSearchUrl, parseURLQueryParams } from 'sly/web/services/helpers/url';
 import SlyEvent from 'sly/web/services/helpers/events';

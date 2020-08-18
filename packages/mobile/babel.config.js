@@ -13,6 +13,8 @@ module.exports = {
     ['transform-inline-environment-variables', {
       include: [
         'IS_STORYBOOK',
+        'SLY_ENV',
+        'API_URL',
       ],
     }],
     // if a unique id is given babel will setup multiple instances of the plugin with all configs.

@@ -8,7 +8,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import BookATourPage from 'sly/web/components/pages/BookATourPage';
 import { TOUR_BOOKED } from 'sly/web/services/api/constants';
 import { medicareToBool, boolToMedicare } from 'sly/web/services/helpers/userDetails';
-import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
 
 const eventCategory = 'BAT';
 

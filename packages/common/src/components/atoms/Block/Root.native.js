@@ -4,7 +4,12 @@ import styled from 'styled-components';
 import { node, any, func } from 'prop-types';
 
 import { isString, objectFilter } from 'sly/common/services/helpers/utils';
+import { withWidth } from 'sly/common/components/helpers';
 import { Text, View } from 'sly/mobile/components/atoms';
+
+const StyledPressable = styled(Pressable)`
+  ${withWidth}
+`;
 
 const StyledView = styled(View)`
   flex-direction: row;
@@ -27,18 +32,27 @@ export default class Root extends Component {
     children: node,
     style: any,
     onClick: func,
+    flex: any,
+    width: any,
+    size: any,
+    weight: any,
+    textDecoration: any,
+    lineHeight: any,
+    palette: any,
+    variation: any,
   };
 
   withPressable(content) {
-    const { onClick } = this.props;
+    const { onClick, flex, width } = this.props;
     const providedPressableProps = objectFilter(this.props, pressableProps);
 
     if (onClick || Object.keys(providedPressableProps).length) {
       // in mobiles onPress is equivalent of onClick
       return (
-        <Pressable onPress={onClick} {...providedPressableProps}>
+        // apply dimension props like flex, width as passed
+        <StyledPressable onPress={onClick} flex={flex} width={width} {...providedPressableProps}>
           {content}
-        </Pressable>
+        </StyledPressable>
       );
     }
 
@@ -62,9 +76,19 @@ export default class Root extends Component {
     }
     // wrap all children with Text, if required
     if (Array.isArray(children)) {
+      // only pass text related styles to chil Text wrapper as unlike web styles
+      // won't be inherited from parent
+      const textProps = {};
+      textProps.size = this.props.size;
+      textProps.weight = this.props.weight;
+      textProps.textDecoration = this.props.textDecoration;
+      textProps.lineHeight = this.props.lineHeight;
+      textProps.palette = this.props.palette;
+      textProps.variation = this.props.variation;
+
       return this.withPressable(
         <StyledView style={style}>
-          {children.map(c => shouldWrapWithText(c) ? <Text key={c}>{c}</Text> : c)}
+          {children.map(c => shouldWrapWithText(c) ? <Text {...textProps} key={c}>{c}</Text> : c)}
         </StyledView>,
       );
     }

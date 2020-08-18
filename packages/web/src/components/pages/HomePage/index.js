@@ -11,8 +11,8 @@ import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/Ba
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import BannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
-import { Label, Heading, Block, Button, Hr } from 'sly/common/components/atoms';
-import { Centered, Link, Paragraph, ResponsiveImage } from 'sly/web/components/atoms';
+import { Label, Heading, Block, Button, Hr, Link, Paragraph } from 'sly/common/components/atoms';
+import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
 import Section from 'sly/web/components/molecules/Section';
 import DiscoverHomeTile from 'sly/web/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/web/components/molecules/MeetOthersTile';

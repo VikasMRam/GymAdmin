@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { size } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
-import { Block, Icon, Heading } from 'sly/common/components/atoms';
-import { Link, ClampedText } from 'sly/web/components/atoms';
+import { Block, Icon, Heading, Link } from 'sly/common/components/atoms';
+import { ClampedText } from 'sly/web/components/atoms';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 

@@ -3,8 +3,7 @@ import styled from 'styled-components';
 
 import config from 'sly/web/config';
 import { size, palette } from 'sly/common/components/themes';
-import { Icon, Block, Hr } from 'sly/common/components/atoms';
-import { Link } from 'sly/web/components/atoms';
+import { Icon, Block, Hr, Link } from 'sly/common/components/atoms';
 
 const FooterWrapper = styled.footer`
   background-color: ${palette('slate', 'base')};

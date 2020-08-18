@@ -115,6 +115,7 @@ TextInput.defaultProps = {
   border: 'regular',
   borderPalette: 'slate',
   borderVariation: 'lighter-90',
+  autoCapitalize: 'none',
 };
 
 export default TextInput;

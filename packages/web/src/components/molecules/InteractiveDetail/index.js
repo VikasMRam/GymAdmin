@@ -4,7 +4,7 @@ import { string, number, shape, oneOf, oneOfType } from 'prop-types';
 
 import { size, palette } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import { Block, Link } from 'sly/web/components/atoms';
+import { Block, Link } from 'sly/common/components/atoms';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 
 const Label = pad(Block, 'regular');

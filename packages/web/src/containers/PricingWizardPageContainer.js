@@ -12,7 +12,7 @@ import withWS from 'sly/web/services/ws/withWS';
 import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/web/services/api/constants';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
-import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
 
 const eventCategory = 'PricingWizard';
 

@@ -7,15 +7,18 @@ import { prefetch } from 'sly/web/services/api';
 import agentPropType from 'sly/common/propTypes/agent';
 import communityPropType from 'sly/common/propTypes/community';
 import SlyEvent from 'sly/web/services/helpers/events';
+import { getIsActiveAdult, getIsSellerAgentCTA } from 'sly/web/services/helpers/community';
+import { shouldShowZillowProfileAd } from 'sly/web/services/helpers/adtiles';
+
 import pad from 'sly/web/components/helpers/pad';
 import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
-import { Link, Block } from 'sly/web/components/atoms';
+import { Link, Block } from 'sly/common/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
 import GetAssessmentBox from 'sly/web/components/organisms/GetAssessmentBox';
 import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
 import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';
-import GetCommunityPricingAndAvailability from 'sly/web/components/organisms/GetCommunityPricingAndAvailability';
-import CommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
+import SidebarCTAContainer from 'sly/web/containers/communityProfile/SidebarCTAContainer';
+import StickyFooterCTAContainer from 'sly/web/containers/communityProfile/StickyFooterCTAContainer';
 
 const PaddedBlock = pad(Block, 'regular');
 
@@ -55,6 +58,13 @@ export default class GetAssessmentBoxContainer extends Component {
     this.setState({
       modalOpened: !modalOpened,
     });
+    let action = modalOpened ? 'open-modal': 'close-modal';
+    const { layout } = this.props;
+    SlyEvent.getInstance().sendEvent({
+          category: 'assessmentWizard',
+          action,
+          label: layout,
+        });
   };
 
   // componentDidMount() {
@@ -66,6 +76,7 @@ export default class GetAssessmentBoxContainer extends Component {
   //     nonInteraction: true,
   //   });
   // }
+
 
   render() {
     const {
@@ -101,19 +112,10 @@ export default class GetAssessmentBoxContainer extends Component {
           />
         }
         {layout === 'sidebar' &&
-          <GetCommunityPricingAndAvailability
-            community={community}
-            completedAssessment={completedPricing}
-            {...buttonProps}
-          />
+          <SidebarCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing}/>
         }
         {layout === 'footer' &&
-          <CommunityStickyFooter
-            community={community}
-            locTrack="sticky-footer"
-            isAlreadyPricingRequested={completedPricing}
-            {...buttonProps}
-          />
+          <StickyFooterCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing}/>
         }
         {layout === 'pricing-table' &&
           <CommunityPricingTable

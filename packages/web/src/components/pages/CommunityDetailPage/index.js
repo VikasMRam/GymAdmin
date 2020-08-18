@@ -18,8 +18,7 @@ import {
 import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { getIsActiveAdult } from 'sly/web/services/helpers/community';
-import { Box, Button, Hr, Block, Heading } from 'sly/common/components/atoms';
-import { Paragraph, Link } from 'sly/web/components/atoms';
+import { Box, Button, Hr, Block, Heading, Paragraph, Link } from 'sly/common/components/atoms';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
 import {
@@ -592,36 +591,35 @@ export default class CommunityDetailPage extends Component {
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
-                {!isActiveAdult &&
                 <GetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}`}
                   community={community}
                   layout="footer"
-                />}
-                {isActiveAdult &&
-                <CommunityStickyFooter
-                  community={community}
-                  locTrack="sticky-footer"
-                  isActiveAdult={true}
                 />
-                }
+                {/*{isActiveAdult &&*/}
+                {/*<CommunityStickyFooter*/}
+                  {/*community={community}*/}
+                  {/*locTrack="sticky-footer"*/}
+                  {/*isActiveAdult={true}*/}
+                {/*/>*/}
+                {/*}*/}
               </Body>
               <Column>
                 <StickToTop>
-                  {!isActiveAdult &&
+
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
                     layout="sidebar"
-                  />}
+                  />
 
-                  {isActiveAdult &&
-                  <Box>
-                    <Heading level="title" size="subtitle">Is selling your home part of your senior living plan?</Heading>
-                    We can connect you with the top selling agents.
-                    <StyledAskAgentButton ackCTA community={community} type="aa-sidebar" ctaText={"Request Info"} />
-                  </Box>
-                  }
+                  {/*{isActiveAdult &&*/}
+                  {/*<Box>*/}
+                    {/*<Heading level="title" size="subtitle">Is selling your home part of your senior living plan?</Heading>*/}
+                    {/*We can connect you with the top selling agents.*/}
+                    {/*<StyledAskAgentButton ackCTA community={community} type="aa-sidebar" ctaText={"Request Info"} />*/}
+                  {/*</Box>*/}
+                  {/*}*/}
 
                 </StickToTop>
               </Column>
