@@ -29,7 +29,7 @@
     "test": "../../node_modules/.bin/jest --passWithNoTests",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
-    "lint": "../../node_modules/.bin/eslint src/*.js src/external src/controllers src/components/common src/components/helpers src/components/atoms src/components/molecules src/constants private webpack.config.js e2e"
+    "lint": "../../node_modules/.bin/eslint src/*.js src/external src/controllers src/containers/wizards src/components/common src/components/helpers src/components/atoms src/components/molecules src/components/wizards src/constants private webpack.config.js e2e"
   },
   "devDependencies": {
     "@loadable/babel-plugin": "5.12.0",
