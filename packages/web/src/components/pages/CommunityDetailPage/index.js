@@ -592,36 +592,35 @@ export default class CommunityDetailPage extends Component {
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
-                {!isActiveAdult &&
                 <GetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}`}
                   community={community}
                   layout="footer"
-                />}
-                {isActiveAdult &&
-                <CommunityStickyFooter
-                  community={community}
-                  locTrack="sticky-footer"
-                  isActiveAdult={true}
                 />
-                }
+                {/*{isActiveAdult &&*/}
+                {/*<CommunityStickyFooter*/}
+                  {/*community={community}*/}
+                  {/*locTrack="sticky-footer"*/}
+                  {/*isActiveAdult={true}*/}
+                {/*/>*/}
+                {/*}*/}
               </Body>
               <Column>
                 <StickToTop>
-                  {!isActiveAdult &&
+
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
                     layout="sidebar"
-                  />}
+                  />
 
-                  {isActiveAdult &&
-                  <Box>
-                    <Heading level="title" size="subtitle">Is selling your home part of your senior living plan?</Heading>
-                    We can connect you with the top selling agents.
-                    <StyledAskAgentButton ackCTA community={community} type="aa-sidebar" ctaText={"Request Info"} />
-                  </Box>
-                  }
+                  {/*{isActiveAdult &&*/}
+                  {/*<Box>*/}
+                    {/*<Heading level="title" size="subtitle">Is selling your home part of your senior living plan?</Heading>*/}
+                    {/*We can connect you with the top selling agents.*/}
+                    {/*<StyledAskAgentButton ackCTA community={community} type="aa-sidebar" ctaText={"Request Info"} />*/}
+                  {/*</Box>*/}
+                  {/*}*/}
 
                 </StickToTop>
               </Column>
