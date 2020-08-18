@@ -37,8 +37,8 @@ const ResidentName = ({
           'Last question, what is the resident\'s name?'}
       </PaddedHeading>
       <form onSubmit={handleSubmit}>
-        {Array(numberOfPeople).fill().map((n, i) => (
-          <FieldsWrapper key={n}>
+        {Array(numberOfPeople).fill().map((_, i) => (
+          <FieldsWrapper key={Symbol(i)}>
             <PaddedField
               name={`firstName${numberOfPeople > 1 ? i + 1 : ''}`}
               type="text"
