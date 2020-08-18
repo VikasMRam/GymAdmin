@@ -49,8 +49,9 @@ const ADL = ({
 }) => {
   let opts = ADL_OPTIONS;
   if (whoNeedsHelp && whoNeedsHelp.match(/myself/)) {
-    opts = opts.filter((e) => !e.value.match(/memory-care/));
+    opts = opts.filter(e => !e.value.match(/memory-care/));
   }
+
   return (
     <div>
       <Wrapper>
@@ -71,7 +72,7 @@ const ADL = ({
               component={ReduxField}
               onChange={(event, newValue, previousValue, name) => {
                 // we know that last element is the newly added value
-                let newlyAddedValue = newValue[newValue.length - 1];
+                const newlyAddedValue = newValue[newValue.length - 1];
                 const valuesThatCanExist = COEXISTING_ADL_OPTIONS[newlyAddedValue];
                 if (valuesThatCanExist) {
                   newValue = newValue.filter(v => valuesThatCanExist.includes(v));
@@ -91,7 +92,7 @@ const ADL = ({
       </Wrapper>
     </div>
   );
-}
+};
 
 ADL.propTypes = {
   handleSubmit: func.isRequired,

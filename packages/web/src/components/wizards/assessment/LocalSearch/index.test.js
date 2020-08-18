@@ -63,6 +63,5 @@ describe('Wizards|assessment - Steps|LocalSearch', () => {
     wrapper.find('Footer').dive().find('StyledIconButton')
       .simulate('click');
     expect(onBackClick).toHaveBeenCalled();
-
   });
 });

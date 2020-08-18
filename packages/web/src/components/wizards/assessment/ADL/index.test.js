@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { ADL } from 'sly/web/components/wizards/assessment';
 
 const handleSubmit = jest.fn();
-const change= jest.fn();
+const change = jest.fn();
 const whoNeedsHelp = 'parents';
 const defaultProps = {
   handleSubmit,

@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { Age } from 'sly/web/components/wizards/assessment';
 
 const handleSubmit = jest.fn();
-const change= jest.fn();
+const change = jest.fn();
 const whoNeedsHelp = 'parents';
 const defaultProps = {
   handleSubmit,
@@ -13,9 +13,9 @@ const defaultProps = {
 };
 const wrap = (props = {}) => shallow(<Age {...defaultProps} {...props} />);
 
-describe('Wizards|assessment - Steps|Age', () => {
+describe.skip('Wizards|assessment - Steps|Age', () => {
   /** Fix after options are good */
-  /*
+
   it('does not render children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();
@@ -89,5 +89,4 @@ describe('Wizards|assessment - Steps|Age', () => {
       .simulate('click');
     expect(onBackClick).toHaveBeenCalled();
   });
-  */
 });

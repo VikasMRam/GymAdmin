@@ -83,6 +83,7 @@ End.propTypes = {
   city: string,
   agent: agentPropType,
   hasNoAgent: bool,
+  adTile: string,
 };
 
 End.defaultProps = {
