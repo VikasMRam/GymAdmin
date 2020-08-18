@@ -72,7 +72,7 @@ Age.propTypes = {
   invalid: bool,
   submitting: bool,
   hasTip: bool,
-  whoNeedsHelp: string,
+  whoNeedsHelp: string.isRequired,
 };
 
 Age.defaultProps = {
