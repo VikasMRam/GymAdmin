@@ -6,7 +6,7 @@ import CookieManager from '@react-native-community/cookies';
 
 import Wizard from './Wizard';
 
-import { apiUrl } from 'sly/common/config';
+import { apiUrl } from 'sly/mobile/config';
 import { authenticateCancel, authenticateSuccess } from 'sly/web/store/authenticated/actions';
 import { withAuth } from 'sly/web/services/api';
 import { Box, Block } from 'sly/common/components/atoms';

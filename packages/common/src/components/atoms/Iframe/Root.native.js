@@ -4,7 +4,7 @@ import { string } from 'prop-types';
 import { WebView } from 'react-native-webview';
 import CookieManager from '@react-native-community/cookies';
 
-import { apiUrl, host, isDev } from 'sly/common/config';
+import { apiUrl, host, isDev } from 'sly/mobile/config';
 
 export default class Root extends Component {
   static propTypes = {
