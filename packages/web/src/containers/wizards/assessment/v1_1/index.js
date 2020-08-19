@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { func, bool, object, string } from 'prop-types';
-import * as immutable from 'object-path-immutable';
 
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { withRedirectTo } from 'sly/common/services/redirectTo';
@@ -9,7 +8,6 @@ import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wiza
 import withWS from 'sly/web/services/ws/withWS';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import { getWizardEndAd } from 'sly/web/services/helpers/adtiles';
-import { medicareToBool } from 'sly/web/services/helpers/userDetails';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
 import {
   ASSESSMENT_WIZARD_MATCHED_AGENT,
