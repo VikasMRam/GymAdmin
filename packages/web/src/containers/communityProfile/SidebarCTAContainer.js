@@ -21,44 +21,44 @@ export default class SidebarCTAContainer extends Component {
   render() {
     const { community = {}, buttonProps, completedCTA } = this.props;
 
+    // eslint-disable-next-line no-empty
     if (!isBrowser) {
     }
-    // console.log('SQ func',shouldShowZillowProfileAd);
     const showZillowProfileAd = shouldShowZillowProfileAd(community);
     const isSellerAgentCtaCommunity = getIsSellerAgentCTA(community);
 
     // let requestSent = false;
-    // if (ackCTA && community) {
-    //   //check if cta was already made
-    //   if (isCtaRecorded(type, community.id)) {
-    //     ctaText = "Request Sent";
-    //     requestSent = true;
-    //   }
-    // }
     if (showZillowProfileAd) {
-      let buttonProps = {
+      const buttonProps = {
         to: 'https://www.zillow.com/offers/?t=seniorly-0220',
         buttonTo: 'https://www.zillow.com/offers/?t=seniorly-0220',
       };
-      const title = "Selling a home to pay the cost of senior living?";
-      const subtitle = "Our partner Zillow will make you an instant offer.";
-      return ( <GetSellerAgentInfo {...buttonProps}
-                                   community={community}
-                                   title={title} subtitle={subtitle} isZillowAd={true}
-              />) ;
-    } else if (isSellerAgentCtaCommunity) {
-      const title = "Is selling your home part of your senior living plan?";
-      const subtitle = "We can connect you to the top seller agents.";
-      return (<GetSellerAgentInfo {...buttonProps}
-                                  community={community}
-                                  title={title} subtitle={subtitle} /> );
-    } else {
-      return (<GetCommunityPricingAndAvailability
-        community={community}
-        completedAssessment={completedCTA}
+      const title = 'Selling a home to pay the cost of senior living?';
+      const subtitle = 'Our partner Zillow will make you an instant offer.';
+      return (<GetSellerAgentInfo
         {...buttonProps}
+        community={community}
+        title={title}
+        subtitle={subtitle}
+        completedCTA={completedCTA}
+        isZillowAd={showZillowProfileAd}
+      />);
+    } else if (isSellerAgentCtaCommunity) {
+      const title = 'Is selling your home part of your senior living plan?';
+      const subtitle = 'We can connect you to the top seller agents.';
+      return (<GetSellerAgentInfo
+        {...buttonProps}
+        community={community}
+        title={title}
+        subtitle={subtitle}
+        completedCTA={completedCTA}
+        isZillowAd={showZillowProfileAd}
       />);
     }
-
+    return (<GetCommunityPricingAndAvailability
+      community={community}
+      completedAssessment={completedCTA}
+      {...buttonProps}
+    />);
   }
 }

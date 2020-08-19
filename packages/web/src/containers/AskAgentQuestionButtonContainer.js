@@ -25,9 +25,9 @@ export default class AskAgentQuestionButtonContainer extends Component {
     }
     let requestSent = false;
     if (ackCTA && community) {
-      //check if cta was already made
+      // check if cta was already made
       if (isCtaRecorded(type, community.id)) {
-        ctaText = "Request Sent";
+        ctaText = 'Request Sent';
         requestSent = true;
       }
     }

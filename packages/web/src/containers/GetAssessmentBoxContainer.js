@@ -9,7 +9,6 @@ import communityPropType from 'sly/common/propTypes/community';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { getIsActiveAdult, getIsSellerAgentCTA } from 'sly/web/services/helpers/community';
 import { shouldShowZillowProfileAd } from 'sly/web/services/helpers/adtiles';
-
 import pad from 'sly/web/components/helpers/pad';
 import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 import { Link, Block } from 'sly/common/components/atoms';
@@ -58,13 +57,13 @@ export default class GetAssessmentBoxContainer extends Component {
     this.setState({
       modalOpened: !modalOpened,
     });
-    let action = modalOpened ? 'open-modal': 'close-modal';
+    const action = modalOpened ? 'open-modal' : 'close-modal';
     const { layout } = this.props;
     SlyEvent.getInstance().sendEvent({
-          category: 'assessmentWizard',
-          action,
-          label: layout,
-        });
+      category: 'assessmentWizard',
+      action,
+      label: layout,
+    });
   };
 
   // componentDidMount() {
@@ -112,10 +111,10 @@ export default class GetAssessmentBoxContainer extends Component {
           />
         }
         {layout === 'sidebar' &&
-          <SidebarCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing}/>
+          <SidebarCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing} />
         }
         {layout === 'footer' &&
-          <StickyFooterCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing}/>
+          <StickyFooterCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing} />
         }
         {layout === 'pricing-table' &&
           <CommunityPricingTable

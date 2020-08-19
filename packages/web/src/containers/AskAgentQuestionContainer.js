@@ -76,10 +76,15 @@ export default class AskAgentQuestionContainer extends Component {
       // notifyInfo('Request sent successfully');
       toggleAskAgentQuestionModal();
       if (community) {
-        recordEntityCta(type,community.id);
+        recordEntityCta(type, community.id);
       }
-      showModal(<Thankyou heading={"Success!"} subheading={'Your request has been sent and we will connect with' +
-      ' you shortly.'} onClose={hideModal} doneText='Finish'/>);
+      showModal(<Thankyou
+        heading="Success!"
+        subheading={'Your request has been sent and we will connect with' +
+      ' you shortly.'}
+        onClose={hideModal}
+        doneText="Finish"
+      />);
     };
 
     if (type === 'how-it-works-banner-notification' || type === 'side-column-get-help-now') {
@@ -104,11 +109,11 @@ export default class AskAgentQuestionContainer extends Component {
       };
       showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
     } else if (type === 'aa-sidebar' || type === 'aa-footer') {
-      let initialValues = {};
+      const initialValues = {};
 
       const modalComponentProps = {
-        heading: "We understand selling your home is a big deal.",
-        description: "Tell us how to connect with you and our team will reach out to share how we work with real estate agents.",
+        heading: 'We understand selling your home is a big deal.',
+        description: 'Tell us how to connect with you and our team will reach out to share how we work with real estate agents.',
         initialValues,
         entityId: community.id,
         category: 'community',
@@ -117,9 +122,7 @@ export default class AskAgentQuestionContainer extends Component {
         type,
       };
       showModal(<AskQuestionToAgentFormContainer actionType={AA_CONSULTATION_REQUESTED} {...modalComponentProps} />, onClose);
-    }
-
-    else {
+    } else {
       const { heading, description, placeholder, question } = generateAskAgentQuestionContents(
         community.name,
         community.address.city,

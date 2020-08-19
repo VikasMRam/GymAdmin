@@ -125,7 +125,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
   const { city, state, toc }  = searchParams;
   const locLabel = getLocationLabel(searchParams);
   const tocLabel = getTocLabel(searchParams.toc);
-  const showZillowSearchAd = shouldShowZillowSearchAd(toc,city);
+  const showZillowSearchAd = shouldShowZillowSearchAd(toc);
 
   // pagination pathname
   let params = {};
@@ -187,7 +187,8 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
             </>
           }
           {
-            showZillowSearchAd && <PaddedSearchResultsAdTileContainer type="getOffer" locationLabel={locLabel} tocLabel={tocLabel} />
+            showZillowSearchAd && ((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
+            <PaddedSearchResultsAdTileContainer type="getOffer" locationLabel={locLabel} tocLabel={tocLabel} />
           }
         </Fragment>
       ))}
