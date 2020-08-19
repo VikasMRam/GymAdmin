@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import CurrentLiving from '.';
 
 const handleSubmit = jest.fn();
-const whoNeedsHelp = 'mom';
+const whoNeedsHelp = 'parents';
 const defaultProps = {
   handleSubmit,
   whoNeedsHelp,
