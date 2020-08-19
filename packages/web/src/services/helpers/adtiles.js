@@ -12,17 +12,20 @@ export const shouldShowZillowAd = (toc, city) => {
   return validTocs.indexOf(toc) > -1 && zillowCities.indexOf(city) > -1;
 };
 
-export const shouldShowZillowSearchAd = (toc, city) => {
-  return shouldShowZillowAd(toc, city);
+export const shouldShowZillowSearchAd = (toc) => {
+  const validTocs = tocs.filter(e =>
+    e.value.match(/active-adult|independent-living|continuing-care-retirement-community/)).map(e => e.value);
+  return validTocs.indexOf(toc) > -1;
 };
 
-export const shouldShowZillowProfileAd = (community) => {
+export const  shouldShowZillowProfileAd = (community) => {
   // return true;
   if (!community || !community.propInfo || !community.propInfo.typeCare) {
     return false;
   }
   const { propInfo: { typeCare: careList }, address: { city: cityLabel } } = community;
-  const toc = tocPaths(careList);
+  const { path: tocSegment = '' } = tocPaths(careList);
+  const toc = tocSegment.substr(1);
   const city = urlize(cityLabel);
   return shouldShowZillowAd(toc, city);
 };
