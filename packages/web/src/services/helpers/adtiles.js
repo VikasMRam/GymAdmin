@@ -13,7 +13,6 @@ export const shouldShowZillowAd = (toc, city) => {
 };
 
 export const shouldShowZillowSearchAd = (toc) => {
-  console.log('search ad: seeing passed in zillow toc', toc);
   const validTocs = tocs.filter(e =>
     e.value.match(/active-adult|independent-living|continuing-care-retirement-community/)).map(e => e.value);
   return validTocs.indexOf(toc) > -1;
@@ -25,7 +24,6 @@ export const  shouldShowZillowProfileAd = (community) => {
     return false;
   }
   const { propInfo: { typeCare: careList }, address: { city: cityLabel } } = community;
-  console.log(' profile ad: seeing passed in comm', community);
   const { path: tocSegment = '' } = tocPaths(careList);
   const toc = tocSegment.substr(1);
   const city = urlize(cityLabel);
