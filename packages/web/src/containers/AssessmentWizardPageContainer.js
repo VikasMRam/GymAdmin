@@ -28,7 +28,6 @@ export default class AssessmentWizardPageContainer extends Component {
     let hasFinished = true;
     const qp = parseURLQueryParams(search);
     const skipIntro = qp.skipIntro && qp.skipIntro !== 'false' ? !!qp.skipIntro : false;
-    console.log('wizard: version', qp.version);
     if (status) {
       ({ hasFinished } = status.community);
     }
