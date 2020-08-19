@@ -56,7 +56,7 @@ describe('Wizards|assessment - Steps|Medicaid', () => {
       whoNeedsHelp: 'friend',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Does your friend qualify for Medicaid?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Does your friend(s) qualify for Medicaid?')).toBeTruthy();
   });
 
   it('handles submit', () => {

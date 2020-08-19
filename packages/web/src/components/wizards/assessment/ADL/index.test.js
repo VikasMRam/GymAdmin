@@ -57,8 +57,7 @@ describe('Wizards|assessment - Steps|ADL', () => {
     const wrapper = wrap({
       whoNeedsHelp: 'myself',
     });
-
-    expect(wrapper.find('PaddedHeading').contains('Which activities below do you need help with?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Which activities do you need help with?')).toBeTruthy();
   });
 
   it('handles submit', () => {
