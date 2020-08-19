@@ -121,41 +121,6 @@ export default class AssessmentWizardV11 extends Component {
     return null;
   };
 
-  updateUuidAux = (data) => {
-    const {
-      status,
-      updateUuidAux,
-    } = this.props;
-
-    const rawUuidAux = status.uuidAux.result;
-    const uuidAux = immutable.wrap(rawUuidAux);
-
-    if (data.roomType) {
-      uuidAux.set('attributes.uuidInfo.housingInfo.roomPreference', data.roomType);
-    }
-
-    if (data.moveTimeline) {
-      uuidAux.set('attributes.uuidInfo.housingInfo.moveTimeline', data.moveTimeline);
-    }
-
-    if (data.careType) {
-      uuidAux.set('attributes.uuidInfo.careInfo.adls', data.careType);
-    }
-
-    if (data.interest) {
-      uuidAux.set('attributes.uuidInfo.residentInfo.interest', data.interest);
-    }
-
-    if (data.medicaidCoverage) {
-      uuidAux.set('attributes.uuidInfo.financialInfo.medicaid', medicareToBool(data.medicaidCoverage));
-    }
-    if (data.budget) {
-      uuidAux.set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', data.budget);
-    }
-
-    return updateUuidAux({ id: rawUuidAux.id }, uuidAux.value());
-  };
-
   onMessage = ({ payload: { agentSlug } }) => {
     const { getAgent, community } = this.props;
     clearTimeout(this.agentMatchTimeout);
@@ -309,7 +274,6 @@ export default class AssessmentWizardV11 extends Component {
                 hasTip={hasTip}
                 onSkipClick={next}
                 onBackClick={previous}
-                updateUuidAux={this.updateUuidAux}
               />
               <WizardStep
                 component={Auth}
@@ -319,7 +283,6 @@ export default class AssessmentWizardV11 extends Component {
                   : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
                 onAuthSuccess={next}
                 community={community}
-                updateUuidAux={this.updateUuidAux}
               />
               <WizardStep
                 component={ResidentName}

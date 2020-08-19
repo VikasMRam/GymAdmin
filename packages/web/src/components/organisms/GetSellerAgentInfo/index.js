@@ -22,7 +22,7 @@ const StyledResponsiveImage = styled(ResponsiveImage)`
 `;
 
 const MarginedDiv = styled.div`
-  margin-bottom: ${size('spacing.regular')};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const onClickEvent = id => ({ action: 'click-seller-agent', category: 'SidebarCTA', label: id });

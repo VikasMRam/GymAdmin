@@ -14,16 +14,17 @@ import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { textAlign } from 'sly/web/components/helpers/text';
 
-const StyledHeading = textAlign(pad(Heading));
+const StyledHeading = textAlign(pad(Heading, 'large'), 'left');
 
 const CenteredTosAndPrivacy = textAlign(TosAndPrivacy);
 
 const StyledDesc = styled.div`
 margin-top: ${size('spacing.regular')};
-margin-bottom: ${size('spacing.regular')};
+margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const StyledButton = styled(fullWidth(Button))`
+  margin-top: ${size('spacing.regular')};
   margin-bottom: ${ifProp('hasMarginBottom', size('spacing.large'), 0)};
 `;
 
@@ -81,7 +82,7 @@ export default class TalkToAgentForm extends Component {
       agentFirstName, messagePrompt, showMessageFieldFirst, hideMessage, image, buttonKind, messagePlaceholder,
     } = this.props;
     const messageLabel = (messagePrompt === '') ? `What can ${agentFirstName} help you with?` : messagePrompt;
-    const showDesc = description !== '' ;
+    const showDesc = description !== '';
     const showTos = !user;
     const messageField = (
       <Field

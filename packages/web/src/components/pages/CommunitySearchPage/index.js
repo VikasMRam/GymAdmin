@@ -136,6 +136,7 @@ const CommunitySearchPage = ({
       })}
       <PageViewActionContainer actionType={SEARCH_PAGE_VIEWED} actionInfo={{ city: searchParams.city, region: searchParams.state, careType: searchParams.toc }} />
       <CommunitySearchPageTemplate
+        searchParams={searchParams}
         column={(
           <>
             <FilterColumnWrapper>

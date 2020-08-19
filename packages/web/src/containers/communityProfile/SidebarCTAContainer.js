@@ -75,7 +75,7 @@ export default class SidebarCTAContainer extends Component {
       />);
     } else if (isSellerAgentCtaCommunity) {
       const title = 'Is selling your home part of your senior living plan?';
-      const subtitle = 'We can connect you to the top seller agents.';
+      const subtitle = 'We can connect you to the top selling agents.';
       return (<GetSellerAgentInfo
         {...buttonProps}
         community={community}
