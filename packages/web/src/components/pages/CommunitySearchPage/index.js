@@ -9,6 +9,8 @@ import { titleize } from 'sly/web/services/helpers/strings';
 import { getTocSeoLabel } from 'sly/web/services/helpers/search';
 import { getHelmetForSearchPage } from 'sly/web/services/helpers/html_headers';
 import { getBreadCrumbsForLocation, getStateAbbr } from 'sly/web/services/helpers/url';
+import PageViewActionContainer from 'sly/web/containers/PageViewActionContainer';
+import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
 import CommunitySearchPageTemplate from 'sly/web/components/templates/CommunitySearchPageTemplate';
 import { Heading, Button, Hr, Box } from 'sly/common/components/atoms';
 import { Image } from 'sly/web/components/atoms';
@@ -19,6 +21,7 @@ import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import pad from 'sly/web/components/helpers/pad';
 import ResponsiveSidebar from 'sly/web/components/molecules/ResponsiveSidebar';
+import { PROFILE_VIEWED, SEARCH_PAGE_VIEWED } from 'sly/web/services/api/constants';
 
 const SearchMap = loadable(() => import(/* webpackChunkName: "chunkSearchMap" */'sly/web/components/organisms/SearchMap'));
 
@@ -131,15 +134,16 @@ const CommunitySearchPage = ({
       {getHelmetForSearchPage({
         ...searchParams, url: location, communityList, listSize, geoGuide,
       })}
+      <PageViewActionContainer actionType={SEARCH_PAGE_VIEWED} actionInfo={{ city: searchParams.city, region: searchParams.state, careType: searchParams.toc }} />
       <CommunitySearchPageTemplate
         column={(
           <>
-          <FilterColumnWrapper>
-            <>
-              {isMapView ? (
-                <IconButton icon="list" to={listViewUrl} iconPalette="primary" ghost>
-                  View List
-                </IconButton>
+            <FilterColumnWrapper>
+              <>
+                {isMapView ? (
+                  <IconButton icon="list" to={listViewUrl} iconPalette="primary" ghost>
+                    View List
+                  </IconButton>
               ) : (
                 <Image lazy={false} src={assetPath('images/map-placeholder.png')} aspectRatio="16:9">
                   <IconButton icon="map" to={mapViewUrl} iconPalette="primary" ghost>
@@ -147,17 +151,17 @@ const CommunitySearchPage = ({
                   </IconButton>
                 </Image>
               )}
-              <StyledHr />
-            </>
-            <ResponsiveSidebar isOpen={areFiltersOpen} onCloseRequested={toggleFiltersOpen}>
-              <CommunityFilterList
-                searchParams={searchParams}
-                geoGuideList={geoGuide && geoGuide.cityTOCGuides}
-              />
-              <ApplyFilterButton kind="jumbo" onClick={toggleFiltersOpen}>Apply Filters</ApplyFilterButton>
-            </ResponsiveSidebar>
+                <StyledHr />
+              </>
+              <ResponsiveSidebar isOpen={areFiltersOpen} onCloseRequested={toggleFiltersOpen}>
+                <CommunityFilterList
+                  searchParams={searchParams}
+                  geoGuideList={geoGuide && geoGuide.cityTOCGuides}
+                />
+                <ApplyFilterButton kind="jumbo" onClick={toggleFiltersOpen}>Apply Filters</ApplyFilterButton>
+              </ResponsiveSidebar>
 
-          </FilterColumnWrapper>
+            </FilterColumnWrapper>
           </>
         )}
       >
