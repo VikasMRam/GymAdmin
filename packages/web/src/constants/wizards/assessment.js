@@ -1,27 +1,29 @@
 export const WHO_PERSON_OPTIONS = [
-  // { label: 'Parent(s)', value: 'parents' },
-  // { label: 'Myself', value: 'myself' },
-  // { label: 'Spouse', value: 'spouse' },
-  // { label: 'Myself and spouse', value: 'myself-and-spouse' },
-  // { label: 'Other Relative(s)', value: 'other-relatives' },
-  // { label: 'Friend(s)', value: 'friend' },
-  // { label: 'Other', value: 'other' },
-  // v1 OPTIONS BELOW:
-  { label: 'Mom', value: 'mom' },
-  { label: 'Dad', value: 'dad' },
-  { label: 'Wife', value: 'wife' },
-  { label: 'Husband', value: 'husband' },
-  { label: 'Grandmother', value: 'grandmother' },
-  { label: 'Grandfather', value: 'grandfather' },
-  { label: 'Mother-in-law', value: 'mother-in-law' },
-  { label: 'Father-in-law', value: 'father-in-law' },
-  { label: 'Aunt', value: 'aunt' },
-  { label: 'Uncle', value: 'uncle' },
-  { label: 'Brother', value: 'brother' },
-  { label: 'Sister', value: 'sister' },
-  { label: 'Client', value: 'client' },
-  { label: 'Patient', value: 'patient' },
+  // v2 OPTIONS BELOW:
+  { label: 'Parent(s)', value: 'parents' },
   { label: 'Myself', value: 'myself' },
+  { label: 'Spouse', value: 'spouse' },
+  { label: 'Myself and spouse', value: 'myself-and-spouse' },
+  { label: 'Other Relative(s)', value: 'other-relatives' },
+  { label: 'Friend(s)', value: 'friend' },
+  { label: 'Other', value: 'other' },
+  // v1 OPTIONS BELOW:
+  // { label: 'Parent(s)', value: 'parents' },
+  // { label: 'Mom', value: 'mom' },
+  // { label: 'Dad', value: 'dad' },
+  // { label: 'Wife', value: 'wife' },
+  // { label: 'Husband', value: 'husband' },
+  // { label: 'Grandmother', value: 'grandmother' },
+  // { label: 'Grandfather', value: 'grandfather' },
+  // { label: 'Mother-in-law', value: 'mother-in-law' },
+  // { label: 'Father-in-law', value: 'father-in-law' },
+  // { label: 'Aunt', value: 'aunt' },
+  // { label: 'Uncle', value: 'uncle' },
+  // { label: 'Brother', value: 'brother' },
+  // { label: 'Sister', value: 'sister' },
+  // { label: 'Client', value: 'client' },
+  // { label: 'Patient', value: 'patient' },
+  // { label: 'Myself', value: 'myself' },
 ];
 
 export const AGE_OPTIONS = [
@@ -70,7 +72,7 @@ export const FEELING_OPTIONS = [
 ];
 
 export const ADL_OPTIONS = [
-  // { label: 'Memory Care', value: 'memory-care' },
+  { label: 'Memory Care', value: 'memory-care' },
   { label: 'Bathing', value: 'bathing' },
   { label: 'Dressing', value: 'dressing' },
   { label: 'Transferring', value: 'transferring' },
@@ -160,15 +162,16 @@ export const DEMENTIA_FORGETFUL_DEFAULT_OPTIONS = {
 };
 
 export const TIMING_OPTIONS = [
-  { label: 'Just starting to research communities', value: 'starting' },
-  { label: 'Working with a senior living advisor', value: 'working' },
-  { label: 'Inquired directly to communities', value: 'inquired' },
-  { label: 'Toured one or more communities', value: 'toured' },
-  { label: 'Already chosen a community and am just comparing', value: 'already-chosen' },
   // v2 options below
-  // { label: 'Need to find a community as soon as possible', value: 'asap' },
-  // { label: 'Just starting to research communities', value: 'researching' },
-  // { label: 'I\'m in the process of planning for the future', value: 'planning' },
+  // { label: 'Just starting to research communities', value: 'starting' },
+  // { label: 'Working with a senior living advisor', value: 'working' },
+  // { label: 'Inquired directly to communities', value: 'inquired' },
+  // { label: 'Toured one or more communities', value: 'toured' },
+  // { label: 'Already chosen a community and am just comparing', value: 'already-chosen' },
+  // v2 options below
+  { label: 'Need to find a community as soon as possible', value: 'asap' },
+  { label: 'Just starting to research communities', value: 'researching' },
+  { label: 'I\'m in the process of planning for the future', value: 'planning' },
 ];
 
 export const WORKING_WITH_OPTIONS = [

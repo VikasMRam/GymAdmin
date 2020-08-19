@@ -1,5 +1,5 @@
 import React from 'react';
-import { any } from 'prop-types';
+import { any, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
@@ -42,11 +42,12 @@ const ColumnWrapper = styled.aside`
 const CommunitySearchPageTemplate = ({
   children,
   column,
+  searchParams,
 }) => (
   <>
     <TemplateHeader>
       <HeaderContainer />
-      <BannerNotificationAdContainer type="covid-19" />
+      <BannerNotificationAdContainer type="wizardSearch" {...searchParams} />
     </TemplateHeader>
     <TemplateContent>
       <TwoColumnWrapper>
@@ -61,6 +62,7 @@ const CommunitySearchPageTemplate = ({
 CommunitySearchPageTemplate.propTypes = {
   children: any.isRequired,
   column: any.isRequired,
+  searchParams: object,
 };
 
 export default CommunitySearchPageTemplate;

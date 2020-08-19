@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { object, bool } from 'prop-types';
+import { object, bool, func } from 'prop-types';
+import { withRouter } from 'react-router';
 
 import communityPropType from 'sly/common/propTypes/community';
 import { isBrowser } from 'sly/web/config';
@@ -9,6 +10,12 @@ import { getIsActiveAdult, getIsSellerAgentCTA } from 'sly/web/services/helpers/
 import { shouldShowZillowProfileAd } from 'sly/web/services/helpers/adtiles';
 import GetCommunityPricingAndAvailability from 'sly/web/components/organisms/GetCommunityPricingAndAvailability';
 import GetSellerAgentInfo from 'sly/web/components/organisms/GetSellerAgentInfo';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { query } from 'sly/web/services/api';
+import { EXTERNAL_LINK_CLICK } from 'sly/web/services/api/constants';
+
+@withRouter
+@query('createAction', 'createUuidAction')
 
 export default class SidebarCTAContainer extends Component {
   static typeHydrationId = 'SidebarCTAContainer';
@@ -16,8 +23,30 @@ export default class SidebarCTAContainer extends Component {
     community: communityPropType,
     buttonProps: object,
     completedCTA: bool,
+    createAction: func,
   };
 
+  handleZillowClick = () => {
+    const { createAction, community = {}, location: { pathname } } = this.props;
+    const action = 'click';
+    SlyEvent.getInstance().sendEvent({
+      category: 'sidebar-ZillowAd',
+      action,
+      label: community.id,
+    });
+    return createAction({
+      type: 'UUIDAction',
+      attributes: {
+        actionType: EXTERNAL_LINK_CLICK,
+        actionPage: pathname,
+        actionInfo: {
+          target: 'https://www.zillow.com/offers/?t=seniorly-0220',
+          source: 'sidebarCTA',
+          slug: community.id,
+        },
+      },
+    });
+  };
   render() {
     const { community = {}, buttonProps, completedCTA } = this.props;
 
@@ -32,6 +61,7 @@ export default class SidebarCTAContainer extends Component {
       const buttonProps = {
         to: 'https://www.zillow.com/offers/?t=seniorly-0220',
         buttonTo: 'https://www.zillow.com/offers/?t=seniorly-0220',
+        onClick: this.handleZillowClick,
       };
       const title = 'Selling a home to pay the cost of senior living?';
       const subtitle = 'Our partner Zillow will make you an instant offer.';
@@ -45,7 +75,7 @@ export default class SidebarCTAContainer extends Component {
       />);
     } else if (isSellerAgentCtaCommunity) {
       const title = 'Is selling your home part of your senior living plan?';
-      const subtitle = 'We can connect you to the top seller agents.';
+      const subtitle = 'We can connect you to the top selling agents.';
       return (<GetSellerAgentInfo
         {...buttonProps}
         community={community}

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { func, oneOf, string } from 'prop-types';
 import styled from 'styled-components';
+import { withRouter } from 'react-router';
 
 import { size } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
+import { query } from 'sly/web/services/api';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
+import { CONSULTATION_REQUESTED, EXTERNAL_LINK_CLICK, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
 import { hcaAdEnabled } from 'sly/web/services/helpers/tileAds';
 import withNotification from 'sly/web/controllers/withNotification';
 import AdTile from 'sly/web/components/organisms/AdTile';
@@ -14,6 +16,7 @@ import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/compo
 import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
 import ExperimentalAdTileContainer from 'sly/web/containers/ExperimentalAdTileContainer';
 
+
 const StyledResponsiveImage = styled(ResponsiveImage)`
   vertical-align: middle;
   margin-left: ${size('spacing.regular')};
@@ -21,11 +24,13 @@ const StyledResponsiveImage = styled(ResponsiveImage)`
 `;
 
 @withNotification
+@withRouter
+@query('createAction', 'createUuidAction')
 
 export default class SearchResultsAdTileContainer extends Component {
   static propTypes = {
     notifyInfo: func.isRequired,
-    type: oneOf(['askAgent', 'getOffer','homeCare']).isRequired,
+    type: oneOf(['askAgent', 'getOffer', 'homeCare']).isRequired,
     city: string,
     locationLabel: string,
     tocLabel: string,
@@ -77,9 +82,25 @@ export default class SearchResultsAdTileContainer extends Component {
   };
 
   handleGetInstantOfferClick = () => {
+    const { createAction, locationLabel, location: { pathname } } = this.props;
+
     SlyEvent.getInstance().sendEvent({
-      action: 'click-get-instant-offer-button',
+      action: 'click-ZillowAd',
       category: 'SearchResultsAdTile',
+      label: locationLabel,
+    });
+
+    return createAction({
+      type: 'UUIDAction',
+      attributes: {
+        actionType: EXTERNAL_LINK_CLICK,
+        actionPage: pathname,
+        actionInfo: {
+          target: 'https://www.zillow.com/offers/?t=seniorly-0220',
+          source: 'searchResults',
+          slug: locationLabel,
+        },
+      },
     });
   };
 
@@ -103,12 +124,12 @@ export default class SearchResultsAdTileContainer extends Component {
   render() {
     const { type, locationLabel } = this.props;
     const { isModalOpen, modalHeading, modalMessagePrompt, modalAction, modalMessagePlaceholder } = this.state;
-    const isHCA = hcaAdEnabled({ cityState:locationLabel });
+    const isHCA = hcaAdEnabled({ cityState: locationLabel });
     const hcaAdTitle = `Home Care Assistance in ${locationLabel}`;
     return (
       <>
         {type === 'askAgent' &&
-          <ExperimentalAdTileContainer {...this.props} handleClick={this.handleAskExpertQuestionClick}/>
+          <ExperimentalAdTileContainer {...this.props} handleClick={this.handleAskExpertQuestionClick} />
         }
         {type === 'getOffer' &&
           <AdTile
@@ -134,7 +155,7 @@ export default class SearchResultsAdTileContainer extends Component {
             image={assetPath('images/homecare-2.png')}
             buttonProps={{ onClick: this.handleUseHomecareClick }}
             showSecondary
-            linkProps={{href:"tel:+18558668719"}}
+            linkProps={{ href: 'tel:+18558668719' }}
             linkText="(855) 866-8719"
             {...this.props}
           >

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { func, bool, object, string } from 'prop-types';
-import * as immutable from 'object-path-immutable';
 
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { withRedirectTo } from 'sly/common/services/redirectTo';
@@ -9,7 +8,6 @@ import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wiza
 import withWS from 'sly/web/services/ws/withWS';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import { getWizardEndAd } from 'sly/web/services/helpers/adtiles';
-import { medicareToBool } from 'sly/web/services/helpers/userDetails';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
 import {
   ASSESSMENT_WIZARD_MATCHED_AGENT,
@@ -119,41 +117,6 @@ export default class AssessmentWizardV11 extends Component {
     }
 
     return null;
-  };
-
-  updateUuidAux = (data) => {
-    const {
-      status,
-      updateUuidAux,
-    } = this.props;
-
-    const rawUuidAux = status.uuidAux.result;
-    const uuidAux = immutable.wrap(rawUuidAux);
-
-    if (data.roomType) {
-      uuidAux.set('attributes.uuidInfo.housingInfo.roomPreference', data.roomType);
-    }
-
-    if (data.moveTimeline) {
-      uuidAux.set('attributes.uuidInfo.housingInfo.moveTimeline', data.moveTimeline);
-    }
-
-    if (data.careType) {
-      uuidAux.set('attributes.uuidInfo.careInfo.adls', data.careType);
-    }
-
-    if (data.interest) {
-      uuidAux.set('attributes.uuidInfo.residentInfo.interest', data.interest);
-    }
-
-    if (data.medicaidCoverage) {
-      uuidAux.set('attributes.uuidInfo.financialInfo.medicaid', medicareToBool(data.medicaidCoverage));
-    }
-    if (data.budget) {
-      uuidAux.set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', data.budget);
-    }
-
-    return updateUuidAux({ id: rawUuidAux.id }, uuidAux.value());
   };
 
   onMessage = ({ payload: { agentSlug } }) => {
@@ -309,7 +272,6 @@ export default class AssessmentWizardV11 extends Component {
                 hasTip={hasTip}
                 onSkipClick={next}
                 onBackClick={previous}
-                updateUuidAux={this.updateUuidAux}
               />
               <WizardStep
                 component={Auth}
@@ -319,7 +281,6 @@ export default class AssessmentWizardV11 extends Component {
                   : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
                 onAuthSuccess={next}
                 community={community}
-                updateUuidAux={this.updateUuidAux}
               />
               <WizardStep
                 component={ResidentName}
