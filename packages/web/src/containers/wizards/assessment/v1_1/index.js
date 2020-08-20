@@ -169,8 +169,6 @@ export default class AssessmentWizardV11 extends Component {
   render() {
     const { community, hasTip, className, toc, status } = this.props;
     let { city, state } = this.props;
-    // let showSkipOption = false;
-    console.log('DEBUG Seeing status', status);
     let amount = 4000;
     const { agent, hasNoAgent } = this.state;
 
