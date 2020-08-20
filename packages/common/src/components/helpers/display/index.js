@@ -1,11 +1,12 @@
 import { css } from 'styled-components';
 
 export const withDisplay = ({
-  display, block, flex, flexGrow, flexShrink, flexBasis, flexWrap, flexOrder,
+  display, block, flex, flexGrow, flexShrink, flexBasis, flexWrap, flexOrder, visibility,
 }) => {
   let styles = {
     order: flexOrder,
     flex,
+    visibility,
   };
 
   styles = (display || block) ? {
