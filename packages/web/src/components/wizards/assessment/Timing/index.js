@@ -55,7 +55,7 @@ const Timing = ({
       </Box>
       {hasTip &&
         <StyledTipBox heading="WHY THIS IS IMPORTANT:">
-          <TipContentBox>This will help us understand and support you wherever you are in your search.</TipContentBox>
+          This will help us understand and support you wherever you are in your search.
         </StyledTipBox>
       }
     </Wrapper>

@@ -34,8 +34,8 @@ const BoxChoiceTile = ({
     {...props}
     padding={padding}
     size="caption"
-    weight={selected ? 'bold' : 'regular'}
-    border={selected ? 'large' : 'regular'}
+    weight={selected ? 'medium' : 'regular'}
+    border="regular"
     palette={selected ? palette : 'slate'}
     highlightedPalette={palette}
     highlighted={selected}
