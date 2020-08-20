@@ -39,8 +39,8 @@ export const LIVE_SEARCH_STATE = [
   { label: 'No', value: 'no' },
 ];
 
-export const LOCAL_EXPERT_INTEREST = [
-  { label: 'Yes definitely', value: 'yes' },
+export const LOCAL_EXPERT_OPTIONS = [
+  { label: 'Yes, definitely', value: 'yes' },
   { label: 'I might be', value: 'maybe' },
   { label: 'Not now', value: 'no' },
 ];

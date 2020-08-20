@@ -112,7 +112,7 @@ export default class AssessmentWizardV11 extends Component {
       return goto('Auth');
     }
 
-    if (currentStep === 'ResidentName') {
+    if (currentStep === 'LocalExpert') {
       this.waitForAgentMatched();
     }
 
@@ -150,7 +150,7 @@ export default class AssessmentWizardV11 extends Component {
         value: to,
       });
     }
-    if (from === 'ResidentName') {
+    if (from === 'LocalExpert') {
       this.waitForAgentMatched();
     }
     this.scrollToTop();

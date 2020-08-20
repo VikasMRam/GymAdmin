@@ -24,7 +24,7 @@ const StyledTipBox = styled(TipBox)`
 `;
 
 const Products = ({
-  handleSubmit, invalid, submitting, hasTip,
+  handleSubmit, invalid, submitting, hasTip, onSkipClick, onBackClick,
 }) => (
   <div>
     <Wrapper>
@@ -32,17 +32,19 @@ const Products = ({
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
-        <PaddedHeading level="subtitle" weight="medium">Please tell us if you are interested in these products</PaddedHeading>
+        <PaddedHeading level="subtitle" weight="medium">Please tell us if you are interested in these products:</PaddedHeading>
+        <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
           <Field
-            multipleChoice
+            multiChoice
+            align="left"
             name="products"
             type="boxChoice"
             component={ReduxField}
             options={PRODUCTS_OPTIONS}
             required
           />
-          <Footer invalid={invalid} submitting={submitting} />
+          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
       {hasTip &&
@@ -59,6 +61,8 @@ Products.propTypes = {
   invalid: bool,
   submitting: bool,
   hasTip: bool,
+  onSkipClick: func,
+  onBackClick: func,
 };
 
 Products.defaultProps = {
