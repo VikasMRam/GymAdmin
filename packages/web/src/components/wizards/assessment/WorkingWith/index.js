@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
-import { COEXISTING_ADL_OPTIONS, WORKING_WITH_OPTIONS } from 'sly/web/constants/wizards/assessment';
+import { WORKING_WITH_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
