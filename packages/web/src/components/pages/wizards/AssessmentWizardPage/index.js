@@ -8,17 +8,16 @@ import AssessmentWizard from 'sly/web/containers/wizards/assessment';
 const StyledTemplateContent = styled(TemplateContent)`
   > * {
     margin: auto;
-    // width: fit-content;
   }
 `;
 
-const AssessmentWizardPage = props =>
-  (<>
+const AssessmentWizardPage = props => (
+  <>
     <TemplateHeader><HeaderContainer layout="wizards" /></TemplateHeader>
     <StyledTemplateContent>
       <AssessmentWizard {...props} />
     </StyledTemplateContent>
-   </>
-  );
+  </>
+);
 
 export default AssessmentWizardPage;
