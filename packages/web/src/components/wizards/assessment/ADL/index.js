@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import { ADL_OPTIONS, COEXISTING_ADL_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import pad from 'sly/web/components/helpers/pad';
-import { getLabelForWhoPersonOption } from 'sly/web/components/wizards/assessment/helpers';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
