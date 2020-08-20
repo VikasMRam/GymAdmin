@@ -39,8 +39,10 @@ const generateHeading = (whoNeedsHelp) => {
       return 'Do you or your spouse qualify for Medicaid?';
     case 'myself':
       return 'Do you qualify for Medicaid?';
+    case 'friend':
+      return 'Does your friend(s) qualify for Medicaid?';
     default:
-      return `Does your ${getLabelForWhoPersonOption(whoNeedsHelp)} qualify for Medicaid?`;
+      return 'Does your person qualify for Medicaid?';
   }
 };
 

@@ -46,7 +46,7 @@ const generateHeading = (whoNeedsHelp, amount, city, state) => {
     case 'myself':
       return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Do you have access to any of these benefits?`;
     default:
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Does your ${whoNeedsHelp} have access to any of these benefits?`;
+      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Does the person you are looking for have access to any of these benefits?`;
   }
 };
 

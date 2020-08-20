@@ -39,8 +39,10 @@ const generateHeading = (whoNeedsHelp) => {
       return 'Which activities do you and your spouse need help with?';
     case 'myself':
       return 'Which activities do you need help with?';
+    case 'friend':
+      return 'Which activities do you need help with?';
     default:
-      return `Which activities below does your ${getLabelForWhoPersonOption(whoNeedsHelp)} need help with?`;
+      return 'Which activities below does the person you are looking for need help with?';
   }
 };
 
