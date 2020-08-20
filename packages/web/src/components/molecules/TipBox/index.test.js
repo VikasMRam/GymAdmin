@@ -16,7 +16,7 @@ describe('TipBox', () => {
       children,
     });
 
-    expect(wrapper.find('PaddedBlock').contains(heading)).toBeTruthy();
+    expect(wrapper.find('Block').contains(heading)).toBeTruthy();
     expect(wrapper.contains(children)).toBeTruthy();
   });
 });
