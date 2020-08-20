@@ -135,7 +135,7 @@ const loggedInMenuItems = (user) => {
     ? 'Log Out'
     : 'Log In';
 
-  return [...roleBasedItems, { name: loginButtonText, section: 3, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
+  return [...roleBasedItems, { name: loginButtonText, section: 3, palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
 };
 
 const loginHeaderItems = user => user
