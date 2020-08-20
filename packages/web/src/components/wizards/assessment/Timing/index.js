@@ -35,8 +35,8 @@ const Timing = ({
 }) => (
   <div>
     <Wrapper>
-      {/* <PaddedProgressBar label totalSteps={10} currentStep={1} /> */}
-      <PaddedProgressBar label totalSteps={8} currentStep={5} />
+      <PaddedProgressBar label totalSteps={10} currentStep={1} />
+      {/* <PaddedProgressBar label totalSteps={8} currentStep={5} /> */}
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
