@@ -3,7 +3,6 @@ import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
 import { LIVE_SEARCH_STATE } from 'sly/web/constants/wizards/assessment';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
@@ -16,12 +15,6 @@ const PaddedProgressBar = pad(ProgressBar);
 
 const PaddedHeading = pad(Heading);
 PaddedHeading.displayName = 'PaddedHeading';
-
-const StyledField = styled(Field)`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
-`;
 
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
@@ -38,7 +31,7 @@ const LocalSearch = ({
       <Box>
         <PaddedHeading level="subtitle" weight="medium">Do you live in the state you’re searching in?</PaddedHeading>
         <form onSubmit={handleSubmit}>
-          <StyledField
+          <Field
             options={LIVE_SEARCH_STATE}
             name="localSearch"
             type="boxChoice"

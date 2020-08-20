@@ -42,7 +42,6 @@ export default class AssessmentWizardV11 extends Component {
     skipIntro: bool,
     ws: object,
     getAgent: func.isRequired,
-    updateUuidAux: func.isRequired,
     community: communityPropType,
     city: string,
     state: string,

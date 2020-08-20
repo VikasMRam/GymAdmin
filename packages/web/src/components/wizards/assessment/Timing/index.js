@@ -3,7 +3,6 @@ import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
 import { TIMING_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
@@ -20,12 +19,6 @@ PaddedHeading.displayName = 'PaddedHeading';
 const PaddedBlock = pad(Block);
 PaddedBlock.displayName = 'PaddedBlock';
 
-const StyledField = styled(Field)`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
-`;
-
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
 `;
@@ -36,13 +29,12 @@ const Timing = ({
   <div>
     <Wrapper>
       <PaddedProgressBar label totalSteps={10} currentStep={1} />
-      {/* <PaddedProgressBar label totalSteps={8} currentStep={5} /> */}
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">Where are you in your senior living search?</PaddedHeading>
         <form onSubmit={handleSubmit}>
-          <StyledField
+          <Field
             singleChoice
             options={TIMING_OPTIONS}
             name="timing"

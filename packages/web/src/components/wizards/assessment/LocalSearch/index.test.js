@@ -20,7 +20,7 @@ describe('Wizards|assessment - Steps|LocalSearch', () => {
 
     expect(wrapper.find('PaddedHeading')).toHaveLength(1);
     expect(wrapper.find('PaddedHeading').contains('Do you live in the state you’re searching in?')).toBeTruthy();
-    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
 
@@ -31,7 +31,7 @@ describe('Wizards|assessment - Steps|LocalSearch', () => {
 
     expect(wrapper.find('PaddedHeading')).toHaveLength(1);
     expect(wrapper.find('PaddedHeading').contains('Do you live in the state you’re searching in?')).toBeTruthy();
-    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);
   });
 

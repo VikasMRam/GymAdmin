@@ -49,8 +49,6 @@ const ProgressButtonsWrapper = styled.div`
   `)}
 `;
 
-export const TipContentBox = styled.div`
-`;
 export const Footer = ({ onBackClick, onSkipClick, submitButtonText, invalid, submitting }) => (
   <ButtonWrapper>
     {onBackClick && <StyledIconButton transparent icon="chevron-left" onClick={onBackClick} palette="primary">Back</StyledIconButton>}

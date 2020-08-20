@@ -3,7 +3,6 @@ import { func, string, number, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
 import { BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { capitalize } from  'sly/web/services/helpers/utils';
@@ -24,12 +23,6 @@ const PaddedIconItem = pad(IconItem, 'large');
 
 const PaddedBlock = pad(Block);
 PaddedBlock.displayName = 'PaddedBlock';
-
-const StyledField = styled(Field)`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
-`;
 
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
@@ -62,7 +55,7 @@ const Budget = ({
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp, amount, city, state)}</PaddedHeading>
         <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
-          <StyledField
+          <Field
             multiChoice
             options={BUDGET_OPTIONS}
             name="budget"
