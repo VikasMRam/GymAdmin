@@ -1,8 +1,9 @@
 import React from 'react';
 import { node, string } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { size, palette } from 'sly/common/components/themes';
+import { startingWith } from 'sly/common/components/helpers';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 import DashboardMenu from 'sly/web/components/molecules/DashboardMenu';
@@ -17,22 +18,23 @@ const Sidebar = styled.aside`
   display:none;
   grid-area: sidebar;
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+  ${startingWith('laptop', `
     width: 180px;
     display: inherit;
-  }
+  `)}
 `;
 
 const Body = styled.main`
-  height: 100%;
   display: flex;
   flex-direction: column;
   background-color: ${palette('grey.background')};
   grid-area: body;
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+  ${startingWith('tablet', css`
     padding: ${size('spacing.xLarge')};
-  }
+  `)}
+
+  ${startingWith('desktop', 'height: 100%;')}
 `;
 
 // min-width: 0 helps in avaoiding overflow when used with a clampped text children component like LatestMessage
@@ -55,7 +57,7 @@ const DashboardPage = styled.div`
     min-width: 0;
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+  ${startingWith('laptop', css`
     display: grid;
     grid-template-columns: 180px auto;
     grid-gap: 0;
@@ -63,7 +65,7 @@ const DashboardPage = styled.div`
     grid-template-areas:
       "header header"
       "sidebar body";
-  }
+  `)}
 `;
 
 const DashboardPageTemplate = ({

@@ -59,7 +59,7 @@ const getDefaultHeaderItems = (layout) => {
 
 
 const smallScreenMenuItems = [
-  { name: 'Home', to: '/', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+  { name: 'Homepage', to: '/', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
 ];
 
 const defaultMenuItems = () => {
