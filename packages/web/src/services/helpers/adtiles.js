@@ -1,15 +1,12 @@
-import { tocs } from './search';
-import { tocPaths, urlize } from './url';
+import { tocs } from 'sly/web/services/helpers/search';
+import { tocPaths, urlize } from 'sly/web/services/helpers/url';
+import { zillowIBuyerCities } from 'sly/web/services/helpers/zillow_cities';
 
 export const shouldShowZillowAd = (toc, city) => {
   // return true;
-  const zillowCities = ['portland', 'sacramento', 'riverside', 'los-angeles', 'san-diego',
-    'las-vegas', 'phoenix', 'tucson', 'fort-collins', 'denver', 'colorado-springs',
-    'minneapolis', 'dallas', 'austin', 'san-antonio', 'houston', 'atlanta', 'nashville',
-    'raleigh', 'charlotte', 'tampa', 'orlando', 'miami'];
   const validTocs = tocs.filter(e =>
     e.value.match(/active-adult|independent-living|continuing-care-retirement-community/)).map(e => e.value);
-  return validTocs.indexOf(toc) > -1 && zillowCities.indexOf(city) > -1;
+  return validTocs.indexOf(toc) > -1 && zillowIBuyerCities.indexOf(city) > -1;
 };
 
 export const shouldShowZillowSearchAd = (toc) => {

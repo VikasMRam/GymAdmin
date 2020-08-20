@@ -43,12 +43,22 @@ const WorkingWith = ({
         <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
           <StyledField
-            multipleChoice
+            multiChoice
             options={WORKING_WITH_OPTIONS}
             name="workingWith"
             type="boxChoice"
             align="left"
             component={ReduxField}
+            // onChange={(event, newValue, previousValue, name) => {
+            //   // we know that last element is the newly added value
+            //   const newlyAddedValue = newValue[newValue.length - 1];
+            //   const valuesThatCanExist = COEXISTING_WW_OPTIONS[newlyAddedValue];
+            //   if (valuesThatCanExist) {
+            //     newValue = newValue.filter(v => valuesThatCanExist.includes(v));
+            //   }
+            //   // delay this update to next tick so that it's always applied at last
+            //   setTimeout(() => change(name, newValue));
+            // }}
           />
           <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>

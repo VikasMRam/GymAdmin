@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { size } from 'sly/common/components/themes';
 import { TIMING_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import pad from 'sly/web/components/helpers/pad';
-import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
+import { Wrapper, Footer, TipContentBox } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 import TipBox from 'sly/web/components/molecules/TipBox';
@@ -41,7 +41,6 @@ const Timing = ({
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">Where are you in your senior living search?</PaddedHeading>
-        <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
           <StyledField
             singleChoice
@@ -56,8 +55,7 @@ const Timing = ({
       </Box>
       {hasTip &&
         <StyledTipBox heading="WHY THIS IS IMPORTANT:">
-          This will help us understand and support you wherever you are in your search.
-          {/* We've helped thousands of loved ones. You're in good hands. */}
+          <TipContentBox>This will help us understand and support you wherever you are in your search.</TipContentBox>
         </StyledTipBox>
       }
     </Wrapper>

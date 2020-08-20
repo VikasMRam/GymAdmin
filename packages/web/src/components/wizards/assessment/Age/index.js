@@ -29,6 +29,8 @@ const generateHeading = (whoNeedsHelp) => {
       return 'How old are you and your spouse?';
     case 'myself':
       return 'How old are you?';
+    case 'spouse':
+      return 'How old is your spouse?';
     case 'friend':
       return 'How old is your friend?';
     default:
@@ -37,7 +39,7 @@ const generateHeading = (whoNeedsHelp) => {
 };
 
 const Age = ({
-  handleSubmit, invalid, submitting, hasTip, whoNeedsHelp,
+  handleSubmit, invalid, submitting, hasTip, whoNeedsHelp, onBackClick, onSkipClick,
 }) => (
   <div>
     <Wrapper>
@@ -55,7 +57,7 @@ const Age = ({
             options={AGE_OPTIONS}
             required
           />
-          <Footer invalid={invalid} submitting={submitting} />
+          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
       {hasTip &&
@@ -73,6 +75,8 @@ Age.propTypes = {
   submitting: bool,
   hasTip: bool,
   whoNeedsHelp: string.isRequired,
+  onSkipClick: func,
+  onBackClick: func,
 };
 
 Age.defaultProps = {

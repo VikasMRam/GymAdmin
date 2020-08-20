@@ -20,7 +20,7 @@ describe('Wizards|assessment - Steps|Services', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('PaddedHeading').contains('Please tell us if you are interested in these other services')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Please tell us if you are interested in these other services:')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
@@ -30,7 +30,7 @@ describe('Wizards|assessment - Steps|Services', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Please tell us if you are interested in these other services')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Please tell us if you are interested in these other services:')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);
   });

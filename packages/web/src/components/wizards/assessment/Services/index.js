@@ -24,7 +24,7 @@ const StyledTipBox = styled(TipBox)`
 `;
 
 const Services = ({
-  handleSubmit, invalid, submitting, hasTip,
+  handleSubmit, invalid, submitting, hasTip, onSkipClick, onBackClick,
 }) => (
   <div>
     <Wrapper>
@@ -32,18 +32,19 @@ const Services = ({
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
-        <PaddedHeading level="subtitle" weight="medium">Please tell us if you are interested in these other services</PaddedHeading>
+        <PaddedHeading level="subtitle" weight="medium">Please tell us if you are interested in these other services:</PaddedHeading>
         <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
           <Field
             name="services"
             type="boxChoice"
+            align="left"
             component={ReduxField}
-            singleChoice
+            multiChoice
             options={SERVICES_OPTIONS}
             required
           />
-          <Footer invalid={invalid} submitting={submitting} />
+          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
       {hasTip &&
@@ -60,6 +61,8 @@ Services.propTypes = {
   invalid: bool,
   submitting: bool,
   hasTip: bool,
+  onSkipClick: func,
+  onBackClick: func,
 };
 
 Services.defaultProps = {
