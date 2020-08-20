@@ -3,7 +3,6 @@ import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
 import { CURRENT_LIVING_OPTIONS, CURRENT_LIVING_DEFAULT_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { getLabelForWhoPersonOption } from 'sly/web/components/wizards/assessment/helpers';
 import pad from 'sly/web/components/helpers/pad';
@@ -17,12 +16,6 @@ const PaddedProgressBar = pad(ProgressBar);
 
 const PaddedHeading = pad(Heading);
 PaddedHeading.displayName = 'PaddedHeading';
-
-const StyledField = styled(Field)`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
-`;
 
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
@@ -50,7 +43,7 @@ const CurrentLiving = ({
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
         <form onSubmit={handleSubmit}>
-          <StyledField
+          <Field
             options={CURRENT_LIVING_OPTIONS[whoNeedsHelp] || CURRENT_LIVING_DEFAULT_OPTIONS}
             name="currentLiving"
             type="boxChoice"

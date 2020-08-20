@@ -20,7 +20,7 @@ describe('Wizards|assessment - Steps|Feeling', () => {
 
     expect(wrapper.find('PaddedHeading')).toHaveLength(1);
     expect(wrapper.find('PaddedHeading').contains('Are you interested in working with a Local Senior Living Expert? They can help you find senior living options that fit your budget and care needs.')).toBeTruthy();
-    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
 
@@ -31,7 +31,7 @@ describe('Wizards|assessment - Steps|Feeling', () => {
 
     expect(wrapper.find('PaddedHeading')).toHaveLength(1);
     expect(wrapper.find('PaddedHeading').contains('Are you interested in working with a Local Senior Living Expert? They can help you find senior living options that fit your budget and care needs.')).toBeTruthy();
-    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);
   });
 

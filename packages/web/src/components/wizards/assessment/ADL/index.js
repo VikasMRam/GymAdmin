@@ -3,7 +3,6 @@ import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
 import { ADL_OPTIONS, COEXISTING_ADL_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import pad from 'sly/web/components/helpers/pad';
 import { getLabelForWhoPersonOption } from 'sly/web/components/wizards/assessment/helpers';
@@ -17,12 +16,6 @@ const PaddedProgressBar = pad(ProgressBar);
 
 const PaddedHeading = pad(Heading, 'large');
 PaddedHeading.displayName = 'PaddedHeading';
-
-const StyledField = styled(Field)`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
-`;
 
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
@@ -65,7 +58,7 @@ const ADL = ({
           <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
           <PaddedBlock>Please select all that apply.</PaddedBlock>
           <form onSubmit={handleSubmit}>
-            <StyledField
+            <Field
               multiChoice
               options={opts}
               name="adl"

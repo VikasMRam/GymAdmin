@@ -23,7 +23,7 @@ describe('Wizards|assessment - Steps|ADL', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('PaddedHeading').contains('Which activities do your parents need help with?')).toBeTruthy();
-    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
 
@@ -33,7 +33,7 @@ describe('Wizards|assessment - Steps|ADL', () => {
     });
 
     expect(wrapper.find('PaddedHeading').contains('Which activities do your parents need help with?')).toBeTruthy();
-    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);
   });
 

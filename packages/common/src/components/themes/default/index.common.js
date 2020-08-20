@@ -185,45 +185,6 @@ theme.sizes = {
    * from available space
    ******************************************** */
 
-  header: {
-    SearchBox: {
-      width: '22.5rem',   // 360x
-    },
-    menu: {
-      width   : '16.5rem',   // 264px
-      position: {
-        top: {
-          mobile     : '3.8125rem',     // 61px
-          tablet     : '5.08rem',      // 81px
-          laptop     : '4rem',        // 64px
-        },
-      },
-    },
-    home: {
-      heroSearchBox: {
-        width: '30rem',   // 480px
-      },
-      heroImage: {
-        height: '40rem',   // 640px
-        mobileHeight: '30rem', // 480px
-      },
-    },
-    hub: {
-      heroSearchBox: {
-        width: '20rem',   // 360px
-      },
-      heroImage: {
-        height: '30rem',   // 640px
-        mobileHeight: '40rem', // 480px
-      },
-    },
-    agents: {
-      heroImage: {
-        height: '30rem', // 480px
-      },
-    },
-  },
-
   filtersMenu: {
     width: {
       mobile: '23.4375rem',   // 375px
