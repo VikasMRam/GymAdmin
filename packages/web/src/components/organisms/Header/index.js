@@ -212,6 +212,7 @@ const Header = ({
             cursor="pointer"
             palette="primary"
             variation="base"
+            testId="MenuIcon"
             icon={!menuOpen ? 'menu' : 'close'}
           />
         )}
