@@ -29,6 +29,7 @@ const Wrapper = styled.div`
 `;
 const InnerWrapper = styled.div`
   display: block;
+  margin: auto;
 `;
 const StyledAskAgentButton = styled(AskAgentQuestionButtonContainer)`
   width: 100%;

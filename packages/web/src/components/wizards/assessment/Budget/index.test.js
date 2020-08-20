@@ -30,8 +30,7 @@ describe('Wizards|assessment - Steps|Budget', () => {
 
   it('renders', () => {
     const wrapper = wrap();
-
-    expect(wrapper.find('PaddedHeading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Does your ${whoNeedsHelp} have access to any of these benefits?`)).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Does the person you are looking for have access to any of these benefits?`)).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
@@ -41,7 +40,7 @@ describe('Wizards|assessment - Steps|Budget', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('PaddedHeading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Does your ${whoNeedsHelp} have access to any of these benefits?`)).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Does the person you are looking for have access to any of these benefits?`)).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);
   });

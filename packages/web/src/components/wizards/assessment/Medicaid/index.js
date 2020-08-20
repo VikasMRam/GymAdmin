@@ -4,7 +4,6 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { MEDICAID_OPTIONS } from 'sly/web/constants/wizards/assessment';
-import { getLabelForWhoPersonOption } from 'sly/web/components/wizards/assessment/helpers';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box } from 'sly/web/components/atoms';
@@ -32,8 +31,10 @@ const generateHeading = (whoNeedsHelp) => {
       return 'Do you or your spouse qualify for Medicaid?';
     case 'myself':
       return 'Do you qualify for Medicaid?';
+    case 'friend':
+      return 'Does your friend(s) qualify for Medicaid?';
     default:
-      return `Does your ${getLabelForWhoPersonOption(whoNeedsHelp)} qualify for Medicaid?`;
+      return 'Does your person qualify for Medicaid?';
   }
 };
 
