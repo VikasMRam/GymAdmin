@@ -296,6 +296,8 @@ export default class AssessmentWizardV11 extends Component {
                 agent={agent}
                 hasNoAgent={hasNoAgent}
                 community={community}
+                onSkipClick={next}
+                onBackClick={previous}
                 city={city}
               />
               <WizardStep
