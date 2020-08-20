@@ -37,7 +37,7 @@ export default class AgeFormContainer extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'Age',
+          stepName: 'step-4:Age',
           wizardName: 'assessmentWizard',
           data,
         },

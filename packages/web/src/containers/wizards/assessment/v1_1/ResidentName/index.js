@@ -41,7 +41,7 @@ export default class ResidentNameFormContainer extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'step-13:ResidentName',
+          stepName: 'step-12:ResidentName',
           wizardName: 'assessmentWizard',
           data,
         },

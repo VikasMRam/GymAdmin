@@ -37,7 +37,7 @@ export default class WhoFormContainer extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'step-3:who',
+          stepName: 'step-3:Who',
           wizardName: 'assessmentWizard',
           data,
         },
