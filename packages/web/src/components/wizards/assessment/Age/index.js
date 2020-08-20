@@ -54,6 +54,7 @@ const Age = ({
             type="boxChoice"
             component={ReduxField}
             singleChoice
+            align="left"
             options={AGE_OPTIONS}
             required
           />

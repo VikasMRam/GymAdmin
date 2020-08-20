@@ -24,7 +24,7 @@ const StyledTipBox = styled(TipBox)`
 `;
 
 const Who = ({
-  handleSubmit, invalid, submitting, hasTip,
+  handleSubmit, invalid, submitting, hasTip, onSkipClick, onBackClick,
 }) => (
   <div>
     <Wrapper>
@@ -44,7 +44,7 @@ const Who = ({
             <option value="">Select a person</option>
             {WHO_PERSON_OPTIONS.map(o => <option value={o.value} key={o.value}>{o.label}</option>)}
           </Field>
-          <Footer invalid={invalid} submitting={submitting} />
+          <Footer invalid={invalid} submitting={submitting} onSkipClick={onSkipClick} onBackClick={onBackClick} />
         </form>
       </Box>
       {hasTip &&
@@ -62,6 +62,8 @@ Who.propTypes = {
   invalid: bool,
   submitting: bool,
   hasTip: bool,
+  onSkipClick: func,
+  onBackClick: func,
 };
 
 Who.defaultProps = {

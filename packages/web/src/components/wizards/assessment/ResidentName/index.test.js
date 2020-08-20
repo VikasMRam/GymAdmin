@@ -19,7 +19,7 @@ describe('Wizards|assessment - Steps|ResidentName', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('PaddedHeading').dive().dive().dive()
-      .text()).toBe("Last question, what is the resident's name?");
+      .text()).toBe("What is the resident's name?");
     expect(wrapper.find('PaddedField').filter({ type: 'text' })).toHaveLength(2);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
@@ -30,7 +30,7 @@ describe('Wizards|assessment - Steps|ResidentName', () => {
     });
 
     expect(wrapper.find('PaddedHeading').dive().dive().dive()
-      .text()).toBe("Last question, what is the resident's name?");
+      .text()).toBe("What is the resident's name?");
     expect(wrapper.find('PaddedField').filter({ type: 'text' })).toHaveLength(2);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);
   });

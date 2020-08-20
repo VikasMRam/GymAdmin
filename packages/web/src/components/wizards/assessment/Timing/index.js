@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { size } from 'sly/common/components/themes';
 import { TIMING_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import pad from 'sly/web/components/helpers/pad';
-import { Wrapper, Footer, TipContentBox } from 'sly/web/components/wizards/assessment/Template';
+import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 import TipBox from 'sly/web/components/molecules/TipBox';
@@ -55,7 +55,7 @@ const Timing = ({
       </Box>
       {hasTip &&
         <StyledTipBox heading="WHY THIS IS IMPORTANT:">
-          <TipContentBox>This will help us understand and support you wherever you are in your search.</TipContentBox>
+          This will help us understand and support you wherever you are in your search.
         </StyledTipBox>
       }
     </Wrapper>

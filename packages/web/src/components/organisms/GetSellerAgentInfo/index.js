@@ -6,7 +6,7 @@ import { community as communityPropType } from 'sly/common/propTypes/community';
 import { assetPath } from 'sly/web/components/themes';
 import { ResponsiveImage, Button, Heading, Box } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
-import { size, palette } from 'sly/common/components/themes';
+import { size } from 'sly/common/components/themes';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import AskAgentQuestionButtonContainer from 'sly/web/containers/AskAgentQuestionButtonContainer';
 
@@ -27,7 +27,7 @@ const MarginedDiv = styled.div`
 
 const onClickEvent = id => ({ action: 'click-seller-agent', category: 'SidebarCTA', label: id });
 
-const ZillowComp = ({ buttonTo, onClick,  communityId }) => (
+export const ZillowComp = ({ buttonTo, onClick,  communityId }) => (
   <>
     <MarginedDiv>
       Our partner <StyledResponsiveImage src={assetPath('vectors/zillow.svg')} /> will make an instant offer.
