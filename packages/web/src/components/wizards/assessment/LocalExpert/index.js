@@ -3,7 +3,6 @@ import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
 import { LOCAL_EXPERT_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
@@ -16,12 +15,6 @@ const PaddedProgressBar = pad(ProgressBar);
 
 const PaddedHeading = pad(Heading);
 PaddedHeading.displayName = 'PaddedHeading';
-
-const StyledField = styled(Field)`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
-`;
 
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
@@ -38,7 +31,7 @@ const LocalExpert = ({
       <Box>
         <PaddedHeading level="subtitle" weight="medium">Are you interested in working with a Local Senior Living Expert? They can help you find senior living options that fit your budget and care needs.</PaddedHeading>
         <form onSubmit={handleSubmit}>
-          <StyledField
+          <Field
             options={LOCAL_EXPERT_OPTIONS}
             name="localExpert"
             type="boxChoice"

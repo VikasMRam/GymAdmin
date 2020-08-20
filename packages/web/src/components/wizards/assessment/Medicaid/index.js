@@ -3,7 +3,6 @@ import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
 import { MEDICAID_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { getLabelForWhoPersonOption } from 'sly/web/components/wizards/assessment/helpers';
 import pad from 'sly/web/components/helpers/pad';
@@ -20,12 +19,6 @@ const PaddedHeading = pad(Heading);
 PaddedHeading.displayName = 'PaddedHeading';
 
 const PaddedIconItem = pad(IconItem, 'large');
-
-const StyledField = styled(Field)`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
-`;
 
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
@@ -55,7 +48,7 @@ const Medicaid = ({
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
         <form onSubmit={handleSubmit}>
-          <StyledField
+          <Field
             options={MEDICAID_OPTIONS}
             name="medicaid"
             type="boxChoice"
