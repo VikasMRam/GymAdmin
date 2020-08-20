@@ -22,16 +22,16 @@ const assertUserDetails = (user, data, shouldHave = [
     expect(uuidInfo.careInfo.adls).to.have.length.of.at.least(1);
     expect(uuidInfo.careInfo.adls).to.contain('medication-management');
   }
-  if (shouldHave.includes('interest')) {
-    expect(uuidInfo.residentInfo.interest === 'explore-affordable-options' || uuidInfo.residentInfo.interest === 'talk-advisor').to.true;
-  }
+  // if (shouldHave.includes('interest')) {
+  //   expect(uuidInfo.residentInfo.interest === 'explore-affordable-options' || uuidInfo.residentInfo.interest === 'talk-advisor').to.true;
+  // }
   if (shouldHave.includes('medicaidCoverage')) {
     expect(uuidInfo.financialInfo.medicaid).to.equal(true);
   }
-  if (shouldHave.includes('roomType')) {
-    expect(uuidInfo.housingInfo.roomPreference).to.have.length.of.at.least(1);
-    expect(uuidInfo.housingInfo.roomPreference).to.contain('suite');
-  }
+  // if (shouldHave.includes('roomType')) {
+  //   expect(uuidInfo.housingInfo.roomPreference).to.have.length.of.at.least(1);
+  //   expect(uuidInfo.housingInfo.roomPreference).to.contain('suite');
+  // }
 };
 
 const assertProfilesContacted = (uuidActions, data, contactType) => {

@@ -18,8 +18,10 @@ describe('Marketplace Profile Page', () => {
       const medicaid = 'Yes';
 
       cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
-
-      waitForHydration(cy.get('button').contains('Get Detailed Pricing')).click();
+      cy.get('section[id*=availability]').within(() => {
+        cy.get('input[id=email]').type(email);
+      });
+      waitForHydration(cy.get('button').contains('Get Availability')).click();
 
       const data = {
         communitySlug, name, phone, moveTimeline, typeOfCare, medicaid, email,
