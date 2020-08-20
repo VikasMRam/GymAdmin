@@ -167,7 +167,7 @@ export default class AssessmentWizardV11 extends Component {
   };
 
   render() {
-    const { community, hasTip, className, toc, status } = this.props;
+    const { community, hasTip, className, toc } = this.props;
     let { city, state } = this.props;
     let amount = 4000;
     const { agent, hasNoAgent } = this.state;
