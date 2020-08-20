@@ -33,8 +33,8 @@ const ResidentName = ({
     <Box>
       <PaddedHeading level="subtitle" weight="medium">
         {numberOfPeople > 1 ?
-          'Last question, what are the residents\' names?' :
-          'Last question, what is the resident\'s name?'}
+          'What are the residents\' names?' :
+          'What is the resident\'s name?'}
       </PaddedHeading>
       <form onSubmit={handleSubmit}>
         {Array(numberOfPeople).fill().map((_, i) => (
@@ -53,7 +53,7 @@ const ResidentName = ({
             />
           </FieldsWrapper>
         ))}
-        <Footer submitButtonText="Finish" onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
+        <Footer onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
       </form>
     </Box>
     {hasTip &&
