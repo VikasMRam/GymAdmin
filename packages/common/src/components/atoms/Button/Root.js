@@ -44,6 +44,7 @@ const StyledButton = styled.button`
   ${withClamping}
   ${withCursor}
   display: inline-block;
+  vertical-align: middle;
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -52,6 +53,17 @@ const StyledButton = styled.button`
   pointer-events: ${ifProp('disabled', 'none', 'auto')};
   transition: background ${key('transitions.default')}, color ${key('transitions.default')},
     border-color ${key('transitions.default')};
+
+  // trick to align verically text content. flex won't work with text-overflow styles.
+  // hence use this trick.
+  ${ifProp('isTextChildren', `
+    &:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+  `)};
 
   &:hover {
     background: ${hoverBackgroundColor};

@@ -11,6 +11,7 @@ import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { createRRAnchor, RRLink } from 'sly/common/components/helpers';
 // todo: most probably should be common in future
 import SlyEvent from 'sly/web/services/helpers/events';
+import { isString } from 'sly/common/services/helpers/utils';
 import isPathInRoutes from 'sly/common/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
@@ -171,6 +172,7 @@ export default class Button extends Component {
     } = this.props;
     const { routes } = this.context;
     const styleProps = this.getStyleProps();
+    styleProps.isTextChildren = isString(props.children);
 
     if (to && isPathInRoutes(routes, to)) {
       return {
