@@ -61,6 +61,7 @@ BoxChoiceTile.propTypes = {
 BoxChoiceTile.defaultProps = {
   padding: 'large',
   align: 'center',
+  verticalAlign: 'middle',
   palette: 'primary',
   cursor: 'pointer',
   direction: 'row',

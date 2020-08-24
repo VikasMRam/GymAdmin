@@ -7,11 +7,15 @@ import { size, getKey } from 'sly/common/components/themes';
 import Block from 'sly/common/components/atoms/Block';
 
 const generateItemDimensions = ({ children, gap, dimensions = [] }) => {
+  const gp = getKey('sizes', 'spacing', gap);
+
   // equally divide if no dimensions given
   if (children.length && !dimensions.length) {
     const ew = (100 / children.length).toFixed(2);
-    const gp = getKey('sizes', 'spacing', gap);
-    dimensions = Array(children.length).fill(`calc(${ew}% - ${(children.length - 1) / children.length}*${gp})`);
+    const gapMinus = gp ? `${(children.length - 1) / children.length}*${gp}` : 0;
+    dimensions = Array(children.length).fill(gapMinus ? `calc(${ew}% - ${gapMinus})` : `${ew}%`);
+  } else {
+    dimensions = dimensions.map(d => gp ? `calc(${d} - ${gp})` : d);
   }
 
   return dimensions.join(' ');
