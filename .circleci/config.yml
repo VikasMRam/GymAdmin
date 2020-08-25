@@ -258,13 +258,16 @@ jobs:
 
   e2e:
     docker:
-      - image: circleci/node:12.16.3
+      - image: cypress/base:12.16.2
+        environment:
+          # this enables colors in the output
+          TERM: xterm
+      - image: redis:4
       - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-db:latest
         environment:
           POSTGRES_DB: slydev
           POSTGRES_USER: slydev
           POSTGRES_PASSWORD: slydev
-      - image: redis:4
       - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-goose:latest
         environment:
           SLY_DBHOST: localhost
@@ -296,10 +299,6 @@ jobs:
           POSTGRES_USER: slydev
           POSTGRES_DB: slydev
           SLY_APIRATELIMITENABLED: false
-      - image: cypress/base:8
-        environment:
-          ## this enables colors in the output
-          TERM: xterm
     resource_class: xlarge
 
     working_directory: ~/project
@@ -325,14 +324,14 @@ jobs:
       #     background: true
 
       - run:
-          name: Installing Curl HAproxy
+          name: Installing HAproxy
           command: |
-            sudo apt-get update
-            sudo apt-get -y install curl haproxy
+            apt-get update
+            apt-get -y install haproxy
 
       - run:
           name: Running HAProxy
-          command: sudo haproxy -f haproxy.conf
+          command: haproxy -f haproxy.conf
           working_directory: ~/project/packages/web/e2e
           background: true
 
@@ -342,12 +341,12 @@ jobs:
           background: true
 
       - run:
-          name: Installing Cypress deps
-          command: sudo apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
-
-      - run:
           name: Install e2e deps
           working_directory: ~/project/packages/web/e2e
+          environment:
+            # as this commands are running in cypress container which already has cypress don't install it again.
+            # just install the extra plugins that's in production dependencies
+            NODE_ENV: production
           command: |
             if [ ! -d node_modules ]; then
               npm ci
@@ -358,10 +357,6 @@ jobs:
       - run:
           name: Waiting for Local Go to be up and running
           command: npx wait-on http-get://localhost:8080/v0/ping
-
-      - run:
-          name: Curl whether API is accessible
-          command: curl http://www.lvh.me/v0/ping
 
       - run:
           name: Waiting for Local React to be up and running
