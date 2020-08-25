@@ -15,11 +15,19 @@ storiesOf('Common|Atoms/Grid', module)
     </Grid>
   ))
   .add('flow', () => (
-    <Grid flow="row">
-      <Button>Hello</Button>
-      <Button>Hello</Button>
-      <Button>Hello</Button>
-    </Grid>
+    <>
+      <Grid flow="column">
+        <Button>Hello</Button>
+        <Button>Hello</Button>
+        <Button>Hello</Button>
+      </Grid>
+      <Heading>Row</Heading>
+      <Grid flow="row">
+        <Button>Hello</Button>
+        <Button>Hello</Button>
+        <Button>Hello</Button>
+      </Grid>
+    </>
   ))
   .add('flow and gap', () => (
     <>

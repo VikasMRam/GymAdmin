@@ -71,7 +71,7 @@ const CommunityStickyFooter = ({ community, isAlreadyPricingRequested, locTrack,
   }
   return (
     <Wrapper>
-      {startingRate > 0 && <CommunityPricing size="subtitle" id={id} estimated={rates !== 'Provided'} price={startingRate} tooltipPos="top" />}
+      {startingRate > 0 && <CommunityPricing size="subtitle" id={id} tipId="stickyFooter" estimated={rates !== 'Provided'} price={startingRate} tooltipPos="top" />}
       <CommunityActions isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack={locTrack} {...props} />
     </Wrapper>
   );

@@ -1,27 +1,16 @@
 import React, { PureComponent } from 'react';
 import { func, object, string, oneOf } from 'prop-types';
-import { generatePath } from 'react-router';
 
-import {
-  CUSTOMER_ROLE,
-  PROVIDER_OD_ROLE,
-  AGENT_ND_ROLE,
-} from 'sly/common/constants/roles';
-import {
-  DASHBOARD_ACCOUNT_PATH,
-  AGENT_DASHBOARD_FAMILIES_PATH,
-  FAMILY_DASHBOARD_FAVORITES_PATH,
-  AGENT_DASHBOARD_TASKS_PATH,
-  AGENT_DASHBOARD_PROFILE_PATH, DASHBOARD_COMMUNITIES_PATH,
-} from 'sly/web/constants/dashboardAppPaths';
 import { withAuth, normalizeResponse, query } from 'sly/web/services/api';
 import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { withProps } from 'sly/web/services/helpers/hocs';
 import { generateSearchUrl, parseURLQueryParams } from 'sly/web/services/helpers/url';
 import SlyEvent from 'sly/web/services/helpers/events';
+import { userIs } from 'sly/web/services/helpers/role';
 import AuthContainer from 'sly/common/services/auth/containers/AuthContainer';
 import NotificationController from 'sly/web/controllers/NotificationController';
 import Notifications from 'sly/web/components/organisms/Notifications';
+import { menuItems } from 'sly/web/components/molecules/DashboardMenu';
 import Header from 'sly/web/components/organisms/Header';
 import ModalController from 'sly/web/controllers/ModalController';
 import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
@@ -82,64 +71,42 @@ const defaultMenuItems = () => {
   return menuItems;
 };
 
-const customerMenuItems = [
-  {
-    name: 'Favorites', to: FAMILY_DASHBOARD_FAVORITES_PATH, section: 1, icon: 'favourite-light', onClick: ({ name }) => sendHeaderItemClickEvent(name),
-  },
-];
-
-const agentMenuItems = [
-  {
-    name: 'Families', to: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), section: 1, icon: 'users', onClick: ({ name }) => sendHeaderItemClickEvent(name),
-  },
-  {
-    name: 'Tasks', to: generatePath(AGENT_DASHBOARD_TASKS_PATH), section: 1, icon: 'checkbox-fill', onClick: ({ name }) => sendHeaderItemClickEvent(name),
-  },
-  {
-    name: 'Profile', to: AGENT_DASHBOARD_PROFILE_PATH, section: 1, icon: 'settings', onClick: ({ name }) => sendHeaderItemClickEvent(name),
-  },
-];
-
-const customerAndAgentMenuItems = [
-  {
-    name: 'Account', to: DASHBOARD_ACCOUNT_PATH, section: 1, icon: 'user', onClick: ({ name }) => sendHeaderItemClickEvent(name),
-  },
-];
-
-const partnerCommunityMenuItems = [
-  {
-    name: 'Communities', to: generatePath(DASHBOARD_COMMUNITIES_PATH), section: 1, icon: 'house', onClick: ({ name }) => sendHeaderItemClickEvent(name),
-  },
-];
-
 const loggedInMenuItems = (user) => {
   /* eslint-disable no-bitwise */
   let roleBasedItems = [];
+  let guestItems = [];
   if (user) {
-    const { roleID } = user;
-    if (roleID & CUSTOMER_ROLE) {
-      roleBasedItems = customerMenuItems;
-    }
-    if (roleID & AGENT_ND_ROLE) {
-      roleBasedItems = agentMenuItems;
-    }
-    if (roleID & PROVIDER_OD_ROLE) {
-      roleBasedItems = partnerCommunityMenuItems;
-    }
-    if (roleID & (CUSTOMER_ROLE | AGENT_ND_ROLE | PROVIDER_OD_ROLE)) {
-      roleBasedItems = [...roleBasedItems, ...customerAndAgentMenuItems];
-    }
+    roleBasedItems = menuItems.filter(mi => userIs(user, mi.role)).map(mi => ({
+      name: mi.label,
+      to: mi.href,
+      section: 1,
+      icon: mi.icon,
+      onClick: ({ name }) => sendHeaderItemClickEvent(name),
+    }));
+  } else {
+    guestItems = [
+      { name: 'Sign Up', section: 3, palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+    ];
   }
 
   const loginButtonText = user
     ? 'Log Out'
     : 'Log In';
 
-  return [...roleBasedItems, { name: loginButtonText, section: 3, palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
+  return [
+    ...roleBasedItems,
+    { name: loginButtonText, section: 3, palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+    ...guestItems,
+  ];
+};
+
+const getUserName = (user) => {
+  const name = user.name ? user.name.split(' ')[0] : user.email;
+  return name.length > 10 ? `${name.substring(0, 10)}...` : name;
 };
 
 const loginHeaderItems = user => user
-  ? [{ name: 'My Seniorly', onClick: ({ name }) => sendHeaderItemClickEvent(name) }]
+  ? [{ name: getUserName(user), isToggler: true, onClick: ({ name }) => sendHeaderItemClickEvent(name) }]
   : [{ name: 'Log In', ghost: true, isButton: true, onClick: ({ name }) => sendHeaderItemClickEvent(name) },
     { name: 'Sign Up', isButton: true, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
 
@@ -272,7 +239,7 @@ export default class HeaderContainer extends PureComponent {
         ensureAuthenticated(data);
       };
     }
-    const mySlyMenuItem = lhItems.find(item => item.name === 'My Seniorly');
+    const mySlyMenuItem = lhItems.find(item => item.isToggler);
     if (mySlyMenuItem) {
       mySlyMenuItem.onClick = this.toggleDropdown;
     }

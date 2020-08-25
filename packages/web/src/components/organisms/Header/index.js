@@ -26,7 +26,6 @@ const SeniorlyLogoWrapper = styled(Block)`
 
 const HeaderMenu = styled.div`
   width: 100%;
-  height: 100%;
   position: absolute;
   top: ${size('header.menu.position.top.mobile')};
   left: 0;
@@ -115,7 +114,7 @@ const OnlyInSmallScreen = styled(Block)`
   ${startingWith('laptop', 'display: none;')}
 `;
 
-const mapItem = (item, i, arr) => item.isButton ? (
+const mapItem = (item, i, arr, menuOpen) => item.isButton ? (
   <Button
     ghost={item.ghost}
     onClick={() => item.onClick(item)}
@@ -135,6 +134,7 @@ const mapItem = (item, i, arr) => item.isButton ? (
     marginRight={i !== arr.length - 1 ? 'xLarge' : null}
   >
     {item.name}
+    {item.isToggler && <Icon icon="arrow-drop-down" flip={menuOpen} />}
   </HeaderItem>
 );
 
@@ -142,7 +142,7 @@ const Header = ({
   menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, onMenuItemClick, onHeaderBlur, className, smallScreenMenuItems, onLogoClick,
   onCurrentLocation, hasSearchBox, hideMenuItemsInSmallScreen,
 }) => {
-  const headerItemComponents = headerItems.map(mapItem);
+  const headerItemComponents = headerItems.map((...args) => mapItem(...args, menuOpen));
   menuItems = menuItems.sort((a, b) => a.section - b.section);
   let prevSection = menuItems.length ? menuItems[0].section : 0;
   const headerMenuItemComponents = menuItems
@@ -260,6 +260,7 @@ Header.propTypes = {
     onClick: func,
     palette: palettePropType,
     isButton: bool,
+    isToggler: bool,
     ghost: bool,
   })).isRequired,
   menuItems: arrayOf(shape({

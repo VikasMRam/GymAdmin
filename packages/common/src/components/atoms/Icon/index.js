@@ -30,7 +30,7 @@ const Wrapper = styled(Block)`
   height: max-content;
   text-align: center;
   ${getTransform};
-  transition: transform ${key('transitions.fast')};
+  transition: transform ${key('transitions.slow.out')};
   & > svg {
     align-self: center;
     height: ${iconSize};
