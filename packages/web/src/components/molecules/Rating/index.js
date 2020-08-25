@@ -65,7 +65,7 @@ const Rating = React.forwardRef(({ palette, variation, value, size, ...props }, 
       {times(5, i => (
         <Fragment key={`star${i}`}>
           {value >= i + 1 && <StarPath palette={palette} variation={variation} transform={`translate(${i * 24}, 0)`} />}
-          {value < i + 1 && <StarFillPath palette={palette} variation={variation} transform={`translate(${i * 24}, 0)`} />}
+          {value < i + 1 && <StarFillPath palette={palette} variation="filler" transform={`translate(${i * 24}, 0)`} />}
           {value > i &&
             value < i + 1 && <MaskedStar palette={palette} variation={variation} value={value} transform={`translate(${i * 24}, 0)`} />}
         </Fragment>

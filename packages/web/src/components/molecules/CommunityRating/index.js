@@ -63,7 +63,7 @@ CommunityRating.propTypes = {
 
 CommunityRating.defaultProps = {
   size: 'body',
-  palette: 'primary.base',
+  palette: 'primary',
 };
 
 export default CommunityRating;
