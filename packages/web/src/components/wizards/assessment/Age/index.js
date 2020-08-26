@@ -63,7 +63,7 @@ const Age = ({
       </Box>
       {hasTip &&
       <StyledTipBox heading="WHY THIS IS IMPORTANT:">
-        Some communities have age restrictions
+        Some communities have age restrictions.
       </StyledTipBox>
       }
     </Wrapper>
