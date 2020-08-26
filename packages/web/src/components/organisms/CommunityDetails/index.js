@@ -46,7 +46,7 @@ LegacyContent.defaultProps = {
 
 const CommunityDetails = ({
   id, communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription, licensingInfo,
-                            ownerExperience, city, state, twilioNumber, guideUrl, communityUser,
+                            ownerExperience, city, state, twilioNumber, guideUrl, communityUser, isActiveAdult
 }) => {
   let phone = '8558664515';
   let isClaimed = false;
@@ -120,19 +120,48 @@ const CommunityDetails = ({
           <Link> state licensing website</Link> for more information.
         </StyledArticle>
       )}
-      <StyledArticle>
-        <StyledHeading level="subtitle" size="subtitle">
-          What is a Local Senior Living Expert in {city}, {state}?
-        </StyledHeading>
-        <Paragraph>
-          A senior living expert is a professional who knows
-          the {city}, {state} communities and specializes in helping you find the right fit for your
-          unique budget, location, care, social and other needs. This is a free service. To learn more,&nbsp;
-          <Link href="https://www.seniorly.com/agents?sly_category=summary&sly_action=cta_link&sly_label=agent_link" target="_blank">
-            click here to visit our Seniorly Local Experts page.
-          </Link>
-        </Paragraph>
-      </StyledArticle>
+      { !isActiveAdult &&
+        <StyledArticle>
+          <StyledHeading level="subtitle" size="subtitle">
+            What is a Local Senior Living Expert in {city}, {state}?
+          </StyledHeading>
+          <Paragraph>
+            A senior living expert is a professional who knows
+            the {city}, {state} communities and specializes in helping you find the right fit for your
+            unique budget, location, care, social and other needs. This is a free service. To learn more,&nbsp;
+            <Link href="https://www.seniorly.com/agents?sly_category=summary&sly_action=cta_link&sly_label=agent_link" target="_blank">
+              click here to visit our Seniorly Local Experts page.
+            </Link>
+          </Paragraph>
+        </StyledArticle>
+      }
+      { isActiveAdult &&
+        <StyledArticle>
+          <StyledHeading level="subtitle" size="subtitle">
+            What are Active Adult Communities in {city}, {state}?
+          </StyledHeading>
+          <Paragraph>
+            Active Adult Communities are age-restricted and age-targeted housing developments typically built for
+            those aged 55 and over. Most 55+ Active Adult Communities have residences that are for sale. Age-restricted
+            active adult communities require that 80% of residents must have at least one person over the age of 55
+            living in the dwelling. Age-targeted active adult communities are housing developments that are marketed
+            to those 55 and over.
+          </Paragraph>
+          <Paragraph>
+            There are many reasons why a person over 55 should consider the Active Adult category. These
+            reasons include living a maintenance free lifestyle, downsizing from a larger empty nest, rich
+            amenities, and most importantly a vibrant social lifestyle.
+          </Paragraph>
+          <Paragraph>
+            These communities do NOT offer caring services and may also not offer services such as housekeeping,
+            transportation, and dining options. Looking for a senior living community that offers caring services? Consider a&nbsp;
+            <Link href="https://www.seniorly.com/continuing-care-retirement-community?sly_category=summary&sly_action=cta_link&sly_label=ccrc_link" target="_blank">
+              Continuing Care Retirement Community near you.
+            </Link>
+          </Paragraph>
+        </StyledArticle>
+      }
+
       { !isClaimed &&
         <>
           <Hr />
@@ -162,6 +191,7 @@ CommunityDetails.propTypes = {
   twilioNumber: PropTypes.object,
   communityUser: PropTypes.object,
   licensingInfo: PropTypes.string,
+  isActiveAdult: PropTypes.bool
 };
 
 export default CommunityDetails;
