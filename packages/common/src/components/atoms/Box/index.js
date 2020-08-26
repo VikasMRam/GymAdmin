@@ -10,10 +10,8 @@ const Box = styled(Block)`
 Box.defaultProps = {
   border: 'regular',
   borderRadius: 'small',
-  borderPalette: 'slate',
-  borderVariation: 'lighter-90',
+  borderPalette: 'slate.lighter-90',
   padding: 'xLarge',
-  snap: 'none',
 };
 
 export default Box;

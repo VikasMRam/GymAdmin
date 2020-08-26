@@ -1,9 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import Heading from '.';
 
-const wrap = (props = {}) => shallow(<Heading {...props} />);
+const wrap = (props = {}) => mount(<Heading {...props} />);
 
 describe('Heading|Web', () => {
   it('renders children when passed in', () => {
@@ -13,21 +13,21 @@ describe('Heading|Web', () => {
 
   it('renders props when passed in', () => {
     const wrapper = wrap({ id: 'foo' });
-    expect(wrapper.dive().dive().dive().find('h2[id="foo"]')).toHaveLength(1);
+    expect(wrapper.find('h2[id="foo"]')).toHaveLength(1);
   });
 
   it('renders h2 by default', () => {
     const wrapper = wrap();
-    expect(wrapper.dive().dive().dive().find('h2')).toHaveLength(1);
+    expect(wrapper.find('h2')).toHaveLength(1);
   });
 
   it('renders h1 for hero', () => {
-    const wrapper = wrap({ level: 'hero' });
-    expect(wrapper.dive().dive().dive().find('h1')).toHaveLength(1);
+    const wrapper = wrap({ size: 'hero' });
+    expect(wrapper.find('h1')).toHaveLength(1);
   });
 
   it('renders hLevel when size is passed in', () => {
     const wrapper = wrap({ size: 'subtitle' });
-    expect(wrapper.dive().dive().dive().find('h2')).toHaveLength(1);
+    expect(wrapper.find('h3')).toHaveLength(1);
   });
 });

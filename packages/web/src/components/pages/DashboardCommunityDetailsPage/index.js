@@ -28,7 +28,6 @@ import {
   Top,
   Right,
   Left,
-  SummarySection,
   DashboardWithSummaryPageTemplate, LeftNotifications, Loading,
 } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import DashboardCommunitySummary from 'sly/web/components/organisms/DashboardCommunitySummary';
@@ -43,6 +42,7 @@ import DashboardCommunityEditsContainer from 'sly/web/containers/DashboardCommun
 import { PROPERTY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 import { Link } from 'sly/web/components/atoms';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
+import { Box } from 'sly/common/components/atoms';
 
 export default class DashboardCommunityDetailsPage extends Component {
   static propTypes = {
@@ -151,7 +151,6 @@ export default class DashboardCommunityDetailsPage extends Component {
     const breadCrumbItems = [
       { ...backLink, label: 'Communities' },
       {
-        path: match.url,
         label: community.name,
       },
     ];
@@ -197,13 +196,15 @@ export default class DashboardCommunityDetailsPage extends Component {
       });
     }
 
+    const headerActions = community.url && <Link to={community.url}>View profile</Link>;
+
     return (
       <DashboardWithSummaryPageTemplate activeMenuItem="Communities">
         <Top>
           <BreadCrumb items={breadCrumbItems} />
         </Top>
 
-        <Left heading={community.name} to={community.url}>
+        <Left heading={community.name} actions={headerActions}>
           {(notifications.length || null) && (
             <LeftNotifications>
               {notifications.map(({ palette, content }) => (

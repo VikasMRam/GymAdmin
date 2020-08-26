@@ -18,7 +18,7 @@ describe('Wizards|assessment - Steps|ResidentName', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('PaddedHeading').dive().dive().dive()
+    expect(wrapper.find('PaddedHeading').dive().dive()
       .text()).toBe("What is the resident's name?");
     expect(wrapper.find('PaddedField').filter({ type: 'text' })).toHaveLength(2);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
@@ -29,7 +29,7 @@ describe('Wizards|assessment - Steps|ResidentName', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('PaddedHeading').dive().dive().dive()
+    expect(wrapper.find('PaddedHeading').dive().dive()
       .text()).toBe("What is the resident's name?");
     expect(wrapper.find('PaddedField').filter({ type: 'text' })).toHaveLength(2);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);

@@ -13,7 +13,7 @@ import {
   PARTNER_AGENTS,
   MESSAGES,
   EMAILS,
-  TASKS, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED,
+  TASKS, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED, DASHBOARD_COMMUNITIES_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
 import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/web/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/web/constants/notes';
@@ -32,27 +32,19 @@ import { userIs } from 'sly/web/services/helpers/role';
 import pad from 'sly/web/components/helpers/pad';
 import SlyEvent from 'sly/web/services/helpers/events';
 import cursor from 'sly/web/components/helpers/cursor';
-import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
 import Role from 'sly/web/components/common/Role';
-import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
-import DashboardTwoColumnTemplate from 'sly/web/components/templates/DashboardTwoColumnTemplate';
 import FamilyDetailsFormContainer from 'sly/web/containers/FamilyDetailsFormContainer';
 import UpdateFamilyStageFormContainer from 'sly/web/containers/UpdateFamilyStageFormContainer';
 import AddNoteFormContainer from 'sly/web/containers/AddNoteFormContainer';
-import { Box, Block, Icon, Hr, Link } from 'sly/common/components/atoms';
-import { Span } from 'sly/web/components/atoms';
+import { Block, Link, Span } from 'sly/web/components/atoms';
 import Tabs from 'sly/web/components/molecules/Tabs';
-import FamilyStage from 'sly/web/components/molecules/FamilyStage';
-import FamilySummary from 'sly/web/components/molecules/FamilySummary';
+import DashboardFamilySummary from 'sly/web/components/molecules/DashboardFamilySummary';
 import FamilyActivityItem from 'sly/web/components/molecules/FamilyActivityItem';
-import BackLink from 'sly/web/components/molecules/BackLink';
-import IconBadge from 'sly/web/components/molecules/IconBadge';
-import Tab from 'sly/web/components/molecules/Tab';
+import Tab, { MobileTab } from 'sly/web/components/molecules/Tab';
 import DashboardMyFamilyStickyFooterContainer from 'sly/web/containers/DashboardMyFamilyStickyFooterContainer';
 import ConversationMessagesContainer from 'sly/web/containers/ConversationMessagesContainer';
 import ReferralSearchContainer from 'sly/web/containers/dashboard/ReferralSearchContainer';
 import StatusSelect from 'sly/web/components/molecules/StatusSelect';
-import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import DuplicateFamilies from 'sly/web/components/organisms/DuplicateFamilies';
 import DashboardAgentTasksSectionContainer from 'sly/web/containers/dashboard/DashboardAgentTasksSectionContainer';
 import DashboardMessagesContainer from 'sly/web/containers/DashboardMessagesContainer';
@@ -60,18 +52,17 @@ import DashboardEmailsContainer from 'sly/web/containers/DashboardEmailsContaine
 import AddOrEditTaskFormContainer from 'sly/web/containers/AddOrEditTaskFormContainer';
 import { Datatable } from 'sly/web/services/datatable';
 import { textDecoration, textAlign } from 'sly/web/components/helpers/text';
-
-const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
-
-const BackLinkWrapper = pad(styled.div`
-  display: flex;
-  align-items: center;
-`, 'regular');
+import {
+  DashboardWithSummaryPageTemplate, Left, LeftNotifications,
+  Loading,
+  Right, Section,
+  Top,
+} from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
+import Tag from 'sly/web/components/atoms/Tag';
+import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 
 const TextAlignCenterBlock = pad(textAlign(Block, 'center'), 'regular');
-const AlignCenterBackLinkWrapper = styled(BackLinkWrapper)`
-  justify-content: center;
-`;
 
 const SmallScreenBorder = css`
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
@@ -87,7 +78,7 @@ const SmallScreenBorderDiv = styled.div`
   ${p => p.padding && css`padding: ${size('spacing', p.padding)};`}
 `;
 
-const SmallScreenBorderPaddedFamilySummary = styled(PaddedFamilySummary)`
+const SmallScreenBorderPaddedFamilySummary = styled(DashboardFamilySummary)`
   ${SmallScreenBorder}
 `;
 
@@ -102,159 +93,58 @@ const StyledFamilyActivityItem = styled(FamilyActivityItem)`
   }
 `;
 
-const FamilyDetailsTab = styled.div`
-  ${SmallScreenBorder};
-`;
-
 const FamilyTasksTab = styled.div`
   padding:${size('spacing', 'xLarge')};
 `;
 
-const TabWrapper = styled(Box)`
-  padding: ${size('spacing.large')};
-  background-color: ${palette('grey', 'background')};
-  margin-bottom: ${size('dashboard.actionFooterBottomMargin')};
-  border-width: 0;
-
-  > * {
-    background-color: ${palette('white', 'base')};
-  }
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: ${size('spacing.xLarge')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    background-color: ${palette('white', 'base')};
-    padding: 0;
-    margin-bottom: 0;
-    border-width: ${size('border.regular')};
-
-    > * {
-      background-color: transparent;
-    }
-  }
-`;
-
-const MobileTab = styled(Tab)`
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none;
-  }
-`;
-
-const BigScreenSummarySection = styled.section`
-  display: none;
-
-  > * {
-    background-color: ${palette('white', 'base')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: block;
-  }
-`;
-
-const SmallScreenClientNameWrapper = styled.div`
-  padding: ${size('spacing.large')};
-  background-color: ${palette('white', 'base')};
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none;
-  }
-`;
-
 const StyledStatusSelect = styled(StatusSelect)`
   margin-bottom: 0;
-  min-width: 56px;
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    min-width: 125px;
-  }
+  min-width: max-content;
 `;
 
-const StyledClientNameBlock = styled(Block)`
-  display: flex;
-  align-items: center;
-
-  > :nth-child(2) {
-    flex-grow: 1;
-    text-align: center;
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    > :nth-child(2) {
-      text-align: left;
-    }
-
-    > :nth-child(1) {
-      display: none;
-    }
-  }
-
-`;
 
 const DashboardMessagesContainerWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: ${size('spacing.xLarge')};
   }
 `;
-const StyledIconBadge = styled(IconBadge)`
-  @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    order: 2;
-  }
-`;
 
 const ClickHere = textDecoration(cursor(Span));
 
-const ClientName = ({ client, rawClient, backLinkHref, user, ...props }) => {
-  const { clientInfo, stage } = client;
-  const { name } = clientInfo;
+const ClientActions = ({ client, rawClient, user, ...props }) => {
+  const { stage } = client;
   const { isNew, isProspects } = getStageDetails(stage);
 
   return (
-    <StyledClientNameBlock
-      weight="medium"
-      size="subtitle"
-    >
-      <Link to={backLinkHref}>
-        <Icon icon="arrow-left" palette="primary" />
-      </Link>
-      <span>{name}</span>
-      {isReferralSent(client) && <StyledIconBadge badgePalette="primary" badgeVariation="base" palette="white" icon="checkmark-circle" text="R SENT" />}
-      {(userIs(user, PLATFORM_ADMIN_ROLE) || (!isNew && !isProspects)) && <StyledStatusSelect client={client} rawClient={rawClient} user={user} {...props} />}
-    </StyledClientNameBlock>
+    <Block display="flex" horizontalGutter="regular">
+      {(userIs(user, PLATFORM_ADMIN_ROLE) || (!isNew && !isProspects)) &&
+        <StyledStatusSelect
+          client={client}
+          rawClient={rawClient}
+          user={user}
+          {...props}
+        />
+      }
+      {isReferralSent(client) &&
+        <Tag
+          palette="green"
+          outline
+          elementSize="label"
+        >
+          Referral sent
+        </Tag>
+      }
+    </Block>
   );
 };
 
-ClientName.propTypes = {
+ClientActions.propTypes = {
   client: clientPropType,
   user: userPropType,
   rawClient: object,
   backLinkHref: string,
 };
-
-const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
-  margin-bottom: ${size('element.xxxLarge')};
-
-  main {
-    padding: 0;
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    margin-bottom: 0;
-
-    main {
-      padding: ${size('spacing.xLarge')};
-    }
-  }
-`;
-
-const PaddedBackLink = pad(BackLink, 'regular');
-
-const PaddedBannerNotification = pad(BannerNotification);
-
-const BigScreenPaddedBannerNotification = displayOnlyIn(PaddedBannerNotification, ['laptop']);
-
-const SmallScreenBannerNotification = displayOnlyIn(BannerNotification, ['mobile', 'tablet']);
 
 const TabMap = {
   New: NEWFAMILIES,
@@ -566,41 +456,19 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
   render() {
     const {
-      client, requestStatus, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
       conversation, setSelectedConversation, refetchClient,
       showModal, hideModal, isModalOpen, onAcceptClick, clients, onEditStatusDetailsClick, isEditStatusDetailsMode, onStatusChange,
     } = this.props;
 
     const { organization } = user;
 
-    if (clientIsLoading || !user) {
-      return (
-        <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
-          Loading...
-        </StyledDashboardTwoColumnTemplate>
-      );
-    }
 
-    if (!client) {
-      const { status: authStatusCode } = requestStatus.user;
-      const { error: clientError } = requestStatus.client;
-      const newUrl = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: NEWFAMILIES });
-      const backlink = <BackLink linkText="Back to New" to={newUrl} onClick={clickEventHandler('fdetails', 'Back to Prospects')} />;
-      let message = "Loading...";
-      // FIXME:
-      const clientNotFound = clientError && clientError.errors && clientError.errors[0] && (clientError.errors[0].status === "404");
-      if (clientNotFound) {
-        message = "Family Not Found";
-      }
-      if ( authStatusCode === 200 && !clientNotFound){
-        requestStatus.client.refetch();
-        message = "Loading Family Details...";
-      }
+    if (clientIsLoading) {
       return (
-        <DashboardPageTemplate activeMenuItem="My Families">
-          <TextAlignCenterBlock weight="medium" size="subtitle">{message}</TextAlignCenterBlock>
-          <AlignCenterBackLinkWrapper>{backlink}</AlignCenterBackLinkWrapper>
-        </DashboardPageTemplate>
+        <Loading activeMenuItem="Families">
+          Loading...
+        </Loading>
       );
     }
 
@@ -614,6 +482,32 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const { id: clientOrg } = clientOrganization;
     const { id: userOrg } = organization;
     const { group, isConnected } = getStageDetails(stage);
+    const backLinkHref = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: TabMap[group] });
+    const backLink = {
+      path: generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: TabMap[group] }),
+      label: 'Back to Families',
+      event: {
+        category: 'fdetails',
+        label: 'Back to Families',
+        action: 'click',
+      },
+    };
+
+    if (!client) {
+      return (
+        <Loading activeMenuItem="Families" backLink={backLink}>
+          Client not found!
+        </Loading>
+      );
+    }
+
+    const breadCrumbItems = [
+      { ...backLink, label: 'Families' },
+      {
+        label: client.clientInfo?.name,
+      },
+    ];
+
     const showAcceptRejectButtons = stage === FAMILY_STAGE_NEW;
     let showUpdateAddNoteButtons = stage !== FAMILY_STAGE_NEW;
     let canEditFamilyDetails = isConnected;
@@ -658,16 +552,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS });
     const familyTasksPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: TASKS });
 
-
-    const backLinkHref = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: TabMap[group] });
-    const backlink = <PaddedBackLink linkText={`Back to ${group}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${group}`)} />;
-
     const taskFilters = {
       'filter[client]': client.id,
     };
 
-    const clientName = (
-      <ClientName
+    const headerActions = (
+      <ClientActions
         client={client}
         rawClient={rawClient}
         refetchClient={refetchClient}
@@ -683,137 +573,117 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       />
     );
 
-    const duplicateWarningContent = (
-      <span>
-        There are families with same contact info.&nbsp;<ClickHere palette="white" onClick={this.handleClickHereForMore}>Click here to check.</ClickHere>
-      </span>
-    );
-    const doNotReferWarningContent = (
-      <span>
-        This family explicitly opted out of being connected with an agent!
-      </span>
-    );
-    let plink = <span/> ;
-    if ( parentSlug != "" ) {
-      plink = <Link palette="white" target="_blank" to={`/dashboard/agent/my-families/${parentSlug}`}
-                    onClick={clickEventHandler('fdetails', 'Nav to Parent')}>You are looking at {client.organization.name}'s family. Go to the parent record.</Link>;
+    const notifications = [];
+
+    if (clients && clients.length > 1) {
+      notifications.push({
+        palette: 'yellow',
+        content: (
+          <>
+            There are families with same contact info.&nbsp;<ClickHere palette="white" onClick={this.handleClickHereForMore}>Click here to check.</ClickHere>
+          </>
+        ),
+      });
     }
 
-    const topSection = (
-      <>
-        {clients && clients.length > 1 && (
-          <BigScreenPaddedBannerNotification hasBorderRadius palette="warning">
-            {duplicateWarningContent}
-          </BigScreenPaddedBannerNotification>
-        )}
-        {userIs(user, PLATFORM_ADMIN_ROLE) && explicitOptOut && (
-          <BigScreenPaddedBannerNotification hasBorderRadius palette="warning">
-            {doNotReferWarningContent}
-          </BigScreenPaddedBannerNotification>
-        )}
-        {isOfDifferentOrg &&
-          <BigScreenPaddedBannerNotification hasBorderRadius palette="primary">
-            <strong>{plink}</strong>
-          </BigScreenPaddedBannerNotification>
-        }
-      </>
-    );
+    if (userIs(user, PLATFORM_ADMIN_ROLE) && explicitOptOut) {
+      notifications.push({
+        palette: 'yellow',
+        content: (
+          <>
+            This family explicitly opted out of being connected with an agent!
+          </>
+        ),
+      });
+    }
+
+    if (isOfDifferentOrg && parentSlug !== '') {
+      notifications.push({
+        palette: 'primary',
+        content: (
+          <Span weight="bold">
+            <Link
+              palette="white"
+              target="_blank"
+              to={`/dashboard/agent/my-families/${parentSlug}`}
+              onClick={clickEventHandler('fdetails', 'Nav to Parent')}
+            >
+              You are looking at {client.organization.name}'s family. Go to the parent record.
+            </Link>
+          </Span>
+        ),
+      });
+    }
 
     return (
-      <StyledDashboardTwoColumnTemplate top={topSection} activeMenuItem="My Families">
-        <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
-          <BigScreenSummarySection>
-            <Box snap="bottom">
-              {backlink}
-              {clientName}
-            </Box>
-            <Hr margin="0" />
-            <FamilyStage
-              noBorderRadius
-              snap="top"
-              stageText={stage}
-              onAcceptClick={onAcceptClick}
-              onRejectClick={this.handleRejectClick}
-              onUpdateClick={this.handleUpdateClick}
-              onAddNoteClick={this.handleAddNoteClick}
-              user={user}
-              client={client}
-            />
-            {showAcceptRejectButtons && <FamilySummary snap="top" client={client} isOfDifferentOrg={isOfDifferentOrg} isAgentUser={isAgentUser} to={familyDetailsPath} />}
-            {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} isOfDifferentOrg={isOfDifferentOrg} isAgentUser={isAgentUser} to={familyDetailsPath} />}
-          </BigScreenSummarySection>
-          <SmallScreenClientNameWrapper>
-            {clientName}
-          </SmallScreenClientNameWrapper>
-        </div>
-        <div>
+      <DashboardWithSummaryPageTemplate hasStickyFooter={!isModalOpen} activeMenuItem="Families">
+        <Top>
+          <BreadCrumb items={breadCrumbItems} />
+        </Top>
+
+        <Left heading={name} actions={headerActions}>
+          {(notifications.length || null) && (
+            <LeftNotifications>
+              {notifications.map(({ palette, content }) => (
+                <BannerNotification
+                  key={content}
+                  palette={palette}
+                >
+                  {content}
+                </BannerNotification>
+              ))}
+            </LeftNotifications>
+          )}
+        </Left>
+
+        <Right>
           <Tabs activeTab={currentTab}>
             {this.getTabsForUser()}
           </Tabs>
-          {clients && clients.length > 1 &&
-            <SmallScreenBannerNotification palette="warning">
-              {duplicateWarningContent}
-            </SmallScreenBannerNotification>
-          }
-          {userIs(user, PLATFORM_ADMIN_ROLE) && explicitOptOut &&
-          <SmallScreenBannerNotification palette="warning">
-            {doNotReferWarningContent}
-          </SmallScreenBannerNotification>
-          }
-          {isOfDifferentOrg &&
-            <SmallScreenBannerNotification palette="primary">
-              <strong>{plink}</strong>
-            </SmallScreenBannerNotification>
-          }
-          <TabWrapper snap="top">
-            {currentTab === SUMMARY && (
-              <SmallScreenBorderPaddedFamilySummary client={client} isAgentUser={isAgentUser} to={familyDetailsPath} noHeading />
-            )}
 
-            {currentTab === ACTIVITY && (
-              <SmallScreenBorderDiv padding={!noteIsLoading && activityCards.length > 0 ? null : 'xLarge'}>
-                {noteIsLoading && <Block size="subtitle">Loading...</Block>}
-                {!noteIsLoading && activityCards.length === 0 &&
-                <TextAlignCenterBlock>There are no activities.</TextAlignCenterBlock>
-                }
-                {!noteIsLoading && activityCards.length > 0 &&
-                <>
-                  {/* <TableHeaderButtons hasColumnsButton={false} /> */}
-                  {activityCards}
-                </>
-                }
-              </SmallScreenBorderDiv>
-            )}
+          {currentTab === ACTIVITY && (
+            <Section>
+              {noteIsLoading && <Block size="subtitle">Loading...</Block>}
+              {!noteIsLoading && activityCards.length === 0 &&
+              <TextAlignCenterBlock>There are no activities.</TextAlignCenterBlock>
+              }
+              {!noteIsLoading && activityCards.length > 0 &&
+              <>
+                {/* <TableHeaderButtons hasColumnsButton={false} /> */}
+                {activityCards}
+              </>
+              }
+            </Section>
+          )}
 
-            {currentTab === FAMILY_DETAILS && (
-              <FamilyDetailsTab>
-                <FamilyDetailsFormContainer
-                  client={client}
-                  isAgentUser={isAgentUser}
-                  rawClient={rawClient}
-                  refetchClient={refetchClient}
-                  notifyInfo={notifyInfo}
-                  notifyError={notifyError}
-                  accepted={!showAcceptRejectButtons  || userIs(user, PLATFORM_ADMIN_ROLE)}
-                  canEditFamilyDetails={canEditFamilyDetails || userIs(user, PLATFORM_ADMIN_ROLE)}
-                  isAgentProUser={userIs(user, AGENT_ADMIN_ROLE)}
-                  gender={gender}
-                  lookingFor={lookingFor}
-                  monthlyBudget={monthlyBudget}
-                  timeToMove={timeToMove}
-                  careServices={careServices}
-                  mobilityLevels={mobilityLevels}
-                  roomTypes={roomTypes}
-                  communityTypes={communityTypes}
-                  assignedTos={assignedTos}
-                  onEditStageDetailsClick={this.handleUpdateClick}
-                  onEditStatusDetailsClick={onEditStatusDetailsClick}
-                />
-              </FamilyDetailsTab>
-            )}
+          {currentTab === FAMILY_DETAILS && (
+            <FamilyDetailsFormContainer
+              client={client}
+              isAgentUser={isAgentUser}
+              rawClient={rawClient}
+              refetchClient={refetchClient}
+              notifyInfo={notifyInfo}
+              notifyError={notifyError}
+              accepted={!showAcceptRejectButtons  || userIs(user, PLATFORM_ADMIN_ROLE)}
+              canEditFamilyDetails={canEditFamilyDetails || userIs(user, PLATFORM_ADMIN_ROLE)}
+              isAgentProUser={userIs(user, AGENT_ADMIN_ROLE)}
+              gender={gender}
+              lookingFor={lookingFor}
+              monthlyBudget={monthlyBudget}
+              timeToMove={timeToMove}
+              careServices={careServices}
+              mobilityLevels={mobilityLevels}
+              roomTypes={roomTypes}
+              communityTypes={communityTypes}
+              assignedTos={assignedTos}
+              onEditStageDetailsClick={this.handleUpdateClick}
+              onEditStatusDetailsClick={onEditStatusDetailsClick}
+            />
+          )}
 
-            {currentTab === COMMUNITIES && (
-              <Role className="agentTab" is={PLATFORM_ADMIN_ROLE | AGENT_ADMIN_ROLE}>
+          {currentTab === COMMUNITIES && (
+            <Role className="agentTab" is={PLATFORM_ADMIN_ROLE | AGENT_ADMIN_ROLE}>
+              <Section>
                 <ReferralSearchContainer
                   notifyError={notifyError}
                   notifyInfo={notifyInfo}
@@ -823,11 +693,13 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   user={user}
                   referralMode="Community"
                 />
-              </Role>
-            )}
+              </Section>
+            </Role>
+          )}
 
-            {currentTab === PARTNER_AGENTS && (
-              <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
+          {currentTab === PARTNER_AGENTS && (
+            <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
+              <Section>
                 <ReferralSearchContainer
                   notifyError={notifyError}
                   notifyInfo={notifyInfo}
@@ -837,62 +709,78 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   user={user}
                   referralMode="Agent"
                 />
-              </Role>
-            )}
+              </Section>
+            </Role>
+          )}
 
-            {currentTab === TASKS && (
-              <Role className="agentTab" is={PLATFORM_ADMIN_ROLE | AGENT_ADMIN_ROLE}>
-                <FamilyTasksTab>
-                  <Datatable
-                    id="tasks"
-                    filters={taskFilters}
-                  >
-                    {datatable => (
-                      <DashboardAgentTasksSectionContainer datatable={datatable} client={client} contextPath={familyTasksPath} />
-                    )}
-                  </Datatable>
-                </FamilyTasksTab>
-              </Role>
-            )}
+          {currentTab === TASKS && (
+            <Role className="agentTab" is={PLATFORM_ADMIN_ROLE | AGENT_ADMIN_ROLE}>
+              <Datatable
+                id="tasks"
+                filters={taskFilters}
+              >
+                {datatable => (
+                  <DashboardAgentTasksSectionContainer datatable={datatable} client={client} contextPath={familyTasksPath} />
+                )}
+              </Datatable>
+            </Role>
+          )}
 
-            {currentTab === MESSAGES && (
-              <SmallScreenBorderDiv>
-                {!conversation &&
-                  <DashboardMessagesContainerWrapper>
-                    <DashboardMessagesContainer
-                      onConversationClick={setSelectedConversation}
-                      heading="Conversations"
-                      clientId={id}
-                    />
-                  </DashboardMessagesContainerWrapper>
-                }
-                {conversation &&
-                  <ConversationMessagesContainer
-                    conversationId={conversation.id}
-                    sendMessageFormPlaceholder={`Message ${name}...`}
-                    onBackClick={() => setSelectedConversation(null)}
+          {currentTab === MESSAGES && (
+            <SmallScreenBorderDiv>
+              {!conversation &&
+                <DashboardMessagesContainerWrapper>
+                  <DashboardMessagesContainer
+                    onConversationClick={setSelectedConversation}
+                    heading="Conversations"
+                    clientId={id}
                   />
-                }
-              </SmallScreenBorderDiv>
-            )}
-            {currentTab === EMAILS && (
-              <SmallScreenBorderDiv>
-                <DashboardEmailsContainer
-                  heading="Emails"
-                  clientId={id}
+                </DashboardMessagesContainerWrapper>
+              }
+              {conversation &&
+                <ConversationMessagesContainer
+                  conversationId={conversation.id}
+                  sendMessageFormPlaceholder={`Message ${name}...`}
+                  onBackClick={() => setSelectedConversation(null)}
                 />
-              </SmallScreenBorderDiv>
-            )}
-          </TabWrapper>
-          {!isModalOpen && <DashboardMyFamilyStickyFooterContainer
+              }
+            </SmallScreenBorderDiv>
+          )}
+          {currentTab === EMAILS && (
+            <SmallScreenBorderDiv>
+              <DashboardEmailsContainer
+                heading="Emails"
+                clientId={id}
+              />
+            </SmallScreenBorderDiv>
+          )}
+        </Right>
+
+        <DashboardFamilySummary
+          className={currentTab === SUMMARY ? 'selected' : ''}
+          client={client}
+          user={user}
+          isOfDifferentOrg={isOfDifferentOrg}
+          isAgentUser={isAgentUser}
+          to={familyDetailsPath}
+          stageText={stage}
+          onAcceptClick={onAcceptClick}
+          onRejectClick={this.handleRejectClick}
+          onUpdateClick={this.handleUpdateClick}
+          onAddNoteClick={this.handleAddNoteClick}
+          snap={notifications.length ? 'vertical' : 'bottom'}
+        />
+
+        {!isModalOpen && (
+          <DashboardMyFamilyStickyFooterContainer
             options={stickyFooterOptions}
             stage={stage}
             stageLabel={`${group} - ${stage}`}
             showAcceptRejectButtons={showAcceptRejectButtons && !isClientAdminUser}
             user={user}
-          />}
-        </div>
-      </StyledDashboardTwoColumnTemplate>
+          />
+        )}
+      </DashboardWithSummaryPageTemplate>
     );
   }
 }

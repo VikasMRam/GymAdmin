@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-import { getKey } from 'sly/common/components/themes';
+import { getKey, getSize as getThemeSize } from 'sly/common/components/themes';
 
 // uses props size and weight
 export const getSize = (type, prop = 'size') => (props) => {
@@ -19,9 +19,8 @@ export const getWeight = (props) => {
   }
 
   if (['subtitle', 'title', 'hero', 'superHero'].includes(props.size)) {
-    const key = 'sizes.weight.medium';
     return css({
-      fontWeight: getKey(key),
+      fontWeight: getThemeSize('weight.medium'),
     });
   }
 

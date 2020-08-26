@@ -45,7 +45,7 @@ describe('FamilyStage', () => {
       onAcceptClick,
     });
 
-    wrapper.dive().find('MarginBottomFullWidthButton').simulate('click');
+    wrapper.find('MarginBottomFullWidthButton').simulate('click');
     expect(onAcceptClick).toHaveBeenCalled();
   });
 
@@ -55,7 +55,7 @@ describe('FamilyStage', () => {
       onRejectClick,
     });
 
-    wrapper.dive().find('FullWidthButton').simulate('click');
+    wrapper.find('FullWidthButton').simulate('click');
     expect(onRejectClick).toHaveBeenCalled();
   });
 
@@ -66,7 +66,7 @@ describe('FamilyStage', () => {
       stageText: interStage,
     });
 
-    wrapper.dive().find('FullWidthButton').simulate('click');
+    wrapper.find('FullWidthButton').simulate('click');
     expect(onAddNoteClick).toHaveBeenCalled();
   });
 
@@ -77,7 +77,7 @@ describe('FamilyStage', () => {
       stageText: endStage,
     });
 
-    wrapper.dive().find('MarginBottomFullWidthButton').simulate('click');
+    wrapper.find('MarginBottomFullWidthButton').simulate('click');
     expect(onUpdateClick).toHaveBeenCalled();
   });
 });

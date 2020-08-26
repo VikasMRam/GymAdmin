@@ -6,6 +6,8 @@ import FamilyDetailsForm from 'sly/web/components/organisms/FamilyDetailsForm';
 import AmalFrancis from 'sly/storybook/sample-data/user-amal-francis.json';
 import SushanthRamakrishna from 'sly/storybook/sample-data/user-sushanth-ramakrishna.json';
 import PraneshKumar from 'sly/storybook/sample-data/client-pranesh-kumar.json';
+import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
+import Button from 'sly/common/components/atoms/Button';
 
 const timeToMove = [
   'Immediately',
@@ -64,8 +66,6 @@ const assignedTos = [
   AmalFrancis,
   SushanthRamakrishna,
 ];
-const AGENT_ND_ROLE = 4;
-const PLATFORM_ADMIN_ROLE = 128;
 const AGENT_ADMIN_ROLE = 8;
 const intro = 'Rhoda Goldman Plaza';
 const handleSubmit = jest.fn();
@@ -106,10 +106,10 @@ describe('FamilyDetailsForm', () => {
     expect(wrapper.find(Field).filter({ name: 'slyMessage' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'lookingFor' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'gender' })).toHaveLength(1);
-    expect(wrapper.find('StyledSearchBoxContainer')).toHaveLength(1);
+    expect(wrapper.find(SearchBoxContainer)).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'budget' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'timeToMove' })).toHaveLength(1);
-    expect(wrapper.find('StyledButton')).toHaveLength(0);
+    expect(wrapper.find(Button).prop('disabled')).toBeTruthy();
   });
 
   it('renders with accepted', () => {
@@ -130,10 +130,10 @@ describe('FamilyDetailsForm', () => {
     expect(wrapper.find(Field).filter({ name: 'slyMessage' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'lookingFor' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'gender' })).toHaveLength(1);
-    expect(wrapper.find('StyledSearchBoxContainer')).toHaveLength(1);
+    expect(wrapper.find(SearchBoxContainer)).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'budget' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'timeToMove' })).toHaveLength(1);
-    expect(wrapper.find('StyledButton')).toHaveLength(1);
+    expect(wrapper.find(Button)).toHaveLength(1);
   });
 
   it('renders with accepted and canEditFamilyDetails', () => {
@@ -154,17 +154,17 @@ describe('FamilyDetailsForm', () => {
     expect(wrapper.find(Field).filter({ name: 'slyMessage' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'lookingFor' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'gender' })).toHaveLength(1);
-    expect(wrapper.find('StyledSearchBoxContainer')).toHaveLength(1);
+    expect(wrapper.find(SearchBoxContainer)).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'budget' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'timeToMove' })).toHaveLength(1);
-    expect(wrapper.find('StyledButton')).toHaveLength(1);
+    expect(wrapper.find(Button)).toHaveLength(1);
   });
 
 
   it('handles onFormSubmit', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
-    wrapper.find('Form').simulate('submit');
+    wrapper.find('Section').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
 

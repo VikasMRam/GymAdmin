@@ -82,4 +82,12 @@ storiesOf('Common|Atoms/Block', module)
     <Block width="col2">
       Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
     </Block>
+  ))
+  .add('width as theme layout', () => (
+    <Block
+      display="flex"
+      alignItems="center"
+    >
+      Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+    </Block>
   ));

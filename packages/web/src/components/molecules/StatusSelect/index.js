@@ -182,8 +182,8 @@ export default class StatusSelect extends Component {
       <StyledField
         type="choice"
         name="status"
+        size="tag"
         value={this.state.status}
-        size="tiny"
         options={this.optionsForUser()}
         onChange={this.onChange}
         {...props}

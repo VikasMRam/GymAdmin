@@ -13,14 +13,25 @@ const client = {
   status: 'On Pause',
 };
 
+const user = {
+  roleID: 4095,
+};
+
 storiesOf('Molecules|StatusSelect', module)
   .add('default', () => (
     <>
       <Wrapper>
-        <StatusSelect client={client} />
+        <StatusSelect
+          client={client}
+          user={user}
+        />
       </Wrapper>
       <Wrapper>
-        <StatusSelect client={client} menuIsOpen />
+        <StatusSelect
+          client={client}
+          user={user}
+          menuIsOpen
+        />
       </Wrapper>
     </>
   ));

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, func, arrayOf } from 'prop-types';
+import { object, func, arrayOf, bool } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
@@ -23,15 +23,17 @@ import { NOTE_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import withBreakpoint from 'sly/web/components/helpers/breakpoint';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
-import NotificationController from 'sly/web/controllers/NotificationController';
-import ModalController from 'sly/web/controllers/ModalController';
 import AcceptAndContactFamilyContainer from 'sly/web/containers/AcceptAndContactFamilyContainer';
 import DashboardMyFamiliesDetailsPage from 'sly/web/components/pages/DashboardMyFamiliesDetailsPage';
+import withNotification from 'sly/web/controllers/withNotification';
+import withModal from 'sly/web/controllers/withModal';
 
 const mapStateToProps = (state, { conversations }) => ({
   selectedConversation: conversations && conversations.length === 1 ? conversations[0] : null,
 });
 
+@withNotification
+@withModal
 @prefetch('client', 'getClient', (req, { match }) => req({
   id: match.params.id,
 }))
@@ -64,6 +66,11 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     updateNote: func.isRequired,
     getClients: func.isRequired,
     getNotes: func.isRequired,
+    notifyInfo: func.isRequired,
+    notifyError: func.isRequired,
+    showModal: func.isRequired,
+    hideModal: func.isRequired,
+    isModalOpen: bool.isRequired,
     notes: arrayOf(notePropType),
     invalidateClients: func,
     invalidateConversations: func,
@@ -297,6 +304,11 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       status,
       user,
       breakpoint,
+      notifyInfo,
+      notifyError,
+      showModal,
+      hideModal,
+      isModalOpen,
     } = this.props;
 
     const { selectedConversation, clientsWithSameContacts, notes, isEditStatusDetailsMode } = this.state;
@@ -314,45 +326,37 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { hasFinished: clientHasFinished } = status.client;
     // since it's using conditional prefetch, in initial stage clients key won't be there
     return (
-      <NotificationController>
-        {({ notifyError, notifyInfo }) => (
-          <ModalController>
-            {({ show, hide, isModalOpen }) => (
-              <DashboardMyFamiliesDetailsPage
-                notifyError={notifyError}
-                notifyInfo={notifyInfo}
-                clients={clientsWithSameContacts || []}
-                requestStatus={status}
-                client={client}
-                rawClient={rawClient}
-                currentTab={match.params.tab || SUMMARY}
-                showModal={show}
-                hideModal={hide}
-                isModalOpen={isModalOpen}
-                meta={meta}
-                onRejectSuccess={() => onRejectSuccess(hide)}
-                refetchClient={this.refetchClient}
-                refetchNotes={this.refetchNotes}
-                onAddNote={onAddNote}
-                onEditNote={onEditNote}
-                notes={notes || []}
-                noteIsLoading={!notes}
-                clientIsLoading={!clientHasFinished}
-                goToFamilyDetails={this.goToFamilyDetails}
-                goToMessagesTab={this.goToMessagesTab}
-                refetchConversations={this.refetchConversations}
-                user={user || {}}
-                conversation={selectedConversation}
-                setSelectedConversation={this.setSelectedConversation}
-                onAcceptClick={() => this.handleAcceptClick(show, hide, notifyError)}
-                onEditStatusDetailsClick={this.toggleEditStatusDetailsMode}
-                onStatusChange={this.toggleEditStatusDetailsMode}
-                isEditStatusDetailsMode={isEditStatusDetailsMode}
-              />
-            )}
-          </ModalController>
-        )}
-      </NotificationController>
+      <DashboardMyFamiliesDetailsPage
+        notifyError={notifyError}
+        notifyInfo={notifyInfo}
+        clients={clientsWithSameContacts || []}
+        requestStatus={status}
+        client={client}
+        rawClient={rawClient}
+        currentTab={match.params.tab || SUMMARY}
+        showModal={showModal}
+        hideModal={hideModal}
+        isModalOpen={isModalOpen}
+        meta={meta}
+        onRejectSuccess={() => onRejectSuccess(hideModal)}
+        refetchClient={this.refetchClient}
+        refetchNotes={this.refetchNotes}
+        onAddNote={onAddNote}
+        onEditNote={onEditNote}
+        notes={notes || []}
+        noteIsLoading={!notes}
+        clientIsLoading={!clientHasFinished}
+        goToFamilyDetails={this.goToFamilyDetails}
+        goToMessagesTab={this.goToMessagesTab}
+        refetchConversations={this.refetchConversations}
+        user={user || {}}
+        conversation={selectedConversation}
+        setSelectedConversation={this.setSelectedConversation}
+        onAcceptClick={() => this.handleAcceptClick(showModal, hideModal, notifyError)}
+        onEditStatusDetailsClick={this.toggleEditStatusDetailsMode}
+        onStatusChange={this.toggleEditStatusDetailsMode}
+        isEditStatusDetailsMode={isEditStatusDetailsMode}
+      />
     );
   }
 }

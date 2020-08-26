@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Block } from 'sly/web/components/atoms';
-import FamilySummary from 'sly/web/components/molecules/FamilySummary';
+import DashboardFamilySummary from 'sly/web/components/molecules/DashboardFamilySummary';
 import PraneshKumar from 'sly/storybook/sample-data/client-pranesh-kumar.json';
 
 // For deep cloning object
@@ -12,11 +11,13 @@ clientWithMedicaid.uuidAux.uuidInfo.financialInfo.medicaid = true;
 const to = '/sdfsdf';
 const defaultProps = {
   to,
+  user: {},
+  stageText: '',
   client: PraneshKumar,
 };
-const wrap = (props = {}) => shallow(<FamilySummary {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<DashboardFamilySummary {...defaultProps} {...props} />);
 
-describe('FamilySummary', () => {
+describe('DashboardFamilySummary', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();
@@ -25,49 +26,37 @@ describe('FamilySummary', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.dive().find('OuterColumWrapper').dive()
-      .find('ColumWrapper')
+    expect(wrapper.find('SummaryRow')
       .at(0)
-      .find(Block)
       .contains(PraneshKumar.uuidAux.uuidInfo.residentInfo.fullName)).toBeTruthy();
-    expect(wrapper.dive().find('OuterColumWrapper').dive()
-      .find('ColumWrapper')
+    expect(wrapper.find('SummaryRow')
       .at(4)
-      .find(Block)
       .contains(PraneshKumar.uuidAux.uuidInfo.housingInfo.lookingFor)).toBeTruthy();
-    expect(wrapper.dive().find('OuterColumWrapper').dive()
-      .find('ColumWrapper')
+    expect(wrapper.find('SummaryRow')
       .at(5)
-      .find(Block)
       .contains(PraneshKumar.uuidAux.uuidInfo.residentInfo.gender)).toBeTruthy();
-    expect(wrapper.dive().find('OuterColumWrapper').dive()
-      .find('ColumWrapper')
+    expect(wrapper.find('SummaryRow')
       .at(6)
-      .find(Block)
       .contains(`${PraneshKumar.uuidAux.uuidInfo.locationInfo.city}, ${PraneshKumar.uuidAux.uuidInfo.locationInfo.state}`)).toBeTruthy();
-    expect(wrapper.dive().find('OuterColumWrapper').dive()
-      .find('ColumWrapper')
+    expect(wrapper.find('SummaryRow')
       .at(7)
-      .find(Block)
       .contains(PraneshKumar.uuidAux.uuidInfo.housingInfo.moveTimeline)).toBeTruthy();
-    expect(wrapper
-      .dive()
-      .find('SlyIntro')
-      .find(Block)
+    expect(wrapper.find('SummaryRow')
+      .at(8)
       .contains(PraneshKumar.clientInfo.slyMessage)).toBeTruthy();
   });
 
   it('see more details href', () => {
     const wrapper = wrap();
 
-    expect(wrapper.dive().find('StyledLink').at(2).prop('to')).toBe(to);
+    expect(wrapper.dive().find('Link').at(2).prop('to')).toBe(to);
   });
 
   it('renders medicard', () => {
     const wrapper = wrap({
       client: clientWithMedicaid,
     });
-    expect(wrapper.contains('Medicaid')).toBeTruthy();
+    expect(wrapper.find('SummaryRow[label="Medicaid"]')).toBeTruthy();
     expect(wrapper.contains('Chose Qualifies on Wizard')).toBeTruthy();
   });
 

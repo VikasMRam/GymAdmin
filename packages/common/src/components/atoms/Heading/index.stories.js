@@ -12,18 +12,18 @@ storiesOf('Common|Atoms/Heading', module)
       Id tempor duis non esse commodo fugiat excepteur nostrud.
     </Heading>
   ))
-  .add('level hero', () => (
-    <Heading level="hero">
+  .add('size hero', () => (
+    <Heading size="hero">
       Id tempor duis non esse commodo fugiat excepteur nostrud.
     </Heading>
   ))
-  .add('level title', () => (
-    <Heading level="title">
+  .add('size title', () => (
+    <Heading size="title">
       Id tempor duis non esse commodo fugiat excepteur nostrud.
     </Heading>
   ))
-  .add('level subtitle', () => (
-    <Heading level="subtitle">
+  .add('size subtitle', () => (
+    <Heading size="subtitle">
       Id tempor duis non esse commodo fugiat excepteur nostrud.
     </Heading>
   ))

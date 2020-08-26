@@ -2,6 +2,7 @@ node_modules
 coverage
 webpack/webpack-assets.json
 e2e/node_modules
+junit.xml
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

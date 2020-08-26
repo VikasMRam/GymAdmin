@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-import padBottomStyle from './padBottomStyle';
+import withGutter from './withGutter';
 
 import { size } from 'sly/common/components/themes';
 import { getCardinalValues } from 'sly/common/components/helpers/getCardinalValues';
@@ -12,19 +12,7 @@ export const withPadding = ({ noPadding, ...props } = {}) => {
   }
   const values = getCardinalValues(props, 'padding', 'spacing');
 
-  // if there is padding-bottom, remove last's child margin
-  if (values.padding || values.paddingBottom) {
-    return css`
-      ${padBottomStyle}
-      ${css(values)}
-    `;
-  }
-
-  if (Object.keys(values).length) {
-    return css(values);
-  }
-
-  return null;
+  return css(values);
 };
 
 export const withMargin = (props = {}) =>
@@ -37,6 +25,7 @@ export const withPad = ({ pad } = {}) => pad !== undefined && pad !== null && cs
 
 export const withSpacing = () => css`
   ${withPadding}
+  ${withGutter}
   ${withMargin}
   ${withPad}
 `;

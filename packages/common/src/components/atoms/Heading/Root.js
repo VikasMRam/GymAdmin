@@ -1,36 +1,36 @@
 import React from 'react';
 import { string } from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import {
-  withText,
+  withAlign,
   withColor,
   withSpacing,
-  withAlign,
+  withText,
 } from 'sly/common/components/helpers';
 
-const styles = css`
+const H1 = styled.h1``;
+const H2 = styled.h2``;
+const H3 = styled.h3``;
+const H4 = styled.h4``;
+
+const Root = styled((props) => {
+  switch (props.size) { /* eslint-disable jsx-a11y/heading-has-content */
+    case 'hero': return <H1 {...props} />;
+    case 'title': return <H2 {...props} />;
+    case 'subtitle': return <H3 {...props} />;
+    case 'body': return <H4 {...props} />;
+    default: return <H1 {...props} />;
+  }
+})`
   ${withSpacing}
   ${withText}
   ${withColor}
   ${withAlign}
 `;
 
-const H1 = styled.h1`${styles}`;
-const H2 = styled.h2`${styles}`;
-const H3 = styled.h3`${styles}`;
-
-const Root = (props) => {
-  switch (props.level) { /* eslint-disable jsx-a11y/heading-has-content */
-    case 'hero': return <H1 {...props} />;
-    case 'title': return <H2 {...props} />;
-    case 'subtitle': return <H3 {...props} />;
-    default: return <H1 {...props} />;
-  }
-};
-
 Root.propTypes = {
-  level: string,
+  size: string,
 };
 
 export default Root;

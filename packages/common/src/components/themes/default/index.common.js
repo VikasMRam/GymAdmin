@@ -11,7 +11,7 @@ const theme = {};
 // see below comments or in storybook
 // DO NOT MODIFY the following without asking Jared
 theme.palette = {
-  slate      : makeColor('#2a333f'),
+  slate      : makeColor('#253348'),
   primary    : makeColor('#1a7473'),
   secondary  : makeColor('#56c4c2'),
   white      : makeColor('#ffffff'),
@@ -99,6 +99,7 @@ theme.sizes = {
   },
 
   element: {
+    tag     : '1.500rem',   // 24px
     tiny    : '1.750rem',   // 28px
     small   : '2.250rem',   // 36px
     regular : '2.500rem',   // 40px
@@ -158,7 +159,7 @@ theme.sizes = {
     title     : '1.750rem',   // 28px
     hero      : '2.250rem',   // 36px
     superHero : '3.000rem',   // 48px
-    xxLarge   : '4.500rem',      // 72px
+    xxLarge   : '4.500rem',   // 72px
   },
 
   lineHeight: {

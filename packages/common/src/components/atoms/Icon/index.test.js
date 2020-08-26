@@ -12,6 +12,7 @@ describe('Icon|Web', () => {
 
   it('renders props when passed in', () => {
     const wrapper = wrap({ id: 'foo' });
-    expect(wrapper.dive().dive().find('div[id="foo"]')).toHaveLength(1);
+    const icon = wrapper.dive().dive().dive().dive();
+    expect(icon.find('div[id="foo"]')).toHaveLength(1);
   });
 });

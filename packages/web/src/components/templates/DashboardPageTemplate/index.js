@@ -1,9 +1,10 @@
 import React from 'react';
-import { node, string } from 'prop-types';
+import { bool, node, string } from 'prop-types';
 import styled, { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/common/components/themes';
-import { startingWith } from 'sly/common/components/helpers';
+import { startingWith, upTo } from 'sly/common/components/helpers';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 import DashboardMenu from 'sly/web/components/molecules/DashboardMenu';
@@ -27,15 +28,34 @@ const Sidebar = styled.aside`
 const Body = styled.main`
   display: flex;
   flex-direction: column;
-  background-color: ${palette('grey.background')};
+  background-color: ${palette('slate.lighter-95')};
   grid-area: body;
 
   ${startingWith('tablet', css`
     padding: ${size('spacing.xLarge')};
   `)}
 
-  ${startingWith('desktop', 'height: 100%;')}
+  ${startingWith('desktop', css`
+    height: 100%;
+  `)}
+
+  ${ifProp('hasStickyFooter', css`
+    // hack to add css specificity instead of using !important
+    &.hasStickyFooter {
+      ${upTo('tablet', css`
+        padding-bottom: calc(78px + ${size('spacing.large')});
+      `)}
+      ${upTo('laptop', css`
+        padding-bottom: calc(78px + ${size('spacing.xLarge')});
+      `)}
+    }
+  `)}
 `;
+
+Body.propTypes = {
+  hasStickyFooter: bool,
+};
+
 
 // min-width: 0 helps in avaoiding overflow when used with a clampped text children component like LatestMessage
 const DashboardPage = styled.div`
@@ -69,13 +89,14 @@ const DashboardPage = styled.div`
 `;
 
 const DashboardPageTemplate = ({
-  children, activeMenuItem, className,
+  children, activeMenuItem, className, hasStickyFooter,
 }) => {
+  const cx = `${className}${hasStickyFooter ? ' hasStickyFooter' : ''}`;
   return (
     <DashboardPage>
       <Header><HeaderContainer /></Header>
       <Sidebar><DashboardMenu activeMenuItem={activeMenuItem} /></Sidebar>
-      <Body className={className}>{children}</Body>
+      <Body hasStickyFooter={hasStickyFooter} className={cx}>{children}</Body>
       <ModalContainer />
     </DashboardPage>
   );
@@ -85,6 +106,7 @@ DashboardPageTemplate.propTypes = {
   children: node,
   activeMenuItem: string.isRequired,
   className: string,
+  hasStickyFooter: bool,
 };
 
 export default DashboardPageTemplate;

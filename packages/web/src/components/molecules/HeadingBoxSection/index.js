@@ -41,7 +41,7 @@ const HeadingBoxSection = ({
   id, heading, children, className, hasNoBodyPadding, hasNoBorder, hasNoHr,
 }) => (
   <StyledSection id={id} className={className} hasNoBodyPadding={hasNoBodyPadding} hasNoBorder={hasNoBorder}>
-    <HeadingBlock level="subtitle" hasNoBodyPadding={hasNoBodyPadding} hasNoHr={hasNoHr}>{heading}</HeadingBlock>
+    <HeadingBlock size="subtitle" hasNoBodyPadding={hasNoBodyPadding} hasNoHr={hasNoHr}>{heading}</HeadingBlock>
     { !hasNoHr && <StyledHr hasNoBodyPadding={hasNoBodyPadding} /> }
     {children}
   </StyledSection>

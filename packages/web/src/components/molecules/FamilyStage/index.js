@@ -1,10 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import { func, string, bool } from 'prop-types';
 
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import { size } from 'sly/common/components/themes';
 import clientPropType from 'sly/common/propTypes/client';
 import userPropType from 'sly/common/propTypes/user';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
@@ -12,23 +10,9 @@ import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/web/constants/provider';
 import { TOTAL_STAGES_COUNT, FAMILY_STAGE_NEW, FAMILY_STAGE_REJECTED } from 'sly/web/constants/familyDetails';
 import { userIs } from 'sly/web/services/helpers/role';
 import { getStageDetails } from 'sly/web/services/helpers/stage';
-import { Box, Heading, Button } from 'sly/web/components/atoms';
+import { Button } from 'sly/web/components/atoms';
 import Stage from 'sly/web/components/molecules/Stage';
 
-const ColumWrapper = pad(styled.div`
-  @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: ${size('tabletLayout.gutter')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-column-gap: ${size('layout.gutter')};
-  }
-`, 'large');
-ColumWrapper.displayName = 'ColumWrapper';
-
-const PaddedHeading = pad(Heading, 'large');
 const PaddedStage = pad(Stage, 'xLarge');
 PaddedStage.displayName = 'PaddedStage';
 const FullWidthButton = fullWidth(Button);
@@ -37,9 +21,17 @@ const MarginBottomFullWidthButton = pad(FullWidthButton, 'regular');
 MarginBottomFullWidthButton.displayName = 'MarginBottomFullWidthButton';
 
 const FamilyStage = ({
-  stageText, onAcceptClick, onRejectClick, snap, noBorderRadius, onAddNoteClick, onUpdateClick,
-  user, client,
+  stageText,
+  onAcceptClick,
+  onRejectClick,
+  onAddNoteClick,
+  onUpdateClick,
+  user,
+  client,
 }) => {
+  if (!stageText) {
+    return null;
+  }
   const { group, palette, stage } = getStageDetails(stageText);
   let showAcceptRejectButtons = stage === FAMILY_STAGE_NEW;
   let showUpdateStageButton = stage !== FAMILY_STAGE_NEW;
@@ -68,15 +60,14 @@ const FamilyStage = ({
   }
 
   return (
-    <Box snap={snap} noBorderRadius={noBorderRadius}>
-      <PaddedHeading size="body">Stage</PaddedHeading>
+    <>
       <PaddedStage stage={stageText} stageLabel={text} totalStage={TOTAL_STAGES_COUNT} palette={palette} />
       {showAcceptRejectButtons && <MarginBottomFullWidthButton onClick={onAcceptClick}>Accept and contact this family</MarginBottomFullWidthButton>}
       {showAcceptRejectButtons && <FullWidthButton onClick={onRejectClick} palette="danger" ghost>Reject</FullWidthButton>}
       {showClaimReferralButton && <MarginBottomFullWidthButton onClick={onAcceptClick}>Claim Referral</MarginBottomFullWidthButton>}
       {showUpdateStageButton && <MarginBottomFullWidthButton onClick={onUpdateClick} disabled={disableAddNoteUpdateButton}>Update stage</MarginBottomFullWidthButton>}
       {showAddNoteButton && <FullWidthButton onClick={onAddNoteClick} disabled={disableAddNoteUpdateButton} ghost>Add note</FullWidthButton>}
-    </Box>
+    </>
   );
 };
 

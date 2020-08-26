@@ -30,7 +30,7 @@ const Wrapper = sortableElement(styled.div`
   align-items: center;
   height: 4rem;
   margin-bottom: ${size('spacing.regular')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  border: ${size('border.regular')} solid ${palette('slate.lighter-90')};
   border-radius: ${size('spacing.small')};
 `);
 

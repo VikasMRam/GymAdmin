@@ -5,7 +5,7 @@ import { func, string, arrayOf, object, bool, node, oneOf, oneOfType } from 'pro
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette, getKey } from 'sly/common/components/themes';
+import { size, palette, getKey, getSizeKeys } from 'sly/common/components/themes';
 import Block from 'sly/common/components/atoms/Block';
 import Icon from 'sly/common/components/atoms/Icon';
 import Hr from 'sly/common/components/atoms/Hr';
@@ -33,6 +33,7 @@ const Wrapper = styled(Block)`
 
   .react-select__value-container {
     overflow: visible;
+    padding-right: 0px;
   }
 
   hr {
@@ -105,31 +106,20 @@ const Wrapper = styled(Block)`
 
 const StyledIcon = styled(Icon)`
   justify-content: center;
-  margin-right: ${size('spacing.small')};
+  margin: 0 ${size('spacing.small')} 0 ${size('spacing.regular')};
   align-self: baseline;
-  width: ${size('text.hero')};
 `;
 
 SyncSelect.displayName = 'Select';
 AsyncSelect.displayName = 'AsyncSelect';
 
-const getIconSize = (textSize) => {
-  switch (textSize) {
-    case 'micro':
-    case 'tiny': return 'small';
-    case 'caption': return 'caption';
-    default: return 'regular';
-  }
-};
-
 const IconOption = ({ selectProps,  ...props }) => {
-  const iconSize = getIconSize(selectProps.textSize);
   const {  icon = 'check' } = props.data;
   const pp = props.data.palette || 'primary';
   const showIcon = props.data.icon || props.isSelected;
   return (
     <StyledOption showIcon={showIcon} palette={pp} {...props}>
-      {showIcon && <StyledIcon icon={icon} size={iconSize} palette={pp} />}
+      {showIcon && <StyledIcon icon={icon} size={selectProps.textSize} palette={pp} />}
       <span>{props.data.label}</span>
     </StyledOption>
   );
@@ -143,23 +133,26 @@ IconOption.propTypes = {
 
 const StyledSingleValue = styled(SingleValue)`
   &.react-select__single-value {
+    top: unset;
+    transform: unset;
+    position: unset;
+    min-width: max-content;
     padding-left: 0;
     ${StyledIcon} {
-      width: ${size('text.hero')};
       justify-content: flex-start;
       margin-left: ${size('spacing.tiny')};
+      margin-right: ${size('spacing.tiny')};
     }
     color: ${palette('base')};
   }
 `;
 
 const IconSingleValue = ({ selectProps, ...props }) => {
-  const iconSize = getIconSize(selectProps.textSize);
   const { palette: pp = 'primary', icon = 'check' } = props.data;
   const showIcon = !!props.data.icon;
   return (
     <StyledSingleValue showIcon={showIcon} palette={pp} {...props}>
-      {showIcon && <StyledIcon icon={icon} size={iconSize} palette={pp} />}
+      {showIcon && <StyledIcon icon={icon} size={selectProps.textSize} palette={pp} />}
       <span>{props.data.label}</span>
     </StyledSingleValue>
   );
@@ -187,13 +180,17 @@ GroupSection.propTypes = {
 };
 
 const getTextSize = (size) => {
-  switch (size) {
-    case 'tiny': return 'micro';
-    case 'small': return 'tiny';
-    case 'regular': return 'caption';
-    case 'large': return 'body';
-    default: return 'caption';
-  }
+  const sizes = {
+    tag: 'tiny',
+    regular: 'caption',
+    large: 'body',
+  };
+  const keys = getSizeKeys('element');
+  let textSize = '';
+  return keys.some((key) => {
+    textSize = sizes[key] || textSize;
+    return size === key;
+  }) && textSize;
 };
 
 // hack to mix emotion and styled-components themes

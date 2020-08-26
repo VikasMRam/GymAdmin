@@ -1,6 +1,5 @@
 import React from 'react';
-import { oneOf, string } from 'prop-types';
-import styled from 'styled-components';
+import { any, oneOf } from 'prop-types';
 
 import Root from './Root';
 
@@ -13,22 +12,24 @@ const getPad = (size) => {
   }
 };
 
-// styled wrapper is required to allow this component to be reffered in css tyles like ${Heading}: {}
-const Heading = styled(props => (
+const Heading = ({ size, level, ...props }) => (
   <Root
-    size={props.size || props.level}
-    pad={getPad(props.size)}
+    size={size || level}
+    pad={getPad(size || level)}
     {...props}
+    marginBottom="xxLarge"
   />
-))``;
+);
+
+Heading.displayName = 'Heading';
 
 Heading.propTypes = {
-  level: oneOf(['hero', 'title', 'subtitle']).isRequired,
-  size: string,
+  size: oneOf(['hero', 'title', 'subtitle', 'body']).isRequired,
+  level: any, // should be deprecated
 };
 
 Heading.defaultProps = {
-  level: 'title',
+  size: 'title',
   palette: 'slate',
   variation: 'base',
   weight: 'medium',

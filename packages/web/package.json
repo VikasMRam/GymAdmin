@@ -58,8 +58,8 @@
   },
   "dependencies": {
     "@emotion/core": "10.0.28",
-    "@loadable/component": "5.12.0",
-    "@loadable/server": "5.12.0",
+    "@loadable/component": "5.13.1",
+    "@loadable/server": "5.13.1",
     "@tinymce/tinymce-react": "3.5.0",
     "copyfiles": "2.3.0",
     "dayjs": "1.8.23",

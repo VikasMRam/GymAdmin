@@ -33,6 +33,14 @@ export function getKey(...args) {
   return prop(key)(theme);
 }
 
-export function getThemePropType(path) {
-  return oneOf(Object.keys(getKey(`sizes.${path}`)));
+export function getSize(...args) {
+  return getKey(['sizes', ...args].join('.'));
+}
+
+export function getSizeKeys(...args) {
+  return Object.keys(getSize(...args));
+}
+
+export function getThemePropType(...args) {
+  return oneOf(getSizeKeys(...args));
 }

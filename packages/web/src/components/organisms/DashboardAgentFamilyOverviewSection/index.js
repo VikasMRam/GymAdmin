@@ -174,7 +174,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
     return (
       <>
         <TwoColumn>
-          <Heading level="subtitle">Families</Heading>
+          <Heading size="subtitle" pad="0">Families</Heading>
           <Role className="addFamily" is={PLATFORM_ADMIN_ROLE | AGENT_ADMIN_ROLE}>
             <IconButton icon="user-add" onClick={this.handleAddFamilyClick} hideTextInMobile>
               Add family
