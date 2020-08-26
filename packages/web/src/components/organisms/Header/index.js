@@ -5,14 +5,25 @@ import { ifProp } from 'styled-tools';
 
 import { size, palette, key } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { startingWith } from 'sly/common/components/helpers';
+import { startingWith, upTo } from 'sly/common/components/helpers';
 import { Icon, Button, Logo, Hr, Link, Block } from 'sly/common/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 
 const Wrapper = styled(Block)`
   // To remove blue line caused by tabIndex
   outline: none;
+  z-index: ${key('zIndexes.header')};
 
+  ${upTo('laptop', css`
+    ${ifProp('isMenuOpen', `
+      position: fixed;
+      height: 100%;
+      overflow: auto;
+    `)}
+  `)}
+`;
+
+const HeaderBar = styled(Block)`
   ${startingWith('tablet', css`
     padding: 0 ${size('spacing.xLarge')};
   `)}
@@ -27,14 +38,13 @@ const SeniorlyLogoWrapper = styled(Block)`
 const HeaderMenu = styled.div`
   width: 100%;
   position: absolute;
-  top: ${size('header.menu.position.top.mobile')};
+  top: ${size('header.menu.position.top.tablet')};
   left: 0;
   background: ${palette('white', 'base')};
   z-index: ${key('zIndexes.header')};
   padding: ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    top: ${size('header.menu.position.top.tablet')};
     padding: ${size('spacing.large')} ${size('spacing.xLarge')};
   }
 
@@ -188,49 +198,56 @@ const Header = ({
     <Wrapper
       tabIndex="-1"
       as="nav"
-      display="flex"
       width="100%"
-      height="80px"
-      verticalAlign="middle"
-      borderBottom="regular"
-      borderPalette="slate"
-      borderVariation="lighter-90"
-      padding={[0, 'large']}
+      background="white"
+      top="0"
+      isMenuOpen={menuOpen}
       onBlur={handleHeaderMenuBlur}
       className={className}
     >
-      <SeniorlyLogoWrapper onClick={onLogoClick} marginRight="xxLarge">
-        <Link to="/" display="block" lineHeight="0" >
-          <Logo />
-        </Link>
-      </SeniorlyLogoWrapper>
-      <OnlyInSmallScreen display="flex" verticalAlign="center" marginRight="large" palette="primary">
-        {(smallScreenMenuItemComponents.length > 0 || headerMenuItemComponents.length > 0) && (
-          <Icon
-            onClick={onMenuIconClick}
-            marginRight="regular"
-            cursor="pointer"
-            palette="primary"
-            variation="base"
-            testId="MenuIcon"
-            icon={!menuOpen ? 'menu' : 'close'}
+      <HeaderBar
+        display="flex"
+        width="100%"
+        height="80px"
+        verticalAlign="middle"
+        borderBottom="regular"
+        borderPalette="slate"
+        borderVariation="lighter-90"
+        padding={[0, 'large']}
+      >
+        <SeniorlyLogoWrapper onClick={onLogoClick} marginRight="xxLarge">
+          <Link to="/" display="block" lineHeight="0" >
+            <Logo />
+          </Link>
+        </SeniorlyLogoWrapper>
+        <OnlyInSmallScreen display="flex" verticalAlign="center" marginRight="large" palette="primary">
+          {(smallScreenMenuItemComponents.length > 0 || headerMenuItemComponents.length > 0) && (
+            <Icon
+              onClick={onMenuIconClick}
+              marginRight="regular"
+              cursor="pointer"
+              palette="primary"
+              variation="base"
+              testId="MenuIcon"
+              icon={!menuOpen ? 'menu' : 'close'}
+            />
+          )}
+          <Link palette="primary" variation="base" to="/"><Icon icon="logo" size="hero" /></Link>
+        </OnlyInSmallScreen>
+        {hasSearchBox && (
+          <StyledSearchBoxContainer
+            onCurrentLocation={onCurrentLocation}
+            onLocationSearch={onLocationSearch}
+            layout="header"
+            width="100%"
+            padding={['regular', 0]}
+            visibility={menuOpen ? 'hidden' : 'visible'}
           />
         )}
-        <Link palette="primary" variation="base" to="/"><Icon icon="logo" size="hero" /></Link>
-      </OnlyInSmallScreen>
-      {hasSearchBox && (
-        <StyledSearchBoxContainer
-          onCurrentLocation={onCurrentLocation}
-          onLocationSearch={onLocationSearch}
-          layout="header"
-          width="100%"
-          padding={['regular', 0]}
-          visibility={menuOpen ? 'hidden' : 'visible'}
-        />
-      )}
-      <HeaderItems hideInSmallScreen={hideMenuItemsInSmallScreen}>
-        {headerItemComponents}
-      </HeaderItems>
+        <HeaderItems hideInSmallScreen={hideMenuItemsInSmallScreen}>
+          {headerItemComponents}
+        </HeaderItems>
+      </HeaderBar>
       {menuOpen &&
         <HeaderMenu ref={headerMenuRef} onClick={onMenuItemClick}>
           {smallScreenMenuItemComponents.length > 0 &&

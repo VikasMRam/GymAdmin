@@ -31,9 +31,10 @@ export const withAlign = ({
     };
   }
   if (top) {
+    // allow top="0"
     styles = {
       ...styles,
-      top: size('spacing', top),
+      top: parseInt(top, 10) === 0 ? '0px' : size('spacing', top),
     };
   }
   if (bottom) {
@@ -49,9 +50,10 @@ export const withAlign = ({
     };
   }
   if (right) {
+    // allow right="0"
     styles = {
       ...styles,
-      right: size('spacing', right),
+      right: parseInt(top, 10) === 0 ? '0px' : size('spacing', right),
     };
   }
 
