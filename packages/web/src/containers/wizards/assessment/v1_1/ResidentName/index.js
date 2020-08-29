@@ -25,11 +25,11 @@ export default class ResidentNameFormContainer extends Component {
   };
 
   componentDidMount() {
-    // const { whatToDoNext, onSkipClick } = this.props;
-    //
-    // if (whatToDoNext === 'no-thanks') {
-    //   onSkipClick();
-    // }
+    const { whatToDoNext, onSkipClick } = this.props;
+
+    if (whatToDoNext === 'no-thanks') {
+      onSkipClick();
+    }
   }
 
   handleSubmit = (data) => {
