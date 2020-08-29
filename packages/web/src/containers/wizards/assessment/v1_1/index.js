@@ -17,6 +17,7 @@ import {
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SlyEvent from 'sly/web/services/helpers/events';
 /* Wizard Step Imports */
+import Intro from 'sly/web/containers/wizards/assessment/v1_1/Intro';
 import Timing from 'sly/web/containers/wizards/assessment/v1_1/Timing';
 import WorkingWith from 'sly/web/containers/wizards/assessment/v1_1/WorkingWith';
 import Who from 'sly/web/containers/wizards/assessment/v1_1/Who';
@@ -166,14 +167,15 @@ export default class AssessmentWizardV11 extends Component {
   };
 
   render() {
-    const { community, hasTip, className, toc } = this.props;
+    const { skipIntro, community, hasTip, className, toc } = this.props;
     let { city, state } = this.props;
     let amount = 4000;
+    let showSkipOption = false;
     const { agent, hasNoAgent } = this.state;
 
     if (community) {
       ({ address: { city, state }, startingRate: amount = 4000 } = community);
-      // showSkipOption = true; // When a community is present this wizard offers a shortcut to skip to final step.
+      showSkipOption = true; // When a community is present this wizard offers a shortcut to skip to final step.
     }
 
     if (!city || !state) {
@@ -193,6 +195,13 @@ export default class AssessmentWizardV11 extends Component {
             data, next, previous, ...props
           }) => (
             <WizardSteps {...props}>
+              {!skipIntro &&
+              <WizardStep
+                component={Intro}
+                name="Intro"
+                showSkipOption={showSkipOption}
+              />
+              }
               <WizardStep
                 component={Timing}
                 name="Timing"
@@ -294,7 +303,6 @@ export default class AssessmentWizardV11 extends Component {
                 hasNoAgent={hasNoAgent}
                 community={community}
                 onSkipClick={next}
-                onBackClick={previous}
                 city={city}
               />
               <WizardStep

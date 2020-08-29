@@ -37,7 +37,7 @@ export default class IntroFormContainer extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'intro',
+          stepName: 'step-0:Intro',
           wizardName: 'assessmentWizard',
           data,
         },

@@ -37,7 +37,7 @@ const LocalExpert = ({
       </Box>
       {hasTip &&
         <StyledTipBox heading="DID YOU KNOW?">
-          Working with one of our Our Local Experts is a free service for you. They are compensated by the senior living community you choose only when you move-in.
+          Working with one of our Local Experts is a free service for you. They are compensated by the senior living community you choose only when you move-in.
         </StyledTipBox>
       }
     </Wrapper>
