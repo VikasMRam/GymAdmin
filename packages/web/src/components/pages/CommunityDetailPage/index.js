@@ -462,6 +462,7 @@ export default class CommunityDetailPage extends Component {
                       guideUrl={guideUrl}
                       communityUser={community.user}
                       licensingInfo={rgsAux.stateLicensingWebsite}
+                      isActiveAdult={isActiveAdult}
                     />
                   </StyledHeadingBoxSection>
                 )}
