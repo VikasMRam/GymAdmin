@@ -4,16 +4,21 @@ import { object, arrayOf } from 'prop-types';
 import queryString from 'query-string';
 
 import { isBrowser } from 'sly/web/config';
-import { size, gridColumns } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
+import { gridColumns } from 'sly/web/components/themes';
 import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/constants/wizards/assessment';
 import { getPaginationData } from 'sly/web/services/helpers/pagination';
+import { getTocLabel, getLocationLabel } from 'sly/web/services/helpers/search';
+import { shouldShowZillowSearchAd } from 'sly/web/services/helpers/adtiles';
 import pad from 'sly/web/components/helpers/pad';
-import { Centered, Link, Block, Heading } from 'sly/web/components/atoms';
+import { Link, Block, Heading } from 'sly/common/components/atoms';
+import { Centered } from 'sly/web/components/atoms';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import CommunityFilterBar from 'sly/web/components/organisms/CommunityFilterBar';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
+import SearchResultsAdTileContainer from 'sly/web/containers/SearchResultsAdTileContainer';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;
@@ -44,6 +49,8 @@ const PaginationText = pad('div');
 const PaddedPagination = pad(Pagination, 'small');
 
 const PaddedGetAssessmentBoxContainer = pad(GetAssessmentBoxContainer);
+
+const PaddedSearchResultsAdTileContainer = pad(SearchResultsAdTileContainer);
 
 const mostSearchedCities = [
   {
@@ -115,7 +122,11 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
   const present = (requestMeta['page-number'] * requestMeta['page-size']);
   const start = present + 1;
   const end = (present + requestMeta['page-size']  > count ? count : present + requestMeta['page-size']);
-  const { city, state }  = searchParams;
+  const { city, state, toc }  = searchParams;
+  const locLabel = getLocationLabel(searchParams);
+  const tocLabel = getTocLabel(searchParams.toc);
+  const showZillowSearchAd = shouldShowZillowSearchAd(toc);
+
   // pagination pathname
   let params = {};
   if (location.search) {
@@ -165,7 +176,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
               }}
             />
           </Link>
-          {((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
+          {!showZillowSearchAd && ((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
             <>
               <PaddedGetAssessmentBoxContainer
                 completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
@@ -174,6 +185,10 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
                 boxLayout="fixed"
               />
             </>
+          }
+          {
+            showZillowSearchAd && ((communityList.length < 3 && index === communityList.length - 1) || (communityList.length > 1 && index === 1)) &&
+            <PaddedSearchResultsAdTileContainer type="getOffer" locationLabel={locLabel} tocLabel={tocLabel} />
           }
         </Fragment>
       ))}

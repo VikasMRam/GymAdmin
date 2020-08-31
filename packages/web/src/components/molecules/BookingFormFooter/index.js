@@ -3,7 +3,7 @@ import { oneOf, string, bool, func } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-import { getKey, palette, size } from 'sly/web/components/themes';
+import { getKey, palette, size } from 'sly/common/components/themes';
 import { LATER_DATE } from 'sly/web/constants/date';
 import { TIME_OPTIONS } from 'sly/web/constants/bookingForm';
 import { Block, Button } from 'sly/web/components/atoms';
@@ -93,7 +93,7 @@ const BookingFormFooter = ({
           </div>
         </div>
       </PreferenceWrapper>
-      <StyledButton kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>
+      <StyledButton kind="jumbo" disabled={isButtonDisabled} background={paletteProp} onClick={onProgressClick}>
         {isFinalStep ? 'Send Tour Request' : 'Continue'}
       </StyledButton>
     </Wrapper>

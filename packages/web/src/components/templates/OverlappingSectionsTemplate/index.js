@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { size, assetPath, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
-import { Image, Heading, Block } from 'sly/web/components/atoms';
+import { Heading, Block } from 'sly/web/components/atoms';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 
 const FixedWidthContainer = styled.div`

@@ -3,8 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
-import { Who } from 'sly/web/components/wizards/assessment';
+import Who from '.';
+
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const WhoContainer = reduxForm({
   form: 'Who',

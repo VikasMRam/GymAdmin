@@ -2,8 +2,9 @@ import React from 'react';
 import { func, string, any, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
-import { Link, Span, Icon } from 'sly/web/components/atoms';
+import { size } from 'sly/common/components/themes';
+import { Icon, Link } from 'sly/common/components/atoms';
+import { Span } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;

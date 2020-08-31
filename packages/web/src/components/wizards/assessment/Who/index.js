@@ -10,7 +10,7 @@ import { Heading, Box } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 import TipBox from 'sly/web/components/molecules/TipBox';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const PaddedProgressBar = pad(ProgressBar);
 
@@ -24,11 +24,12 @@ const StyledTipBox = styled(TipBox)`
 `;
 
 const Who = ({
-  handleSubmit, invalid, submitting, hasTip,
+  handleSubmit, invalid, submitting, hasTip, onSkipClick, onBackClick,
 }) => (
   <div>
     <Wrapper>
-      <PaddedProgressBar label totalSteps={8} />
+      <PaddedProgressBar label totalSteps={10} currentStep={3} />
+      {/* <PaddedProgressBar label totalSteps={8} /> */}
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
@@ -43,7 +44,7 @@ const Who = ({
             <option value="">Select a person</option>
             {WHO_PERSON_OPTIONS.map(o => <option value={o.value} key={o.value}>{o.label}</option>)}
           </Field>
-          <Footer invalid={invalid} submitting={submitting} />
+          <Footer invalid={invalid} submitting={submitting} onSkipClick={onSkipClick} onBackClick={onBackClick} />
         </form>
       </Box>
       {hasTip &&
@@ -61,6 +62,8 @@ Who.propTypes = {
   invalid: bool,
   submitting: bool,
   hasTip: bool,
+  onSkipClick: func,
+  onBackClick: func,
 };
 
 Who.defaultProps = {

@@ -3,10 +3,10 @@ import React, { Fragment } from 'react';
 import { number, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { getThemePropType, size } from 'sly/web/components/themes';
+import { getThemePropType, size } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
-import { withColor } from 'sly/web/components/helpers';
+import { withColor } from 'sly/common/components/helpers';
 
 const times = (nr, fn) => Array.from(Array(nr).keys()).map((_, i) => fn(i));
 
@@ -65,7 +65,7 @@ const Rating = React.forwardRef(({ palette, variation, value, size, ...props }, 
       {times(5, i => (
         <Fragment key={`star${i}`}>
           {value >= i + 1 && <StarPath palette={palette} variation={variation} transform={`translate(${i * 24}, 0)`} />}
-          {value < i + 1 && <StarFillPath palette={palette} variation={variation} transform={`translate(${i * 24}, 0)`} />}
+          {value < i + 1 && <StarFillPath palette={palette} variation="lighter-60" transform={`translate(${i * 24}, 0)`} />}
           {value > i &&
             value < i + 1 && <MaskedStar palette={palette} variation={variation} value={value} transform={`translate(${i * 24}, 0)`} />}
         </Fragment>

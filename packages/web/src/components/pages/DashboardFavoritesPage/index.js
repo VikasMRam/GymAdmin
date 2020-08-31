@@ -2,12 +2,12 @@ import React from 'react';
 import { arrayOf, object, func, bool, shape } from 'prop-types';
 import styled from 'styled-components';
 
+import { size } from 'sly/common/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { size } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import shadow from 'sly/web/components/helpers/shadow';
 import Masonry from 'sly/web/components/common/Masonry';
-import { Heading, Paragraph, Hr, Link } from 'sly/web/components/atoms';
+import { Heading, Hr, Paragraph, Link } from 'sly/common/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import SectionForm from 'sly/web/components/molecules/SectionForm';
@@ -72,7 +72,6 @@ const StyledHr = styled(Hr)`
 
 const PaddedHeading = pad(textAlign(Heading), 'regular');
 const SlyVideoHeading = pad(textAlign(Heading), 'large');
-const PaddedParagraph = pad(textAlign(Paragraph), 'xLarge');
 
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,
@@ -134,7 +133,9 @@ const DashboardFavoritesPage = ({
           <>
             <Wrapper>
               <PaddedHeading size="subtitle" weight="regular">You haven&apos;t saved any communities yet.</PaddedHeading>
-              <PaddedParagraph size="caption">Add communities to your saved list to organize and compare which options are the best fit for you.</PaddedParagraph>
+              <Paragraph align="center" pad="xLarge" size="caption">
+                Add communities to your saved list to organize and compare which options are the best fit for you.
+              </Paragraph>
               <SearchBoxWrapper>
                 <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
               </SearchBoxWrapper>

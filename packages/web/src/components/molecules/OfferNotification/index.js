@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { bool, string } from 'prop-types';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { size, palette } from 'sly/web/components/themes';
-import { Icon, Span, Link } from 'sly/web/components/atoms';
+import { size, palette } from 'sly/common/components/themes';
+import { Icon, Link } from 'sly/common/components/atoms';
+import { Span } from 'sly/web/components/atoms';
 import GetCustomPricingContainer from 'sly/web/containers/GetCustomPricingContainer';
 
 const getColor = ({ palette: paletteProp }) => palette(paletteProp, 'filler');

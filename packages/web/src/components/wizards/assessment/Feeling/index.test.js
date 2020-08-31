@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Feeling } from 'sly/web/components/wizards/assessment';
+import Feeling from '.';
 
 const handleSubmit = jest.fn();
 const defaultProps = {
@@ -19,7 +19,7 @@ describe('Wizards|assessment - Steps|Feeling', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('PaddedHeading')).toHaveLength(1);
-    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
 
@@ -29,7 +29,7 @@ describe('Wizards|assessment - Steps|Feeling', () => {
     });
 
     expect(wrapper.find('PaddedHeading')).toHaveLength(1);
-    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);
   });
 

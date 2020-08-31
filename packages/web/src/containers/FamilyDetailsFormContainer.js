@@ -12,7 +12,7 @@ import { USER_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
 import { query, getRelationship } from 'sly/web/services/api';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { validateAM } from 'sly/web/services/helpers/client';
-import { selectFormData, trimFormData } from 'sly/web/services/helpers/forms';
+import { selectFormData, trimFormData } from 'sly/common/services/helpers/forms';
 import FamilyDetailsForm from 'sly/web/components/organisms/FamilyDetailsForm';
 
 const validate = createValidator({

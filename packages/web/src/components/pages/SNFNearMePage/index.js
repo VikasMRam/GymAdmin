@@ -2,10 +2,9 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
+
+import { size } from 'sly/common/components/themes';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
-
-import { size, assetPath, palette } from 'sly/web/components/themes';
-
 import { getStateAbbr } from 'sly/web/services/helpers/url';
 import HubHeader from 'sly/web/components/molecules/HubHeader';
 import PhoneCTAFooter from 'sly/web/components/molecules/PhoneCTAFooter';
@@ -17,21 +16,19 @@ import {
   makeWrapper,
   makeStickToTop,
   makeArticle,
-  makeTable,
   makeOneColumnListWrapper,
 } from 'sly/web/components/templates/HubPageTemplate';
-import { Label, Heading, Paragraph } from 'sly/web/components/atoms';
+import { Heading, Paragraph } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import { getTocSeoLabel } from 'sly/web/services/helpers/search';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
-import Link from 'sly/web/components/atoms/Link';
+import { Link } from 'sly/common/components/atoms';
 import ListItem from 'sly/web/components/molecules/ListItem';
 
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};
   display: block;
 `;
-
 
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');

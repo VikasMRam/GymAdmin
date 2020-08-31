@@ -3,14 +3,16 @@ import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
 import { host } from 'sly/web/config';
-import { size, palette, gridColumns, assetPath, getKey } from 'sly/web/components/themes';
+import { size, palette, getKey } from 'sly/common/components/themes';
+import { gridColumns, assetPath } from 'sly/web/components/themes';
 import { ALSeoCities, ALSeoStates } from 'sly/web/services/helpers/homepage';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import BannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
-import { Centered, Label, Heading, Hr, Link, Block, Paragraph, ResponsiveImage, Button } from 'sly/web/components/atoms';
+import { Label, Heading, Block, Button, Hr, Link, Paragraph } from 'sly/common/components/atoms';
+import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
 import Section from 'sly/web/components/molecules/Section';
 import DiscoverHomeTile from 'sly/web/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/web/components/molecules/MeetOthersTile';

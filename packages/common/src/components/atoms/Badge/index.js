@@ -1,14 +1,19 @@
-import styled from 'styled-components';
+import React from 'react';
 
-import styles  from './styles';
-import props  from './props';
+import Block from 'sly/common/components/atoms/Block';
 
-const Badge = styled.div`
-  ${styles}
-`;
+const Badge = props => <Block {...props} />;
 
-Badge.propTypes = props.propTypes;
-
-Badge.defaultProps = props.defaultProps;
+Badge.defaultProps = {
+  display: 'inline-flex',
+  padding: ['tiny', 'regular'],
+  background: 'warning',
+  backgroundVariation: 'base',
+  palette: 'slate',
+  size: 'tiny',
+  weight: 'medium',
+  borderRadius: 'large',
+  align: 'center',
+};
 
 export default Badge;

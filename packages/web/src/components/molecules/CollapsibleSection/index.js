@@ -4,8 +4,9 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
 
-import { size, key, palette } from 'sly/web/components/themes';
-import { Icon, ClampedText, Heading } from 'sly/web/components/atoms';
+import { size, key, palette } from 'sly/common/components/themes';
+import { Icon, Heading } from 'sly/common/components/atoms';
+import { ClampedText } from 'sly/web/components/atoms';
 import { weight as weightPropType } from 'sly/common/propTypes/weight';
 
 const Section = styled.section`

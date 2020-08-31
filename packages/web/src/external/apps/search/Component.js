@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { func, shape, string } from 'prop-types';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import pad from 'sly/web/components/helpers/pad';
-import { Heading, Hr } from 'sly/web/components/atoms';
+import { textAlign } from 'sly/web/components/helpers/text';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import SearchResultsContainer from 'sly/web/external/apps/search/SearchResultsContainer';
-import { textAlign } from 'sly/web/components/helpers/text';
+import { Heading, Hr } from 'sly/common/components/atoms';
 
 const Wrapper = styled.div`
   padding: ${size('spacing.large')};

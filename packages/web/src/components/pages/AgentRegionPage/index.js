@@ -5,14 +5,14 @@ import Helmet from 'react-helmet';
 
 import { getHelmetForAgentsRegionPage } from 'sly/web/services/helpers/html_headers';
 import agentPropType from 'sly/common/propTypes/agent';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { CONSULTATION_REQUESTED } from 'sly/web/services/api/constants';
 import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
+import { Heading, Block, Hr, Link } from 'sly/common/components/atoms';
 import AgentTile from 'sly/web/components/molecules/AgentTile';
 import Section from 'sly/web/components/molecules/Section';
 import Footer from 'sly/web/components/organisms/Footer';
-import { Heading, Block, Link, Hr } from 'sly/web/components/atoms';
 import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
 import FindLocalAgent from 'sly/web/components/molecules/FindLocalAgent';
 import MostSearchedRegions from 'sly/web/components/molecules/MostSearchedRegions';
@@ -30,11 +30,6 @@ const PageHeadingSection = styled.div`
 
 const FindLocalAgentLink = styled(Link)`
   text-decoration: underline;
-`;
-
-const StyledHr = styled(Hr)`
-  margin-top: ${size('spacing.huge')};
-  margin-bottom: ${size('spacing.huge')};
 `;
 
 const AgentTiles = styled.div`
@@ -129,7 +124,7 @@ export default class AgentRegionPage extends Component {
               Looking for agents in other areas?
             </FindLocalAgentLink>
           </PageHeadingSection>
-          <StyledHr fullWidth />
+          <Hr size="huge" fullWidth />
           {agentsList.length > 0 &&
             <AgentTiles>
               {agentsList.map(agent => <Link key={agent.id} to={agent.url}><AgentTile agent={agent} /></Link>)}
@@ -138,7 +133,7 @@ export default class AgentRegionPage extends Component {
           {agentsList.length === 0 &&
             <NoResultBlock>{`It looks like we do not have any agents listed in ${locationName}. We are currently adding new partners everyday who might not be listed yet. Fill out the form below and we will help you find your local partner agent.`}</NoResultBlock>
           }
-          <StyledHr fullWidth />
+          <Hr size="huge" fullWidth />
           <FormSection>
             <AskQuestionToAgentFormContainer
               hasLocation
@@ -152,7 +147,7 @@ export default class AgentRegionPage extends Component {
               }}
             />
           </FormSection>
-          <StyledHr fullWidth />
+          <Hr size="huge" fullWidth />
           <FindLocalAgentWrapper innerRef={this.findLocalAgentRef}>
             <FindLocalAgent onLocationSearch={onLocationSearch} />
           </FindLocalAgentWrapper>

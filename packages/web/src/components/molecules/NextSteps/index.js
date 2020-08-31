@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { object, string, arrayOf } from 'prop-types';
 
-import { Heading, Link, Paragraph } from 'sly/web/components/atoms';
-import { size, palette } from 'sly/web/components/themes';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import { size, palette } from 'sly/common/components/themes';
+import { Heading, Paragraph, Link } from 'sly/common/components/atoms';
+import IconButton from 'sly/common/components/molecules/IconButton';
 
 const StyledIconButton = styled(IconButton)`
   font-weight: bold;
@@ -26,10 +26,6 @@ const NextHeader = styled.div`
   padding: ${size('spacing.large')};
 `;
 
-const NextParagraph = styled(Paragraph)`
-    color: ${palette('white', 'base')};
-`;
-
 const NextHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
   color: ${palette('white', 'base')};
@@ -47,16 +43,16 @@ const NextSteps = ({
         <NextHeading level="title" size="title" ref={nextRef} >
           Next Steps
         </NextHeading>
-        <NextParagraph>
+        <Paragraph palette="white">
           {label}
-        </NextParagraph>
+        </Paragraph>
       </NextHeader>
       {links.map(p => (
         <StyledIconButton
           href={p.to}
           icon="chevron"
+          width="100%"
           right
-          fullWidth
           ghost
           transparent
           borderPalette="slate"

@@ -2,8 +2,8 @@ import React from 'react';
 import { string, bool } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
-import { Badge, Icon, Block } from 'sly/web/components/atoms';
+import { size, palette } from 'sly/common/components/themes';
+import { Badge, Icon, Block } from 'sly/common/components/atoms';
 
 const StyledBadge = styled(Badge)`
   width: ${p => p.fullWidth ? '100%' : 'auto'};

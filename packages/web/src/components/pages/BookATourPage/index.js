@@ -7,7 +7,7 @@ import { Route } from 'react-router';
 import CommunityBookATourContactFormContainer from 'sly/web/containers/CommunityBookATourContactFormContainer';
 import CommunityBookATourDateFormContainer from 'sly/web/containers/CommunityBookATourDateFormContainer';
 import { community as communityPropType } from 'sly/common/propTypes/community';
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import {
   FullScreenWizard,

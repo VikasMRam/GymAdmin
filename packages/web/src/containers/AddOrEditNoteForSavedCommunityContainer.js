@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import * as immutable from 'object-path-immutable';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { query } from 'sly/web/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import { community as communityPropType } from 'sly/common/propTypes/community';

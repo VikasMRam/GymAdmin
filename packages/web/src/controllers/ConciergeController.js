@@ -11,7 +11,7 @@ import {
   PROFILE_CONTACTED,
 } from 'sly/web/services/api/constants';
 import { prefetch, query, withAuth } from 'sly/web/services/api';
-import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
 
 export const CONVERSION_FORM = 'conversionForm';
 export const ADVANCED_INFO = 'advancedInfo';

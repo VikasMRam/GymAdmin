@@ -3,12 +3,14 @@ import { func, object, string } from 'prop-types';
 import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 
-import { assetPath } from 'sly/web/components/themes';
 import { generateAskAgentQuestionContents } from 'sly/web/services/helpers/agents';
+import { AA_CONSULTATION_REQUESTED } from 'sly/web/services/api/constants';
+import Thankyou from 'sly/web/components/molecules/Thankyou';
 import SlyEvent from 'sly/web/services/helpers/events';
 import withModal from 'sly/web/controllers/withModal';
 import withNotification from 'sly/web/controllers/withNotification';
 import { prefetch } from 'sly/web/services/api';
+import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 
 const CommunityAskQuestionAgentFormContainer = loadable(() =>
   import(/* webpackChunkName: "chunkCommunityAskQuestionAgentFormContainer" */ 'sly/web/containers/CommunityAskQuestionAgentFormContainer'),
@@ -62,6 +64,7 @@ export default class AskAgentQuestionContainer extends Component {
 
   openAskAgentQuestionModal = (subType) => {
     const { type, community, showModal, hideModal, notifyInfo } = this.props;
+
     const toggleAskAgentQuestionModal = () => {
       this.handleToggleAskAgentQuestionModal(true, subType);
       hideModal();
@@ -69,12 +72,26 @@ export default class AskAgentQuestionContainer extends Component {
     const onClose = () => {
       this.handleToggleAskAgentQuestionModal(true, subType);
     };
+    const postSubmit = () => {
+      // notifyInfo('Request sent successfully');
+      toggleAskAgentQuestionModal();
+      if (community) {
+        recordEntityCta(type, community.id);
+      }
+      showModal(<Thankyou
+        heading="Success!"
+        subheading={'Your request has been sent and we will connect with' +
+      ' you shortly.'}
+        onClose={hideModal}
+        doneText="Finish"
+      />);
+    };
 
     if (type === 'how-it-works-banner-notification' || type === 'side-column-get-help-now') {
-      const postSubmit = () => {
-        notifyInfo('Question sent successfully');
-        toggleAskAgentQuestionModal();
-      };
+      // const postSubmit = () => {
+      //   notifyInfo('Question sent successfully');
+      //   toggleAskAgentQuestionModal();
+      // };
       let initialValues = {};
       if (type === 'how-it-works-banner-notification') {
         initialValues = {
@@ -91,6 +108,20 @@ export default class AskAgentQuestionContainer extends Component {
         type,
       };
       showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
+    } else if (type === 'aa-sidebar' || type === 'aa-footer') {
+      const initialValues = {};
+
+      const modalComponentProps = {
+        heading: 'We understand selling your home is a big deal.',
+        description: 'Tell us how to connect with you and our team will reach out to share how we work with real estate agents.',
+        initialValues,
+        entityId: community.id,
+        category: 'community',
+        hideMessage: true,
+        postSubmit,
+        type,
+      };
+      showModal(<AskQuestionToAgentFormContainer actionType={AA_CONSULTATION_REQUESTED} {...modalComponentProps} />, onClose);
     } else {
       const { heading, description, placeholder, question } = generateAskAgentQuestionContents(
         community.name,
@@ -100,15 +131,16 @@ export default class AskAgentQuestionContainer extends Component {
       const modalComponentProps = {
         toggleAskAgentQuestionModal,
         notifyInfo,
-        community,
+        entityId: community.id,
+        category: 'community',
         heading,
         description,
         placeholder,
         question,
         type,
+        postSubmit,
       };
-
-      showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />, onClose);
+      showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
     }
 
     this.handleToggleAskAgentQuestionModal(false, subType);

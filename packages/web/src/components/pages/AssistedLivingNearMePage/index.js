@@ -2,6 +2,8 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
+
+import { size, palette } from 'sly/common/components/themes';
 import ListItem from 'sly/web/components/molecules/ListItem';
 import HubHeader from 'sly/web/components/molecules/HubHeader';
 import WhatIsPartnerAgent from 'sly/web/components/molecules/WhatIsPartnerAgent';
@@ -9,10 +11,8 @@ import PhoneCTAFooter from 'sly/web/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/web/components/molecules/NextSteps';
 import ADLChart from 'sly/web/components/molecules/ADLChart';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
-import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer'
-
+import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 import { getStateAbbr } from 'sly/web/services/helpers/url';
-import { size, palette, assetPath } from 'sly/web/components/themes';
 import {
   HubPageTemplate,
   makeBody,
@@ -25,7 +25,8 @@ import {
   makeTwoColumnListWrapper,
   makeOneColumnListWrapper,
 } from 'sly/web/components/templates/HubPageTemplate';
-import { ResponsiveImage, Label, Heading, Paragraph, Link, Icon, Hr, Image } from 'sly/web/components/atoms';
+import { Heading, Icon, Paragraph, Link } from 'sly/common/components/atoms';
+import { ResponsiveImage } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import { ALSeoCities, ALSeoStates } from 'sly/web/services/helpers/homepage';
@@ -890,9 +891,11 @@ const NearMePage = ({
             </Column>
             <Body>
               {SEOContentAL()}
-              <Heading level="title" size="title">
-                {heading}
-              </Heading>
+              {!isFetchingResults &&
+                <Heading level="title" size="title">
+                  {heading}
+                </Heading>
+              }
               {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
               {!isFetchingResults && (
                 <CommunitySearchList

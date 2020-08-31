@@ -3,8 +3,8 @@ import { func, arrayOf, object, shape, string } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
-import { Block, Hr } from 'sly/web/components/atoms';
+import { size, palette } from 'sly/common/components/themes';
+import { Block, Hr } from 'sly/common/components/atoms';
 import DashboardCommunityAgentSearchBox from 'sly/web/components/organisms/DashboardCommunityAgentSearchBox';
 import DashboardAdminReferralAgentTile from 'sly/web/components/organisms/DashboardAdminReferralAgentTile';
 import { adminCommunityPropType } from 'sly/common/propTypes/community';

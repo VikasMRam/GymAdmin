@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
+import { Heading, Hr, Paragraph, Link } from 'sly/common/components/atoms';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
-import { Link, Paragraph, Heading, Hr } from 'sly/web/components/atoms';
-import { phoneFormatter } from 'sly/web/services/helpers/phone';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};

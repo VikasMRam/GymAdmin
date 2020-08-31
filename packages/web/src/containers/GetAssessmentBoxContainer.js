@@ -2,19 +2,22 @@ import React, { Component } from 'react';
 import { string, object, bool } from 'prop-types';
 import { branch } from 'recompose';
 
+import { isBrowser } from 'sly/web/config';
 import { prefetch } from 'sly/web/services/api';
 import agentPropType from 'sly/common/propTypes/agent';
 import communityPropType from 'sly/common/propTypes/community';
 import SlyEvent from 'sly/web/services/helpers/events';
+import { getIsActiveAdult, getIsSellerAgentCTA } from 'sly/web/services/helpers/community';
+import { shouldShowZillowProfileAd } from 'sly/web/services/helpers/adtiles';
 import pad from 'sly/web/components/helpers/pad';
 import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
-import { Link, Block } from 'sly/web/components/atoms';
+import { Link, Block } from 'sly/common/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
 import GetAssessmentBox from 'sly/web/components/organisms/GetAssessmentBox';
 import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
 import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';
-import GetCommunityPricingAndAvailability from 'sly/web/components/organisms/GetCommunityPricingAndAvailability';
-import CommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
+import SidebarCTAContainer from 'sly/web/containers/communityProfile/SidebarCTAContainer';
+import StickyFooterCTAContainer from 'sly/web/containers/communityProfile/StickyFooterCTAContainer';
 
 const PaddedBlock = pad(Block, 'regular');
 
@@ -36,6 +39,7 @@ export default class GetAssessmentBoxContainer extends Component {
     boxLayout: string,
     startLink: string.isRequired,
     completedAssessment: bool,
+    completedPricing: bool,
     className: string,
     extraProps: object.isRequired,
   };
@@ -53,6 +57,13 @@ export default class GetAssessmentBoxContainer extends Component {
     this.setState({
       modalOpened: !modalOpened,
     });
+    const action = modalOpened ? 'open-modal' : 'close-modal';
+    const { layout } = this.props;
+    SlyEvent.getInstance().sendEvent({
+      category: 'assessmentWizard',
+      action,
+      label: layout,
+    });
   };
 
   // componentDidMount() {
@@ -65,9 +76,10 @@ export default class GetAssessmentBoxContainer extends Component {
   //   });
   // }
 
+
   render() {
     const {
-      status = {}, layout, boxLayout, agent, community, completedAssessment, startLink, className, extraProps,
+      status = {}, layout, boxLayout, agent, community, completedAssessment, completedPricing, startLink, className, extraProps,
     } = this.props;
     const { modalOpened } = this.state;
     let hasFinished = true;
@@ -75,7 +87,8 @@ export default class GetAssessmentBoxContainer extends Component {
       to: startLink,
       buttonTo: startLink,
     };
-    if (completedAssessment) {
+
+    if (completedAssessment || completedPricing) {
       buttonProps = {
         onClick: this.toggleModal,
       };
@@ -90,7 +103,7 @@ export default class GetAssessmentBoxContainer extends Component {
 
     return (
       <div className={className}>
-        {layout === 'box' &&
+        {layout === 'box' && !completedAssessment && isBrowser &&
           <GetAssessmentBox
             palette="primary"
             layout={boxLayout}
@@ -98,24 +111,16 @@ export default class GetAssessmentBoxContainer extends Component {
           />
         }
         {layout === 'sidebar' &&
-          <GetCommunityPricingAndAvailability
-            community={community}
-            {...buttonProps}
-          />
+          <SidebarCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing} />
         }
         {layout === 'footer' &&
-          <CommunityStickyFooter
-            community={community}
-            locTrack="sticky-footer"
-            isAlreadyPricingRequested={completedAssessment}
-            {...buttonProps}
-          />
+          <StickyFooterCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing} />
         }
         {layout === 'pricing-table' &&
           <CommunityPricingTable
             {...extraProps}
             community={community}
-            isAlreadyPricingRequested={completedAssessment}
+            isAlreadyPricingRequested={completedPricing}
             buttonProps={buttonProps}
           />
         }

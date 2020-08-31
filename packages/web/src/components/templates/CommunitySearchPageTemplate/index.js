@@ -1,8 +1,8 @@
 import React from 'react';
-import { any } from 'prop-types';
+import { any, object } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
 import Footer from 'sly/web/components/organisms/Footer';
@@ -42,11 +42,12 @@ const ColumnWrapper = styled.aside`
 const CommunitySearchPageTemplate = ({
   children,
   column,
+  searchParams,
 }) => (
   <>
     <TemplateHeader>
       <HeaderContainer />
-      <BannerNotificationAdContainer type="covid-19" />
+      <BannerNotificationAdContainer type="wizardSearch" {...searchParams} />
     </TemplateHeader>
     <TemplateContent>
       <TwoColumnWrapper>
@@ -61,6 +62,7 @@ const CommunitySearchPageTemplate = ({
 CommunitySearchPageTemplate.propTypes = {
   children: any.isRequired,
   column: any.isRequired,
+  searchParams: object,
 };
 
 export default CommunitySearchPageTemplate;

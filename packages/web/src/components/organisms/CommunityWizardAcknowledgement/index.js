@@ -2,11 +2,11 @@ import React from 'react';
 import { string, bool, func, array } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
-import { Block, Button, Heading, Hr } from 'sly/web/components/atoms';
+import { Block, Button, Heading, Hr } from 'sly/common/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import HowSlyWorksVideo from 'sly/web/components/organisms/HowSlyWorksVideo';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
@@ -33,8 +33,6 @@ const StyledButton = fullWidth(styled(Button)`
   margin-right: auto;
 `);
 StyledButton.displayName = 'StyledButton';
-
-const PaddedHr = pad(Hr, 'xxxLarge');
 
 const IconsWrapper = pad(mobileOnly(styled.div`
   display: grid;
@@ -66,7 +64,7 @@ const CommunityWizardAcknowledgement = ({
       {subheading && <StyledBlock size="subtitle" palette="grey">{subheading}</StyledBlock>}
       <StyledButton href={buttonTo}>{buttonText}</StyledButton>
     </Wrapper>
-    <PaddedHr />
+    <Hr pad="xxxLarge" />
     <StyledHeading>Seniorly is designed for you.</StyledHeading>
     <StyledBlock size="subtitle" palette="grey">Get the tools and support you need to find the right community.</StyledBlock>
     <IconsWrapper>
@@ -75,7 +73,7 @@ const CommunityWizardAcknowledgement = ({
       <IconItem borderless={false} icon="book">Online resources</IconItem>
     </IconsWrapper>
     <PaddedHowSlyWorksVideo isPlaying={isVideoPlaying} onPause={onVideoPause} onPlay={onVideoPlay} onThumbnailClick={onVideoThumbnailClick} />
-    <PaddedHr />
+    <Hr pad="xxxLarge" />
     <StyledHeading>You might like these communities.</StyledHeading>
     <SimilarCommunities communityStyle={{ imageSize: 'little', layout: 'row', showDescription: false }} communities={similarCommunities} />
   </TopWrapper>

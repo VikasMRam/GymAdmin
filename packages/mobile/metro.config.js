@@ -8,7 +8,7 @@
 const path = require('path');
 const fs = require('fs');
 
-module.exports = {
+module.exports = (async () => ({
   transformer: {
     getTransformOptions: async () => ({
       transform: {
@@ -16,6 +16,7 @@ module.exports = {
         inlineRequires: false,
       },
     }),
+    assetPlugins: ['react-native-svg-asset-plugin'],
   },
   /**
    * Ensure any imports inside the shared 'components' folder resolve to the local node_modules folder
@@ -45,4 +46,4 @@ module.exports = {
     path.resolve(__dirname, '..'),
     path.resolve(__dirname, '..', '..'),
   ],
-};
+}))();

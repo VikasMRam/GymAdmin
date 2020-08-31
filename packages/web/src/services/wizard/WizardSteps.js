@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Children, isValidElement } from 'react';
 import { number, node, func, arrayOf, object } from 'prop-types';
 
 export default class WizardSteps extends Component {
@@ -13,9 +13,12 @@ export default class WizardSteps extends Component {
   initSteps() {
     // NOTE: React caches the class objects, so utilizing same components can clash
     const { children, init } = this.props;
+
     // filter to remove children that are falsy values and not react elements
     // children that in conditions which evaluate to fasly values
-    const stepNames = children.filter(c => c).map(c => c.props.name);
+    const stepNames = Children.map(children,
+      child => isValidElement(child) && child.props.name)
+      .filter(c => c);
 
     init(stepNames);
   }
@@ -34,7 +37,7 @@ export default class WizardSteps extends Component {
     } = this.props;
     // remove children that are falsy values and not react elements
     // children that in conditions which evaluate to fasly values
-    const filteredChildren = children.filter(c => c);
+    const filteredChildren = Children.toArray(children).filter(c => isValidElement(c));
     let newChild = filteredChildren[0];
     const { form } = formOptions;
 

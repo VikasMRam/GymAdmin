@@ -1,22 +1,42 @@
+
 import React from 'react';
-import styled from 'styled-components/native';
+import { string } from 'prop-types';
 
-import styles  from './styles';
-import { textStyles } from './styles.common';
-import props  from './props';
+import Block from 'sly/common/components/atoms/Block';
 
-const StyledView = styled.View`
-  ${styles}
-`;
+const Badge = ({
+  display, background, backgroundVariation, borderRadius, align,
+  ...props
+}) => (
+  <Block
+    display={display}
+    background={background}
+    backgroundVariation={backgroundVariation}
+    borderRadius={borderRadius}
+    align={align}
+  >
+    <Block {...props} />
+  </Block>
+);
 
-const StyledText = styled.Text`
-  ${textStyles}
-`;
+Badge.propTypes = {
+  display: string,
+  background: string,
+  backgroundVariation: string,
+  borderRadius: string,
+  align: string,
+};
 
-const Badge = props => <StyledView {...props}><StyledText {...props} /></StyledView>;
-
-Badge.propTypes = props.propTypes;
-
-Badge.defaultProps = props.defaultProps;
+Badge.defaultProps = {
+  display: 'inline-flex',
+  padding: ['tiny', 'regular'],
+  background: 'warning',
+  backgroundVariation: 'base',
+  palette: 'slate',
+  size: 'tiny',
+  weight: 'medium',
+  borderRadius: 'large',
+  align: 'center',
+};
 
 export default Badge;

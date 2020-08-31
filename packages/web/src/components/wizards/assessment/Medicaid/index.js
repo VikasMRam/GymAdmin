@@ -3,16 +3,14 @@ import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
 import { MEDICAID_OPTIONS } from 'sly/web/constants/wizards/assessment';
-import { getLabelForWhoPersonOption } from 'sly/web/components/wizards/assessment/helpers';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 import TipBox from 'sly/web/components/molecules/TipBox';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const PaddedProgressBar = pad(ProgressBar);
 
@@ -20,12 +18,6 @@ const PaddedHeading = pad(Heading);
 PaddedHeading.displayName = 'PaddedHeading';
 
 const PaddedIconItem = pad(IconItem, 'large');
-
-const StyledField = styled(Field)`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
-`;
 
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
@@ -39,8 +31,10 @@ const generateHeading = (whoNeedsHelp) => {
       return 'Do you or your spouse qualify for Medicaid?';
     case 'myself':
       return 'Do you qualify for Medicaid?';
+    case 'friend':
+      return 'Does your friend(s) qualify for Medicaid?';
     default:
-      return `Does your ${getLabelForWhoPersonOption(whoNeedsHelp)} qualify for Medicaid?`;
+      return 'Does your person qualify for Medicaid?';
   }
 };
 
@@ -49,13 +43,13 @@ const Medicaid = ({
 }) => (
   <div>
     <Wrapper>
-      <PaddedProgressBar label totalSteps={8} currentStep={8} />
+      <PaddedProgressBar label totalSteps={10} currentStep={10} />
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
         <form onSubmit={handleSubmit}>
-          <StyledField
+          <Field
             options={MEDICAID_OPTIONS}
             name="medicaid"
             type="boxChoice"

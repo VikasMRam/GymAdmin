@@ -2,13 +2,12 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { func } from 'prop-types';
+
+import { size } from 'sly/common/components/themes';
 import HubHeader from 'sly/web/components/molecules/HubHeader';
 import PhoneCTAFooter from 'sly/web/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/web/components/molecules/NextSteps';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
-
-import { getStateAbbr } from 'sly/web/services/helpers/url';
-import { size, palette, assetPath } from 'sly/web/components/themes';
 import {
   HubPageTemplate,
   makeBody,
@@ -19,7 +18,7 @@ import {
   makeArticle,
   makeTable,
 } from 'sly/web/components/templates/HubPageTemplate';
-import { Heading, Paragraph, Link } from 'sly/web/components/atoms';
+import { Heading, Paragraph, Link } from 'sly/common/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import CarePageAdTileContainer from 'sly/web/containers/CarePageAdTileContainer';
 

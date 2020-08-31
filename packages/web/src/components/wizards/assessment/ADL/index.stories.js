@@ -3,8 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
-import { ADL } from 'sly/web/components/wizards/assessment';
+import ADL from '.';
+
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const ADLContainer = reduxForm({
   form: 'ADL',

@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 
+import { size } from 'sly/common/components/themes';
 import ListItem from 'sly/web/components/molecules/ListItem';
 import HubHeader from 'sly/web/components/molecules/HubHeader';
 import WhatIsPartnerAgent from 'sly/web/components/molecules/WhatIsPartnerAgent';
@@ -12,7 +13,6 @@ import ADLChart from 'sly/web/components/molecules/ADLChart';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
 import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer'
 import { getStateAbbr } from 'sly/web/services/helpers/url';
-import { size } from 'sly/web/components/themes';
 import {
   HubPageTemplate,
   makeBody,
@@ -24,10 +24,10 @@ import {
   makeTable,
   makeOneColumnListWrapper,
 } from 'sly/web/components/templates/HubPageTemplate';
-import { ResponsiveImage, Heading, Paragraph, Link } from 'sly/web/components/atoms';
+import { Heading, Paragraph, Link } from 'sly/common/components/atoms';
+import { ResponsiveImage } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
-
 
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};

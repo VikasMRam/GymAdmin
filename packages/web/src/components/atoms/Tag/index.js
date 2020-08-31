@@ -1,30 +1,38 @@
-import { string } from 'prop-types';
-import styled from 'styled-components';
+import React from 'react';
+import { bool, string } from 'prop-types';
 
-import { size, palette } from 'sly/web/components/themes';
+import Block from 'sly/common/components/atoms/Block';
 
-const Tag = styled.div`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: ${palette('primary', 'base')};
-  color: ${palette('white', 'base')};
-  letter-spacing: ${size('spacing.nano')};
-  line-height: ${size('spacing.large')};
-  font-size: ${size('spacing.medium')};
-  height: ${size('spacing.xLarge')};
-  border-radius: ${size('spacing.small')};
-  padding: 0 ${size('spacing.regular')};
-`;
+const Tag = ({ ...props }) => {
+  if (props.outline) {
+    props.border = 'regular';
+  } else {
+    props.background = props.palette;
+    props.palette = 'white';
+  }
+
+  return <Block {...props} />;
+};
+
+Tag.displayName = 'Tag';
 
 Tag.propTypes = {
   palette: string,
-  size: string,
+  outline: bool,
 };
 
 Tag.defaultProps = {
-  palette: 'grey',
-  size: 'body',
+  size: 'tiny',
+  weight: 'bold',
+  elementSize: 'tag',
+  borderRadius: 'small',
+  display: 'inline-flex',
+  palette: 'primary',
+  align: 'center',
+  padding: '0 regular',
+  fontWeight: 'bold',
+  textTransform: 'uppercase',
+  singleLine: true,
 };
 
 export default Tag;

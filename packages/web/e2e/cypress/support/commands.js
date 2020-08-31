@@ -65,9 +65,10 @@ function throwOnUnsuccessful(response) {
 }
 
 Cypress.Commands.add('getUser', () => {
+  const url = 'https://api.myseniorly.com';
   return Cypress.Promise.all([
-    fetch('/v0/platform/uuid-actions', { credentials: 'include' }).then(throwOnUnsuccessful),
-    fetch('/v0/platform/users/me', { credentials: 'include' }).then(throwOnUnsuccessful),
+    fetch(`${url}/v0/platform/uuid-actions`, { credentials: 'include' }).then(throwOnUnsuccessful),
+    fetch(`${url}/v0/platform/users/me`, { credentials: 'include' }).then(throwOnUnsuccessful),
   ])
     .then(responses => Cypress.Promise.all(responses.map(toJson)))
     // .then(responses => Cypress.Promise.all(responses.map(toJson)))

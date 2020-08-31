@@ -6,9 +6,9 @@ import pick from 'lodash/pick';
 
 import userPropType from 'sly/common/propTypes/user';
 import clientPropType from 'sly/common/propTypes/client';
-import { size } from 'sly/web/components/themes';
-import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
-import Field from 'sly/web/components/molecules/Field';
+import { size } from 'sly/common/components/themes';
+import { AGENT_ND_ROLE, PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
+import Field from 'sly/common/components/molecules/Field';
 import {
   FAMILY_STATUS_ACTIVE,
   FAMILY_STATUS_ARCHIVED,
@@ -69,7 +69,7 @@ export default class StatusSelect extends Component {
 
   componentDidUpdate({ status }) {
     const { status: newStatus } = this.props;
-    if (newStatus && status !== newStatus) {
+    if (status && newStatus && status !== newStatus) {
       this.onChange({ value: newStatus });
     }
   }
@@ -101,7 +101,6 @@ export default class StatusSelect extends Component {
     label: 'Expected resume date',
   });
 
-  // FIXME: Because I am an idiot and am not clever in the slightest
   optionsForUser = () => {
     const { user } = this.props;
     const { roleID } = user;
@@ -183,8 +182,8 @@ export default class StatusSelect extends Component {
       <StyledField
         type="choice"
         name="status"
+        size="tag"
         value={this.state.status}
-        size="tiny"
         options={this.optionsForUser()}
         onChange={this.onChange}
         {...props}

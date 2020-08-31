@@ -16,7 +16,7 @@ import {
   ADMIN,
   DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
-import { PLATFORM_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import communityPropType from 'sly/common/propTypes/community';
 import userPropType from 'sly/common/propTypes/user';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
@@ -28,7 +28,6 @@ import {
   Top,
   Right,
   Left,
-  SummarySection,
   DashboardWithSummaryPageTemplate, LeftNotifications, Loading,
 } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import DashboardCommunitySummary from 'sly/web/components/organisms/DashboardCommunitySummary';
@@ -41,8 +40,9 @@ import DashboardContactsSectionContainer from 'sly/web/containers/dashboard/Dash
 import DashboardAgentFamilyOverviewSectionContainer from 'sly/web/containers/DashboardAgentFamilyOverviewSectionContainer';
 import DashboardCommunityEditsContainer from 'sly/web/containers/DashboardCommunityEditsContainer';
 import { PROPERTY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
-import Link from 'sly/web/components/atoms/Link';
+import { Link } from 'sly/web/components/atoms';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
+import { Box } from 'sly/common/components/atoms';
 
 export default class DashboardCommunityDetailsPage extends Component {
   static propTypes = {
@@ -151,7 +151,6 @@ export default class DashboardCommunityDetailsPage extends Component {
     const breadCrumbItems = [
       { ...backLink, label: 'Communities' },
       {
-        path: match.url,
         label: community.name,
       },
     ];
@@ -197,13 +196,15 @@ export default class DashboardCommunityDetailsPage extends Component {
       });
     }
 
+    const headerActions = community.url && <Link to={community.url}>View profile</Link>;
+
     return (
       <DashboardWithSummaryPageTemplate activeMenuItem="Communities">
         <Top>
           <BreadCrumb items={breadCrumbItems} />
         </Top>
 
-        <Left heading={community.name} to={community.url}>
+        <Left heading={community.name} actions={headerActions}>
           {(notifications.length || null) && (
             <LeftNotifications>
               {notifications.map(({ palette, content }) => (

@@ -74,7 +74,7 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
 
 export const generateAskAgentQuestionContents = (name, city, type) => {
   let heading = `Ask your Local Senior Living Expert a question about ${name} in ${city}.`;
-  let placeholder = `Hi Rachel, I have a question about ${name} in ${city}...`;
+  let placeholder = `Hi, I have a question about ${name} in ${city}...`;
   let description = null;
   let question = null;
 
@@ -96,6 +96,9 @@ export const generateAskAgentQuestionContents = (name, city, type) => {
     heading = `We are excited to provide you a virtual tour of ${name}`;
     description = "Please tell us when you are available to take your virtual tour?";
     placeholder = "Write your preferred day and time here."
+  } else if (type === 'profile-content-question') {
+    heading = `Ask us anything about living at ${name}`;
+    question = "Hi, I am interested in knowing more about...";
   }
 
   return {

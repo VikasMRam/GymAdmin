@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { host, isServer, isBrowser } from 'sly/web/config';
 import { withUser } from 'sly/web/services/api';
-import { CUSTOMER_ROLE } from 'sly/web/constants/roles';
+import { CUSTOMER_ROLE } from 'sly/common/constants/roles';
 import {
   RETENTION_POPUP_IDLE_TIMEOUT,
   RETENTION_POPUP_EBOOK_TIMEOUT,

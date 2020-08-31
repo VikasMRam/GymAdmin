@@ -3,8 +3,7 @@ import { func, string, number, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
-import { BUDGET_OPTIONS, COEXISTING_BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
+import { BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { capitalize } from  'sly/web/services/helpers/utils';
 import pad from 'sly/web/components/helpers/pad';
@@ -13,7 +12,7 @@ import { Heading, Box, Block } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 import TipBox from 'sly/web/components/molecules/TipBox';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const PaddedProgressBar = pad(ProgressBar);
 
@@ -24,12 +23,6 @@ const PaddedIconItem = pad(IconItem, 'large');
 
 const PaddedBlock = pad(Block);
 PaddedBlock.displayName = 'PaddedBlock';
-
-const StyledField = styled(Field)`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
-`;
 
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
@@ -46,23 +39,23 @@ const generateHeading = (whoNeedsHelp, amount, city, state) => {
     case 'myself':
       return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Do you have access to any of these benefits?`;
     default:
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Does your ${whoNeedsHelp} have access to any of these benefits?`;
+      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Does the person you are looking for have access to any of these benefits?`;
   }
 };
 
 const Budget = ({
-  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip, change,
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip,
 }) => (
   <div>
     <Wrapper>
-      <PaddedProgressBar label totalSteps={8} currentStep={7} />
+      <PaddedProgressBar label totalSteps={10} currentStep={9} />
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp, amount, city, state)}</PaddedHeading>
         <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
-          <StyledField
+          <Field
             multiChoice
             options={BUDGET_OPTIONS}
             name="budget"
@@ -89,7 +82,6 @@ Budget.propTypes = {
   city: string.isRequired,
   state: string.isRequired,
   amount: number.isRequired,
-  change: func.isRequired,
   onSkipClick: func,
   onBackClick: func,
   invalid: bool,

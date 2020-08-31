@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { func, string } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import taskPropType from 'sly/common/propTypes/agent';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
@@ -87,11 +87,15 @@ const AgentRowCard = ({ agent, onAgentClick }) => {
       <NameCell agent={agent} to={agentDetailsPath} onClick={() => onAgentClick(agent)} />
       <DisplayNameCell>
         <span>Display Name</span>
-        <span>{displayName}</span>
+        <ClampedText>
+          <span>{displayName}</span>
+        </ClampedText>
       </DisplayNameCell>
       <AddressCell>
         <span>Address</span>
-        <span>{buildAddressDisplay(agent)}</span>
+        <ClampedText>
+          <span>{buildAddressDisplay(agent)}</span>
+        </ClampedText>
       </AddressCell>
       <StatusCell>
         <span>Status</span>

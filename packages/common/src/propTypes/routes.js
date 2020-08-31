@@ -1,5 +1,5 @@
-import { string, instanceOf, bool, shape, func, oneOfType, arrayOf } from 'prop-types';
 import { Component } from 'react';
+import { string, instanceOf, bool, shape, func, oneOfType, arrayOf } from 'prop-types';
 
 export const routes = arrayOf(shape({
   path: string.isRequired,

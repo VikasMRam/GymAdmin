@@ -3,10 +3,10 @@ import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import { Heading, Button, Block } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 import userPropType from 'sly/common/propTypes/user';
 
@@ -22,6 +22,12 @@ const StyledField = styled(Field)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
+const FieldsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: ${size('spacing.regular')};
+`;
+
 const CommunityAskQuestionAgentForm = ({
   heading, description, handleSubmit, pristine, submitting, error, placeholder, user,
 }) => (
@@ -30,13 +36,24 @@ const CommunityAskQuestionAgentForm = ({
       <Heading level="subtitle" size="subtitle">{heading}</Heading>
       {description && <Block>{description}</Block>}
     </TopSection>
-    {!(user && user.name) && <Field
-      name="full_name"
-      label="Full name"
-      type="text"
-      placeholder="Full name"
-      component={ReduxField}
-    />}
+    {!(user && user.name) &&
+    <FieldsWrapper>
+      <Field
+        name="firstName"
+        label="First Name"
+        type="text"
+        component={ReduxField}
+      />
+      <Field
+        name="lastName"
+        label="Last Name"
+        type="text"
+        component={ReduxField}
+      />
+    </FieldsWrapper>
+    }
+    {}
+
     {!(user && user.phoneNumber) &&
       <Field
         name="phone"

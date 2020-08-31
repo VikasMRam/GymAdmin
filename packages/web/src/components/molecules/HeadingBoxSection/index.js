@@ -3,8 +3,8 @@ import styled, { css } from 'styled-components';
 import { string, node, bool } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
-import { Heading, Hr } from 'sly/web/components/atoms';
+import { size, palette } from 'sly/common/components/themes';
+import { Heading, Hr } from 'sly/common/components/atoms';
 
 const filterProps = Component => ({
   hasNoBodyPadding,
@@ -41,7 +41,7 @@ const HeadingBoxSection = ({
   id, heading, children, className, hasNoBodyPadding, hasNoBorder, hasNoHr,
 }) => (
   <StyledSection id={id} className={className} hasNoBodyPadding={hasNoBodyPadding} hasNoBorder={hasNoBorder}>
-    <HeadingBlock level="subtitle" hasNoBodyPadding={hasNoBodyPadding} hasNoHr={hasNoHr}>{heading}</HeadingBlock>
+    <HeadingBlock size="subtitle" hasNoBodyPadding={hasNoBodyPadding} hasNoHr={hasNoHr}>{heading}</HeadingBlock>
     { !hasNoHr && <StyledHr hasNoBodyPadding={hasNoBodyPadding} /> }
     {children}
   </StyledSection>

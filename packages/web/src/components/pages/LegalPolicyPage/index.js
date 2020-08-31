@@ -3,8 +3,8 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { object } from 'prop-types';
 
-import { size, palette } from 'sly/web/components/themes';
-import { Hr } from 'sly/web/components/atoms';
+import { size, palette } from 'sly/common/components/themes';
+import { Hr } from 'sly/common/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
 import OverlappingSectionsTemplate from 'sly/web/components/templates/OverlappingSectionsTemplate';
 import Footer from 'sly/web/components/organisms/Footer';
@@ -20,8 +20,6 @@ const DescriptionText = pad(styled.div`
     margin-right: ${size('layout.gutter')};
   }
 `, 'huge');
-
-const PaddedHr = pad(Hr, 'huge');
 
 const ContentWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -64,7 +62,7 @@ const LegalPolicyPage = ({ match }) => {
         footer={<Footer />}
       >
         <ContentWrapper>
-          <PaddedHr />
+          <Hr pad="huge" />
         </ContentWrapper>
       </OverlappingSectionsTemplate>
     </>

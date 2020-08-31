@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { object, func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
-import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { generateSearchUrl } from 'sly/web/services/helpers/url';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath, getSearchParams } from 'sly/web/services/helpers/search';

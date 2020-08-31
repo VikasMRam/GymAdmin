@@ -20,6 +20,10 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C254581E07940726B8A02EEC /* libPods-mobile-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78BBA2CE1F94B0F427C6CEE4 /* libPods-mobile-tvOS.a */; };
 		CC2790B56FFB7B01B486F071 /* libPods-mobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92E5326E3CA0456915633CD6 /* libPods-mobile.a */; };
+		291B3B9FC47F47C595023141 /* azosans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A54137100E56464887A0CFD9 /* azosans-Bold.otf */; };
+		989491416AC147E5B3CE1745 /* azosans-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F22AB6749EEB412EA39C089C /* azosans-Light.otf */; };
+		0A1BFD08E072423E9DDBEDDF /* azosans-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 79D1047B5A054C7F9C4DBE71 /* azosans-Medium.otf */; };
+		00D3E4BA364A4E9D88B51301 /* azosans-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 922C8BE7A1A44CB0A1D2A104 /* azosans-Regular.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +71,10 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		FCDBE52B3D0E4C1E385910D3 /* Pods-mobile-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobile-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-mobile-tvOSTests/Pods-mobile-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		FE22E4039C39ADDCE853AF0F /* libPods-mobile-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mobile-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A54137100E56464887A0CFD9 /* azosans-Bold.otf */ = {isa = PBXFileReference; name = "azosans-Bold.otf"; path = "../assets/fonts/azo/azosans-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F22AB6749EEB412EA39C089C /* azosans-Light.otf */ = {isa = PBXFileReference; name = "azosans-Light.otf"; path = "../assets/fonts/azo/azosans-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		79D1047B5A054C7F9C4DBE71 /* azosans-Medium.otf */ = {isa = PBXFileReference; name = "azosans-Medium.otf"; path = "../assets/fonts/azo/azosans-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		922C8BE7A1A44CB0A1D2A104 /* azosans-Regular.otf */ = {isa = PBXFileReference; name = "azosans-Regular.otf"; path = "../assets/fonts/azo/azosans-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +189,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				1B93E7ED12824ABE9B2B8A41 /* Pods */,
+				DBFBABBFCA184899A30D2112 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -197,6 +206,18 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		DBFBABBFCA184899A30D2112 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				A54137100E56464887A0CFD9 /* azosans-Bold.otf */,
+				F22AB6749EEB412EA39C089C /* azosans-Light.otf */,
+				79D1047B5A054C7F9C4DBE71 /* azosans-Medium.otf */,
+				922C8BE7A1A44CB0A1D2A104 /* azosans-Regular.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -342,6 +363,10 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				291B3B9FC47F47C595023141 /* azosans-Bold.otf in Resources */,
+				989491416AC147E5B3CE1745 /* azosans-Light.otf in Resources */,
+				0A1BFD08E072423E9DDBEDDF /* azosans-Medium.otf in Resources */,
+				00D3E4BA364A4E9D88B51301 /* azosans-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

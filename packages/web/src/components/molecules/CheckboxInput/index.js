@@ -2,21 +2,16 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { string, func, oneOfType, bool, arrayOf, object } from 'prop-types';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import Checkbox from 'sly/web/components/molecules/Checkbox';
-import { Span } from 'sly/web/components/atoms';
+import { Block } from 'sly/common/components/atoms';
 import cursor from 'sly/web/components/helpers/cursor';
-
-const CheckboxItem = styled.div`
-  display: flex;
-  align-items: center;
-`;
 
 const StyledCheckbox = cursor(styled(Checkbox)`
   margin-right: ${size('spacing', 'regular')};
 `);
 
-const CheckboxLabel = cursor(Span);
+const CheckboxLabel = cursor(Block);
 
 export default class CheckboxInput extends Component {
   static propTypes = {
@@ -53,7 +48,7 @@ export default class CheckboxInput extends Component {
   };
 
   render() {
-    const { type, label, value, readOnly } = this.props;
+    const { type, label, value, readOnly, ...props } = this.props;
     let { options } = this.props;
     if (options.length === 0 && type === 'boolean') {
       options = [{ value: true, label }];
@@ -64,15 +59,21 @@ export default class CheckboxInput extends Component {
         ? !!value === option.value
         : value.indexOf(option.value) !== -1;
       return (
-        <CheckboxItem key={option.label} onClick={() => this.handleCheckboxItemOnClick(option)} >
+        <Block
+          display="flex"
+          verticalAlign="middle"
+          key={option.label}
+          onClick={() => this.handleCheckboxItemOnClick(option)}
+          {...props}
+        >
           <StyledCheckbox
             palette={readOnly ? 'grey' : 'primary'}
             uncheckedPalette="grey"
             readOnly={readOnly}
             checked={checked}
           />
-          <CheckboxLabel size="caption">{option.label}</CheckboxLabel>
-        </CheckboxItem>
+          <CheckboxLabel display="inline" size="caption">{option.label}</CheckboxLabel>
+        </Block>
       );
     });
   }

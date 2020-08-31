@@ -2,7 +2,8 @@ import React from 'react';
 import { string } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { Icon, Span, Link } from 'sly/web/components/atoms';
+import { Icon, Link } from 'sly/common/components/atoms';
+import { Span } from 'sly/web/components/atoms';
 import {
   ADMIN_DASHBOARD_AGENTS_PATH,
   ADMIN_DASHBOARD_CALLS_PATH,
@@ -16,7 +17,7 @@ import {
   AGENT_ADMIN_ROLE,
   AGENT_ND_ROLE,
   CUSTOMER_ROLE, PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE,
-} from 'sly/web/constants/roles';
+} from 'sly/common/constants/roles';
 import Block from 'sly/web/components/atoms/Block';
 import Role from 'sly/web/components/common/Role';
 

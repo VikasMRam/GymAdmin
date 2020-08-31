@@ -1,6 +1,5 @@
-import styles from './default';
-
 import { publicPath } from 'sly/web/config';
+import styles from 'sly/common/components/themes/default';
 
 const baseColor = styles.palette.slate.base;
 
@@ -45,6 +44,7 @@ export default `
   html * {
     font-family: Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif;
     box-sizing: border-box;
+    margin: 0;
   }
 
   html pre {

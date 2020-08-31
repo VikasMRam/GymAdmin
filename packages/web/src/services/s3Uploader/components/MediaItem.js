@@ -3,14 +3,12 @@ import styled from 'styled-components';
 import { sortableElement, sortableHandle } from 'react-sortable-hoc';
 import { bool, func } from 'prop-types';
 
+import { size, palette } from 'sly/common/components/themes';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import { imagePropType } from 'sly/common/propTypes/gallery';
-import Icon from 'sly/web/components/atoms/Icon';
-import { size, palette } from 'sly/web/components/themes';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import { Icon, Block, Link } from 'sly/common/components/atoms';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import HelpBubble from 'sly/web/components/form/HelpBubble';
-import Link from 'sly/web/components/atoms/Link';
-import Block from 'sly/web/components/atoms/Block';
 
 const DragHandle = sortableHandle(styled(Icon)`
   flex-grow: 0;
@@ -19,20 +17,20 @@ const DragHandle = sortableHandle(styled(Icon)`
 
 const Wrapper = sortableElement(styled.div`
   pointer-events: auto !important;
-  
+
   & > .drag-handle:hover {
     cursor: grab;
   }
-  
+
   body > & > .drag-handle:hover {
     cursor: grabbing;
   }
-  
+
   display: flex;
   align-items: center;
   height: 4rem;
   margin-bottom: ${size('spacing.regular')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  border: ${size('border.regular')} solid ${palette('slate.lighter-90')};
   border-radius: ${size('spacing.small')};
 `);
 
@@ -91,6 +89,7 @@ export default class MediaItem extends React.Component {
           <Link
             onClick={() => editImage(image)}
             palette="slate.lighter-30"
+            clamped
           >
             {descriptionText}
           </Link>

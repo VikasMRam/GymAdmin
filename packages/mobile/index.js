@@ -1,11 +1,15 @@
 import { AppRegistry } from 'react-native';
 
 import { name as appName } from './app.json';
+import MainApp from './src/MainApp';
 
-const RootComponent = __DEV__ && process.env.IS_STORYBOOK ?
-  // eslint-disable-next-line import/order
-  require('sly/storybook/mobile').default :
-  // eslint-disable-next-line import/order
-  require('./src/App').default;
+import { isDev } from 'sly/mobile/config';
+import StorybookApp from 'sly/storybook/mobile';
 
-AppRegistry.registerComponent(appName, () => RootComponent);
+if (isDev && process.env.IS_STORYBOOK) {
+  // eslint-disable-next-line no-console
+  console.log('Storybook enabled. Launching that instead of main app.');
+  AppRegistry.registerComponent(appName, () => StorybookApp);
+} else {
+  AppRegistry.registerComponent(appName, () => MainApp);
+}

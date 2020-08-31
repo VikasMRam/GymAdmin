@@ -9,8 +9,8 @@ describe('Community Profile Sections', () => {
       select('.Header').should('exist');
 
       // Main image with search box and credit should exists
-      select('.HomePage__HeroWrapper').should('exist');
-      select('.Image__StyledLazy').should('exist');
+      select('.ContentOverImage__Wrapper').should('exist');
+      select('.ContentOverImage__StyledImage').should('exist');
       select('.HomePage__SearchBoxWrapper').should('exist');
       select('.HomePage__ImageCreditDiv').should('exist');
 

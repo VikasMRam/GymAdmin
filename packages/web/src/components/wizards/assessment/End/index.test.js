@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { End } from 'sly/web/components/wizards/assessment';
+import End from '.';
+
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 import LindaIwamota from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 

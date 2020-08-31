@@ -3,12 +3,12 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import { oneOf, object } from 'prop-types';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import pad from 'sly/web/components/helpers/pad';
 import { textAlign } from 'sly/web/components/helpers/text';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import { Heading, Box, Icon, Button } from 'sly/web/components/atoms';
+import { Heading, Box, Icon, Button } from 'sly/common/components/atoms';
 
 const PaddedHeading = pad(Heading, 'large');
 PaddedHeading.displayName = 'PaddedHeading';
@@ -43,7 +43,7 @@ const GetAssessmentBox = ({ palette, layout, buttonProps }) => (
     <Wrapper layout={layout}>
       <StyledIcon icon="logo" palette="primary" size="hero" />
       <StyledHeading layout={layout} level="subtitle">Complete this 3-minute assessment tool to get personalized senior living and care options.</StyledHeading>
-      <FullWidthButton {...buttonProps} palette={palette}>Start</FullWidthButton>
+      <FullWidthButton {...buttonProps} background={palette}>Start</FullWidthButton>
     </Wrapper>
   </TextAlignCenteredBox>
 );

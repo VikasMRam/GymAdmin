@@ -3,13 +3,14 @@ import { number, string, bool } from 'prop-types';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { text as textPropType } from 'sly/common/propTypes/text';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import pad from 'sly/web/components/helpers/pad';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
-import { Block, Icon, Paragraph, Link, Span } from 'sly/web/components/atoms';
+import { Block, Icon, Paragraph, Link } from 'sly/common/components/atoms';
+import { Span } from 'sly/web/components/atoms';
 import { isBrowser } from 'sly/web/config';
 
 const overridePosition = ({ left, top }) => ({
@@ -22,14 +23,6 @@ const TooltipContent = styled(ReactTooltip)`
   background-color: ${palette('white', 'base')}!important;
   box-shadow: 0 0 ${size('spacing', 'large')} ${palette('slate', 'filler')}80;
   max-width: ${size('tile.large.width')};
-`;
-
-const StyledParagraph = styled(Paragraph)`
-  text-decoration: underline;
-  margin-bottom: ${size('spacing.small')};
-  color: ${palette('slate', 'base')};
-  font-size: ${size('text.caption')};
-  cursor: pointer;
 `;
 
 const StyledCommunityPricingWrapper = styled.div`
@@ -47,10 +40,18 @@ const CommunityPricing = ({ id, estimated, price, palette, variation, className,
   <StyledCommunityPricingWrapper className={className}>
     {estimated &&
       <DescriptionBlock size="caption">
-        <StyledParagraph data-tip data-for={tipId}>
+        <Block
+          cursor="pointer"
+          size="caption"
+          palette="slate"
+          pad="small"
+          textDecoration="underline"
+          data-tip
+          data-for={tipId}
+        >
           Seniorly Estimate
           <StyledIcon palette="slate" icon="help" size="caption" />
-        </StyledParagraph>
+        </Block>
         {isBrowser && (
           <TooltipContent
             id={tipId}

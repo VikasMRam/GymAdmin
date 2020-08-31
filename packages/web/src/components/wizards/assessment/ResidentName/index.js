@@ -3,12 +3,12 @@ import { func, number, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box } from 'sly/web/components/atoms';
 import TipBox from 'sly/web/components/molecules/TipBox';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const PaddedHeading = pad(Heading);
 PaddedHeading.displayName = 'PaddedHeading';
@@ -33,12 +33,12 @@ const ResidentName = ({
     <Box>
       <PaddedHeading level="subtitle" weight="medium">
         {numberOfPeople > 1 ?
-          'Last question, what are the residents\' names?' :
-          'Last question, what is the resident\'s name?'}
+          'What are the residents\' names?' :
+          'What is the resident\'s name?'}
       </PaddedHeading>
       <form onSubmit={handleSubmit}>
         {Array(numberOfPeople).fill().map((_, i) => (
-          <FieldsWrapper key={i}>
+          <FieldsWrapper key={Symbol(i).toString()}>
             <PaddedField
               name={`firstName${numberOfPeople > 1 ? i + 1 : ''}`}
               type="text"
@@ -53,7 +53,7 @@ const ResidentName = ({
             />
           </FieldsWrapper>
         ))}
-        <Footer submitButtonText="Finish" onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
+        <Footer onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
       </form>
     </Box>
     {hasTip &&

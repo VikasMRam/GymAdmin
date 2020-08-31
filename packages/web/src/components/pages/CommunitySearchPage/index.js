@@ -2,22 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 import loadable from '@loadable/component';
-import { ifProp } from 'styled-tools';
 
-import { size, palette, assetPath } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import { titleize } from 'sly/web/services/helpers/strings';
 import { getTocSeoLabel } from 'sly/web/services/helpers/search';
 import { getHelmetForSearchPage } from 'sly/web/services/helpers/html_headers';
-import { getBreadCrumbsForLocation, getStateAbbr} from 'sly/web/services/helpers/url';
+import { getBreadCrumbsForLocation, getStateAbbr } from 'sly/web/services/helpers/url';
+import PageViewActionContainer from 'sly/web/containers/PageViewActionContainer';
+import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
 import CommunitySearchPageTemplate from 'sly/web/components/templates/CommunitySearchPageTemplate';
-import { Heading, Button, Hr, Box, Image } from 'sly/web/components/atoms';
+import { Heading, Button, Hr, Box } from 'sly/common/components/atoms';
+import { Image } from 'sly/web/components/atoms';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/web/components/organisms/CommunityFilterList';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import pad from 'sly/web/components/helpers/pad';
 import ResponsiveSidebar from 'sly/web/components/molecules/ResponsiveSidebar';
+import { PROFILE_VIEWED, SEARCH_PAGE_VIEWED } from 'sly/web/services/api/constants';
 
 const SearchMap = loadable(() => import(/* webpackChunkName: "chunkSearchMap" */'sly/web/components/organisms/SearchMap'));
 
@@ -58,31 +62,6 @@ const FilterColumnWrapper = styled(Box)`
   width: ${size('layout.col3')};
   margin-bottom: ${size('spacing.xLarge')}
 `;
-
-const ImageButtonWrapper = pad(styled.div`
-  position: relative;
-  text-align: center;
-
-  height: 108px;
-  
-  img {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  a {
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  }
-
-  ${ifProp('isMapView', '', `
-    a {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  `)};
-`, 'large');
 
 const LegacyContent = pad(styled.div`
   a {
@@ -155,36 +134,35 @@ const CommunitySearchPage = ({
       {getHelmetForSearchPage({
         ...searchParams, url: location, communityList, listSize, geoGuide,
       })}
+      <PageViewActionContainer actionType={SEARCH_PAGE_VIEWED} actionInfo={{ city: searchParams.city, region: searchParams.state, careType: searchParams.toc }} />
       <CommunitySearchPageTemplate
+        searchParams={searchParams}
         column={(
           <>
-          <FilterColumnWrapper>
-            <>
-              <ImageButtonWrapper isMapView={isMapView}>
+            <FilterColumnWrapper>
+              <>
                 {isMapView ? (
                   <IconButton icon="list" to={listViewUrl} iconPalette="primary" ghost>
                     View List
                   </IconButton>
-                  ) : (
-                    <>
-                      <Image src={assetPath('images/map-placeholder.png')} />
-                      <IconButton icon="map" iconSize="body" to={mapViewUrl} iconPalette="primary" ghost>
-                        View Map
-                      </IconButton>
-                    </>
-                )}
-              </ImageButtonWrapper>
-              <StyledHr />
-            </>
-            <ResponsiveSidebar isOpen={areFiltersOpen} onCloseRequested={toggleFiltersOpen}>
-              <CommunityFilterList
-                searchParams={searchParams}
-                geoGuideList={geoGuide && geoGuide.cityTOCGuides}
-              />
-              <ApplyFilterButton kind="jumbo" onClick={toggleFiltersOpen}>Apply Filters</ApplyFilterButton>
-            </ResponsiveSidebar>
+              ) : (
+                <Image lazy={false} src={assetPath('images/map-placeholder.png')} aspectRatio="16:9">
+                  <IconButton icon="map" to={mapViewUrl} iconPalette="primary" ghost>
+                    View Map
+                  </IconButton>
+                </Image>
+              )}
+                <StyledHr />
+              </>
+              <ResponsiveSidebar isOpen={areFiltersOpen} onCloseRequested={toggleFiltersOpen}>
+                <CommunityFilterList
+                  searchParams={searchParams}
+                  geoGuideList={geoGuide && geoGuide.cityTOCGuides}
+                />
+                <ApplyFilterButton kind="jumbo" onClick={toggleFiltersOpen}>Apply Filters</ApplyFilterButton>
+              </ResponsiveSidebar>
 
-          </FilterColumnWrapper>
+            </FilterColumnWrapper>
           </>
         )}
       >

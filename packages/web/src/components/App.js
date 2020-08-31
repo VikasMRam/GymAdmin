@@ -9,10 +9,8 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import utc from 'dayjs/plugin/utc';
 
-// https://github.com/diegohaz/arc/wiki/Styling
-
 import { hideChatbox } from 'sly/web/config';
-import theme from 'sly/web/components/themes/default';
+import theme from 'sly/common/components/themes/default';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
 import { assetPath } from 'sly/web/components/themes';
 import { routes as routesPropType } from 'sly/common/propTypes/routes';

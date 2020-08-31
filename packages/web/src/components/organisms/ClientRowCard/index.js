@@ -5,12 +5,9 @@ import { object } from 'prop-types';
 import { ifProp, ifNotProp } from 'styled-tools';
 import { generatePath } from 'react-router';
 
-import {
-  Block,
-  Link,
-  Icon,
-  ClampedText,
-} from 'sly/web/components/atoms';
+import { size, palette } from 'sly/common/components/themes';
+import { Block, Icon } from 'sly/common/components/atoms';
+import { Link, ClampedText } from 'sly/web/components/atoms';
 import {
   DoubleLineTd,
   Td,
@@ -22,7 +19,6 @@ import { FAMILY_STATUS_ON_PAUSE } from 'sly/web/constants/familyDetails';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/web/constants/dashboardAppPaths';
 import clientPropType from 'sly/common/propTypes/client';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
-import { size, palette } from 'sly/web/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 
 const Wrapper = mobileOnly(Tr, css`

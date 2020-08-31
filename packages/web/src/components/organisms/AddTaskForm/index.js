@@ -4,10 +4,10 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import userPropType from 'sly/common/propTypes/user';
-import { Label } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import { Label } from 'sly/common/components/atoms';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
 
 const StyledTable = styled.table`

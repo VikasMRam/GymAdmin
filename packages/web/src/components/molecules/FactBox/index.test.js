@@ -1,10 +1,9 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
-import FactBox from 'sly/web/components/molecules/FactBox';
-import { Paragraph } from 'sly/web/components/atoms';
+import FactBox from '.';
 
-const wrap = (props = {}) => mount(<FactBox {...props} />);
+const wrap = (props = {}) => shallow(<FactBox {...props} />);
 
 const title = 'test title';
 const description = 'test description';
@@ -15,7 +14,7 @@ describe('FactBox', () => {
       title,
       description,
     });
-    expect(wrapper.find('StyledBlock').text()).toContain(title);
-    expect(wrapper.find(Paragraph).text()).toContain(description);
+    expect(wrapper.find('Block').text()).toContain(title);
+    expect(wrapper.find('Paragraph').dive().text()).toContain(description);
   });
 });

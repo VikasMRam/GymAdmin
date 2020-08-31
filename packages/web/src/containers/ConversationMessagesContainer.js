@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { prefetch, withUser, query, invalidateRequests } from 'sly/web/services/api';
 import userPropType from 'sly/common/propTypes/user';
 import messagePropType from 'sly/common/propTypes/conversation/conversationMessage';
@@ -37,10 +37,10 @@ import {
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   SUMMARY,
 } from 'sly/web/constants/dashboardAppPaths';
-import { Block, Button, Link } from 'sly/web/components/atoms';
+import { Block, Button, Link } from 'sly/common/components/atoms';
 import ConversationMessages from 'sly/web/components/organisms/ConversationMessages';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
-import IconButton from 'sly/web/components/molecules/IconButton';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import BackLink from 'sly/web/components/molecules/BackLink';
 import SendMessageFormContainer from 'sly/web/containers/SendMessageFormContainer';

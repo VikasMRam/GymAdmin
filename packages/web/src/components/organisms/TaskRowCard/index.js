@@ -3,15 +3,15 @@ import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import { func, string, bool } from 'prop-types';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import taskPropType from 'sly/common/propTypes/task';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
-import { Badge, Link, ClampedText } from 'sly/web/components/atoms';
+import { Badge, Link } from 'sly/common/components/atoms';
 import { Td, Tr } from 'sly/web/components/atoms/Table';
-import Stage from 'sly/web/components/molecules/Stage';
 import { getAppPathForEntity } from 'sly/web/services/helpers/appPaths';
+import Block from 'sly/web/components/atoms/Block';
 
 const Wrapper = mobileOnly(borderRadius(pad(Tr, 'large'), 'small'), css`
   display: flex;
@@ -25,11 +25,9 @@ const StyledNameCell = ({
   disabled, task, to, ...props
 }) => (
   <Td disabled={disabled} {...props}>
-    <ClampedText>
-      <Link to={to} {...props}>
-        {task.title}
-      </Link>
-    </ClampedText>
+    <Link block clamped to={to} {...props}>
+      {task.title}
+    </Link>
   </Td>
 );
 
@@ -86,14 +84,14 @@ const AssignedToCell = pad(mobileOnly(StyledTd, css`
 `), 'regular');
 AssignedToCell.displayName = 'AssignedToCell';
 
-const getColor = ({ priority }) => {
-  switch(priority) {
-    case "Urgent":
-      return palette('danger','base');
-    case "High":
-      return palette('warning','base');
+const getBadgeBackground = (priority) => {
+  switch (priority) {
+    case 'Urgent':
+      return 'danger';
+    case 'High':
+      return 'warning';
     default:
-      return palette('slate','base');
+      return 'slate';
   }
 };
 
@@ -103,12 +101,6 @@ const PriorityCell = pad(mobileOnly(StyledTd, css`
 `), 'regular');
 
 PriorityCell.displayName = 'PriorityCell';
-
-const StyledBadge = styled(Badge)`
-  text-transform: uppercase;
-  color: ${palette('white','base')};
-  background-color: ${ props => getColor(props)};
-`;
 
 const TaskRowCard = ({ task, onTaskClick }) => {
   const {
@@ -122,7 +114,7 @@ const TaskRowCard = ({ task, onTaskClick }) => {
         {relatedEntities && relatedEntities[0] &&
           <Link to={getAppPathForEntity(relatedEntities[0])}>
             <span>Related to: </span>
-            <span>{relatedEntities[0].label}</span>
+            <Block clamped>{relatedEntities[0].label}</Block>
           </Link>
         }
       </RelatedToCell>
@@ -135,11 +127,11 @@ const TaskRowCard = ({ task, onTaskClick }) => {
       </StageCell>
       <PriorityCell>
         <span>Priority</span>
-        <StyledBadge badgePalette="warning" palette="white" priority={priority}>{priority}</StyledBadge>
+        <Badge background={getBadgeBackground(priority)} palette="white">{priority.toUpperCase()}</Badge>
       </PriorityCell>
       <AssignedToCell>
         <span>Assigned to</span>
-        <span>{owner && owner.name}</span>
+        <Block clamped>{owner && owner.name}</Block>
       </AssignedToCell>
     </Wrapper>
   );

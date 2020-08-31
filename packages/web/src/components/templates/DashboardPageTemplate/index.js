@@ -1,8 +1,10 @@
 import React from 'react';
-import { node, string, bool } from 'prop-types';
-import styled from 'styled-components';
+import { bool, node, string } from 'prop-types';
+import styled, { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
+import { startingWith, upTo } from 'sly/common/components/helpers';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 import DashboardMenu from 'sly/web/components/molecules/DashboardMenu';
@@ -17,23 +19,43 @@ const Sidebar = styled.aside`
   display:none;
   grid-area: sidebar;
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+  ${startingWith('laptop', `
     width: 180px;
     display: inherit;
-  }
+  `)}
 `;
 
 const Body = styled.main`
-  height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${palette('grey.background')};
+  background-color: ${palette('slate.lighter-95')};
   grid-area: body;
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+  ${startingWith('tablet', css`
     padding: ${size('spacing.xLarge')};
-  }
+  `)}
+
+  ${startingWith('desktop', css`
+    height: 100%;
+  `)}
+
+  ${ifProp('hasStickyFooter', css`
+    // hack to add css specificity instead of using !important
+    &.hasStickyFooter {
+      ${upTo('tablet', css`
+        padding-bottom: calc(78px + ${size('spacing.large')});
+      `)}
+      ${upTo('laptop', css`
+        padding-bottom: calc(78px + ${size('spacing.xLarge')});
+      `)}
+    }
+  `)}
 `;
+
+Body.propTypes = {
+  hasStickyFooter: bool,
+};
+
 
 // min-width: 0 helps in avaoiding overflow when used with a clampped text children component like LatestMessage
 const DashboardPage = styled.div`
@@ -55,7 +77,7 @@ const DashboardPage = styled.div`
     min-width: 0;
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+  ${startingWith('laptop', css`
     display: grid;
     grid-template-columns: 180px auto;
     grid-gap: 0;
@@ -63,17 +85,18 @@ const DashboardPage = styled.div`
     grid-template-areas:
       "header header"
       "sidebar body";
-  }
+  `)}
 `;
 
 const DashboardPageTemplate = ({
-  children, activeMenuItem, className,
+  children, activeMenuItem, className, hasStickyFooter,
 }) => {
+  const cx = `${className}${hasStickyFooter ? ' hasStickyFooter' : ''}`;
   return (
     <DashboardPage>
       <Header><HeaderContainer /></Header>
       <Sidebar><DashboardMenu activeMenuItem={activeMenuItem} /></Sidebar>
-      <Body className={className}>{children}</Body>
+      <Body hasStickyFooter={hasStickyFooter} className={cx}>{children}</Body>
       <ModalContainer />
     </DashboardPage>
   );
@@ -83,6 +106,7 @@ DashboardPageTemplate.propTypes = {
   children: node,
   activeMenuItem: string.isRequired,
   className: string,
+  hasStickyFooter: bool,
 };
 
 export default DashboardPageTemplate;

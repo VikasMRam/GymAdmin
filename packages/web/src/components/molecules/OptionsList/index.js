@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, shape, string, func } from 'prop-types';
 
-import { size } from 'sly/web/components/themes';
-import { Hr, Link } from 'sly/web/components/atoms';
+import { size } from 'sly/common/components/themes';
+import { Hr, Link } from 'sly/common/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 
 const getMarginRight = p => p.borderless ? size('spacing', p.iconRightMarginSpacing) : size('spacing.large');
@@ -14,6 +14,7 @@ const OptionItemWrapper = styled(Link)`
 `;
 OptionItemWrapper.displayName = 'OptionItemWrapper';
 
+// todo: this calculation should change to prop margin
 const StyledHr = styled(Hr)`
   margin-left: calc(${size('border.regular')} + ${size('spacing.regular')} + ${getMarginRight} + ${size('icon.regular')});
   margin-bottom: 0;

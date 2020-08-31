@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import messagePropType from 'sly/common/propTypes/conversation/conversationMessage';
 import participantPropType from 'sly/common/propTypes/conversation/conversationParticipant';
 import pad from 'sly/web/components/helpers/pad';
 import { isAfter, isSameDay } from 'sly/web/services/helpers/date';
-import HrWithText from 'sly/web/components/molecules/HrWithText';
+import HrWithText from 'sly/common/components/molecules/HrWithText';
 import Message from 'sly/web/components/molecules/Message';
 
 const Wrapper = styled.div`
@@ -77,24 +77,22 @@ const ConversationMessages = ({
     if ((prevMessage && !isSameDay(prevMessage.createdAt, message.createdAt)) ||
       !prevMessage) {
       const dayName = getDateText(message.createdAt);
-      const hrProps = {
-        text: dayName,
-      };
+      const hrProps = {};
       if (!addedNewMarker && isAfter(message.createdAt, lastMessageReadAt) && ((nextMessage &&
         isAfter(nextMessage.createdAt, lastMessageReadAt)) || messages.length === 1)) {
         hrProps.badgeText = 'New';
-        hrProps.palette = 'warning';
-        hrProps.variation = 'base';
+        hrProps.background = 'warning';
+        hrProps.backgroundVariation = 'base';
         hrProps.hrRef = newMessageRef;
         addedNewMarker = true;
       }
-      messageComponents.push(<PaddedHrWithText key={`hr-${message.id}`} {...hrProps} />);
+      messageComponents.push(<PaddedHrWithText key={`hr-${message.id}`} {...hrProps}>{dayName}</PaddedHrWithText>);
     }
     if (lastMessageReadAt && !addedNewMarker && isAfter(message.createdAt, lastMessageReadAt)) {
       const hrProps = {
         badgeText: 'New',
-        palette: 'warning',
-        variation: 'base',
+        background: 'warning',
+        backgroundVariation: 'base',
         hrRef: newMessageRef,
       };
       addedNewMarker = true;

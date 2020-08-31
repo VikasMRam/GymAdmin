@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { arrayOf, object, bool } from 'prop-types';
 
 import { community as communityPropType } from 'sly/common/propTypes/community';
-import { palette, size } from 'sly/web/components/themes';
+import { palette, size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import { getIsCCRC, getIsSNF, getIsActiveAdult } from 'sly/web/services/helpers/community';
-import { Block, Paragraph } from 'sly/web/components/atoms';
+import { Block, Paragraph } from 'sly/common/components/atoms';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';
 import GetCustomPricingButtonContainer from 'sly/web/containers/GetCustomPricingButtonContainer';
@@ -135,7 +135,7 @@ const CommunityPricingTable = ({
         )}
         {isActiveAdult && (
           <Paragraph>
-            Pricing for {name} may require a purchuce or a monthly component. Connect directly with{' '}
+            Pricing for {name} may require a purchase or a monthly component. Connect directly with{' '}
             {name} to find out your pricing.
           </Paragraph>
         )}
@@ -153,9 +153,9 @@ const CommunityPricingTable = ({
           {...buttonProps}
           hasAlreadyRequestedPricing={isAlreadyPricingRequested}
           locTrack={locTrack}
-        >
-          Get Detailed Pricing
-        </StyledGetPricingButton>
+          community={community}
+          ctaText={'Get Pricing and Availability'}
+        />
       </Block>
     </>
   );

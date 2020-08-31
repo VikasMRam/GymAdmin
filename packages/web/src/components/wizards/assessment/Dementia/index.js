@@ -3,7 +3,6 @@ import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
 import { DEMENTIA_FORGETFUL_OPTIONS, DEMENTIA_FORGETFUL_DEFAULT_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import pad from 'sly/web/components/helpers/pad';
 import { getLabelForWhoPersonOption } from 'sly/web/components/wizards/assessment/helpers';
@@ -11,18 +10,12 @@ import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template'
 import { Heading, Box, Block } from 'sly/web/components/atoms';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 import TipBox from 'sly/web/components/molecules/TipBox';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const PaddedProgressBar = pad(ProgressBar);
 
 const PaddedHeading = pad(Heading, 'large');
 PaddedHeading.displayName = 'PaddedHeading';
-
-const StyledField = styled(Field)`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
-`;
 
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
@@ -56,7 +49,7 @@ const Dementia = ({
         <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
         <PaddedBlock>Please select all that apply.</PaddedBlock>
         <form onSubmit={handleSubmit}>
-          <StyledField
+          <Field
             multiChoice
             options={DEMENTIA_FORGETFUL_OPTIONS[whoNeedsHelp] || DEMENTIA_FORGETFUL_DEFAULT_OPTIONS[whoNeedsHelp]}
             name="forgetful"

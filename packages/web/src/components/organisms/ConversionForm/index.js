@@ -3,10 +3,10 @@ import { func, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import pad from 'sly/web/components/helpers/pad';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { Button, Heading, Box } from 'sly/web/components/atoms';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 

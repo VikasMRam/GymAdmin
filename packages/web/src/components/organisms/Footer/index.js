@@ -2,9 +2,8 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 
 import config from 'sly/web/config';
-import { size, palette } from 'sly/web/components/themes';
-import { Icon, Link, Hr } from 'sly/web/components/atoms';
-import Block from 'sly/web/components/atoms/Block';
+import { size, palette } from 'sly/common/components/themes';
+import { Icon, Block, Hr, Link } from 'sly/common/components/atoms';
 
 const FooterWrapper = styled.footer`
   background-color: ${palette('slate', 'base')};
@@ -77,10 +76,6 @@ const GroupItem = styled(Link)`
   color: ${palette('white', 'base')};
   font-size: ${size('spacing.large')};
   text-decoration: none;
-  margin-bottom: ${size('spacing.regular')};
-`;
-
-const StyledHR = styled(Hr)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
@@ -220,7 +215,7 @@ class Footer extends PureComponent {
           </GroupDiv>
           {groupComponents}
         </FooterTopWrapper>
-        <StyledHR palette="grey" variation="dark" />
+        <Hr palette="grey" variation="dark" pad="regular" />
         <FooterBottomWrapper>
           <TradeMark>&copy; Seniorly {currentYear} <Version>{config.version}</Version></TradeMark>
           <RightWrapper>

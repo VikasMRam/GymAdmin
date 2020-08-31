@@ -3,7 +3,7 @@ import { func, string, arrayOf, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { palette, size } from 'sly/web/components/themes';
+import { palette, size } from 'sly/common/components/themes';
 import {
   FAMILY_STAGE_ORDERED,
   FAMILY_STAGE_WON,
@@ -15,13 +15,14 @@ import {
   WAITLISTED,
   ESTIMATED_MOVE_IN,
 } from 'sly/web/constants/familyDetails';
-import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/web/constants/roles';
+import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/common/constants/roles';
 import Role from 'sly/web/components/common/Role';
 import pad from 'sly/web/components/helpers/pad';
 import { priceFormatter, priceParser } from 'sly/web/services/helpers/pricing';
 import { isBeforeNow, isAfterNow  } from 'sly/web/services/validation';
-import { Block, Span, Label } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import { Block, Label } from 'sly/common/components/atoms';
+import { Span } from 'sly/web/components/atoms';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
 
 const Warning = pad(styled(Block)`

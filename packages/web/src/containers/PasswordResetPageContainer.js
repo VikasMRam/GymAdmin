@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom';
 import { getSearchParams } from 'sly/web/services/helpers/search';
 import { DASHBOARD_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { createValidator, required } from 'sly/web/services/validation';
-import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { withAuth } from 'sly/web/services/api';
 import PasswordResetPage from 'sly/web/components/pages/PasswordResetPage';
 

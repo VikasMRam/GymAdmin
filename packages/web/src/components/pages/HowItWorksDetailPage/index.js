@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, func, arrayOf, object } from 'prop-types';
 
-import { size, assetPath, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
-import { Image, Link, Block, Heading, Hr } from 'sly/web/components/atoms';
+import { Link, Block, Heading, Hr } from 'sly/common/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import HowItWorksInfoTile from 'sly/web/components/molecules/HowItWorksInfoTile';
 import IconInfoTile from 'sly/web/components/molecules/IconInfoTile';
@@ -86,20 +86,6 @@ const BottomWrapper = styled.div`
   }
 `;
 
-const FAQHr = styled(Hr)`
-  margin: ${size('spacing.xxxLarge')} 0;
-`;
-
-// const TabsWrapper = styled.div`
-//   position: absolute;
-//   bottom: 0;
-//   width: inherit;
-
-//   display: flex;
-//   border: ${size('border.regular')} solid ${palette('secondary', 'stroke)};
-//   border-radius: ${size('spacing.small')};
-// `;
-
 const Tab = styled(Link)`
   background-color: ${p => p.active ? palette('white', 'base') : palette('grey', 'stroke')};
   padding: ${size('spacing.xLarge')} 0;
@@ -129,9 +115,6 @@ const Header = ({ heroImageUrl, heading, subheading }) => (
           </HeroSubheading>
         </FixedWidthContainer>
       </HeroTextWrapper>
-      {/* <TabsWrapper>
-        {children}
-      </TabsWrapper> */}
     </HeroWrapper>
   </>
 );
@@ -150,10 +133,6 @@ const ForFamiliesComponents = ({ contents }) => contents
       {...content}
     />
   ));
-
-const StyledHr = styled(Hr)`
-  margin-bottom: ${size('spacing.xxxLarge')};
-`;
 
 const CardsSection = styled.div`
   display: flex;
@@ -193,7 +172,7 @@ const Bottom = () => {
             <Fragment key={item.question}>
               <FAQTile {...item} />
               {index !== FAQ.length - 1 &&
-                <FAQHr />
+                <Hr size="xxxLarge" />
               }
             </Fragment>
           ))}
@@ -231,7 +210,7 @@ const HowItWorksDetailPage = ({
       <TemplateHeader>{header}</TemplateHeader>
       <TemplateContent>
         <ForFamiliesComponents contents={contents} />
-        <StyledHr />
+        <Hr pad="xxxLarge" />
         <CardsSection>
           <StyledHeading>Why Use Seniorly</StyledHeading>
           <CardTiles>

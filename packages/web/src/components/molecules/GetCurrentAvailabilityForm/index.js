@@ -3,9 +3,9 @@ import { func, bool } from 'prop-types';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { Button } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 
 const TwoColumnWrapper = styled.div`

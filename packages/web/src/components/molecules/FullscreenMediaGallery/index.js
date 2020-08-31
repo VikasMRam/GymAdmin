@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes, { string } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import Modal from 'sly/web/components/molecules/Modal';
 import MediaGallery from 'sly/web/components/molecules/MediaGallery';
 

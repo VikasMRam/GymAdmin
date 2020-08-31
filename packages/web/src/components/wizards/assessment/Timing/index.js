@@ -3,14 +3,13 @@ import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
 import { TIMING_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 import TipBox from 'sly/web/components/molecules/TipBox';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const PaddedProgressBar = pad(ProgressBar);
 
@@ -19,12 +18,6 @@ PaddedHeading.displayName = 'PaddedHeading';
 
 const PaddedBlock = pad(Block);
 PaddedBlock.displayName = 'PaddedBlock';
-
-const StyledField = styled(Field)`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
-`;
 
 const StyledTipBox = styled(TipBox)`
   height: fit-content;
@@ -35,15 +28,14 @@ const Timing = ({
 }) => (
   <div>
     <Wrapper>
-      <PaddedProgressBar label totalSteps={8} currentStep={5} />
+      <PaddedProgressBar label totalSteps={10} currentStep={1} />
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
-        <PaddedHeading level="subtitle" weight="medium">Please tell us about where you are in your search.</PaddedHeading>
-        <PaddedBlock>Please select all that apply.</PaddedBlock>
+        <PaddedHeading level="subtitle" weight="medium">Where are you in your senior living search?</PaddedHeading>
         <form onSubmit={handleSubmit}>
-          <StyledField
-            multiChoice
+          <Field
+            singleChoice
             options={TIMING_OPTIONS}
             name="timing"
             type="boxChoice"

@@ -4,21 +4,27 @@ import styled from 'styled-components';
 import { Field } from 'redux-form';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import userPropType from 'sly/common/propTypes/user';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import { Button, Block, Heading, ResponsiveImage } from 'sly/web/components/atoms';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { textAlign } from 'sly/web/components/helpers/text';
 
-const StyledHeading = textAlign(pad(Heading));
+const StyledHeading = textAlign(pad(Heading, 'large'), 'left');
 
 const CenteredTosAndPrivacy = textAlign(TosAndPrivacy);
 
+const StyledDesc = styled.div`
+margin-top: ${size('spacing.regular')};
+margin-bottom: ${size('spacing.xLarge')};
+`;
+
 const StyledButton = styled(fullWidth(Button))`
+  margin-top: ${size('spacing.regular')};
   margin-bottom: ${ifProp('hasMarginBottom', size('spacing.large'), 0)};
 `;
 
@@ -32,6 +38,13 @@ const StyledResponsiveImage = pad(textAlign(styled(ResponsiveImage)`
   max-width: calc(${size('layout.col2')} + ${size('layout.gutter')});
 `));
 
+const FieldsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 50% 48%;
+  grid-gap: ${size('spacing.regular')};
+`;
+
+
 export default class TalkToAgentForm extends Component {
   static propTypes = {
     handleSubmit: func.isRequired,
@@ -41,11 +54,12 @@ export default class TalkToAgentForm extends Component {
     change: func,
     onLocationChange: func,
     heading: string.isRequired,
+    description: string,
     user: userPropType,
     hasLocation: bool,
     image: string,
     hasEmail: bool,
-    firstName: string.isRequired,
+    agentFirstName: string.isRequired,
     messagePrompt: string,
     showMessageFieldFirst: bool,
     hideMessage: bool,
@@ -55,19 +69,20 @@ export default class TalkToAgentForm extends Component {
 
   static defaultProps = {
     heading: 'Talk to a local senior living expert',
-    firstName: 'we',
+    agentFirstName: 'we',
     messagePrompt: '',
     buttonKind: 'jumbo',
-    messagePlaceholder: 'Type your question here. NO JOB INQUIRIES',
+    messagePlaceholder: 'Type your question here. ',
     hideMessage: false,
   };
 
   render() {
     const {
-      invalid, submitting, handleSubmit, error, heading, user, hasLocation, hasEmail,
-      firstName, messagePrompt, showMessageFieldFirst, hideMessage, image, buttonKind, messagePlaceholder,
+      invalid, submitting, handleSubmit, error, heading, description, user, hasLocation, hasEmail,
+      agentFirstName, messagePrompt, showMessageFieldFirst, hideMessage, image, buttonKind, messagePlaceholder,
     } = this.props;
-    const messageLabel = (messagePrompt === '') ? `What can ${firstName} help you with?` : messagePrompt;
+    const messageLabel = (messagePrompt === '') ? `What can ${agentFirstName} help you with?` : messagePrompt;
+    const showDesc = description !== '';
     const showTos = !user;
     const messageField = (
       <Field
@@ -85,6 +100,7 @@ export default class TalkToAgentForm extends Component {
       <section>
         {image && <ImageWrapper><StyledResponsiveImage src={image} /></ImageWrapper>}
         <StyledHeading size="subtitle">{heading}</StyledHeading>
+        {showDesc && <StyledDesc>{description}</StyledDesc>}
         <form onSubmit={handleSubmit}>
           {showMessageFieldFirst && !hideMessage && messageField}
           {hasLocation &&
@@ -98,13 +114,21 @@ export default class TalkToAgentForm extends Component {
             />
           }
           {!(user && user.name) &&
+          <FieldsWrapper>
             <Field
-              name="name"
-              label="Full name"
+              name="firstName"
+              label="First Name"
               type="text"
               component={ReduxField}
-              required
             />
+            <Field
+              name="lastName"
+              label="Last Name"
+              type="text"
+              component={ReduxField}
+            />
+          </FieldsWrapper>
+
           }
           {!(user && user.phoneNumber) &&
           <Field

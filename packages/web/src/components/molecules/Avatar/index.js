@@ -5,12 +5,12 @@ import { prop } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { element as elementPropType } from 'sly/common/propTypes/element';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 
 const dimensionToTextSizeMap = {
   small: 'tiny',
-  regular: 'tiny',
+  regular: 'body',
   large: 'subtitle',
   xLarge: 'subtitle',
   xxLarge: 'title',

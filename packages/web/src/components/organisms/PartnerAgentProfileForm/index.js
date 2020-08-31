@@ -3,10 +3,13 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { func, string, bool } from 'prop-types';
 
-import { size, palette } from 'sly/web/components/themes';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import { AGENT_ROLE_PARAM } from 'sly/common/constants/roles';
+import { size, palette } from 'sly/common/components/themes';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
+import EditField from 'sly/web/components/form/EditField';
 import { Block, Button } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
+
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -70,15 +73,15 @@ const AGENT_STATUS_OPTIONS = [
   { value: 1, label: 'Live' },
 ];
 
-const AGENT_TIMEZONES = [{value:"America/New_York", label:"New York"},
-  {value:"America/Chicago", label:"Chicago"},
-  {value:"America/Denver", label:"Denver"},
-  {value:"America/Phoenix", label:"Phoenix"},
-  {value:"America/Los_Angeles", label:"Los Angeles"},
-  {value:"America/Anchorage", label:"Anchorage"},
-  {value:"Pacific/Honolulu", label:"Honolulu"}];
+const AGENT_TIMEZONES = [{ value: 'America/New_York', label: 'New York' },
+  { value: 'America/Chicago', label: 'Chicago' },
+  { value: 'America/Denver', label: 'Denver' },
+  { value: 'America/Phoenix', label: 'Phoenix' },
+  { value: 'America/Los_Angeles', label: 'Los Angeles' },
+  { value: 'America/Anchorage', label: 'Anchorage' },
+  { value: 'Pacific/Honolulu', label: 'Honolulu' }];
 
-const AGENT_SMS_FORMATS = [{value:"plainText", label:"Plain Text"}, {value:"richText", label:"Rich Text"}];
+const AGENT_SMS_FORMATS = [{ value: 'plainText', label: 'Plain Text' }, { value: 'richText', label: 'Rich Text' }];
 
 const agentRegionOptions = AGENT_REGION_OPTIONS.map(i => <option key={i} value={i}>{i}</option>);
 const agentStatusOptions = AGENT_STATUS_OPTIONS.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
@@ -152,6 +155,19 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
         <FormSection>
           <FormSectionHeading weight="medium">Admin</FormSectionHeading>
           <Field
+            name="name"
+            label="Agent Name"
+            type="text"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+          <EditField
+            name="organization"
+            label="Primary Users Organization"
+            type="organization"
+          />
+          <Field
             name="adminRegion"
             label="Region"
             type="select"
@@ -206,7 +222,7 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
           />
           <Field
             name="canReceiveReferrals"
-            label="Referrals Enabled"
+            label="Auto-Referrals Enabled"
             type="checkbox"
             placeholder=""
             component={ReduxField}

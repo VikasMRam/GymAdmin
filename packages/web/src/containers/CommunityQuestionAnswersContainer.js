@@ -3,14 +3,18 @@ import { func } from 'prop-types';
 import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 
+import Thankyou from 'sly/web/components/molecules/Thankyou';
 import CommunityQuestionAnswers from 'sly/web/components/organisms/CommunityQuestionAnswers';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import SlyEvent from 'sly/web/services/helpers/events';
 import withModal from 'sly/web/controllers/withModal';
 import { prefetch } from 'sly/web/services/api';
+import { PROFILE_ASK_QUESTION } from 'sly/web/services/api/constants';
+import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 
 const CommunityLeaveAnAnswerFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityLeaveAnAnswerFormContainer" */'sly/web/containers/CommunityLeaveAnAnswerFormContainer'));
-const CommunityAskQuestionFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityAskQuestionFormContainer" */'sly/web/containers/CommunityAskQuestionFormContainer'));
+const AskQuestionToAgentFormContainer = loadable(() => import(/* webpackChunkName:
+ "chunkAskQuestionToAgentFormContainer" */'sly/web/containers/AskQuestionToAgentFormContainer'));
 
 @withRouter
 @prefetch('community', 'getCommunity', (req, { match }) => req({
@@ -49,18 +53,30 @@ export default class CommunityQuestionAnswersContainer extends Component {
   };
 
   openAskQuestionModal = (question = {}) => {
-    const { showModal, community: { id, name } } = this.props;
-
+    const { showModal, hideModal, community: { id, name } } = this.props;
+    const postSubmit = () => {
+      // notifyInfo('Request sent successfully');
+      hideModal();
+      if (community) {
+        recordEntityCta(type,community.id);
+      }
+      showModal(<Thankyou heading={"Success!"} subheading={'Your question has been sent and we will connect with' +
+      ' you shortly'} onClose={hideModal} doneText='Finish'/>);
+    };
     this.sendEvent('open-modal', 'AskQuestion');
 
     const onClose = () => this.sendEvent('close-modal', 'AskQuestion');
     showModal(
-      <CommunityAskQuestionFormContainer
+      <AskQuestionToAgentFormContainer
         showModal={showModal}
-        communitySlug={id}
+        actionType={PROFILE_ASK_QUESTION}
+        entityId={id}
         initialValues={{ question: question.contentData }}
         parentSlug={question.id}
         communityName={name}
+        type='profile-content-question'
+        category={'community'}
+        postSubmit={postSubmit}
       />,
       onClose
     );

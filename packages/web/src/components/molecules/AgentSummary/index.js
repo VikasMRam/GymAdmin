@@ -2,10 +2,12 @@ import React from 'react';
 import { func, string, bool } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
+import { upTo } from 'sly/common/components/helpers';
 import { formatRating } from 'sly/web/services/helpers/rating';
 import agentPropType from 'sly/common/propTypes/agent';
-import { Image, Icon, Block, Button, Span, Hr, Link } from 'sly/web/components/atoms';
+import { Icon, Block, Hr, Button, Link } from 'sly/common/components/atoms';
+import { Image, Span } from 'sly/web/components/atoms';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import pad from 'sly/web/components/helpers/pad';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
@@ -65,11 +67,7 @@ const ReviewValueSection = styled.div`
 `;
 
 const StyledHr = styled(Hr)`
-  display: none;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: block;
-    margin-top: 0;
-  }
+  ${upTo('tablet', 'display: none;')}
 `;
 
 const FamiliesHelpedSection = pad('div', 'large');
@@ -140,7 +138,7 @@ const AgentSummary = ({
         </AgentSlySection>
         <AgentName weight="medium" size="title">{displayName}</AgentName>
         {ratingsSection}
-        <StyledHr />
+        <StyledHr marginTop="0" />
         {recentFamiliesHelped > 0 &&
           <FamiliesHelpedSection>
             <Span weight="medium">Families helped: </Span>

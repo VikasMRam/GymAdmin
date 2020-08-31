@@ -294,8 +294,8 @@ export const getTocSeoLabel = (toc) => {
   return actualToc.seoLabel;
 };
 
-export const getTocLabel = (toc) => {
-  const actualToc = tocs.find(elem => (elem.value === toc));
+export const getTocLabel = (tocValue) => {
+  const actualToc = tocs.find(elem => (elem.value === tocValue));
   if (typeof actualToc === 'undefined') {
     return 'Nursing Homes';
   }

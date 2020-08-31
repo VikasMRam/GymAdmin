@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { BUYING_OR_RENTING_OPTIONS } from 'sly/web/external/constants/options';
 import { STEP_INPUT_FIELD_NAMES } from 'sly/web/external/constants/steps';
 import { Heading } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const PaddedHeading = pad(Heading, 'xLarge');
 PaddedHeading.displayName = 'PaddedHeading';

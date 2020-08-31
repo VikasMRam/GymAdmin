@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Dementia } from 'sly/web/components/wizards/assessment';
+import Dementia from '.';
 
 const handleSubmit = jest.fn();
 const whoNeedsHelp = 'parents';
@@ -21,7 +21,7 @@ describe('Wizards|assessment - Steps|Dementia', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('PaddedHeading').contains('Are your parents forgetful?')).toBeTruthy();
-    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
 
@@ -31,7 +31,7 @@ describe('Wizards|assessment - Steps|Dementia', () => {
     });
 
     expect(wrapper.find('PaddedHeading').contains('Are your parents forgetful?')).toBeTruthy();
-    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);
   });
 
@@ -53,10 +53,10 @@ describe('Wizards|assessment - Steps|Dementia', () => {
 
   it('renders correct heading for other options', () => {
     const wrapper = wrap({
-      whoNeedsHelp: 'mom',
+      whoNeedsHelp: 'friend',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Is your mom forgetful?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Is your friend(s) forgetful?')).toBeTruthy();
   });
 
   it('handles submit', () => {

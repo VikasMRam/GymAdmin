@@ -1,17 +1,8 @@
 export Bar from './Bar';
-export Block from './Block';
-export Box from './Box';
-export Button from './Button';
 export Centered from './Centered';
-export Heading from './Heading';
-export Hr from './Hr';
-export Icon from './Icon';
 export Image from './Image';
 export ResponsiveImage from './ResponsiveImage';
 export Input from './Input';
-export Label from './Label';
-export Link from './Link';
-export Paragraph from './Paragraph';
 export Span from './Span';
 export Tag from './Tag';
 export * from './Table';
@@ -19,7 +10,7 @@ export Thumbnail from './Thumbnail';
 export Map from './Map';
 export ClampedText from './ClampedText';
 export BoxChoiceTile from './BoxChoiceTile';
-export Logo from './Logo';
-export { Badge } from 'sly/common/components/atoms';
+export { Badge, Block, Box, Heading, Logo, Button, Label, Icon, Hr, Paragraph, Link }
+  from 'sly/common/components/atoms';
 export StickyFooter from './StickyFooter';
 export RichTextArea from './RichTextArea';

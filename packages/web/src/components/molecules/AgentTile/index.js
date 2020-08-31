@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 import agentPropType from 'sly/common/propTypes/agent';
-import { styles as linkStyles } from 'sly/web/components/atoms/Link';
-import { Box, Image, Block, Link } from 'sly/web/components/atoms';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
+import { Box, Block, Link } from 'sly/common/components/atoms';
+import { Image } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 
@@ -30,7 +30,6 @@ const Badge = styled(Block)`
 
 const Name = styled(Block)`
   margin-bottom: ${size('spacing.regular')};
-  ${linkStyles};
 `;
 
 Name.defaultProps = {

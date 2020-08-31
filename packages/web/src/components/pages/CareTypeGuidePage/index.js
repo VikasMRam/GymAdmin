@@ -4,12 +4,13 @@ import styled from 'styled-components';
 import { array, func, object } from 'prop-types';
 
 import { host } from 'sly/web/config';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import { getBreadCrumbsForGuides } from 'sly/web/services/helpers/url';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
-import { ResponsiveImage, Label, Heading, Paragraph, Link } from 'sly/web/components/atoms';
+import { Label, Heading, Paragraph, Link } from 'sly/common/components/atoms';
+import { ResponsiveImage } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';

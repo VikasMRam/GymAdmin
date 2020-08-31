@@ -18,13 +18,14 @@ describe('Marketplace Profile Page', () => {
       const medicaid = 'Yes';
 
       cy.visit(`/assisted-living/california/san-francisco/${communitySlug}`);
-
-      waitForHydration(cy.get('button').contains('Get Detailed Pricing')).click();
+      cy.get('section[id*=availability]').within(() => {
+        cy.get('input[id=email]').type(email);
+      });
+      waitForHydration(cy.get('button').contains('Get Availability')).click();
 
       const data = {
         communitySlug, name, phone, moveTimeline, typeOfCare, medicaid, email,
       };
-
       doCustomPricingTalkToAdvisorFlow(cy, data);
 
       cy.getUser().then((userData) => {
@@ -32,7 +33,7 @@ describe('Marketplace Profile Page', () => {
       });
     });
 
-    it('tests Get Availability Flow for Assisited Living Community - Affordable Options Flow', () => {
+    it.skip('tests Get Availability Flow for Assisited Living Community - Affordable Options Flow', () => {
       const communitySlug = TEST_COMMUNITY;
       const { name, phone, email } = randomUser();
       const moveTimeline = 'Immediately';

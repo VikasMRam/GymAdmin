@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import { string, bool, func } from 'prop-types';
 
 import { AGENT_STATUS_NAME_MAP } from 'sly/web/constants/agents';
-import { size, palette } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import cursor from 'sly/web/components/helpers/cursor';
 import { adminAgentPropType } from 'sly/common/propTypes/agent';
 import pad from 'sly/web/components/helpers/pad';
 import { getReferralSentTimeText } from 'sly/web/services/helpers/communityReferral';
 import { copyToClipboard } from 'sly/web/services/helpers/utils';
-import { Heading, Badge, Block, Span, Box, Button, Link } from 'sly/web/components/atoms';
+import { Heading, Badge, Block, Box, Button, Link } from 'sly/common/components/atoms';
+import { Span } from 'sly/web/components/atoms';
 import IconBadge from 'sly/web/components/molecules/IconBadge';
 import Stage from 'sly/web/components/molecules/Stage';
 

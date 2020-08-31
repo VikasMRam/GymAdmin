@@ -3,10 +3,10 @@ import { func, string, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import { Heading, Button } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 
 const StyledButton = fullWidth(styled(Button)`

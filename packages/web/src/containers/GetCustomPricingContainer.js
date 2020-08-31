@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 
 import SlyEvent from 'sly/web/services/helpers/events';
 import AskAgentQuestionContainer from 'sly/web/containers/AskAgentQuestionContainer';
-import { withRedirectTo } from 'sly/web/services/redirectTo';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
 
 function GetCustomPricingContainer({
   match: { params: { communitySlug } },

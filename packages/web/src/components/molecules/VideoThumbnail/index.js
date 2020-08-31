@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { string, func } from 'prop-types';
 
-import { Icon, ResponsiveImage, Block } from 'sly/web/components/atoms';
+import { Icon, Block } from 'sly/common/components/atoms';
+import { ResponsiveImage } from 'sly/web/components/atoms';
 
 const Wrapper = styled.div`
   position: relative;

@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, bool } from 'prop-types';
 
-import { assetPath, size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import border from 'sly/web/components/helpers/border';
 import borderRadius from 'sly/web/components/helpers/borderRadius';

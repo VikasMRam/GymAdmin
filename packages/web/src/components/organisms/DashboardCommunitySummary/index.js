@@ -1,28 +1,16 @@
 import React from 'react';
+import { string } from 'prop-types';
+import { generatePath } from 'react-router';
 
 import communityPropType from 'sly/common/propTypes/community';
-import pad from 'sly/web/components/helpers/pad';
-import styled from 'styled-components';
-import { size } from 'sly/web/components/themes';
-import { Block, Label, Link } from 'sly/web/components/atoms';
+import { Link } from 'sly/web/components/atoms';
 import { formatAddress } from 'sly/web/services/helpers/community';
-import { string } from 'prop-types';
-import { Section, SectionHeader, SummarySection } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
-import { generatePath } from 'react-router';
+import {
+  SummaryRow,
+  SummarySection, SummarySectionBody,
+  SummarySectionHeader,
+} from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 import { DASHBOARD_COMMUNITIES_DETAIL_PATH, PROFILE } from 'sly/web/constants/dashboardAppPaths';
-
-const ColumWrapper = pad(styled.div`
-  @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: ${size('tabletLayout.gutter')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: block;
-    grid-column-gap: ${size('layout.gutter')};
-  }
-`, 'large');
 
 export default class DashboardCommunitySummary extends React.Component {
   static propTypes = {
@@ -41,57 +29,47 @@ export default class DashboardCommunitySummary extends React.Component {
     const email = info.ownerEmail || info.websiteEmail;
     // contact email address and capacity information
     return (
-      <SummarySection heading="Summary" className={className}>
-        <ColumWrapper>
-          <Label palette="grey">Address</Label>
-          <Block size="caption">
+      <SummarySection className={className}>
+        <SummarySectionHeader>
+          Summary
+        </SummarySectionHeader>
+        <SummarySectionBody>
+          <SummaryRow label="Address">
             {address || linkTo(
               'address',
               PROFILE,
               'address.line1',
             )}
-          </Block>
-        </ColumWrapper>
-        <ColumWrapper>
-          <Label palette="grey">License number</Label>
-          <Block size="caption">
-            { info.licenseNumber || linkTo(
+          </SummaryRow>
+          <SummaryRow label="License number">
+            {info.licenseNumber || linkTo(
               'license number',
               PROFILE,
               'propInfo.licenseNumber',
             )}
-          </Block>
-        </ColumWrapper>
-        <ColumWrapper>
-          <Label palette="grey">Front desk phone</Label>
-          <Block size="caption">
-            { info.communityPhone || linkTo(
+          </SummaryRow>
+          <SummaryRow label="Front desk phone">
+            {info.communityPhone || linkTo(
               'phone',
               PROFILE,
               'propInfo.communityPhone',
             )}
-          </Block>
-        </ColumWrapper>
-        <ColumWrapper>
-          <Label palette="grey">Email</Label>
-          <Block size="caption">
-            { email || linkTo(
+          </SummaryRow>
+          <SummaryRow label="Email">
+            {email || linkTo(
               'email',
               PROFILE,
               'propInfo.ownerEmail',
             )}
-          </Block>
-        </ColumWrapper>
-        <ColumWrapper>
-          <Label palette="grey">Capacity</Label>
-          <Block size="caption">
-            { info.communitySize || linkTo(
+          </SummaryRow>
+          <SummaryRow label="Capacity">
+            {info.communitySize || linkTo(
               'community size',
               PROFILE,
               'propInfo.communitySize',
             )}
-          </Block>
-        </ColumWrapper>
+          </SummaryRow>
+        </SummarySectionBody>
       </SummarySection>
     );
   }

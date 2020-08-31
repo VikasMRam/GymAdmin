@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Medicaid } from 'sly/web/components/wizards/assessment';
+import Medicaid from '.';
 
 const handleSubmit = jest.fn();
 const whoNeedsHelp = 'parents';
@@ -21,7 +21,7 @@ describe('Wizards|assessment - Steps|Medicaid', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('PaddedHeading').contains('Do your parents qualify for Medicaid?')).toBeTruthy();
-    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
 
@@ -31,7 +31,7 @@ describe('Wizards|assessment - Steps|Medicaid', () => {
     });
 
     expect(wrapper.find('PaddedHeading').contains('Do your parents qualify for Medicaid?')).toBeTruthy();
-    expect(wrapper.find('StyledField').filter({ type: 'boxChoice' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);
   });
 
@@ -53,10 +53,10 @@ describe('Wizards|assessment - Steps|Medicaid', () => {
 
   it('renders correct heading for other options', () => {
     const wrapper = wrap({
-      whoNeedsHelp: 'mom',
+      whoNeedsHelp: 'friend',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Does your mom qualify for Medicaid?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Does your friend(s) qualify for Medicaid?')).toBeTruthy();
   });
 
   it('handles submit', () => {

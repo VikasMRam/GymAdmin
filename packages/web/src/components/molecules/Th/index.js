@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, oneOf, func } from 'prop-types';
 
-import { size, palette } from 'sly/web/components/themes';
-import { Icon } from 'sly/web/components/atoms';
+import { size, palette } from 'sly/common/components/themes';
 import { text as textPropTypes } from 'sly/common/propTypes/text';
+import { Icon } from 'sly/common/components/atoms';
 
 const Wrapper = styled.th`
   padding: 0;

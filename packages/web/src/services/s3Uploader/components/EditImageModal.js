@@ -3,7 +3,7 @@ import { bool, func } from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 
 import Modal, { HeaderWithClose, ModalActions, ModalBody } from 'sly/web/components/atoms/NewModal';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { createValidator, required } from 'sly/web/services/validation';
 import { Button } from 'sly/web/components/atoms';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';

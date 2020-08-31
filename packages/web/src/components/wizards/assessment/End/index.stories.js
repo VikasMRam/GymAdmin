@@ -3,10 +3,11 @@ import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
+import End from '.';
+
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 import LindaIwamota from 'sly/storybook/sample-data/agent-linda-iwamota.json';
-import { withPreventDefault } from 'sly/web/services/helpers/forms';
-import { End } from 'sly/web/components/wizards/assessment';
+import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
 const EndContainer = reduxForm({
   form: 'End',

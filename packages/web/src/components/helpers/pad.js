@@ -1,13 +1,13 @@
 import styled, { css } from 'styled-components';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 
 export const withPad = ({ pad } = {}) => {
   if (!pad) {
     return null;
   }
 
-  return css` 
+  return css`
     margin-bottom: ${size('spacing', pad)};
   `;
 };

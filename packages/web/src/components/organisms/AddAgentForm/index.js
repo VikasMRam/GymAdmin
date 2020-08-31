@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-import { func, object, bool } from 'prop-types';
+import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size, palette, columnWidth } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
-import { Label, Hr, Block, Button } from 'sly/web/components/atoms';
-import ReduxField from 'sly/web/components/organisms/ReduxField';
-import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
+import { Block, Button } from 'sly/web/components/atoms';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { states } from 'sly/web/constants/communities';
 
 const statesOptions = states.map(s => <option key={s} value={s}>{s}</option>);
-
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -43,7 +41,7 @@ export default class AddAgentForm extends Component {
 
   render() {
     const {
-      handleSubmit, invalid, submitting, ...props
+      handleSubmit, invalid, submitting,
     } = this.props;
 
     return (

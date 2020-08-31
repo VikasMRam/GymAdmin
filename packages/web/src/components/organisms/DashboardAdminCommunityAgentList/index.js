@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { arrayOf } from 'prop-types';
 
 import { adminCommunityPropType } from 'sly/common/propTypes/community';
-import { Box, Link, Hr } from 'sly/web/components/atoms';
+import { Box, Hr, Link } from 'sly/common/components/atoms';
 import DashboardAdminCommunityTile from 'sly/web/components/organisms/DashboardAdminCommunityTile';
 import DashboardAdminAgentTile from 'sly/web/components/organisms/DashboardAdminAgentTile';
 

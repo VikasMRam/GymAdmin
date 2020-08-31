@@ -1,23 +1,23 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { bool, func, object } from 'prop-types';
 import styled from 'styled-components';
 import { generatePath } from 'react-router';
 
-import { size, palette, columnWidth } from 'sly/web/components/themes';
+import { size, palette } from 'sly/common/components/themes';
+import { columnWidth } from 'sly/web/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import {
   Block,
   Button,
   Table,
   TBody,
-  Td,
   THead,
   Tr,
 } from 'sly/web/components/atoms';
 import Th from 'sly/web/components/molecules/Th';
 import { CardRow, CellWithLabel } from 'sly/web/components/atoms/TableCard';
 import { SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
-import Link from 'sly/web/components/atoms/Link';
+import { Link } from 'sly/common/components/atoms';
 import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   PHOTOS,

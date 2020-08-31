@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { func, oneOf, string } from 'prop-types';
 import styled from 'styled-components';
+import { withRouter } from 'react-router';
 
-import { size, assetPath } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
+import { assetPath } from 'sly/web/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { hcaAdEnabled } from 'sly/web/services/helpers/tileAds';
-import { HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
+import { EXTERNAL_LINK_CLICK, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
 import withNotification from 'sly/web/controllers/withNotification';
 import AdTile from 'sly/web/components/organisms/AdTile';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
 import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
 import { community as communityProptype } from 'sly/common/propTypes/community';
+import { query } from 'sly/web/services/api';
 
 const StyledResponsiveImage = styled(ResponsiveImage)`
   vertical-align: middle;
@@ -20,6 +23,8 @@ const StyledResponsiveImage = styled(ResponsiveImage)`
 `;
 
 @withNotification
+@withRouter
+@query('createAction', 'createUuidAction')
 
 export default class PostConversionAdTileContainer extends Component {
   static propTypes = {
@@ -50,9 +55,25 @@ export default class PostConversionAdTileContainer extends Component {
   }
 
   handleGetInstantOfferClick = () => {
+    const { createAction, community = {}, location: { pathname } } = this.props;
+
     SlyEvent.getInstance().sendEvent({
-      action: 'click-get-instant-offer-button',
+      action: 'click-ZillowAd',
       category: 'PostConversionAdTile',
+      label: community.id,
+    });
+
+    return createAction({
+      type: 'UUIDAction',
+      attributes: {
+        actionType: EXTERNAL_LINK_CLICK,
+        actionPage: pathname,
+        actionInfo: {
+          target: 'https://www.zillow.com/offers/?t=seniorly-0220',
+          source: 'postConverisonCTA',
+          slug: community.id,
+        },
+      },
     });
   };
 
@@ -123,7 +144,7 @@ export default class PostConversionAdTileContainer extends Component {
           image={assetPath('images/homecare-2.png')}
           buttonProps={{ onClick: this.handleUseHomecareClick }}
           showSecondary
-          linkProps={{href:"tel:+18558668719"}}
+          linkProps={{ href: 'tel:+18558668719' }}
           linkText="(855) 866-8719"
           {...this.props}
         >

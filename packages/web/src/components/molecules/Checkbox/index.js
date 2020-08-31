@@ -3,8 +3,8 @@ import { bool, string } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { palette } from 'sly/web/components/themes';
-import { Icon } from 'sly/web/components/atoms';
+import { palette } from 'sly/common/components/themes';
+import { Icon } from 'sly/common/components/atoms';
 
 const checkedPalette = ({ palette: checkedPalette }) => palette(checkedPalette, 'darker-30');
 const uncheckedPalette = ({ uncheckedPalette }) => palette(uncheckedPalette, 'base');

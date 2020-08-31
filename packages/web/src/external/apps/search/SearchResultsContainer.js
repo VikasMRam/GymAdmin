@@ -3,7 +3,7 @@ import { arrayOf, object, string } from 'prop-types';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
-import { size } from 'sly/web/components/themes';
+import { size } from 'sly/common/components/themes';
 import { NUMBER_OF_RESULTS_PER_PAGE } from 'sly/web/external/constants/search';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { prefetch } from 'sly/web/services/api';
@@ -12,7 +12,7 @@ import { getCitySearchUrl, getStateAbbr } from 'sly/web/services/helpers/url';
 import displayOnlyIn from 'sly/web/components/helpers/displayOnlyIn';
 import pad from 'sly/web/components/helpers/pad';
 import shadow from 'sly/web/components/helpers/shadow';
-import { Block, Link, Button } from 'sly/web/components/atoms';
+import { Block, Link, Button } from 'sly/common/components/atoms';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import { textAlign } from 'sly/web/components/helpers/text';
