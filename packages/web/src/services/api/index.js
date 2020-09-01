@@ -31,6 +31,7 @@ export withAuth from './withAuth';
 
 export renderToString from './renderToString';
 export withPrefetchWait from './withPrefetchWait';
+export { useResourceBuffer, withResourceBuffer } from './resourceBuffer';
 export makeApiCallAction from './makeApiCallAction';
 export apiInstance from './apiInstance';
 

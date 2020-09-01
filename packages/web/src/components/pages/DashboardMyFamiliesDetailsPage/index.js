@@ -13,7 +13,7 @@ import {
   PARTNER_AGENTS,
   MESSAGES,
   EMAILS,
-  TASKS, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED, DASHBOARD_COMMUNITIES_PATH,
+  TASKS, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED
 } from 'sly/web/constants/dashboardAppPaths';
 import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/web/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/web/constants/notes';
@@ -93,10 +93,6 @@ const StyledFamilyActivityItem = styled(FamilyActivityItem)`
   &:last-child {
     border-bottom: 0;
   }
-`;
-
-const FamilyTasksTab = styled.div`
-  padding:${size('spacing', 'xLarge')};
 `;
 
 const StyledStatusSelect = styled(StatusSelect)`

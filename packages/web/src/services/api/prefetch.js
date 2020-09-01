@@ -104,11 +104,11 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
 
       render() {
         const { getRequestInfo, status, ...props } = this.props;
-        const { normalized, ...request } = getRequestInfo();
+        const request = getRequestInfo();
 
         const innerProps = {
           ...props,
-          [propName]: normalized,
+          [propName]: request.normalized,
           status: {
             ...status,
             [propName]: {

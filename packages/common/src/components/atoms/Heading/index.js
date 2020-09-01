@@ -1,5 +1,6 @@
 import React from 'react';
 import { any, oneOf } from 'prop-types';
+import styled from 'styled-components';
 
 import Root from './Root';
 
@@ -12,14 +13,14 @@ const getPad = (size) => {
   }
 };
 
-const Heading = ({ size, level, ...props }) => (
+const Heading = styled(({ size, level, ...props }) => (
   <Root
     size={size || level}
     pad={getPad(size || level)}
     {...props}
     marginBottom="xxLarge"
   />
-);
+))``;
 
 Heading.displayName = 'Heading';
 

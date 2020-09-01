@@ -74,14 +74,6 @@ export default class DashboardCommunityIndexPage extends Component {
     const noResultMessage = 'Click Add Community on the top right corner to add a new community';
     const modelConfig = { name: 'Community', defaultSearchField: 'name' };
 
-    if (isPageLoading) {
-      return (
-        <Loading activeMenuItem="Communities">
-          Loading...
-        </Loading>
-      );
-    }
-
     const actions = (
       <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
         <IconButton icon="plus" onClick={onAddCommunity} hideTextInMobile>
@@ -113,7 +105,17 @@ export default class DashboardCommunityIndexPage extends Component {
               {communities.map(community => (
                 <CommunityRowCard key={community.id} community={community} onCommunityClick={() => this.handleCommunityClick(community)} />
               ))}
-              {communities.length === 0 &&
+              {isPageLoading &&
+                <Tr>
+                  <Td>
+                    <Loading activeMenuItem="Communities">
+                      Loading...
+                    </Loading>
+                  </Td>
+                </Tr>
+              }
+
+              {!isPageLoading && communities.length === 0 &&
                 <Tr>
                   <Td colSpan={TABLE_HEADINGS.length}>
                     <NoResultMessage>{noResultMessage}</NoResultMessage>
