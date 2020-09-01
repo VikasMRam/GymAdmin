@@ -7,9 +7,9 @@ export const withShadow = ({ shadow }) => shadow && css`
   box-shadow: 0 0 ${size('spacing', shadow)} ${palette('slate', 'filler')}80;
 `;
 
-export const withShadowOnHover = ({ withShadowOnHover }) => withShadowOnHover && css`
+export const withShadowOnHover = ({ shadowOnHover }) => shadowOnHover && css`
   ${withTransition('all')}
   &:hover {
-    box-shadow: 0 0 ${size('spacing', withShadowOnHover)} ${palette('slate', 'filler')}80;
+    box-shadow: 0 0 ${size('spacing', shadowOnHover)} ${palette('slate', 'filler')}80;
   }
 `;

@@ -27,7 +27,6 @@ const SearchComponent = ({
   <Wrapper>
     <CenteredHeading size="subtitle">Senior Living Communities Near You</CenteredHeading>
     <SearchBoxContainer
-      hasShadow
       clearLocationOnBlur={false}
       onLocationSearch={onLocationSearch}
     />

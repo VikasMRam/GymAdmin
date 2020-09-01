@@ -69,14 +69,4 @@ describe('SearchBox', () => {
     expect(autocomplete).toHaveLength(1);
     expect(autocomplete.dive().find('SearchTextBox')).toHaveLength(1);
   });
-
-  it('renders with hasShadow', () => {
-    const wrapper = wrap({ hasShadow: true });
-
-    const loadMaps = wrapper.dive().find(LoadGoogleMaps);
-    const autocomplete = loadMaps.dive().find(PlacesAutocomplete);
-
-    expect(autocomplete).toHaveLength(1);
-    expect(autocomplete.dive().find('ShadowedSearchTextBox')).toHaveLength(1);
-  });
 });
