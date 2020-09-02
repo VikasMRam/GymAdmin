@@ -7,29 +7,19 @@ import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME
 import { size, palette } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { startingWith } from 'sly/common/components/helpers';
-import pad from 'sly/web/components/helpers/pad';
-import { Box, Heading, Icon, Hr, Link } from 'sly/common/components/atoms';
+import { Block, Box, Heading, Icon, Hr, Link } from 'sly/common/components/atoms';
 import { Tag } from 'sly/web/components/atoms';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { isBrowser } from 'sly/web/config';
 import { tocPaths } from 'sly/web/services/helpers/url';
-import { phoneFormatter, areaCode } from 'sly/web/services/helpers/phone';
+import { phoneFormatter } from 'sly/web/services/helpers/phone';
 import { showFafNumber, getFafNumber } from 'sly/web/services/helpers/community';
 import ListItem from 'sly/web/components/molecules/ListItem';
-
-const StyledHeading = pad(Heading, 'regular');
-StyledHeading.displayName = 'StyledHeading';
-
-const StyledTag = styled(Tag)`
-  margin-right: ${size('spacing.regular')};
-  text-transform: uppercase;
-  margin-top: ${size('spacing.regular')};
-`;
-
-StyledTag.displayName = 'StyledTag';
+import Span from 'sly/web/components/atoms/Span';
 
 const StyledIcon = styled(Icon)`
   margin-left: ${size('spacing.small')};
+  color: ${palette('slate.lighter-60')};
   vertical-align: text-top;
 `;
 
@@ -38,10 +28,6 @@ const TooltipContent = styled(ReactTooltip)`
   color: ${palette('slate', 'base')}!important;
   background-color: ${palette('white', 'base')}!important;
   box-shadow: 0 0 ${size('spacing', 'large')} ${palette('slate', 'filler')}80;
-`;
-
-const CareTypeWrapper = styled.div`
-  margin-bottom: ${size('spacing.regular')};
 `;
 
 const OverlayTwoColumnListWrapper = styled.div`
@@ -63,12 +49,13 @@ const PhoneNumWrapper = styled.div`
   grid-gap: ${size('spacing.regular')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-template-columns: 50% 50%;  
+    grid-template-columns: 50% 50%;
     grid-column-gap: ${size('spacing.regular')};
   }
 `;
 
 const MobileCommunityRating = styled(CommunityRating)`
+  margin-top: ${size('spacing.large')};
   ${startingWith('laptop', 'display: none;')}
 `;
 
@@ -134,7 +121,12 @@ const CommunitySummary = ({
 
   return (
     <Box ref={innerRef} className={className}>
-      <StyledHeading level="hero" size="title">
+      <Heading
+        level="hero"
+        size="title"
+        lineHeight="32px"
+        pad="regular"
+      >
         {name}
         {isAdmin &&
           <Link
@@ -143,29 +135,42 @@ const CommunitySummary = ({
             &nbsp;(Edit)
           </Link>
         }
-      </StyledHeading>
-      <Heading weight="regular" level="subtitle" size="body" palette="grey">{formattedAddress}</Heading>
+      </Heading>
 
-      <CareTypeWrapper>
-        {
+      <Heading
+        weight="regular"
+        level="title"
+        size="body"
+        palette="grey"
+      >
+        {formattedAddress}
+      </Heading>
 
-          careTypes.map(careType =>
-            (
-              <Link
-                key={careType.path}
-                to={`${careType.path}/${searchParams.state}/${searchParams.city}`}
-                target="_blank"
-                event={{
-                  category: 'care-type-tags',
-                  action: 'tag-click',
-                  label: careType.tag,
-                }}
-              >
-                <StyledTag key={careType.tag}>{careType.tag}</StyledTag>
-              </Link>),
-          )
-        }
-      </CareTypeWrapper>
+      <Block
+        display="flex"
+      >
+        {careTypes.map(careType => (
+          <Tag
+            key={careType.path}
+            marginRight="regular"
+            textTransform="uppercase"
+          >
+            <Link
+              palette="white.base"
+              to={`${careType.path}/${searchParams.state}/${searchParams.city}`}
+              target="_blank"
+              event={{
+                category: 'care-type-tags',
+                action: 'tag-click',
+                label: careType.tag,
+              }}
+            >
+              {careType.tag}
+            </Link>
+          </Tag>
+        ))}
+      </Block>
+
       {reviewsValue > 0 &&
         <MobileCommunityRating
           rating={reviewsValue}
@@ -179,7 +184,7 @@ const CommunitySummary = ({
         {
           partnerAgent &&
             <div>
-              For Pricing & Availability
+              <Span size="caption">For Pricing & Availability</Span>
               <StyledIcon palette="slate" icon="help" size="caption" data-tip data-for="conciergePhone" />
               {isBrowser &&
               <TooltipContent id="conciergePhone" type="light" effect="solid" multiline>
@@ -196,7 +201,7 @@ const CommunitySummary = ({
         {
           showFriendsFamilyNumber &&
           <div>
-            For Friends & Family
+            <Span size="caption">For Friends & Family</Span>
             <StyledIcon palette="slate" icon="help" size="caption" data-tip data-for="fafPhone" />
             {isBrowser &&
             <TooltipContent id="fafPhone" type="light" effect="solid" multiline>

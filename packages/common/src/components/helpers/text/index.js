@@ -5,7 +5,7 @@ import { getWeight, getSize } from './helpers';
 
 const validLineHeightValues = ['0', 'normal'];
 
-export const withText = props => css`
+export const withText = ({ textDecoration, textTransform, ...props }) => css`
   ${ifProp('size', css`
     font-size: ${getSize('text')(props)};
     ${ifNotProp('lineHeight', css`
@@ -18,9 +18,10 @@ export const withText = props => css`
     line-height: ${validLineHeightValues.includes(props.lineHeight) ? props.lineHeight : getSize('lineHeight', 'lineHeight')(props)};
   `)}
 
-  ${ifProp('textDecoration', css`
-    text-decoration: ${props.textDecoration};
-  `)}
+  ${css({
+    textDecoration,
+    textTransform,
+  })}
 
   ${getWeight(props)}
 `;

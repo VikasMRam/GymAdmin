@@ -32,6 +32,7 @@ const StyledCommunityPricingWrapper = styled.div`
 const DescriptionBlock = pad(Block, 'regular');
 
 const StyledIcon = styled(Icon)`
+  color: ${palette('slate.lighter-60')};
   margin-left: ${size('spacing.small')};
   vertical-align: text-top;
 `;

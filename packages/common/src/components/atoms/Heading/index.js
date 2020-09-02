@@ -16,6 +16,8 @@ const getPad = (size) => {
 const Heading = styled(({ size, level, ...props }) => (
   <Root
     size={size || level}
+    // used only to force different h{level} than default
+    level={level}
     pad={getPad(size || level)}
     {...props}
     marginBottom="xxLarge"

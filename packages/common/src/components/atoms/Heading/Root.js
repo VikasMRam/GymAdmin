@@ -15,7 +15,7 @@ const H3 = styled.h3``;
 const H4 = styled.h4``;
 
 const Root = styled((props) => {
-  switch (props.size) { /* eslint-disable jsx-a11y/heading-has-content */
+  switch (props.level || props.size) { /* eslint-disable jsx-a11y/heading-has-content */
     case 'hero': return <H1 {...props} />;
     case 'title': return <H2 {...props} />;
     case 'subtitle': return <H3 {...props} />;

@@ -29,6 +29,7 @@ Tag.defaultProps = {
   display: 'inline-flex',
   palette: 'primary',
   align: 'center',
+  justifyContent: 'center',
   padding: '0 regular',
   fontWeight: 'bold',
   textTransform: 'uppercase',

@@ -33,15 +33,14 @@ const verify = (wrapper) => {
   const {
     line1, line2, city, state, zip,
   } = address;
-  const renderedAddress = wrapper.find('Heading').dive().render()
-    .text();
+  const renderedAddress = wrapper.find('Heading[level="title"]').render().text();
 
   expect(renderedAddress).toContain(line1);
   expect(renderedAddress).toContain(line2);
   expect(renderedAddress).toContain(city);
   expect(renderedAddress).toContain(state);
   expect(renderedAddress).toContain(zip);
-  expect(wrapper.find('StyledHeading').render().text()).toContain(name);
+  expect(wrapper.find('Heading[level="hero"]').render().text()).toContain(name);
 };
 
 describe('CommunitySummary', () => {
@@ -58,7 +57,7 @@ describe('CommunitySummary', () => {
       isAdmin: true,
     });
     verify(wrapper);
-    expect(wrapper.find('StyledHeading').dive().find('Link')).toHaveLength(1);
+    expect(wrapper.find('Heading[level="hero"] Link')).toHaveLength(1);
   });
 
   it('Should render the care types tags for state Delaware', () => {
@@ -66,10 +65,10 @@ describe('CommunitySummary', () => {
     const wrapper = wrap({
       community,
     });
-    const styledTags = wrapper.find('StyledTag');
+    const styledTags = wrapper.find('Tag');
 
-    expect(styledTags.get(0).props.children).toBe('Assisted Living');
-    expect(styledTags.get(1).props.children).toBe('Memory Care');
+    expect(styledTags.at(0).render().text()).toBe('Assisted Living');
+    expect(styledTags.at(1).render().text()).toBe('Memory Care');
 
     verify(wrapper);
     expect(styledTags).toHaveLength(2);
@@ -81,10 +80,10 @@ describe('CommunitySummary', () => {
     const wrapper = wrap({
       community,
     });
-    const styledTags = wrapper.find('StyledTag');
+    const styledTags = wrapper.find('Tag');
 
-    expect(styledTags.get(0).props.children).toBe('Personal Care Home');
-    expect(styledTags.get(1).props.children).toBe('Memory Care');
+    expect(styledTags.at(0).render().text()).toBe('Personal Care Home');
+    expect(styledTags.at(1).render().text()).toBe('Memory Care');
 
     verify(wrapper);
     expect(styledTags).toHaveLength(2);
@@ -96,10 +95,10 @@ describe('CommunitySummary', () => {
     const wrapper = wrap({
       community,
     });
-    const styledTags = wrapper.find('StyledTag');
+    const styledTags = wrapper.find('Tag');
 
-    expect(styledTags.get(0).props.children).toBe('Personal Care Home');
-    expect(styledTags.get(1).props.children).toBe('Memory Care');
+    expect(styledTags.at(0).render().text()).toBe('Personal Care Home');
+    expect(styledTags.at(1).render().text()).toBe('Memory Care');
 
     verify(wrapper);
     expect(styledTags).toHaveLength(2);
@@ -111,10 +110,10 @@ describe('CommunitySummary', () => {
     const wrapper = wrap({
       community,
     });
-    const styledTags = wrapper.find('StyledTag');
+    const styledTags = wrapper.find('Tag');
 
-    expect(styledTags.get(0).props.children).toBe('Personal Care Home');
-    expect(styledTags.get(1).props.children).toBe('Memory Care');
+    expect(styledTags.at(0).render().text()).toBe('Personal Care Home');
+    expect(styledTags.at(1).render().text()).toBe('Memory Care');
 
     verify(wrapper);
     expect(styledTags).toHaveLength(2);
@@ -126,11 +125,11 @@ describe('CommunitySummary', () => {
     const wrapper = wrap({
       community,
     });
-    const styledTags = wrapper.find('StyledTag');
+    const styledTags = wrapper.find('Tag');
 
-    expect(styledTags.get(0).props.children).toBe('Assisted Living');
-    expect(styledTags.get(1).props.children).toBe('Memory Care');
-    expect(styledTags.get(2).props.children).toBe('CCRC');
+    expect(styledTags.at(0).render().text()).toBe('Assisted Living');
+    expect(styledTags.at(1).render().text()).toBe('Memory Care');
+    expect(styledTags.at(2).render().text()).toBe('CCRC');
 
     verify(wrapper);
     expect(styledTags).toHaveLength(3);
