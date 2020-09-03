@@ -27,8 +27,6 @@ import AcceptAndContactFamilyContainer from 'sly/web/containers/AcceptAndContact
 import DashboardMyFamiliesDetailsPage from 'sly/web/components/pages/DashboardMyFamiliesDetailsPage';
 import withNotification from 'sly/web/controllers/withNotification';
 import withModal from 'sly/web/controllers/withModal';
-import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
-import { parse } from 'query-string';
 
 const mapStateToProps = (state, { conversations }) => ({
   selectedConversation: conversations && conversations.length === 1 ? conversations[0] : null,
@@ -39,10 +37,7 @@ const mapStateToProps = (state, { conversations }) => ({
 @prefetch('client', 'getClient', (req, { match }) => req({
   id: match.params.id,
 }))
-@prefetch('notes', 'getNotes', (req, { match, location }) => req({
-  ...parse(location.search),
-  'filter[client]': match.params.id,
-}))
+
 @query('updateClient', 'updateClient')
 @query('createNote', 'createNote')
 @query('updateNote', 'updateNote')
@@ -85,6 +80,8 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     selectedConversation: null,
     conversationsList: null,
     clientsWithSameContacts: null,
+    rawNotes: null,
+    notes: null,
     isEditStatusDetailsMode: false,
   };
 
@@ -104,28 +101,26 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
           this.checkDuplicatesInProgress = false;
         });
     }
+    if (!this.getNotesInProgress && this.props.client && this.state.notes === null) {
+      this.getNotes();
+    }
   }
 
-  // getNotes = () => {
-  //   const { client, getNotes } = this.props;
-  //   const params = {
-  //     'filter[client]': client.id,
-  //   };
-  //   this.getNotesInProgress = true;
-  //   return getNotes(params)
-  //     .then((data) => {
-  //       // const notesPagination = getDetailedPaginationData(data.body, 'communities')
-  //       this.setState({
-  //         rawNotes: data.body.data,
-  //       });
-  //       return data;
-  //     })
-  //     .then(resp => normJsonApi(resp))
-  //     .then(data => {
-  //       this.setState({ notes: data });
-  //       this.getNotesInProgress = false;
-  //     });
-  // };
+  getNotes = () => {
+
+    const { client, getNotes } = this.props;
+    const params = {
+      'filter[client]': client.id,
+    };
+    this.getNotesInProgress = true;
+    return getNotes(params)
+      .then((data) => { this.setState({ rawNotes: data.body.data }); return data; })
+      .then(resp => normJsonApi(resp))
+      .then(data => {
+        this.setState({ notes: data });
+        this.getNotesInProgress = false;
+      });
+  };
 
   onRejectSuccess = (hide) => {
     const { history } = this.props;
@@ -307,10 +302,8 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       client,
       match,
       status,
-      location,
       user,
       breakpoint,
-      notes,
       notifyInfo,
       notifyError,
       showModal,
@@ -318,7 +311,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       isModalOpen,
     } = this.props;
 
-    const { selectedConversation, clientsWithSameContacts, isEditStatusDetailsMode } = this.state;
+    const { selectedConversation, clientsWithSameContacts, notes, isEditStatusDetailsMode } = this.state;
 
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && client && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
@@ -329,7 +322,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       return <Redirect to={activityPath} />;
     }
 
-    // const notesPagination = getDetailedPaginationData(status.communities, 'communities')
     const { result: rawClient, meta } = status.client;
     const { hasFinished: clientHasFinished } = status.client;
     // since it's using conditional prefetch, in initial stage clients key won't be there
@@ -352,9 +344,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
         onAddNote={onAddNote}
         onEditNote={onEditNote}
         notes={notes || []}
-        notesPagination={getDetailedPaginationData(status.notes, 'notes')}
-        noteIsLoading={!status.notes.hasFinished}
-        basePath={location.pathname}
+        noteIsLoading={!notes}
         clientIsLoading={!clientHasFinished}
         goToFamilyDetails={this.goToFamilyDetails}
         goToMessagesTab={this.goToMessagesTab}
