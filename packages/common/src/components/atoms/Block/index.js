@@ -25,7 +25,7 @@ const Block = styled(({ showIf, ...props }) => {
   if (!showIf) {
     return null;
   }
-  return <Root {...props} display="block" />;
+  return <Root {...props} />;
 })`
   ${withSpacing}
   ${withText}
@@ -50,6 +50,7 @@ Block.propTypes = {
 
 Block.defaultProps = {
   showIf: true,
+  display: 'block',
 };
 
 export default Block;

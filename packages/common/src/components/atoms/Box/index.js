@@ -1,8 +1,8 @@
-import React from 'react';
+import styled from 'styled-components';
 
 import Block from 'sly/common/components/atoms/Block';
 
-const Box = props => <Block {...props} />;
+const Box = styled(Block)``;
 
 Box.defaultProps = {
   border: 'regular',

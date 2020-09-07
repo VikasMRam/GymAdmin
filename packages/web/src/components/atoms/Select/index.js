@@ -208,6 +208,7 @@ const Select = ({
   async,
   loadOptions,
   disabled,
+  className,
   ...props
 }) => {
   const SelectComponent = async
@@ -236,7 +237,11 @@ const Select = ({
   const textSize = getTextSize(size);
 
   return (
-    <Wrapper textSize={textSize} size={size} {...props}>
+    <Wrapper
+      textSize={textSize}
+      size={size}
+      className={className}
+    >
       <SelectComponent
         className="react-select-container"
         classNamePrefix="react-select"
@@ -257,6 +262,7 @@ const Select = ({
 Select.propTypes = {
   size: oneOf(['tiny', 'small', 'regular', 'button', 'large']),
   lineHeight: string,
+  className: string,
   async: bool,
   value: oneOfType([string, arrayOf(string)]),
   options: arrayOf(object).isRequired,
