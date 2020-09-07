@@ -1,7 +1,6 @@
 import React from 'react';
 import { oneOf, string, func, bool } from 'prop-types';
-import styled, { css } from 'styled-components';
-import { switchProp, ifProp } from 'styled-tools';
+import styled from 'styled-components';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
 import { size, palette, key } from 'sly/common/components/themes';
@@ -10,39 +9,15 @@ import { Icon, Block } from 'sly/common/components/atoms';
 import { Input, Image } from 'sly/web/components/atoms';
 import LoadGoogleMaps from 'sly/web/services/search/LoadGoogleMaps';
 
-const SearchTextBox = styled(Input)`
-  background-color: ${palette('white', 'base')}!important;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
-  ${switchProp('layout', {
-    header: 'height: auto;',
-    homeHero: css`
-      height: ${size('element.large')};`,
-  })};
-`;
 const SearchSuggestionsWrapper = styled(Block)`
   z-index: ${key('zIndexes.searchSuggestions')};
-  // position the autocomplete items to be the same width as the container
-  top: calc(100% - (2 * ${size('spacing.regular')}));
   left: 0;
   right: 0;
-  box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')} ${palette('slate', 'stroke')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    right: ${ifProp({ layout: 'header' }, size('spacing.xxxLarge'), 0)};
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    right: 0;
-  }
 `;
-const searchSuggestionBGColor = p => (p.active ? palette('grey', 'stroke') : palette('white', 'base'));
-const SearchSuggestion = styled.div`
-  width: 100%;
-  padding: ${size('spacing.large')};
-  background-color: ${searchSuggestionBGColor};
 
+const SearchSuggestion = styled(Block)`
   :hover {
-    background-color: ${palette('grey', 'stroke')};
-    cursor: pointer;
+    background-color: ${palette('primary', 'stroke')};
   }
 `;
 
@@ -83,15 +58,14 @@ const SearchBox = ({
         >
           {({ getInputProps, suggestions, getSuggestionItemProps }) => (
             <>
-              <SearchTextBox
+              <Input
                 {...getInputProps({ onBlur, placeholder })}
                 disabled={false}
-                layout={layout}
                 onFocus={(e) => { loadMaps(); onTextboxFocus && onTextboxFocus(e); }}
                 onBlur={onTextboxBlur}
                 readOnly={readOnly}
                 type="search"
-                size="large"
+                size={layout === 'homeHero' ? 'large' : undefined}
               />
               {(isTextboxInFocus && (onCurrentLocationClick || suggestions.length > 0)) && (
                 <SearchSuggestionsWrapper
@@ -100,15 +74,30 @@ const SearchBox = ({
                   border="regular"
                   borderPalette="slate"
                   borderVariation="stroke"
-                  layout={layout}
+                  shadowBlur="regular"
                 >
                   {/* user mouseDown instead of onClick as the onClick which is triggered after mouse button is release will trigger blur of textbox
                       that will by the time hide the suggestions dropdown
                   */}
                   {onCurrentLocationClick &&
-                    <SearchSuggestion onMouseDown={onCurrentLocationClick}><Icon icon="map" marginRight="regular" /> Current Location</SearchSuggestion>}
+                    <SearchSuggestion
+                      onMouseDown={onCurrentLocationClick}
+                      cursor="pointer"
+                      width="100%"
+                      padding="large"
+                    >
+                      <Icon icon="map" marginRight="regular" palette="grey" /> Current Location
+                    </SearchSuggestion>}
                   {suggestions.map(suggestion => (
-                    <SearchSuggestion {...getSuggestionItemProps(suggestion)} active={suggestion.active}>
+                    <SearchSuggestion
+                      {...getSuggestionItemProps(suggestion)}
+                      key={suggestion.description}
+                      cursor="pointer"
+                      background={suggestion.active ? 'grey.stroke' : 'white'}
+                      palette="primary"
+                      width="100%"
+                      padding="large"
+                    >
                       {suggestion.description}
                     </SearchSuggestion>
                   ))}

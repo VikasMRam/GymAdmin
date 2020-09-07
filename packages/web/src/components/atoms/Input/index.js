@@ -1,53 +1,33 @@
-/* eslint-disable react/sort-comp */
 import React, { Component } from 'react';
 import { bool, oneOf, func } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/common/components/themes';
+import { size, palette, getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
+import {
+  withDisplay,
+  withColor,
+  withSpacing,
+  withBorder,
+  withCursor,
+  withWidth,
+  withHeight,
+  withText,
+} from 'sly/common/components/helpers';
 
-const backgroundColor = (p) => {
-  if (p.disabled || p.readOnly) {
-    return palette('grey', 'stroke');
-  }
-  if (p.warning) {
-    return palette('warning', 'stroke');
-  }
-  return p.invalid ? palette('danger', 'stroke') : palette('white', 'base');
-};
-const borderColor = (p) => {
-  if (p.warning) {
-    return palette('warning', 'base');
-  }
-  return p.invalid ? palette('danger', 'base') : palette('slate', 'lighter-90');
-};
-const focusBorderColor = (p) => {
-  if (p.warning) {
-    return palette('warning', 'base');
-  }
-  return p.invalid ? palette('danger', 'base') : palette('primary', 'base');
-};
-const color = (p) => {
-  return (p.disabled || p.readOnly) ? palette('grey', 'base') : palette('slate', 'base');
-};
+const focusBorderColor = p => (!p.warning && !p.invalid) ? palette('primary', 'base') : null;
 
 export const styles = css`
-  display: block;
-  width: 100%;
-  margin: 0;
-  font-size: inherit;
-  font-family: inherit;
-  font-weight: inherit;
+  ${withColor}
+  ${withSpacing}
+  ${withBorder}
+  ${withCursor}
+  ${withWidth}
+  ${withHeight}
+  ${withText}
+  ${withDisplay}
 
-  font-size: ${size('text', 'caption')};
-  // todo: non standard padding. remove afterwards if added to theme
-  padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')});
-  height: ${ifProp({ type: 'textarea' }, size('element.huge'), ({ size: sizeProp }) => size('element', sizeProp))};
-  color: ${color};
-  background-color: ${backgroundColor};
-  border: ${size('border.regular')} solid ${borderColor};
-  border-radius: ${size('spacing.small')};
   min-width: ${ifProp({ type: 'textarea' }, '100%', 'initial')};
   max-width: ${ifProp({ type: 'textarea' }, '100%', 'initial')};
 
@@ -70,8 +50,12 @@ export const styles = css`
     margin: 0 ${size('spacing.small')} 0 0;
   }
   &[type='search'] {
-    background: url(${assetPath('icons/search-caption.svg')}) no-repeat scroll calc(${size('spacing', 'large')} - ${size('spacing', 'small')}) center;
-    padding-left: calc(12px + ${size('spacing', 'xLarge')} + ${size('spacing', 'regular')});
+    background-image: url(${assetPath('icons/search-caption.svg')});
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position-x: ${size('spacing', 'medium')};
+    background-position-y: center;
+    padding-left: calc(${size('spacing', 'medium')} + ${size('spacing', 'xxLarge')});
   }
 
   ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -90,14 +74,10 @@ export const styles = css`
 
 const StyledTextarea = styled.textarea`
   ${styles};
-  font-size: 14px;
 `;
 
 const StyledSelect = styled.select`
   ${styles};
-  background: ${palette('white', 'base')};
-  color: ${palette('slate', 'base')};
-  height: ${size('element.xLarge')};
 `;
 const StyledInput = styled.input`
   ${styles};
@@ -105,8 +85,21 @@ const StyledInput = styled.input`
 
 export default class Input extends Component {
   static propTypes = {
-    type: oneOf(['search', 'textarea', 'select', 'text', 'file', 'checkbox', 'radio', 'password', 'number', 'hidden', 'date', 'locationSearch']),
-    size: oneOf(['small', 'regular', 'button', 'large', 'xLarge']),
+    type: oneOf([
+      'search',
+      'textarea',
+      'select',
+      'text',
+      'file',
+      'checkbox',
+      'radio',
+      'password',
+      'number',
+      'hidden',
+      'date',
+      'locationSearch',
+    ]).isRequired,
+    size: oneOf(['small', 'regular', 'button', 'large', 'xLarge']).isRequired,
     onFocus: func,
     invalid: bool,
     readOnly: bool,
@@ -114,12 +107,18 @@ export default class Input extends Component {
   };
 
   static defaultProps = {
-    palette: 'stroke',
     type: 'text',
+    display: 'block',
+    width: '100%',
+    margin: '0',
+    padding: 'medium',
     size: 'button',
+    borderRadius: 'small',
+    background: 'white.base',
+    palette: 'slate.base',
+    border: 'regular',
+    borderPalette: 'slate.lighter-90',
   };
-
-  ref = React.createRef();
 
   onFocus = (...args) => {
     if (this.props.onFocus) {
@@ -128,11 +127,32 @@ export default class Input extends Component {
   };
 
   render() {
-    if (this.props.type === 'textarea') {
-      return <StyledTextarea {...this.props} />;
-    } else if (this.props.type === 'select') {
-      return <StyledSelect {...this.props} disabled={this.props.readOnly} />;
+    const { size, ...props } = this.props;
+
+    if (props.type === 'textarea') {
+      props.height = getKey('sizes.element.huge');
+    } else if (size) {
+      props.height = getKey('sizes.element', size);
     }
-    return <StyledInput {...this.props} onFocus={this.onFocus} autoComplete="new-password" />;
+
+    props.size = 'caption';
+
+    if (props.disabled || props.readOnly) {
+      props.background = 'grey.stroke';
+      props.palette = 'grey.base';
+    } else if (props.warning) {
+      props.background = 'warning.stroke';
+      props.borderPalette = 'warning.base';
+    } else if (props.invalid) {
+      props.background = 'danger.stroke';
+      props.borderPalette = 'danger.base';
+    }
+
+    if (props.type === 'textarea') {
+      return <StyledTextarea {...props} />;
+    } else if (props.type === 'select') {
+      return <StyledSelect {...props} disabled={props.readOnly} />;
+    }
+    return <StyledInput {...props} onFocus={this.onFocus} autoComplete="new-password" />;
   }
 }
