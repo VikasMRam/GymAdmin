@@ -27,6 +27,8 @@ import AcceptAndContactFamilyContainer from 'sly/web/containers/AcceptAndContact
 import DashboardMyFamiliesDetailsPage from 'sly/web/components/pages/DashboardMyFamiliesDetailsPage';
 import withNotification from 'sly/web/controllers/withNotification';
 import withModal from 'sly/web/controllers/withModal';
+import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
+import { parse } from 'query-string';
 
 const mapStateToProps = (state, { conversations }) => ({
   selectedConversation: conversations && conversations.length === 1 ? conversations[0] : null,
@@ -37,18 +39,24 @@ const mapStateToProps = (state, { conversations }) => ({
 @prefetch('client', 'getClient', (req, { match }) => req({
   id: match.params.id,
 }))
-
+@prefetch('notes', 'getNotes', (req, { match, location }) => req({
+  ...parse(location.search),
+  'filter[client]': match.params.id,
+}))
 @query('updateClient', 'updateClient')
 @query('createNote', 'createNote')
 @query('updateNote', 'updateNote')
 @query('getClients', 'getClients')
-@query('getNotes', 'getNotes')
 @withBreakpoint
 @withUser
 
 @connect(mapStateToProps, {
-  invalidateClients: () => invalidateRequests('getClients'),
-  invalidateConversations: () => invalidateRequests('getConversations'),
+  invalidateNotes:
+    () => invalidateRequests('getNotes'),
+  invalidateClients:
+    () => invalidateRequests('getClients'),
+  invalidateConversations:
+    () => invalidateRequests('getConversations'),
 })
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
@@ -65,7 +73,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     createNote: func.isRequired,
     updateNote: func.isRequired,
     getClients: func.isRequired,
-    getNotes: func.isRequired,
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
     showModal: func.isRequired,
@@ -74,14 +81,13 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     notes: arrayOf(notePropType),
     invalidateClients: func,
     invalidateConversations: func,
+    invalidateNotes: func,
   };
 
   state = {
     selectedConversation: null,
     conversationsList: null,
     clientsWithSameContacts: null,
-    rawNotes: null,
-    notes: null,
     isEditStatusDetailsMode: false,
   };
 
@@ -101,26 +107,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
           this.checkDuplicatesInProgress = false;
         });
     }
-    if (!this.getNotesInProgress && this.props.client && this.state.notes === null) {
-      this.getNotes();
-    }
   }
-
-  getNotes = () => {
-
-    const { client, getNotes } = this.props;
-    const params = {
-      'filter[client]': client.id,
-    };
-    this.getNotesInProgress = true;
-    return getNotes(params)
-      .then((data) => { this.setState({ rawNotes: data.body.data }); return data; })
-      .then(resp => normJsonApi(resp))
-      .then(data => {
-        this.setState({ notes: data });
-        this.getNotesInProgress = false;
-      });
-  };
 
   onRejectSuccess = (hide) => {
     const { history } = this.props;
@@ -130,8 +117,12 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   onAddNote = (data, notifyError, notifyInfo, hideModal) => {
     const {
-      createNote, client, invalidateClients,
+      createNote,
+      client,
+      invalidateClients,
+      invalidateNotes,
     } = this.props;
+
     const { id } = client;
     const { note } = data;
     const payload = {
@@ -150,10 +141,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       value: '',
     });
     const notePromise = () => createNote(payload);
-    const getNotesPromise = () => this.getNotes();
 
     return notePromise()
-      .then(getNotesPromise)
+      .then(invalidateNotes)
       .then(invalidateClients)
       .then(() => {
         hideModal();
@@ -176,9 +166,12 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   onEditNote = (data, note, notifyError, notifyInfo, hideModal) => {
     const {
-      updateNote, invalidateClients,
+      updateNote,
+      invalidateClients,
+      status,
+      invalidateNotes,
     } = this.props;
-    const { rawNotes } = this.state;
+    const rawNotes = status.notes.result;
     const { id } = note;
     const oldNote = rawNotes.find(n => n.id === id);
     const { note: newNoteBody } = data;
@@ -193,10 +186,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       value: id,
     });
     const notePromise = () => updateNote({ id }, payload);
-    const getNotesPromise = () => this.getNotes();
 
     return notePromise()
-      .then(getNotesPromise)
+      // .then(invalidateNotes)
       .then(invalidateClients)
       .then(() => {
         hideModal();
@@ -274,10 +266,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     status.client.refetch();
   }
 
-  refetchNotes = () => {
-    this.getNotes();
-  }
-
   static getDerivedStateFromProps(props, state) {
     const selectedConversation = state.selectedConversation || props.selectedConversation;
     return {
@@ -302,8 +290,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       client,
       match,
       status,
+      location,
       user,
       breakpoint,
+      notes,
       notifyInfo,
       notifyError,
       showModal,
@@ -311,7 +301,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       isModalOpen,
     } = this.props;
 
-    const { selectedConversation, clientsWithSameContacts, notes, isEditStatusDetailsMode } = this.state;
+    const { selectedConversation, clientsWithSameContacts, isEditStatusDetailsMode } = this.state;
 
     const currentTab = match.params.tab || SUMMARY;
     if (breakpoint && client && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
@@ -322,8 +312,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       return <Redirect to={activityPath} />;
     }
 
+    // const notesPagination = getDetailedPaginationData(status.communities, 'communities')
     const { result: rawClient, meta } = status.client;
     const { hasFinished: clientHasFinished } = status.client;
+    const { hasFinished: userHasFinished } = status.user;
     // since it's using conditional prefetch, in initial stage clients key won't be there
     return (
       <DashboardMyFamiliesDetailsPage
@@ -340,12 +332,14 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
         meta={meta}
         onRejectSuccess={() => onRejectSuccess(hideModal)}
         refetchClient={this.refetchClient}
-        refetchNotes={this.refetchNotes}
+        refetchNotes={status.notes.refetch}
         onAddNote={onAddNote}
         onEditNote={onEditNote}
         notes={notes || []}
-        noteIsLoading={!notes}
-        clientIsLoading={!clientHasFinished}
+        notesPagination={getDetailedPaginationData(status.notes, 'notes')}
+        noteIsLoading={!status.notes.hasFinished}
+        basePath={location.pathname}
+        isLoading={!clientHasFinished || !userHasFinished}
         goToFamilyDetails={this.goToFamilyDetails}
         goToMessagesTab={this.goToMessagesTab}
         refetchConversations={this.refetchConversations}

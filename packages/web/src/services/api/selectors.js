@@ -100,7 +100,7 @@ export function createMemoizedRequestInfoSelector() {
     const request = state.api.requests?.[call]?.[args];
     const result = getRequestResult(state.api.entities, request);
 
-    if (result === null || lastResult === null || !twoSetsAreEqual(result, lastResult)) {
+    if (result === null || result !== lastResult) { // || !twoSetsAreEqual(result, lastResult)
       const error = request && request.error ? request.error : false;
       const hasStarted = hasRequestStarted(request);
       const isLoading = isRequestLoading(request);
@@ -109,13 +109,14 @@ export function createMemoizedRequestInfoSelector() {
       lastRequestInfo = {
         hasStarted,
         isLoading,
+        isInvalid: request?.invalid,
         hasFinished: hasStarted && !isLoading,
         hasFailed: !!error,
         result,
         normalized: getRequestResult(state.api.entities, request, true),
         headers: getRequestHeaders(request),
         meta: getRequestMeta(request),
-        status: request && request.status,
+        status: request?.status,
         error,
       };
     }

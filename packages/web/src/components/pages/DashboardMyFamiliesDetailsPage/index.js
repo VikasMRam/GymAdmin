@@ -61,6 +61,12 @@ import {
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import Tag from 'sly/web/components/atoms/Tag';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
+import Pagination from 'sly/web/components/molecules/Pagination';
+
+const StyledPagination = styled(Pagination)`
+  margin: 1rem;
+  justify-content: center;
+`;
 
 const TextAlignCenterBlock = pad(textAlign(Block, 'center'), 'regular');
 
@@ -76,10 +82,6 @@ const SmallScreenBorder = css`
 const SmallScreenBorderDiv = styled.div`
   ${SmallScreenBorder}
   ${p => p.padding && css`padding: ${size('spacing', p.padding)};`}
-`;
-
-const SmallScreenBorderPaddedFamilySummary = styled(DashboardFamilySummary)`
-  ${SmallScreenBorder}
 `;
 
 const StyledFamilyActivityItem = styled(FamilyActivityItem)`
@@ -167,7 +169,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     onEditNote: func,
     notes: arrayOf(notePropType),
     noteIsLoading: bool,
-    clientIsLoading: bool,
+    isLoading: bool,
     refetchClient: func.isRequired,
     refetchNotes: func.isRequired,
     goToFamilyDetails: func,
@@ -452,7 +454,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
   render() {
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, basePath, notes, notesPagination, noteIsLoading, isLoading, user,
       conversation, setSelectedConversation, refetchClient,
       showModal, hideModal, isModalOpen, onAcceptClick, clients, onEditStatusDetailsClick, isEditStatusDetailsMode, onStatusChange,
     } = this.props;
@@ -460,7 +462,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const { organization } = user;
 
 
-    if (clientIsLoading) {
+    if (isLoading) {
       return (
         <Loading activeMenuItem="Families">
           Loading...
@@ -647,6 +649,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               <>
                 {/* <TableHeaderButtons hasColumnsButton={false} /> */}
                 {activityCards}
+                {notesPagination.show &&
+                  <StyledPagination
+                    current={notesPagination.current}
+                    total={notesPagination.total}
+                    basePath={basePath}
+                    pageParam="page-number"
+                  />
+                }
               </>
               }
             </Section>
