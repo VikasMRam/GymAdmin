@@ -121,7 +121,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       let moveInDateFormatted = moveInDate;
       const parsedDate = dayjs(moveInDate);
       if (parsedDate.isValid()) {
-        moveInDateFormatted = parsedDate.utc().format('MM/DD/YYYY');
+        moveInDateFormatted = parsedDate.format('MM/DD/YYYY');
       }
       let note = `${name} moved into ${communityName} on ${moveInDateFormatted} with a monthly rent of $${monthlyFees} and a referral fee of `;
       note = referralAgreementType === 'flat-fee' ? `${note}$${referralAgreement} flat fee` : `${note}${referralAgreement}% referral fee`;
