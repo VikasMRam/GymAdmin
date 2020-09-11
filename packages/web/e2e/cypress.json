@@ -1,8 +1,10 @@
 {
   "baseUrl": "http://www.lvh.me",
   "reporter": "cypress-multi-reporters",
+  "ignoreTestFiles": "**/{profilePage,sendReferral,assessmentWizard}/!(*v1_1*).js",
   "video": false,
   "reporterOptions": {
     "configFile": "reporter-config.json"
   }
 }
+
