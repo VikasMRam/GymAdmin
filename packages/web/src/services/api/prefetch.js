@@ -84,9 +84,9 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
 
       mayBeFetch = () => {
         const { getRequestInfo, apiContext } = this.props;
-        const { hasStarted, isLoading } = getRequestInfo();
+        const { hasStarted, isLoading, isInvalid } = getRequestInfo();
         const shouldSkip = isServer && (apiContext.skipApiCalls || api[apiCall].ssrIgnore);
-        if (!shouldSkip && !isLoading && !hasStarted) {
+        if (isInvalid || (!shouldSkip && !isLoading && !hasStarted)) {
           return this.fetch();
         }
         return false;

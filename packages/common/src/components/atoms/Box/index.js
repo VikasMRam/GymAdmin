@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 
-import { withShadow } from 'sly/common/components/helpers';
 import Block from 'sly/common/components/atoms/Block';
 
-const Box = styled(Block)`
-  ${withShadow}
-`;
+const Box = styled(Block)``;
 
 Box.defaultProps = {
   border: 'regular',

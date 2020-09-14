@@ -47,13 +47,16 @@ const mapStateToProps = (state, { conversations }) => ({
 @query('createNote', 'createNote')
 @query('updateNote', 'updateNote')
 @query('getClients', 'getClients')
-@query('getNotes', 'getNotes')
 @withBreakpoint
 @withUser
 
 @connect(mapStateToProps, {
-  invalidateClients: () => invalidateRequests('getClients'),
-  invalidateConversations: () => invalidateRequests('getConversations'),
+  invalidateNotes:
+    () => invalidateRequests('getNotes'),
+  invalidateClients:
+    () => invalidateRequests('getClients'),
+  invalidateConversations:
+    () => invalidateRequests('getConversations'),
 })
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
@@ -70,7 +73,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     createNote: func.isRequired,
     updateNote: func.isRequired,
     getClients: func.isRequired,
-    getNotes: func.isRequired,
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
     showModal: func.isRequired,
@@ -79,6 +81,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     notes: arrayOf(notePropType),
     invalidateClients: func,
     invalidateConversations: func,
+    invalidateNotes: func,
   };
 
   state = {
@@ -106,27 +109,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     }
   }
 
-  // getNotes = () => {
-  //   const { client, getNotes } = this.props;
-  //   const params = {
-  //     'filter[client]': client.id,
-  //   };
-  //   this.getNotesInProgress = true;
-  //   return getNotes(params)
-  //     .then((data) => {
-  //       // const notesPagination = getDetailedPaginationData(data.body, 'communities')
-  //       this.setState({
-  //         rawNotes: data.body.data,
-  //       });
-  //       return data;
-  //     })
-  //     .then(resp => normJsonApi(resp))
-  //     .then(data => {
-  //       this.setState({ notes: data });
-  //       this.getNotesInProgress = false;
-  //     });
-  // };
-
   onRejectSuccess = (hide) => {
     const { history } = this.props;
     hide();
@@ -135,8 +117,12 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   onAddNote = (data, notifyError, notifyInfo, hideModal) => {
     const {
-      createNote, client, invalidateClients,
+      createNote,
+      client,
+      invalidateClients,
+      invalidateNotes,
     } = this.props;
+
     const { id } = client;
     const { note } = data;
     const payload = {
@@ -155,10 +141,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       value: '',
     });
     const notePromise = () => createNote(payload);
-    const getNotesPromise = () => this.getNotes();
 
     return notePromise()
-      .then(getNotesPromise)
+      .then(invalidateNotes)
       .then(invalidateClients)
       .then(() => {
         hideModal();
@@ -181,9 +166,12 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   onEditNote = (data, note, notifyError, notifyInfo, hideModal) => {
     const {
-      updateNote, invalidateClients,
+      updateNote,
+      invalidateClients,
+      status,
+      invalidateNotes,
     } = this.props;
-    const { rawNotes } = this.state;
+    const rawNotes = status.notes.result;
     const { id } = note;
     const oldNote = rawNotes.find(n => n.id === id);
     const { note: newNoteBody } = data;
@@ -198,10 +186,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       value: id,
     });
     const notePromise = () => updateNote({ id }, payload);
-    const getNotesPromise = () => this.getNotes();
 
     return notePromise()
-      .then(getNotesPromise)
+      // .then(invalidateNotes)
       .then(invalidateClients)
       .then(() => {
         hideModal();
@@ -279,10 +266,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     status.client.refetch();
   }
 
-  refetchNotes = () => {
-    this.getNotes();
-  }
-
   static getDerivedStateFromProps(props, state) {
     const selectedConversation = state.selectedConversation || props.selectedConversation;
     return {
@@ -332,6 +315,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     // const notesPagination = getDetailedPaginationData(status.communities, 'communities')
     const { result: rawClient, meta } = status.client;
     const { hasFinished: clientHasFinished } = status.client;
+    const { hasFinished: userHasFinished } = status.user;
     // since it's using conditional prefetch, in initial stage clients key won't be there
     return (
       <DashboardMyFamiliesDetailsPage
@@ -348,14 +332,14 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
         meta={meta}
         onRejectSuccess={() => onRejectSuccess(hideModal)}
         refetchClient={this.refetchClient}
-        refetchNotes={this.refetchNotes}
+        refetchNotes={status.notes.refetch}
         onAddNote={onAddNote}
         onEditNote={onEditNote}
         notes={notes || []}
         notesPagination={getDetailedPaginationData(status.notes, 'notes')}
         noteIsLoading={!status.notes.hasFinished}
         basePath={location.pathname}
-        clientIsLoading={!clientHasFinished}
+        isLoading={!clientHasFinished || !userHasFinished}
         goToFamilyDetails={this.goToFamilyDetails}
         goToMessagesTab={this.goToMessagesTab}
         refetchConversations={this.refetchConversations}

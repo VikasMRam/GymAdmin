@@ -18,13 +18,14 @@ import {
   withCursor,
   withWidth,
   withHeight,
+  withShadow,
 } from 'sly/common/components/helpers';
 
 const Block = styled(({ showIf, ...props }) => {
   if (!showIf) {
     return null;
   }
-  return <Root {...props} display="block" />;
+  return <Root {...props} />;
 })`
   ${withSpacing}
   ${withText}
@@ -36,6 +37,7 @@ const Block = styled(({ showIf, ...props }) => {
   ${withClamping}
   ${withCursor}
   ${withOverflow}
+  ${withShadow}
   // put withDisplay before flex to make sure that this display styles are always first priority
   ${withWidth}
   ${withHeight}
@@ -48,6 +50,7 @@ Block.propTypes = {
 
 Block.defaultProps = {
   showIf: true,
+  display: 'block',
 };
 
 export default Block;

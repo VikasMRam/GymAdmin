@@ -16,4 +16,4 @@ storiesOf('Common|Atoms/Box', module)
   .add('palette', () => <Box palette="secondary">test content</Box>)
   .add('padding', () => <Box padding="regular">test content</Box>)
   .add('no padding', () => <Box noPadding>test content</Box>)
-  .add('shadow', () => <Box shadow="regular">test content</Box>);
+  .add('shadow', () => <Box shadowBlur="regular">test content</Box>);

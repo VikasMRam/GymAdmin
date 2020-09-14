@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import SearchBox from 'sly/web/components/molecules/SearchBox';
+import SearchBox from '.';
 
 storiesOf('Molecules|SearchBox', module)
   .add('default', () => (

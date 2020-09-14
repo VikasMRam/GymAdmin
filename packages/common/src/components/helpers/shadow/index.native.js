@@ -4,6 +4,8 @@ import { size, getKey, palette } from 'sly/common/components/themes';
 
 const getElevation = ({ shadow }) => getKey(`sizes.spacing.${shadow}`).replace('px', '');
 
+// TODO: update to support h-offset, v-offset, blur etc
+
 // elevation is for android
 export const withShadow = ({ shadow }) => shadow && css`
   box-shadow: 0 0 ${size('spacing', shadow)} ${palette('slate', 'filler')};

@@ -2,7 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
-import SearchBox from 'sly/web/components/molecules/SearchBox';
+import SearchBox from '.';
+
 import LoadGoogleMaps from 'sly/web/services/search/LoadGoogleMaps';
 
 const onChange = jest.fn();
@@ -57,7 +58,7 @@ describe('SearchBox', () => {
     const autocomplete = loadMaps.dive().find(PlacesAutocomplete);
 
     expect(autocomplete).toHaveLength(1);
-    expect(autocomplete.dive().find('SearchTextBox')).toHaveLength(1);
+    expect(autocomplete.dive().find('Input')).toHaveLength(1);
   });
 
   it('renders with homeHero layout', () => {
@@ -67,6 +68,6 @@ describe('SearchBox', () => {
     const autocomplete = loadMaps.dive().find(PlacesAutocomplete);
 
     expect(autocomplete).toHaveLength(1);
-    expect(autocomplete.dive().find('SearchTextBox')).toHaveLength(1);
+    expect(autocomplete.dive().find('Input')).toHaveLength(1);
   });
 });

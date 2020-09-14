@@ -169,7 +169,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     onEditNote: func,
     notes: arrayOf(notePropType),
     noteIsLoading: bool,
-    clientIsLoading: bool,
+    isLoading: bool,
     refetchClient: func.isRequired,
     refetchNotes: func.isRequired,
     goToFamilyDetails: func,
@@ -454,7 +454,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
   render() {
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, basePath, notes, notesPagination, noteIsLoading, clientIsLoading, user,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, basePath, notes, notesPagination, noteIsLoading, isLoading, user,
       conversation, setSelectedConversation, refetchClient,
       showModal, hideModal, isModalOpen, onAcceptClick, clients, onEditStatusDetailsClick, isEditStatusDetailsMode, onStatusChange,
     } = this.props;
@@ -462,7 +462,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const { organization } = user;
 
 
-    if (clientIsLoading) {
+    if (isLoading) {
       return (
         <Loading activeMenuItem="Families">
           Loading...
