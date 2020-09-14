@@ -13,7 +13,7 @@ import {
   PARTNER_AGENTS,
   MESSAGES,
   EMAILS,
-  TASKS, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED
+  TASKS, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED,
 } from 'sly/web/constants/dashboardAppPaths';
 import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/web/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/web/constants/notes';
@@ -535,7 +535,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         cType: a.cType,
       };
       if (a.commentableType === CLIENT_ENTITY_TYPE && a.commentableID !== id && a.title !== '') {
-        if (!a.title.includes('[Note on Agent Record]')) { // not to allow multiple presence due to rerender
+        if (typeof a.title === 'string' && !a.title.includes('[Note on Agent Record]')) { // not to allow multiple presence due to rerender
           a.title = `[Note on Agent Record] ${a.title}`;
         }
       }
