@@ -1,13 +1,18 @@
 
-import { LIVE_SEARCH_STATE, PRODUCTS_OPTIONS, SERVICES_OPTIONS, AGE_OPTIONS, WORKING_WITH_OPTIONS, WHO_PERSON_OPTIONS, ADL_OPTIONS, TIMING_OPTIONS, BUDGET_OPTIONS, MEDICAID_OPTIONS } from '../../../../src/constants/wizards/assessment';
+import { LOCAL_EXPERT_OPTIONS, LIVE_SEARCH_STATE, PRODUCTS_OPTIONS, SERVICES_OPTIONS, AGE_OPTIONS, WORKING_WITH_OPTIONS, WHO_PERSON_OPTIONS, ADL_OPTIONS, TIMING_OPTIONS, BUDGET_OPTIONS, MEDICAID_OPTIONS } from '../../../../src/constants/wizards/assessment';
 import { TEST_COMMUNITY } from '../../constants/community';
 import { responsive, waitForHydration } from '../../helpers/tests';
+import randomUser from '../../helpers/randomUser';
+
+Cypress.on('uncaught:exception', () => {
+  return false;
+});
 
 describe('Community survey', () => {
   let community;
   let lookingFor;
   const wizardVersion = 'Wizard_V1';
-  const wizardSteps = 11;
+  const wizardSteps = 10;
   const WizardConfiguration = {
     Wizard_V1:
           [{ name: 'step-1:Timing',
@@ -169,7 +174,19 @@ describe('Community survey', () => {
             multipleselectionAllowed: false,
             istitleNested: true,
           },
-
+          {
+            name: 'step-13:LocalExpert',
+            title: 'Are you interested in working with a Local Senior Living Expert? They can help you find senior living options that fit your budget and care needs.',
+            Options: LOCAL_EXPERT_OPTIONS,
+            maxSelect: 3,
+            optionsId: 'localExpert',
+            skipAllowed: true,
+            backAllowed: true,
+            submitText: 'Finish',
+            isSelect: false,
+            multipleselectionAllowed: false,
+            istitleNested: false,
+          },
           ],
   };
 
@@ -207,19 +224,42 @@ describe('Community survey', () => {
     return lookingFor;
   }
 
-
-  function verifypostUuidActions(stepname, val, optionsId) {
+  function verifypostUuidActions(stepname, optionsId, val) {
     cy.wait('@postUuidActions').then((xhr) => {
       const request = xhr.requestBody;
+      const attrs = request.data.attributes;
       expect(request.data).to.have.property('type', 'UUIDAction');
-      expect(request.data.attributes.actionInfo).to.have.property('stepName', stepname);
-      expect(request.data.attributes.actionInfo).to.have.property('wizardName', 'assessmentWizard');
-      expect(request.data.attributes.actionInfo.data).to.have.property(`${optionsId}`).to.deep.equal(val);
-      expect(request.data.attributes).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
-      expect(request.data.attributes).to.have.property('actionType', 'wizardStepCompleted');
+      expect(attrs.actionInfo).to.have.property('stepName', stepname);
+      expect(attrs.actionInfo).to.have.property('wizardName', 'assessmentWizard');
+      expect(attrs.actionInfo.data).to.have.property(`${optionsId}`).to.deep.equal(val);
+      expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
+      expect(attrs).to.have.property('actionType', 'wizardStepCompleted');
     });
   }
 
+  function verifyResidentDetails(stepname, data) {
+    cy.wait('@postUuidActions').then((xhr) => {
+      const request = xhr.requestBody;
+      const attrs = request.data.attributes;
+      expect(attrs.actionInfo.data).to.include(data);
+      expect(request.data).to.have.property('type', 'UUIDAction');
+      expect(attrs.actionInfo).to.have.property('stepName', stepname);
+      expect(attrs.actionInfo).to.have.property('wizardName', 'assessmentWizard');
+      expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
+      expect(attrs).to.have.property('actionType', 'wizardStepCompleted');
+    });
+  }
+
+
+  function fillinresidentDetails(id1, id2, firstName, lastName) {
+    waitForHydration(cy.get(`input[id*=${id1}]`).should('exist')).type(firstName);
+    waitForHydration(cy.get(`input[id*=${id2}]`).should('exist')).type(lastName);
+  }
+
+  function getTitle(istitleNested, i) {
+    if (!istitleNested) { return WizardConfiguration[wizardVersion][i].title; }
+    return WizardConfiguration[wizardVersion][i].title[getlookingFor()];
+  }
 
   beforeEach(() => {
     cy.server();
@@ -234,7 +274,6 @@ describe('Community survey', () => {
     });
   });
 
-
   responsive(() => {
     it('Visit community page', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
@@ -246,29 +285,26 @@ describe('Community survey', () => {
     });
 
 
-    for (let i = 0; i < wizardSteps - 1; i++) {
+    for (let i = 0; i < wizardSteps; i++) {
       const { name, Options, maxSelect, submitText, optionsId, isselect, multipleselectionAllowed, istitleNested } = WizardConfiguration[wizardVersion][i];
-
-      const title = () => {
-        if (!istitleNested) { return WizardConfiguration[wizardVersion][i].title; }
-        return WizardConfiguration[wizardVersion][i].title[getlookingFor()];
-      };
-
       it(`${name}`, () => {
-        waitForHydration(cy.get('div[class*=Box]').first().find('h3').contains(title())).should('exist');
+        const title = getTitle(istitleNested, i);
+        waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains(title)).should('exist');
 
-        const min = getminIndex(name);
+        const minSelect = getminIndex(name);
         if (!multipleselectionAllowed) {
-          const rand = getuniqueRandoms(1, min, maxSelect);
+          const rand = getuniqueRandoms(1, minSelect, maxSelect);
           const { label, value } = Options[rand];
           if (name === 'step-3:Who') setlookingFor(value);
+
           makeSelection(isselect, optionsId, label, submitText);
           waitForHydration(cy.get('button').contains(submitText)).click();
-          verifypostUuidActions(name, value, optionsId);
+
+          verifypostUuidActions(name, optionsId, value);
         } else {
           const valueArr = [];
           const qty = Math.floor(Math.random() * (maxSelect));
-          const arr = getuniqueRandoms(qty, min, maxSelect);
+          const arr = getuniqueRandoms(qty, minSelect, maxSelect);
 
           for (let i = 0; i < arr.length; i++) {
             const { label, value } = Options[arr[i]];
@@ -276,9 +312,77 @@ describe('Community survey', () => {
             makeSelection(isselect, optionsId, label, submitText);
           }
           waitForHydration(cy.get('button').contains(submitText)).click();
-          verifypostUuidActions(name, valueArr, optionsId);
+          verifypostUuidActions(name, optionsId, valueArr);
         }
       });
     }
+
+    it('Submit wizard form', () => {
+      const { name, phone, email } = randomUser();
+      const [fname, lname] = name.split(/\s+(.*)/);
+      waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains('Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.')).should('exist');
+      waitForHydration(cy.get('form input[id=firstName]')).type(fname);
+      waitForHydration(cy.get('form input[id=lastName]')).type(lname);
+      waitForHydration(cy.get('form input[label="Email Address"]')).type(email);
+      waitForHydration(cy.get('form input[id=phone_number]')).type(phone);
+      waitForHydration(cy.get('form button[type=submit]').contains('Get Pricing')).click();
+
+      cy.wait('@postUuidActions').then(async (xhr) => {
+        const request = xhr.requestBody;
+        const attrs = request.data.attributes;
+        expect(attrs.actionInfo).to.deep.equal({ contactType: 'pricingRequest',  email,  name,  phone,  slug: `${community.id}` });
+        expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
+        expect(attrs).to.have.property('actionType', 'profileContacted');
+      });
+
+      cy.wait('@postUuidActions').then((xhr) => {
+        const request = xhr.requestBody;
+        const attrs = request.data.attributes;
+        expect(attrs.actionInfo).to.have.property('stepName', 'step-11:Auth');
+        expect(attrs.actionInfo.data).to.deep.equal({ contactType: 'pricingRequest',  email,  name,  phone,  slug: `${community.id}` });
+        expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
+        expect(attrs).to.have.property('actionType', 'wizardStepCompleted');
+      });
+    });
+
+    it('Resident details', () => {
+      const randUser = randomUser();
+      const lookingFor = getlookingFor();
+      const [fname, lname] = (randUser.name).split(/\s+(.*)/);
+      let data = {};
+
+      if (lookingFor === 'parents' || lookingFor === 'myself-and-spouse') {
+        waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains('What are the residents\' names?')).should('exist');
+        fillinresidentDetails('firstName1', 'lastName1', fname, lname);
+        const randUser2 = randomUser();
+        const [fname2, lname2] = (randUser2.name).split(/\s+(.*)/);
+        fillinresidentDetails('firstName2', 'lastName2', fname2, lname2);
+        data = { firstName1: fname, lastName1: lname, firstName2: fname2, lastName2: lname2 };
+      } else {
+        waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains('What is the resident\'s name?')).should('exist');
+        fillinresidentDetails('firstName', 'lastName', fname, lname);
+        data = { firstName: fname, lastName: lname };
+      }
+      waitForHydration(cy.get('button').contains('Continue')).click();
+      verifyResidentDetails('step-12:ResidentName', data);
+    });
+
+
+    it('Final Step', () => {
+      const { name, Options, maxSelect, submitText, optionsId, isselect, istitleNested } = WizardConfiguration[wizardVersion][wizardSteps];
+      const title = getTitle(istitleNested, wizardSteps);
+      waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains(title)).should('exist');
+      const minSelect = getminIndex(name);
+      const rand = getuniqueRandoms(1, minSelect, maxSelect);
+      const { label, value } = Options[rand];
+
+      makeSelection(isselect, optionsId, label, submitText);
+      waitForHydration(cy.get('button').contains(submitText)).click();
+      verifypostUuidActions(name, optionsId, value);
+
+      waitForHydration(cy.contains('You\'re all set! One of our Local Senior Living Experts will reach out shortly to assist you with pricing for AlmaVia of San Francisco.', { timeout: 30000 }));
+      waitForHydration(cy.get('div[class*=PostConversionGreetingForm]').contains('Return to Profile')).click();
+      cy.url().should('have.string', `/assisted-living/california/san-francisco/${TEST_COMMUNITY}`);
+    });
   });
 });
