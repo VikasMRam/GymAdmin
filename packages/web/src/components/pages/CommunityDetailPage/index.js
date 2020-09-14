@@ -51,6 +51,7 @@ import UnhydratedAskAgentQuestionButtonContainer from 'sly/web/containers/AskAge
 import PlusBranding from 'sly/web/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
+import { AGENT_STATUS_LIVE_ON_PROFILE } from 'sly/web/constants/agents';
 import UnhydratedCommunitySummaryContainer from 'sly/web/containers/CommunitySummaryContainer';
 import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
 import UnhydratedCommunityQuestionAnswersContainer from 'sly/web/containers/CommunityQuestionAnswersContainer';
@@ -300,7 +301,9 @@ export default class CommunityDetailPage extends Component {
 
     const { sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
-    const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
+    //filtering out status 1 partnerAgents
+    const livePartnerAgents = partnerAgents && partnerAgents.filter( e => e.status === AGENT_STATUS_LIVE_ON_PROFILE);
+    const partnerAgent = livePartnerAgents && livePartnerAgents.length > 0 ? livePartnerAgents[0] : null;
 
     const { autoHighlights, nearbyCities } = rgsAux;
 

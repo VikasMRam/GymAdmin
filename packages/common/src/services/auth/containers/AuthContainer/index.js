@@ -13,6 +13,7 @@ import ResetPasswordFormContainer from 'sly/common/services/auth/containers/Rese
 import LoginFormContainer from 'sly/common/services/auth/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/common/services/auth/containers/SignupFormContainer';
 import ProviderSignupFormContainer from 'sly/common/services/auth/containers/ProviderSignupFormContainer';
+import AgentSignupFormContainer from 'sly/common/services/auth/containers/AgentSignupFormContainer';
 import CustomerSignupConfirmationContainer from 'sly/common/services/auth/containers/CustomerSignupConfirmationContainer';
 import ProviderFindCommunityContainer  from 'sly/common/services/auth/containers/ProviderFindCommunityContainer';
 import ProviderConfirmation from 'sly/common/services/auth/components/ProviderConfirmation';
@@ -99,6 +100,9 @@ export default class AuthContainer extends Component {
     if (authenticated.options && authenticated.options.provider) {
       initialStep = 'ProviderSignup';
     }
+    if (authenticated.options && authenticated.options.agent) {
+      initialStep = 'AgentSignup';
+    }
 
     const wizard = (
       <WizardController
@@ -145,6 +149,12 @@ export default class AuthContainer extends Component {
               name="ProviderSignup"
               onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.provider : true) && goto('Login'))}
               onSubmit={() => (goto('ProviderFindCommunity'))}
+            />
+            <WizardStep
+              component={AgentSignupFormContainer}
+              name="AgentSignup"
+              onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.agent : true) && goto('Login'))}
+              onSubmit={this.handleAuthenticateSuccess}
             />
             <WizardStep
               component={ProviderFindCommunityContainer}
