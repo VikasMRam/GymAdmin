@@ -10,6 +10,7 @@ import SignupForm from 'sly/common/services/auth/components/SignupForm';
 
 const validate = createValidator({
   firstName: [required],
+  lastName: [required],
   email: [required, email],
   phone_number: [required, usPhone],
   password: [required, minLength(8)],
