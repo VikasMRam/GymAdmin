@@ -63,6 +63,7 @@ export default class DashboardCommunityServicesFormContainer extends Component {
       status.community.result.attributes,
       [
         'propInfo.careServices',
+        'propInfo.personalSpace',
         'propInfo.communitySpace',
         'propInfo.communitySpaceOther',
         'propInfo.communityDescription',

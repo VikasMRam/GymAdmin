@@ -221,6 +221,9 @@ export default class HeaderContainer extends PureComponent {
             data.community = { value: community.id, label: `${community.name}: ${community.address.city}, ${community.address.state}` };
           }
         }
+        if (location.pathname === '/partners/agents') {
+          data.agent = true;
+        }
         ensureAuthenticated(data);
       };
     }
@@ -235,6 +238,9 @@ export default class HeaderContainer extends PureComponent {
           if (community.id) {
             data.community = { value: community.id, label: `${community.name}: ${community.address.city}, ${community.address.state}` };
           }
+        }
+        if (location.pathname === '/partners/agents') {
+          data.agents = true;
         }
         ensureAuthenticated(data);
       };
