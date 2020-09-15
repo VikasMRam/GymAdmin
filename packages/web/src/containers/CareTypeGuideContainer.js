@@ -3,7 +3,7 @@ import { object, array } from 'prop-types';
 
 import SlyEvent from 'sly/web/services/helpers/events';
 import CareTypeGuidePage from 'sly/web/components/pages/CareTypeGuidePage';
-import { getSearchParamFromPlacesResponse, filterLinkPath, getGuideParams } from 'sly/web/services/helpers/search';
+import { getGuideParams } from 'sly/web/services/helpers/search';
 import { prefetch } from 'sly/web/services/api';
 import { withProps } from 'sly/web/services/helpers/hocs';
 
@@ -22,14 +22,12 @@ export default class CareTypeGuidePageContainer extends PureComponent {
 
   handleOnLocationSearch = (result) => {
     const event = {
-      action: 'submit', category: 'guideMainPageHeroSearch', label: result.formatted_address,
+      action: 'submit', category: 'guideMainPageHeroSearch', label: result.displayText,
     };
     SlyEvent.getInstance().sendEvent(event);
 
     const { history } = this.props;
-    const searchParams = getSearchParamFromPlacesResponse(result);
-    const { path } = filterLinkPath(searchParams, {});
-    history.push(path);
+    history.push(result.url);
   };
 
   render() {

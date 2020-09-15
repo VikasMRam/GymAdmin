@@ -49,11 +49,12 @@ class DashboardProfileUserDetailsForm extends Component {
 
   handleLocationChange = (value) => {
     const { change, onLocationChange } = this.props;
-    change('searchingCity', value.formatted_address);
+    change('searchingCity', value.displayText);
     if (onLocationChange) {
       onLocationChange(value);
     }
   };
+
   render() {
     const { initialValues, hasCustomerRole, title, uuidAuxMeta } = this.props;
 

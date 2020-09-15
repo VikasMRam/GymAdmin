@@ -1,137 +1,179 @@
 import React from 'react';
-import { oneOf, string, func, bool } from 'prop-types';
+import { oneOf, string, func, bool, arrayOf, object } from 'prop-types';
 import styled from 'styled-components';
-import PlacesAutocomplete from 'react-places-autocomplete';
 
-import { size, palette, key } from 'sly/common/components/themes';
-import { assetPath } from 'sly/web/components/themes';
+import { palette, key } from 'sly/common/components/themes';
 import { Icon, Block } from 'sly/common/components/atoms';
-import { Input, Image } from 'sly/web/components/atoms';
-import LoadGoogleMaps from 'sly/web/services/search/LoadGoogleMaps';
+import { Input } from 'sly/web/components/atoms';
+import IconItem from 'sly/web/components/molecules/IconItem';
 
-const SearchSuggestionsWrapper = styled(Block)`
+const SuggestionsWrapper = styled(Block)`
   z-index: ${key('zIndexes.searchSuggestions')};
   left: 0;
   right: 0;
 `;
 
-const SearchSuggestion = styled(Block)`
+const Suggestion = styled(Block)`
   :hover {
     background-color: ${palette('primary', 'stroke')};
   }
 `;
 
-const GoogleLogo = styled(Image)`
-  margin: ${size('spacing.regular')} ${size('spacing.large')};
-  width: ${size('picture.tiny.width')};
-  float: right;
+const Suggestions = styled(Block)`
+  :last-child {
+    border: 0;
+  }
 `;
 
-const baseSearchOptions = { types: ['(regions)'] };
+const groupSuggestions = suggestions => suggestions.reduce((acc, curr) => {
+  if (!acc[curr.resourceType]) acc[curr.resourceType] = [];
+  acc[curr.resourceType].push(curr);
+  return acc;
+}, {});
+
+const GROUP_LABELS = {
+  City: 'Locations',
+  Community: 'Communities',
+  PartnerAgent: 'Agents',
+};
+
+const GROUP_ICONS = {
+  City: 'map',
+  Community: 'community-size-large',
+  PartnerAgent: 'user',
+};
+
+const GROUP_LIMITS = {
+  City: 5,
+  Community: 3,
+  PartnerAgent: 3,
+};
 
 const SearchBox = ({
   layout,
   value,
+  defaultValue,
   onChange,
   onSelect,
-  onSearchButtonClick,
-  onTextboxFocus,
-  onTextboxBlur,
+  onFocus,
   isTextboxInFocus,
   onLocationSearch,
   onCurrentLocationClick,
   onBlur,
+  onKeyDown,
   placeholder,
   readOnly,
+  suggestions,
   ...props
-}) => (
-  <Block position="relative" {...props}>
-    <LoadGoogleMaps>
-      {(googleCallbackName, loadMaps) => (
-        <PlacesAutocomplete
-          value={value}
-          onChange={(e) => { loadMaps(); onChange(e); }}
-          onSelect={onSelect}
-          searchOptions={baseSearchOptions}
-          highlightFirstSuggestion
-          googleCallbackName={googleCallbackName}
+}) => {
+  const gps = groupSuggestions(suggestions);
+  const inputProps = {};
+
+  if (value) {
+    inputProps.value = value;
+  }
+
+  return (
+    <Block position="relative" {...props}>
+      <Input
+        disabled={false}
+        defaultValue={defaultValue}
+        placeholder={placeholder}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        readOnly={readOnly}
+        onKeyDown={onKeyDown}
+        onChange={onChange}
+        type="search"
+        size={layout === 'homeHero' ? 'large' : undefined}
+        {...inputProps}
+      />
+      {(isTextboxInFocus && (onCurrentLocationClick || suggestions.length > 0)) && (
+        <SuggestionsWrapper
+          background="white"
+          position="absolute"
+          border="regular"
+          borderPalette="slate"
+          borderVariation="stroke"
+          shadowBlur="regular"
         >
-          {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-            <>
-              <Input
-                {...getInputProps({ onBlur, placeholder })}
-                disabled={false}
-                onFocus={(e) => { loadMaps(); onTextboxFocus && onTextboxFocus(e); }}
-                onBlur={onTextboxBlur}
-                readOnly={readOnly}
-                type="search"
-                size={layout === 'homeHero' ? 'large' : undefined}
-              />
-              {(isTextboxInFocus && (onCurrentLocationClick || suggestions.length > 0)) && (
-                <SearchSuggestionsWrapper
-                  background="white"
-                  position="absolute"
-                  border="regular"
-                  borderPalette="slate"
-                  borderVariation="stroke"
-                  shadowBlur="regular"
+          {/*
+            user mouseDown instead of onClick as the onClick which is triggered after mouse button is release will trigger blur of textbox
+            that will by the time hide the suggestions dropdown
+          */}
+          {onCurrentLocationClick && !suggestions.length &&
+            <Suggestion
+              onMouseDown={onCurrentLocationClick}
+              cursor="pointer"
+              width="100%"
+              padding={['medium', 'xLarge']}
+              size="caption"
+              iconSize="caption"
+            >
+              <Icon icon="map" marginRight="regular" palette="grey" /> Current Location
+            </Suggestion>
+          }
+          {Object.keys(gps).map(k => (
+            <Suggestions key={k} borderBottom="regular" paddingTop="medium">
+              <IconItem
+                icon={GROUP_ICONS[k]}
+                iconPalette="grey"
+                textPalette="grey"
+                paddingLeft="xLarge"
+                paddingRight="xLarge"
+                size="caption"
+                iconSize="caption"
+              >
+                {GROUP_LABELS[k]}
+              </IconItem>
+              {gps[k].slice(0, GROUP_LIMITS[k]).map(suggestion => (
+                <Suggestion
+                  onMouseDown={() => onSelect(suggestion)}
+                  cursor="pointer"
+                  key={suggestion.id}
+                  background={suggestion.active ? 'grey.stroke' : 'white'}
+                  palette="primary"
+                  width="100%"
+                  padding={['medium', 'xLarge']}
+                  size="caption"
+                  clamped
                 >
-                  {/* user mouseDown instead of onClick as the onClick which is triggered after mouse button is release will trigger blur of textbox
-                      that will by the time hide the suggestions dropdown
-                  */}
-                  {onCurrentLocationClick &&
-                    <SearchSuggestion
-                      onMouseDown={onCurrentLocationClick}
-                      cursor="pointer"
-                      width="100%"
-                      padding="large"
-                    >
-                      <Icon icon="map" marginRight="regular" palette="grey" /> Current Location
-                    </SearchSuggestion>}
-                  {suggestions.map(suggestion => (
-                    <SearchSuggestion
-                      {...getSuggestionItemProps(suggestion)}
-                      key={suggestion.description}
-                      cursor="pointer"
-                      background={suggestion.active ? 'grey.stroke' : 'white'}
-                      palette="primary"
-                      width="100%"
-                      padding="large"
-                    >
-                      {suggestion.description}
-                    </SearchSuggestion>
-                  ))}
-                  <GoogleLogo src={assetPath('images/powered_by_google.png')} />
-                </SearchSuggestionsWrapper>
-              )}
-            </>
-          )}
-        </PlacesAutocomplete>
+                  <Block display="inline" marginLeft="xxLarge">
+                    {suggestion.resourceType === 'City' ? suggestion.displayText : suggestion.name}
+                  </Block>
+                </Suggestion>
+              ))}
+            </Suggestions>
+          ))}
+        </SuggestionsWrapper>
       )}
-    </LoadGoogleMaps>
-  </Block>
-);
+    </Block>
+  );
+};
 
 SearchBox.propTypes = {
   layout: oneOf(['header', 'homeHero']),
   value: string.isRequired,
+  defaultValue: string.isRequired,
   onChange: func.isRequired,
   onSelect: func.isRequired,
-  onSearchButtonClick: func.isRequired,
   onLocationSearch: func,
-  onTextboxFocus: func,
-  onTextboxBlur: func,
+  onFocus: func,
   isTextboxInFocus: bool,
   onCurrentLocationClick: func,
   onBlur: func,
+  onKeyDown: func,
   placeholder: string,
   readOnly: bool,
+  suggestions: arrayOf(object).isRequired,
 };
 
 SearchBox.defaultProps = {
   layout: 'header',
-  placeholder: 'Search by city or ZIP code',
+  placeholder: 'Search by city, state, zip',
   value: '',
+  defaultValue: '',
+  suggestions: [],
 };
 
 export default SearchBox;

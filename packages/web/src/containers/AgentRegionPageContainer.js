@@ -6,7 +6,6 @@ import { titleize } from 'sly/web/services/helpers/strings';
 import { getAgentUrl } from 'sly/web/services/helpers/url';
 import withNotification from 'sly/web/controllers/withNotification';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/web/services/helpers/agents';
 import { getAgentParams } from 'sly/web/services/helpers/search';
 import prefetch from 'sly/web/services/api/prefetch';
 import AgentRegionPage from 'sly/web/components/pages/AgentRegionPage';
@@ -25,13 +24,11 @@ export default class AgentRegionPageContainer extends Component {
   handleLocationSearch = (result) => {
     const { history } = this.props;
     const event = {
-      action: 'submit', category: 'agentsSearch', label: result.formatted_address,
+      action: 'submit', category: 'agentsSearch', label: result.displayText,
     };
     SlyEvent.getInstance().sendEvent(event);
 
-    const searchParams = getSearchParamFromPlacesResponse(result);
-    const { path } = filterLinkPath(searchParams);
-    history.push(path);
+    history.push(result.url);
   };
 
   handleConsultationRequested = () => {

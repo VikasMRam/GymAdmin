@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { string, func, bool, shape } from 'prop-types';
-import { geocodeByAddress } from 'react-places-autocomplete';
+import { debounce } from 'lodash';
 
-import {
-  filterLinkPath,
-  getSearchParamFromPlacesResponse,
-} from 'sly/web/services/helpers/search';
 import { LOCATION_CURRENT_LATITUDE, LOCATION_CURRENT_LONGITUDE } from 'sly/web/constants/location';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { query } from 'sly/web/services/api';
@@ -15,10 +11,10 @@ import SearchBox from 'sly/web/components/molecules/SearchBox';
 
 @withRedirectTo
 @query('getAddresses', 'getAddresses')
+@query('getSearch', 'getSearch')
 
 export default class SearchBoxContainer extends Component {
   static propTypes = {
-    layout: string,
     address: string,
     locationInfo: shape({
       geo: shape({
@@ -26,90 +22,24 @@ export default class SearchBoxContainer extends Component {
         longitude: string.isRequired,
       }),
     }),
-    clearLocationOnBlur: bool,
     onTextChange: func,
     onLocationSearch: func,
     redirectTo: func.isRequired,
     getAddresses: func.isRequired,
+    getSearch: func.isRequired,
     onCurrentLocation: func,
+    include: string.isRequired,
   };
 
   static defaultProps = {
-    clearLocationOnBlur: true,
+    include: 'city,zip',
   };
 
   state = {
-    address: '',
-    location: null,
+    textValue: '',
     isTextboxInFocus: false,
-  };
-
-  constructor(props) {
-    super(props);
-    if (this.props.address && this.props.address !== '') {
-      const { address } = this.props;
-      this.state.address = address;
-    }
-    if (this.props.locationInfo) {
-      const { locationInfo } = this.props;
-      this.state.location = locationInfo;
-    }
-  }
-
-  handleChange = (address) => {
-    const { onTextChange } = this.props;
-    if (onTextChange) {
-      onTextChange(address);
-    }
-    this.setState({ address });
-  };
-
-  handleSelect = (address) => {
-    const { address: value } = this.state;
-    this.addressSelected = address;
-    geocodeByAddress(address)
-      .then(results => results[0])
-      .then((result) => {
-        SlyEvent.getInstance().sendEvent({
-          action: 'select', category: 'googleSearchOption', label: result.formatted_address, value,
-        });
-        // TODO: Fix events server to store value in DB
-        SlyEvent.getInstance().sendEvent({
-          action: 'googleSearchTyped', category: result.formatted_address, label: value,
-        });
-        const geo = {
-          latitude: result.geometry.location.lat(),
-          longitude: result.geometry.location.lng(),
-        };
-        result.geo = geo;
-        const [city, state] = result.formatted_address.split(',');
-        result.city = city;
-        result.state = state;
-        this.setState({ location: result, address: result.formatted_address });
-        this.handleOnLocationSearch(result);
-      })
-      .catch(error => console.error('Error', error));
-  };
-
-  handleSearch = () => {
-    const { locationInfo, address } = this.state;
-    if (address) {
-      this.handleSelect(address);
-    } else if (locationInfo) {
-      this.handleOnLocationSearch(locationInfo);
-    }
-  };
-
-  handleTextboxFocus = () => {
-    const { clearLocationOnBlur } = this.props;
-    const newState = {
-      isTextboxInFocus: true,
-    };
-    if (clearLocationOnBlur) {
-      newState.locationInfo = null;
-    }
-
-    this.setState(newState);
+    suggestions: [],
+    selectedSuggestion: undefined,
   };
 
   handleTextboxBlur = () => {
@@ -118,20 +48,59 @@ export default class SearchBoxContainer extends Component {
     });
   };
 
-  handleOnLocationSearch = (result) => {
+  handleSelect = (suggestion) => {
     const { onLocationSearch, redirectTo } = this.props;
+    const { textValue } = this.state;
+    const { name, resourceType } = suggestion;
+
+    SlyEvent.getInstance().sendEvent({
+      action: 'select', category: 'searchOption', label: resourceType, value: name,
+    });
+    // TODO: Fix events server to store value in DB
+    SlyEvent.getInstance().sendEvent({
+      action: 'searchTyped', category: name, label: textValue,
+    });
+
+    this.handleTextboxBlur();
+    this.setState({
+      selectedSuggestion: suggestion,
+    });
+
     if (onLocationSearch) {
-      onLocationSearch(result);
-    } else {
-      const searchParams = getSearchParamFromPlacesResponse(result);
-      const { path } = filterLinkPath(searchParams);
-      redirectTo(path);
+      onLocationSearch(suggestion);
+    } else if (suggestion.action === 'redirect') {
+      redirectTo(suggestion.url);
     }
+  };
+
+  handleTextboxFocus = () => {
+    this.setState({
+      isTextboxInFocus: true,
+    });
+  };
+
+  handleTextboxChange = (e) => {
+    let { suggestions, selectedSuggestion } = this.state;
+    const { onTextChange } = this.props;
+
+    if (!e.target.value) {
+      suggestions = [];
+      selectedSuggestion = undefined;
+    }
+    if (onTextChange) {
+      onTextChange(e.target.value);
+    }
+
+    this.setState({
+      textValue: e.target.value,
+      suggestions,
+      selectedSuggestion,
+    });
   };
 
   handleCurrentLocationClick = () => {
     SlyEvent.getInstance().sendEvent({
-      action: 'select', category: 'googleSearchOption', label: 'currentLocation',
+      action: 'select', category: 'searchOption', label: 'currentLocation',
     });
 
     if (navigator.geolocation) {
@@ -145,7 +114,7 @@ export default class SearchBoxContainer extends Component {
       (error) => {
         if (error.code === error.PERMISSION_DENIED) {
           SlyEvent.getInstance().sendEvent({
-            action: 'revoke-permission', category: 'googleSearchOption', label: 'currentLocation',
+            action: 'revoke-permission', category: 'searchOption', label: 'currentLocation',
           });
           localStorage.removeItem(LOCATION_CURRENT_LATITUDE);
           localStorage.removeItem(LOCATION_CURRENT_LONGITUDE);
@@ -165,7 +134,7 @@ export default class SearchBoxContainer extends Component {
       }
     } else {
       SlyEvent.getInstance().sendEvent({
-        action: 'no-support', category: 'googleSearchOption', label: 'currentLocation',
+        action: 'no-support', category: 'searchOption', label: 'currentLocation',
       });
       alert('There is no location support on this device or it is disabled. Please check your settings.');
     }
@@ -188,19 +157,71 @@ export default class SearchBoxContainer extends Component {
     }
   };
 
+  handleKeyDown = (e) => {
+    if (!e || !e.target) {
+      return null;
+    }
+
+    if (!e.target.value) {
+      return this.setState({
+        suggestions: [],
+      });
+    }
+
+    const { getSearch, include } = this.props;
+    const query = {
+      'filter[query]': e.target.value,
+      include,
+    };
+
+    return getSearch(query)
+      .then((resp) => {
+        const matches = normJsonApi(resp);
+
+        this.setState({
+          suggestions: matches,
+        });
+      });
+  };
+
+  handleKeyDownThrottled = (e) => {
+    e.persist();
+
+    if (!this.throttledhandleKeyDownFn) {
+      this.throttledhandleKeyDownFn = debounce(this.handleKeyDown, 500);
+    }
+
+    this.throttledhandleKeyDownFn(e);
+  };
+
+  getCurrentValue = () => {
+    const { selectedSuggestion } = this.state;
+
+    if (selectedSuggestion) {
+      return selectedSuggestion.resourceType === 'City' ?
+        selectedSuggestion.displayText : selectedSuggestion.name;
+    }
+
+    return selectedSuggestion;
+  };
+
   render() {
-    const { layout, onCurrentLocation, ...props } = this.props;
-    const { address, isTextboxInFocus } = this.state;
+    const { onCurrentLocation, address, ...props } = this.props;
+    const { isTextboxInFocus, suggestions } = this.state;
+
+    if (this.getCurrentValue()) {
+      props.value = this.getCurrentValue();
+    }
 
     return (
       <SearchBox
-        layout={layout}
-        value={address}
-        onChange={this.handleChange}
+        suggestions={suggestions}
+        defaultValue={address}
         onSelect={this.handleSelect}
-        onSearchButtonClick={this.handleSearch}
-        onTextboxFocus={this.handleTextboxFocus}
-        onTextboxBlur={this.handleTextboxBlur}
+        onFocus={this.handleTextboxFocus}
+        onBlur={this.handleTextboxBlur}
+        onKeyDown={this.handleKeyDownThrottled}
+        onChange={this.handleTextboxChange}
         isTextboxInFocus={isTextboxInFocus}
         onCurrentLocationClick={onCurrentLocation ? this.handleCurrentLocationClick : null}
         {...props}

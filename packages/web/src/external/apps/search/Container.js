@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { getSearchParamFromPlacesResponse } from 'sly/web/services/helpers/agents';
 import { getSearchParams } from 'sly/web/services/helpers/search';
 import { parseURLQueryParams, objectToURLQueryParams } from 'sly/web/services/helpers/url';
 import { withProps } from 'sly/web/services/helpers/hocs';
@@ -29,9 +28,13 @@ export default class SearchContainer extends Component {
     },
   };
 
-  onLocationSearch = (result) => {
+  onLocationSearch = ({ displayText }) => {
     const { history, queryParams } = this.props;
-    const searchParams = getSearchParamFromPlacesResponse(result);
+    const [city, state] = displayText.split(',');
+    const searchParams = {
+      city: city.trim(),
+      state: state.trim(),
+    };
 
     this.setState({
       locationInfo: searchParams,

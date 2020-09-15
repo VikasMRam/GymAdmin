@@ -8,7 +8,8 @@ import { COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS } from 'sly/web/constants/userSave';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { generateAskAgentQuestionContents } from 'sly/web/services/helpers/agents';
-import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/web/services/helpers/search';
+import { filterLinkPath } from 'sly/web/services/helpers/search';
+import { objectToURLQueryParams } from 'sly/web/services/helpers/url';
 import withModal from 'sly/web/controllers/withModal';
 import withNotification from 'sly/web/controllers/withNotification';
 import CommunityAskQuestionAgentFormContainer from 'sly/web/containers/CommunityAskQuestionAgentFormContainer';
@@ -68,15 +69,15 @@ export default class DashboardFavoritesPageContainer extends Component {
 
   handleOnLocationSearch = (result) => {
     const event = {
-      action: 'submit', category: 'dashboardFamilyFavoritesSearch', label: result.formatted_address,
+      action: 'submit', category: 'dashboardFamilyFavoritesSearch', label: result.displayText,
     };
     SlyEvent.getInstance().sendEvent(event);
 
     const { history } = this.props;
     const { activeDiscoverHome } = this.state;
-    const searchParams = getSearchParamFromPlacesResponse(result);
-    const { path } = filterLinkPath(searchParams, activeDiscoverHome ? activeDiscoverHome.searchParams : {});
-    history.push(path);
+
+    history.push(activeDiscoverHome ?
+      `${result.url}?${objectToURLQueryParams(activeDiscoverHome.searchParams)}` : result.url);
   };
 
   handleUnfavouriteClick = (id) => {

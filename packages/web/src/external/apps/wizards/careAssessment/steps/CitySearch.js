@@ -4,7 +4,6 @@ import { Field } from 'redux-form';
 
 import pad from 'sly/web/components/helpers/pad';
 import { STEP_INPUT_FIELD_NAMES } from 'sly/web/external/constants/steps';
-import { getSearchParamFromPlacesResponse } from 'sly/web/services/helpers/search';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import { Heading } from 'sly/web/components/atoms';
 
@@ -21,10 +20,14 @@ class CitySearch extends Component {
 
   handleLocationChange = (result) => {
     const { setFormKey, setStoreKey } = this.props;
-    const searchParams = getSearchParamFromPlacesResponse(result);
-    delete searchParams.toc;
+    const [city, state] = result.displayText.split(',');
+    const searchParams = {
+      city: city.trim(),
+      state: state.trim(),
+    };
+
     setStoreKey('locationSearchParams', searchParams);
-    setFormKey('location', result.formatted_address);
+    setFormKey('location', result.displayText);
   }
 
   handleChange = () => {
@@ -38,7 +41,6 @@ class CitySearch extends Component {
       <>
         <PaddedHeading weight="regular">In what city do you need care?</PaddedHeading>
         <SearchBoxContainer
-          clearLocationOnBlur={false}
           placeholder="Enter city name..."
           onLocationSearch={this.handleLocationChange}
           onTextChange={this.handleChange}
