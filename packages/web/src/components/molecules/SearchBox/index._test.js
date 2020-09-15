@@ -49,9 +49,9 @@ beforeAll(() => {
 describe('SearchBox', () => {
   it('renders', () => {
     const wrapper = wrap();
-
-    const loadMaps = wrapper.dive().find(LoadGoogleMaps);
-    const autocomplete = loadMaps.dive().find(PlacesAutocomplete);
+    const { google } = global.window;
+    const loadMaps = wrapper.dive().find(google.maps);
+    const autocomplete = loadMaps.dive().find(google.maps.places.AutocompleteService);
 
     expect(autocomplete).toHaveLength(1);
     expect(autocomplete.dive().find('Input')).toHaveLength(1);
@@ -59,9 +59,9 @@ describe('SearchBox', () => {
 
   it('renders with homeHero layout', () => {
     const wrapper = wrap({ layout: 'homeHero' });
-
-    const loadMaps = wrapper.dive().find(LoadGoogleMaps);
-    const autocomplete = loadMaps.dive().find(PlacesAutocomplete);
+    const { google } = global.window;
+    const loadMaps = wrapper.dive().find(google.maps);
+    const autocomplete = loadMaps.dive().find(google.maps.places.AutocompleteService);
 
     expect(autocomplete).toHaveLength(1);
     expect(autocomplete.dive().find('Input')).toHaveLength(1);
