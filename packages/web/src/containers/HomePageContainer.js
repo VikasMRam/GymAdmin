@@ -3,9 +3,9 @@ import { object, func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { withRedirectTo } from 'sly/common/services/redirectTo';
-import { generateSearchUrl } from 'sly/web/services/helpers/url';
+import { generateSearchUrl, objectToURLQueryParams } from 'sly/web/services/helpers/url';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { getSearchParamFromPlacesResponse, filterLinkPath, getSearchParams } from 'sly/web/services/helpers/search';
+import { getSearchParams } from 'sly/web/services/helpers/search';
 import { getQueryParamsSetter } from 'sly/web/services/helpers/queryParams';
 import ModalController from 'sly/web/controllers/ModalController';
 import HomePage from 'sly/web/components/pages/HomePage';
@@ -56,23 +56,25 @@ class HomePageContainer extends Component {
   };
 
   handleOnLocationSearch = (result, isFromModal) => {
+    const { redirectTo } = this.props;
     let event;
     if (isFromModal) {
       event = {
-        action: 'submit', category: 'discoverHomeSeeMoreSearch', label: result.formatted_address,
+        action: 'submit', category: 'discoverHomeSeeMoreSearch', label: result.displayText,
       };
     } else {
       event = {
-        action: 'submit', category: 'homeHeroSearch', label: result.formatted_address,
+        action: 'submit', category: 'homeHeroSearch', label: result.displayText,
       };
     }
     SlyEvent.getInstance().sendEvent(event);
 
-    const { history } = this.props;
     const { activeDiscoverHome } = this.state;
-    const searchParams = getSearchParamFromPlacesResponse(result);
-    const { path } = filterLinkPath(searchParams, activeDiscoverHome ? activeDiscoverHome.searchParams : {});
-    history.push(path);
+
+    if (result.action === 'redirect') {
+      redirectTo(activeDiscoverHome ?
+        `${result.url}?${objectToURLQueryParams(activeDiscoverHome.searchParams)}` : result.url);
+    }
   };
 
   handleCurrentLocation = (addresses, { latitude, longitude }) => {

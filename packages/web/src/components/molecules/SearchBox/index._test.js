@@ -1,10 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import PlacesAutocomplete from 'react-places-autocomplete';
 
 import SearchBox from '.';
-
-import LoadGoogleMaps from 'sly/web/services/search/LoadGoogleMaps';
 
 const onChange = jest.fn();
 const onSelect = jest.fn();
@@ -14,7 +11,6 @@ const wrap = (props = {}) =>
 
 const setupGoogleMock = () => {
   /** * Mock Google Maps JavaScript API ** */
-  // https://github.com/kenny-hibino/react-places-autocomplete/issues/189
   const google = {
     maps: {
       places: {
@@ -53,9 +49,9 @@ beforeAll(() => {
 describe('SearchBox', () => {
   it('renders', () => {
     const wrapper = wrap();
-
-    const loadMaps = wrapper.dive().find(LoadGoogleMaps);
-    const autocomplete = loadMaps.dive().find(PlacesAutocomplete);
+    const { google } = global.window;
+    const loadMaps = wrapper.dive().find(google.maps);
+    const autocomplete = loadMaps.dive().find(google.maps.places.AutocompleteService);
 
     expect(autocomplete).toHaveLength(1);
     expect(autocomplete.dive().find('Input')).toHaveLength(1);
@@ -63,9 +59,9 @@ describe('SearchBox', () => {
 
   it('renders with homeHero layout', () => {
     const wrapper = wrap({ layout: 'homeHero' });
-
-    const loadMaps = wrapper.dive().find(LoadGoogleMaps);
-    const autocomplete = loadMaps.dive().find(PlacesAutocomplete);
+    const { google } = global.window;
+    const loadMaps = wrapper.dive().find(google.maps);
+    const autocomplete = loadMaps.dive().find(google.maps.places.AutocompleteService);
 
     expect(autocomplete).toHaveLength(1);
     expect(autocomplete.dive().find('Input')).toHaveLength(1);

@@ -16,6 +16,7 @@ import {
   FAMILY_STATUS_DELETED,
   FAMILY_STATUS_LONG_TERM,
   FAMILY_STATUS_ON_PAUSE,
+  FAMILY_STATUS_TEST,
 } from 'sly/web/constants/familyDetails';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { query } from 'sly/web/services/api';
@@ -28,6 +29,7 @@ const options = [
   { label: 'Long Term', icon: 'hourglass',  palette: 'magenta', value: FAMILY_STATUS_LONG_TERM, role: PLATFORM_ADMIN_ROLE },
   { label: 'On Pause',  icon: 'pause',      palette: 'danger', value: FAMILY_STATUS_ON_PAUSE, role: AGENT_ND_ROLE },
   { label: 'Archived',  icon: 'archived',   palette: 'slate',  value: FAMILY_STATUS_ARCHIVED, role: PLATFORM_ADMIN_ROLE  },
+  { label: 'Test',   icon: 'trash-fill', palette: 'slate',   value: FAMILY_STATUS_TEST, role: PLATFORM_ADMIN_ROLE },
   { label: 'Deleted',   icon: 'trash-fill', palette: 'grey',   value: FAMILY_STATUS_DELETED, role: PLATFORM_ADMIN_ROLE },
 ];
 

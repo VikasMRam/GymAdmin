@@ -37,7 +37,7 @@ export default class ServicesFormContainer extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'step-6:Services',
+          stepName: 'post-auth-step-6:Services',
           wizardName: 'assessmentWizard',
           data,
         },

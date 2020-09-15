@@ -31,10 +31,14 @@ const generateHeading = (whoNeedsHelp) => {
       return 'Do you or your spouse qualify for Medicaid?';
     case 'myself':
       return 'Do you qualify for Medicaid?';
+    case 'spouse':
+      return 'Does your spouse qualify for Medicaid?';
     case 'friend':
       return 'Does your friend(s) qualify for Medicaid?';
+    case 'other-relatives':
+      return 'Does your relative(s) qualify for Medicaid?';
     default:
-      return 'Does your person qualify for Medicaid?';
+      return 'Does the person you are looking for qualify for Medicaid?';
   }
 };
 
@@ -43,7 +47,7 @@ const Medicaid = ({
 }) => (
   <div>
     <Wrapper>
-      <PaddedProgressBar label totalSteps={10} currentStep={10} />
+      <PaddedProgressBar label totalSteps={10} currentStep={8} />
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>

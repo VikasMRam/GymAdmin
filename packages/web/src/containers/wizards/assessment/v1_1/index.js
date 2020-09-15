@@ -230,22 +230,6 @@ export default class AssessmentWizardV11 extends Component {
                 onBackClick={previous}
               />
               <WizardStep
-                component={Services}
-                name="Services"
-                whoNeedsHelp={data.lookingFor}
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={Products}
-                name="Products"
-                whoNeedsHelp={data.lookingFor}
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
                 component={LocalSearch}
                 name="LocalSearch"
                 hasTip={hasTip}
@@ -304,6 +288,22 @@ export default class AssessmentWizardV11 extends Component {
                 community={community}
                 onSkipClick={next}
                 city={city}
+              />
+              <WizardStep
+                component={Services}
+                name="Services"
+                whoNeedsHelp={data.lookingFor}
+                hasTip={hasTip}
+                onSkipClick={next}
+                onBackClick={previous}
+              />
+              <WizardStep
+                component={Products}
+                name="Products"
+                whoNeedsHelp={data.lookingFor}
+                hasTip={hasTip}
+                onSkipClick={next}
+                onBackClick={previous}
               />
               <WizardStep
                 component={End}

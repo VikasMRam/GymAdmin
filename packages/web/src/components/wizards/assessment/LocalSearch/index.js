@@ -25,7 +25,7 @@ const LocalSearch = ({
 }) => (
   <div>
     <Wrapper>
-      <PaddedProgressBar label totalSteps={10} currentStep={7} />
+      <PaddedProgressBar label totalSteps={10} currentStep={5} />
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>

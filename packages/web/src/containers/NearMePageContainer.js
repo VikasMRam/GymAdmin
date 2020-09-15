@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
+
 import SlyEvent from 'sly/web/services/helpers/events';
-import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/web/services/helpers/search';
 import AssistedLivingNearMePage from 'sly/web/components/pages/AssistedLivingNearMePage';
 import MemoryCareNearMePage from 'sly/web/components/pages/MemoryCareNearMePage';
 import SeniorLivingNearMePage from 'sly/web/components/pages/SeniorLivingNearMePage';
@@ -14,7 +14,6 @@ import HomeCareNearMePage from 'sly/web/components/pages/HomeCareNearMePage';
 import RespiteCareNearMePage from 'sly/web/components/pages/RespiteCareNearMePage';
 import VeteransBenefitAssistedLivingPage from 'sly/web/components/pages/VeteransBenefitAssistedLivingPage';
 import ActiveAdultNearMePage from 'sly/web/components/pages/ActiveAdultNearMePage';
-
 import { parseURLQueryParams, generateCityPathSearchUrl } from 'sly/web/services/helpers/url';
 import { query, normalizeResponse } from 'sly/web/services/api';
 import { withProps } from 'sly/web/services/helpers/hocs';
@@ -91,15 +90,13 @@ export default class NearMePageContainer extends Component {
   handleOnLocationSearch = (result) => {
     const { searchParams } = this.props;
     const event = {
-      action: 'submit', category: `nearMeHeroSearch_${searchParams.toc}`, label: result.formatted_address,
+      action: 'submit', category: `nearMeHeroSearch_${searchParams.toc}`, label: result.displayText,
     };
     SlyEvent.getInstance().sendEvent(event);
 
     const { history } = this.props;
-    const params = getSearchParamFromPlacesResponse(result);
-    params.toc = searchParams.toc;
-    const { path } = filterLinkPath(params, {});
-    history.push(path);
+
+    history.push(`${result.url}?toc=${searchParams.toc}`);
   };
 
   handleCurrentLocation = (addresses, { latitude, longitude }) => {

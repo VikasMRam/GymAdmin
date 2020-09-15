@@ -26,13 +26,17 @@ PaddedBlock.displayName = 'PaddedBlock';
 const generateHeading = (whoNeedsHelp) => {
   switch (whoNeedsHelp) {
     case 'parents':
-      return 'Which activities do your parents need help with?';
+      return 'Which activities does your parent(s) need help with?';
     case 'myself-and-spouse':
       return 'Which activities do you and your spouse need help with?';
     case 'myself':
       return 'Which activities do you need help with?';
+    case 'spouse':
+      return 'Which activities does your spouse need help with?';
+    case 'other-relatives':
+      return 'Which activities does your relative need help with?';
     case 'friend':
-      return 'Which activities do you need help with?';
+      return 'Which activities does your friend(s) need help with?';
     default:
       return 'Which activities below does the person you are looking for need help with?';
   }
@@ -49,7 +53,7 @@ const ADL = ({
   return (
     <div>
       <Wrapper>
-        <PaddedProgressBar label totalSteps={10} currentStep={8} />
+        <PaddedProgressBar label totalSteps={10} currentStep={6} />
         {/* <PaddedProgressBar label totalSteps={8} currentStep={3} /> */}
       </Wrapper>
       <Wrapper hasSecondColumn={hasTip}>

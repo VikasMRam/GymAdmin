@@ -22,7 +22,7 @@ describe('Wizards|assessment - Steps|ADL', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('PaddedHeading').contains('Which activities do your parents need help with?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Which activities does your parent(s) need help with?')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(1);
   });
@@ -32,7 +32,7 @@ describe('Wizards|assessment - Steps|ADL', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Which activities do your parents need help with?')).toBeTruthy();
+    expect(wrapper.find('PaddedHeading').contains('Which activities does your parent(s) need help with?')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('StyledTipBox')).toHaveLength(0);
   });
