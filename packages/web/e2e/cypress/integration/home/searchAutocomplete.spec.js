@@ -9,10 +9,10 @@ describe('Marketplace Home Page', () => {
 
     cy.get('div[class*=HomePage__SearchBoxWrapper]').within(() => {
       cy.get('input[class*=Input__StyledInput]')
-        .type('San Francisco, CA, USA');
+        .type('San Francisco');
     });
 
-    cy.get('div[class*=SearchBox__SearchSuggestion]')
+    cy.get('div[class*=SearchBox__Suggestions]')
       .should('have.length', 2)
       .contains('San Francisco')
       .click();

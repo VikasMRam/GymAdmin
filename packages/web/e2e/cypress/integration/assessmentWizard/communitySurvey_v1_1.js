@@ -91,7 +91,7 @@ describe('Community survey', () => {
             title: {
               spouse: 'Which activities does your spouse need help with?',
               myself: 'Which activities do you need help with?',
-              parents: 'Which activities do your parents need help with?',
+              parents: 'Which activities does your parent(s) need help with?',
               'myself-and-spouse': 'Which activities do you and your spouse need help with?',
               friend: 'Which activities does your friend(s) need help with?',
               'other-relatives': 'Which activities does your relative need help with?',
@@ -250,8 +250,8 @@ describe('Community survey', () => {
 
 
   function fillinresidentDetails(id1, id2, firstName, lastName) {
-    waitForHydration(cy.get(`input[id*=${id1}]`).should('exist')).type(firstName);
-    waitForHydration(cy.get(`input[id*=${id2}]`).should('exist')).type(lastName);
+    waitForHydration(cy.get(`input[id*=${id1}]`).should('exist')).type(firstName.trim());
+    waitForHydration(cy.get(`input[id*=${id2}]`).should('exist')).type(lastName.trim());
   }
 
   function getTitle(istitleNested, i) {
@@ -267,18 +267,12 @@ describe('Community survey', () => {
 
       const minSelect = getminIndex(name);
       if (!multipleselectionAllowed) {
-        if (name === 'step-4:Age') {
-          makeSelection(isSelect, optionsId, 'Below 60');
-          waitForHydration(cy.get('button').contains(submitText)).click();
-        } else {
-          const rand = getuniqueRandoms(1, minSelect, maxSelect);
-          const { label, value } = Options[rand];
-          if (name === 'step-3:Who') setlookingFor(value);
-          makeSelection(isSelect, optionsId, label);
-          waitForHydration(cy.get('button').contains(submitText)).click();
-
-          verifypostUuidActions(name, optionsId, value);
-        }
+        const rand = getuniqueRandoms(1, minSelect, maxSelect);
+        const { label, value } = Options[rand];
+        if (name === 'step-3:Who') setlookingFor(value);
+        makeSelection(isSelect, optionsId, label);
+        waitForHydration(cy.get('button').contains(submitText)).click();
+        verifypostUuidActions(name, optionsId, value);
       } else {
         const valueArr = [];
         const qty = Math.floor(Math.random() * (maxSelect));
@@ -325,11 +319,11 @@ describe('Community survey', () => {
     it('Submit wizard form', () => {
       // waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains('Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.', { timeout: 30000 })).should('exist');
       const { name, phone, email } = randomUser();
-      const [fname, lname] = name.split(/\s+(.*)/);
-      waitForHydration(cy.get('form input[id=firstName]')).type(fname);
-      waitForHydration(cy.get('form input[id=lastName]')).type(lname);
-      waitForHydration(cy.get('form input[id=email]').first()).type(email);
-      waitForHydration(cy.get('form input[id=phone_number]')).type(phone);
+      const [fname, lname] = name.split(' ');
+      waitForHydration(cy.get('form input[id=firstName]')).type(fname.trim());
+      waitForHydration(cy.get('form input[id=lastName]')).type(lname.trim());
+      waitForHydration(cy.get('form input[id=email]').first()).type(email.trim());
+      waitForHydration(cy.get('form input[id=phone_number]')).type(phone.trim());
       waitForHydration(cy.get('form button[type=submit]').contains('Get Pricing')).click();
 
       cy.wait('@postUuidActions').then(async (xhr) => {
@@ -353,14 +347,14 @@ describe('Community survey', () => {
     it('Resident details', () => {
       const randUser = randomUser();
       const lookingFor = getlookingFor();
-      const [fname, lname] = (randUser.name).split(/\s+(.*)/);
+      const [fname, lname] = (randUser.name).split(' ');
       let data = {};
 
       if (lookingFor === 'parents' || lookingFor === 'myself-and-spouse') {
         waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains('What are the residents\' names?')).should('exist');
         fillinresidentDetails('firstName1', 'lastName1', fname, lname);
         const randUser2 = randomUser();
-        const [fname2, lname2] = (randUser2.name).split(/\s+(.*)/);
+        const [fname2, lname2] = (randUser2.name).split(' ');
         fillinresidentDetails('firstName2', 'lastName2', fname2, lname2);
         data = { firstName1: fname, lastName1: lname, firstName2: fname2, lastName2: lname2 };
       } else {
@@ -372,7 +366,7 @@ describe('Community survey', () => {
       verifyResidentDetails('step-12:ResidentName', data);
     });
 
-    for (let i = wizardSteps; i < wizardSteps + 3; i++) {
+    for (let i = wizardSteps; i < wizardSteps + postauthwizardSteps; i++) {
       verifywizardStep(i);
     }
 
