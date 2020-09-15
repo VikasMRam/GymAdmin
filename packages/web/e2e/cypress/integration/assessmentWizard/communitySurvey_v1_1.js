@@ -12,7 +12,8 @@ describe('Community survey', () => {
   let community;
   let lookingFor;
   const wizardVersion = 'Wizard_V1';
-  const wizardSteps = 10;
+  const wizardSteps = 8;
+  const postauthwizardSteps = 3;
   const WizardConfiguration = {
     Wizard_V1:
           [{ name: 'step-1:Timing',
@@ -61,7 +62,7 @@ describe('Community survey', () => {
               parents: 'How old is your parent(s)?',
               'myself-and-spouse': 'How old are you and your spouse?',
               friend: 'How old is your friend?',
-              'other-relatives': 'How old is the person(s) you are searching for?',
+              'other-relatives': 'How old is your relative?',
               other: 'How old is the person(s) you are searching for?',
             },
             Options: AGE_OPTIONS,
@@ -73,31 +74,6 @@ describe('Community survey', () => {
             isSelect: false,
             multipleselectionAllowed: false,
             istitleNested: true,
-          },
-          { name: 'step-6:Services',
-            title: 'Please tell us if you are interested in these other services:',
-            Options: SERVICES_OPTIONS,
-            maxSelect: 7,
-            optionsId: 'services',
-            skipAllowed: true,
-            backAllowed: true,
-            submitText: 'Continue',
-            isSelect: false,
-            multipleselectionAllowed: true,
-            istitleNested: false,
-          },
-
-          { name: 'step-5:Products',
-            title: 'Please tell us if you are interested in these products:',
-            Options: PRODUCTS_OPTIONS,
-            maxSelect: 7,
-            optionsId: 'products',
-            skipAllowed: true,
-            backAllowed: true,
-            submitText: 'Continue',
-            isSelect: false,
-            multipleselectionAllowed: true,
-            istitleNested: false,
           },
           { name: 'step-7:LocalSearch',
             title: 'Do you live in the state you’re searching in?',
@@ -111,15 +87,14 @@ describe('Community survey', () => {
             multipleselectionAllowed: false,
             istitleNested: false,
           },
-
           { name: 'step-8:ADL',
             title: {
-              spouse: 'Which activities below does the person you are looking for need help with?',
+              spouse: 'Which activities does your spouse need help with?',
               myself: 'Which activities do you need help with?',
               parents: 'Which activities do your parents need help with?',
               'myself-and-spouse': 'Which activities do you and your spouse need help with?',
-              friend: 'Which activities do you need help with?',
-              'other-relatives': 'Which activities below does the person you are looking for need help with?',
+              friend: 'Which activities does your friend(s) need help with?',
+              'other-relatives': 'Which activities does your relative need help with?',
               other: 'Which activities below does the person you are looking for need help with?',
             },
             Options: ADL_OPTIONS,
@@ -132,15 +107,14 @@ describe('Community survey', () => {
             multipleselectionAllowed: true,
             istitleNested: true,
           },
-
           { name: 'step-9:Budget',
             title: {
-              spouse: 'Does the person you are looking for have access to any of these benefits?',
+              spouse: 'Does your spouse have access to any of these benefits?',
               myself: 'Do you have access to any of these benefits?',
               parents: 'Do your parents have access to any of these benefits?',
               'myself-and-spouse': 'Do you and your spouse have access to any of these benefits?',
-              friend: 'Does the person you are looking for have access to any of these benefits?',
-              'other-relatives': 'Does the person you are looking for have access to any of these benefits?',
+              friend: 'Does your friend(s) have access to any of these benefits?',
+              'other-relatives': 'Does your relative(s) have access to any of these benefits?',
               other: 'Does the person you are looking for have access to any of these benefits?',
             },
             Options: BUDGET_OPTIONS,
@@ -153,16 +127,15 @@ describe('Community survey', () => {
             multipleselectionAllowed: true,
             istitleNested: true,
           },
-
           { name: 'step-10:Medicaid',
             title: {
-              spouse: 'Does your person qualify for Medicaid?',
+              spouse: 'Does your spouse qualify for Medicaid?',
               myself: 'Do you qualify for Medicaid?',
               parents: 'Do your parents qualify for Medicaid?',
               'myself-and-spouse': 'Do you or your spouse qualify for Medicaid?',
               friend: 'Does your friend(s) qualify for Medicaid?',
-              'other-relatives': 'Does your person qualify for Medicaid?',
-              other: 'Does your person qualify for Medicaid?',
+              'other-relatives': 'Does your relative(s) qualify for Medicaid?',
+              other: 'Does the person you are looking for qualify for Medicaid?',
             },
             Options: MEDICAID_OPTIONS,
             maxSelect: 3,
@@ -185,6 +158,31 @@ describe('Community survey', () => {
             submitText: 'Finish',
             isSelect: false,
             multipleselectionAllowed: false,
+            istitleNested: false,
+          },
+          { name: 'post-auth-step-6:Services',
+            title: 'Please tell us if you are interested in these other services:',
+            Options: SERVICES_OPTIONS,
+            maxSelect: 7,
+            optionsId: 'services',
+            skipAllowed: true,
+            backAllowed: true,
+            submitText: 'Continue',
+            isSelect: false,
+            multipleselectionAllowed: true,
+            istitleNested: false,
+          },
+
+          { name: 'post-auth-step-5:Products',
+            title: 'Please tell us if you are interested in these products:',
+            Options: PRODUCTS_OPTIONS,
+            maxSelect: 7,
+            optionsId: 'products',
+            skipAllowed: true,
+            backAllowed: true,
+            submitText: 'Continue',
+            isSelect: false,
+            multipleselectionAllowed: true,
             istitleNested: false,
           },
           ],
@@ -261,6 +259,42 @@ describe('Community survey', () => {
     return WizardConfiguration[wizardVersion][i].title[getlookingFor()];
   }
 
+  function verifywizardStep(i) {
+    const { name, Options, maxSelect, submitText, optionsId, isSelect, multipleselectionAllowed, istitleNested } = WizardConfiguration[wizardVersion][i];
+    it(`${name}`, () => {
+      const title = getTitle(istitleNested, i);
+      waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains(title)).should('exist');
+
+      const minSelect = getminIndex(name);
+      if (!multipleselectionAllowed) {
+        if (name === 'step-4:Age') {
+          makeSelection(isSelect, optionsId, 'Below 60');
+          waitForHydration(cy.get('button').contains(submitText)).click();
+        } else {
+          const rand = getuniqueRandoms(1, minSelect, maxSelect);
+          const { label, value } = Options[rand];
+          if (name === 'step-3:Who') setlookingFor(value);
+          makeSelection(isSelect, optionsId, label);
+          waitForHydration(cy.get('button').contains(submitText)).click();
+
+          verifypostUuidActions(name, optionsId, value);
+        }
+      } else {
+        const valueArr = [];
+        const qty = Math.floor(Math.random() * (maxSelect));
+        const arr = getuniqueRandoms(qty, minSelect, maxSelect);
+
+        for (let i = 0; i < arr.length; i++) {
+          const { label, value } = Options[arr[i]];
+          valueArr.push(value);
+          makeSelection(isSelect, optionsId, label);
+        }
+        waitForHydration(cy.get('button').contains(submitText)).click();
+        verifypostUuidActions(name, optionsId, valueArr);
+      }
+    });
+  }
+
   beforeEach(() => {
     cy.server();
     cy.route({
@@ -286,43 +320,15 @@ describe('Community survey', () => {
     });
 
     for (let i = 0; i < wizardSteps; i++) {
-      const { name, Options, maxSelect, submitText, optionsId, isSelect, multipleselectionAllowed, istitleNested } = WizardConfiguration[wizardVersion][i];
-      it(`${name}`, () => {
-        const title = getTitle(istitleNested, i);
-        waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains(title)).should('exist');
-
-        const minSelect = getminIndex(name);
-        if (!multipleselectionAllowed) {
-          const rand = getuniqueRandoms(1, minSelect, maxSelect);
-          const { label, value } = Options[rand];
-          if (name === 'step-3:Who') setlookingFor(value);
-          makeSelection(isSelect, optionsId, label);
-          waitForHydration(cy.get('button').contains(submitText)).click();
-
-          verifypostUuidActions(name, optionsId, value);
-        } else {
-          const valueArr = [];
-          const qty = Math.floor(Math.random() * (maxSelect));
-          const arr = getuniqueRandoms(qty, minSelect, maxSelect);
-
-          for (let i = 0; i < arr.length; i++) {
-            const { label, value } = Options[arr[i]];
-            valueArr.push(value);
-            makeSelection(isSelect, optionsId, label);
-          }
-          waitForHydration(cy.get('button').contains(submitText)).click();
-          verifypostUuidActions(name, optionsId, valueArr);
-        }
-      });
+      verifywizardStep(i);
     }
-
     it('Submit wizard form', () => {
       // waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains('Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.', { timeout: 30000 })).should('exist');
       const { name, phone, email } = randomUser();
       const [fname, lname] = name.split(/\s+(.*)/);
       waitForHydration(cy.get('form input[id=firstName]')).type(fname);
       waitForHydration(cy.get('form input[id=lastName]')).type(lname);
-      waitForHydration(cy.get('form input[label="Email Address"]')).type(email);
+      waitForHydration(cy.get('form input[id=email]').first()).type(email);
       waitForHydration(cy.get('form input[id=phone_number]')).type(phone);
       waitForHydration(cy.get('form button[type=submit]').contains('Get Pricing')).click();
 
@@ -366,22 +372,15 @@ describe('Community survey', () => {
       verifyResidentDetails('step-12:ResidentName', data);
     });
 
+    for (let i = wizardSteps; i < wizardSteps + 3; i++) {
+      verifywizardStep(i);
+    }
 
-    it('Final Step', () => {
-      const { name, Options, maxSelect, submitText, optionsId, isSelect, istitleNested } = WizardConfiguration[wizardVersion][wizardSteps];
-      const title = getTitle(istitleNested, wizardSteps);
-      waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains(title)).should('exist');
-      const minSelect = getminIndex(name);
-      const rand = getuniqueRandoms(1, minSelect, maxSelect);
-      const { label, value } = Options[rand];
-
-      makeSelection(isSelect, optionsId, label);
-      waitForHydration(cy.get('button').contains(submitText)).click();
-      verifypostUuidActions(name, optionsId, value);
-
+    it('Post Conversion step', () => {
       waitForHydration(cy.contains('You\'re all set! One of our Local Senior Living Experts will reach out shortly to assist you with pricing for AlmaVia of San Francisco.', { timeout: 30000 }));
       waitForHydration(cy.get('div[class*=PostConversionGreetingForm]').contains('Return to Profile')).click();
-      cy.url().should('have.string', `/assisted-living/california/san-francisco/${TEST_COMMUNITY}`);
+      cy.url().should('have.string', `/assisted-living/california/san-francisco/${community.id}`);
     });
   });
 });
+
