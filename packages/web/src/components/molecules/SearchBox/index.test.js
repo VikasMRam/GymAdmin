@@ -1,10 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import PlacesAutocomplete from 'react-places-autocomplete';
 
 import SearchBox from '.';
-
-import LoadGoogleMaps from 'sly/web/services/search/LoadGoogleMaps';
 
 const onChange = jest.fn();
 const onSelect = jest.fn();
@@ -14,7 +11,6 @@ const wrap = (props = {}) =>
 
 const setupGoogleMock = () => {
   /** * Mock Google Maps JavaScript API ** */
-  // https://github.com/kenny-hibino/react-places-autocomplete/issues/189
   const google = {
     maps: {
       places: {

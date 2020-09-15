@@ -30,7 +30,6 @@ export default class LocationSearch extends Component {
     return (
       <SearchBoxContainer
         flex={flex}
-        clearLocationOnBlur={false}
         onLocationSearch={this.handleLocationChange}
         onTextChange={this.handleLocationTextChange}
         address={address}

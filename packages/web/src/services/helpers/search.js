@@ -247,31 +247,6 @@ export const getGuideParams = ({ params }) => {
   return params;
 };
 
-export const getSearchParamFromPlacesResponse = ({ address_components, geometry }) => {
-
-  const cityFull = address_components.filter(e => e.types.indexOf('locality') > -1 || e.types.indexOf('sublocality') > -1 || e.types.indexOf('administrative_area_level_3') > -1 );
-  const stateFull = address_components.filter(e => e.types.indexOf('administrative_area_level_1') > -1);
-  if (cityFull.length > 0 && stateFull.length > 0) {
-    const city = urlize(cityFull[0].long_name);
-    const state = urlize(stateFull[0].long_name);
-    const { lat, lng } = geometry.location;
-    return {
-      toc: 'assisted-living',
-      state,
-      city,
-      latitude: lat(),
-      longitude: lng(),
-    };
-  } else if (stateFull.length > 0) {
-    const state = urlize(stateFull[0].long_name);
-    return {
-      toc: 'assisted-living',
-      state,
-    };
-  }
-  return { toc: 'assisted-living' };
-};
-
 export const getFiltersApplied = (searchParams) => {
   const { size, budget } = searchParams;
   const filtersApplied = [];

@@ -82,7 +82,7 @@ export default class FamilyDetailsForm extends Component {
 
   handleLocationChange = (value) => {
     const { change, onLocationChange } = this.props;
-    change('preferredLocation', value.formatted_address);
+    change('preferredLocation', value.displayText);
     if (onLocationChange) {
       onLocationChange(value);
     }

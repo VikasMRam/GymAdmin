@@ -10,7 +10,7 @@ import { Icon, Block } from 'sly/common/components/atoms';
 
 const getMarginRight = p => p.borderless ? size('spacing', p.iconRightMarginSpacing) : size('spacing.large');
 
-const Wrapper = styled.div`
+const Wrapper = styled(Block)`
   display: flex;
   align-items: baseline;
 `;
@@ -25,9 +25,9 @@ const IconWrapper = styled.div`
 
 const IconItem = ({
   icon, iconSize, iconPalette, iconVariation, size, children, borderless,
-  textPalette, textVariation, iconRightMarginSpacing, className, borderPalette, borderVariation,
+  textPalette, textVariation, iconRightMarginSpacing, borderPalette, borderVariation, ...props
 }) => (
-  <Wrapper className={className}>
+  <Wrapper {...props}>
     <IconWrapper borderless={borderless} borderPalette={borderPalette} borderVariation={borderVariation} iconRightMarginSpacing={iconRightMarginSpacing}>
       <Icon icon={icon} size={iconSize} palette={iconPalette} variation={iconVariation} />
     </IconWrapper>
@@ -46,7 +46,6 @@ IconItem.propTypes = {
   textPalette: palettePropType,
   textVariation: variationPropType,
   iconRightMarginSpacing: string,
-  className: string,
   borderPalette: palettePropType,
   borderVariation: variationPropType,
 };

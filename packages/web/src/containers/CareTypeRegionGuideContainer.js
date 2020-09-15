@@ -2,10 +2,9 @@ import React, { PureComponent } from 'react';
 import { object, array } from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
-
 import SlyEvent from 'sly/web/services/helpers/events';
 import CareTypeRegionGuidePage from 'sly/web/components/pages/CareTypeRegionGuidePage';
-import { getSearchParamFromPlacesResponse, filterLinkPath, getGuideParams } from 'sly/web/services/helpers/search';
+import { getGuideParams } from 'sly/web/services/helpers/search';
 import { prefetch } from 'sly/web/services/api';
 import { withProps } from 'sly/web/services/helpers/hocs';
 
@@ -25,14 +24,12 @@ export default class CareTypeRegionGuidePageContainer extends PureComponent {
 
   handleOnLocationSearch = (result) => {
     const event = {
-      action: 'submit', category: 'guideMainPageHeroSearch', label: result.formatted_address,
+      action: 'submit', category: 'guideMainPageHeroSearch', label: result.displayText,
     };
     SlyEvent.getInstance().sendEvent(event);
 
     const { history } = this.props;
-    const searchParams = getSearchParamFromPlacesResponse(result);
-    const { path } = filterLinkPath(searchParams, {});
-    history.push(path);
+    history.push(result.url);
   };
 
   render() {
