@@ -33,6 +33,8 @@ const generateHeading = (whoNeedsHelp) => {
       return 'How old is your spouse?';
     case 'friend':
       return 'How old is your friend?';
+    case 'other-relatives':
+      return 'How old is your relative?';
     default:
       return 'How old is the person(s) you are searching for?';
   }

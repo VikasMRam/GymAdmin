@@ -33,13 +33,19 @@ const generateHeading = (whoNeedsHelp, amount, city, state) => {
   state = capitalize(state);
   switch (whoNeedsHelp) {
     case 'parents':
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Do your parents have access to any of these benefits?`;
+      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Do your parents have access to any of these benefits?`;
     case 'myself-and-spouse':
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Do you and your spouse have access to any of these benefits?`;
+      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Do you and your spouse have access to any of these benefits?`;
     case 'myself':
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Do you have access to any of these benefits?`;
+      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Do you have access to any of these benefits?`;
+    case 'spouse':
+      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Does your spouse have access to any of these benefits?`;
+    case 'friend':
+      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Does your friend(s) have access to any of these benefits?`;
+    case 'other-relatives':
+      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Does your relative(s) have access to any of these benefits?`;
     default:
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Does the person you are looking for have access to any of these benefits?`;
+      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Does the person you are looking for have access to any of these benefits?`;
   }
 };
 

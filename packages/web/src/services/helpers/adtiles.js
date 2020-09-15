@@ -20,7 +20,13 @@ export const  shouldShowZillowProfileAd = (community) => {
   if (!community || !community.propInfo || !community.propInfo.typeCare) {
     return false;
   }
-  const { propInfo: { typeCare: careList }, address: { city: cityLabel } } = community;
+  const { propInfo: { typeCare: careList }, address: { city: cityLabel, county, state } } = community;
+  if (county === 'Alameda' && state === 'CA' && careList && careList[0] === '') {
+    const { rgsAux: { rgsInfo: { contractInfo } } } = community;
+    if (contractInfo && contractInfo.hasContract) {
+      return false;
+    }
+  }
   const { path: tocSegment = '' } = tocPaths(careList);
   const toc = tocSegment.substr(1);
   const city = urlize(cityLabel);

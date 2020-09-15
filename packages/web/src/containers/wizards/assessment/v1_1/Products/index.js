@@ -37,7 +37,7 @@ export default class ProductsFormContainer extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'step-5:Products',
+          stepName: 'post-auth-step-5:Products',
           wizardName: 'assessmentWizard',
           data,
         },

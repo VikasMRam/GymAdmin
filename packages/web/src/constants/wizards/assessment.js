@@ -1,6 +1,6 @@
 export const WHO_PERSON_OPTIONS = [
   // v2 OPTIONS BELOW:
-  { label: 'Parent(s)', value: 'parents' },
+  { label: 'Parents', value: 'parents' },
   { label: 'Myself', value: 'myself' },
   { label: 'Spouse', value: 'spouse' },
   { label: 'Myself and spouse', value: 'myself-and-spouse' },
@@ -27,11 +27,14 @@ export const WHO_PERSON_OPTIONS = [
 ];
 
 export const AGE_OPTIONS = [
-  { label: 'Below 40', value: 'below-40' },
-  { label: '40-49', value: '40-49' },
-  { label: '50-59', value: '50-59' },
+  // { label: 'Below 40', value: 'below-40' },
+  // { label: '40-49', value: '40-49' },
+  // { label: '50-59', value: '50-59' },
+  { label: 'Below 60', value: 'below-60' },
   { label: '60-69', value: '60-69' },
-  { label: '70+', value: '70+' },
+  { label: '70-79', value: '70-79' },
+  { label: '80-89', value: '80-89' },
+  { label: '90+', value: '90+' },
 ];
 
 export const LIVE_SEARCH_STATE = [
