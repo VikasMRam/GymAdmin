@@ -23,7 +23,7 @@ describe('Community survey', () => {
             backAllowed: false,
             submitText: 'Continue',
             optionsId: 'timing',
-            isselect: false,
+            isSelect: false,
             multipleselectionAllowed: false,
             istitleNested: false,
           },
@@ -36,7 +36,7 @@ describe('Community survey', () => {
             skipAllowed: true,
             backAllowed: true,
             submitText: 'Continue',
-            isselect: false,
+            isSelect: false,
             multipleselectionAllowed: true,
             istitleNested: false,
           },
@@ -49,7 +49,7 @@ describe('Community survey', () => {
             skipAllowed: true,
             backAllowed: true,
             submitText: 'Continue',
-            isselect: true,
+            isSelect: true,
             multipleselectionAllowed: false,
             istitleNested: false,
           },
@@ -70,7 +70,7 @@ describe('Community survey', () => {
             skipAllowed: true,
             backAllowed: true,
             submitText: 'Continue',
-            isselect: false,
+            isSelect: false,
             multipleselectionAllowed: false,
             istitleNested: true,
           },
@@ -170,7 +170,7 @@ describe('Community survey', () => {
             skipAllowed: true,
             backAllowed: true,
             submitText: 'Continue',
-            isSelect: true,
+            isSelect: false,
             multipleselectionAllowed: false,
             istitleNested: true,
           },
@@ -202,8 +202,8 @@ describe('Community survey', () => {
     return arr;
   }
 
-  function makeSelection(isselect, optionsId, label) {
-    if (isselect) {
+  function makeSelection(isSelect, optionsId, label) {
+    if (isSelect) {
       waitForHydration(cy.get(`select[id*=${optionsId}]`).select(label));
     } else { waitForHydration(cy.get(`div[id*=${optionsId}]`).contains(label)).click(); }
   }
@@ -272,6 +272,7 @@ describe('Community survey', () => {
     cy.getCommunity(TEST_COMMUNITY).then((response) => {
       community = response;
     });
+    Cypress.Cookies.preserveOnce('sly_uuid', 'sly_sid');
   });
 
   responsive(() => {
@@ -284,9 +285,8 @@ describe('Community survey', () => {
       });
     });
 
-
     for (let i = 0; i < wizardSteps; i++) {
-      const { name, Options, maxSelect, submitText, optionsId, isselect, multipleselectionAllowed, istitleNested } = WizardConfiguration[wizardVersion][i];
+      const { name, Options, maxSelect, submitText, optionsId, isSelect, multipleselectionAllowed, istitleNested } = WizardConfiguration[wizardVersion][i];
       it(`${name}`, () => {
         const title = getTitle(istitleNested, i);
         waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains(title)).should('exist');
@@ -296,8 +296,7 @@ describe('Community survey', () => {
           const rand = getuniqueRandoms(1, minSelect, maxSelect);
           const { label, value } = Options[rand];
           if (name === 'step-3:Who') setlookingFor(value);
-
-          makeSelection(isselect, optionsId, label, submitText);
+          makeSelection(isSelect, optionsId, label);
           waitForHydration(cy.get('button').contains(submitText)).click();
 
           verifypostUuidActions(name, optionsId, value);
@@ -309,7 +308,7 @@ describe('Community survey', () => {
           for (let i = 0; i < arr.length; i++) {
             const { label, value } = Options[arr[i]];
             valueArr.push(value);
-            makeSelection(isselect, optionsId, label, submitText);
+            makeSelection(isSelect, optionsId, label);
           }
           waitForHydration(cy.get('button').contains(submitText)).click();
           verifypostUuidActions(name, optionsId, valueArr);
@@ -318,9 +317,9 @@ describe('Community survey', () => {
     }
 
     it('Submit wizard form', () => {
+      // waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains('Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.', { timeout: 30000 })).should('exist');
       const { name, phone, email } = randomUser();
       const [fname, lname] = name.split(/\s+(.*)/);
-      waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains('Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.')).should('exist');
       waitForHydration(cy.get('form input[id=firstName]')).type(fname);
       waitForHydration(cy.get('form input[id=lastName]')).type(lname);
       waitForHydration(cy.get('form input[label="Email Address"]')).type(email);
@@ -369,14 +368,14 @@ describe('Community survey', () => {
 
 
     it('Final Step', () => {
-      const { name, Options, maxSelect, submitText, optionsId, isselect, istitleNested } = WizardConfiguration[wizardVersion][wizardSteps];
+      const { name, Options, maxSelect, submitText, optionsId, isSelect, istitleNested } = WizardConfiguration[wizardVersion][wizardSteps];
       const title = getTitle(istitleNested, wizardSteps);
       waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains(title)).should('exist');
       const minSelect = getminIndex(name);
       const rand = getuniqueRandoms(1, minSelect, maxSelect);
       const { label, value } = Options[rand];
 
-      makeSelection(isselect, optionsId, label, submitText);
+      makeSelection(isSelect, optionsId, label);
       waitForHydration(cy.get('button').contains(submitText)).click();
       verifypostUuidActions(name, optionsId, value);
 
