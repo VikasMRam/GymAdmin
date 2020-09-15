@@ -54,7 +54,7 @@ const Budget = ({
 }) => (
   <div>
     <Wrapper>
-      <PaddedProgressBar label totalSteps={10} currentStep={9} />
+      <PaddedProgressBar label totalSteps={10} currentStep={7} />
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>

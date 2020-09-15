@@ -47,7 +47,7 @@ const Medicaid = ({
 }) => (
   <div>
     <Wrapper>
-      <PaddedProgressBar label totalSteps={10} currentStep={10} />
+      <PaddedProgressBar label totalSteps={10} currentStep={8} />
     </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
