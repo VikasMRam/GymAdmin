@@ -32,7 +32,7 @@ const LocalExpert = ({
             align="left"
             component={ReduxField}
           />
-          <Footer submitButtonText="Finish"  onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
+          <Footer submitButtonText="Next"  onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
       {hasTip &&

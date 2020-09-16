@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { size } from 'sly/common/components/themes';
 import { upTo } from 'sly/common/components/helpers';
 import { formatRating } from 'sly/web/services/helpers/rating';
+import { buildAddressDisplay } from 'sly/web/services/helpers/communityReferral';
 import agentPropType from 'sly/common/propTypes/agent';
 import { Icon, Block, Hr, Button, Link } from 'sly/common/components/atoms';
 import { Image, Span } from 'sly/web/components/atoms';
@@ -104,7 +105,7 @@ const AskQuestionPhoneSection = styled.div`
 const AgentSummary = ({
   agent, onButtonClick, onPhoneClick, buttonHref, showAskQuestionButton,
 }) => {
-  const { info, aggregateRating } = agent;
+  const { info, aggregateRating, address } = agent;
   const {
     profileImageUrl, displayName, recentFamiliesHelped, citiesServed, slyPhone, parentCompany, imageCaption,
   } = info;
@@ -156,6 +157,12 @@ const AgentSummary = ({
             <Span weight="medium">{`${firstName}'s Cities: `}</Span>
             <CollapsibleBlock>{citiesServed.join(', ')}</CollapsibleBlock>
           </AgentsCitiesSection>
+        }
+        {address &&
+        <AgentsCitiesSection>
+          <Span weight="medium">{`${firstName}'s Business Address: `}</Span>
+          <Span>{buildAddressDisplay(agent)}</Span>
+        </AgentsCitiesSection>
         }
         {showAskQuestionButton &&
           <AskQuestionPhoneSection>
