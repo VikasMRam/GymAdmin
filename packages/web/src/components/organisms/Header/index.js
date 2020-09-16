@@ -242,8 +242,8 @@ const Header = ({
             width="100%"
             padding={['regular', 0]}
             visibility={menuOpen ? 'hidden' : 'visible'}
-            include="city,zip,community,agent"
-            placeholder="Search by city, state, zip, community name"
+            include="city,zip,community"
+            placeholder="Search by city, zip, community name"
           />
         )}
         <HeaderItems hideInSmallScreen={hideMenuItemsInSmallScreen}>
