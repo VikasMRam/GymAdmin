@@ -115,8 +115,9 @@ const SearchBox = ({
               padding={['medium', 'xLarge']}
               size="caption"
               iconSize="caption"
+              palette="primary"
             >
-              <Icon icon="map" marginRight="regular" palette="grey" /> Current Location
+              <Icon icon="navigation" marginRight="regular" palette="primary" /> Current location
             </Suggestion>
           }
           {Object.keys(gps).map(k => (
