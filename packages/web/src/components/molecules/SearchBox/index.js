@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { palette, key } from 'sly/common/components/themes';
 import { Icon, Block } from 'sly/common/components/atoms';
 import { Input } from 'sly/web/components/atoms';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import IconItem from 'sly/web/components/molecules/IconItem';
 
 const SuggestionsWrapper = styled(Block)`
@@ -77,19 +78,22 @@ const SearchBox = ({
 
   return (
     <Block position="relative" {...props}>
-      <Input
-        disabled={false}
-        defaultValue={defaultValue}
-        placeholder={placeholder}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        readOnly={readOnly}
-        onKeyDown={onKeyDown}
-        onChange={onChange}
-        type="search"
-        size={layout === 'homeHero' ? 'large' : undefined}
-        {...inputProps}
-      />
+      <Block display="flex">
+        <Input
+          disabled={false}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          readOnly={readOnly}
+          onKeyDown={onKeyDown}
+          onChange={onChange}
+          size={layout === 'homeHero' ? 'large' : undefined}
+          snap="right"
+          {...inputProps}
+        />
+        <IconButton icon="search" snap="left" border="0" />
+      </Block>
       {(isTextboxInFocus && (onCurrentLocationClick || suggestions.length > 0)) && (
         <SuggestionsWrapper
           background="white"
@@ -100,7 +104,7 @@ const SearchBox = ({
           shadowBlur="regular"
         >
           {/*
-            user mouseDown instead of onClick as the onClick which is triggered after mouse button is release will trigger blur of textbox
+            use mouseDown instead of onClick as the onClick which is triggered after mouse button is release will trigger blur of textbox
             that will by the time hide the suggestions dropdown
           */}
           {onCurrentLocationClick && !suggestions.length &&
