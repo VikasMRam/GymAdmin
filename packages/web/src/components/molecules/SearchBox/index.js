@@ -12,12 +12,14 @@ const SuggestionsWrapper = styled(Block)`
   left: 0;
   right: 0;
 `;
+SuggestionsWrapper.displayName = 'SuggestionsWrapper';
 
 const Suggestion = styled(Block)`
   :hover {
     background-color: ${palette('primary', 'stroke')};
   }
 `;
+Suggestion.displayName = 'Suggestion';
 
 const Suggestions = styled(Block)`
   :last-child {

@@ -1,0 +1,119 @@
+[
+  {
+    "type": "SiteSearch",
+    "id": "sagebrook-senior-living-at-san-francisco",
+    "action": "redirect",
+    "displayText": "Sagebrook Senior Living At San Francisco, San Francisco, CA",
+    "name": "Sagebrook Senior Living At San Francisco",
+    "resourceType": "Community",
+    "url": "/assisted-living/california/san-francisco/sagebrook-senior-living-at-san-francisco"
+  },
+  {
+    "type": "SiteSearch",
+    "id": "almavia-of-san-francisco",
+    "action": "redirect",
+    "displayText": "AlmaVia Of San Francisco, San Francisco, CA",
+    "name": "AlmaVia Of San Francisco",
+    "resourceType": "Community",
+    "url": "/assisted-living/california/san-francisco/almavia-of-san-francisco"
+  },
+  {
+    "type": "SiteSearch",
+    "id": "casa-aldea",
+    "action": "redirect",
+    "displayText": "Casa Aldea at Santaluz, San Diego, CA",
+    "name": "Casa Aldea at Santaluz",
+    "resourceType": "Community",
+    "url": "/assisted-living/california/san-diego/casa-aldea"
+  },
+  {
+    "type": "SiteSearch",
+    "id": "oakmont-of-santa-clarita",
+    "action": "redirect",
+    "displayText": "Oakmont Of Santa Clarita, Valencia, CA",
+    "name": "Oakmont Of Santa Clarita",
+    "resourceType": "Community",
+    "url": "/assisted-living/california/valencia/oakmont-of-santa-clarita"
+  },
+  {
+    "type": "SiteSearch",
+    "id": "casa-sandoval",
+    "action": "redirect",
+    "displayText": "Casa Sandoval, Hayward, CA",
+    "name": "Casa Sandoval",
+    "resourceType": "Community",
+    "url": "/assisted-living/california/hayward/casa-sandoval"
+  },
+  {
+    "type": "SiteSearch",
+    "id": "13550",
+    "action": "redirect",
+    "displayText": "Sandersville, MS",
+    "name": "Sandersville",
+    "resourceType": "City",
+    "url": "/assisted-living/mississippi/sandersville"
+  },
+  {
+    "type": "SiteSearch",
+    "id": "15821",
+    "action": "redirect",
+    "displayText": "Sanbornville, NH",
+    "name": "Sanbornville",
+    "resourceType": "City",
+    "url": "/assisted-living/new-hampshire/sanbornville"
+  },
+  {
+    "type": "SiteSearch",
+    "id": "4846",
+    "action": "redirect",
+    "displayText": "Sandersville, GA",
+    "name": "Sandersville",
+    "resourceType": "City",
+    "url": "/assisted-living/georgia/sandersville"
+  },
+  {
+    "type": "SiteSearch",
+    "id": "10564",
+    "action": "redirect",
+    "displayText": "Sangerville, ME",
+    "name": "Sangerville",
+    "resourceType": "City",
+    "url": "/assisted-living/maine/sangerville"
+  },
+  {
+    "type": "SiteSearch",
+    "id": "11218",
+    "action": "redirect",
+    "displayText": "Sandisfield, MA",
+    "name": "Sandisfield",
+    "resourceType": "City",
+    "url": "/assisted-living/massachusetts/sandisfield"
+  },
+  {
+    "type": "SiteSearch",
+    "id": "senior-care-authority-of-san-diego-ca",
+    "action": "redirect",
+    "displayText": "Caselle Reinke, Carlsbad, CA",
+    "name": "Caselle Reinke",
+    "resourceType": "PartnerAgent",
+    "url": "/agents/pacific-west/carlsbad-ca/senior-care-authority-of-san-diego-ca"
+  },
+  {
+    "type": "SiteSearch",
+    "id": "assisted-living-locators-santa-rosa-ca-ramona-maurer-",
+    "action": "redirect",
+    "displayText": "Ramona Maurer, Santa Rosa, CA",
+    "name": "Ramona Maurer",
+    "resourceType": "PartnerAgent",
+    "url": "/agents/pacific-west/santa-rosa-ca/assisted-living-locators-santa-rosa-ca-ramona-maurer-"
+  },
+  {
+    "type": "SiteSearch",
+    "id": "assisted-living-locators-shannon-avazian",
+    "action": "redirect",
+    "displayText": "Shannon Avazian, Acton, CA",
+    "name": "Shannon Avazian",
+    "resourceType": "PartnerAgent",
+    "url": "/agents/pacific-west/acton-ca/assisted-living-locators-shannon-avazian"
+  }
+]
