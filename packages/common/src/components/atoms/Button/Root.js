@@ -12,6 +12,7 @@ import {
   withHeight,
   withClamping,
   withCursor,
+  withSnap,
 } from 'sly/common/components/helpers';
 
 const hoverBackgroundColor = ({
@@ -38,6 +39,7 @@ const StyledButton = styled.button`
   ${withText}
   ${withColor}
   ${withBorder}
+  ${withSnap}
   ${withSpacing}
   ${withWidth}
   ${withHeight}

@@ -14,6 +14,7 @@ import {
   withWidth,
   withHeight,
   withText,
+  withSnap,
 } from 'sly/common/components/helpers';
 
 const focusBorderColor = p => (!p.warning && !p.invalid) ? palette('primary', 'base') : null;
@@ -22,6 +23,7 @@ export const styles = css`
   ${withColor}
   ${withSpacing}
   ${withBorder}
+  ${withSnap}
   ${withCursor}
   ${withWidth}
   ${withHeight}

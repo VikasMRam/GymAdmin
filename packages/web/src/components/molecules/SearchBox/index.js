@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { palette, key } from 'sly/common/components/themes';
 import { Icon, Block } from 'sly/common/components/atoms';
 import { Input } from 'sly/web/components/atoms';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import IconItem from 'sly/web/components/molecules/IconItem';
 
 const SuggestionsWrapper = styled(Block)`
@@ -12,12 +13,14 @@ const SuggestionsWrapper = styled(Block)`
   left: 0;
   right: 0;
 `;
+SuggestionsWrapper.displayName = 'SuggestionsWrapper';
 
 const Suggestion = styled(Block)`
   :hover {
     background-color: ${palette('primary', 'stroke')};
   }
 `;
+Suggestion.displayName = 'Suggestion';
 
 const Suggestions = styled(Block)`
   :last-child {
@@ -33,21 +36,29 @@ const groupSuggestions = suggestions => suggestions.reduce((acc, curr) => {
 
 const GROUP_LABELS = {
   City: 'Locations',
+  Zipcode: 'Locations',
   Community: 'Communities',
   PartnerAgent: 'Agents',
 };
 
 const GROUP_ICONS = {
   City: 'map',
+  Zipcode: 'map',
   Community: 'community-size-large',
   PartnerAgent: 'user',
 };
 
 const GROUP_LIMITS = {
   City: 5,
+  Zipcode: 5,
   Community: 3,
   PartnerAgent: 3,
 };
+
+const GROUPS_DISPLAY_TEXT = [
+  'City',
+  'Zipcode',
+];
 
 const SearchBox = ({
   layout,
@@ -75,19 +86,22 @@ const SearchBox = ({
 
   return (
     <Block position="relative" {...props}>
-      <Input
-        disabled={false}
-        defaultValue={defaultValue}
-        placeholder={placeholder}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        readOnly={readOnly}
-        onKeyDown={onKeyDown}
-        onChange={onChange}
-        type="search"
-        size={layout === 'homeHero' ? 'large' : undefined}
-        {...inputProps}
-      />
+      <Block display="flex">
+        <Input
+          disabled={false}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          readOnly={readOnly}
+          onKeyDown={onKeyDown}
+          onChange={onChange}
+          size={layout === 'homeHero' ? 'large' : undefined}
+          snap="right"
+          {...inputProps}
+        />
+        <IconButton icon="search" snap="left" border="0" />
+      </Block>
       {(isTextboxInFocus && (onCurrentLocationClick || suggestions.length > 0)) && (
         <SuggestionsWrapper
           background="white"
@@ -98,7 +112,7 @@ const SearchBox = ({
           shadowBlur="regular"
         >
           {/*
-            user mouseDown instead of onClick as the onClick which is triggered after mouse button is release will trigger blur of textbox
+            use mouseDown instead of onClick as the onClick which is triggered after mouse button is release will trigger blur of textbox
             that will by the time hide the suggestions dropdown
           */}
           {onCurrentLocationClick && !suggestions.length &&
@@ -109,8 +123,9 @@ const SearchBox = ({
               padding={['medium', 'xLarge']}
               size="caption"
               iconSize="caption"
+              palette="primary"
             >
-              <Icon icon="map" marginRight="regular" palette="grey" /> Current Location
+              <Icon icon="navigation" marginRight="regular" palette="primary" /> Current location
             </Suggestion>
           }
           {Object.keys(gps).map(k => (
@@ -139,7 +154,8 @@ const SearchBox = ({
                   clamped
                 >
                   <Block display="inline" marginLeft="xxLarge">
-                    {suggestion.resourceType === 'City' ? suggestion.displayText : suggestion.name}
+                    {GROUPS_DISPLAY_TEXT.includes(suggestion.resourceType) ?
+                      suggestion.displayText : suggestion.name}
                   </Block>
                 </Suggestion>
               ))}
