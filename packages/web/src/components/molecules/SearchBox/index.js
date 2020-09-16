@@ -36,21 +36,29 @@ const groupSuggestions = suggestions => suggestions.reduce((acc, curr) => {
 
 const GROUP_LABELS = {
   City: 'Locations',
+  Zipcode: 'Locations',
   Community: 'Communities',
   PartnerAgent: 'Agents',
 };
 
 const GROUP_ICONS = {
   City: 'map',
+  Zipcode: 'map',
   Community: 'community-size-large',
   PartnerAgent: 'user',
 };
 
 const GROUP_LIMITS = {
   City: 5,
+  Zipcode: 5,
   Community: 3,
   PartnerAgent: 3,
 };
+
+const GROUPS_DISPLAY_TEXT = [
+  'City',
+  'Zipcode',
+];
 
 const SearchBox = ({
   layout,
@@ -146,7 +154,8 @@ const SearchBox = ({
                   clamped
                 >
                   <Block display="inline" marginLeft="xxLarge">
-                    {suggestion.resourceType === 'City' ? suggestion.displayText : suggestion.name}
+                    {GROUPS_DISPLAY_TEXT.includes(suggestion.resourceType) ?
+                      suggestion.displayText : suggestion.name}
                   </Block>
                 </Suggestion>
               ))}
