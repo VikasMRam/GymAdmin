@@ -12,8 +12,7 @@ describe('Marketplace Home Page', () => {
         .type('San Francisco');
     });
 
-    cy.get('div[class*=SearchBox__Suggestions]')
-      .should('have.length', 2)
+    cy.get('div[class*=SearchBox__SuggestionsWrapper]')
       .contains('San Francisco')
       .click();
 
