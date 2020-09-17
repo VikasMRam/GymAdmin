@@ -21,7 +21,7 @@ export const  shouldShowZillowProfileAd = (community) => {
     return false;
   }
   const { propInfo: { typeCare: careList }, address: { city: cityLabel, county, state } } = community;
-  if (county === 'Alameda' && state === 'CA' && careList && careList[0] === '') {
+  if (county === 'Alameda' && state === 'CA' && careList && careList[0] === 'continuing-care-retirement-community') {
     const { rgsAux: { rgsInfo: { contractInfo } } } = community;
     if (contractInfo && contractInfo.hasContract) {
       return false;
