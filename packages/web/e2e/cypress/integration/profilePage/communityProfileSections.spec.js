@@ -49,7 +49,7 @@ describe('Community Profile Sections', () => {
     });
   }
 
-  function verifypostuuidactions_agentaskquestion(community, name, phone, email) {
+  function verifyagentaskQuestion(community, name, phone, email) {
     cy.wait('@postUuidActions').then((xhr) => {
       const uuidAction = {
         data: {
@@ -82,7 +82,7 @@ describe('Community Profile Sections', () => {
     select('form input[id*=email]').last().type(email);
     select('form textarea[id*=message]').type('{selectall}{del}my message');
     select('form button[type=submit]').contains('Send').click();
-    verifypostuuidactions_agentaskquestion(community, name, phone, email);
+    verifyagentaskQuestion(community, name, phone, email);
   }
 
   responsive(() => {
