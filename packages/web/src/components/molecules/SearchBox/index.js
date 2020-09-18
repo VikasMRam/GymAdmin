@@ -68,6 +68,7 @@ const SearchBox = ({
   onSelect,
   onFocus,
   isTextboxInFocus,
+  onSearchButtonClick,
   onLocationSearch,
   onCurrentLocationClick,
   onBlur,
@@ -100,7 +101,7 @@ const SearchBox = ({
           snap="right"
           {...inputProps}
         />
-        <IconButton icon="search" snap="left" border="0" />
+        <IconButton icon="search" snap="left" border="0" onClick={onSearchButtonClick} />
       </Block>
       {(isTextboxInFocus && (onCurrentLocationClick || suggestions.length > 0)) && (
         <SuggestionsWrapper
@@ -174,6 +175,7 @@ SearchBox.propTypes = {
   onChange: func.isRequired,
   onSelect: func.isRequired,
   onLocationSearch: func,
+  onSearchButtonClick: func,
   onFocus: func,
   isTextboxInFocus: bool,
   onCurrentLocationClick: func,
