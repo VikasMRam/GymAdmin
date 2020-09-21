@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { arrayOf, object } from 'prop-types';
+import { arrayOf, object, string } from 'prop-types';
 import { withRouter, generatePath } from 'react-router';
 
 import { prefetch } from 'sly/web/services/api';
@@ -53,6 +53,7 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
     status: object,
     history: object,
     datatable: object,
+    basePath: string,
     match: object,
     location: object,
   };
@@ -67,7 +68,7 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
 
   render() {
     const {
-      clients, status, datatable, match, location,
+      clients, status, datatable, match, location, basePath,
     } = this.props;
 
     const { error, hasFinished } = status.clients;
@@ -87,6 +88,7 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
                 isPageLoading={!hasFinished || !datatable.hasFinished}
                 clients={clients || []}
                 meta={meta || {}}
+                basePath={basePath}
                 pagination={getPaginationData(status.clients)}
                 activeTab={match.params.clientType}
                 datatable={datatable}

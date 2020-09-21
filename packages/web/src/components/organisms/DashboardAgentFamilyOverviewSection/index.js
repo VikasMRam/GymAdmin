@@ -101,8 +101,8 @@ const onTabClick = (label) => {
 };
 
 
-const getBasePath = (clientType, location) => {
-  const path = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType });
+const getBasePath = (basePath, clientType, location) => {
+  const path = generatePath(basePath, { clientType });
   return location && location.search ? `${path}${stripPageNumber(location.search)}` : path;
 };
 
@@ -111,6 +111,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
     datatable: object,
     clients: arrayOf(clientPropType),
     meta: clientMetaPropType,
+    basePath: string,
     pagination: object,
     paginationString: string,
     activeTab: string,
@@ -161,6 +162,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
   render() {
     const {
       clients,
+      basePath,
       pagination,
       activeTab,
       isPageLoading,
@@ -188,7 +190,7 @@ export default class DashboardAgentFamilyOverviewSection extends Component {
               <Tab
                 id={key}
                 key={key}
-                to={getBasePath(key, location)}
+                to={getBasePath(basePath, key, location)}
                 onClick={() => onTabClick(name)}
               >
                 {`${name} (${pagination[`${key}Count`] || '0'})`}
