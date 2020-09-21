@@ -172,7 +172,7 @@ describe('Community Profile Sections', () => {
     });
 
 
-    it.skip('should be able to share', () => {
+    it('should be able to share', () => {
       cy.route('POST', '**/user-shares').as('postUserShares');
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
@@ -180,8 +180,8 @@ describe('Community Profile Sections', () => {
       waitForHydration(cy.get('button').contains('Share')).click({ force: true });
       select('.ReactModal').contains('Share this community').should('exist');
 
-      cy.get('form input[name="to"]').type('fonz@seniorly.com');
-      cy.get('form input[name="from"]').type('fonz@botverse.com');
+      cy.get('form input[name="to"]').type('inchara@seniorly.com');
+      cy.get('form input[name="from"]').type('inchara@botverse.com');
       cy.get('form textarea[name="message"]').type('check out this property');
 
       cy.get('form button').contains('Send').click();
@@ -190,37 +190,36 @@ describe('Community Profile Sections', () => {
         expect(xhr.status).to.equal(200);
         expect(xhr.requestBody).to.deep.equal({
           toEmails: [
-            'fonz@seniorly.com',
+            'inchara@seniorly.com',
           ],
           message: 'check out this property',
           entitySlug: community.id,
           entityType: 'Community',
-          fromEmail: 'fonz@botverse.com',
+          fromEmail: 'inchara@botverse.com',
         });
       });
 
       select('.Notifications').contains('Community has been shared').should('exist');
     });
 
-    it.skip('should be able to save and remove community', () => {
+
+    it('should be able to save and remove community', () => {
       let userSave;
 
       cy.route('POST', '**/user-saves').as('postUserSaves');
       cy.route('PATCH', '**/user-saves/*').as('patchUserSaves');
 
-      cy.registerWithEmail(`fonz+e2e+${randHash()}@seniorly.com`, 'nopassword');
+      const rand = randHash();
+
 
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.registerWithEmail(`fonz+e2e+${rand}@seniorly.com`, 'nopassword');
 
       waitForHydration(cy.get('button').contains('Favorite')).click({ force: true });
+      cy.get('form input[label*=Email]').last().type(`fonz+e2e+${rand}@seniorly.com`);
+      cy.get('form input[id*=password]').last().type('nopassword');
+      cy.get('form button[type*=submit]').contains('Log in').click();
 
-      cy.get('div[class*="AuthContainer__ModalBody"]').within(() => {
-        cy.get('input[name="email"]').type('slytest+admin@seniorly.com');
-        cy.get('input[name="password"]').type('nopassword');
-        cy.get('button').contains('Log in').click();
-      });
-
-      cy.reload();
 
       cy.wait('@postUserSaves').then(async (xhr) => {
         expect(xhr.status).to.equal(200);
@@ -245,11 +244,11 @@ describe('Community Profile Sections', () => {
         });
       });
 
-      cy.contains('h2', 'Community Saved!').should('exist');
+      cy.contains('h3', 'Community Saved!').should('exist');
 
       select('.CommunitySaved button').contains('Done').click();
 
-      select('.CommunitySaved h2').should('not.exist');
+      select('.CommunitySaved h3').should('not.exist');
     });
   });
 });

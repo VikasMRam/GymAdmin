@@ -155,7 +155,7 @@ describe('Community survey', () => {
             optionsId: 'localExpert',
             skipAllowed: true,
             backAllowed: true,
-            submitText: 'Next',
+            submitText: 'Finish',
             isSelect: false,
             multipleselectionAllowed: false,
             istitleNested: false,
@@ -250,8 +250,8 @@ describe('Community survey', () => {
 
 
   function fillinresidentDetails(id1, id2, firstName, lastName) {
-    waitForHydration(cy.get(`input[id*=${id1}]`).should('exist')).type(firstName.trim());
-    waitForHydration(cy.get(`input[id*=${id2}]`).should('exist')).type(lastName.trim());
+    waitForHydration(cy.get(`input[id*=${id1}]`).should('exist')).type(firstName);
+    waitForHydration(cy.get(`input[id*=${id2}]`).should('exist')).type(lastName);
   }
 
   function getTitle(istitleNested, i) {
@@ -320,11 +320,11 @@ describe('Community survey', () => {
       // waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains('Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.', { timeout: 30000 })).should('exist');
       const { name, phone, email } = randomUser();
       const [fname, lname] = name.split(' ');
-      waitForHydration(cy.get('form input[id=firstName]')).type(fname.trim());
-      waitForHydration(cy.get('form input[id=lastName]')).type(lname.trim());
-      waitForHydration(cy.get('form input[id=email]').first()).type(email.trim());
-      waitForHydration(cy.get('form input[id=phone_number]')).type(phone.trim());
-      waitForHydration(cy.get('form button[type=submit]').contains('Get Pricing')).click();
+      waitForHydration(cy.get('form input[id=firstName]')).type(fname);
+      waitForHydration(cy.get('form input[id=lastName]')).type(lname);
+      waitForHydration(cy.get('form input[id=email]').first()).type(email);
+      waitForHydration(cy.get('form input[id=phone_number]')).type(phone);
+      waitForHydration(cy.get('form button[type=submit]').contains('Get Pricing')).click({ force: true });
 
       cy.wait('@postUuidActions').then(async (xhr) => {
         const request = xhr.requestBody;
