@@ -180,7 +180,7 @@ describe('Community survey', () => {
             optionsId: 'products',
             skipAllowed: true,
             backAllowed: true,
-            submitText: 'Finish',
+            submitText: 'Continue',
             isSelect: false,
             multipleselectionAllowed: true,
             istitleNested: false,
