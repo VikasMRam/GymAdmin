@@ -92,19 +92,23 @@ export default class DashboardAgentPhotosFormContainer extends Component {
     images: [],
   };
 
-  addImage = () => {
+  addImage = ({name, path}) => {
     // this adds a image template with the relationship and sortOrder
     // the rest of the attributes of the image are added in MediaItem
     const { status } = this.props;
     const { images } = this.state;
     const newImage = {
+      type: 'Image',
       relationships: {
         gallery: status.agent.result.relationships.gallery,
       },
       attributes: {
+        name: name,
+        path: path,
         sortOrder: images.length,
       },
     };
+    this.saveImage(newImage);
     this.setState({
       images: [
         ...images,
@@ -112,6 +116,19 @@ export default class DashboardAgentPhotosFormContainer extends Component {
       ],
     });
   };
+
+  onUpload = (result, file) => {
+    this.addImage({
+      name: file.name,
+      path: result.path,
+    });
+  };
+
+  onUploadError = (error) => {
+    const { notifyError } = this.props;
+    notifyError(`Photos could not be uploaded to the CDN`);
+  };
+
 
   onSortEnd = ({ oldIndex, newIndex }) => {
     const { images } = this.state;
@@ -227,7 +244,9 @@ export default class DashboardAgentPhotosFormContainer extends Component {
 
     return (
       <DashboardCommunityPhotosForm
-        addImage={this.addImage}
+
+        onUpload={this.onUpload}
+        onUploadError={this.onUploadError}
         saveImage={this.saveImage}
         deleteImage={this.deleteImage}
         initialValues={initialValues}
