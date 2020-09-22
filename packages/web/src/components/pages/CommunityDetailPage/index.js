@@ -44,10 +44,8 @@ import CommunityCareService from 'sly/web/components/organisms/CommunityCareServ
 import CommunityDisclaimerSection from 'sly/web/components/molecules/CommunityDisclaimerSection';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import IconButton from 'sly/common/components/molecules/IconButton';
-import UnhydratedGetCurrentAvailabilityContainer from 'sly/web/containers/GetCurrentAvailabilityContainer';
 import UnhydratedHowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
-import UnhydratedAskAgentQuestionButtonContainer from 'sly/web/containers/AskAgentQuestionButtonContainer';
 import PlusBranding from 'sly/web/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
@@ -56,7 +54,6 @@ import UnhydratedCommunitySummaryContainer from 'sly/web/containers/CommunitySum
 import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
 import UnhydratedCommunityQuestionAnswersContainer from 'sly/web/containers/CommunityQuestionAnswersContainer';
 import UnhydratedCommunityReviewsContainer from 'sly/web/containers/CommunityReviewsContainer';
-import UnhydratedCommunityAddReviewButtonContainer from 'sly/web/containers/CommunityAddReviewButtonContainer';
 import UnhydratedCommunityMorePicturesContainer from 'sly/web/containers/CommunityMorePicturesContainer';
 import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/web/containers/TrackedSimilarCommunitiesContainer';
 import UnhydratedPageViewActionContainer from 'sly/web/containers/PageViewActionContainer';
@@ -74,12 +71,9 @@ const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGal
 const CommunitySummaryContainer = withHydration(UnhydratedCommunitySummaryContainer);
 const OfferNotification = withHydration(UnhydratedOfferNotification);
 const TrackedSimilarCommunitiesContainer = withHydration(UnhydratedTrackedSimilarCommunitiesContainer);
-const GetCurrentAvailabilityContainer = withHydration(UnhydratedGetCurrentAvailabilityContainer);
 const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContainer);
 const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
-const AskAgentQuestionButtonContainer = withHydration(UnhydratedAskAgentQuestionButtonContainer);
 const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContainer);
-const CommunityAddReviewButtonContainer = withHydration(UnhydratedCommunityAddReviewButtonContainer);
 const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuestionAnswersContainer);
 // const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { alwaysHydrate: true });
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
@@ -129,10 +123,6 @@ const StyledButton = styled(Button)`
   width: 100%;
   margin-top: ${size('spacing.xLarge')};
 `;
-const StyledLeaveReviewButton = styled(CommunityAddReviewButtonContainer)`
-  width: 100%;
-  margin-top: ${size('spacing.xLarge')};
-`;
 
 const EventsWrapper = styled(CollapsibleBlock)`
   display: grid;
@@ -143,11 +133,6 @@ const EventsWrapper = styled(CollapsibleBlock)`
     grid-template-columns: 50% 50%;
     grid-column-gap: ${size('layout.gutter')};
   }
-`;
-
-const StyledAskAgentButton = styled(AskAgentQuestionButtonContainer)`
-  width: 100%;
-  margin-top: ${size('spacing.xLarge')};
 `;
 
 const StickToTop = styled.div`
@@ -399,14 +384,6 @@ export default class CommunityDetailPage extends Component {
                 {/* <AdWrapper> */}
                 {/* <CommunityProfileAdTileContainer type="getOffer" community={community} /> */}
                 {/* </AdWrapper> */}
-                {!isActiveAdult &&
-                  <StyledHeadingBoxSection
-                    heading={`Get Availability at ${name}`}
-                    id="availability"
-                  >
-                    <GetCurrentAvailabilityContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested} />
-                  </StyledHeadingBoxSection>
-                }
 
                 {plusCommunity && <PlusBranding />}
                 {(communityDescription || rgsAux.communityDescription ||
@@ -439,7 +416,6 @@ export default class CommunityDetailPage extends Component {
                 {partnerAgent && !isActiveAdult && (
                   <StyledHeadingBoxSection heading={`Your Local Senior Living Expert for ${name}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} />
-                    <StyledAskAgentButton community={community} type="services" ctaText="Ask a Question" />
                   </StyledHeadingBoxSection>
                 )}
                 {!isActiveAdult &&
@@ -476,23 +452,10 @@ export default class CommunityDetailPage extends Component {
                   careServices.length > 0 && (
                     <StyledHeadingBoxSection heading={`Care Services at ${name}`}>
                       <CommunityCareService careServices={careServices} />
-                      {!isActiveAdult && <StyledAskAgentButton
-                        community={community}
-                        type="services"
-                        ctaText={'Ask' +
-                      ' About Care Services'}
-                      />}
                     </StyledHeadingBoxSection>
                   )}
                 <StyledHeadingBoxSection heading={`Amenities at ${name}`}>
                   <CommunityAmenities community={community} />
-                  {!isActiveAdult && <StyledAskAgentButton
-                    community={community}
-                    type="amenities"
-                    ctaText={'Ask' +
-                  ' About Amenities'}
-                  />}
-
                 </StyledHeadingBoxSection>
 
                 <StyledHeadingBoxSection
@@ -500,7 +463,6 @@ export default class CommunityDetailPage extends Component {
                   id="reviews"
                 >
                   <CommunityReviewsContainer />
-                  <StyledLeaveReviewButton>Write a Review</StyledLeaveReviewButton>
                 </StyledHeadingBoxSection>
 
                 <CommunityQuestionAnswersContainer />
