@@ -1,7 +1,6 @@
 import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
 import { TEST_COMMUNITY } from '../../constants/community';
-import randomUser from '../../helpers/randomUser';
 
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { normalizeResponse } from 'sly/web/services/api';
@@ -39,51 +38,6 @@ describe('Community Profile Sections', () => {
       community = response;
     });
   });
-
-
-  // function confirmationRecieved() {
-  //   waitForHydration(cy.get('div[class*=Thankyou__Wrapper]')).within(() => {
-  //     cy.get('h2').contains('Success');
-  //     cy.get('div[class*=Thankyou__StyledBlock]').contains('Your request has been sent and we will connect with you shortly.');
-  //     cy.get('button').contains('Finish').click();
-  //   });
-  // }
-
-  // function verifyagentaskQuestion(community, name, phone, email) {
-  //   cy.wait('@postUuidActions').then((xhr) => {
-  //     const uuidAction = {
-  //       data: {
-  //         type: 'UUIDAction',
-  //         attributes: {
-  //           actionType: 'agentAskQuestions',
-  //           actionPage: `/assisted-living/california/san-francisco/${community.id}`,
-  //           actionInfo: {
-  //             email,
-  //             slug: community.id,
-  //             question: 'my message',
-  //             entityType: 'Community',
-  //             name,
-  //             phone,
-  //           },
-  //         },
-  //       },
-  //     };
-  //     expect(xhr.requestBody).to.deep.equal(uuidAction);
-  //   });
-  // }
-
-  // function submitForm() {
-  //   const { name, phone, email } = randomUser();
-  //   const [fname, lname] = name.split(' ');
-
-  //   select('form input[id*=firstName]').type(fname);
-  //   select('form input[id*=lastName]').type(lname);
-  //   select('form input[id*=phone]').type(phone);
-  //   select('form input[id*=email]').last().type(email);
-  //   select('form textarea[id*=message]').type('{selectall}{del}my message');
-  //   select('form button[type=submit]').contains('Send').click();
-  //   verifyagentaskQuestion(community, name, phone, email);
-  // }
 
   responsive(() => {
     it('Should see community details', () => {
@@ -147,10 +101,7 @@ describe('Community Profile Sections', () => {
         cy.wrap(community.propInfo.careServices).each((service) => {
           cy.get('> h3 + div > div > div > div > div + div').contains(service).should('exist');
         });
-        // waitForHydration(cy.get('> h3 + div ~ div button').contains('Ask About Care Services')).click();
       });
-      // submitForm();
-      // confirmationRecieved();
     });
 
 
@@ -165,10 +116,6 @@ describe('Community Profile Sections', () => {
       ].forEach((service) => {
         careContent.get('div').contains(service).should('exist');
       });
-
-      // waitForHydration(careContent.get('button').contains('Ask About Amenities')).click();
-      // submitForm();
-      // confirmationRecieved();
     });
 
 
