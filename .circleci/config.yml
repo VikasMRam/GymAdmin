@@ -192,8 +192,8 @@ jobs:
             #   echo "export EB_ENV=slyreact-test" >> ~/new_env_vars
             #   echo "export CYPRESS_baseUrl=http://test.teamseniorly.com" >> ~/new_env_vars
             elif [[ "$CIRCLE_BRANCH" = "master" ]]; then
-              echo "export EB_ENV=slyreact-development" >> ~/new_env_vars
-              echo "export CYPRESS_baseUrl=http://www.teamseniorly.com" >> ~/new_env_vars
+              echo "export EB_ENV=slyreact-staging" >> ~/new_env_vars
+              echo "export CYPRESS_baseUrl=http://www.myseniorly.com" >> ~/new_env_vars
             else
               export FEATURE_ENV=$(eb list | grep -w "$CIRCLE_BRANCH")
               if [[ "$FEATURE_ENV" == "slyreact-prod" || "$FEATURE_ENV" == "slyreact-staging" ]]; then
