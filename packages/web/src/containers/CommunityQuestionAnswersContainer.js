@@ -11,6 +11,7 @@ import withModal from 'sly/web/controllers/withModal';
 import { prefetch } from 'sly/web/services/api';
 import { PROFILE_ASK_QUESTION } from 'sly/web/services/api/constants';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
+import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 
 const CommunityLeaveAnAnswerFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityLeaveAnAnswerFormContainer" */'sly/web/containers/CommunityLeaveAnAnswerFormContainer'));
 const AskQuestionToAgentFormContainer = loadable(() => import(/* webpackChunkName:
@@ -84,14 +85,26 @@ export default class CommunityQuestionAnswersContainer extends Component {
 
   render() {
     const { community: { name, questions, communityFaQs } } = this.props;
+
+    const filteredQuestions = questions ? questions.filter((q) => {
+      const { contents = [] } = q;
+      return contents.length > 0;
+    }) : questions;
+
+    if (!filteredQuestions || !filteredQuestions.length) {
+      return null;
+    }
+
     return (
-      <CommunityQuestionAnswers
-        communityName={name}
-        questions={questions}
-        communityFaQs={communityFaQs}
-        onLeaveAnswerClick={this.openAnswerQuestionModal}
-        onAskQuestionClick={this.openAskQuestionModal}
-      />
+      <HeadingBoxSection hasNoHr heading={`Questions About ${name}`} pad="xLarge">
+        <CommunityQuestionAnswers
+          communityName={name}
+          questions={questions}
+          communityFaQs={communityFaQs}
+          onLeaveAnswerClick={this.openAnswerQuestionModal}
+          onAskQuestionClick={this.openAskQuestionModal}
+        />
+      </HeadingBoxSection>
     );
   }
 }

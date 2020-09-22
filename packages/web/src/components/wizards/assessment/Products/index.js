@@ -44,7 +44,7 @@ const Products = ({
             options={PRODUCTS_OPTIONS}
             required
           />
-          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
+          <Footer submitButtonText="Finish" onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
       </Box>
       {hasTip &&

@@ -160,21 +160,20 @@ export default class ReferralSearchContainer extends Component {
 
   getGeoFromLocationValue = (value) => {
     if (value && value.geo) {
-      return [value.geo.latitude, value.geo.longitude, 10].join(',');
+      return [value.geo.Latitude, value.geo.Longitude, 10].join(',');
     }
     return null;
   }
 
-  doCommunitySearch = ({ name, city, geo }) => {
+  doCommunitySearch = ({ name, geo }) => {
     const { getCommunities } = this.props;
     // const filters = this.getSearchFilters(nameOrZip);
     const filters = {};
-    if (city) {
-      [filters['filter[city]']] = [city.split(',')];
-    } else if (name) {
+    if (geo) {
+      filters['filter[geo]'] = this.getGeoFromLocationValue(geo.info);
+    }
+    if (name) {
       filters['filter[name]'] = name;
-    } else if (geo) {
-      filters['filter[geo]'] = this.getGeoFromLocationValue(geo);
     }
     return getCommunities(filters).then((resp) => {
       const communities = normalizeResponse(resp.body);
@@ -184,15 +183,14 @@ export default class ReferralSearchContainer extends Component {
     });
   };
 
-  doAgentSearch = ({ name, city, geo }) => {
+  doAgentSearch = ({ name, geo }) => {
     const { getAgents } = this.props;
     const filters = {};
-    if (city) {
-      filters['filter[address]'] = city;
-    } else if (name) {
+    if (geo) {
+      filters['filter[geo]'] = this.getGeoFromLocationValue(geo.info);
+    }
+    if (name) {
       filters['filter[name]'] = name;
-    } else if (geo) {
-      filters['filter[geo]'] = this.getGeoFromLocationValue(geo);
     }
     return getAgents(filters).then((resp) => {
       const allAgents = normJsonApi(resp);

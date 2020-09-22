@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, func, bool, shape } from 'prop-types';
+import { string, func, shape } from 'prop-types';
 import { debounce } from 'lodash';
 
 import { LOCATION_CURRENT_LATITUDE, LOCATION_CURRENT_LONGITUDE } from 'sly/web/constants/location';
@@ -187,11 +187,15 @@ export default class SearchBoxContainer extends Component {
   handleKeyDownThrottled = (e) => {
     e.persist();
 
-    if (!this.throttledhandleKeyDownFn) {
-      this.throttledhandleKeyDownFn = debounce(this.handleKeyDown, 500);
-    }
+    if (e.key === 'Enter') {
+      this.handleSearchButtonClick();
+    } else {
+      if (!this.throttledhandleKeyDownFn) {
+        this.throttledhandleKeyDownFn = debounce(this.handleKeyDown, 500);
+      }
 
-    this.throttledhandleKeyDownFn(e);
+      this.throttledhandleKeyDownFn(e);
+    }
   };
 
   getCurrentValue = () => {
@@ -203,6 +207,15 @@ export default class SearchBoxContainer extends Component {
     }
 
     return selectedSuggestion;
+  };
+
+  handleSearchButtonClick = () => {
+    const { selectedSuggestion, suggestions } = this.state;
+    const suggestion = selectedSuggestion || suggestions[0];
+
+    if (suggestion) {
+      this.handleSelect(suggestion);
+    }
   };
 
   render() {
@@ -224,6 +237,7 @@ export default class SearchBoxContainer extends Component {
         onChange={this.handleTextboxChange}
         isTextboxInFocus={isTextboxInFocus}
         onCurrentLocationClick={onCurrentLocation ? this.handleCurrentLocationClick : null}
+        onSearchButtonClick={this.handleSearchButtonClick}
         {...props}
       />
     );

@@ -67,9 +67,11 @@ class DashboardCommunityAgentSearchBox extends Component {
       }
       if (preferredLocation.geo) {
         location = {
-          geo: {
-            latitude: preferredLocation.geo.Latitude,
-            longitude: preferredLocation.geo.Longitude,
+          info: {
+            geo: {
+              Latitude: preferredLocation.geo.Latitude,
+              Longitude: preferredLocation.geo.Longitude,
+            },
           },
         };
         initialValues.geo = location;

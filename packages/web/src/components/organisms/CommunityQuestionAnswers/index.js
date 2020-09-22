@@ -1,18 +1,12 @@
 import React, { Fragment } from 'react';
-import styled from 'styled-components';
 import { string, arrayOf, func } from 'prop-types';
 
 import { content as contentPropType } from 'sly/common/propTypes/content';
-import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import cursor from 'sly/web/components/helpers/cursor';
-import { Hr, Block, Button } from 'sly/common/components/atoms';
+import { Hr, Block } from 'sly/common/components/atoms';
 import CommunityQuestion from 'sly/web/components/molecules/CommunityQuestion';
 import CommunityAnswer from 'sly/web/components/molecules/CommunityAnswer';
-
-const AnswersDiv = pad(styled.div`
-  margin-left: ${size('spacing.huge')};
-`, 'large');
 
 const PaddedCommunityQuestion = pad(CommunityQuestion, 'large');
 PaddedCommunityQuestion.displayName = 'PaddedCommunityQuestion';
@@ -21,11 +15,6 @@ const CursorBlock = cursor(Block);
 CursorBlock.displayName = 'CursorBlock';
 
 const PaddedBlock = pad(Block);
-
-const StyledButton = styled(Button)`
-  margin-top: ${size('spacing.xLarge')};
-  width: 100%;
-`;
 
 const sortByCreatedAt = (a, b) => a.createdAt > b.createdAt;
 
@@ -50,10 +39,10 @@ const CommunityQuestionAnswers = ({
       <Fragment key={question.id}>
         <PaddedCommunityQuestion question={question} />
         {firstAnswerComponent}
-        <AnswersDiv>
+        <Block marginLeft="huge">
           {answersComponents}
-        </AnswersDiv>
-        <CursorBlock palette="primary" weight="medium" onClick={() => onLeaveAnswerClick(question)}>Leave an Answer</CursorBlock>
+        </Block>
+        {/* <CursorBlock palette="primary" weight="medium" onClick={() => onLeaveAnswerClick(question)}>Leave an Answer</CursorBlock> */}
         {i < questions.length - 1 && <Hr />}
       </Fragment>
     );
@@ -78,7 +67,7 @@ const CommunityQuestionAnswers = ({
           {communityFaQsComponent}
         </>
       }
-      <StyledButton onClick={() => onAskQuestionClick()}>Ask a Question</StyledButton>
+      {/* <Button width="100%" marginTop="xLarge" onClick={() => onAskQuestionClick()}>Ask a Question</Button> */}
     </>
   );
 };

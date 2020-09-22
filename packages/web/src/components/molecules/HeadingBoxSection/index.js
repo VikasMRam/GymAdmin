@@ -4,7 +4,7 @@ import { string, node, bool } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/common/components/themes';
-import { Heading, Hr } from 'sly/common/components/atoms';
+import { Heading, Hr, Block } from 'sly/common/components/atoms';
 
 const filterProps = Component => ({
   hasNoBodyPadding,
@@ -14,7 +14,7 @@ const filterProps = Component => ({
   <Component {...props} />
 );
 
-const StyledSection = filterProps(styled.section`
+const StyledSection = filterProps(styled(Block)`
   border: ${size('border.regular')} ${ifProp('hasNoBorder', 'none', 'solid')} ${palette('slate', 'stroke')};
   border-radius: ${ifProp('hasNoBorder', null, size('spacing.small'))};
   background-color: ${palette('white.base')};
@@ -38,9 +38,9 @@ const StyledHr = filterProps(styled(Hr)`
 `);
 
 const HeadingBoxSection = ({
-  id, heading, children, className, hasNoBodyPadding, hasNoBorder, hasNoHr,
+  id, heading, children, className, hasNoBodyPadding, hasNoBorder, hasNoHr, ...props
 }) => (
-  <StyledSection id={id} className={className} hasNoBodyPadding={hasNoBodyPadding} hasNoBorder={hasNoBorder}>
+  <StyledSection {...props} as="section" id={id} className={className} hasNoBodyPadding={hasNoBodyPadding} hasNoBorder={hasNoBorder}>
     <HeadingBlock size="subtitle" hasNoBodyPadding={hasNoBodyPadding} hasNoHr={hasNoHr}>{heading}</HeadingBlock>
     { !hasNoHr && <StyledHr hasNoBodyPadding={hasNoBodyPadding} /> }
     {children}

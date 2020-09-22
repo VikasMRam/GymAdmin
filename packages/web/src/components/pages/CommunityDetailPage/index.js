@@ -18,7 +18,7 @@ import {
 import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { getIsActiveAdult } from 'sly/web/services/helpers/community';
-import { Button, Hr, Block, Heading, Paragraph, Link } from 'sly/common/components/atoms';
+import { Button, Block, Heading, Box, Hr } from 'sly/common/components/atoms';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
 import {
@@ -31,7 +31,7 @@ import {
   makeTwoColumn,
   makeWrapper,
 } from 'sly/web/components/templates/CommunityDetailPageTemplate';
-import UnhydratedCommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
+// import UnhydratedCommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
 import Section from 'sly/web/components/molecules/Section';
 import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
 import CommunityPricingComparison from 'sly/web/components/organisms/CommunityPricingComparison';
@@ -44,10 +44,8 @@ import CommunityCareService from 'sly/web/components/organisms/CommunityCareServ
 import CommunityDisclaimerSection from 'sly/web/components/molecules/CommunityDisclaimerSection';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import IconButton from 'sly/common/components/molecules/IconButton';
-import UnhydratedGetCurrentAvailabilityContainer from 'sly/web/containers/GetCurrentAvailabilityContainer';
 import UnhydratedHowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
-import UnhydratedAskAgentQuestionButtonContainer from 'sly/web/containers/AskAgentQuestionButtonContainer';
 import PlusBranding from 'sly/web/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
@@ -56,17 +54,16 @@ import UnhydratedCommunitySummaryContainer from 'sly/web/containers/CommunitySum
 import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
 import UnhydratedCommunityQuestionAnswersContainer from 'sly/web/containers/CommunityQuestionAnswersContainer';
 import UnhydratedCommunityReviewsContainer from 'sly/web/containers/CommunityReviewsContainer';
-import UnhydratedCommunityAddReviewButtonContainer from 'sly/web/containers/CommunityAddReviewButtonContainer';
 import UnhydratedCommunityMorePicturesContainer from 'sly/web/containers/CommunityMorePicturesContainer';
 import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/web/containers/TrackedSimilarCommunitiesContainer';
 import UnhydratedPageViewActionContainer from 'sly/web/containers/PageViewActionContainer';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/web/containers/PageEventsContainer';
-import UnhydratedCommunityDetailsPageColumnContainer from 'sly/web/containers/CommunityDetailsPageColumnContainer';
-import UnhydratedCommunityProfileAdTileContainer from 'sly/web/containers/communityProfile/AdTileContainer';
+// import UnhydratedCommunityDetailsPageColumnContainer from 'sly/web/containers/CommunityDetailsPageColumnContainer';
+// import UnhydratedCommunityProfileAdTileContainer from 'sly/web/containers/communityProfile/AdTileContainer';
 import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
 import UnhydratedGetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
-import UnhydratedCommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
+// import UnhydratedCommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
@@ -74,20 +71,17 @@ const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGal
 const CommunitySummaryContainer = withHydration(UnhydratedCommunitySummaryContainer);
 const OfferNotification = withHydration(UnhydratedOfferNotification);
 const TrackedSimilarCommunitiesContainer = withHydration(UnhydratedTrackedSimilarCommunitiesContainer);
-const GetCurrentAvailabilityContainer = withHydration(UnhydratedGetCurrentAvailabilityContainer);
 const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContainer);
 const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
-const AskAgentQuestionButtonContainer = withHydration(UnhydratedAskAgentQuestionButtonContainer);
 const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContainer);
-const CommunityAddReviewButtonContainer = withHydration(UnhydratedCommunityAddReviewButtonContainer);
 const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuestionAnswersContainer);
-const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { alwaysHydrate: true });
+// const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { alwaysHydrate: true });
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
-const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
-const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
+// const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
+// const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
 const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
-const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable, { alwaysHydrate: true });
+// const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable, { alwaysHydrate: true });
 const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator, { alwaysHydrate: true });
 
 const BackToSearch = styled.div`
@@ -129,10 +123,6 @@ const StyledButton = styled(Button)`
   width: 100%;
   margin-top: ${size('spacing.xLarge')};
 `;
-const StyledLeaveReviewButton = styled(CommunityAddReviewButtonContainer)`
-  width: 100%;
-  margin-top: ${size('spacing.xLarge')};
-`;
 
 const EventsWrapper = styled(CollapsibleBlock)`
   display: grid;
@@ -145,54 +135,9 @@ const EventsWrapper = styled(CollapsibleBlock)`
   }
 `;
 
-const StyledAskAgentButton = styled(AskAgentQuestionButtonContainer)`
-  width: 100%;
-  margin-top: ${size('spacing.xLarge')};
-`;
-
 const StickToTop = styled.div`
   position: sticky;
   top: 24px;
-`;
-
-const StyledIconButton = styled(IconButton)`
-  font-weight: bold;
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const TextBlock = styled(Block)`
-  font-weight: bold;
-  margin-bottom: ${size('spacing.large')};
-  text-align: center;
-`;
-
-const CTAWrapper = styled.div`
-  text-align: center;
-  display: grid;
-  justify-content: center;
-  grid-template-columns: auto auto;
-`;
-
-const CTAButton = styled(AskAgentQuestionButtonContainer)`
-`;
-
-const CTABlock = styled(Block)`
-  display: inline-block;
-  padding-left: ${size('spacing.regular')};
-  line-height: ${size('element.regular')};
-`;
-
-const CovidWrapper = styled.div`
-  padding: ${size('spacing.large')};
-  background-color: ${palette('primary', 'filler')};
-  border-radius: ${size('spacing.small')};
-  border-top: 4px solid ${palette('primary', 'base')};
-  margin-bottom: ${size('spacing.xLarge')};
-  text-align: center;
-`;
-
-const AdWrapper = styled.div`
-  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const PaddedGetAssessmentBoxContainerHydrator = pad(GetAssessmentBoxContainerHydrator);
@@ -299,11 +244,11 @@ export default class CommunityDetailPage extends Component {
 
     const { sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
-    //filtering out status 1 partnerAgents
+    // filtering out status 1 partnerAgents
     const livePartnerAgents = partnerAgents && partnerAgents.filter( e => e.status === AGENT_STATUS_LIVE_ON_PROFILE);
     const partnerAgent = livePartnerAgents && livePartnerAgents.length > 0 ? livePartnerAgents[0] : null;
 
-    const { autoHighlights, nearbyCities } = rgsAux;
+    const { nearbyCities } = rgsAux;
 
     const showMoreImages = gallery.images && gallery.images.length > 0;
 
@@ -362,18 +307,19 @@ export default class CommunityDetailPage extends Component {
                   />
                 )}
                 {(covidInfoDescription || covidInfoTitle) && (
-                  <CovidWrapper>
-                    <Heading size="subtitle" level="subtitle">
-                      {covidInfoTitle}
+                  <Box pad="xLarge">
+                    <Heading size="subtitle" level="subtitle" pad="xLarge">
+                      COVID-19 Policy at {name}
                     </Heading>
-                    <Paragraph>
+                    {covidInfoTitle &&
+                      <Block weight="bold" pad="regular">
+                        {covidInfoTitle}
+                      </Block>
+                    }
+                    <Block>
                       {covidInfoDescription}
-                    </Paragraph>
-                    <CTAWrapper>
-                      <CTAButton type="covid-banner">Take a Virtual Tour</CTAButton>
-                      <CTABlock>or call our team at <Link href="tel:+18558664515">(855) 866-4515</Link></CTABlock>
-                    </CTAWrapper>
-                  </CovidWrapper>
+                    </Block>
+                  </Box>
                 )}
                 {communityInsights &&
                   communityInsights.length > 0 && (
@@ -438,14 +384,6 @@ export default class CommunityDetailPage extends Component {
                 {/* <AdWrapper> */}
                 {/* <CommunityProfileAdTileContainer type="getOffer" community={community} /> */}
                 {/* </AdWrapper> */}
-                {!isActiveAdult &&
-                  <StyledHeadingBoxSection
-                    heading={`Get Availability at ${name}`}
-                    id="availability"
-                  >
-                    <GetCurrentAvailabilityContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested} />
-                  </StyledHeadingBoxSection>
-                }
 
                 {plusCommunity && <PlusBranding />}
                 {(communityDescription || rgsAux.communityDescription ||
@@ -478,7 +416,6 @@ export default class CommunityDetailPage extends Component {
                 {partnerAgent && !isActiveAdult && (
                   <StyledHeadingBoxSection heading={`Your Local Senior Living Expert for ${name}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} />
-                    <StyledAskAgentButton community={community} type="services" ctaText="Ask a Question" />
                   </StyledHeadingBoxSection>
                 )}
                 {!isActiveAdult &&
@@ -491,51 +428,34 @@ export default class CommunityDetailPage extends Component {
                   <StyledHeadingBoxSection
                     heading={`Helpful ${typeOfCare} Resources`}
                   >
-                    {rgsAux.rgsInfo.resourceLinks.map(item => (
-                      <StyledIconButton
-                        to={item.to}
-                        icon="chevron"
-                        right
-                        fullWidth
-                        ghost
-                        transparent
-                        borderPalette="slate"
-                        rotate={-1}
-                      >{item.title}
-                      </StyledIconButton>),
-                    )}
-
-                    <Hr marginTop="regular" />
-                    <TextBlock size="body">Didn't find what you are looking for? Our Senior Living Experts can help.</TextBlock>
-                    <CTAWrapper>
-                      <CTAButton type="resources">Ask a Question</CTAButton>
-                      <CTABlock>or call our team at <Link href="tel:+18558664515">(855) 866-4515</Link></CTABlock>
-                    </CTAWrapper>
-
-
+                    {rgsAux.rgsInfo.resourceLinks.map((item, i) => (
+                      <>
+                        <IconButton
+                          to={item.to}
+                          icon="chevron"
+                          right
+                          transparent
+                          rotate={-1}
+                          palette="primary"
+                          width="100%"
+                          padding="0"
+                          size="body"
+                        >
+                          {item.title}
+                        </IconButton>
+                        {i !== rgsAux.rgsInfo.resourceLinks.length - 1 && <Hr />}
+                      </>
+                    ))}
                   </StyledHeadingBoxSection>
                 )}
                 {careServices &&
                   careServices.length > 0 && (
                     <StyledHeadingBoxSection heading={`Care Services at ${name}`}>
                       <CommunityCareService careServices={careServices} />
-                      {!isActiveAdult && <StyledAskAgentButton
-                        community={community}
-                        type="services"
-                        ctaText={'Ask' +
-                      ' About Care Services'}
-                      />}
                     </StyledHeadingBoxSection>
                   )}
                 <StyledHeadingBoxSection heading={`Amenities at ${name}`}>
                   <CommunityAmenities community={community} />
-                  {!isActiveAdult && <StyledAskAgentButton
-                    community={community}
-                    type="amenities"
-                    ctaText={'Ask' +
-                  ' About Amenities'}
-                  />}
-
                 </StyledHeadingBoxSection>
 
                 <StyledHeadingBoxSection
@@ -543,12 +463,10 @@ export default class CommunityDetailPage extends Component {
                   id="reviews"
                 >
                   <CommunityReviewsContainer />
-                  <StyledLeaveReviewButton>Write a Review</StyledLeaveReviewButton>
                 </StyledHeadingBoxSection>
 
-                <StyledHeadingBoxSection heading={`Questions About ${name}`}>
-                  <CommunityQuestionAnswersContainer />
-                </StyledHeadingBoxSection>
+                <CommunityQuestionAnswersContainer />
+
                 {plusCommunity && eventsLink && sampleEvents &&
                 <StyledHeadingBoxSection heading={`Events at ${name}`}>
                   <EventsWrapper>
