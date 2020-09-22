@@ -43,7 +43,7 @@ export const AGENT_DASHBOARD_PROFILE_PATH = `${AGENT_DASHBOARD_PATH}/my-profile`
 
 
 export const DASHBOARD_COMMUNITIES_PATH = `${DASHBOARD_PATH}/communities`;
-export const DASHBOARD_COMMUNITIES_DETAIL_PATH = `${DASHBOARD_PATH}/communities/:id/:tab?`;
+export const DASHBOARD_COMMUNITIES_DETAIL_PATH = `${DASHBOARD_PATH}/communities/:id/:tab?/:clientType(${familyTypes.join('|')})?`;
 export const DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH = `${DASHBOARD_PATH}/communities/:id/edits/:editId`;
 
 export const SUMMARY = 'summary';

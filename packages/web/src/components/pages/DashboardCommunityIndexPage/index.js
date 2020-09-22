@@ -82,6 +82,14 @@ export default class DashboardCommunityIndexPage extends Component {
       </Role>
     );
 
+    if (isPageLoading) {
+      return (
+        <Loading activeMenuItem="Communities">
+          Loading...
+        </Loading>
+      );
+    }
+
     return (
       <DashboardPageTemplate activeMenuItem="Communities">
         <Section snap="none">
@@ -105,17 +113,7 @@ export default class DashboardCommunityIndexPage extends Component {
               {communities.map(community => (
                 <CommunityRowCard key={community.id} community={community} onCommunityClick={() => this.handleCommunityClick(community)} />
               ))}
-              {isPageLoading &&
-                <Tr>
-                  <Td>
-                    <Loading activeMenuItem="Communities">
-                      Loading...
-                    </Loading>
-                  </Td>
-                </Tr>
-              }
-
-              {!isPageLoading && communities.length === 0 &&
+              {communities.length === 0 &&
                 <Tr>
                   <Td colSpan={TABLE_HEADINGS.length}>
                     <NoResultMessage>{noResultMessage}</NoResultMessage>
@@ -135,7 +133,7 @@ export default class DashboardCommunityIndexPage extends Component {
             />
           )}
 
-          {!isPageLoading && communities.length > 0 &&
+          {communities.length > 0 &&
             <Box padding="regular" size="caption" snap="top">
               {pagination.text}
             </Box>

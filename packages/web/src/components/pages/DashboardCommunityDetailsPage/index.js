@@ -42,7 +42,11 @@ import DashboardCommunityEditsContainer from 'sly/web/containers/DashboardCommun
 import { PROPERTY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 import { Link } from 'sly/web/components/atoms';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
-import { Box } from 'sly/common/components/atoms';
+
+const makeClientsBasePath = ({ id, tab }) => {
+  const path = generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, { id, tab });
+  return `${path}/:clientType`;
+};
 
 export default class DashboardCommunityDetailsPage extends Component {
   static propTypes = {
@@ -277,6 +281,7 @@ export default class DashboardCommunityDetailsPage extends Component {
           )}
           {currentTab === CLIENTS && (
             <DashboardAgentFamilyOverviewSectionContainer
+              basePath={makeClientsBasePath(match.params)}
               sectionFilters={clientsSectionFilters}
             />
           )}

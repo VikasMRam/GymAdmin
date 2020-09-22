@@ -138,7 +138,7 @@ jobs:
           name: JS Test Suite
           command: |
             export JEST_JUNIT_OUTPUT_DIR="$PWD/$TEST_RESULTS_DIR/junit"
-            npm test -- -- -- --ci -w=30
+            npm test -- -- -- --ci -w=25
 
       - cache_deps
 
