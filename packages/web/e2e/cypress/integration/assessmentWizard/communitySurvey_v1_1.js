@@ -209,7 +209,9 @@ describe('Community survey', () => {
   // Do not include memory care for 'myself' and 'myself-and-spouse'
   function getminIndex(name) {
     if (name === 'step-8:ADL') {
-      if (lookingFor === 'myself' || lookingFor === 'myself-and-spouse') { return 1; }
+    // bug: 1222
+    // if (lookingFor === 'myself' || lookingFor === 'myself-and-spouse') { return 1; }
+      return 1;
     }
     return 0;
   }
