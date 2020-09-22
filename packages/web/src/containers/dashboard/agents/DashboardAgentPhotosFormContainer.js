@@ -125,8 +125,8 @@ export default class DashboardAgentPhotosFormContainer extends Component {
   };
 
   onUploadError = (error) => {
-    const { notifyError, community } = this.props;
-    notifyError(`Photos for ${community.name} could not be uploaded to the CDN`);
+    const { notifyError } = this.props;
+    notifyError(`Photos could not be uploaded to the CDN`);
   };
 
 
