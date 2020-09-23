@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { object } from 'prop-types';
 import loadable from '@loadable/component';
 
-import { apiUrl } from 'sly/web/config';
 import { getAutocompleteValues } from 'sly/web/services/datatable/helpers';
 import { normalizeResponse } from 'sly/web/services/api';
 
@@ -15,7 +14,7 @@ export default class Autocomplete extends Component {
 
   loadOptions = (inputValue) => {
     const { column } = this.props;
-    return fetch(`${apiUrl}${column.typeInfo.api}${inputValue}`, {
+    return fetch(`${column.typeInfo.api}${inputValue}`, {
       credentials: 'include',
     })
       .then(r => r.json())
