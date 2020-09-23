@@ -292,7 +292,7 @@ export default class CommunityDetailPage extends Component {
                       COVID-19 Policy at {name}
                     </Heading>
                     {covidInfoTitle &&
-                      <Block weight="bold" pad="regular">
+                      <Block weight="medium" pad="regular">
                         {covidInfoTitle}
                       </Block>
                     }
