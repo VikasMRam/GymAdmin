@@ -39,7 +39,6 @@ import CommunityAmenities from 'sly/web/components/organisms/CommunityAmenities'
 import UnhydratedLazyCommunityMap from 'sly/web/containers/LazyCommunityMapContainer';
 import UnhydratedCommunityMediaGalleryContainer from 'sly/web/containers/CommunityMediaGalleryContainer';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
-import UnhydratedOfferNotification from 'sly/web/components/molecules/OfferNotification';
 import CommunityCareService from 'sly/web/components/organisms/CommunityCareService';
 import CommunityDisclaimerSection from 'sly/web/components/molecules/CommunityDisclaimerSection';
 import IconItem from 'sly/web/components/molecules/IconItem';
@@ -51,7 +50,6 @@ import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import { AGENT_STATUS_LIVE_ON_PROFILE } from 'sly/web/constants/agents';
 import UnhydratedCommunitySummaryContainer from 'sly/web/containers/CommunitySummaryContainer';
-import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
 import UnhydratedCommunityQuestionAnswersContainer from 'sly/web/containers/CommunityQuestionAnswersContainer';
 import UnhydratedCommunityReviewsContainer from 'sly/web/containers/CommunityReviewsContainer';
 import UnhydratedCommunityMorePicturesContainer from 'sly/web/containers/CommunityMorePicturesContainer';
@@ -69,10 +67,8 @@ const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer,
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
 const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGalleryContainer);
 const CommunitySummaryContainer = withHydration(UnhydratedCommunitySummaryContainer);
-const OfferNotification = withHydration(UnhydratedOfferNotification);
 const TrackedSimilarCommunitiesContainer = withHydration(UnhydratedTrackedSimilarCommunitiesContainer);
 const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContainer);
-const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
 const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContainer);
 const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuestionAnswersContainer);
 // const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { alwaysHydrate: true });
@@ -105,10 +101,6 @@ const StyledCommunitySummary = styled(CommunitySummaryContainer)`
 
 const IconItemWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
-`;
-
-const StyledOfferNotification = styled(OfferNotification)`
-  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true })`
@@ -208,8 +200,6 @@ export default class CommunityDetailPage extends Component {
 
     const {
       careServices,
-      promoDescription,
-      promoTitle,
       covidInfoDescription,
       covidInfoTitle,
       communityInsights,
@@ -296,16 +286,6 @@ export default class CommunityDetailPage extends Component {
                   <CommunityMediaGalleryContainer />
                 </Gallery>
                 <StyledCommunitySummary isAdmin={user && user.admin} />
-                {(promoDescription || promoTitle) && (
-                  <StyledOfferNotification
-                    palette="warning"
-                    title={promoTitle}
-                    description={promoDescription}
-                    hasLearnMore
-                    community={community}
-                    hasAlreadyRequested={isAlreadyPricingRequested}
-                  />
-                )}
                 {(covidInfoDescription || covidInfoTitle) && (
                   <Box pad="xLarge">
                     <Heading size="subtitle" level="subtitle" pad="xLarge">
@@ -413,11 +393,6 @@ export default class CommunityDetailPage extends Component {
                   </StyledHeadingBoxSection>
                 }
 
-                {partnerAgent && !isActiveAdult && (
-                  <StyledHeadingBoxSection heading={`Your Local Senior Living Expert for ${name}`}>
-                    <CommunityAgentSectionContainer agent={partnerAgent} />
-                  </StyledHeadingBoxSection>
-                )}
                 {!isActiveAdult &&
                 <PaddedGetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
