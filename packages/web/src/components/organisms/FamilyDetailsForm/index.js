@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { func, bool, string, object, arrayOf } from 'prop-types';
 import { Field } from 'redux-form';
 
+import { apiUrl } from 'sly/web/config';
 import userPropType from 'sly/common/propTypes/user';
 import clientPropType from 'sly/common/propTypes/client';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
@@ -115,7 +116,7 @@ export default class FamilyDetailsForm extends Component {
     const adls = careServices.map(i => ({ value: i, label: i }));
     const communityCareTypeOptions = communityTypes.map(i => ({ value: i, label: i }));
     const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
-    const tagColumn = { typeInfo: { api: '/platform/tags?filter[name]=' }, value: 'tag.name' };
+    const tagColumn = { typeInfo: { api: `${apiUrl}/platform/tags?filter[name]=` }, value: 'tag.name' };
     const medicaidOptions = [{ label: '', value: true }];
     const sourceOptions = SOURCE_OPTIONS.map(s => <option key={s} value={s}>{s}</option>);
     const showStageSummary = showSummaryStages.includes(stage);
