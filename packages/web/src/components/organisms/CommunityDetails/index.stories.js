@@ -4,34 +4,19 @@ import { storiesOf } from '@storybook/react';
 import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-
-const {
-  name, propInfo,
-} = RhodaGoldmanPlaza;
-const {
-  communityDescription, staffDescription, residentDescription,
-} = propInfo;
+const noInfoCommunity = {
+  ...RhodaGoldmanPlaza,
+  propInfo: {},
+};
 
 storiesOf('Organisms|CommunityDetails', module)
-  .add('onlyNameCommunityDescription', () => (
+  .add('default', () => (
     <CommunityDetails
-      communityName={name}
-      communityDescription={communityDescription}
+      community={RhodaGoldmanPlaza}
     />
   ))
-  .add('onlyName,CommunityDescriptionAndStaffDescription', () => (
+  .add('no data', () => (
     <CommunityDetails
-      communityName={name}
-      communityDescription={communityDescription}
-      staffDescription={staffDescription}
+      community={noInfoCommunity}
     />
-  ))
-  .add('allProperties', () => (
-    <CommunityDetails
-      communityName={name}
-      communityDescription={communityDescription}
-      staffDescription={staffDescription}
-      residentDescription={residentDescription}
-    />
-  ))
-  .add('onlyName', () => <CommunityDetails communityName={name} />);
+  ));

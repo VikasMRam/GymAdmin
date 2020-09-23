@@ -1,38 +1,108 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
-import CommunityDetails from '.';
+import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
+import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const wrap = (props = {}) => mount(<CommunityDetails {...props} />);
-
-const id = 'test-comm'
-const communityName = 'testCommunityName';
-const communityDescription = 'communityDescription text here';
-const staffDescription = 'staffDescription text here';
-const residentDescription = 'residentDescription text here';
+const wrap = (props = {}) => shallow(<CommunityDetails community={RhodaGoldmanPlaza} {...props} />);
 
 describe('CommunityDetails', () => {
-  it('verify communityDescription is shown', () => {
+  it('verify no info message shown', () => {
+    const noInfoCommunity = {
+      ...RhodaGoldmanPlaza,
+      propInfo: {},
+    };
     const wrapper = wrap({
-      id, communityName, communityDescription,
+      community: noInfoCommunity,
     });
-    expect(wrapper.text()).toContain(communityDescription);
+
+    expect(wrapper.find('Paragraph').dive().dive().render()
+      .text()).toContain('No information about amenities currently available');
   });
 
-  it('verify staffDescription is shown', () => {
-    const wrapper = wrap({
-      id, communityName, communityDescription, staffDescription,
+  it('verify communityHighlights shown', () => {
+    const { propInfo } = RhodaGoldmanPlaza;
+    const {
+      communityHighlights = [],
+    } = propInfo;
+    const wrapper = wrap();
+    const elements = wrapper.find('Wrapper').children();
+
+    elements.slice(0, communityHighlights.length).forEach((hl, i) => {
+      expect(hl.find('IconItem').dive().dive().find('Block')
+        .render()
+        .text()).toContain(communityHighlights[i]);
     });
-    expect(wrapper.text()).toContain(communityDescription);
-    expect(wrapper.text()).toContain(staffDescription);
   });
 
-  it('verify residentDescription is shown', () => {
-    const wrapper = wrap({
-      id, communityName, communityDescription, staffDescription, residentDescription,
+  it('verify personalSpace shown', () => {
+    const { propInfo } = RhodaGoldmanPlaza;
+    const {
+      communityHighlights = [],
+      personalSpace = [],
+    } = propInfo;
+    const wrapper = wrap();
+    const elements = wrapper.find('Wrapper').children();
+
+    elements.slice(communityHighlights.length, personalSpace.length).forEach((hl, i) => {
+      expect(hl.find('IconItem').render().text()).toContain(personalSpace[i]);
     });
-    expect(wrapper.text()).toContain(communityDescription);
-    expect(wrapper.text()).toContain(staffDescription);
-    expect(wrapper.text()).toContain(residentDescription);
+  });
+
+  it('verify communitySpace shown', () => {
+    const { propInfo } = RhodaGoldmanPlaza;
+    const {
+      communityHighlights = [],
+      personalSpace = [],
+      communitySpace = [],
+    } = propInfo;
+    const start = communityHighlights.length + personalSpace.length;
+    const wrapper = wrap();
+    const elements = wrapper.find('Wrapper').children();
+
+    elements.slice(start, communitySpace.length).forEach((hl, i) => {
+      expect(hl.find('IconItem').dive().dive().find('Block')
+        .dive()
+        .text()).toContain(communitySpace[i]);
+    });
+  });
+
+  it('verify nonCareServices shown', () => {
+    const { propInfo } = RhodaGoldmanPlaza;
+    const {
+      communityHighlights = [],
+      personalSpace = [],
+      communitySpace = [],
+      nonCareServices = [],
+    } = propInfo;
+    const start = communityHighlights.length + personalSpace.length + communitySpace.length;
+    const wrapper = wrap();
+    const elements = wrapper.find('Wrapper').children();
+
+    elements.slice(start, nonCareServices.length).forEach((hl, i) => {
+      expect(hl.find('IconItem').dive().dive().find('Block')
+        .dive()
+        .text()).toContain(nonCareServices[i]);
+    });
+  });
+
+  it('verify languages shown', () => {
+    const { propInfo } = RhodaGoldmanPlaza;
+    const {
+      communityHighlights = [],
+      personalSpace = [],
+      communitySpace = [],
+      nonCareServices = [],
+      languages = [],
+    } = propInfo;
+    const start = communityHighlights.length + personalSpace.length + communitySpace.length + nonCareServices.length;
+    const wrapper = wrap();
+    const elements = wrapper.find('Wrapper').children();
+
+    elements.slice(start, languages.length).forEach((hl, i) => {
+      expect(hl.find('IconItem').dive().dive().find('Block')
+        .dive()
+        .text()).toContain(languages[i]);
+    });
   });
 });

@@ -33,7 +33,7 @@ import {
 } from 'sly/web/components/templates/CommunityDetailPageTemplate';
 // import UnhydratedCommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
 import Section from 'sly/web/components/molecules/Section';
-import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
+import CommunityAbout from 'sly/web/components/organisms/CommunityAbout';
 import CommunityPricingComparison from 'sly/web/components/organisms/CommunityPricingComparison';
 import CommunityAmenities from 'sly/web/components/organisms/CommunityAmenities';
 import UnhydratedLazyCommunityMap from 'sly/web/containers/LazyCommunityMapContainer';
@@ -369,7 +369,7 @@ export default class CommunityDetailPage extends Component {
                 {(communityDescription || rgsAux.communityDescription ||
                   staffDescription || residentDescription || ownerExperience) && (
                   <StyledHeadingBoxSection heading={`Details on ${name}`}>
-                    <CommunityDetails
+                    <CommunityAbout
                       id={community.id}
                       communityName={name}
                       communityDescription={communityDescription}
