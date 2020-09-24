@@ -7,11 +7,12 @@ describe('Marketplace Home Page', () => {
 
     cy.contains('Find The Best Senior Living Near You');
 
-    cy.get('input[class*=SearchBox__SearchTextBox]').last()
-      .type('San Francisco, CA, USA');
+    cy.get('div[class*=HomePage__SearchBoxWrapper]').within(() => {
+      cy.get('input[class*=Input__StyledInput]')
+        .type('San Francisco');
+    });
 
-    cy.get('div[class*=SearchBox__SearchSuggestion]')
-      .should('have.length', 2)
+    cy.get('div[class*=SearchBox__SuggestionsWrapper]')
       .contains('San Francisco')
       .click();
 

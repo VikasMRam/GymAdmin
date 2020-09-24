@@ -26,6 +26,7 @@ export const buildEstimatedPriceList = (community) => {
   return priceList;
 };
 
+
 describe('Community Profile Sections', () => {
   let community;
 
@@ -39,7 +40,7 @@ describe('Community Profile Sections', () => {
   });
 
   responsive(() => {
-    it('Should see details', () => {
+    it('Should see community details', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
 
       cy.wait('@postUuidActions').then((xhr) => {
@@ -56,29 +57,65 @@ describe('Community Profile Sections', () => {
           },
         });
       });
+      const rating = community.propRatings.reviewsValue.toFixed(1).replace(/\.0+$/, '');
 
-      cy.get('h1').contains(community.name).its('length').should('be', 1);
+      waitForHydration(cy.get('div[class*=CommunityDetailPage__StyledCommunitySummary]')).within(() => {
+        const {
+          line1, city, state, zip,
+        } = community.address;
 
-      const {
-        line1, city, state, zip,
-      } = community.address;
-
-      cy.get('h3').should(($h3) => {
-        const address = `${line1}, ${city}, ${state} ${zip}`;
-        expect($h3.first().text().replace(/\s+/g, ' ')).to.equal(address);
+        cy.get('h2').should(($h3) => {
+          const address = `${line1}, ${city}, ${state} ${zip}`;
+          expect($h3.first().text().replace(/\s+/g, ' ')).to.equal(address);
+        });
       });
 
-      // const number = community.twilioNumber.numbers[0];
-      // select(`.CommunitySummary [href="tel:${number}"]`).should(($div) => {
-      //   expect($div.text().replace(/[^\d]/g, '')).to.equal(number.toString());
-      // });
-
-      // select('.CommunitySummary__PricingRatingWrapper').should('contain', formatMoney(community.startingRate));
       select('.CommunityPricing__StyledCommunityPricingWrapper').should('contain', formatMoney(community.startingRate));
+      select('.CommunityRating__RatingValue').contains(rating);
+      cy.get('a[class*=GetCommunityPricingAndAvailability').contains('Get Pricing and Availability').click({ force: true });
+      cy.url().should('include', `wizards/assessment/community/${community.id}`);
+    });
 
-      // const rating = community.propRatings.reviewsValue.toFixed(1).replace(/\.0+$/, '');
-      // select('.CommunitySummary__PricingRatingWrapper').should('contain', rating);
-      select('.CommunityPricing__StyledCommunityPricingWrapper').should('contain', 5);
+    it('should show pricing section', () => {
+      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.wait('@postUuidActions');
+
+      const pricingContent = cy.get('h3').contains(`Pricing at ${community.name}`).parent();
+
+      pricingContent.should('contain', formatMoney(community.startingRate));
+
+      buildEstimatedPriceList(community).forEach(({ label, value }) => {
+        pricingContent.get('tbody td').contains(label).next().should('contain', formatMoney(value));
+      });
+      cy.get('section[id*="pricing-and-floor-plans"]').contains('Get Pricing and Availability')
+        .click();
+      cy.url().should('include', `wizards/assessment/community/${community.id}`);
+    });
+
+
+    it('should show care services section', () => {
+      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.wait('@postUuidActions');
+
+      cy.get('h3').contains(`Care Services at ${community.name}`).parent().within(() => {
+        cy.wrap(community.propInfo.careServices).each((service) => {
+          cy.get('> h3 + div > div > div > div > div + div').contains(service).should('exist');
+        });
+      });
+    });
+
+
+    it('should show amenities section', () => {
+      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.wait('@postUuidActions');
+
+      const careContent = select('h3').contains(`Amenities at ${community.name}`).parent().next();
+      [
+        ...community.propInfo.personalSpace,
+        ...community.propInfo.nonCareServices,
+      ].forEach((service) => {
+        careContent.get('div').contains(service).should('exist');
+      });
     });
 
 
@@ -90,8 +127,8 @@ describe('Community Profile Sections', () => {
       waitForHydration(cy.get('button').contains('Share')).click({ force: true });
       select('.ReactModal').contains('Share this community').should('exist');
 
-      cy.get('form input[name="to"]').type('fonz@seniorly.com');
-      cy.get('form input[name="from"]').type('fonz@botverse.com');
+      cy.get('form input[name="to"]').type('inchara@seniorly.com');
+      cy.get('form input[name="from"]').type('inchara@botverse.com');
       cy.get('form textarea[name="message"]').type('check out this property');
 
       cy.get('form button').contains('Send').click();
@@ -100,37 +137,34 @@ describe('Community Profile Sections', () => {
         expect(xhr.status).to.equal(200);
         expect(xhr.requestBody).to.deep.equal({
           toEmails: [
-            'fonz@seniorly.com',
+            'inchara@seniorly.com',
           ],
           message: 'check out this property',
           entitySlug: community.id,
           entityType: 'Community',
-          fromEmail: 'fonz@botverse.com',
+          fromEmail: 'inchara@botverse.com',
         });
       });
 
       select('.Notifications').contains('Community has been shared').should('exist');
     });
 
-    it.skip('should be able to save and remove community', () => {
+
+    it('should be able to save and remove community', () => {
       let userSave;
 
       cy.route('POST', '**/user-saves').as('postUserSaves');
       cy.route('PATCH', '**/user-saves/*').as('patchUserSaves');
 
-      cy.registerWithEmail(`fonz+e2e+${randHash()}@seniorly.com`, 'nopassword');
-
+      const rand = randHash();
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.registerWithEmail(`fonz+e2e+${rand}@seniorly.com`, 'nopassword');
 
       waitForHydration(cy.get('button').contains('Favorite')).click({ force: true });
+      cy.get('form input[label*=Email]').last().type(`fonz+e2e+${rand}@seniorly.com`);
+      cy.get('form input[id*=password]').last().type('nopassword');
+      cy.get('form button[type*=submit]').contains('Log in').click();
 
-      cy.get('div[class*="AuthContainer__ModalBody"]').within(() => {
-        cy.get('input[name="email"]').type('slytest+admin@seniorly.com');
-        cy.get('input[name="password"]').type('nopassword');
-        cy.get('button').contains('Log in').click();
-      });
-
-      cy.reload();
 
       cy.wait('@postUserSaves').then(async (xhr) => {
         expect(xhr.status).to.equal(200);
@@ -155,118 +189,11 @@ describe('Community Profile Sections', () => {
         });
       });
 
-      cy.contains('h2', 'Community Saved!').should('exist');
+      cy.contains('h3', 'Community Saved!').should('exist');
 
       select('.CommunitySaved button').contains('Done').click();
 
-      select('.CommunitySaved h2').should('not.exist');
-    });
-
-
-    it('should request pricing from section', () => {
-      // the assessment wizard is tested on it's own test,
-      // so we just check that we get there
-
-      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-
-      const pricingContent = cy.get('h3').contains(`Pricing at ${community.name}`).parent();
-
-      pricingContent.should('contain', formatMoney(community.startingRate));
-
-      buildEstimatedPriceList(community).forEach(({ label, value }) => {
-        pricingContent.get('tbody td').contains(label).next().should('contain', formatMoney(value));
-      });
-      cy.get('section[id*="pricing-and-floor-plans"]').contains('Get Detailed Pricing')
-        .click();
-      cy.url().should('include', `wizards/assessment/community/${community.id}`);
-    });
-
-    it('should show and request care services', () => {
-      // cy.route('POST', '**/uuid-actions').as('postUuidActions');
-
-      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-      cy.wait('@postUuidActions');
-
-      cy.get('h3').contains(`Care Services at ${community.name}`).parent().within(() => {
-        cy.wrap(community.propInfo.careServices).each((service) => {
-          cy.get('> h3 + div > div > div > div > div + div').contains(service).should('exist');
-        });
-        waitForHydration(cy.get('> h3 + div ~ div button').contains('Ask About Care Services')).click();
-      });
-
-
-      select('form[name="CommunityAskQuestionAgentForm"] input[name="full_name"]').type('Fonz de la Osa');
-      select('form[name="CommunityAskQuestionAgentForm"] input[name="phone"]').type('9087654321');
-      select('form[name="CommunityAskQuestionAgentForm"] textarea[name="question"]').type('{selectall}{del}my message');
-      select('form[name="CommunityAskQuestionAgentForm"]').contains('Send').click();
-
-      cy.wait('@postUuidActions').then((xhr) => {
-        const uuidAction = {
-          data: {
-            type: 'UUIDAction',
-            attributes: {
-              actionType: 'agentAskQuestions',
-              actionPage: `/assisted-living/california/san-francisco/${community.id}`,
-              actionInfo: {
-                slug: community.id,
-                question: 'my message',
-                entityType: 'Property',
-                name: 'Fonz de la Osa',
-                phone: '9087654321',
-              },
-            },
-          },
-        };
-        expect(xhr.requestBody).to.deep.equal(uuidAction);
-      });
-
-      select('.Notifications').contains('Question sent successfully.').should('exist');
-    });
-
-    it('should show and request amenities', () => {
-      cy.route('POST', '**/uuid-actions').as('postUuidActions');
-
-      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-      cy.wait('@postUuidActions');
-
-      const careContent = select('h3').contains(`Amenities at ${community.name}`).parent().next();
-
-
-      [
-        ...community.propInfo.personalSpace,
-        ...community.propInfo.nonCareServices,
-      ].forEach((service) => {
-        careContent.get('div').contains(service).should('exist');
-      });
-
-      waitForHydration(careContent.get('button').contains('Ask About Amenities')).click();
-
-      select('form[name="CommunityAskQuestionAgentForm"] input[name="full_name"]').type('Fonz de la Osa');
-      select('form[name="CommunityAskQuestionAgentForm"] input[name="phone"]').type('9087654321');
-      select('form[name="CommunityAskQuestionAgentForm"] textarea[name="question"]').type('{selectall}{del}my message');
-      select('form[name="CommunityAskQuestionAgentForm"]').contains('Send').click();
-
-      cy.wait('@postUuidActions').then((xhr) => {
-        const uuidAction = {
-          data: {
-            type: 'UUIDAction',
-            attributes: {
-              actionType: 'agentAskQuestions',
-              actionPage: `/assisted-living/california/san-francisco/${community.id}`,
-              actionInfo: {
-                slug: community.id,
-                question: 'my message',
-                entityType: 'Property',
-                name: 'Fonz de la Osa',
-                phone: '9087654321',
-              },
-            },
-          },
-        };
-        expect(xhr.requestBody).to.deep.equal(uuidAction);
-      });
-
-      select('.Notifications').contains('Question sent successfully.').should('exist');
+      select('.CommunitySaved h3').should('not.exist');
     });
   });
 });
